@@ -13,6 +13,15 @@
 	  <put name="institutionName" value="Instituto Superior Técnico" />
 	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
 	</definition>
+	<definition name="definition.teacher.testsPage" page="/teacherLayout_2col.jsp">
+	  <put name="serviceName" value="Portal Docente" />	
+	  <put name="institutionName" value="Instituto Superior Técnico" />
+	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
+	  <put name="navLocal" value="/teacher/testsNavbar.jsp" />
+	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
+	  <put name="body" value=" " />
+	  <put name="footer" value="/teacher/commons/commonFooterTests.jsp" />	  
+	</definition>
 	<definition name="df.teacher.execution-course-management" extends="definition.teacher.two-column">
 	    <put name="navLocal" value="/teacher/commons/localNavBar.jsp"/>		
 		<put name="body-context" value="/teacher/executionCourseName.jsp"></put>

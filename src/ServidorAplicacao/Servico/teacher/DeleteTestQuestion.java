@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servico.teacher;
 
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -97,7 +98,7 @@ public class DeleteTestQuestion implements IServico {
 			persistentTestQuestion.delete(testQuestion);
 			test.setNumberOfQuestions(
 				new Integer(test.getNumberOfQuestions().intValue() - 1));
-			test.setLastModifiedDate(null);
+			test.setLastModifiedDate(Calendar.getInstance().getTime());
 			return true;
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

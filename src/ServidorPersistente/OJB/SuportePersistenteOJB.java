@@ -974,7 +974,10 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	{
 		return new TestScopeOJB();
 	}
-
+	
+	public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory(){
+		return new DistributedTestAdvisoryOJB();
+	}
     public IPersistentAdvisory getIPersistentAdvisory()
     {
         return new AdvisoryOJB();

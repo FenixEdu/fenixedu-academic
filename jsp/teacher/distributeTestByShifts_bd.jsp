@@ -14,15 +14,15 @@ function invertSelect(){
 	} else { 
 		select = false;
 	}
-	for (var i=0; i<document.distributedTestForm.selected.length; i++){
-		var e = document.distributedTestForm.selected[i];
+	for (var i=0; i<document.forms[0].selected.length; i++){
+		var e = document.forms[0].selected[i];
 		if (select == true) { e.checked = true; } else { e.checked = false; }
 	}
 }
 
 function cleanSelect() { 
 	select = false; 
-	document.distributedTestForm.selected[0].checked = false; 
+	document.forms[0].selected[0].checked = false; 
 }
 // -->
 </script>

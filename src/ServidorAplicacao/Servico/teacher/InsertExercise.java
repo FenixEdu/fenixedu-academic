@@ -25,6 +25,7 @@ import org.apache.struts.upload.FormFile;
 import org.apache.struts.util.LabelValueBean;
 import org.xml.sax.SAXParseException;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoQuestion;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
@@ -32,7 +33,6 @@ import Dominio.IMetadata;
 import Dominio.IQuestion;
 import Dominio.Metadata;
 import Dominio.Question;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
@@ -49,24 +49,12 @@ import UtilTests.ParseQuestionException;
 /**
  * @author Susana Fernandes
  */
-public class InsertExercice implements IServico
+public class InsertExercise implements IService
 {
-	private static InsertExercice service = new InsertExercice();
 	private String path = new String();
 
-	public static InsertExercice getService()
+	public InsertExercise()
 	{
-
-		return service;
-	}
-
-	public InsertExercice()
-	{
-	}
-
-	public String getNome()
-	{
-		return "InsertExercice";
 	}
 
 	public List run(Integer executionCourseId, FormFile metadataFile, FormFile xmlZipFile, String path)
@@ -89,29 +77,23 @@ public class InsertExercice implements IServico
 			}
 			ParseMetadata parseMetadata = new ParseMetadata();
 			String metadataString = null;
-
 			IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
 			IMetadata metadata = new Metadata();
 			metadata.setExecutionCourse(executionCourse);
 			metadata.setVisibility(new Boolean("true"));
 			try
 			{
-				if (metadataFile != null && metadataFile.getFileData().length!=0)
+				if (metadataFile!= null && metadataFile.getFileData().length != 0)
 				{
-					//					metadataString =
-					//						changeDocumentType(new String(metadataFile.getFileData(), "ISO-8859-1"), true);
 					metadataString = new String(metadataFile.getFileData(), "ISO-8859-1");
 					metadata.setMetadataFile(metadataString);
 					metadata = parseMetadata.parseMetadata(metadataString, metadata, this.path);
 				}
-			}
-			catch (SAXParseException e)
+			} catch (SAXParseException e)
 			{
 				badXmls.add(new String("badMetadata"));
 				return badXmls;
-			}
-
-			catch (Exception e)
+			} catch (Exception e)
 			{
 				badXmls.add(new String("badMetadata"));
 				return badXmls;
@@ -143,8 +125,7 @@ public class InsertExercice implements IServico
 					question.setVisibility(new Boolean("true"));
 					persistentQuestion.simpleLockWrite(question);
 					xmlNumber++;
-				}
-				catch (SAXParseException e)
+				} catch (SAXParseException e)
 				{
 					if (metadataString != null)
 					{
@@ -153,8 +134,7 @@ public class InsertExercice implements IServico
 							removeLocation(metadataString, xmlZipFile.getFileName()));
 					}
 					badXmls.add(xmlFileName);
-				}
-				catch (ParseQuestionException e)
+				} catch (ParseQuestionException e)
 				{
 					if (metadataString != null)
 					{
@@ -163,8 +143,7 @@ public class InsertExercice implements IServico
 							removeLocation(metadataString, xmlZipFile.getFileName()));
 					}
 					badXmls.add(xmlFileName + e);
-				}
-				catch (Exception e)
+				} catch (Exception e)
 				{
 					if (metadataString != null)
 					{
@@ -180,16 +159,14 @@ public class InsertExercice implements IServico
 			{
 				persistentMetadata.simpleLockWrite(metadata);
 				persistentMetadata.delete(metadata);
-			}
-			else
+			} else
 			{
 				persistentMetadata.simpleLockWrite(metadata);
 				metadata.setNumberOfMembers(new Integer(xmlNumber));
 			}
 
 			return badXmls;
-		}
-		catch (ExcepcaoPersistencia e)
+		} catch (ExcepcaoPersistencia e)
 		{
 			throw new FenixServiceException(e);
 		}
@@ -234,24 +211,19 @@ public class InsertExercice implements IServico
 
 			transformer.transform(source, new StreamResult(result));
 
-		}
-		catch (javax.xml.transform.TransformerConfigurationException e)
+		} catch (javax.xml.transform.TransformerConfigurationException e)
 		{
 			throw new FenixServiceException(e);
-		}
-		catch (javax.xml.transform.TransformerException e)
+		} catch (javax.xml.transform.TransformerException e)
 		{
 			throw new FenixServiceException(e);
-		}
-		catch (FileNotFoundException e)
+		} catch (FileNotFoundException e)
 		{
 			throw new FenixServiceException(e);
-		}
-		catch (IOException e)
+		} catch (IOException e)
 		{
 			throw new FenixServiceException(e);
-		}
-		catch (Exception e)
+		} catch (Exception e)
 		{
 			throw new FenixServiceException(e);
 		}
@@ -333,8 +305,7 @@ public class InsertExercice implements IServico
 						xmlZipFile.getFileName(),
 						new String(xmlZipFile.getFileData(), "ISO-8859-1")));
 				//						changeDocumentType(new String(xmlZipFile.getFileData(), "ISO-8859-1"), false)));
-			}
-			else
+			} else
 			{
 				zipFile = new ZipInputStream(xmlZipFile.getInputStream());
 				while (true)
@@ -352,8 +323,7 @@ public class InsertExercice implements IServico
 				}
 				zipFile.close();
 			}
-		}
-		catch (Exception e)
+		} catch (Exception e)
 		{
 			return null;
 		}

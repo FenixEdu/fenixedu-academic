@@ -189,7 +189,7 @@ public interface ISuportePersistente
     public IPersistentStudentTestLog getIPersistentStudentTestLog();
 	public IPersistentOnlineTest getIPersistentOnlineTest();
 	public IPersistentTestScope getIPersistentTestScope();
-
+public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory();
     // by Barbosa (October 28th, 2003)
     public IPersistentGrantOwner getIPersistentGrantOwner();
     //by Barbosa (November 18th, 2003)

@@ -8,20 +8,20 @@
 <!--
 
 function selectDelete(){
-	var e = document.testForm.studentsType;
+	var e = document.forms[0].studentsType;
 	e[2].checked=true;
 		
 }
 
 function selectStudents() { 
-	var studentType = document.testForm.studentsType;
-	var deleteType = document.testForm.deleteVariation;
+	var studentType = document.forms[0].studentsType;
+	var deleteType = document.forms[0].deleteVariation;
 	var disable = false;
 	
 	if(studentType[2].checked==false)
 		disable=true;
-	for (var i=0; i<document.testForm.deleteVariation.length; i++){
-		var e = document.testForm.deleteVariation[i];
+	for (var i=0; i<document.forms[0].deleteVariation.length; i++){
+		var e = document.forms[0].deleteVariation[i];
 		if(disable == true) e.disabled=true; else e.disabled=false;
 	}
 	

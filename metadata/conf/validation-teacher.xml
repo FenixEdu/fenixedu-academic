@@ -22,8 +22,11 @@
   	</form>
 
    <form name="questionForm">
-	<field property="questionValue" depends="required, integer" page="1">
+	<field property="questionValue" depends="required,integer" page="2">
 		<arg0 key="message.questionValue" resource="true"/>
+	</field>
+	<field property="metadataCode" depends="required" page="1">
+		<msg name="required" key="error.testQuestion.notSelected"/>
 	</field>
    </form>
 
@@ -119,6 +122,12 @@
            <var-name>datePattern</var-name>
            <var-value>HH:mm</var-value>
         </var>
+	</field>
+   </form>
+   
+   <form name="testMarksForm">
+	<field property="distributedTestCodes" depends="required" page="1">
+		<msg name="required" key="error.distributedTests.notSelected"/>
 	</field>
    </form>
    

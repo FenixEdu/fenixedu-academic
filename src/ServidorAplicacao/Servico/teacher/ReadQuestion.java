@@ -2,6 +2,7 @@
  * Created on 25/Jul/2003
  *
  */
+
 package ServidorAplicacao.Servico.teacher;
 
 import DataBeans.ExecutionCourseSiteView;
@@ -44,22 +45,19 @@ public class ReadQuestion implements IServico
 	}
 
 	public SiteView run(Integer executionCourseId, Integer metadataId, Integer questionId, String path)
-		throws FenixServiceException
+			throws FenixServiceException
 	{
 		this.path = path.replace('\\', '/');
 		try
 		{
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 			IExecutionCourse executionCourse = new ExecutionCourse(executionCourseId);
-			executionCourse =
-				(IExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOId(
-					executionCourse,
-					false);
+			executionCourse = (IExecutionCourse) persistentSuport.getIPersistentExecutionCourse()
+					.readByOId(executionCourse, false);
 			if (executionCourse == null)
 			{
 				throw new InvalidArgumentsServiceException();
 			}
-
 			IPersistentQuestion persistentQuestion = persistentSuport.getIPersistentQuestion();
 			IQuestion question = null;
 			if (questionId == null || questionId.equals(new Integer(-1)))
@@ -67,14 +65,14 @@ public class ReadQuestion implements IServico
 				if (metadataId == null)
 					throw new InvalidArgumentsServiceException();
 				IMetadata metadata = new Metadata(metadataId);
-				metadata =
-					(IMetadata) persistentSuport.getIPersistentMetadata().readByOId(metadata, false);
+				metadata = (IMetadata) persistentSuport.getIPersistentMetadata().readByOId(metadata,
+						false);
 				if (metadata == null)
 					throw new InvalidArgumentsServiceException();
-
-				question =
-					(IQuestion) persistentSuport.getIPersistentQuestion().readExampleQuestionByMetadata(
-						metadata);
+				if (metadata.getVisibleQuestions() != null && metadata.getVisibleQuestions().size() != 0)
+					question = (IQuestion) metadata.getVisibleQuestions().get(0);
+				else
+					throw new InvalidArgumentsServiceException();
 			}
 			else
 			{

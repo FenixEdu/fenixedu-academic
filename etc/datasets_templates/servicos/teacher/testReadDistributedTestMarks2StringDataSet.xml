@@ -1,0 +1,295 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<dataset>
+  <ATTEND ID_INTERNAL='87176' KEY_STUDENT='2516' KEY_EXECUTION_COURSE='34033' ACK_OPT_LOCK='1'/>
+  <ATTEND ID_INTERNAL='92518' KEY_STUDENT='3617' KEY_EXECUTION_COURSE='34033' ACK_OPT_LOCK='1'/>
+  <ATTEND ID_INTERNAL='92539' KEY_STUDENT='3621' KEY_EXECUTION_COURSE='34033' ACK_OPT_LOCK='1'/>
+  <CATEGORY ID_INTERNAL='19' CODE='PAS' LONG_NAME='PROFESSOR ASSOCIADO' SHORT_NAME='PROF.ASSOCIADO' CAN_BE_EXECUTION_COURSE_RESPONSIBLE='1' ACK_OPT_LOCK='1'/>
+  <COUNTRY ID_INTERNAL='1' NAME='PORTUGAL' NATIONALITY='PORTUGUESA' CODE='PT' ACK_OPT_LOCK='1'/>
+  <DISTRIBUTED_TESTS ID_INTERNAL='190' TITLE='Ficha 1' TEST_INFORMATION='A &apos;Ficha 1&apos; é constituida por 1 pergunta(s). Uma pergunta certa vale a cotação indicada. Uma pergunta errada desconta 1/(número de opções-1) da cotação da pergunta.' TEST_BEGIN_DATE='2004-01-01' TEST_BEGIN_HOUR='10:00:00' TEST_END_DATE='2004-05-01' TEST_END_HOUR='10:00:00' TEST_TYPE='1' CORRECTION_AVAILABILITY='3' STUDENT_FEEDBACK='1' NUMBER_OF_QUESTIONS='1' ACK_OPT_LOCK='1' KEY_TEST_SCOPE='22'/>
+  <DISTRIBUTED_TESTS ID_INTERNAL='191' TITLE='Ficha 2' TEST_INFORMATION='A &apos;Ficha 2&apos; é constituida por 1 pergunta(s). Uma pergunta certa vale a cotação indicada. Uma pergunta errada desconta 1/(número de opções-1) da cotação da pergunta.' TEST_BEGIN_DATE='2004-01-01' TEST_BEGIN_HOUR='10:00:00' TEST_END_DATE='2004-05-01' TEST_END_HOUR='10:00:00' TEST_TYPE='2' CORRECTION_AVAILABILITY='3' STUDENT_FEEDBACK='1' NUMBER_OF_QUESTIONS='1' ACK_OPT_LOCK='1' KEY_TEST_SCOPE='22'/>
+  <EXECUTION_COURSE ID_INTERNAL='34033' NAME='AstroFísica' CODE='AF' THEORETICAL_HOURS='3.0' PRATICAL_HOURS='1.0' THEO_PRAT_HOURS='0.0' LAB_HOURS='0.0' KEY_EXECUTION_PERIOD='1' COMMENT='' ACK_OPT_LOCK='1'/>
+  <EXECUTION_PERIOD ID_INTERNAL='1' NAME='2 Semestre' KEY_EXECUTION_YEAR='1' STATE='O' SEMESTER='2' BEGIN_DATE='2003-02-19' END_DATE='2003-06-07' ACK_OPT_LOCK='1'/>
+  <EXECUTION_YEAR ID_INTERNAL='1' YEAR='2002/2003' STATE='O' BEGIN_DATE='2002-08-01' END_DATE='2003-07-31' ACK_OPT_LOCK='1'/>
+  <METADATA ID_INTERNAL='135' KEY_EXECUTION_COURSE='34033' VISIBILITY='1' ACK_OPT_LOCK='1' NUMBER_OF_MEMBERS='2'/>
+  <PERSON ID_INTERNAL='2697' DOCUMENT_ID_NUMBER='2697' EMISSION_LOCATION_OF_DOCUMENT_ID='XXXXXXXXXX' EMISSION_DATE_OF_DOCUMENT_ID='2004-03-02' EXPERATION_DATE_OF_DOCUMENT_ID='2004-03-02' NAME='Xxxxxxxxxxxxxxxx Xxxxxxxxx Xxxxxxx Xxxxxxxxx' DATE_OF_BIRTH='2004-03-02' NAME_OF_FATHER='Xxx Xxxxx Xxx Xxxxxxx Xxxxxxxxx' NAME_OF_MOTHER='Xxx Xxxxx Xxxx Xxxxxxx Xxxxxxxxx' NATIONALITY='xxxxxxxxxx' PARISH_OF_BIRTH='xxxxxxxxxxxxx' DISTRICT_SUBDIVISION_OF_BIRTH='XXXXXXXXXX' DISTRICT_OF_BIRTH='Xxcvxcvx Cxbdxbdxbd' ADDRESS='XXXXXXXXXX' AREA='XXXXXXXXXX' AREA_CODE='2823-657' AREA_OF_AREA_CODE='XXXXXXXXXX' PARISH_OF_RESIDENCE='XXXXXXXXXX' DISTRICT_SUBDIVISION_OF_RESIDENCE='XXXXXXXXXX' DISTRICT_OF_RESIDENCE='XXXXXXXXXX' PHONE='21222697' MOBILE='9695968752' EMAIL='suporte@dotist.utl.pt' WEB_ADRDRESS='http://fenix-ashes.ist.utl.pt:8080' SOCIAL_SECURITY_NUMBER='2697' PROFESSION='zzzzzzzzzzz' USERNAME='D3673' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='1' FISCAL_CODE='2697' TYPE_ID_DOCUMENT='1' SEX='1' MARITAL_STATUS='1' ACK_OPT_LOCK='1'/>
+  <PERSON ID_INTERNAL='5835' DOCUMENT_ID_NUMBER='5835' EMISSION_LOCATION_OF_DOCUMENT_ID='XXXXXXXXXX' EMISSION_DATE_OF_DOCUMENT_ID='2004-03-02' EXPERATION_DATE_OF_DOCUMENT_ID='2004-03-02' NAME='Xxxxxxxxxxxxxxxx Xxxxxxxxx Xxxxxxx Xxxxxxxxx' DATE_OF_BIRTH='2004-03-02' NAME_OF_FATHER='Xxx Xxxxx Xxx Xxxxxxx Xxxxxxxxx' NAME_OF_MOTHER='Xxx Xxxxx Xxxx Xxxxxxx Xxxxxxxxx' NATIONALITY='xxxxxxxxxx' PARISH_OF_BIRTH='xxxxxxxxxxxxx' DISTRICT_SUBDIVISION_OF_BIRTH='XXXXXXXXXX' DISTRICT_OF_BIRTH='Xxcvxcvx Cxbdxbdxbd' ADDRESS='XXXXXXXXXX' AREA='XXXXXXXXXX' AREA_CODE='2823-657' AREA_OF_AREA_CODE='XXXXXXXXXX' PARISH_OF_RESIDENCE='XXXXXXXXXX' DISTRICT_SUBDIVISION_OF_RESIDENCE='XXXXXXXXXX' DISTRICT_OF_RESIDENCE='XXXXXXXXXX' PHONE='21225835' MOBILE='9695968752' EMAIL='suporte@dotist.utl.pt' WEB_ADRDRESS='http://fenix-ashes.ist.utl.pt:8080' SOCIAL_SECURITY_NUMBER='5835' PROFESSION='zzzzzzzzzzz' USERNAME='L46730' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='1' FISCAL_CODE='5835' TYPE_ID_DOCUMENT='1' SEX='1' MARITAL_STATUS='1' ACK_OPT_LOCK='3'/>
+  <PERSON ID_INTERNAL='6921' DOCUMENT_ID_NUMBER='6921' EMISSION_LOCATION_OF_DOCUMENT_ID='XXXXXXXXXX' EMISSION_DATE_OF_DOCUMENT_ID='2004-03-02' EXPERATION_DATE_OF_DOCUMENT_ID='2004-03-02' NAME='Xxxxxxxxxxxxxxxx Xxxxxxxxx Xxxxxxx Xxxxxxxxx' DATE_OF_BIRTH='2004-03-02' NAME_OF_FATHER='Xxx Xxxxx Xxx Xxxxxxx Xxxxxxxxx' NAME_OF_MOTHER='Xxx Xxxxx Xxxx Xxxxxxx Xxxxxxxxx' NATIONALITY='xxxxxxxxxx' PARISH_OF_BIRTH='xxxxxxxxxxxxx' DISTRICT_SUBDIVISION_OF_BIRTH='XXXXXXXXXX' DISTRICT_OF_BIRTH='Xxcvxcvx Cxbdxbdxbd' ADDRESS='XXXXXXXXXX' AREA='XXXXXXXXXX' AREA_CODE='2823-657' AREA_OF_AREA_CODE='XXXXXXXXXX' PARISH_OF_RESIDENCE='XXXXXXXXXX' DISTRICT_SUBDIVISION_OF_RESIDENCE='XXXXXXXXXX' DISTRICT_OF_RESIDENCE='XXXXXXXXXX' PHONE='21226921' MOBILE='9695968752' EMAIL='suporte@dotist.utl.pt' WEB_ADRDRESS='http://fenix-ashes.ist.utl.pt:8080' SOCIAL_SECURITY_NUMBER='6921' PROFESSION='zzzzzzzzzzz' USERNAME='L48178' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='1' FISCAL_CODE='6921' TYPE_ID_DOCUMENT='1' SEX='1' MARITAL_STATUS='1' ACK_OPT_LOCK='3'/>
+  <PERSON ID_INTERNAL='6925' DOCUMENT_ID_NUMBER='6925' EMISSION_LOCATION_OF_DOCUMENT_ID='XXXXXXXXXX' EMISSION_DATE_OF_DOCUMENT_ID='2004-03-02' EXPERATION_DATE_OF_DOCUMENT_ID='2004-03-02' NAME='Xxxxxxxxxxxxxxxx Xxxxxxxxx Xxxxxxx Xxxxxxxxx' DATE_OF_BIRTH='2004-03-02' NAME_OF_FATHER='Xxx Xxxxx Xxx Xxxxxxx Xxxxxxxxx' NAME_OF_MOTHER='Xxx Xxxxx Xxxx Xxxxxxx Xxxxxxxxx' NATIONALITY='xxxxxxxxxx' PARISH_OF_BIRTH='xxxxxxxxxxxxx' DISTRICT_SUBDIVISION_OF_BIRTH='XXXXXXXXXX' DISTRICT_OF_BIRTH='Xxcvxcvx Cxbdxbdxbd' ADDRESS='XXXXXXXXXX' AREA='XXXXXXXXXX' AREA_CODE='2823-657' AREA_OF_AREA_CODE='XXXXXXXXXX' PARISH_OF_RESIDENCE='XXXXXXXXXX' DISTRICT_SUBDIVISION_OF_RESIDENCE='XXXXXXXXXX' DISTRICT_OF_RESIDENCE='XXXXXXXXXX' PHONE='21226925' MOBILE='9695968752' EMAIL='suporte@dotist.utl.pt' WEB_ADRDRESS='http://fenix-ashes.ist.utl.pt:8080' SOCIAL_SECURITY_NUMBER='6925' PROFESSION='zzzzzzzzzzz' USERNAME='L48184' PASSWD='1a1dc91c907325c69271ddf0c944bc72' KEY_COUNTRY='1' FISCAL_CODE='6925' TYPE_ID_DOCUMENT='1' SEX='2' MARITAL_STATUS='1' ACK_OPT_LOCK='2'/>
+  <PERSON_ROLE ID_INTERNAL='5393' KEY_ROLE='1' KEY_PERSON='2697' ACK_OPT_LOCK='1'/>
+  <PERSON_ROLE ID_INTERNAL='11719' KEY_ROLE='1' KEY_PERSON='5835' ACK_OPT_LOCK='1'/>
+  <PERSON_ROLE ID_INTERNAL='13906' KEY_ROLE='1' KEY_PERSON='6921' ACK_OPT_LOCK='1'/>
+  <PERSON_ROLE ID_INTERNAL='13914' KEY_ROLE='1' KEY_PERSON='6925' ACK_OPT_LOCK='1'/>
+  <PERSON_ROLE ID_INTERNAL='23199' KEY_ROLE='3' KEY_PERSON='2697' ACK_OPT_LOCK='1'/>
+  <PERSON_ROLE ID_INTERNAL='24597' KEY_ROLE='9' KEY_PERSON='2697' ACK_OPT_LOCK='1'/>
+  <PERSON_ROLE ID_INTERNAL='27510' KEY_ROLE='2' KEY_PERSON='5835' ACK_OPT_LOCK='1'/>
+  <PERSON_ROLE ID_INTERNAL='28596' KEY_ROLE='2' KEY_PERSON='6921' ACK_OPT_LOCK='1'/>
+  <PERSON_ROLE ID_INTERNAL='28600' KEY_ROLE='2' KEY_PERSON='6925' ACK_OPT_LOCK='1'/>
+  <PROFESSORSHIPS INTERNAL_CODE='16' KEY_TEACHER='773' KEY_EXECUTION_COURSE='34033' CREDITS='0.0' ACK_OPT_LOCK='1'/>
+  <ROLE ID_INTERNAL='1' ROLE_TYPE='1' PORTAL_SUB_APPLICATION='/person' PAGE='/index.do' PAGE_NAME_PROPERTY='portal.person' ACK_OPT_LOCK='1'/>
+  <ROLE ID_INTERNAL='2' ROLE_TYPE='2' PORTAL_SUB_APPLICATION='/student' PAGE='/index.do' PAGE_NAME_PROPERTY='portal.student' ACK_OPT_LOCK='1'/>
+  <ROLE ID_INTERNAL='3' ROLE_TYPE='3' PORTAL_SUB_APPLICATION='/teacher' PAGE='/index.do' PAGE_NAME_PROPERTY='portal.teacher' ACK_OPT_LOCK='1'/>
+  <ROLE ID_INTERNAL='9' ROLE_TYPE='9' PORTAL_SUB_APPLICATION='/employee' PAGE='/index.do' PAGE_NAME_PROPERTY='portal.employee' ACK_OPT_LOCK='1'/>
+  <STUDENT ID_INTERNAL='2516' NUMBER='46730' KEY_PERSON='5835' STATE='2' DEGREE_TYPE='1' KEY_STUDENT_KIND='1' ACK_OPT_LOCK='1'/>
+  <STUDENT ID_INTERNAL='3617' NUMBER='48178' KEY_PERSON='6921' STATE='2' DEGREE_TYPE='1' KEY_STUDENT_KIND='1' ACK_OPT_LOCK='1'/>
+  <STUDENT ID_INTERNAL='3621' NUMBER='48184' KEY_PERSON='6925' STATE='2' DEGREE_TYPE='1' KEY_STUDENT_KIND='1' ACK_OPT_LOCK='1'/>
+  <STUDENT_KIND ID_INTERNAL='1' STUDENT_TYPE='1' MIN_COURSES_TO_ENROL='3' MAX_COURSES_TO_ENROL='7' MAX_NAC_TO_ENROL='10' ACK_OPT_LOCK='1'/>
+  <STUDENT_TEST_QUESTION ID_INTERNAL='34297' KEY_STUDENT='2516' KEY_DISTRIBUTED_TEST='190' KEY_XML_DOCUMENT='9337' TEST_QUESTION_ORDER='1' TEST_QUESTION_VALUE='1' TEST_QUESTION_MARK='-0.333333333333333' RESPONSE='2' OPTION_SHUFFLE='[1, 3, 4, 2]' ACK_OPT_LOCK='3'/>
+  <STUDENT_TEST_QUESTION ID_INTERNAL='34298' KEY_STUDENT='3617' KEY_DISTRIBUTED_TEST='190' KEY_XML_DOCUMENT='9337' TEST_QUESTION_ORDER='1' TEST_QUESTION_VALUE='1' TEST_QUESTION_MARK='-0.333333333333333' RESPONSE='3' OPTION_SHUFFLE='[4, 2, 3, 1]' ACK_OPT_LOCK='3'/>
+  <STUDENT_TEST_QUESTION ID_INTERNAL='34299' KEY_STUDENT='3621' KEY_DISTRIBUTED_TEST='190' KEY_XML_DOCUMENT='9337' TEST_QUESTION_ORDER='1' TEST_QUESTION_VALUE='1' TEST_QUESTION_MARK='0.0' RESPONSE='0' OPTION_SHUFFLE='[2, 4, 1, 3]' ACK_OPT_LOCK='2'/>
+  <STUDENT_TEST_QUESTION ID_INTERNAL='34300' KEY_STUDENT='2516' KEY_DISTRIBUTED_TEST='191' KEY_XML_DOCUMENT='9338' TEST_QUESTION_ORDER='1' TEST_QUESTION_VALUE='1' TEST_QUESTION_MARK='0.0' RESPONSE='3' OPTION_SHUFFLE='[4, 2, 1, 3]' ACK_OPT_LOCK='3'/>
+  <STUDENT_TEST_QUESTION ID_INTERNAL='34301' KEY_STUDENT='3617' KEY_DISTRIBUTED_TEST='191' KEY_XML_DOCUMENT='9338' TEST_QUESTION_ORDER='1' TEST_QUESTION_VALUE='1' TEST_QUESTION_MARK='0.0' RESPONSE='3' OPTION_SHUFFLE='[2, 4, 1, 3]' ACK_OPT_LOCK='3'/>
+  <TEACHER ID_INTERNAL='773' TEACHER_NUMBER='3673' KEY_PERSON='2697' KEY_CATEGORY='19' ACK_OPT_LOCK='1'/>
+  <TEST_SCOPE ID_INTERNAL='22' CLASS_NAME='Dominio.ExecutionCourse' KEY_CLASS='34033' ACK_OPT_LOCK='1'/>
+  <XML_DOCUMENTS ID_INTERNAL='9337' XML_FILE='&lt;?xml version=&quot;1.0&quot; encoding=&quot;Latin1&quot;?&gt;
+&lt;!DOCTYPE questestinterop SYSTEM &quot;file:/Network/Servers/dali/Users/pargana/desktop/qtiasiv1p2.dtd&quot;&gt;
+&lt;questestinterop&gt;
+&lt;item ident=&quot;MALtrcomplx1ÁlgebraLinearPedroDuarte&quot;&gt;
+&lt;presentation&gt;
+&lt;flow&gt;
+&lt;flow&gt;
+&lt;material&gt;
+&lt;mattext&gt;
+Identificando &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlhDgASALMAAAAAABAQECEhITIyMkRERFVVVXd3d4eHh5iYmKmpqd3d3e7u7v///wAAAAAAAAAAACwAAAAADgASAAAEOJDJSau9OOuN0QBAYCzWQAAKoxhEZQAJQCVVACxyBjI5BuKaAgDRuywEthQjcbAsDp/QiEOtWisRADs=&lt;/matimage&gt;
+&lt;mattext&gt;
+  com  &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlhFgAUALMAAAAAACEhIVVVVXd3d4eHh5iYmKmpqbq6uszMzN3d3e7u7v///wAAAAAAAAAAAAAAACwAAAAAFgAUAAAES3DJSau9GGjM194dB4bWSFbmBByaYQhCogKZR0uaYms3RY+BFel3IwACJ+LgWDh5bAsBAOEkLhRB2RC6QBx1IcCyV/g6z+i0es2OAAA7&lt;/matimage&gt;
+&lt;mattext&gt;
+, considere as seguintes afirmações sobre as transformações de  &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlhDgASALMAAAAAABAQECEhITIyMkRERFVVVXd3d4eHh5iYmKmpqd3d3e7u7v///wAAAAAAAAAAACwAAAAADgASAAAEOJDJSau9OOuN0QBAYCzWQAAKoxhEZQAJQCVVACxyBjI5BuKaAgDRuywEthQjcbAsDp/QiEOtWisRADs=&lt;/matimage&gt;
+&lt;mattext&gt;
+  em  &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlhDgASALMAAAAAABAQECEhITIyMkRERFVVVXd3d4eHh5iYmKmpqd3d3e7u7v///wAAAAAAAAAAACwAAAAADgASAAAEOJDJSau9OOuN0QBAYCzWQAAKoxhEZQAJQCVVACxyBjI5BuKaAgDRuywEthQjcbAsDp/QiEOtWisRADs=&lt;/matimage&gt;
+&lt;mattext&gt;
+  mencionadas. Todas as representações são relativas à base canónica de  &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlhFgAUALMAAAAAACEhIVVVVXd3d4eHh5iYmKmpqbq6uszMzN3d3e7u7v///wAAAAAAAAAAAAAAACwAAAAAFgAUAAAES3DJSau9GGjM194dB4bWSFbmBByaYQhCogKZR0uaYms3RY+BFel3IwACJ+LgWDh5bAsBAOEkLhRB2RC6QBx1IcCyV/g6z+i0es2OAAA7&lt;/matimage&gt;
+&lt;mattext&gt;
+ .&lt;/mattext&gt;
+&lt;/material&gt;
+&lt;/flow&gt;
+&lt;flow&gt;
+&lt;material&gt;
+&lt;mattext&gt;
+I.A transformação definida por &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlh3gAYALMAAAAAABAQECEhITIyMkRERFVVVWZmZnd3d4eHh5iYmKmpqbq6uszMzN3d3e7u7v///ywAAAAA3gAYAAAE//DJSau9OOvNu/9gKI5kaZ5oqq4lwL5wLM8vYNN4ru/7fUu23yMY5BmPyKMQOKy4XMmodKpaPp1NqnarEhC/xZAPyiRnzdx0ddcIxMJAInOCVtvvlUQBz+9v5HRgKgUKfoaHdFkUVysBDjVgkZJLSJJ5AyADCVqMi4ohDgcGFA0CFl9qk4AmY0NmDQAIIAoADVSdc3UdCgG9jxIIo4tklCnFW62UBgALTpETsMItzx6oc9cfBpsFmxIEhRnHrOIclpAYAwC/geyLmOPtFgpeAAQMKLoVbYnh+RLzNux1WCWGmL9p/RKeyifojz9aAr6R+3BwwoBCDN5dmAhRYkVXcI9ITISHQZzJjwMPpltAZJ0IaxkUYEJwoGTFlS2roVQIY2Ixnzt5ZsC5YmeAjPcWciBaUGTQEUCdxZs6jOAwqhMSAIjYDZ8HBAV0CRGnlWsPg0VhWkgXqKETjQXdXgBYD5wOB/U2yq1A9xsNc0eWNfsQDdGJArIMp4HVdVctxSUYJIW8JQHcpY0pa97MubOfCAA7&lt;/matimage&gt;
+&lt;mattext&gt;
+ é linear e representavel matricialmente pela matriz &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlhVAAhALMAAAAAABAQECEhITIyMkRERFVVVWZmZoeHh5iYmKmpqbq6uszMzN3d3e7u7v///wAAACwAAAAAVAAhAAAE4tDJSau9OOvNu99AGH7TSJ6oZTprJ6ZwXAKfSMs42Xp7ziUAwqnnul0IgISPUgAgKrYdsZhBAArLSQDQqBlRU0cjnFoABN7Z8GsRABZZK5YXZWvqmOYhawDsszgHV1kDAAqAOAoAA1lbDIgyDAABWWSQVEuWlyB2MZqbGZ90oDCimKRrlZ2onKqsqZmrKrJ0ZKYcIY+ctLg3U5KUS4WHdy+evquKjEt6pykmU4IGWYJzrccSU81LZmi9MtCrbnCqusXgyBdjvChNT9el6RZyiEBCoVHHU0hKr/7/AAMKHEhwSQQAOw==&lt;/matimage&gt;
+&lt;mattext&gt;
+ .&lt;/mattext&gt;
+&lt;/material&gt;
+&lt;/flow&gt;
+&lt;flow&gt;
+&lt;material&gt;
+&lt;mattext&gt;
+II.A transformação definida por &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlh0wAYALMAAAAAABAQECEhITIyMkRERFVVVWZmZnd3d4eHh5iYmKmpqbq6uszMzN3d3e7u7v///ywAAAAA0wAYAAAE//DJSau9OOvNu/9gKI5kaZ5oqq7A6r5wLM90bd/4C+ytxPO5oHB4a/UmRqJyyTQlKc+mdAoS/K5AVPTRO1K/4EojYLv6oOF0OFFQu9/CggJOr8sCDtcPie3vln4VCQMgAwkwfTUOBwYUDQIWZlJ+kk5Gl44ACCAKAA06XjUKAaR5EgiNUEd/MayTmK4SBgALFYESDQCpLKEYtyAGhwWHEgRzGbG8vRq/KskTAwCmfNRQhHp7yKvLZxtjSMzcEgpWAAQMH9kers8n7T7i7e9YI++qG+IUA3MM1xf2DzoJMAZQVZYQBUnYm8ctoTZ197SFO4hBASEEB3zlexBtwY9pHXIc2tqoMN8zgCJLalznIUA/dJFIdiS5Mh1NlRIjcunFECK+Lg23MfOAoMAydtwSABhIjAZSZ5UsRONDL5I/ZUcTpXBg7l/VC+R2GJPRDMesWh9y7bLDocAmtlJyNe3Q6RNcDgxg3mUyqNDcvYADCx5sIwIAOw==&lt;/matimage&gt;
+&lt;mattext&gt;
+ é linear e representavel matricialmente pela matriz &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlhXQAhALMAAAAAABAQECEhITIyMkRERFVVVWZmZoeHh5iYmKmpqbq6uszMzN3d3e7u7v///wAAACwAAAAAXQAhAAAE8dDJSau9OOvNu/8YAICbSJ7oJY5ptbYwubLxHN+caeLOzncJAMGz892MFQIg8ZMUAAjXjDZFaqrSDAJQaDoCgMbJ2iJLGubUAiBApce0iwCw+G27oOlRf3kefgYAf16EB1w/AwAKhIQKAAM/YAyMXgwAAT9vlCmaeXGbOJ0foqCjnzCkpR2pOaeqnK6wr6GxbrWzppm3Ibtwt6wlAJOmvZ4blpg8iYtELzydjpA8fjLFzc4XhgY/hni5zzqx1DxrbVI2FMA9fOsTZHN1usPNuu6naNYfT1Hf4O0Wd7wEGbKK3Z5YSpjgWsiwocOHECNGjAAAOw==&lt;/matimage&gt;
+&lt;mattext&gt;
+ .&lt;/mattext&gt;
+&lt;/material&gt;
+&lt;/flow&gt;
+&lt;flow&gt;
+&lt;material&gt;
+&lt;mattext&gt;
+III.A transformação definida por &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlhzQAYALMAAAAAABAQECEhITIyMkRERFVVVWZmZnd3d4eHh5iYmKmpqbq6uszMzN3d3e7u7v///ywAAAAAzQAYAAAE//DJSau9OOvNu/9gKI5kaZ5oCgJq675wjAK0bN94Hte1RPeP309HLBplQF+wwmIdn9BoKNlkLqVYrEDIHdp4TmX4Os6aiY1A1usTKifls1yWKMzv+GxBke/7iQEOUl2EhWx/GoUVCQMgAwknDgcGFA0CFlyIM3FthkkkYEFjDQAIIAoADSUKAa2CEgiUFECfR7Uqh0ahnwYAC0yEE6SyIwaQBZASBHwZt3DBuM4nbhiKL84DAK/P3LONJ2lwiZyzYc4KWwAEDB3ULqHV5uQm0vWczl0bA3wM3xfSmOahErAMYCeDInogRAhqHj5yDDkoaITgQLwPALMtELJtQ8Rn7m9AhgyIZJ4oks1MggjQjx1KDgg1qvw3s4S9GwA/0YrzcOQFBAXuyUvZzUICAASTyXlYdJPPCdlEPgXgL5I6mpkC5suAjsYyM1ml5iLS69eHYS0KmNLE9gYppR1QqVLBwGXbuzAYOYKLt6/fv4BvRAAAOw==&lt;/matimage&gt;
+&lt;mattext&gt;
+ é linear e representavel matricialmente pela matriz &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlhXQAhALMAAAAAABAQECEhITIyMkRERFVVVWZmZoeHh5iYmKmpqbq6uszMzN3d3e7u7v///wAAACwAAAAAXQAhAAAE59DJSau9OOvNu/8UII4AqIlmqoblmo1u/KFyRdb4e+cOzXMJACHlqxUrBEDi5ygAEDZSy3I8SaMZBKDADAAaqupKLGmQVwuAYNY6E6cXAWDB03LZbpAUTnEeeAYAf0yEB1s8AwAKhIQKAAM8XgyMTAwAATx5lGF8MZqbJp8eoqCjnS6kpRypG6yqOpmnr2+xs0aynKaMe7KuOpOtvqu4E5aYOYmLVsLBHI6QOX4dzMtnhgY8hnfNoGTSOWlrw55XF2JydLHAVqpVZsQqTlDcTDRidkxBQzo7P/1ISmwJHEiwoMGDCBNGAAA7&lt;/matimage&gt;
+&lt;mattext&gt;
+ .&lt;/mattext&gt;
+&lt;/material&gt;
+&lt;/flow&gt;
+&lt;flow&gt;
+&lt;material&gt;
+&lt;mattext&gt;
+IV.A transformação definida por &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlh9QAQALMAAAAAADIyMmZmZnd3d4eHh5iYmKmpqbq6ut3d3e7u7v///wAAAAAAAAAAAAAAAAAAACwAAAAA9QAQAAAE/1DJSau9OOvNu/9gKI5kaZ5oqq5s675wLM90bWNArudVEYCBQsrX4ZF2OhzAEjwRJ0iT8TKdNDPIbPW45FURAALIAECcwOJNkltcVshmEhrqVmw/a2p9Ar9ZvF17CgIABxVadWACJ4SGGjsldx+KJY1KI5AglFhaLpIKAQAJh3VbAD8moaMcn1CceRQDWYeoVBuql7aXd7JRFKePpYIprcXDdsfImXoerRLJpLuCxWrDy3+5n4DRrNAnxrl/3m2/vs/Q5pzMpsfp3MyksOfu58jv6i/Od/rj3c3j/eqJs1cOSzV82A6um+bNGQp+7/YlmxVOocFsEwPdO2SRoEeOHV4LskPoEATFC6HonPxVi0TKatdMypt3EphLhjP/yUNUqqVKejUsTQKwyIRQPyE2jTiK1ILSph3ACPnQx4RUqGPKlLiK9Y3Wrh2eeLjixCdYDGRJiD2b9qzbt3DjtogAADs=&lt;/matimage&gt;
+&lt;mattext&gt;
+ é linear e representavel matricialmente pela matriz &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlhVAAhALMAAAAAABAQECEhITIyMkRERFVVVWZmZoeHh5iYmKmpqbq6uszMzN3d3e7u7v///wAAACwAAAAAVAAhAAAE4tDJSau9OOvNu+cA8FFhOZ6oZZ7h1KbwV4qx89a4dsN7riUAwqgnW1UIgISPUgAgKrMekUWjIACF5SQAaAyrPLCkMY0tAAIq6jYVABbaa9YTFYNmmOZBawDstTgHWFoDAAqAOAoAA1pcDIg1DAABWmWQRZV2l1+ZmzGWa5qeHaBqo6Gdp6Y+paoqoimtdbB0sK1Fjzq0VKKSlEuFh7pLeBeKjEt6G1E1LWWCBlqCc6S7GS9lyktnaZihzBZucJm51ThTZNYnTU/XNLfLmnKIQEK68O5GE0hKrv7/AAMKHEhwSQQAOw==&lt;/matimage&gt;
+&lt;mattext&gt;
+ .&lt;/mattext&gt;
+&lt;/material&gt;
+&lt;/flow&gt;
+&lt;flow&gt;
+&lt;material&gt;
+&lt;mattext&gt;
+Encontre a lista completa de afirmações verdadeiras &lt;/mattext&gt;
+&lt;/material&gt;
+&lt;/flow&gt;
+&lt;response_lid ident=&quot;MALtrcomplx1&quot; rcardinality=&quot;Single&quot; rtiming=&quot;No&quot;&gt;
+&lt;render_choice shuffle=&quot;Yes&quot;&gt;
+&lt;response_label ident=&quot;A&quot; rshuffle=&quot;Yes&quot;&gt;
+&lt;material&gt;
+&lt;mattext&gt;
+  I e II  &lt;/mattext&gt;
+&lt;/material&gt;
+&lt;/response_label&gt;
+&lt;response_label ident=&quot;B&quot; rshuffle=&quot;Yes&quot;&gt;
+&lt;material&gt;
+&lt;mattext&gt;
+  II  &lt;/mattext&gt;
+&lt;/material&gt;
+&lt;/response_label&gt;
+&lt;response_label ident=&quot;C&quot; rshuffle=&quot;Yes&quot;&gt;
+&lt;material&gt;
+&lt;mattext&gt;
+  III e IV  &lt;/mattext&gt;
+&lt;/material&gt;
+&lt;/response_label&gt;
+&lt;response_label ident=&quot;D&quot; rshuffle=&quot;Yes&quot;&gt;
+&lt;material&gt;
+&lt;mattext&gt;
+  II , III e IV  &lt;/mattext&gt;
+&lt;/material&gt;
+&lt;/response_label&gt;
+&lt;/render_choice&gt;
+&lt;/response_lid&gt;
+&lt;/flow&gt;
+&lt;/presentation&gt;
+&lt;resprocessing&gt;
+&lt;outcomes&gt;
+&lt;decvar varname=&quot;SCORE&quot; vartype=&quot;Integer&quot; defaultval=&quot;0&quot;/&gt;
+&lt;/outcomes&gt;
+&lt;respcondition&gt;
+&lt;conditionvar&gt;
+&lt;varequal respident=&quot;MALtrcomplx1&quot;&gt;
+A&lt;/varequal&gt;
+&lt;/conditionvar&gt;
+&lt;setvar action=&quot;Set&quot; varname=&quot;SCORE&quot;&gt;
+1&lt;/setvar&gt;
+&lt;/respcondition&gt;
+&lt;/resprocessing&gt;
+&lt;/item&gt;
+&lt;/questestinterop&gt;' XML_FILE_NAME='MALtrcomplx1.xml' KEY_METADATA='135' VISIBILITY='1' ACK_OPT_LOCK='1'/>
+  <XML_DOCUMENTS ID_INTERNAL='9338' XML_FILE='&lt;?xml version=&quot;1.0&quot; encoding=&quot;Latin1&quot;?&gt;
+&lt;!DOCTYPE questestinterop SYSTEM &quot;file:/Network/Servers/dali/Users/pargana/desktop/qtiasiv1p2.dtd&quot;&gt;
+&lt;questestinterop&gt;
+&lt;item ident=&quot;MALtrcomplx2ÁlgebraLinearPedroDuarte&quot;&gt;
+&lt;presentation&gt;
+&lt;flow&gt;
+&lt;flow&gt;
+&lt;material&gt;
+&lt;mattext&gt;
+Identificando &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlhDgASALMAAAAAABAQECEhITIyMkRERFVVVXd3d4eHh5iYmKmpqd3d3e7u7v///wAAAAAAAAAAACwAAAAADgASAAAEOJDJSau9OOuN0QBAYCzWQAAKoxhEZQAJQCVVACxyBjI5BuKaAgDRuywEthQjcbAsDp/QiEOtWisRADs=&lt;/matimage&gt;
+&lt;mattext&gt;
+  com  &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlhFgAUALMAAAAAACEhIVVVVXd3d4eHh5iYmKmpqbq6uszMzN3d3e7u7v///wAAAAAAAAAAAAAAACwAAAAAFgAUAAAES3DJSau9GGjM194dB4bWSFbmBByaYQhCogKZR0uaYms3RY+BFel3IwACJ+LgWDh5bAsBAOEkLhRB2RC6QBx1IcCyV/g6z+i0es2OAAA7&lt;/matimage&gt;
+&lt;mattext&gt;
+, considere as seguintes afirmações sobre as transformações de  &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlhDgASALMAAAAAABAQECEhITIyMkRERFVVVXd3d4eHh5iYmKmpqd3d3e7u7v///wAAAAAAAAAAACwAAAAADgASAAAEOJDJSau9OOuN0QBAYCzWQAAKoxhEZQAJQCVVACxyBjI5BuKaAgDRuywEthQjcbAsDp/QiEOtWisRADs=&lt;/matimage&gt;
+&lt;mattext&gt;
+  em  &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlhDgASALMAAAAAABAQECEhITIyMkRERFVVVXd3d4eHh5iYmKmpqd3d3e7u7v///wAAAAAAAAAAACwAAAAADgASAAAEOJDJSau9OOuN0QBAYCzWQAAKoxhEZQAJQCVVACxyBjI5BuKaAgDRuywEthQjcbAsDp/QiEOtWisRADs=&lt;/matimage&gt;
+&lt;mattext&gt;
+  mencionadas. Todas as representações são relativas à base canónica de  &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlhFgAUALMAAAAAACEhIVVVVXd3d4eHh5iYmKmpqbq6uszMzN3d3e7u7v///wAAAAAAAAAAAAAAACwAAAAAFgAUAAAES3DJSau9GGjM194dB4bWSFbmBByaYQhCogKZR0uaYms3RY+BFel3IwACJ+LgWDh5bAsBAOEkLhRB2RC6QBx1IcCyV/g6z+i0es2OAAA7&lt;/matimage&gt;
+&lt;mattext&gt;
+ .&lt;/mattext&gt;
+&lt;/material&gt;
+&lt;/flow&gt;
+&lt;flow&gt;
+&lt;material&gt;
+&lt;mattext&gt;
+I.A transformação definida por &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlhvwAQALMAAAAAADIyMmZmZnd3d4eHh5iYmKmpqbq6ut3d3e7u7v///wAAAAAAAAAAAAAAAAAAACwAAAAAvwAQAAAE/1DJSau9OOvNu/9gKI5kaZ5oqq5s675wrAJ0TVdFAAYFfJ+5yy9kA2SGE96xyDSeblCnBAEggAwAhKt2olorXKIUSSErsFrZUhGtCAAHcHNCFbRsp3e8HC6ZNXUaTVIzhBQBAAlyE2QAOluGIoiKjEZ/bB5kA0xgjxhDl36RlWsWl5wgoZmEP6cbeEKWhqqkkKWmo2y5HagSob2LlUVyfbd8usGCuyaqZs3Lok+5rryjbcfGd8uNY5Gnw6nQHN+ft3/XtbHp0rAXiMLgndrtkt70q8W+g4yefMBqE/SACARwhMCCHAgiDEGlxwc0CxkCcBgRA8SKIIJ8UILxg8aOFQg4ghxJsuTCCAA7&lt;/matimage&gt;
+&lt;mattext&gt;
+ é linear e representavel matricialmente pela matriz &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlhXQAhALMAAAAAABAQECEhITIyMkRERFVVVWZmZoeHh5iYmKmpqbq6uszMzN3d3e7u7v///wAAACwAAAAAXQAhAAAE9NDJSau9OOvNu/8WAICfSJ7oJI5ptrZwt7IxNde4S+OmmXMJAAHk47GKFAIg8ZMUAIjKDOmgyqaq6U6CABSajgCgQdzmrI4GurUACEjr2FoAWPy6X4/2h7U8Dz8GAIBghQdePwMACoWFCgADP2IMjWAMAAF8ZpU1cSeenCigZaFNoyWbpSmneqmqn66wr0aas52xcLgSN4V9F6xXlBo+wK1ZF5eZOYqMw0e6MGiPkTl/G8TQLWiHBj+HeTq72blr1jltb87iq75Sm3R2msIY2KFWauMeT1HhVflXxyrgARNkiLNiqF5YUMLElsOHECNKnEiRYgQAOw==&lt;/matimage&gt;
+&lt;mattext&gt;
+ .&lt;/mattext&gt;
+&lt;/material&gt;
+&lt;/flow&gt;
+&lt;flow&gt;
+&lt;material&gt;
+&lt;mattext&gt;
+II.A transformação definida por &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlhEQEYALMAAAAAABAQECEhITIyMkRERFVVVWZmZnd3d4eHh5iYmKmpqbq6uszMzN3d3e7u7v///ywAAAAAEQEYAAAE//DJSau9OOvNu/9gKI5kaZ5oqq5s674WAM90bd+4COx57//AIInHk+yKj+NRyGw6nyOkMVmRyaDYrPYptVap27D4KVCalyjidboGt8fwuK0RwKGNyunkLe/7UwkFf4OEhR0FCoaKi4YBDix5eGeTlHw9lBUJAyADCYCbHlIgZhmiD503DgcGFA0CMZFilbElakltDQAIIAoADSe5ux13o2umeBa9vzQKAc6PEgisFEjHLdZNtqIGAAtVkxO50yXc3hy0Q5YZ4hqYIAaeBZ4SBIml6ivExWcu1gMA0PYYewMAVIl/Ae/dKhXqzQF+1AxeqKYOX7g6ejBge6CgDAACDNqi6PtAsR8+bMesQZxoEdlCjRvQCXw585zFlhIGJGIg8ZuGXgLqbdQoM8TQWicrKj3RhdQtp9SK+oRF02W7pCMrKNiE4ADRDf8WKElYzMTRdFepKjSLMyrDYZZsuV0b00MAniHVagjbNmZfvS82iio5FZbUqjbfsqzpc3BSxjE8ICgQdyCGBACCzvtBOMVKC/8Eft7TU0RouFltjqxEmuVoEg4+uj7ccUe9S+B+lAPBzsRuOL1zFBDGyEmuzR2UAQOAPIzyHgzyFneiiVNzEtXhoJrOvbv37z0iAAA7&lt;/matimage&gt;
+&lt;mattext&gt;
+ é linear e representavel matricialmente pela matriz &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlhXQAhALMAAAAAABAQECEhITIyMkRERFVVVWZmZoeHh5iYmKmpqbq6uszMzN3d3e7u7v///wAAACwAAAAAXQAhAAAE79DJSau9OOvNu/8UII4AyIlmqkrouo1u3LWyRdb4RZY5SueaBICQ+rlaRgkBkABKCgBEZcezVU+7CfUqQQAKTkcA0FAlY+fG2bUACD5Ibm0tACyAXjAcBsxaoAdABgCBYYYHX0ADAAqGhgoAA0BjDI5hDAABfXKWc5wra51Hn2akoqWbp6k9pqogoUWtrh6wJrWzM7J7uXxOfjq6tACVGjS3r1VnmJo5i427lmeQkjmA0NGciAZAiHpY2GvWOW1v36M3wBd1d5vEGceeFmrBH1BS78n0uVpyeWFCRPD9YtWLwpImuBIqXMiwocOHDyMAADs=&lt;/matimage&gt;
+&lt;mattext&gt;
+ .&lt;/mattext&gt;
+&lt;/material&gt;
+&lt;/flow&gt;
+&lt;flow&gt;
+&lt;material&gt;
+&lt;mattext&gt;
+III.A transformação definida por &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlhEQEYALMAAAAAABAQECEhITIyMkRERFVVVWZmZnd3d4eHh5iYmKmpqbq6uszMzN3d3e7u7v///ywAAAAAEQEYAAAE//DJSau9OOvNu/9gKI5kaZ5oqq5s674WAM90bd+4COx57//AIInHk+yKj+NRyGw6nyOkMVmRyaDYrPYptVap27D4KVCalyjidboGt8fwuK0RwKGNyunkLe/7UwkFf4OEhR0FCoaKi4YBDix5eGeTlHw9lBUJAyADCYCbG2ZDkRdSEp03DgcGFA0CMaRhlbGjSVZtDQAIIAoADSe5uxpIph3ElrYWvb80CgHPjxIIrBTHNsVct8kUBgALVZMTudQl3d8f2CDpGOPD4SAGngWeEgSJGesqdyGYLekDAKLtWWMKAKgSAAVyWIcMVoUDZ6ocLEUQWUNxdfRgyKegDAACDNai7FNX0QXDhtjSRdx4EdywUCMHbpO58GLLU4kYTHSZoZcAe/lYxuR3sxbLoxRPdBFFk+JQni4L3jz5dIKCTQgOIM0AcIEShSRNBC2Rr1jZou6MTfWQUls1m0XRBtAZ0uGGrmjTiqRxFqpZi0yTwmz6ZWvbmXjwldzoAUEBS9YuJADwk96PyClWXgA4UHO1nSI4wwxMMmalPaBteS7h4KNTWhQ67rB36Z0PcyDamcANR3eOAsIYOcllucMyYACKhzneg0Fd4U40cVJOQjocVNCza9/OvUcEADs=&lt;/matimage&gt;
+&lt;mattext&gt;
+ é linear e representavel matricialmente pela matriz &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlhXQAhALMAAAAAABAQECEhITIyMkRERFVVVWZmZoeHh5iYmKmpqbq6uszMzN3d3e7u7v///wAAACwAAAAAXQAhAAAE7tDJSau9OOvNu/8VIIrgRpZoOp0Oq0rjK6suHc+4V8t7riUAQqn3IjoIgIRvUgAgQqOaMROVAjIIQGEpCQAan6kt0xCXFgBB+Apj46YCwGKZ3eqq7mIV0zwsDQB+XIMSB1pLAwAKhIQKAANLXgyMgwwAAUtmlCiad5uDnR2hn6J5M6OkJqY8q6ljPqiuGLFUrbJDtimae4RitLMAkxosv7W5DpaYPomLa1xRGo6QPn0gxbUahgZLhnaq19gZ1T5oas6cvCvHcXOZwefPuWXHKU1P4S30url1g0BCw6DFE1gBiZJbCBMqXMiwoUOHEQAAOw==&lt;/matimage&gt;
+&lt;mattext&gt;
+ .&lt;/mattext&gt;
+&lt;/material&gt;
+&lt;/flow&gt;
+&lt;flow&gt;
+&lt;material&gt;
+&lt;mattext&gt;
+IV.A transformação definida por &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlhCAEYALMAAAAAABAQECEhITIyMkRERFVVVWZmZnd3d4eHh5iYmKmpqbq6uszMzN3d3e7u7v///ywAAAAACAEYAAAE//DJSau9OOvNu/9gKI5kaZ5oqq5s647AK890bd8goON87//A0G4n0REfRmNwyWw6P8cishKLPa/YbDBapU614DBQkCwrUUOrVP1li99wVyOAOxeT0ok7zu+PEgV+goOEGAUKhYmKfQEOLHh3ZpKTez2TFQkDIAMJKZkUZSZRVHucNw4HBhQNAhahb5SQolW0qwAIIAoADScNt3pqo1DCwBa6vDQKAcuOEgiqoMGVLcROaUhuBgALpGYTvtAl2twX1RuyHuAalyAGnQWdEgSIGeYqdkKSLtUDAM3Fd6hoMtHvXzQM0wIKO+AN1ECE0hBymKNnXcIHCsgAIMAABr4cEdKpJTRHrFrDcpVI1rNistZBDvYuThiAiMFDVxd1CZhnD+JHET1LkJzW8oSwlj+xvSKFjem5keguKNCE4ADEDf0WJDEIcpaMmHvAGnXTU2ZAlE1fXoXpIYDNjjg5ZDULky7aGWLVHiW6NC7AtF7qXh019K8rDwgKpAxpIQGAnfF+HAk6LCqFfsBOOjyBObPlDn2VngRw0/NnEQ42ogxNIaOOeZb0/RgHQp0J2k9s8yiAa9EVX5E7HOsFIDiT4T0YwPX95NMHUyicO4HOvLr169hrRAAAOw==&lt;/matimage&gt;
+&lt;mattext&gt;
+ é linear e representavel matricialmente pela matriz &lt;/mattext&gt;
+&lt;matimage imagtype=&quot;image/gif&quot; embedded=&quot;base64&quot;&gt;R0lGODlhVAAhALMAAAAAABAQECEhITIyMkRERFVVVWZmZoeHh5iYmKmpqbq6uszMzN3d3e7u7v///wAAACwAAAAAVAAhAAAE59DJSau9OOvNu58A8HFhGY6oV6bZyb6bCVvubNPiLZm53iUAwqXm2/UoBECiKCkAEMOjiochShCAAtMRADSiW5DU0bDaFgBBdQxzmSUCwKKI1VZ4bJYM4zwUDQB+YS8HWUUDAAqDLwoAA0VdDIssDAABRW+THZl6eZoxnimcny2hKKOkYD6oqXemI6ytYpivska0aytte6C0kq6zncEZlZc+iIoasSSmjY8+fb03qIUGRYV2OMulrNE+aGrKtcwbcXO+4jqjZeMfTlAUNdvAtxl1W0BCrrovVBpJS2wJHEiwoMGDCCVEAAA7&lt;/matimage&gt;
+&lt;mattext&gt;
+ .&lt;/mattext&gt;
+&lt;/material&gt;
+&lt;/flow&gt;
+&lt;flow&gt;
+&lt;material&gt;
+&lt;mattext&gt;
+Encontre a lista completa de afirmações verdadeiras &lt;/mattext&gt;
+&lt;/material&gt;
+&lt;/flow&gt;
+&lt;response_lid ident=&quot;MALtrcomplx2&quot; rcardinality=&quot;Single&quot; rtiming=&quot;No&quot;&gt;
+&lt;render_choice shuffle=&quot;Yes&quot;&gt;
+&lt;response_label ident=&quot;A&quot; rshuffle=&quot;Yes&quot;&gt;
+&lt;material&gt;
+&lt;mattext&gt;
+  II e IV  &lt;/mattext&gt;
+&lt;/material&gt;
+&lt;/response_label&gt;
+&lt;response_label ident=&quot;B&quot; rshuffle=&quot;Yes&quot;&gt;
+&lt;material&gt;
+&lt;mattext&gt;
+  II  &lt;/mattext&gt;
+&lt;/material&gt;
+&lt;/response_label&gt;
+&lt;response_label ident=&quot;C&quot; rshuffle=&quot;Yes&quot;&gt;
+&lt;material&gt;
+&lt;mattext&gt;
+  I  &lt;/mattext&gt;
+&lt;/material&gt;
+&lt;/response_label&gt;
+&lt;response_label ident=&quot;D&quot; rshuffle=&quot;Yes&quot;&gt;
+&lt;material&gt;
+&lt;mattext&gt;
+  II , III e IV  &lt;/mattext&gt;
+&lt;/material&gt;
+&lt;/response_label&gt;
+&lt;/render_choice&gt;
+&lt;/response_lid&gt;
+&lt;/flow&gt;
+&lt;/presentation&gt;
+&lt;resprocessing&gt;
+&lt;outcomes&gt;
+&lt;decvar varname=&quot;SCORE&quot; vartype=&quot;Integer&quot; defaultval=&quot;0&quot;/&gt;
+&lt;/outcomes&gt;
+&lt;respcondition&gt;
+&lt;conditionvar&gt;
+&lt;varequal respident=&quot;MALtrcomplx2&quot;&gt;
+A&lt;/varequal&gt;
+&lt;/conditionvar&gt;
+&lt;setvar action=&quot;Set&quot; varname=&quot;SCORE&quot;&gt;
+1&lt;/setvar&gt;
+&lt;/respcondition&gt;
+&lt;/resprocessing&gt;
+&lt;/item&gt;
+&lt;/questestinterop&gt;' XML_FILE_NAME='MALtrcomplx2.xml' KEY_METADATA='135' VISIBILITY='1' ACK_OPT_LOCK='1'/>
+</dataset>

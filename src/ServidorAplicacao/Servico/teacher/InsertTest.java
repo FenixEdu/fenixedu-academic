@@ -4,6 +4,9 @@
  */
 package ServidorAplicacao.Servico.teacher;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.ITest;
@@ -72,8 +75,9 @@ public class InsertTest implements IServico
 			test.setTitle(title);
 			test.setInformation(information);
 			test.setNumberOfQuestions(new Integer(0));
-			test.setCreationDate(null);
-			test.setLastModifiedDate(null);
+			Date date = Calendar.getInstance().getTime();
+			test.setCreationDate(date);
+			test.setLastModifiedDate(date);
 			test.setTestScope(testScope);
 			persistentTest.simpleLockWrite(test);
 			return test.getIdInternal();

@@ -2,11 +2,13 @@
  * Created on 1/Ago/2003
  *
  */
+
 package ServidorAplicacao.Servico.teacher;
 
+import java.util.Calendar;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.ITest;
 import Dominio.Test;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentTest;
@@ -16,44 +18,29 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Susana Fernandes
  */
-public class EditTest implements IServico {
-	private static EditTest service = new EditTest();
-
-	public static EditTest getService() {
-		return service;
+public class EditTest implements IService
+{
+	public EditTest()
+	{
 	}
 
-	public EditTest() {
-	}
-
-	public String getNome() {
-		return "EditTest";
-	}
-
-	public boolean run(
-		Integer executionCourseId,
-		Integer testId,
-		String title,
-		String information)
-		throws FenixServiceException {
-
-		try {
-			ISuportePersistente persistentSuport =
-				SuportePersistenteOJB.getInstance();
-
-			IPersistentTest persistentTest =
-				persistentSuport.getIPersistentTest();
-
+	public boolean run(Integer executionCourseId, Integer testId, String title, String information)
+			throws FenixServiceException
+	{
+		try
+		{
+			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+			IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
 			ITest test = new Test(testId);
 			test = (ITest) persistentTest.readByOId(test, true);
-
 			test.setTitle(title);
 			test.setInformation(information);
-			test.setLastModifiedDate(null);
+			test.setLastModifiedDate(Calendar.getInstance().getTime());
 			return true;
-		} catch (ExcepcaoPersistencia e) {
+		}
+		catch (ExcepcaoPersistencia e)
+		{
 			throw new FenixServiceException(e);
 		}
 	}
-
 }

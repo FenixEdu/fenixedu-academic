@@ -1,8 +1,9 @@
 /*
  * Created on 23/Jul/2003
- *
  */
 package DataBeans;
+
+import java.util.List;
 
 /**
  * @author Susana Fernandes
@@ -10,43 +11,56 @@ package DataBeans;
 
 public class InfoSiteExercise extends DataTranferObject implements ISiteComponent
 {
-	private InfoMetadata infoMetadata;
-	private InfoExecutionCourse executionCourse;
+    private InfoMetadata infoMetadata;
 
-	public InfoSiteExercise()
-	{
-	}
+    private List questionNames;
 
-	public InfoExecutionCourse getExecutionCourse()
-	{
-		return executionCourse;
-	}
+    private InfoExecutionCourse executionCourse;
 
-	public InfoMetadata getInfoMetadata()
-	{
-		return infoMetadata;
-	}
+    public InfoSiteExercise() {
+    }
 
-	public void setExecutionCourse(InfoExecutionCourse course)
-	{
-		executionCourse = course;
-	}
+    public InfoExecutionCourse getExecutionCourse()
+    {
+        return executionCourse;
+    }
 
-	public void setInfoMetadata(InfoMetadata metadata)
-	{
-		infoMetadata = metadata;
-	}
+    public InfoMetadata getInfoMetadata()
+    {
+        return infoMetadata;
+    }
 
-	public boolean equals(Object obj)
-	{
-		boolean result = false;
-		if (obj instanceof InfoSiteExercise)
-		{
-			InfoSiteExercise infoSiteMetadata = (InfoSiteExercise) obj;
-			result =
-				getExecutionCourse().equals(infoSiteMetadata.getExecutionCourse())
-					&& getInfoMetadata().equals(infoSiteMetadata.getInfoMetadata());
-		}
-		return result;
-	}
+    public void setExecutionCourse(InfoExecutionCourse course)
+    {
+        executionCourse = course;
+    }
+
+    public void setInfoMetadata(InfoMetadata metadata)
+    {
+        infoMetadata = metadata;
+    }
+
+    public boolean equals(Object obj)
+    {
+        boolean result = false;
+        if (obj instanceof InfoSiteExercise)
+        {
+            InfoSiteExercise infoSiteMetadata = (InfoSiteExercise) obj;
+            result = getExecutionCourse().equals(infoSiteMetadata.getExecutionCourse())
+                    && getInfoMetadata().equals(infoSiteMetadata.getInfoMetadata())
+                    && getQuestionNames().contains(infoSiteMetadata.getQuestionNames())
+                    && infoSiteMetadata.getQuestionNames().containsAll(getQuestionNames());
+        }
+        return result;
+    }
+
+    public List getQuestionNames()
+    {
+        return questionNames;
+    }
+
+    public void setQuestionNames(List questionNames)
+    {
+        this.questionNames = questionNames;
+    }
 }

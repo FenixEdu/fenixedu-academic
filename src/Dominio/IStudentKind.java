@@ -10,7 +10,7 @@ import Util.StudentType;
  * @author dcs-rjao
  *
  */
-public interface IStudentKind {
+public interface IStudentKind extends IDomainObject{
 	public abstract StudentType getStudentType();
 	public abstract void setStudentType(StudentType studentType);
 	public abstract Integer getMaxCoursesToEnrol();

@@ -11,8 +11,7 @@ function showQuestion(){
 }
 function back(){
 	document.forms[0].method.value="exercisesFirstPage";
-
-}		
+}
 // -->
 </script>
 <br/>
@@ -96,19 +95,20 @@ function back(){
 <br/>
 <br/>
 <br/>
-<bean:size id="visibleQuestionsSize" name="metadata" property="visibleQuestions"/>
-<logic:notEqual name="visibleQuestionsSize" value="">
+<bean:define id="questionName" name="component" property="questionNames"/>
+<bean:size id="questionsSize" name="questionName"/>
+<logic:notEqual name="questionsSize" value="">
 	<html:select property="variationCode" onchange="showQuestion()">
-		<html:option value="-1">--- Variações ---</html:option>
-		<logic:iterate id="question" name="metadata" property="visibleQuestions">
-			<bean:define id="questionCode" name="question" property="idInternal"/>
-			<html:option value="<%=questionCode.toString()%>"><bean:write name="question" property="xmlFileName"/></html:option>
+		<html:option value="-1"><bean:message key="label.variations"/></html:option>
+		<html:option value="-2"><bean:message key="label.summaries.all"/></html:option>
+		<logic:iterate id="question" name="questionName">
+			<bean:define id="questionValue" name="question" property="value"/>
+			<html:option value="<%=questionValue.toString()%>"><bean:write name="question" property="label"/></html:option>
 		</logic:iterate>
 	</html:select>
 	<br/>
 	<br/>
 	<logic:iterate id="iquestion" name="metadata" property="visibleQuestions">
-		<logic:equal name="iquestion" property="idInternal" value="<%=variationCode.toString()%>">
 			<bean:define id="questionCode" name="iquestion" property="idInternal"/>
 			<bean:define id="index" value="0"/>
 			<bean:define id="imageLabel" value="false"/>
@@ -116,7 +116,7 @@ function back(){
 			<tr><td>
 			<logic:iterate id="questionBody" name="iquestion" property="question" indexId="indexQuestion">
 					<logic:equal name="indexQuestion" value="0">
-						<h2><bean:message key="title.exercise"/></h2>
+						<h2><bean:message key="title.exercise"/>:&nbsp;<bean:write name="iquestion" property="xmlFileName"/></h2>
 					</logic:equal>
 				<bean:define id="questionLabel" name="questionBody" property="label"/>
 				<% if (((String)questionLabel).startsWith("image/")){%>
@@ -188,7 +188,6 @@ function back(){
 				</logic:iterate>
 			</td></tr>
 			</table>
-		</logic:equal>
 	</logic:iterate>
 </logic:notEqual>
 </html:form>

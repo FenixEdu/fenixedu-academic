@@ -17,8 +17,8 @@ CREATE TABLE METADATA (
   AUTHOR text,
   NUMBER_OF_MEMBERS int(5) not null default '1',
   VISIBILITY bit not null default '1',
-
-  PRIMARY KEY  (ID_INTERNAL)
+  PRIMARY KEY  (ID_INTERNAL),
+  index INDEX1 (KEY_EXECUTION_COURSE, VISIBILITY)
 ) TYPE=InnoDB;
 
 #----------------------------------
@@ -134,5 +134,18 @@ CREATE TABLE TEST_SCOPE(
   ID_INTERNAL int(11) unsigned not null auto_increment,
   CLASS_NAME varchar(250) NOT NULL,
   KEY_CLASS int(11) unsigned,
+  ACK_OPT_LOCK int(11),
+  PRIMARY KEY  (ID_INTERNAL)
+) TYPE=InnoDB;
+
+#----------------------------------------------
+# Table structure for DISTRIBUTED_TEST_ADVISORY
+#----------------------------------------------
+drop table if exists DISTRIBUTED_TEST_ADVISORY;
+CREATE TABLE DISTRIBUTED_TEST_ADVISORY(
+  ID_INTERNAL int(11) unsigned not null auto_increment,
+  KEY_DISTRIBUTED_TEST int(11) unsigned not null,
+  KEY_ADVISORY int(11) unsigned not null,
+  ACK_OPT_LOCK int(11),
   PRIMARY KEY  (ID_INTERNAL)
 ) TYPE=InnoDB;

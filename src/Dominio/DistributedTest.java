@@ -2,10 +2,11 @@
  * Created on 19/Ago/2003
  *
  */
+
 package Dominio;
 
 import java.util.Calendar;
-
+import java.util.List;
 import Util.CorrectionAvailability;
 import Util.TestType;
 
@@ -26,6 +27,8 @@ public class DistributedTest extends DomainObject implements IDistributedTest
 	private Integer numberOfQuestions;
 	private ITestScope testScope;
 	private Integer keyTestScope;
+	private List studentLogs;
+	private List studentQuestions;
 
 	public DistributedTest()
 	{
@@ -156,4 +159,23 @@ public class DistributedTest extends DomainObject implements IDistributedTest
 		keyTestScope = integer;
 	}
 
+	public List getStudentLogs()
+	{
+		return studentLogs;
+	}
+
+	public void setStudentLogs(List studentLogs)
+	{
+		this.studentLogs = studentLogs;
+	}
+
+	public List getStudentQuestions()
+	{
+		return studentQuestions;
+	}
+
+	public void setStudentQuestions(List studentQuestions)
+	{
+		this.studentQuestions = studentQuestions;
+	}
 }

@@ -4411,9 +4411,17 @@
         </filterChains>
     </service>
     <service>
-        <name>ReadStudentsByDistributedTest</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.teacher.ReadStudentsByDistributedTest</implementationClass>
+        <name>VerifyIfCanDeleteDistributedTest</name>
+        <implementationClass>ServidorAplicacao.Servico.teacher.VerifyIfCanDeleteDistributedTest</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>DeleteDistributedTest</name>
+        <implementationClass>ServidorAplicacao.Servico.teacher.DeleteDistributedTest</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -4470,8 +4478,8 @@
         </filterChains>
     </service>
     <service>
-        <name>InsertExercice</name>
-        <implementationClass>ServidorAplicacao.Servico.teacher.InsertExercice</implementationClass>
+        <name>InsertExercise</name>
+        <implementationClass>ServidorAplicacao.Servico.teacher.InsertExercise</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -4479,7 +4487,7 @@
         </filterChains>
     </service>
     <service>
-        <name>ReadExercise</name>
+       <name>ReadExercise</name>
         <implementationClass>ServidorAplicacao.Servico.teacher.ReadExercise</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -4498,8 +4506,8 @@
         </filterChains>
     </service>
     <service>
-        <name>DeleteExercice</name>
-        <implementationClass>ServidorAplicacao.Servico.teacher.DeleteExercice</implementationClass>
+        <name>DeleteExercise</name>
+        <implementationClass>ServidorAplicacao.Servico.teacher.DeleteExercise</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>

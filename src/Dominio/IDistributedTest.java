@@ -5,6 +5,7 @@
 package Dominio;
 
 import java.util.Calendar;
+import java.util.List;
 
 import Util.CorrectionAvailability;
 import Util.TestType;
@@ -26,6 +27,8 @@ public interface IDistributedTest extends IDomainObject
 	public abstract Integer getNumberOfQuestions();
 	public abstract ITestScope getTestScope();
 	public abstract Integer getKeyTestScope();
+	public abstract List getStudentLogs();
+	public abstract List getStudentQuestions();
 	public abstract void setTitle(String string);
 	public abstract void setTestInformation(String string);
 	public abstract void setBeginDate(Calendar calendar);
@@ -37,5 +40,7 @@ public interface IDistributedTest extends IDomainObject
 	public abstract void setTestType(TestType type);
 	public abstract void setNumberOfQuestions(Integer integer);
 	public abstract void setTestScope(ITestScope scope);
-	public abstract void setKeyTestScope(Integer integer);
+	public abstract void setKeyTestScope(Integer integer);	
+	public abstract void setStudentLogs(List studentLogs);	
+	public abstract void setStudentQuestions(List studentQuestions);
 }

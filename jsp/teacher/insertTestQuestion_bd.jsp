@@ -22,8 +22,8 @@
 
 <span class="error"><html:errors/></span>
 
-<html:form action="/questionsManagement">
-<html:hidden property="page" value="1"/>
+<html:form action="/questionsManagementWithValue">
+<html:hidden property="page" value="2"/>
 <html:hidden property="method" value="insertTestQuestion"/>
 <html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
 <html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>

@@ -1,6 +1,5 @@
 /*
  * Created on 25/Set/2003
- *
  */
 package ServidorAplicacao.Servicos.teacher;
 
@@ -13,6 +12,7 @@ import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
+import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoMetadata;
@@ -38,126 +38,164 @@ import framework.factory.ServiceManagerServiceFactory;
 public class ReadExerciseTest extends ServiceNeedsAuthenticationTestCase
 {
 
-	public ReadExerciseTest(String testName)
-	{
-		super(testName);
-	}
+    public ReadExerciseTest(String testName) {
+        super(testName);
+    }
 
-	protected String getDataSetFilePath()
-	{
-		return "etc/datasets/servicos/teacher/testReadMetadatasByTestTestDataSet.xml";
-	}
+    protected String getDataSetFilePath()
+    {
+        return "etc/datasets/servicos/teacher/testReadExerciseDataSet.xml";
+    }
 
-	protected String getNameOfServiceToBeTested()
-	{
-		return "ReadExercise";
-	}
+    protected String getNameOfServiceToBeTested()
+    {
+        return "ReadExercise";
+    }
 
-	protected String[] getAuthenticatedAndAuthorizedUser()
-	{
+    protected String[] getAuthenticatedAndAuthorizedUser()
+    {
 
-		String[] args = { "D2543", "pass", getApplication()};
-		return args;
-	}
+        String[] args = {"D3673", "pass", getApplication()};
+        return args;
+    }
 
-	protected String[] getAuthenticatedAndUnauthorizedUser()
-	{
+    protected String[] getAuthenticatedAndUnauthorizedUser()
+    {
 
-		String[] args = { "L48283", "pass", getApplication()};
-		return args;
-	}
+        String[] args = {"L46730", "pass", getApplication()};
+        return args;
+    }
 
-	protected String[] getNotAuthenticatedUser()
-	{
+    protected String[] getNotAuthenticatedUser()
+    {
 
-		String[] args = { "L48283", "pass", getApplication()};
-		return args;
-	}
+        String[] args = {"L46730", "pass", getApplication()};
+        return args;
+    }
 
-	protected Object[] getAuthorizeArguments()
-	{
-		Integer executionCourseId = new Integer(34882);
-		Integer metadataId = new Integer(121);
-		String path = new String("e:\\eclipse\\workspace\\fenix-exams3\\build\\standalone\\");
+    protected Object[] getAuthorizeArguments()
+    {
+        Integer executionCourseId = new Integer(34033);
+        Integer metadataId = new Integer(133);
+        Integer variationId = new Integer(9333);
+        String path = new String("e:\\eclipse-m7\\workspace\\fenix\\build\\standalone\\");
 
-		Object[] args = { executionCourseId, metadataId, path };
-		return args;
-	}
+        Object[] args = {executionCourseId, metadataId, variationId, path};
+        return args;
+    }
 
-	protected String getApplication()
-	{
-		return Autenticacao.EXTRANET;
-	}
+    protected Object[] getAuthorizeArguments1()
+    {
+        Integer executionCourseId = new Integer(34033);
+        Integer metadataId = new Integer(133);
+        Integer variationId = new Integer(-1);
+        String path = new String("e:\\eclipse-m7\\workspace\\fenix\\build\\standalone\\");
 
-	public void testSuccessfull()
-	{
+        Object[] args = {executionCourseId, metadataId, variationId, path};
+        return args;
+    }
 
-		try
-		{
-			IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
-			Object[] args = getAuthorizeArguments();
-			SiteView serviceSiteView =
-				(SiteView) ServiceManagerServiceFactory.executeService(
-					userView,
-					getNameOfServiceToBeTested(),
-					args);
+    protected Object[] getAuthorizeArguments2()
+    {
+        Integer executionCourseId = new Integer(34033);
+        Integer metadataId = new Integer(133);
+        Integer variationId = new Integer(-2);
+        String path = new String("e:\\eclipse-m7\\workspace\\fenix\\build\\standalone\\");
 
-			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-			Criteria criteria = new Criteria();
-			criteria.addEqualTo("idInternal", args[1]);
-			Query queryCriteria = new QueryByCriteria(Metadata.class, criteria);
-			IMetadata metadata = (IMetadata) broker.getObjectByQuery(queryCriteria);
+        Object[] args = {executionCourseId, metadataId, variationId, path};
+        return args;
+    }
 
-			criteria = new Criteria();
-			criteria.addEqualTo("idInternal", args[0]);
-			queryCriteria = new QueryByCriteria(ExecutionCourse.class, criteria);
-			IExecutionCourse executionCourse = (IExecutionCourse) broker.getObjectByQuery(queryCriteria);
-			broker.close();
+    protected String getApplication()
+    {
+        return Autenticacao.EXTRANET;
+    }
 
-			InfoMetadata infoMetadata = Cloner.copyIMetadata2InfoMetadata(metadata);
-			Iterator it = metadata.getVisibleQuestions().iterator();
-			List visibleInfoQuestions = new ArrayList();
+    public void testSuccessfull()
+    {
 
-			while (it.hasNext())
-			{
-				InfoQuestion infoQuestion = Cloner.copyIQuestion2InfoQuestion((IQuestion) it.next());
-				ParseQuestion parse = new ParseQuestion();
-				try
-				{
-					infoQuestion =
-						parse.parseQuestion(infoQuestion.getXmlFile(), infoQuestion, (String) args[2]);
-					infoQuestion.setCorrectResponse(
-						parse.newResponseList(
-							infoQuestion.getCorrectResponse(),
-							infoQuestion.getOptions()));
-				}
-				catch (Exception e)
-				{
-					throw new FenixServiceException(e);
-				}
+        try
+        {
+            IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
+            Object[] args = getAuthorizeArguments();
+            Object[] args1 = getAuthorizeArguments1();
+            Object[] args2 = getAuthorizeArguments2();
 
-				visibleInfoQuestions.add(infoQuestion);
-			}
-			infoMetadata.setVisibleQuestions(visibleInfoQuestions);
+            execute(args);
+            execute(args1);
+            execute(args2);
 
-			InfoMetadata serviceInfoMetadata =
-				((InfoSiteExercise) serviceSiteView.getComponent()).getInfoMetadata();
-			if (!infoMetadata.getIdInternal().equals(serviceInfoMetadata.getIdInternal()))
-				fail("ReadExerciseTest " + "InfoMetadata notEqual");
+        }
+        catch (FenixServiceException ex)
+        {
+            fail("ReadExerciseTest " + ex);
+        }
+        catch (Exception ex)
+        {
+            fail("ReadExerciseTest " + ex);
+        }
+    }
 
-			InfoExecutionCourse serviceInfoExecutionCourse =
-				((InfoSiteExercise) serviceSiteView.getComponent()).getExecutionCourse();
-			if (!((InfoExecutionCourse) Cloner.get(executionCourse)).equals(serviceInfoExecutionCourse))
-				fail("ReadExerciseTest " + "InfoExecutionCourse notEqual");
+    private void execute(Object[] args) throws FenixServiceException, Exception
+    {
+        SiteView serviceSiteView = (SiteView) ServiceManagerServiceFactory.executeService(userView,
+                getNameOfServiceToBeTested(), args);
 
-		}
-		catch (FenixServiceException ex)
-		{
-			fail("ReadExerciseTest " + ex);
-		}
-		catch (Exception ex)
-		{
-			fail("ReadExerciseTest " + ex);
-		}
-	}
+        PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("idInternal", args[1]);
+        Query queryCriteria = new QueryByCriteria(Metadata.class, criteria);
+        IMetadata metadata = (IMetadata) broker.getObjectByQuery(queryCriteria);
+
+        criteria = new Criteria();
+        criteria.addEqualTo("idInternal", args[0]);
+        queryCriteria = new QueryByCriteria(ExecutionCourse.class, criteria);
+        IExecutionCourse executionCourse = (IExecutionCourse) broker.getObjectByQuery(queryCriteria);
+        broker.close();
+
+        InfoMetadata infoMetadata = Cloner.copyIMetadata2InfoMetadata(metadata);
+        Iterator it = metadata.getVisibleQuestions().iterator();
+        List visibleInfoQuestions = new ArrayList();
+        List xmlNames = new ArrayList();
+        while (it.hasNext())
+        {
+            IQuestion question = (IQuestion) it.next();
+            xmlNames.add(new LabelValueBean(question.getXmlFileName(), question.getIdInternal()
+                    .toString()));
+            if ((question.getIdInternal().equals((Integer)args[2])) || ((Integer)args[2]).equals(new Integer(-2)))
+            {
+                InfoQuestion infoQuestion = Cloner.copyIQuestion2InfoQuestion(question);
+                ParseQuestion parse = new ParseQuestion();
+                try
+                {
+                    infoQuestion = parse.parseQuestion(infoQuestion.getXmlFile(), infoQuestion,
+                            (String) args[3]);
+                    infoQuestion.setCorrectResponse(parse.newResponseList(infoQuestion
+                            .getCorrectResponse(), infoQuestion.getOptions()));
+                }
+                catch (Exception e)
+                {
+                    throw new FenixServiceException(e);
+                }
+
+                visibleInfoQuestions.add(infoQuestion);
+            }
+        }
+        infoMetadata.setVisibleQuestions(visibleInfoQuestions);
+
+        InfoMetadata serviceInfoMetadata = ((InfoSiteExercise) serviceSiteView.getComponent())
+                .getInfoMetadata();
+        if (!infoMetadata.getIdInternal().equals(serviceInfoMetadata.getIdInternal()))
+            fail("ReadExerciseTest " + "InfoMetadata notEqual");
+
+        InfoExecutionCourse serviceInfoExecutionCourse = ((InfoSiteExercise) serviceSiteView
+                .getComponent()).getExecutionCourse();
+        if (!((InfoExecutionCourse) Cloner.get(executionCourse)).equals(serviceInfoExecutionCourse))
+            fail("ReadExerciseTest " + "InfoExecutionCourse notEqual");
+
+        /*List serviceQuestionNames = ((InfoSiteExercise) serviceSiteView.getComponent())
+                .getQuestionNames();
+        if (!(serviceQuestionNames.equals(xmlNames)))
+            fail("ReadExerciseTest " + "QuestionNamesList notEqual");*/
+    }
 }

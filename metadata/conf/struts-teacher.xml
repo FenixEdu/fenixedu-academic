@@ -95,6 +95,12 @@
             <form-property name="testCode" type="java.lang.String"/>
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>
+        <form-bean name="testMarksForm" type="org.apache.struts.validator.DynaValidatorForm" 
+	        dynamic="true">
+     	  	<form-property name="distributedTestCodes" type="java.lang.String"/>
+        	<form-property name="objectCode" type="java.lang.String"/>
+        	<form-property name="page" type="java.lang.Integer" initial="0"/>
+        </form-bean>
         <!-- summary form -->
         <form-bean name="summaryForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="title" type="java.lang.String"/>
@@ -817,71 +823,75 @@
             input="/testsManagement.do?method=prepareCreateTest&amp;page=0" scope="request" 
             parameter="method" type="ServidorApresentacao.Action.teacher.TestsManagementAction" 
             validate="true">
-            <forward name="testsFirstPage" path="/testsFirstPage.jsp"/>
-            <forward name="createTest" path="/createTest.jsp"/>
-            <forward name="showAvailableQuestions" path="/showAvailableQuestions.jsp"/>
-            <forward name="showTests" path="/showTests.jsp"/>
-            <forward name="prepareDeleteTest" path="/prepareDeleteTest.jsp"/>
-            <forward name="chooseDeleteTestAction" path="/chooseDeleteTestAction.jsp"/>
-            <forward name="showStudentTest" path="/showStudentTest.jsp"/>
-            <forward name="showStudentTestLog" path="/showStudentTestLog.jsp"/>
-            <forward name="changeStudentTestQuestion" path="/changeStudentTestQuestion.jsp"/>
-            <forward name="chooseAnotherExercise" path="/chooseAnotherExercice.jsp"/>
-            <forward name="showTestMarks" path="/showTestMarks.jsp"/>
+                      <forward name="testsFirstPage" path="tests-First-Page"/>
+            <forward name="createTest" path="create-Test"/>
+            <forward name="showAvailableQuestions" path="show-Available-Questions"/>
+            <forward name="showTests" path="show-Tests"/>
+            <forward name="prepareDeleteTest" path="prepare-Delete-Test"/>
+            <forward name="showStudentTest" path="show-Student-Test"/>
+            <forward name="showStudentTestLog" path="show-Student-Test-Log"/>
+            <forward name="changeStudentTestQuestion" path="change-Student-Test-Question"/>
+            <forward name="chooseAnotherExercise" path="choose-Another-Exercise"/>
+            <forward name="showTestMarks" path="show-Test-Marks"/>
         </action>
         <action path="/exercisesManagement" name="exerciseForm"
             input="/exercisesManagement.do?method=insertNewExercise&amp;page=0" scope="request" 
             parameter="method" type="ServidorApresentacao.Action.teacher.TestsManagementAction" 
             validate="true">
-            <forward name="testsFirstPage" path="/testsFirstPage.jsp"/>
-            <forward name="exercisesFirstPage" path="/exercicesFirstPage.jsp"/>
-            <forward name="insertNewExercise" path="/insertNewExercice.jsp"/>
-            <forward name="prepareRemoveExercise" path="/prepareRemoveExercice.jsp"/>
-            <forward name="editExercise" path="/editExercise.jsp"/>
+             <forward name="testsFirstPage" path="tests-First-Page"/>
+            <forward name="exercisesFirstPage" path="exercises-First-Page"/>
+            <forward name="prepareRemoveExercise" path="prepare-Remove-Exercise"/>
+            <forward name="insertNewExercise" path="insert-New-Exercise"/>
+            <forward name="editExercise" path="edit-Exercise"/>
         </action>
-        <action path="/exercisesEdition" name="exerciseEditionForm"
+       <action path="/exercisesEdition" name="exerciseEditionForm"
             input="/exercisesManagement.do?method=prepareEditExercise&amp;page=0" scope="request" 
             parameter="method" type="ServidorApresentacao.Action.teacher.TestsManagementAction" 
             validate="true">
-            <forward name="editExercise" path="/editExercise.jsp"/>
-            <forward name="exercisesFirstPage" path="/exercicesFirstPage.jsp"/>
+            <forward name="editExercise" path="edit-Exercise"/>
+            <forward name="exercisesFirstPage" path="exercises-First-Page"/>
         </action>
-        <action path="/questionsManagement" name="questionForm" 
-            input="/questionsManagement.do?method=prepareInsertTestQuestion&amp;page=0" scope="request" 
+       
+        <action path="/questionsManagementWithValue" name="questionForm" 
+            input="/questionsManagement.do?method=prepareInsertTestQuestion&amp;page=0" scope="request"
             parameter="method" type="ServidorApresentacao.Action.teacher.TestsManagementAction" 
             validate="true">
-            <forward name="showAvailableQuestions" path="/showAvailableQuestions.jsp"/>
-            <forward name="insertTestQuestion" path="/insertTestQuestion.jsp"/>
-            <forward name="editExercise" path="/editExercise.jsp"/>
+            <forward name="showAvailableQuestions" path="show-Available-Questions"/>
+        </action>
+	    <action path="/questionsManagement" name="questionForm" 
+            input="/questionsManagement.do?method=showAvailableQuestions&amp;page=0" scope="request"
+            parameter="method" type="ServidorApresentacao.Action.teacher.TestsManagementAction" 
+            validate="true">
+            <forward name="showAvailableQuestions" path="show-Available-Questions"/>
+            <forward name="insertTestQuestion" path="insert-Test-Question"/>
         </action>
         <action path="/testEdition" name="testForm" 
             input="/testEdition.do?method=prepareEditTestHeader&amp;page=0" scope="request" 
             parameter="method" type="ServidorApresentacao.Action.teacher.TestsManagementAction" 
             validate="true">
-            <forward name="editTest" path="/editTest.jsp"/>
-            <forward name="editTestHeader" path="/editTestHeader.jsp"/>
-            <forward name="showTests" path="/showTests.jsp"/>
-            <forward name="chooseEditTestAction" path="/chooseEditTestAction.jsp"/>
+            <forward name="editTest" path="edit-Test"/>
+            <forward name="editTestHeader" path="edit-Test-Header"/>
+            <forward name="showTests" path="show-Tests"/>
         </action>
         <action path="/testQuestionEdition" name="testQuestionForm" 
             input="/testQuestionEdition.do?method=prepareEditTestQuestion&amp;page=0" scope="request" 
             parameter="method" type="ServidorApresentacao.Action.teacher.TestsManagementAction" 
             validate="true">
-            <forward name="editTestQuestion" path="/editTestQuestion.jsp"/>
-            <forward name="editTest" path="/editTest.jsp"/>
+            <forward name="editTestQuestion" path="edit-Test-Question"/>
+            <forward name="editTest" path="edit-Test"/>
         </action>
         <action path="/testDistribution" name="distributedTestForm" 
             input="/testDistribution.do?method=prepareDistributeTest&amp;page=0" scope="request" 
             parameter="method" type="ServidorApresentacao.Action.teacher.TestsManagementAction" 
             validate="true">
-            <forward name="distributeTest" path="/distributeTest.jsp"/>
-            <forward name="showDistributedTests" path="/showDistributedTests.jsp"/>
-            <forward name="showDistributedTestStudents" path="/showDistributedTestStudents.jsp"/>
-            <forward name="distributeTestByShifts" path="/distributeTestByShifts.jsp"/>
-            <forward name="distributeTestByStudents" path="/distributeTestByStudents.jsp"/>
-            <forward name="showTestMarks" path="/showTestMarks.jsp"/>
-            <forward name="showTestMarksStatistics" path="/showTestMarksStatistics.jsp"/>
-            <forward name="showTestStatistics" path="/showTestStatistics.jsp"/>
+           <forward name="distributeTest" path="distribute-Test"/>
+            <forward name="showDistributedTests" path="show-Distributed-Tests"/>
+            <forward name="distributeTestByShifts" path="distribute-Test-By-Shifts"/>
+            <forward name="distributeTestByStudents" path="distribute-Test-By-Students"/>
+            <forward name="showTestMarks" path="show-Test-Marks"/>
+            <forward name="showTestMarksStatistics" path="show-Test-Marks-Statistics"/>
+            <forward name="showTestStatistics" path="show-Test-Statistics"/>
+            <forward name="prepareDeleteDistributedTest" path="prepare-Delete-Distributed-Test"/>      
         </action>
         <action path="/testDistributionByShifts" name="distributedTestForm" 
             input="/testDistribution.do?method=chooseShifts&amp;page=1" scope="request" parameter="method" 
@@ -892,16 +902,22 @@
             input="/testDistribution.do?method=chooseStudents&amp;page=1" scope="request" 
             parameter="method" type="ServidorApresentacao.Action.teacher.TestsManagementAction" 
             validate="true">
-            <forward name="showDistributedTests" path="/showDistributedTests.jsp"/>
+            <forward name="showDistributedTests" path="show-Distributed-Tests"/>
         </action>
         <action path="/distributedTestEdition" name="distributedTestForm" 
             input="/distributedTestEdition.do?method=prepareEditDistributedTest&amp;page=0" scope="request" 
             parameter="method" type="ServidorApresentacao.Action.teacher.TestsManagementAction" 
             validate="true">
-            <forward name="editDistributedTest" path="/editDistributedTest.jsp"/>
-            <forward name="showDistributedTests" path="/showDistributedTests.jsp"/>
-            <forward name="addShiftsToDistributedTest" path="/addShiftsToDistributedTest.jsp"/>
-            <forward name="addStudentsToDistributedTest" path="/addStudentsToDistributedTest.jsp"/>
+            <forward name="editDistributedTest" path="edit-Distributed-Test"/>
+            <forward name="showDistributedTests" path="show-Distributed-Tests"/>
+            <forward name="addShiftsToDistributedTest" path="add-Shifts-To-Distributed-Test"/>
+            <forward name="addStudentsToDistributedTest" path="add-Students-To-Distributed-Test"/>
+        </action>
+        <action path="/distributedTestMarks" name="testMarksForm" 
+            input="/testDistribution.do?method=showDistributedTests&amp;page=0" scope="request" 
+            parameter="method" type="ServidorApresentacao.Action.teacher.TestsManagementAction" 
+            validate="true">
+            <forward name="showDistributedTests" path="show-Distributed-Tests"/>
         </action>
         <!-- End Action for Tests Administration Site -->
         <!-- Students list -->

@@ -2,6 +2,7 @@
 <!-- Definitions for Dominio.Metadata -->
 <!-- ******************************** -->
 <class-descriptor class="Dominio.Metadata"
+				  proxy="dynamic"
                   table="METADATA">
 	<field-descriptor id="1"
 		name="idInternal"
@@ -75,6 +76,7 @@
     <collection-descriptor
 		name="visibleQuestions"
 		element-class-ref="Dominio.Question"
+		refresh="true"
 		proxy="true">
 		<inverse-foreignkey field-ref="keyMetadata"/>
 		<query-customizer class="ServidorPersistente.customQueries.QuestionFilter">
@@ -87,15 +89,13 @@
     >
     <foreignkey field-id-ref="2"/>
 	</reference-descriptor>
-	<attribute
-		attribute-name="cacheable"
-     	attribute-value="false" />
 </class-descriptor>
 
 <!-- ******************************** -->
 <!-- Definitions for Dominio.Question -->
 <!-- ******************************** -->
 <class-descriptor class="Dominio.Question"
+				  proxy="dynamic"
                   table="XML_DOCUMENTS">
     <field-descriptor id="1"
         name="idInternal"
@@ -137,15 +137,13 @@
     > 
 	<foreignkey field-id-ref="4"/>
 	</reference-descriptor>
-	<attribute
-		attribute-name="cacheable"
-     	attribute-value="false" />
 </class-descriptor>
 
 <!-- **************************** -->
 <!-- Definitions for Dominio.Test -->
 <!-- **************************** -->
 <class-descriptor class="Dominio.Test"
+				  proxy="dynamic"
                   table="TESTS">
     <field-descriptor id="1"
         name="idInternal"
@@ -199,15 +197,13 @@
     > 
 	<foreignkey field-id-ref="7"/>
 	</reference-descriptor>
-    <attribute
-		attribute-name="cacheable"
-     	attribute-value="false" />
 </class-descriptor>
 
 <!-- ************************************ -->
 <!-- Definitions for Dominio.TestQuestion -->
 <!-- ************************************ -->
 <class-descriptor class="Dominio.TestQuestion"
+				  proxy="dynamic"
                   table="TEST_QUESTION">
     <field-descriptor id="1"
         name="idInternal"
@@ -256,15 +252,13 @@
     > 
 	<foreignkey field-id-ref="5"/>
 	</reference-descriptor>
-	<attribute
-		attribute-name="cacheable"
-     	attribute-value="false" />
 </class-descriptor>
 
 <!-- *************************************** -->
 <!-- Definitions for Dominio.DistributedTest -->
 <!-- *************************************** -->
 <class-descriptor class="Dominio.DistributedTest"
+				  proxy="dynamic"
                   table="DISTRIBUTED_TESTS">
     <field-descriptor id="1"
         name="idInternal"
@@ -335,6 +329,20 @@
         column="KEY_TEST_SCOPE"
         jdbc-type="INTEGER"
 	/>
+	 <collection-descriptor
+		name="studentLogs"
+		element-class-ref="Dominio.StudentTestLog"
+		auto-delete="true"
+		proxy="true">
+		<inverse-foreignkey field-ref="keyDistributedTest"/>
+	</collection-descriptor>
+	 <collection-descriptor
+		name="studentQuestions"
+		element-class-ref="Dominio.StudentTestQuestion"
+		auto-delete="true"
+		proxy="true">
+		<inverse-foreignkey field-ref="keyDistributedTest"/>
+	</collection-descriptor>
 	<field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
@@ -348,10 +356,6 @@
     > 
 	<foreignkey field-id-ref="12"/>
 	</reference-descriptor>
-	<attribute
-		attribute-name="cacheable"
-    	attribute-value="false" 
-    />
 </class-descriptor>
 
 <!-- ******************************************* -->
@@ -419,15 +423,13 @@
         class-ref="Dominio.Question">
      <foreignkey field-ref="keyQuestion"/>
      </reference-descriptor>
-      <attribute
-		attribute-name="cacheable"
-     	attribute-value="false" />
 </class-descriptor>
 
 <!-- ************************************** -->
 <!-- Definitions for Dominio.StudentTestLog -->
 <!-- ************************************** -->
 <class-descriptor class="Dominio.StudentTestLog"
+				  proxy="dynamic"
                   table="STUDENT_TEST_LOG">
     <field-descriptor id="1"
         name="idInternal"
@@ -477,9 +479,6 @@
     >
 	<foreignkey field-id-ref="3"/>
 	</reference-descriptor>
-	 <attribute
-		attribute-name="cacheable"
-     	attribute-value="false" />
 </class-descriptor>
 
 <!-- ********************************** -->
@@ -540,12 +539,12 @@
 	
 </class-descriptor>
 
-<!-- ******************************************** -->
+<!-- ********************************* -->
 <!-- Definitions for Dominio.TestScope -->
-<!-- ******************************************** -->
-<!--  -->
+<!-- ********************************* -->
 <class-descriptor class="Dominio.TestScope"
                   table="TEST_SCOPE"
+                  proxy="dynamic"
                   row-reader="ServidorPersistente.rowReaders.TestScopeRowReader" 
                   >
     <field-descriptor id="1"
@@ -571,9 +570,50 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-	
-	<attribute
-		attribute-name="cacheable"
-    	attribute-value="false" 
+</class-descriptor>
+
+
+<!-- *********************************************** -->
+<!-- Definitions for Dominio.DistributedTestAdvisory -->
+<!-- *********************************************** -->
+<class-descriptor class="Dominio.DistributedTestAdvisory"
+                  table="DISTRIBUTED_TEST_ADVISORY"
+                  proxy="dynamic">
+    <field-descriptor id="1"
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
     />
+ 	<field-descriptor id="2"
+         name="keyDistributedTest"
+         column="KEY_DISTRIBUTED_TEST"
+    	 jdbc-type="INTEGER"
+    />
+    <field-descriptor id="3"
+         name="keyAdvisory"
+         column="KEY_ADVISORY"
+    	 jdbc-type="INTEGER"
+    />
+	<field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+	<reference-descriptor
+         name="distributedTest"
+         class-ref="Dominio.DistributedTest"
+         proxy="true"
+    >
+    <foreignkey field-id-ref="2"/>
+    </reference-descriptor>
+    <reference-descriptor
+         name="advisory"
+         class-ref="Dominio.Advisory"
+         proxy="true"
+    >
+    <foreignkey field-id-ref="3"/>
+    </reference-descriptor>
 </class-descriptor>

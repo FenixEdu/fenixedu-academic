@@ -2,6 +2,7 @@
  * Created on 27/Ago/2003
  *
  */
+
 package ServidorAplicacao.Servico.student;
 
 import java.util.ArrayList;
@@ -14,7 +15,6 @@ import DataBeans.InfoSiteStudentDistributedTests;
 import DataBeans.comparators.CalendarDateComparator;
 import DataBeans.comparators.CalendarHourComparator;
 import DataBeans.util.Cloner;
-import Dominio.DistributedTest;
 import Dominio.ExecutionCourse;
 import Dominio.IDistributedTest;
 import Dominio.IExecutionCourse;
@@ -51,32 +51,29 @@ public class ReadStudentTests implements IServico
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 			IStudent student = persistentSuport.getIPersistentStudent().readByUsername(userName);
 
-			IExecutionCourse executionCourse =
-				(IExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOId(
-					new ExecutionCourse(executionCourseId),
-					false);
+			IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
+					.getIPersistentExecutionCourse().readByOId(new ExecutionCourse(executionCourseId),
+							false);
 
-			List distributedTestList =
-				persistentSuport.getIPersistentDistributedTest().readByStudentAndExecutionCourse(
-					student,
-					executionCourse);
+			List distributedTestList = persistentSuport.getIPersistentDistributedTest()
+					.readByStudentAndExecutionCourse(student, executionCourse);
 			List testToDoList = new ArrayList();
 			List doneTestsList = new ArrayList();
 			Iterator it = distributedTestList.iterator();
 			while (it.hasNext())
 			{
-				IDistributedTest distributedTest = (DistributedTest) it.next();
+				IDistributedTest distributedTest = (IDistributedTest) it.next();
 				if (testsToDo(distributedTest))
 				{
-					InfoDistributedTest infoDistributedTest =
-						Cloner.copyIDistributedTest2InfoDistributedTest(distributedTest);
+					InfoDistributedTest infoDistributedTest = Cloner
+							.copyIDistributedTest2InfoDistributedTest(distributedTest);
 					if (!testToDoList.contains(infoDistributedTest))
 						testToDoList.add(infoDistributedTest);
 				}
 				else if (doneTests(distributedTest))
 				{
-					InfoDistributedTest infoDistributedTest =
-						Cloner.copyIDistributedTest2InfoDistributedTest(distributedTest);
+					InfoDistributedTest infoDistributedTest = Cloner
+							.copyIDistributedTest2InfoDistributedTest(distributedTest);
 					if (!doneTestsList.contains(infoDistributedTest))
 						doneTestsList.add(infoDistributedTest);
 				}
@@ -106,7 +103,7 @@ public class ReadStudentTests implements IServico
 			if (dateComparator.compare(calendar, distributedTest.getEndDate()) <= 0)
 			{
 				if (dateComparator.compare(calendar, distributedTest.getEndDate()) == 0)
-					if (hourComparator.compare(calendar, distributedTest.getEndDate()) <= 0)
+					if (hourComparator.compare(calendar, distributedTest.getEndHour()) <= 0)
 						return true;
 					else
 						return false;

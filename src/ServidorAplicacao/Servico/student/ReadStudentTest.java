@@ -18,6 +18,7 @@ import Dominio.IStudentTestQuestion;
 import Dominio.StudentTestLog;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudentTestLog;
 import ServidorPersistente.ISuportePersistente;
@@ -61,7 +62,7 @@ public class ReadStudentTest implements IServico
 					false);
 			if (distributedTest == null)
 			{
-				throw new FenixServiceException();
+				throw new InvalidArgumentsServiceException();
 			}
 
 			List studentTestQuestionList =
@@ -69,7 +70,7 @@ public class ReadStudentTest implements IServico
 					student,
 					distributedTest);
 			if (studentTestQuestionList.size() == 0)
-				throw new FenixServiceException();
+			    throw new InvalidArgumentsServiceException();
 			Iterator it = studentTestQuestionList.iterator();
 			while (it.hasNext())
 			{

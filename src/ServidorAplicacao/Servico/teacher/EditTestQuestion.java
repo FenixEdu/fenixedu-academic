@@ -73,7 +73,7 @@ public class EditTestQuestion implements IServico {
 				if (questionOrder.compareTo(questionOrderOld) < 0) {
 					questionOrder = new Integer(questionOrder.intValue() + 1);
 					while (it.hasNext()) {
-						ITestQuestion testQuestionIt = (TestQuestion) it.next();
+						ITestQuestion testQuestionIt = (ITestQuestion) it.next();
 						Integer questionOrderIt =
 							testQuestionIt.getTestQuestionOrder();
 
@@ -86,7 +86,7 @@ public class EditTestQuestion implements IServico {
 					}
 				} else if (questionOrder.compareTo(questionOrderOld) > 0) {
 					while (it.hasNext()) {
-						ITestQuestion testQuestionIt = (TestQuestion) it.next();
+						ITestQuestion testQuestionIt = (ITestQuestion) it.next();
 						Integer questionOrderIt =
 							testQuestionIt.getTestQuestionOrder();
 

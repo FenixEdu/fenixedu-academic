@@ -2,6 +2,7 @@
  * Created on 3/Set/2003
  *
  */
+
 package ServidorAplicacao.Servico.student;
 
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class InsertStudentTestResponses implements IServico
 	}
 
 	public boolean run(String userName, Integer distributedTestId, String[] options, String path)
-		throws FenixServiceException
+			throws FenixServiceException
 	{
 		List infoStudentTestQuestionList = new ArrayList();
 		this.path = path.replace('\\', '/');
@@ -66,10 +67,8 @@ public class InsertStudentTestResponses implements IServico
 			IDistributedTest distributedTest = new DistributedTest(distributedTestId);
 			if (distributedTest == null)
 				throw new FenixServiceException();
-			distributedTest =
-				(IDistributedTest) persistentSuport.getIPersistentDistributedTest().readByOId(
-					distributedTest,
-					false);
+			distributedTest = (IDistributedTest) persistentSuport.getIPersistentDistributedTest()
+					.readByOId(distributedTest, false);
 
 			String event = new String("Submeter Teste;");
 			for (int i = 0; i < options.length; i++)
@@ -79,17 +78,13 @@ public class InsertStudentTestResponses implements IServico
 
 			if (compareDates(distributedTest.getEndDate(), distributedTest.getEndHour()))
 			{
-				List studentTestQuestionList =
-					persistentSuport
-						.getIPersistentStudentTestQuestion()
-						.readByStudentAndDistributedTest(
-						student,
-						distributedTest);
+				List studentTestQuestionList = persistentSuport.getIPersistentStudentTestQuestion()
+						.readByStudentAndDistributedTest(student, distributedTest);
 				Iterator it = studentTestQuestionList.iterator();
 				if (studentTestQuestionList.size() == 0)
 					return false;
-				IPersistentStudentTestQuestion persistentStudentTestQuestion =
-					persistentSuport.getIPersistentStudentTestQuestion();
+				IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport
+						.getIPersistentStudentTestQuestion();
 				ParseQuestion parse = new ParseQuestion();
 
 				while (it.hasNext())
@@ -99,57 +94,43 @@ public class InsertStudentTestResponses implements IServico
 					IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) it.next();
 					persistentStudentTestQuestion.lockWrite(studentTestQuestion);
 					if (studentTestQuestion.getResponse().intValue() != 0
-						&& distributedTest.getTestType().equals(new TestType(1))) //EVALUATION
+							&& distributedTest.getTestType().equals(new TestType(1))) //EVALUATION
 					{
 						//não pode aceitar nova resposta
 					}
 					else
 					{
-						InfoStudentTestQuestion infoStudentTestQuestion =
-							Cloner.copyIStudentTestQuestion2InfoStudentTestQuestion(studentTestQuestion);
+						InfoStudentTestQuestion infoStudentTestQuestion = Cloner
+								.copyIStudentTestQuestion2InfoStudentTestQuestion(studentTestQuestion);
 						try
 						{
-							infoStudentTestQuestion.setQuestion(
-								parse.parseQuestion(
+							infoStudentTestQuestion.setQuestion(parse.parseQuestion(
 									infoStudentTestQuestion.getQuestion().getXmlFile(),
-									infoStudentTestQuestion.getQuestion(),
-									this.path));
-							infoStudentTestQuestion =
-								parse.getOptionsShuffle(infoStudentTestQuestion, this.path);
+									infoStudentTestQuestion.getQuestion(), this.path));
+							infoStudentTestQuestion = parse.getOptionsShuffle(infoStudentTestQuestion,
+									this.path);
 						}
 						catch (Exception e)
 						{
 							throw new FenixServiceException(e);
 						}
-						studentTestQuestion.setResponse(
-							new Integer(
-								options[studentTestQuestion.getTestQuestionOrder().intValue() - 1]));
+						studentTestQuestion.setResponse(new Integer(options[studentTestQuestion
+								.getTestQuestionOrder().intValue() - 1]));
 						if (studentTestQuestion.getResponse().intValue() != 0
-							&& distributedTest.getTestType().equals(new TestType(TestType.EVALUATION))
-							&& infoStudentTestQuestion.getQuestion().getCorrectResponse().size() != 0)
+								&& distributedTest.getTestType().equals(
+										new TestType(TestType.EVALUATION))
+								&& infoStudentTestQuestion.getQuestion().getCorrectResponse().size() != 0)
 						{
 
-							if (infoStudentTestQuestion
-								.getQuestion()
-								.getCorrectResponse()
-								.contains(studentTestQuestion.getResponse()))
-								questionMark =
-									new Double(studentTestQuestion.getTestQuestionValue().doubleValue());
+							if (infoStudentTestQuestion.getQuestion().getCorrectResponse().contains(
+									studentTestQuestion.getResponse()))
+								questionMark = new Double(studentTestQuestion.getTestQuestionValue()
+										.doubleValue());
 							else
-								questionMark =
-									new Double(
-										- (
-											infoStudentTestQuestion.getTestQuestionValue().intValue()
-												* (java
-													.lang
-													.Math
-													.pow(
-														infoStudentTestQuestion
-															.getQuestion()
-															.getOptionNumber()
-															.intValue()
-															- 1,
-														-1))));
+								questionMark = new Double(-(infoStudentTestQuestion
+										.getTestQuestionValue().intValue() * (java.lang.Math.pow(
+										infoStudentTestQuestion.getQuestion().getOptionNumber()
+												.intValue() - 1, -1))));
 						}
 						totalMark += questionMark.doubleValue();
 						studentTestQuestion.setTestQuestionMark(questionMark);
@@ -157,13 +138,11 @@ public class InsertStudentTestResponses implements IServico
 				}
 				if (distributedTest.getTestType().equals(new TestType(TestType.EVALUATION)))
 				{
-					IOnlineTest onlineTest =
-						(IOnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(
-							distributedTest);
-					IFrequenta attend =
-						persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(
-							student,
-							(IExecutionCourse) distributedTest.getTestScope().getDomainObject());
+					IOnlineTest onlineTest = (IOnlineTest) persistentSuport.getIPersistentOnlineTest()
+							.readByDistributedTest(distributedTest);
+					IFrequenta attend = persistentSuport.getIFrequentaPersistente()
+							.readByAlunoAndDisciplinaExecucao(student,
+									(IExecutionCourse) distributedTest.getTestScope().getDomainObject());
 					IMark mark = persistentSuport.getIPersistentMark().readBy(onlineTest, attend);
 
 					if (mark == null)
@@ -176,12 +155,12 @@ public class InsertStudentTestResponses implements IServico
 					persistentSuport.getIPersistentMark().simpleLockWrite(mark);
 				}
 
-				IPersistentStudentTestLog persistentStudentTestLog =
-					persistentSuport.getIPersistentStudentTestLog();
+				IPersistentStudentTestLog persistentStudentTestLog = persistentSuport
+						.getIPersistentStudentTestLog();
 				IStudentTestLog studentTestLog = new StudentTestLog();
 				studentTestLog.setDistributedTest(distributedTest);
 				studentTestLog.setStudent(student);
-				studentTestLog.setDate(null);
+				studentTestLog.setDate(Calendar.getInstance().getTime());
 				studentTestLog.setEvent(event);
 				persistentStudentTestLog.simpleLockWrite(studentTestLog);
 			}
