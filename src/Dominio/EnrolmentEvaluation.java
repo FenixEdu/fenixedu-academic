@@ -4,6 +4,7 @@ import java.util.Date;
 
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
+import Util.EnrolmentState;
 
 
 /**
@@ -12,8 +13,11 @@ import Util.EnrolmentEvaluationType;
  * 24/Mar/2003
  */
 
-public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvaluation {
+public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvaluation, Comparable {
 
+//	private String RECTIFIED = "RECTIFICADO";
+	private String RECTIFICATION = "RECTIFICAÇÃO";
+	
 	private String grade;
 	private EnrolmentEvaluationType enrolmentEvaluationType;
 	private Date examDate;
@@ -173,6 +177,132 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
 
 	public void setObservation(String string) {
 		observation = string;
+	}
+
+	/**
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	public int compareTo(Object o)
+	{
+		IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) o;
+		EnrolmentState myEnrolmentState = getEnrollmentStateByGrade(this.getGrade());
+		EnrolmentState otherEnrolmentState = getEnrollmentStateByGrade(enrolmentEvaluation.getGrade());
+		String otherGrade = enrolmentEvaluation.getGrade();
+		Date otherWhenAltered = enrolmentEvaluation.getWhen();
+
+		if (this.getObservation() != null
+			&& this.getObservation().equals(this.RECTIFICATION)
+			&& enrolmentEvaluation.getObservation() != null
+			&& enrolmentEvaluation.getObservation().equals(this.RECTIFICATION))
+		{
+			return compareMyWhenAlteredDateToAnotherWhenAlteredDate(otherWhenAltered);
+		} else if (this.getObservation() != null && this.getObservation().equals(this.RECTIFICATION))
+		{
+			return 1;
+		} else if (this.getObservation() != null && this.getObservation().equals(this.RECTIFICATION))
+		{
+			return -1;
+		} else if (myEnrolmentState.equals(otherEnrolmentState))
+		{
+			return compareForEqualStates(myEnrolmentState, otherEnrolmentState, otherGrade, otherWhenAltered);
+		} else
+		{
+			return compareForNotEqualStates(myEnrolmentState, otherEnrolmentState);
+		}
+	}
+
+	private int compareMyWhenAlteredDateToAnotherWhenAlteredDate(Date whenAltered)
+	{
+		if (this.getWhen().compareTo(whenAltered) >= 0)
+		{
+			return 1;
+		} else
+		{
+			return -1;
+		}
+	}
+
+	private int compareMyGradeToAnotherGrade(String grade)
+	{
+		Integer myGrade = Integer.valueOf(this.getGrade());
+		Integer otherGrade = Integer.valueOf(grade);
+		if (myGrade.intValue() >= otherGrade.intValue())
+		{
+			return 1;
+		} else
+		{
+			return -1;
+		}
+	}
+
+	private int compareForEqualStates(
+		EnrolmentState myEnrolmentState,
+		EnrolmentState otherEnrolmentState,
+		String otherGrade,
+		Date otherWhenAltered)
+	{
+		if (myEnrolmentState.equals(EnrolmentState.APROVED))
+		{
+			return compareMyGradeToAnotherGrade(otherGrade);
+		} else
+		{
+			return compareMyWhenAlteredDateToAnotherWhenAlteredDate(otherWhenAltered);
+		}
+	}
+
+	private int compareForNotEqualStates(EnrolmentState myEnrolmentState, EnrolmentState otherEnrolmentState)
+	{
+		if (myEnrolmentState.equals(EnrolmentState.APROVED))
+		{
+			return 1;
+		} else if (myEnrolmentState.equals(EnrolmentState.NOT_APROVED) && otherEnrolmentState.equals(EnrolmentState.APROVED))
+		{
+			return -1;
+		} else if (myEnrolmentState.equals(EnrolmentState.NOT_APROVED))
+		{
+			return 1;
+		} else if (myEnrolmentState.equals(EnrolmentState.NOT_EVALUATED))
+		{
+			return -1;
+		} else
+		{
+			return 0;
+		}
+	}
+	
+	private EnrolmentState getEnrollmentStateByGrade(String grade)
+	{
+		if (grade == null)
+		{
+			return EnrolmentState.NOT_EVALUATED;
+		}
+
+		if (grade.equals(""))
+		{
+			return EnrolmentState.NOT_EVALUATED;
+		}
+
+		if (grade.equals("0"))
+		{
+			return EnrolmentState.NOT_EVALUATED;
+		}
+
+		if (grade.equals("NA"))
+		{
+			return EnrolmentState.NOT_EVALUATED;
+		}
+
+		if (grade.equals("RE"))
+		{
+			return EnrolmentState.NOT_APROVED;
+		}
+
+		if (grade.equals("AP"))
+		{
+			return EnrolmentState.APROVED;
+		}
+
+		return EnrolmentState.APROVED;
 	}
 
 }

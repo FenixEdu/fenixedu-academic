@@ -10,4 +10,5 @@ call mysql ciapl < delete_from_enrolment_evaluation.sql > temp.sql
 call mysql ciapl < update_enrolment_set_state=1.sql | mysql ciapl
 call mysql ciapl < update_enrolment_set_state=2.sql | mysql ciapl
 call mysql ciapl < temp.sql
+call mysql ciapl < enrollmentTableUpdates.sql | mysql ciapl
 call del temp.sql

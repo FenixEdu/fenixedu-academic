@@ -17,9 +17,6 @@ import middleware.persistentMiddlewareSupport.IPersistentMWEquivalenciaIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
 import middleware.persistentMiddlewareSupport.OJBDatabaseSupport.PersistentMiddlewareSupportOJB;
 import middleware.studentMigration.enrollments.CreateAndUpdateAllStudentsPastEnrolments;
-
-import org.apache.commons.beanutils.BeanComparator;
-
 import Dominio.CreditsInAnySecundaryArea;
 import Dominio.CreditsInScientificArea;
 import Dominio.CurricularCourse;
@@ -38,7 +35,6 @@ import Dominio.IExecutionPeriod;
 import Dominio.IScientificArea;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
-import ServidorAplicacao.Servico.commons.student.GetEnrolmentGrade;
 import ServidorPersistente.IPersistentCreditsInAnySecundaryArea;
 import ServidorPersistente.IPersistentCreditsInSpecificScientificArea;
 import ServidorPersistente.IPersistentCurricularCourse;
@@ -751,80 +747,81 @@ public class MakeEquivalencesForILEECStudents
 	 * @return
 	 * @throws Throwable
 	 */
-	private static IEnrolmentEvaluation getLatestEvaluation(IEnrolment enrolment) throws Throwable {
-
+	private static IEnrolmentEvaluation getLatestEvaluation(IEnrolment enrolment) throws Throwable
+	{
 		List enrolmentEvaluations = enrolment.getEvaluations();
 
 		if ((enrolment == null) || (enrolment.getEvaluations() == null) || (enrolment.getEvaluations().size() == 0)) {
 			return null;
-		}
-
-		if (enrolmentEvaluations.size() == 1)
+		} else
 		{
+			// This sorts the list ascendingly so we need to reverse it to get the first object.
+			Collections.sort(enrolmentEvaluations);
+			Collections.reverse(enrolmentEvaluations);
 			return (IEnrolmentEvaluation) enrolmentEvaluations.get(0);
 		}
 
-		BeanComparator dateComparator = new BeanComparator("when");
-		Collections.sort(enrolmentEvaluations, dateComparator);
-		Collections.reverse(enrolmentEvaluations);
-
-		IEnrolmentEvaluation latestEvaluation = (IEnrolmentEvaluation) enrolmentEvaluations.get(0);
-
-		if (enrolment.getEnrolmentState().equals(EnrolmentState.NOT_APROVED) ||
-				enrolment.getEnrolmentState().equals(EnrolmentState.NOT_EVALUATED) ||
-				enrolment.getEnrolmentState().equals(EnrolmentState.ANNULED))
-		{
-			return latestEvaluation;
-		}
-
-		if (latestEvaluation.getObservation() != null && latestEvaluation.getObservation().equals(GetEnrolmentGrade.RECTIFIED))
-		{
-			Iterator iterator = enrolmentEvaluations.iterator();
-			while(iterator.hasNext())
-			{
-				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
-				if(enrolmentEvaluation.getObservation().equals(GetEnrolmentGrade.RECTIFICATION))
-				{
-					latestEvaluation = enrolmentEvaluation;
-					break;
-				}
-			}
-		}
-
-		if (!latestEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ)) {
-			return latestEvaluation;
-		} else {
-			IEnrolmentEvaluation previousEvaluation = (IEnrolmentEvaluation) enrolmentEvaluations.get(1);
-
-			Integer latestMark = new Integer(0);
-			Integer previousMark = new Integer(0);
-
-			try {
-				latestMark = Integer.valueOf(latestEvaluation.getGrade());
-			} catch (NumberFormatException e) {
-				// Do nothing.
-			}
-
-			try {
-				previousMark = Integer.valueOf(previousEvaluation.getGrade());
-			} catch (NumberFormatException e1) {
-				for (int i = 2; i < enrolmentEvaluations.size(); i++)
-				{
-					previousEvaluation = (IEnrolmentEvaluation) enrolmentEvaluations.get(i);
-					try {
-						previousMark = Integer.valueOf(previousEvaluation.getGrade());
-					} catch (NumberFormatException e2) {
-						// Do nothing.
-					}
-				}
-			}
-
-			if (previousMark.intValue() > latestMark.intValue()) {
-				return previousEvaluation;
-			} else {
-				return latestEvaluation;
-			}
-		}
+//		BeanComparator dateComparator = new BeanComparator("when");
+//		Collections.sort(enrolmentEvaluations, dateComparator);
+//		Collections.reverse(enrolmentEvaluations);
+//
+//		IEnrolmentEvaluation latestEvaluation = (IEnrolmentEvaluation) enrolmentEvaluations.get(0);
+//
+//		if (enrolment.getEnrolmentState().equals(EnrolmentState.NOT_APROVED) ||
+//				enrolment.getEnrolmentState().equals(EnrolmentState.NOT_EVALUATED) ||
+//				enrolment.getEnrolmentState().equals(EnrolmentState.ANNULED))
+//		{
+//			return latestEvaluation;
+//		}
+//
+//		if (latestEvaluation.getObservation() != null && latestEvaluation.getObservation().equals(GetEnrolmentGrade.RECTIFIED))
+//		{
+//			Iterator iterator = enrolmentEvaluations.iterator();
+//			while(iterator.hasNext())
+//			{
+//				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
+//				if(enrolmentEvaluation.getObservation().equals(GetEnrolmentGrade.RECTIFICATION))
+//				{
+//					latestEvaluation = enrolmentEvaluation;
+//					break;
+//				}
+//			}
+//		}
+//
+//		if (!latestEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ)) {
+//			return latestEvaluation;
+//		} else {
+//			IEnrolmentEvaluation previousEvaluation = (IEnrolmentEvaluation) enrolmentEvaluations.get(1);
+//
+//			Integer latestMark = new Integer(0);
+//			Integer previousMark = new Integer(0);
+//
+//			try {
+//				latestMark = Integer.valueOf(latestEvaluation.getGrade());
+//			} catch (NumberFormatException e) {
+//				// Do nothing.
+//			}
+//
+//			try {
+//				previousMark = Integer.valueOf(previousEvaluation.getGrade());
+//			} catch (NumberFormatException e1) {
+//				for (int i = 2; i < enrolmentEvaluations.size(); i++)
+//				{
+//					previousEvaluation = (IEnrolmentEvaluation) enrolmentEvaluations.get(i);
+//					try {
+//						previousMark = Integer.valueOf(previousEvaluation.getGrade());
+//					} catch (NumberFormatException e2) {
+//						// Do nothing.
+//					}
+//				}
+//			}
+//
+//			if (previousMark.intValue() > latestMark.intValue()) {
+//				return previousEvaluation;
+//			} else {
+//				return latestEvaluation;
+//			}
+//		}
 	}
 
 	/**
