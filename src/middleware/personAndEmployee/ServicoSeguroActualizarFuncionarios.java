@@ -2,6 +2,7 @@ package middleware.personAndEmployee;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -14,7 +15,8 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
-import Dominio.Funcionario;
+import Dominio.Employee;
+import Dominio.IEmployee;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
 import Dominio.Pessoa;
@@ -22,9 +24,10 @@ import Dominio.Role;
 import Util.RoleType;
 
 /**
- * @author  Ivo Brandão
+ * @author Ivo Brandão
  */
-public class ServicoSeguroActualizarFuncionarios {
+public class ServicoSeguroActualizarFuncionarios
+{
 
 	private static String delimitador;
 	private static Hashtable estrutura;
@@ -32,7 +35,8 @@ public class ServicoSeguroActualizarFuncionarios {
 	private static Collection lista;
 
 	/** Construtor */
-	public ServicoSeguroActualizarFuncionarios(String[] args) {
+	public ServicoSeguroActualizarFuncionarios(String[] args)
+	{
 		delimitador = new String(";");
 
 		/* Inicializar Hashtable com atributos a recuperar do ficheiro de texto requeridos */
@@ -49,15 +53,16 @@ public class ServicoSeguroActualizarFuncionarios {
 	}
 
 	/** Executa a actualizacao da tabela Funcionario na Base de Dados */
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception
+	{
 		new ServicoSeguroActualizarFuncionarios(args);
 		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 		broker.clearCache();
 
 		LeituraFicheiroFuncionario servicoLeitura = new LeituraFicheiroFuncionario();
 
-		lista = servicoLeitura.lerFicheiro(args[0] /*ficheiro*/
-		, delimitador, estrutura, ordem);
+		String ficheiro = "E:/Projectos/_carregamentos/funcionario.dat"; //args[0];
+		lista = servicoLeitura.lerFicheiro(ficheiro, delimitador, estrutura, ordem);
 
 		Integer numeroMecanografico = null;
 
@@ -79,81 +84,102 @@ public class ServicoSeguroActualizarFuncionarios {
 
 		System.out.println("Migrating " + lista.size() + " Employees ...");
 
-		while (iteradorNovo.hasNext()) {
-			try {
+		while (iteradorNovo.hasNext())
+		{
+			try
+			{
 				Hashtable instanciaTemporaria = (Hashtable) iteradorNovo.next();
 
-				String numeroDocumentoIdentificacao = (String) instanciaTemporaria.get("numeroDocumentoIdentificacao");
-//				Integer tipoDocumentoIdentificacao = (Integer) instanciaTemporaria.get("tipoDocumentoIdentificacao");
-				numeroMecanografico = new Integer((String) instanciaTemporaria.get("numeroMecanografico"));
+				String numeroDocumentoIdentificacao =
+					(String) instanciaTemporaria.get("numeroDocumentoIdentificacao");
+				//Integer tipoDocumentoIdentificacao = (Integer)
+				// instanciaTemporaria.get("tipoDocumentoIdentificacao");
+				numeroMecanografico =
+					new Integer((String) instanciaTemporaria.get("numeroMecanografico"));
 
 				// Check if the Employee Exists
 				Criteria criteria = new Criteria();
 				Query query = null;
 
-				criteria.addEqualTo("numeroMecanografico", numeroMecanografico);
-				query = new QueryByCriteria(Funcionario.class, criteria);
-				List resultFuncionario = (List) broker.getCollectionByQuery(query);
+				criteria.addEqualTo("employeeNumber", numeroMecanografico);
+				query = new QueryByCriteria(Employee.class, criteria);
+				List resultEmployee = (List) broker.getCollectionByQuery(query);
 
 				// Read The Corresponding Person
-				
-				IPessoa person = PersonUtils.getPerson(numeroMecanografico.toString(), numeroDocumentoIdentificacao, "F", broker);
-				if (person == null) {
-					person = PersonUtils.getPerson(numeroMecanografico.toString(), numeroDocumentoIdentificacao, "D", broker);
-					if (person == null) {
+				IPessoa person =
+					PersonUtils.getPerson(
+						numeroMecanografico.toString(),
+						numeroDocumentoIdentificacao,
+						"F",
+						broker);
+				if (person == null)
+				{
+					person =
+						PersonUtils.getPerson(
+							numeroMecanografico.toString(),
+							numeroDocumentoIdentificacao,
+							"D",
+							broker);
+					if (person == null)
+					{
 						throw new Exception("Erro a Ler a pessoa do Funcionario " + numeroMecanografico);
 					}
 				}
-//				criteria = new Criteria();
-//				query = null;
-//				criteria.addEqualTo("numeroDocumentoIdentificacao", numeroDocumentoIdentificacao);
-//				criteria.addEqualTo("tipoDocumentoIdentificacao", tipoDocumentoIdentificacao);
-//				query = new QueryByCriteria(Pessoa.class, criteria);
-//				List resultPerson = (List) broker.getCollectionByQuery(query);
-//
-//				if (resultPerson.size() == 0) {
-//					throw new Exception("Erro a Ler a pessoa do Funcionario " + numeroMecanografico);
-//				}
-//				//Pessoa person = (Pessoa) resultPerson.get(0);
 
-				Funcionario funcionario2Write = null;
-				if (resultFuncionario.size() == 0) {
-					// Check If the person already has a employee associated
+				IEmployee employee2Write = null;
+				if (resultEmployee.size() == 0)
+				{
+					// The Employee doesn't exists but the person hasn't a employee associated
 					query = null;
 					criteria = new Criteria();
-					criteria.addEqualTo("chavePessoa", person.getIdInternal());
-					query = new QueryByCriteria(Funcionario.class, criteria);
-					resultFuncionario = (List) broker.getCollectionByQuery(query);
-					if (resultFuncionario.size() == 0) {
-						funcionario2Write = new Funcionario();
-						funcionario2Write.setNumeroMecanografico(numeroMecanografico.intValue());
-						funcionario2Write.setPerson(person);
-						//funcionario2Write.setChavePessoa(person.getIdInternal().intValue());
-					} else {
+					criteria.addEqualTo("keyPerson", person.getIdInternal());
+					query = new QueryByCriteria(Employee.class, criteria);
+					resultEmployee = (List) broker.getCollectionByQuery(query);
+					if (resultEmployee.size() == 0)
+					{
+						employee2Write = new Employee();
+						employee2Write.setEmployeeNumber(numeroMecanografico);
+						employee2Write.setPerson(person);
+						employee2Write.setWorkingHours(new Integer(0));
+						employee2Write.setAntiquity(new Date());
+						employee2Write.setActive(Boolean.TRUE);
+						
+					}
+					else
+					{
+						// The Employee doesn't exists but the person already has a employee associated
 						// Decision Time ... Keep The Old NumeroMecanografico or Put The new ?
-						funcionario2Write = (Funcionario) resultFuncionario.get(0);
-						// Keep the higher 
-						if (funcionario2Write.getNumeroMecanografico() < numeroMecanografico.intValue()) {
-							funcionario2Write.setNumeroMecanografico(numeroMecanografico.intValue());
-						} else {
-							numeroMecanografico = new Integer(funcionario2Write.getNumeroMecanografico());
+						employee2Write = (IEmployee) resultEmployee.get(0);
+						// Keep the higher
+						if (employee2Write.getEmployeeNumber().intValue() < numeroMecanografico.intValue())
+						{
+							employee2Write.setEmployeeNumber(numeroMecanografico);
+						}
+						else
+						{
+							numeroMecanografico = employee2Write.getEmployeeNumber();
 						}
 					}
-					broker.store(funcionario2Write);
+					broker.store(employee2Write);
 					usedPersons.add(person);
-					if (unusedPersons.contains(person)) {
+					if (unusedPersons.contains(person))
+					{
 						unusedPersons.remove(person);
 					}
 					newEmployees++;
-				} else if (resultFuncionario.size() == 1) {
-					Funcionario funcionario = (Funcionario) resultFuncionario.get(0);
-					if (!funcionario.getPerson().equals(person)) {
-						if (!usedPersons.contains(funcionario.getPerson())) {
-							unusedPersons.add(funcionario.getPerson());
+				}
+				else if (resultEmployee.size() == 1)
+				{
+					IEmployee employee = (IEmployee) resultEmployee.get(0);
+					if (!employee.getPerson().equals(person))
+					{
+						if (!usedPersons.contains(employee.getPerson()))
+						{
+							unusedPersons.add(employee.getPerson());
 						}
-						funcionario.setPerson(person);
+						employee.setPerson(person);
 					}
-					broker.store(funcionario);
+					broker.store(employee);
 				}
 
 				// Change the person Username
@@ -166,14 +192,20 @@ public class ServicoSeguroActualizarFuncionarios {
 				query = new QueryByCriteria(Pessoa.class, criteria);
 				List resultPersonUsername = (List) broker.getCollectionByQuery(query);
 				Pessoa personUsername = null;
-				if (resultPersonUsername.size() != 0) {
+				if (resultPersonUsername.size() != 0)
+				{
 					personUsername = (Pessoa) resultPersonUsername.get(0);
-					if (person.getUsername().equals(personUsername.getUsername())) {
-						if (!((person.getNumeroDocumentoIdentificacao().equals(personUsername.getNumeroDocumentoIdentificacao())
-										&& person.getTipoDocumentoIdentificacao().equals(personUsername.getTipoDocumentoIdentificacao())))) {
+					if (person.getUsername().equals(personUsername.getUsername()))
+					{
+						if (!((person
+							.getNumeroDocumentoIdentificacao()
+							.equals(personUsername.getNumeroDocumentoIdentificacao())
+							&& person.getTipoDocumentoIdentificacao().equals(
+								personUsername.getTipoDocumentoIdentificacao()))))
+						{
 							personUsername.setUsername("X" + numeroMecanografico);
 							broker.store(personUsername);
-		
+
 							broker.commitTransaction();
 							broker.beginTransaction();
 						}
@@ -181,7 +213,8 @@ public class ServicoSeguroActualizarFuncionarios {
 				}
 
 				IPersonRole personRole = RoleFunctions.readPersonRole(person, RoleType.EMPLOYEE, broker);
-				if (personRole == null) {
+				if (personRole == null)
+				{
 
 					criteria = new Criteria();
 					criteria.addEqualTo("roleType", RoleType.EMPLOYEE);
@@ -201,7 +234,9 @@ public class ServicoSeguroActualizarFuncionarios {
 				}
 				broker.store(person);
 
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				e.printStackTrace();
 				System.out.println("\nError Migrating Employee " + numeroMecanografico + "\n");
 				//broker.abortTransaction();
@@ -212,9 +247,14 @@ public class ServicoSeguroActualizarFuncionarios {
 		broker.commitTransaction();
 
 		broker.beginTransaction();
-		for (int i = 0; i < unusedPersons.size(); i++) {
+		for (int i = 0; i < unusedPersons.size(); i++)
+		{
 			IPessoa person = (IPessoa) unusedPersons.get(i);
-			System.out.println("PERSON username: " + person.getUsername() + "- bi:" + person.getNumeroDocumentoIdentificacao());
+			System.out.println(
+				"PERSON username: "
+					+ person.getUsername()
+					+ "- bi:"
+					+ person.getNumeroDocumentoIdentificacao());
 			broker.delete(person);
 		}
 		broker.commitTransaction();

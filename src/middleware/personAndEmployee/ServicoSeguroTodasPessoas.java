@@ -9,7 +9,6 @@ import middleware.RoleFunctions;
 import middleware.dataClean.personFilter.LimpaNaturalidades;
 import middleware.dataClean.personFilter.LimpaOutput;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.WordUtils;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
@@ -117,7 +116,7 @@ public class ServicoSeguroTodasPessoas
 					{
 						// A Pessoa Existe
 						person2Write = (IPessoa) result.get(0);
-						updatePerson((Pessoa) person2Write, servico._pessoa);
+						PersonUtils.updatePerson(person2Write, servico._pessoa);
 					}
 
 					//roles
@@ -234,61 +233,5 @@ public class ServicoSeguroTodasPessoas
 	public Collection getListaPessoas()
 	{
 		return _listaPessoas;
-	}
-
-	private static void updatePerson(Pessoa person2Write, Pessoa person2Convert) throws Exception
-	{
-
-		try
-		{
-			// Password Backup
-			String password = new String(person2Write.getPassword());
-			Integer internalCode = new Integer(person2Write.getIdInternal().intValue());
-			String username = new String(person2Write.getUsername());
-			String mobilePhone = null;
-			if (person2Write.getTelemovel() != null)
-			{
-				mobilePhone = new String(person2Write.getTelemovel());
-			}
-			String email = null;
-			if (person2Write.getEmail() != null)
-			{
-				email = new String(person2Write.getEmail());
-			}
-			String url = null;
-			if (person2Write.getEnderecoWeb() != null)
-			{
-				url = new String(person2Write.getEnderecoWeb());
-			}
-
-			Collection rolesLists = person2Write.getPersonRoles();
-			List credtisLists = person2Write.getManageableDepartmentCredits();
-
-			BeanUtils.copyProperties(person2Write, person2Convert);
-
-			person2Write.setIdInternal(internalCode);
-			person2Write.setPassword(password);
-			person2Write.setUsername(username);
-			if (mobilePhone != null)
-			{
-				person2Write.setTelemovel(mobilePhone);
-			}
-			if (email != null)
-			{
-				person2Write.setEmail(email);
-			}
-			if (url != null)
-			{
-				person2Write.setEnderecoWeb(url);
-			}
-			person2Write.setPersonRoles(rolesLists);
-			person2Write.setManageableDepartmentCredits(credtisLists);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			System.out.println("Erro a converter a Pessoa " + person2Convert.getNome());
-			throw new Exception(e);
-		}
 	}
 }

@@ -279,7 +279,12 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB
 
 		pessoa.setPassword(PasswordEncryptor.encryptPassword(numeroDocumentoIdentificacao));
 
-		pessoa.setPais(formataNacionalidadeCompleta(stringTokenizer.nextToken().trim()));
+		ICountry country = formataNacionalidadeCompleta(stringTokenizer.nextToken().trim());
+		pessoa.setPais(country);
+		if(country != null) {
+			pessoa.setChavePais(country.getIdInternal());
+			pessoa.setNacionalidade(WordUtils.capitalize(StringUtils.lowerCase(country.getNationality())));
+		}
 
 		pessoa.getPais().setName(
 			WordUtils.capitalize(StringUtils.lowerCase(pessoa.getPais().getName())));

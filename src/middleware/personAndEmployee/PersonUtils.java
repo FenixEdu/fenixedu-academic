@@ -1,61 +1,100 @@
 /*
  * Created on 26/Jul/2003 by jpvl
- *
+ *  
  */
 package middleware.personAndEmployee;
 
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
+import DataBeans.util.CopyUtils;
+import Dominio.ICountry;
 import Dominio.IPessoa;
 import Dominio.Pessoa;
 
 /**
  * @author jpvl
  */
-public abstract class PersonUtils {
-	public static void updatePerson(
-		IPessoa person2Write,
-		IPessoa person2Convert)
-		throws Exception {
+public abstract class PersonUtils
+{
+	public static void updatePerson(IPessoa person2Write, IPessoa person2Convert) throws Exception
+	{
 
-		try {
-			// Password Backup
+		try
+		{
+			//Backup
 			String password = null;
-			if (person2Write.getPassword() != null) {
+			if (person2Write.getPassword() != null)
+			{
 				password = new String(person2Write.getPassword());
 			}
-
-			Integer internalCode =
-				new Integer(person2Write.getIdInternal().intValue());
+			Integer internalCode = new Integer(person2Write.getIdInternal().intValue());
 			String username = new String(person2Write.getUsername());
-			String mobilePhone = new String(person2Write.getTelemovel());
-			String email = new String(person2Write.getEmail());
-			String url = new String(person2Write.getEnderecoWeb());
+			String mobilePhone = null;
+			if (person2Write.getTelemovel() != null)
+			{
+				mobilePhone = new String(person2Write.getTelemovel());
+			}
+			String email = null;
+			if (person2Write.getEmail() != null)
+			{
+				email = new String(person2Write.getEmail());
+			}
+			String url = null;
+			if (person2Write.getEnderecoWeb() != null)
+			{
+				url = new String(person2Write.getEnderecoWeb());
+			}
+			//backup include ackOptLock, so that errors
+			Integer ackOptLock = person2Write.getAckOptLock();
+
+			ICountry country = person2Write.getPais();
 			Collection rolesLists = person2Write.getPersonRoles();
 			List credtisLists = person2Write.getManageableDepartmentCredits();
+			List advisories = person2Write.getAdvisories();
 
-			BeanUtils.copyProperties(person2Write, person2Convert);
+			CopyUtils.copyProperties(person2Write, person2Convert);
 
 			person2Write.setIdInternal(internalCode);
 			person2Write.setPassword(password);
 			person2Write.setUsername(username);
-			person2Write.setEmail(email);
-			person2Write.setTelemovel(mobilePhone);
-			person2Write.setEnderecoWeb(url);
+			if (mobilePhone != null)
+			{
+				person2Write.setTelemovel(mobilePhone);
+			}
+			if (email != null)
+			{
+				person2Write.setEmail(email);
+			}
+			if (url != null)
+			{
+				person2Write.setEnderecoWeb(url);
+			}
+
+			person2Write.setAckOptLock(ackOptLock);
+
 			person2Write.setPersonRoles(rolesLists);
 			person2Write.setManageableDepartmentCredits(credtisLists);
-
-		} catch (Exception e) {
+			person2Write.setAdvisories(advisories);
+			if (person2Write.getPais() == null
+				|| person2Write.getPais().equals(person2Convert.getPais()))
+			{
+				person2Write.setPais(person2Convert.getPais());
+			}
+			else
+			{
+				person2Write.setPais(country);
+			}
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
-			System.out.println(
-				"Erro a converter a Pessoa " + person2Convert.getNome());
+			System.out.println("Erro a converter a Pessoa " + person2Convert.getNome());
 			throw new Exception(e);
 		}
 	}
@@ -65,7 +104,8 @@ public abstract class PersonUtils {
 		String bi,
 		String usernamePrefix,
 		PersistenceBroker broker)
-		throws Exception {
+		throws Exception
+	{
 
 		Criteria criteriaByBi = new Criteria();
 		criteriaByBi.addEqualTo("numeroDocumentoIdentificacao", bi);
@@ -73,33 +113,39 @@ public abstract class PersonUtils {
 
 		Criteria criteriaByUsername = new Criteria();
 		criteriaByUsername.addEqualTo("username", usernamePrefix + number);
-		List resultByUsername =
-			doQuery(broker, criteriaByUsername, Pessoa.class);
+		List resultByUsername = doQuery(broker, criteriaByUsername, Pessoa.class);
 
 		IPessoa person = null;
-		if (resultByUsername.size() == 1) {
-			IPessoa personByBi = (IPessoa) resultByBi.get(0);
-			IPessoa personByUsername = (IPessoa) resultByUsername.get(0);
+		if (resultByBi.size() == 1)
+		{
+			if (resultByUsername.size() == 1)
+			{
+				IPessoa personByBi = (IPessoa) resultByBi.get(0);
+				IPessoa personByUsername = (IPessoa) resultByUsername.get(0);
 
-			if (personByBi
-				.getUsername()
-				.equals(personByUsername.getUsername())) {
+				if (personByBi.getUsername().equals(personByUsername.getUsername()))
+				{
+					person = (IPessoa) resultByBi.get(0);
+				}
+				else
+				{
+					PersonUtils.updatePerson(personByUsername, personByBi);
+					person = personByUsername;
+					broker.delete(personByBi);
+				}
+			}
+			else
+			{
 				person = (IPessoa) resultByBi.get(0);
-			} else {
-				PersonUtils.updatePerson(personByUsername, personByBi);
-				person = personByUsername;
-				broker.delete(personByBi);
 			}
 		} else {
-			person = (IPessoa) resultByBi.get(0);
+			return null;
 		}
 		return person;
 	}
 
-	private static List doQuery(
-		PersistenceBroker broker,
-		Criteria criteria,
-		Class classToQuery) {
+	private static List doQuery(PersistenceBroker broker, Criteria criteria, Class classToQuery)
+	{
 		Query query = new QueryByCriteria(classToQuery, criteria);
 		return (List) broker.getCollectionByQuery(query);
 	}

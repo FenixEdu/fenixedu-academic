@@ -14,8 +14,9 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
+import Dominio.Employee;
 import Dominio.FuncNaoDocente;
-import Dominio.Funcionario;
+import Dominio.IEmployee;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
 import Dominio.ITeacher;
@@ -41,7 +42,7 @@ public class ServicoSeguroActualizarFuncsDocentes
 	/** Construtor */
 	public ServicoSeguroActualizarFuncsDocentes(String[] args)
 	{
-		ficheiro = args[0];
+		ficheiro = "E:/Projectos/_carregamentos/docente.dat"; //args[0];
 		delimitador = new String(";");
 
 		/* Inicializar Hashtable com atributos a recuperar do ficheiro de texto requeridos */
@@ -98,7 +99,7 @@ public class ServicoSeguroActualizarFuncsDocentes
 				//Read The Employee
 				Criteria criteria = new Criteria();
 				Query query = null;
-				Funcionario funcionario = getFuncionario(broker, numeroMecanografico, criteria);
+				IEmployee employee = getEmployee(broker, numeroMecanografico, criteria);
 
 				// Check if Teacher Exists
 				criteria = new Criteria();
@@ -108,12 +109,12 @@ public class ServicoSeguroActualizarFuncsDocentes
 				query = new QueryByCriteria(Teacher.class, criteria);
 				List resultTeacher = (List) broker.getCollectionByQuery(query);
 
-				if (funcionario == null && resultTeacher.size() == 0)
+				if (employee == null && resultTeacher.size() == 0)
 				{
 					throw new Exception(
 						"Não encontro o funcionário para o professor " + numeroMecanografico);
 				}
-				if (funcionario == null && resultTeacher.size() != 0)
+				if (employee == null && resultTeacher.size() != 0)
 				{
 					throw new Exception(
 						"Erro ao Ler o Funcionario "
@@ -134,7 +135,7 @@ public class ServicoSeguroActualizarFuncsDocentes
 				if (resultTeacher.size() == 0)
 				{
 					teacher = new Teacher();
-					teacher.setPerson(funcionario.getPerson());
+					teacher.setPerson(employee.getPerson());
 					teacher.setTeacherNumber(numeroMecanografico);
 					if(resultCategory != null){
 						teacher.setCategory((ICategory) resultCategory.get(0));
@@ -146,11 +147,11 @@ public class ServicoSeguroActualizarFuncsDocentes
 				{
 					teacher = (ITeacher) resultTeacher.get(0);
 					if ((teacher.getPerson() == null)
-						|| (!teacher.getPerson().equals(funcionario.getPerson())))
+						|| (!teacher.getPerson().equals(employee.getPerson())))
 					{
-						teacher.setPerson(funcionario.getPerson());
+						teacher.setPerson(employee.getPerson());
 					}
-					if ((teacher.getCategory().getCode() == null)
+					if ((teacher.getCategory() == null || teacher.getCategory().getCode() == null)
 						|| (!teacher.getCategory().getCode().equals(categoria)))
 					{
 						
@@ -232,22 +233,22 @@ public class ServicoSeguroActualizarFuncsDocentes
 
 	}
 
-	private static Funcionario getFuncionario(
+	private static IEmployee getEmployee(
 		PersistenceBroker broker,
 		Integer numeroMecanografico,
 		Criteria criteria)
 		throws Exception
 	{
 		Query query;
-		criteria.addEqualTo("numeroMecanografico", numeroMecanografico);
-		query = new QueryByCriteria(Funcionario.class, criteria);
-		List resultFuncionario = (List) broker.getCollectionByQuery(query);
+		criteria.addEqualTo("employeeNumber", numeroMecanografico);
+		query = new QueryByCriteria(Employee.class, criteria);
+		List resultEmployee = (List) broker.getCollectionByQuery(query);
 
-		if (resultFuncionario.size() == 0)
+		if (resultEmployee.size() == 0)
 		{
 			return null;
 			//throw new Exception("Error Reading Existing Employee " + numeroMecanografico);
 		}
-		return (Funcionario) resultFuncionario.get(0);
+		return (IEmployee) resultEmployee.get(0);
 	}
 }
