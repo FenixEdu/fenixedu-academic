@@ -10,7 +10,7 @@
       </font>
     </div>
     <table>
-    <bean:define id="newCandidate" name="<%= SessionConstants.NEW_MASTER_DEGREE_CANDIDATE %>" scope="session" />
+    <bean:define id="newCandidate" name="<%= SessionConstants.NEW_MASTER_DEGREE_CANDIDATE %>" scope="request" />
       <logic:present name="newCandidate">
           <!-- Name -->
           <tr>

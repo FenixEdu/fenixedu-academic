@@ -7,13 +7,18 @@
 <br />
 <span class="error"><html:errors/></span>  
    <table>
-    <bean:define id="specializations" name="<%= SessionConstants.SPECIALIZATIONS %>" scope="session" />
-    <bean:define id="degreeList" name="<%= SessionConstants.DEGREE_LIST %>" scope="session" />
-    <bean:define id="identificationDocumentTypeList" name="<%= SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST %>" scope="session" />
+    <bean:define id="specializations" name="<%= SessionConstants.SPECIALIZATIONS %>" scope="request"/>
+    <bean:define id="degreeList" name="<%= SessionConstants.DEGREE_LIST %>" scope="request"/>
+    <bean:define id="identificationDocumentTypeList" name="<%= SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST %>" scope="request"/>
     <html:form action="/createCandidateDispatchAction?method=create">
 	   <html:hidden property="page" value="1"/>
-
+		<html:hidden property="executionYear"/>
        <!-- Degree Type -->
+       <tr>
+			<td colspan="2">
+				<bean:message key="label.executionYear"/> <bean:write name="createCandidateForm" property="executionYear"/>
+			</td>       
+       </tr>
        <tr>
          <td><bean:message key="label.candidate.specialization"/>:</td>
          <td><html:select property="specialization">
@@ -25,9 +30,9 @@
        <!-- Degree -->
        <tr>
          <td><bean:message key="label.candidate.degree"/>:</td>
-         <td><html:select property="degree">
+         <td><html:select property="executionDegreeOID">
          		<option value="" selected="selected"><bean:message key="label.candidate.degree.default"/></option>
-                <html:options collection="degreeList" property="infoDegreeCurricularPlan.infoDegree.nome" labelProperty="infoDegreeCurricularPlan.infoDegree.nome"/>
+                <html:options collection="degreeList" property="idInternal" labelProperty="infoDegreeCurricularPlan.infoDegree.nome"/>
              </html:select>
          </td>
        </tr>
