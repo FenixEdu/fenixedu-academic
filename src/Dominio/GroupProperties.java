@@ -5,6 +5,7 @@
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 package Dominio;
+import Util.EnrolmentPolicyType;
 
 /**
  * @author asnr and scpo
@@ -14,11 +15,13 @@ package Dominio;
  */
 public class GroupProperties extends DomainObject implements IGroupProperties{
 	
+	
 	private Integer maximumCapacity;
 	private Integer minimumCapacity;
 	private Integer idealCapacity;
-	private String enrolmentPolicy;
+	private EnrolmentPolicyType enrolmentPolicy;
 	private Integer groupMaximumNumber;
+	private String projectName;
 	private Integer keyExecutionCourse;
 	private IDisciplinaExecucao executionCourse;
 	
@@ -30,21 +33,23 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	/** 
 	 * Construtor
 	 */
-	public GroupProperties(IDisciplinaExecucao executionCourse) {
+	public GroupProperties(IDisciplinaExecucao executionCourse,String projectName) {
 			this.executionCourse=executionCourse;
+			this.projectName = projectName;
 	}
 	
 	/** 
 	 * Construtor
 	 */
 	public GroupProperties(Integer maximumCapacity,Integer minimumCapacity,
-							Integer idealCapacity,String enrolmentPolicy,
-	 						Integer groupMaximumNumber,IDisciplinaExecucao executionCourse) {
+							Integer idealCapacity,EnrolmentPolicyType enrolmentPolicy,
+	 						Integer groupMaximumNumber,String projectName,IDisciplinaExecucao executionCourse) {
 		this.maximumCapacity=maximumCapacity;
 		this.minimumCapacity=minimumCapacity;
 		this.idealCapacity=idealCapacity;
-		this.enrolmentPolicy=enrolmentPolicy;
+		this.enrolmentPolicy= enrolmentPolicy;
 		this.groupMaximumNumber=groupMaximumNumber;
+		this.projectName = projectName;
 		this.executionCourse=executionCourse;
 		}
 	
@@ -54,7 +59,8 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	public boolean equals(Object arg0) {
 		boolean result = false;
 		if (arg0 instanceof IGroupProperties) {
-			result = (getExecutionCourse().equals(((IGroupProperties) arg0).getExecutionCourse()));
+			result =(getExecutionCourse().equals(((IGroupProperties) arg0).getExecutionCourse()))&&
+					(getProjectName().equals(((IGroupProperties) arg0).getProjectName()));
 		} 
 		return result;		
 	}
@@ -69,6 +75,7 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 		result += ", idealCapacity=" + getIdealCapacity();
 		result += ", enrolmentPolicy=" + getEnrolmentPolicy();
 		result += ", groupMaximumNumber=" + getGroupMaximumNumber();
+		result += ", projectName=" + getProjectName();
 		result += ", executionCourse=" + getExecutionCourse();
 		result += "]";
 		return result;
@@ -106,7 +113,7 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	/**
 	* @return EnrolmentPolicy
 	*/
-	public String getEnrolmentPolicy() {
+	public EnrolmentPolicyType getEnrolmentPolicy() {
 		return enrolmentPolicy;
 	}
 			
@@ -117,7 +124,13 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 		return groupMaximumNumber;
 	}
 
-	
+	/**
+	* @return String
+	*/
+	public String getProjectName() {
+		return projectName;
+	}
+
 
 	/**
 	 * @return Turno
@@ -162,7 +175,7 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	* Sets the enrolmentPolicy.
 	* @param enrolmentPolicy The enrolmentPolicy to set
 	*/
-	public void setEnrolmentPolicy(String enrolmentPolicy) {
+	public void setEnrolmentPolicy(EnrolmentPolicyType enrolmentPolicy) {
 		this.enrolmentPolicy=enrolmentPolicy;
 	}		
 	/**
@@ -172,7 +185,13 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	public void setGroupMaximumNumber(Integer groupMaximumNumber) {
 		this.groupMaximumNumber=groupMaximumNumber;
 	}	
-
+	/**
+	* Sets the projectName.
+	* @param projectName The projectName to set
+	*/
+		public void setProjectName(String projectName) {
+			this.projectName=projectName;
+		}
 	/**
 	* Sets the executionCourse.
 	* @param executionCourse The executionCourse to set

@@ -21,6 +21,7 @@ import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentGroupProperties;
 import ServidorPersistente.ISuportePersistente;
+import Util.EnrolmentPolicyType;
 
 /**
  * @author asnr and scpo
@@ -93,13 +94,13 @@ public class GroupPropertiesOJBTest extends TestCaseOJB {
   
   
   /** Test of readByExam method, of class ServidorPersistente.OJB.MarkOJB. */
-	public void testReadBy() {
+	public void testReadGroupPropertiesByExecutionCourseAndProjectName() {
 		
 	  	
 		//read existing GroupProperties  
 		try {
 				persistentSupport.iniciarTransaccao();	
-				IGroupProperties existingGroupProperties = persistentGroupProperties.readBy(executionCourse1);
+				IGroupProperties existingGroupProperties = persistentGroupProperties.readGroupPropertiesByExecutionCourseAndProjectName(executionCourse1,"projectB");
 			  	assertNotNull(existingGroupProperties);			
 			  	persistentSupport.confirmarTransaccao();
 
@@ -110,7 +111,7 @@ public class GroupPropertiesOJBTest extends TestCaseOJB {
 		  // read unexisting GroupProperties
 		  try {
 				persistentSupport.iniciarTransaccao();	
-				IGroupProperties unexistingGroupProperties = persistentGroupProperties.readBy(executionCourse2);
+				IGroupProperties unexistingGroupProperties = persistentGroupProperties.readGroupPropertiesByExecutionCourseAndProjectName(executionCourse2,"nonExistingProject");
 				assertNull(unexistingGroupProperties);			
 				persistentSupport.confirmarTransaccao();
 
@@ -119,13 +120,41 @@ public class GroupPropertiesOJBTest extends TestCaseOJB {
 		  }
 	  }	
   
+	/** Test of readByExam method, of class ServidorPersistente.OJB.MarkOJB. */
+		public void testReadAllGroupPropertiesByExecutionCourse() {
+		
+	  	
+			//read existing GroupProperties  
+			try {
+					persistentSupport.iniciarTransaccao();	
+					List existingGroupProperties = persistentGroupProperties.readAllGroupPropertiesByExecutionCourse(executionCourse1);
+					assertEquals(existingGroupProperties.size(),2);			
+					persistentSupport.confirmarTransaccao();
+
+			  } catch (ExcepcaoPersistencia ex) {
+				  fail("testReadBy:fail read existing all executionCourse's GroupProperties ");
+			  }
+
+			  // read unexisting GroupProperties
+			  try {
+					persistentSupport.iniciarTransaccao();	
+					List unexistingGroupProperties = persistentGroupProperties.readAllGroupPropertiesByExecutionCourse(executionCourse2);
+					assertEquals(unexistingGroupProperties.size(),0);			
+					persistentSupport.confirmarTransaccao();
+
+			  } catch (ExcepcaoPersistencia ex) {
+				  fail("testReadBy:fail read non - existing executionCourse's GroupProperties");
+			  }
+		  }	
+  
+  
 	/** Test of delete method, of class ServidorPersistente.OJB.GroupPropertiesOJB. */
 		public void testDeleteGroupProperties() {
 			
 			try {
 			//	read existing GroupProperties
 				persistentSupport.iniciarTransaccao();	
-				IGroupProperties groupProperties =  persistentGroupProperties.readBy(executionCourse1);
+				IGroupProperties groupProperties =  persistentGroupProperties.readGroupPropertiesByExecutionCourseAndProjectName(executionCourse1,"projectB");
 				assertNotNull(groupProperties);	
 				persistentGroupProperties.delete(groupProperties);
 				persistentSupport.confirmarTransaccao();
@@ -133,7 +162,7 @@ public class GroupPropertiesOJBTest extends TestCaseOJB {
 			//	trying to read deleted GroupProperties
 				persistentSupport.iniciarTransaccao();	
 				
-				IGroupProperties groupPropertiesDeleted =  persistentGroupProperties.readBy(executionCourse1);
+				IGroupProperties groupPropertiesDeleted =  persistentGroupProperties.readGroupPropertiesByExecutionCourseAndProjectName(executionCourse1,"projectB");
 				assertNull(groupPropertiesDeleted);	
 				persistentSupport.confirmarTransaccao();
 			} catch (ExcepcaoPersistencia ex) {
@@ -148,7 +177,7 @@ public class GroupPropertiesOJBTest extends TestCaseOJB {
 			try{
 				//write existing GroupProperties
 				persistentSupport.iniciarTransaccao();
-				IGroupProperties existingGroupProperties = persistentGroupProperties.readBy(executionCourse1);
+				IGroupProperties existingGroupProperties = persistentGroupProperties.readGroupPropertiesByExecutionCourseAndProjectName(executionCourse1,"projectB");
 				persistentGroupProperties.lockWrite(existingGroupProperties);
 				persistentSupport.confirmarTransaccao();
 			}catch(ExcepcaoPersistencia excepcaoPersistencia) 
@@ -160,7 +189,7 @@ public class GroupPropertiesOJBTest extends TestCaseOJB {
 			//	write existing GroupProperties
 			try{
 				persistentSupport.iniciarTransaccao();
-				IGroupProperties existingGroupPropertiesToChange = persistentGroupProperties.readBy(executionCourse1);
+				IGroupProperties existingGroupPropertiesToChange = persistentGroupProperties.readGroupPropertiesByExecutionCourseAndProjectName(executionCourse1,"projectB");
 				Integer idAntigo = existingGroupPropertiesToChange.getIdInternal();
 				existingGroupPropertiesToChange.setIdInternal(new Integer(idAntigo.intValue()+1));
 				persistentGroupProperties.lockWrite(existingGroupPropertiesToChange);
@@ -172,8 +201,8 @@ public class GroupPropertiesOJBTest extends TestCaseOJB {
 			}
 			
 			GroupProperties newGroupProperties =  new GroupProperties(new Integer(4),new Integer (1),
-			new Integer(3),"enrolmentPolicy",
-			new Integer(10),executionCourse2);
+			new Integer(3),new EnrolmentPolicyType(2),
+			new Integer(10),"projectD",executionCourse2);
 			
 			try {
 				persistentSupport.iniciarTransaccao();
@@ -186,7 +215,7 @@ public class GroupPropertiesOJBTest extends TestCaseOJB {
 			
 			try {
 				persistentSupport.iniciarTransaccao();
-				IGroupProperties newGroupPropertiesRead = persistentGroupProperties.readBy(executionCourse2);
+				IGroupProperties newGroupPropertiesRead = persistentGroupProperties.readGroupPropertiesByExecutionCourseAndProjectName(executionCourse2,"projectD");;
 				assertNotNull(newGroupPropertiesRead);
 				persistentSupport.confirmarTransaccao();
 			} catch (ExcepcaoPersistencia excepcaoPersistencia) {
@@ -205,7 +234,7 @@ public class GroupPropertiesOJBTest extends TestCaseOJB {
 				//	read all groupProperties	
 					persistentSupport.iniciarTransaccao();	
 					allGroupProperties = persistentGroupProperties.readAll();
-					assertEquals(allGroupProperties.size(),3);
+					assertEquals(allGroupProperties.size(),4);
 					persistentSupport.confirmarTransaccao();
 					
 				//	deleteAll Method
@@ -235,7 +264,7 @@ public class GroupPropertiesOJBTest extends TestCaseOJB {
 				//	read all groupProperties	
 					persistentSupport.iniciarTransaccao();	
 					allGroupProperties = persistentGroupProperties.readAll();
-					assertEquals(allGroupProperties.size(),3);
+					assertEquals(allGroupProperties.size(),4);
 					persistentSupport.confirmarTransaccao();
 					
 					

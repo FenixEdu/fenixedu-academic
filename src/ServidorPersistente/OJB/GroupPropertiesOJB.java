@@ -29,12 +29,22 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 public class GroupPropertiesOJB extends ObjectFenixOJB implements IPersistentGroupProperties{
 	
 	
-	public IGroupProperties readBy(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
+	public List readAllGroupPropertiesByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
 
 			Criteria criteria = new Criteria(); 
 			criteria.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());	
-			return (IGroupProperties) queryObject(GroupProperties.class, criteria);
+			return (List) queryList(GroupProperties.class, criteria);
 	}
+	
+	public IGroupProperties readGroupPropertiesByExecutionCourseAndProjectName(IDisciplinaExecucao executionCourse,String projectName) throws ExcepcaoPersistencia {
+
+			Criteria criteria1 = new Criteria(); 
+			Criteria criteria2 = new Criteria(); 
+			criteria1.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());	
+			criteria2.addEqualTo("projectName", projectName);
+			criteria1.addAndCriteria(criteria2);	
+			return (IGroupProperties) queryObject(GroupProperties.class, criteria1);
+		}
 		
 	public List readAll() throws ExcepcaoPersistencia {
 
@@ -69,7 +79,7 @@ public class GroupPropertiesOJB extends ObjectFenixOJB implements IPersistentGro
 			return;
 
 		// read studentGroup from DB	
-		groupPropertiesFromDB = readBy(groupPropertiesToWrite.getExecutionCourse());
+		groupPropertiesFromDB = readGroupPropertiesByExecutionCourseAndProjectName(groupPropertiesToWrite.getExecutionCourse(),groupPropertiesToWrite.getProjectName());
 		
 
 		// if (studentGroup not in database) then write it

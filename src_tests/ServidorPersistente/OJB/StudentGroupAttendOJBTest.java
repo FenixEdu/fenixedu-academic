@@ -94,9 +94,9 @@ public class StudentGroupAttendOJBTest extends TestCaseOJB{
 		
 		
 					
-			groupProperties1 = persistentGroupProperties.readBy(executionCourse1);
+			groupProperties1 = persistentGroupProperties.readGroupPropertiesByExecutionCourseAndProjectName(executionCourse1,"projectC");
 			
-			IGroupProperties groupProperties2 = persistentGroupProperties.readBy(executionCourse2);
+			IGroupProperties groupProperties2 = persistentGroupProperties.readGroupPropertiesByExecutionCourseAndProjectName(executionCourse2,"projectB");
 			
 			studentGroup1 = persistentStudentGroup.readBy(groupProperties1,new Integer(1));
 			studentGroup2 = persistentStudentGroup.readBy(groupProperties2,new Integer(1));

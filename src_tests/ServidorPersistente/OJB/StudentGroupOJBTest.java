@@ -64,7 +64,7 @@ public class StudentGroupOJBTest extends TestCaseOJB {
 		IDisciplinaExecucao executionCourse1 = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("PO","2002/2003","MEEC");
 		
 		
-		groupProperties1 = persistentGroupProperties.readBy(executionCourse1);
+		groupProperties1 = persistentGroupProperties.readGroupPropertiesByExecutionCourseAndProjectName(executionCourse1,"projectB");
 		
 		
 		persistentSupport.confirmarTransaccao();

@@ -19,7 +19,8 @@ import Dominio.IGroupProperties;
 public interface IPersistentGroupProperties extends IPersistentObject{
 	public void delete(IGroupProperties groupProperties) throws ExcepcaoPersistencia;
 	public void deleteAll() throws ExcepcaoPersistencia;
-	public List readAll() throws ExcepcaoPersistencia;
+	public List readAllGroupPropertiesByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
 	public void lockWrite(IGroupProperties groupProperties) throws ExcepcaoPersistencia;
-	public IGroupProperties readBy(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
+	public IGroupProperties readGroupPropertiesByExecutionCourseAndProjectName(IDisciplinaExecucao executionCourse,String projectName) throws ExcepcaoPersistencia;
+	public List readAll() throws ExcepcaoPersistencia;
 }
