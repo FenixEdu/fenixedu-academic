@@ -29,10 +29,6 @@ public class AccessAnnouncementManagementAction extends FenixAction {
 
 		
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-		
-
-
-		
 
 		InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 
@@ -44,9 +40,9 @@ public class AccessAnnouncementManagementAction extends FenixAction {
 		List announcements = (List) manager.executar(userView, "ReadAnnouncements", args);
 		session.setAttribute("Announcements", announcements);
 		
-//		2 - ?
-//		  userView.setAnunciosNome("Announcements");
-		  session.setAttribute("AnnouncementsName", "Announcements");
+		session.setAttribute("AnnouncementsName", "Announcements");
+		  
+//		session.setAttribute("method", "showAnnouncements");
 		  
 		return mapping.findForward("AnnouncementManagement");
 	}

@@ -32,10 +32,6 @@ public class AnnouncementManagementAction extends FenixLookupDispatchAction {
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession(false);
 
-		/*
-		 * TODO:
-		 * input .jsp
-		 */
 		DynaActionForm insertAnnouncementForm = (DynaActionForm) form;
 		String title = (String) insertAnnouncementForm.get("title");
 		String information = (String) insertAnnouncementForm.get("information");
@@ -108,6 +104,14 @@ public class AnnouncementManagementAction extends FenixLookupDispatchAction {
 			return mapping.findForward("accessAnnouncementManagement");
 	}
 
+	public ActionForward showAnnouncements(
+		ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+
+			//return to announcementManagement
+			return mapping.findForward("showAnnouncements");
+	}
+
 	/**
 	 * @see ServidorApresentacao.Action.FenixLookupDispatchAction#getKeyMethodMap()
 	 */
@@ -118,6 +122,9 @@ public class AnnouncementManagementAction extends FenixLookupDispatchAction {
 		map.put("button.edit", "prepareEditAnnouncement");
 
 		map.put("button.save", "editAnnouncement");
+		
+		map.put("showAnnouncements", "showAnnouncements");
+		
 		return map;
 	}
 }

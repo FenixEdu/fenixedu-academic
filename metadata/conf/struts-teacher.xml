@@ -212,10 +212,9 @@
      <action path="/naoExecutado" forward="/error.jsp"/>
 	 <action path="/naoAutorizado" forward="/notAuthorizedError.jsp"/>
 	
-		<action name="accessAnnouncementManagementAction"
-    	type="ServidorApresentacao.Action.teacher.AccessAnnouncementManagementAction" 
+		<action type="ServidorApresentacao.Action.teacher.AccessAnnouncementManagementAction" 
     	path="/accessAnnouncementManagementAction">
-        <forward name="AnnouncementManagement"  path="/announcementManagementAction.do" redirect="true"/>
+        <forward name="AnnouncementManagement"  path="/announcementManagementAction.do?method=Mostrar Anúncios" />
 	</action>
 
 	<action     path="/bibliographicReferenceManager"
