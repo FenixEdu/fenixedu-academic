@@ -661,7 +661,8 @@
 
 	<collection-descriptor
 			name="scopes"
-			element-class-ref="Dominio.CurricularCourseScope">
+			element-class-ref="Dominio.CurricularCourseScope"
+			proxy="true">
 		<inverse-foreignkey field-ref="curricularSemesterKey"/>
 	</collection-descriptor>    
 
@@ -714,7 +715,8 @@
 
 	<collection-descriptor
 			name="scopes"
-			element-class-ref="Dominio.CurricularCourseScope">
+			element-class-ref="Dominio.CurricularCourseScope"
+			proxy="true">
 		<inverse-foreignkey field-ref="branchKey"/>
 	</collection-descriptor>    
 
