@@ -49,12 +49,15 @@
     name="workingHours"
     column="chaveHorarioActual"
     jdbc-type="INTEGER"
-  />
+   />
   <field-descriptor id="4"
     name="antiquity"
     column="antiguidade"
     jdbc-type="DATE"
   />
+    
+  <field-descriptor id="5" name="active" column="ACTIVE" jdbc-type="BIT"/>
+  
   <reference-descriptor
          name="person"
          class-ref="Dominio.Pessoa">
