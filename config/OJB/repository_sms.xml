@@ -1,0 +1,71 @@
+<!-- Please keep user defined mappings in this file only
+     to avoid mixing user defined and system mappings. -->   
+<!-- Mapping of User defined classes starts here -->
+
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for Dominio.sms.SentSms -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="Dominio.sms.SentSms" table="SENT_SMS">
+	
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+
+	<field-descriptor 
+	    name="keyPerson"
+	    column="KEY_PERSON"
+	    jdbc-type="INTEGER"
+	/>
+   
+	<field-descriptor 
+	    name="destinationNumber"
+	    column="DESTINATION_NUMBER"
+	    jdbc-type="INTEGER"
+	/>   
+   
+	<field-descriptor 
+	    name="sendDate"
+	    column="SEND_DATE"
+	    jdbc-type="TIMESTAMP"
+	    conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+	/>     
+
+	<field-descriptor 
+	    name="deliveryDate"
+	    column="DELIVERY_DATE"
+	    jdbc-type="TIMESTAMP"
+	    conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+	/>   
+	   
+	<field-descriptor 
+	    name="deliveryType"
+	    column="DELIVERY_TYPE"
+	    jdbc-type="INTEGER"
+	    conversion="ServidorPersistente.Conversores.JavaSmsDeliveryType2SqlSmsDeliveryTypeFieldConversion"   			   		
+	/>  
+		   
+	<field-descriptor
+	   	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+	/>
+	
+	<reference-descriptor
+       	name="person"
+       	class-ref="Dominio.Pessoa"
+       	proxy="true"
+		refresh="true"
+    >
+		<foreignkey field-ref="keyPerson"/>
+	</reference-descriptor>
+	
+</class-descriptor>
+
+
+
+<!-- Mapping of User defined classes ends here -->
