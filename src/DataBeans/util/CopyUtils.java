@@ -37,37 +37,21 @@ public class CopyUtils {
 		throws
 			InstantiationException,
 			IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-		PropertyDescriptor[] fields = PropertyUtils.getPropertyDescriptors(sourceBean.getClass());
-		for (int i = 0; i < fields.length; i++) {
-			PropertyDescriptor propertyDescriptor = fields[i];
-			Class fieldClass = propertyDescriptor.getPropertyType();
-			Class[] interfaces = fieldClass.getInterfaces();
-			List interfacesList = Arrays.asList(interfaces);
-			
-			if (CollectionUtils
-				.intersection(interfacesNotToCopy, interfacesList)
-				.isEmpty()) {
-				String propertyName = propertyDescriptor.getName();
-				boolean isReadable = PropertyUtils.isReadable(sourceBean, propertyName);
-				if (isReadable) // readable on source
-				{
-					boolean isWriteable = PropertyUtils.isWriteable(destinationBean, propertyName);
-					if (isWriteable) // writeable on destination
-					{
-						Object value = PropertyUtils.getSimpleProperty(sourceBean, propertyName);
-						try
-						{
-							BeanUtils.copyProperty(destinationBean, propertyName, value);
-						} catch (IllegalArgumentException e)
-						{
-							System.out.println("Property " + propertyName + "class " + sourceBean.getClass().getName());
-							System.out.println("is not of the same type that			 in class " + destinationBean.getClass().getName());
-						}
-
-					}
-				}
-			}
-		}
+		BeanUtils.copyProperties(destinationBean, sourceBean);
+//		PropertyDescriptor[] fields = PropertyUtils.getPropertyDescriptors(sourceBean.getClass());
+//		for (int i = 0; i < fields.length; i++) {
+//			PropertyDescriptor propertyDescriptor = fields[i];
+//			Class fieldClass = propertyDescriptor.getPropertyType();
+//			Class[] interfaces = fieldClass.getInterfaces();
+//			List interfacesList = Arrays.asList(interfaces);
+//
+//			if (CollectionUtils
+//				.intersection(interfacesNotToCopy, interfacesList)
+//				.isEmpty() && !propertyDescriptor.getName().equals("class")) {
+//				Object value = PropertyUtils.getProperty(sourceBean, propertyDescriptor.getName());
+//				BeanUtils.copyProperty(destinationBean, propertyDescriptor.getName(), value);
+//			}
+//		}
 		return destinationBean;
 	}
 }
