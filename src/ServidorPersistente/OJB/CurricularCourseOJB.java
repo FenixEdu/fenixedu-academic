@@ -62,6 +62,44 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
+	
+	public List readCurricularCoursesByName(String name) throws ExcepcaoPersistencia {
+			try {
+					String oqlQuery = "select all from " + CurricularCourse.class.getName();
+					oqlQuery += " where name = $1";
+					query.create(oqlQuery);
+					query.bind(name);
+
+					List result = (List) query.execute();
+					try {
+							lockRead(result);
+					} catch (ExcepcaoPersistencia ex) {
+						throw ex;
+					}
+				return result;
+			} catch (QueryException ex) {
+				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+			}
+	}
+	
+	public List readCurricularCoursesByCode(String code) throws ExcepcaoPersistencia {
+				try {
+						String oqlQuery = "select all from " + CurricularCourse.class.getName();
+						oqlQuery += " where code = $1";
+						query.create(oqlQuery);
+						query.bind(code);
+
+						List result = (List) query.execute();
+						try {
+								lockRead(result);
+						} catch (ExcepcaoPersistencia ex) {
+							throw ex;
+						}
+					return result;
+				} catch (QueryException ex) {
+					throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+				}
+		}
 
 	public void lockWrite(ICurricularCourse curricularCourseToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
 
