@@ -1,4 +1,3 @@
-
 package ServidorAplicacao.Filtro;
 
 import java.util.ArrayList;
@@ -26,8 +25,7 @@ import Util.RoleType;
  */
 public class CandidateApprovalAuthorizationFilter extends Filtro {
 
-	public final static CandidateApprovalAuthorizationFilter instance =
-		new CandidateApprovalAuthorizationFilter();
+	public final static CandidateApprovalAuthorizationFilter instance = new CandidateApprovalAuthorizationFilter();
 
 	/**
 	 * The singleton access method of this class.
@@ -38,7 +36,6 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
 	public static Filtro getInstance() {
 		return instance;
 	}
-
 
 	public void preFiltragem(IUserView id, IServico servico, Object[] argumentos) throws Exception {
 
@@ -55,35 +52,32 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
 	 * @return boolean
 	 */
 	private boolean containsRole(Collection roles) {
-		Iterator rolesIterator = roles.iterator();
 
 		CollectionUtils.intersection(roles, getNeededRoles());
 
-		if (roles.size() != 0){
-			return true;			
+		if (roles.size() != 0) {
+			return true;
 		} else {
 			return false;
 		}
 	}
-	
-	
+
 	/**
 	 * @return The Needed Roles to Execute The Service
 	 */
 	private Collection getNeededRoles() {
 		List roles = new ArrayList();
-		
+
 		InfoRole infoRole = new InfoRole();
 		infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
 		roles.add(infoRole);
-		 
+
 		infoRole = new InfoRole();
 		infoRole.setRoleType(RoleType.COORDINATOR);
 		roles.add(infoRole);
-				
+
 		return roles;
 	}
-
 
 	/**
 	 * @param id
@@ -91,60 +85,55 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
 	 * @return  
 	 */
 	private boolean hasPrivilege(IUserView id, Object[] arguments) throws ExcepcaoPersistencia {
-	
+
 		List roles = getRoleList((List) id.getRoles());
 		CollectionUtils.intersection(roles, getNeededRoles());
 
 		SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
 
-		IUserView userView = (IUserView) id;
-		
 		List roleTemp = new ArrayList();
 		roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
 		if (CollectionUtils.containsAny(roles, roleTemp)) {
 			return true;
-		} 
-		
+		}
+
 		roleTemp = new ArrayList();
 		roleTemp.add(RoleType.COORDINATOR);
 		if (CollectionUtils.containsAny(roles, roleTemp)) {
-			
-			 ITeacher teacher = null;
+
+			ITeacher teacher = null;
 			// Read The ExecutionDegree
 			try {
-								
-				String situations[] = (String[]) arguments[0];
-				String ids[] = (String[]) arguments[1];
-				String remarks[] = (String[]) arguments[2];
-				String substitutes[] = (String[]) arguments[3];
 
-				
+				String ids[] = (String[]) arguments[1];
+
 				teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
-	
-				for (int i = 0; i < ids.length; i++){
+
+				for (int i = 0; i < ids.length; i++) {
 					IMasterDegreeCandidate mdcTemp = new MasterDegreeCandidate();
 					mdcTemp.setIdInternal(new Integer(ids[i]));
-					
-					IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate().readByOId(mdcTemp, false);
-					
-					if (!masterDegreeCandidate.getExecutionDegree().getCoordinator().equals(teacher)){
+
+					IMasterDegreeCandidate masterDegreeCandidate =
+						(IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate().readByOId(mdcTemp, false);
+
+					if (!masterDegreeCandidate.getExecutionDegree().getCoordinator().equals(teacher)) {
 						return false;
 					}
 				}
 			} catch (Exception e) {
 				return false;
 			}
-		} 
-		return true;		
+		}
+		return true;
 	}
-	
-	private List getRoleList(List roles){
+
+	private List getRoleList(List roles) {
 		List result = new ArrayList();
 		Iterator iterator = roles.iterator();
-		while(iterator.hasNext()){
+		while (iterator.hasNext()) {
 			result.add(((InfoRole) iterator.next()).getRoleType());
 		}
-		
+
 		return result;
 	}
 
