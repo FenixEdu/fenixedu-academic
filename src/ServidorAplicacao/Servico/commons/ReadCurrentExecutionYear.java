@@ -37,7 +37,7 @@ public class ReadCurrentExecutionYear implements IServico {
 		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 		IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
 		
-		IExecutionYear executionYear= persistentExecutionYear.readActualExecutionYear();
+		IExecutionYear executionYear= persistentExecutionYear.readCurrentExecutionYear();
 		
 		infoExecutionYear = Cloner.copyIExecutionYear2InfoExecutionYear(executionYear);
 

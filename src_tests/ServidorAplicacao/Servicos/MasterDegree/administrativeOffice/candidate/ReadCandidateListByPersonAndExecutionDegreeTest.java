@@ -68,7 +68,7 @@ public class ReadCandidateListByPersonAndExecutionDegreeTest extends TestCaseRea
 		sp = SuportePersistenteOJB.getInstance();
 		sp.iniciarTransaccao();
   		
-		IExecutionYear executionYear = sp.getIPersistentExecutionYear().readActualExecutionYear();
+		IExecutionYear executionYear = sp.getIPersistentExecutionYear().readCurrentExecutionYear();
 		assertNotNull(executionYear);
 
 		ICurso degree = sp.getICursoPersistente().readBySigla("MEEC");
@@ -103,7 +103,7 @@ public class ReadCandidateListByPersonAndExecutionDegreeTest extends TestCaseRea
   		sp = SuportePersistenteOJB.getInstance();
   		sp.iniciarTransaccao();
   		
-  		IExecutionYear executionYear = sp.getIPersistentExecutionYear().readActualExecutionYear();
+  		IExecutionYear executionYear = sp.getIPersistentExecutionYear().readCurrentExecutionYear();
   		assertNotNull(executionYear);
   		
   		ICurso degree = sp.getICursoPersistente().readBySigla("MEEC");

@@ -67,7 +67,7 @@ public class ReadMasterDegreeCandidateTest extends TestCaseReadServicesIntranet 
 		sp = SuportePersistenteOJB.getInstance();
 		sp.iniciarTransaccao();
   		
-		IExecutionYear executionYear = sp.getIPersistentExecutionYear().readActualExecutionYear();
+		IExecutionYear executionYear = sp.getIPersistentExecutionYear().readCurrentExecutionYear();
 		assertNotNull(executionYear);
 
 		ICurso degree = sp.getICursoPersistente().readBySigla("MEEC");
@@ -101,7 +101,7 @@ public class ReadMasterDegreeCandidateTest extends TestCaseReadServicesIntranet 
 		sp = SuportePersistenteOJB.getInstance();
 		sp.iniciarTransaccao();
   		
-		IExecutionYear executionYear = sp.getIPersistentExecutionYear().readActualExecutionYear();
+		IExecutionYear executionYear = sp.getIPersistentExecutionYear().readCurrentExecutionYear();
 		assertNotNull(executionYear);
 
 		ICurso degree = sp.getICursoPersistente().readBySigla("MEEC");

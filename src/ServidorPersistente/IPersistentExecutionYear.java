@@ -43,11 +43,5 @@ public interface IPersistentExecutionYear extends IPersistentObject {
 	public boolean delete(IExecutionYear executionYear);
 	
 	
-	/**
-	 * @param No Parameters
-	 * @return IExecutionYear
-	 * Note: all the execution Years must be in the form XXXX/XXXX 
-	 * 
-	 */
-	public IExecutionYear readActualExecutionYear() throws ExcepcaoPersistencia ;
+	public IExecutionYear readCurrentExecutionYear() throws ExcepcaoPersistencia ;
 }

@@ -203,7 +203,7 @@ public class ExecutionYearOJBTest extends TestCaseOJB {
 
 			persistentSupport.iniciarTransaccao();
 			
-			IExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear().readActualExecutionYear();
+			IExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear().readCurrentExecutionYear();
 			assertNotNull(executionYear);
 			assertEquals(executionYear.getYear(), "2002/2003");
 			persistentSupport.confirmarTransaccao();

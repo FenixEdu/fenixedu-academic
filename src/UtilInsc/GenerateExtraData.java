@@ -89,7 +89,7 @@ public class GenerateExtraData {
 			teacherCriteria.setIdInternal(new Integer(1));
 			ITeacher teacher = (ITeacher) persistentTeacher.readByOId(teacherCriteria, true);
 			IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
-			IExecutionYear executionYear = persistentExecutionYear.readActualExecutionYear();
+			IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
 			ICursoExecucao executionDegree = new CursoExecucao();
 			executionDegree.setCoordinator(teacher);
 			executionDegree.setCurricularPlan(oldDegreeCurricularPlan);
@@ -184,7 +184,7 @@ public class GenerateExtraData {
 			IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 			try {
 				degreeCurricularPlan2 = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(degreeCurricularPlan);
-				IExecutionYear executionYear = persistentExecutionYear.readActualExecutionYear();
+				IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
 				ITeacher teacher = persistentTeacher.readTeacherByNumber(new Integer(1));
 				ICursoExecucao executionDegree = new CursoExecucao();
 				executionDegree.setCoordinator(teacher);
