@@ -2,8 +2,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %> 
-<bean:define id="seminary" type="DataBeans.Seminaries.InfoSeminary" scope="request" name="seminary"/>
-<bean:define id="equivalencies" type="java.util.List" scope="page" name="seminary" property="equivalencies"/>
+<bean:define id="seminary" scope="request" name="seminary"/>
+<bean:define id="equivalencies" scope="page" name="seminary" property="equivalencies"/>
 <logic:notEmpty name="equivalencies">
 	<logic:present name="seminary" >
     	<h2><bean:write name="seminary" property="name"/></h2>
@@ -15,7 +15,7 @@
     		<td class="listClasses-header" ><bean:message key="label.themesTitle" /></td>
     		<td class="listClasses-header" ><bean:message key="label.enroll" /></td>
     	</tr>	
-    		<logic:iterate id="equivalency" type="DataBeans.Seminaries.InfoEquivalency" name="equivalencies">
+    		<logic:iterate id="equivalency" name="equivalencies">
     		<tr>
     			<td class="listClasses"><bean:write name="equivalency" property="curricularCourse.name"/></td>	
     			<td class="listClasses"><bean:write name="equivalency" property="modality.name"/></td>		
