@@ -195,5 +195,30 @@
   	  </field>	    
     </form>
     
+    <!-- validation for the Send SMS form -->
+	<form name="sendSmsForm">    	
+
+		<field property="destinationPhoneNumber" depends="required,integer,minlength" page="1">
+			<arg0 key="label.person.destinationPhoneNumber" />
+			<arg1 name="minlength" key="${var:minlength}" resource="false"/>
+			<var>
+				<var-name>minlength</var-name>
+				<var-value>9</var-value>
+			</var>	        
+		</field>	
+		
+		
+    	
+		<field property="message" depends="required,maxlength" page="1">
+			<arg0 key="label.person.message" />
+			<arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
+	        <var>
+				<var-name>maxlength</var-name>
+				<var-value>160</var-value>
+			</var>			
+		</field>	    	              
+
+    </form>
+    
   </formset>
 </form-validation>

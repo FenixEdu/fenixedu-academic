@@ -88,6 +88,17 @@
         <form-property name="infoPerson#idInternal" type="java.lang.Integer" />
       </form-bean>
 
+	  <!-- Dynamic-FormBean for Qualification Edit-->
+      <form-bean name="sendSmsForm" 
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+     	<form-property name="page" type="java.lang.Integer"/>
+        <form-property name="destinationPhoneNumber" type="java.lang.Integer" />
+        <form-property name="message" type="java.lang.String" />
+        <form-property name="charCount" type="java.lang.String" />        
+        <form-property name="method" type="java.lang.String" />
+      </form-bean>
+
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -200,7 +211,31 @@
    		<forward name="successfull-delete" path="/readQualifications.do?page=0"/>
  	   </action>
 
+		<!-- Action to send a SMS -->
+		<action path="/sendSms"
+			type="ServidorApresentacao.Action.person.SendSmsDispatchAction"
+			parameter="method"
+			scope="request"
+			name="sendSmsForm"
+			input="/sendSms.do?method=prepare&amp;page=0"
+		>
+			<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+					key="ServidorApresentacao.Action.exceptions.FenixActionException"
+					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>							
+			<forward name="start" path="df.page.sendSms"/>
+			<forward name="error" path="df.page.sendSmsError"/>		
+		</action>
 
+		<action path="/viewSmsDeliveryReports"
+			type="ServidorApresentacao.Action.person.ViewSmsDeliveryReportsAction"
+			scope="request"
+		>
+			<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+					key="ServidorApresentacao.Action.exceptions.FenixActionException"
+					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>							
+			<forward name="start" path="df.page.viewSmsDeliveryReports"/>	
+		</action>
+		
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
@@ -217,7 +252,7 @@
     
     <plug-in className="org.apache.struts.tiles.TilesPlugin" >
 		<set-property property="definitions-config"
-					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/person/tiles-person-pages-definitions.xml,/WEB-INF/tiles/teacher/tiles-teacher-definitions.xml,/WEB-INF/tiles/teacher/tiles-teacher-pages-definitions.xml" />
+					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/person/tiles-person-pages-definitions.xml,/WEB-INF/tiles/person/tiles-person-definitions.xml,/WEB-INF/tiles/teacher/tiles-teacher-definitions.xml,/WEB-INF/tiles/teacher/tiles-teacher-pages-definitions.xml" />
 		<set-property property="moduleAware" value="true" />
 		<set-property property="definitions-parser-validate" value="true" />
 	</plug-in>    
