@@ -163,13 +163,15 @@
 		</logic:notPresent>
 		<tr>
 			<td class="listClasses" rowspan="<%=  pageContext.findAttribute("numberTeachers") %>">&nbsp;
-				<table>
-					<logic:iterate id="yearSemesterBranchElement" name="infoCourse" property="yearSemesterBranch">
-						<tr>
-							<td><bean:write name="yearSemesterBranchElement"/></td>
-						</tr>
-					</logic:iterate>
-				</table>
+				<logic:present name="infoCourse" property="yearSemesterBranch">				
+					<table>
+						<logic:iterate id="yearSemesterBranchElement" name="infoCourse" property="yearSemesterBranch">
+							<tr>
+								<td><bean:write name="yearSemesterBranchElement"/></td>
+							</tr>
+						</logic:iterate>
+					</table>
+				</logic:present>
 			</td>
 			<td class="listClasses" rowspan="<%=  pageContext.findAttribute("numberTeachers") %>">&nbsp;
 				<logic:present name="infoExecutionDegree">
