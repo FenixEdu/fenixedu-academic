@@ -9,6 +9,7 @@ import middleware.studentMigration.enrollments.CreateAndUpdateAllStudentsPastEnr
 import Dominio.DegreeCurricularPlan;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
+import Dominio.EnrolmentInExtraCurricularCourse;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
@@ -24,7 +25,6 @@ import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.EnrolmentState;
 import Util.StudentCurricularPlanState;
 import Util.TipoCurso;
 
@@ -191,8 +191,8 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 
 			IEnrolment enrolment = (IEnrolment) iterator.next();
 
-			if(enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
-			{
+//			if (enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
+//			{
 				ICurricularCourse curricularCourse = enrolment.getCurricularCourse();
 				IDegreeCurricularPlan currentDegreeCurricularPlan = currentStudentCurricularPlan.getDegreeCurricularPlan();
 
@@ -208,9 +208,18 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 						enrolment,
 						curricularCourseFromCurrentDegreeCurricularPlan,
 						currentStudentCurricularPlan,
-						fenixPersistentSuport);
+						fenixPersistentSuport,
+						false);
+				} else
+				{
+					MakeEquivalencesForAllStudentsPastEnrolments.writeEnrollment(
+						enrolment,
+						curricularCourse,
+						currentStudentCurricularPlan,
+						fenixPersistentSuport,
+						true);
 				}
-			}
+//			}
 		}
 	}
 
@@ -263,6 +272,7 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 	 * @param curricularCourse
 	 * @param currentStudentCurricularPlan
 	 * @param fenixPersistentSuport
+	 * @param extraCurricular
 	 * @return
 	 * @throws Throwable
 	 */
@@ -270,7 +280,8 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 		IEnrolment enrolment,
 		ICurricularCourse curricularCourse,
 		IStudentCurricularPlan currentStudentCurricularPlan,
-		ISuportePersistente fenixPersistentSuport)
+		ISuportePersistente fenixPersistentSuport,
+		boolean extraCurricular)
 		throws Throwable
 	{
 		IPersistentEnrolment persistentEnrolment = fenixPersistentSuport.getIPersistentEnrolment();
@@ -295,7 +306,13 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 
 			if (enrolmentToWrite == null)
 			{
-				enrolmentToWrite = new Enrolment();
+				if (extraCurricular)
+				{
+					enrolmentToWrite = new EnrolmentInExtraCurricularCourse();
+				} else
+				{
+					enrolmentToWrite = new Enrolment();
+				}
 
 				fenixPersistentSuport.getIPersistentEnrolment().simpleLockWrite(enrolmentToWrite);
 

@@ -869,7 +869,7 @@ public class MakeEquivalencesForILEECStudents
 			return latestEvaluation;
 		}
 
-		if (latestEvaluation.getObservation().equals(GetEnrolmentGrade.RECTIFIED))
+		if (latestEvaluation.getObservation() != null && latestEvaluation.getObservation().equals(GetEnrolmentGrade.RECTIFIED))
 		{
 			Iterator iterator = enrolmentEvaluations.iterator();
 			while(iterator.hasNext())
