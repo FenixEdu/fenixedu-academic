@@ -6,20 +6,19 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <div align="left">
-  <table >
-    <tr bgcolor='#ffffff'>
+  <table align="center">
+    <tr>
       <td> 
         <html:errors/>
       </td>
     </tr>
     <tr>
       <td colspan='2'>
-          <div style='width=580' align="right">
-            <font size="5" face="Arial, Helvetica, sans-serif">
+            <h2>
               <bean:message key="consultar.justificacoes" />&nbsp;&nbsp;
               <bean:write name="numMecanografico" scope="session"/>
-            </font>
-          </div><br>
+            </h2>
+      <br>
       </td>
     </tr>
     <%-- <tr>
@@ -49,7 +48,7 @@
     </tr>
     <tr>
       <td colspan='2' align="center">
-          <html:link forward="ConsultarFuncionarioMostrarAction"><bean:message key="link.novaConsulta"/></html:link>
+          <html:link forward="ConsultarFuncionarioMostrarAction"><bean:message key="link.novaConsulta" styleClass="inputbutton" /></html:link>
         &nbsp;&nbsp;&nbsp;
       </td>
       <%--

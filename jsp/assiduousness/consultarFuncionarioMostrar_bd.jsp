@@ -16,18 +16,18 @@
    	</h2>
    	</div>
     <br />
-    	<table width="50%" align="center" border="0">
+    	<table width="60%" align="center" border="0">
         	<tr>
             	<td width="100"><bean:message key="prompt.consultar"/>:
                	</td>
-                <td align="left">
+                <td>
                		<html:select name="ConsultarFuncionarioMostrarForm" property="escolha">
                    	<app:options name="ConsultarFuncionarioMostrarForm" property="listaEscolhas"/>
                    	</html:select> 
                    	<bean:message key="prompt.de"/>
                   	<html:text name="ConsultarFuncionarioMostrarForm" property="diaInicioEscolha" size="2" maxlength="2"/> / 
                    	<html:text name="ConsultarFuncionarioMostrarForm" property="mesInicioEscolha" size="2" maxlength="2"/> / 
-                   	<html:text name="ConsultarFuncionarioMostrarForm" property="anoInicioEscolha" size="6" maxlength="4"/>
+                   	<html:text name="ConsultarFuncionarioMostrarForm" property="anoInicioEscolha" size="4" maxlength="4"/>
                    	<bean:message key="prompt.ate"/>
                     <html:text name="ConsultarFuncionarioMostrarForm" property="diaFimEscolha" size="2" maxlength="2"/> / 
                    	<html:text name="ConsultarFuncionarioMostrarForm" property="mesFimEscolha" size="2" maxlength="2"/> / 
@@ -46,13 +46,12 @@
             </tr>
        </table>
        <br />
-	   <table width=50%" class="infotable" align="center">
+	   <table width=60%" class="infotable" align="center">
             <tr>
               <th colspan="2" class="bottomborder" align="left">
                 <h2>
                   <bean:message key="prompt.dadosPessoais" />
                 </h2>
-               <br />
               </th>
             </tr>
             <tr>
@@ -112,7 +111,6 @@
                   <bean:message key="prompt.dadosAssiduidade" />
                 </h2>       
               </th>
-              <br />
             </tr>
 			<tr>
               <td width="30%">
@@ -197,7 +195,7 @@
                 <td width="30%">
                     <bean:message key="prompt.numHorasSemanais"/>
                 </td>
-                <tclass="greytxt">
+                <td class="greytxt">
                     <bean:write name="horario" property="duracaoSemanal" />
                 </td>
               </tr>
@@ -243,10 +241,7 @@
               </td>
             </tr>        
             --%>
-          </table>
-        </td>
-      <tr>
-    </table>
+      </table>
     <br />
   </html:form>
 </div>
