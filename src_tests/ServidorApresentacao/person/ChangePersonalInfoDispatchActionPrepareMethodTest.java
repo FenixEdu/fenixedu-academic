@@ -56,7 +56,6 @@ public class ChangePersonalInfoDispatchActionPrepareMethodTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedUnsuccessfuly()
 	 */
 	protected Map getItemsToPutInSessionForActionToBeTestedUnsuccessfuly() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -65,7 +64,6 @@ public class ChangePersonalInfoDispatchActionPrepareMethodTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedSuccessfuly() 
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
-		// TODO Auto-generated method stub
 		HashMap requestParameters = new HashMap();
 		requestParameters.put("method","prepare");
 		return requestParameters;
@@ -104,7 +102,6 @@ public class ChangePersonalInfoDispatchActionPrepareMethodTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInSuccessfulExecution()
 	 */
 	protected Map getNonExistingAttributesListToVerifyInSuccessfulExecution() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -112,7 +109,6 @@ public class ChangePersonalInfoDispatchActionPrepareMethodTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInUnsuccessfulExecution()
 	 */
 	protected Map getExistingAttributesListToVerifyInUnsuccessfulExecution() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -120,7 +116,6 @@ public class ChangePersonalInfoDispatchActionPrepareMethodTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInUnsuccessfulExecution()
 	 */
 	protected Map getNonExistingAttributesListToVerifyInUnsuccessfulExecution() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

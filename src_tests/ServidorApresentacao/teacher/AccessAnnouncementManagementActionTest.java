@@ -149,7 +149,6 @@ public class AccessAnnouncementManagementActionTest extends TestCasePresentation
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedSuccessfuly()
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -157,7 +156,6 @@ public class AccessAnnouncementManagementActionTest extends TestCasePresentation
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedUnsuccessfuly()
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
