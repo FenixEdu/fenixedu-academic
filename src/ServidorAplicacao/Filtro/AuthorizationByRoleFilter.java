@@ -27,7 +27,6 @@ public abstract class AuthorizationByRoleFilter extends Filtro {
 		IServico servico,
 		Object[] argumentos)
 		throws Exception {
-		RoleType roleType = getRoleType();
 		if (((id != null
 			&& id.getRoles() != null
 			&& !containsRole(id.getRoles())))

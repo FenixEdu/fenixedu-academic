@@ -107,9 +107,7 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection {
 			
 		 
 		if (section != null) {
-			System.out.println(oqlQuery);
 			query.bind(section.getInternalCode());			
-		 
 		}	
 		
 		List result = (List) query.execute();		
@@ -181,8 +179,6 @@ public List readBySite(ISite site) throws ExcepcaoPersistencia {
 	public void delete(ISection section) throws ExcepcaoPersistencia {
 					
 		ISection inferiorSection = section;
-		SectionOJB inferiorSectionOJB = new SectionOJB();			
-				
 		List imediatlyInferiorSections = readBySiteAndSection(section.getSite(),  section);
 		  
 		   Iterator iterator = imediatlyInferiorSections.iterator();
@@ -191,11 +187,6 @@ public List readBySite(ISite site) throws ExcepcaoPersistencia {
 		    	 inferiorSection = (ISection) iterator.next();
 	  		     delete(inferiorSection);
 		        }
-		    
-//	  		super.delete(inferiorSection);
-	
-
-
 		try {
 
 			IItem item = null;

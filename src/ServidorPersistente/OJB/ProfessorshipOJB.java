@@ -109,7 +109,6 @@ public class ProfessorshipOJB
 	public List readByExecutionCourse(IDisciplinaExecucao executionCourse)
 		throws ExcepcaoPersistencia {
 		try {
-			IProfessorship professorship = null;
 			String oqlQuery =
 				"select professorship from "
 					+ Professorship.class.getName()
