@@ -56,7 +56,7 @@ public class ApagarSala implements IServico {
 				result = true;
 			}
 		} catch (notAuthorizedPersistentDeleteException ex) {
-			throw new notAuthorizedServiceDeleteRoomException(ex);
+			throw new NotAuthorizedServiceDeleteRoomException(ex);
 		} catch (ExcepcaoPersistencia ex) {
 			throw new FenixServiceException(ex);
 		}
@@ -64,27 +64,27 @@ public class ApagarSala implements IServico {
 		return new Boolean(result);
 	}
 
-	public class notAuthorizedServiceDeleteRoomException
+	public class NotAuthorizedServiceDeleteRoomException
 		extends FenixServiceException {
 
 		/**
 		 * 
 		 */
-		private notAuthorizedServiceDeleteRoomException() {
+		private NotAuthorizedServiceDeleteRoomException() {
 			super();
 		}
 
 		/**
 		 * @param s
 		 */
-		private notAuthorizedServiceDeleteRoomException(String s) {
+		private NotAuthorizedServiceDeleteRoomException(String s) {
 			super(s);
 		}
 
 		/**
 		 * @param cause
 		 */
-		private notAuthorizedServiceDeleteRoomException(Throwable cause) {
+		private NotAuthorizedServiceDeleteRoomException(Throwable cause) {
 			super(cause);
 		}
 
@@ -92,7 +92,7 @@ public class ApagarSala implements IServico {
 		 * @param message
 		 * @param cause
 		 */
-		private notAuthorizedServiceDeleteRoomException(
+		private NotAuthorizedServiceDeleteRoomException(
 			String message,
 			Throwable cause) {
 			super(message, cause);

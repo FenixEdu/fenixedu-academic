@@ -20,7 +20,7 @@ import DataBeans.InfoRoom;
 import DataBeans.RoomKey;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
+import ServidorAplicacao.Servico.sop.ApagarSala.NotAuthorizedServiceDeleteRoomException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException;
 import ServidorApresentacao.Action.sop.base.FenixSelectedRoomsContextAction;
@@ -164,7 +164,7 @@ public class ManipularSalasAction extends FenixSelectedRoomsContextAction {
 				userView,
 				"ApagarSala",
 				argsCriarSala);
-		} catch (notAuthorizedServiceDeleteException e) {
+		} catch (NotAuthorizedServiceDeleteRoomException e) {
 			Object[] values = { "a sala", "as aulas" };
 			throw new notAuthorizedActionDeleteException(
 				"errors.invalid.delete.with.objects",
