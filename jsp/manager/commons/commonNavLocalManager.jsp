@@ -39,6 +39,14 @@
 </strong></p>
 
 <br />
+<strong><bean:message key="label.generateFiles"/></strong>
+<p><strong>&raquo;
+	<html:link page="/generateFiles.do?method=firstPage">
+		<bean:message key="label.generateFiles"/>
+	</html:link>
+</strong></p>
+
+<br />
 <strong>Gestão do Sistema</strong>
 <p><strong>&raquo; 
 

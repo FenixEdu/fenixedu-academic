@@ -141,10 +141,7 @@ public class StudentsGratuityListAction extends DispatchAction
 			errors.add(
 				"impossibleOperation",
 				new ActionError("error.masterDegree.gatuyiuty.impossible.operation"));
-			if (!errors.isEmpty())
-			{
-				saveErrors(request, errors);
-			}
+			saveErrors(request, errors);
 			return mapping.findForward("choose");
 		}
 
@@ -249,10 +246,7 @@ public class StudentsGratuityListAction extends DispatchAction
 			errors.add(
 				"noList",
 				new ActionError("error.masterDegree.gatuyiuty.impossible.studentsGratuityList"));
-			if (!errors.isEmpty())
-			{
-				saveErrors(request, errors);
-			}
+			saveErrors(request, errors);
 			return mapping.getInputForward();
 		}
 		//put data in request
@@ -275,10 +269,7 @@ public class StudentsGratuityListAction extends DispatchAction
 		{
 			exception.printStackTrace();
 			errors.add("noList", new ActionError(exception.getLocalizedMessage()));
-			if (!errors.isEmpty())
-			{
-				saveErrors(request, errors);
-			}
+			saveErrors(request, errors);
 			return mapping.getInputForward();
 		}
 		if (result == null)
@@ -286,10 +277,7 @@ public class StudentsGratuityListAction extends DispatchAction
 			errors.add(
 				"noList",
 				new ActionError("error.masterDegree.gratuity.impossible.studentsGratuityList"));
-			if (!errors.isEmpty())
-			{
-				saveErrors(request, errors);
-			}
+			saveErrors(request, errors);
 			return mapping.getInputForward();
 		}
 

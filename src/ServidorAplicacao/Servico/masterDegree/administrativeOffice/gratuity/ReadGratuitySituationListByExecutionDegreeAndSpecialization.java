@@ -26,6 +26,7 @@ import Dominio.IExecutionYear;
 import Dominio.IGratuitySituation;
 import Dominio.IGuide;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorApresentacao.Action.masterDegree.utils.SessionConstants;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentGratuitySituation;
@@ -71,15 +72,15 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 			throw new FenixServiceException("error.masterDegree.gratuity.impossible.studentsGratuityList");
 		}
 
-		if (specializationName == null)
-		{
-			throw new FenixServiceException("error.masterDegree.gratuity.impossible.studentsGratuityList");
-		}
-
-		if (gratuitySituationTypeName == null)
-		{
-			throw new FenixServiceException("error.masterDegree.gratuity.impossible.studentsGratuityList");
-		}
+//		if (specializationName == null)
+//		{
+//			throw new FenixServiceException("error.masterDegree.gratuity.impossible.studentsGratuityList");
+//		}
+//
+//		if (gratuitySituationTypeName == null)
+//		{
+//			throw new FenixServiceException("error.masterDegree.gratuity.impossible.studentsGratuityList");
+//		}
 
 		HashMap result = null;
 		ISuportePersistente sp = null;
@@ -240,7 +241,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 					}
 					else if (infoGuideEntry.getDocumentType().equals(DocumentType.INSURANCE_TYPE))
 					{
-						infoGratuitySituation.setInsurancePayed(new String("label.payed"));
+						infoGratuitySituation.setInsurancePayed(SessionConstants.PAYED_INSURANCE);
 					}
 				}
 			}

@@ -357,16 +357,9 @@ public class InsertGratuityData implements IService
 					{
 						gratuitySituation = new GratuitySituation();
 						gratuitySituation.setStudentCurricularPlan(studentCurricularPlan);
-					}
-					if (gratuitySituation.getGratuityValues() == null
-						|| (gratuityValues.getIdInternal() != null
-							&& !gratuitySituation.getGratuityValues().getIdInternal().equals(
-								gratuityValues.getIdInternal())))
-					{
 						gratuitySituation.setGratuityValues(gratuityValues);
+						persistentGratuitySituation.simpleLockWrite(gratuitySituation);
 					}
-
-					persistentGratuitySituation.simpleLockWrite(gratuitySituation);
 				}
 			}
 		}

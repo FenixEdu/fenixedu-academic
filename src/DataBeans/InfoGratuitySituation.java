@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import ServidorApresentacao.Action.masterDegree.utils.SessionConstants;
 import Util.ExemptionGratuityType;
 import Util.GratuitySituationType;
 
@@ -33,7 +34,7 @@ public class InfoGratuitySituation extends InfoObject implements Serializable
 	private Double payedValue;//attributes auxiliaries for calculations
 	private Double remainingValue;//attributes auxiliaries for calculations
 	private GratuitySituationType situationType; //attributes auxiliaries for calculations 
-	private String insurancePayed = new String("label.notPayed"); //attributes auxiliaries for calculations
+	private String insurancePayed = SessionConstants.NOT_PAYED_INSURANCE; //attributes auxiliaries for calculations
 		
 	/**
 	 * @return Returns the insurancePayed.

@@ -20,5 +20,7 @@ public abstract class SessionConstants {
 	public static final String REGISTRATION_PAYMENT = "No acto da inscrição";
 	public static final String REGISTRATION_PAYMENT_KEY = "label.masterDegree.gratuity.registrationPayment";
 	
+	public static final String PAYED_INSURANCE = "label.notPayed";
+	public static final String NOT_PAYED_INSURANCE =  "label.payed";
 	
 }

@@ -252,4 +252,18 @@
 		<put name="body" value="/manager/personManagement/displayEmployee.jsp" />
 		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
 	</definition>
+	
+	<!-- ========== FIND PERSON MANAGEMENT ========== -->
+	<definition name="firstPageGenerateFiles" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/generateFiles/welcomeScreen.jsp" />
+		<put name="navLocal" value="/manager/generateFiles/mainMenu.jsp" />
+	</definition>
+	<definition name="chooseForGenerateFiles" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/generateFiles/chooseForGenerateFiles.jsp" />
+		<put name="navLocal" value="/manager/generateFiles/mainMenu.jsp" />
+	</definition>
+	<definition name="confirmation" extends="definition.manager.masterPage">
+		<put name="body" value="/manager/generateFiles/confirmation.jsp" />
+		<put name="navLocal" value="/manager/generateFiles/mainMenu.jsp" />
+	</definition>
 </tiles-definitions>

@@ -258,6 +258,13 @@
     		<form-property name="page" type="java.lang.Integer" initial="0"/>     		    		
     </form-bean>  
     
+    <form-bean name="chooseForGenerateFiles"
+    	type="org.apache.struts.validator.DynaValidatorForm"
+    	dynamic="true">
+    		<form-property name="page" type="java.lang.Integer" initial="0"/> 
+    		<form-property name="file" type="java.lang.String"/>
+    		<form-property name="executionYear" type="java.lang.String"/>	
+    </form-bean>
     </form-beans>
     
 	 <!-- ========== Global Exception Definitions ============================== -->
@@ -1161,6 +1168,18 @@
 		<forward name="displayEmployee" path="displayEmployee"/>
 	</action>
 	
+	<action path="/generateFiles"
+		type="ServidorApresentacao.Action.manager.generateFiles.GenerateFilesAction"
+		parameter="method"
+		scope="request"
+		name="chooseForGenerateFiles"
+		input="/generateFiles.do?method=prepareChooseForGenerateFiles"
+	>
+		<forward name="firstPage" path="firstPageGenerateFiles"/>
+		<forward name="chooseForGenerateFiles" path="chooseForGenerateFiles"/>
+		<forward name="confirmation" path="confirmation"/>		
+	</action>
+
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
