@@ -28,15 +28,10 @@ public class FenixRequestProcessorWithTiles extends TilesRequestProcessor {
 	protected boolean processPreprocess(
 		HttpServletRequest request,
 		HttpServletResponse response) {
-		HttpSession session = request.getSession(true);
 		String uri = request.getRequestURI();
 		if (((uri.indexOf("login.do") == -1)
 			&& (uri.indexOf("/publico/index.do") == -1))) {
-
-			if ((session == null)
-				|| (session.isNew())
-				&& ((session != null)
-					&& (!session.getAttributeNames().hasMoreElements()))) {
+			if (request.getRemoteUser() == null) {
 				ActionErrors errors = new ActionErrors();
 
 				errors.add(
