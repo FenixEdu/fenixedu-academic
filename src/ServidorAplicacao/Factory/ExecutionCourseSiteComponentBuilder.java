@@ -27,6 +27,7 @@ import DataBeans.InfoSiteBibliography;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteCurricularCourse;
 import DataBeans.InfoSiteEvaluation;
+import DataBeans.InfoSiteEvaluationMethods;
 import DataBeans.InfoSiteExam;
 import DataBeans.InfoSiteFirstPage;
 import DataBeans.InfoSiteObjectives;
@@ -114,8 +115,8 @@ public class ExecutionCourseSiteComponentBuilder {
 		} else if (component instanceof InfoSiteProgram) {
 			return getInfoSiteProgram((InfoSiteProgram) component, site);
 
-		} else if (component instanceof InfoEvaluationMethod) {
-			return getInfoEvaluation((InfoEvaluationMethod) component, site);
+		} else if (component instanceof InfoSiteEvaluationMethods) {
+			return getInfoEvaluation((InfoSiteEvaluationMethods) component, site);
 		} else if (component instanceof InfoSiteBibliography) {
 			return getInfoSiteBibliography(
 				(InfoSiteBibliography) component,
@@ -141,9 +142,12 @@ public class ExecutionCourseSiteComponentBuilder {
 			return getInfoSiteEvaluation((InfoSiteEvaluation) component, site);
 		} else if (component instanceof InfoSiteSummaries) {
 			return getInfoSiteSummaries((InfoSiteSummaries) component, site);
-		}else if (component instanceof InfoSiteCurricularCourse) {
-		return getInfoSiteCurricularCourse((InfoSiteCurricularCourse) component, site,curricularCourseId);
-	}
+		} else if (component instanceof InfoSiteCurricularCourse) {
+			return getInfoSiteCurricularCourse(
+				(InfoSiteCurricularCourse) component,
+				site,
+				curricularCourseId);
+		}
 		return null;
 	}
 
@@ -152,46 +156,59 @@ public class ExecutionCourseSiteComponentBuilder {
 	 * @param site
 	 * @return
 	 */
-	private ISiteComponent getInfoSiteCurricularCourse(InfoSiteCurricularCourse component, ISite site,Integer curricularCourseId) throws FenixServiceException {
+	private ISiteComponent getInfoSiteCurricularCourse(
+		InfoSiteCurricularCourse component,
+		ISite site,
+		Integer curricularCourseId)
+		throws FenixServiceException {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			ICurricularCourse curricularCourse = new CurricularCourse(curricularCourseId);
-			IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-			curricularCourse=(ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse,false);
-			if (curricularCourse== null ){
-				throw new InvalidArgumentsServiceException();				
+			ICurricularCourse curricularCourse =
+				new CurricularCourse(curricularCourseId);
+			IPersistentCurricularCourse persistentCurricularCourse =
+				sp.getIPersistentCurricularCourse();
+			curricularCourse =
+				(ICurricularCourse) persistentCurricularCourse.readByOId(
+					curricularCourse,
+					false);
+			if (curricularCourse == null) {
+				throw new InvalidArgumentsServiceException();
 			}
-			IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
-			ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
+			IPersistentCurriculum persistentCurriculum =
+				sp.getIPersistentCurriculum();
+			ICurriculum curriculum =
+				persistentCurriculum.readCurriculumByCurricularCourse(
+					curricularCourse);
 			InfoCurriculum infoCurriculum = null;
-			if (curriculum!=null){
-			infoCurriculum=Cloner.copyICurriculum2InfoCurriculum(curriculum);}
+			if (curriculum != null) {
+				infoCurriculum =
+					Cloner.copyICurriculum2InfoCurriculum(curriculum);
+			}
 			component.setInfoCurriculum(infoCurriculum);
-			InfoCurricularCourse infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-			List infoCurricularCourseScopes=new ArrayList();
+			InfoCurricularCourse infoCurricularCourse =
+				Cloner.copyCurricularCourse2InfoCurricularCourse(
+					curricularCourse);
+			List infoCurricularCourseScopes = new ArrayList();
 			List curricularCourseScopes = curricularCourse.getScopes();
 			Iterator iter = curricularCourseScopes.iterator();
-			while(iter.hasNext()){
-				ICurricularCourseScope scope = (ICurricularCourseScope) iter.next();
-				InfoCurricularCourseScope infoScope = Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(scope);
+			while (iter.hasNext()) {
+				ICurricularCourseScope scope =
+					(ICurricularCourseScope) iter.next();
+				InfoCurricularCourseScope infoScope =
+					Cloner
+						.copyICurricularCourseScope2InfoCurricularCourseScope(
+						scope);
 				infoCurricularCourseScopes.add(infoScope);
-				
+
 			}
 			infoCurricularCourse.setInfoScopes(infoCurricularCourseScopes);
 			component.setInfoCurricularCourse(infoCurricularCourse);
-			
-			
-			
-			
-			
+
 			return component;
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
-				
 
-
-		
 	}
 
 	/**
@@ -589,22 +606,32 @@ public class ExecutionCourseSiteComponentBuilder {
 	 * @return
 	 */
 	private ISiteComponent getInfoEvaluation(
-		InfoEvaluationMethod component,
+		InfoSiteEvaluationMethods component,
 		ISite site)
 		throws FenixServiceException {
 		try {
-
+			
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
-			IEvaluationMethod evaluation =
-				sp.getIPersistentEvaluationMethod().readByExecutionCourse(
-					executionCourse);
-			if (evaluation != null) {
-				component =
-					Cloner.copyIEvaluationMethod2InfoEvaluationMethod(
-						evaluation);
+			List curricularCourses =
+				executionCourse.getAssociatedCurricularCourses();
+			System.out.println("curricularCourses"+curricularCourses.size());
+			Iterator iter = curricularCourses.iterator();
+			List infoEvaluationMethods = new ArrayList();
+			while (iter.hasNext()) {
+				ICurricularCourse curricularCourse =
+					(ICurricularCourse) iter.next();
+				IEvaluationMethod evaluation =
+					sp.getIPersistentEvaluationMethod().readByCurricularCourse(
+						curricularCourse);
+				if (evaluation != null) {
+					infoEvaluationMethods.add(
+						Cloner.copyIEvaluationMethod2InfoEvaluationMethod(
+							evaluation));
+				}
 			}
-
+			System.out.println("infoEvaluationMethods"+infoEvaluationMethods.size());
+			component.setInfoEvaluations(infoEvaluationMethods);
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}

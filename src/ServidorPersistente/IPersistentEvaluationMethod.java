@@ -17,7 +17,12 @@ import Dominio.IEvaluationMethod;
  *
  */
 public interface IPersistentEvaluationMethod extends IPersistentObject {
-	
+	/**
+	 * @deprecated
+	 * @param executionCourse
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
 	public IEvaluationMethod readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
 	
 	public List readAll() throws ExcepcaoPersistencia;

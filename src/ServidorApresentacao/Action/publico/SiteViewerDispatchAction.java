@@ -11,7 +11,6 @@ import org.apache.struts.action.ActionMapping;
 
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
-import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoGroupProperties;
 import DataBeans.InfoSiteAllGroups;
 import DataBeans.InfoSiteAnnouncement;
@@ -20,6 +19,7 @@ import DataBeans.InfoSiteBibliography;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteCurricularCourse;
 import DataBeans.InfoSiteEvaluation;
+import DataBeans.InfoSiteEvaluationMethods;
 import DataBeans.InfoSiteFirstPage;
 import DataBeans.InfoSiteObjectives;
 import DataBeans.InfoSiteProgram;
@@ -110,7 +110,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		ISiteComponent evaluationComponent = new InfoEvaluationMethod();
+		ISiteComponent evaluationComponent = new InfoSiteEvaluationMethods();
 		readSiteView(request, evaluationComponent, null, null, null);
 
 		return mapping.findForward("sucess");
