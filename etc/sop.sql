@@ -14,7 +14,6 @@ create table ROOM (
    unique U1 (NAME))
    type=InnoDB;
 
-
 #----------------------------
 # Table structure for class
 #----------------------------
@@ -110,21 +109,6 @@ create table ATTEND (
    primary key (ID_INTERNAL),
    unique U1 (KEY_STUDENT, KEY_EXECUTION_COURSE))
    type=InnoDB;
-
-#----------------------------
-# Table structure for enrolment
-# FIXME : This should associate students with execution courses, not with curricular courses.
-#               The curricular course can be reached through the students curricular plan.
-#----------------------------
-drop table if exists ENROLMENT;
-create table ENROLMENT (
-   ID_INTERNAL int(11) not null auto_increment,
-   KEY_STUDENT_CURRICULAR_PLAN int(11) not null,
-   KEY_CURRICULAR_COURSE int(11) not null,
-   primary key (ID_INTERNAL),
-   unique U1 (KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE))
-   type=InnoDB;
-
 
 #----------------------------
 # Table structure for EXECUTION_PERIOD

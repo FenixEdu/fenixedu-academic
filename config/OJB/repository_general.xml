@@ -1,0 +1,35 @@
+<!-- Please keep user defined mappings in this file only
+     to avoid mixing user defined and system mappings. -->   
+<!-- Mapping of User defined classes starts here -->
+
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.Country -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="Dominio.Country"
+                  table="COUNTRY">
+    <field-descriptor id="1"
+        name="internalCode"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+    <field-descriptor id="2"
+        name="name"
+        column="NAME"
+        jdbc-type="VARCHAR"
+    />
+    <field-descriptor id="3"
+        name="nationality"
+        column="NATIONALITY"
+        jdbc-type="VARCHAR"
+    />
+    <field-descriptor id="4"
+        name="code"
+        column="CODE"
+        jdbc-type="VARCHAR"
+    />
+</class-descriptor>
+
+<!-- Mapping of User defined classes ends here -->

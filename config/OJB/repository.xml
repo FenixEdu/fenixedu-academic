@@ -8,6 +8,7 @@
 <!ENTITY internal SYSTEM "repository_internal.xml">
 <!ENTITY secretaria SYSTEM "repository_secretaria.xml">
 <!ENTITY inscricoes SYSTEM "repository_inscricoes.xml">
+<!ENTITY general SYSTEM "repository_general.xml">
 <!ENTITY sop SYSTEM "repository_sop.xml">
 <!ENTITY masterDegree SYSTEM "repository_masterDegree.xml">
 <!ENTITY sopload SYSTEM "repository_sopload.xml">
@@ -32,5 +33,6 @@
     &sopload;
     &gesdis;
     &authentication-roles;
+    &general;
 
 </descriptor-repository>

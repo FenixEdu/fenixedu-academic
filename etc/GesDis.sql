@@ -6,7 +6,6 @@ Source Database:       ciapl
 Date:                  2003-03-11 16:50:53
 */
 
-use ciapl ;
 #----------------------------
 # Table structure for announcement
 #----------------------------

@@ -354,42 +354,5 @@
       </reference-descriptor> 
    </class-descriptor>   
 
-<!-- Definitions for Dominio.Inscricao -->
-   <class-descriptor
-   	  class="Dominio.Enrolment"
-   	  table="ENROLMENT"
-   >
-      <field-descriptor id="1"
-         name="internalID"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor id="2"
-         name="studentCurricularPlanKey"
-         column="KEY_STUDENT_CURRICULAR_PLAN"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor id="3"
-         name="curricularCourseKey"
-         column="KEY_CURRICULAR_COURSE"
-         jdbc-type="INTEGER"
-      />    
-      <reference-descriptor
-         name="studentCurricularPlan"
-         class-ref="Dominio.StudentCurricularPlan"
-         proxy="true"
-      >
-         <foreignkey field-id-ref="2"/>
-      </reference-descriptor>      
-      <reference-descriptor
-         name="curricularCourse"
-         class-ref="Dominio.CurricularCourse"
-         proxy="true"         
-      >
-         <foreignkey field-id-ref="3"/>
-      </reference-descriptor>      
-   </class-descriptor>
    
 <!-- Mapping of User defined classes ends here -->
