@@ -52,6 +52,7 @@ import DataBeans.InfoExternalPerson;
 import DataBeans.InfoFinalEvaluation;
 import DataBeans.InfoFrequenta;
 import DataBeans.InfoGratuity;
+import DataBeans.InfoGratuityValues;
 import DataBeans.InfoGroupProperties;
 import DataBeans.InfoGuide;
 import DataBeans.InfoGuideEntry;
@@ -65,6 +66,7 @@ import DataBeans.InfoMasterDegreeThesis;
 import DataBeans.InfoMasterDegreeThesisDataVersion;
 import DataBeans.InfoMetadata;
 import DataBeans.InfoObject;
+import DataBeans.InfoPaymentPhase;
 import DataBeans.InfoPerson;
 import DataBeans.InfoPrice;
 import DataBeans.InfoProfessorship;
@@ -531,7 +533,7 @@ public abstract class Cloner
         infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
         infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
         infoExecutionDegree.setTemporaryExamMap(executionDegree.getTemporaryExamMap());
-
+        
         //added by Tânia Pousão
         InfoCampus infoCampus = Cloner.copyICampus2InfoCampus(executionDegree.getCampus());
         infoExecutionDegree.setInfoCampus(infoCampus);
@@ -4345,5 +4347,54 @@ public abstract class Cloner
         return infoScientificArea;
     }
 
+    public static InfoGratuityValues copyIGratuityValues2InfoGratuityValues(IGratuityValues gratuityValues) 
+    {
+    	InfoGratuityValues infoGratuityValues = new InfoGratuityValues();
+    	copyObjectProperties(infoGratuityValues, gratuityValues);
+    	
+    	InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner.get(gratuityValues.getExecutionDegree());
+    	InfoEmployee infoEmployee = Cloner.copyIEmployee2InfoEmployee(gratuityValues.getEmployee());
+    	
+    	infoGratuityValues.setInfoExecutionDegree(infoExecutionDegree);
+    	infoGratuityValues.setInfoEmployee(infoEmployee);
+    	
+    	return infoGratuityValues;
+    }
     
+    public static IGratuityValues copyInfoGratuityValues2IGratuityValues(InfoGratuityValues infoGratuityValues) 
+    {
+    	IGratuityValues gratuityValues = new GratuityValues();
+    	
+    	copyObjectProperties(gratuityValues, infoGratuityValues);
+    	
+    	ICursoExecucao executionDegree  = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoGratuityValues.getInfoExecutionDegree());
+    	IEmployee employee  =Cloner.copyInfoEmployee2IEmployee(infoGratuityValues.getInfoEmployee());
+    	
+    	gratuityValues.setExecutionDegree(executionDegree);
+    	gratuityValues.setEmployee(employee);
+    	
+    	return gratuityValues;
+    }
+ 
+    public static InfoPaymentPhase copyIPaymentPhase2InfoPaymentPhase(IPaymentPhase paymentPhase) 
+    {
+    	InfoPaymentPhase infoPaymentPhase = new InfoPaymentPhase();
+    	copyObjectProperties(infoPaymentPhase, paymentPhase);
+    	
+    	InfoGratuityValues infoGratuityValues = Cloner.copyIGratuityValues2InfoGratuityValues(paymentPhase.getGratuityValues());
+    	infoPaymentPhase.setInfoGratuityValues(infoGratuityValues);
+		return infoPaymentPhase;
+   
+    }
+    
+    public static IPaymentPhase copyInfoPaymentPhase2IPaymentPhase(InfoPaymentPhase infoPaymentPhase) 
+    {
+    	IPaymentPhase paymentPhase = new PaymentPhase();
+    	copyObjectProperties(paymentPhase, infoPaymentPhase);
+    	
+    	IGratuityValues gratuityValues = Cloner.copyInfoGratuityValues2IGratuityValues(infoPaymentPhase.getInfoGratuityValues());
+    	
+    	paymentPhase.setGratuityValues(gratuityValues);
+    	return paymentPhase;
+    }
 }
