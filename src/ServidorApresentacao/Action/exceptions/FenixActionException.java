@@ -109,6 +109,10 @@ public class FenixActionException extends Exception {
 		super(key, cause);
 		error = new ActionError(key, values);
 	}
+	
+	public FenixActionException(Throwable cause) {
+			super(cause);
+		}
 
 	// --- End of Constructores ------------------------------------------
 	public String toString() {
