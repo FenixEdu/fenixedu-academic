@@ -9,7 +9,8 @@
 &nbsp;-&nbsp;
 <bean:message key="label.masterDegree.administrativeOffice.curricularCourse"/>:<bean:write name="curricularCourse" />
 
-<%-- don´t forget to take above parameters - degree and curricularCourse - to actions to maintain state of jsp --%>
+<%-- don´t forget to take above parameters - degree and curricularCourse and executionCourseCode - 
+	to actions to maintain state of jsp --%>
 <ul>
     <li><html:link page=""><bean:message key="link.masterDegree.administrativeOffice.marksView" />
     </html:link></li>
