@@ -127,13 +127,13 @@ public class SendWebSiteSectionFileToServer implements IServico {
 				return Boolean.FALSE;
 			}
 
-//			// send file to server by ftp
-//			Ftp.enviarFicheiro(
-//				"/IstFtpServerConfig.properties",
-//				infoWebSiteSection.getName() + "-excerpts.html",
-//				infoWebSiteSection.getName() + "_principal/");
-//			// delete created file
-//			excerpts.delete();
+			// send file to server by ftp
+			Ftp.enviarFicheiro(
+				"/IstFtpServerConfig.properties",
+				infoWebSiteSection.getName() + "-excerpts.html",
+				infoWebSiteSection.getName() + "_principal/");
+			// delete created file
+			excerpts.delete();
 
 			//************************* create file of items month corresponding to item created ****************
 			List items = new ArrayList();
@@ -242,12 +242,12 @@ public class SendWebSiteSectionFileToServer implements IServico {
 					e.printStackTrace();
 					return Boolean.FALSE;
 				}
-//				Ftp.enviarFicheiro(
-//					"/IstFtpServerConfig.properties",
-//					infoWebSiteSection.getName() + "-" + thisMonthString.toString() + ".html",
-//					infoWebSiteSection.getName() + "_principal/");
-//				// delete created file
-//				itemsFileToTransfer.delete();
+				Ftp.enviarFicheiro(
+					"/IstFtpServerConfig.properties",
+					infoWebSiteSection.getName() + "-" + thisMonthString.toString() + ".html",
+					infoWebSiteSection.getName() + "_principal/");
+				// delete created file
+				itemsFileToTransfer.delete();
 			}
 
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
