@@ -12,12 +12,12 @@ import Dominio.PersonRole;
 import Dominio.Pessoa;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.utils.GeneratePassword;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCountry;
 import ServidorPersistente.IPersistentPersonRole;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.RoleType;
 
@@ -35,20 +35,15 @@ import Util.RoleType;
 
 public class CreatePersonBaseClass {
 
-	public IPessoa createPersonBase(InfoPerson newPerson)
+	public IPessoa createPersonBase(InfoPerson newPerson, ISuportePersistente persistentSupport, IPessoaPersistente persistentPerson,IPersistentPersonRole persistentPersonRole)
 		throws FenixServiceException {
-		ISuportePersistente persistentSupport = null;
-		IPessoaPersistente persistentPerson = null;
+		
 		IPersistentCountry persistentCountry = null;
-		IPersistentPersonRole persistentPersonRole = null;
 
 		IPessoa person = null;
 
 		try {
-			persistentSupport = SuportePersistenteOJB.getInstance();
-			persistentPerson = persistentSupport.getIPessoaPersistente();
 			persistentCountry = persistentSupport.getIPersistentCountry();
-			persistentPersonRole = persistentSupport.getIPersistentPersonRole();
 
 			//Check if the person Exists
 			person =
@@ -65,8 +60,7 @@ public class CreatePersonBaseClass {
 				personRole.setPerson(person);
 				personRole.setRole(
 					persistentSupport.getIPersistentRole().readByRoleType(RoleType.PERSON));
-			}
-
+			} 
 			//lock person for WRITE
 			persistentPerson.simpleLockWrite(person);
 
@@ -147,10 +141,7 @@ public class CreatePersonBaseClass {
 			
 			//Generate person's Password
 			if(person.getPassword() == null)
-				//UNCOMMENT this line to run CreateGrantOwnerTest
-				person.setPassword("1a1dc91c907325c69271ddf0c944bc72");
-				//COMMENT this line to run CreateGrantOwnerTest
-				//person.setPassword(GeneratePassword.generatePassword());
+				person.setPassword(GeneratePassword.generatePassword());
 
 		} catch (ExistingPersistentException ex) {
 			throw new ExistingServiceException(ex);
@@ -160,7 +151,6 @@ public class CreatePersonBaseClass {
 			newEx.fillInStackTrace();
 			throw newEx;
 		}
-		
 		return person;
 	}
 }
