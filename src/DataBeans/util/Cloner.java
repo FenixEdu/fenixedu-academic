@@ -19,6 +19,7 @@ import DataBeans.InfoShift;
 import DataBeans.InfoStudent;
 import DataBeans.gesdis.InfoAnnouncement;
 import DataBeans.gesdis.InfoBibliographicReference;
+import DataBeans.gesdis.InfoCurriculum;
 import DataBeans.gesdis.InfoItem;
 import DataBeans.gesdis.InfoSection;
 import DataBeans.gesdis.InfoSite;
@@ -27,6 +28,7 @@ import Dominio.Aula;
 import Dominio.BibliographicReference;
 import Dominio.Country;
 import Dominio.CurricularCourse;
+import Dominio.Curriculum;
 import Dominio.Curso;
 import Dominio.CursoExecucao;
 import Dominio.DisciplinaExecucao;
@@ -37,6 +39,7 @@ import Dominio.IAula;
 import Dominio.IBibliographicReference;
 import Dominio.ICountry;
 import Dominio.ICurricularCourse;
+import Dominio.ICurriculum;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
@@ -623,11 +626,16 @@ public abstract class Cloner {
 		bibliographicReference.setExecutionCourse(executionCourse);
 		return bibliographicReference;
 	}
-	
+
 	public static InfoBibliographicReference copyIBibliographicReference2InfoBibliographicReference(IBibliographicReference bibliographicReference) {
-		InfoBibliographicReference infoBibliographicReference = new InfoBibliographicReference();
-		InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(bibliographicReference.getExecutionCourse());				
-		copyObjectProperties(infoBibliographicReference, bibliographicReference);
+		InfoBibliographicReference infoBibliographicReference =
+			new InfoBibliographicReference();
+		InfoExecutionCourse infoExecutionCourse =
+			Cloner.copyIExecutionCourse2InfoExecutionCourse(
+				bibliographicReference.getExecutionCourse());
+		copyObjectProperties(
+			infoBibliographicReference,
+			bibliographicReference);
 		infoBibliographicReference.setInfoExecutionCourse(infoExecutionCourse);
 		return infoBibliographicReference;
 	}
@@ -636,116 +644,153 @@ public abstract class Cloner {
 			 * @param infoSite
 			 * @return ISite
 			 */
-		public static ISite copyInfoSite2ISite(InfoSite infoSite) {
-				ISite site = new Site();
-				IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoSite.getInfoExecutionCourse());
-			
-				copyObjectProperties(site, infoSite);
-				site.setExecutionCourse(executionCourse);
-			
-				return site;
-			}
-	
-	
-	
-		/**
-			 * Method copyInfoSection2ISection.
-			 * @param infoSection
-			 * @return ISection
-			 **/
-	
-		public static ISection copyInfoSection2ISection(InfoSection infoSection) {
-			
-				ISection section = new Section();
-				
-				ISection fatherSection = null;
-				
-				ISite site = Cloner.copyInfoSite2ISite(infoSection.getSite());
-			
-				InfoSection infoSuperiorSection = (InfoSection) infoSection.getSuperiorSection();
-		    
-		    	while(infoSuperiorSection!=null)
-		    	{
-					fatherSection = Cloner.copyInfoSection2ISection(infoSuperiorSection);
-		    	}
-				
-				 	
-				copyObjectProperties(section, infoSection);
-			
-				section.setSuperiorSection(fatherSection);
-				section.setSite(site);
-			
-				return section;			
-		
-			}
+	public static ISite copyInfoSite2ISite(InfoSite infoSite) {
+		ISite site = new Site();
+		IDisciplinaExecucao executionCourse =
+			Cloner.copyInfoExecutionCourse2ExecutionCourse(
+				infoSite.getInfoExecutionCourse());
 
-			/**
-			 * Method copyInfoItem2IItem.
-			 * @param infoItem
-			 * @return IItem
-			 **/
-	
-		public static IItem copyInfoItem2IItem(InfoItem infoItem) {
-			
-				IItem item = new Item();
-			
-				ISection section = Cloner.copyInfoSection2ISection(infoItem.getInfoSection());
-				 	
-				copyObjectProperties(item, infoItem);
-			
-				item.setSection(section);
-			
-				return item;			
-		
-			}
+		copyObjectProperties(site, infoSite);
+		site.setExecutionCourse(executionCourse);
 
-		/**
-		 * Method copyInfoAnnouncement2IAnnouncement.
-		 * @param infoAnnouncement
-		 * @return IAnnouncement
-		 */
-		public static IAnnouncement copyInfoAnnouncement2IAnnouncement(InfoAnnouncement infoAnnouncement) {
-			IAnnouncement announcement = new Announcement();
+		return site;
+	}
 
-			ISite site = Cloner.copyInfoSite2ISite(infoAnnouncement.getInfoSite());
+	/**
+		 * Method copyInfoSection2ISection.
+		 * @param infoSection
+		 * @return ISection
+		 **/
 
-			copyObjectProperties(announcement, infoAnnouncement);
-			announcement.setSite(site);
+	public static ISection copyInfoSection2ISection(InfoSection infoSection) {
 
-			return announcement;
+		ISection section = new Section();
+
+		ISection fatherSection = null;
+
+		ISite site = Cloner.copyInfoSite2ISite(infoSection.getSite());
+
+		InfoSection infoSuperiorSection =
+			(InfoSection) infoSection.getSuperiorSection();
+
+		while (infoSuperiorSection != null) {
+			fatherSection =
+				Cloner.copyInfoSection2ISection(infoSuperiorSection);
 		}
 
-		/**
-		 * Method copyIAnnouncement2InfoAnnouncement.
-		 * @param announcement
-		 * @return InfoAnnouncement
-		 */
-		public static InfoAnnouncement copyIAnnouncement2InfoAnnouncement(IAnnouncement announcement) {
-			InfoAnnouncement infoAnnouncement = new InfoAnnouncement();
+		copyObjectProperties(section, infoSection);
 
-			InfoSite infoSite = Cloner.copyISite2InfoSite(announcement.getSite());
+		section.setSuperiorSection(fatherSection);
+		section.setSite(site);
 
-			copyObjectProperties(infoAnnouncement, announcement);
-			infoAnnouncement.setInfoSite(infoSite);
+		return section;
 
-			return infoAnnouncement;
-		}
+	}
 
-		/**
-		 * Method copyISite2InfoSite.
-		 * @param site
-		 * @return InfoSite
-		 */
-		public static InfoSite copyISite2InfoSite(ISite site) {
-			InfoSite infoSite = new InfoSite();
-		
-			InfoExecutionCourse infoExecutionCourse = 
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(site.getExecutionCourse());
+	/**
+	 * Method copyInfoItem2IItem.
+	 * @param infoItem
+	 * @return IItem
+	 **/
 
-			copyObjectProperties(infoSite, site);
-			infoSite.setInfoExecutionCourse(infoExecutionCourse);
+	public static IItem copyInfoItem2IItem(InfoItem infoItem) {
 
-			return infoSite;
-		}
+		IItem item = new Item();
 
+		ISection section =
+			Cloner.copyInfoSection2ISection(infoItem.getInfoSection());
+
+		copyObjectProperties(item, infoItem);
+
+		item.setSection(section);
+
+		return item;
+
+	}
+
+	/**
+	 * Method copyInfoAnnouncement2IAnnouncement.
+	 * @param infoAnnouncement
+	 * @return IAnnouncement
+	 */
+	public static IAnnouncement copyInfoAnnouncement2IAnnouncement(InfoAnnouncement infoAnnouncement) {
+		IAnnouncement announcement = new Announcement();
+
+		ISite site = Cloner.copyInfoSite2ISite(infoAnnouncement.getInfoSite());
+
+		copyObjectProperties(announcement, infoAnnouncement);
+		announcement.setSite(site);
+
+		return announcement;
+	}
+
+	/**
+	 * Method copyIAnnouncement2InfoAnnouncement.
+	 * @param announcement
+	 * @return InfoAnnouncement
+	 */
+	public static InfoAnnouncement copyIAnnouncement2InfoAnnouncement(IAnnouncement announcement) {
+		InfoAnnouncement infoAnnouncement = new InfoAnnouncement();
+
+		InfoSite infoSite = Cloner.copyISite2InfoSite(announcement.getSite());
+
+		copyObjectProperties(infoAnnouncement, announcement);
+		infoAnnouncement.setInfoSite(infoSite);
+
+		return infoAnnouncement;
+	}
+
+	/**
+	 * Method copyISite2InfoSite.
+	 * @param site
+	 * @return InfoSite
+	 */
+	public static InfoSite copyISite2InfoSite(ISite site) {
+		InfoSite infoSite = new InfoSite();
+
+		InfoExecutionCourse infoExecutionCourse =
+			Cloner.copyIExecutionCourse2InfoExecutionCourse(
+				site.getExecutionCourse());
+
+		copyObjectProperties(infoSite, site);
+		infoSite.setInfoExecutionCourse(infoExecutionCourse);
+
+		return infoSite;
+	}
+
+	/**
+	 * 
+	 * @param curriculum
+	 * @return InfoCurriculum
+	 */
+	public static InfoCurriculum copyICurriculum2InfoCurriculum(ICurriculum curriculum) {
+		InfoCurriculum infoCurriculum = new InfoCurriculum();
+
+		InfoExecutionCourse infoExecutionCourse =
+			Cloner.copyIExecutionCourse2InfoExecutionCourse(
+				curriculum.getExecutionCourse());
+
+		copyObjectProperties(infoCurriculum, curriculum);
+		infoCurriculum.setInfoExecutionCourse(infoExecutionCourse);
+
+		return infoCurriculum;
+	}
+
+	/**
+	 * 
+	 * @param infoCurriculum
+	 * @return ICurriculum
+	 */
+	public static ICurriculum copyICurriculum2InfoCurriculum(InfoCurriculum infoCurriculum) {
+		ICurriculum curriculum = new Curriculum();
+
+		IDisciplinaExecucao executionCourse =
+			Cloner.copyInfoExecutionCourse2ExecutionCourse(
+				infoCurriculum.getInfoExecutionCourse());
+
+		copyObjectProperties(curriculum, infoCurriculum);
+		curriculum.setExecutionCourse(executionCourse);
+
+		return curriculum;
+	}
 }
