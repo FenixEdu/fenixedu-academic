@@ -4,12 +4,11 @@
  */
 package ServidorAplicacao.Servicos.coordinator;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import DataBeans.InfoCoordinator;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
-import ServidorAplicacao.Servicos.UtilsTestCase;
 
 /**
  *fenix-head
@@ -18,7 +17,7 @@ import ServidorAplicacao.Servicos.UtilsTestCase;
  *6/Nov/2003
  *
  */
-public class ReadCoordinationTeamTestCase extends CoordinatorBelongsToExecutionDegree {
+public class DeleteCoordinatorsTestCase extends CoordinatorIsResponsibleByExecutionDegree {
 
 	protected void setUp() {
 		super.setUp();
@@ -27,7 +26,7 @@ public class ReadCoordinationTeamTestCase extends CoordinatorBelongsToExecutionD
 	/**
 	 * @param name
 	 */
-	public ReadCoordinationTeamTestCase(String name) {
+	public DeleteCoordinatorsTestCase(String name) {
 		super(name);
 	}
 
@@ -59,14 +58,16 @@ public class ReadCoordinationTeamTestCase extends CoordinatorBelongsToExecutionD
 	 * @see ServidorAplicacao.Servicos.ServiceTestCase#getNameOfServiceToBeTested()
 	 */
 	protected String getNameOfServiceToBeTested() {
-		return "ReadCoordinationTeam";
+		return "RemoveCoordinators";
 	}
 
 	/* (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
 	 */
 	protected Object[] getAuthorizeArguments() {
-		Object[] args = { new Integer(10)};
+		List arg = new ArrayList();
+		arg.add(new Integer(3));
+		Object[] args = { new Integer(10), arg };
 		return args;
 	}
 
@@ -74,12 +75,14 @@ public class ReadCoordinationTeamTestCase extends CoordinatorBelongsToExecutionD
 	 * @see ServidorAplicacao.Servicos.coordinator.CoordinatorBelongsToExecutionDegree#getNonAuthorizeArguments()
 	 */
 	protected Object[] getNonAuthorizeArguments() {
-		Object[] args = { new Integer(12)};
+		List arg = new ArrayList();
+		arg.add(new Integer(3));
+		Object[] args = { new Integer(12), arg };
 		return args;
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/datasets/servicos/coordinator/testReadCoordinatorsDataSet.xml";
+		return "etc/datasets/servicos/coordinator/testAddCoordinatorDataSet.xml";
 	}
 
 	protected String getExpectedDataSetFilePath() {
@@ -93,43 +96,36 @@ public class ReadCoordinationTeamTestCase extends CoordinatorBelongsToExecutionD
 		return Autenticacao.EXTRANET;
 	}
 
-	public void testReadCorrectNumberOfCoordinators() {
+	public void testDeleteCoordinator() {
 		Object serviceArguments[] = getAuthorizeArguments();
-		List coordinators;
 		try {
-			coordinators =
-				(List) gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
-			String result =
-				"testReadCoordinators was UNSUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested()
-					+ "- number of coordinators expected:";
-			assertEquals(result, new Integer(coordinators.size()), new Integer(2));
-			System.out.println("COORDINATORS_->"+coordinators);
-			Object[] ids = { new Integer(1), new Integer(3)};
-			String result2 =
-				"testReadCoordinators was UNSUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested()
-					+ "- wrong objects returned";
-			assertTrue(
-				result2,
-				UtilsTestCase.readTestList(coordinators, ids, "idInternal", InfoCoordinator.class));
+			gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
 			System.out.println(
-				"testReadCoordinators was SUCCESSFULY runned by service: "
+				"testDeleteCoordinator was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
 
 		} catch (NotAuthorizedException ex) {
 			ex.printStackTrace();
 			System.out.println(
-				"testReadCoordinators was UNSUCCESSFULY runned by service: "
+				"testDeleteCoordinator was UNSUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
 			fail(getNameOfServiceToBeTested() + ": fail testAuthorizedUser");
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			System.out.println(
-				"testReadCoordinators was UNSUCCESSFULY runned by service: "
+				"testDeleteCoordinator was UNSUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
 			fail("Unable to run service: " + getNameOfServiceToBeTested());
 		}
 	}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.coordinator.CoordinatorIsResponsibleByExecutionDegree#getAuthenticatedResponsibleCoordinatorUserOfExecutionDegree()
+	 */
+	protected String[] getAuthenticatedNotResponsibleCoordinatorUserOfExecutionDegree() {
+		String[] args = { "julia", "pass", getApplication()};
+		return args;
+	}
+
 }

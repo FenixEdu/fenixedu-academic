@@ -14,9 +14,9 @@ package DataBeans;
  */
 public class InfoCoordinator extends InfoObject  {
 
-InfoTeacher infoTeacher;
-InfoExecutionDegree infoExecutionDegree;
-Boolean responsible;
+private InfoTeacher infoTeacher;
+private InfoExecutionDegree infoExecutionDegree;
+private Boolean responsible;
 
 
 

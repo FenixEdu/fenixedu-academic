@@ -4,12 +4,8 @@
  */
 package ServidorAplicacao.Servicos.coordinator;
 
-import java.util.List;
-
-import DataBeans.InfoCoordinator;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
-import ServidorAplicacao.Servicos.UtilsTestCase;
 
 /**
  *fenix-head
@@ -18,7 +14,7 @@ import ServidorAplicacao.Servicos.UtilsTestCase;
  *6/Nov/2003
  *
  */
-public class ReadCoordinationTeamTestCase extends CoordinatorBelongsToExecutionDegree {
+public class AddCoordinatorTestCase extends CoordinatorIsResponsibleByExecutionDegree {
 
 	protected void setUp() {
 		super.setUp();
@@ -27,7 +23,7 @@ public class ReadCoordinationTeamTestCase extends CoordinatorBelongsToExecutionD
 	/**
 	 * @param name
 	 */
-	public ReadCoordinationTeamTestCase(String name) {
+	public AddCoordinatorTestCase(String name) {
 		super(name);
 	}
 
@@ -43,7 +39,7 @@ public class ReadCoordinationTeamTestCase extends CoordinatorBelongsToExecutionD
 	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthenticatedAndUnauthorizedUser()
 	 */
 	protected String[] getAuthenticatedAndUnauthorizedUser() {
-		String[] args = { "3", "pass", getApplication()};
+		String[] args = { "5592", "pass", getApplication()};
 		return args;
 	}
 
@@ -59,14 +55,14 @@ public class ReadCoordinationTeamTestCase extends CoordinatorBelongsToExecutionD
 	 * @see ServidorAplicacao.Servicos.ServiceTestCase#getNameOfServiceToBeTested()
 	 */
 	protected String getNameOfServiceToBeTested() {
-		return "ReadCoordinationTeam";
+		return "AddCoordinator";
 	}
 
 	/* (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
 	 */
 	protected Object[] getAuthorizeArguments() {
-		Object[] args = { new Integer(10)};
+		Object[] args = { new Integer(10),new Integer(3)};
 		return args;
 	}
 
@@ -74,7 +70,7 @@ public class ReadCoordinationTeamTestCase extends CoordinatorBelongsToExecutionD
 	 * @see ServidorAplicacao.Servicos.coordinator.CoordinatorBelongsToExecutionDegree#getNonAuthorizeArguments()
 	 */
 	protected Object[] getNonAuthorizeArguments() {
-		Object[] args = { new Integer(12)};
+		Object[] args = { new Integer(12),new Integer(3)};
 		return args;
 	}
 
@@ -83,7 +79,7 @@ public class ReadCoordinationTeamTestCase extends CoordinatorBelongsToExecutionD
 	}
 
 	protected String getExpectedDataSetFilePath() {
-		return "etc/datasets/servicos/coordinator/testReadCoordinatorsDataSet.xml";
+		return "etc/datasets/servicos/coordinator/testAddCoordinatorDataSet.xml";
 	}
 
 	/* (non-Javadoc)
@@ -93,26 +89,10 @@ public class ReadCoordinationTeamTestCase extends CoordinatorBelongsToExecutionD
 		return Autenticacao.EXTRANET;
 	}
 
-	public void testReadCorrectNumberOfCoordinators() {
+	public void testAddCoordinator() {
 		Object serviceArguments[] = getAuthorizeArguments();
-		List coordinators;
 		try {
-			coordinators =
-				(List) gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
-			String result =
-				"testReadCoordinators was UNSUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested()
-					+ "- number of coordinators expected:";
-			assertEquals(result, new Integer(coordinators.size()), new Integer(2));
-			System.out.println("COORDINATORS_->"+coordinators);
-			Object[] ids = { new Integer(1), new Integer(3)};
-			String result2 =
-				"testReadCoordinators was UNSUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested()
-					+ "- wrong objects returned";
-			assertTrue(
-				result2,
-				UtilsTestCase.readTestList(coordinators, ids, "idInternal", InfoCoordinator.class));
+			gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
 			System.out.println(
 				"testReadCoordinators was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
@@ -132,4 +112,13 @@ public class ReadCoordinationTeamTestCase extends CoordinatorBelongsToExecutionD
 			fail("Unable to run service: " + getNameOfServiceToBeTested());
 		}
 	}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.coordinator.CoordinatorIsResponsibleByExecutionDegree#getAuthenticatedResponsibleCoordinatorUserOfExecutionDegree()
+	 */
+	protected String[] getAuthenticatedNotResponsibleCoordinatorUserOfExecutionDegree() {
+		String[] args = { "julia", "pass", getApplication()};
+		return args;
+	}
+
 }
