@@ -127,6 +127,7 @@
 	    	<include name="**/ServidorPersistenteConfig.properties"/>
 	    	<include name="**/ServidorPersistenteOracleConfig.properties"/>
 	    	<include name="**/**/IstFtpServerConfig.properties"/>
+	    	<include name="**/**/DegreeGradesFtpServerConfig.properties"/>
 			<replacefilter token="&lt;!-- @validation.doctype@ -->"
 						   property="validation.doctype"/>
 
@@ -194,6 +195,16 @@
 		  <replacefilter 
                  token="@ftp.IST.server.address@" 
                  property="ftp.IST.server.address"/>
+            <replacefilter 
+                 token="@ftp.degree.grades.server.user@" 
+                 property="ftp.degree.grades.server.user"/>
+		  <replacefilter 
+                  token="@ftp.degree.grades.server.pass@" 
+                  property="ftp.degree.grades.server.pass"/>
+		  <replacefilter 
+                 token="@ftp.degree.grades.server.address@" 
+                 property="ftp.degree.grades.server.address"/>
+                 
 			<replacefilter token="@db.slide.driver@" 
 		    			   property="db.slide.driver"/>
 			<replacefilter token="@db.slide.alias@" 
