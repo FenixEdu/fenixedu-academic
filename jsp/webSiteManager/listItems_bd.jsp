@@ -31,7 +31,7 @@
 			<tr><td><br/></td></tr>
 			<tr>
 				<td class="listClasses-header"><bean:message key="message.delete"/></td>
-				<td class="listClasses-header"><bean:message key="message.title"/></td>
+				<td class="listClasses-header"><bean:message key="message.item.title"/></td>
 				<td class="listClasses-header"><bean:message key="label.author"/></td>
 				<td class="listClasses-header"><bean:message key="label.status"/></td>
 				<td class="listClasses-header"><bean:message key="label.date"/></td>

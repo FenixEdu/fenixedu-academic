@@ -13,6 +13,7 @@ import Dominio.IWebSiteSection;
 public interface IPersistentWebSiteItem extends IPersistentObject {
 	public IWebSiteItem readByWebSiteSectionAndName(IWebSiteSection webSiteSection, String name) throws ExcepcaoPersistencia;
 	public List readAllWebSiteItemsByWebSiteSection(IWebSiteSection webSiteSection) throws ExcepcaoPersistencia;
+	public List readPublishedWebSiteItemsByWebSiteSection(IWebSiteSection webSiteSection) throws ExcepcaoPersistencia;
 	public void lockWrite(IWebSiteItem webSiteItem) throws ExcepcaoPersistencia;
 	public void delete(IWebSiteItem webSiteItem) throws ExcepcaoPersistencia;
 	public void deleteAll() throws ExcepcaoPersistencia;

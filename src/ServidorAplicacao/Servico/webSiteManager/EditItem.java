@@ -51,6 +51,8 @@ public class EditItem implements IServico {
 		IWebSiteItem webSiteItem = null;
 		IWebSiteSection webSiteSection = null;
 
+		System.out.println("no servico");
+
 		try {
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 			IPersistentWebSiteSection persistentWebSiteSection = persistentSuport.getIPersistentWebSiteSection();
@@ -60,6 +62,7 @@ public class EditItem implements IServico {
 			webSiteSection = new WebSiteSection(sectionCode);
 			webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOId(webSiteSection, false);
 
+			// if excerpt exceeds limit of words its invalid
 			if (infoWebSiteItem.getExcerpt() != null) {
 				if (StringUtils.countMatches(infoWebSiteItem.getExcerpt(), new String(" "))
 					>= webSiteSection.getExcerptSize().intValue()) {
@@ -76,8 +79,14 @@ public class EditItem implements IServico {
 
 			webSiteItem.setExcerpt(infoWebSiteItem.getExcerpt());
 
-			webSiteItem.setItemBeginDay(infoWebSiteItem.getItemBeginDay());
-			webSiteItem.setItemEndDay(infoWebSiteItem.getItemEndDay());
+			webSiteItem.setItemBeginDay(infoWebSiteItem.getItemBeginDayCalendar().getTime());
+			webSiteItem.setItemEndDay(infoWebSiteItem.getItemEndDayCalendar().getTime());
+			
+			System.out.println("info: " + infoWebSiteItem.getItemBeginDayCalendar().getTime());
+			System.out.println("info: " + infoWebSiteItem.getItemEndDayCalendar().getTime());
+			System.out.println(webSiteItem.getItemBeginDay());
+			System.out.println(webSiteItem.getItemEndDay());
+			
 			webSiteItem.setKeyEditor(person.getIdInternal());
 			webSiteItem.setKeyWebSiteSection(webSiteSection.getIdInternal());
 			webSiteItem.setKeywords(infoWebSiteItem.getKeywords());

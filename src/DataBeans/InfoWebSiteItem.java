@@ -1,6 +1,7 @@
 package DataBeans;
 
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -17,8 +18,8 @@ public class InfoWebSiteItem extends InfoObject {
 	private String keywords;
 	private Date onlineBeginDay;
 	private Date onlineEndDay;
-	private Date itemBeginDay;
-	private Date itemEndDay;
+	private Calendar itemBeginDayCalendar;
+	private Calendar itemEndDayCalendar;
 	private Boolean toDelete;
 
 	private InfoWebSiteSection infoWebSiteSection;
@@ -84,29 +85,29 @@ public class InfoWebSiteItem extends InfoObject {
 	/**
 	 * @return
 	 */
-	public Date getItemBeginDay() {
-		return itemBeginDay;
+	public Calendar getItemBeginDayCalendar() {
+		return itemBeginDayCalendar;
 	}
 
 	/**
 	 * @param itemBeginDay
 	 */
-	public void setItemBeginDay(Date itemBeginDay) {
-		this.itemBeginDay = itemBeginDay;
+	public void setItemBeginDayCalendar(Calendar itemBeginDayCalendar) {
+		this.itemBeginDayCalendar = itemBeginDayCalendar;
 	}
 
 	/**
 	 * @return
 	 */
-	public Date getItemEndDay() {
-		return itemEndDay;
+	public Calendar getItemEndDayCalendar() {
+		return itemEndDayCalendar;
 	}
 
 	/**
 	 * @param itemEndDay
 	 */
-	public void setItemEndDay(Date itemEndDay) {
-		this.itemEndDay = itemEndDay;
+	public void setItemEndDayCalendar(Calendar itemEndDayCalendar) {
+		this.itemEndDayCalendar = itemEndDayCalendar;
 	}
 
 	/**
@@ -223,8 +224,8 @@ public class InfoWebSiteItem extends InfoObject {
 				&& elementsAreEqual(webSiteItem.getCreationDate(), this.getCreationDate())
 				&& elementsAreEqual(webSiteItem.getInfoEditor(), this.getInfoEditor())
 				&& elementsAreEqual(webSiteItem.getExcerpt(), this.getExcerpt())
-				&& elementsAreEqual(webSiteItem.getItemBeginDay(), this.getItemBeginDay())
-				&& elementsAreEqual(webSiteItem.getItemEndDay(), this.getItemEndDay())
+				&& elementsAreEqual(webSiteItem.getItemBeginDayCalendar(), this.getItemBeginDayCalendar())
+				&& elementsAreEqual(webSiteItem.getItemEndDayCalendar(), this.getItemEndDayCalendar())
 				&& elementsAreEqual(webSiteItem.getKeywords(), this.getKeywords())
 				&& elementsAreEqual(webSiteItem.getMainEntryText(), this.getMainEntryText())
 				&& elementsAreEqual(webSiteItem.getOnlineBeginDay(), this.getOnlineBeginDay())
@@ -255,8 +256,8 @@ public class InfoWebSiteItem extends InfoObject {
 		result += ", keywords=" + this.getKeywords();
 		result += ", onlineBeginDay=" + this.getOnlineBeginDay();
 		result += ", onlineEndDay=" + this.getOnlineEndDay();
-		result += ", itemBeginDay=" + this.getItemBeginDay();
-		result += ", itemEndDay=" + this.getItemEndDay();
+		result += ", itemBeginDay=" + this.getItemBeginDayCalendar();
+		result += ", itemEndDay=" + this.getItemEndDayCalendar();
 		result += ", webSiteSection=" + this.getInfoWebSiteSection();
 		result += ", editor=" + this.getInfoEditor();
 		result += "]";

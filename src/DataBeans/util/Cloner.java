@@ -1,6 +1,5 @@
 package DataBeans.util;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -1314,15 +1313,12 @@ public abstract class Cloner {
 	public static InfoBranch copyIBranch2InfoBranch(IBranch branch) {
 
 		InfoBranch infoBranch = new InfoBranch();
-         InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;        
-        //modified by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 25/Set/2003
-        if (branch != null)
-        {
-		infoDegreeCurricularPlan =
-			Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
-				branch.getDegreeCurricularPlan());
-		copyObjectProperties(infoBranch, branch);
-        }
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
+		//modified by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 25/Set/2003
+		if (branch != null) {
+			infoDegreeCurricularPlan = Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(branch.getDegreeCurricularPlan());
+			copyObjectProperties(infoBranch, branch);
+		}
 		infoBranch.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 		return infoBranch;
 	}
@@ -2382,7 +2378,7 @@ public abstract class Cloner {
 			infoCandidacy.setModalityIdInternal(candidacy.getModalityIdInternal());
 			infoCandidacy.setSeminaryIdInternal(candidacy.getSeminaryIdInternal());
 			infoCandidacy.setIdInternal(candidacy.getIdInternal());
-            infoCandidacy.setApproved(candidacy.getApproved());
+			infoCandidacy.setApproved(candidacy.getApproved());
 		}
 		return infoCandidacy;
 	}
@@ -2527,14 +2523,14 @@ public abstract class Cloner {
 		InfoWebSiteSection infoWebSiteSection = new InfoWebSiteSection();
 
 		copyObjectProperties(infoWebSiteSection, section);
-		
+
 		InfoWebSite infoWebSite = Cloner.copyIWebSite2InfoWebSite(section.getWebSite());
 		infoWebSiteSection.setInfoWebSite(infoWebSite);
 
 		return infoWebSiteSection;
 
 	}
-	
+
 	public static IWebSiteItem copyInfoWebSiteItem2IWebSiteItem(InfoWebSiteItem infoWebSiteItem) {
 		IWebSiteItem item = new WebSiteItem();
 
@@ -2543,8 +2539,13 @@ public abstract class Cloner {
 		IWebSiteSection section = Cloner.copyInfoWebSiteSection2IWebSiteSection(infoWebSiteItem.getInfoWebSiteSection());
 
 		item.setWebSiteSection(section);
-		
-//		item.setCreationDate(new Timestamp(infoWebSiteItem.getItemCreationDate().getTimeInMillis()));
+
+		if (infoWebSiteItem.getItemBeginDayCalendar() != null) {
+			item.setItemBeginDay(infoWebSiteItem.getItemBeginDayCalendar().getTime());
+			item.setItemEndDay(infoWebSiteItem.getItemEndDayCalendar().getTime());
+		}
+
+		//		item.setCreationDate(new Timestamp(infoWebSiteItem.getItemCreationDate().getTimeInMillis()));
 
 		return item;
 	}
@@ -2556,13 +2557,22 @@ public abstract class Cloner {
 
 		InfoWebSiteSection infoWebSiteSection = Cloner.copyIWebSiteSection2InfoWebSiteSection(item.getWebSiteSection());
 		infoWebSiteItem.setInfoWebSiteSection(infoWebSiteSection);
-		
+
 		InfoPerson person = Cloner.copyIPerson2InfoPerson(item.getEditor());
 		infoWebSiteItem.setInfoEditor(person);
-		
-//		Calendar calendar = Calendar.getInstance();
-//		calendar.setTimeInMillis(item.getCreationDate().getTime());
-//		infoWebSiteItem.setItemCreationDate(calendar);
+
+		if (item.getItemBeginDay() != null) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.clear();
+			calendar.setTimeInMillis(item.getItemBeginDay().getTime());
+			infoWebSiteItem.setItemBeginDayCalendar(calendar);
+
+			calendar = Calendar.getInstance();
+			calendar.setTimeInMillis(item.getItemEndDay().getTime());
+			infoWebSiteItem.setItemEndDayCalendar(calendar);
+		}
+		//		calendar.setTimeInMillis(item.getCreationDate().getTime());
+		//		infoWebSiteItem.setItemCreationDate(calendar);
 
 		return infoWebSiteItem;
 	}

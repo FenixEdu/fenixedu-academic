@@ -96,11 +96,18 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		infoWebSiteItem.setExcerpt((String) itemForm.get("excerpt"));
 
 		String itemBeginDayString = (String) itemForm.get("itemBeginDay");
-		infoWebSiteItem.setItemBeginDay(convertStringDate(itemBeginDayString));
+		Date date = convertStringDate(itemBeginDayString);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		infoWebSiteItem.setItemBeginDayCalendar(calendar);
+		System.out.println(infoWebSiteItem.getItemBeginDayCalendar().getTime());
 
 		String itemEndDayString = (String) itemForm.get("itemEndDay");
-		infoWebSiteItem.setItemEndDay(convertStringDate(itemEndDayString));
-
+		calendar = Calendar.getInstance();
+		calendar.setTime(convertStringDate(itemEndDayString));
+		infoWebSiteItem.setItemEndDayCalendar(calendar);
+		System.out.println(infoWebSiteItem.getItemEndDayCalendar().getTime());
+		
 		infoWebSiteItem.setKeywords((String) itemForm.get("keywords"));
 		infoWebSiteItem.setMainEntryText((String) itemForm.get("mainEntryText"));
 
@@ -124,6 +131,7 @@ public class ItemsManagementAction extends FenixDispatchAction {
 			calendar.set(Calendar.MONTH, (new Integer(dateTokens[1])).intValue() - 1);
 			calendar.set(Calendar.YEAR, (new Integer(dateTokens[2])).intValue());
 			dateString = calendar.getTime();
+			System.out.println("data convertida: " + calendar.getTime());
 		}
 		return dateString;
 	}
@@ -232,11 +240,11 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		itemForm.set("mainEntryText", infoWebSiteItem.getMainEntryText());
 		itemForm.set("excerpt", infoWebSiteItem.getExcerpt());
 		itemForm.set("keywords", infoWebSiteItem.getKeywords());
-		if (infoWebSiteItem.getItemBeginDay() != null) {
-			itemForm.set("itemBeginDay", getDateFormatted(infoWebSiteItem.getItemBeginDay()));
+		if (infoWebSiteItem.getItemBeginDayCalendar() != null) {
+			itemForm.set("itemBeginDay", getDateFormatted(infoWebSiteItem.getItemBeginDayCalendar().getTime()));
 		}
-		if (infoWebSiteItem.getItemEndDay() != null) {
-			itemForm.set("itemEndDay", getDateFormatted(infoWebSiteItem.getItemEndDay()));
+		if (infoWebSiteItem.getItemEndDayCalendar() != null) {
+			itemForm.set("itemEndDay", getDateFormatted(infoWebSiteItem.getItemEndDayCalendar().getTime()));
 		}
 		if (infoWebSiteItem.getOnlineBeginDay() != null) {
 			itemForm.set("onlineBeginDay", getDateFormatted(infoWebSiteItem.getOnlineBeginDay()));
@@ -275,6 +283,9 @@ public class ItemsManagementAction extends FenixDispatchAction {
 		InfoWebSiteItem infoWebSiteItem = new InfoWebSiteItem();
 
 		fillInfoWebSiteItem(form, infoWebSiteItem);
+		
+		System.out.println("infoWebSiteItem.getItemBeginDayCalendar: " + infoWebSiteItem.getItemBeginDayCalendar().getTime());
+		System.out.println("infoWebSiteItem.getItemEndDayCalendar: " + infoWebSiteItem.getItemEndDayCalendar().getTime());
 		infoWebSiteItem.setIdInternal(itemCode);
 
 		ActionErrors errors = new ActionErrors();

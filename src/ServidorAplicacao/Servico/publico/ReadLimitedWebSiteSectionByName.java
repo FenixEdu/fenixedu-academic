@@ -8,6 +8,7 @@ import java.util.ListIterator;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 import DataBeans.InfoWebSiteItem;
@@ -70,9 +71,24 @@ public class ReadLimitedWebSiteSectionByName implements IServico {
 				throw new NonExistingServiceException();
 			}
 
-			List webSiteItems = persistentWebSiteItem.readAllWebSiteItemsByWebSiteSection(webSiteSection);
+			List webSiteItems = persistentWebSiteItem.readPublishedWebSiteItemsByWebSiteSection(webSiteSection);
 
 			if (webSiteItems == null || webSiteItems.size() == 0) {
+				throw new NonExistingServiceException();
+			}
+
+			// get items with valid dates of publishment
+			CollectionUtils.filter(webSiteItems, new Predicate() {
+				public boolean evaluate(Object arg0) {
+					IWebSiteItem webSiteItem = (IWebSiteItem) arg0;
+					if(!webSiteItem.getOnlineBeginDay().after(Calendar.getInstance().getTime()) && !webSiteItem.getOnlineEndDay().before(Calendar.getInstance().getTime())){
+						return true;
+					}
+
+					return false;
+				}
+			});
+			if (webSiteItems.size() == 0) {
 				throw new NonExistingServiceException();
 			}
 
@@ -80,6 +96,7 @@ public class ReadLimitedWebSiteSectionByName implements IServico {
 				public Object transform(Object arg0) {
 					IWebSiteItem webSiteItem = (IWebSiteItem) arg0;
 					InfoWebSiteItem infoWebSiteItem = Cloner.copyIWebSiteItem2InfoWebSiteItem(webSiteItem);
+					System.out.println("data de item " + webSiteItem.getItemBeginDay());
 
 					return infoWebSiteItem;
 				}
@@ -90,9 +107,6 @@ public class ReadLimitedWebSiteSectionByName implements IServico {
 				Collections.reverse(infoWebSiteItems);
 			}
 
-			Calendar today = Calendar.getInstance();
-
-			
 			// limits number of items to mandatory section size in website
 			if (infoWebSiteItems.size() > webSiteSection.getSize().intValue()) {
 				List limitedList = new ArrayList();

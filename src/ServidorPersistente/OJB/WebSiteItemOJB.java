@@ -44,6 +44,20 @@ public class WebSiteItemOJB extends ObjectFenixOJB implements IPersistentWebSite
 		return items;
 	}
 
+	public List readPublishedWebSiteItemsByWebSiteSection(IWebSiteSection webSiteSection) throws ExcepcaoPersistencia {
+		List items = null;
+		if (webSiteSection != null) {
+			Criteria criteria = new Criteria();
+
+			criteria.addEqualTo("webSiteSection.name", webSiteSection.getName());
+			criteria.addEqualTo("webSiteSection.webSite.name", webSiteSection.getWebSite().getName());
+			criteria.addEqualTo("published", Boolean.TRUE);
+
+			items = (List) queryList(WebSiteItem.class, criteria, true);
+		}
+		return items;
+	}
+
 	public void lockWrite(IWebSiteItem item) throws ExcepcaoPersistencia {
 
 		IWebSiteItem itemFromDB = null;

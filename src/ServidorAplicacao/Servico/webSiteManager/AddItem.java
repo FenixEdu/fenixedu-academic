@@ -91,8 +91,8 @@ public class AddItem implements IServico {
 			}
 			webSiteItem.setExcerpt(infoWebSiteItem.getExcerpt());
 
-			webSiteItem.setItemBeginDay(infoWebSiteItem.getItemBeginDay());
-			webSiteItem.setItemEndDay(infoWebSiteItem.getItemEndDay());
+			webSiteItem.setItemBeginDay(infoWebSiteItem.getItemBeginDayCalendar().getTime());
+			webSiteItem.setItemEndDay(infoWebSiteItem.getItemEndDayCalendar().getTime());
 			webSiteItem.setKeyEditor(person.getIdInternal());
 			webSiteItem.setKeyWebSiteSection(webSiteSection.getIdInternal());
 			webSiteItem.setKeywords(infoWebSiteItem.getKeywords());
