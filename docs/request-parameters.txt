@@ -42,3 +42,18 @@ exeCourseList -> executionCourseList
 itemList-> item list
 
 shift -> infoShift
+
+exeDegree -> executionDegree
+
+curricularYearList-> curricular Year List
+curYear -> curricularYear
+
+degreeList -> degree list
+
+class -> classView aka infoClass
+
+infoExamsMap -> list of infoExams
+
+semesterList-> semester List
+
+degreeCurPlan -> degree curricular Plan
