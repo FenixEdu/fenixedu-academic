@@ -363,10 +363,8 @@
             encoding="${encoding}"            
         >
 	        <fileset dir="${sql}">
-			  <include name="*.sql" /> 
-			  <exclude name="GesDis-*.sql" /> 
-			  <exclude name="ciapl*.sql" /> 
-			  <exclude name="test*.sql" /> 
+			  <include name="tables_*.sql" />
+			  <exclude name="tables_inscRelatedDBTables.sql" />
   			</fileset>
             <classpath>
                 <fileset dir="${libs}">
@@ -385,7 +383,7 @@
             userid="root"
             password=""
             encoding="${encoding}"
-            src="${sql}/tests-data_tfc130.sql"
+            src="${sql}/test-data_sop.sql"
         >
             <classpath>
                 <fileset dir="${libs}">
@@ -399,7 +397,7 @@
             userid="root"
             password=""
             encoding="${encoding}"
-            src="${sql}/GesDis-test-data.sql"
+            src="${sql}/test-data_GesDis.sql"
         >
             <classpath>
                 <fileset dir="${libs}">
