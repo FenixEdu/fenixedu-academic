@@ -21,8 +21,6 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author jmota
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class ReadTeachersByExecutionCourseResponsibilityTest
 	extends TestCaseReadServices {
