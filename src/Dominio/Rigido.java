@@ -1,5 +1,6 @@
 package Dominio;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -83,4 +84,92 @@ public class Rigido implements IStrategyHorarios {
     public int mapeamentoFechoMes(Horario horario, List listaRegimes) {
         return 0;
     } /* mapeamentoFechoMes */
+
+    /* (non-Javadoc)
+     * @see Dominio.IStrategyHorarios#validateAssociarHorarioTipo(org.apache.struts.action.ActionForm, Dominio.HorarioTipo, java.util.ArrayList)
+     */
+    public ActionErrors validateAssociarHorarioTipo(ActionForm form, HorarioTipo horarioTipo, ArrayList listaRegimes) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /* (non-Javadoc)
+     * @see Dominio.IStrategyHorarios#setFormAssociarHorarioConfirmar(java.util.Locale, org.apache.struts.action.ActionForm, Dominio.Pessoa, Dominio.Funcionario, Dominio.Horario, java.util.ArrayList, boolean, java.lang.String)
+     */
+    public void setFormAssociarHorarioConfirmar(Locale locale, ActionForm form, Pessoa pessoa, Funcionario funcionario, Horario horario, ArrayList listaRegime, boolean isExcepcao, String alterar) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    /* (non-Javadoc)
+     * @see Dominio.IStrategyHorarios#setFormAssociarHorarioTipoConfirmar(java.util.Locale, org.apache.struts.action.ActionForm, Dominio.Pessoa, Dominio.Funcionario, Dominio.HorarioTipo, Dominio.Horario, java.util.ArrayList, boolean)
+     */
+    public void setFormAssociarHorarioTipoConfirmar(Locale locale, ActionForm form, Pessoa pessoa, Funcionario funcionario, HorarioTipo horarioTipo, Horario horario, ArrayList listaRegime, boolean isExcepcao) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    /* (non-Javadoc)
+     * @see Dominio.IStrategyHorarios#descricaoHorario(java.util.Locale, Dominio.Horario, java.util.ArrayList)
+     */
+    public String descricaoHorario(Locale locale, Horario horario, ArrayList listaRegimes) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /* (non-Javadoc)
+     * @see Dominio.IStrategyHorarios#descricaoHorarioTipo(java.util.Locale, Dominio.HorarioTipo, java.util.ArrayList)
+     */
+    public String descricaoHorarioTipo(Locale locale, HorarioTipo horarioTipo, ArrayList listaRegimes) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /* (non-Javadoc)
+     * @see Dominio.IStrategyHorarios#setSaldosHorarioVerbeteBody(Dominio.Horario, java.util.ArrayList, java.util.ArrayList, java.util.ArrayList, java.util.ArrayList)
+     */
+    public void setSaldosHorarioVerbeteBody(Horario horario, ArrayList listaRegimes, ArrayList listaParamJustificacoes, ArrayList listaMarcacoesPonto, ArrayList listaSaldos) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    /* (non-Javadoc)
+     * @see Dominio.IStrategyHorarios#calcularHorasExtraordinarias(Dominio.Horario, java.util.ArrayList, java.util.ArrayList)
+     */
+    public void calcularHorasExtraordinarias(Horario horario, ArrayList listaMarcacoesPonto, ArrayList listaSaldos) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    /* (non-Javadoc)
+     * @see Dominio.IStrategyHorarios#duracaoPF(Dominio.Horario, java.util.ArrayList)
+     */
+    public long duracaoPF(Horario horario, ArrayList listaRegimes) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    /* (non-Javadoc)
+     * @see Dominio.IStrategyHorarios#mapeamentoFechoMes(Dominio.Horario, java.util.ArrayList)
+     */
+    public int mapeamentoFechoMes(Horario horario, ArrayList listaRegimes) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    /* (non-Javadoc)
+     * @see Dominio.IStrategyHorarios#isNocturno(Dominio.Horario)
+     */
+    public boolean isNocturno(Horario horario) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /* (non-Javadoc)
+     * @see Dominio.IStrategyHorarios#marcacoesObrigatorias(Dominio.Horario)
+     */
+    public int marcacoesObrigatorias(Horario horario) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 }

@@ -25,11 +25,6 @@ public class ExtraWorkCompensation extends DomainObject implements
     private Boolean holiday;
     private Boolean remuneration;
     
-    private Double serviceDismissalPerYear;
-    private Double holidaysNumberPerYear;
-    private Date hoursExtraWorkPerYear;
-    private Date hoursExtraWorkPerDay;
-    
     private int who;
     private IEmployee whoEmployee;
     private Date when;
@@ -108,42 +103,6 @@ public class ExtraWorkCompensation extends DomainObject implements
         this.holiday = holiday;
     }
     /**
-     * @return Returns the holidaysNumberPerYear.
-     */
-    public Double getHolidaysNumberPerYear() {
-        return holidaysNumberPerYear;
-    }
-    /**
-     * @param holidaysNumberPerYear The holidaysNumberPerYear to set.
-     */
-    public void setHolidaysNumberPerYear(Double holidaysNumberPerYear) {
-        this.holidaysNumberPerYear = holidaysNumberPerYear;
-    }
-    /**
-     * @return Returns the hoursExtraWorkPerDay.
-     */
-    public Date getHoursExtraWorkPerDay() {
-        return hoursExtraWorkPerDay;
-    }
-    /**
-     * @param hoursExtraWorkPerDay The hoursExtraWorkPerDay to set.
-     */
-    public void setHoursExtraWorkPerDay(Date hoursExtraWorkPerDay) {
-        this.hoursExtraWorkPerDay = hoursExtraWorkPerDay;
-    }
-    /**
-     * @return Returns the hoursExtraWorkPerYear.
-     */
-    public Date getHoursExtraWorkPerYear() {
-        return hoursExtraWorkPerYear;
-    }
-    /**
-     * @param hoursExtraWorkPerYear The hoursExtraWorkPerYear to set.
-     */
-    public void setHoursExtraWorkPerYear(Date hoursExtraWorkPerYear) {
-        this.hoursExtraWorkPerYear = hoursExtraWorkPerYear;
-    }
-    /**
      * @return Returns the remuneration.
      */
     public Boolean getRemuneration() {
@@ -154,18 +113,6 @@ public class ExtraWorkCompensation extends DomainObject implements
      */
     public void setRemuneration(Boolean remuneration) {
         this.remuneration = remuneration;
-    }
-    /**
-     * @return Returns the serviceDismissalPerYear.
-     */
-    public Double getServiceDismissalPerYear() {
-        return serviceDismissalPerYear;
-    }
-    /**
-     * @param serviceDismissalPerYear The serviceDismissalPerYear to set.
-     */
-    public void setServiceDismissalPerYear(Double serviceDismissalPerYear) {
-        this.serviceDismissalPerYear = serviceDismissalPerYear;
     }
     /**
      * @return Returns the when.

@@ -238,8 +238,8 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
                     if (!_dataConsulta.after(agoraTimestamp)) {
                         IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance()
                                 .callStrategy(_horario.getModalidade());
-                        horarioStrategy.setSaldosHorarioVerbeteBody(_horario, _listaRegimes,
-                                _listaParamJustificacoes, _listaMarcacoesPonto, _listaSaldos);
+                        horarioStrategy.setSaldosHorarioVerbeteBody(_horario, (ArrayList)_listaRegimes,
+                                (ArrayList)_listaParamJustificacoes, (ArrayList)_listaMarcacoesPonto, (ArrayList)_listaSaldos);
                     }
                     // actualiza o saldo
                     if (_listaParamJustificacoes.size() > 0) {
@@ -471,8 +471,8 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
                     Constants.FERIADO)))) {
                 IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(
                         _horario.getModalidade());
-                horarioStrategy.setSaldosHorarioVerbeteBody(_horario, _listaRegimes,
-                        _listaParamJustificacoes, _listaMarcacoesPonto, _listaSaldos);
+                horarioStrategy.setSaldosHorarioVerbeteBody(_horario, (ArrayList)_listaRegimes,
+                        (ArrayList)_listaParamJustificacoes, (ArrayList)_listaMarcacoesPonto, (ArrayList)_listaSaldos);
 
                 calendario.clear();
                 calendario.setTimeInMillis(((Long) _listaSaldos.get(0)).longValue());
@@ -939,7 +939,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
         if (saldo > 0) {
             IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(
                     _horario.getModalidade());
-            horarioStrategy.calcularHorasExtraordinarias(_horario, _listaMarcacoesPonto, _listaSaldos);
+            horarioStrategy.calcularHorasExtraordinarias(_horario, (ArrayList)_listaMarcacoesPonto, (ArrayList)_listaSaldos);
 
             _saldoPrimEscalao = _saldoPrimEscalao + ((Long) _listaSaldos.get(2)).longValue();
             _saldoSegEscalao = _saldoSegEscalao + ((Long) _listaSaldos.get(3)).longValue();

@@ -322,4 +322,9 @@ public final class Constants {
 
     public static final long SEGUNDO_ESCALAO = 2 * 3600 * 1000; // duas horas
     
+	public static final long PERIODO_MINIMO = 1800 * 1000; //meia hora
+	
+	public static final long DURACAO_MINIMA_SEMANAL_JORNADA = 1800 * 1000; //meia hora
+	public static final long DURACAO_MAXIMA_SEMANAL_JORNADA = 1800 * 1000; //meia hora
+    
 }

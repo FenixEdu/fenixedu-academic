@@ -2,6 +2,7 @@ package Dominio;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -102,7 +103,7 @@ public class Saldo implements IStrategyJustificacoes {
 
             IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(
                     horario.getModalidade());
-            long duracaoPF = horarioStrategy.duracaoPF(horario, listaRegimes);
+            long duracaoPF = horarioStrategy.duracaoPF(horario, (ArrayList)listaRegimes);
             if (justificacao.getHoraInicio().getTime() > duracaoPF) {
                 justificacao.setHoraInicio(new Time(duracaoPF));
             }

@@ -25,16 +25,8 @@ public interface IExtraWorkCompensation extends IDomainObject {
     public void setEndDate(Date endDate);
     public Boolean getHoliday();
     public void setHoliday(Boolean holiday);
-    public Double getHolidaysNumberPerYear();
-    public void setHolidaysNumberPerYear(Double holidaysNumberPerYear);
-    public Date getHoursExtraWorkPerDay();
-    public void setHoursExtraWorkPerDay(Date hoursExtraWorkPerDay);
-    public Date getHoursExtraWorkPerYear();
-    public void setHoursExtraWorkPerYear(Date hoursExtraWorkPerYear);
     public Boolean getRemuneration();
     public void setRemuneration(Boolean remuneration);
-    public Double getServiceDismissalPerYear();
-    public void setServiceDismissalPerYear(Double serviceDismissalPerYear);
     public Date getWhen();
     public void setWhen(Date when);
     public int getWho();

@@ -588,6 +588,6 @@ public class AssociarHorarioTipoConfirmarForm extends ActionForm {
         IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(
                 horarioTipo.getModalidade());
         horarioStrategy.setFormAssociarHorarioTipoConfirmar(locale, this, pessoa, funcionario,
-                horarioTipo, horario, listaRegime, isExcepcaoHorario);
+                horarioTipo, horario, (ArrayList) listaRegime, isExcepcaoHorario);
     }
 }

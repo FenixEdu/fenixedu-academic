@@ -22,12 +22,7 @@ public class InfoExtraWorkCompensation extends InfoObject {
     private Boolean dayPerWeek;
     private Boolean holiday;
     private Boolean remuneration;
-    
-    private Double serviceDismissalPerYear;
-    private Double holidaysNumberPerYear;
-    private Date hoursExtraWorkPerYear;
-    private Date hoursExtraWorkPerDay;
-    
+     
     private InfoEmployee infoWhoEmployee;
     private Date when;
     
@@ -78,43 +73,7 @@ public class InfoExtraWorkCompensation extends InfoObject {
      */
     public void setHoliday(Boolean holiday) {
         this.holiday = holiday;
-    }
-    /**
-     * @return Returns the holidaysNumberPerYear.
-     */
-    public Double getHolidaysNumberPerYear() {
-        return holidaysNumberPerYear;
-    }
-    /**
-     * @param holidaysNumberPerYear The holidaysNumberPerYear to set.
-     */
-    public void setHolidaysNumberPerYear(Double holidaysNumberPerYear) {
-        this.holidaysNumberPerYear = holidaysNumberPerYear;
-    }
-    /**
-     * @return Returns the hoursExtraWorkPerDay.
-     */
-    public Date getHoursExtraWorkPerDay() {
-        return hoursExtraWorkPerDay;
-    }
-    /**
-     * @param hoursExtraWorkPerDay The hoursExtraWorkPerDay to set.
-     */
-    public void setHoursExtraWorkPerDay(Date hoursExtraWorkPerDay) {
-        this.hoursExtraWorkPerDay = hoursExtraWorkPerDay;
-    }
-    /**
-     * @return Returns the hoursExtraWorkPerYear.
-     */
-    public Date getHoursExtraWorkPerYear() {
-        return hoursExtraWorkPerYear;
-    }
-    /**
-     * @param hoursExtraWorkPerYear The hoursExtraWorkPerYear to set.
-     */
-    public void setHoursExtraWorkPerYear(Date hoursExtraWorkPerYear) {
-        this.hoursExtraWorkPerYear = hoursExtraWorkPerYear;
-    }
+    }    
     /**
      * @return Returns the infoEmployee.
      */
@@ -152,18 +111,6 @@ public class InfoExtraWorkCompensation extends InfoObject {
         this.remuneration = remuneration;
     }
     /**
-     * @return Returns the serviceDismissalPerYear.
-     */
-    public Double getServiceDismissalPerYear() {
-        return serviceDismissalPerYear;
-    }
-    /**
-     * @param serviceDismissalPerYear The serviceDismissalPerYear to set.
-     */
-    public void setServiceDismissalPerYear(Double serviceDismissalPerYear) {
-        this.serviceDismissalPerYear = serviceDismissalPerYear;
-    }
-    /**
      * @return Returns the when.
      */
     public Date getWhen() {
@@ -182,10 +129,6 @@ public class InfoExtraWorkCompensation extends InfoObject {
             setDayPerWeek(extraWorkCompensation.getDayPerWeek());
             setHoliday(extraWorkCompensation.getHoliday());
             setRemuneration(extraWorkCompensation.getRemuneration());
-            setServiceDismissalPerYear(extraWorkCompensation.getServiceDismissalPerYear());
-            setHolidaysNumberPerYear(extraWorkCompensation.getHolidaysNumberPerYear());
-            setHoursExtraWorkPerYear(extraWorkCompensation.getHoursExtraWorkPerYear());
-            setHoursExtraWorkPerDay(extraWorkCompensation.getHoursExtraWorkPerDay());
             setWhen(extraWorkCompensation.getWhen());
         }        
     }

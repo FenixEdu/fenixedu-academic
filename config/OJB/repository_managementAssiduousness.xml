@@ -373,6 +373,61 @@
   		column="REMUNERATION" 
   		jdbc-type="BIT"
 	/> 		
+	<field-descriptor
+	   	name="employeeKey"
+	   	column="KEY_EMPLOYEE"
+		jdbc-type="INTEGER"
+	/>  
+	<field-descriptor
+	   	name="who"
+	   	column="KEY_EMPLOYEE_DB"
+		jdbc-type="INTEGER"
+	/>   	   	
+	<field-descriptor
+		name="when"
+		column="WHEN_ALTER"
+		jdbc-type="TIMESTAMP"
+		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+	/>   
+    <reference-descriptor
+      	name="employee"
+       	class-ref="Dominio.Employee"
+       	proxy="false"
+		refresh="true">
+        <foreignkey field-ref="employeeKey"/>
+    </reference-descriptor> 
+    <reference-descriptor
+      	name="whoEmployee"
+       	class-ref="Dominio.Employee"
+       	proxy="false"
+		refresh="true">
+        <foreignkey field-ref="who"/>
+    </reference-descriptor> 
+</class-descriptor>
+
+
+<class-descriptor 
+  class="Dominio.managementAssiduousness.ExtraWorkHistoric"
+  table="EXTRA_WORK_HISTORIC"
+>
+	<field-descriptor
+    	name="idInternal"
+	    column="ID_INTERNAL"
+	    jdbc-type="INTEGER"
+	    primarykey="true"
+	    autoincrement="true"
+	/>
+  	<field-descriptor
+   		name="ackOptLock"
+	  	column="ACK_OPT_LOCK"
+	   	jdbc-type="INTEGER"
+	   	locking="true"
+  	/>	
+  	<field-descriptor
+   		name="year"
+	  	column="YEAR"
+	   	jdbc-type="INTEGER"
+  	/> 	
    	<field-descriptor
    			name="serviceDismissalPerYear"
    			column="SERVICE_DISMISSAL_PER_YEAR"
