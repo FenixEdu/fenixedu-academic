@@ -26,6 +26,7 @@ import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NoActiveStudentCurricularPlanServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingContributorServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -196,15 +197,31 @@ public class PrepareCreateGuide implements IServico {
 
 		if (requesterType.equals(GuideRequester.STUDENT_STRING)) {
 			IStudent student = null;
+			IStudentCurricularPlan studentCurricularPlan = null;
 			try {
 				IExecutionYear executionYear = new ExecutionYear(infoExecutionDegree.getInfoExecutionYear().getYear());
-				student = sp.getIPersistentStudent().readByNumero(number, TipoCurso.MESTRADO_OBJ);
+								student = sp.getIPersistentStudent().readByNumero(number,TipoCurso.MESTRADO_OBJ);
+				
+				studentCurricularPlan = sp.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(student.getNumber(),
+										TipoCurso.MESTRADO_OBJ);
 
-				// Check if the Candidate Exists
-				if (student == null)
-					throw new NonExistingServiceException("O Aluno", null);
+					} catch (ExcepcaoPersistencia ex) {
+				FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+				newEx.fillInStackTrace();
+				throw newEx;
+			}
 
-				IStudentCurricularPlan studentCurricularPlan =
+
+			if (studentCurricularPlan == null) {
+				throw new NoActiveStudentCurricularPlanServiceException();
+			} 
+			
+			
+			try {
+				
+				
+
+				 studentCurricularPlan =
 					sp.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(student.getNumber(), TipoCurso.MESTRADO_OBJ);
 
 				executionDegree =

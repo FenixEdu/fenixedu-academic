@@ -83,9 +83,16 @@
 	<definition name="view-ExecutionCourse-Projects" extends="definition.student.masterPage">
 		<put name="body" value="/student/viewExecutionCourseProjects_bd.jsp" />		
 	</definition>
-	<definition name="view-Project-StudentGroups" extends="definition.student.masterPage">
-		<put name="body" value="/student/viewAllGroups_bd.jsp" />		
+	
+	<definition name="view-Project-Shifts" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewProjectShifts_bd.jsp" />		
 	</definition>
+	
+	
+	<definition name="view-StudentGroups" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewStudentGroups_bd.jsp" />		
+	</definition>
+	
 	<definition name="view-StudentGroup-Information" extends="definition.student.masterPage">
 		<put name="body" value="/student/viewStudentGroupInformation_bd.jsp" />		
 	</definition>
@@ -100,6 +107,17 @@
 	<definition name="group-enrolment" extends="definition.student.masterPage">
 		<put name="body" value="/student/viewGroupEnrolment_bd.jsp" />		
 	</definition>
+	
+	<definition name="edit-studentGroup-shift" extends="definition.student.masterPage">
+		<put name="body" value="/student/editStudentGroupShift_bd.jsp" />		
+	</definition>
+
+	<definition name="definition.student.test" extends="definition.student.masterPage">
+		<put name="body" value="/student/test_bd.jsp" />		
+	</definition>
+
+
+
 	
 	
 	

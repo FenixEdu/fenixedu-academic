@@ -13,7 +13,7 @@
 
 
 <logic:present name="infoMasterDegreeCandidate">
-	<html:form action="/candidateRegistration.do?method=confirm">
+	<html:form action="/candidateRegistrationConfirmation.do?method=confirm">
 		<html:hidden property="candidateID" />
 		<table>
 			<tr>
@@ -57,6 +57,29 @@
 		                <html:options collection="branchList" property="idInternal" labelProperty="name"/>
 		            </html:select>
 				</td>
+			</tr>
+		</table>
+		
+		
+		<br />
+		<div class="infoop">
+			<span class="error"><strong>Nota:</strong></span>
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;Caso este Aluno tenha um número de Pós-Graduação que lhe foi atribuido antes do ano lectivo de <strong>2002/2003</strong> introduza-o aqui. 
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;Caso este Aluno  ainda não tenha um número atribuido ou que essa atribuição tenha sido feita no decorrer do ano lectivo de <strong>2002/2003</strong> 
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;deixe este campo vazio que o programa atribuirá um novo número ou associará o aluno ao seu respectivo número.
+			
+		</div>
+		<br />
+		
+		
+		<table>
+			<tr>
+				<td>
+					<strong><bean:message key="label.student.number" /></strong>
+				</td>
+				<td>
+					<html:text property="studentNumber" />
+				</td>
 			</tr>			
 		</table>				
 
@@ -68,7 +91,8 @@
 		<br />
 		<br />
 
-		<html:submit value="Confirmar" styleClass="inputbutton" property="OK"/>
-		<html:submit value="Cancelar" styleClass="inputbutton" property="NOTOK"/>
+		<html:submit value="Confirmar" styleClass="inputbutton" property="confirmation" />
+		<html:submit value="Cancelar" styleClass="inputbutton" property="confirmation" />
+
 	</html:form> 
 </logic:present>

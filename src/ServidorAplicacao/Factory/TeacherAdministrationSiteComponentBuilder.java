@@ -25,7 +25,6 @@ import DataBeans.InfoLink;
 import DataBeans.InfoSection;
 import DataBeans.InfoShift;
 import DataBeans.InfoSite;
-import DataBeans.InfoSiteAllGroups;
 import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteBibliography;
 import DataBeans.InfoSiteCommon;
@@ -38,15 +37,18 @@ import DataBeans.InfoSiteInstructions;
 import DataBeans.InfoSiteItems;
 import DataBeans.InfoSiteObjectives;
 import DataBeans.InfoSitePrograms;
+import DataBeans.InfoSiteProjectShifts;
 import DataBeans.InfoSiteProjects;
 import DataBeans.InfoSiteRegularSections;
 import DataBeans.InfoSiteRootSections;
 import DataBeans.InfoSiteSection;
 import DataBeans.InfoSiteSections;
+import DataBeans.InfoSiteShift;
 import DataBeans.InfoSiteShifts;
 import DataBeans.InfoSiteStudentGroup;
 import DataBeans.InfoSiteStudentInformation;
 import DataBeans.InfoSiteTeachers;
+import DataBeans.InfoStudentGroup;
 import DataBeans.InfoStudentGroupAttend;
 import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
@@ -82,6 +84,7 @@ import Dominio.ITurno;
 import Dominio.Item;
 import Dominio.Section;
 import Dominio.StudentGroup;
+import Dominio.Turno;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -94,8 +97,11 @@ import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentSection;
+import ServidorPersistente.IPersistentStudentGroup;
+import ServidorPersistente.IPersistentStudentGroupAttend;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import fileSuport.FileSuport;
 import fileSuport.FileSuportObject;
@@ -119,8 +125,9 @@ public class TeacherAdministrationSiteComponentBuilder {
 		return instance;
 	}
 
-	public ISiteComponent getComponent(ISiteComponent component, ISite site, ISiteComponent commonComponent, Object obj1, Object obj2) throws FenixServiceException {
-		
+	public ISiteComponent getComponent(ISiteComponent component, ISite site, ISiteComponent commonComponent, Object obj1, Object obj2)
+		throws FenixServiceException {
+
 		if (component instanceof InfoSiteCommon) {
 			return getInfoSiteCommon((InfoSiteCommon) component, site);
 		} else if (component instanceof InfoSiteInstructions) {
@@ -136,11 +143,11 @@ public class TeacherAdministrationSiteComponentBuilder {
 		} else if (component instanceof InfoSitePrograms) {
 			return getInfoSitePrograms((InfoSitePrograms) component, site);
 		} else if (component instanceof InfoCurriculum) {
-			return getInfoCurriculum((InfoCurriculum) component, site,(Integer) obj1);
+			return getInfoCurriculum((InfoCurriculum) component, site, (Integer) obj1);
 		} else if (component instanceof InfoSiteEvaluationMethods) {
 			return getInfoEvaluationMethods((InfoSiteEvaluationMethods) component, site);
-		//} else if (component instanceof InfoCurriculum) {
-		//	return getInfoEvaluationMethod((InfoCurriculum) component, site, (Integer) obj1);
+			//} else if (component instanceof InfoCurriculum) {
+			//	return getInfoEvaluationMethod((InfoCurriculum) component, site, (Integer) obj1);
 		} else if (component instanceof InfoSiteBibliography) {
 			return getInfoSiteBibliography((InfoSiteBibliography) component, site);
 		} else if (component instanceof InfoBibliographicReference) {
@@ -165,14 +172,16 @@ public class TeacherAdministrationSiteComponentBuilder {
 			return getInfoSiteItems((InfoSiteItems) component, site, (Integer) obj1);
 		} else if (component instanceof InfoSiteProjects) {
 			return getInfoSiteProjects((InfoSiteProjects) component, site);
-		} else if (component instanceof InfoSiteAllGroups) {
-			return getInfoSiteAllGroups((InfoSiteAllGroups) component, (Integer) obj1);
+		} else if (component instanceof InfoSiteProjectShifts) {
+			return getInfoSiteProjectShifts((InfoSiteProjectShifts) component, (Integer) obj1);
+		} else if (component instanceof InfoSiteGroupsByShift) {
+			return getInfoSiteStudentGroups((InfoSiteGroupsByShift) component, (Integer) obj1, (Integer) obj2);
 		} else if (component instanceof InfoSiteStudentGroup) {
 			return getInfoSiteStudentGroup((InfoSiteStudentGroup) component, (Integer) obj1);
 		} else if (component instanceof InfoSiteGroupProperties) {
 			return getInfoSiteGroupProperties((InfoSiteGroupProperties) component, (Integer) obj1);
 		} else if (component instanceof InfoSiteShifts) {
-			return getInfoSiteShifts((InfoSiteShifts) component, (Integer) obj1,(Integer) obj2);
+			return getInfoSiteShifts((InfoSiteShifts) component, (Integer) obj1, (Integer) obj2);
 		}
 		return null;
 	}
@@ -268,7 +277,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @param site
 	 * @return
 	 */
-	private ISiteComponent getInfoAnnouncement(InfoAnnouncement component, ISite site, Integer announcementCode) throws FenixServiceException {
+	private ISiteComponent getInfoAnnouncement(InfoAnnouncement component, ISite site, Integer announcementCode)
+		throws FenixServiceException {
 		try {
 
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -295,70 +305,68 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @return
 	 */
 	private ISiteComponent getInfoSiteObjectives(InfoSiteObjectives component, ISite site) throws FenixServiceException {
-		try {	
-				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-				IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
-			
-				IDisciplinaExecucao executionCourse = site.getExecutionCourse();				
-				List curricularCourses = executionCourse.getAssociatedCurricularCourses();
-				Iterator iter = curricularCourses.iterator();
-				List infoCurriculums = new ArrayList();
-			
-				while (iter.hasNext()) {
-					ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
-					ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
-				
-					if (curriculum != null) {
-						infoCurriculums.add(Cloner.copyICurriculum2InfoCurriculum(curriculum));
-					}			
-				}
-				component.setInfoCurriculums(infoCurriculums);
-				component.setInfoCurricularCourses(readInfoCurricularCourses(site));
-			
-			} catch (ExcepcaoPersistencia e) {
-				throw new FenixServiceException(e);
-			}
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
 
-			return component;
+			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
+			List curricularCourses = executionCourse.getAssociatedCurricularCourses();
+			Iterator iter = curricularCourses.iterator();
+			List infoCurriculums = new ArrayList();
+
+			while (iter.hasNext()) {
+				ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+				ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
+
+				if (curriculum != null) {
+					infoCurriculums.add(Cloner.copyICurriculum2InfoCurriculum(curriculum));
+				}
+			}
+			component.setInfoCurriculums(infoCurriculums);
+			component.setInfoCurricularCourses(readInfoCurricularCourses(site));
+
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
+		}
+
+		return component;
 	}
-	
-	
+
 	/**
 	 * @param program
 	 * @param site
 	 * @return
 	 */
 	private ISiteComponent getInfoSitePrograms(InfoSitePrograms component, ISite site) throws FenixServiceException {
-			try {	
-				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-				IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
-			
-				IDisciplinaExecucao executionCourse = site.getExecutionCourse();				
-				List curricularCourses = executionCourse.getAssociatedCurricularCourses();
-				Iterator iter = curricularCourses.iterator();
-				List infoCurriculums = new ArrayList();
-			
-					while (iter.hasNext()) {
-						ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
-						ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
-																	
-						if (curriculum != null) {
-							InfoCurriculum infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
-							infoCurriculum.setInfoCurricularCourse(Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse));
-							infoCurriculums.add(infoCurriculum);
-						}			
-					}
-					component.setInfoCurriculums(infoCurriculums);
-					component.setInfoCurricularCourses(readInfoCurricularCourses(site));
-					
-					
-				} catch (ExcepcaoPersistencia e) {
-					throw new FenixServiceException(e);
-				}
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
 
-				return component;
+			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
+			List curricularCourses = executionCourse.getAssociatedCurricularCourses();
+			Iterator iter = curricularCourses.iterator();
+			List infoCurriculums = new ArrayList();
+
+			while (iter.hasNext()) {
+				ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+				ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
+
+				if (curriculum != null) {
+					InfoCurriculum infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
+					infoCurriculum.setInfoCurricularCourse(Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse));
+					infoCurriculums.add(infoCurriculum);
+				}
 			}
-	
+			component.setInfoCurriculums(infoCurriculums);
+			component.setInfoCurricularCourses(readInfoCurricularCourses(site));
+
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
+		}
+
+		return component;
+	}
+
 	/**
 	 * @param evaluation
 	 * @param site
@@ -366,40 +374,41 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 */
 	private ISiteComponent getInfoEvaluationMethods(InfoSiteEvaluationMethods component, ISite site) throws FenixServiceException {
 		try {
-						
+
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
-			
-			IDisciplinaExecucao executionCourse = site.getExecutionCourse();				
+
+			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
 			List curricularCourses = executionCourse.getAssociatedCurricularCourses();
 			Iterator iter = curricularCourses.iterator();
 			List infoEvaluationMethods = new ArrayList();
-			
+
 			while (iter.hasNext()) {
 				ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
 				ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
-				
+
 				if (curriculum != null) {
 					infoEvaluationMethods.add(Cloner.copyICurriculum2InfoCurriculum(curriculum));
-				}			
+				}
 			}
 			component.setInfoEvaluations(infoEvaluationMethods);
 			component.setInfoCurricularCourses(readInfoCurricularCourses(site));
-			
+
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
 
 		return component;
 	}
-	
+
 	/**
 	* @param methods
 	* @param site
 	* @param integer
 	* @return
 	*/
-	private ISiteComponent getInfoEvaluationMethod(InfoCurriculum component, ISite site, Integer curricularCourseCode) throws FenixServiceException {
+	private ISiteComponent getInfoEvaluationMethod(InfoCurriculum component, ISite site, Integer curricularCourseCode)
+		throws FenixServiceException {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
@@ -411,17 +420,17 @@ public class TeacherAdministrationSiteComponentBuilder {
 			//}	
 			ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
 			InfoCurriculum infoCurriculum = null;
-		
+
 			if (curriculum != null) {
 				infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
 			}
-			
+
 			return infoCurriculum;
-			
-			} catch (ExcepcaoPersistencia e) {
-				throw new FenixServiceException(e);
-			}
+
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
 		}
+	}
 
 	/**
 		* @param methods
@@ -429,30 +438,29 @@ public class TeacherAdministrationSiteComponentBuilder {
 		* @param integer
 		* @return
 		*/
-		private ISiteComponent getInfoCurriculum(InfoCurriculum component, ISite site, Integer curricularCourseCode) throws FenixServiceException {
-			try {
-				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-				IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-				ICurricularCourse curricularCourse = new CurricularCourse(curricularCourseCode);
-				curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse, false);
-				IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
-				
-				ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
-				InfoCurriculum infoCurriculum = null;
-				
-				if (curriculum != null) {
-					infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
-					infoCurriculum.setInfoCurricularCourse(Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse));
-				}
-				
-				return infoCurriculum;
-			
-				} catch (ExcepcaoPersistencia e) {
-					throw new FenixServiceException(e);
-				}
+	private ISiteComponent getInfoCurriculum(InfoCurriculum component, ISite site, Integer curricularCourseCode)
+		throws FenixServiceException {
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+			ICurricularCourse curricularCourse = new CurricularCourse(curricularCourseCode);
+			curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse, false);
+			IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
+
+			ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
+			InfoCurriculum infoCurriculum = null;
+
+			if (curriculum != null) {
+				infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
+				infoCurriculum.setInfoCurricularCourse(Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse));
 			}
 
+			return infoCurriculum;
 
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
+		}
+	}
 
 	/**
 	 * @param bibliography
@@ -465,7 +473,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			IPersistentBibliographicReference persistentBibliographicReference = persistentBibliographicReference = sp.getIPersistentBibliographicReference();
+			IPersistentBibliographicReference persistentBibliographicReference =
+				persistentBibliographicReference = sp.getIPersistentBibliographicReference();
 
 			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
 
@@ -495,14 +504,20 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @param site
 	 * @return
 	 */
-	private ISiteComponent getInfoBibliographicReference(InfoBibliographicReference component, ISite site, Integer bibliographicReferenceCode) throws FenixServiceException {
+	private ISiteComponent getInfoBibliographicReference(
+		InfoBibliographicReference component,
+		ISite site,
+		Integer bibliographicReferenceCode)
+		throws FenixServiceException {
 		try {
 
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			BibliographicReference bibliographicReference = new BibliographicReference(bibliographicReferenceCode);
-			IBibliographicReference iBibliographicReference = (IBibliographicReference) sp.getIPersistentBibliographicReference().readByOId(bibliographicReference, false);
-			InfoBibliographicReference infoBibliographicReference = Cloner.copyIBibliographicReference2InfoBibliographicReference(iBibliographicReference);
+			IBibliographicReference iBibliographicReference =
+				(IBibliographicReference) sp.getIPersistentBibliographicReference().readByOId(bibliographicReference, false);
+			InfoBibliographicReference infoBibliographicReference =
+				Cloner.copyIBibliographicReference2InfoBibliographicReference(iBibliographicReference);
 
 			component.setTitle(infoBibliographicReference.getTitle());
 			component.setAuthors(infoBibliographicReference.getAuthors());
@@ -558,9 +573,12 @@ public class TeacherAdministrationSiteComponentBuilder {
 					}
 
 					ITeacher teacher = persistentTeacher.readTeacherByUsername(username);
-					IResponsibleFor responsibleFor = persistentResponsibleFor.readByTeacherAndExecutionCourse(teacher, executionCourse);
+					IResponsibleFor responsibleFor =
+						persistentResponsibleFor.readByTeacherAndExecutionCourse(teacher, executionCourse);
 					if (teacher != null) {
-						if (responsibleTeachers != null && !responsibleTeachers.isEmpty() && responsibleTeachers.contains(responsibleFor)) {
+						if (responsibleTeachers != null
+							&& !responsibleTeachers.isEmpty()
+							&& responsibleTeachers.contains(responsibleFor)) {
 							isResponsible = true;
 						}
 					}
@@ -613,7 +631,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 				persistentEvaluation.lockWrite(finalEvaluation);
 
 				//associate final evaluation to execution course				
-				IPersistentEvaluationExecutionCourse persistentEvaluationExecutionCourse = sp.getIPersistentEvaluationExecutionCourse();
+				IPersistentEvaluationExecutionCourse persistentEvaluationExecutionCourse =
+					sp.getIPersistentEvaluationExecutionCourse();
 				IEvalutionExecutionCourse evalutionExecutionCourse = new EvaluationExecutionCourse();
 				evalutionExecutionCourse.setEvaluation(finalEvaluation);
 				evalutionExecutionCourse.setExecutionCourse(executionCourse);
@@ -666,7 +685,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @return
 	 */
 
-	private ISiteComponent getInfoEvaluation(InfoEvaluation component, ISite site, Integer evaluationCode) throws FenixServiceException {
+	private ISiteComponent getInfoEvaluation(InfoEvaluation component, ISite site, Integer evaluationCode)
+		throws FenixServiceException {
 		try {
 
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -737,7 +757,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @param site
 	 * @return
 	 */
-	private ISiteComponent getInfoSiteSection(InfoSiteSection component, ISite site, Integer sectionCode) throws FenixServiceException {
+	private ISiteComponent getInfoSiteSection(InfoSiteSection component, ISite site, Integer sectionCode)
+		throws FenixServiceException {
 
 		ISection iSection = null;
 		List itemsList = null;
@@ -790,7 +811,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @param site
 	 * @return
 	 */
-	private ISiteComponent getInfoSiteRegularSections(InfoSiteRegularSections component, ISite site, Integer sectionCode) throws FenixServiceException {
+	private ISiteComponent getInfoSiteRegularSections(InfoSiteRegularSections component, ISite site, Integer sectionCode)
+		throws FenixServiceException {
 		try {
 
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -824,7 +846,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @param integer
 	 * @return
 	 */
-	private ISiteComponent getInfoSiteSections(InfoSiteSections component, ISite site, Integer sectionCode) throws FenixServiceException {
+	private ISiteComponent getInfoSiteSections(InfoSiteSections component, ISite site, Integer sectionCode)
+		throws FenixServiceException {
 		try {
 
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -848,7 +871,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 			} else {
 				while (iterator.hasNext()) {
 					ISection section = (ISection) iterator.next();
-					if ((section.getSuperiorSection() != null && section.getSuperiorSection().getIdInternal().equals(iSection.getSuperiorSection().getIdInternal()))
+					if ((section.getSuperiorSection() != null
+						&& section.getSuperiorSection().getIdInternal().equals(iSection.getSuperiorSection().getIdInternal()))
 						&& !section.getName().equals(iSection.getName())) {
 						infoSectionsList.add(Cloner.copyISection2InfoSection(section));
 					}
@@ -956,7 +980,10 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) sp.getIDisciplinaExecucaoPersistente().readByOId(new DisciplinaExecucao(executionCourseCode), false);
+			IDisciplinaExecucao executionCourse =
+				(IDisciplinaExecucao) sp.getIDisciplinaExecucaoPersistente().readByOId(
+					new DisciplinaExecucao(executionCourseCode),
+					false);
 
 			List executionCourseProjects = sp.getIPersistentGroupProperties().readAllGroupPropertiesByExecutionCourse(executionCourse);
 
@@ -976,68 +1003,90 @@ public class TeacherAdministrationSiteComponentBuilder {
 	}
 
 	/**
-	* @param component
-	* @param site
-	* @param groupPropertiesCode
-	* @return
-	*/
+			* @param component
+			* @param site
+			* @param groupPropertiesCode
+			* @return
+			*/
 
-	private ISiteComponent getInfoSiteAllGroups(InfoSiteAllGroups component, Integer groupPropertiesCode) throws FenixServiceException {
+	private ISiteComponent getInfoSiteProjectShifts(InfoSiteProjectShifts component, Integer groupPropertiesCode)
+		throws FenixServiceException {
 
-		List infoSiteGroupsByShiftList = readAllShiftsAndGroupsByProject(groupPropertiesCode);
-		
-		component.setInfoSiteGroupsByShiftList(infoSiteGroupsByShiftList);
+		List infoSiteShifts = readAllProjectShifts(groupPropertiesCode);
+		component.setInfoSiteShifts(infoSiteShifts);
 		return component;
 	}
 
-	public List readAllShiftsAndGroupsByProject(Integer groupPropertiesCode) throws ExcepcaoInexistente, FenixServiceException {
+	public List readAllProjectShifts(Integer groupPropertiesCode) throws ExcepcaoInexistente, FenixServiceException {
 
-		List infoSiteGroupsByShiftList = null;
+		List infoSiteShifts = null;
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IGroupProperties groupProperties = (IGroupProperties) sp.getIPersistentGroupProperties().readByOId(new GroupProperties(groupPropertiesCode), false);
+			ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+			IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
+
+			IGroupProperties groupProperties =
+				(IGroupProperties) sp.getIPersistentGroupProperties().readByOId(new GroupProperties(groupPropertiesCode), false);
+
+			List allShifts =
+				persistentShift.readByExecutionCourseAndType(
+					groupProperties.getExecutionCourse(),
+					groupProperties.getShiftType().getTipo());
+
 			List allStudentsGroup = sp.getIPersistentStudentGroup().readAllStudentGroupByGroupProperties(groupProperties);
 
-			ITurno shift = null;
-			List shiftsInternalList = new ArrayList();
-			Iterator iterator = allStudentsGroup.iterator();
+			if (allStudentsGroup.size() != 0) {
 
-			while (iterator.hasNext()) {
-				shift = ((IStudentGroup) iterator.next()).getShift();
-				if (!shiftsInternalList.contains(shift))
-					shiftsInternalList.add(shift);
+				Iterator iterator = allStudentsGroup.iterator();
+				while (iterator.hasNext()) {
+					ITurno shift = ((IStudentGroup) iterator.next()).getShift();
+					if (!allShifts.contains(shift)) {
+						allShifts.add(shift);
+
+					}
+				}
 			}
-			Iterator iterator2 = shiftsInternalList.iterator();
-			List studentGroupsList = null;
-			InfoSiteGroupsByShift infoSiteGroupsByShift = null;
-			shift = null;
-			infoSiteGroupsByShiftList = new ArrayList(shiftsInternalList.size());
-			
-			while (iterator2.hasNext()) {
-				shift = (ITurno) iterator2.next();
 
-				studentGroupsList = sp.getIPersistentStudentGroup().readAllStudentGroupByGroupPropertiesAndShift(groupProperties, shift);
-				
-				List infoStudentGroupList = new ArrayList(studentGroupsList.size());
-				Iterator iter = studentGroupsList.iterator();
-				while (iter.hasNext())
-					infoStudentGroupList.add(Cloner.copyIStudentGroup2InfoStudentGroup((IStudentGroup) iter.next()));
+			if (allShifts.size() != 0) {
+				Iterator iter = allShifts.iterator();
+				infoSiteShifts = new ArrayList();
+				InfoSiteShift infoSiteShift = null;
 
-				Collections.sort(infoStudentGroupList, new BeanComparator("groupNumber"));
+				while (iter.hasNext()) {
 
-				infoSiteGroupsByShift = new InfoSiteGroupsByShift();
-				infoSiteGroupsByShift.setInfoStudentGroupsList(infoStudentGroupList);
-				infoSiteGroupsByShift.setInfoShift(Cloner.copyIShift2InfoShift(shift));
-				infoSiteGroupsByShiftList.add(infoSiteGroupsByShift);
+					ITurno shift = (ITurno) iter.next();
+					List allStudentGroups =
+						persistentStudentGroup.readAllStudentGroupByGroupPropertiesAndShift(groupProperties, shift);
 
+					infoSiteShift = new InfoSiteShift();
+					infoSiteShift.setInfoShift(Cloner.copyIShift2InfoShift(shift));
+
+					if (groupProperties.getGroupMaximumNumber() != null) {
+
+						int vagas = groupProperties.getGroupMaximumNumber().intValue() - allStudentGroups.size();
+						if (vagas >= 0)
+							infoSiteShift.setNrOfGroups(new Integer(vagas));
+						else
+							infoSiteShift.setNrOfGroups(new Integer(0));
+					} else
+						infoSiteShift.setNrOfGroups("Sem limite");
+					infoSiteShifts.add(infoSiteShift);
+					/* Sort the list of shifts */
+					ComparatorChain chainComparator = new ComparatorChain();
+					chainComparator.addComparator(new BeanComparator("infoShift.tipo"));
+					chainComparator.addComparator(new BeanComparator("infoShift.nome"));
+					Collections.sort(infoSiteShifts, chainComparator);
+
+				}
 			}
 
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
-			throw new FenixServiceException("error.impossibleReadAllShiftsByProject");
+			throw new FenixServiceException("error.impossibleReadProjectShifts");
 		}
-		return infoSiteGroupsByShiftList;
+
+		return infoSiteShifts;
 	}
 
 	/**
@@ -1047,7 +1096,82 @@ public class TeacherAdministrationSiteComponentBuilder {
 		* @return
 		*/
 
-	private ISiteComponent getInfoSiteStudentGroup(InfoSiteStudentGroup component, Integer studentGroupCode) throws FenixServiceException {
+	public ISiteComponent getInfoSiteStudentGroups(InfoSiteGroupsByShift component, Integer groupPropertiesCode, Integer shiftCode)
+		throws ExcepcaoInexistente, FenixServiceException {
+
+		try {
+
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IPersistentStudentGroupAttend persistentStudentGroupAttend = sp.getIPersistentStudentGroupAttend();
+
+			IGroupProperties groupProperties =
+				(IGroupProperties) sp.getIPersistentGroupProperties().readByOId(new GroupProperties(groupPropertiesCode), false);
+			ITurno shift = (ITurno) sp.getITurnoPersistente().readByOId(new Turno(shiftCode), false);
+
+			InfoSiteShift infoSiteShift = new InfoSiteShift();
+			infoSiteShift.setInfoShift(Cloner.copyIShift2InfoShift(shift));
+			List allStudentsGroupByShift =
+				sp.getIPersistentStudentGroup().readAllStudentGroupByGroupPropertiesAndShift(groupProperties, shift);
+
+			if (groupProperties.getGroupMaximumNumber() != null) {
+
+				int vagas = groupProperties.getGroupMaximumNumber().intValue() - allStudentsGroupByShift.size();
+				if (vagas >= 0)
+					infoSiteShift.setNrOfGroups(new Integer(vagas));
+				else
+					infoSiteShift.setNrOfGroups(new Integer(0));
+			} else
+				infoSiteShift.setNrOfGroups("Sem limite");
+
+			component.setInfoSiteShift(infoSiteShift);
+
+			if (allStudentsGroupByShift.size() != 0) {
+
+				List infoStudentGroupList = new ArrayList(allStudentsGroupByShift.size());
+				Iterator iter = allStudentsGroupByShift.iterator();
+				InfoSiteStudentGroup infoSiteStudentGroup = null;
+				while (iter.hasNext()) {
+					IStudentGroup studentGroup = (IStudentGroup) iter.next();
+					List allSGAttend = persistentStudentGroupAttend.readAllByStudentGroup(studentGroup);
+					InfoStudentGroup infoStudentGroup = Cloner.copyIStudentGroup2InfoStudentGroup(studentGroup);
+
+					infoSiteStudentGroup = new InfoSiteStudentGroup();
+					infoSiteStudentGroup.setInfoStudentGroup(infoStudentGroup);
+					if (groupProperties.getMaximumCapacity() != null) {
+
+						int vagas = groupProperties.getMaximumCapacity().intValue() - allSGAttend.size();
+						if (vagas >= 0)
+							infoSiteStudentGroup.setNrOfElements(new Integer(vagas));
+						else
+							infoSiteStudentGroup.setNrOfElements(new Integer(0));
+					} else
+						infoSiteStudentGroup.setNrOfElements("Sem limite");
+
+					infoStudentGroupList.add(infoSiteStudentGroup);
+
+				}
+				Collections.sort(infoStudentGroupList, new BeanComparator("infoStudentGroup.groupNumber"));
+				
+				component.setInfoSiteStudentGroupsList(infoStudentGroupList);
+
+			}
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace();
+			throw new FenixServiceException("error.impossibleReadStudentGroups");
+		}
+
+		return component;
+	}
+
+	/**
+		* @param component
+		* @param site
+		* @param groupPropertiesCode
+		* @return
+		*/
+
+	private ISiteComponent getInfoSiteStudentGroup(InfoSiteStudentGroup component, Integer studentGroupCode)
+		throws FenixServiceException {
 
 		List infoSiteStudents = readStudentGroupInformation(studentGroupCode);
 		component.setInfoSiteStudentInformationList(infoSiteStudents);
@@ -1057,75 +1181,74 @@ public class TeacherAdministrationSiteComponentBuilder {
 	public List readStudentGroupInformation(Integer studentGroupCode) throws FenixServiceException {
 
 		List studentGroupAttendInformationList = null;
-		List studentGroupAttendList =null;
+		List studentGroupAttendList = null;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode), false);
-			
-			if(studentGroup==null)
+			IStudentGroup studentGroup =
+				(IStudentGroup) sp.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode), false);
+
+			if (studentGroup == null)
 				return null;
-			
+
 			studentGroupAttendList = sp.getIPersistentStudentGroupAttend().readAllByStudentGroup(studentGroup);
 			
-			} catch (ExcepcaoPersistencia ex) {
-				ex.printStackTrace();
-			
+
+		} catch (ExcepcaoPersistencia ex) {
+			ex.printStackTrace();
+
 			throw new FenixServiceException("error.impossibleReadStudentGroupInformation");
-			}
-		
-			studentGroupAttendInformationList = new ArrayList(studentGroupAttendList.size());
-			Iterator iter = studentGroupAttendList.iterator();
-			InfoSiteStudentInformation infoSiteStudentInformation = null;
-			InfoStudentGroupAttend infoStudentGroupAttend = null;
+		}
 
-			while (iter.hasNext()) {
-				infoSiteStudentInformation = new InfoSiteStudentInformation();
+		studentGroupAttendInformationList = new ArrayList(studentGroupAttendList.size());
+		Iterator iter = studentGroupAttendList.iterator();
+		InfoSiteStudentInformation infoSiteStudentInformation = null;
+		InfoStudentGroupAttend infoStudentGroupAttend = null;
 
-				infoStudentGroupAttend = Cloner.copyIStudentGroupAttend2InfoStudentGroupAttend((IStudentGroupAttend) iter.next());
+		while (iter.hasNext()) {
+			infoSiteStudentInformation = new InfoSiteStudentInformation();
 
-				infoSiteStudentInformation.setNumber(infoStudentGroupAttend.getInfoAttend().getAluno().getNumber());
+			infoStudentGroupAttend = Cloner.copyIStudentGroupAttend2InfoStudentGroupAttend((IStudentGroupAttend) iter.next());
 
-				infoSiteStudentInformation.setName(infoStudentGroupAttend.getInfoAttend().getAluno().getInfoPerson().getNome());
+			infoSiteStudentInformation.setNumber(infoStudentGroupAttend.getInfoAttend().getAluno().getNumber());
 
-				infoSiteStudentInformation.setEmail(infoStudentGroupAttend.getInfoAttend().getAluno().getInfoPerson().getEmail());
-				
-				infoSiteStudentInformation.setUsername(infoStudentGroupAttend.getInfoAttend().getAluno().getInfoPerson().getUsername());
-				
-				
-				studentGroupAttendInformationList.add(infoSiteStudentInformation);
+			infoSiteStudentInformation.setName(infoStudentGroupAttend.getInfoAttend().getAluno().getInfoPerson().getNome());
 
-			}
+			infoSiteStudentInformation.setEmail(infoStudentGroupAttend.getInfoAttend().getAluno().getInfoPerson().getEmail());
 
-			Collections.sort(studentGroupAttendInformationList, new BeanComparator("number"));
+			infoSiteStudentInformation.setUsername(infoStudentGroupAttend.getInfoAttend().getAluno().getInfoPerson().getUsername());
 
-			
-		
+			studentGroupAttendInformationList.add(infoSiteStudentInformation);
+
+		}
+
+		Collections.sort(studentGroupAttendInformationList, new BeanComparator("number"));
+
 		return studentGroupAttendInformationList;
 	}
 
-	
-
 	/**
-			* @param component
-			* @param site
-			* @return
-			*/
+	 * @param component
+	 * @param site
+	 * @return
+	 */
 
-	private ISiteComponent getInfoSiteGroupProperties(InfoSiteGroupProperties component, Integer groupPropertiesCode) throws FenixServiceException {
+	private ISiteComponent getInfoSiteGroupProperties(InfoSiteGroupProperties component, Integer groupPropertiesCode)
+		throws FenixServiceException {
 
 		InfoGroupProperties infoGroupProperties = readGroupProperties(groupPropertiesCode);
 		component.setInfoGroupProperties(infoGroupProperties);
 		return component;
 	}
-	
+
 	public InfoGroupProperties readGroupProperties(Integer groupPropertiesCode) throws ExcepcaoInexistente, FenixServiceException {
 
 		List projects = null;
 		IGroupProperties groupProperties = null;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			groupProperties = (IGroupProperties) sp.getIPersistentGroupProperties().readByOId(new GroupProperties(groupPropertiesCode), false);
+			groupProperties =
+				(IGroupProperties) sp.getIPersistentGroupProperties().readByOId(new GroupProperties(groupPropertiesCode), false);
 
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
@@ -1134,34 +1257,32 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 		return Cloner.copyIGroupProperties2InfoGroupProperties(groupProperties);
 	}
-	
-	
-	
-	
+
 	/**
 	 * @param shifts
 	 * @param site
 	 * @return
 	 */
-	private ISiteComponent getInfoSiteShifts(InfoSiteShifts component, Integer objectCode, Integer studentGroupCode) throws FenixServiceException {
+	private ISiteComponent getInfoSiteShifts(InfoSiteShifts component, Integer objectCode, Integer studentGroupCode)
+		throws FenixServiceException {
 		List infoShifts = new ArrayList();
-		IDisciplinaExecucao executionCourse=null;
+		IDisciplinaExecucao executionCourse = null;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			
-			if(studentGroupCode!=null)
-			{
-			
-				IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode), false);
-			
-				if(studentGroup==null)
-				{
+
+			if (studentGroupCode != null) {
+
+				IStudentGroup studentGroup =
+					(IStudentGroup) sp.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode), false);
+
+				if (studentGroup == null) {
 					component.setShifts(null);
 					return component;
 				}
-			}	
-			
-			executionCourse = (IDisciplinaExecucao) sp.getIDisciplinaExecucaoPersistente().readByOId(new DisciplinaExecucao(objectCode), false);
+			}
+
+			executionCourse =
+				(IDisciplinaExecucao) sp.getIDisciplinaExecucaoPersistente().readByOId(new DisciplinaExecucao(objectCode), false);
 
 			List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
 
@@ -1172,7 +1293,11 @@ public class TeacherAdministrationSiteComponentBuilder {
 				for (int i = 0; i < shifts.size(); i++) {
 					ITurno shift = (ITurno) shifts.get(i);
 					InfoShift infoShift =
-						new InfoShift(shift.getNome(),shift.getTipo(),shift.getLotacao(),Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+						new InfoShift(
+							shift.getNome(),
+							shift.getTipo(),
+							shift.getLotacao(),
+							Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
 
 					List lessons = sp.getITurnoAulaPersistente().readByShift(shift);
 					List infoLessons = new ArrayList();
@@ -1202,65 +1327,5 @@ public class TeacherAdministrationSiteComponentBuilder {
 		component.setInfoExecutionYearName(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
 		return component;
 	}
-	
-	
-//	private ISiteComponent getInfoSiteShifts(InfoSiteShifts component, Integer objectCode, Integer studentGroupCode) throws FenixServiceException {
-//			List shiftsWithAssociatedClassesAndLessons = new ArrayList();
-//			IDisciplinaExecucao executionCourse=null;
-//			try {
-//				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-//			
-//				if(studentGroupCode!=null)
-//				{
-//			
-//					IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode), false);
-//			
-//					if(studentGroup==null)
-//					{
-//						component.setShifts(null);
-//						return component;
-//					}
-//				}	
-//			
-//				executionCourse = (IDisciplinaExecucao) sp.getIDisciplinaExecucaoPersistente().readByOId(new DisciplinaExecucao(objectCode), false);
-//
-//				List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
-//
-//				if (shifts == null || shifts.isEmpty()) {
-//
-//				} else {
-//
-//					for (int i = 0; i < shifts.size(); i++) {
-//						ITurno shift = (ITurno) shifts.get(i);
-//						InfoShiftWithAssociatedInfoClassesAndInfoLessons shiftWithAssociatedClassesAndLessons =
-//							new InfoShiftWithAssociatedInfoClassesAndInfoLessons(Cloner.copyShift2InfoShift(shift), null, null);
-//
-//						List lessons = sp.getITurnoAulaPersistente().readByShift(shift);
-//						List infoLessons = new ArrayList();
-//						List classesShifts = sp.getITurmaTurnoPersistente().readClassesWithShift(shift);
-//						List infoClasses = new ArrayList();
-//
-//						for (int j = 0; j < lessons.size(); j++)
-//							infoLessons.add(Cloner.copyILesson2InfoLesson((IAula) lessons.get(j)));
-//
-//						shiftWithAssociatedClassesAndLessons.setInfoLessons(infoLessons);
-//
-//						for (int j = 0; j < classesShifts.size(); j++)
-//							infoClasses.add(Cloner.copyClass2InfoClass(((ITurmaTurno) classesShifts.get(j)).getTurma()));
-//
-//						shiftWithAssociatedClassesAndLessons.setInfoClasses(infoClasses);
-//
-//						shiftsWithAssociatedClassesAndLessons.add(shiftWithAssociatedClassesAndLessons);
-//					}
-//				}
-//
-//			} catch (ExcepcaoPersistencia e) {
-//				throw new FenixServiceException(e);
-//			}
-//			component.setShifts(shiftsWithAssociatedClassesAndLessons);
-//			component.setInfoExecutionPeriodName(executionCourse.getExecutionPeriod().getName());
-//			component.setInfoExecutionYearName(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
-//			return component;
-//		}
-	
+
 }

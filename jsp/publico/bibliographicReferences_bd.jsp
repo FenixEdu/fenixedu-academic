@@ -19,24 +19,24 @@
 		    <logic:notEqual name="bibliographicReference" property="optional" value="true">
 				<tr>
 					<td><h4><bean:message key="label.bibliography.title" />:</h4></td>
-				    <td><bean:write name="bibliographicReference" property="title"/></td>
+				    <td><bean:write name="bibliographicReference" property="title" filter="false"/></td>
 				</tr>
 				<logic:notEmpty name="bibliographicReference" property="authors">
 					<tr>
 						<td><h4><bean:message key="label.bibliography.authors" />:</h4></td>
-					    <td><bean:write name="bibliographicReference" property="authors"/></td>
+					    <td><bean:write name="bibliographicReference" property="authors" filter="false"/></td>
 					</tr>
 				</logic:notEmpty>
 				<logic:notEmpty name="bibliographicReference" property="reference">				
 					<tr>
 						<td><h4><bean:message key="label.bibliography.reference" />:</h4></td>
-					    <td><h4><bean:write name="bibliographicReference" property="reference"/></td>
+					    <td><h4><bean:write name="bibliographicReference" property="reference" filter="false"/></td>
 					</tr>
 				</logic:notEmpty>
 				<logic:notEmpty name="bibliographicReference" property="year">
 					<tr>
 						<td style="vertical-align:top"><h4><bean:message key="label.bibliography.year" />:</h4></td>
-					    <td style="vertical-align:top"><bean:write name="bibliographicReference" property="year"/> <br /><br /></td>
+					    <td style="vertical-align:top"><bean:write name="bibliographicReference" property="year" filter="false"/> <br /><br /></td>
 					</tr>
 				</logic:notEmpty>
 		    </logic:notEqual>
@@ -50,24 +50,24 @@
             <logic:notEqual name="bibliographicReference" property="optional" value="false">
 				<tr>
 					<td><h4><bean:message key="label.bibliography.title" />:</h4></td>
-				    <td><bean:write name="bibliographicReference" property="title"/></td>
+				    <td><bean:write name="bibliographicReference" property="title" filter="false"/></td>
 				</tr>
 				<logic:notEmpty name="bibliographicReference" property="authors">
 					<tr>
 						<td><h4><bean:message key="label.bibliography.authors" />:</h4></td>
-					    <td><bean:write name="bibliographicReference" property="authors"/></td>
+					    <td><bean:write name="bibliographicReference" property="authors" filter="false"/></td>
 					</tr>
 				</logic:notEmpty>
 				<logic:notEmpty name="bibliographicReference" property="reference">				
 					<tr>
 						<td><h4><bean:message key="label.bibliography.reference" />:</h4></td>
-					    <td><bean:write name="bibliographicReference" property="reference"/></td>
+					    <td><bean:write name="bibliographicReference" property="reference" filter="false"/></td>
 					</tr>
 				</logic:notEmpty>
 				<logic:notEmpty name="bibliographicReference" property="year">
 					<tr>
 						<td style="vertical-align:top"><h4><bean:message key="label.bibliography.year" />:</h4></td>
-					    <td style="vertical-align:top"><bean:write name="bibliographicReference" property="year"/> <br /><br /></td>
+					    <td style="vertical-align:top"><bean:write name="bibliographicReference" property="year" filter="false"/> <br /><br /></td>
 					</tr>
 				</logic:notEmpty>
             </logic:notEqual>

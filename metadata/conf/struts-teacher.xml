@@ -307,6 +307,42 @@
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 			
 		</form-bean>
+
+		<form-bean name="showCandidacies"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+			dynamic="true">  
+			<form-property name="seminaryID" type="java.lang.Integer" />      
+			<form-property name="case1ID" type="java.lang.Integer" />      
+			<form-property name="case2ID" type="java.lang.Integer" />      
+			<form-property name="case3ID" type="java.lang.Integer" />      
+			<form-property name="case4ID" type="java.lang.Integer" />      
+			<form-property name="case5ID" type="java.lang.Integer" />      
+			<form-property name="degreeID" type="java.lang.Integer" />
+			<form-property name="modalityID" type="java.lang.Integer" />
+			<form-property name="courseID" type="java.lang.Integer" />
+			<form-property name="themeID" type="java.lang.Integer" />
+		</form-bean>
+
+		<form-bean name="sendMailForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+			dynamic="true">  
+			<form-property name="shiftCode" type="java.lang.String" />      
+			<form-property name="studentGroupCode" type="java.lang.String" />      
+			<form-property name="objectCode" type="java.lang.String" />
+			<form-property name="text" type="java.lang.String" />
+			<form-property name="from" type="java.lang.String" />
+			<form-property name="fromName" type="java.lang.String" />
+			<form-property name="method" type="java.lang.String" />
+			<form-property name="subject" type="java.lang.String" />
+		</form-bean>
+
+		<form-bean name="studentsByCurricularCourseForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+			dynamic="true">  
+			<form-property name="shiftCode" type="java.lang.Integer" />      
+			<form-property name="objectCode" type="java.lang.Integer" />
+			<form-property name="method" type="java.lang.String" />
+		</form-bean>
     </form-beans>
 
 
@@ -538,6 +574,7 @@
                /> 
 		<forward name="sectionsFirstPage" path="/sectionsFirstPage.jsp"/>               
        <forward name="createSection" path="/createSection.jsp"/>
+       <forward name="createSubSection" path="/createSubSection.jsp"/>
 	</action>
 
 	<!-- Edit Section -->
@@ -570,6 +607,7 @@
         validate="false">    
      <forward name="viewSection" path="/viewSection.jsp"/>         
      <forward name="createSection" path="/createSection.jsp"/>
+     <forward name="createSubSection" path="/createSubSection.jsp"/>
 	</action>
 	
 	<!-- Section viewer -->
@@ -873,6 +911,7 @@
 		</action>
         <action path="/studentsByCurricularCourse"
 				input="/teacherAdministrationViewerError.jsp"
+				name="studentsByCurricularCourseForm"
 				scope="request"
 				parameter="method"
 				type="ServidorApresentacao.Action.teacher.StudentsByCurricularCourseListAction">
@@ -964,17 +1003,27 @@
 		path="/viewExecutionCourseProjects"
 		parameter="method"
 		scope="request"
+		name="studentGroupForm"
 		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">				
        <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
 	</action>
 	
 	<action 
-		path="/viewProjectStudentGroups"
+		path="/viewProjectShifts"
 		parameter="method"
 		scope="request"
 		name="studentGroupForm"
 		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">				
-       <forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
+       <forward name="viewProjectShifts" path="/viewProjectShifts.jsp"/>
+	</action>
+	
+	<action 
+		path="/viewStudentGroups"
+		parameter="method"
+		scope="request"
+		name="studentGroupForm"
+		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">				
+       <forward name="viewStudentGroups" path="/viewStudentGroups.jsp"/>
 	</action>
 	
 	<action 
@@ -983,7 +1032,7 @@
 		scope="request"
 		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">				
        <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.jsp"/>
-       <forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
+       <forward name="viewStudentGroups" path="/viewStudentGroups.jsp"/>
 	</action>
 	   
 	   
@@ -1012,14 +1061,14 @@
      	type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"    
        	validate="true">                      
        	<forward name="editGroupProperties" path="/editGroupProperties.jsp"/>
-		<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
+		<forward name="viewProjectShifts" path="/viewProjectShifts.jsp"/>
 	</action>
 	
 	<action 
 		path="/deleteStudentGroup"
  		parameter="method"
         type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
-	    <forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
+	    <forward name="viewStudentGroups" path="/viewStudentGroups.jsp"/>
     </action>
 
 
@@ -1036,7 +1085,7 @@
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                /> 
        	<forward name="insertStudentGroup" path="/insertStudentGroup.jsp"/>
-		<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
+		<forward name="viewProjectShifts" path="/viewProjectShifts.jsp"/>
 	</action>
 	
 	<action     
@@ -1047,7 +1096,7 @@
 		input="/editStudentGroupShift.do?method=prepareEditStudentGroupShift&amp;page=0" 
      	type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">            
        	<forward name="editStudentGroupShift" path="/editStudentGroupShift.jsp"/>
-		<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
+		<forward name="viewProjectShifts" path="/viewProjectShifts.jsp"/>
 	</action>
 	
 	<action     
@@ -1063,7 +1112,7 @@
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
         />          
        	<forward name="editStudentGroupMembers" path="/editStudentGroupMembers.jsp"/>
-		<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
+		<forward name="viewStudentGroups" path="/viewStudentGroups.jsp"/>
        	
 	</action>
 	
@@ -1078,7 +1127,7 @@
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
         />             
        	<forward name="editStudentGroupMembers" path="/editStudentGroupMembers.jsp"/>
-       	<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
+       	<forward name="viewStudentGroups" path="/viewStudentGroups.jsp"/>
 	</action>
 	
 	<action     
@@ -1092,7 +1141,7 @@
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
         />              
        	<forward name="editStudentGroupMembers" path="/editStudentGroupMembers.jsp"/>
-       	<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
+       	<forward name="viewStudentGroups" path="/viewStudentGroups.jsp"/>
 	</action>
 	
 	<!-- FILE UPLOAD 	-->
@@ -1128,14 +1177,51 @@
       		  type="ServidorApresentacao.Action.fileManager.FileListingAction" >
       		  <forward  name="xpto1" path="/xpto1.jsp"/>  		  
      </action>	
-	
+	<!--- by gedl, 1-9-2003 -->
+	<action     
+		path="/showCandidacies"
+		name="showCandidacies"
+		type="ServidorApresentacao.Action.Seminaries.ShowCandidacies">            
+       	<forward name="allCandidaciesGrid" path="candidaciesGrid"/>
+	</action>
+
+	<!--- by gedl, 8-9-2003 -->
+  	  <action type="ServidorApresentacao.Action.Seminaries.ShowCandidacyDetails"
+              path="/candidacyDetails"
+              scope="request">
+        <forward name="showCandidacyDetails" path="/showCandidacyDetails.jsp"/>
+        <forward name="invalidQueryString" path="naoAutorizado.do"/>
+      </action>
+
+	   <action type="ServidorApresentacao.Action.Seminaries.DownloadCandidaciesTable"
+              path="/getTabSeparatedCandidacies"
+              scope="request">
+      </action>
+
+	<!--- by gedl, 16-9-2003 -->
+  	  <action type="ServidorApresentacao.Action.teacher.DownloadStudentList"
+              path="/getTabSeparatedStudentList"
+              scope="request">
+      </action>
+
+		<!--- by gedl, 17-9-2003 -->
+  	  <action type="ServidorApresentacao.Action.teacher.SendMailToAllStudents"
+              path="/sendMailToAllStudents"
+			  name="sendMailForm"
+			  parameter="method"
+              scope="request">
+        <forward name="showEmailForm" path="showEmailForm"/>
+        <forward name="mailSent" path="/studentsByCurricularCourse.do?method=readStudents"/>
+      </action>
 	</action-mappings>
+
 
 	<!-- ========== Controller Configuration ================================ -->
 	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
 
 	<!-- ========== Message Resources Definitions ============================ -->
-	<message-resources parameter="ServidorApresentacao.ApplicationResources" null="false"/>
+	<message-resources parameter="ServidorApresentacao.ApplicationResources" />
+<!--	<message-resources parameter="ServidorApresentacao.TeacherResources" /> -->
 
 	<!-- ========== Plug Ins Configuration ================================= -->
 	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">

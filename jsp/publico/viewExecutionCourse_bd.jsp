@@ -23,7 +23,7 @@
 	<table align="center" cellspacing="0" width="90%">
         <tr>
           <td class="citation">
-            <p><bean:write name="component" property="initialStatement" /></p>
+            <p><bean:write name="component" property="initialStatement" filter="false"/></p>
           </td>
         </tr>
       </table>		
@@ -106,32 +106,23 @@
 	</logic:empty> --%>
 
 	<logic:notEmpty name="component" property="responsibleTeachers">	
+	
 	<table>
 	<tr>
-		<th>
-			<h2><bean:message key="label.responsableProfessor"/></h2>	
-		</th>
+		<td>
+			<h2><bean:message key="label.lecturingTeachers"/></h2>	
+		</td>
 	</tr>	
 
 	<logic:iterate id="infoResponsableTeacher" name="component" property="responsibleTeachers">
 		<tr>
 			<td>
-				<bean:write name="infoResponsableTeacher" property="infoPerson.nome" /> 
+				<bean:write name="infoResponsableTeacher" property="infoPerson.nome" /> <bean:message key="label.responsible"/>
 			</td>
 		</tr>
 	</logic:iterate>	
-</table>
-</BR>
-</logic:notEmpty> 
-
 
 <logic:notEmpty name="component" property="lecturingTeachers" >	
-<table>
-	<tr>
-		<th>
-			<h2><bean:message key="label.professorShips"/></h2>	
-		</th>
-	</tr>	
 
 	<logic:iterate id="infoTeacher" name="component" property="lecturingTeachers">
 		<tr>
@@ -140,7 +131,8 @@
 			</td>
 		</tr>
 	</logic:iterate>	
-</table>
-</logic:notEmpty>
 
+</logic:notEmpty>
+</table>
+</logic:notEmpty> 
 </logic:present>

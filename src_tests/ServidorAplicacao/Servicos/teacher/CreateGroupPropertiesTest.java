@@ -6,6 +6,7 @@ package ServidorAplicacao.Servicos.teacher;
 
 import java.util.HashMap;
 
+import DataBeans.InfoGroupProperties;
 import DataBeans.util.Cloner;
 import Dominio.GroupProperties;
 import Dominio.IDisciplinaExecucao;
@@ -26,40 +27,18 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class CreateGroupPropertiesTest extends TestCaseCreateServices {
 
+	ISuportePersistente persistentSupport = null;
+	IPersistentExecutionYear persistentExecutionYear = null;
+	IPersistentExecutionPeriod persistentExecutionPeriod = null;
+	IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
 
 	IDisciplinaExecucao executionCourse = null;
-	
+
 	/**
 	 * @param testName
 	 */
 	public CreateGroupPropertiesTest(String testName) {
 		super(testName);
-	}
-
-	protected void setUp() {
-		ISuportePersistente persistentSupport = null;
-		IPersistentExecutionYear persistentExecutionYear = null;
-		IPersistentExecutionPeriod persistentExecutionPeriod = null;
-		IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
-		
-
-		try {
-			persistentSupport = SuportePersistenteOJB.getInstance();
-			persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
-			persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-			persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
-			persistentSupport.iniciarTransaccao();
-
-			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
-			IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
-			executionCourse = persistentExecutionCourse.readByExecutionCourseInitialsAndExecutionPeriod("TFCII", executionPeriod);
-			persistentSupport.confirmarTransaccao();
-			
-		} catch (ExcepcaoPersistencia e) {
-			System.out.println("failed setting up the test data");
-		}
-
-		super.setUp();
 	}
 
 	/**
@@ -73,9 +52,27 @@ public class CreateGroupPropertiesTest extends TestCaseCreateServices {
 	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
 	 */
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+		try {
+		
+			persistentSupport = SuportePersistenteOJB.getInstance();
+			persistentSupport.iniciarTransaccao();
+			persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
+			persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
+			persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+
+			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+			IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
+			executionCourse = persistentExecutionCourse.readByExecutionCourseInitialsAndExecutionPeriod("TFCII", executionPeriod);
+			persistentSupport.confirmarTransaccao();
+
+		} catch (ExcepcaoPersistencia e) {
+			System.out.println("failed setting up the test data");
+		}
+
 		IGroupProperties groupProperties = new GroupProperties(executionCourse, "projecto A");
 		Object[] args = { executionCourse.getIdInternal(), Cloner.copyIGroupProperties2InfoGroupProperties(groupProperties)};
 		return args;
+
 	}
 
 	/**
@@ -83,9 +80,32 @@ public class CreateGroupPropertiesTest extends TestCaseCreateServices {
 	 */
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
+		try {
+			
+			persistentSupport = SuportePersistenteOJB.getInstance();
+			persistentSupport.iniciarTransaccao();
+			persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
+			persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
+			persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+
+			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+			IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
+			executionCourse = persistentExecutionCourse.readByExecutionCourseInitialsAndExecutionPeriod("TFCII", executionPeriod);
+			
+			persistentSupport.confirmarTransaccao();
+
+		} catch (ExcepcaoPersistencia e) {
+			System.out.println("failed setting up the test data");
+		}
+
 		IGroupProperties groupProperties = new GroupProperties(executionCourse, "newName");
-		Object[] args = { executionCourse.getIdInternal(), Cloner.copyIGroupProperties2InfoGroupProperties(groupProperties)};
+		
+		InfoGroupProperties infoGroupProperties = Cloner.copyIGroupProperties2InfoGroupProperties(groupProperties);
+		
+		Object[] args = { new Integer(25), infoGroupProperties };
+		
 		return args;
+
 	}
 
 	/**

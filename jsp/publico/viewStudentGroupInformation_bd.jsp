@@ -14,15 +14,13 @@
 
 	<logic:notEmpty name="component" property="infoSiteStudentInformationList">
 	
-	<table width="50%" cellpadding="0" border="0">
+	<table width="85%" cellpadding="0" border="0">
 		<h2><bean:message key="title.StudentGroupInformation"/></h2>
 	<br>
 	<tr>
-		<td class="listClasses-header"><bean:message key="label.numberWord" />
+		<td class="listClasses-header" width="20%"><bean:message key="label.numberWord" />
 		</td>
 		<td class="listClasses-header"><bean:message key="label.nameWord" />
-		</td>
-		<td class="listClasses-header"><bean:message key="label.emailWord" />
 		</td>
 	</tr>
 	
@@ -33,19 +31,16 @@
 			</td>	
 			<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="name"/>
 			</td>		
-			<td class="listClasses">
-					<bean:define id="mail" name="infoSiteStudentInformation" property="email"/>
-					<html:link href="<%= "mailto:"+ mail %>"><bean:write name="infoSiteStudentInformation" property="email"/></html:link>
-			</td>
+
 		</tr>
-			<bean:define id="aux" name="mailingList"/>
+<%--			<bean:define id="aux" name="mailingList"/>
 			<logic:lessThan name="aux" value="1">
 				<bean:define id="mailingList" value="<%= mail.toString() %>"/>	
 			</logic:lessThan>
 			<logic:greaterThan name="aux" value="0">
 				<bean:define id="mailingList" value="<%= aux + ";"+ mail  %>"/>	
 			</logic:greaterThan>
-			
+--%>			
 	 		
 	 </logic:iterate>
 	 
@@ -57,7 +52,7 @@
 </logic:present>
 
 <logic:notPresent name="siteView" property="component">
-<h4>
+<h2>
 <bean:message key="message.infoSiteStudentGroupList.not.available" />
-</h4>
+</h2>
 </logic:notPresent>

@@ -7,6 +7,9 @@
 <logic:notEmpty name="equivalencies">
 	<logic:present name="seminary" >
     	<h2><bean:write name="seminary" property="name"/></h2>
+    	<br />
+    		<span class="error">ATENÇÃO: As inscrições foram adiadas até à próxima sexta-feira dia 26 de Setembro 2003.</span>
+    	<br />
     	<h3><bean:message key="label.seminariesEquivalencies"/></h3>
     	<table width="90%" align="center">
     	<tr>

@@ -46,6 +46,21 @@ public class FrequentaOJB
 		return (IFrequenta) queryObject(Frequenta.class, crit);
 
 	}
+    
+    //by gedl AT rnl DOT IST DOT UTL DOT PT , september the 16th, 2003
+    public IFrequenta readByAlunoIdAndDisciplinaExecucaoId(
+        Integer alunoId,
+        Integer disciplinaExecucaoId)
+        throws ExcepcaoPersistencia {
+
+        Criteria crit = new Criteria();
+        crit.addEqualTo("chaveAluno", alunoId);
+        crit.addEqualTo(
+            "chaveDisciplinaExecucao",
+            disciplinaExecucaoId);
+        return (IFrequenta) queryObject(Frequenta.class, crit);
+
+    }
 
 	public void lockWrite(IFrequenta attendanceToWrite)
 		throws ExcepcaoPersistencia, ExistingPersistentException {

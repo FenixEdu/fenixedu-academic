@@ -20,6 +20,10 @@
 	</logic:notPresent>		
 </logic:notEmpty>
 </ul>
+<br/>
+<br/>
+<br/>
+<br/>
 <ul>
 <li><html:link page="/teacherAdministrationViewer.do?method=instructions" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.executionCourseAdministration"/></html:link></li>
 </ul>

@@ -386,6 +386,15 @@
             type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">
           <forward name="executionCourseViewer" path="/viewExecutionCourse.jsp"/>
     </action>
+
+	<!-- by gedl September the 11th, 2003 -->
+    <action type="ServidorApresentacao.Action.publico.ShowStudentGroupInfo"
+			name="showStudentGroupInfoForm"
+            path="/showStudentGroupInfo"
+	        scope="request"
+			validate="true">
+    </action>
+     	 
     
       <action path="/fileDownload" 
       		  type="ServidorApresentacao.Action.fileManager.FileRetrievingAction" >

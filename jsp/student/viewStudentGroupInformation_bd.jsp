@@ -7,6 +7,17 @@
 
 
 <logic:present name="infoSiteStudentInformationList">
+	
+
+	<table width="100%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="infoop">
+				<bean:message key="label.student.viewStudentGroupInformation.description" />
+			</td>
+		</tr>
+	</table>
+	<br>
+	
 	<logic:empty name="infoSiteStudentInformationList">
 	<h2><bean:message key="message.infoSiteStudentGroupList.not.available" /></h2>
 	</logic:empty> 
@@ -57,8 +68,20 @@
 
 </logic:present>
 
+
+ <html:form action="/viewStudentGroups" method="get">
+ 	<html:submit styleClass="inputbutton"><bean:message key="button.back"/>                    		         	
+	</html:submit>
+	
+	<html:hidden property="method" value="execute"/>
+	<html:hidden  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
+	<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode")%>"/>
+	<html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode")%>"/>
+	
+  </html:form>  
+
 <logic:notPresent name="infoSiteStudentInformationList">
-<h4>
+<h2>
 <bean:message key="message.infoSiteStudentGroupList.not.available" />
-</h4>
+</h2>
 </logic:notPresent>

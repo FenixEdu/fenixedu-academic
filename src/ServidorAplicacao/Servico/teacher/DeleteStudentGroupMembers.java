@@ -17,6 +17,7 @@ import Dominio.StudentGroup;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
@@ -94,6 +95,8 @@ public class DeleteStudentGroupMembers implements IServico {
 				IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend.readBy(studentGroup,attend); 
 				if(oldStudentGroupAttend!=null)				
 					persistentStudentGroupAttend.delete(oldStudentGroupAttend);
+				else
+					throw new InvalidSituationServiceException();
 			}
 
 		}

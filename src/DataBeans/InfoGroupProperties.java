@@ -86,8 +86,8 @@ public class InfoGroupProperties extends InfoObject{
 			result += ", name=" + getName();
 			result += ", infoExecutionCourse=" + getInfoExecutionCourse();
 			result += ", shiftType=" + getShiftType();
-			result += ", enrolmentBeginDay=" + getEnrolmentBeginDay();
-			result += ", enrolmentEndDay=" + getEnrolmentEndDay();
+			//result += ", enrolmentBeginDay=" + getEnrolmentBeginDay();
+			//result += ", enrolmentEndDay=" + getEnrolmentEndDay();
 			result += ", projectDescription=" + getProjectDescription();
 			result += "]";
 			return result;

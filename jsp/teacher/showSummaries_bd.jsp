@@ -61,7 +61,7 @@
 								<bean:message key="button.edit" /> 
 							</html:link></div>
 						<div class="gen-button">
-							<html:link page="<%= "/summariesManager.do?method=deleteSummary&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;summaryCode=" + summaryCode %>">
+							<html:link page="<%= "/summariesManager.do?method=deleteSummary&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;summaryCode=" + summaryCode %>" onclick="return confirm('Tem a certeza que deseja apagar este sumário?')">
 								<bean:message key="button.delete" />
 							</html:link></div>
     	                <br />

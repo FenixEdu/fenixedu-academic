@@ -32,12 +32,14 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
+import ServidorAplicacao.Servico.exceptions.NoActiveStudentCurricularPlanServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingContributorServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException;
 import ServidorApresentacao.Action.exceptions.InvalidSituationActionException;
+import ServidorApresentacao.Action.exceptions.NoActiveStudentCurricularPlanActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.DocumentType;
@@ -219,6 +221,8 @@ public class CreateGuideDispatchAction extends DispatchAction {
 				infoGuide = (InfoGuide) serviceManager.executar(userView, "PrepareCreateGuide", args);
 			} catch (ExistingServiceException e) {
 				throw new ExistingActionException("O Contribuinte", e);
+			} catch (NoActiveStudentCurricularPlanServiceException e) {
+				throw new NoActiveStudentCurricularPlanActionException(e);
 			} catch (NonExistingContributorServiceException e) {
 				session.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE);
 				return mapping.getInputForward();
@@ -298,7 +302,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
 					}
 				}
 			} catch(NumberFormatException e){
-				throw new InvalidInformationInFormActionException(null);
+				throw new InvalidInformationInFormActionException(new Throwable());
 			}
 			
 //			session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.FALSE);

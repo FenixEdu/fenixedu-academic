@@ -57,16 +57,20 @@
 <bean:define id="curriculum" name="component" property="infoCurriculum"/>
 
 	<logic:notEmpty name="curriculum" property="generalObjectives">
+		<logic:notEqual name="curriculum" property="generalObjectives" value="">
 		<h2><bean:message key="label.generalObjectives" />	</h2>
 		<p>
 			<bean:write name="curriculum" property="generalObjectives" filter="false"/>
 		</p>
+		</logic:notEqual>
 	</logic:notEmpty>
 	 <logic:notEmpty name="curriculum" property="operacionalObjectives">
+		<logic:notEqual name="curriculum" property="operacionalObjectives" value="">
 		<h2><bean:message key="label.operacionalObjectives" /></h2>
 		<p>
 			<bean:write name="curriculum" property="operacionalObjectives" filter="false"/>
 		</p>
+		</logic:notEqual>
 	</logic:notEmpty> 
 <br/>
 <br/>

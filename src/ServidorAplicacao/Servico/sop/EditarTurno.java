@@ -106,14 +106,16 @@ public class EditarTurno implements IServico {
 					DisciplinaExecucao.class,
 					infoShiftNew.getInfoDisciplinaExecucao().getIdInternal());
 
-			System.out.println(
-				"infoShiftOld.getInfoDisciplinaExecucao().getNome()= "
-					+ infoShiftOld.getInfoDisciplinaExecucao().getNome());
-			System.out.println(
-				"infoShiftNew.getInfoDisciplinaExecucao().getNome()= "
-					+ infoShiftNew.getInfoDisciplinaExecucao().getNome());
-
 			shift.setDisciplinaExecucao(executionCourse);
+
+			// Also change the type of associated lessons and lessons execution course
+			if (shift.getAssociatedLessons() != null) {
+				for( int i = 0; i < shift.getAssociatedLessons().size(); i++) {
+					sp.getIAulaPersistente().lockWrite(shift.getAssociatedLessons().get(i));
+					((IAula) shift.getAssociatedLessons().get(i)).setTipo(infoShiftNew.getTipo());
+					((IAula) shift.getAssociatedLessons().get(i)).setDisciplinaExecucao(executionCourse);
+				}
+			}
 
 			infoShift = Cloner.copyShift2InfoShift(shift);
 

@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -35,7 +37,18 @@ public class ViewExecutionCourseProjectsAction extends FenixContextAction {
 
 		HttpSession session = request.getSession(false);
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
 		String executionCourseCodeString = request.getParameter("executionCourseCode");
+
+		if (executionCourseCodeString.equals("")) {
+			ActionErrors actionErrors1 = new ActionErrors();
+			ActionError error1 = null;
+			// Create an ACTION_ERROR 
+			error1 = new ActionError("errors.notSelected.executionCourse");
+			actionErrors1.add("errors.notSelected.executionCourse", error1);
+			saveErrors(request, actionErrors1);
+			return mapping.findForward("insucess");
+		}
 		Integer executionCourseCode = new Integer(executionCourseCodeString);
 
 		ISiteComponent viewProjectsComponent;
@@ -49,11 +62,12 @@ public class ViewExecutionCourseProjectsAction extends FenixContextAction {
 
 		InfoSiteProjects infoSiteProjects = (InfoSiteProjects) viewProjectsComponent;
 		List infoGroupPropertiesList = new ArrayList();
-		if (infoSiteProjects != null) {
+		if (infoSiteProjects != null) 
 			infoGroupPropertiesList = infoSiteProjects.getInfoGroupPropertiesList();
-		}
-		request.setAttribute("infoGroupPropertiesList", infoGroupPropertiesList);
+
 		
+		request.setAttribute("infoGroupPropertiesList", infoGroupPropertiesList);
+
 		return mapping.findForward("sucess");
 
 	}

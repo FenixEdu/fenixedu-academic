@@ -31,6 +31,14 @@ public class GroupPropertiesOJB extends ObjectFenixOJB implements IPersistentGro
 			criteria.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());	
 			return (List) queryList(GroupProperties.class, criteria);
 	}
+    
+    public List readAllGroupPropertiesByExecutionCourseID(Integer id) throws ExcepcaoPersistencia {
+
+            Criteria criteria = new Criteria(); 
+            criteria.addEqualTo("keyExecutionCourse", id); 
+            return (List) queryList(GroupProperties.class, criteria);
+    }
+    
 	
 	public IGroupProperties readGroupPropertiesByExecutionCourseAndName(IDisciplinaExecucao executionCourse,String name) throws ExcepcaoPersistencia {
 

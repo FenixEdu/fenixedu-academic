@@ -78,4 +78,29 @@ public class ReadPersonByUsername implements IServico {
 
 		return infoPerson;
     }
+    
+	public Object run(String username)
+		throws ExcepcaoInexistente, FenixServiceException {
+
+		ISuportePersistente sp = null;
+        
+		IPessoa person = null;
+         
+		try {
+			sp = SuportePersistenteOJB.getInstance();
+			person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
+
+		} catch (ExcepcaoPersistencia ex) {
+			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+			newEx.fillInStackTrace();
+			throw newEx;
+		} 
+
+		if (person == null)
+			throw new ExcepcaoInexistente("Unknown Person !!");	
+	
+		InfoPerson infoPerson = Cloner.copyIPerson2InfoPerson(person);
+
+		return infoPerson;
+	}
 }

@@ -17,6 +17,8 @@ public class InfoFrequenta  extends InfoObject{
 	
 
 	/** Construtor sem argumentos público requerido pela moldura de objectos OJB */
+    // errr..... os objectos info nao vao para a base de dados, por isso nao precisam deste construtor ;) ai esse copy/paste ...:P
+    // ass: BlueBus
 	public InfoFrequenta() {
 	}
 

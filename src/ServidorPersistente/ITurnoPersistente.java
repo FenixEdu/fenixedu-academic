@@ -63,4 +63,6 @@ public interface ITurnoPersistente extends IPersistentObject {
 	 */
 	public List readAvailableShiftsForClass(ITurma schoolClass)
 		throws ExcepcaoPersistencia;
+    
+    public List readByExecutionCourseID(Integer id) throws ExcepcaoPersistencia;
 }

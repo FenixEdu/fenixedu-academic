@@ -12,7 +12,7 @@
 	
 <html:form action="/editItem">
 	<html:hidden property="page" value="1"/>
-<table align="center">
+<table width="100%">
 <tr>
 	<td>
 		<bean:message key="message.itemName"/>
@@ -50,7 +50,7 @@
 
 <tr>
 	<td>
-		<bean:message key="message.itemUrgent"/>
+		<bean:message key="message.itemUrgent"/>:
 	</td>
 	<td>
 		<html:select name="item" property="urgent" size="1" >				
@@ -61,16 +61,16 @@
 	</td>
 </tr>
 <tr>
-	<td>
-		<bean:message key="message.itemInformation"/>
+	<td valign="top">
+		<bean:message key="message.itemInformation"/>:
 	</td>
 	<td>
-		<html:textarea name="item" property="information" rows="8" cols="40"/>
+		<html:textarea name="item" property="information" rows="15" cols="45"/>
 		<span class="error"><html:errors property="information"/></span>
 	</td>
 </tr>
 </table>			
-
+<br/>
 <html:hidden property="method" value="editItem" />
 <html:hidden property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 <bean:define id="itemCode" name="item" property="idInternal"/>

@@ -53,7 +53,8 @@ public class EditGroupPropertiesTest extends TestCaseDeleteAndEditServices {
 			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
 			executionCourse = persistentExecutionCourse.readByExecutionCourseInitialsAndExecutionPeriod("TFCII", executionPeriod);
-			groupProperties = persistentGroupProperties.readGroupPropertiesByExecutionCourseAndName(executionCourse,"projecto A");
+			groupProperties = persistentGroupProperties.readGroupPropertiesByExecutionCourseAndName(executionCourse,"projecto B");
+			
 			persistentSupport.confirmarTransaccao();
 			
 		} catch (ExcepcaoPersistencia e) {
@@ -77,7 +78,7 @@ public class EditGroupPropertiesTest extends TestCaseDeleteAndEditServices {
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 		
 		InfoGroupProperties infoGroupProperties = Cloner.copyIGroupProperties2InfoGroupProperties(groupProperties);
-		infoGroupProperties.setName("projecto B");
+		infoGroupProperties.setName("projecto A");
 		Object[] args = { executionCourse.getIdInternal(), infoGroupProperties};
 		return args;
 	}

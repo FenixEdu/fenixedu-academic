@@ -34,3 +34,9 @@
   <li>Atribuir Roles</li>
 </ul>
 
+
+<p><strong>&raquo;
+	<html:link page="/generateNewPassword.do?method=prepare&page=0"><bean:message key="link.operator.newPassword" /></html:link>
+   </strong>	
+</p>
+

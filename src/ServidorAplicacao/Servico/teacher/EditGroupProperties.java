@@ -18,6 +18,8 @@ import Dominio.ITurno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorAplicacao.Servico.exceptions.NonValidChangeServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
@@ -73,7 +75,6 @@ public class EditGroupProperties implements IServico {
 			}
 
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-
 			throw new FenixServiceException(excepcaoPersistencia);
 		}
 		return true;
@@ -129,29 +130,21 @@ public class EditGroupProperties implements IServico {
 
 			Iterator iterGroups = allStudentsGroup.iterator();
 			List allStudents = null;
-			int size;
+			Integer size;
 			while (iterGroups.hasNext()) {
 				allStudents = new ArrayList();
 
 				IStudentGroup studentGroup = (IStudentGroup) iterGroups.next();
 				allStudents = persistentStudentGroupAttend.readAllByStudentGroup(studentGroup);
-				size = allStudents.size();
-
-				if (maximumCapacity == null && minimumCapacity != null) {
-					if (size < minimumCapacity.intValue()) {
-						throw new NonValidChangeServiceException();
-					}
-				} else if (minimumCapacity == null && maximumCapacity != null) {
-					if (size > maximumCapacity.intValue()) {
-						throw new NonValidChangeServiceException();
-					}
-				} else if (size > maximumCapacity.intValue() || size < minimumCapacity.intValue()) {
-					throw new NonValidChangeServiceException();
-				}
+				size = new Integer(allStudents.size());
+				if(size.compareTo(maximumCapacity)>0)
+					throw new InvalidArgumentsServiceException();
+				else
+					if(size.compareTo(minimumCapacity)<0)
+						throw new InvalidSituationServiceException();
 			}
 
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-
 			throw new FenixServiceException(excepcaoPersistencia);
 		}
 		return true;

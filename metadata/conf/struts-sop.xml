@@ -1322,7 +1322,10 @@
             validate="true"
             >
     	<forward name="ShowSearchForm" path="/manageExecutionCourses.jsp"/>
+    	<forward name="showOccupancy" path="/showOccupancyLevels.jsp"/>
+    	<forward name="showLoads" path="/showLoads.jsp"/>
     	<forward name="ManageExecutionCourse" path="/manageExecutionCourse.do?method=prepare&amp;page=0"/>
+    	
 	</action>
 
 	<action path="/manageExecutionCourse"

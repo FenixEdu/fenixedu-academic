@@ -24,12 +24,12 @@
 				<logic:notEmpty name="section" property="superiorInfoSection">
 					<bean:define id="superiorSection" name="section" property="superiorInfoSection"/>
 					<bean:define id="superiorSectionCode" name="superiorSection" property="idInternal"/>
-					<html:link page="<%= "/deleteSection.do?method=deleteSection&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;currentSectionCode=" + currentSectionCode + "&amp;superiorSectionCode=" + superiorSectionCode %>">		
+					<html:link page="<%= "/deleteSection.do?method=deleteSection&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;currentSectionCode=" + currentSectionCode + "&amp;superiorSectionCode=" + superiorSectionCode %>" onclick="return confirm('Tem a certeza que deseja apagar esta secção?')">		
 						<bean:message key="button.deleteSection"/>
 					</html:link>
 				</logic:notEmpty>
 				<logic:empty name="section" property="superiorInfoSection">
-					<html:link page="<%= "/deleteSection.do?method=deleteSection&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;currentSectionCode=" + currentSectionCode %>">		
+					<html:link page="<%= "/deleteSection.do?method=deleteSection&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;currentSectionCode=" + currentSectionCode %>" onclick="return confirm('Tem a certeza que deseja apagar esta secção?')">		
 						<bean:message key="button.deleteSection"/>
 					</html:link>
 				</logic:empty>
@@ -96,7 +96,7 @@
 		</td>
 		<td>
 			<div class="gen-button">
-				<html:link page="<%= "/deleteItem.do?method=deleteItem&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode%>">
+				<html:link page="<%= "/deleteItem.do?method=deleteItem&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode%>" onclick="return confirm('Tem a certeza que deseja apagar este item?')">
 					<bean:message key="button.deleteItem"/>
 				</html:link>
 			</div>

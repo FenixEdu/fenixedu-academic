@@ -63,7 +63,10 @@ public class ReadStudentGroupInformation implements IServico {
 				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 				IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode), false);
-
+				
+				if(studentGroup==null)
+					throw new FenixServiceException();
+					
 				List studentGroupAttendList = sp.getIPersistentStudentGroupAttend().readAllByStudentGroup(studentGroup);
 				if(studentGroupAttendList.size()!=0)
 				{
@@ -95,11 +98,13 @@ public class ReadStudentGroupInformation implements IServico {
 				Collections.sort(studentGroupAttendInformationList, new BeanComparator("number"));
 				
 				infoSiteStudentGroup.setInfoSiteStudentInformationList(studentGroupAttendInformationList);
+				infoSiteStudentGroup.setInfoStudentGroup(Cloner.copyIStudentGroup2InfoStudentGroup(studentGroup));
+				
 				}
 				} catch (ExcepcaoPersistencia ex) {
 				ex.printStackTrace();
 			}
-			System.out.println("RESULATDO NO FIM DO SERVICO"+infoSiteStudentGroup);
+			
 			return infoSiteStudentGroup;
 	}
 }

@@ -73,6 +73,12 @@
 	<definition name="df.page.read-execution-course-teachers" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/readTeachers_bd.jsp" />
 		<put name="navLocal" value="/manager/readTeachers.jsp" />
+	</definition>	
+	<definition name="df.page.choosePerson" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/password/choosePersonPage_bd.jsp" />
+	</definition>
+	<definition name="df.page.confirmPasswordChange" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/password/confirmPasswordChange_bd.jsp" />
 	</definition>
 
 

@@ -77,7 +77,7 @@ public class StudentGuideDispatchAction extends DispatchAction {
 				 	if (quantity.intValue() < 0)
 				 		throw new NumberFormatException(); 
 				} catch(NumberFormatException e){
-					throw new InvalidInformationInFormActionException(null);
+					throw new InvalidInformationInFormActionException(new Throwable());
 				}
 
 				if (quantity.intValue() > 0){

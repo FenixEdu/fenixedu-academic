@@ -29,7 +29,7 @@
    <tr>
      <td id="barraist"><a href="http://www.ist.utl.pt"><img src="<%= request.getContextPath() %>/images/LogoIST.gif" alt="" border="0" /></a>
 	</td>
-    <td id="principal" bgcolor="#FFFFFF">
+    <td id="principal" width="100%">
       <div id="header"><img src="<%= request.getContextPath() %>/images/ist_header.gif" width="324" height="42" ""alt="Instituto Superior T&eacute;cnico"></div>
 	  <div id="invisible"><h4><tiles:getAsString name="institutionName" ignore="true"/></h4></div>
 	  		<div id="invisible"><tiles:insert attribute="degrees" ignore="true" /></div>	

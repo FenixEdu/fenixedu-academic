@@ -1,3 +1,14 @@
+insert into role values (20,20,'/teacher','/seminariesIndex.jsp','portal.seminariesCoordinator');
+insert into person_role values (41960,20,1605);
+insert into person_role values (41962,20,1416);
+insert into person_role values (41963,20,389);
+insert into person_role values (41964,20,290);
+insert into person_role values (41965,20,1761);
+insert into person_role values (41966,20,934);
+insert into person_role values (41967,20,11195);
+insert into person_role values (41968,20,771);
+insert into person_role values (41969,20,1237);
+insert into person_role values (41970,20,395);
 
 -- -----------------------------
 -- Data for table 'SEMINARY'

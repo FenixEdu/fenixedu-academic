@@ -8,10 +8,26 @@
 
 <logic:present name="siteView" property="component">
 	<bean:define id="component" name="siteView" property="component" />
+
+<table width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td class="infoop">
+			<bean:message key="label.teacher.viewProjectsAndLink.description" />
+		</td>
+	</tr>
+</table>
+
 	<logic:empty name="component" property="infoGroupPropertiesList">
 	<h2><bean:message key="message.infoGroupPropertiesList.not.available" /></h2>
 	</logic:empty>
-<h2><li><html:link page="/createGroupProperties.do?method=prepareCreateGroupProperties" paramId="objectCode" paramName="objectCode" ><bean:message key="link.groupPropertiesDefinition"/></html:link></li></h2>
+	
+	
+<br>
+<br>
+<b><html:link page="/createGroupProperties.do?method=prepareCreateGroupProperties" paramId="objectCode" paramName="objectCode" ><bean:message key="link.groupPropertiesDefinition"/></html:link></b>
+<br>
+<br>
+<br>
  
  <logic:notEmpty name="component" property="infoGroupPropertiesList"> 
 <table border="0" style="text-align: left;">
@@ -21,20 +37,39 @@
 			</td>
 			<td class="listClasses-header"><bean:message key="label.projectDescription" />
 			</td>
+			<td class="listClasses-header"><bean:message key="label.properties" />
+			</td>
 		</tr>
             <logic:iterate id="infoGroupProperties" name="component" property="infoGroupPropertiesList" >
                 <tr>
-                    <td class="listClasses">
-                        <br>
-                        	<h2><html:link page="<%= "/viewProjectStudentGroups.do?method=viewProjectStudentGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")%>" paramId="groupPropertiesCode" paramName="infoGroupProperties" paramProperty="idInternal">
-							<bean:write name="infoGroupProperties" property="name"/></html:link></li></h2>
+                    <td class="listClasses" align="left">
+                        <b><html:link page="<%= "/viewProjectShifts.do?method=viewProjectShifts&amp;objectCode=" + pageContext.findAttribute("objectCode")%>" paramId="groupPropertiesCode" paramName="infoGroupProperties" paramProperty="idInternal">
+							<bean:write name="infoGroupProperties" property="name"/></html:link></b>
                     		
                     </td>
                     
                     <td class="listClasses">
-                    <html:textarea name="infoGroupProperties" property="projectDescription" cols="30" rows="4"/>
+                    <html:textarea readonly="true" name="infoGroupProperties" property="projectDescription" cols="30" rows="6"/>
                    
                 	</td>
+                	
+                	 <td align="left" class="listClasses" >
+                	 
+                	 <logic:notEmpty name="infoGroupProperties" property="maximumCapacity">
+                	 <b><bean:message key="label.teacher.viewProjectsAndLink.MaximumCapacity"/>:</b> <bean:write name="infoGroupProperties" property="maximumCapacity"/>
+                	 <br/>
+                	 </logic:notEmpty>
+                	 
+                	 <logic:notEmpty name="infoGroupProperties" property="minimumCapacity">
+                	 <b><bean:message key="label.teacher.viewProjectsAndLink.MinimumCapacity"/>:</b> <bean:write name="infoGroupProperties" property="minimumCapacity"/>
+                	 <br/>
+                	 </logic:notEmpty>
+                	 
+                	 <logic:notEmpty name="infoGroupProperties" property="groupMaximumNumber">
+                	 <b><bean:message key="message.groupPropertiesGroupMaximumNumber"/>:</b> <bean:write name="infoGroupProperties" property="groupMaximumNumber"/>
+                   	 </logic:notEmpty>
+                	</td>
+                	
                 </tr>
 
             </logic:iterate>
@@ -45,7 +80,7 @@
 </logic:present>
 
 <logic:notPresent name="siteView" property="component">
-<h4>
+<h2>
 <bean:message key="message.infoGroupPropertiesList.not.available" />
-</h4>
+</h2>
 </logic:notPresent>

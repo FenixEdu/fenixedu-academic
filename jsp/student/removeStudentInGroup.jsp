@@ -8,6 +8,15 @@
 
 <logic:present name="infoSiteStudentInformationList">
 
+	<table width="100%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="infoop">
+				<bean:message key="label.student.removeStudentInGroup.description" />
+			</td>
+		</tr>
+	</table>
+<br>
+
 	<logic:empty name="infoSiteStudentInformationList">
 	<h2><bean:message key="message.infoSiteStudentGroupList.not.available" /></h2>
 	</logic:empty> 
@@ -65,22 +74,27 @@
 				</html:submit> 
 			
 				<html:hidden property="method" value="remove"/>
+				<html:hidden  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
 				<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode")%>"/>
 				<html:hidden  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode")%>"/>	
-
+				<html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode")%>"/>
+			
 				</html:form>
 
 			</td>
 			
 			<td>
-				<html:form action="/viewProjectStudentGroups" method="get">
+				<html:form action="/viewStudentGroups" method="get">
 	
 				<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
 				</html:cancel>
 	
 				<html:hidden property="method" value="execute"/>
+				<html:hidden  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
 				<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode")%>"/>
-
+				<html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode")%>"/>
+				
+			
 				</html:form>
 			</td>
 		</tr>

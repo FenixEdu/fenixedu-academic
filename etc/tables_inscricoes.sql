@@ -87,10 +87,10 @@ create table CURRICULAR_COURSE (
    KEY_DEPARTMENT_COURSE int(11),
    KEY_DEGREE_CURRICULAR_PLAN int(11) not null default '0',
    CREDITS double,
-   THEORETICAL_HOURS double,
-   PRATICAL_HOURS double,
-   THEO_PRAT_HOURS double,
-   LAB_HOURS double,
+   THEORETICAL_HOURS double, -- Deprecated
+   PRATICAL_HOURS double, -- Deprecated
+   THEO_PRAT_HOURS double, -- Deprecated
+   LAB_HOURS double, -- Deprecated
    NAME varchar(100) not null,
    CODE varchar(100) not null,
    TYPE int(11) not null,

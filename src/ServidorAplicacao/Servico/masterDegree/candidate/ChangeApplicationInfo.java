@@ -44,6 +44,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.SituationName;
 import Util.Specialization;
+import Util.State;
 
 public class ChangeApplicationInfo implements IServico {
 
@@ -126,25 +127,34 @@ public class ChangeApplicationInfo implements IServico {
 			List situations = new ArrayList();
 			ICandidateView candidateView = null;
 
-			while (situationIterator.hasNext()) {
-				ICandidateSituation candidateSituation = (ICandidateSituation) situationIterator.next();
 
-				// Check if this is the Active Situation
-				if (candidateSituation.getValidation().equals(new Util.State(Util.State.ACTIVE))) {
+//			while (situationIterator.hasNext()) {
+//				ICandidateSituation candidateSituation = (ICandidateSituation) situationIterator.next();
+//
+//				// Check if this is the Active Situation
+//				if (candidateSituation.getValidation().equals(new Util.State(Util.State.ACTIVE))) {
+//
+//					candidateSituationDAO.writeCandidateSituation(candidateSituation);
+//
+//					candidateSituation.setValidation(new Util.State(Util.State.INACTIVE));
+//
+//					// FIXME: the two lines aboce should be removed. below we should commit and then read the candidate 
+//					ICandidateSituation candidateSituationTemp = new CandidateSituation();
+//					candidateSituationTemp.setIdInternal(candidateSituation.getIdInternal());
+//					ICandidateSituation candidateSituationFromBD = (ICandidateSituation) sp.getIPersistentCandidateSituation().readByOId(candidateSituationTemp, true);
+//					candidateSituationFromBD.setValidation(new Util.State(Util.State.INACTIVE));
+//
+//					break;
+//				}
+//			}
 
-					candidateSituationDAO.writeCandidateSituation(candidateSituation);
+			ICandidateSituation candidateSituationTemp = new CandidateSituation();
+			candidateSituationTemp.setIdInternal(existingMasterDegreeCandidate.getActiveCandidateSituation().getIdInternal());
+			
+			ICandidateSituation candidateSituationFromBD = new CandidateSituation();
+			candidateSituationFromBD = (ICandidateSituation) sp.getIPersistentCandidateSituation().readByOId(candidateSituationTemp, true);
+			candidateSituationFromBD.setValidation(new State(State.INACTIVE));
 
-					candidateSituation.setValidation(new Util.State(Util.State.INACTIVE));
-
-					// FIXME: the two lines aboce should be removed. below we should commit and then read the candidate 
-					ICandidateSituation candidateSituationTemp = new CandidateSituation();
-					candidateSituationTemp.setIdInternal(candidateSituation.getIdInternal());
-					ICandidateSituation candidateSituationFromBD = (ICandidateSituation) sp.getIPersistentCandidateSituation().readByOId(candidateSituationTemp, true);
-					candidateSituationFromBD.setValidation(new Util.State(Util.State.INACTIVE));
-
-					break;
-				}
-			}
 
 			//Create the New Candidate Situation
 			ICandidateSituation activeCandidateSituation = createActiveSituation(existingMasterDegreeCandidate, candidateSituationDAO);

@@ -13,6 +13,7 @@ import Dominio.StudentGroup;
 import Dominio.Turno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudentGroup;
 import ServidorPersistente.ISuportePersistente;
@@ -70,19 +71,9 @@ public class EditStudentGroupShift implements IServico {
 			persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
 			IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOId(new StudentGroup(studentGroupCode),false);
 			
-//			List studentGroupList = persistentStudentGroup.readAllStudentGroupByGroupPropertiesAndShift(studentGroup.getGroupProperties(),studentGroup.getShift());
-//			
-//			IStudentGroup existingStudentGroup = new StudentGroup();
-//			Iterator iter = studentGroupList.iterator();
-//			while(iter.hasNext())
-//			{
-//				existingStudentGroup = (IStudentGroup)iter.next();
-//				if(existingStudentGroup.getGroupNumber().equals(studentGroup.getGroupNumber()))
-//				{
-//					return new Boolean(false);
-//				}			
-//			}
-//			
+			if(studentGroup == null)
+				throw new InvalidArgumentsServiceException();
+				
 						
 			studentGroup.setShift(shift);
 			persistentStudentGroup.lockWrite(studentGroup);

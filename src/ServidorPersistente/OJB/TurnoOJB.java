@@ -296,4 +296,12 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
 		return shifts;
 	}
 
+	//by gedl AT rnl DOT ist DOT utl DOT pt, September the 17th, 2003
+	public List readByExecutionCourseID(Integer id) throws ExcepcaoPersistencia
+	{
+        Criteria criteria = new Criteria();        
+		criteria.addEqualTo("key_execution_course",id);
+        return queryList(Turno.class, criteria);
+	}
+
 }

@@ -12,6 +12,9 @@ public class InvalidInformationInFormActionException extends FenixActionExceptio
 	public static String key = "error.exception.invalidInformationInForm";
 	
 
+	public InvalidInformationInFormActionException(String key) {
+		super(key);
+	}
 	public InvalidInformationInFormActionException(Throwable cause) {
 		super(key, cause);
 	}
@@ -31,5 +34,7 @@ public class InvalidInformationInFormActionException extends FenixActionExceptio
 	public static void setKey(String key) {
 		InvalidInformationInFormActionException.key = key;
 	}
+	
+	 
 
 }

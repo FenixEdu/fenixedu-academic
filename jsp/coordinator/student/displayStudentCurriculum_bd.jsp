@@ -8,43 +8,69 @@
 <%@ page import="Util.EnrolmentState" %>
   <span class="error"><html:errors/></span>
   <bean:define id="curriculum" name="<%= SessionConstants.CURRICULUM %>" scope="request" />
+  <bean:size id="enrolmentNumber" name="<%= SessionConstants.CURRICULUM %>" scope="request" />
   <bean:define id="student" name="<%= SessionConstants.STUDENT_CURRICULAR_PLAN %>" scope="request" />
-  <table>
-  	<tr>
-		 <td width="100px"><strong><bean:message key="label.person.name" /></strong></td>
-		 <td><bean:write name="student" property="infoStudent.infoPerson.nome"/></td>
-  	</tr>
-  	<tr>
-	  	<td width="100px"><strong><bean:message key="label.degree" />:</strong></td>
-	  	<td><bean:write name="student" property="infoDegreeCurricularPlan.infoDegree.nome"/></td>
-  	</tr>
-  	<tr>
-  	 	<td width="100px"><strong><bean:message key="property.number" /></strong></td>
-  	 	<td><bean:write name="student" property="infoStudent.number"/><td>
-  	</tr>
-</table>
-  <br />
-  <table>
-  	<logic:iterate id="enrolment" name="curriculum">
-  		<tr>
-		  <td>
-		    <bean:write name="enrolment" property="infoExecutionPeriod.infoExecutionYear.year"/>
-		  </td>
-		  <td>
-		    <bean:write name="enrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/>
-		  </td>
-		  <td>
-			<logic:notEqual name="enrolment" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">
-				<bean:message name="enrolment" property="enrolmentState.name" bundle="ENUMERATION_RESOURCES" />
-			</logic:notEqual>
-			
-			<logic:equal name="enrolment" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">
-				<bean:write name="enrolment" property="infoEnrolmentEvaluation.grade"/>
-			</logic:equal>
+  
+  
+  <bean:message key="label.person.name" />
+  <bean:write name="student" property="infoStudent.infoPerson.nome"/>
+  </br>
+  
+  <bean:message key="label.degree.name" />:
+  <bean:write name="student" property="infoDegreeCurricularPlan.infoDegree.nome"/>
+  </br>
 
-		  </td>
-  		</tr>
-    </logic:iterate>
-  </table>    	
+  <bean:message key="label.number" />
+  <bean:write name="student" property="infoStudent.number"/>
+  </br>
+  </br>
+  
+  
+  
+  <logic:notEqual name="enrolmentNumber" value="0">
+	  <table>
+	  	<tr>
+		  	<td class="listClasses-header">
+		  		<bean:message key="label.executionYear" />
+		  	</td >
+		  	<td class="listClasses-header">
+		  		<bean:message key="label.degree.name" />
+		  	</td>
+		  	<td class="listClasses-header">
+		  		<bean:message key="label.curricular.course.name" />
+		  	</td>
+		  	<td class="listClasses-header">
+		  		<bean:message key="label.finalEvaluation" />
+		  	</td>
+	  	</tr>
+	  
+	  	<logic:iterate id="enrolment" name="curriculum">
+	  		<tr>
+			  <td class="listClasses">
+			    <bean:write name="enrolment" property="infoExecutionPeriod.infoExecutionYear.year"/>
+			  </td>
+			  <td class="listClasses">
+			    <bean:write name="enrolment" property="infoCurricularCourseScope.infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome"/>
+			  </td>
+			  <td class="listClasses">
+			    <bean:write name="enrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/>
+			  </td>
+			  <td class="listClasses">
+				<logic:notEqual name="enrolment" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">
+					<bean:message name="enrolment" property="enrolmentState.name" bundle="ENUMERATION_RESOURCES" />
+				</logic:notEqual>
+				
+				<logic:equal name="enrolment" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">
+					<bean:write name="enrolment" property="infoEnrolmentEvaluation.grade"/>
+				</logic:equal>
+	
+			  </td>
+	  		</tr>
+	    </logic:iterate>
+	  </table>    	
+  </logic:notEqual>
+  <logic:equal name="enrolmentNumber" value="0">
+		<bean:message key="message.no.enrolments" />
+  </logic:equal>
     	
     		

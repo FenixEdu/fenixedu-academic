@@ -60,13 +60,13 @@
             <td width="20%"><strong>Processo de:</strong></td>
             <td width="80%">&nbsp;</td>
           </tr>
-          <logic:present name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE%>">
-	          <bean:define id="infoMasterDegreeCandidate" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE%>" scope="session" />    
+          <logic:present name="<%= SessionConstants.REQUESTER_NUMBER%>">
 	          <tr>
 	            <td> <bean:message key="label.masterDegree.administrativeOffice.requesterNumber"/> </td>
-	            <td> <bean:write name="infoMasterDegreeCandidate" property="candidateNumber"/> </td>
+	            <td> <bean:write name="<%= SessionConstants.REQUESTER_NUMBER%>" /> </td>
 	          </tr>
           </logic:present>
+
           <tr>
             <td> <bean:message key="label.masterDegree.administrativeOffice.requesterName"/> </td>
             <td> <bean:write name="guide" property="infoPerson.nome"/> </td>

@@ -23,6 +23,7 @@ import Util.TipoAula;
 
 public interface ITurnoAlunoPersistente extends IPersistentObject {
 	
+    public List readByShiftID(Integer id) throws ExcepcaoPersistencia;    
 	public List readByStudentAndExecutionPeriod(IStudent student,IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
     public ITurnoAluno readByTurnoAndAluno(ITurno turno, IStudent aluno)
                throws ExcepcaoPersistencia;

@@ -48,8 +48,8 @@ public class InfoStudentGroupAttend extends InfoObject{
 		 */
 		public String toString() {
 			String result = "[INFO_STUDENT_GROUP_ATTEND";
-			result += ", infoStudentGroup=" + getInfoStudentGroup();
-			result += ", infoAttend=" + getInfoAttend();
+			//result += ", infoStudentGroup=" + getInfoStudentGroup();
+			//result += ", infoAttend=" + getInfoAttend();
 			result += "]";
 			return result;
 		}

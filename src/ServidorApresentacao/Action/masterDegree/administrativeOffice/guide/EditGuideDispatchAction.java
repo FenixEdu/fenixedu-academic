@@ -298,7 +298,7 @@ public class EditGuideDispatchAction extends DispatchAction {
 				// Check for invalid quantities and prices
 				if (((othersPrice != null) && (othersPrice.floatValue() < 0)) ||
 				    ((othersQuantity != null) && (othersQuantity.intValue() < 0)))
-					throw new InvalidInformationInFormActionException(null);
+					throw new InvalidInformationInFormActionException(new Throwable());
 
 				while(arguments.hasMoreElements()){
 					String parameter = (String) arguments.nextElement();
@@ -314,7 +314,7 @@ public class EditGuideDispatchAction extends DispatchAction {
 						} else {
 							Integer value = new Integer(request.getParameter(parameter));
 							if (value.intValue() < 0 )
-								throw new InvalidInformationInFormActionException(null);
+								throw new InvalidInformationInFormActionException(new Throwable());
 							
 							quantityList[new Integer(position).intValue()] = String.valueOf(value);
 						}

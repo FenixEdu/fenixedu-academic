@@ -14,5 +14,7 @@ public interface IStudentGroupAttend extends IDomainObject{
 
 	public void setStudentGroup(IStudentGroup studentGroup);
 	public void setAttend(IFrequenta attend);
+    
+    public Integer getKeyStudentGroup();
 
 }

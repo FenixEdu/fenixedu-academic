@@ -59,8 +59,9 @@ public class StudentGroupAttend extends DomainObject implements IStudentGroupAtt
 	 */
 	public String toString() {
 		String result = "[STUDENT_GROUP_ATTEND";
+        result +=", keyStudentGroup=" + getKeyStudentGroup();
 		result += ", studentGroup=" + getStudentGroup();
-		result += ", attend=" + getAttend();
+		//result += ", attend=" + getAttend();
 		result += "]";
 		return result;
 	}

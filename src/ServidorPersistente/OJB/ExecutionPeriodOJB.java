@@ -886,4 +886,10 @@ public class ExecutionPeriodOJB
 		}
 	}
 
+	public List readByExecutionYear(IExecutionYear executionYear) throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("keyExecutionYear", executionYear.getIdInternal());
+		return queryList(ExecutionPeriod.class, criteria);
+	}
+
 }

@@ -11,7 +11,12 @@
 	<logic:empty name="component" property="infoGroupPropertiesList">
 	<h2><bean:message key="message.infoGroupPropertiesList.not.available" /></h2>
 	</logic:empty>
-<table border="0" style="text-align: left;">
+
+	<logic:notEmpty name="component" property="infoGroupPropertiesList">
+	
+	
+<table width="90%" cellpadding="5" border="0" style="text-align: left;" >
+        
         <tbody>
         
         <tr>
@@ -23,17 +28,16 @@
             <logic:iterate id="infoGroupProperties" name="component" property="infoGroupPropertiesList" >
                 <tr>
                     <td class="listClasses">
-                        <br>
-                        <b>
-							<li><html:link page="<%= "/viewSite.do" + "?method=viewProjectStudentGroupsAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" paramId="groupProperties" paramName="infoGroupProperties" paramProperty="idInternal">
-								<bean:write name="infoGroupProperties" property="name"/></b>
+                
+							<html:link page="<%= "/viewSite.do" + "?method=viewProjectShiftsAction&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" paramId="groupProperties" paramName="infoGroupProperties" paramProperty="idInternal">
+								  <b><bean:write name="infoGroupProperties" property="name"/></b>
 							</html:link>
-							</li>
+							
 							
                     </td>
                     
                      <td class="listClasses">
-                    <html:textarea name="infoGroupProperties" property="projectDescription" cols="30" rows="4"/>
+                    <html:textarea readonly="true" name="infoGroupProperties" property="projectDescription" cols="50" rows="6"/>
                    
                 	</td>
                 </tr>
@@ -41,6 +45,7 @@
             </logic:iterate>
         </tbody>
 </table>
+</logic:notEmpty>
 </logic:present>
 
 <logic:notPresent name="siteView" property="component">

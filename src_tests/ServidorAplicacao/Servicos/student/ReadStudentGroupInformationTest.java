@@ -16,6 +16,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoSiteStudentGroup;
 import DataBeans.InfoSiteStudentInformation;
+import DataBeans.util.Cloner;
 import Dominio.IStudentGroup;
 import Dominio.StudentGroup;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
@@ -84,8 +85,8 @@ public class ReadStudentGroupInformationTest extends TestCaseReadServices {
 			List infoSiteStudentInformationList = new ArrayList();
 			infoSiteStudentInformationList.add(infoSiteStudentInformation);
 			infoSiteStudentGroup.setInfoSiteStudentInformationList(infoSiteStudentInformationList);
-			
-						
+			infoSiteStudentGroup.setInfoStudentGroup(Cloner.copyIStudentGroup2InfoStudentGroup(studentGroup));
+									
 			sp.confirmarTransaccao();
 		}catch (ExcepcaoPersistencia ex) {
 		ex.printStackTrace();;

@@ -44,6 +44,20 @@
         	<form-property name="selection" type="java.lang.Integer[]"/>
         	<form-property name="attributedCredits" type="java.lang.String"/>
       </form-bean>     
+      
+      
+      <!-- Dynamic-FormBean for searchExecutionCourse -->
+      <form-bean name="searchExecutionCourses"
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+        <form-property name="page" type="java.lang.Integer"/>
+        <form-property name="executionPeriodOID" type="java.lang.String"/>
+        <form-property name="curricularYearOID" type="java.lang.String"/>
+        <form-property name="executionCourseName" type="java.lang.String"/>        
+      </form-bean>
+      
+      
+      
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -191,6 +205,7 @@
 
         <!-- Prepare the Candidates Approval Process -->
         <action path="/prepareCandidateApproval"
+        	  
 		      parameter="method"
 		      scope="request"
               type="ServidorApresentacao.Action.masterDegree.coordinator.PrepareCandidateApprovalDispatchAction"
@@ -215,7 +230,7 @@
 	         <forward name="OrderCandidates" path="/displayListToSelectCandidates.do?method=getSubstituteCandidates&amp;page=0"/> 
 	         <forward name="Cancel" path="/displayListToSelectCandidates.do?method=prepareSelectCandidates&amp;page=0"/> 
 	         <forward name="OrderCandidatesReady" path="/candidate/displayChosenSelection.jsp"/> 
-	         <forward name="NumerusClaususNotDefined" path="/chooseMasterDegreeToSelectCandidates.do?method=prepareChooseMasterDegree&amp;page=0"/>  	         
+	         <forward name="NumerusClaususNotDefined" path="/candidate/numerusClaususNotDefined.jsp"/>  	         
 			 <forward name="BackError" path="/backErrorCandidateApprovalPage.do" redirect="true"/>
 			 <forward name="PrintReady" path="/candidate/approvalDispatchTemplate.jsp" />  
 		</action>
@@ -268,6 +283,25 @@
      		 <forward name="PrintReady" path="/candidate/studyPlanTemplate.jsp"/>     			 
 			 <forward name="BackError" path="/backError.do" redirect="true"/>  
 		</action>
+
+
+
+
+      <action path="/executionCoursesInformation"
+       		  input="/courses/searchCurricularCourses.jsp"
+      		  attribute="searchExecutionCourses"
+		      name="searchExecutionCourses"
+		      parameter="method"
+		      scope="request"
+		      validate="true"
+		      type="ServidorApresentacao.Action.coordinator.ExecutionCourseInfoDispatchAction"
+			  >
+	         <forward name="ReadyToSearch" path="/courses/searchCurricularCourses.jsp" />  
+	         <forward name="ShowCurricularCourseList" path="/courses/showCurricularCourses.jsp" />
+	      	 <forward name="showOccupancy" path="/courses/showOccupancyLevels.jsp"/>	           
+    	     <forward name="showLoads" path="/courses/showLoads.jsp"/>
+		</action>		
+
 
 
 

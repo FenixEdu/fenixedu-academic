@@ -7,13 +7,12 @@ package ServidorAplicacao.Servico.student;
 import java.util.ArrayList;
 import java.util.List;
 
-import DataBeans.ISiteComponent;
 import DataBeans.InfoShift;
-import DataBeans.InfoSiteShifts;
 import DataBeans.util.Cloner;
 import Dominio.GroupProperties;
 import Dominio.IGroupProperties;
 import Dominio.ITurno;
+import Dominio.Turno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
@@ -29,8 +28,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ReadGroupPropertiesShifts implements IServico {
 
-	private static ReadGroupPropertiesShifts service =
-		new ReadGroupPropertiesShifts();
+	private static ReadGroupPropertiesShifts service = new ReadGroupPropertiesShifts();
 
 	/**
 		* The singleton access method of this class.
@@ -53,88 +51,51 @@ public class ReadGroupPropertiesShifts implements IServico {
 	/**
 	 * Executes the service.
 	 */
-	public ISiteComponent run(Integer groupPropertiesCode,String username)
-		throws FenixServiceException {
-		
-		
+	public List run(Integer groupPropertiesCode, Integer shiftCode) throws FenixServiceException {
+
 		List infoShifts = new ArrayList();
 		IGroupProperties groupProperties = null;
-		InfoSiteShifts infoSiteShifts = null;
+		boolean result = false;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			
-		
-			groupProperties = (IGroupProperties) sp.getIPersistentGroupProperties().readByOId(new GroupProperties(groupPropertiesCode),false);
+
+			groupProperties =
+				(IGroupProperties) sp.getIPersistentGroupProperties().readByOId(new GroupProperties(groupPropertiesCode), false);
 			IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
 			IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
-			
-			List usernames = new ArrayList();
-			usernames.add(username);
-			
-			boolean result = strategy.checkAlreadyEnroled(groupProperties,usernames);
-			if(result)
-			{
-				
-				List executionCourseShifts =sp.getITurnoPersistente().readByExecutionCourse(groupProperties.getExecutionCourse());
-			
-				List shifts = strategy.checkShiftsType(groupProperties,executionCourseShifts);
-			
-			
-				if (shifts == null || shifts.isEmpty()) {
 
-				} else {
+			List executionCourseShifts = sp.getITurnoPersistente().readByExecutionCourse(groupProperties.getExecutionCourse());
 
-					for (int i = 0; i < shifts.size(); i++) {
+			List shifts = strategy.checkShiftsType(groupProperties, executionCourseShifts);
+			if (shifts == null || shifts.isEmpty()) {
+
+			} else {
+
+				for (int i = 0; i < shifts.size(); i++) {
 					ITurno shift = (ITurno) shifts.get(i);
-					InfoShift infoShift =Cloner.copyIShift2InfoShift(shift);
+					result = strategy.checkNumberOfGroups(groupProperties, shift);
+					if (result) {
 
-//					List lessons =sp.getITurnoAulaPersistente().readByShift(shift);
-//					List infoLessons = new ArrayList();
-//					List classesShifts =sp.getITurmaTurnoPersistente().readClassesWithShift(shift);
-//					List infoClasses = new ArrayList();
-//
-//					for (int j = 0; j < lessons.size(); j++)
-//						infoLessons.add(
-//							Cloner.copyILesson2InfoLesson(
-//								(IAula) lessons.get(j)));
-//
-//					infoShift.setInfoLessons(infoLessons);
-//
-//					for (int j = 0; j < classesShifts.size(); j++)
-//						infoClasses.add(
-//							Cloner.copyClass2InfoClass(
-//								((ITurmaTurno) classesShifts.get(j))
-//									.getTurma()));
-//
-//					infoShift.setInfoClasses(infoClasses);
-//					
-					infoShift.setIdInternal(shift.getIdInternal());
+						InfoShift infoShift = Cloner.copyIShift2InfoShift(shift);
 
-					infoShifts.add(infoShift);
+						infoShift.setIdInternal(shift.getIdInternal());
+
+						infoShifts.add(infoShift);
+					}
 				}
-			
-			infoSiteShifts = new InfoSiteShifts();
-			infoSiteShifts.setShifts(infoShifts);
-			infoSiteShifts.setInfoExecutionPeriodName(groupProperties.getExecutionCourse().getExecutionPeriod().getName());
-			infoSiteShifts.setInfoExecutionYearName(groupProperties.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
+
+				if (shiftCode != null) {
+					ITurno oldShift = (ITurno) sp.getITurnoPersistente().readByOId(new Turno(shiftCode), false);
+					infoShifts.add(Cloner.copyIShift2InfoShift(oldShift));
 				}
+
 			}
+
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
-		System.out.println("INFO_SITE_SHIFTS"+infoSiteShifts);
-		if(infoSiteShifts!=null)
-		{
-		
-			System.out.println("-----------tam-shifts"+infoSiteShifts.getShifts().size());
-			System.out.println("-----------tam-shifts"+infoSiteShifts.getShifts().get(0).toString());
-			
 
-			System.out.println("-----------tam-ano"+infoSiteShifts.getInfoExecutionYearName());
-
-			System.out.println("-----------tam-periodo"+infoSiteShifts.getInfoExecutionPeriodName());
-		}
-		return infoSiteShifts;
+		return infoShifts;
 	}
 
 }

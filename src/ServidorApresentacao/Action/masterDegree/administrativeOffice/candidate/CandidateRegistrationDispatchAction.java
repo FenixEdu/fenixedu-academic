@@ -26,12 +26,15 @@ import DataBeans.InfoMasterDegreeCandidate;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ActiveStudentCurricularPlanAlreadyExistsServiceException;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidChangeServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException;
+import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.InvalidChangeActionException;
+import ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -126,6 +129,7 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 		
 		candidateRegistration.set("candidateID", candidateID);		
 
+		candidateRegistration.set("studentNumber", null);
 
 		List branchList = null;
 		try {
@@ -169,17 +173,51 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 		Integer candidateID = (Integer) candidateRegistration.get("candidateID");
 		Integer branchID = (Integer) candidateRegistration.get("branchID");
 		
-		if ((request.getParameter("OK") != null) &&	(request.getParameter("notOK") == null)) {				
+		String studentNumberString = (String) candidateRegistration.get("studentNumber");
+		Integer studentNumber = null;
+		if ((studentNumberString != null) && (studentNumberString.length() > 0)) {
+			try {
+				studentNumber = new Integer(studentNumberString);
+				if (studentNumber.intValue() < 0) {
+					throw new NumberFormatException();
+				}
+			} catch(NumberFormatException e) {
+				throw new InvalidInformationInFormActionException("error.exception.invalidInformationInStudentNumber");
+			}
+		} 
 
+		if ((request.getParameter("confirmation") == null) || request.getParameter("confirmation").equals("Confirmar")) {
+		
 			InfoCandidateRegistration infoCandidateRegistration = null;
 			try {
-				Object args[] = { candidateID , branchID};
+				Object args[] = { candidateID , branchID,  studentNumber};
 				infoCandidateRegistration = (InfoCandidateRegistration) serviceManager.executar(userView, "RegisterCandidate", args);
 			} catch (ActiveStudentCurricularPlanAlreadyExistsServiceException e) {
 				throw new ActiveStudentCurricularPlanAlreadyExistsActionException(e);
+			} catch (ExistingServiceException e) {
+				
+				List branchList = null;
+				try {
+					Object args[] = { candidateID };
+					branchList = (List) serviceManager.executar(userView, "GetBranchListByCandidateID", args);
+				} catch (FenixServiceException ex) {
+					throw new FenixActionException(ex);
+				}
+					
+				request.setAttribute("branchList", branchList);					
+					
+					
+				InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;					
+				try {
+					Object args[] = { candidateID };
+					infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) serviceManager.executar(userView, "GetCandidatesByID", args);
+				} catch (NonExistingServiceException ex) {
+					throw new FenixActionException(ex);
+				}
+				throw new ExistingActionException("O Aluno", e);
 			} catch (InvalidChangeServiceException e) {
 				throw new InvalidChangeActionException("error.cantRegisterCandidate", e);
-			}catch (FenixServiceException e) {
+			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
 			}
 

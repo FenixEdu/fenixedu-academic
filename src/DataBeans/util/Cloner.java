@@ -137,6 +137,7 @@ public abstract class Cloner {
 		copyObjectProperties(infoExecutionCourse, executionCourse);
 
 		infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
+		infoExecutionCourse.setNumberOfAttendingStudents(new Integer(executionCourse.getAttendingStudents() == null ? 0: executionCourse.getAttendingStudents().size()));
 		return infoExecutionCourse;
 	}
 
@@ -2430,7 +2431,6 @@ public abstract class Cloner {
 		infoStudentGroup.setIdInternal(studentGroup.getIdInternal());
 		infoStudentGroup.setInfoGroupProperties(infoGroupProperties);
 		infoStudentGroup.setInfoShift(infoShift);
-
 		return infoStudentGroup;
 	}
 

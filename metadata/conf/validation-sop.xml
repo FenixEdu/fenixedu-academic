@@ -712,7 +712,7 @@
         <field property="executionPeriodOID" depends="requiered" page="1">
 	        <arg0 key="property.executionPeriod" resource="true"/>
         </field>
-      <field property="executionDegreeOID" depends="required, integer" page="1">
+      <field property="executionDegreeOID" depends="integer" page="1">
         <arg0 key="property.context.degree" />
       </field>
       <field property="curricularYearOID" depends="range" page="1">

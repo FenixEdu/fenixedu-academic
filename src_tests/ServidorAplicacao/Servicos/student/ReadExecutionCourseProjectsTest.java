@@ -70,18 +70,19 @@ public class ReadExecutionCourseProjectsTest extends TestCaseReadServices {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
-			IGroupProperties groupProperties =
-							(IGroupProperties) sp.getIPersistentGroupProperties().readByOId(
-								new GroupProperties(new Integer(3)),
-								false);
-			
-			List infoAllGroupProperties= new ArrayList();
-			infoAllGroupProperties.add(Cloner.copyIGroupProperties2InfoGroupProperties(groupProperties));
-			
+			IGroupProperties groupProperties1 =
+				(IGroupProperties) sp.getIPersistentGroupProperties().readByOId(new GroupProperties(new Integer(3)), false);
+			IGroupProperties groupProperties2 =
+				(IGroupProperties) sp.getIPersistentGroupProperties().readByOId(new GroupProperties(new Integer(5)), false);
+			List infoAllGroupProperties = new ArrayList();
+			infoAllGroupProperties.add(Cloner.copyIGroupProperties2InfoGroupProperties(groupProperties1));
+			infoAllGroupProperties.add(Cloner.copyIGroupProperties2InfoGroupProperties(groupProperties2));
+
 			infoSiteProjects.setInfoGroupPropertiesList(infoAllGroupProperties);
 			sp.confirmarTransaccao();
-		}catch (ExcepcaoPersistencia ex) {
-		ex.printStackTrace();;
+		} catch (ExcepcaoPersistencia ex) {
+			ex.printStackTrace();
+			;
 		}
 		return infoSiteProjects;
 	}

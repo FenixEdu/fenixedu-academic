@@ -37,6 +37,7 @@ import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Filtro.AuthorizationUtils;
 import ServidorAplicacao.Servico.exceptions.ActiveStudentCurricularPlanAlreadyExistsServiceException;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidChangeServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -82,7 +83,7 @@ public class RegisterCandidate implements IServico {
 		return "RegisterCandidate";
 	}
 
-	public InfoCandidateRegistration run(Integer candidateID, Integer branchID) throws FenixServiceException {
+	public InfoCandidateRegistration run(Integer candidateID, Integer branchID , Integer studentNumber) throws FenixServiceException {
 
 		ISuportePersistente sp = null;
 
@@ -90,6 +91,16 @@ public class RegisterCandidate implements IServico {
 		IMasterDegreeCandidate masterDegreeCandidate = null; 
 		try {
 			sp = SuportePersistenteOJB.getInstance();
+
+			
+			if (studentNumber != null) {
+				IStudent student = (IStudent) sp.getIPersistentStudent().readByNumero(studentNumber, TipoCurso.MESTRADO_OBJ);
+
+				
+				if (student != null) {
+					throw new ExistingServiceException();
+				}
+			}
 			
 			IMasterDegreeCandidate mdcTemp = new MasterDegreeCandidate();
 			mdcTemp.setIdInternal(candidateID);
@@ -116,7 +127,12 @@ public class RegisterCandidate implements IServico {
 				student.setDegreeType(TipoCurso.MESTRADO_OBJ);
 				student.setPerson(masterDegreeCandidate.getPerson());
 				student.setState(new StudentState(StudentState.INSCRITO));
-				student.setNumber(sp.getIPersistentStudent().generateStudentNumber(TipoCurso.MESTRADO_OBJ));
+				
+				if (studentNumber == null) {
+					student.setNumber(sp.getIPersistentStudent().generateStudentNumber(TipoCurso.MESTRADO_OBJ));
+				} else {
+					student.setNumber(studentNumber);
+				}
 				
 				
 				IStudentKind studentKind = sp.getIPersistentStudentKind().readByStudentType(new StudentType(StudentType.NORMAL));
@@ -141,7 +157,7 @@ public class RegisterCandidate implements IServico {
 
 			IStudentCurricularPlan studentCurricularPlanOld = sp.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(student.getNumber(), TipoCurso.MESTRADO_OBJ); 
 
-			if (studentCurricularPlanOld != null){
+			if ((studentCurricularPlanOld != null) && (studentCurricularPlanOld.getCurrentState().equals(StudentCurricularPlanState.ACTIVE_OBJ))){
 				sp.getIStudentCurricularPlanPersistente().lockWrite(studentCurricularPlanOld);
 
 //				System.out.println("------------- MASTER DEGREE STUDENT WITH ACTIVE CURRICULAR PLAN ----------------");

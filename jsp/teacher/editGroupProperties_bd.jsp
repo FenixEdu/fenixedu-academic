@@ -15,6 +15,16 @@
 
 <html:form action="/editGroupProperties">
 <html:hidden property="page" value="1"/>
+<br>
+
+<table width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td class="infoop">
+			<bean:message key="label.teacher.editGroupProperties.description" />
+		</td>
+	</tr>
+</table>
+<br>
 
 <h2><span class="error"><html:errors/></span></h2>
 <br>
@@ -82,7 +92,12 @@
 		</tr>
 
 		<tr>
-			<td><bean:message key="message.groupPropertiesMaximumCapacity"/></td>
+			<td><bean:message key="message.groupPropertiesMaximumCapacity"/>
+			<br><bean:message key="label.teacher.insertGroupProperties.MaximumCapacityDescription"/>
+			<br>
+			<br>
+			</td>
+			
 			<td>
 			<logic:empty name="groupProperties" property="maximumCapacity">
 			<html:text size="5" property="maximumCapacity"/>
@@ -94,7 +109,11 @@
 			
 		</tr>	
     	<tr>
-			<td><bean:message key="message.groupPropertiesMinimumCapacity"/></td>
+			<td><bean:message key="message.groupPropertiesMinimumCapacity"/>
+			<br><bean:message key="label.teacher.insertGroupProperties.MinimumCapacityDescription"/>
+			<br>
+			<br>
+			</td>
 			<td>
 			<logic:empty name="groupProperties" property="minimumCapacity">
 			<html:text size="5" property="minimumCapacity"/>
@@ -106,7 +125,11 @@
 			
 		</tr>
 		<tr>
-			<td><bean:message key="message.groupPropertiesIdealCapacity"/></td>
+			<td><bean:message key="message.groupPropertiesIdealCapacity"/>
+			<br><bean:message key="label.teacher.insertGroupProperties.IdealCapacityDescription"/>
+			<br>
+			<br>
+			</td>
 			<td>
 			<logic:empty name="groupProperties" property="idealCapacity">
 			<html:text size="5" property="idealCapacity"/>
@@ -133,19 +156,44 @@
 </table>
 <br />
 <br />
-<html:submit styleClass="inputbutton"><bean:message key="button.save"/>                    		         	
-</html:submit>       
-<html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
-</html:reset>  
 
-<html:hidden property="method" value="editGroupProperties"/>	
-<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
-</html:form>
+<table>
+<tr>
+	<td>
+		<html:submit styleClass="inputbutton"><bean:message key="button.save"/>                    		         	
+		</html:submit>
+		
+	</td>       	
+	<td>
+		<html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
+		</html:reset>  
+	</td>
+		<html:hidden property="method" value="editGroupProperties"/>	
+		<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+		<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
+		</html:form>
+
+	
+	
+		<html:form action="/viewProjectShifts" method="get">
+	<td>
+		<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
+		</html:cancel>
+	</td>
+		<html:hidden property="method" value="viewProjectShifts"/>
+		<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+		<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
+	</html:form>
+
+</tr>
+</table>
+
 </logic:present>
 
+
+
 <logic:notPresent name="siteView" property="component"> 
-<h4>
+<h2>
 <bean:message key="message.infoGroupProperties.not.available" />
-</h4>
+</h2>
 </logic:notPresent>

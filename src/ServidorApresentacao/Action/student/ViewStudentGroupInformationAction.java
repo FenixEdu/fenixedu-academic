@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -37,7 +39,6 @@ public class ViewStudentGroupInformationAction extends FenixContextAction {
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		String studentGroupCodeString = request.getParameter("studentGroupCode");
-
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
 
 		ISiteComponent viewStudentGroup;
@@ -46,7 +47,12 @@ public class ViewStudentGroupInformationAction extends FenixContextAction {
 			viewStudentGroup = (InfoSiteStudentGroup) ServiceUtils.executeService(userView, "ReadStudentGroupInformation", args);
 
 		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error = new ActionError("error.noGroup");
+			actionErrors.add("error.noGroup", error);
+			saveErrors(request, actionErrors);
+			return mapping.findForward("viewStudentGroups");
 		}
 		InfoSiteStudentGroup infoSiteStudentGroup = (InfoSiteStudentGroup) viewStudentGroup;
 

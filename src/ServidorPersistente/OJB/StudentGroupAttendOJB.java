@@ -37,7 +37,7 @@ public class StudentGroupAttendOJB extends ObjectFenixOJB implements IPersistent
 			return (IStudentGroupAttend) queryObject(StudentGroupAttend.class, criteria);
 			
 	}
-		
+    		
 	public List readAllByStudentGroup(IStudentGroup studentGroup) throws ExcepcaoPersistencia {
 
 			Criteria criteria = new Criteria();
@@ -120,4 +120,23 @@ public class StudentGroupAttendOJB extends ObjectFenixOJB implements IPersistent
 				throw ex;
 			}
 		}
+        
+     //by gedl AT rnl DOT ist DOT utl DOT pt at September the 10th, 2003    
+    public IStudentGroupAttend readBy(IFrequenta attend) throws ExcepcaoPersistencia {
+            
+            
+            Criteria criteria = new Criteria();
+            
+            criteria.addEqualTo("keyAttend",attend.getIdInternal());
+            return (IStudentGroupAttend) queryObject(StudentGroupAttend.class, criteria);            
+    }
+
+//  by gedl AT rnl DOT ist DOT utl DOT pt at September the 12th, 2003    
+	public List readByStudentGroupId(Integer id) throws ExcepcaoPersistencia
+	{
+        Criteria criteria = new Criteria();
+            
+        criteria.addEqualTo("key_student_group",id);
+        return queryList(StudentGroupAttend.class, criteria);    		
+	}
 }

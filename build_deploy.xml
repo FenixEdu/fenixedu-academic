@@ -17,7 +17,9 @@
     <target name="deploy-tests" description="Deploys application to test server">
 		<property name="server.hostname"  value="fenix-tests.ist.utl.pt" />
 		<property name="server.deployDirectory" value="/var/tomcat4/webapps"/>
-
+		<property name="server.restartCommand"
+				  value="apachectl stop; /etc/init.d/tomcat4 restart; apachectl start"
+				  />
 		<property name="server.startCommand" value="/etc/init.d/tomcat4 start" />
 		<property name="server.stopCommand" value="/etc/init.d/tomcat4 stop" />		
 

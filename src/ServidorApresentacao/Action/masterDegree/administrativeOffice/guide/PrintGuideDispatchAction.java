@@ -67,14 +67,11 @@ public class PrintGuideDispatchAction extends DispatchAction {
 					throw new FenixActionException();
 				}
 				session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
-				if ((passwordPrint != null) && passwordPrint.booleanValue())
+				if ((passwordPrint != null) && passwordPrint.booleanValue()) {
 					infoMasterDegreeCandidate.getInfoPerson().setPassword(infoGuide.getInfoPerson().getPassword());
-					
-				
-			} else if (infoGuide.getGuideRequester().equals(GuideRequester.STUDENT_TYPE)){
-				// TODO: Comming soon :)
-			}
-
+				}
+			} 
+			
 			Locale locale = new Locale("pt", "PT");
 			Date date = new Date();
 

@@ -55,6 +55,17 @@ public class ReadExecutionCourseByOID implements IServico {
 					Cloner.copyIExecutionCourse2InfoExecutionCourse(
 						executionCourse);
 			}
+			
+//			result.setAssociatedInfoCurricularCourses(new ArrayList());
+//			Iterator iterator = executionCourse.getAssociatedCurricularCourses().iterator();
+//			while(iterator.hasNext()) {
+//				ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next(); 
+//				result.getAssociatedInfoCurricularCourses().add(Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse));
+//			}
+//			if (result.getAssociatedInfoCurricularCourses().isEmpty()) {
+//				result.setAssociatedInfoCurricularCourses(null);
+//			}
+			
 		} catch (ExcepcaoPersistencia ex) {
 			throw new FenixServiceException(ex);
 		}

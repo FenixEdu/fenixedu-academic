@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- @validation.doctype@ -->
+<form-validation>
+   <formset>
+
+	   <form name="newPasswordForm">
+		   	<field property="userType" depends="required" page="1">
+		    	<arg0 key="label.userType" resource="true"/>
+		    </field>
+
+		   	<field property="number" depends="required, integer" page="1">
+		    	<arg0 key="label.number" resource="true"/>
+		    </field>
+   	   </form>
+  	
+  	
+   </formset>
+</form-validation>

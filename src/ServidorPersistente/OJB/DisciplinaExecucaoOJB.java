@@ -272,14 +272,22 @@ public class DisciplinaExecucaoOJB
 				"associatedCurricularCourses.scopes.curricularSemester.curricularYear.idInternal",
 				curricularYear.getIdInternal());
 		}
+		
+		if (executionDegree != null) {
+			criteria.addEqualTo(
+				"associatedCurricularCourses.scopes.curricularCourse.degreeCurricularPlan.idInternal",
+				executionDegree.getCurricularPlan().getIdInternal());
+		}
 		criteria.addEqualTo(
-			"associatedCurricularCourses.scopes.curricularCourse.degreeCurricularPlan.idInternal",
-			executionDegree.getCurricularPlan().getIdInternal());
-		criteria.addEqualTo(
-			"executionPeriod.idInternal",
+			"keyExecutionPeriod",
 			executionPeriod.getIdInternal());
+		
+		List temp = queryList(DisciplinaExecucao.class, criteria, true);
 
-		return queryList(DisciplinaExecucao.class, criteria, true);
+		
+		
+		return temp;
+//		return queryList(DisciplinaExecucao.class, criteria, true);
 	}
 	
 //	returns a list of teachers in charge ids

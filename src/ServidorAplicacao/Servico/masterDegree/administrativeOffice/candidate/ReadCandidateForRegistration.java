@@ -72,16 +72,11 @@ public class ReadCandidateForRegistration implements IServico {
 			throw newEx;
 		} 
 
-System.out.println("Resultado : " + result);
 
 
 		if (result == null){
 			throw new NonExistingServiceException();
 		}
-
-
-System.out.println("Resultado : " + result.size());
-
 
 
 		List candidateList = new ArrayList();

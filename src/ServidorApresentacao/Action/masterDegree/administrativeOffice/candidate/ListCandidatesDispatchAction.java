@@ -552,8 +552,6 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			infoMasterDegreeCandidate.getInfoPerson().setPassword(RandomStringGenerator.getRandomStringGenerator(8));					
 	
 	
-System.out.println("New Password: " + infoMasterDegreeCandidate.getInfoPerson().getPassword());
-
 			// Write the Person
 			try {
 				Object args[] = {infoMasterDegreeCandidate.getInfoPerson().getIdInternal(), infoMasterDegreeCandidate.getInfoPerson().getPassword() };
@@ -619,7 +617,8 @@ System.out.println("New Password: " + infoMasterDegreeCandidate.getInfoPerson().
 		
 		editCandidateForm.set("fatherName", infoPerson.getNomePai());
 		editCandidateForm.set("motherName", infoPerson.getNomeMae());
-		editCandidateForm.set("nationality", infoPerson.getInfoPais().getName());
+		
+		editCandidateForm.set("nationality", infoPerson.getInfoPais().getNationality());
 		editCandidateForm.set("birthPlaceParish", infoPerson.getFreguesiaNaturalidade());
 		editCandidateForm.set("birthPlaceMunicipality", infoPerson.getConcelhoNaturalidade());
 		editCandidateForm.set("birthPlaceDistrict", infoPerson.getDistritoNaturalidade());

@@ -7,6 +7,16 @@
 
 <h2><bean:message key="title.insertGroupProperties"/></h2>
 
+<br>
+
+<table width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td class="infoop">
+			<bean:message key="label.teacher.insertGroupProperties.description" />
+		</td>
+	</tr>
+</table>
+<br>
 <span class="error"><html:errors/></span>
 
 <html:form action="/createGroupProperties">
@@ -18,7 +28,8 @@
 
 <table>
 		<tr>
-			<td><bean:message key="message.groupPropertiesName"/></td>
+			<td><bean:message key="message.groupPropertiesName"/>
+			</td>
 			<td><html:text size="40" property="name" /></td>
 		</tr>
 	    
@@ -49,7 +60,8 @@
 		</tr>
     
     	<tr>
-			<td><bean:message key="message.groupPropertiesShiftType"/></td>
+			<td><bean:message key="message.groupPropertiesShiftType"/>
+			<br><br></td>
 			<td><html:select property="shiftType">
 				<html:options name="shiftTypeValues" labelName="shiftTypeNames"/>
 				</html:select>
@@ -58,17 +70,29 @@
 		</tr>
 
 	    <tr>
-			<td><bean:message key="message.groupPropertiesMaximumCapacity"/></td>
+			<td><bean:message key="message.groupPropertiesMaximumCapacity"/>
+			<br><bean:message key="label.teacher.insertGroupProperties.MaximumCapacityDescription"/>
+			<br>
+			<br>
+			</td>
 			<td><html:text size="5" property="maximumCapacity" /></td>
 			
 		</tr>	
     	<tr>
-			<td><bean:message key="message.groupPropertiesMinimumCapacity"/></td>
+			<td><bean:message key="message.groupPropertiesMinimumCapacity"/>
+			<br><bean:message key="label.teacher.insertGroupProperties.MinimumCapacityDescription"/>
+			<br>
+			<br>
+			</td>
 			<td><html:text size="5" property="minimumCapacity" /></td>
 			
 		</tr>
 		<tr>
-			<td><bean:message key="message.groupPropertiesIdealCapacity"/></td>
+			<td><bean:message key="message.groupPropertiesIdealCapacity"/>
+			<br><bean:message key="label.teacher.insertGroupProperties.IdealCapacityDescription"/>
+			<br>
+			<br>
+			</td>
 			<td><html:text size="5" property="idealCapacity" /></td>
 			
 		</tr>
@@ -83,19 +107,42 @@
 </table>
 <br />
 <br />
-<html:submit styleClass="inputbutton"><bean:message key="button.save"/>                    		         	
-</html:submit>       
-<html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
-</html:reset>  
 
-<html:hidden property="method" value="createGroupProperties"/>	
-<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+<table>
+<tr>
+	<td>
+		<html:submit styleClass="inputbutton"><bean:message key="button.save"/>                    		         	
+		</html:submit>       
+	</td>
+	<td>
+		<html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
+		</html:reset>  
+	</td>
+		<html:hidden property="method" value="createGroupProperties"/>	
+		<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 
-</html:form>
+		</html:form>
+
+	
+
+	
+		<html:form action="/viewExecutionCourseProjects" method="get">
+	<td>
+		<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
+		</html:cancel>
+	</td>
+		<html:hidden property="method" value="viewExecutionCourseProjects"/>
+		<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+		</html:form>
+	
+</tr>
+</table>
+
+
 </logic:present>
 
 <logic:notPresent name="siteView">
-<h4>
+<h2>
 <bean:message key="message.insert.infoGroupProperties.not.available" />
-</h4> 
+</h2> 
 </logic:notPresent> 

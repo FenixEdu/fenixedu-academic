@@ -11,12 +11,23 @@
 <logic:present name="siteView" property="component"> 
 <bean:define id="component" name="siteView" property="component" />
 
+<br>
+
+	<table width="100%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="infoop">
+				<bean:message key="label.teacher.EditStudentGroupMembers.description" />
+			</td>
+		</tr>
+	</table>
+	<br>
+
 <logic:empty name="component" property="infoSiteStudentInformationList">
-<h4><bean:message key="message.infoSiteStudentGroupList.not.available" /></h4>
+<h2><bean:message key="message.infoSiteStudentGroupList.not.available" /></h2>
 </logic:empty> 	
 
 <logic:notEmpty name="component" property="infoSiteStudentInformationList">
-<html:form action="/deleteStudentGroupMembers">
+<html:form action="/deleteStudentGroupMembers" method="get">
 <html:hidden property="page" value="1"/>
 <bean:message key="message.editStudentGroupMembers.RemoveMembers"/>
 
@@ -59,7 +70,7 @@
 </table>
 
 <br>
-<html:submit styleClass="inputbutton"><bean:message key="button.delete"/>                    		         	
+<html:submit styleClass="inputbutton"><bean:message key="button.remove"/>                    		         	
 </html:submit>
 <html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
 </html:reset>
@@ -70,6 +81,7 @@
 <html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 <html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 <html:hidden  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode") %>" />
+<html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />
 
 </html:form>
 </logic:notEmpty> 	
@@ -77,21 +89,21 @@
 </logic:present>
 
 <logic:notPresent name="siteView" property="component">
-<h4>
+<h2>
 <bean:message key="message.infoSiteStudentGroupList.not.available" />
-</h4>
+</h2>
 </logic:notPresent>
 
 
  <logic:present name="infoStudentList"> 
 		
-<html:form action="/insertStudentGroupMembers">
+<html:form action="/insertStudentGroupMembers" method="get">
 <html:hidden property="page" value="1"/>
 
 <logic:empty name="infoStudentList"> 
-<h4>
+<h2>
 <bean:message key="message.editStudentGroupMembers.NoMembersToAdd" />
-</h4>
+</h2>
 </logic:empty>
 
 <logic:notEmpty name="infoStudentList"> 
@@ -139,20 +151,35 @@
 <html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 <html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 <html:hidden  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode") %>" />
-
+<html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />
 
 
 <html:submit styleClass="inputbutton"><bean:message key="button.insert"/>                    		         	
 </html:submit>       
+
 <html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
 </html:reset>  
+
 </logic:notEmpty>
+
 </html:form>
+
+
+	<html:form action="/viewStudentGroups" method="get">
+	
+		<html:submit styleClass="inputbutton"><bean:message key="button.back"/>                    		         	
+		</html:submit>
+	
+		<html:hidden property="method" value="viewStudentGroups"/>
+		<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+		<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
+		<html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />
+	</html:form>
 
 </logic:present>
 
 <logic:notPresent name="infoStudentList">
-<h4>
+<h2>
 <bean:message key="message.editStudentGroupMembers.NoMembersToAdd" />
-</h4>
+</h2>
 </logic:notPresent>

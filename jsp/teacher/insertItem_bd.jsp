@@ -27,7 +27,7 @@
 			<bean:message key="message.itemInformation"/>
 		</td>
 		<td>
-			<html:textarea rows="2" cols="40" property="information"/>
+			<html:textarea rows="15" cols="45" property="information"/>
 			<span class="error"><html:errors property="information"/></span>
 		</td>
 	</tr>

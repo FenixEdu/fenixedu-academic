@@ -77,7 +77,8 @@
 	 <form-bean name="enroledExecutionCoursesForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
-        <form-property name="executionCourseCode" type="java.lang.String" />
+        <form-property name="executionCourseCode" type="java.lang.String"/>
+       
       </form-bean>
       
       <!-- Student tests -->
@@ -97,6 +98,17 @@
         <form-property name="studentsNotEnroled" type="java.lang.Integer[]" />
         <form-property name="shift" type="java.lang.String" />
       </form-bean>
+      
+
+        <form-bean name="showStudentGroupInfoForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="username" type="java.lang.String" />
+        <form-property name="password" type="java.lang.String" />
+      </form-bean>
+      
+	
+      
       
      </form-beans>
     
@@ -400,8 +412,10 @@
  	   
  	   <action type="ServidorApresentacao.Action.student.ViewEnroledExecutionCoursesAction"
               path="/viewEnroledExecutionCourses"
+              name="enroledExecutionCoursesForm"
               scope="request"
-              validate="true">
+              validate="true"
+              >
         <forward name="sucess" path="view-Enroled-ExecutionCourses"/>
       </action>
       
@@ -409,23 +423,36 @@
               path="/viewExecutionCourseProjects"
               scope="request"
               name="enroledExecutionCoursesForm"
-              validate="true">
+              validate="true">    
+        <forward name="insucess" path="/viewEnroledExecutionCourses.do"/>      
         <forward name="sucess" path="view-ExecutionCourse-Projects"/>
       </action>
  	
- 	<action type="ServidorApresentacao.Action.student.ViewProjectStudentGroupsAction"
-              path="/viewProjectStudentGroups"
-              name="enroledExecutionCoursesForm"
+ 	
+ 	<action type="ServidorApresentacao.Action.student.ViewProjectShiftsAction"
+              path="/viewProjectShifts"
               scope="request"
+              name="enroledExecutionCoursesForm"
               validate="true">
-        <forward name="sucess" path="view-Project-StudentGroups"/>
+        <forward name="sucess" path="view-Project-Shifts"/>
       </action>
+      
+ 	<action type="ServidorApresentacao.Action.student.ViewStudentGroupsAction"
+              path="/viewStudentGroups"
+              scope="request"
+              name="enroledExecutionCoursesForm"
+              validate="true">
+        <forward name="sucess" path="view-StudentGroups"/>
+      </action>
+       
+ 	
       
       	<action type="ServidorApresentacao.Action.student.ViewStudentGroupInformationAction"
               path="/viewStudentGroupInformation"
               scope="request"
               validate="true">
         <forward name="sucess" path="view-StudentGroup-Information"/>
+        <forward name="viewStudentGroups" path="/viewStudentGroups.do"/>        
       </action>
       
       <!-- TESTS -->
@@ -461,7 +488,7 @@
             parameter="method"
             name="enroledExecutionCoursesForm">
         <forward name="sucess" path="remove-Student-InGroup"/>
-        <forward name="remove" path="view-Project-StudentGroups"/>
+        <forward name="viewStudentGroups" path="/viewStudentGroups.do"/>
     </action>
 
       <action type="ServidorApresentacao.Action.student.GroupStudentEnrolmentDispatchAction"
@@ -469,10 +496,9 @@
         name="enroledExecutionCoursesForm"
         parameter="method"
         scope="request"
-        validate="true">
-                             
+        validate="true">                  
         <forward name="sucess" path="group-student-enrolment"/>
-        <forward name="viewProjectStudentGroups" path="/viewProjectStudentGroups.do"/>
+        <forward name="viewStudentGroups" path="/viewStudentGroups.do"/>
         
       </action>
       
@@ -482,11 +508,23 @@
         parameter="method"
         scope="request"
         validate="true">
-                             
         <forward name="sucess" path="group-enrolment"/>
-        <forward name="viewProjectStudentGroups" path="/viewProjectStudentGroups.do"/>
+        <forward name="viewProjectShifts" path="/viewProjectShifts.do"/>
         
       </action>
+      
+      	<action type="ServidorApresentacao.Action.student.EditStudentGroupShiftDispatchAction"
+            path="/editStudentGroupShift"
+            scope="request"
+            validate="true"
+            parameter="method"
+            name="groupEnrolmentForm">
+        <forward name="sucess" path="edit-studentGroup-shift"/>
+        <forward name="viewProjectShifts" path="/viewProjectShifts.do"/>
+        <forward name="viewStudentGroups" path="/viewStudentGroups.do"/>
+    </action>
+   
+      
      </action-mappings>     
 
     

@@ -135,7 +135,14 @@
         <form-property name="recipients" type="java.lang.Integer"/>
         <form-property name="page" type="java.lang.Integer"/>
      </form-bean>
-
+<form-bean name="newPasswordForm"
+      			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+      			dynamic="true">
+		<form-property name="userType" type="java.lang.String"/>
+		<form-property name="number" type="java.lang.String"/>
+		<form-property name="personID" type="java.lang.Integer"/>
+		<form-property name="page" type="java.lang.Integer"/>
+      </form-bean>   
     </form-beans>
 
 	 <!-- ========== Global Exception Definitions ============================== -->
@@ -676,7 +683,21 @@
               >
           <forward name="Manage" path="df.page.manage-advisories"/>
       </action>
-
+<action	name="newPasswordForm"
+				attribute="newPasswordForm"
+				type="ServidorApresentacao.Action.commons.password.GenerateNewPasswordDispatchAction"
+				path="/generateNewPassword"
+				input="/generateNewPassword.do?method=prepare&amp;page=0"
+				parameter="method"
+				scope="request"
+				validate="true">
+			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<forward name="PrepareSuccess" path="df.page.choosePerson"/>
+			<forward name="Confirm" path="df.page.confirmPasswordChange"/>
+			<forward name="Success" path="/password/newPasswordTemplate.jsp"/>
+		</action>
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

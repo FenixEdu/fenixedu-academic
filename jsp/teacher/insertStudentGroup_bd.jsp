@@ -9,11 +9,26 @@
 
 <html:form action="/insertStudentGroup" method="get">
 <html:hidden property="page" value="1"/>
+
+
+	<table width="100%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="infoop">
+				<bean:message key="label.teacher.CreateStudentGroup.description" />
+			</td>
+		</tr>
+	</table>
+	<br>
+
+
 <b><bean:message key="message.insertStudentGroupData"/></b>
+
+<br>
 <br>
 
 <h2><span class="error"><html:errors/></span></h2>
-<br>		 
+<br>
+		 
 <table width="50%" cellpadding="0" border="0">
 	<tr>
 		<td>
@@ -23,7 +38,7 @@
 		<td>
 		<html:text size="21" property="groupNumber" />
 		</td>
-		<%--<td><span class="error"><html:errors property="groupNumber"/></span></td>--%>
+		
 	</tr>
 	
 	<tr>
@@ -41,6 +56,13 @@
 
 <br>
 
+<logic:empty name="infoStudentList">
+<h2>
+<bean:message key="message.editStudentGroupMembers.NoMembersToAdd" />
+</h2>
+</logic:empty>
+
+<logic:notEmpty name="infoStudentList">
 <table width="50%" cellpadding="0" border="0">	
 	<tr>
 		<td class="listClasses-header">
@@ -72,17 +94,39 @@
 	 
 
 </table>
+</logic:notEmpty>
 <br>
+
+
 
 <html:hidden property="method" value="createStudentGroup"/>
 <html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 <html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 
-
-<html:submit styleClass="inputbutton"><bean:message key="button.insert"/>                    		         	
-</html:submit>       
-<html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
-</html:reset>  
-
+<table>
+<tr>
+	<td>
+		<html:submit styleClass="inputbutton"><bean:message key="button.insert"/>                    		         	
+		</html:submit>       
+	</td>
+	<td>	
+		<html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
+		</html:reset>  
+	</td>
 </html:form>
+
+		<html:form action="/viewProjectShifts" method="get">
+	<td>
+		<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
+		</html:cancel>
+	</td>
+		<html:hidden property="method" value="viewProjectShifts"/>
+		<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+		<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
+	</html:form>
+
+</tr>
+</table>
+
+
 </logic:present>

@@ -21,6 +21,8 @@ import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteStudentGroup;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -50,70 +52,65 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
-		Integer result;
-		Object[] args1 = { studentGroupCode, userView.getUtilizador()};
+		Object[] args1 = { null, studentGroupCode, userView.getUtilizador(), new Integer(1)};
 		try {
-			result = (Integer) ServiceUtils.executeService(userView, "VerifyStudentGroupAtributes", args1);
+			ServiceUtils.executeService(userView, "VerifyStudentGroupAtributes", args1);
+
+		} catch (InvalidSituationServiceException e) {
+			ActionErrors actionErrors2 = new ActionErrors();
+			ActionError error2 = null;
+			// Create an ACTION_ERROR 
+			error2 = new ActionError("errors.existing.groupStudentEnrolment");
+			actionErrors2.add("errors.existing.groupStudentEnrolment", error2);
+			saveErrors(request, actionErrors2);
+			return mapping.findForward("viewStudentGroups");
+
+		} catch (InvalidArgumentsServiceException e) {
+			ActionErrors actionErrors1 = new ActionErrors();
+			ActionError error1 = null;
+			// Create an ACTION_ERROR 
+			error1 = new ActionError("errors.invalid.insert.groupStudentEnrolment");
+			actionErrors1.add("errors.invalid.insert.groupStudentEnrolment", error1);
+			saveErrors(request, actionErrors1);
+			return mapping.findForward("viewStudentGroups");
 
 		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
+			ActionErrors actionErrors3 = new ActionErrors();
+			ActionError error3 = null;
+			// Create an ACTION_ERROR 
+			error3 = new ActionError("error.noGroup");
+			actionErrors3.add("error.noGroup", error3);
+			saveErrors(request, actionErrors3);
+			return mapping.findForward("viewStudentGroups");
+
 		}
 
-		if (result.intValue() == 1) {
+		Object[] args2 = { studentGroupCode };
+		ISiteComponent viewStudentGroup = null;
+		try {
+			viewStudentGroup = (InfoSiteStudentGroup) ServiceUtils.executeService(userView, "ReadStudentGroupInformation", args2);
 
-			Object[] args2 = { studentGroupCode };
-			ISiteComponent viewStudentGroup = null;
-			try {
-				viewStudentGroup = (InfoSiteStudentGroup) ServiceUtils.executeService(userView, "ReadStudentGroupInformation", args2);
-
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
-
-			InfoSiteStudentGroup infoSiteStudentGroup = (InfoSiteStudentGroup) viewStudentGroup;
-
-			List infoSiteStudentInformationList = new ArrayList();
-			if (infoSiteStudentGroup != null) {
-				infoSiteStudentInformationList = infoSiteStudentGroup.getInfoSiteStudentInformationList();
-			}
-
-			request.setAttribute("infoSiteStudentInformationList", infoSiteStudentInformationList);
-
-			return mapping.findForward("sucess");
-		} else {
-
-			switch (result.intValue()) {
-				case -1 :
-					ActionErrors actionErrors1 = new ActionErrors();
-					ActionError error1 = null;
-					// Create an ACTION_ERROR 
-					error1 = new ActionError("errors.existing.groupStudentEnrolment");
-					actionErrors1.add("errors.existing.groupStudentEnrolment", error1);
-					saveErrors(request, actionErrors1);
-					return mapping.findForward("viewProjectStudentGroups");
-
-				case -2 :
-					ActionErrors actionErrors2 = new ActionErrors();
-					ActionError error2 = null;
-					// Create an ACTION_ERROR 
-					error2 = new ActionError("errors.invalid.insert.groupStudentEnrolment");
-					actionErrors2.add("errors.invalid.insert.groupStudentEnrolment", error2);
-					saveErrors(request, actionErrors2);
-					return mapping.findForward("viewProjectStudentGroups");
-
-				case -3 :
-					ActionErrors actionErrors3 = new ActionErrors();
-					ActionError error3 = null;
-					// Create an ACTION_ERROR 
-					error3 = new ActionError("error.noGroup");
-					actionErrors3.add("error.noGroup", error3);
-					saveErrors(request, actionErrors3);
-					return mapping.findForward("viewProjectStudentGroups");
-
-			}
-			//request.setAttribute("groupPropertiesCode",groupPropertiesCode);
-			return mapping.findForward("viewProjectStudentGroups");
+		} catch (FenixServiceException e) {
+			ActionErrors actionErrors3 = new ActionErrors();
+			ActionError error3 = null;
+			// Create an ACTION_ERROR 
+			error3 = new ActionError("error.noGroup");
+			actionErrors3.add("error.noGroup", error3);
+			saveErrors(request, actionErrors3);
+			return mapping.findForward("viewStudentGroups");
 		}
+
+		InfoSiteStudentGroup infoSiteStudentGroup = (InfoSiteStudentGroup) viewStudentGroup;
+
+		List infoSiteStudentInformationList = new ArrayList();
+		if (infoSiteStudentGroup != null) {
+			infoSiteStudentInformationList = infoSiteStudentGroup.getInfoSiteStudentInformationList();
+		}
+
+		request.setAttribute("infoSiteStudentInformationList", infoSiteStudentInformationList);
+
+		return mapping.findForward("sucess");
+
 	}
 
 	public ActionForward enrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -123,7 +120,6 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
-
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
 		String studentGroupCodeString = request.getParameter("studentGroupCode");
@@ -136,20 +132,23 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 
 			result = (Boolean) ServiceUtils.executeService(userView, "GroupStudentEnrolment", args1);
 
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		if (!result.booleanValue()) {
+		} catch (InvalidSituationServiceException e) {
 			ActionErrors actionErrors = new ActionErrors();
 			ActionError error = null;
-			// Create an ACTION_ERROR 
 			error = new ActionError("errors.existing.groupStudentEnrolment");
 			actionErrors.add("errors.existing.groupStudentEnrolment", error);
 			saveErrors(request, actionErrors);
 
+		} catch (FenixServiceException e) {
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error = new ActionError("error.noGroup");
+			actionErrors.add("error.noGroup", error);
+			saveErrors(request, actionErrors);
+
 		}
 
-		return mapping.findForward("viewProjectStudentGroups");
+		return mapping.findForward("viewStudentGroups");
 
 	}
 

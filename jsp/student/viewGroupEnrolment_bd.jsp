@@ -5,17 +5,29 @@
 
 <logic:present name="shiftsList">
 
+
+<h2><bean:message key="title.enrolmentGroup.insertNewGroup"/></h2>
+
+	<table width="100%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="infoop">
+				<bean:message key="label.student.viewGroupEnrolment.description" />
+			</td>
+		</tr>
+	</table>
+	<br>
+
+
 <logic:empty name="shiftsList">
-<h4>
+<h2>
 <bean:message key="message.infoSiteShiftList.not.available" />
-</h4>
+</h2>
 </logic:empty>
 
 
 <html:form action="/groupEnrolment" method="get">
 
-<h2><bean:message key="title.enrolmentGroup.insertNewGroup"/></h2>
-<b><bean:message key="label.enrolmentGroup.chooseShiftAndStudents"/></b>
+
 <br>
 
 <h2><span class="error"><html:errors/></span></h2>		 
@@ -36,12 +48,15 @@
 
 <logic:present name="infoStudents"> 
 	<logic:empty name="infoStudents">
-	<h4>
+	<h2>
 	<bean:message key="message.infoStudents.not.available" />
-	</h4>
+	</h2>
 	</logic:empty>
 	
 	<logic:notEmpty name="infoStudents">
+	<bean:message key="label.infoStudents.studentsWithoutGroup" />
+	<br>
+	<br>
 	<table width="50%" cellpadding="0" border="0">	
 		<tr>
 		<td class="listClasses-header">
@@ -78,7 +93,9 @@
 	</logic:present>
 
 <html:hidden property="method" value="enrolment"/>
+<html:hidden  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
 <html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
+
 
 <table>
 <tr>
@@ -90,14 +107,15 @@
 		</html:form>
 	</td>
 	<td>
-		<html:form action="/viewProjectStudentGroups" method="get">
+		<html:form action="/viewProjectShifts" method="get">
 	
 		<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
 		</html:cancel>
 	
 		<html:hidden property="method" value="execute"/>
+		<html:hidden  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
 		<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode")%>"/>		
-	
+
 	</html:form>
 	</td>
 	
@@ -105,8 +123,10 @@
 </table>
 			
 </logic:present>
+
 <logic:notPresent name="shiftsList">
-<h4>
+<h2><span class="error"><html:errors/></span></h2>
+<h2>
 <bean:message key="message.infoSiteShiftList.not.available" />
-</h4>
+</h2>
 </logic:notPresent>

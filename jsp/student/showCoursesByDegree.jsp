@@ -22,6 +22,7 @@
 	</span>
 	<br/>
 	<p align="left">
+		<span class="error">ATENÇÃO: A INSCRIÇÃO EM TURNOS/TURMAS NÃO SUBSTITUI A INSCRIÇÃO EM DISCIPLINAS EFECTUADA NA <a href="http://secreta.ist.utl.pt/secretaria/" target="_blank">SECRETARIA</a>.</span>
 		<h2 class="redtxt" style="text-align:center">
 			Informações de utilização:
 		</h2>

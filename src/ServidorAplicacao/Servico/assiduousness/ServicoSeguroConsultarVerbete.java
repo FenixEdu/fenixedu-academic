@@ -214,7 +214,8 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 						calendario.setTimeInMillis(((Long) _listaSaldos.get(0)).longValue());
 						_listaVerbeteDiaria.set(2, FormataCalendar.horasMinutosDuracao(calendario)); //saldo HN
 
-						IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(_horario.getModalidade());
+						IStrategyHorarios horarioStrategy =
+							SuporteStrategyHorarios.getInstance().callStrategy(_horario.getModalidade());
 						if (((Long) _listaSaldos.get(0)).longValue() > horarioStrategy.duracaoDiaria(_horario)) {
 							_listaSaldos.set(0, new Long(horarioStrategy.duracaoDiaria(_horario)));
 						}
@@ -234,7 +235,8 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 					calcularSaldoDiario();
 					// nao efectua calculos de saldo para dias além do dia de hoje
 					if (!_dataConsulta.after(agoraTimestamp)) {
-						IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(_horario.getModalidade());
+						IStrategyHorarios horarioStrategy =
+							SuporteStrategyHorarios.getInstance().callStrategy(_horario.getModalidade());
 						horarioStrategy.setSaldosHorarioVerbeteBody(
 							_horario,
 							_listaRegimes,
@@ -267,7 +269,9 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 
 					if (_dataConsulta.before(agoraTimestamp)) {
 						//verifica se este dia nao teve assiduidade
-						if (_listaMarcacoesPonto.size() == 0 && _listaParamJustificacoes.size() == 0 && (!_dataConsulta.after(agoraTimestamp))) {
+						if (_listaMarcacoesPonto.size() == 0
+							&& _listaParamJustificacoes.size() == 0
+							&& (!_dataConsulta.after(agoraTimestamp))) {
 							_listaVerbeteDiaria.set(4, new String("<b>" + Constants.INJUSTIFICADO + "</b>"));
 						}
 
@@ -322,7 +326,9 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 		servicoSeguroLerStatusAssiduidadeFuncionario.execute();
 
 		if (servicoSeguroLerStatusAssiduidadeFuncionario.getListaStatusAssiduidade() != null) {
-			if (!servicoSeguroLerStatusAssiduidadeFuncionario.getListaEstadosStatusAssiduidade().contains(Constants.ASSIDUIDADE_ACTIVO)) {
+			if (!servicoSeguroLerStatusAssiduidadeFuncionario
+				.getListaEstadosStatusAssiduidade()
+				.contains(Constants.ASSIDUIDADE_ACTIVO)) {
 				throw new NotExecuteException("error.assiduidade.naoExiste");
 			}
 		}
@@ -344,7 +350,11 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 		ServicoAutorizacao servicoAutorizacao = new ServicoAutorizacao();
 
 		ServicoSeguroLerInicioAssiduidade servicoSeguroLerInicioAssiduidade =
-			new ServicoSeguroLerInicioAssiduidade(servicoAutorizacao, _numMecanografico.intValue(), _dataInicioEscolha, _dataFimEscolha);
+			new ServicoSeguroLerInicioAssiduidade(
+				servicoAutorizacao,
+				_numMecanografico.intValue(),
+				_dataInicioEscolha,
+				_dataFimEscolha);
 		servicoSeguroLerInicioAssiduidade.execute();
 
 		if (servicoSeguroLerInicioAssiduidade.getDataAssiduidade() != null) {
@@ -530,10 +540,16 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 		// verifica se neste dia tem status pendente
 		ServicoAutorizacao servicoAutorizacao = new ServicoAutorizacao();
 		ServicoSeguroLerStatusAssiduidadeFuncionario servicoSeguroLerStatusAssiduidadeFuncionario =
-			new ServicoSeguroLerStatusAssiduidadeFuncionario(servicoAutorizacao, _numMecanografico.intValue(), _dataConsulta, _dataConsulta);
+			new ServicoSeguroLerStatusAssiduidadeFuncionario(
+				servicoAutorizacao,
+				_numMecanografico.intValue(),
+				_dataConsulta,
+				_dataConsulta);
 		servicoSeguroLerStatusAssiduidadeFuncionario.execute();
 
-		while (servicoSeguroLerStatusAssiduidadeFuncionario.getListaEstadosStatusAssiduidade().contains(Constants.ASSIDUIDADE_PENDENTE)) {
+		while (servicoSeguroLerStatusAssiduidadeFuncionario
+			.getListaEstadosStatusAssiduidade()
+			.contains(Constants.ASSIDUIDADE_PENDENTE)) {
 			//enquanto tiver status pendente escreve o status a que corresponde
 			construirListaDiasPendente(
 				(StatusAssiduidade) servicoSeguroLerStatusAssiduidadeFuncionario.getListaStatusAssiduidade().get(0),
@@ -673,7 +689,8 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 		long margemExpediente = (calendario.getTimeInMillis() - _horario.getFimExpediente().getTime()) / 2;
 
 		calendario.clear();
-		calendario.setTimeInMillis(_calendarioConsulta.getTimeInMillis() + _horario.getInicioExpediente().getTime() - margemExpediente);
+		calendario.setTimeInMillis(
+			_calendarioConsulta.getTimeInMillis() + _horario.getInicioExpediente().getTime() - margemExpediente);
 		_dataInicio = new Timestamp(calendario.getTimeInMillis());
 		calendario.clear();
 		calendario.setTimeInMillis(
@@ -865,7 +882,11 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 					IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(_horario.getModalidade());
 					saldo =
 						saldo
-							+ horarioStrategy.limitaTrabalhoSeguido(_horario, entrada.getData().getTime(), saida.getData().getTime(), limita5Horas);
+							+ horarioStrategy.limitaTrabalhoSeguido(
+								_horario,
+								entrada.getData().getTime(),
+								saida.getData().getTime(),
+								limita5Horas);
 					limita5Horas = false;
 					if ((_horario.getSigla() != null)
 						&& !((_horario.getSigla().equals(Constants.DSC)
@@ -897,7 +918,8 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 		while (iterador.hasNext()) {
 			Justificacao justificacao = (Justificacao) iterador.next();
 
-			if (justificacao.getHoraInicio().equals(inicioJustificacao.getTime())
+			if (justificacao.getHoraInicio() != null
+				&& justificacao.getHoraInicio().equals(inicioJustificacao.getTime())
 				&& justificacao.getHoraFim().equals(fimJustificacao.getTime())) {
 
 				return true;

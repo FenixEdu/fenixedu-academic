@@ -172,4 +172,12 @@ public class TurnoAlunoOJB extends ObjectFenixOJB implements ITurnoAlunoPersiste
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
+
+    // by gedl AT rnl DOT ist DOT utl DOT pt, September the 16th, 2003    
+    public List readByShiftID(Integer id) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();        
+        criteria.addEqualTo("key_shift",id);
+        return queryList(ShiftStudent.class, criteria);        
+    } 
 }

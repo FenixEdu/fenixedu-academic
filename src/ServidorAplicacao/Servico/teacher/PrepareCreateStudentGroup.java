@@ -61,6 +61,7 @@ public class PrepareCreateStudentGroup implements IServico {
 
 	public List run(Integer executionCourseCode,Integer groupPropertiesCode)
 		throws FenixServiceException {
+			
 		
 		IFrequentaPersistente persistentAttend = null;
 		IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
@@ -68,9 +69,9 @@ public class PrepareCreateStudentGroup implements IServico {
 		IPersistentStudentGroup persistentStudentGroup = null;
 		IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
 		List frequentas = new ArrayList();
-				
+		List infoStudentList = null;		
 		try {
-		
+					
 			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
 			persistentExecutionCourse = ps.getIDisciplinaExecucaoPersistente();
 			persistentAttend = ps.getIFrequentaPersistente();
@@ -79,28 +80,29 @@ public class PrepareCreateStudentGroup implements IServico {
 			
 			IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode),false);
 			IGroupProperties groupProperties = (IGroupProperties)ps.getIPersistentGroupProperties().readByOId(new GroupProperties(groupPropertiesCode),false);
-			
+						
 			frequentas = persistentAttend.readByExecutionCourse(executionCourse);
+			
 			List allStudentsGroups =persistentStudentGroup.readAllStudentGroupByGroupProperties(groupProperties);
 			
 			List allStudentAttend = new ArrayList();
 			Iterator iterator = allStudentsGroups.iterator();
 			List allStudentGroupAttend;
-			int i;
-			IFrequenta frequenta = null;
+		
 			while (iterator.hasNext()) 
 			{
-				i=0;
-				allStudentGroupAttend = persistentStudentGroupAttend.readAllByStudentGroup((IStudentGroup) iterator.next()); 
 				
-				while(i<allStudentGroupAttend.size())
+				allStudentGroupAttend = persistentStudentGroupAttend.readAllByStudentGroup((IStudentGroup) iterator.next()); 
+				Iterator iterator2 = allStudentGroupAttend.iterator();
+				IFrequenta frequenta = null;
+				while(iterator2.hasNext())
 				{
-					frequenta =((IStudentGroupAttend)allStudentGroupAttend.get(i)).getAttend();
+					frequenta =((IStudentGroupAttend)iterator2.next()).getAttend();
 					if(frequentas.contains(frequenta))
 					{
 						frequentas.remove(frequenta);
 					}
-					i++;
+					
 				}
 			}
 		
@@ -109,7 +111,7 @@ public class PrepareCreateStudentGroup implements IServico {
 		  }
 
 		IStudent student = null;
-		List infoStudentList = new ArrayList();
+		infoStudentList = new ArrayList();
 		Iterator iterator = frequentas.iterator();
 
 		while (iterator.hasNext()) 
@@ -117,7 +119,6 @@ public class PrepareCreateStudentGroup implements IServico {
 			student = ((IFrequenta) iterator.next()).getAluno();
 			infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));		
 		}
-
 		
 		return infoStudentList;
 	}

@@ -342,6 +342,7 @@
             <form-property name="executionYear" type="java.lang.String"/>
             <form-property name="degreeCode" type="java.lang.String"/>
             <form-property name="branchID" type="java.lang.Integer"/>
+            <form-property name="studentNumber" type="java.lang.String"/>
             <form-property name="studentCurricularPlanID" type="java.lang.Integer"/>
        </form-bean>
 
@@ -812,6 +813,9 @@
      		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+     		 <exception type="ServidorApresentacao.Action.exceptions.NoActiveStudentCurricularPlanActionException"
+		                key="ServidorApresentacao.Action.exceptions.NoActiveStudentCurricularPlanActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
               
 	         <forward name="PrepareSuccess" path="/guide/createGuide.jsp"/> 
 	         <forward name="CreateCandidateGuide" path="/guide/createGuideReady.jsp"/>  
@@ -887,6 +891,9 @@
 		      scope="request"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.CreateGuideDispatchAction"
               validate="true">
+     		 <exception type="ServidorApresentacao.Action.exceptions.NoActiveStudentCurricularPlanActionException"
+		                key="ServidorApresentacao.Action.exceptions.NoActiveStudentCurricularPlanActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
      		 <exception type="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
 		                key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
@@ -1394,6 +1401,9 @@
 			<exception type="ServidorApresentacao.Action.exceptions.InvalidChangeActionException"
 		                key="ServidorApresentacao.Action.exceptions.InvalidChangeActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 			<exception type="ServidorApresentacao.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException"
 		                key="ServidorApresentacao.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
@@ -1405,6 +1415,34 @@
 	         
       </action>
 
+        <action path="/candidateRegistrationConfirmation"
+      		  input="/candidate/confirmCandidateRegistration.jsp"
+      	      name="candidateRegistrationForm"
+		      parameter="method"
+		      scope="session"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate.CandidateRegistrationDispatchAction">
+
+			<exception type="ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException"
+		                key="ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception type="ServidorApresentacao.Action.exceptions.InvalidChangeActionException"
+		                key="ServidorApresentacao.Action.exceptions.InvalidChangeActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception type="ServidorApresentacao.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException"
+		                key="ServidorApresentacao.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+	         <forward name="ListCandidates" path="candidate/displayCandidateListForRegistration.jsp"/> 
+	         <forward name="ShowConfirmation" path="candidate/confirmCandidateRegistration.jsp"/> 
+	         <forward name="PrepareCandidateList"  path="/candidateRegistration.do?method=getCandidateList"/>
+	         <forward name="ShowResult" path="candidate/candidateRegistered.jsp"/> 
+	         <forward name="Print" path="candidate/candidateRegistrationTemplate.jsp"/> 
+	         
+      </action>
+
+	
 
 
       

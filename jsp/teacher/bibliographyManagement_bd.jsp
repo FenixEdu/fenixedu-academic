@@ -66,7 +66,7 @@
 						</html:link>
 					</div>                               	       
 					<div class="gen-button">
-						<html:link page="<%= "/bibliographicReferenceManager.do?method=deleteBibliographicReference&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;bibliographicReferenceCode=" + bibliographicReferenceCode %>">
+						<html:link page="<%= "/bibliographicReferenceManager.do?method=deleteBibliographicReference&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;bibliographicReferenceCode=" + bibliographicReferenceCode %>" onclick="return confirm('Tem a certeza que deseja apagar esta referência bibliográfica ?')">
 							<bean:message key="button.delete"/>                  		     
 						</html:link>
 					</div>
@@ -116,7 +116,7 @@
 						</html:link>
 					</div>                               	       
 					<div class="gen-button">
-						<html:link page="<%= "/bibliographicReferenceManager.do?method=deleteBibliographicReference&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;bibliographicReferenceCode=" + bibliographicReferenceCode %>">
+						<html:link page="<%= "/bibliographicReferenceManager.do?method=deleteBibliographicReference&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;bibliographicReferenceCode=" + bibliographicReferenceCode %>" onclick="return confirm('Tem a certeza que deseja apagar esta referência bibliográfica ?')">
 							<bean:message key="button.delete"/>                  		     
 						</html:link>
 					</div>

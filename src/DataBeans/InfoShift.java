@@ -73,20 +73,14 @@ public class InfoShift extends InfoObject {
 	}
 
 	public Integer getOcupation() {
-		return ocupation;
+		return this.ocupation;
 	}
 
-	public void setOcupation(Integer ocupation) {
-		this.ocupation = ocupation;
-	}
 		
 	public Double getPercentage() {
-		return percentage;
+		return this.percentage;
 	}
 
-	public void setPercentage(Double percentage) {
-		this.percentage = percentage;
-	}
 	
 	
 	public boolean equals(Object obj) {
@@ -109,7 +103,7 @@ public class InfoShift extends InfoObject {
 		return result;
 
 	}
-
+	
 	public String getLessons() {
 
 		String result = new String();
@@ -193,4 +187,31 @@ public class InfoShift extends InfoObject {
 		infoClasses = list;
 	}
 
+	/**
+	 * @param ocupation
+	 */
+	public void setOcupation(Integer ocupation) {
+		this.ocupation = ocupation;
+	}
+
+	/**
+	 * @param percentage
+	 */
+	public void setPercentage(Double percentage) {
+		this.percentage = percentage;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer get_lotacao() {
+		return _lotacao;
+	}
+
+	/**
+	 * @param _lotacao
+	 */
+	public void set_lotacao(Integer _lotacao) {
+		this._lotacao = _lotacao;
+	}
 }

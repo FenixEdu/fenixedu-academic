@@ -145,6 +145,18 @@
 		<h2><bean:message key="label.masterDegree.newCourses"/> <bean:write name="newDegree" property="infoDegreeCurricularPlan.infoDegree.nome" /></h2>
 
 		
+		<br />
+		<br />
+		
+		<div class="infoop">
+			<span class="error"><strong>Nota:</strong></span>
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;O nome das Áreas Científicas aparecem por baixo do nome da disciplina e ligeiramente mais à frente. Nesse caso a opção é feita no quadrado à frente da área científica.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;Caso a disciplina não pertença a nenhuma Área Científica, a opção para a sua selecção aparecerá imediatamente antes do seu nome. 
+		</div>
+
+		<br />
+		<br />
+		
 		<table>
 			<logic:iterate id="curricularCourseElem" name="curricularCourses"  indexId="index">
 			   	<bean:define id="curricularCourse" name="curricularCourseElem" property="name"/>

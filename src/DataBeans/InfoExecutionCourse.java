@@ -21,12 +21,19 @@ public class InfoExecutionCourse extends InfoObject implements Serializable {
 	private Double _praticalHours;
 	private Double _theoPratHours;
 	private Double _labHours;
+	private Double occupancy;
 
 	protected List associatedInfoCurricularCourses;
 	protected List associatedInfoExams;
 	protected List associatedInfoEvaluations;
+	protected Integer numberOfAttendingStudents;
 
 	protected String comment;
+	
+	/**
+	 * Tells if all the associated Curricular Courses load are the same
+	 */
+	protected String equalLoad;
 
 	// A chave do responsavel falta ainda porque ainda nao existe a respeciva ligacao
 	// na base de dados.
@@ -47,6 +54,7 @@ public class InfoExecutionCourse extends InfoObject implements Serializable {
 	public InfoExecutionCourse(Integer idInternal) {
 		setIdInternal(idInternal);
 	}
+	
 
 	/**
 	 * 
@@ -296,6 +304,48 @@ public class InfoExecutionCourse extends InfoObject implements Serializable {
 	 */
 	public void setAssociatedInfoEvaluations(List list) {
 		associatedInfoEvaluations = list;
+	}
+
+	/**
+	 * @return
+	 */
+	public Double getOccupancy() {
+		return occupancy;
+	}
+
+	/**
+	 * @param occupancy
+	 */
+	public void setOccupancy(Double occupancy) {
+		this.occupancy = occupancy;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getNumberOfAttendingStudents() {
+		return numberOfAttendingStudents;
+	}
+
+	/**
+	 * @param numberOfAttendingStudents
+	 */
+	public void setNumberOfAttendingStudents(Integer attendingStudents) {
+		this.numberOfAttendingStudents = attendingStudents;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getEqualLoad() {
+		return equalLoad;
+	}
+
+	/**
+	 * @param equalLoad
+	 */
+	public void setEqualLoad(String equalLoad) {
+		this.equalLoad = equalLoad;
 	}
 
 }

@@ -263,7 +263,7 @@ public class StudentGroupAttendOJBTest extends TestCaseOJB{
 				//	read all StudentGroupAttend	
 					persistentSupport.iniciarTransaccao();	
 					allStudentGroupAttend = persistentStudentGroupAttend.readAll();
-					assertEquals(allStudentGroupAttend.size(),4);
+					assertEquals(allStudentGroupAttend.size(),7);
 					persistentSupport.confirmarTransaccao();
 					
 				//	deleteAll Method
@@ -293,7 +293,7 @@ public class StudentGroupAttendOJBTest extends TestCaseOJB{
 					//	read all StudentGroupAttend	
 						persistentSupport.iniciarTransaccao();	
 						allStudentGroupAttend = persistentStudentGroupAttend.readAll();
-						assertEquals(allStudentGroupAttend.size(),4);
+						assertEquals(allStudentGroupAttend.size(),7);
 						persistentSupport.confirmarTransaccao();
 					
 					

@@ -53,7 +53,7 @@
 	<td width="200px" valign="top">
 		<bean:message key="message.initialStatement"/>
 	</td>	
-	<td><html:textarea name="bodyComponent" property="initialStatement" rows="4" cols="56"/> 
+	<td><html:textarea name="bodyComponent" property="initialStatement" rows="10" cols="56"/> 
 	</td>
 </tr>
 </table>
@@ -73,7 +73,7 @@
 	<td width="200px" valign="top">
 		<bean:message key="message.introduction"/>
 	</td>	
-	<td><html:textarea name="bodyComponent" property="introduction" rows="4" cols="56"/></td> 
+	<td><html:textarea name="bodyComponent" property="introduction" rows="10" cols="56"/></td> 
 </tr>
 </table>
 <h3><table>

@@ -97,6 +97,11 @@
             <param-value>/WEB-INF/conf/struts-scientificCouncil.xml</param-value>
         </init-param>
         <init-param>
+            <param-name>config/operator</param-name>
+            <param-value>/WEB-INF/conf/struts-operator.xml</param-value>
+        </init-param>
+        
+        <init-param>
             <param-name>debug</param-name>
             <param-value>3</param-value>
         </init-param>

@@ -14,85 +14,86 @@ import java.util.ListIterator;
 
 public class InfoSiteGroupsByShift implements ISiteComponent{
 
-	private InfoShift infoShift;
-	private List infoStudentGroupsList;
-
+	private List infoSiteStudentGroupsList;
+	private InfoSiteShift infoSiteShift;
+	
 	/**
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
 		String result = "[INFO_SITE_GROUPS_BY_SHIFT";
-		result += " infoShift=" + getInfoShift();
-		result += ", infoStudentGroupsList=" + getInfoStudentGroupsList();
+		result += ", infoStudentGroupsList=" + getInfoSiteStudentGroupsList();
+		result += ", infoSiteShift=" + getInfoSiteShift();
+		
 		result += "]";
 		return result;
 	}
 
 	public boolean equals(Object objectToCompare) {
 		boolean result = false;
-		if(objectToCompare instanceof InfoSiteGroupsByShift)
-			result = true;
+		if(objectToCompare instanceof InfoSiteGroupsByShift){
+		
+		result = (this.getInfoSiteShift().equals(((InfoSiteGroupsByShift) objectToCompare).getInfoSiteShift()));
+		}		
 			
-		if (objectToCompare instanceof InfoSiteSections
-			&& (((((InfoSiteGroupsByShift) objectToCompare).getInfoShift() != null
-				&& this.getInfoShift() != null
-				&& ((InfoSiteGroupsByShift) objectToCompare).getInfoShift().equals(
-					this.getInfoShift()))
-				|| ((InfoSiteGroupsByShift) objectToCompare).getInfoShift() == null
-				&& this.getInfoShift() == null))) {
-			result = true;
-		}
 
-		if (((InfoSiteGroupsByShift) objectToCompare).getInfoStudentGroupsList() == null
-			&& this.getInfoStudentGroupsList() == null
+		if (((InfoSiteGroupsByShift) objectToCompare).getInfoSiteStudentGroupsList() == null
+			&& this.getInfoSiteStudentGroupsList() == null
 			&& result == true) {
 			return true;
 		}
-		if (((InfoSiteGroupsByShift) objectToCompare).getInfoStudentGroupsList() == null
-			|| this.getInfoStudentGroupsList() == null
-			|| ((InfoSiteGroupsByShift) objectToCompare).getInfoStudentGroupsList().size()
-				!= this.getInfoStudentGroupsList().size()) {
+		if (((InfoSiteGroupsByShift) objectToCompare).getInfoSiteStudentGroupsList() == null
+			|| this.getInfoSiteStudentGroupsList() == null
+			|| ((InfoSiteGroupsByShift) objectToCompare).getInfoSiteStudentGroupsList().size()
+				!= this.getInfoSiteStudentGroupsList().size()) {
 
 			return false;
 		}
 		
 		ListIterator iter1 =
-			((InfoSiteGroupsByShift) objectToCompare).getInfoStudentGroupsList().listIterator();
-		ListIterator iter2 = this.getInfoStudentGroupsList().listIterator();
+			((InfoSiteGroupsByShift) objectToCompare).getInfoSiteStudentGroupsList().listIterator();
+		ListIterator iter2 = this.getInfoSiteStudentGroupsList().listIterator();
 		while (result && iter1.hasNext()) {
-			InfoStudentGroup infoStudentGroup1 = (InfoStudentGroup) iter1.next();
-			InfoStudentGroup infoStudentGroup2 = (InfoStudentGroup) iter2.next();
-			if (!infoStudentGroup1.equals(infoStudentGroup2)) {
+			InfoSiteStudentGroup infoSiteStudentGroup1 = (InfoSiteStudentGroup) iter1.next();
+			InfoSiteStudentGroup infoSiteStudentGroup2 = (InfoSiteStudentGroup) iter2.next();
+			if (!infoSiteStudentGroup1.equals(infoSiteStudentGroup2)) {
 				result = false;
 			}
 		}
 		return result;
 	}
 
-	/**
-	 * @return
-	 */
-	public InfoShift getInfoShift() {
-		return infoShift;
-	}
 
-	/**
-	 * @param infoShift
-	 */
-	public void setInfoShift(InfoShift infoShift) {
-		this.infoShift = infoShift;
-	}
 	/**
 		 * @return
 		 */
-	public List getInfoStudentGroupsList() {
-		return infoStudentGroupsList;
+	public List getInfoSiteStudentGroupsList() {
+		return infoSiteStudentGroupsList;
 	}
 
 	/**
 	 * @param list
 	 */
-	public void setInfoStudentGroupsList(List infoStudentGroupsList) {
-		this.infoStudentGroupsList = infoStudentGroupsList;
+	public void setInfoSiteStudentGroupsList(List infoStudentGroupsList) {
+		this.infoSiteStudentGroupsList = infoStudentGroupsList;
 	}
+	
+	
+	
+	/**
+			 * @return
+			 */
+		public InfoSiteShift getInfoSiteShift() {
+			return infoSiteShift;
+		}
+
+		/**
+		 * @param list
+		 */
+		public void setInfoSiteShift(InfoSiteShift infoSiteShift) {
+			this.infoSiteShift = infoSiteShift;
+		}
+	
+	
+	
 }

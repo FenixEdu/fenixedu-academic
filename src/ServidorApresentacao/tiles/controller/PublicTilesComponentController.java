@@ -12,7 +12,6 @@ import org.apache.struts.tiles.ComponentContext;
 import org.apache.struts.tiles.ControllerSupport;
 
 import DataBeans.ISiteComponent;
-import DataBeans.InfoSiteAllGroups;
 import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteAssociatedCurricularCourses;
 import DataBeans.InfoSiteBibliography;
@@ -20,9 +19,11 @@ import DataBeans.InfoSiteCurricularCourse;
 import DataBeans.InfoSiteEvaluation;
 import DataBeans.InfoSiteEvaluationMethods;
 import DataBeans.InfoSiteFirstPage;
+import DataBeans.InfoSiteGroupsByShift;
 import DataBeans.InfoSiteMarks;
 import DataBeans.InfoSiteObjectives;
 import DataBeans.InfoSiteProgram;
+import DataBeans.InfoSiteProjectShifts;
 import DataBeans.InfoSiteProjects;
 import DataBeans.InfoSiteSection;
 import DataBeans.InfoSiteShifts;
@@ -105,13 +106,13 @@ public class PublicTilesComponentController extends ControllerSupport {
 		if (component instanceof InfoSiteProjects) 
 		{
 			List infoGroupPropertiesList = ((InfoSiteProjects)component).getInfoGroupPropertiesList();
-			if(infoGroupPropertiesList.size()==1)
-				tileContext.putAttribute("body","/publico/viewAllGroups_bd.jsp");
-			else
 				tileContext.putAttribute("body","/publico/viewProjectsName_bd.jsp");
 		}
-		else if (component instanceof InfoSiteAllGroups) {
-			tileContext.putAttribute("body","/publico/viewAllGroups_bd.jsp");
+		else if (component instanceof InfoSiteProjectShifts) {
+					tileContext.putAttribute("body","/publico/viewProjectShifts_bd.jsp");
+				}
+		else if (component instanceof InfoSiteGroupsByShift) {
+			tileContext.putAttribute("body","/publico/viewStudentGroups_bd.jsp");
 		}
 		else if (component instanceof InfoSiteStudentGroup) {
 			tileContext.putAttribute("body","/publico/viewStudentGroupInformation_bd.jsp");

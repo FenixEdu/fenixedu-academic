@@ -128,6 +128,7 @@ public class InfoEquivalency
         String result = "[InfoEquivalency:";
         result += "IdInternal: "+this.getIdInternal() +";";
         result += "CurricularCourse" + this.getCurricularCourse() +";";
+        result += "CurricularCourseInternal " + this.getCurricularCourseIdInternal() +";";
         result += "Seminary:" + this.getSeminaryIdInternal() +";";
         result += "Modality:" + this.getModality()+"]";
         return result;

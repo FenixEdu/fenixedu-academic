@@ -95,8 +95,8 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 		result += ", name=" + getName();
 		result += ", executionCourse=" + getExecutionCourse();
 		result += ", shiftType=" + getShiftType();
-		result += ", enrolmentBeginDay=" + getEnrolmentBeginDay();
-		result += ", enrolmentEndDay=" + getEnrolmentEndDay();
+		//result += ", enrolmentBeginDay=" + getEnrolmentBeginDay();
+		//result += ", enrolmentEndDay=" + getEnrolmentEndDay();
 		result += ", projectDescription=" + getProjectDescription();
 		result += "]";
 		return result;

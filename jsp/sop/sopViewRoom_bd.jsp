@@ -73,7 +73,11 @@
             </table>
 	<br />
 	<br />	
-	<div align="center"><app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>" type="<%= TimeTableType.SOP_CLASS_ROOM_TIMETABLE %>"/></div>
+	<div align="center">
+		<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>"
+						  type="<%= TimeTableType.SOP_ROOM_TIMETABLE %>"
+		/>
+	</div>
 	</logic:present>
 	<logic:notPresent name="<%= SessionConstants.ROOM%>" scope="request">
 		<table align="center">

@@ -23,6 +23,7 @@ import Dominio.ICountry;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
 import Dominio.MasterDegreeCandidate;
+import Dominio.Pessoa;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -64,84 +65,67 @@ public class ChangeCandidate implements IServico {
 	    throws ExcepcaoInexistente, FenixServiceException, IllegalAccessException, InvocationTargetException, ExcepcaoPersistencia {
 
         ISuportePersistente sp = null;
-
+		IPessoa person = null;
 		IMasterDegreeCandidate masterDegreeCandidate = null;
-		IPessoa candidatePerson = null;
+//		IPessoa candidatePerson = null;
         try {
 	        sp = SuportePersistenteOJB.getInstance();
 	        IMasterDegreeCandidate masterDegreeCandidateTemp = new MasterDegreeCandidate();
 	        masterDegreeCandidateTemp.setIdInternal(oldCandidateID);
 			
 			masterDegreeCandidate = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate().readByOId(masterDegreeCandidateTemp, true);
-	
-			IPessoa person = sp.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(newCandidate.getInfoPerson().getNumeroDocumentoIdentificacao(), 
-						newCandidate.getInfoPerson().getTipoDocumentoIdentificacao());
-	
-			if (!person.equals(masterDegreeCandidate.getPerson())){
-				throw new ExistingServiceException();
-			}
-			
+
+
 			if (masterDegreeCandidate == null) {
 				throw new ExcepcaoInexistente("Unknown Candidate !!");
 			}
 
-			candidatePerson = person;
-//			candidatePerson = masterDegreeCandidate.getPerson();
-			sp.getIPessoaPersistente().simpleLockWrite(candidatePerson);
-			
-			candidatePerson.setTipoDocumentoIdentificacao(newCandidate.getInfoPerson().getTipoDocumentoIdentificacao());
-			candidatePerson.setNumeroDocumentoIdentificacao(newCandidate.getInfoPerson().getNumeroDocumentoIdentificacao());
+	
+			IPessoa personTemp = new Pessoa();
+			personTemp.setIdInternal(masterDegreeCandidate.getPerson().getIdInternal());
+			person = (IPessoa) sp.getIPessoaPersistente().readByOId(personTemp, true);
+	
+			person.setTipoDocumentoIdentificacao(newCandidate.getInfoPerson().getTipoDocumentoIdentificacao());
+			person.setNumeroDocumentoIdentificacao(newCandidate.getInfoPerson().getNumeroDocumentoIdentificacao());
 					
         } catch (ExistingPersistentException ex) {
 			throw new ExistingServiceException(ex);        	
         } 
 
-	
-		
-
 		// Get new Country
 		ICountry nationality = null;
-		if ((newCandidate.getInfoPerson().getInfoPais() != null) && (candidatePerson.getPais() != null)){
-			try {
-				if (!newCandidate.getInfoPerson().getInfoPais().getNationality().equals(
-						candidatePerson.getPais().getNationality())) {
-					nationality = sp.getIPersistentCountry().readCountryByNationality(newCandidate.getInfoPerson().getInfoPais().getNationality());
-					candidatePerson.setPais(nationality);
-				}
-			} catch (ExcepcaoPersistencia ex) {
-			  FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			  newEx.fillInStackTrace();
-			  throw newEx;
-			}
+		if ((newCandidate.getInfoPerson().getInfoPais() != null) /*&& (person.getPais() != null)*/){
+			nationality = sp.getIPersistentCountry().readCountryByNationality(newCandidate.getInfoPerson().getInfoPais().getNationality());
+			person.setPais(nationality);
 		}
 		
 		// Change personal Information
-		candidatePerson.setNascimento(newCandidate.getInfoPerson().getNascimento());
-		candidatePerson.setDataEmissaoDocumentoIdentificacao(newCandidate.getInfoPerson().getDataEmissaoDocumentoIdentificacao());		
-		candidatePerson.setDataValidadeDocumentoIdentificacao(newCandidate.getInfoPerson().getDataValidadeDocumentoIdentificacao());
-		candidatePerson.setLocalEmissaoDocumentoIdentificacao(newCandidate.getInfoPerson().getLocalEmissaoDocumentoIdentificacao());
-		candidatePerson.setNome(newCandidate.getInfoPerson().getNome());
-		candidatePerson.setSexo(newCandidate.getInfoPerson().getSexo());
-		candidatePerson.setEstadoCivil(newCandidate.getInfoPerson().getEstadoCivil());
-		candidatePerson.setNomePai(newCandidate.getInfoPerson().getNomePai());
-		candidatePerson.setNomeMae(newCandidate.getInfoPerson().getNomeMae());
-		candidatePerson.setFreguesiaNaturalidade(newCandidate.getInfoPerson().getFreguesiaNaturalidade());
-		candidatePerson.setConcelhoNaturalidade(newCandidate.getInfoPerson().getConcelhoNaturalidade());
-		candidatePerson.setDistritoNaturalidade(newCandidate.getInfoPerson().getDistritoNaturalidade());
-		candidatePerson.setLocalidadeCodigoPostal(newCandidate.getInfoPerson().getLocalidadeCodigoPostal());
-		candidatePerson.setMorada(newCandidate.getInfoPerson().getMorada());						
-		candidatePerson.setLocalidade(newCandidate.getInfoPerson().getLocalidade());
-		candidatePerson.setCodigoPostal(newCandidate.getInfoPerson().getCodigoPostal());
-		candidatePerson.setFreguesiaMorada(newCandidate.getInfoPerson().getFreguesiaMorada());
-		candidatePerson.setConcelhoMorada(newCandidate.getInfoPerson().getConcelhoMorada());
-		candidatePerson.setDistritoMorada(newCandidate.getInfoPerson().getDistritoMorada());
-		candidatePerson.setTelefone(newCandidate.getInfoPerson().getTelefone());
-		candidatePerson.setTelemovel(newCandidate.getInfoPerson().getTelemovel());
-		candidatePerson.setEmail(newCandidate.getInfoPerson().getEmail());
-		candidatePerson.setEnderecoWeb(newCandidate.getInfoPerson().getEnderecoWeb());
-		candidatePerson.setNumContribuinte(newCandidate.getInfoPerson().getNumContribuinte());
-		candidatePerson.setProfissao(newCandidate.getInfoPerson().getProfissao());
-		candidatePerson.setNacionalidade(newCandidate.getInfoPerson().getNacionalidade());
+		person.setNascimento(newCandidate.getInfoPerson().getNascimento());
+		person.setDataEmissaoDocumentoIdentificacao(newCandidate.getInfoPerson().getDataEmissaoDocumentoIdentificacao());		
+		person.setDataValidadeDocumentoIdentificacao(newCandidate.getInfoPerson().getDataValidadeDocumentoIdentificacao());
+		person.setLocalEmissaoDocumentoIdentificacao(newCandidate.getInfoPerson().getLocalEmissaoDocumentoIdentificacao());
+		person.setNome(newCandidate.getInfoPerson().getNome());
+		person.setSexo(newCandidate.getInfoPerson().getSexo());
+		person.setEstadoCivil(newCandidate.getInfoPerson().getEstadoCivil());
+		person.setNomePai(newCandidate.getInfoPerson().getNomePai());
+		person.setNomeMae(newCandidate.getInfoPerson().getNomeMae());
+		person.setFreguesiaNaturalidade(newCandidate.getInfoPerson().getFreguesiaNaturalidade());
+		person.setConcelhoNaturalidade(newCandidate.getInfoPerson().getConcelhoNaturalidade());
+		person.setDistritoNaturalidade(newCandidate.getInfoPerson().getDistritoNaturalidade());
+		person.setLocalidadeCodigoPostal(newCandidate.getInfoPerson().getLocalidadeCodigoPostal());
+		person.setMorada(newCandidate.getInfoPerson().getMorada());						
+		person.setLocalidade(newCandidate.getInfoPerson().getLocalidade());
+		person.setCodigoPostal(newCandidate.getInfoPerson().getCodigoPostal());
+		person.setFreguesiaMorada(newCandidate.getInfoPerson().getFreguesiaMorada());
+		person.setConcelhoMorada(newCandidate.getInfoPerson().getConcelhoMorada());
+		person.setDistritoMorada(newCandidate.getInfoPerson().getDistritoMorada());
+		person.setTelefone(newCandidate.getInfoPerson().getTelefone());
+		person.setTelemovel(newCandidate.getInfoPerson().getTelemovel());
+		person.setEmail(newCandidate.getInfoPerson().getEmail());
+		person.setEnderecoWeb(newCandidate.getInfoPerson().getEnderecoWeb());
+		person.setNumContribuinte(newCandidate.getInfoPerson().getNumContribuinte());
+		person.setProfissao(newCandidate.getInfoPerson().getProfissao());
+		person.setNacionalidade(newCandidate.getInfoPerson().getNacionalidade());
 		
 		// Change Application Information
 		masterDegreeCandidate.setAverage(newCandidate.getAverage());
@@ -151,7 +135,7 @@ public class ChangeCandidate implements IServico {
 		masterDegreeCandidate.setSpecializationArea(newCandidate.getSpecializationArea());
 		
 		
-		masterDegreeCandidate.setPerson(candidatePerson);
+		masterDegreeCandidate.setPerson(person);
 		
 		// Change Situation
 		
@@ -163,27 +147,26 @@ public class ChangeCandidate implements IServico {
 
 			
 			// Change the Active Situation
-			Iterator iterator = masterDegreeCandidate.getSituations().iterator();
-			while(iterator.hasNext()) {
-				ICandidateSituation candidateSituationTemp = (ICandidateSituation) iterator.next();
-				if (candidateSituationTemp.getValidation().equals(new State(State.ACTIVE))){
-//					sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituationTemp);
-//					candidateSituationTemp.setValidation(new State(State.INACTIVE));
-//					masterDegreeCandidate.getSituations().add(candidateSituationTemp);
-					
-					
-					ICandidateSituation csTemp = new CandidateSituation();
-					csTemp.setIdInternal(candidateSituationTemp.getIdInternal());
-					ICandidateSituation candidateSituationFromBD = (ICandidateSituation) sp.getIPersistentCandidateSituation().readByOId(csTemp, true);
-					candidateSituationFromBD.setValidation(new State(State.INACTIVE));
-					
-					
-					
-				}
-//				situations.add(candidateSituationTemp);
-			}
-//sp.getIPersistentCandidateSituation().writeCandidateSituation(masterDegreeCandidate.getActiveCandidateSituation());			
-//masterDegreeCandidate.getActiveCandidateSituation().setValidation(new State(State.INACTIVE));
+//			Iterator iterator = masterDegreeCandidate.getSituations().iterator();
+//			while(iterator.hasNext()) {
+//				ICandidateSituation candidateSituationTemp = (ICandidateSituation) iterator.next();
+//				if (candidateSituationTemp.getValidation().equals(new State(State.ACTIVE))){
+//					
+//					ICandidateSituation csTemp = new CandidateSituation();
+//					csTemp.setIdInternal(candidateSituationTemp.getIdInternal());
+//					ICandidateSituation candidateSituationFromBD = (ICandidateSituation) sp.getIPersistentCandidateSituation().readByOId(csTemp, true);
+//					candidateSituationFromBD.setValidation(new State(State.INACTIVE));
+//					
+//					
+//					
+//				}
+//			}
+
+			ICandidateSituation candidateSituationTemp = new CandidateSituation();
+			candidateSituationTemp.setIdInternal(masterDegreeCandidate.getActiveCandidateSituation().getIdInternal());
+			ICandidateSituation candidateSituationFromBD = (ICandidateSituation) sp.getIPersistentCandidateSituation().readByOId(candidateSituationTemp, true);
+			
+			candidateSituationFromBD.setValidation(new State(State.INACTIVE));
 
   			candidateSituation = new CandidateSituation();
 			sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
@@ -195,18 +178,6 @@ public class ChangeCandidate implements IServico {
 		
 			candidateSituation.setSituation(new SituationName(newCandidate.getInfoCandidateSituation().getSituation()));
 			candidateSituation.setValidation(new State(State.ACTIVE));
-//			try {		
-//				sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
-//				masterDegreeCandidate.getSituations().add(candidateSituation);
-//			} catch (ExcepcaoPersistencia ex) {
-//			  FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-//			  newEx.fillInStackTrace();
-//			  throw newEx;
-//			}	
-//			
-//			situations.add(candidateSituation);
-//		} else 
-//			situations.addAll(masterDegreeCandidate.getSituations());
 	
 		}
 	
