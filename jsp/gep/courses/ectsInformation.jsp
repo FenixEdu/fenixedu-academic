@@ -69,7 +69,10 @@
 											  bundle="GEP_RESOURCES"/></strong>
 					<td colspan="3">
 						<bean:define id="objectCode" name="infoSiteCourseInformation" property="infoExecutionCourse.idInternal"/>
-						https://fenix.ist.utl.pt/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<%= objectCode %>
+						<bean:define id="courseURL" type="java.lang.String">
+							<bean:message key="fenix.url" bundle="GLOBAL_RESOURCES"/><bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.sigla"/>/<bean:message key="courseSite.url.subpattern" bundle="GLOBAL_RESOURCES"/>/<bean:write name="curricularCourse" property="acronym"/>
+						</bean:define>
+						<html:link href="<%= courseURL %>"><bean:write name="courseURL"/></html:link>
 					</td>
 				</tr>
 				<logic:iterate id="infoTeacher" name="infoSiteCourseInformation" property="infoResponsibleTeachers">
