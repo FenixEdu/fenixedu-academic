@@ -20,8 +20,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoCandidateRegistration;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoMasterDegreeCandidate;
@@ -40,6 +38,7 @@ import ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionExce
 import ServidorApresentacao.Action.exceptions.InvalidStudentNumberActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * 
@@ -55,7 +54,6 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 									HttpServletResponse response)
 		throws Exception {
 
-	
 		
 		HttpSession session = request.getSession(false);
 
@@ -63,7 +61,8 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 
 		String executionYearString = request.getParameter("executionYear");
 		String degreeCode = request.getParameter("degree");
-		
+	
+		Integer executionDegree = Integer.valueOf(request.getParameter("executionDegreeID"));
 		if ((executionYearString == null) || (executionYearString.length() == 0)){
 			executionYearString = (String) candidateRegistration.get("executionYear");
 		}
@@ -77,9 +76,10 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 		List result = null;
 		
 		try {
-			Object args[] = { executionYearString, degreeCode };
+			Object args[] = {executionDegree };
 			result = (List) ServiceManagerServiceFactory.executeService(userView, "ReadCandidateForRegistration", args);
 		} catch (NonExistingServiceException e) {
+			session.removeAttribute(SessionConstants.DEGREE_LIST);
 			ActionErrors errors = new ActionErrors();
 			errors.add("nonExisting", new ActionError("error.candidatesNotFound"));
 			saveErrors(request, errors);
@@ -90,7 +90,6 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 		BeanComparator nameComparator = new BeanComparator("infoPerson.nome");
 		Collections.sort(result, nameComparator);
 
-
 		request.setAttribute("candidateList", result);
 		candidateRegistration.set("degreeCode", degreeCode);
 		candidateRegistration.set("executionYear", executionYearString);
@@ -99,14 +98,13 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 
 		InfoExecutionDegree infoExecutionDegree = null;
 		try {
-			Object args[] = { executionYearString, degreeCode };
+			Object args[] = { executionDegree };
 			infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView, "ReadExecutionDegreeByExecutionYearAndDegreeCode", args);
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException(e);
 		}
 	
 		request.setAttribute("infoExecutionDegree", infoExecutionDegree);
-					
 		return mapping.findForward("ListCandidates");
 	}
 
