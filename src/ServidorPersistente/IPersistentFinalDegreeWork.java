@@ -7,6 +7,7 @@ package ServidorPersistente;
 
 import java.util.List;
 
+import Dominio.finalDegreeWork.IGroup;
 import Dominio.finalDegreeWork.IScheduleing;
 
 /**
@@ -28,6 +29,9 @@ public interface IPersistentFinalDegreeWork extends IPersistentObject {
 		throws ExcepcaoPersistencia;
 
 	public List readPublishedFinalDegreeWorkProposalsByExecutionDegree(Integer executionDegreeOID)
+		throws ExcepcaoPersistencia;
+
+	public IGroup readFinalDegreeWorkGroupByUsername(String username)
 		throws ExcepcaoPersistencia;
 
 }

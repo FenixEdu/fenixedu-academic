@@ -20,6 +20,10 @@ public class InfoScheduleing extends InfoObject {
 	private Date endOfProposalPeriod;
 	private Date startOfCandidacyPeriod;
 	private Date endOfCandidacyPeriod;
+	private Integer minimumNumberOfCompletedCourses;
+	private Integer minimumNumberOfStudents;
+	private Integer maximumNumberOfStudents;
+	private Integer maximumNumberOfProposalCandidaciesPerGroup;
 
 	/* Construtores */
 	public InfoScheduleing() {
@@ -113,5 +117,62 @@ public class InfoScheduleing extends InfoObject {
     public void setEndOfCandidacyPeriod(Date endOfCandidacyPeriod)
     {
         this.endOfCandidacyPeriod = endOfCandidacyPeriod;
+    }
+    /**
+     * @return Returns the minimumNumberOfCompletedCourses.
+     */
+    public Integer getMinimumNumberOfCompletedCourses()
+    {
+        return minimumNumberOfCompletedCourses;
+    }
+    /**
+     * @param minimumNumberOfCompletedCourses The minimumNumberOfCompletedCourses to set.
+     */
+    public void setMinimumNumberOfCompletedCourses(Integer minimumNumberOfCompletedCourses)
+    {
+        this.minimumNumberOfCompletedCourses = minimumNumberOfCompletedCourses;
+    }
+    /**
+     * @return Returns the maximumNumberOfStudents.
+     */
+    public Integer getMaximumNumberOfStudents()
+    {
+        return maximumNumberOfStudents;
+    }
+    /**
+     * @param maximumNumberOfStudents The maximumNumberOfStudents to set.
+     */
+    public void setMaximumNumberOfStudents(Integer maximumNumberOfStudents)
+    {
+        this.maximumNumberOfStudents = maximumNumberOfStudents;
+    }
+    /**
+     * @return Returns the minimumNumberOfStudents.
+     */
+    public Integer getMinimumNumberOfStudents()
+    {
+        return minimumNumberOfStudents;
+    }
+    /**
+     * @param minimumNumberOfStudents The minimumNumberOfStudents to set.
+     */
+    public void setMinimumNumberOfStudents(Integer minimumNumberOfStudents)
+    {
+        this.minimumNumberOfStudents = minimumNumberOfStudents;
+    }
+    /**
+     * @return Returns the maximumNumberOfProposalCandidaciesPerGroup.
+     */
+    public Integer getMaximumNumberOfProposalCandidaciesPerGroup()
+    {
+        return maximumNumberOfProposalCandidaciesPerGroup;
+    }
+    /**
+     * @param maximumNumberOfProposalCandidaciesPerGroup The maximumNumberOfProposalCandidaciesPerGroup to set.
+     */
+    public void setMaximumNumberOfProposalCandidaciesPerGroup(
+            Integer maximumNumberOfProposalCandidaciesPerGroup)
+    {
+        this.maximumNumberOfProposalCandidaciesPerGroup = maximumNumberOfProposalCandidaciesPerGroup;
     }
 }

@@ -119,7 +119,29 @@
 		<form-property name="unenrolledCurricularCourses" type="java.lang.Integer[]"/>
 		<form-property name="page" type="java.lang.Integer" initial="0"/>
 	</form-bean>
-      
+
+		<form-bean name="finalDegreeWorkCandidacyForm"
+				   type="org.apache.struts.validator.DynaValidatorForm"
+        	       dynamic="true">
+    	    <form-property name="page" type="java.lang.Integer" />
+			<form-property name="idInternal" type="java.lang.String"/>
+			<form-property name="executionDegreeOID" type="java.lang.String"/>
+			<form-property name="students" type="java.lang.String[]"/>
+			<form-property name="studentUsernameToAdd" type="java.lang.String"/>
+			<form-property name="studentToRemove" type="java.lang.String"/>
+			<form-property name="selectedProposal" type="java.lang.String"/>
+			<form-property name="selectedGroupProposal" type="java.lang.String"/>
+		</form-bean>
+
+		<form-bean name="finalDegreeWorkAttributionForm"
+				   type="org.apache.struts.validator.DynaValidatorForm"
+        	       dynamic="true">
+    	    <form-property name="page" type="java.lang.Integer" />
+			<form-property name="selectedGroupProposal" type="java.lang.String"/>
+			<form-property name="attributedByTeacher" type="java.lang.String"/>
+			<form-property name="confirmAttributions" type="java.lang.String[]"/>
+		</form-bean>
+
      </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -570,6 +592,64 @@
     	<action	path="/warningFirst"
 				type="ServidorApresentacao.Action.commons.VoidAction">
         	<forward name="Success" path="df.page.warning"/>
+		</action>
+
+		<action	path="/finalDegreeWorkCandidacy"
+				type="ServidorApresentacao.Action.student.finalDegreeWork.FinalDegreeWorkCandidacyDA"
+				name="finalDegreeWorkCandidacyForm"
+				parameter="method"
+				scope="request"
+				validate="true"
+				input="df.page.finalDegreeWork.candidacy">
+			<exception	type="ServidorAplicacao.Servico.student.CheckCandidacyConditionsForFinalDegreeWork$CandidacyPeriodNotDefinedException"
+						key="error.message.CandidacyPeriodNotDefinedException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception	type="ServidorAplicacao.Servico.student.CheckCandidacyConditionsForFinalDegreeWork$OutOfCandidacyPeriodException"
+						key="error.message.OutOfCandidacyPeriodException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception	type="ServidorAplicacao.Servico.student.CheckCandidacyConditionsForFinalDegreeWork$InsufficientCompletedCoursesException"
+						key="error.message.InsufficientCompletedCoursesException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception	type="ServidorAplicacao.Servico.student.AddFinalDegreeWorkProposalCandidacyForGroup$MaximumNumberOfProposalCandidaciesPerGroupUndefinedException"
+						key="error.message.MaximumNumberOfProposalCandidaciesPerGroupUndefinedException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception	type="ServidorAplicacao.Servico.student.AddFinalDegreeWorkProposalCandidacyForGroup$MaximumNumberOfProposalCandidaciesPerGroupReachedException"
+						key="error.message.MaximumNumberOfProposalCandidaciesPerGroupReachedException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception	type="ServidorAplicacao.Servico.student.AddStudentToFinalDegreeWorkStudentGroup$MaximumNumberOfStudentsUndefinedException"
+						key="error.message.MaximumNumberOfStudentsUndefinedException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception	type="ServidorAplicacao.Servico.student.AddStudentToFinalDegreeWorkStudentGroup$MaximumNumberOfStudentsReachedException"
+						key="error.message.MaximumNumberOfStudentsReachedException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception	type="ServidorAplicacao.Servico.student.RemoveStudentFromFinalDegreeWorkStudentGroup$GroupProposalCandidaciesExistException"
+						key="error.message.GroupProposalCandidaciesExistException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception	type="ServidorAplicacao.Servico.student.EstablishFinalDegreeWorkStudentGroup$GroupStudentCandidaciesExistException"
+						key="error.message.GroupStudentCandidaciesExistException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception	type="ServidorAplicacao.Servico.student.EstablishFinalDegreeWorkStudentGroup$GroupProposalCandidaciesExistException"
+						key="error.message.GroupProposalCandidaciesExistException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception	type="ServidorAplicacao.Servico.student.AddFinalDegreeWorkProposalCandidacyForGroup$MinimumNumberOfStudentsUndefinedException"
+						key="error.message.MinimumNumberOfStudentsUndefinedException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception	type="ServidorAplicacao.Servico.student.AddFinalDegreeWorkProposalCandidacyForGroup$MinimumNumberOfStudentsNotReachedException"
+						key="error.message.MinimumNumberOfStudentsNotReachedException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<forward name="showCandidacyForm" path="df.page.finalDegreeWork.candidacy"/>
+			<forward name="showSelectProposalsForm" path="df.page.finalDegreeWork.selectProposals"/>
+		</action>
+
+		<action	path="/finalDegreeWorkAttribution"
+				type="ServidorApresentacao.Action.student.finalDegreeWork.FinalDegreeWorkAttributionDA"
+				name="finalDegreeWorkAttributionForm"
+				parameter="method"
+				scope="request"
+				validate="true"
+				input="/finalDegreeWorkAttribution.do?method=prepare&amp;page=0">
+			<forward name="showFinalDegreeWorkList" path="df.page.finalDegreeWork.attribution"/>
+			<forward name="prepareShowFinalDegreeWorkList" path="/finalDegreeWorkAttribution.do?method=prepare&amp;page=0"/>
 		</action>
     
      </action-mappings>     

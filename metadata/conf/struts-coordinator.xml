@@ -174,6 +174,9 @@
 			<form-property name="endOfProposalPeriodDate" type="java.lang.String"/>
 			<form-property name="endOfProposalPeriodHour" type="java.lang.String"/>
 			<form-property name="selectedProposals" type="java.lang.String[]"/>
+			<form-property name="selectedGroupProposal" type="java.lang.String"/>
+			<form-property name="attributedByTeacher" type="java.lang.String[]"/>
+			<form-property name="attributions" type="java.lang.String[]"/>
 		</form-bean>
 
 		<form-bean name="finalDegreeWorkCandidacyPeriod" 
@@ -184,6 +187,16 @@
 			<form-property name="startOfCandidacyPeriodHour" type="java.lang.String"/>
 			<form-property name="endOfCandidacyPeriodDate" type="java.lang.String"/>
 			<form-property name="endOfCandidacyPeriodHour" type="java.lang.String"/>
+		</form-bean>
+
+		<form-bean name="finalDegreeWorkCandidacyRequirements" 
+				   type="org.apache.struts.validator.DynaValidatorForm" 
+				   dynamic="true">
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="minimumNumberOfCompletedCourses" type="java.lang.String"/>
+			<form-property name="minimumNumberOfStudents" type="java.lang.String"/>
+			<form-property name="maximumNumberOfStudents" type="java.lang.String"/>
+			<form-property name="maximumNumberOfProposalCandidaciesPerGroup" type="java.lang.String"/>
 		</form-bean>
 
 		<!-- SUBMIT FINAL WORK PROPOSAL -->
@@ -521,7 +534,7 @@
 				name="curricularCourseInformationForm"
 				scope="request"
 				validate="true"
-				input="/indexCoordinator.jsp">
+				input="/chooseDegree.do">
 		   <exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
         key="ServidorApresentacao.Action.exceptions.FenixActionException"
         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
@@ -600,7 +613,7 @@
 	<action path="/viewStudentCurriculum"
 	   	type="ServidorApresentacao.Action.degreeAdministrativeOffice.ViewStudentCurriculumDispatchAction"
        	parameter="method">
-		<forward name="prepareViewStudentCurriculumChooseStudent" path="df.page.prepareViewStudentCurriculumChooseStudent"/>        	
+		<forward name="prepareViewStudentCurriculumChooseStudent" path="df.page.prepareViewStudentCurriculumChooseStudent"/>
     </action>
       	
 	<action path="/viewCurriculum"
@@ -650,6 +663,8 @@
 			>
 		<forward name="show-final-degree-work-list" path="df.page.showFinalDegreeWorkList"/>
 		<forward name="show-final-degree-work-proposal" path="df.page.showFinalDegreeWorkProposal"/>
+		<forward name="prepare-show-final-degree-work-proposal" path="/manageFinalDegreeWork.do?method=prepare&amp;page=0"/>
+		<forward name="show-student-curricular-plan" path="/viewCurriculum.do?method=getStudentCP&amp;page=0"/>
 	</action>
 
 	<action path="/setFinalDegreeWorkCandidacyPeriod"
@@ -657,6 +672,18 @@
 			input="/manageFinalDegreeWork.do?method=prepare&amp;page=0"
 			name="finalDegreeWorkCandidacyPeriod"
 			attribute="finalDegreeWorkCandidacyPeriod"
+			parameter="method"
+			scope="request"
+			validate="true"
+			>
+		<forward name="Sucess" path="/manageFinalDegreeWork.do?method=prepare&amp;page=0"/>
+	</action>
+
+	<action path="/setFinalDegreeWorkCandidacyRequirements"
+			type="ServidorApresentacao.Action.coordinator.ManageFinalDegreeWorkDispatchAction"
+			input="/manageFinalDegreeWork.do?method=prepare&amp;page=0"
+			name="finalDegreeWorkCandidacyRequirements"
+			attribute="finalDegreeWorkCandidacyRequirements"
 			parameter="method"
 			scope="request"
 			validate="true"

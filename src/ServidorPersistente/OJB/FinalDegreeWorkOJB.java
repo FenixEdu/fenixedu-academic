@@ -9,6 +9,8 @@ import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
+import Dominio.finalDegreeWork.Group;
+import Dominio.finalDegreeWork.IGroup;
 import Dominio.finalDegreeWork.IScheduleing;
 import Dominio.finalDegreeWork.Proposal;
 import Dominio.finalDegreeWork.Scheduleing;
@@ -60,6 +62,14 @@ public class FinalDegreeWorkOJB
 		criteria.addEqualTo("executionDegree.idInternal", executionDegreeOID);
 		criteria.addEqualTo("status", FinalDegreeWorkProposalStatus.PUBLISHED_STATUS);
 		return queryList(Proposal.class, criteria);
+	}
+
+	public IGroup readFinalDegreeWorkGroupByUsername(String username)
+		throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("groupStudents.student.person.username", username);
+		return (IGroup) queryObject(Group.class, criteria);
 	}
 
 }

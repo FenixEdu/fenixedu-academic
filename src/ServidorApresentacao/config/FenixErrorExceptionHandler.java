@@ -84,7 +84,7 @@ public class FenixErrorExceptionHandler extends ExceptionHandler
             error = new ActionError(ae.getKey(), ex.getMessage());
             property = error.getKey();
         }
-        ex.printStackTrace(System.out);
+        //ex.printStackTrace(System.out);
         // Store the exception
         request.setAttribute(Globals.EXCEPTION_KEY, ex);
         super.storeException(request, property, error, forward, ae.getScope());

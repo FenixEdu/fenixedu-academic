@@ -137,6 +137,16 @@
          jdbc-type="INTEGER"
          conversion="ServidorPersistente.Conversores.JavaFinalDegreeWorkProposalStatus2SqlFinalDegreeWorkProposalStatusFieldConversion"
       />
+      <field-descriptor
+         name="keyGroupAttributedByTeacher"
+         column="KEY_GROUP_ATTRIBUTED_BY_TEACHER"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="keyGroupAttributed"
+         column="KEY_GROUP_ATTRIBUTED"
+         jdbc-type="INTEGER"
+      />
       <reference-descriptor
          name="executionDegree"
          class-ref="Dominio.CursoExecucao">
@@ -152,15 +162,35 @@
          class-ref="Dominio.Teacher">
          <foreignkey field-ref="keyCoorientator"/>
       </reference-descriptor>
+      <reference-descriptor
+         name="groupAttributedByTeacher"
+         class-ref="Dominio.finalDegreeWork.Group">
+         <foreignkey field-ref="keyGroupAttributedByTeacher"/>
+      </reference-descriptor>
+      <reference-descriptor
+         name="groupAttributed"
+         class-ref="Dominio.finalDegreeWork.Group">
+         <foreignkey field-ref="keyGroupAttributed"/>
+      </reference-descriptor>
 	<collection-descriptor
 			name="branches"
 			element-class-ref="Dominio.Branch"
 			indirection-table="FINAL_DEGREE_WORK_PROPOSAL_BRANCH"
 			auto-retrieve="true"
+			refresh="true"
 			proxy="true">
 		<fk-pointing-to-this-class column="KEY_FINAL_DEGREE_WORK_PROPOSAL"/>
 		<fk-pointing-to-element-class column="KEY_BRANCH"/>
 	</collection-descriptor>
+	<collection-descriptor
+         name="groupProposals"
+         element-class-ref="Dominio.finalDegreeWork.GroupProposal"
+         collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+         auto-retrieve="true"
+         refresh="true"
+         proxy="true">
+		<inverse-foreignkey field-ref="keyFinalDegreeWorkProposal"/>
+    </collection-descriptor>
 </class-descriptor>
 
 <class-descriptor
@@ -238,9 +268,169 @@
          jdbc-type="TIME"
          conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
       />
+      <field-descriptor
+      	name="minimumNumberOfCompletedCourses"
+      	column="MINIMUM_NUMBER_OF_COMPLETED_COURSES"
+      	jdbc-type="INTEGER"
+      />
+      <field-descriptor
+      	name="minimumNumberOfStudents"
+      	column="MINIMUM_NUMBER_OF_STUDENTS"
+      	jdbc-type="INTEGER"
+      />
+      <field-descriptor
+      	name="maximumNumberOfStudents"
+      	column="MAXIMUM_NUMBER_OF_STUDENTS"
+      	jdbc-type="INTEGER"
+      />
+      <field-descriptor
+      	name="maximumNumberOfProposalCandidaciesPerGroup"
+      	column="MAXIMUM_NUMBER_OF_PROPOSAL_CANDIDACIES_PER_GROUP"
+      	jdbc-type="INTEGER"
+      />
       <reference-descriptor
          name="executionDegree"
          class-ref="Dominio.CursoExecucao">
          <foreignkey field-ref="keyExecutionDegree"/>
+      </reference-descriptor>
+</class-descriptor>
+
+<class-descriptor
+   	  class="Dominio.finalDegreeWork.Group"
+   	  table="FINAL_DEGREE_WORK_GROUP"
+   >
+      <field-descriptor
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+      <field-descriptor
+         name="keyExecutionDegree"
+         column="KEY_EXECUTION_DEGREE"
+         jdbc-type="INTEGER"
+      />
+      <reference-descriptor
+         name="executionDegree"
+         class-ref="Dominio.CursoExecucao">
+         <foreignkey field-ref="keyExecutionDegree"/>
+      </reference-descriptor>
+	<collection-descriptor
+			name="groupStudents"
+			element-class-ref="Dominio.finalDegreeWork.GroupStudent"
+			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			auto-retrieve="true"
+			refresh="true"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyFinalDegreeDegreeWorkGroup"/>
+	</collection-descriptor>
+	<collection-descriptor
+         name="groupProposals"
+         element-class-ref="Dominio.finalDegreeWork.GroupProposal"
+         collection-class="org.apache.ojb.broker.util.collections.RemovalAwareCollection"
+         auto-retrieve="true"
+         refresh="true"
+         proxy="true">
+		<inverse-foreignkey field-ref="keyFinalDegreeDegreeWorkGroup"/>
+    </collection-descriptor>
+</class-descriptor>
+
+<class-descriptor
+   	  class="Dominio.finalDegreeWork.GroupProposal"
+   	  table="FINAL_DEGREE_WORK_GROUP_PROPOSAL"
+   >
+      <field-descriptor
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+      <field-descriptor
+         name="keyFinalDegreeDegreeWorkGroup"
+         column="KEY_FINAL_DEGREE_WORK_GROUP"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="keyFinalDegreeWorkProposal"
+         column="KEY_FINAL_DEGREE_WORK_PROPOSAL"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="orderOfPreference"
+         column="ORDER_OF_PREFERENCE"
+         jdbc-type="INTEGER"
+      />
+      <reference-descriptor
+         name="finalDegreeDegreeWorkGroup"
+         class-ref="Dominio.finalDegreeWork.Group">
+         <foreignkey field-ref="keyFinalDegreeDegreeWorkGroup"/>
+      </reference-descriptor>
+      <reference-descriptor
+         name="finalDegreeWorkProposal"
+         class-ref="Dominio.finalDegreeWork.Proposal">
+         <foreignkey field-ref="keyFinalDegreeWorkProposal"/>
+      </reference-descriptor>
+</class-descriptor>
+
+<class-descriptor
+   	  class="Dominio.finalDegreeWork.GroupStudent"
+   	  table="FINAL_DEGREE_WORK_GROUP_STUDENT"
+   >
+      <field-descriptor
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+      <field-descriptor
+         name="keyFinalDegreeDegreeWorkGroup"
+         column="KEY_FINAL_DEGREE_WORK_GROUP"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="keyStudent"
+         column="KEY_STUDENT"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="keyFinalDegreeWorkProposalConfirmation"
+         column="KEY_FINAL_DEGREE_WORK_PROPOSAL_CONFIRMATION"
+         jdbc-type="INTEGER"
+      />
+      <reference-descriptor
+         name="finalDegreeDegreeWorkGroup"
+         class-ref="Dominio.finalDegreeWork.Group">
+         <foreignkey field-ref="keyFinalDegreeDegreeWorkGroup"/>
+      </reference-descriptor>
+      <reference-descriptor
+         name="student"
+         class-ref="Dominio.Student">
+         <foreignkey field-ref="keyStudent"/>
+      </reference-descriptor>
+      <reference-descriptor
+         name="finalDegreeWorkProposalConfirmation"
+         class-ref="Dominio.finalDegreeWork.Proposal">
+         <foreignkey field-ref="keyFinalDegreeWorkProposalConfirmation"/>
       </reference-descriptor>
 </class-descriptor>

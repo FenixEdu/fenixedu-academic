@@ -289,6 +289,71 @@
 		</java>
 	</target>
 	
+	<path id="runtime-classpath">
+    	<fileset dir="${libs.web}">
+    		<include  name="**/*.jar"/>
+    	</fileset>
+        <fileset dir="${lib}">
+    		<include  name="**/*.jar"/>
+    	</fileset>
+        <pathelement path="${build.app-server}"/> 
+    </path>
+
+	<!-- Access the classpath as a property -->
+    <property 	name="runtime.classpath" refid="runtime-classpath"/>
+
+	<target name="generate-dataset"
+			description="Generates a dataset using the parameters specified in SmartDataSetGenerator.properties"
+			depends="compile-app-server">
+		<java classname="Tools.SmartDataSetGeneratorMain" fork="true">
+			<classpath refid="runtime-classpath" />
+		</java>
+	</target>
+
+	<target name="compile-service-tests-luis-cruz"
+			depends="compile-app-server"
+            description="Compiles application server.">
+		<mkdir dir="${build.tests.services}"/>
+		<javac classpath="${build.app-server}"
+               destdir="${build.tests.services}"
+               extdirs="${lib}" 
+               srcdir="${src.tests}"
+               debug="true"
+               optimize="true"
+               deprecation="true"
+               encoding="${encoding}"
+               fork="yes">
+            <include name="Tools/*.java"/>
+            <include name="ServidorAplicacao/Servicos/*.java"/>
+            <include name="ServidorAplicacao/Servicos/publico/ReadPublishedFinalDegreeWorkProposalHeadersTest.java"/>
+		</javac>
+	</target>		
+	
+	<target name="run-tests-luis-cruz"
+    		depends="compile-service-tests-luis-cruz"
+            description="Executes tests for branch ExamsV4">
+        <ant antfile="build_dataBaseUtils.xml" target="create-tables"/>
+        <junit haltonfailure="false" printsummary="yes" dir="${basedir}">
+            <formatter type="plain" usefile="false"/>
+            <batchtest fork="yes">
+                <fileset dir="${src.tests}">
+	                <include name="ServidorAplicacao/Servicos/publico/ReadPublishedFinalDegreeWorkProposalHeadersTest.java"/>
+	                <!--
+                	<include name="Servicos/sop/exams/*Test.java"/>                  
+                	-->
+                </fileset>
+            </batchtest>
+            <classpath>
+                <pathelement path="${build.app-server}"/>
+                <pathelement path="${build.tests.services}"/>
+                <pathelement path="${sql}"/>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </junit>
+    </target>
+		
 	<target name="prepare">
 		<!-- Create build directories as needed -->
 		<mkdir dir="${webapp.classes}"/>	

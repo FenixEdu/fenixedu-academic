@@ -519,6 +519,16 @@
 			<form-property name="coResponsableTeacherNumber" type="java.lang.String"/>
 			<form-property name="alteredField" type="java.lang.String" />
 		</form-bean>
+
+		<form-bean name="finalWorkAttributionForm"
+				   type="org.apache.struts.validator.DynaValidatorForm" 
+				   dynamic="true"
+				   >
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="selectedGroupProposal" type="java.lang.String"/>
+			<form-property name="selectedGroupProposals" type="java.lang.String[]"/>
+		</form-bean>
+
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -1330,20 +1340,33 @@
 	    	name="finalWorkInformationForm" 
 	    	scope="request" 
 	    	validate="true">
-				<forward name="chooseDegreeForFinalWorkProposal" path="df.page.chooseDegreeForFinalWorkProposal"/>
+			<forward name="chooseDegreeForFinalWorkProposal" path="df.page.chooseDegreeForFinalWorkProposal"/>
 				<forward name="submitFinalWorkProposal" path="df.page.finalWorkSubmit"/>
 				<forward name="showTeacherName" path="df.page.finalWorkSubmit"/>
 				<forward name="coorientatorVisibility" path="df.page.finalWorkSubmit"/>				
 				<forward name="OutOfSubmisionPeriod" path="/finalWorkManagement.do?method=chooseDegree&amp;page=0"/>
 				<forward name="SubmitionOfFinalDegreeWorkProposalSucessful" path="/finalWorkManagement.do?method=chooseDegree&amp;page=0"/>
 				<forward name="viewFinalDegreeWorkProposal" path="df.page.viewfinalDegreeWorkProposal"/>
+	        	<forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>
+    	    	<forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
+        		<forward name="NotAuthorized" path="df.page.notAuthorized"/>
+	    </action>
+	    
+	    <action path="/finalDegreeWorkAttribution"
+	    	type="ServidorApresentacao.Action.teacher.FinalWorkManagementAction"
+	    	parameter="method"
+	    	input="/finalWorkManagement.do?method=prepareFinalWorkInformation&amp;page=0"
+	    	name="finalWorkAttributionForm"
+	    	scope="request"
+	    	validate="true">
+				<forward name="sucess" path="/finalWorkManagement.do?method=chooseDegree&amp;page=0"/>
 	    </action>
 	    
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
     <!-- ========== Message Resources Definitions ============================ -->
-    <message-resources parameter="ServidorApresentacao.ApplicationResources" />
+    <message-resources parameter="ServidorApresentacao.ApplicationResources" null="false"/>
     <!--	<message-resources parameter="ServidorApresentacao.TeacherResources" /> -->
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

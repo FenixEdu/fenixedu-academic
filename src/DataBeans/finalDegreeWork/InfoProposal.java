@@ -46,6 +46,8 @@ public class InfoProposal extends InfoObject {
 	private String companyAdress;
 	private List branches;
 	private FinalDegreeWorkProposalStatus status;
+	private InfoGroup groupAttributedByTeacher;
+	private InfoGroup groupAttributed;
 
 	/* Construtores */
 	public InfoProposal() {
@@ -477,4 +479,32 @@ public class InfoProposal extends InfoObject {
 		this.status = status;
 	}
 
+    /**
+     * @return Returns the groupAttributedByTeacher.
+     */
+    public InfoGroup getGroupAttributedByTeacher()
+    {
+        return groupAttributedByTeacher;
+    }
+    /**
+     * @param groupAttributedByTeacher The groupAttributedByTeacher to set.
+     */
+    public void setGroupAttributedByTeacher(InfoGroup groupAttributedByTeacher)
+    {
+        this.groupAttributedByTeacher = groupAttributedByTeacher;
+    }
+    /**
+     * @return Returns the groupAttributed.
+     */
+    public InfoGroup getGroupAttributed()
+    {
+        return groupAttributed;
+    }
+    /**
+     * @param groupAttributed The groupAttributed to set.
+     */
+    public void setGroupAttributed(InfoGroup groupAttributed)
+    {
+        this.groupAttributed = groupAttributed;
+    }
 }

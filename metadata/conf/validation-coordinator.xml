@@ -243,5 +243,20 @@
 		</field>
 	</form>
 
+	<form name="finalDegreeWorkCandidacyRequirements">
+		<field property="minimumNumberOfCompletedCourses" depends="integer" page="1">
+			<arg0 key="finalDegreeWorkCandidacy.requirements.minimumNumberOfCompletedCourses" resource="true"/>
+		</field>
+		<field property="minimumNumberOfStudents" depends="integer" page="1">
+			<arg0 key="finalDegreeWorkCandidacy.requirements.minimumNumberOfStudents" resource="true"/>
+		</field>
+		<field property="maximumNumberOfStudents" depends="integer" page="1">
+			<arg0 key="finalDegreeWorkCandidacy.requirements.maximumNumberOfStudents" resource="true"/>
+		</field>
+		<field property="maximumNumberOfProposalCandidaciesPerGroup" depends="integer" page="1">
+			<arg0 key="finalDegreeWorkCandidacy.requirements.maximumNumberOfProposalCandidaciesPerGroup" resource="true"/>
+		</field>
+	</form>
+
   </formset>
 </form-validation>

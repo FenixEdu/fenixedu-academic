@@ -7,8 +7,8 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <span class="error"><html:errors/></span>
 <bean:define id="studentCPList" name="studentCPs" scope="request" />
-<bean:define id="link">/viewCurriculum.do?method=getCurriculum&studentCPID=</bean:define>
-<%= ((List) studentCPList).size()%> <bean:message key="label.student.studentCPFound"/>    
+<bean:define id="link">/viewCurriculum.do?method=getCurriculum&page=0&studentCPID=</bean:define>
+<%= ((List) studentCPList).size()%> <bean:message key="label.student.studentCPFound"/>
 <br />    
 <% if (((List) studentCPList).size() != 0) { %>
 

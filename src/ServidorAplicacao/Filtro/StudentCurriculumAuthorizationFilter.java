@@ -19,11 +19,15 @@ import Dominio.IStudentCurricularPlan;
 import Dominio.ITeacher;
 import Dominio.ITutor;
 import Dominio.StudentCurricularPlan;
+import Dominio.finalDegreeWork.IGroup;
+import Dominio.finalDegreeWork.IGroupProposal;
+import Dominio.finalDegreeWork.IProposal;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentCoordinator;
+import ServidorPersistente.IPersistentFinalDegreeWork;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -38,327 +42,317 @@ import Util.TipoCurso;
 public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 {
 
-	public StudentCurriculumAuthorizationFilter()
-	{
-		super();
-	}
+    public StudentCurriculumAuthorizationFilter()
+    {
+        super();
+    }
 
-	/**
-	 * @param collection
-	 * @return boolean
-	 */
-	private boolean containsRole(Collection roles)
-	{
-		CollectionUtils.intersection(roles, getNeededRoles());
+    /**
+     * @param collection
+     * @return boolean
+     */
+    private boolean containsRole(Collection roles)
+    {
+        CollectionUtils.intersection(roles, getNeededRoles());
 
-		if (roles.size() != 0)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+        if (roles.size() != 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-	 *      pt.utl.ist.berserk.ServiceResponse)
-	 */
-	public void execute(ServiceRequest request, ServiceResponse response) throws Exception
-	{
-		IUserView id = (IUserView) request.getRequester();
-		String messageException = hasProvilege(id, request.getArguments());
-		if ((id == null)
-			|| (id.getRoles() == null)
-			|| (!containsRole(id.getRoles()))
-			|| (messageException != null))
-		{
-			throw new NotAuthorizedFilterException(messageException);
-		}
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
+     *      pt.utl.ist.berserk.ServiceResponse)
+     */
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception
+    {
+        IUserView id = (IUserView) request.getRequester();
+        String messageException = hasProvilege(id, request.getArguments());
+        if ((id == null) || (id.getRoles() == null) || (!containsRole(id.getRoles()))
+                || (messageException != null)) { throw new NotAuthorizedFilterException(messageException); }
+    }
 
-	/**
-	 * @return The Needed Roles to Execute The Service
-	 */
-	private Collection getNeededRoles()
-	{
-		List roles = new ArrayList();
+    /**
+     * @return The Needed Roles to Execute The Service
+     */
+    private Collection getNeededRoles()
+    {
+        List roles = new ArrayList();
 
-		InfoRole infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-		roles.add(infoRole);
+        InfoRole infoRole = new InfoRole();
+        infoRole.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+        roles.add(infoRole);
 
-		infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
-		roles.add(infoRole);
+        infoRole = new InfoRole();
+        infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
+        roles.add(infoRole);
 
-		infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
-		roles.add(infoRole);
+        infoRole = new InfoRole();
+        infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
+        roles.add(infoRole);
 
-		infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.COORDINATOR);
-		roles.add(infoRole);
+        infoRole = new InfoRole();
+        infoRole.setRoleType(RoleType.COORDINATOR);
+        roles.add(infoRole);
 
-		infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.TEACHER);
-		roles.add(infoRole);
+        infoRole = new InfoRole();
+        infoRole.setRoleType(RoleType.TEACHER);
+        roles.add(infoRole);
 
-		infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.STUDENT);
-		roles.add(infoRole);
+        infoRole = new InfoRole();
+        infoRole.setRoleType(RoleType.STUDENT);
+        roles.add(infoRole);
 
-		return roles;
-	}
+        return roles;
+    }
 
-	private List getRoleList(List roles)
-	{
-		List result = new ArrayList();
-		Iterator iterator = roles.iterator();
-		while (iterator.hasNext())
-		{
-			result.add(((InfoRole) iterator.next()).getRoleType());
-		}
+    private List getRoleList(List roles)
+    {
+        List result = new ArrayList();
+        Iterator iterator = roles.iterator();
+        while (iterator.hasNext())
+        {
+            result.add(((InfoRole) iterator.next()).getRoleType());
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	/**
-	 * @param id
-	 * @param argumentos
-	 * @return null if authorized string with message if not authorized
-	 */
-	private String hasProvilege(IUserView id, Object[] arguments)
-	{
-		List roles = getRoleList((List) id.getRoles());
-		CollectionUtils.intersection(roles, getNeededRoles());
+    /**
+     * @param id
+     * @param argumentos
+     * @return null if authorized string with message if not authorized
+     */
+    private String hasProvilege(IUserView id, Object[] arguments)
+    {
+        List roles = getRoleList((List) id.getRoles());
+        CollectionUtils.intersection(roles, getNeededRoles());
 
-		Integer studentCurricularPlanID = (Integer) arguments[1];
+        Integer studentCurricularPlanID = (Integer) arguments[1];
 
-		IStudentCurricularPlan studentCurricularPlan = null;
+        IStudentCurricularPlan studentCurricularPlan = null;
 
-		// Read The DegreeCurricularPlan
-		try
-		{
-			IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
-				SuportePersistenteOJB.getInstance().getIStudentCurricularPlanPersistente();
+        // Read The DegreeCurricularPlan
+        try
+        {
+            IStudentCurricularPlanPersistente persistentStudentCurricularPlan = SuportePersistenteOJB
+                    .getInstance().getIStudentCurricularPlanPersistente();
 
-			studentCurricularPlan =
-				readStudentCurricularPlan(studentCurricularPlanID, persistentStudentCurricularPlan);
+            studentCurricularPlan = readStudentCurricularPlan(studentCurricularPlanID,
+                    persistentStudentCurricularPlan);
 
-		}
-		catch (Exception e)
-		{
-			return "noAuthorization";
-		}
+        }
+        catch (Exception e)
+        {
+            return "noAuthorization";
+        }
 
-		if (studentCurricularPlan == null || studentCurricularPlan.getStudent() == null)
-		{
-			return "noAuthorization";
-		}
+        if (studentCurricularPlan == null || studentCurricularPlan.getStudent() == null) { return "noAuthorization"; }
 
-		List roleTemp = new ArrayList();
-		roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
-		if (CollectionUtils.containsAny(roles, roleTemp))
-		{
-			if (!studentCurricularPlan.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(TipoCurso.MESTRADO_OBJ)
-				&& !(roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE) || roles
-					.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)))
-			{
-				return "noAuthorization";
-			}
-			if (!(roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE) || roles
-				.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)))
-			{
-				return null;
-			}
-		}
+        try
+        {
+            IStudent student = studentCurricularPlan.getStudent();
 
-		if (arguments[0] != null)
-		{
-			roleTemp = new ArrayList();
-			roleTemp.add(RoleType.COORDINATOR);
-			if (CollectionUtils.containsAny(roles, roleTemp))
-			{
-				try
-				{
-					ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-					ICursoExecucaoPersistente persistentExecutionDegree =
-						sp.getICursoExecucaoPersistente();
+            IPersistentFinalDegreeWork persistentFinalDegreeWork = SuportePersistenteOJB.getInstance()
+                    .getIPersistentFinalDegreeWork();
 
-					ICursoExecucao executionDegree = new CursoExecucao();
-					executionDegree.setIdInternal((Integer) arguments[0]);
-					executionDegree =
-						(ICursoExecucao) persistentExecutionDegree.readByOId(executionDegree, false);
+            IGroup group = persistentFinalDegreeWork.readFinalDegreeWorkGroupByUsername(student
+                    .getPerson().getUsername());
+            if (group != null)
+            {
+                ICursoExecucao executionDegree = group.getExecutionDegree();
+                for (int i = 0; i < executionDegree.getCoordinatorsList().size(); i++)
+                {
+                    ICoordinator coordinator = (ICoordinator) executionDegree.getCoordinatorsList().get(i);
+                    if (coordinator.getTeacher().getPerson().getUsername().equals(id.getUtilizador()))
+                    {
+                        // The student is a candidate for a final degree work of the degree of the
+                        // coordinator making the request. Allow access.
+                        return null;
+                    }
+                }
+                
+                for (int i = 0; i < group.getGroupProposals().size(); i++)
+                {
+                    IGroupProposal groupProposal = (IGroupProposal) group.getGroupProposals().get(i);
+                    IProposal proposal = groupProposal.getFinalDegreeWorkProposal();
+                    ITeacher teacher = proposal.getOrientator();
 
-					if (executionDegree == null)
-					{
-						return "noAuthorization";
-					}
-					IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
-					List coordinatorsList =
-						persistentCoordinator.readCoordinatorsByExecutionDegree(executionDegree);
-					if (coordinatorsList == null)
-					{
-						return "noAuthorization";
-					}
+                    if (teacher.getPerson().getUsername().equals(id.getUtilizador()))
+                    {
+                        // The student is a candidate for a final degree work of oriented by the
+                        // teacher making the request. Allow access.
+                        return null;
+                    }
+                    
+                    teacher = proposal.getCoorientator();
+                    if (teacher != null && teacher.getPerson().getUsername().equals(id.getUtilizador()))
+                    {
+                        // The student is a candidate for a final degree work of cooriented by the
+                        // teacher making the request. Allow access.
+                        return null;
+                    }                    
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            // check other possible authorizations
+        }
 
-					final String username = id.getUtilizador();
-					ICoordinator coordinator =
-						(ICoordinator) CollectionUtils.find(coordinatorsList, new Predicate()
-					{
-						public boolean evaluate(Object input)
-						{
-							ICoordinator coordinatorTemp = (ICoordinator) input;
-							if (username.equals(coordinatorTemp.getTeacher().getPerson().getUsername()))
-							{
-								return true;
-							}
-							return false;
-						}
-					});
-					if (coordinator == null)
-					{
-						return "noAuthorization";
-					}
+        List roleTemp = new ArrayList();
+        roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+        if (CollectionUtils.containsAny(roles, roleTemp))
+        {
+            if (!studentCurricularPlan.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(
+                    TipoCurso.MESTRADO_OBJ)
+                    && !(roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE) || roles
+                            .contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))) { return "noAuthorization"; }
+            if (!(roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE) || roles
+                    .contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))) { return null; }
+        }
 
-					if (!coordinator
-						.getExecutionDegree()
-						.getCurricularPlan()
-						.getDegree()
-						.getIdInternal()
-						.equals(
-							studentCurricularPlan
-								.getDegreeCurricularPlan()
-								.getDegree()
-								.getIdInternal()))
-					{
-						return "noAuthorization";
-					}
-					IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
-						sp.getIStudentCurricularPlanPersistente();
-					List activeStudentCurricularPlans = 
-						persistentStudentCurricularPlan.readAllActiveStudentCurricularPlan(
-							studentCurricularPlan.getStudent().getNumber());
-					boolean hasAnActiveCurricularPlanThatCoincidesWithTheCoordinatorsCurricularPlan = false;
-					for (int i = 0; i < activeStudentCurricularPlans.size(); i++)
-					{
-						IStudentCurricularPlan activeStudentCurricularPlan = (IStudentCurricularPlan) activeStudentCurricularPlans.get(i);
-						if (coordinator
-							.getExecutionDegree()
-							.getCurricularPlan()
-							.getIdInternal()
-							.equals(
-								activeStudentCurricularPlan
-									.getDegreeCurricularPlan()
-									.getIdInternal())) {
-							hasAnActiveCurricularPlanThatCoincidesWithTheCoordinatorsCurricularPlan = true;
-						}	
-					}
-					if (!hasAnActiveCurricularPlanThatCoincidesWithTheCoordinatorsCurricularPlan)
-					{
-						return "noAuthorization";
-					}
-				}
-				catch (Exception e)
-				{
-					return "noAuthorization";
-				}
-				return null;
-			}
-		}
-		roleTemp = new ArrayList();
-		roleTemp.add(RoleType.STUDENT);
-		if (CollectionUtils.containsAny(roles, roleTemp))
-		{
-			try
-			{
-				if (!id
-					.getUtilizador()
-					.equals(studentCurricularPlan.getStudent().getPerson().getUsername()))
-				{
-					return "noAuthorization";
-				}
-			}
-			catch (Exception e)
-			{
-				return "noAuthorization";
-			}
-			return null;
-		}
+        if (arguments[0] != null)
+        {
+            roleTemp = new ArrayList();
+            roleTemp.add(RoleType.COORDINATOR);
+            if (CollectionUtils.containsAny(roles, roleTemp))
+            {
+                try
+                {
+                    ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+                    ICursoExecucaoPersistente persistentExecutionDegree = sp
+                            .getICursoExecucaoPersistente();
 
-		roleTemp = new ArrayList();
-		roleTemp.add(RoleType.TEACHER);
-		if (CollectionUtils.containsAny(roles, roleTemp))
-		{
-			try
-			{
-				ITeacher teacher =
-					SuportePersistenteOJB.getInstance().getIPersistentTeacher().readTeacherByUsername(
-						id.getUtilizador());
-				if (teacher == null)
-				{
-					return "noAuthorization";
-				}
+                    ICursoExecucao executionDegree = new CursoExecucao();
+                    executionDegree.setIdInternal((Integer) arguments[0]);
+                    executionDegree = (ICursoExecucao) persistentExecutionDegree.readByOId(
+                            executionDegree, false);
 
-				if (!verifyStudentTutor(teacher, studentCurricularPlan.getStudent()))
-				{
-					return new String(
-						"error.enrollment.notStudentTutor+"
-							+ studentCurricularPlan.getStudent().getNumber().toString());
-				}
+                    if (executionDegree == null) { return "noAuthorization"; }
+                    IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
+                    List coordinatorsList = persistentCoordinator
+                            .readCoordinatorsByExecutionDegree(executionDegree);
+                    if (coordinatorsList == null) { return "noAuthorization"; }
 
-			}
-			catch (Exception e)
-			{
-				return "noAuthorization";
-			}
-			return null;
-		}
+                    final String username = id.getUtilizador();
+                    ICoordinator coordinator = (ICoordinator) CollectionUtils.find(coordinatorsList,
+                            new Predicate()
+                            {
 
-		roleTemp = new ArrayList();
-		roleTemp.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
-		roleTemp.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
-		if (CollectionUtils.containsAny(roles, roleTemp))
-		{
-			if (!studentCurricularPlan
-				.getDegreeCurricularPlan()
-				.getDegree()
-				.getTipoCurso()
-				.equals(TipoCurso.LICENCIATURA_OBJ))
-			{
-				return "noAuthorization";
-			}
-			return null;
-		}
-		return "noAuthorization";
-	}
+                                public boolean evaluate(Object input)
+                                {
+                                    ICoordinator coordinatorTemp = (ICoordinator) input;
+                                    if (username.equals(coordinatorTemp.getTeacher().getPerson()
+                                            .getUsername())) { return true; }
+                                    return false;
+                                }
+                            });
+                    if (coordinator == null) { return "noAuthorization"; }
 
-	private boolean verifyStudentTutor(ITeacher teacher, IStudent student) throws ExcepcaoPersistencia
-	{
-		ITutor tutor =
-			SuportePersistenteOJB.getInstance().getIPersistentTutor().readTutorByTeacherAndStudent(
-				teacher,
-				student);
+                    if (!coordinator.getExecutionDegree().getCurricularPlan().getDegree()
+                            .getIdInternal().equals(
+                                    studentCurricularPlan.getDegreeCurricularPlan().getDegree()
+                                            .getIdInternal())) { return "noAuthorization"; }
+                    IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp
+                            .getIStudentCurricularPlanPersistente();
+                    List activeStudentCurricularPlans = persistentStudentCurricularPlan
+                            .readAllActiveStudentCurricularPlan(studentCurricularPlan.getStudent()
+                                    .getNumber());
+                    boolean hasAnActiveCurricularPlanThatCoincidesWithTheCoordinatorsCurricularPlan = false;
+                    for (int i = 0; i < activeStudentCurricularPlans.size(); i++)
+                    {
+                        IStudentCurricularPlan activeStudentCurricularPlan = (IStudentCurricularPlan) activeStudentCurricularPlans
+                                .get(i);
+                        if (coordinator.getExecutionDegree().getCurricularPlan().getIdInternal().equals(
+                                activeStudentCurricularPlan.getDegreeCurricularPlan().getIdInternal()))
+                        {
+                            hasAnActiveCurricularPlanThatCoincidesWithTheCoordinatorsCurricularPlan = true;
+                        }
+                    }
+                    if (!hasAnActiveCurricularPlanThatCoincidesWithTheCoordinatorsCurricularPlan) { return "noAuthorization"; }
+                }
+                catch (Exception e)
+                {
+                    return "noAuthorization";
+                }
+                return null;
+            }
+        }
+        roleTemp = new ArrayList();
+        roleTemp.add(RoleType.STUDENT);
+        if (CollectionUtils.containsAny(roles, roleTemp))
+        {
+            try
+            {
+                if (!id.getUtilizador().equals(
+                        studentCurricularPlan.getStudent().getPerson().getUsername())) { return "noAuthorization"; }
+            }
+            catch (Exception e)
+            {
+                return "noAuthorization";
+            }
+            return null;
+        }
 
-		return (tutor != null);
-	}
+        roleTemp = new ArrayList();
+        roleTemp.add(RoleType.TEACHER);
+        if (CollectionUtils.containsAny(roles, roleTemp))
+        {
+            try
+            {
+                ITeacher teacher = SuportePersistenteOJB.getInstance().getIPersistentTeacher()
+                        .readTeacherByUsername(id.getUtilizador());
+                if (teacher == null) { return "noAuthorization"; }
 
-	private IStudentCurricularPlan readStudentCurricularPlan(
-		Integer studentCurricularPlanID,
-		IStudentCurricularPlanPersistente persistentStudentCurricularPlan)
-	{
-		IStudentCurricularPlan studentCurricularPlan;
-		IStudentCurricularPlan studentCurricularPlanTemp = new StudentCurricularPlan();
-		studentCurricularPlanTemp.setIdInternal(studentCurricularPlanID);
+                if (!verifyStudentTutor(teacher, studentCurricularPlan.getStudent())) { return new String(
+                        "error.enrollment.notStudentTutor+"
+                                + studentCurricularPlan.getStudent().getNumber().toString()); }
 
-		studentCurricularPlan =
-			(IStudentCurricularPlan) persistentStudentCurricularPlan.readByOId(
-				studentCurricularPlanTemp,
-				false);
-		return studentCurricularPlan;
-	}
+            }
+            catch (Exception e)
+            {
+                return "noAuthorization";
+            }
+            return null;
+        }
+
+        roleTemp = new ArrayList();
+        roleTemp.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
+        roleTemp.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
+        if (CollectionUtils.containsAny(roles, roleTemp))
+        {
+            if (!studentCurricularPlan.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(
+                    TipoCurso.LICENCIATURA_OBJ)) { return "noAuthorization"; }
+            return null;
+        }
+        return "noAuthorization";
+    }
+
+    private boolean verifyStudentTutor(ITeacher teacher, IStudent student) throws ExcepcaoPersistencia
+    {
+        ITutor tutor = SuportePersistenteOJB.getInstance().getIPersistentTutor()
+                .readTutorByTeacherAndStudent(teacher, student);
+
+        return (tutor != null);
+    }
+
+    private IStudentCurricularPlan readStudentCurricularPlan(Integer studentCurricularPlanID,
+            IStudentCurricularPlanPersistente persistentStudentCurricularPlan)
+    {
+        IStudentCurricularPlan studentCurricularPlan;
+        IStudentCurricularPlan studentCurricularPlanTemp = new StudentCurricularPlan();
+        studentCurricularPlanTemp.setIdInternal(studentCurricularPlanID);
+
+        studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan.readByOId(
+                studentCurricularPlanTemp, false);
+        return studentCurricularPlan;
+    }
 }

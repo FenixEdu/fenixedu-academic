@@ -17,3 +17,10 @@
   	<li><html:link page="/studentTests.do?method=viewStudentExecutionCoursesWithTests" ><bean:message key="link.tests"/></html:link></li>
   	<li><html:link page="/studentGaugingTestResults.do"><bean:message key="link.results.test"/></html:link></li>
 </ul>
+<ul>
+	<li><bean:message key="link.finalDegreeWork"/></li>
+	<ul>
+		<li><html:link page="/finalDegreeWorkCandidacy.do?method=prepareCandidacy&amp;page=0"><bean:message key="link.finalDegreeWork.candidacy"/></html:link></li>
+		<li><html:link page="/finalDegreeWorkAttribution.do?method=prepare&amp;page=0"><bean:message key="link.finalDegreeWork.confirmAttribution"/></html:link></li>
+	</ul>
+</ul>

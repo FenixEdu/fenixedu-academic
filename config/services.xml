@@ -6425,4 +6425,67 @@
 		<isTransactional>true</isTransactional>
 		<filterChains/>
 	</service>
+<service>
+        <name>CheckCandidacyConditionsForFinalDegreeWork</name>
+        <implementationClass>ServidorAplicacao.Servico.student.CheckCandidacyConditionsForFinalDegreeWork</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="StudentAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>DefineFinalDegreeWorkCandidacyRequirements</name>
+        <implementationClass>ServidorAplicacao.Servico.coordinator.DefineFinalDegreeWorkCandidacyRequirements</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        	<chain name="ReadCoursesInformationAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+    	<name>TeacherAttributeFinalDegreeWork</name>
+    	<implementationClass>ServidorAplicacao.Servico.teacher.finalDegreeWork.TeacherAttributeFinalDegreeWork</implementationClass>
+    	<description/>
+    	<isTransactional>true</isTransactional>    	
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>    	
+    </service>
+    <service>
+        <name>ConfirmAttributionOfFinalDegreeWork</name>
+        <implementationClass>ServidorAplicacao.Servico.student.ConfirmAttributionOfFinalDegreeWork</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="StudentAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>AttributeFinalDegreeWork</name>
+        <implementationClass>ServidorAplicacao.Servico.coordinator.AttributeFinalDegreeWork</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
+    <service>
+        <name>PrepareStudentEnrolmentContextForOptionalCoursesEnrolment</name>
+        <description></description>
+        <implementationClass>
+            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.PrepareStudentEnrolmentContextForOptionalCoursesEnrolment</implementationClass>
+        <isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="EnrollmentWithoutRulesAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>WriteEnrolmentInOptionalCourse</name>
+        <description>Enrolls student in curricular course</description>
+        <implementationClass>ServidorAplicacao.Servico.enrolment.WriteEnrolmentInOptionalCourse</implementationClass>
+        <isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="EnrollmentLEECAuthorization"/>
+        </filterChains>
+    </service>
 </serviceDefinitions>

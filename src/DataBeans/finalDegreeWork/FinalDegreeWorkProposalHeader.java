@@ -4,6 +4,8 @@
  */
 package DataBeans.finalDegreeWork;
 
+import java.util.List;
+
 import Util.FinalDegreeWorkProposalStatus;
 import DataBeans.InfoObject;
 
@@ -14,6 +16,7 @@ import DataBeans.InfoObject;
 public class FinalDegreeWorkProposalHeader extends InfoObject {
 
 	private Integer proposalNumber;
+	private Integer executionDegreeOID;
 	private String title;
 	private Integer orientatorOID;
 	private String orientatorName;
@@ -23,6 +26,9 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
 	private String degreeCode;
 	private Boolean editable;
 	private FinalDegreeWorkProposalStatus status;
+	private List groupProposals;
+	private InfoGroup groupAttributedByTeacher;
+	private InfoGroup groupAttributed;
 
 	public FinalDegreeWorkProposalHeader() {
 		super();
@@ -174,4 +180,60 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
 		this.status = status;
 	}
 
+    /**
+     * @return Returns the groupProposals.
+     */
+    public List getGroupProposals()
+    {
+        return groupProposals;
+    }
+    /**
+     * @param groupProposals The groupProposals to set.
+     */
+    public void setGroupProposals(List groupProposals)
+    {
+        this.groupProposals = groupProposals;
+    }
+    /**
+     * @return Returns the groupAttributedByTeacher.
+     */
+    public InfoGroup getGroupAttributedByTeacher()
+    {
+        return groupAttributedByTeacher;
+    }
+    /**
+     * @param groupAttributedByTeacher The groupAttributedByTeacher to set.
+     */
+    public void setGroupAttributedByTeacher(InfoGroup groupAttributedByTeacher)
+    {
+        this.groupAttributedByTeacher = groupAttributedByTeacher;
+    }
+    /**
+     * @return Returns the groupAttributed.
+     */
+    public InfoGroup getGroupAttributed()
+    {
+        return groupAttributed;
+    }
+    /**
+     * @param groupAttributed The groupAttributed to set.
+     */
+    public void setGroupAttributed(InfoGroup groupAttributed)
+    {
+        this.groupAttributed = groupAttributed;
+    }
+    /**
+     * @return Returns the executionDegreeOID.
+     */
+    public Integer getExecutionDegreeOID()
+    {
+        return executionDegreeOID;
+    }
+    /**
+     * @param executionDegreeOID The executionDegreeOID to set.
+     */
+    public void setExecutionDegreeOID(Integer executionDegreeOID)
+    {
+        this.executionDegreeOID = executionDegreeOID;
+    }
 }

@@ -1,6 +1,5 @@
 /*
  * Created on Mar 10, 2004
- *
  */
 package Dominio.finalDegreeWork;
 
@@ -11,33 +10,49 @@ import Dominio.IDomainObject;
 
 /**
  * @author Luis Cruz
- *
  */
 public interface IScheduleing extends IDomainObject
 {
 
-	public ICursoExecucao getExecutionDegree();
+    public ICursoExecucao getExecutionDegree();
 
-	public void setExecutionDegree(ICursoExecucao executionDegree);
+    public void setExecutionDegree(ICursoExecucao executionDegree);
 
-   public Date getEndOfProposalPeriod();
+    public Date getEndOfProposalPeriod();
 
-   public void setEndOfProposalPeriod(Date endOfProposalPeriod);
+    public void setEndOfProposalPeriod(Date endOfProposalPeriod);
 
-   public Date getStartOfProposalPeriod();
+    public Date getStartOfProposalPeriod();
 
-   public void setStartOfProposalPeriod(Date startOfProposalPeriod);
+    public void setStartOfProposalPeriod(Date startOfProposalPeriod);
 
-   public Integer getCurrentProposalNumber();
-   
-   public void setCurrentProposalNumber(Integer currentProposalNumber);
+    public Integer getCurrentProposalNumber();
 
-   public Date getStartOfCandidacyPeriod();
+    public void setCurrentProposalNumber(Integer currentProposalNumber);
 
-   public void setStartOfCandidacyPeriod(Date startOfCandidacyPeriod);
+    public Date getStartOfCandidacyPeriod();
 
-   public Date getEndOfCandidacyPeriod();
+    public void setStartOfCandidacyPeriod(Date startOfCandidacyPeriod);
 
-   public void setEndOfCandidacyPeriod(Date endOfCandidacyPeriod);
+    public Date getEndOfCandidacyPeriod();
+
+    public void setEndOfCandidacyPeriod(Date endOfCandidacyPeriod);
+
+    public Integer getMinimumNumberOfCompletedCourses();
+
+    public void setMinimumNumberOfCompletedCourses(Integer minimumNumberOfCompletedCourses);
+
+    public Integer getMaximumNumberOfStudents();
+
+    public void setMaximumNumberOfStudents(Integer maximumNumberOfStudents);
+
+    public Integer getMinimumNumberOfStudents();
+
+    public void setMinimumNumberOfStudents(Integer minimumNumberOfStudents);
+
+    public Integer getMaximumNumberOfProposalCandidaciesPerGroup();
+
+    public void setMaximumNumberOfProposalCandidaciesPerGroup(
+            Integer maximumNumberOfProposalCandidaciesPerGroup);
 
 }

@@ -119,4 +119,16 @@ public interface IProposal extends IDomainObject
 
 	public void setStatus(FinalDegreeWorkProposalStatus status);
 
+    public List getGroupProposals();
+
+    public void setGroupProposals(List groupProposals);
+
+    public IGroup getGroupAttributedByTeacher();
+
+    public void setGroupAttributedByTeacher(IGroup groupAttributedByTeacher);
+
+    public IGroup getGroupAttributed();
+
+    public void setGroupAttributed(IGroup groupAttributed);
+
 }

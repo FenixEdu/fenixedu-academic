@@ -158,7 +158,7 @@
 		</tr>
 		<tr>
 			<td bgcolor="#eae7e4" align="center" colspan="3">
-				<bean:write name="finalDegreeWorkProposal" property="objectives"/>
+				<bean:write name="finalDegreeWorkProposal" property="framing"/>
 			</td>
 		</tr>
 		<tr>

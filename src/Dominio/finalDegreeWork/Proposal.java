@@ -46,6 +46,11 @@ public class Proposal extends DomainObject implements IProposal {
 	private String companyAdress;
 	private List branches;
 	private FinalDegreeWorkProposalStatus status;
+	private List groupProposals;
+	private Integer keyGroupAttributedByTeacher;
+	private IGroup groupAttributedByTeacher;
+	private Integer keyGroupAttributed;
+	private IGroup groupAttributed;
 
 	/* Construtores */
 	public Proposal() {
@@ -57,9 +62,7 @@ public class Proposal extends DomainObject implements IProposal {
 		if (obj instanceof IProposal) {
 			IProposal proposal = (IProposal) obj;
 
-			result =
-				getTitle().equals(proposal.getTitle())
-					&& getExecutionDegree().equals(proposal.getExecutionDegree());
+			result = getIdInternal().equals(proposal.getIdInternal());
 		}
 		return result;
 	}
@@ -486,4 +489,74 @@ public class Proposal extends DomainObject implements IProposal {
 		this.status = status;
 	}
 
+    /**
+     * @return Returns the groupProposals.
+     */
+    public List getGroupProposals()
+    {
+        return groupProposals;
+    }
+    /**
+     * @param groupProposals The groupProposals to set.
+     */
+    public void setGroupProposals(List groupProposals)
+    {
+        this.groupProposals = groupProposals;
+    }
+    /**
+     * @return Returns the groupAttributedByTeacher.
+     */
+    public IGroup getGroupAttributedByTeacher()
+    {
+        return groupAttributedByTeacher;
+    }
+    /**
+     * @param groupAttributedByTeacher The groupAttributedByTeacher to set.
+     */
+    public void setGroupAttributedByTeacher(IGroup groupAttributedByTeacher)
+    {
+        this.groupAttributedByTeacher = groupAttributedByTeacher;
+    }
+    /**
+     * @return Returns the keyGroupAttributedByTeacher.
+     */
+    public Integer getKeyGroupAttributedByTeacher()
+    {
+        return keyGroupAttributedByTeacher;
+    }
+    /**
+     * @param keyGroupAttributedByTeacher The keyGroupAttributedByTeacher to set.
+     */
+    public void setKeyGroupAttributedByTeacher(Integer keyGroupAttributedByTeacher)
+    {
+        this.keyGroupAttributedByTeacher = keyGroupAttributedByTeacher;
+    }
+    /**
+     * @return Returns the groupAttributed.
+     */
+    public IGroup getGroupAttributed()
+    {
+        return groupAttributed;
+    }
+    /**
+     * @param groupAttributed The groupAttributed to set.
+     */
+    public void setGroupAttributed(IGroup groupAttributed)
+    {
+        this.groupAttributed = groupAttributed;
+    }
+    /**
+     * @return Returns the keyGroupAttributed.
+     */
+    public Integer getKeyGroupAttributed()
+    {
+        return keyGroupAttributed;
+    }
+    /**
+     * @param keyGroupAttributed The keyGroupAttributed to set.
+     */
+    public void setKeyGroupAttributed(Integer keyGroupAttributed)
+    {
+        this.keyGroupAttributed = keyGroupAttributed;
+    }
 }
