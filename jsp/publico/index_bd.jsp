@@ -4,9 +4,7 @@
 <p>Aqui tem à sua disposição três formas de consultar horários:</p>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="../images/info.gif" width="15"> 
-    </td>
-    <td class="infoop"><strong>Consultar Turmas</strong></td>
+    <td><h2>Consultar Turmas</h2></td>
   </tr>
 </table>
 <p>Nesta área poderá efectuar uma pesquisa por curso (actualmente só encontrará licenciaturas) e ano lectivo.
@@ -15,9 +13,7 @@ O semestre é o <strong>actual</strong>.
 <br />
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="../images/info.gif" width="15"> 
-    </td>
-    <td class="infoop"><strong>Consultar disciplinas</strong></td>
+    <td><h2>Consultar disciplinas</h2></td>
   </tr>
 </table>
   <p>
@@ -27,9 +23,7 @@ O semestre é o <strong>actual</strong>.
 <br />
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td nowrap="nowrap" class="infoIcons"><img alt="" height="15" src="../images/info.gif" width="15"> 
-    </td>
-    <td class="infoop"><strong>Consultar salas</strong></td>
+    <td><h2>Consultar salas</h2></td>
   </tr>
 </table>
   <p>
