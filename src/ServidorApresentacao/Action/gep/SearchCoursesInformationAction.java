@@ -48,11 +48,6 @@ public class SearchCoursesInformationAction extends SearchAction
     {
         final InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
                 .getAttribute("infoExecutionDegree");
-        if(infoExecutionDegree != null) {
-            System.out.println("----------->infoExecutionDegree é " + infoExecutionDegree.getIdInternal());
-        } else {
-            System.out.println("----------->infoExecutionDegree é null");
-        }
 
         //      sort the execution course list
         ComparatorChain comparatorChain1 = new ComparatorChain();
@@ -177,7 +172,8 @@ public class SearchCoursesInformationAction extends SearchAction
                     public boolean evaluate(Object arg0)
                     {
                         InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) arg0;
-                        return infoCurricularCourse.getInfoDegreeCurricularPlan().equals(
+                        return infoExecutionDegree == null
+                        || infoCurricularCourse.getInfoDegreeCurricularPlan().equals(
                                 infoExecutionDegree.getInfoDegreeCurricularPlan());
                     }
                 });
