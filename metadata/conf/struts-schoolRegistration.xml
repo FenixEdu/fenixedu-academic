@@ -20,16 +20,16 @@
         <form-property name="reTypeNewPassword" type="java.lang.String" />
         
       	<form-property name="idInternal" type="java.lang.String" />
-      	<form-property name="documentIdNumber" type="java.lang.Integer" />
+      	<form-property name="documentIdNumber" type="java.lang.String" />
 		<form-property name="emissionLocationOfDocumentID" type="java.lang.String" />
-		<form-property name="dayOfEmissionDateOfDocumentId" type="java.lang.Integer" />
-		<form-property name="monthOfEmissionDateOfDocumentId" type="java.lang.Integer" />
-		<form-property name="yearOfEmissionDateOfDocumentId" type="java.lang.Integer" />
-		<form-property name="dayOfExpirationDateOfDocumentId" type="java.lang.Integer" />
-		<form-property name="monthOfExpirationDateOfDocumentId" type="java.lang.Integer" />
+		<form-property name="dayOfEmissionDateOfDocumentId" type="java.lang.String" />
+		<form-property name="monthOfEmissionDateOfDocumentId" type="java.lang.String" />
+		<form-property name="yearOfEmissionDateOfDocumentId" type="java.lang.String" />
+		<form-property name="dayOfExpirationDateOfDocumentId" type="java.lang.String" />
+		<form-property name="monthOfExpirationDateOfDocumentId" type="java.lang.String" />
 		<form-property name="yearOfExpirationDateOfDocumentId" type="java.lang.Integer" />
 		<form-property name="name" type="java.lang.String" />
-		<form-property name="dateOfBirth" type="java.lang.Integer" />
+		<form-property name="dateOfBirth" type="java.lang.String" />
 		<form-property name="nameOfFather" type="java.lang.String" />
 		<form-property name="nameOfMother" type="java.lang.String" />
 		<form-property name="nacionality" type="java.lang.String" />
@@ -43,8 +43,8 @@
 		<form-property name="parishOfResidence" type="java.lang.String" />
 		<form-property name="districtSubdivisionOfResidence" type="java.lang.String" />
 		<form-property name="districtOfResidence" type="java.lang.String" />
-		<form-property name="phone" type="java.lang.Integer" />
-		<form-property name="mobile" type="java.lang.Integer" />
+		<form-property name="phone" type="java.lang.String" />
+		<form-property name="mobile" type="java.lang.String" />
 		<form-property name="email" type="java.lang.String" />
 		<form-property name="availableEmail" type="java.lang.Boolean" />
 		<form-property name="webAddress" type="java.lang.String" />
