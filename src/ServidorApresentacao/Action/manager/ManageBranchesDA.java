@@ -56,7 +56,9 @@ public class ManageBranchesDA extends FenixDispatchAction {
 		} catch (FenixServiceException ex) {
 			throw new FenixActionException(ex.getMessage());
 		}
-		Collections.sort(infoBranches, new BeanComparator("code"));
+		
+		if(infoBranches!=null)
+			Collections.sort(infoBranches, new BeanComparator("code"));
 		request.setAttribute("infoBranchesList", infoBranches);
 
 		return mapping.findForward("manageBranches");

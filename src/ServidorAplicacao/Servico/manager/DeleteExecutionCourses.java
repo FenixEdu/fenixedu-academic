@@ -11,6 +11,7 @@ import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
+import Dominio.ISite;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -18,6 +19,7 @@ import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentResponsibleFor;
+import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -52,6 +54,8 @@ public class DeleteExecutionCourses implements IServico {
 			IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
 			IPersistentProfessorship persistentProfessorShip = sp.getIPersistentProfessorship();
 			IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
+			IPersistentSite persistentSite = sp.getIPersistentSite();
+
 
 			Iterator iter = internalIds.iterator();
 			Iterator iterator;
@@ -60,6 +64,7 @@ public class DeleteExecutionCourses implements IServico {
 			IProfessorship professorShip;
 			IResponsibleFor responsibleFor;
 			List undeletedExecutionCoursesCodes = new ArrayList();
+			ISite site;
 
 			while(iter.hasNext()) {
 				internalId = (Integer) iter.next();
@@ -84,6 +89,9 @@ public class DeleteExecutionCourses implements IServico {
 								responsibleFor = (IResponsibleFor) iterator.next();
 								persistentResponsibleFor.delete(responsibleFor);
 							}
+							
+							site = persistentSite.readByExecutionCourse(executionCourse);	
+							persistentSite.delete(site);
 						} 
 						else
 							undeletedExecutionCoursesCodes.add((String) executionCourse.getSigla());
