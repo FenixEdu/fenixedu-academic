@@ -88,7 +88,7 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
 				executionPeriods =
 					(ArrayList) gestor.executar(
 						userView,
-						"ReadExecutionPeriods",
+						"ReadNotClosedExecutionPeriods",
 						argsReadExecutionPeriods);
 			} catch (FenixServiceException e1) {
 				throw new FenixActionException();

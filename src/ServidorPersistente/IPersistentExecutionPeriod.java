@@ -90,4 +90,9 @@ public interface IPersistentExecutionPeriod extends IPersistentObject {
 	 */
 	public List readByExecutionYear(IExecutionYear executionYear) throws ExcepcaoPersistencia;
 
+	/**
+	 * @return
+	 */
+	public List readNotClosedExecutionPeriods() throws ExcepcaoPersistencia;
+
 }

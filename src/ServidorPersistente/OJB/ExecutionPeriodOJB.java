@@ -1480,4 +1480,13 @@ public class ExecutionPeriodOJB
 		return siteToCreate;
 	}
 
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IPersistentExecutionPeriod#readNotClosedExecutionPeriods()
+	 */
+	public List readNotClosedExecutionPeriods() throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addNotEqualTo("state", PeriodState.CLOSED);
+		return queryList(ExecutionPeriod.class, criteria);
+	}
+
 }

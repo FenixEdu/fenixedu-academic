@@ -64,7 +64,7 @@ public class SearchEmptyRoomsDispatchAction extends FenixContextDispatchAction {
 		ArrayList executionPeriods =
 			(ArrayList) gestor.executar(
 				userView,
-				"ReadExecutionPeriods",
+				"ReadNotClosedExecutionPeriods",
 				argsReadExecutionPeriods);
 
 		// if executionPeriod was previously selected,form has that

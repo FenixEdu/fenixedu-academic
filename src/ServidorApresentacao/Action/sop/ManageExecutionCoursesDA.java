@@ -51,7 +51,7 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
 		InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
 		Object argsReadExecutionPeriods[] = {};
-		ArrayList executionPeriods = (ArrayList) gestor.executar(userView, "ReadExecutionPeriods", argsReadExecutionPeriods);
+		ArrayList executionPeriods = (ArrayList) gestor.executar(userView, "ReadNotClosedExecutionPeriods", argsReadExecutionPeriods);
 
 		ComparatorChain chainComparator = new ComparatorChain();
 		chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));

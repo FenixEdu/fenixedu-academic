@@ -52,7 +52,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		ArrayList executionPeriods =
 			(ArrayList) gestor.executar(
 				userView,
-				"ReadExecutionPeriods",
+				"ReadNotClosedExecutionPeriods",
 				argsReadExecutionPeriods);
 		ComparatorChain chainComparator = new ComparatorChain();
 		chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
@@ -143,7 +143,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		ArrayList executionPeriods =
 			(ArrayList) gestor.executar(
 				userView,
-				"ReadExecutionPeriods",
+				"ReadNotClosedExecutionPeriods",
 				argsReadExecutionPeriods);
 		ComparatorChain chainComparator = new ComparatorChain();
 		chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));

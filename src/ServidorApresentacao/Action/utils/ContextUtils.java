@@ -668,7 +668,7 @@ public class ContextUtils
         try
         {
             executionPeriods =
-                (ArrayList) gestor.executar(userView, "ReadExecutionPeriods", argsReadExecutionPeriods);
+                (ArrayList) gestor.executar(userView, "ReadNotClosedExecutionPeriods", argsReadExecutionPeriods);
 
             selectedExecutionPeriod.getInfoExecutionYear().getYear();
             selectedExecutionPeriod.getSemester();
