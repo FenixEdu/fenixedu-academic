@@ -8,7 +8,6 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.util.SmsDeliveryType;
 
 /**
  * 

@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.util.SmsDeliveryType;
+import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
 
 import org.apache.ojb.broker.accesslayer.conversions.ConversionException;
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
@@ -19,7 +19,7 @@ public class JavaSmsDeliveryType2SqlSmsDeliveryTypeFieldConversion implements Fi
     public Object javaToSql(Object source) throws ConversionException {
         if (source instanceof SmsDeliveryType) {
             SmsDeliveryType smsDeliveryType = (SmsDeliveryType) source;
-            return new Integer(smsDeliveryType.getValue());
+            return smsDeliveryType.toString();
         }
 
         return source;
@@ -27,9 +27,9 @@ public class JavaSmsDeliveryType2SqlSmsDeliveryTypeFieldConversion implements Fi
     }
 
     public Object sqlToJava(Object source) throws ConversionException {
-        if (source instanceof Integer) {
-            Integer src = (Integer) source;
-            return SmsDeliveryType.getEnum(src.intValue());
+        if (source instanceof String) {
+            String src = (String) source;
+            return SmsDeliveryType.valueOf(src);
         }
 
         return source;

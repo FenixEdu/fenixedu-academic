@@ -8,7 +8,6 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.util.SmsDeliveryType;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>

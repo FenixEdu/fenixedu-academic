@@ -9,10 +9,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.sms.SentSms;
+import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
-import net.sourceforge.fenixedu.util.SmsDeliveryType;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -44,7 +44,7 @@ public class SentSmsOJB extends PersistentObjectOJB implements IPersistentSentSm
         crit.addEqualTo("person.idInternal", personId);
         crit.addGreaterOrEqualThan("sendDate", startDate);
         crit.addLessThan("sendDate", endDate);
-        crit.addNotEqualTo("deliveryType", SmsDeliveryType.NOT_SENT);
+        crit.addNotEqualTo("deliveryType", SmsDeliveryType.NOT_SENT_TYPE);
 
         return new Integer(count(SentSms.class, crit));
     }
