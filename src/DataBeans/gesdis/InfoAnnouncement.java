@@ -137,7 +137,7 @@ public class InfoAnnouncement implements Comparable{
 		}
 		else{ if (getYoungerDate().before(((InfoAnnouncement)arg0).getYoungerDate())){
 			return 1;
-		}else {		return 0; } 
+		}else {	return 0; } 
 	}
 	}
 	
