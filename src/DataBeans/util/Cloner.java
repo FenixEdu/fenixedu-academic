@@ -11,6 +11,7 @@ import DataBeans.InfoCountry;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
+import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
@@ -38,6 +39,7 @@ import Dominio.Curriculum;
 import Dominio.Curso;
 import Dominio.CursoExecucao;
 import Dominio.DisciplinaExecucao;
+import Dominio.Exam;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
 import Dominio.IAnnouncement;
@@ -50,6 +52,7 @@ import Dominio.ICurriculum;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IExam;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IItem;
@@ -1049,4 +1052,42 @@ public abstract class Cloner {
 
 		return curriculum;
 	}
+
+
+	/**
+	 * 
+	 * @param exam
+	 * @return InfoExam
+	 */
+	public static InfoExam copyIExam2InfoExam(IExam exam) {
+		InfoExam infoExam = new InfoExam();
+
+		InfoExecutionCourse infoExecutionCourse =
+			Cloner.copyIExecutionCourse2InfoExecutionCourse(
+				exam.getExecutionCourse());
+
+		copyObjectProperties(infoExam, exam);
+		infoExam.setInfoExecutionCourse(infoExecutionCourse);
+
+		return infoExam;
+	}
+
+	/**
+	 * 
+	 * @param infoExam
+	 * @return IExam
+	 */
+	public static IExam copyInfoExam2IExam(InfoExam infoExam) {
+		IExam exam = new Exam();
+
+		IDisciplinaExecucao executionCourse =
+			Cloner.copyInfoExecutionCourse2ExecutionCourse(
+				infoExam.getInfoExecutionCourse());
+
+		copyObjectProperties(exam, infoExam);
+		exam.setExecutionCourse(executionCourse);
+
+		return exam;
+	}
+
 }

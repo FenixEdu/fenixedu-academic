@@ -23,7 +23,12 @@ public abstract class PasswordEncryptor {
 
 		byte[] digest = algorithm.digest();
 		BigInteger bi = new BigInteger(digest);
-		return bi.toString(16);
+		String pairLength = bi.toString(16);
+		// append 0 if length is even
+		if (pairLength.length() % 2 != 0){
+			pairLength = "0"+pairLength;
+		}
+		return pairLength;
 	}
 
 	static public boolean areEquals(
