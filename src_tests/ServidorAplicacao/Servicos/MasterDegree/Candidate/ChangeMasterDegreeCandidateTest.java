@@ -160,7 +160,7 @@ public class ChangeMasterDegreeCandidateTest extends TestCaseServicosCandidato {
         assertTrue(masterDegreeCandidate.getOccupation().equals("Estudante"));
         assertTrue(masterDegreeCandidate.getMajorDegree().equals("LEIC"));
         assertTrue(masterDegreeCandidate.getUsername().equals("Cand2"));
-        assertTrue(masterDegreeCandidate.getPassword().equals("Pass1"));
+        assertTrue(masterDegreeCandidate.getPassword().equals("Pass2"));
         assertTrue(masterDegreeCandidate.getCandidateNumber().equals(new Integer(2)));
         assertTrue(masterDegreeCandidate.getExecutionYear().getYear().equals("2003/2004"));
         assertEquals(masterDegreeCandidate.getSpecialization(), new Specialization(Specialization.MESTRADO));
