@@ -46,7 +46,7 @@ public class EditCareer extends EditDomainObjectService
         return "EditCareer";
     }
 
-    protected IPersistentObject getPersistentObject(ISuportePersistente sp)
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
     {
         IPersistentCareer persistentCareer = sp.getIPersistentCareer();
         return persistentCareer;
@@ -54,8 +54,8 @@ public class EditCareer extends EditDomainObjectService
 
     protected IDomainObject clone2DomainObject(InfoObject infoCareer)
     {
-        ICareer oldCareer = Cloner.copyInfoCareer2ICareer((InfoCareer) infoCareer);
-        return oldCareer;
+        ICareer Career = Cloner.copyInfoCareer2ICareer((InfoCareer) infoCareer);
+        return Career;
     }
 
 }

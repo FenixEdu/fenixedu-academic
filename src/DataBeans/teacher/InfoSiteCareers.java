@@ -1,0 +1,57 @@
+/*
+ * Created on Nov 13, 2003
+ *  
+ */
+package DataBeans.teacher;
+
+import java.util.List;
+
+import DataBeans.ISiteComponent;
+import DataBeans.InfoObject;
+import Util.CareerType;
+
+/**
+ * @author Leonor Almeida
+ * @author Sergio Montelobo
+ *  
+ */
+public class InfoSiteCareers extends InfoObject implements ISiteComponent
+{
+
+	private List infoCareers;
+	private CareerType careerType;
+
+	/**
+	 * @return Returns the careerType.
+	 */
+	public CareerType getCareerType()
+	{
+		return careerType;
+	}
+
+	/**
+	 * @param careerType
+	 *                    The careerType to set.
+	 */
+	public void setCareerType(CareerType careerType)
+	{
+		this.careerType = careerType;
+	}
+
+	/**
+	 * @return Returns the infoCareers.
+	 */
+	public List getInfoCareers()
+	{
+		return infoCareers;
+	}
+
+	/**
+	 * @param infoCareers
+	 *                    The infoCareers to set.
+	 */
+	public void setInfoCareers(List infoCareers)
+	{
+		this.infoCareers = infoCareers;
+	}
+}

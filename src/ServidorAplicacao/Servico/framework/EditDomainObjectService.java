@@ -27,10 +27,9 @@ public abstract class EditDomainObjectService implements IServico
         try
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentObject persistentObject = getPersistentObject(sp);
+            IPersistentObject persistentObject = getIPersistentObject(sp);
             IDomainObject oldDomainObject = clone2DomainObject(infoObject);
-            IDomainObject newDomainObject =
-                (IDomainObject) Class.forName(oldDomainObject.getClass().getName()).newInstance();
+            IDomainObject newDomainObject = (IDomainObject) oldDomainObject.getClass().newInstance();
 
             newDomainObject.setIdInternal(oldDomainObject.getIdInternal());
             
@@ -66,7 +65,7 @@ public abstract class EditDomainObjectService implements IServico
      * @param sp
      * @return
      */
-    protected abstract IPersistentObject getPersistentObject(ISuportePersistente sp);
+    protected abstract IPersistentObject getIPersistentObject(ISuportePersistente sp);
     
     /**
      * This method invokes the Cloner to convert from InfoObject to IDomainObject 

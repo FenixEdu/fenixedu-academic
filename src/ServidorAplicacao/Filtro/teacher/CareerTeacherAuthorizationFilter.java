@@ -70,7 +70,6 @@ public class CareerTeacherAuthorizationFilter extends AuthorizationByRoleFilter
             {
                 throw new NotAuthorizedException();
             }
-            System.out.println("cheguei ao fim do filtro");
         } catch (RuntimeException e)
         {
             throw new NotAuthorizedException(e.getMessage());
