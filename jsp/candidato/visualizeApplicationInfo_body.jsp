@@ -1,6 +1,8 @@
+<%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
 <html>
   <head>
@@ -8,8 +10,9 @@
   </head>
   <body>
     <table>
-    
+    <bean:define id="applicationInfo" name="<%= SessionConstants.APPLICATION_INFO %>" scope="request" />
         <logic:present name="applicationInfo">
+        
           <!-- Nome -->
           <tr>
             <td><bean:message key="label.candidate.name" /></td>
@@ -90,7 +93,6 @@
             <td><bean:message key="label.candidate.average" /></td>
             <td><bean:write name="applicationInfo" property="average"/> <bean:message key="label.candidate.values"/></td>
           </tr>
-          
         </logic:present>
     </table>
     

@@ -14,11 +14,6 @@ package ServidorApresentacao.Action.sop.utils;
  * 
  */
 public abstract class SessionConstants {
-	
-
-	
-
-	
 
 	public static final String CONTEXT_PREFIX = "context.";
 
@@ -80,5 +75,16 @@ public abstract class SessionConstants {
 	public static final String INFO_BIBLIOGRAPHIC_REFERENCE_LIST = "BibliographicReferences";		
 	
 	public static final String INFO_BIBLIOGRAPHIC_REFERENCE = "BibliographicReference";
+	
+	
+	// Master Degree 
+	public static final String SPECIALIZATIONS = "specializations"; 
+	public static final String DEGREE_LIST = "degree_list";
+	public static final String NEW_MASTER_DEGREE_CANDIDATE = "new_master_degree_candidate";
+	public static final String APPLICATION_INFO = "application_info";
+	
+
+    // Person constants
+	public static final String IDENTIFICATION_DOCUMENT_TYPE_LIST = "identification_document_type_list";
 	
 }

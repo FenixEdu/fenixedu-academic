@@ -24,6 +24,7 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.InfoMasterDegreeCandidate;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 public class VisualizeApplicationInfoAction extends ServidorApresentacao.Action.base.FenixAction {
@@ -37,7 +38,7 @@ public class VisualizeApplicationInfoAction extends ServidorApresentacao.Action.
 
 	HttpSession session = request.getSession(false);
 	if (session != null) {
-      IUserView userView = (IUserView) session.getAttribute("UserView");
+      IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
       GestorServicos gestor = GestorServicos.manager();
 	  
       Object args[] = new Object[1];
@@ -46,7 +47,7 @@ public class VisualizeApplicationInfoAction extends ServidorApresentacao.Action.
       InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) gestor.executar(userView, "ReadActiveCandidateSituation", args);
 	  
 	   
-      request.setAttribute("applicationInfo", infoMasterDegreeCandidate);
+      request.setAttribute(SessionConstants.APPLICATION_INFO, infoMasterDegreeCandidate);
       return mapping.findForward("Success");
     } else
       throw new Exception();   

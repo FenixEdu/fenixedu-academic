@@ -21,6 +21,7 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
@@ -45,7 +46,7 @@ public class CreateContributorDispatchAction extends DispatchAction {
 			DynaActionForm createContributorForm = (DynaActionForm) form;
 			GestorServicos serviceManager = GestorServicos.manager();
 			
-			IUserView userView = (IUserView) session.getAttribute("UserView");
+			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 //			InfoGuide infoGuide = session.getAttribute("infoGuide"); 
 //			
@@ -75,7 +76,7 @@ public class CreateContributorDispatchAction extends DispatchAction {
 
 			GestorServicos serviceManager = GestorServicos.manager();
 			
-			IUserView userView = (IUserView) session.getAttribute("UserView");
+			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 			// Get the Information
 			Integer contributorNumber = new Integer((String) createContributorForm.get("contributorNumber"));

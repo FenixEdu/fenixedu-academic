@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
 <html>
   <head>
@@ -11,6 +12,10 @@
    
    <table>
     <span class="error"><html:errors/></span>
+    <bean:define id="specializations" name="<%= SessionConstants.SPECIALIZATIONS %>" scope="session" />
+    <bean:define id="degreeList" name="<%= SessionConstants.DEGREE_LIST %>" scope="session" />
+    <bean:define id="identificationDocumentTypeList" name="<%= SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST %>" scope="session" />
+    
     <html:form action="/createCandidateDispatchAction?method=create">
 	   <html:hidden property="page" value="1"/>
 

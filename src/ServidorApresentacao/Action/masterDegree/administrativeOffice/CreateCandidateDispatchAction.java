@@ -25,6 +25,7 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.Specialization;
 import Util.TipoDocumentoIdentificacao;
 
@@ -50,11 +51,13 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 			DynaActionForm createCandidateForm = (DynaActionForm) form;
 			GestorServicos serviceManager = GestorServicos.manager();
 			
-			IUserView userView = (IUserView) session.getAttribute("UserView");
+			
+			
+			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 			// Create the Degree Type List
 			ArrayList specializations = Specialization.toArrayList();
-			session.setAttribute("specializations", specializations);
+			session.setAttribute(SessionConstants.SPECIALIZATIONS, specializations);
 			
 			// Get the Degree List
 			
@@ -65,10 +68,10 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 				throw new ExistingActionException(e);
 			}
 
-			session.setAttribute("degreeList", degreeList);
+			session.setAttribute(SessionConstants.DEGREE_LIST, degreeList);
 						
 			// Create the type of Identification Document
-			session.setAttribute("identificationDocumentTypeList", TipoDocumentoIdentificacao.toArrayList());  
+			session.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST, TipoDocumentoIdentificacao.toArrayList());  
 			
 			return mapping.findForward("PrepareSuccess");
 		  } else
@@ -91,7 +94,7 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 
 			GestorServicos serviceManager = GestorServicos.manager();
 			
-			IUserView userView = (IUserView) session.getAttribute("UserView");
+			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 			// Get the Information
 			String degreeType = (String) createCandidateForm.get("specialization");
@@ -100,7 +103,7 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 			String identificationDocumentNumber = (String) createCandidateForm.get("identificationDocumentNumber");
 			String identificationDocumentType = (String) createCandidateForm.get("identificationDocumentType");
 
-			ArrayList degrees = (ArrayList) session.getAttribute("degreeList");
+			ArrayList degrees = (ArrayList) session.getAttribute(SessionConstants.DEGREE_LIST);
 			
 			Iterator iterator = degrees.iterator();
 			InfoExecutionDegree infoExecutionDegree = null; 
@@ -131,7 +134,7 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 			} catch (ExistingServiceException e) {
 				throw new ExistingActionException("O Candidato", e);
 			}
-		  session.setAttribute("newCandidate", createdCandidate);
+		  session.setAttribute(SessionConstants.NEW_MASTER_DEGREE_CANDIDATE, createdCandidate);
 		  
 		  return mapping.findForward("CreateSuccess");
 		} else

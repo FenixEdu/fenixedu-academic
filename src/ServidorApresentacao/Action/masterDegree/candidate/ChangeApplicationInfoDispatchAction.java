@@ -26,6 +26,7 @@ import org.apache.struts.actions.DispatchAction;
 import DataBeans.InfoMasterDegreeCandidate;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 public class ChangeApplicationInfoDispatchAction extends DispatchAction {
@@ -41,7 +42,7 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 	
 	if (session != null) {
 	  DynaActionForm changeApplicationInfoForm = (DynaActionForm) form;
-	  IUserView userView = (IUserView) session.getAttribute("UserView");
+	  IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 	  GestorServicos gestor = GestorServicos.manager();
  
  	  Object changeArgs[] = new Object[2];
@@ -76,7 +77,7 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 		if (session != null) {
 		  DynaActionForm changeApplicationInfoForm = (DynaActionForm) form;
 
-		  IUserView userView = (IUserView) session.getAttribute("UserView");
+		  IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		  GestorServicos gestor = GestorServicos.manager();
 	
 		  Object changeArgs[] = new Object[1];
