@@ -31,7 +31,10 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoRole;
+import DataBeans.util.Cloner;
 import Dominio.CurricularCourse;
+import Dominio.CurricularSemester;
+import Dominio.CurricularYear;
 import Dominio.Curso;
 import Dominio.CursoExecucao;
 import Dominio.DegreeCurricularPlan;
@@ -41,6 +44,8 @@ import Dominio.DisciplinaExecucao;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
 import Dominio.ICurricularCourse;
+import Dominio.ICurricularSemester;
+import Dominio.ICurricularYear;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
@@ -58,6 +63,7 @@ import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
+import ServidorPersistente.IPersistentCurricularSemester;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
@@ -92,7 +98,7 @@ public class SessionUtilsTest extends TestCase {
 	protected IPersistentDegreeCurricularPlan _degreeCurriculumDAO;
 	protected IPersistentExecutionYear executionYearDAO;
 	protected IPersistentExecutionPeriod executionPeriodDAO;
-	
+	private IPersistentCurricularSemester curricularSemesterDAO = null;
 
 	protected ICursoExecucao _executionDegree;
 	protected ICurso _degree;
@@ -137,13 +143,14 @@ public class SessionUtilsTest extends TestCase {
 				executionYearDAO.lockWrite(executionYear);
 			}
 			_sp.confirmarTransaccao();
+			IDegreeCurricularPlan degreeCurriculum = new DegreeCurricularPlan("plano1", _degree);
 			_executionDegree =
 				new CursoExecucao(
 					executionYear,
-					new DegreeCurricularPlan("plano1", _degree));
+					degreeCurriculum);
 
-			IDegreeCurricularPlan degreeCurriculum =
-				new DegreeCurricularPlan("Plano 1", _degree);
+			
+
 
 			IDisciplinaExecucao _executionCourse = null;
 			ICurricularCourse _curricularCourse = null;
@@ -166,6 +173,24 @@ public class SessionUtilsTest extends TestCase {
 						"D" + i,
 						dd,
 						degreeCurriculum);
+
+				ICurricularYear curricularYear =
+					new CurricularYear(new Integer(2));
+				ICurricularSemester curricularSemester =
+					curricularSemesterDAO
+						.readCurricularSemesterBySemesterAndCurricularYear(
+						new Integer(2),
+						curricularYear);
+				if (curricularSemester == null) {
+					curricularSemester =
+						new CurricularSemester(new Integer(2), curricularYear);
+					curricularSemesterDAO.lockWrite(curricularSemester);
+				}
+
+				List curricularSemesterList = new ArrayList();
+				curricularSemesterList.add(curricularSemester);
+				_curricularCourse.setAssociatedCurricularSemesters(
+					curricularSemesterList);
 
 				IExecutionPeriod executionPeriod =
 					executionPeriodDAO.readByNameAndExecutionYear(
@@ -191,6 +216,11 @@ public class SessionUtilsTest extends TestCase {
 				List list = new ArrayList();
 
 				list.add(_curricularCourse);
+				
+				List listExecutionCourse = new ArrayList();
+				listExecutionCourse.add(_executionCourse);
+				_curricularCourse.setAssociatedExecutionCourses(listExecutionCourse);
+				
 				_executionCourse.setAssociatedCurricularCourses(list);
 
 				_sp.getIDepartamentoPersistente().escreverDepartamento(d);
@@ -266,6 +296,7 @@ public class SessionUtilsTest extends TestCase {
 		_personDAO = _sp.getIPessoaPersistente();
 		executionYearDAO = _sp.getIPersistentExecutionYear();
 		executionPeriodDAO = _sp.getIPersistentExecutionPeriod();
+		curricularSemesterDAO = _sp.getIPersistentCurricularSemester();
 		cleanData();
 	}
 
@@ -383,9 +414,24 @@ public class SessionUtilsTest extends TestCase {
 		HttpServletRequestSimulator request =
 			new HttpServletRequestSimulator(_ctx);
 
-		
+		InfoExecutionYear infoExecutionYear =
+			new InfoExecutionYear(_schoolYear);
 
+		InfoExecutionPeriod infoExecutionPeriod =
+			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
 		setToSessionUserView(request);
+		HttpSession session = request.getSession();
+		session.setAttribute(
+			SessionConstants.CURRICULAR_YEAR_KEY,
+			new Integer(2));
+
+		session.setAttribute(
+			SessionConstants.INFO_EXECUTION_DEGREE_KEY,
+			Cloner.copyIExecutionDegree2InfoExecutionDegree(_executionDegree));
+		session.setAttribute(
+			SessionConstants.INFO_EXECUTION_PERIOD_KEY,
+			infoExecutionPeriod);
+
 		List infoExecutionCourseList = null;
 		try {
 			infoExecutionCourseList = SessionUtils.getExecutionCourses(request);
@@ -398,9 +444,9 @@ public class SessionUtilsTest extends TestCase {
 			"infoExecutionCourseList is null.",
 			infoExecutionCourseList);
 		assertEquals(
-			"List is not of the same size",
-			infoExecutionCourseList.size(),
-			_executionCourseList.size());
+			"List is not of the same size!",
+			_executionCourseList.size(),
+			infoExecutionCourseList.size());
 		assertTrue(
 			"List not contains all elements!",
 			infoExecutionCourseList.containsAll(_executionCourseList));
