@@ -57,7 +57,7 @@
 
 <html:hidden property="method" value="createStudentGroup"/>
 <html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-<html:hidden  property="groupProperties" value="<%= request.getParameter("groupProperties") %>" />
+<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 <html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />
 
 <html:submit styleClass="inputbutton"><bean:message key="button.insert"/>                    		         	

@@ -22,6 +22,7 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoGroupProperties;
 import DataBeans.InfoItem;
 import DataBeans.InfoSection;
+import DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons;
 import DataBeans.InfoSite;
 import DataBeans.InfoSiteAllGroups;
 import DataBeans.InfoSiteAnnouncement;
@@ -58,6 +59,7 @@ import Dominio.EvaluationExecutionCourse;
 import Dominio.FinalEvaluation;
 import Dominio.GroupProperties;
 import Dominio.IAnnouncement;
+import Dominio.IAula;
 import Dominio.IBibliographicReference;
 import Dominio.ICurricularCourse;
 import Dominio.ICurriculum;
@@ -76,6 +78,7 @@ import Dominio.ISite;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
 import Dominio.ITeacher;
+import Dominio.ITurmaTurno;
 import Dominio.ITurno;
 import Dominio.Item;
 import Dominio.Section;
@@ -96,7 +99,6 @@ import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
@@ -1139,30 +1141,60 @@ public class TeacherAdministrationSiteComponentBuilder {
 		return Cloner.copyIGroupProperties2InfoGroupProperties(groupProperties);
 	}
 	
+	
+	
+	
 	/**
-	 * 
-	 * @param component
+	 * @param shifts
 	 * @param site
 	 * @return
 	 */
-	private ISiteComponent getInfoSiteShifts(InfoSiteShifts component, Integer groupPropertiesCode) throws ExcepcaoInexistente, FenixServiceException {
-
-		List shifts = null;
-		IGroupProperties groupProperties = null;
-
+	private ISiteComponent getInfoSiteShifts(InfoSiteShifts component, Integer objectCode) throws FenixServiceException {
+		List shiftsWithAssociatedClassesAndLessons = new ArrayList();
+		IDisciplinaExecucao executionCourse=null;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			groupProperties = (IGroupProperties) sp.getIPersistentGroupProperties().readByOId(new GroupProperties(groupPropertiesCode), false);
+			executionCourse = (IDisciplinaExecucao) sp.getIDisciplinaExecucaoPersistente().readByOId(new DisciplinaExecucao(objectCode), false);
 
-			ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-			shifts = persistentShift.readByExecutionCourseAndType(groupProperties.getExecutionCourse(), groupProperties.getShiftType().getTipo());
+			List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
+
+			if (shifts == null || shifts.isEmpty()) {
+
+			} else {
+
+				for (int i = 0; i < shifts.size(); i++) {
+					ITurno shift = (ITurno) shifts.get(i);
+					InfoShiftWithAssociatedInfoClassesAndInfoLessons shiftWithAssociatedClassesAndLessons =
+						new InfoShiftWithAssociatedInfoClassesAndInfoLessons(Cloner.copyShift2InfoShift(shift), null, null);
+
+					List lessons = sp.getITurnoAulaPersistente().readByShift(shift);
+					List infoLessons = new ArrayList();
+					List classesShifts = sp.getITurmaTurnoPersistente().readClassesWithShift(shift);
+					List infoClasses = new ArrayList();
+
+					for (int j = 0; j < lessons.size(); j++)
+						infoLessons.add(Cloner.copyILesson2InfoLesson((IAula) lessons.get(j)));
+
+					shiftWithAssociatedClassesAndLessons.setInfoLessons(infoLessons);
+
+					for (int j = 0; j < classesShifts.size(); j++)
+						infoClasses.add(Cloner.copyClass2InfoClass(((ITurmaTurno) classesShifts.get(j)).getTurma()));
+
+					shiftWithAssociatedClassesAndLessons.setInfoClasses(infoClasses);
+
+					shiftsWithAssociatedClassesAndLessons.add(shiftWithAssociatedClassesAndLessons);
+				}
+			}
 
 		} catch (ExcepcaoPersistencia e) {
-			e.printStackTrace();
-			throw new FenixServiceException("error.impossibleReadShifts");
+			throw new FenixServiceException(e);
 		}
-		InfoSiteShifts infoSiteShifts = new InfoSiteShifts();
-		infoSiteShifts.setShifts(shifts);
-		return infoSiteShifts;
+		component.setShifts(shiftsWithAssociatedClassesAndLessons);
+		component.setInfoExecutionPeriodName(executionCourse.getExecutionPeriod().getName());
+		component.setInfoExecutionYearName(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+		return component;
 	}
+	
+	
+
 }

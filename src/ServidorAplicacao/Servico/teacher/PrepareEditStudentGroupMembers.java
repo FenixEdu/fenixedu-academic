@@ -34,27 +34,27 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  *
  */
 
-public class PrepareEditStudentGroup  implements IServico {
+public class PrepareEditStudentGroupMembers  implements IServico {
 
-	private static PrepareEditStudentGroup service =
-			new PrepareEditStudentGroup();
+	private static PrepareEditStudentGroupMembers service =
+			new PrepareEditStudentGroupMembers();
 
 	/**
 		* The singleton access method of this class.
 		*/
-	public static PrepareEditStudentGroup getService() {
+	public static PrepareEditStudentGroupMembers getService() {
 		return service;
 	}
 	/**
 	 * The constructor of this class.
 	 */
-	private PrepareEditStudentGroup() {
+	private PrepareEditStudentGroupMembers() {
 	}
 	/**
 	 * The name of the service
 	 */
 	public final String getNome() {
-		return "PrepareEditStudentGroup";
+		return "PrepareEditStudentGroupMembers";
 	}
 
 	/**
@@ -122,3 +122,4 @@ public class PrepareEditStudentGroup  implements IServico {
 		return infoStudentList;
 	}
 }
+

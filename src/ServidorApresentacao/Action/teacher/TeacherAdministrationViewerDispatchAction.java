@@ -19,6 +19,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.ExecutionCourseSiteView;
@@ -28,6 +29,8 @@ import DataBeans.InfoBibliographicReference;
 import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoGroupProperties;
 import DataBeans.InfoItem;
+import DataBeans.InfoShift;
+import DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons;
 import DataBeans.InfoSite;
 import DataBeans.InfoSiteAllGroups;
 import DataBeans.InfoSiteAnnouncement;
@@ -47,7 +50,6 @@ import DataBeans.InfoSiteSection;
 import DataBeans.InfoSiteSections;
 import DataBeans.InfoSiteShifts;
 import DataBeans.InfoSiteStudentGroup;
-import DataBeans.InfoSiteStudentInformation;
 import DataBeans.InfoSiteSummaries;
 import DataBeans.InfoSiteSummary;
 import DataBeans.InfoSiteTeachers;
@@ -1758,7 +1760,7 @@ public class TeacherAdministrationViewerDispatchAction
 		throws FenixActionException {
 
 		String groupPropertiesCodeString =
-			(String) request.getParameter("groupProperties");
+			(String) request.getParameter("groupPropertiesCode");
 
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
@@ -1776,7 +1778,7 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		String studentGroupCodeString = (String) request.getParameter("studentGroup");
+		String studentGroupCodeString = (String) request.getParameter("studentGroupCode");
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
 
 		ISiteComponent viewStudentGroup = new InfoSiteStudentGroup();
@@ -1937,7 +1939,7 @@ public class TeacherAdministrationViewerDispatchAction
 
 			HttpSession session = request.getSession(false);
 			
-			String groupPropertiesCodeString = (String) request.getParameter("groupProperties");
+			String groupPropertiesCodeString = (String) request.getParameter("groupPropertiesCode");
 			Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
 			ISiteComponent viewGroupProperties = new InfoSiteGroupProperties();
@@ -2001,11 +2003,10 @@ public class TeacherAdministrationViewerDispatchAction
 
 			HttpSession session = request.getSession(false);
 
-			System.out.println("<-----------------ENTRA NA ACCAO EDIT GROUP PROPERTIES");
-
+			
 			DynaActionForm editGroupPropertiesForm = (DynaActionForm) form;
 			
-			String groupPropertiesString = request.getParameter("groupProperties");
+			String groupPropertiesString = request.getParameter("groupPropertiesCode");
 			Integer groupPropertiesCode = new Integer(groupPropertiesString); 
 			
 			String name =(String) editGroupPropertiesForm.get("name");
@@ -2074,7 +2075,6 @@ public class TeacherAdministrationViewerDispatchAction
 			if (result.booleanValue() == false) {
 				ActionErrors actionErrors = new ActionErrors();
 				ActionError error = null;
-				System.out.println("ENTRA NOS ACTION ERRORS");
 				// Create an ACTION_ERROR for each GROUP_PROPERTIES
 				error =	new ActionError("errors.invalid.edit.groupProperties");
 				actionErrors.add("errors.invalid.edit.groupProperties",error);
@@ -2101,7 +2101,7 @@ public class TeacherAdministrationViewerDispatchAction
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		String studentGroupCodeString =
-			(String) request.getParameter("studentGroup");
+			(String) request.getParameter("studentGroupCode");
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
 
 		Object[] args = { studentGroupCode };
@@ -2147,7 +2147,7 @@ public class TeacherAdministrationViewerDispatchAction
 		UserView userView = (UserView) session.getAttribute("UserView");
 		
 		String groupPropertiesString =
-					(String) request.getParameter("groupProperties");
+					(String) request.getParameter("groupPropertiesCode");
 		Integer groupPropertiesCode = new Integer(groupPropertiesString);
 		Integer objectCode = getObjectCode(request);
 		
@@ -2184,7 +2184,7 @@ public class TeacherAdministrationViewerDispatchAction
 		Integer shiftCode = new Integer(shiftCodeString);
 		
 		
-		String groupPropertiesCodeString = (String) request.getParameter("groupProperties");
+		String groupPropertiesCodeString = (String) request.getParameter("groupPropertiesCode");
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 		
 		DynaActionForm insertStudentGroupForm = (DynaActionForm) form;
@@ -2221,101 +2221,166 @@ public class TeacherAdministrationViewerDispatchAction
 	}
 
 
-	public ActionForward prepareEditStudentGroup(
+	public ActionForward prepareEditStudentGroupMembers(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
 			
-		System.out.println("<----------ENTRA NA ACCAO");	
 		HttpSession session = request.getSession(false);
 		
 		UserView userView = (UserView) session.getAttribute("UserView");
-		String studentGroupCodeString =(String) request.getParameter("studentGroup");
-		String shiftCodeString =(String) request.getParameter("shiftCode");
-		
+		String studentGroupCodeString =(String) request.getParameter("studentGroupCode");
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
-		Integer shiftCode = new Integer(shiftCodeString);
 		
 		Integer objectCode = getObjectCode(request);
 		
 
-		System.out.println("<----------ANTES DO 1º SERVICO");
-		ISiteComponent viewShifts = new InfoSiteShifts();
-		TeacherAdministrationSiteView shifts = (TeacherAdministrationSiteView)readSiteView(request, viewShifts, null, studentGroupCode, null);
-		InfoSiteShifts shiftsComponent = (InfoSiteShifts)shifts.getComponent();
-		request.setAttribute("shiftsList",shiftsComponent.getShifts());
-		request.setAttribute("shift",shiftCode);
-
-		System.out.println("<----------ANTES DO 2º SERVICO");
+		
 		ISiteComponent viewStudentGroup = new InfoSiteStudentGroup();
 		TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView)readSiteView(request, viewStudentGroup, null, studentGroupCode, null);
 		InfoSiteStudentGroup component = (InfoSiteStudentGroup)siteView.getComponent();
 		
 		
 		request.setAttribute("infoSiteStudentInformationList",component.getInfoSiteStudentInformationList());  
-		List infoStudentList;
-	
+		
 		Object args[] = { objectCode,studentGroupCode};
 		GestorServicos gestor = GestorServicos.manager();
-
-		System.out.println("<----------ANTES DO 2º SERVICO");
+		List infoStudentList;
+	
 		try {
-			infoStudentList = (List) gestor.executar(userView, "PrepareEditStudentGroup", args);
+			infoStudentList = (List) gestor.executar(userView, "PrepareEditStudentGroupMembers", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		  }
 		  
 		request.setAttribute("infoStudentList",infoStudentList);
 
-		return mapping.findForward("editStudentGroup");
+		return mapping.findForward("editStudentGroupMembers");
 		
 	}	
+	
+	
+	public ActionForward prepareEditStudentGroupShift(
+			ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response)
+			throws FenixActionException {
+			
 		
-	public ActionForward editStudentGroup(
+			HttpSession session = request.getSession(false);
+		
+			UserView userView = (UserView) session.getAttribute("UserView");
+			String studentGroupCodeString =(String) request.getParameter("studentGroupCode");
+			String shiftCodeString =(String) request.getParameter("shiftCode");
+		
+			Integer studentGroupCode = new Integer(studentGroupCodeString);
+			Integer shiftCode = new Integer(shiftCodeString);
+			
+			Integer objectCode = getObjectCode(request);
+		
+			
+			ISiteComponent viewShifts = new InfoSiteShifts();
+			TeacherAdministrationSiteView shiftsView = (TeacherAdministrationSiteView)readSiteView(request, viewShifts, null,objectCode, null);
+			List shifts = (List)((InfoSiteShifts)shiftsView.getComponent()).getShifts();
+			
+
+			
+						
+		//			creation of bean of InfoSiteShifts for use in jsp
+				ArrayList shiftsList = new ArrayList();
+				InfoShift oldInfoShift=new InfoShift();
+				if(shifts.size() != 0) {
+					shiftsList.add(new LabelValueBean("(escolher)", ""));
+					InfoShiftWithAssociatedInfoClassesAndInfoLessons infoShift;
+					Iterator iter = shifts.iterator();
+					String label, value;
+					while(iter.hasNext())
+					{
+						infoShift = (InfoShiftWithAssociatedInfoClassesAndInfoLessons) iter.next();
+					
+			
+						if((infoShift.getInfoShift()).getIdInternal().equals(shiftCode))
+						{
+							oldInfoShift = infoShift.getInfoShift();
+						}
+						value = infoShift.getInfoShift().getIdInternal().toString();
+						label = infoShift.getInfoShift().getNome();
+						shiftsList.add(new LabelValueBean(label, value));
+					}
+					request.setAttribute("shiftsList", shiftsList);
+				}
+			
+		
+			request.setAttribute("shift",oldInfoShift);
+	
+			
+		
+			return mapping.findForward("editStudentGroupShift");
+		
+		}
+	
+
+		
+	public ActionForward editStudentGroupShift(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
 
-//		HttpSession session = request.getSession(false);
-//		Integer objectCode = getObjectCode(request);
-//		
-//				
-//		DynaActionForm editStudentGroupForm = (DynaActionForm) form;
-//		UserView userView = (UserView) session.getAttribute("UserView");
-//
-//		List studentCodes = Arrays.asList((Integer[]) editStudentGroupForm.get("studentCodes"));
-//		String studentGroupCodeString =(String) request.getParameter("studentGroup");
-//		Integer studentGroupCode = new Integer(studentGroupCodeString);
-//		
-//		Object args[] = {studentCodes, studentGroupCode};
-//		GestorServicos gestor = GestorServicos.manager();
-//
-//		Boolean result;
-//		
-//		try {
-//			result = (Boolean) gestor.executar(userView, "EditStudentGroup", args);
-//		} catch (FenixServiceException e) {
-//			throw new FenixActionException(e);
-//		}
-//		
-//		if (result.booleanValue() == false) {
-//			ActionErrors actionErrors = new ActionErrors();
-//			ActionError error = null;
-//
-//			// Create an ACTION_ERROR for each DEGREE_CURRICULAR_PLAN
-//			error =	new ActionError("errors.invalid.edit.studentGroup");
-//			actionErrors.add( "errors.invalid.edit.studentGroup",error);
-//			saveErrors(request, actionErrors);
-//			
-//			return prepareEditStudentGroup(mapping, form, request, response);
-//		}
+		HttpSession session = request.getSession(false);
+		Integer objectCode = getObjectCode(request);
+				
+		DynaActionForm editStudentGroupForm = (DynaActionForm) form;
+		UserView userView = (UserView) session.getAttribute("UserView");
+
+		String shiftCodeString = (String) request.getParameter("shiftCode");
+		String studentGroupCodeString =(String) request.getParameter("studentGroupCode");
+
+		Integer oldShiftCode = new Integer(shiftCodeString);
+		
+		Integer studentGroupCode = new Integer(studentGroupCodeString);
+		
+		String newShiftString = (String) editStudentGroupForm.get("shift");
+		
+		Integer newShiftCode = new Integer(newShiftString);
+		
+		if(newShiftCode.equals(oldShiftCode))
+		{
+			return viewProjectStudentGroups(mapping, form, request, response);
+		}
+		else
+		{
+		
+			Object args[] = {studentGroupCode, newShiftCode};
+			GestorServicos gestor = GestorServicos.manager();
+
+			Boolean result;
+		
+			try {
+				result = (Boolean) gestor.executar(userView, "EditStudentGroupShift", args);
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
+		
+		if (result.booleanValue() == false) 
+		{
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+
+			// Create an ACTION_ERROR for each DEGREE_CURRICULAR_PLAN
+			error =	new ActionError("errors.invalid.edit.studentGroupShift");
+			actionErrors.add( "errors.invalid.edit.studentGroupShift",error);
+			saveErrors(request, actionErrors);
+			
+			return prepareEditStudentGroupShift(mapping, form, request, response);
+		}
 		
 		return viewProjectStudentGroups(mapping, form, request, response);
-		
+		}
 	}
 
 

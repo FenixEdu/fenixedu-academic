@@ -89,6 +89,6 @@
 
 <html:hidden property="method" value="editGroupProperties"/>	
 <html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-<html:hidden  property="groupProperties" value="<%= request.getParameter("groupProperties") %>" />
+<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 </html:form>
 </logic:present>

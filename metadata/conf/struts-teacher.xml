@@ -269,12 +269,21 @@
 			dynamic="true">        
 			<form-property name="groupNumber" type="java.lang.Integer" />
 			<form-property name="studentCodes" type="java.lang.Integer[]" />
-			<form-property name="studentNumbers" type="java.lang.Integer[]" />
-			<form-property name="shifts" type="java.lang.Integer[]" />
+			<form-property name="studentsToRemove" type="java.lang.Integer[]" />
+			<form-property name="shift" type="java.lang.String" />
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 			
 		</form-bean>
-	
+		
+		<form-bean name="editStudentGroupForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+			dynamic="true">        
+			<form-property name="studentCodes" type="java.lang.Integer[]" />
+			<form-property name="studentsToRemove" type="java.lang.Integer[]" />
+			<form-property name="shift" type="java.lang.String" />
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			
+		</form-bean>
     </form-beans>
 
 
@@ -954,15 +963,29 @@
 	</action>
 	
 	<action     
-		path="/editStudentGroup"
-		name="studentGroupForm"
+		path="/editStudentGroupMembers"
+		name="editStudentGroupForm"
 		parameter="method"      			
 		scope="request"
+		input="/editStudentGroupMembers.do?method=prepareEditStudentGroupMembers&amp;page=0" 
 		validate="true"
      	type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">            
-       	<forward name="editStudentGroup" path="/editStudentGroup.jsp"/>
+       	<forward name="editStudentGroupMembers" path="/editStudentGroupMembers.jsp"/>
 		<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
 	</action>
+
+	<action     
+		path="/editStudentGroupShift"
+		name="editStudentGroupForm"
+		parameter="method"      			
+		scope="request"
+		input="/editStudentGroupShift.do?method=prepareEditStudentGroupShift&amp;page=0" 
+     	type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">            
+       	<forward name="editStudentGroupShift" path="/editStudentGroupShift.jsp"/>
+		<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
+	</action>
+	
+
 	
 	</action-mappings>
 
