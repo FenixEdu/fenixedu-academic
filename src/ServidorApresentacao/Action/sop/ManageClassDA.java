@@ -1,5 +1,6 @@
 package ServidorApresentacao.Action.sop;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,9 +16,12 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoClass;
+import DataBeans.InfoShift;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao
 	.Action
 	.sop
@@ -111,6 +115,104 @@ public class ManageClassDA
 		request.setAttribute(SessionConstants.CLASS_VIEW, infoClassNew);
 
 		return prepare(mapping, form, request, response);
+	}
+
+	public ActionForward removeShift(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		IUserView userView = SessionUtils.getUserView(request);
+
+		InfoClass infoClass =
+			(InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+
+		Integer shiftOID =
+			new Integer(request.getParameter(SessionConstants.SHIFT_OID));
+
+		Object[] args = { shiftOID };
+		InfoShift infoShift = null;
+		try {
+			infoShift =
+				(InfoShift) ServiceUtils.executeService(
+					userView,
+					"ReadShiftByOID",
+					args);
+			System.out.println("shift= " + infoShift);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException();
+		}
+
+		Object argsRemove[] = { infoShift, infoClass };
+		ServiceUtils.executeService(userView, "RemoverTurno", argsRemove);
+
+		return prepare(mapping, form, request, response);
+	}
+
+	public ActionForward prepareAddShifts(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		InfoClass infoClass =
+			(InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+
+		//Get list of available shifts and place them in request
+		Object args[] = { infoClass };
+
+		List infoShifts =
+			(List) ServiceUtils.executeService(
+				SessionUtils.getUserView(request),
+				"ReadAvailableShiftsForClass",
+				args);
+
+		/* Sort the list of shifts */
+		ComparatorChain chainComparator = new ComparatorChain();
+		chainComparator.addComparator(
+			new BeanComparator("infoDisciplinaExecucao.nome"));
+		chainComparator.addComparator(new BeanComparator("tipo.tipo"));
+		chainComparator.addComparator(new BeanComparator("nome"));
+		Collections.sort(infoShifts, chainComparator);
+
+		/* Place list of shifts in request */
+		request.setAttribute(SessionConstants.SHIFTS, infoShifts);
+
+		return mapping.findForward("AddShifts");
+	}
+
+	public ActionForward viewSchedule(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		IUserView userView = SessionUtils.getUserView(request);
+
+		InfoClass infoClass =
+			(InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+
+		// Fill out the form with the name of the class
+		DynaActionForm classForm = (DynaActionForm) form;
+		classForm.set("className", infoClass.getNome());
+
+		// Place list of lessons in request
+		Object argsApagarTurma[] = { infoClass };
+
+		/** InfoLesson ArrayList */
+		ArrayList lessonList =
+			(ArrayList) ServiceUtils.executeService(
+				userView,
+				"LerAulasDeTurma",
+				argsApagarTurma);
+
+		request.setAttribute(SessionConstants.LESSON_LIST_ATT, lessonList);
+
+		return mapping.findForward("ViewSchedule");
 	}
 
 }

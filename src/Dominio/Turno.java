@@ -23,6 +23,7 @@ public class Turno extends DomainObject implements ITurno {
 	private List associatedTeacherProfessorShipPercentage;
 	
 	private List associatedLessons;
+	private List associatedClasses;
 
 	// c�digos internos da base de dados	
 	private Integer chaveDisciplinaExecucao;
@@ -151,6 +152,20 @@ public class Turno extends DomainObject implements ITurno {
 	 */
 	public void setAvailabilityFinal(Integer integer) {
 		availabilityFinal = integer;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getAssociatedClasses() {
+		return associatedClasses;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setAssociatedClasses(List list) {
+		associatedClasses = list;
 	}
 
 }

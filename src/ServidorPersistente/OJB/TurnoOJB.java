@@ -21,6 +21,7 @@ import Dominio.ICurricularYear;
 import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
+import Dominio.ITurma;
 import Dominio.ITurmaTurno;
 import Dominio.ITurno;
 import Dominio.ITurnoAluno;
@@ -397,6 +398,40 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
 			executionPeriod.getIdInternal());
 
 		List shifts = queryList(Turno.class, criteria);
+		return shifts;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ITurnoPersistente#readAvailableShiftsForClass(Dominio.ITurma)
+	 */
+	public List readAvailableShiftsForClass(ITurma schoolClass)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+
+		criteria.addEqualTo(
+			"disciplinaExecucao.associatedCurricularCourses.scopes.curricularSemester.curricularYear.idInternal",
+			schoolClass.getAnoCurricular());
+		criteria.addEqualTo(
+			"disciplinaExecucao.associatedCurricularCourses.degreeCurricularPlan.idInternal",
+			schoolClass
+				.getExecutionDegree()
+				.getCurricularPlan()
+				.getIdInternal());
+		criteria.addEqualTo(
+			"disciplinaExecucao.executionPeriod.idInternal",
+			schoolClass.getExecutionPeriod().getIdInternal());
+
+		List shifts = queryList(Turno.class, criteria);
+
+		List classShifts =
+			SuportePersistenteOJB
+				.getInstance()
+				.getITurmaTurnoPersistente()
+				.readByClass(
+				schoolClass);
+
+		shifts.removeAll(classShifts);
+
 		return shifts;
 	}
 

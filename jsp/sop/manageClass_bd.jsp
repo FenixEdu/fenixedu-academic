@@ -14,7 +14,7 @@
 </table>
 
 <br />
-<h2>Manipular Turmas</h2>
+<h2>Manipular Turma</h2>
 
 <br />
 <html:form action="/manageClass">
@@ -98,6 +98,8 @@ Turnos:
 			<td class="listClasses-header">
 	        	<bean:message key="property.shift.capacity"/>
 	        </td>
+			<td class="listClasses-header">
+			</td>
 		</tr>
 		<logic:iterate id="infoShift" name="<%= SessionConstants.SHIFTS %>">
 			<bean:define id="infoShiftOID" name="infoShift" property="idInternal"/>
@@ -148,6 +150,30 @@ Turnos:
               	<td class="listClasses">
               		<bean:write name="infoShift" property="lotacao"/>
               	</td>
+				<td class="listClasses">
+               		<html:link page="<%= "/manageClass.do?method=removeShift&amp;"
+               							+ SessionConstants.SHIFT_OID
+			  							+ "="
+               				   			+ pageContext.findAttribute("infoShiftOID")
+               				   			+ "&amp;"
+			  							+ SessionConstants.CLASS_VIEW_OID
+  										+ "="
+  										+ pageContext.findAttribute("classOID")
+               				   			+ "&amp;"
+			  							+ SessionConstants.EXECUTION_PERIOD_OID
+  										+ "="
+  										+ pageContext.findAttribute("executionPeriodOID")
+  										+ "&amp;"
+  										+ SessionConstants.CURRICULAR_YEAR_OID
+			  							+ "="
+  										+ pageContext.findAttribute("curricularYearOID")
+  										+ "&amp;"
+			  							+ SessionConstants.EXECUTION_DEGREE_OID
+  										+ "="
+  										+ pageContext.findAttribute("executionDegreeOID") %>">
+						<bean:message key="link.remove"/>
+					</html:link>
+				</td>
 			</tr>
 		</logic:iterate>
 	</table>

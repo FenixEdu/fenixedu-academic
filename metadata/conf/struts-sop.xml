@@ -74,6 +74,14 @@
         <form-property name="nomeSala" type="java.lang.String"/>
       </form-bean>
 
+	  <!-- Dynamic-FormBean for adding shifts to class -->
+      <form-bean name="addShiftsForm"
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+        <form-property name="page" type="java.lang.Integer"/>
+        <form-property name="selectedShifts" type="java.lang.String[]" size="0"/>
+      </form-bean>
+
 	  <!-- AULAS -->
       <!-- Dynamic-FormBean para CriarAula -->
       <form-bean name="aulaForm"
@@ -1189,6 +1197,19 @@
             validate="true"
             >
     	<forward name="EditClass" path="/manageClass.jsp"/>
+    	<forward name="AddShifts" path="/addShifts.jsp"/>
+    	<forward name="ViewSchedule" path="/viewClassSchedule.jsp"/>
+	</action>
+
+	<action path="/addShifts"
+			input="/manageClass.do?method=prepare&amp;page=0"
+            type="ServidorApresentacao.Action.sop.AddShiftsDA"
+            name="addShiftsForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="EditClass" path="/manageClass.do?method=prepare&amp;page=0"/>
 	</action>
 
       <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->
