@@ -3,6 +3,8 @@
  */
 package ServidorAplicacao.Filtro;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -12,6 +14,7 @@ import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSummary;
+import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
@@ -25,6 +28,7 @@ import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
+import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentSummary;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
@@ -59,9 +63,22 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
-
+        ISummary summary = getSummary(arguments);
+        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        ITeacher teacherLogged = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+        
         try {
-            if ((id == null) || (id.getRoles() == null)
+            if(isTeacherResponsible(arguments, request)){
+                List teachers = getExecutionCourseTeachers(arguments, request);
+                if(isTeacherExecutionCourseMember(teachers, arguments, id)){
+                    throw new NotAuthorizedFilterException();                  
+                }                
+            }
+            else if(summary.getTeacher().equals(teacherLogged)){ 
+                System.out.println("********************************");
+            }    
+            else if ((id == null) || (id.getRoles() == null)
                     || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
                     || !lecturesExecutionCourse(id, arguments)
                     || !SummaryBelongsExecutionCourse(id, arguments)
@@ -70,6 +87,106 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
             }
         } catch (RuntimeException ex) {
             throw new NotAuthorizedFilterException(ex.getMessage());
+        }
+    }
+
+    /**
+     * @param arguments
+     * @param request
+     * @return
+     * @throws ExcepcaoPersistencia
+     */
+    private List getExecutionCourseTeachers(Object[] arguments, ServiceRequest request) throws ExcepcaoPersistencia {
+        IUserView userView = getRemoteUser(request);
+              
+        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+        IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+        
+        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, ((Integer)arguments[0]));
+        
+        List professorShips = persistentProfessorship.readByExecutionCourse(executionCourse);
+        
+        return professorShips;      
+    }
+    
+    /**
+     * @param teachers
+     * @param arguments
+     * @param userView
+     * @throws ExcepcaoPersistencia
+     */
+    private boolean isTeacherExecutionCourseMember(List teachers, Object[] arguments, IUserView userView) throws ExcepcaoPersistencia {       
+        ISummary summary = getSummary(arguments);
+        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();       
+        IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+        IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+        
+        ITeacher teacherLogged = persistentTeacher.readTeacherByUsername(userView.getUtilizador());
+        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class,  ((Integer)arguments[0]));
+        IProfessorship professorshipLogged = persistentProfessorship.readByTeacherAndExecutionCourse(teacherLogged, executionCourse);       
+        
+        if(summary.getProfessorship() != null && !summary.getProfessorship().equals(professorshipLogged)){
+            System.out.println("************************111111111111111111111");
+            return true;
+        }
+        if(summary.getTeacher() != null){
+            IProfessorship professorship = persistentProfessorship.readByTeacherAndExecutionCourse(summary.getTeacher(), executionCourse);
+            if(teachers.contains(professorship) && !summary.getTeacher().equals(teacherLogged)){
+                System.out.println("************************222222222222222222222");
+                return true;
+            }
+        }
+       return false;
+    }
+
+    
+    /**
+     * @param arguments
+     * @throws NotAuthorizedFilterException
+     * @throws ExcepcaoPersistencia
+     */
+    private boolean isTeacherResponsible(Object[] arguments, ServiceRequest request) throws NotAuthorizedFilterException, ExcepcaoPersistencia {
+        IUserView userView = getRemoteUser(request);              
+        List responsibleTeachers = getResponsibleTeachers((Integer) arguments[0]);  
+        boolean loggedIsResponsible = false;  
+        
+        for (Iterator iter = responsibleTeachers.iterator(); iter.hasNext();) {
+            ITeacher teacher = (ITeacher) iter.next();
+            if (teacher.getPerson().getUsername().equals(userView.getUtilizador()))
+                loggedIsResponsible = true;
+            break;
+        }
+        return loggedIsResponsible;
+    }
+
+    /**
+     * @param executionCourse
+     * @return
+     * @throws NotAuthorizedFilterException
+     */
+    private List getResponsibleTeachers(Integer executionCourse) throws NotAuthorizedFilterException {
+        try {
+            List result = null;
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
+            result = persistentResponsibleFor.readByExecutionCourseID(executionCourse);
+            
+            List infoResult = new ArrayList();
+            if (result != null) {
+                Iterator iter = result.iterator();
+                while (iter.hasNext()) {
+                    IResponsibleFor responsibleFor = (IResponsibleFor) iter.next();
+                    ITeacher teacher = responsibleFor.getTeacher();
+                    infoResult.add(teacher);
+                }
+                return infoResult;
+            }
+            return result;
+            
+        } catch (ExcepcaoPersistencia e) {
+            throw new NotAuthorizedFilterException(e);
         }
     }
 
