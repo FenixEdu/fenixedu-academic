@@ -64,7 +64,7 @@ public class ReadEmptyRoomsService implements IServico {
 			// Check is time interval is valid
 
 			if (!validTimeInterval(infoLesson)) {
-				throw new InvalidTimeIntervalServiceException();
+				throw new InvalidTimeInterval();
 			}
 
 			// Read all Rooms with a capacity
@@ -145,4 +145,40 @@ public class ReadEmptyRoomsService implements IServico {
 		return result;
 	}
 
+	/**
+	 * To change the template for this generated type comment go to
+	 * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+	 */
+	public class InvalidTimeInterval extends InvalidTimeIntervalServiceException {
+
+		/**
+		 * 
+		 */
+		private InvalidTimeInterval() {
+			super();
+		}
+
+		/**
+		 * @param s
+		 */
+		private InvalidTimeInterval(String s) {
+			super(s);
+		}
+
+		/**
+		 * @param cause
+		 */
+		private InvalidTimeInterval(Throwable cause) {
+			super(cause);
+		}
+
+		/**
+		 * @param message
+		 * @param cause
+		 */
+		private InvalidTimeInterval(String message, Throwable cause) {
+			super(message, cause);
+		}
+
+	}
 }

@@ -24,7 +24,7 @@ import DataBeans.comparators.RoomAlphabeticComparator;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
+import ServidorAplicacao.Servico.sop.ReadEmptyRoomsService.InvalidTimeInterval;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException;
@@ -211,7 +211,7 @@ public class SearchEmptyRoomsDispatchAction extends FenixContextDispatchAction {
 
 			return mapping.findForward("showSearchResult");
 
-		} catch (InvalidTimeIntervalServiceException ex) {
+		} catch (InvalidTimeInterval ex) {
 			throw new InvalidTimeIntervalActionException(ex);
 		} catch (Exception e) {
 			e.printStackTrace(System.out);
