@@ -44,7 +44,7 @@
 	</reference-descriptor>
 	<reference-descriptor
 			name="degreeCurricularPlan"
-			class-ref="Dominio.CurricularCourse"
+			class-ref="Dominio.DegreeCurricularPlan"
 			proxy="true">
 		<foreignkey field-ref="degreeCurricularPlanKey"/>
 	</reference-descriptor>

@@ -524,8 +524,8 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
             return new CurricularCourse2Enroll(curricularCourse, CurricularCourseEnrollmentType.NOT_ALLOWED);
         }
 
-        List enrollmentsWithEnrolledStateInPreviousExecutionPeriod = getAllStudentEnrolledEnrollmentsInExecutionPeriod(currentExecutionPeriod
-                .getPreviousExecutionPeriod());
+        List enrollmentsWithEnrolledStateInPreviousExecutionPeriod = getAllStudentEnrolledEnrollmentsInExecutionPeriod(
+                currentExecutionPeriod.getPreviousExecutionPeriod());
 
         result = (List) CollectionUtils.collect(enrollmentsWithEnrolledStateInPreviousExecutionPeriod, new Transformer() {
             public Object transform(Object obj) {
