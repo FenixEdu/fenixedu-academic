@@ -1,0 +1,8 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="index" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/index.jsp"></put>
+	</definition>
+</tiles-definitions>

@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE struts-config PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+ 
+		<!-- ========== Data Source Configuration =============================== -->
+	
+		<!-- ========== Form Bean Definitions ================================== -->
+		<form-beans type="org.apache.struts.action.ActionFormBean">  
+	
+		<form-bean name="degreeForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+				<form-property name="name" type="java.lang.String" />       
+				<form-property name="code" type="java.lang.String" />
+				<form-property name="degreeType" type="java.lang.Integer" />
+				<form-property name="internalIds" type="java.lang.Integer[]" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>  
+		 
+		<form-bean name="degreeCurricularPlanForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+				<form-property name="internalIds" type="java.lang.Integer[]" />
+				<form-property name="name" type="java.lang.String" />
+				<form-property name="state" type="java.lang.String" />
+				<form-property name="initialDate" type="java.lang.String" />
+				<form-property name="endDate" type="java.lang.String" />
+				<form-property name="degreeDuration" type="java.lang.String" />
+				<form-property name="minimalYearForOptionalCourses" type="java.lang.String" />
+				<form-property name="neededCredits" type="java.lang.String" />
+				<form-property name="markType" type="java.lang.String" />
+				<form-property name="numerusClausus" type="java.lang.String" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
+		<form-bean name="curricularCourseForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+                <form-property name="internalIds" type="java.lang.Integer[]" />
+				<form-property name="name" type="java.lang.String" />
+				<form-property name="code" type="java.lang.String" />
+				<form-property name="type" type="java.lang.String" />
+				<form-property name="mandatory" type="java.lang.String" />
+				<form-property name="basic" type="java.lang.String" />
+				<form-property name="departmentCourse" type="java.lang.String" />
+				<!--copiei pq a falta tava a dar erro-->
+				<form-property name="branchId" type="java.lang.String" />
+				<form-property name="curricularSemesterId" type="java.lang.String" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
+		<form-bean name="associateExecutionCourseToCurricularCourseForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+                <form-property name="executionCourseId" type="java.lang.String" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
+		<form-bean name="curricularCourseScopeForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+				<form-property name="theoreticalHours" type="java.lang.String" />
+				<form-property name="praticalHours" type="java.lang.String" />
+				<form-property name="theoPratHours" type="java.lang.String" />
+				<form-property name="labHours" type="java.lang.String" />
+	            <form-property name="credits" type="java.lang.String" />			
+	            <form-property name="ectsCredits" type="java.lang.String" />			
+				<form-property name="maxIncrementNac" type="java.lang.String" />
+				<form-property name="minIncrementNac" type="java.lang.String" />
+				<form-property name="weight" type="java.lang.String" />
+	            <form-property name="beginDate" type="java.lang.String" />			
+	            <form-property name="endDate" type="java.lang.String" />			
+				<form-property name="branchId" type="java.lang.String" />
+				<form-property name="curricularSemesterId" type="java.lang.String" />
+				<form-property name="curricularCourseScopeId" type="java.lang.String" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
+		<form-bean name="executionDegreeForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+				<form-property name="executionYearId" type="java.lang.String" />
+				<form-property name="coordinatorId" type="java.lang.String" />
+				<form-property name="tempExamMap" type="java.lang.String" />
+				<form-property name="internalIds" type="java.lang.Integer[]" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
+		<form-bean name="curriculumForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+				<form-property name="generalObjectives" type="java.lang.String" />
+				<form-property name="operacionalObjectives" type="java.lang.String" />
+				<form-property name="program" type="java.lang.String" />
+				<form-property name="generalObjectivesEn" type="java.lang.String" />
+				<form-property name="operacionalObjectivesEn" type="java.lang.String" />
+				<form-property name="programEn" type="java.lang.String" />
+				<form-property name="evaluationElements" type="java.lang.String" />
+				<form-property name="evaluationElementsEn" type="java.lang.String" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
+		<form-bean name="branchForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+				<form-property name="name" type="java.lang.String" />       
+				<form-property name="code" type="java.lang.String" />
+				<form-property name="internalIds" type="java.lang.Integer[]" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
+		<form-bean name="teacherForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+                <form-property name="professorShipTeachersIds" type="java.lang.Integer[]" />
+                <form-property name="responsibleTeachersIds" type="java.lang.Integer[]" />
+				<form-property name="number" type="java.lang.String" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
+		<form-bean name="executionCourseForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+                <form-property name="name" type="java.lang.String" />
+                <form-property name="code" type="java.lang.String" />
+                <form-property name="theoreticalHours" type="java.lang.String" />
+				<form-property name="praticalHours" type="java.lang.String" />
+				<form-property name="theoPratHours" type="java.lang.String" />
+				<form-property name="labHours" type="java.lang.String" />
+				<form-property name="semester" type="java.lang.String" />
+				<form-property name="comment" type="java.lang.String" />
+				<form-property name="internalIds" type="java.lang.Integer[]" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
+		<form-bean name="teacherForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+                <form-property name="professorShipTeachersIds" type="java.lang.Integer[]" />
+                <form-property name="responsibleTeachersIds" type="java.lang.Integer[]" />
+				<form-property name="number" type="java.lang.String" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
+
+	  <!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
+
+      <!-- Dynamic-FormBean para Day And Shift Context -->
+     <form-bean name="createExecutionPeriodForm"
+                type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true"
+                >
+        <form-property name="semesterToCreate" type="java.lang.String"/>
+        <form-property name="yearToCreate" type="java.lang.String"/>
+        <form-property name="beginDateToCreate" type="java.lang.String"/>
+        <form-property name="endDateToCreate" type="java.lang.String"/>
+        <form-property name="semesterToExportDataFrom" type="java.lang.String"/>  
+        <form-property name="yearToExportDataFrom" type="java.lang.String"/>
+        <form-property name="beginDateToExportDataFrom" type="java.lang.String"/>
+        <form-property name="endDateToExportDataFrom" type="java.lang.String"/>
+        <form-property name="page" type="java.lang.Integer"/>
+     </form-bean>
+
+	  <!-- ========== ADVISORY MANIPULATION ========== -->
+
+      <!-- Dynamic-FormBean para Day And Shift Context -->
+     <form-bean name="advisoryForm"
+                type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true"
+                >
+        <form-property name="sender" type="java.lang.String"/>
+        <form-property name="subject" type="java.lang.String"/>
+        <form-property name="message" type="java.lang.String"/>
+        <form-property name="experationDate" type="java.lang.String"/>
+        <form-property name="recipients" type="java.lang.Integer"/>
+        <form-property name="page" type="java.lang.Integer"/>
+     </form-bean>
+     
+	<form-bean name="newPasswordForm"
+      			type="org.apache.struts.validator.DynaValidatorForm"
+      			dynamic="true">
+		<form-property name="userType" type="java.lang.String"/>
+		<form-property name="username" type="java.lang.String"/>
+		<form-property name="page" type="java.lang.Integer"/>
+      </form-bean>   
+    </form-beans>
+
+	 <!-- ========== Global Exception Definitions ============================== -->
+	<global-exceptions>
+		<exception type="ServidorAplicacao.NotAuthorizedException"
+			       key="ServidorAplicacao.NotAuthorizedException"
+			       path="/naoAutorizado.do"
+			       handler="ServidorApresentacao.config.FenixExceptionHandler"/>
+		<exception type="ServidorAplicacao.NotExecutedException"
+		  	       key="ServidorAplicacao.NotExecutedException"
+		  	       path="/naoExecutado.do"
+		  	       handler="ServidorApresentacao.config.FenixExceptionHandler" />
+		<exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
+			       key="ServidorAplicacao.Servico.ExcepcaoInexistente"
+			       path="/naoExistente.do"
+			       handler="ServidorApresentacao.config.FenixExceptionHandler" />
+		<exception type="ServidorAplicacao.FenixServiceException"
+		  	       key="ServidorAplicacao.FenixServiceException"
+		  	       path="/naoExecutado.do"
+		  	       handler="ServidorApresentacao.config.FenixExceptionHandler" />
+	</global-exceptions>
+
+	<!-- ========== Global Forward Definitions =============================== -->
+	<global-forwards type="org.apache.struts.action.ActionForward">
+    </global-forwards>
+
+	<!-- ========== Action Mapping Definitions =============================== -->
+	<action-mappings type="org.apache.struts.action.ActionMapping">
+    <!-- page fronting actions  -->
+	</action-mappings>
+
+	<!-- ========== Controller Configuration ================================ -->
+    <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
+
+	<!-- ========== Message Resources Definitions ============================ -->
+	<message-resources parameter="ServidorApresentacao.FacultyAdmOfficeResources" null="false"/>
+
+	<!-- ========== Plug Ins Configuration ================================= -->
+			
+	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+      <set-property property="pathnames" 
+		value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-facultyAdmOffice.xml"/>
+	</plug-in>
+	    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+		<set-property property="definitions-config"
+					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/facultyAdmOffice/tiles-facultyAdmOffice-definitions.xml,/WEB-INF/tiles/manager/tiles-facultyAdmOffice-pages-definitions.xml" />
+		<set-property property="moduleAware" value="true" />
+		<set-property property="definitions-parser-validate" value="true" />
+	</plug-in>    
+
+</struts-config>
