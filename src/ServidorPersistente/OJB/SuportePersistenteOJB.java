@@ -316,7 +316,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	}
 	public IPersistentEnrollment getIPersistentEnrolment()
 	{
-		return new EnrolmentOJB();
+		return new EnrollmentOJB();
 	}
 	public IPersistentEnrolmentEvaluation getIPersistentEnrolmentEvaluation()
 	{

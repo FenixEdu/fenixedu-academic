@@ -25,7 +25,7 @@ import Util.TipoCurso;
  * @author dcs-rjao 24/Mar/2003
  */
 
-public class EnrolmentOJB extends ObjectFenixOJB implements
+public class EnrollmentOJB extends ObjectFenixOJB implements
         IPersistentEnrollment {
 
     public List readAll() throws ExcepcaoPersistencia {
