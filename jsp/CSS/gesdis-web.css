@@ -1,5 +1,5 @@
 /*  -------------------------------------
-	GESDIS CSS - WEB | 08.04.2003
+	GESDIS CSS - WEB | 09.04.2003
 	------------------------------------- */
 
 /*****************************************
@@ -67,6 +67,14 @@ h4	{
 	background-color: transparent;
 	}
 
+/* Header - Departamento */
+
+h5 {
+	font: 12px "Trebuchet MS", Georgia, Arial, Helvetica, sans-serif;
+	color: #EBEFFA;
+	margin: 0;
+	background-color: transparent;
+	} 
 
 /******************************************
 	links - geral
