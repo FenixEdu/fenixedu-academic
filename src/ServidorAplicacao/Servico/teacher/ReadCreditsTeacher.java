@@ -33,7 +33,7 @@ public class ReadCreditsTeacher implements IServico {
 	 * @see ServidorAplicacao.IServico#getNome()
 	 */
 	public String getNome() {
-		return "ReadCredits";
+		return "ReadCreditsTeacher";
 	}
 
 	public Object run(InfoTeacher infoTeacher) throws FenixServiceException {
