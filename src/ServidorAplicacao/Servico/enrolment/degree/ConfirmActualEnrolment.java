@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
 import Dominio.Enrolment;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
@@ -100,13 +103,25 @@ public class ConfirmActualEnrolment implements IServico {
 					enrolmentContext.getStudentActiveCurricularPlan(),
 					new EnrolmentState(EnrolmentState.TEMPORARILY_ENROLED));
 			
+			// enrolments in (anual) curricular courses that the student is doing.
+			final List doingEnrolmentsRead = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(enrolmentContext.getStudentActiveCurricularPlan(), new EnrolmentState(EnrolmentState.ENROLED));
+			List doingCurricularCoursesRead = (List) CollectionUtils.collect(doingEnrolmentsRead, new Transformer() {
+				public Object transform(Object obj) {
+					IEnrolment enrolment = (IEnrolment) obj;
+					return (enrolment.getCurricularCourse());
+				}
+			});
+
+			
 			// lista de todos os enrolments a escrever
 			List temporarilyEnrolmentsToWrite = new ArrayList();
 			Iterator iterator = enrolmentContext.getActualEnrolment().iterator();
 			while (iterator.hasNext()) {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
 				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(curricularCourseScope.getCurricularCourse());
-				temporarilyEnrolmentsToWrite.add(new Enrolment(studentCurricularPlan, curricularCourse, new EnrolmentState(EnrolmentState.TEMPORARILY_ENROLED), executionPeriod));
+				if(!doingCurricularCoursesRead.contains(curricularCourse)) {
+					temporarilyEnrolmentsToWrite.add(new Enrolment(studentCurricularPlan, curricularCourse, new EnrolmentState(EnrolmentState.TEMPORARILY_ENROLED), executionPeriod));
+				}
 			}
 
 			// interseccao das duas listas de enrolments

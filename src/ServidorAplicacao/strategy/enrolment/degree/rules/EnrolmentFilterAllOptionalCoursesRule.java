@@ -26,13 +26,10 @@ import Util.DegreeCurricularPlanState;
  * 3/Abr/2003
  */
 public class EnrolmentFilterAllOptionalCoursesRule implements IEnrolmentRule {
-
-	// FIXME : David-Ricardo: Todas estas constantes sao para parametrizar
-	private static final int MIN_YEAR_OF_OPTIONAL_COURSES = 3;
 	
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
 	
-//		int min_year_of_optional_courses = enrolmentContext.getStudentActiveCurricularPlan().getDegreeCurricularPlan().getDegreeCurricularPlanEnrolmentInfo().getMinimalYearForOptionalCourses().intValue();
+		int min_year_of_optional_courses = enrolmentContext.getStudentActiveCurricularPlan().getDegreeCurricularPlan().getDegreeCurricularPlanEnrolmentInfo().getMinimalYearForOptionalCourses().intValue();
 		
 		List degreeCurricularPlanList = enrolmentContext.getChosenOptionalDegree().getDegreeCurricularPlans();
 
@@ -82,8 +79,8 @@ public class EnrolmentFilterAllOptionalCoursesRule implements IEnrolmentRule {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator3.next();
 				if(
 						(curricularCourseScope.getCurricularSemester().getSemester().equals(enrolmentContext.getSemester())) &&
-						(curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().intValue() >= MIN_YEAR_OF_OPTIONAL_COURSES) &&
-//						(curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().intValue() >= min_year_of_optional_courses) &&
+//						(curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().intValue() >= MIN_YEAR_OF_OPTIONAL_COURSES) &&
+						(curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().intValue() >= min_year_of_optional_courses) &&
 						(!finalCurricularCourseList.contains(curricularCourseScope.getCurricularCourse())) &&
 						(!curricularCourseScope.getCurricularCourse().getType().equals(new CurricularCourseType(CurricularCourseType.OPTIONAL_COURSE))) &&
 						(!curricularCourseScope.getCurricularCourse().getType().equals(new CurricularCourseType(CurricularCourseType.TFC_COURSE))) &&

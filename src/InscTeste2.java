@@ -9,7 +9,6 @@ import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
 import Util.CurricularCourseType;
 
@@ -20,7 +19,7 @@ import Util.CurricularCourseType;
 public class InscTeste2 {
 
 	private static GestorServicos gestor = GestorServicos.manager();
-	private static IUserView userView = new UserView("user", null);
+	private static IUserView userView = null;
 
 	public static void main(String[] args) {
 
