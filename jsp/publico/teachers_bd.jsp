@@ -4,6 +4,14 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <span class="error"><html:errors/></span>	
+<logic:notPresent name="<%= SessionConstants.RESPONSIBLE_TEACHERS_LIST %>">
+	<span class="error">
+         <bean:message key="message.teachers.not.available" />
+	</span>
+	<br/>
+	<br/>
+	<html:link href="mailto:suporte@dot.ist.utl.pt">suporte@dot.ist.utl.pt</html:link>
+</logic:notPresent>
 <logic:present name="<%= SessionConstants.RESPONSIBLE_TEACHERS_LIST %>" >
 <table>
 	<tr>
