@@ -139,6 +139,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 			
 
 			if (infoEnrolmentEvaluations.size() == 0) {
+
 				throw new NonExistingServiceException();
 			}
 
@@ -160,7 +161,6 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 		infoSiteEnrolmentEvaluation.setEnrolmentEvaluations(infoEnrolmentEvaluations);
 		infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);
 		infoSiteEnrolmentEvaluation.setLastEvaluationDate(lastEvaluationDate);
-
 		return infoSiteEnrolmentEvaluation;
 	}
 
