@@ -11,10 +11,12 @@ package ServidorPersistente.OJB;
  * @author  tfc130
  */
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.odmg.QueryException;
 
+import Dominio.IDisciplinaExecucao;
 import Dominio.IStudent;
 import Dominio.ITurno;
 import Dominio.ITurnoAluno;
@@ -121,32 +123,34 @@ public class TurnoAlunoOJB
 	/**
 	 * @see ServidorPersistente.ITurnoAlunoPersistente#readByTurno(Dominio.ITurno)
 	 */
-	public List readByTurno(ITurno shift) throws ExcepcaoPersistencia {
+	public List readByShift(ITurno shift) throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery = "select turno from " + TurnoAluno.class.getName();
 			oqlQuery += " where turno.nome = $1";
 			oqlQuery += " and turno.disciplinaExecucao.sigla = $2";
 			oqlQuery
-				+= " and turno.disciplinaExecucao.licenciaturaExecucao.anoLectivo = $3"
-				+ " and turno.disciplinaExecucao.licenciaturaExecucao.curso.sigla = $4";
+				+= " and turno.disciplinaExecucao.executionPeriod.name = $3"
+				+ " and turno.disciplinaExecucao.executionPeriod.executionYear.year = $4";
 			query.create(oqlQuery);
 			query.bind(shift.getNome());
-			query.bind(shift.getDisciplinaExecucao().getSigla());
-			query.bind(
-				shift
-					.getDisciplinaExecucao()
-					.getLicenciaturaExecucao()
-					.getAnoLectivo());
-			query.bind(
-				shift
-					.getDisciplinaExecucao()
-					.getLicenciaturaExecucao()
-					.getCurso()
-					.getSigla());
+			
+			IDisciplinaExecucao executionCourse = shift.getDisciplinaExecucao();
+			query.bind(executionCourse.getSigla());
+			query.bind(executionCourse.getExecutionPeriod().getName());
+			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
 
 			List result = (List) query.execute();
+			
+
 			lockRead(result);
-			return result;
+			List studentList = new ArrayList();
+			
+			Iterator iterator = result.iterator();
+			while (iterator.hasNext()) {
+				ITurnoAluno shiftStudent = (ITurnoAluno) iterator.next();
+				studentList.add(shiftStudent.getAluno());	
+			}			
+			return studentList;
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}

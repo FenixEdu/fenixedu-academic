@@ -20,8 +20,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
-import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionPeriod;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
@@ -42,24 +42,20 @@ public class ChooseExecutionCourseAction extends Action {
 		HttpSession session = request.getSession();
 
 		DynaValidatorForm chooseCourseForm = (DynaValidatorForm) form;
+		
+		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 
-		CurricularYearAndSemesterAndInfoExecutionDegree context =
-			SessionUtils.getContext(request);
 
-		List infoCourseList = SessionUtils.getExecutionCourses(request, context);
+		List infoCourseList = SessionUtils.getExecutionCourses(request);
 	
 		String courseInitials = (String) chooseCourseForm.get("courseInitials");
 
 		if (courseInitials != null && !courseInitials.equals("")) {
-
-
-			InfoExecutionCourse infoCourse =
-				new InfoExecutionCourse(
-					null,
-					courseInitials,
-					null,
-					context.getInfoLicenciaturaExecucao(),
-					null, null, null, null);
+			InfoExecutionCourse infoCourse = new InfoExecutionCourse();
+			
+			infoCourse.setInfoExecutionPeriod(infoExecutionPeriod);
+			infoCourse.setSigla(courseInitials);
+			
 			int index = infoCourseList.indexOf(infoCourse);
 			infoCourse = (InfoExecutionCourse) infoCourseList.get(index);
 

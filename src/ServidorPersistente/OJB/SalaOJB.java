@@ -24,7 +24,7 @@ import ServidorPersistente.ISalaPersistente;
 
 public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
    
-    public ISala readByNome(String nome) throws ExcepcaoPersistencia {
+    public ISala readByName(String nome) throws ExcepcaoPersistencia {
         try {
             ISala sala = null;
             String oqlQuery = "select salanome from " + Sala.class.getName();

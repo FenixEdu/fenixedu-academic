@@ -14,13 +14,16 @@ package ServidorAplicacao.Servico.sop;
 
 import DataBeans.InfoLesson;
 import DataBeans.InfoLessonServiceResult;
+import DataBeans.util.Cloner;
 import Dominio.Aula;
 import Dominio.IAula;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
 import Dominio.ISala;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.NotExecutedException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -47,35 +50,43 @@ public class CriarAula implements IServico {
 		return "CriarAula";
 	}
 
-	public Object run(InfoLesson infoAula) throws NotExecutedException {
+	public InfoLessonServiceResult run(InfoLesson infoLesson) throws NotExecutedException {
 
 		InfoLessonServiceResult result = null;
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			ISala sala = sp.getISalaPersistente().readByNome( infoAula.getInfoSala().getNome() );
-			IDisciplinaExecucao disciplinaExecucao = sp.getIDisciplinaExecucaoPersistente()
-					.readBySiglaAndAnoLectivAndSiglaLicenciatura(
-						infoAula.getInfoDisciplinaExecucao().getSigla(),
-						infoAula
-							.getInfoDisciplinaExecucao()
-							.getInfoLicenciaturaExecucao()
-							.getAnoLectivo(),
-						infoAula
-							.getInfoDisciplinaExecucao()
-							.getInfoLicenciaturaExecucao()
-							.getInfoLicenciatura()
-							.getSigla());
-			IAula aula = new Aula(infoAula.getDiaSemana(),
-								  infoAula.getInicio(),
-								  infoAula.getFim(),
-								  infoAula.getTipo(),
-								  sala,
-								  disciplinaExecucao);
+			ISala sala =
+				sp.getISalaPersistente().readByName(
+					infoLesson.getInfoSala().getNome());
+
+			IDisciplinaExecucaoPersistente executionCourseDAO =
+				sp.getIDisciplinaExecucaoPersistente();
+
+			IExecutionPeriod executionPeriod =
+				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
+					infoLesson
+						.getInfoDisciplinaExecucao()
+						.getInfoExecutionPeriod());
+
+			IDisciplinaExecucao executionCourse =
+				executionCourseDAO
+					.readByExecutionCourseInitialsAndExecutionPeriod(
+					infoLesson.getInfoDisciplinaExecucao().getSigla(),
+					executionPeriod);
+
+			IAula aula =
+				new Aula(
+					infoLesson.getDiaSemana(),
+					infoLesson.getInicio(),
+					infoLesson.getFim(),
+					infoLesson.getTipo(),
+					sala,
+					executionCourse);
 
 			result = valid(aula);
 
-			if ( result.isSUCESS() )
+			if (result.isSUCESS())
 				sp.getIAulaPersistente().lockWrite(aula);
 
 		} catch (ExcepcaoPersistencia ex) {
@@ -88,8 +99,10 @@ public class CriarAula implements IServico {
 	private InfoLessonServiceResult valid(IAula lesson) {
 		InfoLessonServiceResult result = new InfoLessonServiceResult();
 
-		if ( lesson.getInicio().getTime().getTime() >= lesson.getFim().getTime().getTime() ) {
-			result.setMessageType(InfoLessonServiceResult.INVALID_TIME_INTERVAL);
+		if (lesson.getInicio().getTime().getTime()
+			>= lesson.getFim().getTime().getTime()) {
+			result.setMessageType(
+				InfoLessonServiceResult.INVALID_TIME_INTERVAL);
 		}
 
 		return result;

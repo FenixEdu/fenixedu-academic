@@ -53,7 +53,7 @@ public class SalaOJBTest extends TestCaseOJB {
     // read existing Sala
     try {
       _suportePersistente.iniciarTransaccao();
-      sala = _salaPersistente.readByNome("Ga1");
+      sala = _salaPersistente.readByName("Ga1");
       _suportePersistente.confirmarTransaccao();
     } catch (ExcepcaoPersistencia ex) {
       fail("testReadByNome:fail read existing sala");
@@ -63,7 +63,7 @@ public class SalaOJBTest extends TestCaseOJB {
     // read unexisting Sala
     try {
       _suportePersistente.iniciarTransaccao();
-      sala = _salaPersistente.readByNome("Ga6");
+      sala = _salaPersistente.readByName("Ga6");
       assertNull(sala);
       _suportePersistente.confirmarTransaccao();
     } catch (ExcepcaoPersistencia ex) {
@@ -101,7 +101,7 @@ public class SalaOJBTest extends TestCaseOJB {
     // write sala already mapped into memory
     try {
     	_suportePersistente.iniciarTransaccao();
-    	ISala sala = _salaPersistente.readByNome("Ga1");
+    	ISala sala = _salaPersistente.readByName("Ga1");
     	_suportePersistente.confirmarTransaccao();
     	
     	_suportePersistente.iniciarTransaccao();
@@ -117,12 +117,12 @@ public class SalaOJBTest extends TestCaseOJB {
     // write sala already mapped into memory
     try {
       _suportePersistente.iniciarTransaccao();
-      ISala sala = _salaPersistente.readByNome("Ga1");
+      ISala sala = _salaPersistente.readByName("Ga1");
       sala.setTipo(new TipoSala(TipoSala.PLANA));
       _suportePersistente.confirmarTransaccao();
 
       _suportePersistente.iniciarTransaccao();
-      sala = _salaPersistente.readByNome("Ga1");
+      sala = _salaPersistente.readByName("Ga1");
       _suportePersistente.confirmarTransaccao();
       
       assertTrue(sala.getTipo().equals( new TipoSala(TipoSala.PLANA) ));
@@ -135,7 +135,7 @@ public class SalaOJBTest extends TestCaseOJB {
   public void testDeleteSala() {
     try {
     	_suportePersistente.iniciarTransaccao();
-    	ISala sala = _salaPersistente.readByNome("Ga1");
+    	ISala sala = _salaPersistente.readByName("Ga1");
     	_suportePersistente.confirmarTransaccao();
 
     	_suportePersistente.iniciarTransaccao();
@@ -143,7 +143,7 @@ public class SalaOJBTest extends TestCaseOJB {
     	_suportePersistente.confirmarTransaccao();
     	
     	_suportePersistente.iniciarTransaccao();
-    	sala = _salaPersistente.readByNome("Ga1");
+    	sala = _salaPersistente.readByName("Ga1");
     	_suportePersistente.confirmarTransaccao();
 
     	assertNull(sala);

@@ -93,28 +93,26 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 		super.deleteAll(oqlQuery);
 	}
 
-	public List readByDisciplinaExecucao(IDisciplinaExecucao disciplinaExecucao)
+	public List readByExecutionCourse(IDisciplinaExecucao executionCourse)
 		throws ExcepcaoPersistencia {
-		if (disciplinaExecucao == null)
+		if (executionCourse == null)
 			return new ArrayList();
 		try {
-			List aulas = new ArrayList();
 			String oqlQuery = "select aulas from " + Aula.class.getName();
 			oqlQuery += " where disciplinaExecucao.sigla = $1";
-			oqlQuery += " and disciplinaExecucao.licenciaturaExecucao.anoLectivo = $2";
-			oqlQuery += " and disciplinaExecucao.licenciaturaExecucao.curso.nome = $3";
-			oqlQuery += " and disciplinaExecucao.licenciaturaExecucao.curso.sigla = $4";
+			oqlQuery += " and disciplinaExecucao.executionPeriod.name = $2";
+			oqlQuery += " and disciplinaExecucao.executionPeriod.executionYear.year = $3";
+
 			query.create(oqlQuery);
-			query.bind(disciplinaExecucao.getSigla());
-			query.bind(disciplinaExecucao.getLicenciaturaExecucao().getAnoLectivo());
-			query.bind(disciplinaExecucao.getLicenciaturaExecucao().getCurso().getNome());
-			query.bind(disciplinaExecucao.getLicenciaturaExecucao().getCurso().getSigla());
+			
+			query.bind(executionCourse.getSigla());
+			query.bind(executionCourse.getExecutionPeriod().getName());
+			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+			
 			
 			List result = (List) query.execute();
 			lockRead(result);
-			for (int i = 0; i != result.size(); i++)
-				aulas.add((IAula) (result.get(i)));
-			return aulas;
+			return result;
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
@@ -141,9 +139,9 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 		}
 	}
 
-	public List readByDisciplinaExecucaoETipo(
+	public List readByExecutionCourseAndLessonType(
 		IDisciplinaExecucao executionCourse,
-		TipoAula tipoAula)
+		TipoAula lessonType)
 		throws ExcepcaoPersistencia {
 		try {
 			//			List aulas = new ArrayList();
@@ -152,39 +150,21 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 					+ Aula.class.getName()
 					+ " where tipo = $1"
 					+ " and disciplinaExecucao.sigla = $2"
-					+ " and disciplinaExecucao.licenciaturaExecucao.curso.sigla = $3"
-					+ " and disciplinaExecucao.licenciaturaExecucao.anoLectivo = $4";
+					+ " and disciplinaExecucao.executionPeriod.name = $3"
+					+ " and disciplinaExecucao.executionPeriod.executionYear.year = $4";
 			query.create(oqlQuery);
-			query.bind(tipoAula);
+			
+			query.bind(lessonType);
+			
 			query.bind(executionCourse.getSigla());
+			
+			query.bind(executionCourse.getExecutionPeriod().getName());
+			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
 
-			System.out.println(tipoAula);
-			System.out.println(
-				executionCourse
-					.getLicenciaturaExecucao()
-					.getCurso()
-					.getSigla());
-			System.out.println(
-				executionCourse.getLicenciaturaExecucao().getAnoLectivo());
 
-			query.bind(
-				executionCourse
-					.getLicenciaturaExecucao()
-					.getCurso()
-					.getSigla());
-			query.bind(
-				executionCourse.getLicenciaturaExecucao().getAnoLectivo());
-
-			System.out.println(query.toString());
 
 			List result = (List) query.execute();
 			lockRead(result);
-
-			System.out.println(result.size());
-
-			//			for (int i = 0; i != result.size(); i++)
-			//				aulas.add((IAula) (result.get(i)));
-			//			return aulas;
 			return result;
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);

@@ -26,7 +26,7 @@ public interface IAulaPersistente extends IPersistentObject {
     public void lockWrite(IAula aula) throws ExcepcaoPersistencia;
     public void delete(IAula aula) throws ExcepcaoPersistencia;
     public void deleteAll() throws ExcepcaoPersistencia;
-    public List readByDisciplinaExecucao(IDisciplinaExecucao disciplinaExecucao) throws ExcepcaoPersistencia;
+    public List readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
     public List readByDisciplinaExecucaoETipo(String sigla, TipoAula tipoAula) throws ExcepcaoPersistencia;
     public List readBySalaEmSemestre(String nomeSala, Integer semestre) throws ExcepcaoPersistencia;
 	/**
@@ -35,9 +35,9 @@ public interface IAulaPersistente extends IPersistentObject {
 	 * @param tipoAula
 	 * @return List
 	 */
-	List readByDisciplinaExecucaoETipo(
+	List readByExecutionCourseAndLessonType(
 		IDisciplinaExecucao executionCourse,
-		TipoAula tipoAula)throws ExcepcaoPersistencia;
+		TipoAula lessonType)throws ExcepcaoPersistencia;
 		
 	/**
 	 * 

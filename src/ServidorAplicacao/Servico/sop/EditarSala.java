@@ -49,7 +49,7 @@ public class EditarSala implements IServico {
     try {
       ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-      sala = sp.getISalaPersistente().readByNome(salaAntiga.getNomeSala());
+      sala = sp.getISalaPersistente().readByName(salaAntiga.getNomeSala());
       if (sala != null) {
           sala.setNome(salaNova.getNome());
           sala.setEdificio(salaNova.getEdificio());

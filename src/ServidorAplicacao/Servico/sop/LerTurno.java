@@ -80,7 +80,7 @@ public class LerTurno implements IServico {
 			executionDegree.setCurso(degree);
 
 			ITurno turno =
-				sp.getITurnoPersistente().readByNomeAndExecutionCourse(
+				sp.getITurnoPersistente().readByNameAndExecutionCourse(
 					keyTurno.getShiftName(),
 					executionCourse);
 

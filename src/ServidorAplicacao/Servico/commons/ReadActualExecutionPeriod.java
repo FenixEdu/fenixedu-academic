@@ -1,7 +1,7 @@
 package ServidorAplicacao.Servico.commons;
 
 import DataBeans.InfoExecutionPeriod;
-import DataBeans.InfoExecutionYear;
+import DataBeans.util.Cloner;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -38,14 +38,7 @@ public class ReadActualExecutionPeriod implements IServico {
 		
 		IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
 		
-		
-		infoExecutionPeriod = new InfoExecutionPeriod();
-		
-		InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-		infoExecutionYear.setYear(executionPeriod.getExecutionYear().getYear());
-		
-		infoExecutionPeriod.setInfoExecutionYear(infoExecutionYear);
-		infoExecutionPeriod.setName(executionPeriod.getName());
+		infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
 
 	  } catch (ExcepcaoPersistencia ex) {
 	  	throw new RuntimeException(ex);

@@ -7,9 +7,12 @@ package ServidorAplicacao.Servico.sop;
  * @version
  **/
 
-import DataBeans.ClassKey;
 import DataBeans.InfoClass;
-import DataBeans.InfoDegree;
+import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionPeriod;
+import DataBeans.util.Cloner;
+import Dominio.ICursoExecucao;
+import Dominio.IExecutionPeriod;
 import Dominio.ITurma;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -38,17 +41,20 @@ public class LerTurma implements IServico {
     return "LerTurma";
   }
 
-  public Object run(ClassKey keyTurma) {
+  public InfoClass run(String className, InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod) {
                         
     InfoClass infoTurma = null;
 
     try {
       ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-      ITurma turma = sp.getITurmaPersistente().readByNome(keyTurma.getNomeTurma());
+      
+      IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+      ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
+      
+      ITurma turma = sp.getITurmaPersistente().readByNameAndExecutionDegreeAndExecutionPeriod(className, executionDegree, executionPeriod);
+
 	  if (turma != null) {
-	  	InfoDegree infoLicenciatura = new InfoDegree(turma.getLicenciatura().getSigla(),
-	  	                                                         turma.getLicenciatura().getNome());
-	  	infoTurma= new InfoClass(turma.getNome(), turma.getSemestre(),turma.getAnoCurricular(), infoLicenciatura);
+	  	infoTurma = Cloner.copyClass2InfoClass(turma);
 	  }
     } catch (ExcepcaoPersistencia ex) {
       ex.printStackTrace();

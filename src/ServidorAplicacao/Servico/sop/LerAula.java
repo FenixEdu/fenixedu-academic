@@ -53,7 +53,7 @@ public class LerAula implements IServico {
 
     try {
       ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-      ISala sala = sp.getISalaPersistente().readByNome(keyAula.getKeySala().getNomeSala());
+      ISala sala = sp.getISalaPersistente().readByName(keyAula.getKeySala().getNomeSala());
       IAula aula1 = sp.getIAulaPersistente().readByDiaSemanaAndInicioAndFimAndSala(keyAula.getDiaSemana(),
                     keyAula.getInicio(), keyAula.getFim(), sala);
       if (aula1 != null) {

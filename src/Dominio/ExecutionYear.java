@@ -15,7 +15,7 @@ public class ExecutionYear implements IExecutionYear {
 	 * Constructor for ExecutionYear.
 	 */
 	public ExecutionYear() {
-			}
+	}
 	/**
 	 * 
 	 * @param year
@@ -54,6 +54,17 @@ public class ExecutionYear implements IExecutionYear {
 	 */
 	public void setInternalCode(Integer internalCode) {
 		this.internalCode = internalCode;
+	}
+
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	public boolean equals(Object obj) {
+		if(obj instanceof IExecutionYear){
+			IExecutionYear executionYear = (IExecutionYear) obj;
+			return getYear().equals(executionYear.getYear());
+		}
+		return false;
 	}
 
 }

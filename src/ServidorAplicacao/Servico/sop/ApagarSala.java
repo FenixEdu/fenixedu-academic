@@ -47,7 +47,7 @@ public class ApagarSala implements IServico {
 
     try {
       ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-      sala1 = sp.getISalaPersistente().readByNome(keySala.getNomeSala());
+      sala1 = sp.getISalaPersistente().readByName(keySala.getNomeSala());
       if (sala1 != null) {
           sp.getISalaPersistente().delete(sala1);
           result = true;

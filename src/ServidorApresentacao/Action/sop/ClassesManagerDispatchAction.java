@@ -52,8 +52,7 @@ public class ClassesManagerDispatchAction extends DispatchAction {
 		Object argsLerTurmas[] = { infoExecutionDegree, infoExecutionPeriod, curricularYear};
 
 		List classesList = (List) ServiceUtils.executeService(SessionUtils.getUserView(request),"LerTurmas", argsLerTurmas);
-		System.out.println((classesList == null)+"=====================");
-		System.out.println(classesList.isEmpty()+"=====================");
+		System.out.println("A lista de turmas é null?("+classesList.isEmpty()+")");
 		if (classesList != null && !classesList.isEmpty())
 			request.setAttribute(CLASS_LIST_KEY, classesList);
 

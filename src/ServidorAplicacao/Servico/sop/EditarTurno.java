@@ -85,7 +85,7 @@ public class EditarTurno implements IServico {
 			// fim da cópia 
 						
 			turno =
-				sp.getITurnoPersistente().readByNomeAndExecutionCourse(
+				sp.getITurnoPersistente().readByNameAndExecutionCourse(
 					shiftToEdit.getNome(),
 					executionCourse);
 			if (turno != null) {

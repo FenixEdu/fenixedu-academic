@@ -35,9 +35,7 @@ public class Curso implements ICurso {
     boolean resultado = false;
     if (obj instanceof ICurso) {
       ICurso curso = (ICurso)obj;
-      resultado = getNome().equals(curso.getNome()) &&
-	              getSigla().equals(curso.getSigla()) && 
-	              getTipoCurso().getTipoCurso().equals(curso.getTipoCurso().getTipoCurso());
+      resultado = getSigla().equals(curso.getSigla()); 
     } 
     return resultado;
   }

@@ -11,10 +11,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
-import DataBeans.InfoDegree;
-import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.util.Cloner;
 import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
@@ -51,7 +49,7 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular
 		return "LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular";
 	}
 
-	public Object run(CurricularYearAndSemesterAndInfoExecutionDegree executionContextAndExecutionDegree) {
+	public List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod, Integer curricularYear) {
 
 		List listDCDE = null;
 		List listInfoDE = null;
@@ -64,16 +62,16 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular
 			IPersistentExecutionPeriod executionPeriodDAO =
 				sp.getIPersistentExecutionPeriod();
 
-			/* :FIXME: execution period must be in parameter */
-			IExecutionPeriod executionPeriod =
-				executionPeriodDAO.readActualExecutionPeriod();
+			
+			IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+				
 
-			ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(executionContextAndExecutionDegree.getInfoLicenciaturaExecucao());
+			ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
 
 			listDCDE =
 				executionCourseDAO
 					.readByCurricularYearAndExecutionPeriodAndExecutionDegree(
-					executionContextAndExecutionDegree.getAnoCurricular(),
+					curricularYear,
 					executionPeriod, executionDegree);
 
 			Iterator iterator = listDCDE.iterator();
@@ -81,24 +79,9 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular
 			while (iterator.hasNext()) {
 				IDisciplinaExecucao elem =
 					(IDisciplinaExecucao) iterator.next();
-				InfoDegree infoLicenciatura =
-					new InfoDegree(
-						elem.getLicenciaturaExecucao().getCurso().getSigla(),
-						elem.getLicenciaturaExecucao().getCurso().getNome());
-				InfoExecutionDegree infoLicenciaturaExecucao =
-					new InfoExecutionDegree(
-						elem.getLicenciaturaExecucao().getAnoLectivo(),
-						infoLicenciatura);
-				listInfoDE.add(
-					new InfoExecutionCourse(
-						elem.getNome(),
-						elem.getSigla(),
-						elem.getPrograma(),
-						infoLicenciaturaExecucao,
-						elem.getTheoreticalHours(),
-						elem.getPraticalHours(),
-						elem.getTheoPratHours(),
-						elem.getLabHours()));
+
+				listInfoDE.add(Cloner.copyIExecutionCourse2InfoExecutionCourse(elem));
+
 			}
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();

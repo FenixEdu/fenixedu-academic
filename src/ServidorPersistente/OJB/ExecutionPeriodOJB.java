@@ -113,29 +113,6 @@ public class ExecutionPeriodOJB
 			return false;
 		}
 	}
-	/**
-	 * @see ServidorPersistente.IPersistentExecutionPeriod#readAllExecutionPeriodByExecutionYear(Dominio.IExecutionYear)
-	 */
-	public ArrayList readAllExecutionPeriodByExecutionYear(IExecutionYear executionYear)
-		throws ExcepcaoPersistencia {
-			try {
-
-				IExecutionPeriod executionPeriod = null;
-				String oqlQuery =
-					"select all from " + ExecutionPeriod.class.getName();
-				oqlQuery += " where name = $1 and executionYear.year= $2 ";
-				query.create(oqlQuery);
-				
-				query.bind(executionYear.getYear());
-				List result = (List) query.execute();
-				lockRead(result);
-				if (result.size() != 0)
-					executionPeriod = (IExecutionPeriod) result.get(0);
-				return (ArrayList) executionPeriod;
-			} catch (QueryException ex) {
-				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-			}
-	}
 
 	/**
 	 * :FIXME: this is wrong if we have more than one EXECUTION_PERIOD
@@ -157,6 +134,34 @@ public class ExecutionPeriodOJB
 		} catch (QueryException e) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
 		}
+	}
+	/**
+	 * @see ServidorPersistente.IPersistentExecutionPeriod#readByNameAndExecutionYear(java.lang.String, Dominio.IExecutionYear)
+	 */
+	public IExecutionPeriod readByNameAndExecutionYear(
+		String executionPeriodName,
+		IExecutionYear executionYear) throws ExcepcaoPersistencia {
+			try {
+
+				IExecutionPeriod executionPeriod = null;
+				String oqlQuery =
+					"select all from " + ExecutionPeriod.class.getName();
+				oqlQuery += " where name = $1 and executionYear.year= $2 ";
+				query.create(oqlQuery);
+				query.bind(executionPeriodName);
+				query.bind(executionYear.getYear());
+				
+				List result = (List) query.execute();
+				
+				lockRead(result);
+				
+				if (result.size() != 0)
+					return (IExecutionPeriod) result.get(0);
+				
+				return executionPeriod;
+			} catch (QueryException ex) {
+				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+			}
 	}
 
 }

@@ -15,17 +15,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
-
-import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoPerson;
 import DataBeans.InfoStudent;
 import DataBeans.ShiftKey;
-import Dominio.Curso;
-import Dominio.CursoExecucao;
-import Dominio.DisciplinaExecucao;
-import Dominio.ICurso;
-import Dominio.ICursoExecucao;
+import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IStudent;
 import Dominio.ITurno;
@@ -70,32 +63,14 @@ public class LerAlunosDeTurno implements IServico {
       ITurno shift = new Turno();
       
       
-      IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
-      ICursoExecucao executionDegree = new CursoExecucao(); 
-      ICurso degree = new Curso();
-      
-      
-      
- 	  InfoExecutionCourse infoExecutionCourse = keyTurno.getInfoExecutionCourse();     
-      
-	try {
-		  BeanUtils.copyProperties(executionCourse, infoExecutionCourse);
-		  BeanUtils.copyProperties(executionDegree, infoExecutionCourse.getInfoLicenciaturaExecucao());
-		  BeanUtils.copyProperties(degree, infoExecutionCourse.getInfoLicenciaturaExecucao().getInfoLicenciatura());
-	} catch (Exception e) {
-		e.printStackTrace(System.out);
-	}
-	  
-
-	  executionDegree.setCurso(degree);
-	  executionCourse.setLicenciaturaExecucao(executionDegree);
+      IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(keyTurno.getInfoExecutionCourse());
 
       shift.setDisciplinaExecucao(executionCourse);
       shift.setNome(keyTurno.getShiftName());
       
       
 
-      alunos = sp.getITurnoAlunoPersistente().readByTurno(shift);
+      alunos = sp.getITurnoAlunoPersistente().readByShift(shift);
       
       Iterator iterator = alunos.iterator();
       infoAlunos = new ArrayList();

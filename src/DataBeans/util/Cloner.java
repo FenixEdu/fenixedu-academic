@@ -30,6 +30,7 @@ import Dominio.ITurma;
 import Dominio.ITurno;
 import Dominio.PlanoCurricularCurso;
 import Dominio.Sala;
+import Dominio.Turma;
 import Dominio.Turno;
 
 /**
@@ -40,29 +41,9 @@ public abstract class Cloner {
 
 	public static ITurno copyInfoShift2Shift(InfoShift infoShift) {
 		ITurno shift = new Turno();
-		IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
-		ICursoExecucao executionDegree = new CursoExecucao();
-		ICurso degree = new Curso();
-		InfoExecutionCourse infoExecutionCourse =
-			infoShift.getInfoDisciplinaExecucao();
-		try {
-			BeanUtils.copyProperties(shift, infoShift);
-			BeanUtils.copyProperties(executionCourse, infoExecutionCourse);
-			BeanUtils.copyProperties(
-				executionDegree,
-				infoExecutionCourse.getInfoLicenciaturaExecucao());
-			BeanUtils.copyProperties(
-				degree,
-				infoExecutionCourse
-					.getInfoLicenciaturaExecucao()
-					.getInfoLicenciatura());
-		} catch (Exception e) {
-			e.printStackTrace(System.out);
-			throw new RuntimeException(e.getMessage());
-		}
+		IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoShift.getInfoDisciplinaExecucao());
 
-		executionCourse.setLicenciaturaExecucao(executionDegree);
-		executionDegree.setCurso(degree);
+		copyObjectProperties(shift, infoShift);		
 
 		shift.setDisciplinaExecucao(executionCourse);
 		return shift;
@@ -74,49 +55,21 @@ public abstract class Cloner {
 	 */
 	public static IDisciplinaExecucao copyInfoExecutionCourse2ExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
 		IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
-		ICursoExecucao executionDegree = new CursoExecucao();
-		ICurso degree = new Curso();
-		try {
-			BeanUtils.copyProperties(executionCourse, infoExecutionCourse);
-			BeanUtils.copyProperties(
-				executionDegree,
-				infoExecutionCourse.getInfoLicenciaturaExecucao());
-			BeanUtils.copyProperties(
-				degree,
-				infoExecutionCourse
-					.getInfoLicenciaturaExecucao()
-					.getInfoLicenciatura());
-		} catch (Exception e) {
-			e.printStackTrace(System.out);
-			throw new RuntimeException(e.getMessage());
-		}
-
-		executionCourse.setLicenciaturaExecucao(executionDegree);
-		executionDegree.setCurso(degree);
-
+		IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionCourse.getInfoExecutionPeriod());
+		
+		copyObjectProperties(executionCourse, infoExecutionCourse);
+		
+		executionCourse.setExecutionPeriod(executionPeriod);
 		return executionCourse;
 	}
 
-	public static InfoExecutionCourse copyIExecutionCourse2InfoinfoExecutionCourse(IDisciplinaExecucao executionCourse) {
+	public static InfoExecutionCourse copyIExecutionCourse2InfoExecutionCourse(IDisciplinaExecucao executionCourse) {
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
-		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
-		InfoDegree infoDegree = new InfoDegree();
-		try {
-			BeanUtils.copyProperties(infoExecutionCourse, executionCourse);
-			BeanUtils.copyProperties(
-				infoExecutionDegree,
-				executionCourse.getLicenciaturaExecucao());
-			BeanUtils.copyProperties(
-				infoDegree,
-				executionCourse.getLicenciaturaExecucao().getCurso());
-		} catch (Exception e) {
-			e.printStackTrace(System.out);
-			throw new RuntimeException(e.getMessage());
-		}
+		InfoExecutionPeriod infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionCourse.getExecutionPeriod());
 
-		infoExecutionCourse.setInfoLicenciaturaExecucao(infoExecutionDegree);
-		infoExecutionDegree.setInfoLicenciatura(infoDegree);
+		copyObjectProperties(infoExecutionCourse, executionCourse);
 
+		infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 		return infoExecutionCourse;
 	}
 
@@ -166,16 +119,9 @@ public abstract class Cloner {
 	 */
 	public static InfoRoom copyRoom2InfoRoom(ISala room) {
 		InfoRoom infoRoom = new InfoRoom();
-
-		try {
-			if (room == null)
-				infoRoom = null;
-			else
-				BeanUtils.copyProperties(infoRoom, room);
-		} catch (Exception e) {
-			e.printStackTrace(System.out);
-			throw new RuntimeException(e.getMessage());
-		}
+		
+		copyObjectProperties(infoRoom, room);
+		
 		return infoRoom;
 	}
 
@@ -184,19 +130,16 @@ public abstract class Cloner {
 	 * @param lessonExample
 	 * @return IAula
 	 */
-	public static InfoLesson copyLesson2InfoLesson(IAula lesson) {
+	public static InfoLesson copyILesson2InfoLesson(IAula lesson) {
 		InfoLesson infoLesson = new InfoLesson();
-		InfoRoom infoRoom = null;
+		InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(lesson.getDisciplinaExecucao());
+		
+		InfoRoom infoRoom = Cloner.copyRoom2InfoRoom(lesson.getSala());
 
-		try {
-			BeanUtils.copyProperties(infoLesson, lesson);
-		} catch (Exception e) {
-			e.printStackTrace(System.out);
-			throw new RuntimeException(e.getMessage());
-		}
+		copyObjectProperties(infoLesson, lesson);
 
-		infoRoom = Cloner.copyRoom2InfoRoom(lesson.getSala());
 		infoLesson.setInfoSala(infoRoom);
+		infoLesson.setInfoDisciplinaExecucao(infoExecutionCourse);
 		return infoLesson;
 	}
 
@@ -252,11 +195,8 @@ public abstract class Cloner {
 		InfoClass infoClass = new InfoClass();
 		InfoExecutionDegree infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(classD.getExecutionDegree());
 		InfoExecutionPeriod infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(classD.getExecutionPeriod());
-		try {
-			BeanUtils.copyProperties(infoClass, classD);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		
+		copyObjectProperties(infoClass, classD);
 		
 		infoClass.setInfoExecutionDegree(infoExecutionDegree);
 		infoClass.setInfoExecutionPeriod(infoExecutionPeriod);
@@ -271,7 +211,7 @@ public abstract class Cloner {
 		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
 		InfoExecutionYear infoExecutionYear = Cloner.copyIExecutionYear2InfoExecutionYear(executionPeriod.getExecutionYear());
 		
-		copyObjectProperties(executionPeriod, infoExecutionPeriod);
+		copyObjectProperties(infoExecutionPeriod, executionPeriod);
 		
 		infoExecutionPeriod.setInfoExecutionYear(infoExecutionYear);
 		return infoExecutionPeriod;
@@ -381,12 +321,7 @@ public abstract class Cloner {
 	 */
 	public static InfoExecutionYear copyIExecutionYear2InfoExecutionYear(IExecutionYear executionYear) {
 		InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-		try {
-			BeanUtils.copyProperties(executionYear, infoExecutionYear);
-		} catch (Exception e) {
-			e.printStackTrace(System.out);
-			throw new RuntimeException(e);
-		}
+		copyObjectProperties(infoExecutionYear, executionYear);
 		return infoExecutionYear;
 	}
 
@@ -453,6 +388,35 @@ public abstract class Cloner {
 		executionPeriod.setExecutionYear(executionYear);
 		
 		return executionPeriod;
+	}
+	/**
+	 * Method copyInfoClass2Class.
+	 * @param infoTurma
+	 * @return ITurma
+	 */
+	public static ITurma copyInfoClass2Class(InfoClass infoClass) {
+		ITurma domainClass = new Turma();
+		
+		IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoClass.getInfoExecutionPeriod());
+		ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoClass.getInfoExecutionDegree());
+		
+		copyObjectProperties(domainClass, infoClass);
+		
+		domainClass.setExecutionDegree(executionDegree);
+		domainClass.setExecutionPeriod(executionPeriod);
+		return domainClass;
+	}
+	/**
+	 * Method copyIShift2InfoShift.
+	 * @param elem
+	 * @return Object
+	 */
+	public static InfoShift copyIShift2InfoShift(ITurno shift) {
+		InfoShift infoShift = new InfoShift();
+		InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(shift.getDisciplinaExecucao());
+		copyObjectProperties(infoShift, shift);
+		infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
+		return infoShift;
 	}
 
 }

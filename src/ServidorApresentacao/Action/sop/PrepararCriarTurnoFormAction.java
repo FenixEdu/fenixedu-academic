@@ -27,7 +27,7 @@ public class PrepararCriarTurnoFormAction extends Action {
     if (sessao != null) {
 
 		/** to be sure that execution course list is in session */
-		SessionUtils.getExecutionCourses(request, SessionUtils.getContext(request));
+		SessionUtils.getExecutionCourses(request);
         ArrayList tiposAula = new ArrayList();
         tiposAula.add(new LabelValueBean("escolher", ""));
         tiposAula.add(new LabelValueBean("Teorica", (new Integer(TipoAula.TEORICA)).toString() ));

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -23,8 +24,9 @@ import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.ClassKey;
-import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
 import DataBeans.InfoClass;
+import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -55,21 +57,30 @@ public class ClassManagerDispatchAction extends DispatchAction {
 		IUserView userView = SessionUtils.getUserView(request);
 
 		if (className != null && !className.equals("")) {
-			InfoClass classView = getInfoTurma(userView, className);
+			InfoClass classView = getInfoTurma(userView, className, request.getSession());
 
 			if (classView == null) {
-				CurricularYearAndSemesterAndInfoExecutionDegree context =
-					SessionUtils.getContext(request);
+				Integer curricularYear =
+					(Integer) session.getAttribute(
+						SessionConstants.CURRICULAR_YEAR_KEY);
+				InfoExecutionDegree infoExecutionDegree =
+					(InfoExecutionDegree) session.getAttribute(
+						SessionConstants.INFO_EXECUTION_DEGREE_KEY);
+				InfoExecutionPeriod infoExecutionPeriod =
+					(InfoExecutionPeriod) session.getAttribute(
+						SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+
+//				CurricularYearAndSemesterAndInfoExecutionDegree context =
+//					SessionUtils.getContext(request);
+
+				InfoClass infoClass = new InfoClass();
+				infoClass.setNome(className);
+				infoClass.setAnoCurricular(curricularYear);
+				infoClass.setInfoExecutionDegree(infoExecutionDegree);
+				infoClass.setInfoExecutionPeriod(infoExecutionPeriod);
 
 				Object argsCriarTurma[] =
-					{
-						 new InfoClass(
-							className,
-							context.getSemestre(),
-							context.getAnoCurricular(),
-							context
-								.getInfoLicenciaturaExecucao()
-								.getInfoLicenciatura())};
+					{infoClass};
 
 				ServiceUtils.executeService(
 					userView,
@@ -106,27 +117,26 @@ public class ClassManagerDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession();
 		IUserView userView = SessionUtils.getUserView(request);
 		boolean change = request.getParameter("change") != null;
-		InfoClass infoTurma = getInfoTurma(userView, className);
-
+	
 		if (change) {
 
-			infoTurma =
+			InfoClass oldClassView =
 				(InfoClass) session.getAttribute(SessionConstants.CLASS_VIEW);
 
-			ClassKey keyTurma = new ClassKey(infoTurma.getNome());
-			//isto não está bem
-			infoTurma.setNome(className);
+			InfoClass newClassView = (InfoClass) BeanUtils.cloneBean(oldClassView);
+			
+			newClassView.setNome(className);
 
-			Object[] argsEditarTurma = { keyTurma, infoTurma };
+			Object[] argsEditarTurma = { newClassView, oldClassView };
 			try {
 
 				ServiceUtils.executeService(
 					userView,
 					"EditarTurma",
 					argsEditarTurma);
-
 			} catch (Exception e) {
-				infoTurma.setNome(keyTurma.getNomeTurma());
+				e.printStackTrace(System.out);
+				oldClassView.setNome(newClassView.getNome());
 				ActionErrors actionErrors = new ActionErrors();
 				actionErrors.add(
 					"existingClass",
@@ -134,11 +144,16 @@ public class ClassManagerDispatchAction extends DispatchAction {
 				saveErrors(request, actionErrors);
 				return mapping.getInputForward();
 			}
-
-		} else { /** starting editing */
+			
 			session.setAttribute(
 				SessionConstants.CLASS_VIEW,
-				getInfoTurma(SessionUtils.getUserView(request), className));
+				newClassView);
+
+		} else { /** starting editing */
+			InfoClass classView = getInfoTurma(userView, className, session);
+			session.setAttribute(
+				SessionConstants.CLASS_VIEW,
+				getInfoTurma(SessionUtils.getUserView(request), className, session));
 		}
 
 		setLessonListToSession(session, userView, className);
@@ -158,7 +173,7 @@ public class ClassManagerDispatchAction extends DispatchAction {
 
 		String className = getClassName(form);
 		IUserView userView = SessionUtils.getUserView(request);
-		InfoClass classView = getInfoTurma(userView, className);
+		InfoClass classView = getInfoTurma(userView, className, request.getSession());
 		setLessonListToSession(request.getSession(), userView, className);
 		HttpSession session = request.getSession();
 		session.setAttribute(SessionConstants.CLASS_VIEW, classView);
@@ -200,17 +215,21 @@ public class ClassManagerDispatchAction extends DispatchAction {
 
 	}
 
-	private InfoClass getInfoTurma(IUserView userView, String className)
+	private InfoClass getInfoTurma(IUserView userView, String className, HttpSession session)
 		throws Exception {
-
-		ClassKey keyClass = new ClassKey(className);
-		Object argsLerTurma[] = { keyClass };
+		/* :FIXME: put this 2 variables into parameters */		
+		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY);
+		
+		
+		
+		Object argsLerTurma[] = { className, infoExecutionDegree, infoExecutionPeriod };
 		InfoClass classView =
 			(InfoClass) ServiceUtils.executeService(
 				userView,
 				"LerTurma",
 				argsLerTurma);
-
+		System.out.println("Class:"+classView+"********************");
 		return classView;
 	}
 

@@ -25,6 +25,14 @@ public class InfoClass implements Serializable {
 	public InfoClass() {
 	}
 
+	/**
+	 * 
+	 * @param nome
+	 * @param semestre
+	 * @param anoCurricular
+	 * @param infoLicenciatura
+	 * @deprecated
+	 */
 	public InfoClass(
 		String nome,
 		Integer semestre,

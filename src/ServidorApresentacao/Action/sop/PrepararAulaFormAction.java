@@ -98,8 +98,7 @@ public class PrepararAulaFormAction extends Action {
 
 			// Ler Disciplinas em Execucao
 			SessionUtils.getExecutionCourses(
-				request,
-				SessionUtils.getContext(request));
+				request);
 
 			return mapping.findForward("Sucesso");
 		} else

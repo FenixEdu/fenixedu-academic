@@ -17,7 +17,6 @@ import Dominio.IExecutionPeriod;
 import Dominio.ITurma;
 
 public interface ITurmaPersistente extends IPersistentObject {
-	public ITurma readByNome(String nome) throws ExcepcaoPersistencia;
 	public void lockWrite(ITurma turma) throws ExcepcaoPersistencia;
 	public void delete(ITurma turma) throws ExcepcaoPersistencia;
 	public void deleteAll() throws ExcepcaoPersistencia;
@@ -33,5 +32,16 @@ public interface ITurmaPersistente extends IPersistentObject {
 		Integer curricularYear,
 		ICursoExecucao executionDegree)
 		throws ExcepcaoPersistencia;
+	/**
+	 * Method readByNameAndExecutionDegreeAndExecutionPeriod.
+	 * @param className
+	 * @param executionDegree
+	 * @param executionPeriod
+	 * @return ITurma
+	 */
+	public ITurma readByNameAndExecutionDegreeAndExecutionPeriod(
+		String className,
+		ICursoExecucao executionDegree,
+		IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 		
 }

@@ -87,7 +87,7 @@ public class TurmaTurnoOJBTest extends TestCaseOJB {
     ITurmaTurno turmaTurno = null;
     try {
     	_suportePersistente.iniciarTransaccao();
-    	ITurma turma2 = _turmaPersistente.readByNome(_turma2.getNome());
+    	ITurma turma2 = _turmaPersistente.readByName(_turma2.getNome());
     	ITurno turno1 = _turnoPersistente.readByNome(_turno1.getNome());
     	_suportePersistente.confirmarTransaccao();
 
@@ -214,7 +214,7 @@ public class TurmaTurnoOJBTest extends TestCaseOJB {
       List turnos = null;
 
       _suportePersistente.iniciarTransaccao();
-      ITurma turma1 = _turmaPersistente.readByNome(_turma1.getNome());
+      ITurma turma1 = _turmaPersistente.readByName(_turma1.getNome());
       ITurno turno1 = _turnoPersistente.readByNome(_turno1.getNome());
       ITurno turno2 = _turnoPersistente.readByNome(_turno2.getNome());
       _suportePersistente.confirmarTransaccao();      

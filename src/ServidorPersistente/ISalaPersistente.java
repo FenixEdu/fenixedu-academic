@@ -15,7 +15,7 @@ import java.util.List;
 import Dominio.ISala;
 
 public interface ISalaPersistente extends IPersistentObject {
-	public ISala readByNome(String nome) throws ExcepcaoPersistencia;
+	public ISala readByName(String nome) throws ExcepcaoPersistencia;
 	public void lockWrite(ISala sala) throws ExcepcaoPersistencia;
 	public void delete(ISala sala) throws ExcepcaoPersistencia;
 	public void deleteAll() throws ExcepcaoPersistencia;

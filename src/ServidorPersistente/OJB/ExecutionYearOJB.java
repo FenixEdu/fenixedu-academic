@@ -7,7 +7,6 @@ import java.util.List;
 import org.odmg.QueryException;
 
 import Dominio.ExecutionYear;
-import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionYear;
@@ -15,8 +14,7 @@ import ServidorPersistente.IPersistentExecutionYear;
 /**
  * Created on 11/Fev/2003
  * @author João Mota
- * Package ServidorPersistente.OJB
- * 
+ * Package  ServidorPersistente.OJB
  */
 public class ExecutionYearOJB
 	extends ObjectFenixOJB
@@ -83,27 +81,6 @@ public class ExecutionYearOJB
 			return false;
 		}
 
-	}
-	/**
-	 * @see ServidorPersistente.IPersistentExecutionYear#delete(Dominio.IExecutionYear)
-	 */
-	public boolean delete(IExecutionYear executionYear) {
-		try {
-			//falta apagar todos os periodos execucao ligados a este ano execucao
-			ExecutionPeriodOJB execPeriodOJB = new ExecutionPeriodOJB();
-			ArrayList list =
-				execPeriodOJB.readAllExecutionPeriodByExecutionYear(
-					executionYear);
-			Iterator iter = list.iterator();
-			while (iter.hasNext()) {
-				IExecutionPeriod execPeriod = (IExecutionPeriod) iter.next();
-				execPeriodOJB.delete(execPeriod);
-			}
-			super.delete(executionYear);
-			return true;
-		} catch (ExcepcaoPersistencia e) {
-			return false;
-		}
 	}
 	/**
 	 * @see ServidorPersistente.IPersistentExecutionYear#deleteAll()

@@ -21,7 +21,7 @@ public abstract class SessionConstants {
 	public static final String INFO_EXECUTION_DEGREE_KEY =
 		CONTEXT_PREFIX + "infoLicenciaturaExecucao";
 	public static final String U_VIEW = "UserView";
-	public static final String CLASS_VIEW = "classView";
+	public static final String CLASS_VIEW = CONTEXT_PREFIX + "classView";
 	public static final String EXECUTION_COURSE_KEY = "infoDisciplinaExecucao";
 	public static final String LESSON_LIST_ATT = "lessonList";
 	public static final String EXECUTION_COURSE_LIST_KEY =

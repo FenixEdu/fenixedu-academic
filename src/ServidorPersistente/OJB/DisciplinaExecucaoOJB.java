@@ -19,7 +19,6 @@ import Dominio.ICurricularCourse;
 import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
-import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 
@@ -205,7 +204,7 @@ public class DisciplinaExecucaoOJB
 		}
 	}
 	/**
-	 * :FIXME: Semester is hard coded.
+	 * :FIXME: THIS QUERY IS TOO SLOW... Must implement indirection Class.
 	 * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByAnoCurricularAndAnoLectivoAndSiglaLicenciatura(java.lang.Integer, Dominio.IExecutionPeriod, java.lang.String)
 	 */
 	public List readByCurricularYearAndExecutionPeriodAndExecutionDegree(
@@ -214,19 +213,16 @@ public class DisciplinaExecucaoOJB
 		ICursoExecucao executionDegree)
 		throws ExcepcaoPersistencia {
 			try {
-				IExecutionYear executionYear = executionPeriod.getExecutionYear();
+				
 
 				String oqlQuery =
 					"select distinct all from "
 						+ DisciplinaExecucao.class.getName();
-				/*oqlQuery += " where licenciaturaExecucao.curso.sigla = $1";
-				oqlQuery += " and licenciaturaExecucao.executionYear.year = $2";*/
-				oqlQuery += " where executionPeriod.name = $3 ";
-				oqlQuery += " and executionPeriod.executionYear.year = $4 ";
+				oqlQuery += " where executionPeriod.name = $1 ";
+				oqlQuery += " and executionPeriod.executionYear.year = $2 ";
 
 				query.create(oqlQuery);
-				/*query.bind(siglaLicenciatura);
-				query.bind(executionYear.getYear());*/
+				
 				query.bind(executionPeriod.getName());
 				query.bind(executionPeriod.getExecutionYear().getYear());
 				
@@ -251,15 +247,49 @@ public class DisciplinaExecucaoOJB
 						if (curricularCourse
 							.getCurricularYear()
 							.equals(anoCurricular) &&
-							curricularCourse.getDegreeCurricularPlan().getCurso().equals(executionDegree.getCurso()));
+							curricularCourse.getDegreeCurricularPlan().getCurso().equals(executionDegree.getCurricularPlan().getCurso())){
 							resultList.add(disciplinaExecucao);
-						break;
+							break;
+						}
 					}
 				}
 				return resultList;
 			} catch (QueryException ex) {
 				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 			}
+	}
+	/**
+	 * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByExecutionCourseInitials(java.lang.String)
+	 */
+	public IDisciplinaExecucao readByExecutionCourseInitialsAndExecutionPeriod(String courseInitials, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+		try {
+				
+
+			String oqlQuery =
+				"select distinct all from "
+					+ DisciplinaExecucao.class.getName();
+			oqlQuery += " where executionPeriod.name = $1 ";
+			oqlQuery += " and executionPeriod.executionYear.year = $2 "
+						+ " and sigla = $3 ";
+						
+			
+
+			query.create(oqlQuery);
+				
+			query.bind(executionPeriod.getName());
+			query.bind(executionPeriod.getExecutionYear().getYear());
+			query.bind(courseInitials);	
+
+			List result = (List) query.execute();
+			lockRead(result);
+
+			IDisciplinaExecucao executionCourse = null;
+			if (!result.isEmpty())
+				executionCourse = (IDisciplinaExecucao) result.get(0);
+			return executionCourse;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
 	}
 
 }

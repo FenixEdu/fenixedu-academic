@@ -17,6 +17,7 @@ import java.util.List;
 import org.odmg.QueryException;
 
 import Dominio.IAula;
+import Dominio.IDisciplinaExecucao;
 import Dominio.ISala;
 import Dominio.ITurno;
 import Dominio.ITurnoAula;
@@ -122,36 +123,30 @@ public class TurnoAulaOJB
 		}
 	}
 
-	/**
-	 * @see ServidorPersistente.ITurnoAulaPersistente#readAulasDeTurno(Dominio.ITurno)
-	 * 
-	 */
-	public List readAulasDeTurno(ITurno shift) throws ExcepcaoPersistencia {
+/**
+ * 
+ * @see ServidorPersistente.ITurnoAulaPersistente#readByShift(ITurno)
+ */
+	public List readByShift(ITurno shift) throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery =
 				"select all from "
 					+ TurnoAula.class.getName()
 					+ " where turno.nome = $1"
-					+ " and turno.disciplinaExecucao.licenciaturaExecucao.anoLectivo = $2"
-					+ " and turno.disciplinaExecucao.licenciaturaExecucao.curso.sigla = $3"
+					+ " and turno.disciplinaExecucao.executionPeriod.name = $2"
+					+ " and turno.disciplinaExecucao.executionPeriod.executionYear.year = $3"
 					+ " and turno.disciplinaExecucao.sigla = $4";
 			query.create(oqlQuery);
 
+			
+			IDisciplinaExecucao executionCourse = shift.getDisciplinaExecucao();
+			
 			query.bind(shift.getNome());
+			query.bind(executionCourse.getExecutionPeriod().getName());
+			
+			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
 
-			query.bind(
-				shift
-					.getDisciplinaExecucao()
-					.getLicenciaturaExecucao()
-					.getAnoLectivo());
-			query.bind(
-				shift
-					.getDisciplinaExecucao()
-					.getLicenciaturaExecucao()
-					.getCurso()
-					.getSigla());
-
-			query.bind(shift.getDisciplinaExecucao().getSigla());
+			query.bind(executionCourse.getSigla());
 
 			List shiftLessons = (List) query.execute();
 			lockRead(shiftLessons);
@@ -159,8 +154,8 @@ public class TurnoAulaOJB
 			List lessons = new ArrayList();
 			for (int j = 0; j < shiftLessons.size(); j++)
 				lessons.add(((TurnoAula) shiftLessons.get(j)).getAula());
-
 			return lessons;
+
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
@@ -181,8 +176,8 @@ public class TurnoAulaOJB
 				"select turnoAula from "
 					+ TurnoAula.class.getName()
 					+ " where turno.nome = $1"
-					+ " and turno.disciplinaExecucao.licenciaturaExecucao.anoLectivo = $2"
-					+ " and turno.disciplinaExecucao.licenciaturaExecucao.curso.sigla = $3"
+					+ " and turno.disciplinaExecucao.executionPeriod.name = $2"
+					+ " and turno.disciplinaExecucao.executionPeriod.executionYear.year = $3"
 					+ " and turno.disciplinaExecucao.sigla = $4"
 					+ " and aula.diaSemana = $5"
 					+ " and aula.inicio= $6"
@@ -191,21 +186,15 @@ public class TurnoAulaOJB
 
 			query.create(oqlQuery);
 
+			IDisciplinaExecucao executionCourse = shift.getDisciplinaExecucao();
+			
 			query.bind(shift.getNome());
+			
 
-			query.bind(
-				shift
-					.getDisciplinaExecucao()
-					.getLicenciaturaExecucao()
-					.getAnoLectivo());
-			query.bind(
-				shift
-					.getDisciplinaExecucao()
-					.getLicenciaturaExecucao()
-					.getCurso()
-					.getSigla());
+			query.bind(executionCourse.getExecutionPeriod().getName());
+			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
 
-			query.bind(shift.getDisciplinaExecucao().getSigla());
+			query.bind(executionCourse.getSigla());
 
 			query.bind(diaSemana);
 			query.bind(inicio);

@@ -30,12 +30,6 @@ public interface IPersistentExecutionYear extends IPersistentObject {
 	public boolean writeExecutionYear(IExecutionYear executionYear);
 	/**
 	 * 
-	 * @param executionYear
-	 * @return boolean
-	 */
-	public boolean delete(IExecutionYear executionYear);
-	/**
-	 * 
 	 * @return boolean
 	 */
 	public boolean deleteAll();

@@ -135,13 +135,13 @@ public class TurmaTurnoOJB extends ObjectFenixOJB implements ITurmaTurnoPersiste
 			String oqlQuery = "select all from " + TurmaTurno.class.getName()
 					 + " where turno.nome = $1"
 					 + " and  turno.disciplinaExecucao.sigla = $2"
-					 + " and  turno.disciplinaExecucao.licenciaturaExecucao.anoLectivo = $3"
-					 + " and turno.disciplinaExecucao.licenciaturaExecucao.curso.sigla = $4";
+					 + " and  turno.disciplinaExecucao.executionPeriod.name = $3"
+					 + " and turno.disciplinaExecucao.executionPeriod.executionYear.year = $4";
 			query.create(oqlQuery);
 			query.bind(turno.getNome());
 			query.bind(turno.getDisciplinaExecucao().getSigla());			
-			query.bind(turno.getDisciplinaExecucao().getLicenciaturaExecucao().getAnoLectivo());
-			query.bind(turno.getDisciplinaExecucao().getLicenciaturaExecucao().getCurso().getSigla());			
+			query.bind(turno.getDisciplinaExecucao().getExecutionPeriod().getName());
+			query.bind(turno.getDisciplinaExecucao().getExecutionPeriod().getExecutionYear().getYear());			
 			
 			List classesList = (List) query.execute();
 			lockRead(classesList);

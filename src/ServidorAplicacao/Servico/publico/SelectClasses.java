@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DataBeans.InfoClass;
-import DataBeans.InfoDegree;
+import DataBeans.util.Cloner;
 import Dominio.Curso;
 import Dominio.ITurma;
 import Dominio.Turma;
@@ -66,14 +66,7 @@ public class SelectClasses implements IServico {
           
 			for (int i = 0; i < classes.size(); i++) {
 				ITurma taux = (ITurma) classes.get(i);
-				infoClasses.add(
-					new InfoClass(
-						taux.getNome(),
-						taux.getSemestre(),
-						taux.getAnoCurricular(),
-						new InfoDegree(
-							taux.getLicenciatura().getSigla(),
-							taux.getLicenciatura().getNome())));
+				infoClasses.add(Cloner.copyClass2InfoClass(taux));
 			}
 
 		} catch (ExcepcaoPersistencia e) {

@@ -29,20 +29,12 @@ public interface IPersistentExecutionPeriod extends IPersistentObject {
 	 * @throws ExcepcaoPersistencia
 	 */
 	public ArrayList readAllExecutionPeriod() throws ExcepcaoPersistencia;
-	/**
-	 * 
-	 * @param executionYear
-	 * @return ArrayList
-	 * @throws ExcepcaoPersistencia
-	 */
-	public ArrayList readAllExecutionPeriodByExecutionYear(IExecutionYear executionYear)
-		throws ExcepcaoPersistencia;
+
 	/**
 	 * 
 	 * @param executionPeriod
 	 * @return boolean
 	 */
-
 	public boolean writeExecutionPeriod(IExecutionPeriod executionPeriod);
 	/**
 	 * 
@@ -61,4 +53,14 @@ public interface IPersistentExecutionPeriod extends IPersistentObject {
 	 * @throws ExcepcaoPersistencia
 	 */
 	public IExecutionPeriod readActualExecutionPeriod() throws ExcepcaoPersistencia;	
+	
+	/**
+	 * Method readByNameAndExecutionYear.
+	 * @param string
+	 * @param iExecutionYear
+	 * @return IExecutionPeriod
+	 */
+	public IExecutionPeriod readByNameAndExecutionYear(
+		String executionPeriodName,
+		IExecutionYear executionYear) throws ExcepcaoPersistencia;
 }

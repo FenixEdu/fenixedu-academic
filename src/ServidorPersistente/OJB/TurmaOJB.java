@@ -26,22 +26,6 @@ import ServidorPersistente.ITurmaPersistente;
 
 public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 
-	public ITurma readByNome(String nome) throws ExcepcaoPersistencia {
-		try {
-			ITurma turma = null;
-			String oqlQuery = "select turmanome from " + Turma.class.getName();
-			oqlQuery += " where nome = $1";
-			query.create(oqlQuery);
-			query.bind(nome);
-			List result = (List) query.execute();
-			lockRead(result);
-			if (result.size() != 0)
-				turma = (ITurma) result.get(0);
-			return turma;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
 
 	public void lockWrite(ITurma turma) throws ExcepcaoPersistencia {
 		super.lockWrite(turma);
@@ -126,14 +110,6 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 				+ " and executionDegree.curricularPlan.name = $5"
 				+ " and executionDegree.curricularPlan.curso.sigla = $6";
 
-			System.out.println("1-"+executionPeriod.getExecutionYear().getYear());
-			System.out.println("2-"+executionPeriod.getName());
-
-			System.out.println("3-"+curricularYear);
-			System.out.println("4-"+executionDegree.getExecutionYear().getYear());
-			System.out.println("5-"+executionDegree.getCurricularPlan().getName());
-			System.out.println("6-"+
-			executionDegree.getCurricularPlan().getCurso().getSigla());			
 			
 			query.create(oqlQuery);
 
@@ -154,6 +130,46 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
+	}
+	/**
+	 * @see ServidorPersistente.ITurmaPersistente#readByNameAndExecutionDegreeAndExecutionPeriod(java.lang.String, Dominio.ICursoExecucao, Dominio.IExecutionPeriod)
+	 */
+	public ITurma readByNameAndExecutionDegreeAndExecutionPeriod(
+		String className,
+		ICursoExecucao executionDegree,
+		IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+			try {
+				String oqlQuery = "select turmas from " + Turma.class.getName();
+				oqlQuery += " where executionPeriod.executionYear.year = $1"
+					+ " and executionPeriod.name = $2"
+					+ " and nome = $3"
+					+ " and executionDegree.executionYear.year = $4"
+					+ " and executionDegree.curricularPlan.name = $5"
+					+ " and executionDegree.curricularPlan.curso.sigla = $6";
+
+			
+				query.create(oqlQuery);
+
+				query.bind(executionPeriod.getExecutionYear().getYear());
+				query.bind(executionPeriod.getName());
+
+				query.bind(className);
+
+				query.bind(executionDegree.getExecutionYear().getYear());
+				query.bind(executionDegree.getCurricularPlan().getName());
+				
+				query.bind(
+					executionDegree.getCurricularPlan().getCurso().getSigla());
+				
+				List result = (List) query.execute();
+				lockRead(result);
+				ITurma iClass = null; 
+				if (!result.isEmpty())
+					iClass = (ITurma) result.get(0);
+				return iClass;
+			} catch (QueryException ex) {
+				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+			}
 	}
 
 }

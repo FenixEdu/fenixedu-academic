@@ -13,14 +13,13 @@ package ServidorAplicacao.Servico.sop;
  **/
 import DataBeans.InfoExecutionCourse;
 import DataBeans.ShiftKey;
-import Dominio.Curso;
-import Dominio.CursoExecucao;
-import Dominio.DisciplinaExecucao;
+import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ITurno;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class ApagarTurno implements IServico {
@@ -46,41 +45,24 @@ public class ApagarTurno implements IServico {
 		return "ApagarTurno";
 	}
 
-	public Object run(ShiftKey keyTurno, InfoExecutionCourse IEC) {
+	public Boolean run(ShiftKey keyTurno, InfoExecutionCourse infoExecutionCourse) {
 
 		ITurno turno1 = null;
 		boolean result = false;
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucao IDE =
-				new DisciplinaExecucao(
-					IEC.getNome(),
-					IEC.getSigla(),
-					IEC.getPrograma(),
-					new CursoExecucao(
-						IEC.getInfoLicenciaturaExecucao().getAnoLectivo(),
-						new Curso(
-							IEC
-								.getInfoLicenciaturaExecucao()
-								.getInfoLicenciatura()
-								.getSigla(),
-							IEC
-								.getInfoLicenciaturaExecucao()
-								.getInfoLicenciatura()
-								.getNome(),
-							null)),
-					IEC.getTheoreticalHours(),
-					IEC.getPraticalHours(),
-					IEC.getTheoPratHours(),
-					IEC.getLabHours());
+			
+			IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+
+			ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
 
 			turno1 =
-				sp.getITurnoPersistente().readByNomeAndExecutionCourse(
+				shiftDAO.readByNameAndExecutionCourse(
 					keyTurno.getShiftName(),
-					IDE);
+					executionCourse);
 			if (turno1 != null) {
-				sp.getITurnoPersistente().delete(turno1);
+				shiftDAO.delete(turno1);
 				result = true;
 			}
 		} catch (ExcepcaoPersistencia ex) {

@@ -89,7 +89,7 @@ public class AulaOJBTest extends TestCaseOJB {
     IAula aula = null;
     try {
       _suportePersistente.iniciarTransaccao();
-      ISala sala = _salaPersistente.readByNome(_sala2.getNome());
+      ISala sala = _salaPersistente.readByName(_sala2.getNome());
       IDisciplinaExecucao de =
         _disciplinaExecucaoPersistente
       	  .readBySiglaAndAnoLectivAndSiglaLicenciatura(
@@ -200,7 +200,7 @@ public class AulaOJBTest extends TestCaseOJB {
     // read existing disciplinaExecucao
     try {
       _suportePersistente.iniciarTransaccao();
-      aulas = _aulaPersistente.readByDisciplinaExecucao(_disciplinaExecucao1);
+      aulas = _aulaPersistente.readByExecutionCourse(_disciplinaExecucao1);
       _suportePersistente.confirmarTransaccao();
       assertEquals("testReadByDisciplinaExecucao: Existing", 5, aulas.size());
     } catch (ExcepcaoPersistencia ex) {
@@ -210,7 +210,7 @@ public class AulaOJBTest extends TestCaseOJB {
     // read unexisting disciplinaExecucao
     try {
       _suportePersistente.iniciarTransaccao();
-      aulas = _aulaPersistente.readByDisciplinaExecucao(_disciplinaExecucao2);
+      aulas = _aulaPersistente.readByExecutionCourse(_disciplinaExecucao2);
       assertTrue("testReadByDisciplinaExecucao: Unexisting", aulas.isEmpty());
       _suportePersistente.confirmarTransaccao();
     } catch (ExcepcaoPersistencia ex) {

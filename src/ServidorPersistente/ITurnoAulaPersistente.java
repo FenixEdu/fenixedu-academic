@@ -31,7 +31,7 @@ public interface ITurnoAulaPersistente extends IPersistentObject{
 	public List readLessonsByStudent(String username) throws ExcepcaoPersistencia;
 	
 	
-	public List readAulasDeTurno(ITurno shift) throws ExcepcaoPersistencia;
+	public List readByShift(ITurno shift) throws ExcepcaoPersistencia;
 	public void delete(ITurno shift, DiaSemana diaSemana, Calendar inicio, Calendar fim,
 					   ISala sala) throws ExcepcaoPersistencia;
 	public List readLessonsByShift(ITurno shift) throws ExcepcaoPersistencia;					   

@@ -15,11 +15,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.InfoDegree;
-import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoLesson;
-import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
 import DataBeans.ShiftKey;
 import DataBeans.util.Cloner;
@@ -52,70 +47,25 @@ public class LerAulasDeTurno implements IServico {
     return "LerAulasDeTurno";
   }
 
-  public Object run(ShiftKey shiftKey) {
+  public List run(ShiftKey shiftKey) {
     ArrayList infoAulas = null;
 
     try {
       ISuportePersistente sp = SuportePersistenteOJB.getInstance();
       
+      
       ITurno shift = Cloner.copyInfoShift2Shift(new InfoShift(shiftKey.getShiftName(),null, null, shiftKey.getInfoExecutionCourse()));
       
-      List aulas = sp.getITurnoAulaPersistente().readAulasDeTurno(shift);
+      List aulas = sp.getITurnoAulaPersistente().readByShift(shift);
 
       Iterator iterator = aulas.iterator();
       infoAulas = new ArrayList();
+
       while(iterator.hasNext()) {
       	IAula elem = (IAula)iterator.next();
-		if (elem != null) {
-			InfoRoom infoSala = null;
-			if (elem.getSala() != null)
-				infoSala =
-					new InfoRoom(
-						elem.getSala().getNome(),
-						elem.getSala().getEdificio(),
-						elem.getSala().getPiso(),
-						elem.getSala().getTipo(),
-						elem.getSala().getCapacidadeNormal(),
-						elem.getSala().getCapacidadeExame());
-			InfoDegree infoLicenciatura =
-				new InfoDegree(
-					elem
-						.getDisciplinaExecucao()
-						.getLicenciaturaExecucao()
-						.getCurso()
-						.getSigla(),
-					elem
-						.getDisciplinaExecucao()
-						.getLicenciaturaExecucao()
-						.getCurso()
-						.getNome());
-			InfoExecutionDegree infoLicenciaturaExecucao =
-				new InfoExecutionDegree(
-					elem
-						.getDisciplinaExecucao()
-						.getLicenciaturaExecucao()
-						.getAnoLectivo(),
-					infoLicenciatura);
-			InfoExecutionCourse infoDisciplinaExecucao =
-				new InfoExecutionCourse(
-					elem.getDisciplinaExecucao().getNome(),
-					elem.getDisciplinaExecucao().getSigla(),
-					elem.getDisciplinaExecucao().getPrograma(),
-					infoLicenciaturaExecucao,
-					elem.getDisciplinaExecucao().getTheoreticalHours(),
-					elem.getDisciplinaExecucao().getPraticalHours(),
-					elem.getDisciplinaExecucao().getTheoPratHours(),
-					elem.getDisciplinaExecucao().getLabHours());
-			infoAulas.add(
-				new InfoLesson(
-					elem.getDiaSemana(),
-					elem.getInicio(),
-					elem.getFim(),
-					elem.getTipo(),
-					infoSala,
-					infoDisciplinaExecucao));
-		}
+		infoAulas.add(Cloner.copyILesson2InfoLesson(elem));
       }
+
     } catch (ExcepcaoPersistencia ex) {
       ex.printStackTrace();
     }

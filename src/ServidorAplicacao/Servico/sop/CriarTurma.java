@@ -12,11 +12,12 @@ package ServidorAplicacao.Servico.sop;
  * @author tfc130
  **/
 import DataBeans.InfoClass;
-import Dominio.ICurso;
+import DataBeans.util.Cloner;
 import Dominio.ITurma;
-import Dominio.Turma;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -49,9 +50,20 @@ public class CriarTurma implements IServico {
 
     try {
       ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-      ICurso licenciatura = sp.getICursoPersistente().readBySigla(infoTurma.getInfoLicenciatura().getSigla());
-      turma = new Turma(infoTurma.getNome(), infoTurma.getSemestre(),infoTurma.getAnoCurricular(), licenciatura);
+      
+      turma = Cloner.copyInfoClass2Class(infoTurma);
+      
+      IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+      ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
+      
+      turma.setExecutionDegree(executionDegreeDAO.readByDegreeCurricularPlanAndExecutionYear(turma.getExecutionDegree().getCurricularPlan(), turma.getExecutionDegree().getExecutionYear()));
+      
+      
+      turma.setExecutionPeriod(executionPeriodDAO.readByNameAndExecutionYear(turma.getExecutionPeriod().getName(), turma.getExecutionPeriod().getExecutionYear()));
+      
+      
       sp.getITurmaPersistente().lockWrite(turma);
+      
       result = true;
     } catch (ExcepcaoPersistencia ex) {
       ex.printStackTrace();

@@ -48,46 +48,30 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
 		}
 	}
 
-	public ITurno readByNomeAndExecutionCourse(
-		String nome,
-		IDisciplinaExecucao IDE)
+	public ITurno readByNameAndExecutionCourse(
+		String shiftName,
+		IDisciplinaExecucao executionCourse)
 		throws ExcepcaoPersistencia {
-		//		try {
-		//				if (((DisciplinaExecucao)IDE).getCodigoInterno()==null){
-		//				DisciplinaExecucaoOJB discExecOJB = new DisciplinaExecucaoOJB();
-		//				IDE= discExecOJB.
-		//				
-		//				}	
-		//						String oqlQuery2 = "select turnonome from " + Turno.class.getName();
-		//						oqlQuery2 += " where nome = $1 and chaveDisciplinaExecucao = $2 ";
-		//						query.create(oqlQuery2);
-		//						query.bind(nome);
-		//						query.bind( ((DisciplinaExecucao)IDE).getCodigoInterno());
-		//						List result = (List) query.execute();
-		//						lockRead(result);
-		//						if (result.size() != 0)
-		//							turno = (ITurno) result.get(0);
-		//						return turno;
-		//					} catch (QueryException ex) {
-		//						throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		//					}
 
 		try {
-			ITurno turno = null;
+			ITurno shift = null;
 			String oqlQuery = "select turnonome from " + Turno.class.getName();
 			oqlQuery += " where nome = $1 and disciplinaExecucao.sigla = $2 "
-				+ "and  disciplinaExecucao.licenciaturaExecucao.anoLectivo = $3 and "
-				+ " disciplinaExecucao.licenciaturaExecucao.curso.sigla = $4 ";
+				+ " and  disciplinaExecucao.executionPeriod.name = $3 "
+				+ " and disciplinaExecucao.executionPeriod.executionYear.year = $4";
 			query.create(oqlQuery);
-			query.bind(nome);
-			query.bind(IDE.getSigla());
-			query.bind(IDE.getLicenciaturaExecucao().getAnoLectivo());
-			query.bind(IDE.getLicenciaturaExecucao().getCurso().getSigla());
+			
+			query.bind(shiftName);
+			query.bind(executionCourse.getSigla());
+			query.bind(executionCourse.getExecutionPeriod().getName());
+			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+			
 			List result = (List) query.execute();
 			lockRead(result);
 			if (result.size() != 0)
-				turno = (ITurno) result.get(0);
-			return turno;
+				shift = (ITurno) result.get(0);
+			return shift;
+		
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
@@ -327,6 +311,28 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
 			for (int i = 0; i != result.size(); i++)
 				turnos.add((ITurno) (result.get(i)));
 			return turnos;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+	/**
+	 * @see ServidorPersistente.ITurnoPersistente#readByExecutionCourse(Dominio.IDisciplinaExecucao)
+	 */
+	public List readByExecutionCourse(IDisciplinaExecucao executionCourse)
+		throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select turnos from " + Turno.class.getName();
+			oqlQuery += " where disciplinaExecucao.sigla = $1"
+				+ " and disciplinaExecucao.executionPeriod.name = $2"
+				+ " and disciplinaExecucao.executionPeriod.executionYear.year = $3";
+			query.create(oqlQuery);
+			query.bind(executionCourse.getSigla());
+			query.bind(executionCourse.getExecutionPeriod().getName());
+			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+			
+			List result = (List) query.execute();
+			lockRead(result);
+			return result;
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}

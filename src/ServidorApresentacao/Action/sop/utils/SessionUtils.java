@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
+import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.IUserView;
 
 /**
@@ -40,19 +42,24 @@ public final class SessionUtils {
 	}
 
 	public static List getExecutionCourses(
-		HttpServletRequest request,
-		CurricularYearAndSemesterAndInfoExecutionDegree context)
+		HttpServletRequest request)
 		throws Exception {
 
 		HttpSession session = request.getSession();
 		ArrayList infoCourseList =
 			(ArrayList) session.getAttribute(
 				SessionConstants.EXECUTION_COURSE_LIST_KEY);
+				
 		if (infoCourseList == null) {
 
 			IUserView userView = SessionUtils.getUserView(request);
 			// Ler Disciplinas em Execucao
-			Object[] args = { context };
+			Integer curricularYear = (Integer) session.getAttribute(SessionConstants.CURRICULAR_YEAR_KEY);
+			
+			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY);
+			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+			
+			Object[] args = { infoExecutionDegree, infoExecutionPeriod, curricularYear };
 
 			infoCourseList =
 				(ArrayList) ServiceUtils.executeService(

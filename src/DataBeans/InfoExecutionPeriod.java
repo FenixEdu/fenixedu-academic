@@ -1,5 +1,6 @@
 package DataBeans;
 
+
 /**
  * @author Nuno & Joana
  */
@@ -42,6 +43,21 @@ public class InfoExecutionPeriod {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	public boolean equals(Object obj) {
+		if (obj instanceof InfoExecutionPeriod) {
+			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) obj;
+			return (
+				getInfoExecutionYear().equals(
+					infoExecutionPeriod.getInfoExecutionYear())
+					&& getName().equals(infoExecutionPeriod.getName()));
+
+		}
+		return false;
 	}
 
 }

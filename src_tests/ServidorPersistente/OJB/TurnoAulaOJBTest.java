@@ -202,7 +202,7 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 
       /* Testa metodo qdo ha mais do q uma aula de um turno na BD */
       _suportePersistente.iniciarTransaccao();
-      aulas = _turnoAulaPersistente.readAulasDeTurno(new Turno("455",null, null, null));
+      aulas = _turnoAulaPersistente.readByShift(new Turno("455",null, null, null));
       _suportePersistente.confirmarTransaccao();
       assertEquals("testReadAulasDeTurno: qdo ha 2 aulas da turma na BD", aulas.size(),2);
 
@@ -212,7 +212,7 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
       _suportePersistente.confirmarTransaccao();
       
       _suportePersistente.iniciarTransaccao();
-      aulas = _turnoAulaPersistente.readAulasDeTurno(new Turno("turno1",null, null, null));
+      aulas = _turnoAulaPersistente.readByShift(new Turno("turno1",null, null, null));
       _suportePersistente.confirmarTransaccao();
       assertEquals("testReadAulasDeTurno: qdo nao nenhuma aula do turno na BD", aulas.size(),0);
 

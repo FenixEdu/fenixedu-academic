@@ -13,6 +13,9 @@ package ServidorAplicacao.Servico.sop;
  **/
 import DataBeans.ClassKey;
 import DataBeans.InfoClass;
+import DataBeans.util.Cloner;
+import Dominio.ICursoExecucao;
+import Dominio.IExecutionPeriod;
 import Dominio.ITurma;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -21,46 +24,60 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class EditarTurma implements IServico {
 
-  private static EditarTurma _servico = new EditarTurma();
-  /**
-   * The singleton access method of this class.
-   **/
-  public static EditarTurma getService() {
-    return _servico;
-  }
+	private static EditarTurma _servico = new EditarTurma();
+	/**
+	 * The singleton access method of this class.
+	 **/
+	public static EditarTurma getService() {
+		return _servico;
+	}
 
-  /**
-   * The actor of this class.
-   **/
-  private EditarTurma() { }
+	/**
+	 * The actor of this class.
+	 **/
+	private EditarTurma() {
+	}
 
-  /**
-   * Devolve o nome do servico
-   **/
-  public final String getNome() {
-    return "EditarTurma";
-  }
+	/**
+	 * Devolve o nome do servico
+	 **/
+	public final String getNome() {
+		return "EditarTurma";
+	}
 
-  public Object run(ClassKey turmaAntiga, InfoClass turmaNova) {
+	public Object run(InfoClass oldClassView, InfoClass newClassView) {
 
-    ITurma turma = null;
-    boolean result = false;
+		ITurma turma = null;
+		boolean result = false;
 
-    try {
-      ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-      turma = sp.getITurmaPersistente().readByNome(turmaAntiga.getNomeTurma());
-      if (turma != null) {
-          turma.setNome(turmaNova.getNome());
-          turma.setSemestre(turmaNova.getSemestre());
-          sp.getITurmaPersistente().lockWrite(turma);
-          result = true;
-      }
-    } catch (ExcepcaoPersistencia ex) {
-      ex.printStackTrace();
-    }
-    
-    return new Boolean (result);
-  }
+			IExecutionPeriod executionPeriod =
+				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
+					oldClassView.getInfoExecutionPeriod());
+
+			ICursoExecucao executionDegree =
+				Cloner.copyInfoExecutionDegree2ExecutionDegree(
+					oldClassView.getInfoExecutionDegree());
+
+			turma =
+				sp
+					.getITurmaPersistente()
+					.readByNameAndExecutionDegreeAndExecutionPeriod(
+					oldClassView.getNome(),
+					executionDegree, executionPeriod);
+			/* :FIXME: we have to change more things... to dump one year to another */			
+			if (turma != null) {
+				turma.setNome(newClassView.getNome());
+				sp.getITurmaPersistente().lockWrite(turma);
+				result = true;
+			}
+		} catch (ExcepcaoPersistencia ex) {
+			ex.printStackTrace();
+		}
+
+		return new Boolean(result);
+	}
 
 }

@@ -11,9 +11,10 @@ package ServidorApresentacao.Action.sop.utils;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionPeriod;
 
 /**
  * @author jpvl
@@ -25,21 +26,26 @@ public abstract class RequestUtils {
 		String infoExecutionCourseInitials)
 		throws Exception {
 
-		CurricularYearAndSemesterAndInfoExecutionDegree context =
-			SessionUtils.getContext(request);
 
 		List executionCourseList =
-			SessionUtils.getExecutionCourses(request, context);
-
+			SessionUtils.getExecutionCourses(request);
+			
+		HttpSession session = request.getSession();
+		
+		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);	
+		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
+		
+		
+		infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
+		infoExecutionCourse.setSigla(infoExecutionCourseInitials);
+		System.out.println("*******************************************");
+		System.out.println(infoExecutionPeriod.getName());
+		System.out.println(infoExecutionCourseInitials);
 		int indexOf =
-			executionCourseList.indexOf(
-				new InfoExecutionCourse(
-					null,
-					infoExecutionCourseInitials,
-					null,
-					context.getInfoLicenciaturaExecucao(),
-					null, null, null, null));
+			executionCourseList.indexOf(infoExecutionCourse);
 
+		System.out.println("INDEX OF "+ indexOf+" *****************************");
+		System.out.println("*******************************************");
 		if (indexOf != -1)
 			return (InfoExecutionCourse) executionCourseList.get(indexOf);
 		else

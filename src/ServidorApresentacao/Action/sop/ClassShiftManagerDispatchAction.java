@@ -23,6 +23,7 @@ import DataBeans.ClassAndShiftKeys;
 import DataBeans.ClassKey;
 import DataBeans.InfoClass;
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoShift;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -44,16 +45,23 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 		try {
+			HttpSession session = request.getSession();
 			IUserView userView = SessionUtils.getUserView(request);
 
 			String shiftName = request.getParameter("shiftName");
 
 			InfoClass classView = getInfoTurma(request);
 
-			ClassAndShiftKeys keysTurmaAndTurno =
-				new ClassAndShiftKeys(classView.getNome(), shiftName);
-
-			Object[] argsAdicionarTurno = { keysTurmaAndTurno };
+			
+			InfoShift infoShift = new InfoShift();
+			
+			
+			InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) session.getAttribute(SessionConstants.EXECUTION_COURSE_KEY); 
+			
+			infoShift.setNome(shiftName);
+			infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
+			
+			Object[] argsAdicionarTurno = { classView, infoShift};
 
 			
 			
@@ -64,7 +72,7 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 			
 			setClassShiftListToRequest(request, userView, classView.getNome());
 
-			HttpSession session = request.getSession();
+			
 
 			/* TO REMOVE */
 			session.setAttribute(SessionConstants.CLASS_VIEW, classView);

@@ -15,6 +15,7 @@ import java.io.Serializable;
 public class InfoDegree implements Serializable{
   protected String _sigla;
   protected String _nome;
+    
 
   public InfoDegree() { }
     

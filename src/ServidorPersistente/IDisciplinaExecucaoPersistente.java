@@ -45,5 +45,15 @@ public interface IDisciplinaExecucaoPersistente extends IPersistentObject {
 		IExecutionPeriod executionPeriod,
 		ICursoExecucao executionDegree)
 		throws ExcepcaoPersistencia;
-
+	/**
+	 * 
+	 * @param courseInitials
+	 * @param executionPeriod
+	 * @return IDisciplinaExecucao
+	 * @throws ExcepcaoPersistencia
+	 */
+	public IDisciplinaExecucao readByExecutionCourseInitialsAndExecutionPeriod(
+		String courseInitials,
+		IExecutionPeriod executionPeriod)
+		throws ExcepcaoPersistencia;
 }

@@ -97,7 +97,7 @@ public class ReadEmptyRoomsService implements IServico {
 			
 			while (lessonIterator.hasNext()) {
 				IAula lessonAux = (IAula) lessonIterator.next();
-				InfoLesson infoLessonAux = Cloner.copyLesson2InfoLesson(lessonAux);
+				InfoLesson infoLessonAux = Cloner.copyILesson2InfoLesson(lessonAux);
 				infoRoomList.remove(infoLessonAux.getInfoSala());
 			}
 			return infoRoomList;

@@ -56,7 +56,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 		// read existing Turma
 		try {
 			_suportePersistente.iniciarTransaccao();
-			turma = _turmaPersistente.readByNome(_turma1.getNome());
+			turma = _turmaPersistente.readByName(_turma1.getNome());
 			_suportePersistente.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("testReadByNome:fail read existing turma");
@@ -66,7 +66,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 		// read unexisting Turma
 		try {
 			_suportePersistente.iniciarTransaccao();
-			turma = _turmaPersistente.readByNome("turmaInexistente");
+			turma = _turmaPersistente.readByName("turmaInexistente");
 			assertNull(turma);
 			_suportePersistente.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
@@ -112,7 +112,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 		// write turma already mapped into memory
 		try {
 			_suportePersistente.iniciarTransaccao();
-			ITurma turma = _turmaPersistente.readByNome(_turma1.getNome());
+			ITurma turma = _turmaPersistente.readByName(_turma1.getNome());
 			_suportePersistente.confirmarTransaccao();
 
 			_suportePersistente.iniciarTransaccao();
@@ -131,12 +131,12 @@ public class TurmaOJBTest extends TestCaseOJB {
 		try {
 			_suportePersistente.iniciarTransaccao();
 			//_turmaPersistente.lockWrite(_turma1);
-			turma1 = _turmaPersistente.readByNome(_turma1.getNome());
+			turma1 = _turmaPersistente.readByName(_turma1.getNome());
 			turma1.setSemestre(new Integer(2));
 			_suportePersistente.confirmarTransaccao();
 
 			_suportePersistente.iniciarTransaccao();
-			turma2 = _turmaPersistente.readByNome(turma1.getNome());
+			turma2 = _turmaPersistente.readByName(turma1.getNome());
 			_suportePersistente.confirmarTransaccao();
 
 			assertEquals(turma2.getSemestre(), new Integer(2));
@@ -150,7 +150,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 	public void testDeleteTurma() {
 		try {
 			_suportePersistente.iniciarTransaccao();
-			ITurma turma = _turmaPersistente.readByNome(_turma1.getNome());
+			ITurma turma = _turmaPersistente.readByName(_turma1.getNome());
 			_suportePersistente.confirmarTransaccao();
 
 			_suportePersistente.iniciarTransaccao();
@@ -158,7 +158,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 			_suportePersistente.confirmarTransaccao();
 
 			_suportePersistente.iniciarTransaccao();
-			turma = _turmaPersistente.readByNome(_turma1.getNome());
+			turma = _turmaPersistente.readByName(_turma1.getNome());
 			_suportePersistente.confirmarTransaccao();
 
 			assertEquals(turma, null);

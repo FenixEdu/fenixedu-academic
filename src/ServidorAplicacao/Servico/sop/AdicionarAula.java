@@ -63,7 +63,7 @@ public class AdicionarAula implements IServico {
 				sp.getITurnoPersistente().readByNome(
 					keysTurnoAndAula.getNomeTurno());
 			ISala sala1 =
-				sp.getISalaPersistente().readByNome(
+				sp.getISalaPersistente().readByName(
 					keysTurnoAndAula.getKeySala().getNomeSala());
 			IAula aula1 =
 				sp.getIAulaPersistente().readByDiaSemanaAndInicioAndFimAndSala(

@@ -52,8 +52,8 @@ public class EditarAula implements IServico {
     try {
       ISuportePersistente sp = SuportePersistenteOJB.getInstance();
       
-      ISala salaAntiga = sp.getISalaPersistente().readByNome(aulaAntiga.getKeySala().getNomeSala());
-      ISala salaNova = sp.getISalaPersistente().readByNome(aulaNova.getInfoSala().getNome());
+      ISala salaAntiga = sp.getISalaPersistente().readByName(aulaAntiga.getKeySala().getNomeSala());
+      ISala salaNova = sp.getISalaPersistente().readByName(aulaNova.getInfoSala().getNome());
       aula = sp.getIAulaPersistente().readByDiaSemanaAndInicioAndFimAndSala(aulaAntiga.getDiaSemana(),
                     aulaAntiga.getInicio(), aulaAntiga.getFim(), salaAntiga);
       

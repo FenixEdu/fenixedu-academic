@@ -25,5 +25,18 @@ public class InfoExecutionYear {
 	public void setYear(String year) {
 		this.year = year;
 	}
+	
+	
+
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	public boolean equals(Object obj) {
+		if (obj instanceof InfoExecutionYear){
+			InfoExecutionYear infoExecutionYear = (InfoExecutionYear) obj;
+			return getYear().equals(infoExecutionYear.getYear());
+		}
+		return false;
+	}
 
 }

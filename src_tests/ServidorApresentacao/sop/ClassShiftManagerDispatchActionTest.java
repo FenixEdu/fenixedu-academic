@@ -415,36 +415,36 @@ public class ClassShiftManagerDispatchActionTest extends MockStrutsTestCase {
 
 	public void testUnAuthorizedViewClassShift() {
 		//set request path
-		setRequestPathInfo("sop", "/ClassShiftManagerDA");
-		//sets needed objects to session/request
-		addRequestParameter("method", "viewClassShiftList");
-
-		//coloca credenciais na sessao
-		HashSet privilegios = new HashSet();
-		IUserView userView = new UserView("user", privilegios);
-		getSession().setAttribute(SessionConstants.U_VIEW, userView);
-
-		//coloca a class_view na sessão
-
-		InfoDegree infoDegree =
-			new InfoDegree(
-				_turma1.getLicenciatura().getSigla(),
-				_turma1.getLicenciatura().getNome());
-		InfoClass classView =
-			new InfoClass(
-				_turma1.getNome(),
-				_turma1.getSemestre(),
-				_turma1.getAnoCurricular(),
-				infoDegree);
-		getSession().setAttribute(SessionConstants.CLASS_VIEW, classView);
-
-		//action perform
-		actionPerform();
-
-		//verify that there are errors
-		String[] errors = { "ServidorAplicacao.NotAuthorizedException" };
-		verifyActionErrors(errors);
-
+//		setRequestPathInfo("sop", "/ClassShiftManagerDA");
+//		//sets needed objects to session/request
+//		addRequestParameter("method", "viewClassShiftList");
+//
+//		//coloca credenciais na sessao
+//		HashSet privilegios = new HashSet();
+//		IUserView userView = new UserView("user", privilegios);
+//		getSession().setAttribute(SessionConstants.U_VIEW, userView);
+//
+//		//coloca a class_view na sessão
+//
+//		InfoDegree infoDegree =
+//			new InfoDegree(
+//				_turma1.getLicenciatura().getSigla(),
+//				_turma1.getLicenciatura().getNome());
+//		InfoClass classView =
+//			new InfoClass(
+//				_turma1.getNome(),
+//				_turma1.getSemestre(),
+//				_turma1.getAnoCurricular(),
+//				infoDegree);
+//		getSession().setAttribute(SessionConstants.CLASS_VIEW, classView);
+//
+//		//action perform
+//		actionPerform();
+//
+//		//verify that there are errors
+//		String[] errors = { "ServidorAplicacao.NotAuthorizedException" };
+//		verifyActionErrors(errors);
+		fail("Falta fazer o teste");
 	}
 
 	public void testAuthorizedViewClassShift() {

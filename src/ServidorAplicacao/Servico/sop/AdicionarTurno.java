@@ -11,7 +11,11 @@ package ServidorAplicacao.Servico.sop;
  *
  * @author tfc130
  **/
-import DataBeans.ClassAndShiftKeys;
+import DataBeans.InfoClass;
+import DataBeans.InfoShift;
+import DataBeans.util.Cloner;
+import Dominio.ICursoExecucao;
+import Dominio.IExecutionPeriod;
 import Dominio.ITurma;
 import Dominio.ITurmaTurno;
 import Dominio.ITurno;
@@ -43,18 +47,26 @@ public class AdicionarTurno implements IServico {
     return "AdicionarTurno";
   }
 
-  public Object run(ClassAndShiftKeys keysTurmaAndTurno) {
+  public Boolean run(InfoClass infoClass, InfoShift infoShift) {
 
     ITurmaTurno turmaTurno = null;
     boolean result = false;
 
     try {
       ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-      ITurma turma1 = sp.getITurmaPersistente().readByNome(keysTurmaAndTurno.getNomeTurma());
-      ITurno turno1 = sp.getITurnoPersistente().readByNome(keysTurmaAndTurno.getNomeTurno());
+      
+      IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoClass.getInfoExecutionPeriod());
+      ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoClass.getInfoExecutionDegree()); 
+      
+      ITurma group = sp.getITurmaPersistente().readByNameAndExecutionDegreeAndExecutionPeriod(infoClass.getNome(), executionDegree, executionPeriod);
+      
+	  /* :FIXME: must read with ExecutionCourse*/
+      ITurno shift = sp.getITurnoPersistente().readByNome(infoShift.getNome());
 
-	  turmaTurno = new TurmaTurno(turma1, turno1);
+	  turmaTurno = new TurmaTurno(group, shift);
+      
       sp.getITurmaTurnoPersistente().lockWrite(turmaTurno);
+      
       result = true;
     } catch (ExcepcaoPersistencia ex) {
       ex.printStackTrace();

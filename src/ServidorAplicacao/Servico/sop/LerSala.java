@@ -43,7 +43,7 @@ public class LerSala implements IServico {
 
     try {
       ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-      ISala sala = sp.getISalaPersistente().readByNome(keySala.getNomeSala());
+      ISala sala = sp.getISalaPersistente().readByName(keySala.getNomeSala());
       if (sala != null)
       	infoSala = new InfoRoom(sala.getNome(), sala.getEdificio(), sala.getPiso(), sala.getTipo(),
       	                        sala.getCapacidadeNormal(), sala.getCapacidadeExame());

@@ -6,11 +6,13 @@
 
 package DataBeans;
 
+import java.io.Serializable;
+
 /**
  *
  * @author  tfc130
  */
-public class InfoExecutionDegree {
+public class InfoExecutionDegree implements Serializable {
 	protected String _anoLectivo;
 	protected InfoDegree _infoLicenciatura;
 	private InfoExecutionYear infoExecutionYear;

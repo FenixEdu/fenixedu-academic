@@ -50,7 +50,7 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
     // read existing CursoExecucao
     try {
       _suportePersistente.iniciarTransaccao();
-      cursoExecucao = cursoExecucaoPersistente.readByCursoAndAnoLectivo(curso1,"2002/03");
+      cursoExecucao = cursoExecucaoPersistente.readByDegreeAndExecutionYear(curso1,"2002/03");
       _suportePersistente.confirmarTransaccao();
     } catch (ExcepcaoPersistencia ex) {
       fail("testReadByCursoAndAnoLectivo:fail read existing cursoExecucao");
@@ -60,7 +60,7 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
     // read unexisting CursoExecucao
     try {
       _suportePersistente.iniciarTransaccao();
-      cursoExecucao = cursoExecucaoPersistente.readByCursoAndAnoLectivo(curso1,"5000");
+      cursoExecucao = cursoExecucaoPersistente.readByDegreeAndExecutionYear(curso1,"5000");
       assertNull(cursoExecucao);
       _suportePersistente.confirmarTransaccao();
     } catch (ExcepcaoPersistencia ex) {
@@ -103,7 +103,7 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
     // write cursoExecucao already mapped into memory
     try {
     	_suportePersistente.iniciarTransaccao();
-    	ICursoExecucao le = cursoExecucaoPersistente.readByCursoAndAnoLectivo(curso1,"2002/03");
+    	ICursoExecucao le = cursoExecucaoPersistente.readByDegreeAndExecutionYear(curso1,"2002/03");
     	_suportePersistente.confirmarTransaccao();
 
       _suportePersistente.iniciarTransaccao();
@@ -119,12 +119,12 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
     // write item already mapped into memory
     try {
       _suportePersistente.iniciarTransaccao();
-      ICursoExecucao le = cursoExecucaoPersistente.readByCursoAndAnoLectivo(curso1,"2002/03");
+      ICursoExecucao le = cursoExecucaoPersistente.readByDegreeAndExecutionYear(curso1,"2002/03");
       le.setAnoLectivo("10000");
       _suportePersistente.confirmarTransaccao();
 
       _suportePersistente.iniciarTransaccao();
-      le = cursoExecucaoPersistente.readByCursoAndAnoLectivo(curso1,"10000");
+      le = cursoExecucaoPersistente.readByDegreeAndExecutionYear(curso1,"10000");
       _suportePersistente.confirmarTransaccao();
       assertEquals(le.getAnoLectivo(),"10000");
     } catch (ExcepcaoPersistencia ex) {
@@ -134,22 +134,22 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
 
   /** Test of delete method, of class ServidorPersistente.OJB.CursoExecucaoOJB. */
   public void testDeleteCursoExecucao() {
-    try {
-    	_suportePersistente.iniciarTransaccao();
-    	ICursoExecucao le = cursoExecucaoPersistente.readByCursoAndAnoLectivo(curso1,"2002/03");
-    	_suportePersistente.confirmarTransaccao();
-
-      _suportePersistente.iniciarTransaccao();
-      cursoExecucaoPersistente.delete(le);
-      _suportePersistente.confirmarTransaccao();
-
-      _suportePersistente.iniciarTransaccao();
-      ICursoExecucao cursoExecucao = cursoExecucaoPersistente.readByCursoAndAnoLectivo(cursoExecucao1.getCurso(),cursoExecucao1.getAnoLectivo());
-      _suportePersistente.confirmarTransaccao();
-      assertEquals(cursoExecucao, null);
-    } catch (ExcepcaoPersistencia ex) {
+//    try {
+//    	_suportePersistente.iniciarTransaccao();
+//    	ICursoExecucao le = cursoExecucaoPersistente.readByDegreeAndExecutionYear(curso1,"2002/03");
+//    	_suportePersistente.confirmarTransaccao();
+//
+//      _suportePersistente.iniciarTransaccao();
+//      cursoExecucaoPersistente.delete(le);
+//      _suportePersistente.confirmarTransaccao();
+//
+//      _suportePersistente.iniciarTransaccao();
+//      ICursoExecucao cursoExecucao = cursoExecucaoPersistente.readByDegreeAndExecutionYear(cursoExecucao1.getCurso(),cursoExecucao1.getAnoLectivo());
+//      _suportePersistente.confirmarTransaccao();
+//      assertEquals(cursoExecucao, null);
+//    } catch (ExcepcaoPersistencia ex) {
       fail("testDeleteCursoExecucao");
-    }
+//    }
   }
 
 

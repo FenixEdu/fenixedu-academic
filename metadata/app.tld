@@ -84,7 +84,7 @@
 
     <name>gerarHorario</name>
     
-    <tagclass>ServidorApresentacao.TagLib.sop.v2.GerarHorarioTag</tagclass>
+    <tagclass>ServidorApresentacao.TagLib.sop.v3.RenderTimeTableTag</tagclass>
     
     <bodycontent>empty</bodycontent>
     

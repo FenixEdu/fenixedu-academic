@@ -16,13 +16,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoShift;
+import DataBeans.util.Cloner;
+import Dominio.IDisciplinaExecucao;
 import Dominio.ITurno;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-
 public class LerTurnosDeDisciplinaExecucao implements IServico {
   private static LerTurnosDeDisciplinaExecucao _servico = new LerTurnosDeDisciplinaExecucao();
   /**
@@ -43,27 +43,30 @@ public class LerTurnosDeDisciplinaExecucao implements IServico {
   public final String getNome() {
     return "LerTurnosDeDisciplinaExecucao";
   }
-  public Object run(InfoExecutionCourse iDE) {
+  public List run(InfoExecutionCourse infoExecutionCourse) {
 
-    List turnos = null;
-    List infoTurnos = null;
+    List shiftList = null;
+    List infoShiftList = null;
 
     try {
       ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-      turnos = sp.getITurnoPersistente().readByDisciplinaExecucao(iDE.getSigla(),
-      															  iDE.getInfoLicenciaturaExecucao().getAnoLectivo(),
-      															  iDE.getInfoLicenciaturaExecucao().getInfoLicenciatura().getSigla());
-      Iterator iterator = turnos.iterator();
-      infoTurnos = new ArrayList();
+      
+      
+      IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+      
+      shiftList = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
+      
+      Iterator iterator = shiftList.iterator();
+      infoShiftList = new ArrayList();
       while(iterator.hasNext()) {
-      	ITurno elem = (ITurno)iterator.next();
-        infoTurnos.add(new InfoShift(elem.getNome(), elem.getTipo(), elem.getLotacao(), iDE));
+      	ITurno shift = (ITurno)iterator.next();
+        infoShiftList.add(Cloner.copyIShift2InfoShift(shift));
         }
       															  
     } catch (ExcepcaoPersistencia ex) {
       ex.printStackTrace();
     }
-    return infoTurnos;
+    return infoShiftList;
   }
 
 }

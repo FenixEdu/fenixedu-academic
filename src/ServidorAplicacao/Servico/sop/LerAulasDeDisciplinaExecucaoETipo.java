@@ -16,11 +16,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.ExecutionCourseKeyAndLessonType;
-import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoLesson;
-import DataBeans.InfoRoom;
 import DataBeans.util.Cloner;
 import Dominio.IAula;
 import Dominio.IDisciplinaExecucao;
@@ -63,7 +60,7 @@ public class LerAulasDeDisciplinaExecucaoETipo implements IServico {
 
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			List aulas =
-				sp.getIAulaPersistente().readByDisciplinaExecucaoETipo(
+				sp.getIAulaPersistente().readByExecutionCourseAndLessonType(
 					executionCourse,
 					tipoAulaAndKeyDisciplinaExecucao.getTipoAula());
 
@@ -71,53 +68,8 @@ public class LerAulasDeDisciplinaExecucaoETipo implements IServico {
 			infoAulas = new ArrayList();
 			while (iterator.hasNext()) {
 				IAula lesson = (IAula) iterator.next();
-				InfoRoom infoSala =
-					new InfoRoom(
-						lesson.getSala().getNome(),
-						lesson.getSala().getEdificio(),
-						lesson.getSala().getPiso(),
-						lesson.getSala().getTipo(),
-						lesson.getSala().getCapacidadeNormal(),
-						lesson.getSala().getCapacidadeExame());
-
-				InfoDegree infoLicenciatura =
-					new InfoDegree(
-						lesson
-							.getDisciplinaExecucao()
-							.getLicenciaturaExecucao()
-							.getCurso()
-							.getSigla(),
-						lesson
-							.getDisciplinaExecucao()
-							.getLicenciaturaExecucao()
-							.getCurso()
-							.getNome());
-
-				InfoExecutionDegree infoLicenciaturaExecucao =
-					new InfoExecutionDegree(
-						lesson
-							.getDisciplinaExecucao()
-							.getLicenciaturaExecucao()
-							.getAnoLectivo(),
-						infoLicenciatura);
-				InfoExecutionCourse infoDisciplinaExecucao =
-					new InfoExecutionCourse(
-						lesson.getDisciplinaExecucao().getNome(),
-						lesson.getDisciplinaExecucao().getSigla(),
-						lesson.getDisciplinaExecucao().getPrograma(),
-						infoLicenciaturaExecucao,
-						lesson.getDisciplinaExecucao().getTheoreticalHours(),
-						lesson.getDisciplinaExecucao().getPraticalHours(),
-						lesson.getDisciplinaExecucao().getTheoPratHours(),
-						lesson.getDisciplinaExecucao().getLabHours());
-				infoAulas.add(
-					new InfoLesson(
-						lesson.getDiaSemana(),
-						lesson.getInicio(),
-						lesson.getFim(),
-						lesson.getTipo(),
-						infoSala,
-						infoDisciplinaExecucao));
+				InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(lesson);
+				infoAulas.add(infoLesson);
 			}
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();
