@@ -8,22 +8,23 @@ import Dominio.DomainObject;
 import Dominio.ICurso;
 import Dominio.IExecutionYear;
 import Dominio.IStudent;
-import Util.DelegateType;
+import Util.DelegateYearType;
 
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida</a>
  * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo</a>
  *  
  */
-public class Delegate extends DomainObject
+public class Delegate extends DomainObject implements IDelegate
 {
     private IStudent student;
     private ICurso degree;
     private IExecutionYear executionYear;
-    private DelegateType type;
+    private DelegateYearType yearType;
     private Integer keyStudent;
     private Integer keyDegree;
     private Integer keyExecutionYear;
+    private Boolean type;
 
     /**
 	 *  
@@ -31,6 +32,23 @@ public class Delegate extends DomainObject
     public Delegate()
     {
         super();
+    }
+
+    /**
+	 * @return Returns the type.
+	 */
+    public Boolean getType()
+    {
+        return type;
+    }
+
+    /**
+	 * @param type
+	 *            The type to set.
+	 */
+    public void setType(Boolean type)
+    {
+        this.type = type;
     }
 
     /**
@@ -146,18 +164,18 @@ public class Delegate extends DomainObject
     /**
 	 * @return Returns the type.
 	 */
-    public DelegateType getType()
+    public DelegateYearType getYearType()
     {
-        return type;
+        return yearType;
     }
 
     /**
 	 * @param type
 	 *            The type to set.
 	 */
-    public void setType(DelegateType type)
+    public void setYearType(DelegateYearType yearType)
     {
-        this.type = type;
+        this.yearType = yearType;
     }
 
 }

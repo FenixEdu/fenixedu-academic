@@ -2,7 +2,7 @@
  * Created on Feb 18, 2004
  *  
  */
-package DataBeans.gesdis;
+package DataBeans.student;
 
 import java.util.Date;
 

@@ -24,6 +24,7 @@
 		<td>
 			<logic:iterate id="infoTeacher" name="siteCourseInformation" property="infoResponsibleTeachers">
 				<bean:write name="infoTeacher" property="infoPerson.nome" />
+				<br />
 			</logic:iterate>	
 		</td>
 	</tr>
@@ -32,6 +33,7 @@
 		<td>
 			<logic:iterate id="infoDepartment" name="siteCourseInformation" property="infoDepartments">
 				<bean:write name="infoDepartment" property="name" />
+				<br />
 			</logic:iterate>
 		</td>
 	</tr>

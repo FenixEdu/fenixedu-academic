@@ -2,10 +2,10 @@
  * Created on Feb 18, 2004
  *  
  */
-package ServidorAplicacao.Servico.gesdis.student;
+package ServidorAplicacao.Servico.student.delegate;
 
 import DataBeans.InfoObject;
-import DataBeans.gesdis.InfoStudentCourseReport;
+import DataBeans.student.InfoStudentCourseReport;
 import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
 import ServidorAplicacao.Servico.framework.EditDomainObjectService;

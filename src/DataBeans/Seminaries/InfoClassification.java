@@ -8,7 +8,6 @@
 package DataBeans.Seminaries;
 
 import DataBeans.DataTranferObject;
-import DataBeans.InfoObject;
 
 /**
  * 

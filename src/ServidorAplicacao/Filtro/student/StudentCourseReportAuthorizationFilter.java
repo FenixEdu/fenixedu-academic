@@ -11,23 +11,22 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.IExecutionYear;
 import Dominio.IStudent;
-import Dominio.gesdis.IStudentCourseReport;
-import Dominio.gesdis.StudentCourseReport;
 import Dominio.student.IDelegate;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.gesdis.IPersistentStudentCourseReport;
 import ServidorPersistente.student.IPersistentDelegate;
-import Util.DelegateType;
+import Util.DelegateYearType;
 import Util.RoleType;
 
 /**
@@ -60,23 +59,21 @@ public class StudentCourseReportAuthorizationFilter extends DomainObjectAuthoriz
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-            IPersistentStudentCourseReport persistentStudentCourseReport =
-                sp.getIPersistentStudentCourseReport();
             IPersistentDelegate persistentDelegate = sp.getIPersistentDelegate();
             IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 
             IStudent student = persistentStudent.readByUsername(id.getUtilizador());
-            IStudentCourseReport studentCourseReport =
-                (IStudentCourseReport) persistentStudentCourseReport.readByOId(
-                    new StudentCourseReport(objectId),
+            ICurricularCourse curricularCourse =
+                (ICurricularCourse) persistentCurricularCourse.readByOId(
+                    new CurricularCourse(objectId),
                     false);
-            ICurricularCourse curricularCourse = studentCourseReport.getCurricularCourse();
+
             IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
             IDelegate degreeDelegate =
-                persistentDelegate.readByDegreeAndExecutionYearAndType(
+                persistentDelegate.readDegreeDelegateByDegreeAndExecutionYear(
                     curricularCourse.getDegreeCurricularPlan().getDegree(),
-                    executionYear,
-                    DelegateType.DEGREE);
+                    executionYear);
 
             // if it's a degree delegate then it's allowed
             if (degreeDelegate.getStudent().equals(student))
@@ -97,10 +94,10 @@ public class StudentCourseReportAuthorizationFilter extends DomainObjectAuthoriz
             {
                 Integer year = (Integer) iter.next();
                 IDelegate delegate =
-                    persistentDelegate.readByDegreeAndExecutionYearAndType(
+                    persistentDelegate.readByDegreeAndExecutionYearAndYearType(
                         curricularCourse.getDegreeCurricularPlan().getDegree(),
                         executionYear,
-                        DelegateType.getEnum(year.intValue()));
+                        DelegateYearType.getEnum(year.intValue()));
 
                 return delegate.getStudent().equals(student);
             }

@@ -16,7 +16,6 @@ import java.util.List;
 import DataBeans.util.Cloner;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;

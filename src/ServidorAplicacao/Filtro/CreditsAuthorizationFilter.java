@@ -16,7 +16,6 @@ import Dominio.ITeacher;
 import Dominio.Teacher;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.IPersistentDepartment;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;

@@ -27,7 +27,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.gesdis.IPersistentStudentCourseReport;
 import ServidorPersistente.student.IPersistentDelegate;
-import Util.DelegateType;
+import Util.DelegateYearType;
 import Util.RoleType;
 
 /**
@@ -87,10 +87,10 @@ public class EditStudentCourseReportAuthorizationFilter extends DomainObjectAuth
             {
                 Integer year = (Integer) iter.next();
                 IDelegate delegate =
-                    persistentDelegate.readByDegreeAndExecutionYearAndType(
+                    persistentDelegate.readByDegreeAndExecutionYearAndYearType(
                         curricularCourse.getDegreeCurricularPlan().getDegree(),
                         executionYear,
-                        DelegateType.getEnum(year.intValue()));
+                        DelegateYearType.getEnum(year.intValue()));
 
                 return delegate.getStudent().equals(student);
             }

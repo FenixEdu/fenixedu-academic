@@ -6,6 +6,19 @@
     <!-- ========== Data Source Configuration =============================== -->
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
+        <form-bean name="studentReportForm" 
+			type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="idInternal" type="java.lang.Integer" 
+				initial="0" />
+			<form-property name="studentReport" type="java.lang.String" />
+			<form-property name="strongPoints" type="java.lang.String" />
+			<form-property name="weakPoints" type="java.lang.String" />
+			<form-property name="curricularCourseId" type="java.lang.Integer" />
+			<form-property name="universityId" type="java.lang.Integer" />
+			<form-property name="degreeCurricularPlanId" type="java.lang.Integer"/>
+			<form-property name="degreeId" type="java.lang.Integer"/>
+		</form-bean>
     </form-beans>
     <!-- ========== Global Exception Definitions ============================== -->
     <global-exceptions>
@@ -28,6 +41,19 @@
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
         <action path="/index" forward="index" />
+        
+        <action path="/readCurricularCourses" 
+            type="ServidorApresentacao.Action.student.delegate.ReadDelegateCurricularCoursesAction">
+            <forward name="show-curricular-courses" path="view-curricular-courses"/>
+        </action>
+        <action 
+			type="ServidorApresentacao.Action.student.delegate.StudentReportAction" 
+			path="/studentReport" name="studentReportForm" 
+			parameter="method" scope="request" validate="true" 
+			input="/studentReport.do?page=0&amp;method=prepareEdit">
+			<forward name="show-form" path="student-report-management"/>
+			<forward name="successfull-read" path="view-student-report"/>
+		</action>
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>

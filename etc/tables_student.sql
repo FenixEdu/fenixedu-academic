@@ -8,7 +8,9 @@ create table DELEGATE (
    KEY_DEGREE int(11) not null,
    KEY_STUDENT int(11) not null,
    KEY_EXECUTION_YEAR int(11) not null,
-   TYPE int(11) not null,
+   YEAR_TYPE int(11) not null,
+   TYPE bit not null,
    primary key (ID_INTERNAL),
-   unique U1 (KEY_EXECUTION_YEAR,KEY_STUDENT, TYPE)
+   unique U1 (KEY_EXECUTION_YEAR, KEY_STUDENT, YEAR_TYPE),
+   unique U2 (KEY_EXECUTION_YEAR, KEY_STUDENT, TYPE)
 ) type=InnoDB;

@@ -35,10 +35,14 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor 
-	    name="type" 
-    	column="TYPE" 
+	    name="yearType" 
+    	column="YEAR_TYPE" 
     	jdbc-type="INTEGER"
-    	conversion="ServidorPersistente.Conversores.DelegateTypeFieldConversion"/>
+    	conversion="ServidorPersistente.Conversores.DelegateYearTypeFieldConversion"/>
+    <field-descriptor 
+        name="type" 
+        column="TYPE" 
+        jdbc-type="BIT"/>
     <reference-descriptor
 			name="degree"
 			class-ref="Dominio.Curso"

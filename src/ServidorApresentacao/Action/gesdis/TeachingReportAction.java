@@ -4,8 +4,6 @@
  */
 package ServidorApresentacao.Action.gesdis;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +22,6 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.SiteView;
 import DataBeans.gesdis.InfoCourseReport;
-import DataBeans.gesdis.InfoSiteCourseHistoric;
 import DataBeans.gesdis.InfoSiteCourseInformation;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -169,7 +166,7 @@ public class TeachingReportAction extends DispatchAction
         throws Exception
     {
         SiteView siteView = readSiteView(mapping, form, request);
-        List infoCoursesHistoric  = readCoursesHistoric(mapping, form, request); 
+        List infoCoursesHistoric = readCoursesHistoric(mapping, form, request);
         if (!hasErrors(request) && siteView != null)
         {
             InfoSiteCourseInformation infoSiteCourseInformation =

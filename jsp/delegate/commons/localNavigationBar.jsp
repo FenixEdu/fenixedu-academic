@@ -4,8 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <ul>
 	<li>
-		<html:link page="/studentCourseReport.do?method=edit">
-			<bean:message key="link.delegate.studentCourseReport"/>
+		<html:link page="/readCurricularCourses.do">
+			<bean:message key="link.delegate.coursesEvalutation"/>
 		</html:link>
 		<br/>
 		<br/>

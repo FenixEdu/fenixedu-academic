@@ -337,7 +337,8 @@
     </service>
     <service>
         <name>ReadDegreesClassesLessons</name>
-        <implementationClass> ServidorAplicacao.Servico.sop.ReadDegreesClassesLessons</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.sop.ReadDegreesClassesLessons</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -346,7 +347,8 @@
     </service>
     <service>
         <name>ReadPavillionsRoomsLessons</name>
-        <implementationClass> ServidorAplicacao.Servico.sop.ReadPavillionsRoomsLessons</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.sop.ReadPavillionsRoomsLessons</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -486,7 +488,8 @@
     </service>
     <service>
         <name>ReadExamsByDayAndBeginning</name>
-        <implementationClass> ServidorAplicacao.Servico.sop.ReadExamsByDayAndBeginning</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.sop.ReadExamsByDayAndBeginning</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains/>
@@ -693,7 +696,8 @@
     </service>
     <service>
         <name>ReadStudentByUsername</name>
-        <implementationClass> ServidorAplicacao.Servico.student.ReadStudentByUsername</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.student.ReadStudentByUsername</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -900,7 +904,8 @@
     </service>
     <service>
         <name>UnEnrollStudentInGroup</name>
-        <implementationClass> ServidorAplicacao.Servico.student.UnEnrollStudentInGroup</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.student.UnEnrollStudentInGroup</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -909,7 +914,8 @@
     </service>
     <service>
         <name>GroupStudentEnrolment</name>
-        <implementationClass> ServidorAplicacao.Servico.student.GroupStudentEnrolment</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.student.GroupStudentEnrolment</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -996,7 +1002,8 @@
     </service>
     <service>
         <name>SelectExecutionCourse</name>
-        <implementationClass> ServidorAplicacao.Servico.publico.SelectExecutionCourse</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.publico.SelectExecutionCourse</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains/>
@@ -1239,7 +1246,8 @@
     </service>
     <service>
         <name>CreateExecutionPeriod</name>
-        <implementationClass> ServidorAplicacao.Servico.manager.CreateExecutionPeriod</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.manager.CreateExecutionPeriod</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -1276,7 +1284,8 @@
     </service>
     <service>
         <name>ReadNumberCachedItems</name>
-        <implementationClass> ServidorAplicacao.Servico.manager.ReadNumberCachedItems</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.manager.ReadNumberCachedItems</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -1313,7 +1322,8 @@
     </service>
     <service>
         <name>ReadAllTeachersNumberAndName</name>
-        <implementationClass>ServidorAplicacao.Servico.grant.ReadAllTeachersNumberAndName</implementationClass>
+        <implementationClass>
+            ServidorAplicacao.Servico.grant.ReadAllTeachersNumberAndName</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -1322,7 +1332,8 @@
     </service>
     <service>
         <name>ReadAllExecutionYears</name>
-        <implementationClass> ServidorAplicacao.Servico.manager.ReadAllExecutionYears</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.manager.ReadAllExecutionYears</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains/>
@@ -1633,7 +1644,8 @@
     </service>
     <service>
         <name>DeleteExecutionCourses</name>
-        <implementationClass> ServidorAplicacao.Servico.manager.DeleteExecutionCourses</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.manager.DeleteExecutionCourses</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -2287,7 +2299,7 @@
     </service>
     <service>
         <name>ReadGrantOwnerByPerson</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Servico.grant.owner.ReadGrantOwnerByPerson</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -2297,7 +2309,8 @@
     </service>
     <service>
         <name>EditGrantType</name>
-        <implementationClass> ServidorAplicacao.Servico.grant.contract.EditGrantType</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.grant.contract.EditGrantType</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -2306,7 +2319,8 @@
     </service>
     <service>
         <name>ReadGrantType</name>
-        <implementationClass> ServidorAplicacao.Servico.grant.contract.ReadGrantType</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.grant.contract.ReadGrantType</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -2331,13 +2345,23 @@
             <chain name="ReadCourseInformationAuthorization"/>
         </filterChains>
     </service>
-     <service>
+    <service>
         <name>ReadCourseHistoric</name>
         <implementationClass>ServidorAplicacao.Servico.gesdis.ReadCourseHistoric</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ReadCourseInformationAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadCurricularCourseHistoric</name>
+        <implementationClass>
+            ServidorAplicacao.Servico.gesdis.ReadCurricularCourseHistoric</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="StudentCourseReportAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -2513,7 +2537,8 @@
     </service>
     <service>
         <name>ReadTeacherByUserName</name>
-        <implementationClass> ServidorAplicacao.Servico.commons.ReadTeacherByUserName</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.commons.ReadTeacherByUserName</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains/>
@@ -2877,8 +2902,7 @@
     </service>
     <service>
         <name>SelectOptionalCurricularCourse</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.enrolment.degree.SelectOptionalCurricularCourse
+        <implementationClass> ServidorAplicacao.Servico.enrolment.degree.SelectOptionalCurricularCourse 
             </implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -3158,7 +3182,8 @@
     </service>
     <service>
         <name>CreateGroupProperties</name>
-        <implementationClass> ServidorAplicacao.Servico.teacher.CreateGroupProperties</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.CreateGroupProperties</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -3285,7 +3310,8 @@
     </service>
     <service>
         <name>DeleteExternalActivity</name>
-        <implementationClass> ServidorAplicacao.Servico.teacher.DeleteExternalActivity</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.DeleteExternalActivity</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -3303,7 +3329,8 @@
     </service>
     <service>
         <name>ReadExternalActivities</name>
-        <implementationClass> ServidorAplicacao.Servico.teacher.ReadExternalActivities</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.ReadExternalActivities</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -3321,7 +3348,8 @@
     </service>
     <service>
         <name>EditTeacherInformation</name>
-        <implementationClass> ServidorAplicacao.Servico.teacher.EditTeacherInformation</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.EditTeacherInformation</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -3330,7 +3358,8 @@
     </service>
     <service>
         <name>ReadTeacherInformation</name>
-        <implementationClass> ServidorAplicacao.Servico.teacher.ReadTeacherInformation</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.ReadTeacherInformation</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -3368,7 +3397,8 @@
     </service>
     <service>
         <name>EditStudentGroupShift</name>
-        <implementationClass> ServidorAplicacao.Servico.teacher.EditStudentGroupShift</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.EditStudentGroupShift</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -3452,7 +3482,7 @@
     </service>
     <service>
         <name>ReadDetailedTeacherProfessorshipsByExecutionYear</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Servico.teacher.professorship.ReadDetailedTeacherProfessorshipsByExecutionYear</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -3461,7 +3491,7 @@
     </service>
     <service>
         <name>UpdateTeacherExecutionYearResponsabilities</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Servico.teacher.professorship.UpdateTeacherExecutionYearResponsabilities</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -3615,7 +3645,7 @@
     </service>
     <service>
         <name>ReadDepartmentByTeacher</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Servico.department.ReadDepartmentByTeacher</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -3641,7 +3671,8 @@
     </service>
     <service>
         <name>UnEnrollStudentInExam</name>
-        <implementationClass> ServidorAplicacao.Servico.student.UnEnrollStudentInExam</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.student.UnEnrollStudentInExam</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -3699,7 +3730,8 @@
     </service>
     <service>
         <name>InsertEvaluationMarks</name>
-        <implementationClass> ServidorAplicacao.Servico.teacher.InsertEvaluationMarks</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.InsertEvaluationMarks</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -3987,7 +4019,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-           <!-- <chain name="DegreeAndMasterAdministrativeOfficeAuthorization"/>-->
+            <!-- <chain name="DegreeAndMasterAdministrativeOfficeAuthorization"/>-->
         </filterChains>
     </service>
     <service>
@@ -3997,7 +4029,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-           <!-- <chain name="DegreeAndMasterAdministrativeOfficeAuthorization"/>-->
+            <!-- <chain name="DegreeAndMasterAdministrativeOfficeAuthorization"/>-->
         </filterChains>
     </service>
     <service>
@@ -4007,7 +4039,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-          <!--  <chain name="DegreeAndMasterAdministrativeOfficeAuthorization"/>-->
+            <!--  <chain name="DegreeAndMasterAdministrativeOfficeAuthorization"/>-->
         </filterChains>
     </service>
     <service>
@@ -4062,7 +4094,7 @@
     </service>
     <service>
         <name>SelectOptionalCurricularCourseWithoutRules</name>
-        <implementationClass> ServidorAplicacao.Servico.enrolment.degree.SelectOptionalCurricularCourse
+        <implementationClass> ServidorAplicacao.Servico.enrolment.degree.SelectOptionalCurricularCourse 
             </implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -4112,7 +4144,8 @@
     </service>
     <service>
         <name>ConfirmEquivalence</name>
-        <implementationClass> ServidorAplicacao.Servico.equivalence.ConfirmEquivalence</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.equivalence.ConfirmEquivalence</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -4342,7 +4375,8 @@
     </service>
     <service>
         <name>InsertDistributedTest</name>
-        <implementationClass> ServidorAplicacao.Servico.teacher.InsertDistributedTest</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.InsertDistributedTest</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -4643,7 +4677,8 @@
     </service>
     <service>
         <name>Seminaries.GetAllEquivalencies</name>
-        <implementationClass> ServidorAplicacao.Servico.Seminaries.GetAllEquivalencies</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.Seminaries.GetAllEquivalencies</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -4709,7 +4744,8 @@
     </service>
     <service>
         <name>teacher.ReadStudentsByShiftID</name>
-        <implementationClass> ServidorAplicacao.Servico.teacher.ReadStudentsByShiftID</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.ReadStudentsByShiftID</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -4806,7 +4842,8 @@
     </service>
     <service>
         <name>EditWebSiteItem</name>
-        <implementationClass> ServidorAplicacao.Servico.webSiteManager.EditWebSiteItem</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.webSiteManager.EditWebSiteItem</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains/>
@@ -4970,7 +5007,8 @@
     </service>
     <service>
         <name>RemoveCoordinators</name>
-        <implementationClass> ServidorAplicacao.Servico.coordinator.RemoveCoordinators</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.coordinator.RemoveCoordinators</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -5112,7 +5150,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains/>
-    </service>    
+    </service>
     <service>
         <name>ReadActiveDegreeCurricularPlanByID</name>
         <implementationClass> 
@@ -5146,7 +5184,8 @@
     </service>
     <service>
         <name>MergeExecutionCourses</name>
-        <implementationClass> ServidorAplicacao.Servico.manager.MergeExecutionCourses</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.manager.MergeExecutionCourses</implementationClass>
         <description>This service merges 2 execution courses</description>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -5174,8 +5213,8 @@
         <name>ReadExecutionDegreesByExecutionYearAndDegreeType</name>
         <implementationClass> 
             ServidorAplicacao.Servico.degree.execution.ReadExecutionDegreesByExecutionYearAndDegreeType</implementationClass>
-        <description> Reads all execution degrees by execution year and degree type. If degree type is null 
-            then it reads all. If execution year is null then it reads by current execution year. 
+        <description> Reads all execution degrees by execution year and degree type. If degree type is 
+            null then it reads all. If execution year is null then it reads by current execution year. 
             </description>
         <isTransactional>true</isTransactional>
         <filterChains/>
@@ -5271,7 +5310,8 @@
     </service>
     <service>
         <name>RemoveCoordinatorsByManager</name>
-        <implementationClass> ServidorAplicacao.Servico.coordinator.RemoveCoordinators</implementationClass>
+        <implementationClass> 
+            ServidorAplicacao.Servico.coordinator.RemoveCoordinators</implementationClass>
         <description>This service remove one or more coordinators to a execution degree in manager 
             operations</description>
         <isTransactional>true</isTransactional>
@@ -5283,8 +5323,8 @@
         <name>ResponsibleCoordinatorsByManager</name>
         <implementationClass> 
             ServidorAplicacao.Servico.coordinator.ResponsibleCoordinators</implementationClass>
-        <description>This service associate a coordinator to a execution degree with responsible functions 
-            in manager operations</description>
+        <description>This service associate a coordinator to a execution degree with responsible 
+            functions in manager operations</description>
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ManagerAuthorization"/>
@@ -5301,7 +5341,7 @@
     </service>
     <service>
         <name>ReadAllContractsByGrantOwner</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Servico.grant.contract.ReadAllContractsByGrantOwner</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -5311,7 +5351,7 @@
     </service>
     <service>
         <name>ReadGrantContract</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Servico.grant.contract.ReadGrantContract</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -5319,57 +5359,56 @@
             <chain name="GrantOwnerManagerAuthorization"/>
         </filterChains>
     </service>
-   	<service>
-		<name>ReadExecutionDegreesByExecutionPeriodId</name>
-        <implementationClass>
+    <service>
+        <name>ReadExecutionDegreesByExecutionPeriodId</name>
+        <implementationClass> 
             ServidorAplicacao.Servico.manager.executionCourseManagement.ReadExecutionDegreesByExecutionPeriodId</implementationClass>
-		<description/>
-		<isTransactional>true</isTransactional>
+        <description/>
+        <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ManagerAuthorization"/>
         </filterChains>
     </service>
-   	<service>
-		<name>ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear</name>
-        <implementationClass>
+    <service>
+        <name>ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear</name>
+        <implementationClass> 
             ServidorAplicacao.Servico.manager.executionCourseManagement.ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear</implementationClass>
-		<description/>
-		<isTransactional>true</isTransactional>
+        <description/>
+        <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ManagerAuthorization"/>
         </filterChains>
     </service>
-   	<service>
-		<name>ReadInfoExecutionCourseByOID</name>
-        <implementationClass>
+    <service>
+        <name>ReadInfoExecutionCourseByOID</name>
+        <implementationClass> 
             ServidorAplicacao.Servico.manager.executionCourseManagement.ReadInfoExecutionCourseByOID</implementationClass>
-		<description/>
-		<isTransactional>true</isTransactional>
+        <description/>
+        <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ManagerAuthorization"/>
         </filterChains>
     </service>
-   	<service>
-		<name>DissociateCurricularCourseByExecutionCourseId</name>
-        <implementationClass>
+    <service>
+        <name>DissociateCurricularCourseByExecutionCourseId</name>
+        <implementationClass> 
             ServidorAplicacao.Servico.manager.executionCourseManagement.DissociateCurricularCourseByExecutionCourseId</implementationClass>
-		<description/>
-		<isTransactional>true</isTransactional>
+        <description/>
+        <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ManagerAuthorization"/>
         </filterChains>
     </service>
-   	<service>
-		<name>AssociateCurricularCoursesToExecutionCourse</name>
-        <implementationClass>
+    <service>
+        <name>AssociateCurricularCoursesToExecutionCourse</name>
+        <implementationClass> 
             ServidorAplicacao.Servico.manager.executionCourseManagement.AssociateCurricularCoursesToExecutionCourse</implementationClass>
-		<description/>
-		<isTransactional>true</isTransactional>
+        <description/>
+        <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ManagerAuthorization"/>
         </filterChains>
     </service>
-    
     <service>
         <name>ReadProfessorshipsAndResponsibilitiesByExecutionDegree</name>
         <implementationClass> 
@@ -5379,32 +5418,34 @@
         <filterChains/>
     </service>
     <service>
-    	<name>SearchPerson</name>
-    	<implementationClass>ServidorAplicacao.Servico.person.SearchPerson</implementationClass>
-    	<description>Service that find a person by number, name and/or email</description>
-    	<isTransactional>true</isTransactional>
+        <name>SearchPerson</name>
+        <implementationClass>ServidorAplicacao.Servico.person.SearchPerson</implementationClass>
+        <description>Service that find a person by number, name and/or email</description>
+        <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ManagerAuthorization"/>
-        </filterChains>            	
+        </filterChains>
     </service>
     <service>
-    	<name>ReadAllDepartments</name>
-    	<description>Service that retrieves all departments from the database</description>
-    	<implementationClass>ServidorAplicacao.Servico.department.ReadAllDepartments</implementationClass>
-    	<isTransactional>true</isTransactional>
-        <filterChains/>                    	
-    </service>
-    <service>
-    	<name>ReadProfessorshipsAndResponsibilitiesByDepartment</name>
-    	<description>Service that retrieves all professorships by department from the database</description>
+        <name>ReadAllDepartments</name>
+        <description>Service that retrieves all departments from the database</description>
         <implementationClass>
+            ServidorAplicacao.Servico.department.ReadAllDepartments</implementationClass>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+    </service>
+    <service>
+        <name>ReadProfessorshipsAndResponsibilitiesByDepartment</name>
+        <description>Service that retrieves all professorships by department from the 
+            database</description>
+        <implementationClass> 
             ServidorAplicacao.Servico.publico.teachersBody.ReadProfessorshipsAndResponsibilitiesByDepartment</implementationClass>
-    	<isTransactional>true</isTransactional>
-        <filterChains/>                    	
+        <isTransactional>true</isTransactional>
+        <filterChains/>
     </service>
     <service>
         <name>EditGrantContract</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Servico.grant.contract.EditGrantContract</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -5414,7 +5455,7 @@
     </service>
     <service>
         <name>EditGrantSubsidy</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Servico.grant.contract.EditGrantSubsidy</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -5424,7 +5465,7 @@
     </service>
     <service>
         <name>ReadGrantSubsidy</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Servico.grant.contract.ReadGrantSubsidy</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -5434,7 +5475,7 @@
     </service>
     <service>
         <name>ReadActualGrantSubsidyByGrantContract</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Servico.grant.contract.ReadActualGrantSubsidyByGrantContract</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -5442,9 +5483,9 @@
             <chain name="GrantOwnerManagerAuthorization"/>
         </filterChains>
     </service>
-     <service>
+    <service>
         <name>EditGrantPart</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Servico.grant.contract.EditGrantPart</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -5454,7 +5495,7 @@
     </service>
     <service>
         <name>ReadGrantPart</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Servico.grant.contract.ReadGrantPart</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -5464,7 +5505,7 @@
     </service>
     <service>
         <name>ReadGrantPaymentEntity</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Servico.grant.contract.ReadGrantPaymentEntity</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -5474,7 +5515,7 @@
     </service>
     <service>
         <name>ReadPaymentEntityByNumberAndClass</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Servico.grant.contract.ReadPaymentEntityByNumberAndClass</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -5484,17 +5525,17 @@
     </service>
     <service>
         <name>EditGrantPaymentEntity</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Servico.grant.contract.EditGrantPaymentEntity</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="GrantOwnerManagerAuthorization"/>
         </filterChains>
-    </service>    
+    </service>
     <service>
         <name>DeleteGrantPart</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Servico.grant.contract.DeleteGrantPart</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -5504,7 +5545,7 @@
     </service>
     <service>
         <name>ReadAllGrantPartsByGrantSubsidy</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Servico.grant.contract.ReadAllGrantPartsByGrantSubsidy</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -5514,7 +5555,7 @@
     </service>
     <service>
         <name>ReadAllGrantPaymentEntitiesByClassName</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Servico.grant.contract.ReadAllGrantPaymentEntitiesByClassName</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -5524,7 +5565,7 @@
     </service>
     <service>
         <name>ReadAllGrantTypes</name>
-        <implementationClass>
+        <implementationClass> 
             ServidorAplicacao.Servico.grant.contract.ReadAllGrantTypes</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -5534,7 +5575,8 @@
     </service>
     <service>
         <name>ReadStudentCurricularPlansByNumberAndDegreeTypeInMasterDegree</name>
-        <implementationClass>ServidorAplicacao.Servico.commons.student.ReadStudentCurricularPlansByNumberAndDegreeType</implementationClass>
+        <implementationClass>
+            ServidorAplicacao.Servico.commons.student.ReadStudentCurricularPlansByNumberAndDegreeType</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -5543,7 +5585,8 @@
     </service>
     <service>
         <name>ReadStudentCurricularPlanInMasterDegree</name>
-        <implementationClass>ServidorAplicacao.Servico.commons.student.ReadStudentCurricularPlan</implementationClass>
+        <implementationClass>
+            ServidorAplicacao.Servico.commons.student.ReadStudentCurricularPlan</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -5551,41 +5594,45 @@
         </filterChains>
     </service>
     <service>
-    	<name>ReadGratuitySituationByStudentCurricularPlanByGratuityValues</name>
-    	<description>Retrieves gratuity situation associated with this student</description>
-        <implementationClass>ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationByStudentCurricularPlanByGratuityValues
-    	</implementationClass>
-    	<isTransactional>True</isTransactional>
+        <name>ReadGratuitySituationByStudentCurricularPlanByGratuityValues</name>
+        <description>Retrieves gratuity situation associated with this student</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationByStudentCurricularPlanByGratuityValues 
+            </implementationClass>
+        <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
         </filterChains>
     </service>
     <service>
-    	<name>EditGratuitySituationById</name>
-    	<description>Servive that edit or create a gratuity situatuion</description>
-        <implementationClass>ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.EditGratuitySituationById 
-    	</implementationClass>
-    	<isTransactional>True</isTransactional>
+        <name>EditGratuitySituationById</name>
+        <description>Servive that edit or create a gratuity situatuion</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.EditGratuitySituationById 
+            </implementationClass>
+        <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
         </filterChains>
     </service>
     <service>
-    	<name>DeleteGratuitySituationById</name>
-    	<description>Servive that delete a gratuity situatuion</description>
-        <implementationClass>ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.DeleteGratuitySituationById 
-    	</implementationClass>
-    	<isTransactional>True</isTransactional>
+        <name>DeleteGratuitySituationById</name>
+        <description>Servive that delete a gratuity situatuion</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.DeleteGratuitySituationById 
+            </implementationClass>
+        <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
         </filterChains>
     </service>
     <service>
-    	<name>ReadGratuityValuesByExecutionDegree</name>
-    	<description>Retrieves gratuity values associated with this execution degree</description>
-        <implementationClass>ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuityValuesByExecutionDegree 
-    	</implementationClass>
-    	<isTransactional>True</isTransactional>
+        <name>ReadGratuityValuesByExecutionDegree</name>
+        <description>Retrieves gratuity values associated with this execution degree</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuityValuesByExecutionDegree 
+            </implementationClass>
+        <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
         </filterChains>
@@ -5593,7 +5640,8 @@
     <service>
         <name>ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear</name>
         <description>Retrieves gratuity values associated with this execution degree</description>
-        <implementationClass>ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear 
+        <implementationClass>
+            ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear 
             </implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
@@ -5604,7 +5652,8 @@
         <name>InsertGratuityData</name>
         <description>This service create a gratuity data about a execution degree, but if already exists 
             only change it</description>
-        <implementationClass>ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.InsertGratuityData</implementationClass>
+        <implementationClass>
+            ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.InsertGratuityData</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
@@ -5613,17 +5662,19 @@
     <service>
         <name>ReadNotClosedExecutionYears</name>
         <description>Retrieves only current and future execution years</description>
-        <implementationClass>ServidorAplicacao.Servico.commons.ReadNotClosedExecutionYears</implementationClass>
+        <implementationClass>
+            ServidorAplicacao.Servico.commons.ReadNotClosedExecutionYears</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains/>
     </service>
     <service>
-		<name>StartMigrationProcess</name>
-		<implementationClass>ServidorAplicacao.Servico.manager.migration.StartMigrationProcess</implementationClass>
-		<description/>
-		<isTransactional>true</isTransactional>
-		<filterChains/>
-	</service>
+        <name>StartMigrationProcess</name>
+        <implementationClass>
+            ServidorAplicacao.Servico.manager.migration.StartMigrationProcess</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+    </service>
     <service>
         <name>ClearCacheForMigrationProcess</name>
         <implementationClass>ServidorAplicacao.Servico.manager.ClearCache</implementationClass>
@@ -5631,7 +5682,7 @@
         <isTransactional>true</isTransactional>
         <filterChains/>
     </service>
-	<service>
+    <service>
         <name>ReadPerson</name>
         <description>Reads a Person by OID</description>
         <implementationClass>ServidorAplicacao.Servico.person.ReadPerson</implementationClass>
@@ -5639,183 +5690,203 @@
         <filterChains/>
     </service>
     <service>
-    	<name>ReadGratuitySituationListByExecutionDegreeAndSpecialization</name>
-    	<description>Return a list of gratuity situation of a execution degree or/and specialization or/and situation</description>
-    	<implementationClass>ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationListByExecutionDegreeAndSpecialization</implementationClass>
-    	<isTransactional>True</isTransactional>
+        <name>ReadGratuitySituationListByExecutionDegreeAndSpecialization</name>
+        <description>Return a list of gratuity situation of a execution degree or/and specialization 
+            or/and situation</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationListByExecutionDegreeAndSpecialization</implementationClass>
+        <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="ReadGratuityListAuthorization"/>
         </filterChains>
     </service>
     <service>
-    	<name>ReadGratuitySituationListByExecutionDegreeAndSpecializationInManager</name>
-    	<description>Return a list of gratuity situation of a execution degree or/and specialization or/and situation</description>
-    	<implementationClass>ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationListByExecutionDegreeAndSpecialization</implementationClass>
-    	<isTransactional>True</isTransactional>
+        <name>ReadGratuitySituationListByExecutionDegreeAndSpecializationInManager</name>
+        <description>Return a list of gratuity situation of a execution degree or/and specialization 
+            or/and situation</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationListByExecutionDegreeAndSpecialization</implementationClass>
+        <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="ManagerAuthorization"/>
         </filterChains>
-    </service>          
-	<service>
-    	<name>ShowAvailableCurricularCoursesNew</name>
-    	<description>Returns information about student enrollments in curricular courses testing enrollment period</description>
-    	<implementationClass>ServidorAplicacao.Servico.enrolment.ShowAvailableCurricularCourses</implementationClass>
-    	<isTransactional>True</isTransactional>
-        <filterChains>
-            <chain name="EnrollmentLEECAuthorization"/>
-        </filterChains>
-    </service>  
+    </service>
     <service>
-    	<name>DeleteEnrolment</name>
-    	<description>Deletes enrolment of student in a curricular course</description>
-    	<implementationClass>ServidorAplicacao.Servico.enrolment.DeleteEnrolment</implementationClass>
-    	<isTransactional>True</isTransactional>
-        <filterChains>
-            <chain name="EnrollmentLEECAuthorization"/>
-        </filterChains>
-    </service>  
-    <service>
-    	<name>WriteStudentAreas</name>
-    	<description>Modifies areas belonging to student curricular plan</description>
-    	<implementationClass>ServidorAplicacao.Servico.enrolment.WriteStudentAreas</implementationClass>
-    	<isTransactional>True</isTransactional>
-        <filterChains>
-            <chain name="EnrollmentLEECAuthorization"/>
-        </filterChains>
-    </service>  
-    <service>
-    	<name>WriteEnrolment</name>
-    	<description>Enrolls student in curricular course</description>
-    	<implementationClass>ServidorAplicacao.Servico.enrolment.WriteEnrolment</implementationClass>
-    	<isTransactional>True</isTransactional>
-        <filterChains>
-            <chain name="EnrollmentLEECAuthorization"/>
-        </filterChains>
-    </service>  
-    <service>
-    	<name>ReadSpecializationAndSecundaryAreasByStudent</name>
-    	<description>Reads areas corrresponding to student curricular plan</description>
-    	<implementationClass>ServidorAplicacao.Servico.enrolment.ReadSpecializationAndSecundaryAreasByStudent</implementationClass>
-    	<isTransactional>True</isTransactional>
-        <filterChains>
-            <chain name="EnrollmentLEECAuthorization"/>
-        </filterChains>
-    </service>  
-    <service>
-    	<name>ReadStudentsByTutor</name>
-    	<description>Reads students associated with the teacher</description>
-    	<implementationClass>ServidorAplicacao.Servico.coordinator.ReadStudentsByTutor</implementationClass>
-    	<isTransactional>True</isTransactional>
-        <filterChains>
-            <chain name="CoordinatorAndLEECAuthorization"/>
-        </filterChains>
-    </service>  
-    <service>
-    	<name>ReadNotClosedPublicExecutionPeriods</name>
-    	<description>Reads all public execution periods that are not closed</description>
-    	<implementationClass>ServidorAplicacao.Servico.commons.ReadNotClosedPublicExecutionPeriods</implementationClass>
-    	<isTransactional>True</isTransactional>
-        <filterChains/>
-    </service> 
-    <service>
-    	<name>ReadStudentCurriculumForEnrollmentConfirmation</name>
-    	<description>Reads student curriculum given student curricular plan id</description>
-        <implementationClass> 
-            ServidorAplicacao.Servico.commons.student.ReadStudentCurriculum</implementationClass>
-    	<isTransactional>True</isTransactional>
+        <name>ShowAvailableCurricularCoursesNew</name>
+        <description>Returns information about student enrollments in curricular courses testing 
+            enrollment period</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.enrolment.ShowAvailableCurricularCourses</implementationClass>
+        <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="EnrollmentLEECAuthorization"/>
         </filterChains>
     </service>
     <service>
-    	<name>InsertTutorShipWithOneStudent</name>
-    	<description>Associate one student to the teacher</description>
-    	<implementationClass>ServidorAplicacao.Servico.coordinator.InsertTutorShipWithOneStudent</implementationClass>
-    	<isTransactional>True</isTransactional>
+        <name>DeleteEnrolment</name>
+        <description>Deletes enrolment of student in a curricular course</description>
+        <implementationClass>ServidorAplicacao.Servico.enrolment.DeleteEnrolment</implementationClass>
+        <isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="EnrollmentLEECAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>WriteStudentAreas</name>
+        <description>Modifies areas belonging to student curricular plan</description>
+        <implementationClass>ServidorAplicacao.Servico.enrolment.WriteStudentAreas</implementationClass>
+        <isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="EnrollmentLEECAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>WriteEnrolment</name>
+        <description>Enrolls student in curricular course</description>
+        <implementationClass>ServidorAplicacao.Servico.enrolment.WriteEnrolment</implementationClass>
+        <isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="EnrollmentLEECAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadSpecializationAndSecundaryAreasByStudent</name>
+        <description>Reads areas corrresponding to student curricular plan</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.enrolment.ReadSpecializationAndSecundaryAreasByStudent</implementationClass>
+        <isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="EnrollmentLEECAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadStudentsByTutor</name>
+        <description>Reads students associated with the teacher</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.coordinator.ReadStudentsByTutor</implementationClass>
+        <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="CoordinatorAndLEECAuthorization"/>
         </filterChains>
-    </service>  
+    </service>
     <service>
-    	<name>InsertTutorShipWithManyStudent</name>
-    	<description>Associate a range of students to the teacher</description>
-    	<implementationClass>ServidorAplicacao.Servico.coordinator.InsertTutorShipWithManyStudent</implementationClass>
-    	<isTransactional>True</isTransactional>
-        <filterChains>
-            <chain name="CoordinatorAndLEECAuthorization"/>
-        </filterChains>
-    </service>  
-    <service>
-    	<name>DeleteTutorShip</name>
-    	<description>Delete a tutor ship</description>
-    	<implementationClass>ServidorAplicacao.Servico.coordinator.DeleteTutorShip</implementationClass>
-    	<isTransactional>True</isTransactional>
-        <filterChains>
-            <chain name="CoordinatorAndLEECAuthorization"/>
-        </filterChains>
-    </service>     
-    <service>
-    	<name>UserCoordinatorByExecutionDegree</name>
-    	<description>Verify the user logged is coordinator of this degree</description>
-    	<implementationClass>ServidorAplicacao.Servico.coordinator.UserCoordinatorByExecutionDegree</implementationClass>
-    	<isTransactional>True</isTransactional>
+        <name>ReadNotClosedPublicExecutionPeriods</name>
+        <description>Reads all public execution periods that are not closed</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.commons.ReadNotClosedPublicExecutionPeriods</implementationClass>
+        <isTransactional>True</isTransactional>
         <filterChains/>
-    </service> 
+    </service>
     <service>
-    	<name>PrepareInfoShiftEnrollmentByStudentNumber</name>
-    	<description>Read all information needed for shift enrollment</description>
-    	<implementationClass>ServidorAplicacao.Servico.enrolment.shift.PrepareInfoShiftEnrollmentByStudentNumber</implementationClass>
-    	<isTransactional>True</isTransactional>
+        <name>ReadStudentCurriculumForEnrollmentConfirmation</name>
+        <description>Reads student curriculum given student curricular plan id</description>
+        <implementationClass> 
+            ServidorAplicacao.Servico.commons.student.ReadStudentCurriculum</implementationClass>
+        <isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="EnrollmentLEECAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>InsertTutorShipWithOneStudent</name>
+        <description>Associate one student to the teacher</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.coordinator.InsertTutorShipWithOneStudent</implementationClass>
+        <isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="CoordinatorAndLEECAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>InsertTutorShipWithManyStudent</name>
+        <description>Associate a range of students to the teacher</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.coordinator.InsertTutorShipWithManyStudent</implementationClass>
+        <isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="CoordinatorAndLEECAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>DeleteTutorShip</name>
+        <description>Delete a tutor ship</description>
+        <implementationClass>ServidorAplicacao.Servico.coordinator.DeleteTutorShip</implementationClass>
+        <isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="CoordinatorAndLEECAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>UserCoordinatorByExecutionDegree</name>
+        <description>Verify the user logged is coordinator of this degree</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.coordinator.UserCoordinatorByExecutionDegree</implementationClass>
+        <isTransactional>True</isTransactional>
+        <filterChains/>
+    </service>
+    <service>
+        <name>PrepareInfoShiftEnrollmentByStudentNumber</name>
+        <description>Read all information needed for shift enrollment</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.enrolment.shift.PrepareInfoShiftEnrollmentByStudentNumber</implementationClass>
+        <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="StudentAuthorization"/>
         </filterChains>
-    </service>      
+    </service>
     <service>
-    	<name>WriteStudentAttendingCourse</name>
-    	<description>Writes the attending of a student in an execution course</description>
-    	<implementationClass>ServidorAplicacao.Servico.enrolment.shift.WriteStudentAttendingCourse</implementationClass>
-    	<isTransactional>True</isTransactional>
+        <name>WriteStudentAttendingCourse</name>
+        <description>Writes the attending of a student in an execution course</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.enrolment.shift.WriteStudentAttendingCourse</implementationClass>
+        <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="StudentShiftEnrollmentAuthorization"/>
         </filterChains>
-    </service> 
+    </service>
     <service>
-    	<name>DeleteStudentAttendingCourse</name>
-    	<description>Deletes the attending of a student in an execution course</description>
-    	<implementationClass>ServidorAplicacao.Servico.enrolment.shift.DeleteStudentAttendingCourse</implementationClass>
-    	<isTransactional>True</isTransactional>
-        <filterChains/>
-    </service> 
-    <service>
-    	<name>ReadClassShiftEnrollmentDetails</name>
-    	<description>Read all data, include schedule, shift, class and lessons, from student shift enrollment</description>
-    	<implementationClass>ServidorAplicacao.Servico.enrolment.shift.ReadClassShiftEnrollmentDetails</implementationClass>
-    	<isTransactional>True</isTransactional>
+        <name>DeleteStudentAttendingCourse</name>
+        <description>Deletes the attending of a student in an execution course</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.enrolment.shift.DeleteStudentAttendingCourse</implementationClass>
+        <isTransactional>True</isTransactional>
         <filterChains/>
     </service>
-	<service>
-    	<name>ShowAvailableCurricularCoursesWithoutEnrollmentPeriod</name>
-    	<description>Returns information about student enrollments in curricular courses</description>
-    	<implementationClass>ServidorAplicacao.Servico.enrolment.ShowAvailableCurricularCoursesWithoutEnrollmentPeriod</implementationClass>
-    	<isTransactional>True</isTransactional>
+    <service>
+        <name>ReadClassShiftEnrollmentDetails</name>
+        <description>Read all data, include schedule, shift, class and lessons, from student shift 
+            enrollment</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.enrolment.shift.ReadClassShiftEnrollmentDetails</implementationClass>
+        <isTransactional>True</isTransactional>
+        <filterChains/>
+    </service>
+    <service>
+        <name>ShowAvailableCurricularCoursesWithoutEnrollmentPeriod</name>
+        <description>Returns information about student enrollments in curricular courses</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.enrolment.ShowAvailableCurricularCoursesWithoutEnrollmentPeriod</implementationClass>
+        <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="EnrollmentLEECAuthorization"/>
         </filterChains>
     </service>
     <service>
-    	<name>UnEnrollStudentFromShift</name>
-    	<description>Deletes a students enrolment in a shift</description>
-    	<implementationClass>ServidorAplicacao.Servico.enrolment.shift.UnEnrollStudentFromShift</implementationClass>
-    	<isTransactional>True</isTransactional>
+        <name>UnEnrollStudentFromShift</name>
+        <description>Deletes a students enrolment in a shift</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.enrolment.shift.UnEnrollStudentFromShift</implementationClass>
+        <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="StudentIsUserAndHasStudentRoleFilter"/>
         </filterChains>
     </service>
     <service>
-    	<name>EnrollStudentInShifts</name>
-    	<description>Enrolls a student in a List of shifts</description>
-    	<implementationClass>ServidorAplicacao.Servico.enrolment.shift.EnrollStudentInShifts</implementationClass>
-    	<isTransactional>True</isTransactional>
+        <name>EnrollStudentInShifts</name>
+        <description>Enrolls a student in a List of shifts</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.enrolment.shift.EnrollStudentInShifts</implementationClass>
+        <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="StudentIsUserAndHasStudentRoleFilter"/>
         </filterChains>
@@ -5829,77 +5900,97 @@
         <filterChains/>
     </service>
     <service>
-        <name>ReadCurricularCoursesByDegreeCurricularPlanId</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.manager.ReadCurricularCoursesByDegreeCurricularPlan</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains/>
-    </service>
-    <service>
-    	<name>PrepareDegreesListByStudentNumber</name>
-    	<description>Returns a list that the first element is the degree pre-select and the tail is all degrees </description>
-    	<implementationClass>ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.PrepareDegreesListByStudentNumber</implementationClass>
-    	<isTransactional>True</isTransactional>
+        <name>PrepareDegreesListByStudentNumber</name>
+        <description>Returns a list that the first element is the degree pre-select and the tail is all 
+            degrees </description>
+        <implementationClass>
+            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.PrepareDegreesListByStudentNumber</implementationClass>
+        <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="EnrollmentLEECWithoutRulesAuthorization"/>
         </filterChains>
     </service>
     <service>
-    	<name>ReadEnrollmentsWithStateEnrolledByStudent</name>
-    	<description>Enrollments with state ENROLED of the student</description>
-    	<implementationClass>ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ReadEnrollmentsWithStateEnrolledByStudent</implementationClass>
-    	<isTransactional>True</isTransactional>
-        <filterChains>
-            <chain name="EnrollmentLEECWithoutRulesAuthorization"/>
-        </filterChains>
-    </service>    
-    <service>
-    	<name>DeleteEnrollmentsList</name>
-    	<description>Deletes enrolment of student in a curricular course</description>
-    	<implementationClass>ServidorAplicacao.Servico.enrolment.DeleteEnrollmentsList</implementationClass>
-    	<isTransactional>True</isTransactional>
-        <filterChains>
-            <chain name="EnrollmentLEECWithoutRulesAuthorization"/>
-        </filterChains>
-    </service>     
-    <service>
-    	<name>ReadCurricularCoursesToEnroll</name>
-    	<description>Read all curricular course that can be enrolled</description>
-    	<implementationClass>ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ReadCurricularCoursesToEnroll</implementationClass>
-    	<isTransactional>True</isTransactional>
-        <filterChains>
-            <chain name="EnrollmentLEECWithoutRulesAuthorization"/>
-        </filterChains>
-    </service> 
-    <service>
-    	<name>WriteEnrollmentsList</name>
-    	<description>Deletes enrolment of student in a curricular course</description>
-    	<implementationClass>ServidorAplicacao.Servico.enrolment.WriteEnrollmentsList</implementationClass>
-    	<isTransactional>True</isTransactional>
+        <name>ReadEnrollmentsWithStateEnrolledByStudent</name>
+        <description>Enrollments with state ENROLED of the student</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ReadEnrollmentsWithStateEnrolledByStudent</implementationClass>
+        <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="EnrollmentLEECWithoutRulesAuthorization"/>
         </filterChains>
     </service>
     <service>
-    	<name>EditStudentCourseReport</name>
-    	<description>Edits or creates the student course report of a curricular course</description>
-    	<implementationClass>ServidorAplicacao.Servico.gesdis.student.EditStudentCourseReport</implementationClass>
-    	<isTransactional>True</isTransactional>
+        <name>DeleteEnrollmentsList</name>
+        <description>Deletes enrolment of student in a curricular course</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.enrolment.DeleteEnrollmentsList</implementationClass>
+        <isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="EnrollmentLEECWithoutRulesAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadCurricularCoursesToEnroll</name>
+        <description>Read all curricular course that can be enrolled</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ReadCurricularCoursesToEnroll</implementationClass>
+        <isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="EnrollmentLEECWithoutRulesAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>WriteEnrollmentsList</name>
+        <description>Deletes enrolment of student in a curricular course</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.enrolment.WriteEnrollmentsList</implementationClass>
+        <isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="EnrollmentLEECWithoutRulesAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>EditStudentCourseReport</name>
+        <description>Edits or creates the student course report of a curricular course</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.student.delegate.EditStudentCourseReport</implementationClass>
+        <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="EditStudentCourseReportAuthorization"/>
         </filterChains>
     </service>
     <service>
-    	<name>ReadStudentCourseReport</name>
-    	<description>Reads the student course report of a curricular course</description>
-    	<implementationClass>ServidorAplicacao.Servico.gesdis.student.ReadStudentCourseReport</implementationClass>
-    	<isTransactional>True</isTransactional>
-    	<filterChains>
-    	    <chain name="StudentCourseReportAuthorization"/>
-    	</filterChains>
+        <name>ReadStudentCourseReport</name>
+        <description>Reads the student course report of a curricular course</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.student.delegate.ReadStudentCourseReport</implementationClass>
+        <isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="StudentCourseReportAuthorization"/>
+        </filterChains>
     </service>
     <service>
+        <name>ReadDelegateCurricularCourses</name>
+        <description>Reads all the curricular courses regarding the or degree of a delegate</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.student.delegate.ReadDelegateCurricularCourses</implementationClass>
+        <isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="DelegateAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadDelegate</name>
+        <description>Reads the delegate corresponding to the user</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.student.delegate.ReadDelegate</implementationClass>
+        <isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="DelegateAuthorization"/>
+        </filterChains>
+    </service>
+ 	<service>
         <name>ReadExecutionDegreesByDegreeCurricularPlanID</name>
         <implementationClass> 
             ServidorAplicacao.Servico.masterDegree.administrativeOffice.commons.ReadExecutionDegreesByDegreeCurricularPlanID</implementationClass>
@@ -5908,5 +5999,5 @@
         <filterChains>
             <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
         </filterChains>
-    </service>    
+    </service>  
 </serviceDefinitions>

@@ -611,5 +611,11 @@
             ServidorAplicacao.Filtro.student.StudentCourseReportAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-    </filter> 
+    </filter>
+    <filter>
+    	<name>DelegateAuthorization</name>
+    	<implementationClass>ServidorAplicacao.Filtro.student.DelegateAuthorizationFilter</implementationClass>
+    	<description/>
+    	<isTransactional>false</isTransactional>
+    </filter>           
 </filterDefinitions>

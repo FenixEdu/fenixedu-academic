@@ -10,12 +10,13 @@ import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.ICurso;
 import Dominio.IExecutionYear;
+import Dominio.IStudent;
 import Dominio.student.Delegate;
 import Dominio.student.IDelegate;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.ObjectFenixOJB;
 import ServidorPersistente.student.IPersistentDelegate;
-import Util.DelegateType;
+import Util.DelegateYearType;
 
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida</a>
@@ -46,16 +47,40 @@ public class DelegateOJB extends ObjectFenixOJB implements IPersistentDelegate
 	 * @see ServidorPersistente.student.IPersistentDelegate#readByDegreeAndExecutionYearAndType(Dominio.ICurso,
 	 *      Dominio.IExecutionYear, Util.DelegateType)
 	 */
-    public IDelegate readByDegreeAndExecutionYearAndType(
+    public IDelegate readByDegreeAndExecutionYearAndYearType(
         ICurso degree,
         IExecutionYear executionYear,
-        DelegateType type)
+        DelegateYearType yearType)
         throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degree.idInternal", degree.getIdInternal());
         criteria.addEqualTo("executionYear.idInternal", executionYear.getIdInternal());
-        criteria.addEqualTo("type", type);
+        criteria.addEqualTo("yearType", yearType);
+        return (IDelegate) queryObject(Delegate.class, criteria);
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.student.IPersistentDelegate#readByStudent(Dominio.IStudent)
+	 */
+    public IDelegate readByStudent(IStudent student) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("student.idInternal", student.getIdInternal());
+        return (IDelegate) queryObject(Delegate.class, criteria);
+    }
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.student.IPersistentDelegate#readDegreeDelegateByDegreeAndExecutionYear(Dominio.ICurso, Dominio.IExecutionYear)
+     */
+    public IDelegate readDegreeDelegateByDegreeAndExecutionYear(ICurso degree, IExecutionYear executionYear) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("degree.idInternal", degree.getIdInternal());
+        criteria.addEqualTo("executionYear.idInternal", executionYear.getIdInternal());
+        criteria.addEqualTo("type", Boolean.TRUE);
         return (IDelegate) queryObject(Delegate.class, criteria);
     }
 }

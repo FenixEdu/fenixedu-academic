@@ -8,7 +8,7 @@ import Dominio.ICurso;
 import Dominio.IDomainObject;
 import Dominio.IExecutionYear;
 import Dominio.IStudent;
-import Util.DelegateType;
+import Util.DelegateYearType;
 
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida</a>
@@ -23,6 +23,8 @@ public interface IDelegate extends IDomainObject
     public void setExecutionYear(IExecutionYear executionYear);
     public IStudent getStudent();
     public void setStudent(IStudent student);
-    public DelegateType getType();
-    public void setType(DelegateType type);
+    public DelegateYearType getYearType();
+    public void setYearType(DelegateYearType yearType);
+    public Boolean getType(); 
+    public void setType(Boolean type);
 }

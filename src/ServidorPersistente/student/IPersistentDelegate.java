@@ -8,10 +8,11 @@ import java.util.List;
 
 import Dominio.ICurso;
 import Dominio.IExecutionYear;
+import Dominio.IStudent;
 import Dominio.student.IDelegate;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
-import Util.DelegateType;
+import Util.DelegateYearType;
 
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida</a>
@@ -22,9 +23,14 @@ public interface IPersistentDelegate extends IPersistentObject
 {
     public List readByDegreeAndExecutionYear(ICurso degree, IExecutionYear executionYear)
         throws ExcepcaoPersistencia;
-    public IDelegate readByDegreeAndExecutionYearAndType(
+    public IDelegate readByDegreeAndExecutionYearAndYearType(
         ICurso degree,
         IExecutionYear executionYear,
-        DelegateType type)
+        DelegateYearType type)
+        throws ExcepcaoPersistencia;
+    public IDelegate readByStudent(IStudent student) throws ExcepcaoPersistencia;
+    public IDelegate readDegreeDelegateByDegreeAndExecutionYear(
+        ICurso degree,
+        IExecutionYear executionYear)
         throws ExcepcaoPersistencia;
 }

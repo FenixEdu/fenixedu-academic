@@ -4,7 +4,7 @@
  */
 package DataBeans.student;
 
-import Util.DelegateType;
+import Util.DelegateYearType;
 import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoObject;
@@ -17,10 +17,12 @@ import DataBeans.InfoStudent;
  */
 public class InfoDelegate extends InfoObject
 {
-    private DelegateType type;
+    private DelegateYearType yearType;
     private InfoStudent infoStudent;
     private InfoDegree infoDegree;
     private InfoExecutionYear infoExecutionYear;
+    private Boolean type;
+    
     /**
 	 *  
 	 */
@@ -91,16 +93,32 @@ public class InfoDelegate extends InfoObject
     /**
 	 * @return Returns the type.
 	 */
-    public DelegateType getType()
+    public DelegateYearType getYearType()
     {
-        return type;
+        return yearType;
     }
 
     /**
 	 * @param type
 	 *            The type to set.
 	 */
-    public void setType(DelegateType type)
+    public void setYearType(DelegateYearType type)
+    {
+        this.yearType = type;
+    }
+
+    /**
+     * @return Returns the type.
+     */
+    public Boolean getType()
+    {
+        return type;
+    }
+
+    /**
+     * @param type The type to set.
+     */
+    public void setType(Boolean type)
     {
         this.type = type;
     }

@@ -5,7 +5,13 @@
     <definition name="index" extends="definition.delegate.two-column">
         <put name="body" value="/delegate/index.jsp"></put>
     </definition>
-    <definition name="view-student-course-report" extends="definition.delegate.two-column">
+    <definition name="view-curricular-courses" extends="definition.delegate.two-column">
+        <put name="body" value="/delegate/viewCurricularCourses.jsp"/>
+    </definition>
+    <definition name="view-student-report" extends="definition.delegate.two-column">
         <put name="body" value="/delegate/viewStudentCourseReport.jsp"/>
+    </definition>
+     <definition name="student-report-management" extends="definition.delegate.two-column">
+        <put name="body" value="/delegate/studentCourseReportManagment.jsp"/>
     </definition>
 </tiles-definitions>

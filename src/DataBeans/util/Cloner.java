@@ -109,7 +109,6 @@ import DataBeans.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
 import DataBeans.gaugingTests.physics.InfoGaugingTestResult;
 import DataBeans.gesdis.InfoCourseHistoric;
 import DataBeans.gesdis.InfoCourseReport;
-import DataBeans.gesdis.InfoStudentCourseReport;
 import DataBeans.grant.contract.InfoGrantContract;
 import DataBeans.grant.contract.InfoGrantCostCenter;
 import DataBeans.grant.contract.InfoGrantOrientationTeacher;
@@ -123,6 +122,7 @@ import DataBeans.guide.reimbursementGuide.InfoReimbursementGuide;
 import DataBeans.guide.reimbursementGuide.InfoReimbursementGuideSituation;
 import DataBeans.person.InfoQualification;
 import DataBeans.student.InfoDelegate;
+import DataBeans.student.InfoStudentCourseReport;
 import DataBeans.teacher.InfoCareer;
 import DataBeans.teacher.InfoCategory;
 import DataBeans.teacher.InfoExternalActivity;
@@ -664,16 +664,9 @@ public abstract class Cloner
 	 */
 	public static InfoDegree copyIDegree2InfoDegree(ICurso degree)
 	{
-		InfoDegree infoDegree = new InfoDegree();
-		try
-		{
-			BeanUtils.copyProperties(infoDegree, degree);
-		}
-		catch (Exception e)
-		{
-			throw new RuntimeException(e);
-		}
-		return infoDegree;
+	    InfoDegree infoDegree = new InfoDegree();
+	    copyObjectProperties(infoDegree, degree);
+	    return infoDegree;
 	}
 	/**
 	 * Method copyInfoDegree2IDegree.
@@ -684,14 +677,7 @@ public abstract class Cloner
 	public static ICurso copyInfoDegree2IDegree(InfoDegree infoDegree)
 	{
 		ICurso degree = new Curso();
-		try
-		{
-			BeanUtils.copyProperties(degree, infoDegree);
-		}
-		catch (Exception e)
-		{
-			throw new RuntimeException(e);
-		}
+		copyObjectProperties(degree, infoDegree);
 		return degree;
 
 	}
@@ -2239,8 +2225,7 @@ public abstract class Cloner
 	{
 
 		ICurricularCourse curricularCourse = new CurricularCourse();
-		IUniversity university = new University();
-		university = Cloner.copyInfoUniversity2IUniversity(infoCurricularCourse.getInfoUniversity());
+		IUniversity university = Cloner.copyInfoUniversity2IUniversity(infoCurricularCourse.getInfoUniversity());
 		IDegreeCurricularPlan planoCurricularCurso =
 			copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(
 				infoCurricularCourse.getInfoDegreeCurricularPlan());

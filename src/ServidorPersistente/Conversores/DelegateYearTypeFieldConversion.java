@@ -7,14 +7,14 @@ package ServidorPersistente.Conversores;
 import org.apache.commons.beanutils.ConversionException;
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
-import Util.DelegateType;
+import Util.DelegateYearType;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  *  
  */
-public class DelegateTypeFieldConversion implements FieldConversion
+public class DelegateYearTypeFieldConversion implements FieldConversion
 {
 
     /*
@@ -24,9 +24,9 @@ public class DelegateTypeFieldConversion implements FieldConversion
 	 */
     public Object javaToSql(Object obj) throws ConversionException
     {
-        if (obj instanceof DelegateType)
+        if (obj instanceof DelegateYearType)
         {
-            DelegateType delegateType = (DelegateType) obj;
+            DelegateYearType delegateType = (DelegateYearType) obj;
             return new Integer(delegateType.getValue());
         }
         return obj;
@@ -39,12 +39,12 @@ public class DelegateTypeFieldConversion implements FieldConversion
 	 */
     public Object sqlToJava(Object obj) throws ConversionException
     {
-        DelegateType delegateType = null;
+        DelegateYearType delegateType = null;
         if (obj instanceof Integer)
         {
             Integer delegateTypeId = (Integer) obj;
 
-            delegateType = DelegateType.getEnum(delegateTypeId.intValue());
+            delegateType = DelegateYearType.getEnum(delegateTypeId.intValue());
 
             if (delegateType == null)
             {

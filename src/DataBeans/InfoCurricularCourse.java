@@ -1,6 +1,6 @@
 /*
  * InfoExecutionCourse.java
- *
+ * 
  * Created on 28 de Novembro de 2002, 3:41
  */
 
@@ -13,62 +13,63 @@ import Util.CurricularCourseExecutionScope;
 import Util.CurricularCourseType;
 
 /**
- *
- * @author  tfc130
+ * @author tfc130
  */
-public class InfoCurricularCourse  extends InfoObject implements Comparable,ISiteComponent{
-	private String name;
-	private String code;
-	private Double credits;
-	private Double theoreticalHours;
-	private Double praticalHours;
-	private Double theoPratHours;
-	private Double labHours;
-	private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
-	private List infoScopes;
-	private List infoAssociatedExecutionCourses;
-	private CurricularCourseType type;
-	private CurricularCourseExecutionScope curricularCourseExecutionScope;
-	private Boolean mandatory;
-	private InfoUniversity infoUniversity;
-	private Boolean basic;
-	private String chosen;
+public class InfoCurricularCourse extends InfoObject implements Comparable, ISiteComponent
+{
+    private String name;
+    private String code;
+    private Double credits;
+    private Double theoreticalHours;
+    private Double praticalHours;
+    private Double theoPratHours;
+    private Double labHours;
+    private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
+    private List infoScopes;
+    private List infoAssociatedExecutionCourses;
+    private CurricularCourseType type;
+    private CurricularCourseExecutionScope curricularCourseExecutionScope;
+    private Boolean mandatory;
+    private InfoUniversity infoUniversity;
+    private Boolean basic;
+    private String chosen;
     private InfoScientificArea infoScientificArea;
     private Integer maximumValueForAcumulatedEnrollments;
     private Integer minimumValueForAcumulatedEnrollments;
     private Integer enrollmentWeigth;
     private Double ectsCredits;
-    
+
     /**
-     * @return
-     */
+	 * @return
+	 */
     public Boolean getBasic()
     {
         return basic;
     }
 
     /**
-     * @param basic
-     */
+	 * @param basic
+	 */
     public void setBasic(Boolean basic)
     {
         this.basic = basic;
     }
 
     public InfoCurricularCourse()
-    {
-    }
+    {}
 
     public String getOwnershipType()
     {
         String result = "";
-        if (getBasic().booleanValue())
+        if (getBasic() != null)
         {
-            result = "Básica";
-        }
-        else
-        {
-            result = "Não Básica";
+            if (getBasic().booleanValue())
+            {
+                result = "Básica";
+            } else
+            {
+                result = "Não Básica";
+            }
         }
         return result;
     }
@@ -99,178 +100,206 @@ public class InfoCurricularCourse  extends InfoObject implements Comparable,ISit
     }
 
     /**
-     * Returns the code.
-     * @return String
-     */
+	 * Returns the code.
+	 * 
+	 * @return String
+	 */
     public String getCode()
     {
         return code;
     }
 
     /**
-     * Returns the nome.
-     * @return String
-     */
+	 * Returns the nome.
+	 * 
+	 * @return String
+	 */
     public String getName()
     {
         return name;
     }
 
     /**
-     * Sets the code.
-     * @param code The code to set
-     */
+	 * Sets the code.
+	 * 
+	 * @param code
+	 *            The code to set
+	 */
     public void setCode(String code)
     {
         this.code = code;
     }
 
     /**
-     * Sets the nome.
-     * @param nome The nome to set
-     */
+	 * Sets the nome.
+	 * 
+	 * @param nome
+	 *            The nome to set
+	 */
     public void setName(String name)
     {
         this.name = name;
     }
 
     /**
-     * Returns the credits.
-     * @return Double
-     */
+	 * Returns the credits.
+	 * 
+	 * @return Double
+	 */
     public Double getCredits()
     {
         return credits;
     }
 
     /**
-     * Returns the labHours.
-     * @return Double
-     */
+	 * Returns the labHours.
+	 * 
+	 * @return Double
+	 */
     public Double getLabHours()
     {
         return labHours;
     }
 
     /**
-     * Returns the praticalHours.
-     * @return Double
-     */
+	 * Returns the praticalHours.
+	 * 
+	 * @return Double
+	 */
     public Double getPraticalHours()
     {
         return praticalHours;
     }
 
     /**
-     * Returns the theoPratHours.
-     * @return Double
-     */
+	 * Returns the theoPratHours.
+	 * 
+	 * @return Double
+	 */
     public Double getTheoPratHours()
     {
         return theoPratHours;
     }
 
     /**
-     * Returns the theoreticalHours.
-     * @return Double
-     */
+	 * Returns the theoreticalHours.
+	 * 
+	 * @return Double
+	 */
     public Double getTheoreticalHours()
     {
         return theoreticalHours;
     }
 
     /**
-     * Sets the credits.
-     * @param credits The credits to set
-     */
+	 * Sets the credits.
+	 * 
+	 * @param credits
+	 *            The credits to set
+	 */
     public void setCredits(Double credits)
     {
         this.credits = credits;
     }
 
     /**
-     * Sets the labHours.
-     * @param labHours The labHours to set
-     */
+	 * Sets the labHours.
+	 * 
+	 * @param labHours
+	 *            The labHours to set
+	 */
     public void setLabHours(Double labHours)
     {
         this.labHours = labHours;
     }
 
     /**
-     * Sets the praticalHours.
-     * @param praticalHours The praticalHours to set
-     */
+	 * Sets the praticalHours.
+	 * 
+	 * @param praticalHours
+	 *            The praticalHours to set
+	 */
     public void setPraticalHours(Double praticalHours)
     {
         this.praticalHours = praticalHours;
     }
 
     /**
-     * Sets the theoPratHours.
-     * @param theoPratHours The theoPratHours to set
-     */
+	 * Sets the theoPratHours.
+	 * 
+	 * @param theoPratHours
+	 *            The theoPratHours to set
+	 */
     public void setTheoPratHours(Double theoPratHours)
     {
         this.theoPratHours = theoPratHours;
     }
 
     /**
-     * Sets the theoreticalHours.
-     * @param theoreticalHours The theoreticalHours to set
-     */
+	 * Sets the theoreticalHours.
+	 * 
+	 * @param theoreticalHours
+	 *            The theoreticalHours to set
+	 */
     public void setTheoreticalHours(Double theoreticalHours)
     {
         this.theoreticalHours = theoreticalHours;
     }
 
     /**
-     * Returns the infoDegreeCurricularPlan.
-     * @return InfoDegreeCurricularPlan
-     */
+	 * Returns the infoDegreeCurricularPlan.
+	 * 
+	 * @return InfoDegreeCurricularPlan
+	 */
     public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan()
     {
         return infoDegreeCurricularPlan;
     }
 
     /**
-     * Sets the infoDegreeCurricularPlan.
-     * @param infoDegreeCurricularPlan The infoDegreeCurricularPlan to set
-     */
+	 * Sets the infoDegreeCurricularPlan.
+	 * 
+	 * @param infoDegreeCurricularPlan
+	 *            The infoDegreeCurricularPlan to set
+	 */
     public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan)
     {
         this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
     }
 
     /**
-     * @return List
-     */
+	 * @return List
+	 */
     public List getInfoScopes()
     {
         return infoScopes;
     }
 
     /**
-     * Sets the infoScopes.
-     * @param infoScopes The infoScopes to set
-     */
+	 * Sets the infoScopes.
+	 * 
+	 * @param infoScopes
+	 *            The infoScopes to set
+	 */
     public void setInfoScopes(List infoScopes)
     {
         this.infoScopes = infoScopes;
     }
 
     /**
-     * @return CurricularCourseType
-     */
+	 * @return CurricularCourseType
+	 */
     public CurricularCourseType getType()
     {
         return type;
     }
 
     /**
-     * Sets the type.
-     * @param type The type to set
-     */
+	 * Sets the type.
+	 * 
+	 * @param type
+	 *            The type to set
+	 */
     public void setType(CurricularCourseType type)
     {
         this.type = type;
@@ -330,17 +359,18 @@ public class InfoCurricularCourse  extends InfoObject implements Comparable,ISit
         this.infoUniversity = university;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
     public int compareTo(Object arg0)
     {
         int result = 0;
         if (getMinScope() < ((InfoCurricularCourse) arg0).getMinScope())
         {
             result = -1;
-        }
-        else if (getMinScope() > ((InfoCurricularCourse) arg0).getMinScope())
+        } else if (getMinScope() > ((InfoCurricularCourse) arg0).getMinScope())
         {
             return 1;
         }
@@ -377,100 +407,106 @@ public class InfoCurricularCourse  extends InfoObject implements Comparable,ISit
         this.infoAssociatedExecutionCourses = infoAssociatedExecutionCourses;
     }
 
-	/**
+    /**
 	 * @return Returns the chosen.
 	 */
-	public String getChosen()
-	{
-		return chosen;
-	}
+    public String getChosen()
+    {
+        return chosen;
+    }
 
-	/**
-	 * @param chosen The chosen to set.
+    /**
+	 * @param chosen
+	 *            The chosen to set.
 	 */
-	public void setChosen(String chosen)
-	{
-		this.chosen = chosen;
-	}
+    public void setChosen(String chosen)
+    {
+        this.chosen = chosen;
+    }
 
-	/**
+    /**
 	 * @return Returns the ectsCredits.
 	 */
-	public Double getEctsCredits()
-	{
-		return ectsCredits;
-	}
+    public Double getEctsCredits()
+    {
+        return ectsCredits;
+    }
 
-	/**
-	 * @param ectsCredits The ectsCredits to set.
+    /**
+	 * @param ectsCredits
+	 *            The ectsCredits to set.
 	 */
-	public void setEctsCredits(Double ectsCredits)
-	{
-		this.ectsCredits = ectsCredits;
-	}
+    public void setEctsCredits(Double ectsCredits)
+    {
+        this.ectsCredits = ectsCredits;
+    }
 
-	/**
+    /**
 	 * @return Returns the enrollmentWeigth.
 	 */
-	public Integer getEnrollmentWeigth()
-	{
-		return enrollmentWeigth;
-	}
+    public Integer getEnrollmentWeigth()
+    {
+        return enrollmentWeigth;
+    }
 
-	/**
-	 * @param enrollmentWeigth The enrollmentWeigth to set.
+    /**
+	 * @param enrollmentWeigth
+	 *            The enrollmentWeigth to set.
 	 */
-	public void setEnrollmentWeigth(Integer enrollmentWeigth)
-	{
-		this.enrollmentWeigth = enrollmentWeigth;
-	}
+    public void setEnrollmentWeigth(Integer enrollmentWeigth)
+    {
+        this.enrollmentWeigth = enrollmentWeigth;
+    }
 
-	/**
+    /**
 	 * @return Returns the infoScientificArea.
 	 */
-	public InfoScientificArea getInfoScientificArea()
-	{
-		return infoScientificArea;
-	}
+    public InfoScientificArea getInfoScientificArea()
+    {
+        return infoScientificArea;
+    }
 
-	/**
-	 * @param infoScientificArea The infoScientificArea to set.
+    /**
+	 * @param infoScientificArea
+	 *            The infoScientificArea to set.
 	 */
-	public void setInfoScientificArea(InfoScientificArea infoScientificArea)
-	{
-		this.infoScientificArea = infoScientificArea;
-	}
+    public void setInfoScientificArea(InfoScientificArea infoScientificArea)
+    {
+        this.infoScientificArea = infoScientificArea;
+    }
 
-	/**
+    /**
 	 * @return Returns the maximumValueForAcumulatedEnrollments.
 	 */
-	public Integer getMaximumValueForAcumulatedEnrollments()
-	{
-		return maximumValueForAcumulatedEnrollments;
-	}
+    public Integer getMaximumValueForAcumulatedEnrollments()
+    {
+        return maximumValueForAcumulatedEnrollments;
+    }
 
-	/**
-	 * @param maximumValueForAcumulatedEnrollments The maximumValueForAcumulatedEnrollments to set.
+    /**
+	 * @param maximumValueForAcumulatedEnrollments
+	 *            The maximumValueForAcumulatedEnrollments to set.
 	 */
-	public void setMaximumValueForAcumulatedEnrollments(Integer maximumValueForAcumulatedEnrollments)
-	{
-		this.maximumValueForAcumulatedEnrollments = maximumValueForAcumulatedEnrollments;
-	}
+    public void setMaximumValueForAcumulatedEnrollments(Integer maximumValueForAcumulatedEnrollments)
+    {
+        this.maximumValueForAcumulatedEnrollments = maximumValueForAcumulatedEnrollments;
+    }
 
-	/**
+    /**
 	 * @return Returns the minimumValueForAcumulatedEnrollments.
 	 */
-	public Integer getMinimumValueForAcumulatedEnrollments()
-	{
-		return minimumValueForAcumulatedEnrollments;
-	}
+    public Integer getMinimumValueForAcumulatedEnrollments()
+    {
+        return minimumValueForAcumulatedEnrollments;
+    }
 
-	/**
-	 * @param minimumValueForAcumulatedEnrollments The minimumValueForAcumulatedEnrollments to set.
+    /**
+	 * @param minimumValueForAcumulatedEnrollments
+	 *            The minimumValueForAcumulatedEnrollments to set.
 	 */
-	public void setMinimumValueForAcumulatedEnrollments(Integer minimumValueForAcumulatedEnrollments)
-	{
-		this.minimumValueForAcumulatedEnrollments = minimumValueForAcumulatedEnrollments;
-	}
+    public void setMinimumValueForAcumulatedEnrollments(Integer minimumValueForAcumulatedEnrollments)
+    {
+        this.minimumValueForAcumulatedEnrollments = minimumValueForAcumulatedEnrollments;
+    }
 
 }
