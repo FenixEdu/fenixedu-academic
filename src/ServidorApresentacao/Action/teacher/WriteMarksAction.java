@@ -52,8 +52,7 @@ public class WriteMarksAction extends DispatchAction {
 
 		IUserView userView = (IUserView) session.getAttribute("UserView");
 
-		//TODO: put list as argument for service
-		Object[] args = { objectCode, examCode };
+		Object[] args = { objectCode, examCode, marksList };
 		GestorServicos manager = GestorServicos.manager();
 		TeacherAdministrationSiteView siteView = null;
 		try {
