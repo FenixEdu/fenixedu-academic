@@ -91,19 +91,19 @@ public class DisciplinaDepartamentoOJB extends ObjectFenixOJB implements IDiscip
         }
     }
     
-    public List lerTodasAsDisciplinasDepartamento() throws ExcepcaoPersistencia {
+    public ArrayList lerTodasAsDisciplinasDepartamento() throws ExcepcaoPersistencia {
         try {
             ArrayList listade = new ArrayList();
             String oqlQuery = "select all from " + DisciplinaDepartamento.class.getName();
             query.create(oqlQuery);
             List result = (List) query.execute();
             lockRead(result);
-//            if (result.size() != 0) {
-//                ListIterator iterator = result.listIterator();
-//                while(iterator.hasNext())
-//                    listade.add(iterator.next());
-//            }
-            return result;
+            if (result.size() != 0) {
+                ListIterator iterator = result.listIterator();
+                while(iterator.hasNext())
+                    listade.add(iterator.next());
+            }
+            return listade;
         } catch (QueryException ex) {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
         }
