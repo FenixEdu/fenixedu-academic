@@ -14,9 +14,9 @@ package ServidorAplicacao.Servicos.sop;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.RoomKey;
-import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
+import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
 
-public class ApagarSalaServicosTest extends TestCaseServicosWithAuthorization {
+public class ApagarSalaServicosTest extends TestCaseNeedAuthorizationServices {
 
 	public ApagarSalaServicosTest(java.lang.String testName) {
 		super(testName);
@@ -41,7 +41,7 @@ public class ApagarSalaServicosTest extends TestCaseServicosWithAuthorization {
 	}
 
 	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization#getNameOfServiceToBeTested()
+	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
 	 */
 	protected String getNameOfServiceToBeTested() {
 		return "ApagarSala";

@@ -15,10 +15,10 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoRoom;
 import DataBeans.RoomKey;
-import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
+import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
 import Util.TipoSala;
 
-public class EditarSalaServicosTest extends TestCaseServicosWithAuthorization {
+public class EditarSalaServicosTest extends TestCaseNeedAuthorizationServices {
 
 	public EditarSalaServicosTest(java.lang.String testName) {
 		super(testName);
@@ -43,7 +43,7 @@ public class EditarSalaServicosTest extends TestCaseServicosWithAuthorization {
 	}
 
 	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization#getNameOfServiceToBeTested()
+	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
 	 */
 	protected String getNameOfServiceToBeTested() {
 		return "EditarSala";

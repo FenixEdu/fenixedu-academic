@@ -22,7 +22,7 @@ import Dominio.IExecutionYear;
 import Dominio.IPlanoCurricularCurso;
 import Dominio.ITurma;
 import Dominio.Turma;
-import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
+import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
@@ -33,7 +33,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ApagarTurmaServicosTest extends TestCaseServicosWithAuthorization {
+public class ApagarTurmaServicosTest extends TestCaseNeedAuthorizationServices {
 	
 	private InfoClass infoClass = null;
 	
@@ -60,7 +60,7 @@ public class ApagarTurmaServicosTest extends TestCaseServicosWithAuthorization {
 	}
 
 	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization#getNameOfServiceToBeTested()
+	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
 	 */
 	protected String getNameOfServiceToBeTested() {
 		return "ApagarTurma";

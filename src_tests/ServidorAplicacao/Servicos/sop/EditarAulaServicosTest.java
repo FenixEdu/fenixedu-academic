@@ -26,12 +26,12 @@ import DataBeans.InfoLessonServiceResult;
 import DataBeans.InfoRoom;
 import DataBeans.KeyLesson;
 import DataBeans.RoomKey;
-import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
+import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
 import Util.DiaSemana;
 import Util.TipoAula;
 import Util.TipoSala;
 
-public class EditarAulaServicosTest extends TestCaseServicosWithAuthorization {
+public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 	public EditarAulaServicosTest(java.lang.String testName) {
 		super(testName);
 	}
@@ -199,7 +199,7 @@ public class EditarAulaServicosTest extends TestCaseServicosWithAuthorization {
 		}
 
 	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization#getNameOfServiceToBeTested()
+	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
 	 */
 	protected String getNameOfServiceToBeTested() {
 		return "EditarAula";

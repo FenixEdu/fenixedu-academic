@@ -24,7 +24,7 @@ import Dominio.IExecutionYear;
 import Dominio.IPlanoCurricularCurso;
 import Dominio.ITurma;
 import Dominio.ITurno;
-import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
+import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
@@ -37,7 +37,7 @@ import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class AdicionarTurnoServicosTest extends TestCaseServicosWithAuthorization {
+public class AdicionarTurnoServicosTest extends TestCaseNeedAuthorizationServices {
 	
 	private InfoClass infoClass = null;
 	private InfoShift infoShift = null;
@@ -65,7 +65,7 @@ public class AdicionarTurnoServicosTest extends TestCaseServicosWithAuthorizatio
 	}
 
 	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization#getNameOfServiceToBeTested()
+	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
 	 */
 	protected String getNameOfServiceToBeTested() {
 		return "AdicionarTurno";

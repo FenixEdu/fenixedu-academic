@@ -16,10 +16,10 @@ import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.ExecutionCourseKeyAndLessonType;
-import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
+import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
 import Util.TipoAula;
 
-public class LerAulasDeDisciplinaExecucaoETipoServicosTest extends TestCaseServicosWithAuthorization {
+public class LerAulasDeDisciplinaExecucaoETipoServicosTest extends TestCaseNeedAuthorizationServices {
 
 	public LerAulasDeDisciplinaExecucaoETipoServicosTest(
 		java.lang.String testName) {
@@ -46,7 +46,7 @@ public class LerAulasDeDisciplinaExecucaoETipoServicosTest extends TestCaseServi
 	}
 
 	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization#getNameOfServiceToBeTested()
+	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
 	 */
 	protected String getNameOfServiceToBeTested() {
 		return "LerAulasDeDisciplinaExecucaoETipo";

@@ -21,7 +21,7 @@ import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
+import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -29,7 +29,7 @@ import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class LerAulasDeDisciplinaExecucaoServicosTest extends TestCaseServicosWithAuthorization {
+public class LerAulasDeDisciplinaExecucaoServicosTest extends TestCaseNeedAuthorizationServices {
 		
 	private InfoExecutionCourse infoExecutionCourse = null;
 
@@ -58,7 +58,7 @@ public class LerAulasDeDisciplinaExecucaoServicosTest extends TestCaseServicosWi
 	}
 
 	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization#getNameOfServiceToBeTested()
+	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
 	 */
 	protected String getNameOfServiceToBeTested() {
 		return "LerAulasDeDisciplinaExecucao";

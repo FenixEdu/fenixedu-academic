@@ -25,7 +25,7 @@ import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.ISala;
 import Dominio.ITurno;
-import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
+import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
@@ -37,7 +37,7 @@ import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.DiaSemana;
 
-public class AdicionarAulaServicosTest extends TestCaseServicosWithAuthorization {
+public class AdicionarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 
 	private InfoLesson infoLesson = null;
 	private InfoShift infoShift = null;
@@ -65,7 +65,7 @@ public class AdicionarAulaServicosTest extends TestCaseServicosWithAuthorization
 	}
 
 	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization#getNameOfServiceToBeTested()
+	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
 	 */
 	protected String getNameOfServiceToBeTested() {
 		return "AdicionarAula";

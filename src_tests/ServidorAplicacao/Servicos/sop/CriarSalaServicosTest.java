@@ -15,10 +15,10 @@ package ServidorAplicacao.Servicos.sop;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoRoom;
-import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
+import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
 import Util.TipoSala;
 
-public class CriarSalaServicosTest extends TestCaseServicosWithAuthorization {
+public class CriarSalaServicosTest extends TestCaseNeedAuthorizationServices {
 
 	public CriarSalaServicosTest(java.lang.String testName) {
 		super(testName);
@@ -43,7 +43,7 @@ public class CriarSalaServicosTest extends TestCaseServicosWithAuthorization {
 	}
 
 	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization#getNameOfServiceToBeTested()
+	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
 	 */
 	protected String getNameOfServiceToBeTested() {
 		return "CriarSala";
@@ -76,4 +76,10 @@ public class CriarSalaServicosTest extends TestCaseServicosWithAuthorization {
 			fail("testCreateNonExistingSala");
 		}
 	}
+
+	// TODO This class must extend class TestCaseNeedAuthorizationServices so this method will be gonne
+	protected boolean needsAuthorization() {
+		return true;
+	}
+
 }

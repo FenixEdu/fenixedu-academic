@@ -20,7 +20,7 @@ import DataBeans.InfoRoom;
 import DataBeans.util.Cloner;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
+import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
@@ -28,7 +28,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoSala;
 
-public class LerAulasDeSalaEmSemestreServicosTest extends TestCaseServicosWithAuthorization {
+public class LerAulasDeSalaEmSemestreServicosTest extends TestCaseNeedAuthorizationServices {
 
 	private InfoExecutionPeriod infoExecutionPeriod = null;
 	private InfoRoom infoRoom = null;
@@ -57,7 +57,7 @@ public class LerAulasDeSalaEmSemestreServicosTest extends TestCaseServicosWithAu
 	}
 
 	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization#getNameOfServiceToBeTested()
+	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
 	 */
 	protected String getNameOfServiceToBeTested() {
 		return "LerAulasDeSalaEmSemestre";

@@ -20,7 +20,7 @@ import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.ITurno;
 import Dominio.Turno;
-import ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization;
+import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -30,7 +30,7 @@ import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoAula;
 
-public class CriarTurnoServicosTest extends TestCaseServicosWithAuthorization {
+public class CriarTurnoServicosTest extends TestCaseNeedAuthorizationServices {
 	
 	private InfoShift infoShift = null;
 
@@ -57,7 +57,7 @@ public class CriarTurnoServicosTest extends TestCaseServicosWithAuthorization {
 	}
 
 	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization#getNameOfServiceToBeTested()
+	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
 	 */
 	protected String getNameOfServiceToBeTested() {
 		return "CriarTurno";
