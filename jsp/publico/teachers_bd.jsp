@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <span class="error"><html:errors/></span>	
-
+<logic:present name="<%= SessionConstants.RESPONSIBLE_TEACHERS_LIST %>" >
 <table>
 	<tr>
 		<th>
@@ -21,6 +21,8 @@
 	</logic:iterate>	
 </table>
 </BR>
+</logic:present>
+<logic:present name="<%= SessionConstants.TEACHERS_LIST %>" >
 <table>
 	<tr>
 		<th>
@@ -36,3 +38,4 @@
 		</tr>
 	</logic:iterate>	
 </table>
+</logic:present>
