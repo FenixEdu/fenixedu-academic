@@ -3,6 +3,7 @@ package middleware;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.StringTokenizer;
 
@@ -23,6 +24,7 @@ import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.StudentCurricularPlanState;
 import Util.StudentState;
 import Util.TipoCurso;
@@ -88,7 +90,7 @@ public class LoadStudents extends DataFileLoader {
 	}
 
 	private static void carregarAluno(String line)
-		throws ExcepcaoPersistencia {
+		throws ExistingPersistentException, ExcepcaoPersistencia, IllegalAccessException, InvocationTargetException {
 		StringTokenizer stringTokenizer =
 			new StringTokenizer(line, getFieldSeparator());
 

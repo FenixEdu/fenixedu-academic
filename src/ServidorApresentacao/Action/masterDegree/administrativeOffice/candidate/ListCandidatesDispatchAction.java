@@ -26,7 +26,9 @@ import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.Data;
@@ -369,17 +371,6 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			InfoMasterDegreeCandidate infoMasterDegreeCandidateInSession = (InfoMasterDegreeCandidate) session.getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE); 
 
 
-			// Clear the Session
-			session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE);
-			session.removeAttribute(SessionConstants.NATIONALITY_LIST_KEY);
-			session.removeAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY);
-			session.removeAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY);
-			session.removeAttribute(SessionConstants.SEX_LIST_KEY);
-			session.removeAttribute(SessionConstants.MONTH_DAYS_KEY);
-			session.removeAttribute(SessionConstants.MONTH_LIST_KEY);
-			session.removeAttribute(SessionConstants.YEARS_KEY);
-			session.removeAttribute(SessionConstants.EXPIRATION_YEARS_KEY);
-			session.removeAttribute(SessionConstants.CANDIDATE_SITUATION_LIST);
 
 			
 			// FIXME: Check All if fields are empty 
@@ -503,9 +494,26 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			InfoMasterDegreeCandidate infoMasterDegreeCandidateChanged = null;
 			try {
 				infoMasterDegreeCandidateChanged = (InfoMasterDegreeCandidate) serviceManager.executar(userView, "ChangeCandidate", args);
+			} catch(ExistingServiceException e){
+				throw new ExistingActionException("Esta Pessoa", e);
 			} catch(FenixServiceException e){
 				throw new FenixActionException(e);
 			}
+
+
+			// Clear the Session
+			session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE);
+			session.removeAttribute(SessionConstants.NATIONALITY_LIST_KEY);
+			session.removeAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY);
+			session.removeAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY);
+			session.removeAttribute(SessionConstants.SEX_LIST_KEY);
+			session.removeAttribute(SessionConstants.MONTH_DAYS_KEY);
+			session.removeAttribute(SessionConstants.MONTH_LIST_KEY);
+			session.removeAttribute(SessionConstants.YEARS_KEY);
+			session.removeAttribute(SessionConstants.EXPIRATION_YEARS_KEY);
+			session.removeAttribute(SessionConstants.CANDIDATE_SITUATION_LIST);
+
+
 
 			session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidateChanged);
 			return mapping.findForward("ChangeSuccess");
