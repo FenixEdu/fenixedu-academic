@@ -16,8 +16,14 @@ public class SecretaryEnrolmentStudentReason extends FenixValuedEnum {
 
     public static final int GENERIC_TYPE = 1;
     
+    public static final int LEIC_OLD_TYPE = 2;
+    
     public static final SecretaryEnrolmentStudentReason GENERIC = new SecretaryEnrolmentStudentReason(
             "generic.secretary.enrolment.student.reason", SecretaryEnrolmentStudentReason.GENERIC_TYPE);
+
+    public static final SecretaryEnrolmentStudentReason LEIC = new SecretaryEnrolmentStudentReason(
+            "leic.old.secretary.enrolment.student.reason", SecretaryEnrolmentStudentReason.LEIC_OLD_TYPE);
+
     
     public SecretaryEnrolmentStudentReason(String name, int value) {
         super(name, value);

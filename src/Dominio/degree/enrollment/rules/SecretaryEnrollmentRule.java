@@ -12,6 +12,7 @@ import Dominio.exceptions.EnrolmentRuleDomainException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.SecretaryEnrolmentStudentReason;
 
 /**
  * 
@@ -21,6 +22,8 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 public class SecretaryEnrollmentRule implements IEnrollmentRule {
 
     private IStudentCurricularPlan studentCurricularPlan;
+    
+    private int LEIC_OLD_DCP = 10;
 
     public SecretaryEnrollmentRule(IStudentCurricularPlan studentCurricularPlan) {
         this.studentCurricularPlan = studentCurricularPlan;
@@ -31,7 +34,12 @@ public class SecretaryEnrollmentRule implements IEnrollmentRule {
         ISuportePersistente persistentSuport;
         try {
             persistentSuport = SuportePersistenteOJB.getInstance();
-
+            
+            //check if student curricular plan is Old LEIC
+            if(studentCurricularPlan.getDegreeCurricularPlan().getIdInternal().intValue() == LEIC_OLD_DCP) {
+                throw new EnrolmentRuleDomainException(SecretaryEnrolmentStudentReason.LEIC_OLD_TYPE);
+            }
+            
             Integer studentNumber = this.studentCurricularPlan.getStudent().getNumber();
 
             ISecretaryEnrolmentStudent secretaryEnrolmentStudent = persistentSuport
