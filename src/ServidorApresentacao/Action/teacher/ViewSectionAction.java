@@ -1,8 +1,6 @@
 /*
  * Created on 7/Abr/2003
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code Template
  */
 package ServidorApresentacao.Action.teacher;
 
@@ -22,16 +20,10 @@ import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
- * @author lmac2
+ * @author asnr and scpo
  */
 
 public class ViewSectionAction extends FenixAction {
-	/*
-	 * Created on 7/Abr/2003
-	 *
-	 * To change this generated comment go to 
-	 * Window>Preferences>Java>Code Generation>Code Template
-	 */
 
 	public ActionForward execute(
 		ActionMapping mapping,
@@ -39,8 +31,6 @@ public class ViewSectionAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-
-		
 
 		HttpSession session = request.getSession(false);
 
@@ -69,8 +59,6 @@ public class ViewSectionAction extends FenixAction {
 				SessionConstants.INFO_SECTION_ITEMS_LIST,
 				infoItems);
 				
-			
-
 		}
 		return mapping.findForward("Sucess");
 

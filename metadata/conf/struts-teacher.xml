@@ -456,6 +456,7 @@
      <forward name="createSection" path="/createSection.jsp"/>
 	</action>
 	
+	
 	<!-- Section viewer -->
 	<!--
 	<action name="sectionForm"		
@@ -464,6 +465,7 @@
         type="ServidorApresentacao.Action.teacher.ViewSectionAction">    
      <forward name="Sucess" path="/viewSection.jsp"/>         
 	</action>-->
+	
 	
 	<!-- Delete Section -->
 	<action path="/deleteSection"

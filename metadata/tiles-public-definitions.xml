@@ -15,4 +15,5 @@
   	<put name="footer" value="/publico/commonFooterPub.jsp" />
 
 	</definition>
+	
 </tiles-definitions>
