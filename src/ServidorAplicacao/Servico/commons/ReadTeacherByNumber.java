@@ -37,7 +37,7 @@ public class ReadTeacherByNumber implements IServico {
 		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 		IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
 		
-		ITeacher teacher = teacherDAO.readTeacherByNumber(teacherNumber);
+		ITeacher teacher = teacherDAO.readByNumber(teacherNumber);
 		if (teacher != null) {
 			infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
 		}

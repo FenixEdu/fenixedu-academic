@@ -54,7 +54,7 @@ public class InsertProfessorShip implements IServico {
 				
 				Integer teacherNumber = infoProfessorShip.getInfoTeacher().getTeacherNumber();
 				IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
-				ITeacher teacher = persistentTeacher.readTeacherByNumber(teacherNumber);
+				ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
 				
 				if(teacher == null)
 					throw new NonExistingServiceException("message.non.existing.teacher", null);

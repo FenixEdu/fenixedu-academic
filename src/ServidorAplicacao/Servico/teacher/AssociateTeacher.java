@@ -48,7 +48,7 @@ public class AssociateTeacher implements IServico {
 			IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
 			IPersistentExecutionCourse persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
 			
-			ITeacher iTeacher = persistentTeacher.readTeacherByNumber(teacherNumber);
+			ITeacher iTeacher = persistentTeacher.readByNumber(teacherNumber);
 			if (iTeacher == null) {
 				throw new InvalidArgumentsServiceException();
 			}

@@ -690,7 +690,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	{
 		IPersistentTeacher persistentTeacher = fenixPersistentSuport.getIPersistentTeacher();
 		
-		ITeacher teacher = persistentTeacher.readTeacherByNumber(mwEnrolment.getTeachernumber());
+		ITeacher teacher = persistentTeacher.readByNumber(mwEnrolment.getTeachernumber());
 		
 		if (teacher == null) {
 			if (mwEnrolment.getTeachernumber().intValue() != 0) {

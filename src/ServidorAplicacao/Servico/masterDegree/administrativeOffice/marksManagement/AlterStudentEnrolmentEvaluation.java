@@ -94,7 +94,7 @@ public class AlterStudentEnrolmentEvaluation implements IServico
             IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
 
             //			responsible teacher
-            ITeacher teacher = persistentTeacher.readTeacherByNumber(teacherNumber);
+            ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
             if (teacher == null)
             {
                 throw new NonExistingServiceException();

@@ -56,7 +56,7 @@ public class AddCoordinator implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
 			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-			ITeacher teacher = persistentTeacher.readTeacherByNumber(teacherNumber);
+			ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
 			if (teacher == null) {
 				throw new NonExistingServiceException();
 			}

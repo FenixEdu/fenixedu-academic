@@ -187,7 +187,7 @@ public class GenerateExtraData {
 			try {
 				degreeCurricularPlan2 = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(degreeCurricularPlan);
 				IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
-				ITeacher teacher = persistentTeacher.readTeacherByNumber(new Integer(1));
+				ITeacher teacher = persistentTeacher.readByNumber(new Integer(1));
 				ICursoExecucao executionDegree = new CursoExecucao();
 				executionDegree.setCoordinator(teacher);
 				executionDegree.setCurricularPlan(degreeCurricularPlan2);

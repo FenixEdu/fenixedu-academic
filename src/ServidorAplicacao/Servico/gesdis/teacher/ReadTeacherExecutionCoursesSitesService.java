@@ -70,7 +70,7 @@ public class ReadTeacherExecutionCoursesSitesService implements IServico {
 			IPersistentProfessorship persistentProfessorship =
 				persistentSuport.getIPersistentProfessorship();
 			ITeacher teacher =
-				persistentTeacher.readTeacherByNumber(
+				persistentTeacher.readByNumber(
 					infoTeacher.getTeacherNumber());
 			List professorships =
 				persistentProfessorship.readByTeacher(teacher);

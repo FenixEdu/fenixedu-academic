@@ -148,7 +148,7 @@ public class InsertStudentsFinalEvaluation implements IServico
     {
 
         //			responsible teacher
-        ITeacher teacher = persistentTeacher.readTeacherByNumber(teacherNumber);
+        ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
         if (teacher == null)
         {
             throw new NonExistingServiceException();
