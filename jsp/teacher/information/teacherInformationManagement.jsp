@@ -185,11 +185,13 @@
 		<p class="infoop"><span class="emphasis-box">7</span>
 			<bean:message key="message.teacherInformation.ownPublications" />
 		</p>
-		<div class="gen-button">
-			<html:link page="/readOldPublications.do?oldPublicationType=Didactic&amp;page=0">
-				<bean:message key="label.teacherInformation.manage" />
-			</html:link>
-		</div>
+		<logic:lessThan name="infoSiteOldPublications" property="numberOldPublications" value="5">
+			<div class="gen-button">
+				<html:link page="/readOldPublications.do?oldPublicationType=Didactic&amp;page=0">
+					<bean:message key="label.teacherInformation.manage" />
+				</html:link>
+			</div>
+		</logic:lessThan>
 		<br />	
 			<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldPublications">
 				<bean:write name="infoOldPublication" property="publication" />
@@ -197,11 +199,13 @@
 		<br />
 		<p class="infoop"><span class="emphasis-box">8</span>
 			<bean:message key="message.teacherInformation.cientificPublications" /></p>
-		<div class="gen-button">
-			<html:link page="/readOldPublications.do?oldPublicationType=Cientific&amp;page=0">
-				<bean:message key="label.teacherInformation.manage" />
-			</html:link>
-		</div>
+		<logic:lessThan name="infoSiteOldPublications" property="numberOldPublications" value="5">
+			<div class="gen-button">
+				<html:link page="/readOldPublications.do?oldPublicationType=Cientific&amp;page=0">
+					<bean:message key="label.teacherInformation.manage" />
+				</html:link>
+			</div>
+		</logic:lessThan>
 		<br />	
 			<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldPublications">
 				<bean:write name="infoOldPublication" property="publication" />
