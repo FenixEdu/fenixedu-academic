@@ -6,13 +6,15 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
-	<html:link page="/viewSite.do">
+
+<html:link page="/viewSite.do">
 	<li><bean:message key="link.home"/></li>
 </html:link>
-<p/>
+<br />
+<br />
 <html:link page="/alternativeSite.do?method=management">
-	<li>	<bean:message key="link.personalizationOptions"/></li>
-	</html:link>
+	<li><bean:message key="link.personalizationOptions"/></li>
+</html:link>
 <html:link  page="/accessAnnouncementManagementAction.do">
 	<li><bean:message key="link.announcements"/></li>
 </html:link><html:link page="/objectivesManagerDA.do?method=acessObjectives">
@@ -27,7 +29,6 @@
 	<html:link page="/teachersManagerDA.do?method=viewTeachersByProfessorship">
 	<li><bean:message key="link.teachers"/></li>
 </html:link>
-
 <logic:present name="<%= SessionConstants.SECTIONS %>" >
 	<logic:present name="<%= SessionConstants.INFO_SECTION %>" >
 	<app:generateSectionMenu name="<%= SessionConstants.SECTIONS %>" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" activeSectionName="<%= SessionConstants.INFO_SECTION %>" renderer="teacher" />
@@ -36,8 +37,8 @@
 	<app:generateSectionMenu name="<%= SessionConstants.SECTIONS %>" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" renderer="teacher" />
 	</logic:notPresent>		
 </logic:present>
-<p/>
-
+<br />
+<br />
 	<html:link forward="logoff">
 	<li><bean:message key="link.logout"/></li>
 </html:link>
