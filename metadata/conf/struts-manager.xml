@@ -131,11 +131,9 @@
 		<form-bean name="teacherForm"
 			type="org.apache.struts.validator.DynaValidatorForm"
                 dynamic="true">
+                <form-property name="professorShipTeachersIds" type="java.lang.Integer[]" />
+                <form-property name="responsibleTeachersIds" type="java.lang.Integer[]" />
 				<form-property name="number" type="java.lang.String" />
-        		<form-property name="professorshipsListSize" type="java.lang.Integer" />
-		        <form-property name="responsibleForListSize" type="java.lang.Integer" />
-				<form-property name="deletePS" type="java.lang.Boolean" />
-				<form-property name="deleteRF" type="java.lang.Boolean" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		
@@ -153,14 +151,7 @@
 				<form-property name="internalIds" type="java.lang.Integer[]" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
-		<!--
-		<form-bean name="teacherForm"
-			type="org.apache.struts.validator.DynaValidatorForm"
-                dynamic="true">
-				<form-property name="number" type="java.lang.String" />
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
-		</form-bean>-->
-		
+	
 
 	  <!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
 
@@ -220,8 +211,8 @@
 		<form-property name="teacherNumber" type="java.lang.String"/>
 		<form-property name="deletePS" type="java.lang.Boolean"/>
 		<form-property name="deleteRF" type="java.lang.Boolean"/>
-    <form-property name="professorshipsListSize" type="java.lang.Integer" />
-    <form-property name="responsibleForListSize" type="java.lang.Integer" />
+    	<form-property name="professorshipsListSize" type="java.lang.Integer" />
+	    <form-property name="responsibleForListSize" type="java.lang.Integer" />
 		<form-property name="page" type="java.lang.Integer" initial="0"/>
     </form-bean>       
 
