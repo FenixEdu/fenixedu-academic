@@ -20,8 +20,14 @@ public class TestCasePresentation extends MockStrutsTestCase {
 		super(testName);
 	}
 
-	public void setUp() throws Exception {
-		super.setUp();
+	public void setUp(){
+		
+		try {
+			super.setUp();
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Setting up!");
+		}
 		
 		//		The following code backs up the contents of the database
 		// and loads the database with the data set required to run
@@ -34,6 +40,7 @@ public class TestCasePresentation extends MockStrutsTestCase {
 			_dbAcessPoint.closeConnection();
 		} catch (Exception ex) {
 			System.out.println("Setup failed: " + ex);
+			fail("Setting up!");
 		}
 
 	}
