@@ -15,6 +15,10 @@
 	<definition name="df.teacher.credits-management" extends="definition.teacher.two-column">
 	    <put name="navLocal" value="/teacher/commons/creditsManagementLocalNavigationBar.jsp"/>	
 	</definition>
+	<definition name="df.teacher.site.administration" extends="definition.teacher.two-column">
+	    <put name="navLocal" value="/teacher/navbar.jsp"/>	
+	</definition>
+	
 	<definition name="teacher-professor-ships" page="/teacher/myProfessorships.jsp" 
 				controllerClass="ServidorApresentacao.tiles.controller.MyProfessorships">
 		<put name="title" value=""/>
