@@ -28,6 +28,7 @@ import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.DegreeCurricularPlanState;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a> 3/Dez/2003
@@ -89,7 +90,10 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriodId implements IServic
             while (iter.hasNext())
             {
                 IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) iter.next();
-                curricularCourses.addAll(degreeCurricularPlan.getCurricularCourses());
+                if (degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE_OBJ))
+                {
+                    curricularCourses.addAll(degreeCurricularPlan.getCurricularCourses());
+                }
             }
             List executionCourses = new ArrayList();
             iter = curricularCourses.iterator();
@@ -114,7 +118,7 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriodId implements IServic
             {
                 public Object transform(Object arg0)
                 {
-					return Cloner.get((IExecutionCourse) arg0);
+                    return Cloner.get((IExecutionCourse) arg0);
                 }
             });
             return infoExecutionCourses;
@@ -123,6 +127,6 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriodId implements IServic
         {
             throw new FenixServiceException(e);
         }
-       
+
     }
 }
