@@ -36,8 +36,7 @@ import constants.assiduousness.Constants;
 public final class IndexAction extends Action {
 
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws IOException, ServletException {
-			System.out.println("--->No Assiduidade...funcionario username");
+		throws IOException, ServletException {			
 
 		Locale locale = request.getLocale();
 
@@ -47,6 +46,7 @@ public final class IndexAction extends Action {
 		IUserView userView = (IUserView)session.getAttribute(SessionConstants.U_VIEW);
 			 
 		String username = userView.getUtilizador();//((LogonForm) form).getUsername();
+		System.out.println("--->NA ASSIDUIDADE: " + username);
 		
 		ServicoAutorizacaoLerPessoa servicoAutorizacaoLerPessoa = new ServicoAutorizacaoLerPessoa();
 		ServicoSeguroLerPessoa servicoSeguroLerPessoa = new ServicoSeguroLerPessoa(servicoAutorizacaoLerPessoa, username);
