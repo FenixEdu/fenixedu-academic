@@ -77,7 +77,7 @@ public class EditCurricularCourseScope implements IServico {
 			Integer curricularSemesterId = newInfoCurricularCourseScope.getInfoCurricularSemester().getIdInternal();
 			
 			
-			//so da com o construtor como ta
+			//so da com o construtor como ta/COM O OUTRO TAVA A VIR A NULL
 //			ICurricularSemester curricularSemester = new CurricularSemester();
 //			curricularSemester.setIdInternal(curricularSemesterId);
 			ICurricularSemester newCurricularSemester = (ICurricularSemester) persistentCurricularSemester.readByOId(new CurricularSemester(curricularSemesterId), false);

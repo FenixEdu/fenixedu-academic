@@ -60,6 +60,8 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 			} catch (FenixServiceException fenixServiceException) {
 				throw new FenixActionException(fenixServiceException.getMessage());
 			}
+			
+			//VER S ELE TA A LER BEM DA BD-SE O ID DO SEMESTER AQUI JA EH 0
 		System.out.println("11111111111111111111111111111VELHO CURRICULAR COURSEScope"+oldInfoCurricularCourseScope);
 			
 			if(oldInfoCurricularCourseScope.getTheoreticalHours() != null)

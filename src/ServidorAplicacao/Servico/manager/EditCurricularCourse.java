@@ -42,8 +42,6 @@ public class EditCurricularCourse implements IServico {
 		
 		try {
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-//			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport.getIPersistentDegreeCurricularPlan();
-//							IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(new DegreeCurricularPlan(degreeCPId), false);
 			persistentCurricularCourse = persistentSuport.getIPersistentCurricularCourse();
 			oldCurricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(oldCurricularCourseId), false);
 			
@@ -56,11 +54,6 @@ public class EditCurricularCourse implements IServico {
 				newCurricularCourse = new CurricularCourse();
 				oldCurricularCourse.setName(newName);
 				oldCurricularCourse.setCode(newCode);
-//				oldCurricularCourse.setCredits(newInfoCurricularCourse.getCredits());
-//				oldCurricularCourse.setTheoreticalHours(newInfoCurricularCourse.getTheoreticalHours());
-//				oldCurricularCourse.setPraticalHours(newInfoCurricularCourse.getPraticalHours());
-//				oldCurricularCourse.setTheoPratHours(newInfoCurricularCourse.getTheoPratHours());
-//				oldCurricularCourse.setLabHours(newInfoCurricularCourse.getLabHours());
 				oldCurricularCourse.setType(newInfoCurricularCourse.getType());
 				oldCurricularCourse.setMandatory(newInfoCurricularCourse.getMandatory());
 				oldCurricularCourse.setBasic(newInfoCurricularCourse.getBasic());
