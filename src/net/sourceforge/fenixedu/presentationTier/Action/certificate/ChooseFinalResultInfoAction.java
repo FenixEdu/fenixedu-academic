@@ -184,7 +184,7 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 
             try {
                 Object argsEnrolmentList[] = { infoStudentCurricularPlan.getIdInternal(),
-                        EnrollmentState.APROVED };
+                        EnrollmentState.enrollmentStateEnumerationFromUtil(EnrollmentState.APROVED) };
                 enrolmentList = (List) ServiceManagerServiceFactory.executeService(userView,
                         "GetEnrolmentList", argsEnrolmentList);
 

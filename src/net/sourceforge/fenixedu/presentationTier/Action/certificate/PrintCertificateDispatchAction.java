@@ -186,7 +186,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                     if ((certificate.equals("Aproveitamento"))
                             || (certificate.equals("Aproveitamento de Disciplinas Extra Curricular"))) {
                         Object args[] = { infoStudentCurricularPlan.getIdInternal(),
-                                EnrollmentState.APROVED, new Boolean(true) };
+                                EnrollmentState.enrollmentStateEnumerationFromUtil(EnrollmentState.APROVED), new Boolean(true) };
                         try {
                             enrolmentList = (List) ServiceManagerServiceFactory.executeService(userView,
                                     "GetEnrolmentList", args);
@@ -289,7 +289,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                                     // FinalResulUnreachedActionException("aqui");
                                 }
                                 Object args[] = { infoStudentCurricularPlan.getIdInternal(),
-                                        EnrollmentState.APROVED };
+                                        EnrollmentState.enrollmentStateEnumerationFromUtil(EnrollmentState.APROVED) };
                                 try {
                                     enrolmentList = (List) ServiceManagerServiceFactory.executeService(
                                             userView, "GetEnrolmentList", args);
