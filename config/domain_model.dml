@@ -1,4 +1,5 @@
-/* DOMAIN_MODEL.DML
+/*
+ * DOMAIN_MODEL.DML
  *
  * The Fenix Project Domain Model
  * 
@@ -25,6 +26,7 @@ class net.sourceforge.fenixedu.domain.Building extends net.sourceforge.fenixedu.
 
 	interface "
     public java.util.List getRooms();
+    
     public void setRooms(java.util.List rooms);
     "
 }
@@ -57,12 +59,6 @@ class net.sourceforge.fenixedu.domain.gesdis.CourseHistoric extends net.sourcefo
 	Integer enrolled;
 	Integer semester;
 	Integer evaluated;
-	
-	interface "
-	public net.sourceforge.fenixedu.domain.ICurricularCourse getCurricularCourse();
-
-	public void setCurricularCourse(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
-	"
 }
 
 
@@ -70,12 +66,6 @@ class net.sourceforge.fenixedu.domain.gesdis.CourseReport extends net.sourceforg
 	String report;
 	Date lastModificationDate;
 	Integer keyExecutionCourse;
-	
-	interface "
-	public net.sourceforge.fenixedu.domain.IExecutionCourse getExecutionCourse();
-
-	public void setExecutionCourse(net.sourceforge.fenixedu.domain.IExecutionCourse executionCourse);
-	"
 }
 
 
@@ -86,18 +76,6 @@ class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.f
 	Integer keyStudent;
 	
 	interface "
-	public net.sourceforge.fenixedu.domain.IDegree getDegree();
-
-	public void setDegree(net.sourceforge.fenixedu.domain.IDegree degree);
-	
-	public net.sourceforge.fenixedu.domain.IExecutionYear getExecutionYear();
-	
-	public void setExecutionYear(net.sourceforge.fenixedu.domain.IExecutionYear executionYear);
-	
-	public net.sourceforge.fenixedu.domain.IStudent getStudent();
-	
-	public void setStudent(net.sourceforge.fenixedu.domain.IStudent student);
-	
 	public net.sourceforge.fenixedu.util.DelegateYearType getYearType();
 	
 	public void setYearType(net.sourceforge.fenixedu.util.DelegateYearType yearType);
@@ -179,16 +157,6 @@ class net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes extends n
 	Integer numAnswers2_5_text;
 	Integer numberAnswers;
 	Integer inquiryId;
-	
-	interface "
-	public net.sourceforge.fenixedu.domain.IDegree getDegree();
-
-	public void setDegree(net.sourceforge.fenixedu.domain.IDegree degree);
-	
-	public net.sourceforge.fenixedu.domain.IExecutionPeriod getExecutionPeriod() ;
-	
-    public void setExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
-	"
 }
 
 
@@ -234,16 +202,6 @@ class net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary extends net.
 	Double average3_8;
 	Integer numberAnswers;
 	Integer inquiryId;
-	
-	interface "
-	public net.sourceforge.fenixedu.domain.IDegree getDegree();
-
-	public void setDegree(net.sourceforge.fenixedu.domain.IDegree degree);
-	
-	public net.sourceforge.fenixedu.domain.IExecutionPeriod getExecutionPeriod() ;
-	
-    public void setExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
-	"
 }
 
 
@@ -303,20 +261,6 @@ class net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes extends 
 	Double tolerance3_9;
 	Integer departmentCode;
 	Double deviation3_9;
-
-	interface "
-	public net.sourceforge.fenixedu.domain.IDegree getDegree();
-
-	public void setDegree(net.sourceforge.fenixedu.domain.IDegree degree);
-	
-	public net.sourceforge.fenixedu.domain.IExecutionPeriod getExecutionPeriod() ;
-	
-    public void setExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
-	
-    public net.sourceforge.fenixedu.domain.ITeacher getTeacher();
-	
-    public void setTeacher(net.sourceforge.fenixedu.domain.ITeacher teacher);
-	"
 }
 
 
@@ -329,10 +273,6 @@ class net.sourceforge.fenixedu.domain.teacher.OldPublication extends net.sourcef
 	public net.sourceforge.fenixedu.util.OldPublicationType getOldPublicationType();
 
 	public void setOldPublicationType(net.sourceforge.fenixedu.util.OldPublicationType oldPublicationType);
-	
-	public net.sourceforge.fenixedu.domain.ITeacher getTeacher();
-
-	public void setTeacher(net.sourceforge.fenixedu.domain.ITeacher teacher);
 	"
 }
 
@@ -416,7 +356,6 @@ class net.sourceforge.fenixedu.domain.Role extends net.sourceforge.fenixedu.doma
 
     public void setRoleType(net.sourceforge.fenixedu.domain.person.RoleType roleType);
     "
-
 }
 
 
@@ -426,10 +365,158 @@ class net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport extends net.sou
 	String strongPoints;
 	String weakPoints;
 	String studentReport;
-	
-	interface "
-	public net.sourceforge.fenixedu.domain.ICurricularCourse getCurricularCourse();
+}
 
-	public void setCurricularCourse(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
-	"
+
+
+/*
+ * External classes declarations
+ *
+ * The following declarations allow the DmlCompiler to recognize the classes in
+ * the relations definitions. Remove each declaration once the corresponding 
+ * class definition is included.
+ * 
+ */
+
+external class net.sourceforge.fenixedu.domain.CurricularCourse;
+external class net.sourceforge.fenixedu.domain.Degree;
+external class net.sourceforge.fenixedu.domain.ExecutionCourse;
+external class net.sourceforge.fenixedu.domain.ExecutionPeriod;
+external class net.sourceforge.fenixedu.domain.ExecutionYear;
+external class net.sourceforge.fenixedu.domain.Student;
+external class net.sourceforge.fenixedu.domain.Teacher;
+external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
+
+
+
+/*
+ * Relations definitions
+ * 
+ */
+
+relation CurricularCourseHistoric {
+	net.sourceforge.fenixedu.domain.gesdis.CourseHistoric playsRole courseHistoric;
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
+}
+
+
+relation CurricularCourseStudentReport {
+	net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport playsRole studentCourseReport {
+		multiplicity 1;
+	}
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
+}
+
+
+relation DelegateDegree {
+	net.sourceforge.fenixedu.domain.student.Delegate playsRole delegate {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Degree playsRole degree;
+}
+
+
+relation DelegateExecutionYear {
+	net.sourceforge.fenixedu.domain.student.Delegate playsRole delegate {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+}
+
+
+relation DelegateStudent {
+	net.sourceforge.fenixedu.domain.student.Delegate playsRole delegate {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Student playsRole student;
+}
+
+
+relation ExecutionCourseReport {
+	net.sourceforge.fenixedu.domain.gesdis.CourseReport playsRole courseReport {
+		multiplicity 1;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+}
+
+
+relation OldInquiriesCoursesResDegree {
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes playsRole oldInquiriesCoursesRes {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Degree playsRole degree;
+}
+
+
+relation OldInquiriesCoursesResExecutionPeriod {
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes playsRole oldInquiriesCoursesRes {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
+
+
+relation OldInquiriesSummaryDegree {
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary playsRole oldInquiriesSummary {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Degree playsRole degree;
+}
+
+
+relation OldInquiriesSummaryExecutionPeriod {
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary playsRole oldInquiriesSummary {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
+
+
+relation OldInquiriesTeachersResDegree {
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes playsRole oldInquiriesTeachersRes {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Degree playsRole degree;
+}
+
+
+relation OldInquiriesTeachersResExecutionPeriod {
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes playsRole oldInquiriesTeachersRes {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod {
+		multiplicity 1;
+	}
+}
+
+
+relation OldInquiriesTeachersResTeacher {
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes playsRole oldInquiriesTeacherRes {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+
+relation TeachingCareerCategory {
+	net.sourceforge.fenixedu.domain.teacher.TeachingCareer playsRole teachingCareer {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.teacher.Category playsRole category;
+}
+
+
+relation TeacherCategory {
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.teacher.Category playsRole category;
+}
+
+
+relation TeacherOldPublication {
+	net.sourceforge.fenixedu.domain.teacher.OldPublication playsRole oldPublication {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
