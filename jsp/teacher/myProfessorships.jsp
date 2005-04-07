@@ -44,7 +44,7 @@
 				<td class="listClasses-header" style="text-align:left"><bean:message key="label.professorships.degrees" />
 				</td>
 				
-				<td class="listClasses-header"><bean:message key="label.semester" />
+				<td class="listClasses-header"><bean:message key="label.semestre" />
 				</td>
 			</tr>
 			<bean:define id="link">
