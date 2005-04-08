@@ -4,15 +4,11 @@ package net.sourceforge.fenixedu.domain;
  * @author Tânia Pousão
  *  
  */
-public class EvaluationExecutionCourse extends DomainObject implements IEvalutionExecutionCourse {
+public class EvaluationExecutionCourse extends EvaluationExecutionCourse_Base {
 
     private IEvaluation evaluation;
 
     private IExecutionCourse executionCourse;
-
-    private Integer keyEvaluation;
-
-    private Integer keyExecutionCourse;
 
     public EvaluationExecutionCourse() {
     }
@@ -52,20 +48,6 @@ public class EvaluationExecutionCourse extends DomainObject implements IEvalutio
     }
 
     /**
-     * @return
-     */
-    public Integer getKeyEvaluation() {
-        return keyEvaluation;
-    }
-
-    /**
-     * @return
-     */
-    public Integer getKeyExecutionCourse() {
-        return keyExecutionCourse;
-    }
-
-    /**
      * @param evaluation
      */
     public void setEvaluation(IEvaluation evaluation) {
@@ -77,20 +59,6 @@ public class EvaluationExecutionCourse extends DomainObject implements IEvalutio
      */
     public void setExecutionCourse(IExecutionCourse execucao) {
         executionCourse = execucao;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setKeyEvaluation(Integer integer) {
-        keyEvaluation = integer;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setKeyExecutionCourse(Integer integer) {
-        keyExecutionCourse = integer;
     }
 
 }

@@ -368,6 +368,22 @@ class net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport extends net.sou
 }
 
 
+class net.sourceforge.fenixedu.domain.EvaluationExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyExecutionCourse;
+	Integer keyEvaluation;
+
+	interface "
+	public net.sourceforge.fenixedu.domain.IExecutionCourse getExecutionCourse();
+	
+	public void setExecutionCourse(net.sourceforge.fenixedu.domain.IExecutionCourse executionCourse);
+	
+	public net.sourceforge.fenixedu.domain.IEvaluation getEvaluation();
+	
+	public void setEvaluation(net.sourceforge.fenixedu.domain.IEvaluation evaluation);
+	"
+}
+
+
 
 /*
  * External classes declarations
