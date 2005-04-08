@@ -155,6 +155,11 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet>
+        <servlet-name>FacesServlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
         <servlet-name>action</servlet-name>
         <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
         <init-param>
@@ -285,8 +290,12 @@
             <param-name>validating</param-name>
             <param-value>true</param-value>
         </init-param>
-        <load-on-startup>1</load-on-startup>
+        <load-on-startup>2</load-on-startup>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>FacesServlet</servlet-name>
+        <url-pattern>*.faces</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>action</servlet-name>
         <url-pattern>*.do</url-pattern>
@@ -317,14 +326,29 @@
         <taglib-uri>/WEB-INF/app.tld</taglib-uri>
         <taglib-location>/WEB-INF/app.tld</taglib-location>
     </taglib>
-  <taglib>
-    <!--<taglib-uri>http://jakarta.apache.org/taglibs/datetime-1.0</taglib-uri>-->
-    <taglib-uri>/WEB-INF/taglibs-datetime.tld</taglib-uri>
-    <taglib-location>/WEB-INF/taglibs-datetime.tld</taglib-location>
-  </taglib>
-  <taglib>
-    <taglib-uri>/WEB-INF/c.tld</taglib-uri>
-    <taglib-location>/WEB-INF/c.tld</taglib-location>
-  </taglib>    
+    <taglib>
+        <taglib-uri>/WEB-INF/c.tld</taglib-uri>
+        <taglib-location>/WEB-INF/c.tld</taglib-location>
+    </taglib>
+    <taglib>
+        <taglib-uri>/WEB-INF/struts-faces.tld</taglib-uri>
+        <taglib-location>/WEB-INF/struts-faces.tld</taglib-location>
+    </taglib>
+    <taglib>
+        <taglib-uri>/WEB-INF/html_basic.tld</taglib-uri>
+        <taglib-location>/WEB-INF/html_basic.tld</taglib-location>
+    </taglib>
+    <taglib>
+        <taglib-uri>/WEB-INF/jsf_core.tld</taglib-uri>
+        <taglib-location>/WEB-INF/jsf_core.tld</taglib-location>
+    </taglib>
+    <taglib>
+        <taglib-uri>/WEB-INF/jsf_tiles.tld</taglib-uri>
+        <taglib-location>/WEB-INF/jsf_tiles.tld</taglib-location>
+    </taglib>
+	<taglib>
+		<taglib-uri>/WEB-INF/taglibs-datetime.tld</taglib-uri>
+		<taglib-location>/WEB-INF/taglibs-datetime.tld</taglib-location>
+	</taglib>
 </web-app>
 

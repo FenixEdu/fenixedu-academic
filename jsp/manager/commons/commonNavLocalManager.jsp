@@ -117,3 +117,9 @@
 		Informações do Sistema
 	</html:link>
 </strong></p>
+
+<p><strong>&raquo; 
+	<html:link page="/somePage.faces">
+		Java Server Faces Example
+	</html:link>
+</strong></p>

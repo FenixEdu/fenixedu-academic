@@ -1573,7 +1573,7 @@
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
-    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
+    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixFacesRequestProcessorWithTiles"/>
 
 	<!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="ServidorApresentacao.ManagerResources" null="false"/>

@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <html:html xhtml="true">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
@@ -37,7 +38,8 @@
     </td>
      <td id="bodycontent" width="100%" align="left" valign="top" >
      	<tiles:insert attribute="body-context" ignore="true"/>
-     	<tiles:insert attribute="body" />
+     	<tiles:insert attribute="body" ignore="true"/>
+     	<tiles:getAsString name="body-inline" ignore="true"/>
 	</td>
   </tr>
 </table>

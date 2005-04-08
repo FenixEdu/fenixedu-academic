@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+<faces-config>
+
+	<managed-bean>
+		<description>InfoExecutionPeriod</description>
+		<managed-bean-name>infoExecutionPeriod</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<description>name</description>
+			<property-name>name</property-name>
+			<value>sub zero</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<description>ExecutionPeriods</description>
+		<managed-bean-name>executionPeriods</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.example.ExecutionPeriods</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<navigation-rule>
+		<from-view-id>/manager/somePage.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>listExecutionPeriods</from-outcome>
+			<to-view-id>/manager/somePageListExecutionPeriods.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+</faces-config>
