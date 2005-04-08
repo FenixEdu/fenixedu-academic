@@ -1,18 +1,17 @@
-
-
-class domain.EvaluationExecutionCourse {
-	Integer keyExecutionCourse;
+class net.sourceforge.fenixedu.domain.DomainObject {
 	Integer ackOptLock;
 	Integer idInternal;
+}
+
+class net.sourceforge.fenixedu.domain.EvaluationExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyExecutionCourse;
 	Integer keyEvaluation;
 }
 
-class domain.ExecutionDegree {
+class net.sourceforge.fenixedu.domain.ExecutionDegree extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPeriodExamsSecondSemester;
 	Integer keyPeriodLessonsSecondSemester;
 	Boolean temporaryExamMap;
-	Integer ackOptLock;
-	Integer idInternal;
 	Integer keyPeriodExamsFirstSemester;
 	Integer keyPeriodLessonsFirstSemester;
 	Integer academicYear;
@@ -20,699 +19,657 @@ class domain.ExecutionDegree {
 	Integer keyCampus;
 }
 
-class domain.Room {
+class net.sourceforge.fenixedu.domain.Room extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyBuilding;
 	String name;
-	Integer ackOptLock;
-	Integer idInternal;
 	String building;
 	Integer normalCapacity;
 	Integer examCapacity;
 	Integer floor;
 }
 
-class domain.Exam {
-	Integer ackOptLock;
-	Integer idInternal;
+class net.sourceforge.fenixedu.domain.Exam extends net.sourceforge.fenixedu.domain.DomainObject {
 	String ojbConcreteClass;
 	String publishmentMessage;
 }
 
-class domain.ExamStudentRoom {
+class net.sourceforge.fenixedu.domain.ExamStudentRoom extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyRoom;
-	Integer ackOptLock;
 	Integer keyStudent;
-	Integer idInternal;
 	Integer keyExam;
 }
 
-class domain.WrittenTest {
-	Integer ackOptLock;
-	Integer idInternal;
+class net.sourceforge.fenixedu.domain.WrittenTest extends net.sourceforge.fenixedu.domain.DomainObject {
 	String ojbConcreteClass;
 	String publishmentMessage;
 }
 
-class domain.WrittenEvaluationCurricularCourseScope {
+class net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyWrittenEvaluation;
 	Integer keyCurricularCourseScope;
-	Integer ackOptLock;
-	Integer idInternal;
 }
 
-class domain.ShiftStudent {
+class net.sourceforge.fenixedu.domain.ShiftStudent extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyShift;
-	Integer ackOptLock;
-	Integer idInternal;
 	Integer keyStudent;
 }
 
-class domain.ExamExecutionCourse {
+class net.sourceforge.fenixedu.domain.ExamExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionCourse;
-	Integer ackOptLock;
-	Integer idInternal;
 	Integer keyExam;
 }
 
-class domain.Shift {
+class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.domain.DomainObject {
 	String name;
-	Integer ackOptLock;
-	Integer idInternal;
 	Integer keyExecutionCourse;
 	Integer availabilityFinal;
 	Integer capacity;
 }
 
-class domain.RoomOccupation {
+class net.sourceforge.fenixedu.domain.RoomOccupation extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer weekOfBiweeklyStart;
 	Integer keyRoom;
-	Integer ackOptLock;
-	Integer idInternal;
 	Integer frequency;
 	Integer keyPeriod;
 }
 
-class domain.Lesson {
-	Integer ackOptLock;
-	Integer idInternal;
+class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionPeriod;
 	Integer keyShift;
 	Integer keyRoomOccupation;
 	Integer keyRoom;
 }
 
-class domain.SchoolClassShift {
-	Integer ackOptLock;
-	Integer idInternal;
+class net.sourceforge.fenixedu.domain.SchoolClassShift extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyClass;
 	Integer keyShift;
 }
 
-class domain.Period {
+class net.sourceforge.fenixedu.domain.Period extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPeriod;
-	Integer ackOptLock;
-	Integer idInternal;
 }
 
-class domain.ExecutionCourse {
+class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
 	String name;
 	Double theoreticalHours;
 	String code;
-	Integer ackOptLock;
 	Double labHours;
-	Integer idInternal;
 	Integer keyExecutionPeriod;
 	Double praticalHours;
 	String comment;
 	Double theoPratHours;
 }
 
-class domain.SchoolClass {
+class net.sourceforge.fenixedu.domain.SchoolClass extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionDegree;
 	String name;
-	Integer ackOptLock;
-	Integer idInternal;
 	Integer keyExecutionPeriod;
 	Integer curricularYear;
 }
 
-class domain.FinalEvaluation {
+class net.sourceforge.fenixedu.domain.FinalEvaluation extends net.sourceforge.fenixedu.domain.DomainObject {
 	String ojbConcreteClass;
-	Integer ackOptLock;
-	Integer idInternal;
 	String publishmentMessage;
 }
 
-class domain.ExecutionPeriod {
+class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionYear;
-	Integer ackOptLock;
-	Integer idInternal;
 	Integer keyPreviousExecutionPeriod;
 	String name;
 	Integer semester;
 }
 
-class domain.ExecutionYear {
-	Integer ackOptLock;
+class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.fenixedu.domain.DomainObject {
 	String year;
-	Integer idInternal;
 }
 
-class domain.Building {
-	Integer ackOptLock;
+class net.sourceforge.fenixedu.domain.Building extends net.sourceforge.fenixedu.domain.DomainObject {
 	String name;
-	Integer idInternal;
 }
 
-class domain.Attends {
+class net.sourceforge.fenixedu.domain.Attends extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionCourse;
 	Integer keyStudent;
-	Integer ackOptLock;
-	Integer idInternal;
 	Integer keyEnrolment;
 }
 
-class domain.Evaluation {
-	Integer ackOptLock;
+class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixedu.domain.DomainObject {
 	String ojbConcreteClass;
-	Integer idInternal;
 }
 
-class domain.WrittenEvaluation {
-	Integer ackOptLock;
-	Integer idInternal;
+class net.sourceforge.fenixedu.domain.WrittenEvaluation extends net.sourceforge.fenixedu.domain.DomainObject {
 	String ojbConcreteClass;
 	String publishmentMessage;
 }
 
 relation ExecutionCourseCurricularCourse {
-	domain.ExecutionCourse playsRole associatedExecutionCourses {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole associatedExecutionCourses {
 		multiplicity *;
 	}
-	domain.CurricularCourse playsRole associatedCurricularCourses {
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole associatedCurricularCourses {
 		multiplicity *;
 	}
 }
 
 relation ExecutionPeriodExecutionYear {
-	domain.ExecutionPeriod playsRole executionPeriods {
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriods {
 		multiplicity *;
 	}
-	domain.ExecutionYear playsRole executionYear;
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
 
 relation SchoolClassShiftShift {
-	domain.SchoolClassShift playsRole schoolClassShifts {
+	net.sourceforge.fenixedu.domain.SchoolClassShift playsRole schoolClassShifts {
 		multiplicity *;
 	}
-	domain.Shift playsRole shift;
+	net.sourceforge.fenixedu.domain.Shift playsRole shift;
 }
 
 relation LessonRoom {
-	domain.Lesson playsRole roomOccupations {
+	net.sourceforge.fenixedu.domain.Lesson playsRole roomOccupations {
 		multiplicity *;
 	}
-	domain.Room playsRole room;
+	net.sourceforge.fenixedu.domain.Room playsRole room;
 }
 
 relation AttendsAttendInAttendsSet {
-	domain.Attends playsRole attend;
-	domain.AttendInAttendsSet playsRole attendInAttendsSet {
+	net.sourceforge.fenixedu.domain.Attends playsRole attend;
+	net.sourceforge.fenixedu.domain.AttendInAttendsSet playsRole attendInAttendsSet {
 		multiplicity *;
 	}
 }
 
 relation StudentGroupShift {
-	domain.StudentGroup playsRole studentGroups {
+	net.sourceforge.fenixedu.domain.StudentGroup playsRole studentGroups {
 		multiplicity *;
 	}
-	domain.Shift playsRole shift;
+	net.sourceforge.fenixedu.domain.Shift playsRole shift;
 }
 
 relation ShiftExecutionCourse {
-	domain.Shift playsRole shifts {
+	net.sourceforge.fenixedu.domain.Shift playsRole shifts {
 		multiplicity *;
 	}
-	domain.ExecutionCourse playsRole executionCourse;
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 }
 
 relation ExecutionPeriodSchoolClass {
-	domain.ExecutionPeriod playsRole executionPeriod;
-	domain.SchoolClass playsRole schoolClasses {
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.SchoolClass playsRole schoolClasses {
 		multiplicity *;
 	}
 }
 
 relation EnrolmentPeriodExecutionPeriod {
-	domain.EnrolmentPeriod playsRole enrolmentPeriod {
+	net.sourceforge.fenixedu.domain.EnrolmentPeriod playsRole enrolmentPeriod {
 		multiplicity *;
 	}
-	domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
 }
 
 relation ShiftStudentShift {
-	domain.ShiftStudent playsRole shiftStudents {
+	net.sourceforge.fenixedu.domain.ShiftStudent playsRole shiftStudents {
 		multiplicity *;
 	}
-	domain.Shift playsRole shift;
+	net.sourceforge.fenixedu.domain.Shift playsRole shift;
 }
 
 relation ShiftLesson {
-	domain.Shift playsRole shift;
-	domain.Lesson playsRole associatedLessons {
+	net.sourceforge.fenixedu.domain.Shift playsRole shift;
+	net.sourceforge.fenixedu.domain.Lesson playsRole associatedLessons {
 		multiplicity *;
 	}
 }
 
 relation ExecutionDegreeCoordinator {
-	domain.ExecutionDegree playsRole executionDegree;
-	domain.Coordinator playsRole coordinatorsList {
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
+	net.sourceforge.fenixedu.domain.Coordinator playsRole coordinatorsList {
 		multiplicity *;
 	}
 }
 
 relation ExamExecutionCourseExam {
-	domain.ExamExecutionCourse playsRole associatedExecutionCourses {
+	net.sourceforge.fenixedu.domain.ExamExecutionCourse playsRole associatedExecutionCourses {
 		multiplicity *;
 	}
-	domain.Exam playsRole exam;
+	net.sourceforge.fenixedu.domain.Exam playsRole exam;
 }
 
 relation WrittenTestRoomOccupation {
-	domain.WrittenTest playsRole writtenTests;
+	net.sourceforge.fenixedu.domain.WrittenTest playsRole writtenTests;
 	
-	domain.RoomOccupation playsRole associatedRoomOccupation {
+	net.sourceforge.fenixedu.domain.RoomOccupation playsRole associatedRoomOccupation {
 		multiplicity *;
 	}
 }
 
 relation RoomBuilding {
-	domain.Room playsRole rooms {
+	net.sourceforge.fenixedu.domain.Room playsRole rooms {
 		multiplicity *;
 	}
-	domain.Building playsRole building;
+	net.sourceforge.fenixedu.domain.Building playsRole building;
 }
 
 relation ExecutionCourseAttends {
-	domain.ExecutionCourse playsRole executionCourse;
-	domain.Attends playsRole attends {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+	net.sourceforge.fenixedu.domain.Attends playsRole attends {
 		multiplicity *;
 	}
 }
 
 relation ExecutionCourseExecutionPeriod {
-	domain.ExecutionCourse playsRole executionCourses {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourses {
 		multiplicity *;
 	}
-	domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
 }
 
 relation SchoolClassShift {
-	domain.SchoolClass playsRole associatedClasses {
+	net.sourceforge.fenixedu.domain.SchoolClass playsRole associatedClasses {
 		multiplicity *;
 	}
-	domain.Shift playsRole associatedShifts {
+	net.sourceforge.fenixedu.domain.Shift playsRole associatedShifts {
 		multiplicity *;
 	}
 }
 
 relation LessonExecutionPeriod {
-	domain.Lesson playsRole lessons {
+	net.sourceforge.fenixedu.domain.Lesson playsRole lessons {
 		multiplicity *;
 	}
-	domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
 }
 
 relation WrittenEvaluationRoomOccupation {
-	domain.WrittenEvaluation playsRole writtenEvaluation;
+	net.sourceforge.fenixedu.domain.WrittenEvaluation playsRole writtenEvaluation;
 	
-	domain.RoomOccupation playsRole associatedRoomOccupation {
+	net.sourceforge.fenixedu.domain.RoomOccupation playsRole associatedRoomOccupation {
 		multiplicity *;
 	}
 }
 
 relation ExecutionCourseEvaluation {
-	domain.ExecutionCourse playsRole associatedExecutionCourses {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole associatedExecutionCourses {
 		multiplicity *;
 	}
-	domain.Evaluation playsRole associatedEvaluations {
+	net.sourceforge.fenixedu.domain.Evaluation playsRole associatedEvaluations {
 		multiplicity *;
 	}
 }
 
 relation AttendsStudent {
-	domain.Attends playsRole attends {
+	net.sourceforge.fenixedu.domain.Attends playsRole attends {
 		multiplicity *;
 	}
-	domain.Student playsRole student;
+	net.sourceforge.fenixedu.domain.Student playsRole student;
 }
 
 relation SchoolClassExecutionDegree {
-	domain.SchoolClass playsRole schoolClasses {
+	net.sourceforge.fenixedu.domain.SchoolClass playsRole schoolClasses {
 		multiplicity *;
 	}
-	domain.ExecutionDegree playsRole executionDegree;
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
 }
 
 relation ExamStudentRoomStudent {
-	domain.ExamStudentRoom playsRole examStudentRoom {
+	net.sourceforge.fenixedu.domain.ExamStudentRoom playsRole examStudentRoom {
 		multiplicity *;
 	}
-	domain.Student playsRole student;
+	net.sourceforge.fenixedu.domain.Student playsRole student;
 }
 
 relation RoomOccupationRoom {
-	domain.RoomOccupation playsRole roomOccupations {
+	net.sourceforge.fenixedu.domain.RoomOccupation playsRole roomOccupations {
 		multiplicity *;
 	}
-	domain.Room playsRole room;
+	net.sourceforge.fenixedu.domain.Room playsRole room;
 }
 
 relation PeriodRoomOccupation {
-	domain.Period playsRole period;
-	domain.RoomOccupation playsRole roomOccupations {
+	net.sourceforge.fenixedu.domain.Period playsRole period;
+	net.sourceforge.fenixedu.domain.RoomOccupation playsRole roomOccupations {
 		multiplicity *;
 	}
 }
 
 relation ExecutionDegreePeriodExamsSecondSemester {
-	domain.ExecutionDegree playsRole executionDegree {
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree {
 		multiplicity *;
 	}
-	domain.Period playsRole periodExamsSecondSemester;
+	net.sourceforge.fenixedu.domain.Period playsRole periodExamsSecondSemester;
 }
 
 relation EvaluationExecutionCourseExecutionCourse {
-	domain.EvaluationExecutionCourse playsRole evaluationExecutionCourses {
+	net.sourceforge.fenixedu.domain.EvaluationExecutionCourse playsRole evaluationExecutionCourses {
 		multiplicity *;
 	}
-	domain.ExecutionCourse playsRole executionCourse;
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 }
 
 relation ExecutionDegreeDegreeCurricularPlan {
-	domain.ExecutionDegree playsRole executionDegrees {
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegrees {
 		multiplicity *;
 	}
-	domain.DegreeCurricularPlan playsRole degreeCurricularPlan;
+	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlan;
 }
 
 relation ExecutionCourseProfessorship {
-	domain.ExecutionCourse playsRole executionCourse;
-	domain.Professorship playsRole professorships {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+	net.sourceforge.fenixedu.domain.Professorship playsRole professorships {
 		multiplicity *;
 	}
 }
 
 relation OldInquiriesCoursesResExecutionPeriod {
-	domain.inquiries.OldInquiriesCoursesRes playsRole oldInquiriesCoursesRes {
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes playsRole oldInquiriesCoursesRes {
 		multiplicity *;
 	}
-	domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
 }
 
 relation SiteExecutionCourse {
-	domain.Site playsRole site;
-	domain.ExecutionCourse playsRole executionCourse;
+	net.sourceforge.fenixedu.domain.Site playsRole site;
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 }
 
 relation ExecutionCourseResponsible {
-	domain.ExecutionCourse playsRole executionCourse;
-	domain.ResponsibleFor playsRole responsibleTeachers {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+	net.sourceforge.fenixedu.domain.ResponsibleFor playsRole responsibleTeachers {
 		multiplicity *;
 	}
 }
 
 relation AttendsEnrolment {
-	domain.Attends playsRole attends {
+	net.sourceforge.fenixedu.domain.Attends playsRole attends {
 		multiplicity *;
 	}
-	domain.Enrolment playsRole enrolment;
+	net.sourceforge.fenixedu.domain.Enrolment playsRole enrolment;
 }
 
 relation WrittenTestExecutionCourse {
-	domain.WrittenTest playsRole writtenTests {
+	net.sourceforge.fenixedu.domain.WrittenTest playsRole writtenTests {
 		multiplicity *;
 	}
-	domain.ExecutionCourse playsRole associatedExecutionCourses {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole associatedExecutionCourses {
 		multiplicity *;
 	}
 }
 
 relation FinalDegreeWorkProposalExecutionDegree {
-	domain.finalDegreeWork.Proposal playsRole proposal {
+	net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal playsRole proposal {
 		multiplicity *;
 	}
-	domain.ExecutionDegree playsRole executionDegree;
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
 }
 
 relation WrittenEvaluationCurricularCourseScopeWrittenEvaluation {
-	domain.WrittenEvaluationCurricularCourseScope playsRole writtenEvaluationCurricularCourseScopes {
+	net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope playsRole writtenEvaluationCurricularCourseScopes {
 		multiplicity *;
 	}
-	domain.WrittenEvaluation playsRole writtenEvaluation;
+	net.sourceforge.fenixedu.domain.WrittenEvaluation playsRole writtenEvaluation;
 }
 
 relation ExamStudentRoomExam {
-	domain.ExamStudentRoom playsRole examStudentRoom {
+	net.sourceforge.fenixedu.domain.ExamStudentRoom playsRole examStudentRoom {
 		multiplicity *;
 	}
-	domain.Exam playsRole exam;
+	net.sourceforge.fenixedu.domain.Exam playsRole exam;
 }
 
 relation InsuranceTransactionExecutionYear {
-	domain.transactions.InsuranceTransaction playsRole insuranceTransactions {
+	net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction playsRole insuranceTransactions {
 		multiplicity *;
 	}
-	domain.ExecutionYear playsRole executionYear;
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
 
 relation SummaryRoom {
-	domain.Summary playsRole summaries {
+	net.sourceforge.fenixedu.domain.Summary playsRole summaries {
 		multiplicity *;
 	}
-	domain.Room playsRole room;
+	net.sourceforge.fenixedu.domain.Room playsRole room;
 }
 
 relation OnlineTestExecutionCourse {
-	domain.OnlineTest playsRole onlinesTests {
+	net.sourceforge.fenixedu.domain.OnlineTest playsRole onlinesTests {
 		multiplicity *;
 	}
-	domain.ExecutionCourse playsRole associatedExecutionCourses {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole associatedExecutionCourses {
 		multiplicity *;
 	}
 }
 
 relation LessonRoomOccupation {
-	domain.Lesson playsRole lesson;
+	net.sourceforge.fenixedu.domain.Lesson playsRole lesson;
 	
-	domain.RoomOccupation playsRole roomOccupation;
+	net.sourceforge.fenixedu.domain.RoomOccupation playsRole roomOccupation;
 }
 
 relation InsuranceValueExecutionYear {
-	domain.InsuranceValue playsRole insuranceValue;
-	domain.ExecutionYear playsRole executionYear;
+	net.sourceforge.fenixedu.domain.InsuranceValue playsRole insuranceValue;
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
 
 relation ExecutionDegreePeriodExamsFirstSemester {
-	domain.ExecutionDegree playsRole executionDegree {
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree {
 		multiplicity *;
 	}
-	domain.Period playsRole periodExamsFirstSemester;
+	net.sourceforge.fenixedu.domain.Period playsRole periodExamsFirstSemester;
 }
 
 relation ExamStudentRoomRoom {
-	domain.ExamStudentRoom playsRole examStudentRoom {
+	net.sourceforge.fenixedu.domain.ExamStudentRoom playsRole examStudentRoom {
 		multiplicity *;
 	}
-	domain.Room playsRole room;
+	net.sourceforge.fenixedu.domain.Room playsRole room;
 }
 
 relation EvaluationExecutionCourseEvaluation {
-	domain.EvaluationExecutionCourse playsRole evaluationExecutionCourses {
+	net.sourceforge.fenixedu.domain.EvaluationExecutionCourse playsRole evaluationExecutionCourses {
 		multiplicity *;
 	}
-	domain.Evaluation playsRole evaluation;
+	net.sourceforge.fenixedu.domain.Evaluation playsRole evaluation;
 }
 
 relation WrittenEvaluationExecutionCourse {
-	domain.WrittenEvaluation playsRole writtenEvaluations {
+	net.sourceforge.fenixedu.domain.WrittenEvaluation playsRole writtenEvaluations {
 		multiplicity *;
 	}
-	domain.ExecutionCourse playsRole associatedExecutionCourses {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole associatedExecutionCourses {
 		multiplicity *;
 	}
 }
 
 relation ExamExecutionCourse {
-	domain.ExecutionCourse playsRole associatedExecutionCourses {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole associatedExecutionCourses {
 		multiplicity *;
 	}
-	domain.Exam playsRole associatedExams {
+	net.sourceforge.fenixedu.domain.Exam playsRole associatedExams {
 		multiplicity *;
 	}
 }
 
 relation ExecutionCourseBibliographicReference {
-	domain.BibliographicReference playsRole bibliographicReferences {
+	net.sourceforge.fenixedu.domain.BibliographicReference playsRole bibliographicReferences {
 		multiplicity *;
 	}
-	domain.ExecutionCourse playsRole executionCourse;
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 }
 
 relation SchoolClassShiftSchoolClass {
-	domain.SchoolClassShift playsRole schoolClassShifts {
+	net.sourceforge.fenixedu.domain.SchoolClassShift playsRole schoolClassShifts {
 		multiplicity *;
 	}
-	domain.SchoolClass playsRole schoolClass;
+	net.sourceforge.fenixedu.domain.SchoolClass playsRole schoolClass;
 }
 
 relation ShiftStudentStudent {
-	domain.ShiftStudent playsRole shiftStudents {
+	net.sourceforge.fenixedu.domain.ShiftStudent playsRole shiftStudents {
 		multiplicity *;
 	}
-	domain.Student playsRole student;
+	net.sourceforge.fenixedu.domain.Student playsRole student;
 }
 
 relation SummaryShift {
-	domain.Summary playsRole summaries {
+	net.sourceforge.fenixedu.domain.Summary playsRole summaries {
 		multiplicity *;
 	}
-	domain.Turno playsRole shift;
+	net.sourceforge.fenixedu.domain.Turno playsRole shift;
 }
 
 relation FinalEvaluationExecutionCourse {
-	domain.FinalEvaluation playsRole finalEvaluations {
+	net.sourceforge.fenixedu.domain.FinalEvaluation playsRole finalEvaluations {
 		multiplicity *;
 	}
-	domain.ExecutionCourse playsRole associatedExecutionCourses {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole associatedExecutionCourses {
 		multiplicity *;
 	}
 }
 
 relation ExecutionDegreePeriodLessonsFirstSemester {
-	domain.ExecutionDegree playsRole executionDegree {
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree {
 		multiplicity *;
 	}
-	domain.Period playsRole periodLessonsFirstSemester;
+	net.sourceforge.fenixedu.domain.Period playsRole periodLessonsFirstSemester;
 }
 
 relation MasterDegreeCandidateExecutionDegree {
-	domain.MasterDegreeCandidate playsRole masterDegreeCandidates {
+	net.sourceforge.fenixedu.domain.MasterDegreeCandidate playsRole masterDegreeCandidates {
 		multiplicity *;
 	}
-	domain.ExecutionDegree playsRole executionDegree;
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
 }
 
 relation ExecutionPeriodExecutionPeriod {
-	domain.ExecutionPeriod playsRole nextExecutionPeriod;
-	domain.ExecutionPeriod playsRole previousExecutionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole nextExecutionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole previousExecutionPeriod;
 }
 
 relation ShiftShiftProfessorship {
-	domain.Shift playsRole shift;
-	domain.ShiftProfessorship playsRole associatedShiftProfessorship {
+	net.sourceforge.fenixedu.domain.Shift playsRole shift;
+	net.sourceforge.fenixedu.domain.ShiftProfessorship playsRole associatedShiftProfessorship {
 		multiplicity *;
 	}
 }
 
 relation ExecutionDegreeCampus {
-	domain.ExecutionDegree playsRole executionDegrees {
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegrees {
 		multiplicity *;
 	}
-	domain.Campus playsRole campus;
+	net.sourceforge.fenixedu.domain.Campus playsRole campus;
 }
 
 relation OldInquiriesSummaryExecutionPeriod {
-	domain.inquiries.OldInquiriesSummary playsRole oldInquiriesSummaries {
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary playsRole oldInquiriesSummaries {
 		multiplicity *;
 	}
-	domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
 }
 
 relation ExecutionCourseExecutionCourseProperty {
-	domain.ExecutionCourse playsRole executionCourse;
-	domain.classProperties.ExecutionCourseProperty playsRole executionCourseProperties {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+	net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty playsRole executionCourseProperties {
 		multiplicity *;
 	}
 }
 
 relation StudentExecutionYear {
-	domain.Student playsRole students {
+	net.sourceforge.fenixedu.domain.Student playsRole students {
 		multiplicity *;
 	}
-	domain.ExecutionYear playsRole registrationYear;
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole registrationYear;
 }
 
 relation MarkAttends {
-	domain.Mark playsRole mark;
-	domain.Attends playsRole attend;
+	net.sourceforge.fenixedu.domain.Mark playsRole mark;
+	net.sourceforge.fenixedu.domain.Attends playsRole attend;
 }
 
 relation ExecutionCourseGroupPropertiesExecutionCourse {
-	domain.ExecutionCourse playsRole executionCourse;
-	domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
 		multiplicity *;
 	}
 }
 
 relation ExamExecutionCourseExecutionCourse {
-	domain.ExamExecutionCourse playsRole examExecutionCourse {
+	net.sourceforge.fenixedu.domain.ExamExecutionCourse playsRole examExecutionCourse {
 		multiplicity *;
 	}
-	domain.ExecutionCourse playsRole executionCourse;
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 }
 
 relation DelegateExecutionYear {
-	domain.student.Delegate playsRole delegates {
+	net.sourceforge.fenixedu.domain.student.Delegate playsRole delegates {
 		multiplicity *;
 	}
-	domain.ExecutionYear playsRole executionYear;
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
 
 relation OldInquiriesTeachersResExecutionPeriod {
-	domain.inquiries.OldInquiriesTeachersRes playsRole oldInquiriesTeachersRes {
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes playsRole oldInquiriesTeachersRes {
 		multiplicity *;
 	}
-	domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
 }
 
 relation ExecutionDegreePeriodLessonsSecondSemester {
-	domain.ExecutionDegree playsRole executionDegree {
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree {
 		multiplicity *;
 	}
-	domain.Period playsRole periodLessonsSecondSemester;
+	net.sourceforge.fenixedu.domain.Period playsRole periodLessonsSecondSemester;
 }
 
 relation SummaryExecutionCourse {
-	domain.Summary playsRole summaries {
+	net.sourceforge.fenixedu.domain.Summary playsRole summaries {
 		multiplicity *;
 	}
-	domain.ExecutionCourse playsRole executionCourse;
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 }
 
 relation ExamCurricularCourseScope {
-	domain.Exam playsRole exams {
+	net.sourceforge.fenixedu.domain.Exam playsRole exams {
 		multiplicity *;
 	}
-	domain.CurricularCourseScope playsRole associatedCurricularCourseScope {
+	net.sourceforge.fenixedu.domain.CurricularCourseScope playsRole associatedCurricularCourseScope {
 		multiplicity *;
 	}
 }
 
 relation EnrolmentExecutionPeriod {
-	domain.Enrolment playsRole enrolments {
+	net.sourceforge.fenixedu.domain.Enrolment playsRole enrolments {
 		multiplicity *;
 	}
-	domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
 }
 
 relation ExamRoomOccupation {
-	domain.Exam playsRole exam;
+	net.sourceforge.fenixedu.domain.Exam playsRole exam;
 	
-	domain.RoomOccupation playsRole associatedRoomOccupation {
+	net.sourceforge.fenixedu.domain.RoomOccupation playsRole associatedRoomOccupation {
 		multiplicity *;
 	}
 }
 
 relation ExecutionCourseStudent {
-	domain.ExecutionCourse playsRole executionCourses {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourses {
 		multiplicity *;
 	}
-	domain.Student playsRole attendingStudents {
+	net.sourceforge.fenixedu.domain.Student playsRole attendingStudents {
 		multiplicity *;
 	}
 }
 
 relation ExecutionDegreeExecutionYear {
-	domain.ExecutionDegree playsRole executionDegrees {
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegrees {
 		multiplicity *;
 	}
-	domain.ExecutionYear playsRole executionYear;
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
 
 relation MarkEvaluation {
-	domain.Mark playsRole marks {
+	net.sourceforge.fenixedu.domain.Mark playsRole marks {
 		multiplicity *;
 	}
-	domain.Evaluation playsRole evaluation;
+	net.sourceforge.fenixedu.domain.Evaluation playsRole evaluation;
 }
