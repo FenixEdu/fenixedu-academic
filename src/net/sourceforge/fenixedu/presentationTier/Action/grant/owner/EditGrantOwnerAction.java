@@ -11,18 +11,18 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.person.Sex;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.EstadoCivil;
-import net.sourceforge.fenixedu.util.Sexo;
 import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 import org.apache.struts.action.ActionForm;
@@ -240,7 +240,7 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
             form.set("fiscalCode", infoPerson.getCodigoFiscal());
         form.set("idType", infoPerson.getTipoDocumentoIdentificacao().getTipo());
         if (infoPerson.getSexo() != null)
-            form.set("sex", infoPerson.getSexo().getSexo());
+            form.set("sex", infoPerson.getSexo().toString());
         if (infoPerson.getEstadoCivil() != null)
             form.set("maritalStatus", infoPerson.getEstadoCivil().getEstadoCivil());
         if (infoPerson.getInfoPais() != null)
@@ -339,8 +339,7 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
             tipoDocumentoIdentificacao.setTipo((Integer) editGrantOwnerForm.get("idType"));
             infoPerson.setTipoDocumentoIdentificacao(tipoDocumentoIdentificacao);
         }
-        Sexo sexo = new Sexo();
-        sexo.setSexo((Integer) editGrantOwnerForm.get("sex"));
+        Sex sexo = Sex.valueOf((String) editGrantOwnerForm.get("sex"));
         infoPerson.setSexo(sexo);
 
         EstadoCivil estadoCivil = new EstadoCivil();

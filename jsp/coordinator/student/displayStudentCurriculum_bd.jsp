@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<%@ page import="net.sourceforge.fenixedu.util.EnrollmentState" %>
+<%@ page import="net.sourceforge.fenixedu.domain.curriculum.EnrollmentState" %>
   <span class="error"><html:errors/></span>
   <bean:define id="curriculum" name="<%= SessionConstants.CURRICULUM %>" scope="request" />
   <bean:size id="enrolmentNumber" name="<%= SessionConstants.CURRICULUM %>" scope="request" />

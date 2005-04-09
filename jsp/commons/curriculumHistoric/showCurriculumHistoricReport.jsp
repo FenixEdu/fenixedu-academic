@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="net.sourceforge.fenixedu.util.EnrollmentState" %>
+<%@ page import="net.sourceforge.fenixedu.domain.curriculum.EnrollmentState" %>
 <%@ page import="net.sourceforge.fenixedu.util.EnrolmentEvaluationState" %>
 <span class="error"><html:errors bundle="CURRICULUM_HISTORIC_RESOURCES"/></span>
 <logic:present name="infoCurriculumHistoricReport">

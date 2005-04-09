@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.domain.IEnrollment;
 import net.sourceforge.fenixedu.domain.IEnrolmentPeriodInCurricularCourses;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
@@ -182,7 +183,7 @@ public class GeraXml extends FenixUtil {
             Integer degreeCurricularPlanID) {
         String curricularCourseName = curricularCourseData[0].toUpperCase();
 
-        EnrollmentState enrollmentState = EnrollmentState.getEnum("msg." + curricularCourseData[1]);
+        EnrollmentState enrollmentState = EnrollmentState.valueOf(curricularCourseData[1]);
         EnrolmentEvaluationType enrolmentEvaluationType = EnrolmentEvaluationType.NORMAL_OBJ;
 
         IEnrollment enrolment = null;
@@ -222,7 +223,7 @@ public class GeraXml extends FenixUtil {
                 enrolment.setCurricularCourse(curricularCourse);
                 enrolment.setStudentCurricularPlan(studentCurricularPlan);
                 enrolment.setExecutionPeriod(executionPeriod);
-                enrolment.setEnrollmentState(EnrollmentState.enrollmentStateEnumerationFromUtil(enrollmentState));
+                enrolment.setEnrollmentState(enrollmentState);
                 enrolment.setEnrolmentEvaluationType(enrolmentEvaluationType);
                 enrolment.setCondition(EnrollmentCondition.FINAL);
             } catch (RuntimeException e1) {

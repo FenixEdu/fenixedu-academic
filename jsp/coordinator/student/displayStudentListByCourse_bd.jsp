@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
  <%@ page import="java.util.List" %>
-<%@ page import="net.sourceforge.fenixedu.util.EnrollmentState" %>
+<%@ page import="net.sourceforge.fenixedu.domain.curriculum.EnrollmentState" %>
 <logic:present name="jspTitle">
 	<h2><bean:write name="jspTitle" /></h2>
 	<br />

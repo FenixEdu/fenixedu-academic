@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.dataTransferObject.sibs;
 import java.sql.Timestamp;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
+import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFileEntry;
-import net.sourceforge.fenixedu.util.gratuity.SibsPaymentStatus;
 import net.sourceforge.fenixedu.util.gratuity.SibsPaymentType;
 
 /**
@@ -91,7 +91,7 @@ public class InfoSibsPaymentFileEntry extends InfoObject {
     public void copyFromDomain(ISibsPaymentFileEntry sibsPaymentFileEntry) {
 
         setPayedValue(sibsPaymentFileEntry.getPayedValue());
-        setPaymentStatus(SibsPaymentStatus.toUtilType(sibsPaymentFileEntry.getPaymentStatus()));
+        setPaymentStatus(sibsPaymentFileEntry.getPaymentStatus());
         setPaymentType(sibsPaymentFileEntry.getPaymentType());
         setStudentNumber(sibsPaymentFileEntry.getStudentNumber());
         setTransactionDate(sibsPaymentFileEntry.getTransactionDate());

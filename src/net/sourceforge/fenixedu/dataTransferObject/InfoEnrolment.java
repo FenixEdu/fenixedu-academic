@@ -6,7 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.IEnrollment;
-import net.sourceforge.fenixedu.util.EnrollmentState;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.util.enrollment.EnrollmentCondition;
 
@@ -222,7 +222,7 @@ public class InfoEnrolment extends InfoObject {
         if (enrollment != null) {
             setCreationDate(enrollment.getCreationDate());
             setEnrolmentEvaluationType(enrollment.getEnrolmentEvaluationType());
-            setEnrollmentState(EnrollmentState.enrollmentStateUtilFromEnumeration(enrollment.getEnrollmentState()));
+            setEnrollmentState(enrollment.getEnrollmentState());
             setAccumulatedWeight(enrollment.getAccumulatedWeight());
             setCondition(enrollment.getCondition());
 

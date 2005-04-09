@@ -5,7 +5,7 @@
 <%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="java.util.List" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<%@ page import="net.sourceforge.fenixedu.util.EnrollmentState" %>
+<%@ page import="net.sourceforge.fenixedu.domain.curriculum.EnrollmentState" %>
 
   <span class="error"><html:errors/></span>
 

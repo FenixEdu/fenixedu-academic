@@ -14,13 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.actions.DispatchAction;
-import org.apache.struts.util.LabelValueBean;
-
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
@@ -28,20 +24,24 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.person.Sex;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.util.EstadoCivil;
 import net.sourceforge.fenixedu.util.RandomStringGenerator;
-import net.sourceforge.fenixedu.util.Sexo;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.actions.DispatchAction;
+import org.apache.struts.util.LabelValueBean;
 
 /**
  * 
@@ -319,7 +319,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
                     .toArrayList());
             request.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY,
                     TipoDocumentoIdentificacao.toArrayList());
-            request.setAttribute(SessionConstants.SEX_LIST_KEY, new Sexo().toArrayList());
+            request.setAttribute(SessionConstants.SEX_LIST_KEY, Sex.values());
             request.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
             request.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
             request.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
@@ -413,7 +413,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
             if ((sex == null) || (sex.length() == 0))
                 infoPerson.setSexo(null);
             else
-                infoPerson.setSexo(new Sexo(sex));
+                infoPerson.setSexo(Sex.valueOf(sex));
 
             String maritalStatus = (String) editCandidateForm.get("maritalStatus");
             if ((maritalStatus == null) || (maritalStatus.length() == 0))

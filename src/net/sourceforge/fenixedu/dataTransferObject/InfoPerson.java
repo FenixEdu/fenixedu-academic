@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.Sex;
 import net.sourceforge.fenixedu.util.EstadoCivil;
-import net.sourceforge.fenixedu.util.Sexo;
 import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 /**
@@ -103,7 +102,7 @@ public class InfoPerson extends InfoObject {
     public InfoPerson(String numeroDocumentoIdentificacao,
             TipoDocumentoIdentificacao tipoDocumentoIdentificacao,
             String localEmissaoDocumentoIdentificacao, Date dataEmissaoDocumentoIdentificacao,
-            Date dataValidadeDocumentoIdentificacao, String nome, Sexo sexo, EstadoCivil estadoCivil,
+            Date dataValidadeDocumentoIdentificacao, String nome, Sex sex, EstadoCivil estadoCivil,
             Date nascimento, String nomePai, String nomeMae, String nacionalidade,
             String freguesiaNaturalidade, String concelhoNaturalidade, String distritoNaturalidade,
             String morada, String localidade, String codigoPostal, String localidadeCodigoPostal,
@@ -117,7 +116,7 @@ public class InfoPerson extends InfoObject {
         setDataEmissaoDocumentoIdentificacao(dataEmissaoDocumentoIdentificacao);
         setDataValidadeDocumentoIdentificacao(dataValidadeDocumentoIdentificacao);
         setNome(nome);
-        setSexo(sexo);
+        setSex(sex);
         setEstadoCivil(estadoCivil);
         setNascimento(nascimento);
         setNomePai(nomePai);
@@ -380,8 +379,8 @@ public class InfoPerson extends InfoObject {
         return profissao;
     }
 
-    public Sexo getSexo() {
-        return sex == Sex.MALE ? Sexo.MASCULINO_OBJ : Sexo.FEMININO_OBJ;
+    public Sex getSexo() {
+        return sex == Sex.MALE ? Sex.MALE : Sex.FEMALE;
     }
 
     /**
@@ -688,12 +687,12 @@ public class InfoPerson extends InfoObject {
      * @param sexo
      *            The sexo to set
      */
-    public void setSexo(Sexo sexo) {
+    public void setSexo(Sex sexo) {
 		if (sexo == null) {
 			this.sex = null;
-		} else if (sexo.equals(Sexo.MASCULINO_OBJ)) {
+		} else if (sexo.equals(Sex.MALE)) {
 			this.sex = Sex.MALE;
-		} else if (sexo.equals(Sexo.FEMININO_OBJ)) {
+		} else if (sexo.equals(Sex.FEMALE)) {
 			this.sex = Sex.FEMALE;
 		}
     }
