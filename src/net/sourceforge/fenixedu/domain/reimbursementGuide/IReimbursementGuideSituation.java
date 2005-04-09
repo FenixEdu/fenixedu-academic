@@ -8,7 +8,7 @@ import java.util.Calendar;
 
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.util.ReimbursementGuideState;
+import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.util.State;
 
 /**

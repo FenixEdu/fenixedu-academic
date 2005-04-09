@@ -7,7 +7,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuide" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuideSituation" %>
-<%@ page import="net.sourceforge.fenixedu.util.ReimbursementGuideState" %>
+<%@ page import="net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 
 <bean:define id="reimbursementGuide" name="<%= SessionConstants.REIMBURSEMENT_GUIDE %>" scope="request"/>

@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.IGuideEntry;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IPersonAccount;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideSituation;
@@ -44,7 +45,6 @@ import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGu
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuideEntry;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
 import net.sourceforge.fenixedu.util.DocumentType;
-import net.sourceforge.fenixedu.util.ReimbursementGuideState;
 import net.sourceforge.fenixedu.util.State;
 import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.util.transactions.TransactionType;
@@ -119,7 +119,7 @@ public class EditReimbursementGuide implements IService {
                 newActiveSituation.setOfficialDate(Calendar.getInstance());
             }
 
-            ReimbursementGuideState newState = ReimbursementGuideState.getEnum(situation);
+            ReimbursementGuideState newState = ReimbursementGuideState.valueOf(situation);
             newActiveSituation.setReimbursementGuideState(newState);
 
             newActiveSituation.setReimbursementGuide(reimbursementGuide);
@@ -236,7 +236,7 @@ public class EditReimbursementGuide implements IService {
     private boolean validateReimbursementGuideSituation(IReimbursementGuideSituation activeSituation,
             String situation) {
 
-        ReimbursementGuideState newState = ReimbursementGuideState.getEnum(situation);
+        ReimbursementGuideState newState = ReimbursementGuideState.valueOf(situation);
         ReimbursementGuideState currentState = activeSituation.getReimbursementGuideState();
 
         if (currentState.equals(newState))

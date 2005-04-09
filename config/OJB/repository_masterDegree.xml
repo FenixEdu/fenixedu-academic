@@ -1206,7 +1206,7 @@
 	 <field-descriptor 
 	     name="reimbursementGuideState"
 	     column="REIMBURSEMENT_GUIDE_STATE"
-         jdbc-type="INTEGER"         		 
+         jdbc-type="VARCHAR"         		 
          conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaReimbursementGuideState2SqlReimbursementGuideStateFieldConversion"
 	 />
       <field-descriptor

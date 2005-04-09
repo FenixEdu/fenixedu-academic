@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.util.ReimbursementGuideState;
+import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
@@ -16,19 +16,17 @@ public class JavaReimbursementGuideState2SqlReimbursementGuideStateFieldConversi
     public Object javaToSql(Object source) {
         if (source instanceof ReimbursementGuideState) {
             ReimbursementGuideState state = (ReimbursementGuideState) source;
-            return new Integer(state.getValue());
+            return state.toString();
         }
         return source;
-
     }
 
     public Object sqlToJava(Object source) {
-        if (source instanceof Integer) {
-            Integer src = (Integer) source;
-            return ReimbursementGuideState.getEnum(src.intValue());
+        if (source instanceof String) {
+            String src = (String) source;
+            return ReimbursementGuideState.valueOf(src);
         }
         return source;
-
     }
 
 }
