@@ -91,7 +91,7 @@ public class InfoSibsPaymentFileEntry extends InfoObject {
     public void copyFromDomain(ISibsPaymentFileEntry sibsPaymentFileEntry) {
 
         setPayedValue(sibsPaymentFileEntry.getPayedValue());
-        setPaymentStatus(sibsPaymentFileEntry.getPaymentStatus());
+        setPaymentStatus(SibsPaymentStatus.toUtilType(sibsPaymentFileEntry.getPaymentStatus()));
         setPaymentType(sibsPaymentFileEntry.getPaymentType());
         setStudentNumber(sibsPaymentFileEntry.getStudentNumber());
         setTransactionDate(sibsPaymentFileEntry.getTransactionDate());

@@ -1747,7 +1747,7 @@
    	<field-descriptor
    		name="paymentStatus"
    		column="PAYMENT_STATUS"
-   		jdbc-type="INTEGER"   		
+   		jdbc-type="VARCHAR"   		
    		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSibsPaymentStatus2SQLSibsPaymentStatusFieldConversion"
    	/>
     <reference-descriptor

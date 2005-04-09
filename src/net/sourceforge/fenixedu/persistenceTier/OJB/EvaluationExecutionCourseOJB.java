@@ -7,7 +7,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExamExecutionCourse;
 import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IEvalutionExecutionCourse;
+import net.sourceforge.fenixedu.domain.IEvaluationExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -18,7 +18,7 @@ import org.apache.ojb.broker.query.Criteria;
 public class EvaluationExecutionCourseOJB extends PersistentObjectOJB implements
         IPersistentEvaluationExecutionCourse {
 
-    public IEvalutionExecutionCourse readBy(IEvaluation evaluation, IExecutionCourse executionCourse)
+    public IEvaluationExecutionCourse readBy(IEvaluation evaluation, IExecutionCourse executionCourse)
             throws ExcepcaoPersistencia {
 
         if (evaluation instanceof IExam) {
@@ -29,7 +29,7 @@ public class EvaluationExecutionCourseOJB extends PersistentObjectOJB implements
                     .getName());
             crit.addEqualTo("executionCourse.executionPeriod.executionYear.year", executionCourse
                     .getExecutionPeriod().getExecutionYear().getYear());
-            return (IEvalutionExecutionCourse) queryObject(ExamExecutionCourse.class, crit);
+            return (IEvaluationExecutionCourse) queryObject(ExamExecutionCourse.class, crit);
 
         }
 
@@ -68,13 +68,13 @@ public class EvaluationExecutionCourseOJB extends PersistentObjectOJB implements
     public void delete(IEvaluation evaluation) throws ExcepcaoPersistencia {
         List evaluationsExecutionCourses = readByEvaluation(evaluation);
         for (int i = 0; i < evaluationsExecutionCourses.size(); i++) {
-            IEvalutionExecutionCourse evalutionExecutionCourse = (IEvalutionExecutionCourse) evaluationsExecutionCourses
+            IEvaluationExecutionCourse evalutionExecutionCourse = (IEvaluationExecutionCourse) evaluationsExecutionCourses
                     .get(i);
             super.delete(evalutionExecutionCourse);
         }
     }
 
-    public void delete(IEvalutionExecutionCourse evalutionExecutionCourse) throws ExcepcaoPersistencia {
+    public void delete(IEvaluationExecutionCourse evalutionExecutionCourse) throws ExcepcaoPersistencia {
         super.delete(evalutionExecutionCourse);
     }
 

@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.domain.gratuity.masterDegree;
 import java.sql.Timestamp;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.util.gratuity.SibsPaymentStatus;
+import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
 import net.sourceforge.fenixedu.util.gratuity.SibsPaymentType;
 
 /**

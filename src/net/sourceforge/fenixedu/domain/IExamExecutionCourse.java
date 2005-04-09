@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.domain;
  * 
  * @author Luis Cruz & Sara Ribeiro
  */
-public interface IExamExecutionCourse extends IEvalutionExecutionCourse {
+public interface IExamExecutionCourse extends IEvaluationExecutionCourse {
 
     public IExam getExam();
 

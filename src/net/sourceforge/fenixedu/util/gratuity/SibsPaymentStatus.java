@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.util.FenixValuedEnum;
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 public final class SibsPaymentStatus extends FenixValuedEnum {
 
@@ -92,4 +92,64 @@ public final class SibsPaymentStatus extends FenixValuedEnum {
         return result;
     }
 
+    public static net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus toEnumType(
+            final SibsPaymentStatus sibsPaymentStatus) {
+        if (sibsPaymentStatus == null) {
+            return null;
+        }
+
+        switch (sibsPaymentStatus.getValue()) {
+        case NOT_PROCESSED_PAYMENT_TYPE:
+            return net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus.NOT_PROCESSED_PAYMENT;
+        case PROCESSED_PAYMENT_TYPE:
+            return net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus.PROCESSED_PAYMENT;
+        case DUPLICATE_GRATUITY_PAYMENT_TYPE:
+            return net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus.DUPLICATE_GRATUITY_PAYMENT;
+        case DUPLICATE_INSURANCE_PAYMENT_TYPE:
+            return net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus.DUPLICATE_INSURANCE_PAYMENT;
+        case INVALID_EXECUTION_YEAR_TYPE:
+            return net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus.INVALID_EXECUTION_YEAR;
+        case INVALID_EXECUTION_DEGREE_TYPE:
+            return net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus.INVALID_EXECUTION_DEGREE;
+        case INVALID_INSURANCE_VALUE_TYPE:
+            return net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus.INVALID_INSURANCE_VALUE;
+        case UNABLE_TO_DETERMINE_STUDENT_CURRICULAR_PLAN_TYPE:
+            return net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus.UNABLE_TO_DETERMINE_STUDENT_CURRICULAR_PLAN;
+        }
+        throw new RuntimeException("Enum and Util types do not match!");
+    }
+
+    public static SibsPaymentStatus toUtilType(
+            final net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus sibsPaymentStatus) {
+        if (sibsPaymentStatus == null) {
+            return null;
+        }
+
+        if (sibsPaymentStatus
+                .equals(net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus.NOT_PROCESSED_PAYMENT))
+            return NOT_PROCESSED_PAYMENT;
+        if (sibsPaymentStatus
+                .equals(net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus.PROCESSED_PAYMENT))
+            return PROCESSED_PAYMENT;
+        if (sibsPaymentStatus
+                .equals(net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus.DUPLICATE_GRATUITY_PAYMENT))
+            return DUPLICATE_GRATUITY_PAYMENT;
+        if (sibsPaymentStatus
+                .equals(net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus.DUPLICATE_INSURANCE_PAYMENT))
+            return DUPLICATE_INSURANCE_PAYMENT;
+        if (sibsPaymentStatus
+                .equals(net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus.INVALID_EXECUTION_YEAR))
+            return INVALID_EXECUTION_YEAR;
+        if (sibsPaymentStatus
+                .equals(net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus.INVALID_EXECUTION_DEGREE))
+            return INVALID_EXECUTION_DEGREE;
+        if (sibsPaymentStatus
+                .equals(net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus.INVALID_INSURANCE_VALUE))
+            return INVALID_INSURANCE_VALUE;
+        if (sibsPaymentStatus
+                .equals(net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus.UNABLE_TO_DETERMINE_STUDENT_CURRICULAR_PLAN))
+            return UNABLE_TO_DETERMINE_STUDENT_CURRICULAR_PLAN;
+
+        throw new RuntimeException("Enum and Util types do not match!");
+    }
 }
