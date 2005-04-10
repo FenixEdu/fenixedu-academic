@@ -4,8 +4,8 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.teacher;
 
+import net.sourceforge.fenixedu.domain.CareerType;
 import net.sourceforge.fenixedu.domain.teacher.ITeachingCareer;
-import net.sourceforge.fenixedu.util.CareerType;
 
 /**
  * @author Leonor Almeida

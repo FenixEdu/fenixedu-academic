@@ -10,10 +10,10 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
+import net.sourceforge.fenixedu.domain.CareerType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.CareerType;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -43,7 +43,7 @@ public class ReadCareersAction extends FenixAction {
         IUserView userView = SessionUtils.getUserView(request);
 
         if ((session != null) && (string != null)) {
-            careerType = CareerType.getEnum(string);
+            careerType = CareerType.valueOf(string);
 
             Object[] args = { careerType, userView.getUtilizador() };
             SiteView siteView = (SiteView) ServiceUtils.executeService(userView, "ReadCareers", args);

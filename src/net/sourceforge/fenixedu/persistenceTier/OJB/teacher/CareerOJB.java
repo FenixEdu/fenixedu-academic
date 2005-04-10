@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.teacher;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.CareerType;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
@@ -13,7 +14,6 @@ import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCareer;
-import net.sourceforge.fenixedu.util.CareerType;
 
 import org.apache.ojb.broker.query.Criteria;
 

@@ -9,7 +9,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.util.CareerType;
+import net.sourceforge.fenixedu.domain.CareerType;
 
 /**
  * @author Leonor Almeida

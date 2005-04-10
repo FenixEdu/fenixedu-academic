@@ -6,10 +6,10 @@ package net.sourceforge.fenixedu.persistenceTier.teacher;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.CareerType;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.util.CareerType;
 
 /**
  * @author Leonor Almeida
