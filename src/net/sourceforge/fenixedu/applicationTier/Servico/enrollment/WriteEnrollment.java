@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
@@ -36,7 +37,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationType;
-import net.sourceforge.fenixedu.util.enrollment.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.util.enrollment.EnrollmentCondition;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -225,19 +225,18 @@ public class WriteEnrollment implements IService {
     }
 
     protected EnrollmentCondition getEnrollmentCondition(CurricularCourseEnrollmentType enrollmentType) {
-        switch (enrollmentType.getValue()) {
-        case 1:
+        switch (enrollmentType) {
+        case TEMPORARY:
             return EnrollmentCondition.getEnum(2);
-        case 2:
+        case DEFINITIVE:
             return EnrollmentCondition.getEnum(1);
-        case 3:
+        case NOT_ALLOWED:
             return EnrollmentCondition.getEnum(3);
-        case 4:
+        case VALIDATED:
             return EnrollmentCondition.getEnum(4);
         default:
             return null;
         }
-
     }
 
 }

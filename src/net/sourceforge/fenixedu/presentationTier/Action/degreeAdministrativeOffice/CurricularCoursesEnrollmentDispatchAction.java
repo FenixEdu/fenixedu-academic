@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.applicationTier.strategy.enrolment.context.InfoS
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoAreas2Choose;
+import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.TransactionalDispatchAction;
@@ -29,7 +30,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason;
-import net.sourceforge.fenixedu.util.enrollment.CurricularCourseEnrollmentType;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -338,14 +338,14 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
             }
         });
         CurricularCourseEnrollmentType enrollmentType = CurricularCourseEnrollmentType
-                .getEnum(new Integer((String) ((List) CollectionUtils.collect(toEnrollString,
+                .valueOf((String) ((List) CollectionUtils.collect(toEnrollString,
                         new Transformer() {
 
                             public Object transform(Object arg0) {
                                 String string = (String) arg0;
                                 return string.split("-")[1];
                             }
-                        })).get(0)).intValue());
+                        })).get(0));
 
         String courseType = (String) enrollmentForm.get("courseType");
         if (toEnroll.size() == 1) {

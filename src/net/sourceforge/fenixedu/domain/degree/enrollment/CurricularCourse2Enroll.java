@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.domain.degree.enrollment;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.util.enrollment.CurricularCourseEnrollmentType;
+import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 
 /**
  * @author João Mota
@@ -91,7 +91,7 @@ public class CurricularCourse2Enroll implements Serializable {
 
     public String toString() {
         return getCurricularCourse().getName() + " - " + getCurricularCourse().getCode() + " - "
-                + getEnrollmentType().getName() + " - " + getAccumulatedWeight().toString();
+                + getEnrollmentType().toString() + " - " + getAccumulatedWeight().toString();
     }
 
     public boolean isOptionalCurricularCourse() {

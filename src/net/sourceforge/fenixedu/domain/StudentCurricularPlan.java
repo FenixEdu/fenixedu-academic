@@ -9,6 +9,7 @@ import java.util.Map;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.cache.EnrollmentInfoCacheOSCacheImpl;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.degree.enrollment.INotNeedToEnrollInCurricularCourse;
@@ -18,7 +19,6 @@ import net.sourceforge.fenixedu.util.AreaType;
 import net.sourceforge.fenixedu.util.BranchType;
 import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
-import net.sourceforge.fenixedu.util.enrollment.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.util.enrollment.EnrollmentCondition;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -88,12 +88,6 @@ public class StudentCurricularPlan extends DomainObject implements
 			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) obj;
 			result = getIdInternal().equals(
 					studentCurricularPlan.getIdInternal());
-
-			// result = getStudent().equals(studentCurricularPlan.getStudent())
-			// &&
-			// getDegreeCurricularPlan().equals(studentCurricularPlan.getDegreeCurricularPlan())
-			// &&
-			// getCurrentState().equals(studentCurricularPlan.getCurrentState());
 		}
 
 		return result;
@@ -550,33 +544,10 @@ public class StudentCurricularPlan extends DomainObject implements
 				return CurricularCourseEnrollmentType.NOT_ALLOWED;
 			}
 		}
-		// List result = (List) CollectionUtils.collect(
-		// enrollmentsWithEnrolledStateInCurrentExecutionPeriod, new
-		// Transformer() {
-		// public Object transform(Object obj) {
-		// IEnrollment enrollment = (IEnrollment) obj;
-		// return enrollment.getCurricularCourse();
-		// }
-		// });
-		// if (result.contains(curricularCourse)) {
-		// return CurricularCourseEnrollmentType.NOT_ALLOWED;
-		// }
 
 		List enrollmentsWithEnrolledStateInPreviousExecutionPeriod = getAllStudentEnrolledEnrollmentsInExecutionPeriod(currentExecutionPeriod
 				.getPreviousExecutionPeriod());
 
-		// List result = (List)
-		// CollectionUtils.collect(enrollmentsWithEnrolledStateInPreviousExecutionPeriod,
-		// new Transformer() {
-		// public Object transform(Object obj) {
-		// IEnrollment enrollment = (IEnrollment) obj;
-		// return enrollment.getCurricularCourse();
-		// }
-		// });
-		//
-		// if (result.contains(curricularCourse)) {
-		// return CurricularCourseEnrollmentType.TEMPORARY;
-		// }
 		for (int i = 0; i < enrollmentsWithEnrolledStateInPreviousExecutionPeriod
 				.size(); i++) {
 			IEnrollment enrollment = (IEnrollment) enrollmentsWithEnrolledStateInPreviousExecutionPeriod
@@ -819,11 +790,6 @@ public class StudentCurricularPlan extends DomainObject implements
 		final EnrollmentInfoCacheOSCacheImpl cache = EnrollmentInfoCacheOSCacheImpl
 				.getInstance();
 
-		// final StringBuffer stringBuffer = new StringBuffer(24);
-		// stringBuffer.append(degreeCurricularPlan.getIdInternal());
-		// stringBuffer.append(":");
-		// stringBuffer.append(curricularCourse.getIdInternal());
-
 		final StringBuffer stringBuffer = new StringBuffer(96);
 		stringBuffer.append(degreeCurricularPlan.getIdInternal());
 		stringBuffer.append(":");
@@ -850,27 +816,6 @@ public class StudentCurricularPlan extends DomainObject implements
 			cache.cache(cacheKey, resultCurricularCourses);
 		}
 		return resultCurricularCourses;
-
-		// final List result = (List)
-		// CollectionUtils.select(curricularCourseEquivalences, new
-		// Predicate() {
-		// public boolean evaluate(Object obj) {
-		// final ICurricularCourseEquivalence curricularCourseEquivalence =
-		// (ICurricularCourseEquivalence) obj;
-		// return
-		// /*curricularCourseEquivalence.getOldCurricularCourse().equals(curricularCourse)
-		// ||*/ areTheseCurricularCoursesTheSame(curricularCourseEquivalence
-		// .getOldCurricularCourse(), curricularCourse);
-		// }
-		// });
-		//
-		// return (List) CollectionUtils.collect(result, new Transformer() {
-		// public Object transform(Object obj) {
-		// final ICurricularCourseEquivalence curricularCourseEquivalence =
-		// (ICurricularCourseEquivalence) obj;
-		// return curricularCourseEquivalence.getEquivalentCurricularCourse();
-		// }
-		// });
 	}
 
 	protected boolean areTheseCurricularCoursesTheSame(
@@ -992,8 +937,6 @@ public class StudentCurricularPlan extends DomainObject implements
 		}
 
 		curricularCourses.addAll(degreeCurricularPlan.getTFCs());
-
-		// curricularCourses.addAll(degreeCurricularPlan.getSpecialListOfCurricularCourses());
 
 		List allCurricularCourses = new ArrayList(curricularCourses.size());
 		allCurricularCourses.addAll(curricularCourses);

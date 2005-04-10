@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.precedences;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IEnrollment;
-import net.sourceforge.fenixedu.util.enrollment.CurricularCourseEnrollmentType;
+import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;

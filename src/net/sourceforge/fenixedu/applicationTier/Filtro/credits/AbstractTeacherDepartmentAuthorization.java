@@ -50,7 +50,7 @@ public abstract class AbstractTeacherDepartmentAuthorization extends Filtro {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
 
-        Integer teacherId = getTeacherId(serviceRequest.getArguments(), sp);
+        Integer teacherId = getTeacherId(serviceRequest.getServiceParameters().parametersArray(), sp);
         if (teacherId != null) {
 
             IPessoaPersistente personDAO = sp.getIPessoaPersistente();

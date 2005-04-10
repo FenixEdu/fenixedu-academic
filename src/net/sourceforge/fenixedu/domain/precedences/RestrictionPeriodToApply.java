@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.precedences;
 
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.util.PeriodToApplyRestriction;
-import net.sourceforge.fenixedu.util.enrollment.CurricularCourseEnrollmentType;
 
 /**
  * @author David Santos in Jun 9, 2004
