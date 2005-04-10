@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.util.CreditLineType;
 
 /**
  * @author Fernanda Quitério 28/Nov/2003
