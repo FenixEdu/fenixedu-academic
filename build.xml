@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project basedir="." default="compile" name="Fenix Build File">
 
-	<target name="generate"
-	    		description="Generate java code from a DML file">
-			<ant antfile="build_compile.xml" target="generate"/>
-    </target>
-	
     <target name="clean-all"
     		description="Removes any generated files">
 		<ant antfile="build_compile.xml" target="clean-all"/>
@@ -14,6 +9,11 @@
     <target name="prepare"
     		description="Copy configuration files to compile dir">
 		<ant antfile="build_compile.xml" target="prepare"/>
+    </target>
+
+	<target name="precompile"
+	    		description="Generate java code from a DML file">
+			<ant antfile="build_compile.xml" target="generate"/>
     </target>
 
     <target name="install"
