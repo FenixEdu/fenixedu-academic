@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.publication;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -127,57 +128,141 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
         InfoPublicationType type = InfoPublicationType.newInfoFromDomain(
         		(IPublicationType)ServiceUtils.executeService(userView,"ReadPublicationType",
         				new Object[]{ keyPublicationType }));
+        HashMap attributes = (HashMap) ServiceUtils.executeService(userView,
+                "ReadAttributesByPublicationType", new Object[] { keyPublicationType });
+
+        resetPublication(publication);
         publication.setInfoPublicationType(type);
-        publication.setKeyPublicationType(keyPublicationType);
         publication.setPublicationType(type.getPublicationType());
-        publication.setSubType((String)dynaForm.get("subtype"));
-        publication.setJournalName((String)dynaForm.get("journalName"));
-		publication.setVolume((String)dynaForm.get("volume"));
-        publication.setFirstPage((Integer)dynaForm.get("firstPage"));
-        publication.setLastPage((Integer)dynaForm.get("lastPage"));
-        publication.setLanguage((String)dynaForm.get("language"));
-        publication.setFormat((String)dynaForm.get("format"));
-        publication.setObservation((String)dynaForm.get("observation"));
-        publication.setNumber((Integer)dynaForm.get("number"));
-        publication.setMonth((String)dynaForm.get("month"));
-        publication.setYear((String)dynaForm.get("year"));
-        publication.setMonth_end((String)dynaForm.get("month_end"));
-        publication.setYear_end((String)dynaForm.get("year_end"));
-        publication.setEditor((String)dynaForm.get("editor"));
-        publication.setCountry((String)dynaForm.get("country"));
-        publication.setIssn((Integer)dynaForm.get("issn"));
-        publication.setScope((String)dynaForm.get("scope"));
-        publication.setUrl((String)dynaForm.get("url"));
-        publication.setEditorCity((String)dynaForm.get("editorCity"));
-        publication.setNumberPages((Integer)dynaForm.get("numberPages"));
-        String edition = (String)dynaForm.get("edition"); Integer ed;
-        if (edition.equals("")) ed = new Integer(0);
-        else ed = Integer.valueOf(edition);
-        publication.setEdition(ed);
-        String fascicle = (String)dynaForm.get("fascicle"); Integer fas;
-        if (fascicle.equals("")) fas = new Integer(0);
-        else fas = Integer.valueOf(fascicle);
-        publication.setFascicle(fas);
-        String serie = (String)dynaForm.get("serie"); Integer ser;
-        if (serie.equals("")) ser = new Integer(0);
-        else ser = Integer.valueOf(serie);
-        publication.setSerie(ser);
-        publication.setIsbn((Integer)dynaForm.get("isbn"));
-        publication.setLocal((String)dynaForm.get("local"));
-        publication.setConference((String)dynaForm.get("conference"));
-        publication.setInstituition((String)dynaForm.get("instituition"));
-        publication.setOriginalLanguage((String)dynaForm.get("originalLanguage"));
-        publication.setTranslatedAuthor((String)dynaForm.get("translatedAuthor"));
-        publication.setCriticizedAuthor((String)dynaForm.get("criticizedAuthor"));
-        publication.setUniversity((String)dynaForm.get("university"));
-        publication.setIdInternal((Integer)dynaForm.get("idInternal"));
-        publication.setDidatic((Integer)dynaForm.get("isDidatic"));
+        publication.setKeyPublicationType(keyPublicationType);
+        if (attributes.get("subtype") != null)
+            publication.setSubType((String) dynaForm.get("subtype"));
+        if (attributes.get("journalName") != null)
+            publication.setJournalName((String) dynaForm.get("journalName"));
+        if (attributes.get("volume") != null)
+            publication.setVolume((String) dynaForm.get("volume"));
+        if (attributes.get("firstpage") != null)
+            publication.setFirstPage((Integer) dynaForm.get("firstpage"));
+        if (attributes.get("lastPage") != null)
+            publication.setLastPage((Integer) dynaForm.get("lastPage"));
+        if (attributes.get("language") != null)
+            publication.setLanguage((String) dynaForm.get("language"));
+        if (attributes.get("format") != null)
+            publication.setFormat((String) dynaForm.get("format"));
+        if (attributes.get("observation") != null)
+            publication.setObservation((String) dynaForm.get("observation"));
+        if (attributes.get("number") != null)
+            publication.setNumber((Integer) dynaForm.get("number"));
+        if (attributes.get("month") != null)
+            publication.setMonth((String) dynaForm.get("month"));
+        if (attributes.get("year") != null)
+            publication.setYear((String) dynaForm.get("year"));
+        if (attributes.get("month_end") != null)
+            publication.setMonth_end((String) dynaForm.get("month_end"));
+        if (attributes.get("year_end") != null)
+            publication.setYear_end((String) dynaForm.get("year_end"));
+        if (attributes.get("editor") != null)
+            publication.setEditor((String) dynaForm.get("editor"));
+        if (attributes.get("country") != null)
+            publication.setCountry((String) dynaForm.get("country"));
+        if (attributes.get("issn") != null)
+            publication.setIssn((Integer) dynaForm.get("issn"));
+        if (attributes.get("scope") != null)
+            publication.setScope((String) dynaForm.get("scope"));
+        if (attributes.get("url") != null)
+            publication.setUrl((String) dynaForm.get("url"));
+        if (attributes.get("editorCity") != null)
+            publication.setEditorCity((String) dynaForm.get("editorCity"));
+        if (attributes.get("numberPages") != null)
+            publication.setNumberPages((Integer) dynaForm.get("numberPages"));
+        if (attributes.get("edition") != null) {
+            String edition = (String) dynaForm.get("edition");
+            Integer ed;
+            if (edition.equals(""))
+                ed = new Integer(0);
+            else
+                ed = Integer.valueOf(edition);
+            publication.setEdition(ed);
+        }
+        if (attributes.get("fascicle") != null) {
+            String fascicle = (String) dynaForm.get("fascicle");
+            Integer fas;
+            if (fascicle.equals(""))
+                fas = new Integer(0);
+            else
+                fas = Integer.valueOf(fascicle);
+            publication.setFascicle(fas);
+        }
+        if (attributes.get("serie") != null) {
+            String serie = (String) dynaForm.get("serie");
+            Integer ser;
+            if (serie.equals(""))
+                ser = new Integer(0);
+            else
+                ser = Integer.valueOf(serie);
+            publication.setSerie(ser);
+        }
+        if (attributes.get("isbn") != null)
+            publication.setIsbn((Integer) dynaForm.get("isbn"));
+        if (attributes.get("local") != null)
+            publication.setLocal((String) dynaForm.get("local"));
+        if (attributes.get("conference") != null)
+            publication.setConference((String) dynaForm.get("conference"));
+        if (attributes.get("instituition") != null)
+            publication.setInstituition((String) dynaForm.get("instituition"));
+        if (attributes.get("originalLanguage") != null)
+            publication.setOriginalLanguage((String) dynaForm.get("originalLanguage"));
+        if (attributes.get("translatedAuthor") != null)
+            publication.setTranslatedAuthor((String) dynaForm.get("translatedAuthor"));
+        if (attributes.get("criticizedAuthor") != null)
+            publication.setCriticizedAuthor((String) dynaForm.get("criticizedAuthor"));
+        // publication.setPublicationType((String)dynaForm.get("publicationType"));
+        if (attributes.get("university") != null)
+            publication.setUniversity((String) dynaForm.get("university"));
+        
+        publication.setIdInternal((Integer) dynaForm.get("idInternal"));
+        publication.setDidatic((Integer) dynaForm.get("isDidatic"));
         
         Object[] argEditarPublication = { publication };
         ServiceUtils.executeService(userView, "EditarPublication", argEditarPublication);
 		
 		return mapping.findForward("done");
 	}
+    
+    private void resetPublication(InfoPublication publication) {
+        publication.setSubType(null);
+        publication.setJournalName(null);
+        publication.setVolume(null);
+        publication.setFirstPage(null);
+        publication.setLastPage(null);
+        publication.setLanguage(null);
+        publication.setFormat(null);
+        publication.setObservation(null);
+        publication.setNumber(null);
+        publication.setMonth(null);
+        publication.setYear(null);
+        publication.setMonth_end(null);
+        publication.setYear_end(null);
+        publication.setEditor(null);
+        publication.setCountry(null);
+        publication.setIssn(null);
+        publication.setScope(null);
+        publication.setUrl(null);
+        publication.setEditorCity(null);
+        publication.setNumberPages(null);
+        publication.setEdition(null);
+        publication.setFascicle(null);
+        publication.setSerie(null);
+        publication.setIsbn(null);
+        publication.setLocal(null);
+        publication.setConference(null);
+        publication.setInstituition(null);
+        publication.setOriginalLanguage(null);
+        publication.setTranslatedAuthor(null);
+        publication.setCriticizedAuthor(null);
+        publication.setUniversity(null);
+        publication.setDidatic(null);
+    }
 	
 	private void loadData(ActionForm form, HttpServletRequest request) throws FenixFilterException, FenixServiceException {
 		String id = request.getParameter("idInternal");
