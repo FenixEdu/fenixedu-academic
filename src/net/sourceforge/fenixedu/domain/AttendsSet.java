@@ -12,71 +12,15 @@ import java.util.List;
  * @author joaosa-rmalo
  */
 
-public class AttendsSet extends DomainObject implements IAttendsSet{
-	private String name;
-	private List attendInAttendsSet;
-	private List studentGroups;
-	private Integer keyGroupProperties;
-	private IGroupProperties groupProperties;
+public class AttendsSet extends AttendsSet_Base {
+
 	
 	public AttendsSet () {}
 	
 	
 	public AttendsSet (String name) {
-		this.name=name;
+		super.setName(name);
 	}
-	
-	
-	public String getName() {
-		return name;
-	}
-	
-	
-	public void setName(String name) {
-		this.name=name;
-	}
-	
-	
-	public List getAttendInAttendsSet () {
-		return attendInAttendsSet;
-	}
-	
-	
-	public void setAttendInAttendsSet (List attendInAttendsSet) {
-		this.attendInAttendsSet=attendInAttendsSet;
-	}
-	
-	
-	
-	public List getStudentGroups () {
-		return studentGroups;
-	}
-	
-	
-	public void setStudentGroups (List studentGroups) {
-		this.studentGroups=studentGroups;
-	}
-	
-	
-	public Integer getKeyGroupProperties () {
-		return keyGroupProperties;
-	}
-	
-	
-	public void setKeyGroupProperties (Integer keyGroupProperties) {
-		this.keyGroupProperties = keyGroupProperties;
-	}
-	
-	
-	public IGroupProperties getGroupProperties () {
-		return groupProperties;
-	}
-	
-	
-	public void setGroupProperties (IGroupProperties groupProperties) {
-		this.groupProperties = groupProperties;
-	}
-	
 	
 	
 	public String toString() {
@@ -89,40 +33,40 @@ public class AttendsSet extends DomainObject implements IAttendsSet{
 	
 	public void addAttendInAttendsSet (IAttendInAttendsSet attendInAttendsSet) {
 		if( attendInAttendsSet==null){
-			this.attendInAttendsSet=new ArrayList();
-			this.attendInAttendsSet.add(attendInAttendsSet);
+			super.setAttendInAttendsSet(new ArrayList());
+			super.getAttendInAttendsSet().add(attendInAttendsSet);
 		}
 		else{
-			this.attendInAttendsSet.add(attendInAttendsSet);	
+			super.getAttendInAttendsSet().add(attendInAttendsSet);	
 		}
 	}
 	
 	
 	public void removeAttendInAttendsSet (IAttendInAttendsSet attendInAttendsSet) {
-		this.attendInAttendsSet.remove(attendInAttendsSet);
+		super.getAttendInAttendsSet().remove(attendInAttendsSet);
 	}
 	
 		
 	public boolean existsAttendInAttendsSet (IAttendInAttendsSet attendInAttendsSet) {
-		return this.attendInAttendsSet.contains(attendInAttendsSet);
+		return super.getAttendInAttendsSet().contains(attendInAttendsSet);
 	}
 
 	public void addStudentGroup (IStudentGroup studentGroup) {
-		studentGroups.add(studentGroup);
+		super.getStudentGroups().add(studentGroup);
 	}
 	
 	
 	public void removeStudentGroup (IStudentGroup studentGroup) {
-		studentGroups.remove(studentGroup);
+	    super.getStudentGroups().remove(studentGroup);
 	}
 	
 		
 	public boolean existsStudentGroup (IStudentGroup studentGroup) {
-		return studentGroups.contains(studentGroup);
+		return super.getStudentGroups().contains(studentGroup);
 	}
 	
 	public IStudentGroup getStudentGroup(Integer groupNumber){
-		Iterator iter=studentGroups.iterator();
+		Iterator iter=super.getStudentGroups().iterator();
 		while(iter.hasNext()){
 			IStudentGroup sg=(IStudentGroup)iter.next();
 			if(sg.getGroupNumber()==groupNumber)
@@ -146,8 +90,6 @@ public class AttendsSet extends DomainObject implements IAttendsSet{
 	}
 	
 	
-	
-	
 	public IAttends getStudentAttend(IStudent student){
 		IAttends attend=null;
 		boolean found = false;
@@ -165,7 +107,7 @@ public class AttendsSet extends DomainObject implements IAttendsSet{
 	
 	public List getStudentGroupsWithoutShift(){
 		List result = new ArrayList();
-		Iterator iter=studentGroups.iterator();
+		Iterator iter=super.getStudentGroups().iterator();
 		while(iter.hasNext()){
 			IStudentGroup sg=(IStudentGroup)iter.next();
 			if(sg.getShift()==null){
@@ -177,7 +119,7 @@ public class AttendsSet extends DomainObject implements IAttendsSet{
 	
 	public List getStudentGroupsWithShift(){
 		List result = new ArrayList();
-		Iterator iter=studentGroups.iterator();
+		Iterator iter=super.getStudentGroups().iterator();
 		while(iter.hasNext()){
 			IStudentGroup sg=(IStudentGroup)iter.next();
 			if(sg.getShift()!=null){
@@ -188,7 +130,7 @@ public class AttendsSet extends DomainObject implements IAttendsSet{
 	}
 	
 	public Integer getNumberOfStudentsInAttendsSet(){
-	    return new Integer(attendInAttendsSet.size());
+	    return new Integer(getAttendInAttendsSet().size());
 	}
 	
 	public Integer getNumberOfStudentsNotInAttendsSet(){
@@ -196,8 +138,8 @@ public class AttendsSet extends DomainObject implements IAttendsSet{
 	    List frequentasPossiveis = new ArrayList();
         List frequentasAttendsSet = new ArrayList();
         List frequentasStudentNumbersInsert = new ArrayList();
-        frequentasAttendsSet.addAll(attendInAttendsSet); 
-	    List allGroupPropertiesExecutionCourse = groupProperties.getGroupPropertiesExecutionCourse();            
+        frequentasAttendsSet.addAll(getAttendInAttendsSet()); 
+	    List allGroupPropertiesExecutionCourse = super.getGroupProperties().getGroupPropertiesExecutionCourse();            
         
 	    // Create List with all attends related with possible ExecutionCourses 
 	    

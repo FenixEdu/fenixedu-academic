@@ -8,13 +8,7 @@ package net.sourceforge.fenixedu.domain;
  * @author joaosa & rmalo
  */
  
-public class AttendInAttendsSet extends DomainObject implements IAttendInAttendsSet {
-		
-	
-	private Integer keyAttend;
-	private Integer keyAttendsSet;
-	private IAttends attend;
-	private IAttendsSet attendsSet; 
+public class AttendInAttendsSet extends AttendInAttendsSet_Base {
 
 	
 	/** 
@@ -33,8 +27,8 @@ public class AttendInAttendsSet extends DomainObject implements IAttendInAttends
 	 * Construtor
 	 */
 	public AttendInAttendsSet(IAttends attend,IAttendsSet attendsSet) {
-			this.attend = attend;
-			this.attendsSet = attendsSet;
+			super.setAttend(attend);
+			super.setAttendsSet(attendsSet);
 	}
 	
 	
@@ -61,64 +55,4 @@ public class AttendInAttendsSet extends DomainObject implements IAttendInAttends
 		return result;
 	}
 		
-	
-	/**
-	 * @return Integer
-	 */
-	public Integer getKeyAttend() {
-		return keyAttend;
-	}
-	
-	/**
-	 * @return Attends
-	 */
-	public IAttends getAttend() {
-		return attend;
-	}
-	
-	/**
-	 * @return Integer
-	 */
-	public Integer getKeyAttendsSet() {
-		return keyAttendsSet;
-	}
-	
-	/**
-	 * @return AttendsSet
-	 */
-	public IAttendsSet getAttendsSet() {
-		return attendsSet;
-	}
-	
-	/**
-	* Sets the keyAttend.
-	* @param keyAttend
-	*/
-	public void setKeyAttend(Integer keyAttend) {
-		this.keyAttend=keyAttend;
-	}
-		
-	/**
-	* Sets the attend.
-	* @param attend The attend to set
-	*/
-	public void setAttend(IAttends attend) {
-		this.attend=attend;
-	}		
-	
-	/**
-	* Sets the keyAttendsSet.
-	* @param keyAttendsSet
-	*/
-	public void setKeyAttendsSet(Integer keyAttendsSet) {
-		this.keyAttendsSet=keyAttendsSet;
-	}
-	
-	/**
-	* Sets the attendsSet.
-	* @param attendsSet The attendsSet to set
-	*/
-	public void setAttendsSet(IAttendsSet attendsSet) {
-		this.attendsSet=attendsSet;
-	}		
 }

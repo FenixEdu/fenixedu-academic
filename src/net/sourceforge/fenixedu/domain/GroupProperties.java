@@ -1,5 +1,5 @@
 /*
- * Created on 6/Mai/2003
+ * Created on 08/Mar/2005
  *
  */
 package net.sourceforge.fenixedu.domain;
@@ -12,27 +12,13 @@ import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
 import net.sourceforge.fenixedu.util.TipoAula;
 
 /**
- * @author asnr and scpo
+ * @author joaosa & rmalo
  *
  */
-public class GroupProperties extends DomainObject implements IGroupProperties{
+public class GroupProperties extends GroupProperties_Base {
 	
 	
-    private Integer maximumCapacity;
-
-    private Integer minimumCapacity;
-
-    private Integer idealCapacity;
-
     private EnrolmentGroupPolicyType enrolmentPolicy;
-
-    private Integer groupMaximumNumber;
-
-    private String name;
-    
-	private Integer keyAttendsSet;
-	
-	private IAttendsSet attendsSet;
 	
     private TipoAula shiftType;
 
@@ -40,9 +26,6 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 
     private Calendar enrolmentEndDay;
 
-    private String projectDescription;
-    
-	private List groupPropertiesExecutionCourse = null;
 	
     /**
      * Construtor
@@ -61,8 +44,8 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	 * Construtor
 	 */
 	public GroupProperties(IAttendsSet attendsSet,String name) {
-			this.attendsSet=attendsSet;
-			this.name = name;
+			super.setAttendsSet(attendsSet);
+			super.setName(name);
 	}
 	
 	/** 
@@ -72,17 +55,17 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 							Integer idealCapacity,EnrolmentGroupPolicyType enrolmentPolicy,
 	 						Integer groupMaximumNumber,String name,IAttendsSet attendsSet,
 							TipoAula shiftType, Calendar enrolmentBeginDay,Calendar enrolmentEndDay,String projectDescription) {
-		this.maximumCapacity=maximumCapacity;
-		this.minimumCapacity=minimumCapacity;
-		this.idealCapacity=idealCapacity;
-		this.enrolmentPolicy= enrolmentPolicy;
-		this.groupMaximumNumber=groupMaximumNumber;
-		this.name = name;
-		this.attendsSet=attendsSet;
-		this.shiftType = shiftType;
-		this.enrolmentBeginDay = enrolmentBeginDay;
-		this.enrolmentEndDay = enrolmentEndDay;
-		this.projectDescription = projectDescription;
+	    super.setMaximumCapacity(maximumCapacity);
+	    super.setMinimumCapacity(minimumCapacity);
+	    super.setIdealCapacity(idealCapacity);
+	    setEnrolmentPolicy(enrolmentPolicy);
+	    super.setGroupMaximumNumber(groupMaximumNumber);
+	    super.setName(name);
+	    super.setAttendsSet(attendsSet);
+	    setShiftType(shiftType);
+	    setEnrolmentBeginDay(enrolmentBeginDay);
+	    setEnrolmentEndDay(enrolmentEndDay);
+	    super.setProjectDescription(projectDescription);
 		
 		}
 	
@@ -118,35 +101,6 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 		return result;
 	}
 		
-	
-	/**
-	 * @return Integer
-	 */
-	public Integer getKeyAttendsSet() {
-		return keyAttendsSet;
-	}
-	
-	/**
-	 * @return Integer
-	 */
-	public Integer getMaximumCapacity() {
-		return maximumCapacity;
-	}
-
-	/**
-	 * @return Integer
-	 */
-	public Integer getMinimumCapacity() {
-		return minimumCapacity;
-	}
-	
-	/**
-	 * @return Integer
-	 */
-	public Integer getIdealCapacity() {
-		return idealCapacity;
-	}
-	
 	/**
 	* @return EnrolmentPolicy
 	*/
@@ -154,33 +108,6 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 		return enrolmentPolicy;
 	}
 			
-	/**
-	 * @return Integer
-	 */
-	public Integer getGroupMaximumNumber() {
-		return groupMaximumNumber;
-	}
-
-	/**
-	* @return String
-	*/
-	public String getName() {
-		return name;
-	}
-
-	/**
-	* @return String
-	*/
-	public String getProjectDescription() {
-		return projectDescription;
-	}
-
-	/**
-	 * @return ConjuntoDisciplinasAlunos
-	 */
-	public IAttendsSet getAttendsSet() {
-		return attendsSet;
-	}
 	
 	/**
 	* @return Tipo Lesson
@@ -203,10 +130,6 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 		return enrolmentEndDay;
 	}
 	
-	public List getGroupPropertiesExecutionCourse(){
-		return groupPropertiesExecutionCourse;
-	}
-
 	/**
 	* @return List
 	**/
@@ -225,78 +148,14 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 		return executionCourses;
 	}
 	
-	
-	
-
-	/**
-	* Sets the keyAttendsSet.
-	* @param keyAttendsSet
-	*/
-	public void setKeyAttendsSet(Integer keyAttendsSet) {
-		this.keyAttendsSet=keyAttendsSet;
-	}
-	
-	/**
-	* Sets the maximumCapacity.
-	* @param maximumCapacity The maximumCapacity to set
-	*/
-	public void setMaximumCapacity(Integer maximumCapacity) {
-		this.maximumCapacity=maximumCapacity;
-	}
-
-	/**
-	* Sets the minimumCapacity.
-	* @param minimumCapacity The minimumCapacity to set
-	*/
-	public void setMinimumCapacity(Integer minimumCapacity) {
-		this.minimumCapacity=minimumCapacity;
-	}
-	
-	/**
-	* Sets the idealCapacity.
-	* @param idealCapacity The idealCapacity to set
-	*/
-	public void setIdealCapacity(Integer idealCapacity) {
-		this.idealCapacity=idealCapacity;
-	}
-	
+		
 	/**
 	* Sets the enrolmentPolicy.
 	* @param enrolmentPolicy The enrolmentPolicy to set
 	*/
 	public void setEnrolmentPolicy(EnrolmentGroupPolicyType enrolmentPolicy) {
 		this.enrolmentPolicy=enrolmentPolicy;
-	}		
-	/**
-	* Sets the groupMaximumNumber.
-	* @param groupMaximumNumber The groupMaximumNumber to set
-	*/
-	public void setGroupMaximumNumber(Integer groupMaximumNumber) {
-		this.groupMaximumNumber=groupMaximumNumber;
-	}	
-	/**
-	* Sets the name.
-	* @param name The name to set
-	*/
-	public void setName(String name) {
-		this.name=name;
 	}
-	
-	/**
-	* Sets the projectDescription.
-	* @param projectDescription The projectDescription to set
-	*/
-	public void setProjectDescription(String projectDescription) {
-		this.projectDescription=projectDescription;
-	}
-	
-	/**
-	* Sets the attendsSet.
-	* @param attendsSet The attendsSet to set
-	*/
-	public void setAttendsSet(IAttendsSet attendsSet) {
-		this.attendsSet=attendsSet;
-	}	
 
 	/**
 	* Sets the shiftType.
@@ -323,26 +182,21 @@ public class GroupProperties extends DomainObject implements IGroupProperties{
 	}
 
 	
-	public void setGroupPropertiesExecutionCourse(List groupPropertiesExecutionCourse){
-		this.groupPropertiesExecutionCourse=groupPropertiesExecutionCourse;
-	}
-
-	
 	public void addGroupPropertiesExecutionCourse(IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse){
 		
-		if(this.groupPropertiesExecutionCourse==null){
-			this.groupPropertiesExecutionCourse=new ArrayList();
-			this.groupPropertiesExecutionCourse.add(groupPropertiesExecutionCourse);
+		if(super.getGroupPropertiesExecutionCourse()==null){
+			super.setGroupPropertiesExecutionCourse(new ArrayList());
+			super.getGroupPropertiesExecutionCourse().add(groupPropertiesExecutionCourse);
 		}
 		else{
-			this.groupPropertiesExecutionCourse.add(groupPropertiesExecutionCourse);		
+			super.getGroupPropertiesExecutionCourse().add(groupPropertiesExecutionCourse);		
 		}
 		
 	}
 	
 	
 	public void removeGroupPropertiesExecutionCourse(IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse){
-		this.groupPropertiesExecutionCourse.remove(groupPropertiesExecutionCourse);
+		super.getGroupPropertiesExecutionCourse().remove(groupPropertiesExecutionCourse);
 	}
 
 }

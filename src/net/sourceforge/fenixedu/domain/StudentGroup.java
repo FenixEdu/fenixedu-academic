@@ -7,18 +7,8 @@ package net.sourceforge.fenixedu.domain;
 /**
  * @author asnr and scpo
  */
-public class StudentGroup extends DomainObject implements IStudentGroup {
+public class StudentGroup extends StudentGroup_Base {
 
-    private Integer groupNumber;
-
-    private Integer keyShift;
-
-    private Integer keyAttendsSet;
-
-    private IAttendsSet attendsSet;
-
-    private IShift shift;
-	
     /** 
      * Construtor
      */
@@ -37,8 +27,8 @@ public class StudentGroup extends DomainObject implements IStudentGroup {
 	 */
 	public StudentGroup(Integer groupNumber,IAttendsSet attendsSet) {
 			
-		this.groupNumber = groupNumber;
-		this.attendsSet = attendsSet;
+		super.setGroupNumber(groupNumber);
+		super.setAttendsSet(attendsSet);
 	}
 	
 	/** 
@@ -46,9 +36,9 @@ public class StudentGroup extends DomainObject implements IStudentGroup {
 	 */
 	public StudentGroup(Integer groupNumber,IAttendsSet attendsSet,IShift shift) {
 			
-		this.groupNumber = groupNumber;
-		this.attendsSet = attendsSet;
-		this.shift = shift;
+		super.setGroupNumber(groupNumber);
+		super.setAttendsSet(attendsSet);
+		super.setShift(shift);
 	}
 	
 	/**
@@ -76,82 +66,5 @@ public class StudentGroup extends DomainObject implements IStudentGroup {
 		return result;
 	}
 
-    /**
-     * @return Integer
-     */
-    public Integer getKeyShift() {
-        return keyShift;
-    }
-    
-	/**
-	 * @return Integer
-	 */
-	public Integer getkeyAttendsSet() {
-		return keyAttendsSet;
-	}
-
-    /**
-     * @return Integer
-     */
-    public Integer getGroupNumber() {
-        return groupNumber;
-    }
-
-	/**
-	 * @return GroupProperties
-	 */
-	public IAttendsSet getAttendsSet() {
-		return attendsSet;
-	}
-
-	/**
-	 * @return Shift
-	 */
-	public IShift getShift() {
-		return shift;
-	}
-
-	
-	/**
-	* Sets the keyShift.
-	* @param keyShift The keyShift to set
-	*/
-	public void setKeyShift(Integer keyShift) {
-		this.keyShift = keyShift;
-	}
-	
-	/**
-	* Sets the groupProperties.
-	* @param groupProperties The groupProperties to set
-	*/
-	
-	public void setKeyAttendsSet(Integer keyAttendsSet) {
-		this.keyAttendsSet = keyAttendsSet;
-	}
-	
-		
-	/**
-	 * Sets the groupNumber.
-	 * @param groupNumber The groupNumber to set
-	 */
-	public void setGroupNumber(Integer groupNumber) {
-		this.groupNumber = groupNumber;
-	}
-
-	/**
-	 * Sets the groupProperties.
-	 * @param groupProperties The groupProperties to set
-	 */
-	public void setAttendsSet(IAttendsSet attendsSet) {
-		this.attendsSet = attendsSet;
-	}
-
-	/**
-	* Sets the shift.
-	* @param shift The shift to set
-	*/
-	public void setShift(IShift shift) {
-		this.shift = shift;
-	}
 }
 	

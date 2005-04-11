@@ -1,22 +1,15 @@
 /*
- * Created on 9/Mai/2003
+ * Created on 08/Mar/2005
  *
  */
 package net.sourceforge.fenixedu.domain;
 
 /**
- * @author asnr and scpo
+ * @author joaosa & rmalo
  *  
  */
-public class StudentGroupAttend extends DomainObject implements IStudentGroupAttend {
+public class StudentGroupAttend extends StudentGroupAttend_Base {
 
-    private Integer keyAttend;
-
-    private Integer keyStudentGroup;
-
-    private IAttends attend;
-
-    private IStudentGroup studentGroup;
 
     /**
      * Construtor
@@ -37,8 +30,8 @@ public class StudentGroupAttend extends DomainObject implements IStudentGroupAtt
      */
     public StudentGroupAttend(IStudentGroup studentGroup, IAttends attend) {
 
-        this.studentGroup = studentGroup;
-        this.attend = attend;
+        super.setStudentGroup(studentGroup);
+        super.setAttend(attend);
     }
 
     /**
@@ -63,74 +56,6 @@ public class StudentGroupAttend extends DomainObject implements IStudentGroupAtt
         //result += ", attend=" + getAttend();
         result += "]";
         return result;
-    }
-
-    /**
-     * @return Integer
-     */
-    public Integer getKeyStudentGroup() {
-        return keyStudentGroup;
-    }
-
-    /**
-     * @return Integer
-     */
-    public Integer getKeyAttend() {
-        return keyAttend;
-    }
-
-    /**
-     * @return StudentGroup
-     */
-    public IStudentGroup getStudentGroup() {
-        return studentGroup;
-    }
-
-    /**
-     * @return Attends
-     */
-    public IAttends getAttend() {
-        return attend;
-    }
-
-    /**
-     * Sets the keyGroup.
-     * 
-     * @param keyGroup
-     *            The keyGroup to set
-     */
-    public void setKeyStudentGroup(Integer keyStudentGroup) {
-        this.keyStudentGroup = keyStudentGroup;
-    }
-
-    /**
-     * Sets the keyAttend.
-     * 
-     * @param keyAttend
-     *            The keyAttend to set
-     */
-    public void setKeyAttend(Integer keyAttend) {
-        this.keyAttend = keyAttend;
-    }
-
-    /**
-     * Sets the studentGroup.
-     * 
-     * @param studentGroup
-     *            The studentGroup to set
-     */
-    public void setStudentGroup(IStudentGroup studentGroup) {
-        this.studentGroup = studentGroup;
-    }
-
-    /**
-     * Sets the attend.
-     * 
-     * @param attend
-     *            The attend to set
-     */
-    public void setAttend(IAttends attend) {
-        this.attend = attend;
     }
 
 }
