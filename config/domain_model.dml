@@ -395,7 +395,7 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
         public Integer getCreditsInSpecializationArea();
         public net.sourceforge.fenixedu.util.StudentCurricularPlanState getCurrentState();
         public Integer getCurricularCourseAcumulatedEnrollments(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
-        public net.sourceforge.fenixedu.util.enrollment.CurricularCourseEnrollmentType getCurricularCourseEnrollmentType(
+        public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType getCurricularCourseEnrollmentType(
                 net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse, net.sourceforge.fenixedu.domain.IExecutionPeriod currentExecutionPeriod);
         public java.util.List getCurricularCoursesToEnroll(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod) throws net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
         public net.sourceforge.fenixedu.domain.IDegreeCurricularPlan getDegreeCurricularPlan();
