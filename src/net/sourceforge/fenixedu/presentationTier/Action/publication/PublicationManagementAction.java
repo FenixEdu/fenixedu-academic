@@ -86,11 +86,6 @@ public class PublicationManagementAction extends FenixAction {
 			saveMessages(request, messages);
 		}
 
-		// ActionErrors errors = new ActionErrors();
-		// errors.add("error1", new
-		// ActionError("message.publications.managementDeleted"));
-		// saveErrors(request,errors);
-
 		return mapping.findForward("show-publications");
 	}
 }
