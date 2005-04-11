@@ -83,6 +83,22 @@ class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.f
 }
 
 
+class net.sourceforge.fenixedu.domain.EvaluationExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyExecutionCourse;
+	Integer keyEvaluation;
+
+	interface "
+	public net.sourceforge.fenixedu.domain.IExecutionCourse getExecutionCourse();
+	
+	public void setExecutionCourse(net.sourceforge.fenixedu.domain.IExecutionCourse executionCourse);
+	
+	public net.sourceforge.fenixedu.domain.IEvaluation getEvaluation();
+	
+	public void setEvaluation(net.sourceforge.fenixedu.domain.IEvaluation evaluation);
+	"
+}
+
+
 class net.sourceforge.fenixedu.domain.support.FAQEntry extends net.sourceforge.fenixedu.domain.DomainObject {
 	String answer;
 	String question;
@@ -446,20 +462,6 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlanLEEC extends net.sour
     Integer secundaryBranchKey;
 }
 
-class net.sourceforge.fenixedu.domain.EvaluationExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyExecutionCourse;
-	Integer keyEvaluation;
-
-	interface "
-	public net.sourceforge.fenixedu.domain.IExecutionCourse getExecutionCourse();
-	
-	public void setExecutionCourse(net.sourceforge.fenixedu.domain.IExecutionCourse executionCourse);
-	
-	public net.sourceforge.fenixedu.domain.IEvaluation getEvaluation();
-	
-	public void setEvaluation(net.sourceforge.fenixedu.domain.IEvaluation evaluation);
-	"
-}
 
 
 
