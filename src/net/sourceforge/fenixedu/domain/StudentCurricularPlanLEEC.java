@@ -17,7 +17,7 @@ import org.apache.commons.collections.Predicate;
  * @author David Santos in Jun 24, 2004
  */
 
-public class StudentCurricularPlanLEEC extends StudentCurricularPlan implements IStudentCurricularPlan {
+public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base implements IStudentCurricularPlan {
     protected Integer secundaryBranchKey;
 
     protected IBranch secundaryBranch;
@@ -27,7 +27,7 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlan implements 
     protected Integer creditsInSecundaryArea;
 
     public StudentCurricularPlanLEEC() {
-        ojbConcreteClass = getClass().getName();
+        setOjbConcreteClass(getClass().getName());
     }
 
     public IBranch getSecundaryBranch() {

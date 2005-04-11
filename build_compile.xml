@@ -43,6 +43,7 @@
     		description="Removes any generated files">
 		<delete dir="${build.home}"/>
 		<delete dir="${deploy.home}"/>
+		<delete dir="${src_gen}"/>
     </target>
 
 	<target name="prepare"
@@ -421,7 +422,6 @@
 	<target name="generate"
 	                description="Generate java code from a DML file">
 		<echo message="Processing ${dml.definition.file} ..."/>
-		<delete dir="${src_gen}"/>
 		<mkdir dir="${src_gen}"/>
 		<java classname="dml.DmlCompiler" fork="true">
 			<arg value="-f"/>

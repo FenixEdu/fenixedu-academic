@@ -29,18 +29,8 @@ import org.apache.commons.collections.Transformer;
  * @author David Santos in Jun 24, 2004
  */
 
-public class StudentCurricularPlan extends DomainObject implements
+public class StudentCurricularPlan extends StudentCurricularPlan_Base implements
 		IStudentCurricularPlan {
-
-	protected Integer studentKey;
-
-	protected Integer branchKey;
-
-	protected Integer degreeCurricularPlanKey;
-
-	protected Integer employeeKey;
-
-	protected String ojbConcreteClass;
 
 	protected IStudent student;
 
@@ -50,25 +40,11 @@ public class StudentCurricularPlan extends DomainObject implements
 
 	protected IEmployee employee;
 
-	protected Date startDate;
-
 	protected StudentCurricularPlanState currentState;
 
 	protected List enrolments;
 
-	protected Integer completedCourses;
-
-	protected Double classification;
-
-	protected Integer enrolledCourses;
-
-	protected String observations;
-
 	protected Specialization specialization;
-
-	protected Double givenCredits;
-
-	protected Date when;
 
 	// For enrollment purposes only
 	protected Map acumulatedEnrollments;
@@ -78,7 +54,7 @@ public class StudentCurricularPlan extends DomainObject implements
 	protected List enrollmentReports;
 
 	public StudentCurricularPlan() {
-		ojbConcreteClass = getClass().getName();
+		setOjbConcreteClass(getClass().getName());
 	}
 
 	public boolean equals(Object obj) {
@@ -98,10 +74,10 @@ public class StudentCurricularPlan extends DomainObject implements
 		result += "internalCode = " + getIdInternal() + "; ";
 		result += "student = " + this.student + "; ";
 		result += "degreeCurricularPlan = " + this.degreeCurricularPlan + "; ";
-		result += "startDate = " + this.startDate + "; ";
+		result += "startDate = " + this.getStartDate() + "; ";
 		result += "specialization = " + this.specialization + "; ";
 		result += "currentState = " + this.currentState + "]\n";
-		result += "when alter = " + this.when + "]\n";
+		result += "when alter = " + this.getWhen() + "]\n";
 		if (this.employee != null) {
 			result += "employee = " + this.employee.getPerson().getNome()
 					+ "]\n";
@@ -113,18 +89,6 @@ public class StudentCurricularPlan extends DomainObject implements
 		return branch;
 	}
 
-	public Integer getBranchKey() {
-		return branchKey;
-	}
-
-	public Double getClassification() {
-		return classification;
-	}
-
-	public Integer getCompletedCourses() {
-		return completedCourses;
-	}
-
 	public StudentCurricularPlanState getCurrentState() {
 		return currentState;
 	}
@@ -133,36 +97,12 @@ public class StudentCurricularPlan extends DomainObject implements
 		return degreeCurricularPlan;
 	}
 
-	public Integer getDegreeCurricularPlanKey() {
-		return degreeCurricularPlanKey;
-	}
-
 	public IEmployee getEmployee() {
 		return employee;
 	}
 
-	public Integer getEmployeeKey() {
-		return employeeKey;
-	}
-
-	public Integer getEnrolledCourses() {
-		return enrolledCourses;
-	}
-
 	public List getEnrolments() {
 		return enrolments;
-	}
-
-	public Double getGivenCredits() {
-		return givenCredits;
-	}
-
-	public String getOjbConcreteClass() {
-		return ojbConcreteClass;
-	}
-
-	public String getObservations() {
-		return observations;
 	}
 
 	public IBranch getSecundaryBranch() {
@@ -177,36 +117,12 @@ public class StudentCurricularPlan extends DomainObject implements
 		return specialization;
 	}
 
-	public Date getStartDate() {
-		return startDate;
-	}
-
 	public IStudent getStudent() {
 		return student;
 	}
 
-	public Integer getStudentKey() {
-		return studentKey;
-	}
-
-	public Date getWhen() {
-		return when;
-	}
-
 	public void setBranch(IBranch branch) {
 		this.branch = branch;
-	}
-
-	public void setBranchKey(Integer branchKey) {
-		this.branchKey = branchKey;
-	}
-
-	public void setClassification(Double classification) {
-		this.classification = classification;
-	}
-
-	public void setCompletedCourses(Integer completedCourses) {
-		this.completedCourses = completedCourses;
 	}
 
 	public void setCurrentState(StudentCurricularPlanState currentState) {
@@ -218,36 +134,12 @@ public class StudentCurricularPlan extends DomainObject implements
 		this.degreeCurricularPlan = degreeCurricularPlan;
 	}
 
-	public void setDegreeCurricularPlanKey(Integer degreeCurricularPlanKey) {
-		this.degreeCurricularPlanKey = degreeCurricularPlanKey;
-	}
-
 	public void setEmployee(IEmployee employee) {
 		this.employee = employee;
 	}
 
-	public void setEmployeeKey(Integer employeeKey) {
-		this.employeeKey = employeeKey;
-	}
-
-	public void setEnrolledCourses(Integer enrolledCourses) {
-		this.enrolledCourses = enrolledCourses;
-	}
-
 	public void setEnrolments(List enrolments) {
 		this.enrolments = enrolments;
-	}
-
-	public void setGivenCredits(Double givenCredits) {
-		this.givenCredits = givenCredits;
-	}
-
-	public void setOjbConcreteClass(String ojbConcreteClass) {
-		this.ojbConcreteClass = ojbConcreteClass;
-	}
-
-	public void setObservations(String observations) {
-		this.observations = observations;
 	}
 
 	public void setSecundaryBranch(IBranch secundaryBranch) {
@@ -260,20 +152,8 @@ public class StudentCurricularPlan extends DomainObject implements
 		this.specialization = specialization;
 	}
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
-
 	public void setStudent(IStudent student) {
 		this.student = student;
-	}
-
-	public void setStudentKey(Integer studentKey) {
-		this.studentKey = studentKey;
-	}
-
-	public void setWhen(Date when) {
-		this.when = when;
 	}
 
 	// -------------------------------------------------------------

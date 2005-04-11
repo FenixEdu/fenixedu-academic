@@ -14,10 +14,10 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
 import net.sourceforge.fenixedu.util.AreaType;
 
 /**
- * @author João Mota
+ * @author Joï¿½o Mota
  */
 
-public class StudentCurricularPlanLEIC extends StudentCurricularPlan implements IStudentCurricularPlan {
+public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base implements IStudentCurricularPlan {
 
     protected Integer secundaryBranchKey;
 
@@ -28,7 +28,7 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlan implements 
     protected Integer creditsInSecundaryArea;
 
     public StudentCurricularPlanLEIC() {
-        ojbConcreteClass = getClass().getName();
+        setOjbConcreteClass(getClass().getName());
     }
 
     public IBranch getSecundaryBranch() {
