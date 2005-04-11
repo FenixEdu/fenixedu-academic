@@ -136,6 +136,52 @@ class net.sourceforge.fenixedu.domain.EvaluationExecutionCourse extends net.sour
 }
 
 
+class net.sourceforge.fenixedu.domain.ExecutionDegree extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyPeriodExamsSecondSemester;
+	Integer keyPeriodLessonsSecondSemester;
+	Boolean temporaryExamMap;
+	Integer keyPeriodExamsFirstSemester;
+	Integer keyPeriodLessonsFirstSemester;
+	Integer academicYear;
+	Integer keyCurricularPlan;
+	Integer keyCampus;
+	
+	interface"
+	public net.sourceforge.fenixedu.domain.IExecutionYear getExecutionYear();
+	
+	public void setExecutionYear (net.sourceforge.fenixedu.domain.IExecutionYear executionYear);
+	
+	public net.sourceforge.fenixedu.domain.IDegreeCurricularPlan getDegreeCurricularPlan();
+	
+	public void setDegreeCurricularPlan (net.sourceforge.fenixedu.domain.IDegreeCurricularPlan degreeCurricularPlan);
+	
+	public java.util.List getCoordinatorsList();
+	
+	public void setCoordinatorsList (java.util.List coordinatorsList);
+	
+	public net.sourceforge.fenixedu.domain.ICampus getCampus();
+	
+	public void setCampus (net.sourceforge.fenixedu.domain.ICampus campus);
+	
+	public net.sourceforge.fenixedu.domain.IPeriod getPeriodLessonsFirstSemester();
+	
+	public void setPeriodLessonsFirstSemester (net.sourceforge.fenixedu.domain.IPeriod periodLessonsFirstSemester);
+	
+	public net.sourceforge.fenixedu.domain.IPeriod getPeriodExamsFirstSemester();
+	
+	public void setPeriodExamsFirstSemester (net.sourceforge.fenixedu.domain.IPeriod periodExamsFirstSemester);
+	
+	public net.sourceforge.fenixedu.domain.IPeriod getPeriodLessonsSecondSemester();
+	
+	public void setPeriodLessonsSecondSemester (net.sourceforge.fenixedu.domain.IPeriod periodLessonsSecondSemester);
+	
+	public net.sourceforge.fenixedu.domain.IPeriod getPeriodExamsSecondSemester();
+	
+	public void setPeriodExamsSecondSemester (net.sourceforge.fenixedu.domain.IPeriod periodExamsSecondSemester);
+	"
+}
+
+
 class net.sourceforge.fenixedu.domain.support.FAQEntry extends net.sourceforge.fenixedu.domain.DomainObject {
 	String answer;
 	String question;
