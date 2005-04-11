@@ -11,7 +11,7 @@
 			<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.title" />
 		</td>
 		<td>
-			<html:text size="20" property="title"/>
+			<html:textarea cols="80" rows="10" property="title"/>
 		</td>
 	</tr>
 	
