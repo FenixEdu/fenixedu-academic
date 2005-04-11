@@ -134,10 +134,6 @@
 		<logic:equal name="type" value="9">
 				<jsp:include page="publicationAttributesOther.jsp" />
 		</logic:equal>
-	
-		<logic:equal name="type" value="10">
-				<jsp:include page="publicationAttributesUnstructured.jsp" />
-		</logic:equal>
 
 		<logic:equal name="type" value="11">
 				<jsp:include page="publicationAttributesUnstructured.jsp" />
