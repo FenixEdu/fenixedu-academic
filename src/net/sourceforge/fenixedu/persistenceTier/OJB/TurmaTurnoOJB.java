@@ -33,9 +33,9 @@ public class TurmaTurnoOJB extends PersistentObjectOJB implements ITurmaTurnoPer
                 .getExecutionYear().getYear());
         crit.addEqualTo("turma.executionDegree.executionYear.year", turma.getExecutionDegree()
                 .getExecutionYear().getYear());
-        crit.addEqualTo("turma.executionDegree.curricularPlan.name", turma.getExecutionDegree()
+        crit.addEqualTo("turma.executionDegree.degreeCurricularPlan.name", turma.getExecutionDegree()
                 .getDegreeCurricularPlan().getName());
-        crit.addEqualTo("turma.executionDegree.curricularPlan.degree.sigla", turma.getExecutionDegree()
+        crit.addEqualTo("turma.executionDegree.degreeCurricularPlan.degree.sigla", turma.getExecutionDegree()
                 .getDegreeCurricularPlan().getDegree().getSigla());
         crit.addEqualTo("turno.nome", turno.getNome());
         crit.addEqualTo("turno.disciplinaExecucao.sigla", turno.getDisciplinaExecucao().getSigla());
@@ -65,9 +65,9 @@ public class TurmaTurnoOJB extends PersistentObjectOJB implements ITurmaTurnoPer
         IExecutionDegree executionDegree = group.getExecutionDegree();
         crit.addEqualTo("turma.executionDegree.executionYear.year", executionDegree.getExecutionYear()
                 .getYear());
-        crit.addEqualTo("turma.executionDegree.curricularPlan.name", executionDegree.getDegreeCurricularPlan()
+        crit.addEqualTo("turma.executionDegree.degreeCurricularPlan.name", executionDegree.getDegreeCurricularPlan()
                 .getName());
-        crit.addEqualTo("turma.executionDegree.curricularPlan.degree.sigla", executionDegree
+        crit.addEqualTo("turma.executionDegree.degreeCurricularPlan.degree.sigla", executionDegree
                 .getDegreeCurricularPlan().getDegree().getSigla());
 
         List result = queryList(SchoolClassShift.class, crit);
@@ -119,7 +119,7 @@ public class TurmaTurnoOJB extends PersistentObjectOJB implements ITurmaTurnoPer
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("turno.nome", turno.getNome());
-        criteria.addEqualTo("turma.executionDegree.curricularPlan.degree.sigla", execucao
+        criteria.addEqualTo("turma.executionDegree.degreeCurricularPlan.degree.sigla", execucao
                 .getDegreeCurricularPlan().getDegree().getSigla());
         return queryList(SchoolClassShift.class, criteria);
     }

@@ -35,9 +35,9 @@ public class TurmaOJB extends PersistentObjectOJB implements ITurmaPersistente {
          * turma.getExecutionPeriod().getExecutionYear().getYear());
          * crit.addEqualTo( "turma.executionDegree.executionYear.year",
          * turma.getExecutionDegree().getExecutionYear().getYear());
-         * crit.addEqualTo( "turma.executionDegree.curricularPlan.name",
+         * crit.addEqualTo( "turma.executionDegree.degreeCurricularPlan.name",
          * turma.getExecutionDegree().getDegreeCurricularPlan().getName());
-         * crit.addEqualTo( "turma.executionDegree.curricularPlan.degree.sigla",
+         * crit.addEqualTo( "turma.executionDegree.degreeCurricularPlan.degree.sigla",
          * turma.getExecutionDegree().getDegreeCurricularPlan().getDegree().getSigla());
          * 
          * ISchoolClassShift turmaTurno = null; TurmaTurnoOJB turmaTurnoOJB = new
@@ -69,9 +69,9 @@ public class TurmaOJB extends PersistentObjectOJB implements ITurmaPersistente {
         crit.addEqualTo("anoCurricular", curricularYear);
         crit.addEqualTo("executionDegree.executionYear.year", executionDegree.getExecutionYear()
                 .getYear());
-        crit.addEqualTo("executionDegree.curricularPlan.name", executionDegree.getDegreeCurricularPlan()
+        crit.addEqualTo("executionDegree.degreeCurricularPlan.name", executionDegree.getDegreeCurricularPlan()
                 .getName());
-        crit.addEqualTo("executionDegree.curricularPlan.degree.sigla", executionDegree
+        crit.addEqualTo("executionDegree.degreeCurricularPlan.degree.sigla", executionDegree
                 .getDegreeCurricularPlan().getDegree().getSigla());
         return queryList(SchoolClass.class, crit);
 
@@ -91,9 +91,9 @@ public class TurmaOJB extends PersistentObjectOJB implements ITurmaPersistente {
                 .getYear());
         criteria.addEqualTo("executionDegree.executionYear.year", executionDegree.getExecutionYear()
                 .getYear());
-        criteria.addEqualTo("executionDegree.curricularPlan.name", executionDegree.getDegreeCurricularPlan()
+        criteria.addEqualTo("executionDegree.degreeCurricularPlan.name", executionDegree.getDegreeCurricularPlan()
                 .getName());
-        criteria.addEqualTo("executionDegree.curricularPlan.degree.sigla", executionDegree
+        criteria.addEqualTo("executionDegree.degreeCurricularPlan.degree.sigla", executionDegree
                 .getDegreeCurricularPlan().getDegree().getSigla());
 
         return (ISchoolClass) queryObject(SchoolClass.class, criteria);
@@ -102,8 +102,8 @@ public class TurmaOJB extends PersistentObjectOJB implements ITurmaPersistente {
 
     public List readByDegreeNameAndDegreeCode(String name, String code) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("executionDegree.curricularPlan.degree.nome", name);
-        crit.addEqualTo("executionDegree.curricularPlan.degree.sigla", code);
+        crit.addEqualTo("executionDegree.degreeCurricularPlan.degree.nome", name);
+        crit.addEqualTo("executionDegree.degreeCurricularPlan.degree.sigla", code);
         return queryList(SchoolClass.class, crit);
 
     }
@@ -126,9 +126,9 @@ public class TurmaOJB extends PersistentObjectOJB implements ITurmaPersistente {
         Criteria crit = new Criteria();
         crit.addEqualTo("executionDegree.executionYear.year", executionDegree.getExecutionYear()
                 .getYear());
-        crit.addEqualTo("executionDegree.curricularPlan.name", executionDegree.getDegreeCurricularPlan()
+        crit.addEqualTo("executionDegree.degreeCurricularPlan.name", executionDegree.getDegreeCurricularPlan()
                 .getName());
-        crit.addEqualTo("executionDegree.curricularPlan.degree.sigla", executionDegree
+        crit.addEqualTo("executionDegree.degreeCurricularPlan.degree.sigla", executionDegree
                 .getDegreeCurricularPlan().getDegree().getSigla());
         return queryList(SchoolClass.class, crit);
 
@@ -141,7 +141,7 @@ public class TurmaOJB extends PersistentObjectOJB implements ITurmaPersistente {
         criteria.addEqualTo("executionPeriod.executionYear.year", executionPeriod.getExecutionYear()
                 .getYear());
         criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
-        criteria.addEqualTo("executionDegree.curricularPlan.degree.tipoCurso", tipoCurso);
+        criteria.addEqualTo("executionDegree.degreeCurricularPlan.degree.tipoCurso", tipoCurso);
         //Query queryPB = new QueryByCriteria(SchoolClass.class, criteria);
         return queryList(SchoolClass.class, criteria);
     }
@@ -153,9 +153,9 @@ public class TurmaOJB extends PersistentObjectOJB implements ITurmaPersistente {
                 .getYear());
         criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
         criteria.addEqualTo("executionDegree.executionYear.year", execucao.getExecutionYear().getYear());
-        criteria.addEqualTo("executionDegree.curricularPlan.name", execucao.getDegreeCurricularPlan()
+        criteria.addEqualTo("executionDegree.degreeCurricularPlan.name", execucao.getDegreeCurricularPlan()
                 .getName());
-        criteria.addEqualTo("executionDegree.curricularPlan.degree.sigla", execucao.getDegreeCurricularPlan()
+        criteria.addEqualTo("executionDegree.degreeCurricularPlan.degree.sigla", execucao.getDegreeCurricularPlan()
                 .getDegree().getSigla());
         //Query queryPB = new QueryByCriteria(SchoolClass.class, criteria);
         return queryList(SchoolClass.class, criteria);
@@ -165,7 +165,7 @@ public class TurmaOJB extends PersistentObjectOJB implements ITurmaPersistente {
             IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionDegree.idInternal", execucao.getIdInternal());
-        criteria.addEqualTo("executionDegree.curricularPlan.degree.idInternal", degree.getIdInternal());
+        criteria.addEqualTo("executionDegree.degreeCurricularPlan.degree.idInternal", degree.getIdInternal());
         criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
         return queryList(SchoolClass.class, criteria);
     }
