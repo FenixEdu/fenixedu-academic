@@ -49,7 +49,7 @@ public class ReadSchoolClassByNameInCurrentExecutionPeriod implements IService {
                     });
             if (schoolClass != null) {
                 IDegreeCurricularPlan degreeCurricularPlan = schoolClass.getExecutionDegree()
-                        .getCurricularPlan();
+                        .getDegreeCurricularPlan();
                 IDegree degree = degreeCurricularPlan.getDegree();
                 SchoolClassDTO schoolClassDTO = new SchoolClassDTO();
                 schoolClassDTO.setExecutionPeriodId(executionPeriod.getIdInternal());

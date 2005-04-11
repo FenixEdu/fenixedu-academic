@@ -232,7 +232,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
                         return "noAuthorization";
                     }
 
-                    if (!coordinator.getExecutionDegree().getCurricularPlan().getDegree()
+                    if (!coordinator.getExecutionDegree().getDegreeCurricularPlan().getDegree()
                             .getIdInternal().equals(
                                     studentCurricularPlan.getDegreeCurricularPlan().getDegree()
                                             .getIdInternal())) {
@@ -252,7 +252,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
                      * IStudentCurricularPlan activeStudentCurricularPlan =
                      * (IStudentCurricularPlan) activeStudentCurricularPlans
                      * .get(i); if (coordinator.getExecutionDegree()
-                     * .getCurricularPlan().getIdInternal().equals(
+                     * .getDegreeCurricularPlan().getIdInternal().equals(
                      * activeStudentCurricularPlan .getDegreeCurricularPlan()
                      * .getIdInternal())) {
                      * hasAnActiveCurricularPlanThatCoincidesWithTheCoordinatorsCurricularPlan =

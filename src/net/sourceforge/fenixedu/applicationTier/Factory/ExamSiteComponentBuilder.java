@@ -88,15 +88,15 @@ public class ExamSiteComponentBuilder {
         endSeason2.set(Calendar.SECOND, 0);
         endSeason2.set(Calendar.MILLISECOND, 0);
 
-        if (executionDegree.getCurricularPlan().getDegree().getSigla().equals("LEC")) {
+        if (executionDegree.getDegreeCurricularPlan().getDegree().getSigla().equals("LEC")) {
             startSeason1.set(Calendar.DAY_OF_MONTH, 21);
             endSeason2.set(Calendar.DAY_OF_MONTH, 17);
         }
-        if (executionDegree.getCurricularPlan().getDegree().getSigla().equals("LET")) {
+        if (executionDegree.getDegreeCurricularPlan().getDegree().getSigla().equals("LET")) {
             startSeason1.set(Calendar.DAY_OF_MONTH, 21);
             endSeason2.set(Calendar.DAY_OF_MONTH, 17);
         }
-        if (executionDegree.getCurricularPlan().getDegree().getSigla().equals("LA")) {
+        if (executionDegree.getDegreeCurricularPlan().getDegree().getSigla().equals("LA")) {
             startSeason1.set(Calendar.DAY_OF_MONTH, 21);
             endSeason2.set(Calendar.DAY_OF_MONTH, 17);
         }

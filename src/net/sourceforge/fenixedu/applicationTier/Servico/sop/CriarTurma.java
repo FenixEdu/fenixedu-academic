@@ -60,7 +60,7 @@ public class CriarTurma implements IService {
         sp.getITurmaPersistente().simpleLockWrite(turma);
         turma.setExecutionDegree(executionDegreeDAO
                 .readByDegreeCurricularPlanAndExecutionYear(turma.getExecutionDegree()
-                        .getCurricularPlan(), turma.getExecutionDegree().getExecutionYear()));
+                        .getDegreeCurricularPlan(), turma.getExecutionDegree().getExecutionYear()));
 
         turma.setExecutionPeriod(executionPeriodDAO.readByNameAndExecutionYear(turma
                 .getExecutionPeriod().getName(), turma.getExecutionPeriod().getExecutionYear()));

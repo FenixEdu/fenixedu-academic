@@ -34,9 +34,9 @@ public class TurmaTurnoOJB extends PersistentObjectOJB implements ITurmaTurnoPer
         crit.addEqualTo("turma.executionDegree.executionYear.year", turma.getExecutionDegree()
                 .getExecutionYear().getYear());
         crit.addEqualTo("turma.executionDegree.curricularPlan.name", turma.getExecutionDegree()
-                .getCurricularPlan().getName());
+                .getDegreeCurricularPlan().getName());
         crit.addEqualTo("turma.executionDegree.curricularPlan.degree.sigla", turma.getExecutionDegree()
-                .getCurricularPlan().getDegree().getSigla());
+                .getDegreeCurricularPlan().getDegree().getSigla());
         crit.addEqualTo("turno.nome", turno.getNome());
         crit.addEqualTo("turno.disciplinaExecucao.sigla", turno.getDisciplinaExecucao().getSigla());
         crit.addEqualTo("turno.disciplinaExecucao.executionPeriod.name", turno.getDisciplinaExecucao()
@@ -65,10 +65,10 @@ public class TurmaTurnoOJB extends PersistentObjectOJB implements ITurmaTurnoPer
         IExecutionDegree executionDegree = group.getExecutionDegree();
         crit.addEqualTo("turma.executionDegree.executionYear.year", executionDegree.getExecutionYear()
                 .getYear());
-        crit.addEqualTo("turma.executionDegree.curricularPlan.name", executionDegree.getCurricularPlan()
+        crit.addEqualTo("turma.executionDegree.curricularPlan.name", executionDegree.getDegreeCurricularPlan()
                 .getName());
         crit.addEqualTo("turma.executionDegree.curricularPlan.degree.sigla", executionDegree
-                .getCurricularPlan().getDegree().getSigla());
+                .getDegreeCurricularPlan().getDegree().getSigla());
 
         List result = queryList(SchoolClassShift.class, crit);
 
@@ -120,7 +120,7 @@ public class TurmaTurnoOJB extends PersistentObjectOJB implements ITurmaTurnoPer
         Criteria criteria = new Criteria();
         criteria.addEqualTo("turno.nome", turno.getNome());
         criteria.addEqualTo("turma.executionDegree.curricularPlan.degree.sigla", execucao
-                .getCurricularPlan().getDegree().getSigla());
+                .getDegreeCurricularPlan().getDegree().getSigla());
         return queryList(SchoolClassShift.class, criteria);
     }
 

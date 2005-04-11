@@ -40,7 +40,7 @@ public class ReadActiveDegreeCurricularPlansByExecutionYear implements IService 
                         public Object transform(Object obj) {
                             IExecutionDegree cursoExecucao = (IExecutionDegree) obj;
                             IDegreeCurricularPlan degreeCurricularPlan = cursoExecucao
-                                    .getCurricularPlan();
+                                    .getDegreeCurricularPlan();
                             return InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(degreeCurricularPlan);
                         }
                     });

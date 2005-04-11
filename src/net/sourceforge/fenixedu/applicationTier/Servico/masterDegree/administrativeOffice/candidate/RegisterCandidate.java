@@ -119,7 +119,7 @@ public class RegisterCandidate implements IService {
                 //                    if (studentCurricularPlan.getCurrentState().equals(
                 //                            StudentCurricularPlanState.ACTIVE_OBJ)) {
                 //                        if
-                // (masterDegreeCandidate.getExecutionDegree().getCurricularPlan()
+                // (masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan()
                 //                                .getIdInternal().equals(
                 //                                        studentCurricularPlan.getDegreeCurricularPlan().getIdInternal()))
                 // {
@@ -207,7 +207,7 @@ public class RegisterCandidate implements IService {
 
             IStudentCurricularPlan existingStudentCurricularPlan = sp
                     .getIStudentCurricularPlanPersistente().readByStudentDegreeCurricularPlanAndState(
-                            student, masterDegreeCandidate.getExecutionDegree().getCurricularPlan(),
+                            student, masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan(),
                             StudentCurricularPlanState.ACTIVE_OBJ);
             if (existingStudentCurricularPlan != null) {
                 throw new ExistingServiceException();
@@ -222,7 +222,7 @@ public class RegisterCandidate implements IService {
             studentCurricularPlan.setEnrolments(new ArrayList());
             studentCurricularPlan.setCurrentState(StudentCurricularPlanState.ACTIVE_OBJ);
             studentCurricularPlan.setDegreeCurricularPlan(masterDegreeCandidate.getExecutionDegree()
-                    .getCurricularPlan());
+                    .getDegreeCurricularPlan());
             studentCurricularPlan.setGivenCredits(masterDegreeCandidate.getGivenCredits());
             studentCurricularPlan.setSpecialization(masterDegreeCandidate.getSpecialization());
             studentCurricularPlan.setStartDate(Calendar.getInstance().getTime());

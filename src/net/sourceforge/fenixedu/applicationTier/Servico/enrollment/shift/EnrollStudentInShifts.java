@@ -227,7 +227,7 @@ public class EnrollStudentInShifts implements IService {
     //                            .getExecutionYear()));
     //            infoExecutionDegree
     //                    .setInfoDegreeCurricularPlan(copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(executionDegree
-    //                            .getCurricularPlan()));
+    //                            .getDegreeCurricularPlan()));
     //        }
     //        return infoExecutionDegree;
     //    }

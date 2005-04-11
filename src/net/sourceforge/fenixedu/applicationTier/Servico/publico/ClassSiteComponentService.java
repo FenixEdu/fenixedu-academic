@@ -97,7 +97,7 @@ public class ClassSiteComponentService implements IService {
             if (className == null && curricularYear == null) {
 
                 domainList = persistentClass.readByExecutionDegreeAndDegreeAndExecutionPeriod(
-                        executionDegree, executionDegree.getCurricularPlan().getDegree(),
+                        executionDegree, executionDegree.getDegreeCurricularPlan().getDegree(),
                         executionPeriod);
 
                 if (domainList.size() != 0) {

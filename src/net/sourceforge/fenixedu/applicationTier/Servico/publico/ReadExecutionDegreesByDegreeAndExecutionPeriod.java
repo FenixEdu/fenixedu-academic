@@ -114,8 +114,8 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IServico 
 				InfoExecutionYear infoExecutionYear =   InfoExecutionYear.newInfoFromDomain(executionDegree.getExecutionYear());
 				infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
 
-				InfoDegreeCurricularPlan infoDegreeCurricularPlan =   InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getCurricularPlan());
-				InfoDegree infoDegree = InfoDegree.newInfoFromDomain(executionDegree.getCurricularPlan().getDegree());
+				InfoDegreeCurricularPlan infoDegreeCurricularPlan =   InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
+				InfoDegree infoDegree = InfoDegree.newInfoFromDomain(executionDegree.getDegreeCurricularPlan().getDegree());
 				infoDegreeCurricularPlan.setInfoDegree(infoDegree);
                 infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
                 

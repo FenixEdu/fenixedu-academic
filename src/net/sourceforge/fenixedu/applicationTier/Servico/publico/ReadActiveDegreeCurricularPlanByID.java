@@ -85,14 +85,14 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
 
         IExecutionDegree executionDegree = InfoExecutionDegree.newDomainFromInfo(infoExecutionDegree);
         if (executionDegree != null) {
-            executionDegree.setCurricularPlan(InfoDegreeCurricularPlan
+            executionDegree.setDegreeCurricularPlan(InfoDegreeCurricularPlan
                     .newDomainFromInfo(infoExecutionDegree.getInfoDegreeCurricularPlan()));
-            executionDegree.getCurricularPlan().setDegree(
+            executionDegree.getDegreeCurricularPlan().setDegree(
                     InfoDegree.newDomainFromInfo(infoExecutionDegree.getInfoDegreeCurricularPlan()
                             .getInfoDegree()));
         }
         IExecutionPeriod executionPeriod = InfoExecutionPeriod.newDomainFromInfo(infoExecutionPeriod);
-        IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getCurricularPlan();
+        IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
         if (degreeCurricularPlan == null) {
             throw new FenixServiceException("nullDegree");
         }

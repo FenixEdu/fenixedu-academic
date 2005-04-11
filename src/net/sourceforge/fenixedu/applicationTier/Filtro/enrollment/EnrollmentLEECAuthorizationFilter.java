@@ -169,9 +169,9 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
 
         String degreeCode = null;
         if (coordinator.getExecutionDegree() != null
-                && coordinator.getExecutionDegree().getCurricularPlan() != null
-                && coordinator.getExecutionDegree().getCurricularPlan().getDegree() != null) {
-            degreeCode = coordinator.getExecutionDegree().getCurricularPlan().getDegree().getSigla();
+                && coordinator.getExecutionDegree().getDegreeCurricularPlan() != null
+                && coordinator.getExecutionDegree().getDegreeCurricularPlan().getDegree() != null) {
+            degreeCode = coordinator.getExecutionDegree().getDegreeCurricularPlan().getDegree().getSigla();
         }
 
         return DEGREE_LEEC_CODE.equals(degreeCode);

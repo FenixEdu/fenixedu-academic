@@ -78,7 +78,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
 
             IExecutionDegree executionDegree = new ExecutionDegree();
             persistentExecutionDegree.simpleLockWrite(executionDegree);
-            executionDegree.setCurricularPlan(degreeCurricularPlan);
+            executionDegree.setDegreeCurricularPlan(degreeCurricularPlan);
             executionDegree.setExecutionYear(executionYear);
             executionDegree.setTemporaryExamMap(infoExecutionDegree.getTemporaryExamMap());
             executionDegree.setCampus(campus);

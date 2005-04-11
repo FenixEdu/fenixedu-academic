@@ -82,7 +82,7 @@ public class ReadAvailableClassesForShift implements IService {
             ICurricularCourseScope scope = (ICurricularCourseScope) scopes.get(i);
 
             if (scope.getCurricularCourse().getDegreeCurricularPlan().equals(
-                    classImpl.getExecutionDegree().getCurricularPlan())
+                    classImpl.getExecutionDegree().getDegreeCurricularPlan())
                     && scope.getCurricularSemester().getCurricularYear().getYear().equals(
                             classImpl.getAnoCurricular()))
                 return true;

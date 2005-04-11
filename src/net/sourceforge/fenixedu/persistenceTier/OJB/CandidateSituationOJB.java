@@ -36,7 +36,7 @@ public class CandidateSituationOJB extends PersistentObjectOJB implements IPersi
         crit.addEqualTo("masterDegreeCandidate.candidateNumber", masterDegreeCandidate
                 .getCandidateNumber());
         crit.addEqualTo("masterDegreeCandidate.executionDegree.curricularPlan.degree.sigla",
-                masterDegreeCandidate.getExecutionDegree().getCurricularPlan().getDegree().getSigla());
+                masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan().getDegree().getSigla());
         crit.addEqualTo("masterDegreeCandidate.executionDegree.executionYear.year",
                 masterDegreeCandidate.getExecutionDegree().getExecutionYear().getYear());
         crit.addEqualTo("validation", new Integer(State.ACTIVE));
@@ -52,7 +52,7 @@ public class CandidateSituationOJB extends PersistentObjectOJB implements IPersi
         crit.addEqualTo("masterDegreeCandidate.candidateNumber", masterDegreeCandidate
                 .getCandidateNumber());
         crit.addEqualTo("masterDegreeCandidate.executionDegree.curricularPlan.degree.sigla",
-                masterDegreeCandidate.getExecutionDegree().getCurricularPlan().getDegree().getSigla());
+                masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan().getDegree().getSigla());
         crit.addEqualTo("masterDegreeCandidate.executionDegree.executionYear.year",
                 masterDegreeCandidate.getExecutionDegree().getExecutionYear().getYear());
         crit.addEqualTo("masterDegreeCandidate.specialization", masterDegreeCandidate

@@ -70,9 +70,9 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
         criteria.addEqualTo("associatedCurricularCourses.scopes.curricularSemester.semester",
                 executionPeriod.getSemester());
         criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.name", executionDegree
-                .getCurricularPlan().getName());
+                .getDegreeCurricularPlan().getName());
         criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.degree.sigla",
-                executionDegree.getCurricularPlan().getDegree().getSigla());
+                executionDegree.getDegreeCurricularPlan().getDegree().getSigla());
         criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
         criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
 
@@ -93,9 +93,9 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
          * executionPeriod.getSemester());
          */
         criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.name", executionDegree
-                .getCurricularPlan().getName());
+                .getDegreeCurricularPlan().getName());
         criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.degree.sigla",
-                executionDegree.getCurricularPlan().getDegree().getSigla());
+                executionDegree.getDegreeCurricularPlan().getDegree().getSigla());
         criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
         criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
 
@@ -114,9 +114,9 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
         criteria.addEqualTo("associatedCurricularCourses.scopes.curricularSemester.semester",
                 executionPeriod.getSemester());
         criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.name", executionDegree
-                .getCurricularPlan().getName());
+                .getDegreeCurricularPlan().getName());
         criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.degree.sigla",
-                executionDegree.getCurricularPlan().getDegree().getSigla());
+                executionDegree.getDegreeCurricularPlan().getDegree().getSigla());
         criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
         criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
 
@@ -210,7 +210,7 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
             criteria
                     .addEqualTo(
                             "associatedCurricularCourses.scopes.curricularCourse.degreeCurricularPlan.idInternal",
-                            executionDegree.getCurricularPlan().getIdInternal());
+                            executionDegree.getDegreeCurricularPlan().getIdInternal());
         }
         criteria.addEqualTo("keyExecutionPeriod", executionPeriod.getIdInternal());
         criteria.addEqualTo("associatedCurricularCourses.scopes.curricularSemester.semester",
@@ -292,7 +292,7 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
             IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.idInternal",
-                executionDegree.getCurricularPlan().getIdInternal());
+                executionDegree.getDegreeCurricularPlan().getIdInternal());
         criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
         return queryList(ExecutionCourse.class, criteria, true);
     }
@@ -369,8 +369,8 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
 
 				IExecutionDegree cursoExecucao = (IExecutionDegree)iterator.next();
 
-				executionArrayName.add(cursoExecucao.getCurricularPlan().getName());
-				executionArraySigla.add(cursoExecucao.getCurricularPlan().getDegree().getSigla() );
+				executionArrayName.add(cursoExecucao.getDegreeCurricularPlan().getName());
+				executionArraySigla.add(cursoExecucao.getDegreeCurricularPlan().getDegree().getSigla() );
 			
 			   }
 			   criteriaExcutionDegreeName.addIn("associatedCurricularCourses.degreeCurricularPlan.name", executionArrayName);
@@ -382,9 +382,9 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
 					
 //					
 //			criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.name", executionDegree
-//					.getCurricularPlan().getName());
+//					.getDegreeCurricularPlan().getName());
 //			criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.degree.sigla",
-//					executionDegree.getCurricularPlan().getDegree().getSigla());
+//					executionDegree.getDegreeCurricularPlan().getDegree().getSigla());
 			criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
 			criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
 

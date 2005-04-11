@@ -53,9 +53,9 @@ public class ReadClassesForCurrentAndPreviousPeriodByDegree implements IService 
                 classView.setClassOID(klass.getIdInternal());
                 classView.setCurricularYear(klass.getAnoCurricular());
                 classView.setSemester(klass.getExecutionPeriod().getSemester());
-                classView.setDegreeCurricularPlanID(klass.getExecutionDegree().getCurricularPlan().getIdInternal());
-                classView.setDegreeInitials(klass.getExecutionDegree().getCurricularPlan().getDegree().getSigla());
-                classView.setNameDegreeCurricularPlan(klass.getExecutionDegree().getCurricularPlan().getName());
+                classView.setDegreeCurricularPlanID(klass.getExecutionDegree().getDegreeCurricularPlan().getIdInternal());
+                classView.setDegreeInitials(klass.getExecutionDegree().getDegreeCurricularPlan().getDegree().getSigla());
+                classView.setNameDegreeCurricularPlan(klass.getExecutionDegree().getDegreeCurricularPlan().getName());
                 classView.setExecutionPeriodOID(klass.getExecutionPeriod().getIdInternal());
                 classViews.add(classView);
             }
@@ -68,7 +68,7 @@ public class ReadClassesForCurrentAndPreviousPeriodByDegree implements IService 
         return (klass.getExecutionPeriod().getIdInternal()
                 .equals(currentExecutionPeriod.getIdInternal()) || klass.getExecutionPeriod()
                 .getIdInternal().equals(previouseExecutionPeriod.getIdInternal()))
-                && klass.getExecutionDegree().getCurricularPlan().getDegree().getIdInternal().equals(
+                && klass.getExecutionDegree().getDegreeCurricularPlan().getDegree().getIdInternal().equals(
                         degree.getIdInternal());
     }
 

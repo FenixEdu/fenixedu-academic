@@ -43,7 +43,7 @@ public class ResponsibleForOJB extends PersistentObjectOJB implements IPersisten
         Criteria criteria = new Criteria();
         criteria.addEqualTo(
                 "executionCourse.associatedCurricularCourses.degreeCurricularPlan.idInternal",
-                executionDegree.getCurricularPlan().getIdInternal());
+                executionDegree.getDegreeCurricularPlan().getIdInternal());
         criteria.addEqualTo("executionCourse.executionPeriod.executionYear.idInternal", executionDegree
                 .getExecutionYear().getIdInternal());
         return queryList(ResponsibleFor.class, criteria);

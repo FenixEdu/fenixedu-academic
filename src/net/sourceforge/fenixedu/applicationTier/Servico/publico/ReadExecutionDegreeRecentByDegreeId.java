@@ -35,7 +35,7 @@ public class ReadExecutionDegreeRecentByDegreeId implements IService {
             public boolean evaluate(Object arg0) {
                 IExecutionDegree executionDegree = (IExecutionDegree) arg0;
                 
-                return executionDegree.getCurricularPlan().getDegree().getIdInternal().equals(degreeId);
+                return executionDegree.getDegreeCurricularPlan().getDegree().getIdInternal().equals(degreeId);
             }
         });
         ComparatorChain chain = new ComparatorChain(new BeanComparator("curricularPlan.initialDate"));
@@ -45,7 +45,7 @@ public class ReadExecutionDegreeRecentByDegreeId implements IService {
         
         InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
         
-        InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getCurricularPlan());
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
         infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
         
         

@@ -295,7 +295,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
             return false;
         }
         return studentCurricularPlan.getDegreeCurricularPlan().equals(
-                coordinator.getExecutionDegree().getCurricularPlan());
+                coordinator.getExecutionDegree().getDegreeCurricularPlan());
 
     }
 }

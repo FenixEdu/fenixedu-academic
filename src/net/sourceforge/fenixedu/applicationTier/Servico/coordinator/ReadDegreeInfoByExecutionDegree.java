@@ -44,13 +44,13 @@ public class ReadDegreeInfoByExecutionDegree implements IService {
                 throw new FenixServiceException("error.invalidExecutionDegree");
             }
 
-            if (executionDegree.getCurricularPlan() == null) {
+            if (executionDegree.getDegreeCurricularPlan() == null) {
                 throw new FenixServiceException("error.invalidExecutionDegree");
             }
 
             //Degree
             IDegree degree = null;
-            degree = executionDegree.getCurricularPlan().getDegree();
+            degree = executionDegree.getDegreeCurricularPlan().getDegree();
 
             if (degree == null) {
                 throw new FenixServiceException("error.impossibleDegreeInfo");

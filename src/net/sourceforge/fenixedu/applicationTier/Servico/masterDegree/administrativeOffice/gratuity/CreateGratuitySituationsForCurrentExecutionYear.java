@@ -76,7 +76,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
                 }
 
                 List studentCurricularPlanList = studentCurricularPlanDAO
-                        .readByDegreeCurricularPlan(executionDegree.getCurricularPlan());
+                        .readByDegreeCurricularPlan(executionDegree.getDegreeCurricularPlan());
 
                 for (Iterator iterator = studentCurricularPlanList.iterator(); iterator.hasNext();) {
 

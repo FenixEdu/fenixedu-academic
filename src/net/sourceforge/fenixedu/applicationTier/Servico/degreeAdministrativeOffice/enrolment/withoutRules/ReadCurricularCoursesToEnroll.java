@@ -88,7 +88,7 @@ public class ReadCurricularCoursesToEnroll implements IService {
             }
 
             //Degree Curricular Plan
-            IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getCurricularPlan();
+            IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
             if (degreeCurricularPlan == null || degreeCurricularPlan.getCurricularCourses() == null) {
                 throw new FenixServiceException("error.degree.noData");

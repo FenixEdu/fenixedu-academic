@@ -280,7 +280,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 
                 IExecutionDegree executionDegree = (IExecutionDegree) iter.next();
 
-                IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getCurricularPlan();
+                IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
                 List studentCurricularPlanList = studentCurricularPlanDAO
                         .readByDegreeCurricularPlan(degreeCurricularPlan);
@@ -611,7 +611,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 
         } else {
             throw new InsufficientSibsPaymentPhaseCodesServiceException(gratuitySituation
-                    .getGratuityValues().getExecutionDegree().getCurricularPlan().getName()
+                    .getGratuityValues().getExecutionDegree().getDegreeCurricularPlan().getName()
                     + " - "
                     + gratuitySituation.getGratuityValues().getExecutionDegree().getExecutionYear()
                             .getYear());

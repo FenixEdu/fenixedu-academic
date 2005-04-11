@@ -175,7 +175,7 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
 		                }
 		
 		                //if this is a coordinator of the Degree for this Student
-		                if (coordinator.getExecutionDegree().getCurricularPlan().getDegree().getIdInternal().equals(
+		                if (coordinator.getExecutionDegree().getDegreeCurricularPlan().getDegree().getIdInternal().equals(
 		                                studentCurricularPlan.getDegreeCurricularPlan().getDegree().getIdInternal()))
 		                {
 		                    return null;

@@ -101,7 +101,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
         List roleTemp = new ArrayList();
         roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
-            if (executionDegree.getCurricularPlan().getDegree().getTipoCurso().equals(
+            if (executionDegree.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(
                     TipoCurso.MESTRADO_OBJ)) {
 
                 return true;

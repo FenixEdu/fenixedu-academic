@@ -43,12 +43,12 @@ public class EditDegreeInfoByExecutionDegree implements IService {
             if (executionDegree == null) {
                 throw new FenixServiceException("error.impossibleEditDegreeInfo");
             }
-            if (executionDegree.getCurricularPlan() == null) {
+            if (executionDegree.getDegreeCurricularPlan() == null) {
                 throw new FenixServiceException("error.impossibleEditDegreeInfo");
             }
 
             //Degree
-            IDegree degree = executionDegree.getCurricularPlan().getDegree();
+            IDegree degree = executionDegree.getDegreeCurricularPlan().getDegree();
             if (degree == null) {
                 throw new FenixServiceException("error.impossibleEditDegreeInfo");
             }

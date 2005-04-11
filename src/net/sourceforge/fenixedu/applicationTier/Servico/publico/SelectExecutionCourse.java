@@ -67,9 +67,9 @@ public class SelectExecutionCourse implements IServico {
 
             IExecutionDegree executionDegree = InfoExecutionDegree.newDomainFromInfo(infoExecutionDegree);
             if (executionDegree != null) {
-                executionDegree.setCurricularPlan(InfoDegreeCurricularPlan
+                executionDegree.setDegreeCurricularPlan(InfoDegreeCurricularPlan
                         .newDomainFromInfo(infoExecutionDegree.getInfoDegreeCurricularPlan()));
-                executionDegree.getCurricularPlan().setDegree(
+                executionDegree.getDegreeCurricularPlan().setDegree(
                         InfoDegree.newDomainFromInfo(infoExecutionDegree.getInfoDegreeCurricularPlan()
                                 .getInfoDegree()));
             }

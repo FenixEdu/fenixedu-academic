@@ -47,7 +47,7 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode implements ISe
             if (executionDegree == null) {
                 throw new NonExistingServiceException();
             }
-            IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getCurricularPlan();
+            IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
             if (degreeCurricularPlan != null) {
                 List allCurricularCourses = sp.getIPersistentCurricularCourse()
                         .readCurricularCoursesByDegreeCurricularPlan(degreeCurricularPlan);
@@ -80,9 +80,9 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode implements ISe
         //CLONER
         //InfoDegreeCurricularPlan infoDegreeCurricularPlan =
         //  Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
-        //    executionDegree.getCurricularPlan());
+        //    executionDegree.getDegreeCurricularPlan());
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
-                .newInfoFromDomain(executionDegree.getCurricularPlan());
+                .newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
 
         List allInfoCurricularCourses = new ArrayList();
 

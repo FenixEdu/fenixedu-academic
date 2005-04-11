@@ -206,9 +206,9 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase {
             sp.confirmarTransaccao();
 
             assertNotNull(executionDegree);
-            assertNotNull(executionDegree.getCurricularPlan());
-            assertNotNull(executionDegree.getCurricularPlan().getDegree());
-            assertEquals(executionDegree.getCurricularPlan().getDegree().getIdInternal(), new Integer(
+            assertNotNull(executionDegree.getDegreeCurricularPlan());
+            assertNotNull(executionDegree.getDegreeCurricularPlan().getDegree());
+            assertEquals(executionDegree.getDegreeCurricularPlan().getDegree().getIdInternal(), new Integer(
                     1000));
 
             //read degree info by degree
@@ -216,7 +216,7 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase {
 
             sp.iniciarTransaccao();
             List degreeInfoList = persistentDegreeInfo.readDegreeInfoByDegree(executionDegree
-                    .getCurricularPlan().getDegree());
+                    .getDegreeCurricularPlan().getDegree());
             sp.confirmarTransaccao();
 
             assertEquals(new Integer(degreeInfoList.size()), new Integer(1));
@@ -288,9 +288,9 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase {
             sp.confirmarTransaccao();
 
             assertNotNull(executionDegree);
-            assertNotNull(executionDegree.getCurricularPlan());
-            assertNotNull(executionDegree.getCurricularPlan().getDegree());
-            assertEquals(new Integer(2002), executionDegree.getCurricularPlan().getDegree()
+            assertNotNull(executionDegree.getDegreeCurricularPlan());
+            assertNotNull(executionDegree.getDegreeCurricularPlan().getDegree());
+            assertEquals(new Integer(2002), executionDegree.getDegreeCurricularPlan().getDegree()
                     .getIdInternal());
 
             //read degree info by degree
@@ -298,7 +298,7 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase {
 
             sp.iniciarTransaccao();
             List degreeInfoList = persistentDegreeInfo.readDegreeInfoByDegree(executionDegree
-                    .getCurricularPlan().getDegree());
+                    .getDegreeCurricularPlan().getDegree());
             sp.confirmarTransaccao();
 
             assertEquals(new Integer(2), new Integer(degreeInfoList.size()));

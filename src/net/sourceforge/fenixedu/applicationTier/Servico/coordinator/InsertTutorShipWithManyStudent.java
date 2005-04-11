@@ -49,9 +49,9 @@ public class InsertTutorShipWithManyStudent extends InsertTutorShip {
             IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
                     ExecutionDegree.class, executionDegreeId);
             String degreeCode = null;
-            if (executionDegree != null && executionDegree.getCurricularPlan() != null
-                    && executionDegree.getCurricularPlan().getDegree() != null) {
-                degreeCode = executionDegree.getCurricularPlan().getDegree().getSigla();
+            if (executionDegree != null && executionDegree.getDegreeCurricularPlan() != null
+                    && executionDegree.getDegreeCurricularPlan().getDegree() != null) {
+                degreeCode = executionDegree.getDegreeCurricularPlan().getDegree().getSigla();
             }
 
             //teacher

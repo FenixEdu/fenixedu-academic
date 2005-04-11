@@ -35,7 +35,7 @@ public class BranchOJB extends PersistentObjectOJB implements IPersistentBranch 
 
     public List readByExecutionDegree(IExecutionDegree executionDegree) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("degreeCurricularPlan.idInternal", executionDegree.getCurricularPlan()
+        crit.addEqualTo("degreeCurricularPlan.idInternal", executionDegree.getDegreeCurricularPlan()
                 .getIdInternal());
         return queryList(Branch.class, crit);
 

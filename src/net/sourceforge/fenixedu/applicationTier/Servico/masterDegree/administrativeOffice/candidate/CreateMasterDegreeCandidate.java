@@ -109,7 +109,7 @@ public class CreateMasterDegreeCandidate implements IService {
             // Generate the Candidate's number
             Integer number = sp.getIPersistentMasterDegreeCandidate().generateCandidateNumber(
                     masterDegreeCandidate.getExecutionDegree().getExecutionYear().getYear(),
-                    masterDegreeCandidate.getExecutionDegree().getCurricularPlan().getDegree()
+                    masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan().getDegree()
                             .getSigla(), masterDegreeCandidate.getSpecialization());
 
             masterDegreeCandidate.setCandidateNumber(number);

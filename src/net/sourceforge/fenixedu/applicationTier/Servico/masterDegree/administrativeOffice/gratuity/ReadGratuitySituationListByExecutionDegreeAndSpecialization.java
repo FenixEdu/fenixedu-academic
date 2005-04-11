@@ -123,7 +123,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 
                 List studentCurricularPlanList = studentCurricularPlanDAO
                         .readAllByDegreeCurricularPlanAndSpecialization(executionDegree
-                                .getCurricularPlan(), specialization);
+                                .getDegreeCurricularPlan(), specialization);
 
                 for (Iterator iterator = studentCurricularPlanList.iterator(); iterator.hasNext();) {
                     IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator

@@ -119,7 +119,7 @@ abstract public class ReadDegreeCurricularPlanBaseService implements IService {
 
                 List allActiveExecution = persistentCurricularCourseScope
                         .readActiveCurricularCourseScopesByDegreeCurricularPlanAndCurricularYear(
-                                executionDegree.getCurricularPlan(), curricularYear, executionPeriod
+                                executionDegree.getDegreeCurricularPlan(), curricularYear, executionPeriod
                                         .getExecutionYear());
 
                 if (allActiveExecution != null && allActiveExecution.size() > 0) {

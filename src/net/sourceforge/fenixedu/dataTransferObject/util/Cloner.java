@@ -539,7 +539,7 @@ public abstract class Cloner {
         copyObjectProperties(executionDegree, infoExecutionDegree);
 
         executionDegree.setExecutionYear(executionYear);
-        executionDegree.setCurricularPlan(degreeCurricularPlan);
+        executionDegree.setDegreeCurricularPlan(degreeCurricularPlan);
 
         ICampus campus = Cloner.copyInfoCampus2ICampus(infoExecutionDegree.getInfoCampus());
         executionDegree.setCampus(campus);
@@ -559,7 +559,7 @@ public abstract class Cloner {
         InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
 
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = Cloner
-                .copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(executionDegree.getCurricularPlan());
+                .copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(executionDegree.getDegreeCurricularPlan());
         InfoExecutionYear infoExecutionYear = (InfoExecutionYear) Cloner.get(executionDegree
                 .getExecutionYear());
         try {

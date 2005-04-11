@@ -49,7 +49,7 @@ public class GenerateUsername {
         // Generate Username
         String username = newMasterDegreeCandidate.getCandidateNumber()
                 + String.valueOf(buf)
-                + newMasterDegreeCandidate.getExecutionDegree().getCurricularPlan().getDegree()
+                + newMasterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan().getDegree()
                         .getSigla();
 
         // Verify if the Username already Exists

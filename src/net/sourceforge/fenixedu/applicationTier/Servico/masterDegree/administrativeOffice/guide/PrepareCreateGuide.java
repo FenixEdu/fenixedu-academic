@@ -159,7 +159,7 @@ public class PrepareCreateGuide implements IService {
 
                 List studentCurricularPlanList = sp.getIStudentCurricularPlanPersistente()
                         .readAllByStudentAndDegreeCurricularPlan(student,
-                                executionDegree.getCurricularPlan());
+                                executionDegree.getDegreeCurricularPlan());
 
                 // check if student curricular plan contains selected execution
                 // degree

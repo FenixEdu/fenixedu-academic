@@ -121,7 +121,7 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
                             .getIPersistentCurricularCourse().readByOID(CurricularCourse.class,
                                     selection[i]);
                     if (!curricularCourse.getDegreeCurricularPlan().equals(
-                            masterDegreeCandidate.getExecutionDegree().getCurricularPlan())) {
+                            masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan())) {
                         return false;
                     }
 

@@ -104,7 +104,7 @@ public class ReadStudentEnrollmentsAndClass implements IService {
 
             for (int j = 0; j < classes.size(); j++) {
                 ISchoolClass klass = (ISchoolClass) classes.get(j);
-                if (degreeName.equals(klass.getExecutionDegree().getCurricularPlan().getDegree()
+                if (degreeName.equals(klass.getExecutionDegree().getDegreeCurricularPlan().getDegree()
                         .getNome())) {
                     classesName.add(klass.getNome());
                 }

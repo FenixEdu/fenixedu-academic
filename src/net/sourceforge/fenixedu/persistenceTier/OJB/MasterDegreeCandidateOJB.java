@@ -81,7 +81,7 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
                 .readCandidateByNumberAndApplicationYearAndDegreeCodeAndSpecialization(
                         masterDegreeCandidateToWrite.getCandidateNumber(), masterDegreeCandidateToWrite
                                 .getExecutionDegree().getExecutionYear().getYear(),
-                        masterDegreeCandidateToWrite.getExecutionDegree().getCurricularPlan()
+                        masterDegreeCandidateToWrite.getExecutionDegree().getDegreeCurricularPlan()
                                 .getDegree().getSigla(), masterDegreeCandidateToWrite
                                 .getSpecialization());
 
@@ -145,10 +145,10 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
         crit.addEqualTo("specialization", specialization);
         crit.addEqualTo("executionDegree.executionYear.year", executionDegree.getExecutionYear()
                 .getYear());
-        crit.addEqualTo("executionDegree.curricularPlan.name", executionDegree.getCurricularPlan()
+        crit.addEqualTo("executionDegree.curricularPlan.name", executionDegree.getDegreeCurricularPlan()
                 .getName());
         crit.addEqualTo("executionDegree.curricularPlan.degree.nome", executionDegree
-                .getCurricularPlan().getDegree().getNome());
+                .getDegreeCurricularPlan().getDegree().getNome());
         crit.addEqualTo("person.numeroDocumentoIdentificacao", idDocumentNumber);
         crit.addEqualTo("person.tipoDocumentoIdentificacao", idDocumentType);
         return (IMasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
@@ -161,10 +161,10 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
         crit.addEqualTo("specialization", specialization);
         crit.addEqualTo("executionDegree.executionYear.year", executionDegree.getExecutionYear()
                 .getYear());
-        crit.addEqualTo("executionDegree.curricularPlan.name", executionDegree.getCurricularPlan()
+        crit.addEqualTo("executionDegree.curricularPlan.name", executionDegree.getDegreeCurricularPlan()
                 .getName());
         crit.addEqualTo("executionDegree.curricularPlan.degree.nome", executionDegree
-                .getCurricularPlan().getDegree().getNome());
+                .getDegreeCurricularPlan().getDegree().getNome());
         crit.addEqualTo("person.username", username);
         return (IMasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
 
@@ -220,10 +220,10 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
         crit.addEqualTo("specialization", specialization);
         crit.addEqualTo("executionDegree.executionYear.year", executionDegree.getExecutionYear()
                 .getYear());
-        crit.addEqualTo("executionDegree.curricularPlan.name", executionDegree.getCurricularPlan()
+        crit.addEqualTo("executionDegree.curricularPlan.name", executionDegree.getDegreeCurricularPlan()
                 .getName());
         crit.addEqualTo("executionDegree.curricularPlan.degree.nome", executionDegree
-                .getCurricularPlan().getDegree().getNome());
+                .getDegreeCurricularPlan().getDegree().getNome());
         crit.addEqualTo("candidateNumber", number);
         return (IMasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
 
@@ -235,10 +235,10 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
         crit.addEqualTo("person.username", person.getUsername());
         crit.addEqualTo("executionDegree.executionYear.year", executionDegree.getExecutionYear()
                 .getYear());
-        crit.addEqualTo("executionDegree.curricularPlan.name", executionDegree.getCurricularPlan()
+        crit.addEqualTo("executionDegree.curricularPlan.name", executionDegree.getDegreeCurricularPlan()
                 .getName());
         crit.addEqualTo("executionDegree.curricularPlan.degree.nome", executionDegree
-                .getCurricularPlan().getDegree().getNome());
+                .getDegreeCurricularPlan().getDegree().getNome());
 
         return (IMasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
 
@@ -250,10 +250,10 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
         crit.addEqualTo("person.username", person.getUsername());
         crit.addEqualTo("executionDegree.executionYear.year", executionDegree.getExecutionYear()
                 .getYear());
-        crit.addEqualTo("executionDegree.curricularPlan.name", executionDegree.getCurricularPlan()
+        crit.addEqualTo("executionDegree.curricularPlan.name", executionDegree.getDegreeCurricularPlan()
                 .getName());
         crit.addEqualTo("executionDegree.curricularPlan.degree.nome", executionDegree
-                .getCurricularPlan().getDegree().getNome());
+                .getDegreeCurricularPlan().getDegree().getNome());
         crit.addEqualTo("candidateNumber", number);
         return (IMasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
 
@@ -265,10 +265,10 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
          * crit.addEqualTo( "executionDegree.executionYear.year",
          * executionDegree.getExecutionYear().getYear());
          */
-        crit.addEqualTo("executionDegree.curricularPlan.name", executionDegree.getCurricularPlan()
+        crit.addEqualTo("executionDegree.curricularPlan.name", executionDegree.getDegreeCurricularPlan()
                 .getName());
         crit.addEqualTo("executionDegree.curricularPlan.degree.nome", executionDegree
-                .getCurricularPlan().getDegree().getNome());
+                .getDegreeCurricularPlan().getDegree().getNome());
         return queryList(MasterDegreeCandidate.class, crit);
 
     }

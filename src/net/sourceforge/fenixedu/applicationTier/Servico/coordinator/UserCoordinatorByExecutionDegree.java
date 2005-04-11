@@ -33,7 +33,7 @@ public class UserCoordinatorByExecutionDegree implements IService {
             IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
             ICoordinator coordinator = persistentCoordinator
                     .readCoordinatorByTeacherAndExecutionDegreeId(teacher, executionDegreeCode);
-            degree = coordinator.getExecutionDegree().getCurricularPlan().getDegree();
+            degree = coordinator.getExecutionDegree().getDegreeCurricularPlan().getDegree();
 
             result = degree.getSigla().equals(degree2Compare);
         } catch (Exception e) {

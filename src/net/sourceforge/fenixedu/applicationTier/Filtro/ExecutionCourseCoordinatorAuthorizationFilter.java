@@ -103,7 +103,7 @@ public class ExecutionCourseCoordinatorAuthorizationFilter extends Authorization
                         IExecutionDegree executionDegree = (IExecutionDegree) iter.next();
                         if (executionDegree.getExecutionYear().equals(
                                 executionCourse.getExecutionPeriod().getExecutionYear())) {
-                            if (CollectionUtils.containsAny(executionDegree.getCurricularPlan()
+                            if (CollectionUtils.containsAny(executionDegree.getDegreeCurricularPlan()
                                     .getCurricularCourses(), executionCourse
                                     .getAssociatedCurricularCourses())) {
                                 result = true;

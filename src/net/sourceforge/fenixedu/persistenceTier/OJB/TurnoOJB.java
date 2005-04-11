@@ -176,7 +176,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
                 executionPeriod.getSemester());
         criteria.addEqualTo(
                 "disciplinaExecucao.associatedCurricularCourses.degreeCurricularPlan.idInternal",
-                executionDegree.getCurricularPlan().getIdInternal());
+                executionDegree.getDegreeCurricularPlan().getIdInternal());
         criteria.addEqualTo("disciplinaExecucao.executionPeriod.idInternal", executionPeriod
                 .getIdInternal());
 
@@ -198,7 +198,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
                         schoolClass.getAnoCurricular());
         criteria.addEqualTo(
                 "disciplinaExecucao.associatedCurricularCourses.degreeCurricularPlan.idInternal",
-                schoolClass.getExecutionDegree().getCurricularPlan().getIdInternal());
+                schoolClass.getExecutionDegree().getDegreeCurricularPlan().getIdInternal());
         criteria.addEqualTo("disciplinaExecucao.executionPeriod.idInternal", schoolClass
                 .getExecutionPeriod().getIdInternal());
 

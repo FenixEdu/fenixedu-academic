@@ -296,7 +296,7 @@ public class InsertGratuityData implements IService {
 //        List studentCurricularPlanList = null;
 //        try {
 //            studentCurricularPlanList = persistentStudentCurricularPlan
-//                    .readByDegreeCurricularPlan(gratuityValues.getExecutionDegree().getCurricularPlan());
+//                    .readByDegreeCurricularPlan(gratuityValues.getExecutionDegree().getDegreeCurricularPlan());
 //
 //            if (studentCurricularPlanList != null && studentCurricularPlanList.size() >
 // 0) {
@@ -347,7 +347,7 @@ public class InsertGratuityData implements IService {
 //
 //		// gratuitySituationList =
 //		// persistentGratuitySituation.readGratuitySituationsByDegreeCurricularPlan(
-//		// gratuityValues.getExecutionDegree().getCurricularPlan());
+//		// gratuityValues.getExecutionDegree().getDegreeCurricularPlan());
 //		//
 //		// Iterator iterGratuitySituation = gratuitySituationList.iterator();
 //		// while (iterGratuitySituation.hasNext())
@@ -415,7 +415,7 @@ public class InsertGratuityData implements IService {
 //
 //		studentCurricularPlanList =
 //		persistentStudentCurricularPlan.readByDegreeCurricularPlan(
-//				gratuityValues.getExecutionDegree().getCurricularPlan());
+//				gratuityValues.getExecutionDegree().getDegreeCurricularPlan());
 //
 //		if (studentCurricularPlanList != null && studentCurricularPlanList.size() >
 // 0)

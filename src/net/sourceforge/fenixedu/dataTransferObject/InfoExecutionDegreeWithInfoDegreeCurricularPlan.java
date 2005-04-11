@@ -17,7 +17,7 @@ public class InfoExecutionDegreeWithInfoDegreeCurricularPlan extends InfoExecuti
         super.copyFromDomain(executionDegree);
         if (executionDegree != null) {
             setInfoDegreeCurricularPlan(InfoDegreeCurricularPlanWithDegree
-                    .newInfoFromDomain(executionDegree.getCurricularPlan()));
+                    .newInfoFromDomain(executionDegree.getDegreeCurricularPlan()));
         }
     }
 
@@ -35,7 +35,7 @@ public class InfoExecutionDegreeWithInfoDegreeCurricularPlan extends InfoExecuti
 
     public void copyToDomain(InfoExecutionDegree infoExecutionDegree, IExecutionDegree executionDegree) {
         super.copyToDomain(infoExecutionDegree, executionDegree);
-        executionDegree.setCurricularPlan(InfoDegreeCurricularPlanWithDegree
+        executionDegree.setDegreeCurricularPlan(InfoDegreeCurricularPlanWithDegree
                 .newDomainFromInfo(infoExecutionDegree.getInfoDegreeCurricularPlan()));
     }
 

@@ -76,7 +76,7 @@ public class ReadFinalDegreeWorkProposalHeadersByTeacher implements IService {
                         }
                         finalDegreeWorkProposalHeader.setCompanyLink(proposal.getCompanionName());
                         finalDegreeWorkProposalHeader.setDegreeCode(proposal.getExecutionDegree()
-                                .getCurricularPlan().getDegree().getSigla());
+                                .getDegreeCurricularPlan().getDegree().getSigla());
 
                         IScheduleing scheduleing = persistentFinalDegreeWork
                                 .readFinalDegreeWorkScheduleing(proposal.getExecutionDegree()

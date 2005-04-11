@@ -145,15 +145,15 @@ public class ReadFinalDegreeWorkProposal implements IService {
                                 proposal.getExecutionDegree().getExecutionYear().getYear());
                     }
 
-                    if (proposal.getExecutionDegree().getCurricularPlan() != null
-                            && proposal.getExecutionDegree().getCurricularPlan().getDegree() != null) {
+                    if (proposal.getExecutionDegree().getDegreeCurricularPlan() != null
+                            && proposal.getExecutionDegree().getDegreeCurricularPlan().getDegree() != null) {
                         infoProposal.getExecutionDegree().setInfoDegreeCurricularPlan(
                                 new InfoDegreeCurricularPlan());
                         infoProposal.getExecutionDegree().getInfoDegreeCurricularPlan().setInfoDegree(
                                 new InfoDegree());
                         infoProposal.getExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree()
                                 .setNome(
-                                        proposal.getExecutionDegree().getCurricularPlan().getDegree()
+                                        proposal.getExecutionDegree().getDegreeCurricularPlan().getDegree()
                                                 .getNome());
                     }
                 }

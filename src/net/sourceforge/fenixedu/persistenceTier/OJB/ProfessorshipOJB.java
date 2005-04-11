@@ -144,7 +144,7 @@ public class ProfessorshipOJB extends PersistentObjectOJB implements IPersistent
         Criteria criteria = new Criteria();
         List executionDegreesIds = (List) CollectionUtils.collect(executionDegrees, new Transformer() {
             public Object transform(Object o) {
-                return ((IExecutionDegree) o).getCurricularPlan().getIdInternal();
+                return ((IExecutionDegree) o).getDegreeCurricularPlan().getIdInternal();
             }
         });
         criteria.addIn("executionCourse.associatedCurricularCourses.degreeCurricularPlan.idInternal",
@@ -166,7 +166,7 @@ public class ProfessorshipOJB extends PersistentObjectOJB implements IPersistent
         Criteria criteria = new Criteria();
         criteria.addEqualTo(
                 "executionCourse.associatedCurricularCourses.degreeCurricularPlan.idInternal",
-                executionDegree.getCurricularPlan().getIdInternal());
+                executionDegree.getDegreeCurricularPlan().getIdInternal());
         criteria.addEqualTo("executionCourse.executionPeriod.executionYear.idInternal", executionDegree
                 .getExecutionYear().getIdInternal());
         return queryList(Professorship.class, criteria, true);
@@ -184,7 +184,7 @@ public class ProfessorshipOJB extends PersistentObjectOJB implements IPersistent
 		Criteria criteria = new Criteria();
         criteria.addEqualTo(
                 "executionCourse.associatedCurricularCourses.degreeCurricularPlan.idInternal",
-                executionDegree.getCurricularPlan().getIdInternal());
+                executionDegree.getDegreeCurricularPlan().getIdInternal());
         /*criteria.addEqualTo("executionCourse.executionPeriod.executionYear.idInternal", executionDegree
                 .getExecutionYear().getIdInternal());*/
         criteria.addEqualTo("executionCourse.executionPeriod.idInternal", executionPeriod
@@ -204,7 +204,7 @@ public class ProfessorshipOJB extends PersistentObjectOJB implements IPersistent
         Criteria criteria = new Criteria();
         criteria.addEqualTo(
                 "executionCourse.associatedCurricularCourses.degreeCurricularPlan.idInternal",
-                executionDegree.getCurricularPlan().getIdInternal());
+                executionDegree.getDegreeCurricularPlan().getIdInternal());
         criteria.addEqualTo("executionCourse.executionPeriod.executionYear.idInternal", executionDegree
                 .getExecutionYear().getIdInternal());
         criteria.addEqualTo("executionCourse.associatedCurricularCourses.basic", basic);
@@ -235,7 +235,7 @@ public class ProfessorshipOJB extends PersistentObjectOJB implements IPersistent
         Criteria criteria = new Criteria();
         List executionDegreesIds = (List) CollectionUtils.collect(executionDegrees, new Transformer() {
             public Object transform(Object o) {
-                return ((IExecutionDegree) o).getCurricularPlan().getIdInternal();
+                return ((IExecutionDegree) o).getDegreeCurricularPlan().getIdInternal();
             }
         });
         criteria.addIn("executionCourse.associatedCurricularCourses.degreeCurricularPlan.idInternal",

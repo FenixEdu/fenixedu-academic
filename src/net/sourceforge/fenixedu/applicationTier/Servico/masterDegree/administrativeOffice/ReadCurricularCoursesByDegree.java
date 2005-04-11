@@ -44,15 +44,15 @@ public class ReadCurricularCoursesByDegree implements IService {
 							executionYear);
 
 			if (cursoExecucao == null
-					|| cursoExecucao.getCurricularPlan() == null
-					|| cursoExecucao.getCurricularPlan().getCurricularCourses() == null
-					|| cursoExecucao.getCurricularPlan().getCurricularCourses()
+					|| cursoExecucao.getDegreeCurricularPlan() == null
+					|| cursoExecucao.getDegreeCurricularPlan().getCurricularCourses() == null
+					|| cursoExecucao.getDegreeCurricularPlan().getCurricularCourses()
 							.size() == 0) {
 				throw new NonExistingServiceException();
 			}
 
 			infoCurricularCourses = new ArrayList();
-			ListIterator iterator = cursoExecucao.getCurricularPlan()
+			ListIterator iterator = cursoExecucao.getDegreeCurricularPlan()
 					.getCurricularCourses().listIterator();
 			while (iterator.hasNext()) {
 				ICurricularCourse curricularCourse = (ICurricularCourse) iterator

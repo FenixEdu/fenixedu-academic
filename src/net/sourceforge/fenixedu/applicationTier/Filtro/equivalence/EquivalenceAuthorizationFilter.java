@@ -164,7 +164,7 @@ public class EquivalenceAuthorizationFilter extends Filtro {
                 executionDegreesOfThisCoordinator, new Transformer() {
                     public Object transform(Object obj) {
                         IExecutionDegree executionDegree = (IExecutionDegree) obj;
-                        return executionDegree.getCurricularPlan();
+                        return executionDegree.getDegreeCurricularPlan();
                     }
                 });
 

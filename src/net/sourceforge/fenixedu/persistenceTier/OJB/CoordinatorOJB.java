@@ -73,7 +73,7 @@ public class CoordinatorOJB extends PersistentObjectOJB implements
 			executionDegree = coordinator.getExecutionDegree();
 			//get the curricular plan from the execution degree
 			IDegreeCurricularPlan curricularPlan = executionDegree
-					.getCurricularPlan();
+					.getDegreeCurricularPlan();
 
 			if (!degreeCurricularPlans.contains(curricularPlan)) {
 				degreeCurricularPlans.add(curricularPlan);
