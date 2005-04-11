@@ -8667,4 +8667,15 @@
 			<chain name="ManagerAuthorization"/>
 		</filterChains>
 	</service>
+	<service>
+		<name>ReadAttributesByPublicationType</name>
+		<implementationClass>
+			net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAttributesByPublicationType
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TeacherAuthorization"/>
+		</filterChains>
+	</service>
 </serviceDefinitions>
