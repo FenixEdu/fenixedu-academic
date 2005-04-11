@@ -24,10 +24,10 @@ import org.apache.commons.collections.Predicate;
  * @author David Santos in Jun 25, 2004
  */
 
-public class DegreeCurricularPlanLEIC extends DegreeCurricularPlan implements IDegreeCurricularPlan {
+public class DegreeCurricularPlanLEIC extends DegreeCurricularPlanLEIC_Base implements IDegreeCurricularPlan {
 
     public DegreeCurricularPlanLEIC() {
-        ojbConcreteClass = getClass().getName();
+        setOjbConcreteClass(getClass().getName());
     }
 
     public List getSpecialListOfCurricularCourses() {
@@ -38,7 +38,7 @@ public class DegreeCurricularPlanLEIC extends DegreeCurricularPlan implements ID
                 allDegreeCurricularPlans, new Predicate() {
                     public boolean evaluate(Object obj) {
                         IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) obj;
-                        return degreeCurricularPlan.getName().equals("LEIC - Currículo Antigo");
+                        return degreeCurricularPlan.getName().equals("LEIC - Currï¿½culo Antigo");
                     }
                 });
 

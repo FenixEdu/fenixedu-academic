@@ -11,13 +11,13 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PrecedencesEnroll
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PreviousYearsCurricularCourseEnrollmentRuleIgnoringLastYears;
 
 /**
- * @author João Mota
+ * @author Joï¿½o Mota
  */
 
-public class DegreeCurricularPlanLEM extends DegreeCurricularPlan implements IDegreeCurricularPlan {
+public class DegreeCurricularPlanLEM extends DegreeCurricularPlanLEM_Base implements IDegreeCurricularPlan {
 
     public DegreeCurricularPlanLEM() {
-        ojbConcreteClass = getClass().getName();
+        setOjbConcreteClass(getClass().getName());
     }
 
     public List getListOfEnrollmentRules(IStudentCurricularPlan studentCurricularPlan,

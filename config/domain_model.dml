@@ -106,6 +106,75 @@ class net.sourceforge.fenixedu.domain.gesdis.CourseReport extends net.sourceforg
 }
 
 
+
+
+
+
+class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourceforge.fenixedu.domain.DomainObject {
+    String concreteClassForStudentCurricularPlans;
+    Integer degreeDuration;
+    Integer degreeKey;
+    String description;
+    String descriptionEn;
+    Date endDate;
+    Date initialDate;
+    Integer minimalYearForOptionalCourses;
+    String name;
+    Double neededCredits;
+    Integer numerusClausus;
+    String ojbConcreteClass;
+    
+    interface "
+
+    public java.util.List getAreas();
+    public net.sourceforge.fenixedu.domain.IStudentCurricularPlan getNewStudentCurricularPlan();
+    public java.util.List getCurricularCourses();
+    public net.sourceforge.fenixedu.domain.IDegree getDegree();
+    public net.sourceforge.fenixedu.util.MarkType getMarkType();
+    public net.sourceforge.fenixedu.util.DegreeCurricularPlanState getState();
+    public java.util.List getCurricularCourseEquivalences();
+    public java.util.List getListOfEnrollmentRules(net.sourceforge.fenixedu.domain.IStudentCurricularPlan studentCurricularPlan,
+            net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
+    public java.util.List getCurricularCoursesFromArea(net.sourceforge.fenixedu.domain.IBranch area, net.sourceforge.fenixedu.util.AreaType areaType);
+    public java.util.List getCurricularCoursesFromAnyArea();
+    public java.util.List getCommonAreas();
+    public java.util.List getSpecializationAreas();
+    public java.util.List getSecundaryAreas();
+    public java.util.List getTFCs();
+    public java.util.List getAllOptionalCurricularCourseGroups();
+    public java.util.List getCurricularCoursesByYearAndSemesterAndBranch(int year, Integer semester, net.sourceforge.fenixedu.domain.IBranch area);
+    public java.util.List getSpecialListOfCurricularCourses();
+    
+    public void setAreas(java.util.List areas);
+    public void setCurricularCourses(java.util.List curricularCourses);
+    public void setDegree(net.sourceforge.fenixedu.domain.IDegree degree);
+    public void setMarkType(net.sourceforge.fenixedu.util.MarkType markType);
+    public void setState(net.sourceforge.fenixedu.util.DegreeCurricularPlanState state);
+    public void setCurricularCourseEquivalences(java.util.List curricularCourseEquivalences);
+   
+    "
+}
+
+class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEC extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
+}
+
+class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEEC extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
+}
+
+class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEIC extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
+}
+
+class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEICTAGUS extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
+}
+
+class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEM extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
+}
+
+
+
+
+
+
 class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionYear;
 	Integer keyDegree;

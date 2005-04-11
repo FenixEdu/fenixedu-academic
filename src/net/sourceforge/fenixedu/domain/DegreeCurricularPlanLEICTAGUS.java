@@ -18,13 +18,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.AreaType;
 
 /**
- * @author João Mota in Aug 10, 2004
+ * @author Joï¿½o Mota in Aug 10, 2004
  */
 
-public class DegreeCurricularPlanLEICTAGUS extends DegreeCurricularPlan implements IDegreeCurricularPlan {
+public class DegreeCurricularPlanLEICTAGUS extends DegreeCurricularPlanLEICTAGUS_Base implements IDegreeCurricularPlan {
 
     public DegreeCurricularPlanLEICTAGUS() {
-        ojbConcreteClass = getClass().getName();
+        setOjbConcreteClass(getClass().getName());
     }
 
     public List getCurricularCoursesFromArea(IBranch area, AreaType areaType) {
