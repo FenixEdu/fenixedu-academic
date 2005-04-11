@@ -16,8 +16,6 @@ import java.util.List;
 public class ExecutionDegree extends DomainObject implements IExecutionDegree {
     private Integer keyCurricularPlan;
 
-    private Integer keyCoordinator;
-
     private IExecutionYear executionYear;
 
     private Integer academicYear;
@@ -173,24 +171,10 @@ public class ExecutionDegree extends DomainObject implements IExecutionDegree {
     }
 
     /**
-     * @return
-     */
-    public Integer getKeyCoordinator() {
-        return keyCoordinator;
-    }
-
-    /**
      * @param plan
      */
     public void setDegreeCurricularPlan(IDegreeCurricularPlan plan) {
         degreeCurricularPlan = plan;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setKeyCoordinator(Integer integer) {
-        keyCoordinator = integer;
     }
 
     /**
