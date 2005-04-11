@@ -46,7 +46,7 @@
 					<tr>
 						<td class="listClasses" style="text-align:left"><bean:write name="infoCurricularCourse" property="infoCurricularCourse.name"/></td>
 						<td class="listClasses"><html:multibox property="curricularCourses"> 
-						<bean:write name="infoCurricularCourseId"/>-<bean:write name="infoCurricularCourse" property="enrollmentType.value"/>
+						<bean:write name="infoCurricularCourseId"/>-<bean:write name="infoCurricularCourse" property="enrollmentType"/>
 						</html:multibox>
 						</td>
 						<td class="listClasses">

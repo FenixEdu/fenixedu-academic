@@ -17,6 +17,10 @@ public enum EnrollmentState {
 
     ANNULED,
 
-    NOT_EVALUATED
+    NOT_EVALUATED;
+
+	public String getName() {
+		return name();
+	}
 
 }

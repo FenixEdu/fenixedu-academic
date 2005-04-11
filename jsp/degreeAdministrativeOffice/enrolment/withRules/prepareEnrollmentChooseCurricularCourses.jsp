@@ -229,7 +229,7 @@
 				
 				<td class="listClasses">
 					<html:multibox property="unenrolledCurricularCourses" onclick="<%=onclick.toString()%>">
-						<bean:write name="curricularCourseIndex"/>-<bean:write name="curricularCourse" property="enrollmentType.value"/>
+						<bean:write name="curricularCourseIndex"/>-<bean:write name="curricularCourse" property="enrollmentType"/>
 					</html:multibox>
 					
 				</td>
