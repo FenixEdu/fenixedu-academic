@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,6 +37,7 @@ import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
+import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -319,7 +321,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
                     .toArrayList());
             request.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY,
                     TipoDocumentoIdentificacao.toArrayList());
-            request.setAttribute(SessionConstants.SEX_LIST_KEY, Sex.values());
+            request.setAttribute(SessionConstants.SEX_LIST_KEY, Sex.getSexLabelValues((Locale) request.getAttribute(Globals.LOCALE_KEY)));
             request.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
             request.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
             request.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());

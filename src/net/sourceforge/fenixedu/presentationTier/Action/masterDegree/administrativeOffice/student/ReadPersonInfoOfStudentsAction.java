@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,6 +33,7 @@ import net.sourceforge.fenixedu.util.EstadoCivil;
 import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
+import org.apache.struts.Globals;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -104,7 +106,7 @@ public class ReadPersonInfoOfStudentsAction extends FenixAction {
                     .toArrayList());
             session.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY,
                     TipoDocumentoIdentificacao.toArrayList());
-            session.setAttribute(SessionConstants.SEX_LIST_KEY, Sex.values());
+            session.setAttribute(SessionConstants.SEX_LIST_KEY, Sex.getSexLabelValues((Locale) request.getAttribute(Globals.LOCALE_KEY)));
             session.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
             session.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
             session.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
