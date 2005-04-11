@@ -13,26 +13,15 @@ import java.util.List;
  * @author rpfi
  */
 
-public class ExecutionDegree extends DomainObject implements IExecutionDegree {
-    private Integer keyCurricularPlan;
-
+public class ExecutionDegree extends ExecutionDegree_Base {
     private IExecutionYear executionYear;
-
-    private Integer academicYear;
 
     private IDegreeCurricularPlan degreeCurricularPlan;
 
-    //added by Tânia Pousão
     private List coordinatorsList;
-
-    private Boolean temporaryExamMap;
-
-    //added by Tânia Pousão
-    private Integer keyCampus;
 
     private ICampus campus;
 
-    // added by amsg 4 Jun 2004
     private IPeriod periodLessonsFirstSemester;
 
     private IPeriod periodExamsFirstSemester;
@@ -41,21 +30,13 @@ public class ExecutionDegree extends DomainObject implements IExecutionDegree {
 
     private IPeriod periodExamsSecondSemester;
 
-    private Integer keyPeriodLessonsFirstSemester;
-
-    private Integer keyPeriodExamsFirstSemester;
-
-    private Integer keyPeriodLessonsSecondSemester;
-
-    private Integer keyPeriodExamsSecondSemester;
-
     /** Construtor sem argumentos publico requerido pela moldura de objectos OJB */
     public ExecutionDegree() {
     }
 
     public ExecutionDegree(IExecutionYear executionYear, IDegreeCurricularPlan curricularPlan) {
         setExecutionYear(executionYear);
-        setCurricularPlan(curricularPlan);
+        setDegreeCurricularPlan(curricularPlan);
     }
 
     /**
@@ -78,7 +59,7 @@ public class ExecutionDegree extends DomainObject implements IExecutionDegree {
         String result = "[CURSO_EXECUCAO";
         result += ", codInt=" + getIdInternal();
         result += ", executionYear=" + executionYear;
-        result += ", keyExecutionYear=" + academicYear;
+        //result += ", keyExecutionYear=" + academicYear;
         result += ", degreeCurricularPlan=" + degreeCurricularPlan;
         if (coordinatorsList != null) {
             result += ", coordinatorsList=" + coordinatorsList.size();
@@ -107,63 +88,6 @@ public class ExecutionDegree extends DomainObject implements IExecutionDegree {
     }
 
     /**
-     * Returns the academicYear.
-     * 
-     * @return Integer
-     */
-    public Integer getAcademicYear() {
-        return academicYear;
-    }
-
-    /**
-     * Sets the academicYear.
-     * 
-     * @param academicYear
-     *            The academicYear to set
-     */
-    public void setAcademicYear(Integer academicYear) {
-        this.academicYear = academicYear;
-    }
-
-    /**
-     * Returns the curricularPlan.
-     * 
-     * @return IDegreeCurricularPlan
-     */
-    public IDegreeCurricularPlan getCurricularPlan() {
-        return degreeCurricularPlan;
-    }
-
-    /**
-     * Returns the keyCurricularPlan.
-     * 
-     * @return Integer
-     */
-    public Integer getKeyCurricularPlan() {
-        return keyCurricularPlan;
-    }
-
-    /**
-     * Sets the curricularPlan.
-     * 
-     * @param curricularPlan
-     *            The curricularPlan to set
-     */
-    public void setCurricularPlan(IDegreeCurricularPlan curricularPlan) {
-        this.degreeCurricularPlan = curricularPlan;
-    }
-
-    /**
-     * Sets the keyCurricularPlan.
-     * 
-     * @param keyCurricularPlan
-     *            The keyCurricularPlan to set
-     */
-    public void setKeyCurricularPlan(Integer keyCurricularPlan) {
-        this.keyCurricularPlan = keyCurricularPlan;
-    }
-
-    /**
      * @return
      */
     public IDegreeCurricularPlan getDegreeCurricularPlan() {
@@ -173,22 +97,8 @@ public class ExecutionDegree extends DomainObject implements IExecutionDegree {
     /**
      * @param plan
      */
-    public void setDegreeCurricularPlan(IDegreeCurricularPlan plan) {
-        degreeCurricularPlan = plan;
-    }
-
-    /**
-     * @return
-     */
-    public Boolean getTemporaryExamMap() {
-        return temporaryExamMap;
-    }
-
-    /**
-     * @param boolean1
-     */
-    public void setTemporaryExamMap(Boolean temporary) {
-        temporaryExamMap = temporary;
+    public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
+        this.degreeCurricularPlan = degreeCurricularPlan;
     }
 
     /**
@@ -204,21 +114,6 @@ public class ExecutionDegree extends DomainObject implements IExecutionDegree {
      */
     public void setCampus(ICampus campus) {
         this.campus = campus;
-    }
-
-    /**
-     * @return Returns the keyCampus.
-     */
-    public Integer getKeyCampus() {
-        return keyCampus;
-    }
-
-    /**
-     * @param keyCampus
-     *            The keyCampus to set.
-     */
-    public void setKeyCampus(Integer keyCampus) {
-        this.keyCampus = keyCampus;
     }
 
     /**
@@ -268,36 +163,5 @@ public class ExecutionDegree extends DomainObject implements IExecutionDegree {
         this.periodLessonsFirstSemester = periodLessonsFirstSemester;
     }
 
-    public Integer getKeyPeriodExamsFirstSemester() {
-        return keyPeriodExamsFirstSemester;
-    }
-
-    public void setKeyPeriodExamsFirstSemester(Integer keyPeriodExamsFirstSemester) {
-        this.keyPeriodExamsFirstSemester = keyPeriodExamsFirstSemester;
-    }
-
-    public Integer getKeyPeriodExamsSecondSemester() {
-        return keyPeriodExamsSecondSemester;
-    }
-
-    public void setKeyPeriodExamsSecondSemester(Integer keyPeriodExamsSecondSemester) {
-        this.keyPeriodExamsSecondSemester = keyPeriodExamsSecondSemester;
-    }
-
-    public Integer getKeyPeriodLessonsFirstSemester() {
-        return keyPeriodLessonsFirstSemester;
-    }
-
-    public void setKeyPeriodLessonsFirstSemester(Integer keyPeriodLessonsFirstSemester) {
-        this.keyPeriodLessonsFirstSemester = keyPeriodLessonsFirstSemester;
-    }
-
-    public Integer getKeyPeriodLessonsSecondSemester() {
-        return keyPeriodLessonsSecondSemester;
-    }
-
-    public void setKeyPeriodLessonsSecondSemester(Integer keyPeriodLessonsSecondSemester) {
-        this.keyPeriodLessonsSecondSemester = keyPeriodLessonsSecondSemester;
-    }
-
+    
 }
