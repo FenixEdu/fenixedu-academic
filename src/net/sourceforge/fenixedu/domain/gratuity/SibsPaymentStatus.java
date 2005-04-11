@@ -1,10 +1,5 @@
 package net.sourceforge.fenixedu.domain.gratuity;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import net.sourceforge.fenixedu.util.FenixValuedEnum;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
