@@ -92,7 +92,7 @@ class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.f
 	String acronym;
 	Integer minimumValueForAcumulatedEnrollments;
 }
-
+/** NEXT
 class net.sourceforge.fenixedu.domain.Curriculum extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPersonWhoAltered;
 	Integer keyCurricularCourse;
@@ -184,24 +184,6 @@ class net.sourceforge.fenixedu.domain.EvaluationMethod extends net.sourceforge.f
 	String evaluationElements;
 	String evaluationElementsEn;
 	Integer keyExecutionCourse;
-}
-
-class net.sourceforge.fenixedu.domain.AttendsSet extends net.sourceforge.fenixedu.domain.DomainObject {
-	String name;
-	Integer keyGroupProperties;
-}
-
-class net.sourceforge.fenixedu.domain.AttendInAttendsSet extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyAttendsSet;
-	Integer keyAttend;
-}
-
-class net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keySenderPerson;
-	Integer keySenderExecutionCourse;
-	Integer keyReceiverPerson;
-	Integer keyExecutionCourse;
-	Integer keyGroupProperties;
 }
 
 class net.sourceforge.fenixedu.domain.Room extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -382,73 +364,6 @@ relation ExecutionCourseEvaluationMethod {
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 }
 
-relation AttendsSetAttendInAttendsSet {
-	net.sourceforge.fenixedu.domain.AttendInAttendsSet playsRole attendInAttendsSet {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.AttendsSet playsRole attendsSet;
-}
-
-relation AttendsSetStudentGroup {
-	net.sourceforge.fenixedu.domain.AttendsSet playsRole attendsSet {
-		multiplicity 1;
-	}
-	net.sourceforge.fenixedu.domain.StudentGroup playsRole studentGroups {
-		multiplicity *;
-	}
-}
-
-relation AttendSetGroupProperties {
-	net.sourceforge.fenixedu.domain.GroupProperties playsRole groupProperties {
-		multiplicity 1;
-	}
-	net.sourceforge.fenixedu.domain.AttendsSet playsRole attendsSet;
-}
-
-relation AttendsAttendInAttendsSet {
-	net.sourceforge.fenixedu.domain.AttendInAttendsSet playsRole attendInAttendsSet {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Attends playsRole attend;
-}
-
-relation GroupPropertiesExecutionCourseGroupProperties {
-	net.sourceforge.fenixedu.domain.GroupProperties playsRole groupProperties {
-		multiplicity 1;
-	}
-	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
-		multiplicity *;
-	}
-}
-
-relation ExecutionCourseGroupPropertiesExecutionCourse {
-	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
-}
-
-relation ReceiverPersonGroupPropertiesExecutionCourse {
-	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole ??? {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Person playsRole receiverPerson;
-}
-
-relation SenderPersonGroupPropertiesExecutionCourse {
-	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole ??? {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Person playsRole senderPerson;
-}
-
-relation SenderExecutionCourseGroupPropertiesExecutionCourse {
-	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole senderExecutionCourse;
-}
-
 relation BuildingRoom {
 	net.sourceforge.fenixedu.domain.Room playsRole rooms {
 		multiplicity *;
@@ -492,7 +407,6 @@ relation ShiftExecutionCourse {
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 }
 
-
 relation ShiftSummary {
 	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
 		multiplicity *;
@@ -527,3 +441,93 @@ relation DegreeDegreeCurricularPlan {
 	}
 	net.sourceforge.fenixedu.domain.Degree playsRole degree;
 }
+
+/* ************************************
+class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
+	String nome;
+	Double theoreticalHours;
+	String sigla;
+	Double labHours;
+	Integer keyExecutionPeriod;
+	Double praticalHours;
+	String comment;
+	Double theoPratHours;
+	
+	interface "
+	public java.util.List getAssociatedCurricularCourses();
+
+	public void setAssociatedCurricularCourses(java.util.List associatedCurricularCourses);
+
+    public net.sourceforge.fenixedu.domain.IExecutionPeriod getExecutionPeriod();
+
+    public void setExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
+
+	public java.util.List getAssociatedExams();
+
+	public void setAssociatedExams(java.util.List list);
+
+	public java.util.List getAssociatedEvaluations();
+
+    public void setAssociatedEvaluations(java.util.List list);
+    
+    public java.util.List getAttendingStudents();
+
+	public void setAttendingStudents(java.util.List list);
+
+	public java.util.List getExecutionCourseProperties();
+
+    public void setExecutionCourseProperties(java.util.List executionCourseProperties);
+	
+	public java.util.List getGroupPropertiesExecutionCourse();
+	
+	public void setGroupPropertiesExecutionCourse(java.util.List groupPropertiesExecutionCourse);
+		
+	public java.util.List getGroupProperties();
+	
+	public net.sourceforge.fenixedu.domain.IGroupProperties getGroupPropertiesByName(String name);
+	
+	public void addGroupPropertiesExecutionCourse(net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
+	
+	public void removeGroupPropertiesExecutionCourse(net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
+
+	public boolean existsGroupPropertiesExecutionCourse(net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
+		
+	public boolean existsGroupPropertiesExecutionCourse();
+	
+	public boolean hasProposals();
+	
+    public java.util.List getAttends();
+    
+    public void setAttends(java.util.List attends);
+
+    public java.util.List getResponsibleTeachers();
+
+    public void setResponsibleTeachers(java.util.List responsibleTeachers);
+
+    public java.util.List getProfessorships();
+
+    public void setProfessorships(java.util.List professorships);
+
+    public boolean isMasterDegreeOnly();
+    "
+}
+
+class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keySuperiorSection;
+	Integer sectionOrder;
+	Integer keySite;
+	String name;
+	Date lastModifiedDate;
+	
+	interface "
+	public net.sourceforge.fenixedu.domain.ISite getSite();
+    
+    public void setSite(net.sourceforge.fenixedu.domain.ISite site);
+
+    public net.sourceforge.fenixedu.domain.ISection getSuperiorSection();
+
+    public void setSuperiorSection(net.sourceforge.fenixedu.domain.ISection superiorSection);
+	"
+}
+************************************ */
+
