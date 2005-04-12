@@ -7,7 +7,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
  * @version
  */
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
@@ -17,52 +18,33 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class ReadExecutionDegreesByExecutionYearAndDegreeInitials implements IServico {
+public class ReadExecutionDegreesByExecutionYearAndDegreeInitials implements
+		IService {
 
-    private static ReadExecutionDegreesByExecutionYearAndDegreeInitials service = new ReadExecutionDegreesByExecutionYearAndDegreeInitials();
+	public InfoExecutionDegree run(final InfoExecutionYear infoExecutionYear,
+			final String degreeInitials, final String nameDegreeCurricularPlan)
+			throws ExcepcaoPersistencia {
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadExecutionDegreesByExecutionYearAndDegreeInitials getService() {
-        return service;
-    }
+		final ISuportePersistente sp = PersistenceSupportFactory
+				.getDefaultPersistenceSupport();
+		final IPersistentExecutionDegree executionDegreeDAO = sp
+				.getIPersistentExecutionDegree();
+		final IExecutionYear executionYear = Cloner
+				.copyInfoExecutionYear2IExecutionYear(infoExecutionYear);
 
-    /**
-     * The actor of this class.
-     */
-    private ReadExecutionDegreesByExecutionYearAndDegreeInitials() {
-    }
+		final IExecutionDegree executionDegree = executionDegreeDAO
+				.readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
+						degreeInitials, nameDegreeCurricularPlan, executionYear);
+		final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
+				.newInfoFromDomain(executionDegree);
+		final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
+		infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+		final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(executionDegree.getDegreeCurricularPlan().getDegree());
+		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
 
-    /**
-     * Devolve o nome do servico
-     */
-    public final String getNome() {
-        return "ReadExecutionDegreesByExecutionYearAndDegreeInitials";
-    }
-
-    public InfoExecutionDegree run(InfoExecutionYear infoExecutionYear, String degreeInitials,
-            String nameDegreeCurricularPlan) {
-
-        InfoExecutionDegree infoExecutionDegree = null;
-
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
-            IExecutionYear executionYear = Cloner
-                    .copyInfoExecutionYear2IExecutionYear(infoExecutionYear);
-
-            IExecutionDegree executionDegree = executionDegreeDAO
-                    .readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(degreeInitials,
-                            nameDegreeCurricularPlan, executionYear);
-            if (executionDegree != null)
-                infoExecutionDegree = (InfoExecutionDegree) Cloner.get(executionDegree);
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
-            throw new RuntimeException(ex);
-        }
-        return infoExecutionDegree;
-    }
+		return infoExecutionDegree;
+	}
 
 }
