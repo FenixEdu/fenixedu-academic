@@ -10,7 +10,7 @@ import java.util.Calendar;
  * @author Ana e Ricardo
  *  
  */
-public class WrittenTest extends WrittenEvaluation implements IWrittenTest {
+public class WrittenTest extends WrittenTest_Base {
 
     public WrittenTest() {
     }

@@ -289,6 +289,9 @@ class net.sourceforge.fenixedu.domain.Exam extends net.sourceforge.fenixedu.doma
 	"	
 }
 
+class net.sourceforge.fenixedu.domain.WrittenTest extends net.sourceforge.fenixedu.domain.WrittenEvaluation {
+}
+
 
 class net.sourceforge.fenixedu.domain.EvaluationExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionCourse;
