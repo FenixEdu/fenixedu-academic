@@ -15,7 +15,7 @@ import org.apache.commons.collections.Transformer;
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public class Exam extends WrittenEvaluation implements IExam {
+public class Exam extends Exam_Base{
 
     protected Season season;
 
@@ -24,6 +24,13 @@ public class Exam extends WrittenEvaluation implements IExam {
 
     public Exam(Integer idInternal) {
         setIdInternal(idInternal);
+    }
+    
+    public Exam(Calendar day, Calendar beginning, Calendar end, Season season) {
+        this.setDay(day);
+        this.setBeginning(beginning);
+        this.setEnd(end);
+        this.setSeason(season);
     }
 
     public boolean equals(Object obj) {
@@ -41,12 +48,6 @@ public class Exam extends WrittenEvaluation implements IExam {
                 + " season= '" + this.getSeason() + "'\n" + "";
     }
 
-    public Exam(Calendar day, Calendar beginning, Calendar end, Season season) {
-        this.setDay(day);
-        this.setBeginning(beginning);
-        this.setEnd(end);
-        this.setSeason(season);
-    }
 
     /**
      * @return
