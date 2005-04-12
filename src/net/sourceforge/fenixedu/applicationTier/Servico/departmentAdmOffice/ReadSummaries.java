@@ -192,7 +192,7 @@ public class ReadSummaries implements IServico {
                 Iterator iter = summaries.iterator();
                 while (iter.hasNext()) {
                     ISummary summary = (ISummary) iter.next();
-                    InfoSummary infoSummary = Cloner.copyISummary2InfoSummary(summary);
+                    InfoSummary infoSummary = InfoSummary.newInfoFromDomain(summary);
                     result.add(infoSummary);
                 }
             }
