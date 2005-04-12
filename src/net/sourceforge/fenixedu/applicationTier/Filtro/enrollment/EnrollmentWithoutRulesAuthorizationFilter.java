@@ -91,9 +91,6 @@ public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByMa
     private boolean verifyDegreeType(Object[] arguments, TipoCurso degreeType) {
         boolean isEqual = false;
 
-		System.out.println("degreeType= " + degreeType);
-		System.out.println("arguments[1]= " + arguments[1]);
-
         if (arguments != null && arguments[1] != null) {
             isEqual = degreeType.equals(arguments[1]);
         }
