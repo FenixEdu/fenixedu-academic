@@ -81,7 +81,7 @@ public class CreateGuideFromTransactions implements IService {
         infoGuideSituation.setInfoGuide(infoGuide);
 
         Calendar calendar = Calendar.getInstance();
-        infoGuideSituation.setDate(calendar.getTime());
+        //infoGuideSituation.setDate(calendar.getTime());
         infoGuideSituation.setSituation(situationOfGuide);
 
         guide = Cloner.copyInfoGuide2IGuide(infoGuide);
@@ -152,7 +152,11 @@ public class CreateGuideFromTransactions implements IService {
                 guideEntry.setGuide(guide);
 
                 transaction.setGuideEntry(guideEntry);
-
+                
+                guide.setCreationDate(transaction.getTransactionDate());
+                guide.setPaymentDate(transaction.getTransactionDate());
+                infoGuideSituation.setDate(transaction.getTransactionDate());
+                
             }
 
             // Guide Total Price
