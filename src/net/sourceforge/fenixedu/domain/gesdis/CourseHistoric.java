@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.domain.gesdis;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
 
 /**
  * @author Leonor Almeida
@@ -12,23 +11,6 @@ import net.sourceforge.fenixedu.domain.ICurricularCourse;
  *  
  */
 public class CourseHistoric extends CourseHistoric_Base {
-
-    private ICurricularCourse curricularCourse;
-
-    /**
-     * @return Returns the curricularCourse.
-     */
-    public ICurricularCourse getCurricularCourse() {
-        return curricularCourse;
-    }
-
-    /**
-     * @param curricularCourse
-     *            The curricularCourse to set.
-     */
-    public void setCurricularCourse(ICurricularCourse curricularCourse) {
-        this.curricularCourse = curricularCourse;
-    }
 
     public String toString() {
         String result = "[Dominio.gesdis.CourseHistoric ";

@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.domain.teacher;
 
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.util.OldPublicationType;
 
 /**
@@ -13,7 +12,6 @@ import net.sourceforge.fenixedu.util.OldPublicationType;
  * 
  */
 public class OldPublication extends OldPublication_Base {
-    private ITeacher teacher;
     private OldPublicationType oldPublicationType;
 
     /**
@@ -29,21 +27,6 @@ public class OldPublication extends OldPublication_Base {
      */
     public void setOldPublicationType(OldPublicationType oldPublicationType) {
         this.oldPublicationType = oldPublicationType;
-    }
-
-    /**
-     * @return Returns the teacher.
-     */
-    public ITeacher getTeacher() {
-        return teacher;
-    }
-
-    /**
-     * @param teacher
-     *            The teacher to set.
-     */
-    public void setTeacher(ITeacher teacher) {
-        this.teacher = teacher;
     }
 
 }
