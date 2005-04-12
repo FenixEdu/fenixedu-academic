@@ -640,7 +640,7 @@ public class ReadCourseInformation implements IService {
 
             InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(lesson);
             IShift shift = lesson.getShift();
-            InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+            InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
             infoLesson.setInfoShift(infoShift);
 
             infoLessons.add(infoLesson);

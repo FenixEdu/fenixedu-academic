@@ -62,7 +62,7 @@ public class LerAulasDeDisciplinaExecucaoETipo implements IService {
                 ILesson lesson = (ILesson) iterator.next();
                 InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(lesson);
                 IShift shift = lesson.getShift();
-                InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+                InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
                 infoLesson.setInfoShift(infoShift);
 
                 infoAulas.add(infoLesson);

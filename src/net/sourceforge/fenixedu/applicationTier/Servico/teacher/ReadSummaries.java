@@ -105,7 +105,6 @@ public class ReadSummaries implements IServico {
                     public Object transform(Object arg0) {
                         IShift turno = (IShift) arg0;
 						return InfoShift.newInfoFromDomain(turno);
-                        //return Cloner.copyShift2InfoShift(turno);
                     }
                 });
             }

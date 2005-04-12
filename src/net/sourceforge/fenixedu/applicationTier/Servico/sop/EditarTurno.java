@@ -98,7 +98,7 @@ public class EditarTurno implements IService {
             }
         }
 
-        return Cloner.copyShift2InfoShift(shiftToEdit);
+        return InfoShift.newInfoFromDomain(shiftToEdit);
 
         // NOTE: changed the lock twice strategy to see if the new turn exists
         //        catch (ExcepcaoPersistencia ex)

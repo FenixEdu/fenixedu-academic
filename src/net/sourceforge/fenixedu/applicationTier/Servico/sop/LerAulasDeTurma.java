@@ -64,7 +64,7 @@ public class LerAulasDeTurma implements IService {
                 // Cloner.copyILesson2InfoLesson(elem);
                 InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
 
-                InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+                InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
                 infoLesson.setInfoShift(infoShift);
 
                 if (infoLesson != null) {

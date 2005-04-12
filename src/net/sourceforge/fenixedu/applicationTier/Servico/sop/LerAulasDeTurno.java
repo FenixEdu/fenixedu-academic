@@ -45,7 +45,7 @@ public class LerAulasDeTurno implements IService {
 
             InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
 
-            InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+            InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
             infoLesson.setInfoShift(infoShift);
 
             infoAulas.add(infoLesson);

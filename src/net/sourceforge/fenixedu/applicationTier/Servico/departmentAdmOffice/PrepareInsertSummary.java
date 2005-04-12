@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSummaries;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
@@ -75,7 +76,9 @@ public class PrepareInsertSummary implements IService {
 
                     public Object transform(Object arg0) {
                         IShift turno = (IShift) arg0;
-                        return Cloner.copyShift2InfoShift(turno);
+
+						InfoShift infoShift = InfoShift.newInfoFromDomain(turno);
+						return infoShift;
                     }
                 });
             }

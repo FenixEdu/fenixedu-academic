@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSummary;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSummaryWithAll;
@@ -86,7 +87,7 @@ public class ReadSummary implements IService {
 
                     public Object transform(Object arg0) {
                         IShift turno = (IShift) arg0;
-                        return Cloner.copyShift2InfoShift(turno);
+                        return InfoShift.newInfoFromDomain(turno);
                     }
                 });
             }

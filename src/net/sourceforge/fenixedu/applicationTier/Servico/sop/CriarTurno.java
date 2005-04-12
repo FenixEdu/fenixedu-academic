@@ -48,7 +48,7 @@ public class CriarTurno implements IService {
         newShift.setAssociatedClasses(new ArrayList());
         newShift.setAssociatedShiftProfessorship(new ArrayList());
 
-        return Cloner.copyShift2InfoShift(newShift);
+        return InfoShift.newInfoFromDomain(newShift);
 
     }
 

@@ -66,7 +66,7 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClasses implements ISe
                 for (int i = 0; i < shifts.size(); i++) {
                     IShift shift = (IShift) shifts.get(i);
                     InfoShiftWithAssociatedInfoClassesAndInfoLessons shiftWithAssociatedClassesAndLessons = new InfoShiftWithAssociatedInfoClassesAndInfoLessons(
-                            Cloner.copyShift2InfoShift(shift), null, null);
+							InfoShift.newInfoFromDomain(shift), null, null);
 
                     //List lessons =
                     // sp.getITurnoAulaPersistente().readByShift(shift);
@@ -76,7 +76,7 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClasses implements ISe
                     List infoClasses = new ArrayList();
 
                     for (int j = 0; j < lessons.size(); j++) {
-                        InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+                        InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
                         InfoLesson infoLesson = Cloner.copyILesson2InfoLesson((ILesson) lessons.get(j));
                         infoLesson.setInfoShift(infoShift);
                         infoLessons.add(infoLesson);

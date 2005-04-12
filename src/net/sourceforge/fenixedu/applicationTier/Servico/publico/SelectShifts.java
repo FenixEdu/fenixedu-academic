@@ -56,7 +56,7 @@ public class SelectShifts implements IServico {
 
             for (int i = 0; i < shifts.size(); i++) {
                 IShift taux = (IShift) shifts.get(i);
-                infoShifts.add(Cloner.copyShift2InfoShift(taux));
+                infoShifts.add(InfoShift.newInfoFromDomain(taux));
             }
         } catch (ExcepcaoPersistencia e) {
         }

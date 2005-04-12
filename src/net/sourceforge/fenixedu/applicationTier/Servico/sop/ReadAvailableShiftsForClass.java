@@ -46,7 +46,7 @@ public class ReadAvailableShiftsForClass implements IService {
             infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
                 public Object transform(Object arg0) {
                     IShift shift = (IShift) arg0;
-                    InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+                    InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
                     infoShift.setInfoLessons((List) CollectionUtils.collect(
                             shift.getAssociatedLessons(), new Transformer() {
                                 public Object transform(Object arg0) {

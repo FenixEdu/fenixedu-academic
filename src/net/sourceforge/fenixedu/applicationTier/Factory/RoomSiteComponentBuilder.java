@@ -149,7 +149,7 @@ public class RoomSiteComponentBuilder {
                             if (shift == null) {
                                 continue;
                             }
-                            InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+							InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
                             infoLesson.setInfoShift(infoShift);
 
                             infoShowOccupations.add(infoLesson);
