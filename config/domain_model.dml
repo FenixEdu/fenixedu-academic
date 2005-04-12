@@ -58,6 +58,31 @@ class net.sourceforge.fenixedu.domain.AttendsSet extends net.sourceforge.fenixed
 		"
 }
 
+class net.sourceforge.fenixedu.domain.Branch extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer secondaryCredits;
+    String code;
+    Integer keyDegreeCurricularPlan;
+    Integer specializationCredits;
+    String name;
+    String acronym;
+    
+    interface "
+
+    public java.util.List getScopes();
+    public net.sourceforge.fenixedu.domain.IDegreeCurricularPlan getDegreeCurricularPlan();
+    public net.sourceforge.fenixedu.util.BranchType getBranchType();
+    public java.util.List getAreaCurricularCourseGroups();
+    public java.util.List getOptionalCurricularCourseGroups();
+    public void setAreaCurricularCourseGroups(java.util.List curricularCourseGroups);
+    public void setScopes(java.util.List scopes);
+    public void setDegreeCurricularPlan(net.sourceforge.fenixedu.domain.IDegreeCurricularPlan degreeCurricularPlan);
+    public void setBranchType(net.sourceforge.fenixedu.util.BranchType branchType);
+    public void setOptionalCurricularCourseGroups(java.util.List optionCurricularCourseGroups);
+    public java.util.List getAreaCurricularCourseGroups(net.sourceforge.fenixedu.util.AreaType areaType);
+    "
+}
+
+
 class net.sourceforge.fenixedu.domain.Building extends net.sourceforge.fenixedu.domain.DomainObject {
 	String name;
 

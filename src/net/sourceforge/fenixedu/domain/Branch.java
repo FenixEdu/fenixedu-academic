@@ -14,13 +14,7 @@ import org.apache.commons.collections.Predicate;
  * 19/Mar/2003
  */
 
-public class Branch extends DomainObject implements IBranch {
-    private Integer keyDegreeCurricularPlan;
-
-    private String name;
-
-    private String code;
-
+public class Branch extends Branch_Base {
     private List scopes;
 
     private IDegreeCurricularPlan degreeCurricularPlan;
@@ -28,12 +22,6 @@ public class Branch extends DomainObject implements IBranch {
     /**
      * @author Nuno Correia & Ricardo Rodrigues
      */
-    private String acronym;
-
-    private Integer specializationCredits;
-
-    private Integer secondaryCredits;
-
     private BranchType branchType;
 
     private List areaCurricularCourseGroups;
@@ -56,14 +44,14 @@ public class Branch extends DomainObject implements IBranch {
     public String toString() {
         String result = "[" + this.getClass().getName() + ": ";
         result += "idInternal = " + getIdInternal() + "; ";
-        result += "name = " + this.name + "; ";
-        result += "code = " + this.code + "; ";
-        result += "acronym = " + this.acronym + "]\n";
+        result += "name = " + this.getName() + "; ";
+        result += "code = " + this.getCode() + "; ";
+        result += "acronym = " + this.getAcronym() + "]\n";
         return result;
     }
 
     /**
-     * @author Fernanda Quitério
+     * @author Fernanda Quitï¿½rio
      */
     public Boolean representsCommonBranch() {
 
@@ -71,34 +59,6 @@ public class Branch extends DomainObject implements IBranch {
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
-    }
-
-    /**
-     * @return String
-     */
-    public String getCode() {
-        return code;
-    }
-
-    /**
-     * @return String
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param code
-     */
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    /**
-     * @param name
-     */
-    public void setName(String name) {
-        this.name = name;
     }
 
     /**
@@ -123,64 +83,10 @@ public class Branch extends DomainObject implements IBranch {
     }
 
     /**
-     * @return
-     */
-    public Integer getKeyDegreeCurricularPlan() {
-        return keyDegreeCurricularPlan;
-    }
-
-    /**
      * @param plan
      */
     public void setDegreeCurricularPlan(IDegreeCurricularPlan plan) {
         degreeCurricularPlan = plan;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setKeyDegreeCurricularPlan(Integer integer) {
-        keyDegreeCurricularPlan = integer;
-    }
-
-    /**
-     * 
-     * @param string
-     */
-    public void setAcronym(String acronym) {
-        this.acronym = acronym;
-    }
-
-    public String getAcronym() {
-        return acronym;
-    }
-
-    /**
-     * @return
-     */
-    public Integer getSecondaryCredits() {
-        return secondaryCredits;
-    }
-
-    /**
-     * @param secondaryCredits
-     */
-    public void setSecondaryCredits(Integer secondaryCredits) {
-        this.secondaryCredits = secondaryCredits;
-    }
-
-    /**
-     * @return
-     */
-    public Integer getSpecializationCredits() {
-        return specializationCredits;
-    }
-
-    /**
-     * @param specializationCredits
-     */
-    public void setSpecializationCredits(Integer specializationCredits) {
-        this.specializationCredits = specializationCredits;
     }
 
     /**
