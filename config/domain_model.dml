@@ -189,6 +189,18 @@ class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.f
 }
 
 
+class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixedu.domain.DomainObject {
+	String ojbConcreteClass;
+	String publishmentMessage;
+
+    interface"
+	public java.util.List getAssociatedExecutionCourses();
+	
+	public void setAssociatedExecutionCourses(java.util.List list);
+	"
+}
+
+
 class net.sourceforge.fenixedu.domain.EvaluationExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionCourse;
 	Integer keyEvaluation;
@@ -218,35 +230,35 @@ class net.sourceforge.fenixedu.domain.ExecutionDegree extends net.sourceforge.fe
 	interface"
 	public net.sourceforge.fenixedu.domain.IExecutionYear getExecutionYear();
 	
-	public void setExecutionYear (net.sourceforge.fenixedu.domain.IExecutionYear executionYear);
+	public void setExecutionYear(net.sourceforge.fenixedu.domain.IExecutionYear executionYear);
 	
 	public net.sourceforge.fenixedu.domain.IDegreeCurricularPlan getDegreeCurricularPlan();
 	
-	public void setDegreeCurricularPlan (net.sourceforge.fenixedu.domain.IDegreeCurricularPlan degreeCurricularPlan);
+	public void setDegreeCurricularPlan(net.sourceforge.fenixedu.domain.IDegreeCurricularPlan degreeCurricularPlan);
 	
 	public java.util.List getCoordinatorsList();
 	
-	public void setCoordinatorsList (java.util.List coordinatorsList);
+	public void setCoordinatorsList(java.util.List coordinatorsList);
 	
 	public net.sourceforge.fenixedu.domain.ICampus getCampus();
 	
-	public void setCampus (net.sourceforge.fenixedu.domain.ICampus campus);
+	public void setCampus(net.sourceforge.fenixedu.domain.ICampus campus);
 	
 	public net.sourceforge.fenixedu.domain.IPeriod getPeriodLessonsFirstSemester();
 	
-	public void setPeriodLessonsFirstSemester (net.sourceforge.fenixedu.domain.IPeriod periodLessonsFirstSemester);
+	public void setPeriodLessonsFirstSemester(net.sourceforge.fenixedu.domain.IPeriod periodLessonsFirstSemester);
 	
 	public net.sourceforge.fenixedu.domain.IPeriod getPeriodExamsFirstSemester();
 	
-	public void setPeriodExamsFirstSemester (net.sourceforge.fenixedu.domain.IPeriod periodExamsFirstSemester);
+	public void setPeriodExamsFirstSemester(net.sourceforge.fenixedu.domain.IPeriod periodExamsFirstSemester);
 	
 	public net.sourceforge.fenixedu.domain.IPeriod getPeriodLessonsSecondSemester();
 	
-	public void setPeriodLessonsSecondSemester (net.sourceforge.fenixedu.domain.IPeriod periodLessonsSecondSemester);
+	public void setPeriodLessonsSecondSemester(net.sourceforge.fenixedu.domain.IPeriod periodLessonsSecondSemester);
 	
 	public net.sourceforge.fenixedu.domain.IPeriod getPeriodExamsSecondSemester();
 	
-	public void setPeriodExamsSecondSemester (net.sourceforge.fenixedu.domain.IPeriod periodExamsSecondSemester);
+	public void setPeriodExamsSecondSemester(net.sourceforge.fenixedu.domain.IPeriod periodExamsSecondSemester);
 	"
 }
 
