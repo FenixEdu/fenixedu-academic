@@ -6,8 +6,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -60,8 +60,7 @@ public class ReadPublicExecutionDegreeByDCPID implements IService {
 
                 public Object transform(Object input) {
                     IExecutionDegree executionDegree = (IExecutionDegree) input;
-                    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner
-                            .get(executionDegree);
+                    InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
                     return infoExecutionDegree;
                 }
             });
@@ -79,11 +78,11 @@ public class ReadPublicExecutionDegreeByDCPID implements IService {
     public InfoExecutionDegree run(Integer degreeCurricularPlanID, Integer executionYearID)
             throws FenixServiceException {
 
-        IExecutionDegree executionDegrees = null;
+        IExecutionDegree executionDegree = null;
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            executionDegrees = sp.getIPersistentExecutionDegree()
+            executionDegree = sp.getIPersistentExecutionDegree()
                     .readExecutionDegreesbyDegreeCurricularPlanIDAndExecutionYearID(
                             degreeCurricularPlanID, executionYearID);
 
@@ -91,11 +90,12 @@ public class ReadPublicExecutionDegreeByDCPID implements IService {
             throw new FenixServiceException(ex);
         }
 
-        if (executionDegrees == null) {
+        if (executionDegree == null) {
             return null;
             //throw new NonExistingServiceException();
         }
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner.get(executionDegrees);
+        InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+
         return infoExecutionDegree;
     }
 

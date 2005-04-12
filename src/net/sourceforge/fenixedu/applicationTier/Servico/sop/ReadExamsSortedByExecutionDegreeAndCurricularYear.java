@@ -75,16 +75,14 @@ public class ReadExamsSortedByExecutionDegreeAndCurricularYear implements IServi
                     new TipoCurso(TipoCurso.LICENCIATURA));
 
             for (int k = 0; k < executionDegrees.size(); k++) {
-                InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner
-                        .get((IExecutionDegree) executionDegrees.get(k));
+                IExecutionDegree executionDegree = (IExecutionDegree) executionDegrees.get(k);
+                InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
 
                 for (int curricularYear = 1; curricularYear <= 5; curricularYear++) {
                     InfoViewAllExams infoViewAllExams = new InfoViewAllExams(infoExecutionDegree,
                             new Integer(curricularYear), null);
 
                     List infoExecutionCourseAndExamsList = new ArrayList();
-
-                    IExecutionDegree executionDegree = (IExecutionDegree) executionDegrees.get(k);
 
                     List executionCourses = sp.getIPersistentExecutionCourse()
                             .readByCurricularYearAndExecutionPeriodAndExecutionDegree(

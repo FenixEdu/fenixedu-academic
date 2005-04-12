@@ -81,8 +81,6 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeType implements IServic
 							InfoDegree infoDegree = InfoDegree.newInfoFromDomain(executionDegree.getDegreeCurricularPlan().getDegree());
 							infoDegreeCurricularPlan.setInfoDegree(infoDegree);
 
-//                            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner
-//                                    .get(executionDegree);
                             return infoExecutionDegree;
                         }
                     });
