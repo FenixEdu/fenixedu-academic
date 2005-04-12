@@ -453,6 +453,15 @@
 			<form-property name="enrollmentIDsToTransfer" type="java.lang.String[]"/>
 		</form-bean>
 		
+		<!-- ========== Struts vs JSF example ========== -->
+		<form-bean name="strutsExampleForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="method" type="java.lang.String"/> 
+			<form-property name="someValue" type="java.lang.String" initial="O galo!"/> 
+		</form-bean>
+		
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -1504,6 +1513,18 @@
 		<forward name="insertRestrictionByPeriodToApply" path="df.page.manage.precedences.insertRestrictionByPeriodToApply"/>
 		<forward name="sucess" path="/managePrecedences.do" />
 	</action>	
+	
+	<!-- ========== Struts vs JSF example ========== -->
+	<action
+			path="/someStrutsPage"
+			input="/someStrutsPage.do"
+			name="strutsExampleForm"
+			scope="request"
+			parameter="method"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.strutsVsJSF.StrutsExampleDsipatchAction">
+       <forward name="showFirstPage" path="strutsExampleFirstPage"/>
+       <forward name="showListExecutionPeriods" path="strutsExampleListExecutionPeriods"/>              
+	</action>
 
 	<!-- ========== CURRICULAR COURSE GROUPS MANAGEMENT ========== -->	
 	<action path="/manageCurricularCourseGroups"

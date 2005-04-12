@@ -386,4 +386,12 @@
 		<put name="body" value="/manager/transferEnrollments.jsp" />
 	</definition>
 
+	<!-- ========== Struts vs JSF example ========== -->
+	<definition name="strutsExampleFirstPage" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/somePageInStruts.jsp" />
+	</definition>	
+	<definition name="strutsExampleListExecutionPeriods" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/somePageInStrutsListExecutionPeriods.jsp" />
+	</definition>	
+	
 </tiles-definitions>

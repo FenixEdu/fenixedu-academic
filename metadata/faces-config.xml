@@ -12,7 +12,7 @@
 		<managed-property>
 			<description>name</description>
 			<property-name>name</property-name>
-			<value>sub zero</value>
+			<value>O galo!</value>
 		</managed-property>
 	</managed-bean>
 
@@ -21,14 +21,14 @@
 		<managed-bean-name>executionPeriods</managed-bean-name>
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.example.ExecutionPeriods</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
+	</managed-bean>		
 
 	<navigation-rule>
 		<from-view-id>/manager/somePage.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>listExecutionPeriods</from-outcome>
 			<to-view-id>/manager/somePageListExecutionPeriods.jsp</to-view-id>
-		</navigation-case>
+		</navigation-case>			
 	</navigation-rule>
 
 </faces-config>

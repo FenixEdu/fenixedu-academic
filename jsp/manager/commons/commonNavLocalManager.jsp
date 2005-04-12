@@ -122,4 +122,9 @@
 	<html:link page="/somePage.faces">
 		Java Server Faces Example
 	</html:link>
+<p><strong>&raquo; 
+	<html:link page="/someStrutsPage.do?method=showFirstPage">
+		Struts Example
+	</html:link>
+	
 </strong></p>

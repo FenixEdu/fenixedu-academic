@@ -5,12 +5,9 @@
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
 		<h:outputText value="Execution Periods: "/>
 		<br />
-		<h:dataTable value="#{executionPeriods.executionPeriods}" var="executionPeriod">
+		<h:dataTable value="#{executionPeriods.executionYears}" var="executionYear">
 			<h:column>
-				<h:outputText value="#{executionPeriod.name}"/>
-			</h:column>
-			<h:column>
-				<h:outputText value="#{executionPeriod.infoExecutionYear.year}"/>
+				<h:outputText value="#{executionYear.year}"/>
 			</h:column>
 		</h:dataTable>
 </ft:tilesView>
