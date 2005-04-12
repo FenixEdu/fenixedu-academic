@@ -114,12 +114,6 @@ class net.sourceforge.fenixedu.domain.Branch extends net.sourceforge.fenixedu.do
 
 class net.sourceforge.fenixedu.domain.Building extends net.sourceforge.fenixedu.domain.DomainObject {
 	String name;
-
-	interface "
-    public java.util.List getRooms();
-    
-    public void setRooms(java.util.List rooms);
-    "
 }
 
 
@@ -692,6 +686,50 @@ class net.sourceforge.fenixedu.domain.Role extends net.sourceforge.fenixedu.doma
 }
 
 
+class net.sourceforge.fenixedu.domain.Room extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyBuilding;
+	String nome;
+	Integer capacidadeNormal;
+	Integer capacidadeExame;
+	Integer piso;
+	
+	interface "
+	public String getEdificio();
+    public void setEdificio(String edificio);
+	public net.sourceforge.fenixedu.util.TipoSala getTipo();
+    public void setTipo(net.sourceforge.fenixedu.util.TipoSala tipo);
+	public java.util.List getRoomOccupations();
+    public void setRoomOccupations(java.util.List roomOccupations);
+	"
+}
+
+
+class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer availabilityFinal;
+	Integer chaveDisciplinaExecucao;
+	String nome;
+	Integer lotacao;
+	
+	interface "
+	public net.sourceforge.fenixedu.util.TipoAula getTipo();
+    public void setTipo(net.sourceforge.fenixedu.util.TipoAula tipo);
+    public Integer getOcupation();
+    public void setOcupation(Integer integer);
+    public Double getPercentage();
+    public void setPercentage(Double percentage);
+    
+    public java.util.List getAssociatedShiftProfessorship();
+    public void setAssociatedShiftProfessorship(java.util.List list);
+    public java.util.List getAssociatedClasses();
+    public void setAssociatedClasses(java.util.List list);
+    public java.util.List getStudentShifts();
+    public void setStudentShifts(java.util.List studentShifts);
+    
+    public double hours();
+	"
+}
+
+
 class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.domain.DomainObject {
 	String style;
 	String initialStatement;
@@ -839,10 +877,9 @@ external class net.sourceforge.fenixedu.domain.Degree;
 external class net.sourceforge.fenixedu.domain.ExecutionCourse;
 external class net.sourceforge.fenixedu.domain.ExecutionPeriod;
 external class net.sourceforge.fenixedu.domain.ExecutionYear;
+external class net.sourceforge.fenixedu.domain.Lesson;
 external class net.sourceforge.fenixedu.domain.Professorship;
-external class net.sourceforge.fenixedu.domain.Room;
 external class net.sourceforge.fenixedu.domain.Section;
-external class net.sourceforge.fenixedu.domain.Shift;
 external class net.sourceforge.fenixedu.domain.Student;
 external class net.sourceforge.fenixedu.domain.Teacher;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
@@ -882,6 +919,14 @@ relation BelongsTo {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.GroupProperties playsRole groupProperties;
+}
+
+
+relation BuildingRoom {
+	net.sourceforge.fenixedu.domain.Room playsRole rooms {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Building playsRole building;
 }
 
 
@@ -969,6 +1014,14 @@ relation GroupPropertiesAttendsSet {
 }
 
 
+relation LessonShift {
+	net.sourceforge.fenixedu.domain.Lesson playsRole associatedLessons {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Shift playsRole shift;
+}
+
+
 relation MakeExportProposal {
 	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourseSender {
 		multiplicity *;
@@ -1043,6 +1096,14 @@ relation ProfessorshipSummary {
 }
 
 
+relation RoomLesson {
+	net.sourceforge.fenixedu.domain.Lesson playsRole lesson {
+		multiplicity 1;
+	}
+	net.sourceforge.fenixedu.domain.Room playsRole room;
+}
+
+
 relation RoomSummary {
 	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
 		multiplicity *;
@@ -1055,6 +1116,14 @@ relation SendProposal {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole senderExecutionCourse;
+}
+
+
+relation ShiftExecutionCourse {
+	net.sourceforge.fenixedu.domain.Shift playsRole associatedShifts {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole disciplinaExecucao;
 }
 
 

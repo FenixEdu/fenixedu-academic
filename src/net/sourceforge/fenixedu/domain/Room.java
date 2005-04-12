@@ -14,24 +14,11 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.util.TipoSala;
 
-public class Room extends DomainObject implements IRoom {
-
-    protected String _nome;
-
-    protected Integer _piso;
-
-    protected Integer _capacidadeNormal;
-
-    protected Integer _capacidadeExame;
-
+public class Room extends Room_Base {
     protected TipoSala _tipo;
-
     private List roomOccupations;
 
-    private Integer keyBuilding;
-
-    private IBuilding building;
-
+    
     /** Construtor sem argumentos público requerido pela moldura de objectos OJB */
     public Room() {
     }
@@ -50,14 +37,6 @@ public class Room extends DomainObject implements IRoom {
         setCapacidadeExame(capacidadeExame);
     }
 
-    public String getNome() {
-        return _nome;
-    }
-
-    public void setNome(String nome) {
-        _nome = nome;
-    }
-
     public String getEdificio() {
         //return _edificio;
         return getBuilding().getName();
@@ -67,36 +46,12 @@ public class Room extends DomainObject implements IRoom {
         //_edificio = edificio;
     }
 
-    public Integer getPiso() {
-        return _piso;
-    }
-
-    public void setPiso(Integer piso) {
-        _piso = piso;
-    }
-
     public TipoSala getTipo() {
         return _tipo;
     }
 
     public void setTipo(TipoSala tipo) {
         _tipo = tipo;
-    }
-
-    public Integer getCapacidadeNormal() {
-        return _capacidadeNormal;
-    }
-
-    public void setCapacidadeNormal(Integer capacidadeNormal) {
-        _capacidadeNormal = capacidadeNormal;
-    }
-
-    public Integer getCapacidadeExame() {
-        return _capacidadeExame;
-    }
-
-    public void setCapacidadeExame(Integer capacidadeExame) {
-        _capacidadeExame = capacidadeExame;
     }
 
     public boolean equals(Object obj) {
@@ -111,44 +66,20 @@ public class Room extends DomainObject implements IRoom {
     public String toString() {
         String result = "[SALA";
         result += ", codInt=" + getIdInternal();
-        result += ", nome=" + _nome;
-        result += ", piso=" + _piso;
-        result += ", tipo=" + _tipo;
-        result += ", capacidadeNormal=" + _capacidadeNormal;
-        result += ", capacidadeExame=" + _capacidadeExame;
+        result += ", nome=" + getNome();
+        result += ", piso=" + getPiso();
+        result += ", tipo=" + getTipo();
+        result += ", capacidadeNormal=" + getCapacidadeNormal();
+        result += ", capacidadeExame=" + getCapacidadeExame();
         result += "]";
         return result;
     }
 
-    /**
-     * @return Returns the roomOccupations.
-     */
     public List getRoomOccupations() {
         return roomOccupations;
     }
-
-    /**
-     * @param roomOccupations
-     *            The roomOccupations to set.
-     */
+    
     public void setRoomOccupations(List roomOccupations) {
         this.roomOccupations = roomOccupations;
-    }
-
-    public IBuilding getBuilding() {
-        return building;
-    }
-
-    public void setBuilding(IBuilding building) {
-        this.building = building;
-    }
-
-    public Integer getKeyBuilding() {
-        return keyBuilding;
-    }
-
-    public void setKeyBuilding(Integer keyBuilding) {
-        this.keyBuilding = keyBuilding;
-    }
-
+    } 
 }

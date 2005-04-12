@@ -194,6 +194,7 @@ class net.sourceforge.fenixedu.domain.EvaluationMethod extends net.sourceforge.f
 	Integer keyExecutionCourse;
 }
 
+/* DONE */
 class net.sourceforge.fenixedu.domain.Room extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyBuilding;
 	String nome;
@@ -209,6 +210,7 @@ class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.do
 	Integer chaveSala;
 }
 
+/* DONE */
 class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer availabilityFinal;
 	Integer chaveDisciplinaExecucao;
@@ -373,6 +375,7 @@ relation ExecutionCourseEvaluationMethod {
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 }
 
+/* DONE */
 relation BuildingRoom {
 	net.sourceforge.fenixedu.domain.Room playsRole rooms {
 		multiplicity *;
@@ -388,7 +391,7 @@ relation RoomSummary {
 	net.sourceforge.fenixedu.domain.Room playsRole room;
 }
 
-
+/* DONE */
 relation RoomLesson {
 	net.sourceforge.fenixedu.domain.Lesson playsRole lesson {
 		multiplicity 1;
@@ -396,6 +399,7 @@ relation RoomLesson {
 	net.sourceforge.fenixedu.domain.Room playsRole room;
 }
 
+/* DONE */
 relation LessonShift {
 	net.sourceforge.fenixedu.domain.Lesson playsRole associatedLessons {
 		multiplicity *;
@@ -410,6 +414,7 @@ relation LessonExecutionPeriod {
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
 }
 
+/* DONE */
 relation ShiftExecutionCourse {
 	net.sourceforge.fenixedu.domain.Shift playsRole associatedShifts {
 		multiplicity *;
