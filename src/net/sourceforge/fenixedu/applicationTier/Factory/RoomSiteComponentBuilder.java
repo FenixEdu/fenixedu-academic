@@ -14,11 +14,16 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteRoomTimeTable;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExam;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ILesson;
@@ -69,35 +74,6 @@ public class RoomSiteComponentBuilder {
             IRoom room) {
 
         List infoShowOccupations = new ArrayList();
-        /*
-         * try { ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-         * 
-         * //adicionar as aulas IAulaPersistente lessonDAO =
-         * sp.getIAulaPersistente(); IPersistentExam examDAO =
-         * sp.getIPersistentExam(); List lessonList =
-         * lessonDAO.readByRoomAndExecutionPeriod(room, executionPeriod);
-         * 
-         * Iterator iterator = lessonList.iterator();
-         * 
-         * while (iterator.hasNext()) { ILesson elem = (ILesson) iterator.next();
-         * InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem); IShift
-         * shift = elem.getShift(); if(shift == null) { continue; } InfoShift
-         * infoShift = Cloner.copyShift2InfoShift(shift);
-         * infoLesson.setInfoShift(infoShift);
-         * 
-         * infoShowOccupations.add(infoLesson); }
-         * 
-         * //adicionar os exames Calendar week = Calendar.getInstance();
-         * 
-         * List examList = examDAO.readByRoomAndWeek(room, week); iterator =
-         * examList.iterator();
-         * 
-         * while (iterator.hasNext()) { IExam elem = (IExam) iterator.next();
-         * InfoExam infoExam = Cloner.copyIExam2InfoExam(elem);
-         * 
-         * infoShowOccupations.add(infoExam); } } catch (ExcepcaoPersistencia
-         * ex) { ex.printStackTrace(); }
-         */
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
@@ -151,6 +127,23 @@ public class RoomSiteComponentBuilder {
                             }
 							InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
                             infoLesson.setInfoShift(infoShift);
+
+                            InfoRoomOccupation infoRoomOccupation = Cloner.copyIRoomOccupation2InfoRoomOccupation(aula
+                                    .getRoomOccupation());
+                            InfoRoom infoRoom = InfoRoom.newInfoFromDomain(aula
+                                    .getRoomOccupation().getRoom());
+                            infoRoomOccupation.setInfoRoom(infoRoom);
+                            infoLesson.setInfoRoomOccupation(infoRoomOccupation);
+
+                            shift.setAssociatedLessons(new ArrayList(1));
+                            shift.getAssociatedLessons().add(infoLesson);
+
+                            IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
+                            InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
+                            infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
+
+                            InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
+                            infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 
                             infoShowOccupations.add(infoLesson);
                         }

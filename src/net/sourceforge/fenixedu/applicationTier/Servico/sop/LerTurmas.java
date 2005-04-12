@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
+import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
@@ -22,30 +22,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class LerTurmas implements IServico {
-
-    private static LerTurmas _servico = new LerTurmas();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static LerTurmas getService() {
-        return _servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private LerTurmas() {
-    }
-
-    /**
-     * Devolve o nome do servico
-     */
-    public final String getNome() {
-        return "LerTurmas";
-    }
+public class LerTurmas implements IService {
 
     public List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
             Integer curricularYear) throws ExcepcaoPersistencia {
@@ -75,7 +54,10 @@ public class LerTurmas implements IServico {
         infoClassesList = new ArrayList();
         while (iterator.hasNext()) {
             ISchoolClass elem = (ISchoolClass) iterator.next();
-            infoClassesList.add(Cloner.copyClass2InfoClass(elem));
+
+            InfoClass infoClass = InfoClass.newInfoFromDomain(elem);
+            infoClass.setInfoExecutionPeriod(infoExecutionPeriod);
+            infoClassesList.add(infoClass);
         }
 
         return infoClassesList;

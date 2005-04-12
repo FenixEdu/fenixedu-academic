@@ -26,10 +26,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluationMethod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonWithInfoRoomAndInfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSection;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
@@ -59,6 +61,7 @@ import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IEvaluationMethod;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IItem;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IProfessorship;
@@ -597,8 +600,6 @@ public class ExecutionCourseSiteComponentBuilder {
 
             IExecutionCourse executionCourse = site.getExecutionCourse();
 
-            //                 List aulas =
-            // sp.getIAulaPersistente().readByExecutionCourse(executionCourse);
             List aulas = new ArrayList();
 
             List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
@@ -613,13 +614,9 @@ public class ExecutionCourseSiteComponentBuilder {
             infoLessonList = new ArrayList();
             while (iterator.hasNext()) {
                 ILesson elem = (ILesson) iterator.next();
-                //                InfoLesson infoLesson =
-                // InfoLessonWithInfoRoomAndInfoExecutionCourse
-                //                        .newInfoFromDomain(elem);
                 InfoLesson infoLesson = copyILesson2InfoLesson(elem);
 
                 infoLessonList.add(infoLesson);
-
             }
         } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex);
@@ -637,14 +634,27 @@ public class ExecutionCourseSiteComponentBuilder {
             infoLesson.setFim(lesson.getFim());
             infoLesson.setInicio(lesson.getInicio());
             infoLesson.setTipo(lesson.getTipo());
-            //infoLesson.setInfoSala(copyISala2InfoRoom(lesson.getSala()));
 
             InfoRoomOccupation infoRoomOccupation = Cloner.copyIRoomOccupation2InfoRoomOccupation(lesson
                     .getRoomOccupation());
+            InfoRoom infoRoom = InfoRoom.newInfoFromDomain(lesson
+                    .getRoomOccupation().getRoom());
+            infoRoomOccupation.setInfoRoom(infoRoom);
             infoLesson.setInfoRoomOccupation(infoRoomOccupation);
 
             IShift shift = lesson.getShift();
 			InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
+            shift.setAssociatedLessons(new ArrayList(1));
+            shift.getAssociatedLessons().add(infoLesson);
+
+            IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
+            InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
+            infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
+
+            IExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+            InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
+            infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
+
             infoLesson.setInfoShift(infoShift);
         }
         return infoLesson;
