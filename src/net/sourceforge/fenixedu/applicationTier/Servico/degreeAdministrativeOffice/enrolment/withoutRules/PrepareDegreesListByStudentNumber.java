@@ -112,7 +112,7 @@ public class PrepareDegreesListByStudentNumber implements IService {
             IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
                     ExecutionDegree.class, executionDegreeIdChosen);
             if (executionDegree != null) {
-                return (InfoExecutionDegree) Cloner.get(executionDegree);
+                return InfoExecutionDegree.newInfoFromDomain(executionDegree);
             }
         }
 

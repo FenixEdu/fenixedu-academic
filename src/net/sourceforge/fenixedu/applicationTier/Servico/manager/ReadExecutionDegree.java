@@ -45,7 +45,7 @@ public class ReadExecutionDegree implements IService {
             throw new NonExistingServiceException();
         }
 
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner.get(executionDegree);
+        InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
 
         //added by Tânia Pousão
         if (executionDegree.getCoordinatorsList() != null) {

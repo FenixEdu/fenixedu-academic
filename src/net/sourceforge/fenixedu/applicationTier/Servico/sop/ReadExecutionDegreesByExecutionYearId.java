@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
@@ -57,7 +58,7 @@ public class ReadExecutionDegreesByExecutionYearId implements IService {
 
                 while (iterator.hasNext()) {
                     IExecutionDegree executionDegree = (IExecutionDegree) iterator.next();
-                    infoExecutionDegreeList.add(Cloner.get(executionDegree));
+                    infoExecutionDegreeList.add(InfoExecutionDegree.newInfoFromDomain(executionDegree));
                 }
             }
         } catch (ExcepcaoPersistencia ex) {

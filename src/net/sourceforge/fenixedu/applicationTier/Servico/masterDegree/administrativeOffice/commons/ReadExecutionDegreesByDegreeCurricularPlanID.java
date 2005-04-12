@@ -50,9 +50,6 @@ public class ReadExecutionDegreesByDegreeCurricularPlanID implements IService {
 
             for (Iterator iter = executionDegrees.iterator(); iter.hasNext();) {
                 IExecutionDegree executionDegree = (IExecutionDegree) iter.next();
-                //CLONER
-                //InfoExecutionDegree infoExecutionDegree =
-                //    (InfoExecutionDegree) Cloner.get(executionDegree);
                 InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYear
                         .newInfoFromDomain(executionDegree);
                 infoExecutionDegreeList.add(infoExecutionDegree);

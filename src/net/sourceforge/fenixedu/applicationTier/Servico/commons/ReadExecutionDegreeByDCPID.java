@@ -42,7 +42,7 @@ public class ReadExecutionDegreeByDCPID implements IService {
             throw new NonExistingServiceException();
         }
 
-        return (InfoExecutionDegree) Cloner.get(executionDegree);
+        return InfoExecutionDegree.newInfoFromDomain(executionDegree);
     }
 
 }

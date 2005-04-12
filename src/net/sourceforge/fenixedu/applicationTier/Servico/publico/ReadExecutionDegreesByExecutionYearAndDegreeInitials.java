@@ -37,8 +37,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeInitials implements
 		final IExecutionDegree executionDegree = executionDegreeDAO
 				.readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
 						degreeInitials, nameDegreeCurricularPlan, executionYear);
-		final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
-				.newInfoFromDomain(executionDegree);
+		final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
 		final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
 		infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 		final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(executionDegree.getDegreeCurricularPlan().getDegree());

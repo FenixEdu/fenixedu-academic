@@ -160,7 +160,7 @@ public class ExamSiteComponentBuilder {
         } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex);
         }
-        component.setInfoExecutionDegree((InfoExecutionDegree) Cloner.get(executionDegree));
+        component.setInfoExecutionDegree(InfoExecutionDegree.newInfoFromDomain(executionDegree));
         component.setInfoExamsMap(infoExamsMap);
 
         return component;
