@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher;
  * @author EP 15
  */
 
-import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;

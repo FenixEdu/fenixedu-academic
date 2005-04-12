@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.RequestContextUtil;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
