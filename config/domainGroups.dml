@@ -1,89 +1,121 @@
-class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
-	String nome;
-	Double theoreticalHours;
-	String sigla;
-	Integer ackOptLock;
-	Double labHours;
-	Integer idInternal;
-	Integer keyExecutionPeriod;
-	Double praticalHours;
-	String comment;
-	Double theoPratHours;
-}
-
-
 class net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keySenderExecutionCourse;
-	Integer ackOptLock;
-	Integer idInternal;
-	Integer keySenderPerson;
-	Integer keyExecutionCourse;
-	Integer keyReceiverPerson;
-	Integer keyGroupProperties;
+        Integer keySenderExecutionCourse;
+        Integer keySenderPerson;
+        Integer keyExecutionCourse;
+        Integer keyReceiverPerson;
+        Integer keyGroupProperties;
+        
+        interface "
+        public net.sourceforge.fenixedu.util.ProposalState getProposalState();
+        
+        public void setProposalState(net.sourceforge.fenixedu.util.ProposalState proposalState);
+        "
 }
 
 
 class net.sourceforge.fenixedu.domain.GroupProperties extends net.sourceforge.fenixedu.domain.DomainObject {
-	String projectDescription;
-	Integer idInternal;
-	Integer keyAttendsSet;
-	Integer maximumCapacity;
-	Integer groupMaximumNumber;
-	Integer ackOptLock;
-	Integer idealCapacity;
-	Integer minimumCapacity;
-	String name;
+        String projectDescription;
+        Integer keyAttendsSet;
+        Integer maximumCapacity;
+        Integer groupMaximumNumber;
+        Integer idealCapacity;
+        Integer minimumCapacity;
+        String name;
+        
+        interface "
+        public net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType getEnrolmentPolicy();
+        
+        public void setEnrolmentPolicy(net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType enrolmentGroupPolicy);
+
+        public net.sourceforge.fenixedu.util.TipoAula getShiftType();
+        
+        public void setShiftType(net.sourceforge.fenixedu.util.TipoAula shiftType);
+        
+        public java.util.Calendar getEnrolmentBeginDay();
+        
+		public void setEnrolmentBeginDay(java.util.Calendar enrolmentBeginDay);
+		
+		public java.util.Calendar getEnrolmentEndDay();
+
+		public void setEnrolmentEndDay(java.util.Calendar enrolmentEndDay);
+        
+		public void addGroupPropertiesExecutionCourse(net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
+
+		public void removeGroupPropertiesExecutionCourse(net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
+		
+	    public java.util.List getExecutionCourses();
+        "
 }
 
 
 class net.sourceforge.fenixedu.domain.AttendsSet extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer ackOptLock;
-	Integer idInternal;
-	String name;
-	Integer keyGroupProperties;
+        String name;
+        Integer keyGroupProperties;
+        
+        interface "
+        
+       	public java.util.List getAttends();
+        
+        public void addAttendInAttendsSet (net.sourceforge.fenixedu.domain.IAttendInAttendsSet attendInAttendsSet);
+
+		public void removeAttendInAttendsSet (net.sourceforge.fenixedu.domain.IAttendInAttendsSet attendInAttendsSet);
+
+		public boolean existsAttendInAttendsSet (net.sourceforge.fenixedu.domain.IAttendInAttendsSet attendInAttendsSet);
+	
+		public void addStudentGroup (net.sourceforge.fenixedu.domain.IStudentGroup studentGroup);
+
+		public void removeStudentGroup (net.sourceforge.fenixedu.domain.IStudentGroup studentGroup);
+
+		public boolean existsStudentGroup (net.sourceforge.fenixedu.domain.IStudentGroup studentGroup);
+	
+		public net.sourceforge.fenixedu.domain.IAttends getStudentAttend(net.sourceforge.fenixedu.domain.IStudent student);
+
+		public java.util.List getStudentGroupsWithoutShift();
+
+		public java.util.List getStudentGroupsWithShift();
+
+		public Integer getNumberOfStudentsInAttendsSet();
+
+		public Integer getNumberOfStudentsNotInAttendsSet();
+		"
 }
 
 class net.sourceforge.fenixedu.domain.AttendInAttendsSet extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer ackOptLock;
-	Integer idInternal;
-	Integer keyAttend;
-	Integer keyAttendsSet;
+        Integer keyAttend;
+        Integer keyAttendsSet;
+        
 }
-
-
-class net.sourceforge.fenixedu.domain.Attends extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer chaveDisciplinaExecucao;
-	Integer chaveAluno;
-	Integer ackOptLock;
-	Integer idInternal;
-	Integer keyEnrolment;
-}
-
 
 class net.sourceforge.fenixedu.domain.StudentGroup extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyShift;
-	Integer ackOptLock;
-	Integer idInternal;
-	Integer groupNumber;
-	Integer keyAttendsSet;
+        Integer keyShift;
+        Integer groupNumber;
+        Integer keyAttendsSet;
 }
 
-
-class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.domain.DomainObject {
-	String nome;
-	Integer ackOptLock;
-	Integer idInternal;
-	Integer chaveDisciplinaExecucao;
-	Integer availabilityFinal;
-	Integer lotacao;
-}
 
 class net.sourceforge.fenixedu.domain.StudentGroupAttend extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyStudentGroup;
-	Integer ackOptLock;
-	Integer idInternal;
-	Integer keyAttend;
+        Integer keyStudentGroup;
+        Integer keyAttend;        
 }
+
+/*
+ * External classes declarations
+ *
+ * The following declarations allow the DmlCompiler to recognize the classes in
+ * the relations definitions. Remove each declaration once the corresponding 
+ * class definition is included.
+ * 
+ */
+ 
+external class net.sourceforge.fenixedu.domain.Attends;
+external class net.sourceforge.fenixedu.domain.ExecutionCourse;
+external class net.sourceforge.fenixedu.domain.Shift;
+
+
+/*
+ * Relations definitions
+ * 
+ */
 
 
 relation sendProposal {
@@ -94,7 +126,6 @@ relation sendProposal {
 }
 
 
-
 relation goalExecutionCourse {
 	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
 		multiplicity *;
@@ -103,7 +134,7 @@ relation goalExecutionCourse {
 }
 
 
-relation permission {
+relation groupPropertiesAttendsSet {
 	net.sourceforge.fenixedu.domain.AttendsSet playsRole attendsSet;
 	net.sourceforge.fenixedu.domain.GroupProperties playsRole groupProperties;
 }
@@ -117,18 +148,18 @@ relation belongsTo {
 }
 
 relation answerExportProposal {
-	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourseReceiver {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Pessoa playsRole receiverPerson;
+	net.sourceforge.fenixedu.domain.Person playsRole receiverPerson;
 }
 
 
 relation makeExportProposal {
-	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourseSender {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Pessoa playsRole senderPerson;
+	net.sourceforge.fenixedu.domain.Person playsRole senderPerson;
 }
 
 relation studentGroupBelongsToGroupProperties {
@@ -149,15 +180,15 @@ relation attendBelongsToAttendsSet {
 	net.sourceforge.fenixedu.domain.AttendInAttendsSet playsRole attendInAttendsSet {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Frequenta playsRole attend;
+	net.sourceforge.fenixedu.domain.Attends playsRole attend;
 }
 
 
-relation StudentGroupAttendFrequenta {
+relation StudentGroupAttendAttends {
 	net.sourceforge.fenixedu.domain.StudentGroupAttend playsRole studentGroupAttends {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Frequenta playsRole attend;
+	net.sourceforge.fenixedu.domain.Attends playsRole attend;
 }
 
 relation StudentGroupAttendStudentGroup {
@@ -171,8 +202,5 @@ relation StudentGroup {
 	net.sourceforge.fenixedu.domain.StudentGroup playsRole associatedStudentGroups {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Turno playsRole shift;
+	net.sourceforge.fenixedu.domain.Shift playsRole shift;
 }
-
-
-
