@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author Ana e Ricardo
  */
-public class WrittenEvaluation extends Evaluation implements IWrittenEvaluation {
+public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     protected Calendar day;
 
