@@ -800,7 +800,28 @@ class net.sourceforge.fenixedu.domain.StudentGroupAttend extends net.sourceforge
         Integer keyAttend;        
 }
 
-
+class net.sourceforge.fenixedu.domain.Summary extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer studentsNumber;
+	Integer keyProfessorship;
+	String title;
+	Integer keyExecutionCourse;
+	Integer keyTeacher;
+	Integer keyRoom;
+	String teacherName;
+	String summaryText;
+	Date lastModifiedDate;
+	Integer keyShift;
+	Boolean isExtraLesson;
+	
+	interface "
+	public java.util.Calendar getSummaryHour();
+    public void setSummaryHour(java.util.Calendar summaryHour);
+    public net.sourceforge.fenixedu.util.TipoAula getSummaryType();
+    public void setSummaryType(net.sourceforge.fenixedu.util.TipoAula summaryType);
+    public java.util.Calendar getSummaryDate();
+    public void setSummaryDate(java.util.Calendar summaryDate);
+	"
+}
 
 
 /*
@@ -818,6 +839,8 @@ external class net.sourceforge.fenixedu.domain.Degree;
 external class net.sourceforge.fenixedu.domain.ExecutionCourse;
 external class net.sourceforge.fenixedu.domain.ExecutionPeriod;
 external class net.sourceforge.fenixedu.domain.ExecutionYear;
+external class net.sourceforge.fenixedu.domain.Professorship;
+external class net.sourceforge.fenixedu.domain.Room;
 external class net.sourceforge.fenixedu.domain.Section;
 external class net.sourceforge.fenixedu.domain.Shift;
 external class net.sourceforge.fenixedu.domain.Student;
@@ -924,6 +947,14 @@ relation ExecutionCourseSite {
 }
 
 
+relation ExecutionCourseSummary {
+	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+}
+
+
 relation GoalExecutionCourse {
 	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
 		multiplicity *;
@@ -1004,11 +1035,34 @@ relation OldInquiriesTeachersResTeacher {
 }
 
 
+relation ProfessorshipSummary {
+	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Professorship playsRole professorship;
+}
+
+
+relation RoomSummary {
+	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Room playsRole room;
+}
+
 relation SendProposal {
 	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole senderExecutionCourse;
+}
+
+
+relation ShiftSummary {
+	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Shift playsRole shift;
 }
 
 
@@ -1081,3 +1135,12 @@ relation TeacherOldPublication {
 	}
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
+
+
+relation TeacherSummary {
+	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
