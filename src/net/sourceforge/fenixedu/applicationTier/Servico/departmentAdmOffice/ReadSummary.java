@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -15,6 +16,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSummary;
@@ -86,8 +89,17 @@ public class ReadSummary implements IService {
                 infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
 
                     public Object transform(Object arg0) {
-                        IShift turno = (IShift) arg0;
-                        return InfoShift.newInfoFromDomain(turno);
+                        final IShift turno = (IShift) arg0;
+                        final InfoShift infoShift = InfoShift.newInfoFromDomain(turno);
+                        infoShift.setInfoLessons(new ArrayList(turno.getAssociatedLessons().size()));
+                        for (final Iterator iterator = turno.getAssociatedLessons().iterator(); iterator.hasNext(); ) {
+                            final ILesson lesson = (ILesson) iterator.next();
+                            final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
+                            final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(lesson.getSala());
+                            infoLesson.setInfoSala(infoRoom);
+                            infoShift.getInfoLessons().add(infoLesson);
+                        }
+                        return infoShift;
                     }
                 });
             }
