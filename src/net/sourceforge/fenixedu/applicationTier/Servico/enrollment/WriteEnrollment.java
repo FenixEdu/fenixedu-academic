@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
@@ -81,13 +81,13 @@ public class WriteEnrollment implements IService {
                     executionPeriodID);
         }
 
-        IEnrollment enrollment = enrollmentDAO
+        IEnrolment enrollment = enrollmentDAO
                 .readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(studentCurricularPlan,
                         curricularCourse, executionPeriod);
 
         if (enrollment == null) {
 
-            IEnrollment enrollmentToWrite;
+            IEnrolment enrollmentToWrite;
             if (enrollmentClass == null || enrollmentClass.equals(new Integer(1))
                     || enrollmentClass.equals(new Integer(0))) {
 
@@ -138,7 +138,7 @@ public class WriteEnrollment implements IService {
      * @throws ExcepcaoPersistencia
      */
     public static void createAttend(IStudent student, ICurricularCourse curricularCourse,
-            IExecutionPeriod executionPeriod, IEnrollment enrolmentToWrite) throws ExcepcaoPersistencia {
+            IExecutionPeriod executionPeriod, IEnrolment enrolmentToWrite) throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExecutionCourse executionCourseDAO = persistentSuport.getIPersistentExecutionCourse();
         IFrequentaPersistente attendDAO = persistentSuport.getIFrequentaPersistente();
@@ -186,12 +186,12 @@ public class WriteEnrollment implements IService {
         }
     }
 
-    public static void createAttend(IEnrollment enrolment) throws ExcepcaoPersistencia {
+    public static void createAttend(IEnrolment enrolment) throws ExcepcaoPersistencia {
         createAttend(enrolment.getStudentCurricularPlan().getStudent(), enrolment.getCurricularCourse(),
                 enrolment.getExecutionPeriod(), enrolment);
     }
 
-    private void createEnrollmentEvaluation(IEnrollment enrolment) throws ExcepcaoPersistencia {
+    private void createEnrollmentEvaluation(IEnrolment enrolment) throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentEnrolmentEvaluation enrollmentEvaluationDAO = persistentSuport
                 .getIPersistentEnrolmentEvaluation();

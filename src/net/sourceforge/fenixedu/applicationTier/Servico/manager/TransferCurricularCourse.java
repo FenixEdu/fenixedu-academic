@@ -12,7 +12,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudent;
@@ -108,7 +108,7 @@ public class TransferCurricularCourse implements IService {
         List attends = sourceExecutionCourse.getAttends();
         for (Iterator iterator = attends.iterator(); iterator.hasNext();) {
             IAttends attend = (IAttends) iterator.next();
-            IEnrollment enrollment = attend.getEnrolment();
+            IEnrolment enrollment = attend.getEnrolment();
             final IStudent student = attend.getAluno();
             if (enrollment != null) {
                 ICurricularCourse associatedCurricularCourse = attend.getEnrolment().getCurricularCourse();

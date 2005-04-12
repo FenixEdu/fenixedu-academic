@@ -10,11 +10,11 @@ import java.util.List;
 
 public interface IEnrolmentEquivalence extends IDomainObject {
 
-    public IEnrollment getEnrolment();
+    public IEnrolment getEnrolment();
 
     public List getEquivalenceRestrictions();
 
-    public void setEnrolment(IEnrollment enrolment);
+    public void setEnrolment(IEnrolment enrolment);
 
     public void setEquivalenceRestrictions(List list);
 

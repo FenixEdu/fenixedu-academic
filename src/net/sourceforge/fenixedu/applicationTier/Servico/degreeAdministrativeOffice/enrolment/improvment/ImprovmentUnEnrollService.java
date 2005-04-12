@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
@@ -52,7 +52,7 @@ public class ImprovmentUnEnrollService implements IService {
             Iterator iterator = enrolmentsIds.iterator();
             while(iterator.hasNext()) {
                 Integer enrolmentId = (Integer) iterator.next();
-                IEnrollment enrollment = (IEnrollment) persistentEnrollment.readByOID(Enrolment.class, enrolmentId);
+                IEnrolment enrollment = (IEnrolment) persistentEnrollment.readByOID(Enrolment.class, enrolmentId);
                 if(enrollment == null) {
                     throw new InvalidArgumentsServiceException();
                 }
@@ -87,7 +87,7 @@ public class ImprovmentUnEnrollService implements IService {
      * @param enrollment
      * @param student
      */
-    private void setAttend(ISuportePersistente sp, IEnrollment enrollment, final IStudent student) throws ExcepcaoPersistencia{
+    private void setAttend(ISuportePersistente sp, IEnrolment enrollment, final IStudent student) throws ExcepcaoPersistencia{
         
         IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
         final IExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();

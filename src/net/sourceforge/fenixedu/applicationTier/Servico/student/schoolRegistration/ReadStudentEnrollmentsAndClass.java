@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithInfoCurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
@@ -70,7 +70,7 @@ public class ReadStudentEnrollmentsAndClass implements IService {
 
         for (int iterator = 0; iterator < studentEnrollments.size(); iterator++) {
 
-            IEnrollment enrollment = (IEnrollment) studentEnrollments.get(iterator);
+            IEnrolment enrollment = (IEnrolment) studentEnrollments.get(iterator);
 
             InfoEnrolment infoEnrollment = InfoEnrolmentWithInfoCurricularCourse
                     .newInfoFromDomain(enrollment);

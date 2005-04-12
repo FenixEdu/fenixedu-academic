@@ -5,9 +5,9 @@ package net.sourceforge.fenixedu.domain;
  */
 
 public interface ICreditsInScientificArea extends IDomainObject {
-    public IEnrollment getEnrolment();
+    public IEnrolment getEnrolment();
 
-    public void setEnrolment(IEnrollment enrolment);
+    public void setEnrolment(IEnrolment enrolment);
 
     public Integer getEnrolmentKey();
 

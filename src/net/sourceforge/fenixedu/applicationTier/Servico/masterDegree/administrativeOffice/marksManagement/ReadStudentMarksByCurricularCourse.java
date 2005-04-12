@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
@@ -52,7 +52,7 @@ public class ReadStudentMarksByCurricularCourse implements IService {
         List enrolmentEvaluations = null;
         InfoTeacher infoTeacher = null;
         List infoSiteEnrolmentEvaluations = new ArrayList();
-        IEnrollment enrolment = new Enrolment();
+        IEnrolment enrolment = new Enrolment();
         IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
 
         try {
@@ -133,7 +133,7 @@ public class ReadStudentMarksByCurricularCourse implements IService {
                 if (enrollments.isEmpty()) {
                     throw new ExistingServiceException();
                 }
-                enrolment = (IEnrollment) enrollments.get(0);
+                enrolment = (IEnrolment) enrollments.get(0);
             }
 
             if (enrolment != null) {

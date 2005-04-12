@@ -6,7 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
 import net.sourceforge.fenixedu.dataTransferObject.equivalence.InfoEquivalenceContext;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEquivalence;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -108,7 +108,7 @@ public class ReadListsOfEnrollmentsWithEquivalences extends EnrollmentEquivalenc
             List enrollmentsFromEquivalences = new ArrayList();
 
             for (int i = 0; i < studentEnrollments.size(); i++) {
-                IEnrollment enrollment = (IEnrollment) studentEnrollments.get(i);
+                IEnrolment enrollment = (IEnrolment) studentEnrollments.get(i);
 
                 IEnrolmentEquivalence enrollmentEquivalence = enrollmentEquivalenceDAO
                         .readByEnrolment(enrollment);

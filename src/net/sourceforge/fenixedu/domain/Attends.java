@@ -19,7 +19,7 @@ public class Attends extends DomainObject implements IAttends {
 
     protected IExecutionCourse _disciplinaExecucao;
 
-    protected IEnrollment _enrolment;
+    protected IEnrolment _enrolment;
 
     // códigos internos da base de dados
     private Integer _chaveAluno;
@@ -42,7 +42,7 @@ public class Attends extends DomainObject implements IAttends {
 	public Attends(
 		IStudent aluno,
 		IExecutionCourse disciplinaExecucao,
-		IEnrollment enrolment) {
+		IEnrolment enrolment) {
 		setAluno(aluno);
 		setDisciplinaExecucao(disciplinaExecucao);
 		setEnrolment(enrolment);
@@ -88,11 +88,11 @@ public class Attends extends DomainObject implements IAttends {
 		_keyEnrolment = integer;
 	}
 
-	public IEnrollment getEnrolment() {
+	public IEnrolment getEnrolment() {
 		return _enrolment;
 	}
 
-	public void setEnrolment(IEnrollment enrolment) {
+	public void setEnrolment(IEnrolment enrolment) {
 		this._enrolment = enrolment;
 	}
 

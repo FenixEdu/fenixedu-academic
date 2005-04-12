@@ -6,7 +6,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.utils;
 
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 
 import org.apache.commons.collections.Predicate;
@@ -26,9 +26,9 @@ public class EnrollmentPredicates
 		{
 			public boolean evaluate(Object object)
 			{
-				if (object instanceof IEnrollment)
+				if (object instanceof IEnrolment)
 				{
-					IEnrollment en = (IEnrollment)object;
+					IEnrolment en = (IEnrolment)object;
 					if (en.getEnrollmentState().equals(EnrollmentState.APROVED) ||
 					    en.getEnrollmentState().equals(EnrollmentState.ENROLLED) ||
 					    en.getEnrollmentState().equals(EnrollmentState.TEMPORARILY_ENROLLED))
@@ -47,9 +47,9 @@ public class EnrollmentPredicates
 		{
 			public boolean evaluate(Object object)
 			{
-				if (object instanceof IEnrollment)
+				if (object instanceof IEnrolment)
 				{
-					IEnrollment en = (IEnrollment)object;
+					IEnrolment en = (IEnrolment)object;
 					if (en.getEnrollmentState().equals(EnrollmentState.ENROLLED) ||
 						en.getEnrollmentState().equals(EnrollmentState.TEMPORARILY_ENROLLED))
 						return true;
@@ -67,7 +67,7 @@ public class EnrollmentPredicates
 		{
 			public boolean evaluate(Object object)
 			{
-				if (object instanceof IEnrollment)
+				if (object instanceof IEnrolment)
 				{
 					return true;
 				}
@@ -77,7 +77,7 @@ public class EnrollmentPredicates
 		};
 	}
 	
-	/* devolve um Predicate que nao aceita nenhum IEnrollment */
+	/* devolve um Predicate que nao aceita nenhum IEnrolment */
 	public static Predicate getNonePredicate()
 	{
 		return new Predicate()

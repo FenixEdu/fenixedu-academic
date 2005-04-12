@@ -193,7 +193,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base implements
 		return (List) CollectionUtils.select(allEnrollments, new Predicate() {
 
 			public boolean evaluate(Object arg0) {
-				IEnrollment enrollment = (IEnrollment) arg0;
+				IEnrolment enrollment = (IEnrolment) arg0;
 				return !enrollment.getCondition().equals(
 						EnrollmentCondition.INVISIBLE);
 			}
@@ -264,7 +264,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base implements
 		List result = (List) CollectionUtils.collect(
 				studentApprovedEnrollments, new Transformer() {
 					public Object transform(Object obj) {
-						IEnrollment enrollment = (IEnrollment) obj;
+						IEnrolment enrollment = (IEnrolment) obj;
 
 						return enrollment.getCurricularCourse();
 
@@ -312,7 +312,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base implements
 		List result = (List) CollectionUtils.collect(
 				studentEnrolledEnrollments, new Transformer() {
 					public Object transform(Object obj) {
-						IEnrollment enrollment = (IEnrollment) obj;
+						IEnrolment enrollment = (IEnrolment) obj;
 						return enrollment.getCurricularCourse();
 					}
 				});
@@ -328,7 +328,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base implements
 		List result = (List) CollectionUtils.collect(
 				studentEnrolledEnrollments, new Transformer() {
 					public Object transform(Object obj) {
-						IEnrollment enrollment = (IEnrollment) obj;
+						IEnrolment enrollment = (IEnrolment) obj;
 						return enrollment.getCurricularCourse();
 					}
 				});
@@ -371,7 +371,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base implements
 
 					public boolean evaluate(Object arg0) {
 
-						return ((IEnrollment) arg0).getExecutionPeriod()
+						return ((IEnrolment) arg0).getExecutionPeriod()
 								.equals(executionPeriod);
 					}
 				}));
@@ -382,7 +382,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base implements
 		return initAcumulatedEnrollments((List) CollectionUtils.select(
 				getEnrolments(), new Predicate() {
 					public boolean evaluate(Object obj) {
-						IEnrollment enrollment = (IEnrollment) obj;
+						IEnrolment enrollment = (IEnrolment) obj;
 						return (enrollment.getEnrollmentState().equals(
 								EnrollmentState.ENROLLED) && enrollment
 								.getCondition().equals(
@@ -417,7 +417,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base implements
 
 		for (int i = 0; i < enrollmentsWithEnrolledStateInCurrentExecutionPeriod
 				.size(); i++) {
-			IEnrollment enrollment = (IEnrollment) enrollmentsWithEnrolledStateInCurrentExecutionPeriod
+			IEnrolment enrollment = (IEnrolment) enrollmentsWithEnrolledStateInCurrentExecutionPeriod
 					.get(i);
 			if (curricularCourse.equals(enrollment.getCurricularCourse())) {
 				return CurricularCourseEnrollmentType.NOT_ALLOWED;
@@ -429,7 +429,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base implements
 
 		for (int i = 0; i < enrollmentsWithEnrolledStateInPreviousExecutionPeriod
 				.size(); i++) {
-			IEnrollment enrollment = (IEnrollment) enrollmentsWithEnrolledStateInPreviousExecutionPeriod
+			IEnrolment enrollment = (IEnrolment) enrollmentsWithEnrolledStateInPreviousExecutionPeriod
 					.get(i);
 			if (curricularCourse.equals(enrollment.getCurricularCourse())) {
 				return CurricularCourseEnrollmentType.TEMPORARY;
@@ -589,7 +589,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base implements
 			final IExecutionPeriod executionPeriod) {
 		return (List) CollectionUtils.select(getEnrolments(), new Predicate() {
 			public boolean evaluate(Object obj) {
-				IEnrollment enrollment = (IEnrollment) obj;
+				IEnrolment enrollment = (IEnrolment) obj;
 				if (enrollment.getEnrollmentState().equals(
 						EnrollmentState.APROVED)
 						&& enrollment.getExecutionPeriod().equals(
@@ -616,7 +616,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base implements
 		List curricularCourses = (List) CollectionUtils.collect(enrollments,
 				new Transformer() {
 					public Object transform(Object obj) {
-						ICurricularCourse curricularCourse = ((IEnrollment) obj)
+						ICurricularCourse curricularCourse = ((IEnrolment) obj)
 								.getCurricularCourse();
 						return curricularCourse
 								.getCurricularCourseUniqueKeyForEnrollment();
@@ -642,7 +642,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base implements
 
 			for (int i = 0; i < size; i++) {
 				try {
-					IEnrollment enrollment = (IEnrollment) elements.get(i);
+					IEnrolment enrollment = (IEnrolment) elements.get(i);
 					enrollment
 							.setAccumulatedWeight(getCurricularCourseAcumulatedEnrollments(enrollment
 									.getCurricularCourse()));
@@ -730,7 +730,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base implements
 		return (List) CollectionUtils.select(getAllEnrollments(),
 				new Predicate() {
 					public boolean evaluate(Object obj) {
-						IEnrollment enrollment = (IEnrollment) obj;
+						IEnrolment enrollment = (IEnrolment) obj;
 						return enrollment.getEnrollmentState().equals(
 								EnrollmentState.APROVED);
 					}
@@ -741,7 +741,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base implements
 
 		return (List) CollectionUtils.select(getEnrolments(), new Predicate() {
 			public boolean evaluate(Object obj) {
-				IEnrollment enrollment = (IEnrollment) obj;
+				IEnrolment enrollment = (IEnrolment) obj;
 				return enrollment.getEnrollmentState().equals(
 						EnrollmentState.ENROLLED)
 						&& !enrollment.getCondition().equals(
@@ -755,7 +755,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base implements
 		return (List) CollectionUtils.select(getAllEnrollments(),
 				new Predicate() {
 					public boolean evaluate(Object obj) {
-						IEnrollment enrollment = (IEnrollment) obj;
+						IEnrolment enrollment = (IEnrolment) obj;
 						return !enrollment.getEnrollmentState().equals(
 								EnrollmentState.ENROLLED)
 								&& !enrollment.getEnrollmentState().equals(
@@ -956,7 +956,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base implements
 
 		int size = curricularCoursesEnrollments.size();
 		for (int i = 0; i < size; i++) {
-			ICurricularCourse tempCurricularCourse = ((IEnrollment) curricularCoursesEnrollments
+			ICurricularCourse tempCurricularCourse = ((IEnrolment) curricularCoursesEnrollments
 					.get(i)).getCurricularCourse();
 			List curricularCourseEquivalences = getCurricularCoursesInCurricularCourseEquivalences(tempCurricularCourse);
 			if (curricularCourseEquivalences.contains(curricularCourse)) {

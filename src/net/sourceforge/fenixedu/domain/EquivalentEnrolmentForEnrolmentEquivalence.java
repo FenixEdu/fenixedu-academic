@@ -11,7 +11,7 @@ public class EquivalentEnrolmentForEnrolmentEquivalence extends DomainObject imp
         IEquivalentEnrolmentForEnrolmentEquivalence {
     private IEnrolmentEquivalence enrolmentEquivalence;
 
-    private IEnrollment equivalentEnrolment;
+    private IEnrolment equivalentEnrolment;
 
     private Integer enrolmentEquivalenceKey;
 
@@ -43,7 +43,7 @@ public class EquivalentEnrolmentForEnrolmentEquivalence extends DomainObject imp
         return enrolmentEquivalenceKey;
     }
 
-    public IEnrollment getEquivalentEnrolment() {
+    public IEnrolment getEquivalentEnrolment() {
         return equivalentEnrolment;
     }
 
@@ -59,7 +59,7 @@ public class EquivalentEnrolmentForEnrolmentEquivalence extends DomainObject imp
         enrolmentEquivalenceKey = integer;
     }
 
-    public void setEquivalentEnrolment(IEnrollment enrolment) {
+    public void setEquivalentEnrolment(IEnrolment enrolment) {
         equivalentEnrolment = enrolment;
     }
 

@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithInfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
@@ -33,7 +33,7 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service {
      * @param enrollment
      * @return true/false
      */
-    protected boolean isAnAprovedEnrollment(IEnrollment enrollment) {
+    protected boolean isAnAprovedEnrollment(IEnrolment enrollment) {
         return enrollment.getEnrollmentState().equals(EnrollmentState.APROVED);
     }
 
@@ -41,7 +41,7 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service {
      * @param enrollment
      * @return true/false
      */
-    protected boolean isAnEnroledEnrollment(IEnrollment enrollment) {
+    protected boolean isAnEnroledEnrollment(IEnrolment enrollment) {
         return (enrollment.getEnrollmentState().equals(EnrollmentState.ENROLLED) || enrollment
                 .getEnrollmentState().equals(EnrollmentState.TEMPORARILY_ENROLLED));
     }
@@ -52,7 +52,7 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service {
      * @param studentCurricularPlan
      * @return true/false
      */
-    protected boolean isAnEnrollmentWithNoEquivalences(IEnrollment enrollment,
+    protected boolean isAnEnrollmentWithNoEquivalences(IEnrolment enrollment,
             IDegreeCurricularPlan degreeCurricularPlan, IStudentCurricularPlan studentCurricularPlan) {
         List result1 = null;
         List result2 = null;
@@ -153,7 +153,7 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service {
     protected List cloneEnrolmentsToInfoEnrolments(List enrollments) {
         List infoEnrolments = new ArrayList();
         for (int i = 0; i < enrollments.size(); i++) {
-            IEnrollment enrollment = (IEnrollment) enrollments.get(i);
+            IEnrolment enrollment = (IEnrolment) enrollments.get(i);
             //CLONER
             //InfoEnrolment infoEnrolment =
             // Cloner.copyIEnrolment2InfoEnrolment(enrollment);
@@ -168,7 +168,7 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service {
      * @param infoEnrollment
      * @return String
      */
-    protected String getEnrollmentGrade(IEnrollment enrollment) {
+    protected String getEnrollmentGrade(IEnrolment enrollment) {
         // This sorts the list ascendingly so we need to reverse it to get the
         // first object.
         Collections.sort(enrollment.getEvaluations());

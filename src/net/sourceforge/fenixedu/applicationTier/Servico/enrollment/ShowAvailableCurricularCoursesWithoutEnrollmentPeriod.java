@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoEx
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranch;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoCurricularCourse2Enroll;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoCurricularCourse2EnrollWithInfoCurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentPeriodInCurricularCourses;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudent;
@@ -158,7 +158,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements IS
             public Object transform(Object arg0) {
 
                 return InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear
-                        .newInfoFromDomain((IEnrollment) arg0);
+                        .newInfoFromDomain((IEnrolment) arg0);
             }
         });
     }

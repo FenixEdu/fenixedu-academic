@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
@@ -296,7 +296,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
 
             for (Iterator iter = studentCurricularPlan.getEnrolments().iterator(); iter.hasNext();) {
 
-                IEnrollment enrolment = (IEnrollment) iter.next();
+                IEnrolment enrolment = (IEnrolment) iter.next();
 
                 if (enrolment.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
 
@@ -316,7 +316,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
 
             for (Iterator iter = studentCurricularPlan.getEnrolments().iterator(); iter.hasNext();) {
 
-                IEnrollment enrolment = (IEnrollment) iter.next();
+                IEnrolment enrolment = (IEnrolment) iter.next();
 
                 if (enrolment.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
 

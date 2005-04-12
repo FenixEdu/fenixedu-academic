@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 
 /**
  * @author nmgo
@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.IEnrollment;
  */
 public class InfoEnrolmentWithInfoStudentPlanAndInfoDegreePlanAndInfoStudent extends InfoEnrolment {
 
-    public void copyFromDomain(IEnrollment enrolment) {
+    public void copyFromDomain(IEnrolment enrolment) {
         super.copyFromDomain(enrolment);
         if (enrolment != null) {
             setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree
@@ -19,7 +19,7 @@ public class InfoEnrolmentWithInfoStudentPlanAndInfoDegreePlanAndInfoStudent ext
         }
     }
 
-    public static InfoEnrolment newInfoFromDomain(IEnrollment enrolment) {
+    public static InfoEnrolment newInfoFromDomain(IEnrolment enrolment) {
         InfoEnrolmentWithInfoStudentPlanAndInfoDegreePlanAndInfoStudent infoEnrolment = null;
         if (enrolment != null) {
             infoEnrolment = new InfoEnrolmentWithInfoStudentPlanAndInfoDegreePlanAndInfoStudent();

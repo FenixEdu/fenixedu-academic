@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -30,11 +30,11 @@ public class ReadInfoEnrolmentEvaluationByEvaluationOID implements IService {
             throws ExcepcaoInexistente, FenixServiceException {
         ISuportePersistente sp = null;
 
-        IEnrollment enrolment = null;
+        IEnrolment enrolment = null;
         try {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            enrolment = (IEnrollment) sp.getIPersistentEnrolment().readByOID(Enrolment.class,
+            enrolment = (IEnrolment) sp.getIPersistentEnrolment().readByOID(Enrolment.class,
                     enrolmentOID);
 
         } catch (ExcepcaoPersistencia e) {

@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CreditsInScientificArea;
 import net.sourceforge.fenixedu.domain.ICreditsInScientificArea;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IScientificArea;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -25,7 +25,7 @@ public class CreditsInSpecificScientificAreaOJB extends PersistentObjectOJB impl
     }
 
     public ICreditsInScientificArea readByStudentCurricularPlanAndEnrollmentAndScientificArea(
-            IStudentCurricularPlan studentCurricularPlan, IEnrollment enrolment,
+            IStudentCurricularPlan studentCurricularPlan, IEnrolment enrolment,
             IScientificArea scientificArea) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("studentCurricularPlan.idInternal", studentCurricularPlan.getIdInternal());

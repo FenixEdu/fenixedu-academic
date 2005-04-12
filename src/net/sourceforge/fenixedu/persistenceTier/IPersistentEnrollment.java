@@ -5,7 +5,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
  */
 
 public interface IPersistentEnrollment extends IPersistentObject {
-    public void delete(IEnrollment enrolment) throws ExcepcaoPersistencia;
+    public void delete(IEnrolment enrolment) throws ExcepcaoPersistencia;
 
     public List readEnrollmentsByStudentAndCurricularCourseNameAndDegree(IStudent student,
             ICurricularCourse curricularCourse, IDegree degree) throws ExcepcaoPersistencia;
@@ -42,7 +42,7 @@ public interface IPersistentEnrollment extends IPersistentObject {
             IStudentCurricularPlan studentCurricularPlan, IExecutionPeriod executionPeriod)
             throws ExcepcaoPersistencia;
 
-    public IEnrollment readEnrolmentByStudentCurricularPlanAndCurricularCourse(
+    public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourse(
             IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, String year)
             throws ExcepcaoPersistencia;
 
@@ -62,7 +62,7 @@ public interface IPersistentEnrollment extends IPersistentObject {
             IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse,
             IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 
-    public IEnrollment readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
+    public IEnrolment readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
             IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse,
             IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 

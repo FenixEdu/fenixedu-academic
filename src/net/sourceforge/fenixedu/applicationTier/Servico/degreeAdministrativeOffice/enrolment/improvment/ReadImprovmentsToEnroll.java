@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoEx
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoImprovmentEnrolmentContext;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudent;
@@ -111,7 +111,7 @@ public class ReadImprovmentsToEnroll implements IService  {
         List improvments = (List) CollectionUtils.select(enrolments, new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IEnrollment enrollment = (IEnrollment) arg0;
+                IEnrolment enrollment = (IEnrolment) arg0;
                 if(CollectionUtils.find(enrollment.getEvaluations(), new Predicate() {
 
                     public boolean evaluate(Object arg0) {
@@ -132,7 +132,7 @@ public class ReadImprovmentsToEnroll implements IService  {
         return (List) CollectionUtils.select(improvments, new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IEnrollment enrollment = (IEnrollment) arg0;
+                IEnrolment enrollment = (IEnrolment) arg0;
                 IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) CollectionUtils.find(enrollment.getEvaluations(), new Predicate() {
 
                     public boolean evaluate(Object arg0) {
@@ -167,7 +167,7 @@ public class ReadImprovmentsToEnroll implements IService  {
         improvmentEnrolmentContext.setImprovmentsToEnroll((List) CollectionUtils.collect(res, new Transformer() {
 
             public Object transform(Object arg0) {
-                IEnrollment enrollment = (IEnrollment) arg0;
+                IEnrolment enrollment = (IEnrolment) arg0;
                 return InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear.newInfoFromDomain(enrollment);
             }
             
@@ -176,7 +176,7 @@ public class ReadImprovmentsToEnroll implements IService  {
         improvmentEnrolmentContext.setAlreadyEnrolled((List) CollectionUtils.collect(alreadyImprovedEnrolmentsInCurrentExecutionPeriod, new Transformer() {
 
             public Object transform(Object arg0) {
-                IEnrollment enrollment = (IEnrollment) arg0;
+                IEnrolment enrollment = (IEnrolment) arg0;
                 return InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear.newInfoFromDomain(enrollment);
             }
             
@@ -188,7 +188,7 @@ public class ReadImprovmentsToEnroll implements IService  {
     private List removeEquivalenceEnrolment(List enrolments) {
         return (List) CollectionUtils.select(enrolments, new Predicate() {
             public boolean evaluate(Object obj) {
-                IEnrollment enrollment = (IEnrollment) obj;
+                IEnrolment enrollment = (IEnrolment) obj;
                 if (enrollment.getEnrolmentEvaluationType().equals(
                         EnrolmentEvaluationType.EQUIVALENCE_OBJ))
                     return false;
@@ -203,7 +203,7 @@ public class ReadImprovmentsToEnroll implements IService  {
         List res = new ArrayList();
         Iterator iterator = enrolments.iterator();
         while(iterator.hasNext()) {
-           IEnrollment enrolment = (IEnrollment) iterator.next();
+           IEnrolment enrolment = (IEnrolment) iterator.next();
 
            List scopes = persistentCurricularCourseScope.readCurricularCourseScopesByCurricularCourseInExecutionPeriod(enrolment.getCurricularCourse(), currentExecutionPeriod);
            if(scopes != null && !scopes.isEmpty()) {

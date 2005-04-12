@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
@@ -25,7 +25,7 @@ public class GetEnrolmentGrade {
     public GetEnrolmentGrade() {
     }
 
-    public InfoEnrolmentEvaluation run(IEnrollment enrolment) throws FenixServiceException {
+    public InfoEnrolmentEvaluation run(IEnrolment enrolment) throws FenixServiceException {
         List enrolmentEvaluations = enrolment.getEvaluations();
 
         if ((enrolment == null) || (enrolment.getEvaluations() == null)

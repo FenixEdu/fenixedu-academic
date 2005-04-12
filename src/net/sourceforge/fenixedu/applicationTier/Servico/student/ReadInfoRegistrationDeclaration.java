@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoRegistrationDeclaration;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
@@ -55,7 +55,7 @@ public class ReadInfoRegistrationDeclaration implements IService {
         IExecutionYear executionYear = null;
         if (scp.getEnrolments() != null) {
             for (Iterator iter = scp.getEnrolments().iterator(); iter.hasNext();) {
-                IEnrollment enrollment = (IEnrollment) iter.next();
+                IEnrolment enrollment = (IEnrolment) iter.next();
                 Calendar calendar = Calendar.getInstance();
                 Date actualDate = calendar.getTime();
                 Date beginDate = enrollment.getExecutionPeriod().getExecutionYear().getBeginDate();

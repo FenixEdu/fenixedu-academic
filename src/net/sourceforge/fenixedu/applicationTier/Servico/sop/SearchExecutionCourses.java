@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularYear;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
@@ -172,7 +172,7 @@ public class SearchExecutionCourses implements IServico {
                     int approved = 0;
                     Iterator iter = enrolments.iterator();
                     while (iter.hasNext()) {
-                        IEnrollment enrolment = (IEnrollment) iter.next();
+                        IEnrolment enrolment = (IEnrolment) iter.next();
                         EnrollmentState enrollmentState = enrolment.getEnrollmentState();
                         if (enrollmentState.equals(EnrollmentState.APROVED)) {
                             approved++;
@@ -185,7 +185,7 @@ public class SearchExecutionCourses implements IServico {
                     int evaluated = 0;
                     Iterator iter = enrolments.iterator();
                     while (iter.hasNext()) {
-                        IEnrollment enrolment = (IEnrollment) iter.next();
+                        IEnrolment enrolment = (IEnrolment) iter.next();
                         EnrollmentState enrollmentState = enrolment.getEnrollmentState();
                         if (enrollmentState.equals(EnrollmentState.APROVED)
                                 || enrollmentState.equals(EnrollmentState.NOT_APROVED)) {

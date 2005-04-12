@@ -15,7 +15,7 @@ import org.apache.ojb.broker.PersistenceBrokerAware;
  * 24/Mar/2003
  */
 
-public interface IEnrollment extends IDomainObject, PersistenceBrokerAware {
+public interface IEnrolment extends IDomainObject, PersistenceBrokerAware {
     public ICurricularCourse getCurricularCourse();
 
     public IStudentCurricularPlan getStudentCurricularPlan();

@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -86,7 +86,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
             Iterator iterator = enrollments.iterator();
             if (newState.getState().intValue() == StudentCurricularPlanState.INACTIVE) {
                 while (iterator.hasNext()) {
-                    IEnrollment enrolment = (IEnrollment) iterator.next();
+                    IEnrolment enrolment = (IEnrolment) iterator.next();
                     if (enrolment.getEnrollmentState() == EnrollmentState.ENROLLED
                             || enrolment.getEnrollmentState() == EnrollmentState.TEMPORARILY_ENROLLED) {
                         persistentEnrolment.simpleLockWrite(enrolment);
@@ -96,13 +96,13 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
             } else {
 
                 while (iterator.hasNext()) {
-                    IEnrollment enrolment = (IEnrollment) iterator.next();
+                    IEnrolment enrolment = (IEnrolment) iterator.next();
 
                     if (extraCurricularCourses.contains(enrolment.getIdInternal())) {
                         if (!(enrolment instanceof EnrolmentInExtraCurricularCourse)) {
                             persistentEnrolment.delete(enrolment);
 
-                            IEnrollment auxEnrolment = new EnrolmentInExtraCurricularCourse();
+                            IEnrolment auxEnrolment = new EnrolmentInExtraCurricularCourse();
                             persistentEnrolment.simpleLockWrite(auxEnrolment);
 
                             copyEnrollment(enrolment, auxEnrolment);
@@ -117,7 +117,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
                         if (enrolment instanceof EnrolmentInExtraCurricularCourse) {
                             persistentEnrolment.delete(enrolment);
 
-                            IEnrollment auxEnrolment = new Enrolment();
+                            IEnrolment auxEnrolment = new Enrolment();
                             persistentEnrolment.simpleLockWrite(auxEnrolment);
 
                             copyEnrollment(enrolment, auxEnrolment);
@@ -137,7 +137,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
 
     }
 
-    private void setEnrolmentCreationInformation(IUserView userView, IEnrollment auxEnrolment) {
+    private void setEnrolmentCreationInformation(IUserView userView, IEnrolment auxEnrolment) {
         auxEnrolment.setCreationDate(Calendar.getInstance().getTime());
         auxEnrolment.setCreatedBy(userView.getUtilizador());
     }
@@ -147,7 +147,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
      * @param auxEnrolment
      * @throws FenixServiceException
      */
-    private void copyEnrollment(IEnrollment enrolment, IEnrollment auxEnrolment)
+    private void copyEnrollment(IEnrolment enrolment, IEnrolment auxEnrolment)
             throws FenixServiceException {
         auxEnrolment.setIdInternal(enrolment.getIdInternal());
 
@@ -171,7 +171,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
      * @throws ExcepcaoPersistencia
      */
     private void changeAnnulled2ActiveIfActivePlan(StudentCurricularPlanState newState,
-            IPersistentEnrollment persistentEnrolment, IEnrollment enrolment)
+            IPersistentEnrollment persistentEnrolment, IEnrolment enrolment)
             throws ExcepcaoPersistencia {
         if (newState.getState().intValue() == StudentCurricularPlanState.ACTIVE) {
             if (enrolment.getEnrollmentState() == EnrollmentState.ANNULED) {

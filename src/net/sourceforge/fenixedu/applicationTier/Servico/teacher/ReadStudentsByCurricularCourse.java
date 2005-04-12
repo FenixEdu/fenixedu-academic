@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.IStudent;
@@ -94,7 +94,7 @@ public class ReadStudentsByCurricularCourse implements IService {
 
         infoStudentList = (List) CollectionUtils.collect(enrolments, new Transformer() {
             public Object transform(Object input) {
-                IEnrollment enrolment = (IEnrollment) input;
+                IEnrolment enrolment = (IEnrolment) input;
                 IStudent student = enrolment.getStudentCurricularPlan().getStudent();
                 //CLONER
                 //InfoStudent infoStudent =

@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.equivalence.InfoEquivalenceCo
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
@@ -76,7 +76,7 @@ public class PrepareToGetGradesOfCurricularCoursesForEnrollmentEquivalence exten
         List infoCurricularCourseGradesToGetEquivalences = new ArrayList();
 
         for (int i = 0; i < enrollmentsToGiveEquivalences.size(); i++) {
-            IEnrollment enrollment = (IEnrollment) enrollmentsToGiveEquivalences.get(i);
+            IEnrolment enrollment = (IEnrolment) enrollmentsToGiveEquivalences.get(i);
             InfoEnrollmentGrade infoEnrollmentGrade = new InfoEnrollmentGrade();
             //CLONER
             //infoEnrollmentGrade.setInfoEnrollment(Cloner.copyIEnrolment2InfoEnrolment(enrollment));
@@ -142,7 +142,7 @@ public class PrepareToGetGradesOfCurricularCoursesForEnrollmentEquivalence exten
             List enrollmentsToGiveEquivalence = new ArrayList();
             for (int i = 0; i < idsOfChosenEnrollmentsToGiveEquivalence.size(); i++) {
                 Integer enrollmentID = (Integer) idsOfChosenEnrollmentsToGiveEquivalence.get(i);
-                IEnrollment enrollment = (IEnrollment) enrollmentDAO.readByOID(Enrolment.class,
+                IEnrolment enrollment = (IEnrolment) enrollmentDAO.readByOID(Enrolment.class,
                         enrollmentID);
                 enrollmentsToGiveEquivalence.add(enrollment);
             }

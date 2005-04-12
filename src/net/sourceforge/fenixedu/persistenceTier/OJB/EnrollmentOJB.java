@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalenc
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
@@ -31,7 +31,7 @@ public class EnrollmentOJB extends PersistentObjectOJB implements IPersistentEnr
         return queryList(Enrolment.class, new Criteria());
     }
 
-    public void delete(IEnrollment enrolment) throws ExcepcaoPersistencia {
+    public void delete(IEnrolment enrolment) throws ExcepcaoPersistencia {
         try {
             super.delete(enrolment);
         } catch (ExcepcaoPersistencia ex) {
@@ -99,7 +99,7 @@ public class EnrollmentOJB extends PersistentObjectOJB implements IPersistentEnr
         return queryList(Enrolment.class, crit);
     }
 
-    public IEnrollment readEnrolmentByStudentCurricularPlanAndCurricularCourse(
+    public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourse(
             IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, String year)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
@@ -107,7 +107,7 @@ public class EnrollmentOJB extends PersistentObjectOJB implements IPersistentEnr
         criteria.addEqualTo("executionPeriod.executionYear.year", year);
         criteria.addEqualTo("studentCurricularPlan.student.number", studentCurricularPlan.getStudent()
                 .getNumber());
-        return (IEnrollment) queryObject(Enrolment.class, criteria);
+        return (IEnrolment) queryObject(Enrolment.class, criteria);
     }
 
     public List readEnrolmentsByStudentCurricularPlanStateAndEnrolmentStateAndDegreeCurricularPlans(
@@ -132,14 +132,14 @@ public class EnrollmentOJB extends PersistentObjectOJB implements IPersistentEnr
         return queryList(Enrolment.class, criteria);
     }
 
-    public IEnrollment readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
+    public IEnrolment readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
             IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse,
             IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("studentCurricularPlan.idInternal", studentCurricularPlan.getIdInternal());
         criteria.addEqualTo("curricularCourse.idInternal", curricularCourse.getIdInternal());
         criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
-        return (IEnrollment) queryObject(Enrolment.class, criteria);
+        return (IEnrolment) queryObject(Enrolment.class, criteria);
     }
 
     public List readByStudentCurricularPlanAndCurricularCourse(
@@ -254,7 +254,7 @@ public class EnrollmentOJB extends PersistentObjectOJB implements IPersistentEnr
 
             List enrolmentsInOtherStudentCurricularPlans = queryList(Enrolment.class, criteria);
             for (int i = 0; i < enrolmentsInOtherStudentCurricularPlans.size(); i++) {
-                IEnrollment enrolment = (IEnrollment) enrolmentsInOtherStudentCurricularPlans.get(i);
+                IEnrolment enrolment = (IEnrolment) enrolmentsInOtherStudentCurricularPlans.get(i);
 
                 criteria = new Criteria();
                 criteria.addEqualTo("equivalentEnrolment.idInternal", enrolment.getIdInternal());

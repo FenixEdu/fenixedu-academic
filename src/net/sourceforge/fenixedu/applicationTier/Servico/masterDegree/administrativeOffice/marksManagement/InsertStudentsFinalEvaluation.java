@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
@@ -147,7 +147,7 @@ public class InsertStudentsFinalEvaluation implements IService {
             InfoEnrolmentEvaluation infoEnrolmentEvaluation) throws ExcepcaoPersistencia,
             FenixServiceException {
 
-        IEnrollment enrolmentToSearch = new Enrolment();
+        IEnrolment enrolmentToSearch = new Enrolment();
         enrolmentToSearch.setIdInternal(infoEnrolmentEvaluation.getInfoEnrolment().getIdInternal());
         List enrolmentEvaluationsForEnrolment = persistentEnrolmentEvaluation
                 .readEnrolmentEvaluationByEnrolment(enrolmentToSearch);

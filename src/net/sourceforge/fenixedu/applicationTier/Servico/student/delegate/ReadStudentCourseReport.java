@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
@@ -202,7 +202,7 @@ public class ReadStudentCourseReport implements IService {
         int approved = 0;
         Iterator iter = enrolments.iterator();
         while (iter.hasNext()) {
-            IEnrollment enrolment = (IEnrollment) iter.next();
+            IEnrolment enrolment = (IEnrolment) iter.next();
             EnrollmentState enrollmentState = enrolment.getEnrollmentState();
             if (enrollmentState.equals(EnrollmentState.APROVED)) {
                 approved++;
@@ -220,7 +220,7 @@ public class ReadStudentCourseReport implements IService {
         int evaluated = 0;
         Iterator iter = enrolments.iterator();
         while (iter.hasNext()) {
-            IEnrollment enrolment = (IEnrollment) iter.next();
+            IEnrolment enrolment = (IEnrolment) iter.next();
             EnrollmentState enrollmentState = enrolment.getEnrollmentState();
             if (enrollmentState.equals(EnrollmentState.APROVED)
                     || enrollmentState.equals(EnrollmentState.NOT_APROVED)) {

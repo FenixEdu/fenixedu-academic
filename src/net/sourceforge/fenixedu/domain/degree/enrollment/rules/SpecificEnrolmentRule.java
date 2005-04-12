@@ -13,7 +13,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
@@ -141,7 +141,7 @@ public abstract class SpecificEnrolmentRule {
 
         List result = (List) CollectionUtils.select(enrolledEnrollments, new Predicate() {
             public boolean evaluate(Object obj) {
-                IEnrollment enrollment = (IEnrollment) obj;
+                IEnrolment enrollment = (IEnrolment) obj;
                 return areaCurricularCourses.contains(enrollment.getCurricularCourse());
             }
         });

@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -34,7 +34,7 @@ public class DeleteStudentCurricularPlan implements IService {
                 .readByOID(StudentCurricularPlan.class, studentCurricularPlanId);
         final List enrollments = studentCurricularPlan.getEnrolments();
         for (final Iterator iterator = enrollments.iterator(); iterator.hasNext();) {
-            final IEnrollment enrollment = (IEnrollment) iterator.next();
+            final IEnrolment enrollment = (IEnrolment) iterator.next();
             DeleteEnrollment.deleteAssociatedEnrollmentInformation(persistentSupport, enrollment);
             persistentEnrollment.delete(enrollment);
         }

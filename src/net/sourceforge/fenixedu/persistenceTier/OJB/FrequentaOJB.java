@@ -13,7 +13,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -89,7 +89,7 @@ public class FrequentaOJB extends PersistentObjectOJB implements IFrequentaPersi
         return new Integer(pb.getCount(queryCriteria));
     }
 
-    public IAttends readByEnrolment(IEnrollment enrolment) throws ExcepcaoPersistencia {
+    public IAttends readByEnrolment(IEnrolment enrolment) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
         return (IAttends) queryObject(Attends.class, crit);

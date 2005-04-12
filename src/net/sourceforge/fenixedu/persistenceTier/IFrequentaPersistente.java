@@ -12,7 +12,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.util.TipoCurso;
@@ -35,7 +35,7 @@ public interface IFrequentaPersistente extends IPersistentObject {
 
     public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
 
-    public IAttends readByEnrolment(IEnrollment enrolment) throws ExcepcaoPersistencia;
+    public IAttends readByEnrolment(IEnrolment enrolment) throws ExcepcaoPersistencia;
 
     public List readByUsername(String username) throws ExcepcaoPersistencia;
 }

@@ -13,7 +13,7 @@ public class CreditsInAnySecundaryArea extends DomainObject implements ICreditsI
 
     private IStudentCurricularPlan studentCurricularPlan;
 
-    private IEnrollment enrolment;
+    private IEnrolment enrolment;
 
     public CreditsInAnySecundaryArea() {
     }
@@ -39,7 +39,7 @@ public class CreditsInAnySecundaryArea extends DomainObject implements ICreditsI
     /**
      * @return Returns the enrolment.
      */
-    public IEnrollment getEnrolment() {
+    public IEnrolment getEnrolment() {
         return enrolment;
     }
 
@@ -47,7 +47,7 @@ public class CreditsInAnySecundaryArea extends DomainObject implements ICreditsI
      * @param enrolment
      *            The enrolment to set.
      */
-    public void setEnrolment(IEnrollment enrolment) {
+    public void setEnrolment(IEnrolment enrolment) {
         this.enrolment = enrolment;
     }
 

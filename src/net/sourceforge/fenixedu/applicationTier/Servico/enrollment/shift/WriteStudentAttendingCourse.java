@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
@@ -102,7 +102,7 @@ public class WriteStudentAttendingCourse implements IService {
         while (iterCurricularCourses.hasNext()) {
             ICurricularCourse curricularCourseElem = (ICurricularCourse) iterCurricularCourses.next();
 
-            IEnrollment enrollment = persistentEnrolment
+            IEnrolment enrollment = persistentEnrolment
                     .readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
                             studentCurricularPlan, curricularCourseElem, executionCourse
                                     .getExecutionPeriod());

@@ -78,7 +78,7 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base im
 
         Iterator iterator = studentsAprovedEnrollments.iterator();
         while (iterator.hasNext()) {
-            IEnrollment enrolment = (IEnrollment) iterator.next();
+            IEnrolment enrolment = (IEnrolment) iterator.next();
             if (curricularCoursesBelongingToAnySpecializationAndSecundaryArea.contains(enrolment
                     .getCurricularCourse())){
                 if(curricularCoursesFromSpecArea.contains(enrolment.getCurricularCourse())) {
@@ -111,7 +111,7 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base im
         List enrollmentsWithEnrolledStateInCurrentExecutionPeriod = getAllStudentEnrolledEnrollmentsInExecutionPeriod(currentExecutionPeriod);
 
         for (int i = 0; i < enrollmentsWithEnrolledStateInCurrentExecutionPeriod.size(); i++) {
-            IEnrollment enrollment = (IEnrollment) enrollmentsWithEnrolledStateInCurrentExecutionPeriod
+            IEnrolment enrollment = (IEnrolment) enrollmentsWithEnrolledStateInCurrentExecutionPeriod
                     .get(i);
             if (curricularCourse.equals(enrollment.getCurricularCourse())) {
                 return CurricularCourseEnrollmentType.NOT_ALLOWED;
@@ -120,7 +120,7 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base im
         //        List result = (List) CollectionUtils.collect(
         //                enrollmentsWithEnrolledStateInCurrentExecutionPeriod, new Transformer() {
         //                    public Object transform(Object obj) {
-        //                        IEnrollment enrollment = (IEnrollment) obj;
+        //                        IEnrolment enrollment = (IEnrolment) obj;
         //                        return enrollment.getCurricularCourse();
         //                    }
         //                });
@@ -135,7 +135,7 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base im
         // CollectionUtils.collect(enrollmentsWithEnrolledStateInPreviousExecutionPeriod,
         //                new Transformer() {
         //                    public Object transform(Object obj) {
-        //                        IEnrollment enrollment = (IEnrollment) obj;
+        //                        IEnrolment enrollment = (IEnrolment) obj;
         //                        return enrollment.getCurricularCourse();
         //                    }
         //                });
@@ -144,7 +144,7 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base im
         //            return CurricularCourseEnrollmentType.TEMPORARY;
         //        }
         for (int i = 0; i < enrollmentsWithEnrolledStateInPreviousExecutionPeriod.size(); i++) {
-            IEnrollment enrollment = (IEnrollment) enrollmentsWithEnrolledStateInPreviousExecutionPeriod
+            IEnrolment enrollment = (IEnrolment) enrollmentsWithEnrolledStateInPreviousExecutionPeriod
                     .get(i);
             if (curricularCourse.equals(enrollment.getCurricularCourse())) {
                 return CurricularCourseEnrollmentType.TEMPORARY;

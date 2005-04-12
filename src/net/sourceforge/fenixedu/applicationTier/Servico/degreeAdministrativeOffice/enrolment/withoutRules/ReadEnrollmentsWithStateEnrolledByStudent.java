@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudent;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
@@ -107,7 +107,7 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService {
         if (enrollments != null && enrollments.size() > 0) {
             infoEnrollments = (List) CollectionUtils.collect(enrollments, new Transformer() {
                 public Object transform(Object input) {
-                    IEnrollment enrolment = (IEnrollment) input;
+                    IEnrolment enrolment = (IEnrolment) input;
                     return InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear
                             .newInfoFromDomain(enrolment);
                 }

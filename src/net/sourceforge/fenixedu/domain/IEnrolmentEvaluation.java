@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationType;
  */
 public interface IEnrolmentEvaluation extends IDomainObject {
 
-    public abstract IEnrollment getEnrolment();
+    public abstract IEnrolment getEnrolment();
 
     public abstract EnrolmentEvaluationType getEnrolmentEvaluationType();
 
@@ -42,7 +42,7 @@ public interface IEnrolmentEvaluation extends IDomainObject {
 
     public abstract void setPersonResponsibleForGrade(IPerson teacher);
 
-    public abstract void setEnrolment(IEnrollment enrolment);
+    public abstract void setEnrolment(IEnrolment enrolment);
 
     public abstract void setEnrolmentEvaluationType(EnrolmentEvaluationType type);
 

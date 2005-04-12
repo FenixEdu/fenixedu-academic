@@ -7,7 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.utils.enrolment.DeleteEnrolmentUtils;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.precedences.IRestrictionByCurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -39,7 +39,7 @@ public class DeleteEnrolment implements IService {
             IPersistentEnrolmentEvaluation enrolmentEvaluationDAO = persistentSuport
                     .getIPersistentEnrolmentEvaluation();
             IPersistentRestriction persistentRestriction = persistentSuport.getIPersistentRestriction();
-            final IEnrollment enrollment1 = (IEnrollment) enrolmentDAO.readByOID(Enrolment.class,
+            final IEnrolment enrollment1 = (IEnrolment) enrolmentDAO.readByOID(Enrolment.class,
                     enrolmentID);
 
             List enrollments2Delete = new ArrayList();
@@ -50,7 +50,7 @@ public class DeleteEnrolment implements IService {
                     studentEnrolledEnrollmentsInExecutionPeriod, new Predicate() {
 
                         public boolean evaluate(Object arg0) {
-                            IEnrollment enrollment2 = (IEnrollment) arg0;
+                            IEnrolment enrollment2 = (IEnrolment) arg0;
                             return enrollment2.getCurricularCourse()
                                     .getCurricularYearByBranchAndSemester(
                                             enrollment2.getStudentCurricularPlan().getBranch(),
@@ -75,11 +75,11 @@ public class DeleteEnrolment implements IService {
                                 .next();
                         if (enrollment1.getStudentCurricularPlan().isCurricularCourseEnrolled(
                                 restriction.getPrecedence().getCurricularCourse())) {
-                            IEnrollment enrollment2Delete = (IEnrollment) CollectionUtils.find(
+                            IEnrolment enrollment2Delete = (IEnrolment) CollectionUtils.find(
                                     studentEnrolledEnrollmentsInExecutionPeriod, new Predicate() {
 
                                         public boolean evaluate(Object arg0) {
-                                            IEnrollment enrollment = (IEnrollment) arg0;
+                                            IEnrolment enrollment = (IEnrolment) arg0;
                                             return enrollment.getCurricularCourse().equals(
                                                     restriction.getPrecedence().getCurricularCourse());
                                         }
@@ -96,7 +96,7 @@ public class DeleteEnrolment implements IService {
             finalEnrollments2Delete.addAll(enrollments2Delete);
             Iterator iter = finalEnrollments2Delete.iterator();
             while (iter.hasNext()) {
-                DeleteEnrolmentUtils.deleteEnrollment(enrolmentDAO, enrolmentEvaluationDAO, (IEnrollment) iter.next());
+                DeleteEnrolmentUtils.deleteEnrollment(enrolmentDAO, enrolmentEvaluationDAO, (IEnrolment) iter.next());
             }
 
         } catch (ExcepcaoPersistencia e) {

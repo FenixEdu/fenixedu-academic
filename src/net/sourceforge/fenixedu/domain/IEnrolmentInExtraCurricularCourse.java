@@ -5,5 +5,5 @@ package net.sourceforge.fenixedu.domain;
  * 
  * 23/Mai/2003
  */
-public interface IEnrolmentInExtraCurricularCourse extends IEnrollment {
+public interface IEnrolmentInExtraCurricularCourse extends IEnrolment {
 }

@@ -31,7 +31,7 @@ import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IGroupProperties;
 import net.sourceforge.fenixedu.domain.IShift;
@@ -248,7 +248,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
                 infoComposition.setInfoStudentGroups(infoStudentGroups);
                 
                 IStudent student = iFrequenta.getAluno();
-                IEnrollment enrollment = iFrequenta.getEnrolment();
+                IEnrolment enrollment = iFrequenta.getEnrolment();
                 Integer numberOfEnrollments = null;
                 
                 if (enrollment != null){

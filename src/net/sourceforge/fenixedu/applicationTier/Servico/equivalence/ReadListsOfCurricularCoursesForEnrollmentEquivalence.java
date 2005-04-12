@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
 import net.sourceforge.fenixedu.dataTransferObject.equivalence.InfoEquivalenceContext;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -120,7 +120,7 @@ public class ReadListsOfCurricularCoursesForEnrollmentEquivalence extends
             List enrollmentsThatMayGiveEquivalences = (List) CollectionUtils.select(
                     fromStudentCurricularPlan.getEnrolments(), new Predicate() {
                         public boolean evaluate(Object obj) {
-                            IEnrollment enrollment = (IEnrollment) obj;
+                            IEnrolment enrollment = (IEnrolment) obj;
                             return (isAnAprovedEnrollment(enrollment) && isAnEnrollmentWithNoEquivalences(
                                     enrollment, toStudentCurricularPlan.getDegreeCurricularPlan(),
                                     fromStudentCurricularPlan));
@@ -130,7 +130,7 @@ public class ReadListsOfCurricularCoursesForEnrollmentEquivalence extends
             List aprovedAndEnrolledEnrollments = (List) CollectionUtils.select(toStudentCurricularPlan
                     .getEnrolments(), new Predicate() {
                 public boolean evaluate(Object obj) {
-                    IEnrollment enrollment = (IEnrollment) obj;
+                    IEnrolment enrollment = (IEnrolment) obj;
                     return (isAnAprovedEnrollment(enrollment) || isAnEnroledEnrollment(enrollment));
                 }
             });
@@ -138,7 +138,7 @@ public class ReadListsOfCurricularCoursesForEnrollmentEquivalence extends
             final List aprovedAndEnrolledCurricularCourses = (List) CollectionUtils.collect(
                     aprovedAndEnrolledEnrollments, new Transformer() {
                         public Object transform(Object obj) {
-                            IEnrollment enrollment = (IEnrollment) obj;
+                            IEnrolment enrollment = (IEnrolment) obj;
                             return enrollment.getCurricularCourse();
                         }
                     });

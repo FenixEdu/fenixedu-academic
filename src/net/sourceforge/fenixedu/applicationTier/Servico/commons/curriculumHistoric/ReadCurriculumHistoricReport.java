@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.commons.curriculumHistoric.In
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
@@ -99,7 +99,7 @@ public class ReadCurriculumHistoricReport implements IService {
         List notAnulledEnrollments = (List) CollectionUtils.select(enrollments, new Predicate() {
 
             public boolean evaluate(Object obj) {
-                IEnrollment enrollment = (IEnrollment) obj;
+                IEnrolment enrollment = (IEnrolment) obj;
                 if (!enrollment.getEnrollmentState().equals(EnrollmentState.ANNULED)) {
                     return true;
                 }
@@ -111,7 +111,7 @@ public class ReadCurriculumHistoricReport implements IService {
                 new Predicate() {
 
                     public boolean evaluate(Object obj) {
-                        IEnrollment enrollment = (IEnrollment) obj;
+                        IEnrolment enrollment = (IEnrolment) obj;
                         if (enrollment.getEnrollmentState().equals(EnrollmentState.APROVED)
                                 || enrollment.getEnrollmentState().equals(EnrollmentState.NOT_APROVED)) {
                             return true;
@@ -123,7 +123,7 @@ public class ReadCurriculumHistoricReport implements IService {
         List aprovedEnrollments = (List) CollectionUtils.select(evaluatedEnrollments, new Predicate() {
 
             public boolean evaluate(Object obj) {
-                IEnrollment enrollment = (IEnrollment) obj;
+                IEnrolment enrollment = (IEnrolment) obj;
                 if (enrollment.getEnrollmentState().equals(EnrollmentState.APROVED)) {
                     return true;
                 }
@@ -140,7 +140,7 @@ public class ReadCurriculumHistoricReport implements IService {
         Iterator iterator = notAnulledEnrollments.iterator();
         List infoEnrollments = new ArrayList();
         while (iterator.hasNext()) {
-            IEnrollment enrolmentTemp = (IEnrollment) iterator.next();
+            IEnrolment enrolmentTemp = (IEnrolment) iterator.next();
 
             InfoEnrolmentEvaluation infoEnrolmentEvaluation = getEnrollmentGrade.run(enrolmentTemp);
 

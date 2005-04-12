@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEquivalence;
 import net.sourceforge.fenixedu.domain.IEquivalentEnrolmentForEnrolmentEquivalence;
 
@@ -19,12 +19,12 @@ public interface IPersistentEquivalentEnrolmentForEnrolmentEquivalence extends I
             throws ExcepcaoPersistencia;
 
     public IEquivalentEnrolmentForEnrolmentEquivalence readByEnrolmentEquivalenceAndEquivalentEnrolment(
-            IEnrolmentEquivalence enrolmentEquivalence, IEnrollment equivalentEnrolment)
+            IEnrolmentEquivalence enrolmentEquivalence, IEnrolment equivalentEnrolment)
             throws ExcepcaoPersistencia;
 
     public List readAll() throws ExcepcaoPersistencia;
 
-    public List readByEquivalentEnrolment(IEnrollment equivalentEnrolment) throws ExcepcaoPersistencia;
+    public List readByEquivalentEnrolment(IEnrolment equivalentEnrolment) throws ExcepcaoPersistencia;
 
     public List readByEnrolmentEquivalence(IEnrolmentEquivalence enrolmentEquivalence)
             throws ExcepcaoPersistencia;

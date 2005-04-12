@@ -17,13 +17,13 @@ public interface IAttends extends IDomainObject {
 
     public IExecutionCourse getDisciplinaExecucao();
 
-    public IEnrollment getEnrolment();
+    public IEnrolment getEnrolment();
 
     public void setAluno(IStudent aluno);
 
     public void setDisciplinaExecucao(IExecutionCourse disciplinaExecucao);
 
-    public void setEnrolment(IEnrollment enrolment);
+    public void setEnrolment(IEnrolment enrolment);
 
     public Integer getChaveAluno();
 

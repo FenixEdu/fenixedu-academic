@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.ICandidateEnrolment;
 import net.sourceforge.fenixedu.domain.ICandidateSituation;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IGratuity;
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
@@ -237,7 +237,7 @@ public class RegisterCandidate implements IService {
             while (iterator.hasNext()) {
                 ICandidateEnrolment candidateEnrolment = (ICandidateEnrolment) iterator.next();
 
-                IEnrollment enrolment = new Enrolment();
+                IEnrolment enrolment = new Enrolment();
                 sp.getIPersistentEnrolment().simpleLockWrite(enrolment);
                 enrolment.setCurricularCourse(candidateEnrolment.getCurricularCourse());
                 enrolment.setEnrolmentEvaluationType(new EnrolmentEvaluationType(

@@ -9,7 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
@@ -78,7 +78,7 @@ public class ReadStudentsWithEnrollmentInCurrentSemester implements IService {
                 student.getActiveStudentCurricularPlan(), executionPeriod);
 
         for (int iter = 0; iter < enrollments.size(); iter++) {
-            IEnrollment enrollment = (IEnrollment) enrollments.get(iter);
+            IEnrolment enrollment = (IEnrolment) enrollments.get(iter);
             if (enrollment.getEnrollmentState().equals(EnrollmentState.APROVED)
                     || enrollment.getEnrollmentState().equals(EnrollmentState.TEMPORARILY_ENROLLED)
                     || enrollment.getEnrollmentState().equals(EnrollmentState.ENROLLED))

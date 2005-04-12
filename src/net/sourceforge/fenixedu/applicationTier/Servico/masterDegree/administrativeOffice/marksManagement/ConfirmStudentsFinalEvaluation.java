@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
@@ -61,7 +61,7 @@ public class ConfirmStudentsFinalEvaluation implements IService {
             List enrolmentEvaluations = new ArrayList();
             Iterator iterEnrolment = enrolments.listIterator();
             while (iterEnrolment.hasNext()) {
-                IEnrollment enrolment = (IEnrollment) iterEnrolment.next();
+                IEnrolment enrolment = (IEnrolment) iterEnrolment.next();
                 List allEnrolmentEvaluations = persistentEnrolmentEvaluation
                         .readEnrolmentEvaluationByEnrolment(enrolment);
                 IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) allEnrolmentEvaluations
@@ -113,7 +113,7 @@ public class ConfirmStudentsFinalEvaluation implements IService {
 
     private void updateEnrolmentState(IPersistentEnrollment persistentEnrolment,
             IEnrolmentEvaluation enrolmentEvaluationElem) throws ExcepcaoPersistencia {
-        IEnrollment enrolmentToEdit = enrolmentEvaluationElem.getEnrolment();
+        IEnrolment enrolmentToEdit = enrolmentEvaluationElem.getEnrolment();
         persistentEnrolment.simpleLockWrite(enrolmentToEdit);
 
         EnrollmentState newEnrolmentState = EnrollmentState.APROVED;

@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluationWithRe
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudent;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEquivalence;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IEquivalentEnrolmentForEnrolmentEquivalence;
@@ -95,7 +95,7 @@ public class GetEnrollmentEvaluationWithEquivalence extends EnrollmentEquivalenc
             IPersistentEquivalentEnrolmentForEnrolmentEquivalence equivalentEnrollmentForEnrollmentEquivalenceDAO = persistenceDAO
                     .getIPersistentEquivalentEnrolmentForEnrolmentEquivalence();
 
-            IEnrollment enrollment = (IEnrollment) enrollmentDAO
+            IEnrolment enrollment = (IEnrolment) enrollmentDAO
                     .readByOID(Enrolment.class, enrollmentID);
 
             enrollmentEvaluations.add(0, getEnrollmentEvaluation(enrollment));
@@ -127,7 +127,7 @@ public class GetEnrollmentEvaluationWithEquivalence extends EnrollmentEquivalenc
         return enrollmentEvaluations;
     }
 
-    private IEnrolmentEvaluation getEnrollmentEvaluation(IEnrollment enrollment) {
+    private IEnrolmentEvaluation getEnrollmentEvaluation(IEnrolment enrollment) {
         List enrolmentEvaluations = enrollment.getEvaluations();
 
         // This sorts the list ascendingly so we need to reverse it to get the

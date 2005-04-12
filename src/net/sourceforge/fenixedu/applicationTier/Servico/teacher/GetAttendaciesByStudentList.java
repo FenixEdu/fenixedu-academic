@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.ITurnoAluno;
@@ -83,7 +83,7 @@ public class GetAttendaciesByStudentList implements IService {
                         .getIdInternal(), executionCourseID);
                 Integer enrollments = new Integer(0);
                 if (attendacy.getEnrolment() != null) {
-                    IEnrollment enrollment = attendacy.getEnrolment();
+                    IEnrolment enrollment = attendacy.getEnrolment();
                     ICurricularCourse curricularCourse = enrollment.getCurricularCourse();
                     IDegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
                     IDegree degree = degreeCurricularPlan.getDegree();

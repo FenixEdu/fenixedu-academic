@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternal
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalPersonInfo;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoStudentExternalInformation;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -73,7 +73,7 @@ public class ReadStudentExternalInformation implements IService
         for (Iterator iter = student.getActiveStudentCurricularPlan().getEnrolments().iterator(); iter
                 .hasNext();)
         {
-            IEnrollment enrollment = (IEnrollment) iter.next();
+            IEnrolment enrollment = (IEnrolment) iter.next();
             InfoExternalEnrollmentInfo info = InfoExternalEnrollmentInfo.newFromEnrollment(enrollment);
             
             GetEnrolmentGrade getEnrollmentGrade = new GetEnrolmentGrade();

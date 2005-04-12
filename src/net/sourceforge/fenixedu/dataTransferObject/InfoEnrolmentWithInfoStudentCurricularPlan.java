@@ -4,14 +4,14 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 
 /**
  * @author Tânia Pousão 18/Jun/2004
  */
 public class InfoEnrolmentWithInfoStudentCurricularPlan extends InfoEnrolment {
 
-    public void copyFromDomain(IEnrollment enrolment) {
+    public void copyFromDomain(IEnrolment enrolment) {
         super.copyFromDomain(enrolment);
         if (enrolment != null) {
             setInfoStudentCurricularPlan(InfoStudentCurricularPlan.newInfoFromDomain(enrolment
@@ -19,7 +19,7 @@ public class InfoEnrolmentWithInfoStudentCurricularPlan extends InfoEnrolment {
         }
     }
 
-    public static InfoEnrolment newInfoFromDomain(IEnrollment enrolment) {
+    public static InfoEnrolment newInfoFromDomain(IEnrolment enrolment) {
         InfoEnrolmentWithInfoStudentCurricularPlan infoEnrolment = null;
         if (enrolment != null) {
             infoEnrolment = new InfoEnrolmentWithInfoStudentCurricularPlan();

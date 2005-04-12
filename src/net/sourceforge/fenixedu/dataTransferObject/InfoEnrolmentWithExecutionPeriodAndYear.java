@@ -4,13 +4,13 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 
 /**
  * @author Tânia Pousão 23/Jun/2004
  */
 public class InfoEnrolmentWithExecutionPeriodAndYear extends InfoEnrolment {
-    public void copyFromDomain(IEnrollment enrolment) {
+    public void copyFromDomain(IEnrolment enrolment) {
         super.copyFromDomain(enrolment);
         if (enrolment != null) {
             setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(enrolment
@@ -18,7 +18,7 @@ public class InfoEnrolmentWithExecutionPeriodAndYear extends InfoEnrolment {
         }
     }
 
-    public static InfoEnrolment newInfoFromDomain(IEnrollment enrolment) {
+    public static InfoEnrolment newInfoFromDomain(IEnrolment enrolment) {
         InfoEnrolmentWithExecutionPeriodAndYear infoEnrolment = null;
         if (enrolment != null) {
             infoEnrolment = new InfoEnrolmentWithExecutionPeriodAndYear();

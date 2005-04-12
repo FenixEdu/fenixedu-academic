@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -75,7 +75,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IService {
             List enrolmentEvaluations = new ArrayList();
             Iterator iterEnrolment = enrolments.listIterator();
             while (iterEnrolment.hasNext()) {
-                IEnrollment enrolment = (IEnrollment) iterEnrolment.next();
+                IEnrolment enrolment = (IEnrolment) iterEnrolment.next();
                 if (enrolment.getStudentCurricularPlan().getDegreeCurricularPlan().getDegree()
                         .getTipoCurso().equals(TipoCurso.MESTRADO_OBJ)) {
                     List allEnrolmentEvaluations = persistentEnrolmentEvaluation

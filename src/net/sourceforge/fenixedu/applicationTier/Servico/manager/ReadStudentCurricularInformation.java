@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.dataTransferObject.equivalence.InfoEnrollmentGra
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
@@ -113,7 +113,7 @@ public class ReadStudentCurricularInformation implements IService {
     protected List constructEnrollmentsList(final List enrollments) {
         return (List) CollectionUtils.collect(enrollments, new Transformer() {
             public Object transform(Object arg0) {
-                final IEnrollment enrollment = (IEnrollment) arg0;
+                final IEnrolment enrollment = (IEnrolment) arg0;
                 final IExecutionPeriod executionPeriod = enrollment.getExecutionPeriod();
                 final IExecutionYear executionYear = executionPeriod.getExecutionYear();
                 final ICurricularCourse curricularCourse = enrollment.getCurricularCourse();

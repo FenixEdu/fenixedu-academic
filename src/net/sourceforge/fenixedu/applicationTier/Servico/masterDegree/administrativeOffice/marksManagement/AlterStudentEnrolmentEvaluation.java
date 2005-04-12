@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudent;
@@ -65,7 +65,7 @@ public class AlterStudentEnrolmentEvaluation implements IService {
 
                 IEnrolmentEvaluation enrolmentEvaluationCopy = (IEnrolmentEvaluation) persistentEnrolmentEvaluation
                         .readByOID(EnrolmentEvaluation.class, enrolmentEvaluationCode);
-                IEnrollment enrolment = enrolmentEvaluationCopy.getEnrolment();
+                IEnrolment enrolment = enrolmentEvaluationCopy.getEnrolment();
 
                 persistentEnrolment.simpleLockWrite(enrolment);
 
@@ -129,7 +129,7 @@ public class AlterStudentEnrolmentEvaluation implements IService {
 
                     //check for an alteration
                     if (!enrolmentEvaluation.getGrade().equals(iEnrolmentEvaluation.getGrade())) {
-                        IEnrollment enrolment = iEnrolmentEvaluation.getEnrolment();
+                        IEnrolment enrolment = iEnrolmentEvaluation.getEnrolment();
                         persistentEnrolment.simpleLockWrite(enrolment);
                         try {
                             new Integer(enrolmentEvaluation.getGrade());

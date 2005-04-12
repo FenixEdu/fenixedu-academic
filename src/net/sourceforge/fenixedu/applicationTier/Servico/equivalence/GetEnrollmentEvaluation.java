@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -54,11 +54,11 @@ public class GetEnrollmentEvaluation extends EnrollmentEquivalenceServiceUtils i
 
         GetEnrolmentGrade service = new GetEnrolmentGrade();
 
-        IEnrollment enrollment = null;
+        IEnrolment enrollment = null;
         try {
             ISuportePersistente persistenceDAO = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentEnrollment enrollmentDAO = persistenceDAO.getIPersistentEnrolment();
-            enrollment = (IEnrollment) enrollmentDAO.readByOID(Enrolment.class, enrollmentID);
+            enrollment = (IEnrolment) enrollmentDAO.readByOID(Enrolment.class, enrollmentID);
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }

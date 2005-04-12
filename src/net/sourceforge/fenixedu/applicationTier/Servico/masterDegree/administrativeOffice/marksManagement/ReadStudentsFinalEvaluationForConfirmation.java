@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IPerson;
@@ -74,7 +74,7 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IService {
             List enrolmentEvaluations = new ArrayList();
             Iterator iterEnrolment = enrolments.listIterator();
             while (iterEnrolment.hasNext()) {
-                IEnrollment enrolment = (IEnrollment) iterEnrolment.next();
+                IEnrolment enrolment = (IEnrolment) iterEnrolment.next();
                 List allEnrolmentEvaluations = persistentEnrolmentEvaluation
                         .readEnrolmentEvaluationByEnrolment(enrolment);
                 IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) allEnrolmentEvaluations

@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoClassification
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoModality;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminary;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
@@ -110,7 +110,7 @@ public class ReadCandidacies implements IService {
         float acc = 0;
         float grade = 0;
         for (Iterator iter1 = enrollments.iterator(); iter1.hasNext();) {
-            IEnrollment enrollment = (IEnrollment) iter1.next();
+            IEnrolment enrollment = (IEnrolment) iter1.next();
             List enrollmentEvaluations = enrollment.getEvaluations();
             IEnrolmentEvaluation enrollmentEvaluation = null;
             if (enrollmentEvaluations != null && !enrollmentEvaluations.isEmpty()) {

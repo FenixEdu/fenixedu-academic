@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.util.enrollment.EnrollmentCondition;
@@ -217,7 +217,7 @@ public class InfoEnrolment extends InfoObject {
         this.creationDate = creationDate;
     }
 
-    public void copyFromDomain(IEnrollment enrollment) {
+    public void copyFromDomain(IEnrolment enrollment) {
         super.copyFromDomain(enrollment);
         if (enrollment != null) {
             setCreationDate(enrollment.getCreationDate());
@@ -237,7 +237,7 @@ public class InfoEnrolment extends InfoObject {
         }
     }
 
-    public static InfoEnrolment newInfoFromDomain(IEnrollment enrollment) {
+    public static InfoEnrolment newInfoFromDomain(IEnrolment enrollment) {
         InfoEnrolment infoEnrolment = null;
         if (enrollment != null) {
             infoEnrolment = new InfoEnrolment();

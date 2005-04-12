@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEquivalence;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEquivalence;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IEquivalentEnrolmentForEnrolmentEquivalence;
@@ -80,7 +80,7 @@ public class DeleteChosenEnrollmentEquivalences extends EnrollmentEquivalenceSer
             for (int i = 0; i < idsOfChosenEnrollments.size(); i++) {
                 Integer enrollmentID = (Integer) idsOfChosenEnrollments.get(i);
 
-                IEnrollment enrollment = (IEnrollment) enrollmentDAO.readByOID(Enrolment.class,
+                IEnrolment enrollment = (IEnrolment) enrollmentDAO.readByOID(Enrolment.class,
                         enrollmentID);
 
                 if (enrollment != null) {

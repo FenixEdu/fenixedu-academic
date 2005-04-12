@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.degree.enrollment.rules;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
@@ -35,7 +35,7 @@ public class MaximumNumberOfCurricularCoursesEnrollmentRule implements IEnrollme
         int size = allStudentEnrolledEnrollments.size();
 
         for (int i = 0; i < size; i++) {
-            IEnrollment enrollment = (IEnrollment) allStudentEnrolledEnrollments.get(i);
+            IEnrolment enrollment = (IEnrolment) allStudentEnrolledEnrollments.get(i);
             numberOfEnrolledCurricularCourses += enrollment.getCurricularCourse().getEnrollmentWeigth()
                     .intValue();
         }

@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -166,7 +166,7 @@ public class SubmitMarks implements IServico {
 
             while (iter.hasNext()) {
                 IAttends attend = (IAttends) iter.next();
-                IEnrollment enrolment = attend.getEnrolment();
+                IEnrolment enrolment = attend.getEnrolment();
                 IEnrolmentEvaluation enrolmentEvaluation = null;
 
                 //check student´s degree type
@@ -201,7 +201,7 @@ public class SubmitMarks implements IServico {
     }
 
     private IEnrolmentEvaluation getEnrolmentEvaluation(IUserView userView,
-            IExecutionCourse executionCourse, IEnrollment enrolment, Date evaluationDate, IEmployee employee, ITeacher teacher, IMark mark, EnrolmentEvaluationType enrolmentEvaluationType) throws FenixServiceException {
+            IExecutionCourse executionCourse, IEnrolment enrolment, Date evaluationDate, IEmployee employee, ITeacher teacher, IMark mark, EnrolmentEvaluationType enrolmentEvaluationType) throws FenixServiceException {
         
         IEnrolmentEvaluation newEnrolmentEvaluation = null;
         
@@ -226,7 +226,7 @@ public class SubmitMarks implements IServico {
      * @param executionCourse
      * @return
      */
-    private boolean isImprovment(IEnrollment enrolment, IExecutionCourse executionCourse) {
+    private boolean isImprovment(IEnrolment enrolment, IExecutionCourse executionCourse) {
         if(enrolment.getExecutionPeriod().equals(executionCourse.getExecutionPeriod()))
             return false;
         return true;
@@ -239,7 +239,7 @@ public class SubmitMarks implements IServico {
 
             public Object transform(Object input) {
                 IAttends attend = (IAttends) input;
-                IEnrollment enrolment = attend.getEnrolment();
+                IEnrolment enrolment = attend.getEnrolment();
                 if(enrolment != null) {
                     if(enrolment.getExecutionPeriod().equals(executionPeriod))
                         return enrolment.getIdInternal();
@@ -278,7 +278,7 @@ public class SubmitMarks implements IServico {
     }
 
     private IEnrolmentEvaluation getEnrolmentEvaluationByEnrolment(IUserView userView,
-            IExecutionCourse executionCourse, IEnrollment enrolment, Date evaluationDate,
+            IExecutionCourse executionCourse, IEnrolment enrolment, Date evaluationDate,
             String publishedMark, IEmployee employee, ITeacher teacher, EnrolmentEvaluationType enrolmentEvaluationType) throws FenixServiceException {
         ISuportePersistente sp;
         IEnrolmentEvaluation enrolmentEvaluation = null;

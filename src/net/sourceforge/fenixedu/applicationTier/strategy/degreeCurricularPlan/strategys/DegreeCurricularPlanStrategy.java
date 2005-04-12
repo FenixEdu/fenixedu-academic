@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 import net.sourceforge.fenixedu.dataTransferObject.InfoFinalResult;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IEnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
@@ -84,7 +84,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 
         Iterator iterator = enrolments.iterator();
         while (iterator.hasNext()) {
-            IEnrollment enrolment = (IEnrollment) iterator.next();
+            IEnrolment enrolment = (IEnrolment) iterator.next();
             if ((enrolment.getEnrollmentState().equals(EnrollmentState.APROVED))
                     && (!enrolment.getCurricularCourse().getType().equals(
                             CurricularCourseType.P_TYPE_COURSE_OBJ))) {
@@ -131,7 +131,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 
         Iterator iterator = enrolments.iterator();
         while (iterator.hasNext()) {
-            IEnrollment enrolment = (IEnrollment) iterator.next();
+            IEnrolment enrolment = (IEnrolment) iterator.next();
             if ((enrolment.getEnrollmentState().equals(EnrollmentState.APROVED))
                     && (!enrolment.getCurricularCourse().getType().equals(
                             CurricularCourseType.P_TYPE_COURSE_OBJ))) {
@@ -250,7 +250,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 
     }
 
-    public List newEnrolmentList(IEnrollment enrolmentList) {
+    public List newEnrolmentList(IEnrolment enrolmentList) {
 
         List newEnrolmentList = new ArrayList();
 

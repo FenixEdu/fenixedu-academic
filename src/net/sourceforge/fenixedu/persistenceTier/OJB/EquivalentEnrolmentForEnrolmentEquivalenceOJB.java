@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEquivalence;
 import net.sourceforge.fenixedu.domain.IEquivalentEnrolmentForEnrolmentEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -30,7 +30,7 @@ public class EquivalentEnrolmentForEnrolmentEquivalenceOJB extends PersistentObj
     }
 
     public IEquivalentEnrolmentForEnrolmentEquivalence readByEnrolmentEquivalenceAndEquivalentEnrolment(
-            IEnrolmentEquivalence enrolmentEquivalence, IEnrollment equivalentEnrolment)
+            IEnrolmentEquivalence enrolmentEquivalence, IEnrolment equivalentEnrolment)
             throws ExcepcaoPersistencia {
         try {
             Criteria criteria = new Criteria();
@@ -43,7 +43,7 @@ public class EquivalentEnrolmentForEnrolmentEquivalenceOJB extends PersistentObj
         }
     }
 
-    public List readByEquivalentEnrolment(IEnrollment equivalentEnrolment) throws ExcepcaoPersistencia {
+    public List readByEquivalentEnrolment(IEnrolment equivalentEnrolment) throws ExcepcaoPersistencia {
         try {
             Criteria criteria = new Criteria();
             criteria.addEqualTo("equivalentEnrolment.idInternal", equivalentEnrolment.getIdInternal());

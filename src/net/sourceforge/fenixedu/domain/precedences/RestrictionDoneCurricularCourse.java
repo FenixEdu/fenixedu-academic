@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.precedences;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -41,7 +41,7 @@ public class RestrictionDoneCurricularCourse extends RestrictionByCurricularCour
         List result = (List) CollectionUtils.collect(
                 enrollmentsWithEnrolledStateInPreviousExecutionPeriod, new Transformer() {
                     public Object transform(Object obj) {
-                        IEnrollment enrollment = (IEnrollment) obj;
+                        IEnrolment enrollment = (IEnrolment) obj;
                         return enrollment.getCurricularCourse();
                     }
                 });

@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentPeriodInCurricularCourses;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
@@ -119,7 +119,7 @@ public class GeraXml extends FenixUtil {
             String curricularCourseData[] = (String[]) iter.next();
             System.out.println("A Lista tem: " + curricularCourseData[0]);
 
-            IEnrollment enrolment = criaEnrolment(curricularCourseData, studentNumber,
+            IEnrolment enrolment = criaEnrolment(curricularCourseData, studentNumber,
                     degreeCurricularPlanID);
             enrolments.add(enrolment);
         }
@@ -168,7 +168,7 @@ public class GeraXml extends FenixUtil {
 
             Iterator iter = enrolments.iterator();
             while (iter.hasNext())
-                persistentEnrolment.delete((IEnrollment) iter.next());
+                persistentEnrolment.delete((IEnrolment) iter.next());
 
             suportePersistente.confirmarTransaccao();
         } catch (ExcepcaoPersistencia e) {
@@ -179,14 +179,14 @@ public class GeraXml extends FenixUtil {
     /**
      * @param object
      */
-    private static IEnrollment criaEnrolment(String[] curricularCourseData, Integer studentNumber,
+    private static IEnrolment criaEnrolment(String[] curricularCourseData, Integer studentNumber,
             Integer degreeCurricularPlanID) {
         String curricularCourseName = curricularCourseData[0].toUpperCase();
 
         EnrollmentState enrollmentState = EnrollmentState.valueOf(curricularCourseData[1]);
         EnrolmentEvaluationType enrolmentEvaluationType = EnrolmentEvaluationType.NORMAL_OBJ;
 
-        IEnrollment enrolment = null;
+        IEnrolment enrolment = null;
         try {
             ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
@@ -331,7 +331,7 @@ public class GeraXml extends FenixUtil {
             Iterator iterador = enrolments.iterator();
 
             while (iterador.hasNext())
-                persistentEnrolment.delete((IEnrollment) iterador.next());
+                persistentEnrolment.delete((IEnrolment) iterador.next());
 
             suportePersistente.confirmarTransaccao();
         } catch (ExcepcaoPersistencia e) {

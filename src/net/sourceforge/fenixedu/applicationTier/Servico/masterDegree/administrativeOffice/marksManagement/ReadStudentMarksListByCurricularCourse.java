@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -78,7 +78,7 @@ public class ReadStudentMarksListByCurricularCourse implements IService {
 
         Iterator iterator = enrollments.iterator();
         while (iterator.hasNext()) {
-            IEnrollment enrolment = (IEnrollment) iterator.next();
+            IEnrolment enrolment = (IEnrolment) iterator.next();
 
             if ((numberAux == null)
                     || (numberAux.intValue() != enrolment.getStudentCurricularPlan().getStudent()

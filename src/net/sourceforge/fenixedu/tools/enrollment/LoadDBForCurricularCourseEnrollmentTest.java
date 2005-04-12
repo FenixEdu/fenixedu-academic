@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ICreditsInAnySecundaryArea;
 import net.sourceforge.fenixedu.domain.ICreditsInScientificArea;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IPersonRole;
@@ -113,7 +113,7 @@ public class LoadDBForCurricularCourseEnrollmentTest {
                 // ---------------------------------------------------------------------------------------------------
                 int size = studentCurricularPlan.getEnrolments().size();
                 for (int i = 0; i < size; i++) {
-                    IEnrollment enrollment = (IEnrollment) studentCurricularPlan.getEnrolments().get(i);
+                    IEnrolment enrollment = (IEnrolment) studentCurricularPlan.getEnrolments().get(i);
 
                     int size2 = enrollment.getEvaluations().size();
                     for (int j = 0; j < size2; j++) {

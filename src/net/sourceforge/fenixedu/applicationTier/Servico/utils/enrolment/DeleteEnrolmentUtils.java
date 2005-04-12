@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
@@ -37,7 +37,7 @@ public abstract class DeleteEnrolmentUtils {
      * @throws ExcepcaoPersistencia
      */
     public static void deleteEnrollment(IPersistentEnrollment enrolmentDAO,
-            IPersistentEnrolmentEvaluation enrolmentEvaluationDAO, IEnrollment enrolment)
+            IPersistentEnrolmentEvaluation enrolmentEvaluationDAO, IEnrolment enrolment)
             throws ExcepcaoPersistencia {
 
         deleteEnrollmentEvaluations(enrolmentEvaluationDAO, enrolment);
@@ -54,7 +54,7 @@ public abstract class DeleteEnrolmentUtils {
      * @throws ExcepcaoPersistencia
      */
     protected static void deleteEnrollmentEvaluations(IPersistentEnrolmentEvaluation enrolmentEvaluationDAO,
-            IEnrollment enrolment) throws ExcepcaoPersistencia {
+            IEnrolment enrolment) throws ExcepcaoPersistencia {
         if (enrolment.getEvaluations() != null) {
             Iterator iterator = enrolment.getEvaluations().iterator();
             while (iterator.hasNext()) {
@@ -70,7 +70,7 @@ public abstract class DeleteEnrolmentUtils {
      * @param enrolment
      * @throws ExcepcaoPersistencia
      */
-    protected static void deleteAttend(IEnrollment enrolment) throws ExcepcaoPersistencia {
+    protected static void deleteAttend(IEnrolment enrolment) throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExecutionCourse executionCourseDAO = persistentSuport.getIPersistentExecutionCourse();
         IFrequentaPersistente attendDAO = persistentSuport.getIFrequentaPersistente();

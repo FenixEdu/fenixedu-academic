@@ -20,7 +20,7 @@ import org.apache.ojb.broker.PersistenceBrokerException;
  * 24/Mar/2003
  */
 
-public class Enrolment extends DomainObject implements IEnrollment,
+public class Enrolment extends DomainObject implements IEnrolment,
         PersistenceBrokerAware {
     private IStudentCurricularPlan studentCurricularPlan;
 
@@ -209,8 +209,8 @@ public class Enrolment extends DomainObject implements IEnrollment,
     public boolean equals(Object obj) {
         boolean result = false;
 
-        if (obj instanceof IEnrollment) {
-            IEnrollment enrolment = (IEnrollment) obj;
+        if (obj instanceof IEnrolment) {
+            IEnrolment enrolment = (IEnrolment) obj;
 
             result = this.getStudentCurricularPlan().equals(
                     enrolment.getStudentCurricularPlan())

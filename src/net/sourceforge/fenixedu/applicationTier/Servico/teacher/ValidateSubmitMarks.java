@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSubmitMarks;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
@@ -85,7 +85,7 @@ public class ValidateSubmitMarks implements IServico {
 
                 public Object transform(Object input) {
                     IAttends attend = (IAttends) input;
-                    IEnrollment enrolment = attend.getEnrolment();
+                    IEnrolment enrolment = attend.getEnrolment();
                     if(enrolment != null) {
                         if(enrolment.getExecutionPeriod().equals(executionCourse.getExecutionPeriod()))
                             return enrolment.getIdInternal();

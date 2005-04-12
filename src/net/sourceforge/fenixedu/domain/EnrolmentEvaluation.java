@@ -31,7 +31,7 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
 
     private String observation;
 
-    private IEnrollment enrolment;
+    private IEnrolment enrolment;
 
     private IPerson personResponsibleForGrade;
 
@@ -71,7 +71,7 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
         return result;
     }
 
-    public IEnrollment getEnrolment() {
+    public IEnrolment getEnrolment() {
         return enrolment;
     }
 
@@ -99,7 +99,7 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
         return enrolmentEvaluationState;
     }
 
-    public void setEnrolment(IEnrollment enrolment) {
+    public void setEnrolment(IEnrolment enrolment) {
         this.enrolment = enrolment;
     }
 

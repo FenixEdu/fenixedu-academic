@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ICreditsInAnySecundaryArea;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 
 /**
@@ -15,6 +15,6 @@ public interface IPersistentCreditsInAnySecundaryArea extends IPersistentObject 
             throws ExcepcaoPersistencia;
 
     public ICreditsInAnySecundaryArea readByStudentCurricularPlanAndEnrollment(
-            IStudentCurricularPlan studentCurricularPlan, IEnrollment enrolment)
+            IStudentCurricularPlan studentCurricularPlan, IEnrolment enrolment)
             throws ExcepcaoPersistencia;
 }

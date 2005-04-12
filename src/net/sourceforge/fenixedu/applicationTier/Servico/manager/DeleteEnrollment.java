@@ -9,7 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
@@ -30,14 +30,14 @@ public class DeleteEnrollment implements IService {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentEnrollment persistentEnrollment = persistentSupport.getIPersistentEnrolment();
 
-        final IEnrollment enrollment = (IEnrollment) persistentEnrollment.readByOID(Enrolment.class, enrollmentId);
+        final IEnrolment enrollment = (IEnrolment) persistentEnrollment.readByOID(Enrolment.class, enrollmentId);
         deleteAssociatedEnrollmentInformation(persistentSupport, enrollment);
         persistentEnrollment.delete(enrollment);
     }
 
     public static void deleteAssociatedEnrollmentInformation(
             final ISuportePersistente persistentSupport,
-            final IEnrollment enrollment) throws ExcepcaoPersistencia {
+            final IEnrolment enrollment) throws ExcepcaoPersistencia {
         final IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = persistentSupport
         .getIPersistentEnrolmentEvaluation();
         final IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();

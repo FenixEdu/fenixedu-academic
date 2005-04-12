@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndEvaluationsAndExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -51,7 +51,7 @@ public class GetEnrolmentList implements IService {
         Iterator iterator = enrolmentList.iterator();
 
         while (iterator.hasNext()) {
-            IEnrollment enrolment = (IEnrollment) iterator.next();
+            IEnrolment enrolment = (IEnrolment) iterator.next();
 			if (enrolment instanceof EnrolmentInExtraCurricularCourse) {
 				continue;				
 			}
@@ -89,7 +89,7 @@ public class GetEnrolmentList implements IService {
         Iterator iterator = enrolmentList.iterator();
 
         while (iterator.hasNext()) {
-            IEnrollment enrolment = (IEnrollment) iterator.next();
+            IEnrolment enrolment = (IEnrolment) iterator.next();
 			if (enrolment instanceof EnrolmentInExtraCurricularCourse) {
 				continue;				
 			}
@@ -122,7 +122,7 @@ public class GetEnrolmentList implements IService {
         // clone
         List result = new ArrayList();
         for (Iterator iter = enrolmentList.iterator(); iter.hasNext();) {
-            IEnrollment enrollment = (IEnrollment) iter.next();
+            IEnrolment enrollment = (IEnrolment) iter.next();
 			if (enrollment instanceof EnrolmentInExtraCurricularCourse) {
 				continue;				
 			}

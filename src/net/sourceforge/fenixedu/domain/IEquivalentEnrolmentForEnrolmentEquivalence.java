@@ -15,9 +15,9 @@ public interface IEquivalentEnrolmentForEnrolmentEquivalence extends IDomainObje
     //	public boolean equals(Object obj) {
     public abstract IEnrolmentEquivalence getEnrolmentEquivalence();
 
-    public abstract IEnrollment getEquivalentEnrolment();
+    public abstract IEnrolment getEquivalentEnrolment();
 
     public abstract void setEnrolmentEquivalence(IEnrolmentEquivalence equivalence);
 
-    public abstract void setEquivalentEnrolment(IEnrollment enrolment);
+    public abstract void setEquivalentEnrolment(IEnrolment enrolment);
 }

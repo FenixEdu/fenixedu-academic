@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.GetEnrol
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IEnrollment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
@@ -53,7 +53,7 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
         }
 
         while (iterator.hasNext()) {
-            IEnrollment enrolment = (IEnrollment) iterator.next();
+            IEnrolment enrolment = (IEnrolment) iterator.next();
 
             if ((enrolment.getEnrollmentState().equals(EnrollmentState.APROVED))
                     && (!(enrolment instanceof IEnrolmentInExtraCurricularCourse))) {
@@ -81,7 +81,7 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
         Iterator iterator = enrolments.iterator();
 
         while (iterator.hasNext()) {
-            IEnrollment enrolment = (IEnrollment) iterator.next();
+            IEnrolment enrolment = (IEnrolment) iterator.next();
             if (enrolment.getEnrollmentState().equals(EnrollmentState.APROVED)) {
 
                 try {
