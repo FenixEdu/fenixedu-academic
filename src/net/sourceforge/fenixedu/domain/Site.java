@@ -7,21 +7,8 @@ package net.sourceforge.fenixedu.domain;
 /**
  * @author Ivo Brandão
  */
-public class Site extends DomainObject implements ISite {
-
+public class Site extends Site_Base {
     private IExecutionCourse executionCourse;
-
-    private Integer keyExecutionCourse;
-
-    private String alternativeSite;
-
-    private String mail;
-
-    private String initialStatement;
-
-    private String introduction;
-
-    private String style;
 
     /**
      * Construtor
@@ -58,23 +45,7 @@ public class Site extends DomainObject implements ISite {
         this.executionCourse = executionCourse;
     }
 
-    /**
-     * @return Integer
-     */
-    public Integer getKeyExecutionCourse() {
-        return keyExecutionCourse;
-    }
-
-    /**
-     * Sets the keyExecutionCourse.
-     * 
-     * @param keyExecutionCourse
-     *            The keyExecutionCourse to set
-     */
-    public void setKeyExecutionCourse(Integer keyExecutionCourse) {
-        this.keyExecutionCourse = keyExecutionCourse;
-    }
-
+    
     /**
      * @see java.lang.Object#equals(java.lang.Object)
      */
@@ -146,23 +117,7 @@ public class Site extends DomainObject implements ISite {
     //	public void setKeyInitialSection(Integer keyInitialSection) {
     //		this.keyInitialSection = keyInitialSection;
     //	}
-    /**
-     * @return String
-     */
-    public String getAlternativeSite() {
-        return alternativeSite;
-    }
-
-    /**
-     * Sets the alternativeSite.
-     * 
-     * @param alternativeSite
-     *            The alternativeSite to set
-     */
-    public void setAlternativeSite(String alternativeSite) {
-        this.alternativeSite = alternativeSite;
-    }
-
+    
     /**
      * @see java.lang.Object#toString()
      */
@@ -178,73 +133,4 @@ public class Site extends DomainObject implements ISite {
         result += "]";
         return result;
     }
-
-    /**
-     * @return String
-     */
-    public String getMail() {
-        return mail;
-    }
-
-    /**
-     * Sets the mail.
-     * 
-     * @param mail
-     *            The mail to set
-     */
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    /**
-     * @return String
-     */
-    public String getInitialStatement() {
-        return initialStatement;
-    }
-
-    /**
-     * @return String
-     */
-    public String getIntroduction() {
-        return introduction;
-    }
-
-    /**
-     * Sets the initialStatement.
-     * 
-     * @param initialStatement
-     *            The initialStatement to set
-     */
-    public void setInitialStatement(String initialStatement) {
-        this.initialStatement = initialStatement;
-    }
-
-    /**
-     * Sets the introduction.
-     * 
-     * @param introduction
-     *            The introduction to set
-     */
-    public void setIntroduction(String introduction) {
-        this.introduction = introduction;
-    }
-
-    /**
-     * @return String
-     */
-    public String getStyle() {
-        return style;
-    }
-
-    /**
-     * Sets the style.
-     * 
-     * @param style
-     *            The style to set
-     */
-    public void setStyle(String style) {
-        this.style = style;
-    }
-
 }

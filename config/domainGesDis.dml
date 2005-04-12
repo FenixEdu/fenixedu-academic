@@ -1,3 +1,4 @@
+/* TODO */
 class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
 	String nome;
 	Double theoreticalHours;
