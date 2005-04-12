@@ -20,6 +20,24 @@ class net.sourceforge.fenixedu.domain.Advisory extends net.sourceforge.fenixedu.
 	String sender;
 }
 
+
+class net.sourceforge.fenixedu.domain.Announcement extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keySite;
+	String information;
+	String title;
+	
+	interface "
+	public java.sql.Timestamp getCreationDate();
+    
+    public void setCreationDate(java.sql.Timestamp creationDate);
+
+    public java.sql.Timestamp getLastModifiedDate();
+
+    public void setLastModifiedDate(java.sql.Timestamp lastModifiedDate);	
+	"
+}
+
+
 class net.sourceforge.fenixedu.domain.AttendInAttendsSet extends net.sourceforge.fenixedu.domain.DomainObject {
         Integer keyAttend;
         Integer keyAttendsSet;
@@ -780,7 +798,6 @@ class net.sourceforge.fenixedu.domain.StudentGroupAttend extends net.sourceforge
  * 
  */
 
-external class net.sourceforge.fenixedu.domain.Announcement;
 external class net.sourceforge.fenixedu.domain.Attends;
 external class net.sourceforge.fenixedu.domain.CurricularCourse;
 external class net.sourceforge.fenixedu.domain.Degree;
