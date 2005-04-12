@@ -38,10 +38,12 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeInitials implements
 				.readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
 						degreeInitials, nameDegreeCurricularPlan, executionYear);
 		final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
-		final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
-		infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-		final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(executionDegree.getDegreeCurricularPlan().getDegree());
-		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
+        if (executionDegree != null) {
+            final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
+            infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+            final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(executionDegree.getDegreeCurricularPlan().getDegree());
+            infoDegreeCurricularPlan.setInfoDegree(infoDegree);
+        }
 
 		return infoExecutionDegree;
 	}
