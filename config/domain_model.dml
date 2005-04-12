@@ -76,6 +76,17 @@ class net.sourceforge.fenixedu.domain.AttendsSet extends net.sourceforge.fenixed
 		"
 }
 
+
+class net.sourceforge.fenixedu.domain.BibliographicReference extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyExecutionCourse;
+	Boolean optional;
+	String year;
+	String authors;
+	String title;
+	String reference;
+}
+
+
 class net.sourceforge.fenixedu.domain.Branch extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer secondaryCredits;
     String code;
@@ -892,6 +903,14 @@ relation DelegateStudent {
 relation ExecutionCourseReport {
 	net.sourceforge.fenixedu.domain.gesdis.CourseReport playsRole courseReport {
 		multiplicity 1;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+}
+
+
+relation ExecutionCourseBibliographicReference {
+	net.sourceforge.fenixedu.domain.BibliographicReference playsRole associatedBibliographicReferences {
+		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 }
