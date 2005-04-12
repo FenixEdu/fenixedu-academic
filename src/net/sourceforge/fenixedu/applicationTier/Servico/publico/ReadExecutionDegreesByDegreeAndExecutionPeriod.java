@@ -90,25 +90,6 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IServico 
             while (listIterator.hasNext()) {
                 IExecutionDegree executionDegree = (IExecutionDegree) listIterator.next();
 
-                //CLONER
-                //InfoExecutionDegree infoExecutionDegree =
-                // (InfoExecutionDegree) Cloner
-                //        .get(executionDegree);
-                //if (executionDegree.getCoordinatorsList() != null) {
-                //    List infoCoordinatorList = new ArrayList();
-                //    ListIterator iteratorCoordinator = executionDegree
-                //            .getCoordinatorsList().listIterator();
-                //    while (iteratorCoordinator.hasNext()) {
-                //        ICoordinator coordinator = (ICoordinator) iteratorCoordinator
-                //                .next();
-
-                //        infoCoordinatorList.add(Cloner
-                //                .copyICoordinator2InfoCoordenator(coordinator));
-                //    }
-
-                //    infoExecutionDegree
-                //            .setCoordinatorsList(infoCoordinatorList);
-                //}
                 InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithCoordinators
                         .newInfoFromDomain(executionDegree);
 				InfoExecutionYear infoExecutionYear =   InfoExecutionYear.newInfoFromDomain(executionDegree.getExecutionYear());

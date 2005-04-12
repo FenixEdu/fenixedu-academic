@@ -46,7 +46,7 @@ public class ReadCoordinationTeam implements IService {
             List infoCoordinators = new ArrayList();
             while (iterator.hasNext()) {
                 ICoordinator coordinator = (ICoordinator) iterator.next();
-                InfoCoordinator infoCoordinator = Cloner.copyICoordinator2InfoCoordenator(coordinator);
+                InfoCoordinator infoCoordinator = InfoCoordinator.newInfoFromDomain(coordinator);
                 infoCoordinators.add(infoCoordinator);
             }
 

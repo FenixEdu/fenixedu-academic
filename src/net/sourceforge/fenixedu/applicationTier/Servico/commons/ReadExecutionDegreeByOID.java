@@ -57,7 +57,6 @@ public class ReadExecutionDegreeByOID implements IService {
                     while (iteratorCoordinator.hasNext()) {
                         ICoordinator coordinator = (ICoordinator) iteratorCoordinator.next();
 
-                        //infoCoordinatorList.add(Cloner.copyICoordinator2InfoCoordenator(coordinator));
                         infoCoordinatorList.add(InfoCoordinatorWithInfoPerson
                                 .newInfoFromDomain(coordinator));
                     }

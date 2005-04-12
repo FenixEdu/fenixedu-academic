@@ -9,6 +9,9 @@ import java.util.ListIterator;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinator;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
@@ -47,14 +50,20 @@ public class ReadExecutionDegree implements IService {
 
         InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
 
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
+        InfoDegree infoDegree = InfoDegree.newInfoFromDomain(executionDegree.getDegreeCurricularPlan().getDegree());
+        infoDegreeCurricularPlan.setInfoDegree(infoDegree);
+        infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+
         //added by Tânia Pousão
         if (executionDegree.getCoordinatorsList() != null) {
             List infoCoordinatorList = new ArrayList();
             ListIterator iteratorCoordinator = executionDegree.getCoordinatorsList().listIterator();
             while (iteratorCoordinator.hasNext()) {
                 ICoordinator coordinator = (ICoordinator) iteratorCoordinator.next();
-
-                infoCoordinatorList.add(Cloner.copyICoordinator2InfoCoordenator(coordinator));
+                
+                InfoCoordinator infoCoordinator = InfoCoordinator.newInfoFromDomain(coordinator);
+                infoCoordinatorList.add(infoCoordinator);
             }
 
             infoExecutionDegree.setCoordinatorsList(infoCoordinatorList);
@@ -63,22 +72,18 @@ public class ReadExecutionDegree implements IService {
         if (executionDegree.getPeriodExamsFirstSemester() != null) {
             infoExecutionDegree.setInfoPeriodExamsFirstSemester(InfoPeriod
                     .newInfoFromDomain(executionDegree.getPeriodExamsFirstSemester()));
-            //infoExecutionDegree.setInfoPeriodExamsFirstSemester(Cloner.copyIPeriod2InfoPeriod(executionDegree.getPeriodExamsFirstSemester()));
         }
         if (executionDegree.getPeriodExamsSecondSemester() != null) {
             infoExecutionDegree.setInfoPeriodExamsSecondSemester(InfoPeriod
                     .newInfoFromDomain(executionDegree.getPeriodExamsSecondSemester()));
-            //infoExecutionDegree.setInfoPeriodExamsSecondSemester(Cloner.copyIPeriod2InfoPeriod(executionDegree.getPeriodExamsSecondSemester()));
         }
         if (executionDegree.getPeriodLessonsFirstSemester() != null) {
             infoExecutionDegree.setInfoPeriodLessonsFirstSemester(InfoPeriod
                     .newInfoFromDomain(executionDegree.getPeriodLessonsFirstSemester()));
-            //infoExecutionDegree.setInfoPeriodLessonsFirstSemester(Cloner.copyIPeriod2InfoPeriod(executionDegree.getPeriodLessonsFirstSemester()));
         }
         if (executionDegree.getPeriodLessonsSecondSemester() != null) {
             infoExecutionDegree.setInfoPeriodLessonsSecondSemester(InfoPeriod
                     .newInfoFromDomain(executionDegree.getPeriodLessonsSecondSemester()));
-            //infoExecutionDegree.setInfoPeriodLessonsSecondSemester(Cloner.copyIPeriod2InfoPeriod(executionDegree.getPeriodLessonsSecondSemester()));
         }
 
         return infoExecutionDegree;
