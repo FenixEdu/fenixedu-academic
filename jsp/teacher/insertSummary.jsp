@@ -24,15 +24,13 @@
 <h2><bean:message key="title.summary.insert" /></h2>
 
 <html:form action="/summariesManagerInsertSummary">
-	<html:hidden property="forHidden" value=""/>
+	<html:hidden property="forHidden" />
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="insertSummary"/>
 	<html:hidden property="objectCode"/>
 	<html:hidden property="save"/>
 	<html:hidden property="summaryText" />
-	<html:hidden property="summaryDateInput" />
-
-
+	
 <!-- Shifts -->
 <table width="100%">
 	<tr>
@@ -81,7 +79,7 @@
 		<td colspan='2'>&nbsp;</td>
 	</tr>
 	<logic:present name="datesVisible">
-		<logic:notEqual name="datesVisible" value="false">
+		<logic:equal name="datesVisible" value="true">
 			<tr>
 				<td><bean:message key="label.summaryOptions"/></td>
 			</tr>	
@@ -104,18 +102,14 @@
 						onchange="this.form.summaryDateInputOption.value='null';this.form.summaryDateInput.value=this.form.dateEmpty.value;this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();"/>
 				<bean:message key="message.dateFormat"/></td>
 			</tr>							
-		</logic:notEqual>
-	</logic:present>		
-	<logic:present name="datesVisible">
-		<logic:notEqual name="datesVisible" value="true">
-			<tr>
-				<td><bean:message key="label.summaryDate"/></td>
-				<td><html:text property="summaryDateInput" size="10" maxlength="10"/><bean:message key="message.dateFormat"/></td>
-			</tr>
-		</logic:notEqual>
+		</logic:equal>
 	</logic:present>		
 	<logic:present name="forHidden">
-		<logic:notEqual name="forHidden" value="true">
+		<logic:equal name="forHidden" value="false">
+		<tr>
+			<td><bean:message key="label.summaryDate"/></td>
+			<td><html:text property="summaryDateInput" size="10" maxlength="10"/><bean:message key="message.dateFormat"/></td>
+		</tr>
 		<tr>
 			<td><bean:message key="label.summaryHour"/></td>
 			<td><html:text property="summaryHourInput" size="5" maxlength="5"/><bean:message key="message.hourFormat"/></td>		
@@ -127,10 +121,11 @@
 					<html:options collection="rooms" property="idInternal" labelProperty="nome"/>
 				</html:select></td>		
 		<tr/>	
-		</logic:notEqual>
+		</logic:equal>
 		<logic:equal name="forHidden" value="true">
 			<html:hidden property="summaryHourInput"/>
 			<html:hidden property="room"/>
+			<html:hidden property="summaryDateInput" />
 		</logic:equal>
 	</logic:present>
 	<logic:notPresent name="forHidden">
