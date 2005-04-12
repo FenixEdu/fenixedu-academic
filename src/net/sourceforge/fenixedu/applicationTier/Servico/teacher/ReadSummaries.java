@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSummaries;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSummary;
@@ -103,7 +104,8 @@ public class ReadSummaries implements IServico {
 
                     public Object transform(Object arg0) {
                         IShift turno = (IShift) arg0;
-                        return Cloner.copyShift2InfoShift(turno);
+						return InfoShift.newInfoFromDomain(turno);
+                        //return Cloner.copyShift2InfoShift(turno);
                     }
                 });
             }
@@ -200,7 +202,7 @@ public class ReadSummaries implements IServico {
                 Iterator iter = summaries.iterator();
                 while (iter.hasNext()) {
                     ISummary summary = (ISummary) iter.next();
-                    InfoSummary infoSummary = Cloner.copyISummary2InfoSummary(summary);
+					InfoSummary infoSummary = InfoSummary.newInfoFromDomain(summary);
                     result.add(infoSummary);
                 }
             }

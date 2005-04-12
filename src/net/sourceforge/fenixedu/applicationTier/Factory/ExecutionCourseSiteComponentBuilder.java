@@ -644,7 +644,8 @@ public class ExecutionCourseSiteComponentBuilder {
             infoLesson.setInfoRoomOccupation(infoRoomOccupation);
 
             IShift shift = lesson.getShift();
-            InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+			InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
+            //InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
             infoLesson.setInfoShift(infoShift);
         }
         return infoLesson;

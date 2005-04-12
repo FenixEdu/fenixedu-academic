@@ -56,4 +56,8 @@ public enum CurricularCourseEnrollmentType {
         }
     }
 
+	public String getName() {
+		return name();
+	}
+
 }
