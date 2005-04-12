@@ -3,15 +3,21 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<span class="error"><html:errors property="error.default" /></span>
+<span class="error"><html:errors/>
+	<logic:present name="errors">
+		<bean:write name="errors" filter="true" />
+	</logic:present	>
+</span>
 
 <logic:present name="siteView">
-<bean:define id="infoSiteItems" name="siteView" property="component"/>
-<bean:define id="item" name="infoSiteItems" property="item"/>
-<bean:define id="items" name="infoSiteItems" property="items"/>
+	<bean:define id="infoSiteItems" name="siteView" property="component"/>
+	<bean:define id="item" name="infoSiteItems" property="item"/>
+	<bean:define id="items" name="infoSiteItems" property="items"/>
 	
 <html:form action="/editItem">
 	<html:hidden property="page" value="1"/>
+	<html:hidden property="information" />
+	
 <table width="100%">
 <tr>
 	<td>
@@ -65,7 +71,20 @@
 		<bean:message key="message.itemInformation"/>:
 	</td>
 	<td>
-		<html:textarea name="item" property="information" rows="15" cols="45"/>
+		<script language="JavaScript" type="text/javascript"> 
+		<!--
+			initEditor();		
+		//-->
+		</script>
+				
+		<noscript>JavaScript must be enable to use this form <br> </noscript>
+			
+		<script language="JavaScript" type="text/javascript"> 
+		<!--
+			writeTextEditor(200, 200, document.forms[0].information.value);		
+		//-->
+		</script>	
+		<!--<html:textarea name="item" property="information" rows="15" cols="45"/>//-->
 		<span class="error"><html:errors property="information"/></span>
 	</td>
 </tr>
@@ -80,7 +99,7 @@
 <html:hidden property="currentSectionCode" value="<%= currentSectionCode.toString() %>" />
 	
 
-<html:submit styleClass="inputbutton">
+<html:submit styleClass="inputbutton" onclick="this.form.information.value=update()">
 	<bean:message key="button.save"/>
 </html:submit>
 <html:reset  styleClass="inputbutton">

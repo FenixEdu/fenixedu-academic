@@ -3,7 +3,13 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<span class="error"><html:errors property="error.default" /></span>
+
+<span class="error"><html:errors/>
+	<logic:present name="errors">
+		<bean:write name="errors" filter="true" />
+	</logic:present	>
+</span>
+
 <h2><bean:message key="message.insertItem" /></h2>
 <br />
 
@@ -12,7 +18,9 @@
 <bean:define id="itemsList" name="component" property="items"/>
 	
 <html:form action="/insertItem">
-<html:hidden property="page" value="1"/>
+	<html:hidden property="page" value="1"/>
+	<html:hidden property="information" />
+	
 <table>
 	<tr>
 		<td>
@@ -27,7 +35,20 @@
 			<bean:message key="message.itemInformation"/>
 		</td>
 		<td>
-			<html:textarea rows="15" cols="45" property="information"/>
+			<script language="JavaScript" type="text/javascript"> 
+			<!--
+				initEditor();		
+			//-->
+			</script>
+			
+			<noscript>JavaScript must be enable to use this form <br> </noscript>
+			
+			<script language="JavaScript" type="text/javascript"> 
+			<!--
+				writeTextEditor(200, 200, document.forms[0].information.value);		
+			//-->
+			</script>						
+			<!--<html:textarea rows="15" cols="45" property="information"/>//-->
 			<span class="error"><html:errors property="information"/></span>
 		</td>
 	</tr>
@@ -65,10 +86,10 @@
 <bean:define id="sectionCode" name="section" property="idInternal"/>	
 <html:hidden property="currentSectionCode" value="<%= sectionCode.toString() %>" />
 
-<html:submit styleClass="inputbutton">
+<html:submit styleClass="inputbutton" onclick="this.form.information.value=update()">
 	<bean:message key="button.save"/>
 </html:submit>
-<html:reset  styleClass="inputbutton">
+<html:reset styleClass="inputbutton">
 	<bean:message key="label.clear"/>
 </html:reset>			
 </html:form>

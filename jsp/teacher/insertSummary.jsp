@@ -200,22 +200,20 @@
 		<td colspan='2'><strong><bean:message key="label.summaryText"/></strong></td>
 	</tr>
 	<tr>
-		<td>
-		
-		<script language="JavaScript" type="text/javascript"> 
-		<!--
-		initEditor();		
-		//-->
-		</script>
-		
-		<noscript>JavaScript must be enable to use this form <br> </noscript>
-		
-		<script language="JavaScript" type="text/javascript"> 
-		<!--
-		writeTextEditor(200, 200, document.forms[0].summaryText.value);		
-		//-->
-		</script>
-		
+		<td>	
+			<script language="JavaScript" type="text/javascript"> 
+			<!--
+			initEditor();		
+			//-->
+			</script>
+			
+			<noscript>JavaScript must be enable to use this form <br> </noscript>
+			
+			<script language="JavaScript" type="text/javascript"> 
+			<!--
+			writeTextEditor(200, 200, document.forms[0].summaryText.value);		
+			//-->
+			</script>		
 		</td>
 		<!-- <td colspan='2'><html:textarea rows="7" cols="50" property="summaryText"/></td> //-->
 	</tr>

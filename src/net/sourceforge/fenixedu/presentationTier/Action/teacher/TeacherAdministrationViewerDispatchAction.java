@@ -1089,6 +1089,19 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer order = new Integer((String) dynaForm.get("itemOrder"));
         String itemName = (String) dynaForm.get("name");
         String information = (String) dynaForm.get("information");
+        
+        HtmlValidator htmlValidator = new HtmlValidator();     
+        htmlValidator.validateHTMLString(information);
+        String errors = htmlValidator.getErrors();           
+  
+        if((errors != null) && (!errors.equals(""))){
+            ActionErrors actionErrors = new ActionErrors();
+            request.setAttribute("errors", errors);
+            actionErrors.add("htmlErrors", new ActionError("html.validate.error"));
+            saveErrors(request, actionErrors);
+            return mapping.getInputForward();
+        }
+        
         String urgentString = (String) dynaForm.get("urgent");
         InfoItem newInfoItem = new InfoItem();
         newInfoItem.setItemOrder(order);
@@ -1111,7 +1124,13 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         Integer itemCode = getItemCode(request);
         ISiteComponent itemsComponent = new InfoSiteItems();
-        readSiteView(request, itemsComponent, null, itemCode, null);
+        SiteView siteView = readSiteView(request, itemsComponent, null, itemCode, null);
+        String information = (String)((InfoSiteItems)siteView.getComponent()).getItem().getInformation();
+                    
+        if(information != null){
+            DynaActionForm itemForm = (DynaActionForm) form;
+        	itemForm.set("information", ((InfoSiteItems)siteView.getComponent()).getItem().getInformation());
+        }
         return mapping.findForward("editItem");
     }
     
@@ -1134,6 +1153,19 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer objectCode = getObjectCode(request);
         DynaActionForm itemForm = (DynaActionForm) form;
         String information = (String) itemForm.get("information");
+        
+        HtmlValidator htmlValidator = new HtmlValidator();     
+        htmlValidator.validateHTMLString(information);
+        String errors = htmlValidator.getErrors();           
+  
+        if((errors != null) && (!errors.equals(""))){
+            ActionErrors actionErrors = new ActionErrors();
+            request.setAttribute("errors", errors);
+            actionErrors.add("htmlErrors", new ActionError("html.validate.error"));
+            saveErrors(request, actionErrors);
+            return mapping.getInputForward();
+        }
+        
         String name = (String) itemForm.get("name");
         Boolean urgent = new Boolean((String) itemForm.get("urgent"));
         Integer itemOrder = new Integer((String) itemForm.get("itemOrder"));
@@ -1268,7 +1300,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         
         try {
             TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) ServiceUtils
-            .executeService(userView, "TeacherAdministrationSiteComponentService", args);
+            .executeService(userView, "TeacherAdministrationSiteComponentService", args);                     
             request.setAttribute("siteView", siteView);
             request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent())
                     .getExecutionCourse().getIdInternal());
