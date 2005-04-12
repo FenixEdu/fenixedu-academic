@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
@@ -48,8 +48,12 @@ public class ReadExecutionDegreesByDegree implements IService {
         Iterator iterator = allExecutionDegrees.iterator();
         List allInfoExecutionDegrees = new ArrayList(allExecutionDegrees.size());
 
-        while (iterator.hasNext())
-            allInfoExecutionDegrees.add(Cloner.get((IExecutionDegree) iterator.next()));
+        while (iterator.hasNext()) {
+            IExecutionDegree executionDegree = (IExecutionDegree) iterator.next();
+            InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+
+            allInfoExecutionDegrees.add(infoExecutionDegree);
+        }
 
         return allInfoExecutionDegrees;
     }
