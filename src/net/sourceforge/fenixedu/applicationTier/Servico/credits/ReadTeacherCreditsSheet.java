@@ -126,8 +126,7 @@ public class ReadTeacherCreditsSheet implements IService {
         List infoShiftProfessorships = new ArrayList();
         for (int i = 0; i < shiftProfessorships.size(); i++) {
             IShiftProfessorship shiftProfessorship = (IShiftProfessorship) shiftProfessorships.get(i);
-            InfoShiftProfessorship infoShiftProfessorship = Cloner
-                    .copyIShiftProfessorship2InfoShiftProfessorship(shiftProfessorship);
+            InfoShiftProfessorship infoShiftProfessorship = InfoShiftProfessorship.newInfoFromDomain(shiftProfessorship);
             infoShiftProfessorships.add(infoShiftProfessorship);
         }
         return infoShiftProfessorships;

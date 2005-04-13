@@ -84,8 +84,7 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IService {
                             && (!shiftProfessorship.getProfessorship().getTeacher().equals(teacher))) {
                         availablePercentage -= shiftProfessorship.getPercentage().doubleValue();
                     }
-                    infoShiftProfessorship = Cloner
-                            .copyIShiftProfessorship2InfoShiftProfessorship(shiftProfessorship);
+                    infoShiftProfessorship = InfoShiftProfessorship.newInfoFromDomain(shiftProfessorship);
                     infoShiftPercentage.addInfoShiftProfessorship(infoShiftProfessorship);
                 }
 
