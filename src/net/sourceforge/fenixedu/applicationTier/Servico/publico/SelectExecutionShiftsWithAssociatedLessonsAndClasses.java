@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IServico;
+import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
@@ -84,7 +85,8 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClasses implements ISe
                     shiftWithAssociatedClassesAndLessons.setInfoLessons(infoLessons);
 
                     for (int j = 0; j < classesShifts.size(); j++)
-                        infoClasses.add(Cloner.copyClass2InfoClass(((ISchoolClassShift) classesShifts.get(j))
+                        infoClasses.add(InfoClass.newInfoFromDomain(
+								((ISchoolClassShift) classesShifts.get(j))
                                 .getTurma()));
 
                     shiftWithAssociatedClassesAndLessons.setInfoClasses(infoClasses);

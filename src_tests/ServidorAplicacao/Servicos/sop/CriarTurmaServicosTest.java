@@ -119,7 +119,7 @@ public class CriarTurmaServicosTest extends TestCaseCreateServices {
                 turma = new Turma("turma1", new Integer(1), ice, iep);
             }
 
-            this.infoClass = Cloner.copyClass2InfoClass(turma);
+            this.infoClass = InfoClass.newInfoFromDomain(turma);
 
             sp.confirmarTransaccao();
 

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
@@ -89,7 +90,7 @@ public class ReadDegreesClassesLessons implements IService {
                     }
                 }
 
-                infoViewClassSchedule.setInfoClass(Cloner.copyClass2InfoClass(turma));
+                infoViewClassSchedule.setInfoClass(InfoClass.newInfoFromDomain(turma));
                 infoViewClassSchedule.setClassLessons(infoLessonList);
                 infoViewClassScheduleList.add(infoViewClassSchedule);
             }

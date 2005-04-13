@@ -8,7 +8,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -47,7 +46,7 @@ public class ReadClassByOID implements IServico {
             ITurmaPersistente classDAO = sp.getITurmaPersistente();
             ISchoolClass turma = (ISchoolClass) classDAO.readByOID(SchoolClass.class, oid);
             if (turma != null) {
-                result = Cloner.copyClass2InfoClass(turma);
+                result = InfoClass.newInfoFromDomain(turma);
             }
         } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex);

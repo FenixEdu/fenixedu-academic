@@ -60,7 +60,7 @@ public class LerTurma implements IServico {
                     className, executionDegree, executionPeriod);
 
             if (turma != null) {
-                infoTurma = Cloner.copyClass2InfoClass(turma);
+                infoTurma = InfoClass.newInfoFromDomain(turma);
             }
         } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();

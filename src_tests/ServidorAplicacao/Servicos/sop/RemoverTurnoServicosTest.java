@@ -135,7 +135,7 @@ public class RemoverTurnoServicosTest extends TestCaseDeleteAndEditServices {
                         executionCourse);
             }
 
-            this.infoClass = Cloner.copyClass2InfoClass(turma);
+            this.infoClass = InfoClass.newInfoFromDomain(turma);
             this.infoShift = Cloner.copyShift2InfoShift(shift);
 
             sp.confirmarTransaccao();

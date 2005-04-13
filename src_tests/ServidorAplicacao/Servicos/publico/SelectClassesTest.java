@@ -130,7 +130,7 @@ public class SelectClassesTest extends TestCaseServicos {
             //			if (!classesExist)
             //				turmaPersistente.deleteAll(); method deleted- too dangerous
 
-            this.infoClass = Cloner.copyClass2InfoClass(class1);
+            this.infoClass = InfoClass.newInfoFromDomain(class1);
 
             sp.confirmarTransaccao();
 

@@ -38,7 +38,7 @@ public class SelectClasses implements IService {
 
         for (int i = 0; i < classes.size(); i++) {
             ISchoolClass taux = (ISchoolClass) classes.get(i);
-            infoClasses.add(Cloner.copyClass2InfoClass(taux));
+            infoClasses.add(InfoClass.newInfoFromDomain(taux));
         }
 
         return infoClasses;

@@ -65,7 +65,7 @@ public class CriarTurma implements IService {
         turma.setExecutionPeriod(executionPeriodDAO.readByNameAndExecutionYear(turma
                 .getExecutionPeriod().getName(), turma.getExecutionPeriod().getExecutionYear()));
 
-        return Cloner.copyClass2InfoClass(turma);
+        return InfoClass.newInfoFromDomain(turma);
     }
 
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ISchoolClassShift;
@@ -34,7 +35,7 @@ public class ReadClassesWithShiftService implements IService {
         List infoClasses = new ArrayList();
         while (iterator.hasNext()) {
             ISchoolClassShift element = (ISchoolClassShift) iterator.next();
-            infoClasses.add(Cloner.copyClass2InfoClass(element.getTurma()));
+            infoClasses.add(InfoClass.newInfoFromDomain(element.getTurma()));
         }
         return infoClasses;
     }

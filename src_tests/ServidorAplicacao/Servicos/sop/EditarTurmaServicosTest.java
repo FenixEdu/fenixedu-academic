@@ -72,7 +72,7 @@ public class EditarTurmaServicosTest extends TestCaseDeleteAndEditServices {
         Object argsEditarTurma[] = new Object[2];
         argsEditarTurma[0] = this.infoClass;
         ITurma turma = Cloner.copyInfoClass2Class(this.infoClass);
-        InfoClass newInfoClass = Cloner.copyClass2InfoClass(turma);
+        InfoClass newInfoClass = InfoClass.newInfoFromDomain(turma);
         newInfoClass.setAnoCurricular(new Integer(2));
         //TODO: verify if infoExecutionDegree is needed for the service
         newInfoClass.setInfoExecutionPeriod(new InfoExecutionPeriod("2º Semestre",
@@ -90,7 +90,7 @@ public class EditarTurmaServicosTest extends TestCaseDeleteAndEditServices {
         Object argsEditarTurma[] = new Object[2];
         argsEditarTurma[0] = this.infoClass;
         ITurma turma = Cloner.copyInfoClass2Class(this.infoClass);
-        InfoClass newInfoClass = Cloner.copyClass2InfoClass(turma);
+        InfoClass newInfoClass = InfoClass.newInfoFromDomain(turma);
         newInfoClass.setAnoCurricular(new Integer(2));
         //TODO: verify if infoExecutionDegree is needed for the service
         newInfoClass.setInfoExecutionPeriod(new InfoExecutionPeriod("2º Semestre",
@@ -133,7 +133,7 @@ public class EditarTurmaServicosTest extends TestCaseDeleteAndEditServices {
                 turma = new Turma("asdasdsad", new Integer(1), ice, iep);
             }
 
-            this.infoClass = Cloner.copyClass2InfoClass(turma);
+            this.infoClass = InfoClass.newInfoFromDomain(turma);
 
             sp.confirmarTransaccao();
 

@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteClassesComponent;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
@@ -70,7 +69,7 @@ public class ReadAllClasses implements IServico {
             Iterator iter = classes.iterator();
             while (iter.hasNext()) {
                 ISchoolClass dClass = (ISchoolClass) iter.next();
-                InfoClass infoClass = Cloner.copyClass2InfoClass(dClass);
+                InfoClass infoClass = InfoClass.newInfoFromDomain(dClass);
                 infoClasses.add(infoClass);
             }
 

@@ -127,7 +127,7 @@ public class AdicionarTurnoServicosTest extends TestCaseCreateServices {
                 it = itp.readByNameAndExecutionCourse("turno1", ide);
             }
 
-            this.infoClass = Cloner.copyClass2InfoClass(turma);
+            this.infoClass = InfoClass.newInfoFromDomain(turma);
             this.infoShift = (InfoShift) Cloner.get(it);
 
             sp.confirmarTransaccao();

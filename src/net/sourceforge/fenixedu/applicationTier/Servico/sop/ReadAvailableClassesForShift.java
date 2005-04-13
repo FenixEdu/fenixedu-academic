@@ -11,7 +11,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -62,7 +61,7 @@ public class ReadAvailableClassesForShift implements IService {
                 ISchoolClass classImpl = (ISchoolClass) iter.next();
                 if (!shift.getAssociatedClasses().contains(classImpl)
                         && containsScope(scopes, classImpl)) {
-                    InfoClass infoClass = Cloner.copyClass2InfoClass(classImpl);
+                    InfoClass infoClass = InfoClass.newInfoFromDomain(classImpl);
                     infoClasses.add(infoClass);
                 }
             }
