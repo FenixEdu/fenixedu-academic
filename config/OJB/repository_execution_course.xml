@@ -157,5 +157,12 @@
 			proxy="true">
 		<inverse-foreignkey field-ref="keyExecutionCourse"/>
     </collection-descriptor>
-
+<!--
+	<collection-descriptor 
+			name="groupPropertiesSenderExecutionCourse" 
+			element-class-ref="net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse"
+			proxy="true">
+		<inverse-foreignkey field-ref="keySenderExecutionCourse"/>
+    </collection-descriptor>
+-->
 </class-descriptor>
