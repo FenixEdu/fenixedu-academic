@@ -7,15 +7,11 @@ package net.sourceforge.fenixedu.domain;
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public class ExamExecutionCourse extends EvaluationExecutionCourse implements IExamExecutionCourse {
+public class ExamExecutionCourse extends ExamExecutionCourse_Base {
 
     protected IExam exam;
 
     protected IExecutionCourse executionCourse;
-
-    private Integer keyExam;
-
-    private Integer keyExecutionCourse;
 
     public ExamExecutionCourse() {
     }
@@ -55,20 +51,6 @@ public class ExamExecutionCourse extends EvaluationExecutionCourse implements IE
     }
 
     /**
-     * @return
-     */
-    public Integer getKeyExam() {
-        return keyExam;
-    }
-
-    /**
-     * @return
-     */
-    public Integer getKeyExecutionCourse() {
-        return keyExecutionCourse;
-    }
-
-    /**
      * @param exam
      */
     public void setExam(IExam exam) {
@@ -80,20 +62,6 @@ public class ExamExecutionCourse extends EvaluationExecutionCourse implements IE
      */
     public void setExecutionCourse(IExecutionCourse execucao) {
         executionCourse = execucao;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setKeyExam(Integer integer) {
-        keyExam = integer;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setKeyExecutionCourse(Integer integer) {
-        keyExecutionCourse = integer;
     }
 
 }
