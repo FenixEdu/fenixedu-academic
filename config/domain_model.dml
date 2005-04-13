@@ -861,6 +861,22 @@ class net.sourceforge.fenixedu.domain.Summary extends net.sourceforge.fenixedu.d
 	"
 }
 
+class net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyWrittenEvaluation;
+	Integer keyCurricularCourseScope;
+
+	interface "
+	public net.sourceforge.fenixedu.domain.IWrittenEvaluation getWrittenEvaluation();
+	 
+	public void setWrittenEvaluation(net.sourceforge.fenixedu.domain.IWrittenEvaluation writtenEvaluation);
+	 
+	public net.sourceforge.fenixedu.domain.ICurricularCourseScope getCurricularCourseScope();
+	 
+	public void setCurricularCourseScope(net.sourceforge.fenixedu.domain.ICurricularCourseScope curricularCourseScope);
+	"
+
+}
+
 
 /*
  * External classes declarations

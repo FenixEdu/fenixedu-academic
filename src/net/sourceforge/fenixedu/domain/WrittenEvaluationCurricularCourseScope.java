@@ -3,12 +3,7 @@ package net.sourceforge.fenixedu.domain;
 /**
  * @author Fernanda Quitério created on 16/06/2004
  */
-public class WrittenEvaluationCurricularCourseScope extends DomainObject implements
-        IWrittenEvaluationCurricularCourseScope {
-
-    private Integer keyWrittenEvaluation;
-
-    private Integer keyCurricularCourseScope;
+public class WrittenEvaluationCurricularCourseScope extends WrittenEvaluationCurricularCourseScope_Base {
 
     private IWrittenEvaluation writtenEvaluation;
 
@@ -33,20 +28,6 @@ public class WrittenEvaluationCurricularCourseScope extends DomainObject impleme
     /**
      * @return
      */
-    public Integer getKeyWrittenEvaluation() {
-        return keyWrittenEvaluation;
-    }
-
-    /**
-     * @return
-     */
-    public Integer getKeyCurricularCourseScope() {
-        return keyCurricularCourseScope;
-    }
-
-    /**
-     * @return
-     */
     public IWrittenEvaluation getWrittenEvaluation() {
         return writtenEvaluation;
     }
@@ -56,20 +37,6 @@ public class WrittenEvaluationCurricularCourseScope extends DomainObject impleme
      */
     public ICurricularCourseScope getCurricularCourseScope() {
         return curricularCourseScope;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setKeyWrittenEvaluation(Integer integer) {
-        keyWrittenEvaluation = integer;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setKeyCurricularCourseScope(Integer integer) {
-        keyCurricularCourseScope = integer;
     }
 
     /**
