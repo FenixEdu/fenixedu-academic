@@ -416,15 +416,6 @@
         </filterChains>
     </service>
     <service>
-        <name>LerTurno</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.LerTurno</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="TimeTableManagerAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
         <name>LerSalas</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.LerSalas</implementationClass>
         <description/>
