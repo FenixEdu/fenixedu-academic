@@ -20,7 +20,7 @@ public class ClassTimeTableWithoutLinksLessonContentRenderer implements LessonSl
      */
     public StringBuffer render(LessonSlot lessonSlot) {
         StringBuffer strBuffer = new StringBuffer();
-        //InfoLesson lesson =
+        // InfoLesson lesson =
         // lessonSlot.getInfoLessonWrapper().getInfoLesson();
         InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
 
@@ -36,9 +36,10 @@ public class ClassTimeTableWithoutLinksLessonContentRenderer implements LessonSl
 
             strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
 
-            //TODO(rspl): Will it stay like this the interface for showing
+            // TODO(rspl): Will it stay like this the interface for showing
             // it is a quinzenal lesson?
-            if (lesson.getInfoRoomOccupation().getFrequency().intValue() == RoomOccupation.QUINZENAL) {
+            if (lesson.getInfoRoomOccupation().getFrequency() != null
+                    && lesson.getInfoRoomOccupation().getFrequency().intValue() == RoomOccupation.QUINZENAL) {
                 strBuffer.append("&nbsp;&nbsp;[Q]");
             }
         } else {

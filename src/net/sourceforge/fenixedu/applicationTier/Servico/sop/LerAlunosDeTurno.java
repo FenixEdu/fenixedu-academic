@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
@@ -28,69 +27,40 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class LerAlunosDeTurno implements IServico {
+public class LerAlunosDeTurno implements IService {
 
-    private static LerAlunosDeTurno _servico = new LerAlunosDeTurno();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static LerAlunosDeTurno getService() {
-        return _servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private LerAlunosDeTurno() {
-    }
-
-    /**
-     * Devolve o nome do servico
-     */
-    public final String getNome() {
-        return "LerAlunosDeTurno";
-    }
-
-    public Object run(ShiftKey keyTurno) {
+    public Object run(ShiftKey keyTurno) throws ExcepcaoPersistencia {
 
         List alunos = null;
         List infoAlunos = null;
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IShift shift = new Shift();
+        IShift shift = new Shift();
 
-            IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(keyTurno
-                    .getInfoExecutionCourse());
+        IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(keyTurno
+                .getInfoExecutionCourse());
 
-            //      shift.setDisciplinaExecucao(executionCourse);
-            //      shift.setNome(keyTurno.getShiftName());
+        ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+        shift = persistentShift.readByNameAndExecutionCourse(keyTurno.getShiftName(), executionCourse);
 
-            ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-            shift = persistentShift.readByNameAndExecutionCourse(keyTurno.getShiftName(),
-                    executionCourse);
+        alunos = sp.getITurnoAlunoPersistente().readByShift(shift);
 
-            alunos = sp.getITurnoAlunoPersistente().readByShift(shift);
-
-            Iterator iterator = alunos.iterator();
-            infoAlunos = new ArrayList();
-            while (iterator.hasNext()) {
-                IStudent elem = (IStudent) iterator.next();
-                InfoPerson infoPessoa = new InfoPerson();
-                infoPessoa.setNome(elem.getPerson().getNome());
-                infoPessoa.setUsername(elem.getPerson().getUsername());
-                infoPessoa.setPassword(elem.getPerson().getPassword());
-                infoPessoa.setEmail(elem.getPerson().getEmail());
-                infoAlunos.add(new InfoStudent(elem.getNumber(), elem.getState(), infoPessoa, elem
-                        .getDegreeType()));
-            }
-
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
+        
+        infoAlunos = new ArrayList(alunos.size());
+        for (final Iterator iterator = alunos.iterator(); iterator.hasNext(); ) {
+            IStudent elem = (IStudent) iterator.next();
+            InfoPerson infoPessoa = new InfoPerson();
+            infoPessoa.setNome(elem.getPerson().getNome());
+            infoPessoa.setUsername(elem.getPerson().getUsername());
+            infoPessoa.setPassword(elem.getPerson().getPassword());
+            infoPessoa.setEmail(elem.getPerson().getEmail());
+            infoAlunos.add(new InfoStudent(elem.getNumber(), elem.getState(), infoPessoa, elem
+                    .getDegreeType()));
         }
+
         return infoAlunos;
     }
 

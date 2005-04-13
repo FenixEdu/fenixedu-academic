@@ -229,37 +229,45 @@ public final class RenderTimeTableTag extends TagSupport {
     private void setLessonSlotRendererAndColorPicker() {
         switch (this.type) {
         case TimeTableType.SHIFT_TIMETABLE:
+            System.out.println("1");
             this.lessonSlotContentRenderer = new ShiftTimeTableLessonContentRenderer();
             this.colorPicker = new ClassTimeTableColorPicker();
             break;
         case TimeTableType.EXECUTION_COURSE_TIMETABLE:
+            System.out.println("12");
             this.lessonSlotContentRenderer = new ExecutionCourseTimeTableLessonContentRenderer();
             this.colorPicker = new ExecutionCourseTimeTableColorPicker();
             break;
         case TimeTableType.ROOM_TIMETABLE:
+            System.out.println("13");
             this.lessonSlotContentRenderer = new RoomTimeTableLessonContentRenderer();
             this.colorPicker = new RoomTimeTableColorPicker();
             break;
 
         case TimeTableType.SOP_CLASS_TIMETABLE:
+            System.out.println("14");
             this.lessonSlotContentRenderer = new SopClassTimeTableLessonContentRenderer(
                     infoExecutionDegree, infoCurricularYear);
             this.colorPicker = new ClassTimeTableColorPicker();
             break;
 
         case TimeTableType.SOP_ROOM_TIMETABLE:
+            System.out.println("15");
             this.lessonSlotContentRenderer = new SopRoomTimeTableLessonContentRenderer();
             this.colorPicker = new ClassTimeTableColorPicker();
             break;
         case TimeTableType.SOP_CLASS_ROOM_TIMETABLE:
+            System.out.println("16");
             this.lessonSlotContentRenderer = new SopClassRoomTimeTableLessonContentRenderer();
             this.colorPicker = new ClassTimeTableColorPicker();
             break;
         case TimeTableType.CLASS_TIMETABLE_WITHOUT_LINKS:
+            System.out.println("17");
             this.lessonSlotContentRenderer = new ClassTimeTableWithoutLinksLessonContentRenderer();
             this.colorPicker = new ClassTimeTableColorPicker();
             break;
         case TimeTableType.CLASS_TIMETABLE:
+            System.out.println("17");
             this.lessonSlotContentRenderer = new ClassTimeTableWithLinksLessonContentRenderer(
                     getApplication());
             this.colorPicker = new ClassTimeTableColorPicker();

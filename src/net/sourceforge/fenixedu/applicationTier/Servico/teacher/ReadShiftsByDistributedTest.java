@@ -10,7 +10,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.DistributedTest;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IDistributedTest;
@@ -57,8 +57,10 @@ public class ReadShiftsByDistributedTest implements IService {
             while (itShiftList.hasNext()) {
                 IShift shift = (IShift) itShiftList.next();
                 List shiftStudents = turnoAlunoPersistente.readByShift(shift);
-                if (!studentsList.containsAll(shiftStudents))
-                    result.add(Cloner.get(shift));
+                if (!studentsList.containsAll(shiftStudents)) {
+                    final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
+                    result.add(infoShift);
+                }
             }
             return result;
         } catch (ExcepcaoPersistencia e) {

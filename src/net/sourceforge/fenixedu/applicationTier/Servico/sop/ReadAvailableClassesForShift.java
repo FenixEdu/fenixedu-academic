@@ -9,11 +9,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
+import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -28,46 +33,54 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author João Mota
  * 
  * 30/Jun/2003 fenix-branch ServidorAplicacao.Servico.sop
- *  
+ * 
  */
 public class ReadAvailableClassesForShift implements IService {
 
-    public List run(Integer shiftOID) throws FenixServiceException {
+    public List run(Integer shiftOID) throws ExcepcaoPersistencia {
 
         List infoClasses = null;
-        try {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
 
-            ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
+        IShift shift = (IShift) shiftDAO.readByOID(Shift.class, shiftOID);
 
-            IShift shift = (IShift) shiftDAO.readByOID(Shift.class, shiftOID);
-
-            List curricularCourses = shift.getDisciplinaExecucao().getAssociatedCurricularCourses();
-            List scopes = new ArrayList();
-            for (int i = 0; i < curricularCourses.size(); i++) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) curricularCourses.get(i);
-                scopes.addAll(curricularCourse.getScopes());
-            }
-
-            IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
-
-            ITurmaPersistente classDAO = sp.getITurmaPersistente();
-            List classes = classDAO.readByExecutionPeriod(executionCourse.getExecutionPeriod());
-
-            infoClasses = new ArrayList();
-            Iterator iter = classes.iterator();
-            while (iter.hasNext()) {
-                ISchoolClass classImpl = (ISchoolClass) iter.next();
-                if (!shift.getAssociatedClasses().contains(classImpl)
-                        && containsScope(scopes, classImpl)) {
-                    InfoClass infoClass = InfoClass.newInfoFromDomain(classImpl);
-                    infoClasses.add(infoClass);
-                }
-            }
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+        List curricularCourses = shift.getDisciplinaExecucao().getAssociatedCurricularCourses();
+        List scopes = new ArrayList();
+        for (int i = 0; i < curricularCourses.size(); i++) {
+            ICurricularCourse curricularCourse = (ICurricularCourse) curricularCourses.get(i);
+            scopes.addAll(curricularCourse.getScopes());
         }
+
+        IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
+
+        ITurmaPersistente classDAO = sp.getITurmaPersistente();
+        List classes = classDAO.readByExecutionPeriod(executionCourse.getExecutionPeriod());
+
+        infoClasses = new ArrayList();
+        Iterator iter = classes.iterator();
+        while (iter.hasNext()) {
+            ISchoolClass classImpl = (ISchoolClass) iter.next();
+            if (!shift.getAssociatedClasses().contains(classImpl) && containsScope(scopes, classImpl)) {
+                final InfoClass infoClass = InfoClass.newInfoFromDomain(classImpl);
+
+                final IExecutionDegree executionDegree = classImpl.getExecutionDegree();
+                final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+                infoClass.setInfoExecutionDegree(infoExecutionDegree);
+
+                final IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+                final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
+                infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+
+                final IDegree degree = degreeCurricularPlan.getDegree();
+                final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
+                infoDegreeCurricularPlan.setInfoDegree(infoDegree);
+
+                infoClasses.add(infoClass);
+            }
+        }
+
         return infoClasses;
     }
 

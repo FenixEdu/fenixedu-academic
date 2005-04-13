@@ -13,15 +13,21 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewRoomSchedule;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ILesson;
+import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.domain.IRoom;
+import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
@@ -32,63 +38,62 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadPavillionsRoomsLessons implements IService {
 
-    private static ReadPavillionsRoomsLessons _servico = new ReadPavillionsRoomsLessons();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadPavillionsRoomsLessons getService() {
-        return _servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private ReadPavillionsRoomsLessons() {
-    }
-
-    public List run(List pavillions, InfoExecutionPeriod infoExecutionPeriod) {
+    public List run(List pavillions, InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia {
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISalaPersistente roomDAO = sp.getISalaPersistente();
+        final IAulaPersistente lessonDAO = sp.getIAulaPersistente();
 
         final List infoViewRoomScheduleList = new ArrayList();
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        
+        final IExecutionPeriod executionPeriod = InfoExecutionPeriodWithInfoExecutionYear
+                .newDomainFromInfo(infoExecutionPeriod);
 
-            IExecutionPeriod executionPeriod = InfoExecutionPeriodWithInfoExecutionYear
-                    .newDomainFromInfo(infoExecutionPeriod);
+        // Read pavillions rooms
+        final List rooms = roomDAO.readByPavillions(pavillions);
 
-            ISalaPersistente roomDAO = sp.getISalaPersistente();
-            IAulaPersistente lessonDAO = sp.getIAulaPersistente();
-            // Read pavillions rooms
-            List rooms = roomDAO.readByPavillions(pavillions);
+        // Read rooms classes
+        for (final Iterator iterator = rooms.iterator(); iterator.hasNext(); ) {
+            final IRoom room = (IRoom) iterator.next();
 
-            // Read rooms classes
-            for (int i = 0; i < rooms.size(); i++) {
-                InfoViewRoomSchedule infoViewRoomSchedule = new InfoViewRoomSchedule();
-                IRoom room = (IRoom) rooms.get(i);
-                List lessonList = lessonDAO.readByRoomAndExecutionPeriod(room, executionPeriod);
-                Iterator iterator = lessonList.iterator();
-                List infoLessonsList = new ArrayList();
-                while (iterator.hasNext()) {
-                    ILesson elem = (ILesson) iterator.next();
-                    InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
-                    IShift shift = elem.getShift();
-                    if (shift == null) {
-                        continue;
-                    }
-                    InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-                    infoLesson.setInfoShift(infoShift);
+            final InfoViewRoomSchedule infoViewRoomSchedule = new InfoViewRoomSchedule();
+            infoViewRoomScheduleList.add(infoViewRoomSchedule);
 
-                    infoLessonsList.add(infoLesson);
-                }
+            final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
+            infoViewRoomSchedule.setInfoRoom(infoRoom);
 
-                infoViewRoomSchedule.setInfoRoom(Cloner.copyRoom2InfoRoom(room));
-                infoViewRoomSchedule.setRoomLessons(infoLessonsList);
-                infoViewRoomScheduleList.add(infoViewRoomSchedule);
+            final List lessons = lessonDAO.readByRoomAndExecutionPeriod(room, executionPeriod);
+            final List infoLessons = new ArrayList(lessons.size());
+            for (final Iterator iterator2 = lessons.iterator(); iterator2.hasNext(); ) {
+                final ILesson lesson = (ILesson) iterator2.next();
+                final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
+                infoLessons.add(infoLesson);
+
+                final IRoomOccupation roomOccupation = lesson.getRoomOccupation();
+                final InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(roomOccupation);
+                infoLesson.setInfoRoomOccupation(infoRoomOccupation);
+
+                infoRoomOccupation.setInfoRoom(infoRoom);
+                infoLesson.setInfoSala(infoRoom);
+
+                final IPeriod period = roomOccupation.getPeriod();
+                final InfoPeriod infoPeriod = InfoPeriod.newInfoFromDomain(period);
+                infoRoomOccupation.setInfoPeriod(infoPeriod);
+
+                final IShift shift = lesson.getShift();
+                final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
+                infoLesson.setInfoShift(infoShift);
+                infoLesson.setInfoShiftList(new ArrayList(1));
+                infoLesson.getInfoShiftList().add(infoShift);
+
+                final IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
+                final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
+                infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
+
+                infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
             }
-
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
+            infoViewRoomSchedule.setRoomLessons(infoLessons);
         }
+
         return infoViewRoomScheduleList;
     }
 }

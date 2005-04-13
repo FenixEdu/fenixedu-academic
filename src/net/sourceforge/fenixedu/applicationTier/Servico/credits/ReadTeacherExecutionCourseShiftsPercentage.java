@@ -69,7 +69,8 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IService {
                 IShift shift = (IShift) iterator.next();
 
                 InfoShiftPercentage infoShiftPercentage = new InfoShiftPercentage();
-                infoShiftPercentage.setShift((InfoShift) Cloner.get(shift));
+                final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
+                infoShiftPercentage.setShift(infoShift);
                 double availablePercentage = 100;
                 InfoShiftProfessorship infoShiftProfessorship = null;
 
