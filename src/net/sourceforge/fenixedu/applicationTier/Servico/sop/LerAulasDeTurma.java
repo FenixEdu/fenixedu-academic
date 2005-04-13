@@ -51,7 +51,8 @@ public class LerAulasDeTurma implements IService {
         ISchoolClass group = null;
         if (infoClass.getIdInternal() != null) {
 
-            group = (ISchoolClass) persistentDomainClass.readByOID(SchoolClass.class, infoClass.getIdInternal());
+            group = (ISchoolClass) persistentDomainClass.readByOID(SchoolClass.class, infoClass
+                    .getIdInternal());
         } else {
             group = Cloner.copyInfoClass2Class(infoClass);
         }
@@ -67,17 +68,19 @@ public class LerAulasDeTurma implements IService {
             final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
 
             final IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
-            final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
+            final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
+                    .newInfoFromDomain(executionCourse);
             infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
 
             final IExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-            final InfoExecutionPeriod infoExecutionPeriod2 = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
+            final InfoExecutionPeriod infoExecutionPeriod2 = InfoExecutionPeriod
+                    .newInfoFromDomain(executionPeriod);
             infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod2);
 
             final Collection lessons = shift.getAssociatedLessons();
             final List infoLessons = new ArrayList(lessons.size());
             infoShift.setInfoLessons(infoLessons);
-            for (final Iterator iterator2 = lessons.iterator(); iterator2.hasNext(); ) {
+            for (final Iterator iterator2 = lessons.iterator(); iterator2.hasNext();) {
                 final ILesson lesson = (ILesson) iterator2.next();
                 final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
                 infoLesson.setInfoShift(infoShift);
@@ -85,7 +88,8 @@ public class LerAulasDeTurma implements IService {
                 infoLesson.getInfoShiftList().add(infoShift);
 
                 final IRoomOccupation roomOccupation = lesson.getRoomOccupation();
-                final InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(roomOccupation);
+                final InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation
+                        .newInfoFromDomain(roomOccupation);
                 infoLesson.setInfoRoomOccupation(infoRoomOccupation);
 
                 final IRoom room = roomOccupation.getRoom();
@@ -101,48 +105,6 @@ public class LerAulasDeTurma implements IService {
                 infoLessonList.add(infoLesson);
             }
         }
-//            List lessonList = shift.getAssociatedLessons();
-//            Iterator lessonIterator = lessonList.iterator();
-//            while (lessonIterator.hasNext()) {
-//                ILesson elem = (ILesson) lessonIterator.next();
-//
-//                final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(elem);
-//                infoLesson.setInfoShift(infoShift);
-//                infoLesson.setInfoShiftList(new ArrayList(1));
-//                infoLesson.getInfoShiftList().add(infoShift);
-//
-//                final IRoomOccupation roomOccupation = lesson.getRoomOccupation();
-//                final InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(roomOccupation);
-//                infoLesson.setInfoRoomOccupation(infoRoomOccupation);
-//
-//                final IRoom room = roomOccupation.getRoom();
-//                final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
-//                infoRoomOccupation.setInfoRoom(infoRoom);
-//                infoLesson.setInfoSala(infoRoom);
-//
-//                final IPeriod period = roomOccupation.getPeriod();
-//                final InfoPeriod infoPeriod = InfoPeriod.newInfoFromDomain(period);
-//                infoRoomOccupation.setInfoPeriod(infoPeriod);
-//
-//                infoLessons.add(infoLesson);
-//                infoLessonList.add(infoLesson);
-//
-//                // ILesson lesson = (ILesson)
-//                // sp.getIAulaPersistente().readByOID(
-//                // Lesson.class, elem.getIdInternal());
-//                // InfoLesson infoLesson =
-//                // Cloner.copyILesson2InfoLesson(elem);
-//                InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
-//
-//                InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-//                infoLesson.setInfoShift(infoShift);
-//
-//                if (infoLesson != null) {
-//                    infoLessonList.add(infoLesson);
-//                }
-//
-//            }
-//        }
 
         return infoLessonList;
     }
