@@ -9,18 +9,12 @@ package net.sourceforge.fenixedu.domain;
  * @author João Mota
  *  
  */
-public class ExamStudentRoom extends DomainObject implements IExamStudentRoom {
+public class ExamStudentRoom extends ExamStudentRoom_Base {
     private IExam exam;
 
     private IStudent student;
 
     private IRoom room;
-
-    private Integer keyExam;
-
-    private Integer keyStudent;
-
-    private Integer keyRoom;
 
     /**
      *  
@@ -58,27 +52,6 @@ public class ExamStudentRoom extends DomainObject implements IExamStudentRoom {
     /**
      * @return
      */
-    public Integer getKeyExam() {
-        return keyExam;
-    }
-
-    /**
-     * @return
-     */
-    public Integer getKeyRoom() {
-        return keyRoom;
-    }
-
-    /**
-     * @return
-     */
-    public Integer getKeyStudent() {
-        return keyStudent;
-    }
-
-    /**
-     * @return
-     */
     public IRoom getRoom() {
         return room;
     }
@@ -95,27 +68,6 @@ public class ExamStudentRoom extends DomainObject implements IExamStudentRoom {
      */
     public void setExam(IExam exam) {
         this.exam = exam;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setKeyExam(Integer integer) {
-        keyExam = integer;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setKeyRoom(Integer integer) {
-        keyRoom = integer;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setKeyStudent(Integer integer) {
-        keyStudent = integer;
     }
 
     /**
