@@ -15,67 +15,11 @@ import org.apache.commons.lang.StringUtils;
  * @author David Santos on Jul 12, 2004
  */
 
-public class CurricularCourse extends DomainObject implements ICurricularCourse {
-
-    private Integer departmentCourseKey;
-
-    private Integer degreeCurricularPlanKey;
-
-    private Integer universityKey;
-
-    private Integer keyScientificArea;
-
-    private Double credits;
-
-    private Double theoreticalHours;
-
-    private Double praticalHours;
-
-    private Double theoPratHours;
-
-    private Double labHours;
-
-    private String name;
-
-    private String code;
-
-    private IDepartmentCourse departmentCourse;
-
-    private IDegreeCurricularPlan degreeCurricularPlan;
-
+public class CurricularCourse extends CurricularCourse_Base {
     private CurricularCourseType type;
-
     private CurricularCourseExecutionScope curricularCourseExecutionScope;
 
-    private Boolean mandatory;
-
-    private IUniversity university;
-
-    private Boolean basic;
-
-    private List associatedExecutionCourses;
-
-    private List scopes;
-
-    private IScientificArea scientificArea;
-
-    private Double ectsCredits;
-
-    private Double weigth;
-
-    private String acronym;
-
     // For enrollment purposes
-    private Integer maximumValueForAcumulatedEnrollments;
-
-    private Integer minimumValueForAcumulatedEnrollments;
-
-    private Integer enrollmentWeigth;
-
-    private Boolean mandatoryEnrollment;
-
-    private Boolean enrollmentAllowed;
-
     private String uniqueKeyForEnrollment;
 
     public CurricularCourse() {
@@ -92,46 +36,18 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
     public String toString() {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("[").append(this.getClass()).append(":").append("idInternal = ").append(
-                this.getIdInternal()).append(";name = ").append(this.name).append(";code = ").append(
-                this.code).append("\n degreeCurricularPlan = ").append(this.getDegreeCurricularPlan())
-                .append(";type = ").append(this.type);
+                this.getIdInternal()).append(";name = ").append(this.getName()).append(";code = ").append(
+                this.getCode()).append("\n degreeCurricularPlan = ").append(this.getDegreeCurricularPlan())
+                .append(";type = ").append(this.getType());
         return stringBuffer.toString();
     }
 
-    public List getAssociatedExecutionCourses() {
-        return associatedExecutionCourses;
-    }
-
-    public void setAssociatedExecutionCourses(List associatedExecutionCourses) {
-        this.associatedExecutionCourses = associatedExecutionCourses;
-    }
-
-    public Boolean getBasic() {
-        return basic;
-    }
-
-    public void setBasic(Boolean basic) {
-        this.basic = basic;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
     public void setCode(String code) {
-        this.code = code;
+        super.setCode(code);
         TipoCurso tipoCurso = (this.getDegreeCurricularPlan() != null && this.getDegreeCurricularPlan()
                 .getDegree() != null) ? this.getDegreeCurricularPlan().getDegree().getTipoCurso() : null;
         this.uniqueKeyForEnrollment = constructUniqueEnrollmentKey(this.getCode(), this.getName(),
                 tipoCurso);
-    }
-
-    public Double getCredits() {
-        return credits;
-    }
-
-    public void setCredits(Double credits) {
-        this.credits = credits;
     }
 
     public CurricularCourseExecutionScope getCurricularCourseExecutionScope() {
@@ -143,156 +59,20 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
         this.curricularCourseExecutionScope = curricularCourseExecutionScope;
     }
 
-    public IDegreeCurricularPlan getDegreeCurricularPlan() {
-        return degreeCurricularPlan;
-    }
-
     public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
-        this.degreeCurricularPlan = degreeCurricularPlan;
+        super.setDegreeCurricularPlan(degreeCurricularPlan);
         TipoCurso tipoCurso = (this.getDegreeCurricularPlan() != null && this.getDegreeCurricularPlan()
                 .getDegree() != null) ? this.getDegreeCurricularPlan().getDegree().getTipoCurso() : null;
         this.uniqueKeyForEnrollment = constructUniqueEnrollmentKey(this.getCode(), this.getName(),
                 tipoCurso);
-    }
-
-    public Integer getDegreeCurricularPlanKey() {
-        return degreeCurricularPlanKey;
-    }
-
-    public void setDegreeCurricularPlanKey(Integer degreeCurricularPlanKey) {
-        this.degreeCurricularPlanKey = degreeCurricularPlanKey;
-    }
-
-    public IDepartmentCourse getDepartmentCourse() {
-        return departmentCourse;
-    }
-
-    public void setDepartmentCourse(IDepartmentCourse departmentCourse) {
-        this.departmentCourse = departmentCourse;
-    }
-
-    public Integer getDepartmentCourseKey() {
-        return departmentCourseKey;
-    }
-
-    public void setDepartmentCourseKey(Integer departmentCourseKey) {
-        this.departmentCourseKey = departmentCourseKey;
-    }
-
-    public Double getEctsCredits() {
-        return ectsCredits;
-    }
-
-    public void setEctsCredits(Double ectsCredits) {
-        this.ectsCredits = ectsCredits;
-    }
-
-    public Integer getEnrollmentWeigth() {
-        return enrollmentWeigth;
-    }
-
-    public void setEnrollmentWeigth(Integer enrollmentWeigth) {
-        this.enrollmentWeigth = enrollmentWeigth;
-    }
-
-    public Integer getKeyScientificArea() {
-        return keyScientificArea;
-    }
-
-    public void setKeyScientificArea(Integer keyScientificArea) {
-        this.keyScientificArea = keyScientificArea;
-    }
-
-    public Double getLabHours() {
-        return labHours;
-    }
-
-    public void setLabHours(Double labHours) {
-        this.labHours = labHours;
-    }
-
-    public Boolean getMandatory() {
-        return mandatory;
-    }
-
-    public void setMandatory(Boolean mandatory) {
-        this.mandatory = mandatory;
-    }
-
-    public Boolean getMandatoryEnrollment() {
-        return mandatoryEnrollment;
-    }
-
-    public void setMandatoryEnrollment(Boolean mandatoryEnrollment) {
-        this.mandatoryEnrollment = mandatoryEnrollment;
-    }
-
-    public Integer getMaximumValueForAcumulatedEnrollments() {
-        return maximumValueForAcumulatedEnrollments;
-    }
-
-    public void setMaximumValueForAcumulatedEnrollments(Integer maximumValueForAcumulatedEnrollments) {
-        this.maximumValueForAcumulatedEnrollments = maximumValueForAcumulatedEnrollments;
-    }
-
-    public Integer getMinimumValueForAcumulatedEnrollments() {
-        return minimumValueForAcumulatedEnrollments;
-    }
-
-    public void setMinimumValueForAcumulatedEnrollments(Integer minimumValueForAcumulatedEnrollments) {
-        this.minimumValueForAcumulatedEnrollments = minimumValueForAcumulatedEnrollments;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        super.setName(name);
         TipoCurso tipoCurso = (this.getDegreeCurricularPlan() != null && this.getDegreeCurricularPlan()
                 .getDegree() != null) ? this.getDegreeCurricularPlan().getDegree().getTipoCurso() : null;
         this.uniqueKeyForEnrollment = constructUniqueEnrollmentKey(this.getCode(), this.getName(),
                 tipoCurso);
-    }
-
-    public Double getPraticalHours() {
-        return praticalHours;
-    }
-
-    public void setPraticalHours(Double praticalHours) {
-        this.praticalHours = praticalHours;
-    }
-
-    public IScientificArea getScientificArea() {
-        return scientificArea;
-    }
-
-    public void setScientificArea(IScientificArea scientificArea) {
-        this.scientificArea = scientificArea;
-    }
-
-    public List getScopes() {
-        return scopes;
-    }
-
-    public void setScopes(List scopes) {
-        this.scopes = scopes;
-    }
-
-    public Double getTheoPratHours() {
-        return theoPratHours;
-    }
-
-    public void setTheoPratHours(Double theoPratHours) {
-        this.theoPratHours = theoPratHours;
-    }
-
-    public Double getTheoreticalHours() {
-        return theoreticalHours;
-    }
-
-    public void setTheoreticalHours(Double theoreticalHours) {
-        this.theoreticalHours = theoreticalHours;
     }
 
     public CurricularCourseType getType() {
@@ -301,38 +81,6 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
 
     public void setType(CurricularCourseType type) {
         this.type = type;
-    }
-
-    public IUniversity getUniversity() {
-        return university;
-    }
-
-    public void setUniversity(IUniversity university) {
-        this.university = university;
-    }
-
-    public Integer getUniversityKey() {
-        return universityKey;
-    }
-
-    public void setUniversityKey(Integer universityKey) {
-        this.universityKey = universityKey;
-    }
-
-    public Double getWeigth() {
-        return weigth;
-    }
-
-    public void setWeigth(Double weigth) {
-        this.weigth = weigth;
-    }
-
-    public String getAcronym() {
-        return acronym;
-    }
-
-    public void setAcronym(String acronym) {
-        this.acronym = acronym;
     }
 
     public boolean curricularCourseIsMandatory() {
@@ -508,20 +256,6 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
     // -------------------------------------------------------------
     // END: Only for enrollment purposes
     // -------------------------------------------------------------
-    /**
-     * @return Returns the enrollmentAllowed.
-     */
-    public Boolean getEnrollmentAllowed() {
-        return enrollmentAllowed;
-    }
-
-    /**
-     * @param enrollmentAllowed
-     *            The enrollmentAllowed to set.
-     */
-    public void setEnrollmentAllowed(Boolean enrollmentAllowed) {
-        this.enrollmentAllowed = enrollmentAllowed;
-    }
 
     private String constructUniqueEnrollmentKey(String code, String name, TipoCurso tipoCurso) {
         StringBuffer stringBuffer = new StringBuffer(50);

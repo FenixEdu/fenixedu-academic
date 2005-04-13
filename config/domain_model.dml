@@ -153,6 +153,42 @@ class net.sourceforge.fenixedu.domain.gesdis.CourseReport extends net.sourceforg
 	Integer keyExecutionCourse;
 }
 
+
+class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.fenixedu.domain.DomainObject {
+	Double ectsCredits;
+	Boolean basic;
+	Integer universityKey;
+	Boolean mandatoryEnrollment;
+	Integer maximumValueForAcumulatedEnrollments;
+	Double theoPratHours;
+	Double weigth;
+	Integer keyScientificArea;
+	Integer degreeCurricularPlanKey;
+	String code;
+	Boolean enrollmentAllowed;
+	Double theoreticalHours;
+	Integer departmentCourseKey;
+	Double labHours;
+	Double credits;
+	Integer enrollmentWeigth;
+	Double praticalHours;
+	Boolean mandatory;
+	String name;
+	String acronym;
+	Integer minimumValueForAcumulatedEnrollments;
+	
+	interface "
+	public net.sourceforge.fenixedu.util.CurricularCourseType getType();
+    public void setType(net.sourceforge.fenixedu.util.CurricularCourseType type);
+    public net.sourceforge.fenixedu.domain.ICurricularYear getCurricularYearByBranchAndSemester(final net.sourceforge.fenixedu.domain.IBranch branch,final Integer semester);
+    public String getCurricularCourseUniqueKeyForEnrollment();
+    public boolean hasActiveScopeInGivenSemester(final Integer semester);
+    public boolean hasActiveScopeInGivenSemesterForGivenBranch(final Integer semester, final IBranch branch);
+    public boolean hasActiveScopeInGivenSemesterForCommonAndGivenBranch(final Integer semester, final IBranch branch);
+	"
+}
+
+
 class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourceforge.fenixedu.domain.DomainObject {
     String concreteClassForStudentCurricularPlans;
     Integer degreeDuration;
@@ -171,7 +207,6 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
 
     public java.util.List getAreas();
     public net.sourceforge.fenixedu.domain.IStudentCurricularPlan getNewStudentCurricularPlan();
-    public java.util.List getCurricularCourses();
     public net.sourceforge.fenixedu.domain.IDegree getDegree();
     public net.sourceforge.fenixedu.util.MarkType getMarkType();
     public net.sourceforge.fenixedu.util.DegreeCurricularPlanState getState();
@@ -189,7 +224,6 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     public java.util.List getSpecialListOfCurricularCourses();
     
     public void setAreas(java.util.List areas);
-    public void setCurricularCourses(java.util.List curricularCourses);
     public void setDegree(net.sourceforge.fenixedu.domain.IDegree degree);
     public void setMarkType(net.sourceforge.fenixedu.util.MarkType markType);
     public void setState(net.sourceforge.fenixedu.util.DegreeCurricularPlanState state);
@@ -942,8 +976,10 @@ class net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope ext
  */
 
 external class net.sourceforge.fenixedu.domain.Attends;
-external class net.sourceforge.fenixedu.domain.CurricularCourse;
+external class net.sourceforge.fenixedu.domain.CurricularCourseScope;
+external class net.sourceforge.fenixedu.domain.Curriculum;
 external class net.sourceforge.fenixedu.domain.Degree;
+external class net.sourceforge.fenixedu.domain.DepartmentCourse;
 external class net.sourceforge.fenixedu.domain.ExecutionCourse;
 external class net.sourceforge.fenixedu.domain.ExecutionPeriod;
 external class net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -951,12 +987,14 @@ external class net.sourceforge.fenixedu.domain.Lesson;
 external class net.sourceforge.fenixedu.domain.Professorship;
 external class net.sourceforge.fenixedu.domain.RoomOccupation;
 external class net.sourceforge.fenixedu.domain.SchoolClass;
+external class net.sourceforge.fenixedu.domain.ScientificArea;
 external class net.sourceforge.fenixedu.domain.Section;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
 external class net.sourceforge.fenixedu.domain.ShiftStudent;
 external class net.sourceforge.fenixedu.domain.Student;
 external class net.sourceforge.fenixedu.domain.Teacher;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
+external class net.sourceforge.fenixedu.domain.University;
 
 
 /*
@@ -1004,9 +1042,51 @@ relation BuildingRoom {
 }
 
 
+relation CurricularCourseCurricularCourseScope {
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
+	net.sourceforge.fenixedu.domain.CurricularCourseScope playsRole scopes {
+		multiplicity *;
+	}
+}
+
+
+relation CurricularCourseCurriculum {
+	net.sourceforge.fenixedu.domain.Curriculum playsRole associatedCurriculums {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
+}
+
+
+relation CurricularCourseDepartmentCourse {
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole associatedCurricularCourses {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.DepartmentCourse playsRole departmentCourse;
+}
+
+
+relation CurricularCourseExecutionCourse {
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole associatedCurricularCourses {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole associatedExecutionCourses {
+		multiplicity *;
+	}
+}
+
+
 relation CurricularCourseHistoric {
 	net.sourceforge.fenixedu.domain.gesdis.CourseHistoric playsRole courseHistoric;
 	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
+}
+
+
+relation CurricularCourseScientificArea {
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole associatedCurricularCourses {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ScientificArea playsRole scientificArea;
 }
 
 
@@ -1015,6 +1095,22 @@ relation CurricularCourseStudentReport {
 		multiplicity 1;
 	}
 	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
+}
+
+
+relation CurricularCourseUniversity {
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole associatedCurricularCourses {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.University playsRole university;
+}
+
+
+relation DegreeCurricularPlanCurricularCourse {
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourses {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlan;
 }
 
 
@@ -1195,7 +1291,7 @@ relation RoomSummary {
 }
 
 relation SendProposal {
-	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesSenderExecutionCourse {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole senderExecutionCourse;

@@ -77,6 +77,7 @@ class net.sourceforge.fenixedu.domain.Summary extends net.sourceforge.fenixedu.d
 	Boolean isExtraLesson;
 }
 
+/* DONE */
 class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.fenixedu.domain.DomainObject {
 	Double ectsCredits;
 	Boolean basic;
@@ -100,6 +101,7 @@ class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.f
 	String acronym;
 	Integer minimumValueForAcumulatedEnrollments;
 }
+
 /** NEXT
 class net.sourceforge.fenixedu.domain.Curriculum extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPersonWhoAltered;
@@ -296,6 +298,7 @@ relation ExecutionCourseSummary {
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 }
 
+/* DONE */
 relation CurricularCourseExecutionCourse {
 	net.sourceforge.fenixedu.domain.CurricularCourse playsRole associatedCurricularCourses {
 		multiplicity *;
@@ -305,6 +308,7 @@ relation CurricularCourseExecutionCourse {
 	}
 }
 
+/* DONE */
 relation CurricularCourseCurriculum {
 	net.sourceforge.fenixedu.domain.Curriculum playsRole associatedCurriculums {
 		multiplicity *;
@@ -482,6 +486,7 @@ relation ProfessorshipSummary {
 	net.sourceforge.fenixedu.domain.Professorship playsRole professorship;
 }
 
+/* DONE */
 relation DegreeCurricularPlanCurricularCourse {
 	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourses {
 		multiplicity *;
@@ -494,6 +499,40 @@ relation DegreeDegreeCurricularPlan {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Degree playsRole degree;
+}
+
+
+/* DONE */
+relation CurricularCourseDepartmentCourse {
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole associatedCurricularCourses {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.DepartmentCourse playsRole departmentCourse;
+}
+
+/* DONE */
+relation CurricularCourseUniversity {
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole associatedCurricularCourses {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.University playsRole university;
+}
+
+/* DONE */
+relation CurricularCourseScientificArea {
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole associatedCurricularCourses {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ScientificArea playsRole scientificArea;
+}
+
+
+/* DONE */
+relation CurricularCourseCurricularCourseScope {
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
+	net.sourceforge.fenixedu.domain.CurricularCourseScope playsRole scopes {
+		multiplicity *;
+	}
 }
 
 /* ************************************
