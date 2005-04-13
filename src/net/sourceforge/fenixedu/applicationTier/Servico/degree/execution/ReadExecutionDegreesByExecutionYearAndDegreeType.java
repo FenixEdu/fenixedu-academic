@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degree.execution;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -32,19 +31,11 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadExecutionDegreesByExecutionYearAndDegreeType implements IService {
 
-    /**
-     *  
-     */
-    public ReadExecutionDegreesByExecutionYearAndDegreeType() {
-        super();
-    }
-
     public List run(InfoExecutionYear infoExecutionYear, TipoCurso degreeType)
-            throws FenixServiceException {
+            throws ExcepcaoPersistencia {
 
         List infoExecutionDegreeList = null;
 
-        try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
 
@@ -84,9 +75,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeType implements IServic
                             return infoExecutionDegree;
                         }
                     });
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException("Problems on database!", ex);
-        }
+
         return infoExecutionDegreeList;
     }
 }
