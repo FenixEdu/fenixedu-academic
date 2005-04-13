@@ -109,6 +109,7 @@ public class InfoClass extends InfoObject {
         super.copyFromDomain(turma);
         if (turma != null) {
             setNome(turma.getNome());
+            setAnoCurricular(turma.getAnoCurricular());
         }
     }
 
@@ -117,7 +118,6 @@ public class InfoClass extends InfoObject {
         if (turma != null) {
             infoClass = new InfoClass();
             infoClass.copyFromDomain(turma);
-            infoClass.setAnoCurricular(turma.getAnoCurricular());
         }
         return infoClass;
     }
