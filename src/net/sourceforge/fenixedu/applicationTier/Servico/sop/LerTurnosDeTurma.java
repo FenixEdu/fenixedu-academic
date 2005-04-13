@@ -12,18 +12,26 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  * @author tfc130
  */
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ILesson;
+import net.sourceforge.fenixedu.domain.IPeriod;
+import net.sourceforge.fenixedu.domain.IRoom;
+import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.SchoolClass;
@@ -36,54 +44,64 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class LerTurnosDeTurma implements IService {
 
     public Object run(String className, InfoExecutionDegree infoExecutionDegree,
-            InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException {
+            InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia {
 
         List infoShiftAndLessons = new ArrayList();
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            ITurmaTurnoPersistente classShiftDAO = sp.getITurmaTurnoPersistente();
+        ITurmaTurnoPersistente classShiftDAO = sp.getITurmaTurnoPersistente();
 
-            IExecutionPeriod executionPeriod = Cloner
-                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
-            IExecutionDegree executionDegree = Cloner
-                    .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
+        IExecutionPeriod executionPeriod = Cloner
+                .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+        IExecutionDegree executionDegree = Cloner
+                .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
 
-            ISchoolClass group = new SchoolClass();
+        ISchoolClass group = new SchoolClass();
 
-            group.setExecutionDegree(executionDegree);
-            group.setExecutionPeriod(executionPeriod);
-            group.setNome(className);
+        group.setExecutionDegree(executionDegree);
+        group.setExecutionPeriod(executionPeriod);
+        group.setNome(className);
 
-            List shiftList = classShiftDAO.readByClass(group);
+        List shiftList = classShiftDAO.readByClass(group);
 
-            Iterator iterator = shiftList.iterator();
-            //			infoTurnos = new ArrayList();
+        Iterator iterator = shiftList.iterator();
+        // infoTurnos = new ArrayList();
 
-            while (iterator.hasNext()) {
-                IShift turno = (IShift) iterator.next();
-                InfoShift infoTurno = (InfoShift) Cloner.get(turno);
+        while (iterator.hasNext()) {
+            IShift shift = (IShift) iterator.next();
+            final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
 
-                List aulas = turno.getAssociatedLessons();
-                Iterator itLessons = aulas.iterator();
+            final IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
+            final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
+            infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
 
-                List infoLessons = new ArrayList();
-                InfoLesson infoLesson;
+            infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 
-                while (itLessons.hasNext()) {
-                    infoLesson = Cloner.copyILesson2InfoLesson((ILesson) itLessons.next());
+            final Collection lessons = shift.getAssociatedLessons();
+            final List infoLessons = new ArrayList(lessons.size());
+            infoShift.setInfoLessons(infoLessons);
+            for (final Iterator iterator2 = lessons.iterator(); iterator2.hasNext(); ) {
+                final ILesson lesson = (ILesson) iterator2.next();
+                final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
 
-                    infoLesson.setInfoShift(infoTurno);
-                    infoLessons.add(infoLesson);
-                }
+                final IRoomOccupation roomOccupation = lesson.getRoomOccupation();
+                final InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(roomOccupation);
+                infoLesson.setInfoRoomOccupation(infoRoomOccupation);
 
-                infoTurno.setInfoLessons(infoLessons);
-                infoShiftAndLessons.add(infoTurno);
+                final IRoom room = roomOccupation.getRoom();
+                final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
+                infoRoomOccupation.setInfoRoom(infoRoom);
+                infoLesson.setInfoSala(infoRoom);
 
+                final IPeriod period = roomOccupation.getPeriod();
+                final InfoPeriod infoPeriod = InfoPeriod.newInfoFromDomain(period);
+                infoRoomOccupation.setInfoPeriod(infoPeriod);
+
+                infoLessons.add(infoLesson);
             }
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
+            infoShiftAndLessons.add(infoShift);
+
         }
         return infoShiftAndLessons;
 

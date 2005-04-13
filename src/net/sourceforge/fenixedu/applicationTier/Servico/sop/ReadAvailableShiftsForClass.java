@@ -9,14 +9,24 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  * @author Luis Cruz & Sara Ribeiro
  *  
  */
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.ILesson;
+import net.sourceforge.fenixedu.domain.IPeriod;
+import net.sourceforge.fenixedu.domain.IRoom;
+import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.SchoolClass;
@@ -46,18 +56,34 @@ public class ReadAvailableShiftsForClass implements IService {
             infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
                 public Object transform(Object arg0) {
                     IShift shift = (IShift) arg0;
-                    InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-                    infoShift.setInfoLessons((List) CollectionUtils.collect(
-                            shift.getAssociatedLessons(), new Transformer() {
-                                public Object transform(Object arg0) {
-                                    InfoLesson infoLesson = Cloner.copyILesson2InfoLesson((ILesson) arg0);
-                                    //							IShift shift = ((ILesson) arg0).getShift();
-                                    //							InfoShift infoShift =
-                                    // Cloner.copyShift2InfoShift(shift);
-                                    //							infoLesson.setInfoShift(infoShift);
-                                    return infoLesson;
-                                }
-                            }));
+                    final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
+
+                    final IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
+                    final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
+                    infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
+
+                    final Collection lessons = shift.getAssociatedLessons();
+                    final List infoLessons = new ArrayList(lessons.size());
+                    infoShift.setInfoLessons(infoLessons);
+                    for (final Iterator iterator2 = lessons.iterator(); iterator2.hasNext(); ) {
+                        final ILesson lesson = (ILesson) iterator2.next();
+                        final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
+
+                        final IRoomOccupation roomOccupation = lesson.getRoomOccupation();
+                        final InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(roomOccupation);
+                        infoLesson.setInfoRoomOccupation(infoRoomOccupation);
+
+                        final IRoom room = roomOccupation.getRoom();
+                        final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
+                        infoRoomOccupation.setInfoRoom(infoRoom);
+                        infoLesson.setInfoSala(infoRoom);
+
+                        final IPeriod period = roomOccupation.getPeriod();
+                        final InfoPeriod infoPeriod = InfoPeriod.newInfoFromDomain(period);
+                        infoRoomOccupation.setInfoPeriod(infoPeriod);
+
+                        infoLessons.add(infoLesson);
+                    }
                     return infoShift;
                 }
             });
