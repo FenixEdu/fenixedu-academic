@@ -130,6 +130,7 @@ class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.feni
 	String year;
 }
 
+/* SEE RELATIONS */
 class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.DomainObject {
 	String localidade;
 	String codigoFiscal;
@@ -166,23 +167,27 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 	String freguesiaMorada;
 }
 
+/* OTHER GROUP */
 class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer teacherNumber;
 	Integer keyPerson;
 	Integer keyCategory;
 }
 
+/* OTHER GROUP */
 class net.sourceforge.fenixedu.domain.ResponsibleFor extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionCourse;
 	Integer keyTeacher;
 }
 
+/* OTHER GROUP */
 class net.sourceforge.fenixedu.domain.Professorship extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyTeacher;
 	Integer keyExecutionCourse;
 	Double hours;
 }
 
+/* OTHER GROUP */
 class net.sourceforge.fenixedu.domain.SupportLesson extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyProfessorship;
 	Date startTime;
@@ -204,7 +209,8 @@ class net.sourceforge.fenixedu.domain.Room extends net.sourceforge.fenixedu.doma
 	Integer capacidadeExame;
 	Integer piso;
 }
-/* DONE */
+
+/* OTHER GROUP */
 class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionPeriod;
 	Integer keyShift;
@@ -226,6 +232,7 @@ class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.do
 	String sigla;
 }
 
+/* OTHER GROUP */
 class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourceforge.fenixedu.domain.DomainObject {
 	String concreteClassForStudentCurricularPlans;
 	Integer degreeDuration;

@@ -183,8 +183,8 @@ class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.f
     public net.sourceforge.fenixedu.domain.ICurricularYear getCurricularYearByBranchAndSemester(final net.sourceforge.fenixedu.domain.IBranch branch,final Integer semester);
     public String getCurricularCourseUniqueKeyForEnrollment();
     public boolean hasActiveScopeInGivenSemester(final Integer semester);
-    public boolean hasActiveScopeInGivenSemesterForGivenBranch(final Integer semester, final IBranch branch);
-    public boolean hasActiveScopeInGivenSemesterForCommonAndGivenBranch(final Integer semester, final IBranch branch);
+    public boolean hasActiveScopeInGivenSemesterForGivenBranch(final Integer semester, final net.sourceforge.fenixedu.domain.IBranch branch);
+    public boolean hasActiveScopeInGivenSemesterForCommonAndGivenBranch(final Integer semester, final net.sourceforge.fenixedu.domain.IBranch branch);
 	"
 }
 
