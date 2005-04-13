@@ -13,10 +13,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinator;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ICoordinator;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -30,18 +34,15 @@ public class ReadExecutionDegree implements IService {
 
     /**
      * Executes the service. Returns the current InfoExecutionDegree.
+     * 
+     * @throws ExcepcaoPersistencia
      */
-    public InfoExecutionDegree run(Integer idInternal) throws FenixServiceException {
-        IExecutionDegree executionDegree;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+    public InfoExecutionDegree run(Integer idInternal) throws FenixServiceException,
+            ExcepcaoPersistencia {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree().readByOID(
-                    ExecutionDegree.class, idInternal);
-
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
-        }
+        IExecutionDegree executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree()
+                .readByOID(ExecutionDegree.class, idInternal);
 
         if (executionDegree == null) {
             throw new NonExistingServiceException();
@@ -49,20 +50,30 @@ public class ReadExecutionDegree implements IService {
 
         InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
 
-        InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
-        InfoDegree infoDegree = InfoDegree.newInfoFromDomain(executionDegree.getDegreeCurricularPlan().getDegree());
+        final IExecutionYear executionYear = executionDegree.getExecutionYear();
+        final InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(executionYear);
+        infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
+
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
+                .newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
+        InfoDegree infoDegree = InfoDegree.newInfoFromDomain(executionDegree.getDegreeCurricularPlan()
+                .getDegree());
         infoDegreeCurricularPlan.setInfoDegree(infoDegree);
         infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
-        //added by Tânia Pousão
+        // added by Tânia Pousão
         if (executionDegree.getCoordinatorsList() != null) {
             List infoCoordinatorList = new ArrayList();
             ListIterator iteratorCoordinator = executionDegree.getCoordinatorsList().listIterator();
             while (iteratorCoordinator.hasNext()) {
                 ICoordinator coordinator = (ICoordinator) iteratorCoordinator.next();
-                
+
                 InfoCoordinator infoCoordinator = InfoCoordinator.newInfoFromDomain(coordinator);
                 infoCoordinatorList.add(infoCoordinator);
+
+                final ITeacher teacher = coordinator.getTeacher();
+                final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
+                infoCoordinator.setInfoTeacher(infoTeacher);
             }
 
             infoExecutionDegree.setCoordinatorsList(infoCoordinatorList);
