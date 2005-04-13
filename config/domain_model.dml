@@ -243,59 +243,59 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 	"
 }
 
-class net.sourceforge.fenixedu.domain.WrittenEvaluation extends net.sourceforge.fenixedu.domain.Evaluation {
-	interface"
+	class net.sourceforge.fenixedu.domain.WrittenEvaluation extends net.sourceforge.fenixedu.domain.Evaluation {
+		interface"
+		
+		public java.util.Calendar getDay();
+		
+		public void setDay(java.util.Calendar calendar);
+		
+		public java.util.Calendar getBeginning();
+		
+		public void setBeginning(java.util.Calendar calendar);
+		
+		public java.util.Calendar getEnd();
+		
+		public void setEnd(java.util.Calendar calendar);
+		
+		public java.util.Calendar getEnrollmentBeginDay();
+		
+		public void setEnrollmentBeginDay(java.util.Calendar calendar);
 	
-	public java.util.Calendar getDay();
+	    public java.util.Calendar getEnrollmentBeginTime();
+	    
+	    public void setEnrollmentBeginTime(java.util.Calendar calendar);
 	
-	public void setDay(java.util.Calendar calendar);
+	    public java.util.Calendar getEnrollmentEndDay();
+	    
+	    public void setEnrollmentEndDay(java.util.Calendar calendar);
+	    
+		public java.util.Calendar getEnrollmentEndTime();
+	    
+	    public void setEnrollmentEndTime(java.util.Calendar calendar);
 	
-	public java.util.Calendar getBeginning();
+		public java.util.List getAssociatedCurricularCourseScope();
+		
+		public void setAssociatedCurricularCourseScope(java.util.List list);
 	
-	public void setBeginning(java.util.Calendar calendar);
-	
-	public java.util.Calendar getEnd();
-	
-	public void setEnd(java.util.Calendar calendar);
-	
-	public java.util.Calendar getEnrollmentBeginDay();
-	
-	public void setEnrollmentBeginDay(java.util.Calendar calendar);
+	    public java.util.List getAssociatedRoomOccupation();
+		
+		public void setAssociatedRoomOccupation(java.util.List list);
+		"
+	}
 
-    public java.util.Calendar getEnrollmentBeginTime();
-    
-    public void setEnrollmentBeginTime(java.util.Calendar calendar);
+		class net.sourceforge.fenixedu.domain.Exam extends net.sourceforge.fenixedu.domain.WrittenEvaluation {
+			interface"
+			public net.sourceforge.fenixedu.util.Season getSeason();
+			
+			public void setSeason(net.sourceforge.fenixedu.util.Season season);
+			
+			public java.util.List getAssociatedRooms();
+			"	
+		}
 
-    public java.util.Calendar getEnrollmentEndDay();
-    
-    public void setEnrollmentEndDay(java.util.Calendar calendar);
-    
-	public java.util.Calendar getEnrollmentEndTime();
-    
-    public void setEnrollmentEndTime(java.util.Calendar calendar);
-
-	public java.util.List getAssociatedCurricularCourseScope();
-	
-	public void setAssociatedCurricularCourseScope(java.util.List list);
-
-    public java.util.List getAssociatedRoomOccupation();
-	
-	public void setAssociatedRoomOccupation(java.util.List list);
-	"
-}
-
-class net.sourceforge.fenixedu.domain.Exam extends net.sourceforge.fenixedu.domain.WrittenEvaluation {
-	interface"
-	public net.sourceforge.fenixedu.util.Season getSeason();
-	
-	public void setSeason(net.sourceforge.fenixedu.util.Season season);
-	
-	public java.util.List getAssociatedRooms();
-	"	
-}
-
-class net.sourceforge.fenixedu.domain.WrittenTest extends net.sourceforge.fenixedu.domain.WrittenEvaluation {
-}
+		class net.sourceforge.fenixedu.domain.WrittenTest extends net.sourceforge.fenixedu.domain.WrittenEvaluation {
+		}
 
 
 class net.sourceforge.fenixedu.domain.EvaluationExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
