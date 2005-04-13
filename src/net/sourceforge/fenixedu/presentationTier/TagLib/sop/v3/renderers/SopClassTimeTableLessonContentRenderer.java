@@ -66,7 +66,7 @@ public class SopClassTimeTableLessonContentRenderer implements LessonSlotContent
 
             //TODO(rspl): Will it stay like this the interface for showing
             // it is a quinzenal lesson?
-            if (lesson.getInfoRoomOccupation().getFrequency().intValue() == RoomOccupation.QUINZENAL) {
+            if (lesson.getInfoRoomOccupation().getFrequency() != null && lesson.getInfoRoomOccupation().getFrequency().intValue() == RoomOccupation.QUINZENAL) {
                 strBuffer.append("&nbsp;&nbsp;[Q]");
             }
         } else {
