@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.util.CalendarUtil;
  * @author Ana e Ricardo
  *  
  */
-public class Period extends DomainObject implements IPeriod {
+public class Period extends Period_Base {
 
     protected Calendar startDate;
 
@@ -22,8 +22,6 @@ public class Period extends DomainObject implements IPeriod {
     protected List roomOccupations;
 
     protected IPeriod nextPeriod;
-
-    private Integer keyPeriod;
 
     public Period() {
     }
@@ -90,14 +88,6 @@ public class Period extends DomainObject implements IPeriod {
      */
     public void setRoomOccupations(List roomOccupations) {
         this.roomOccupations = roomOccupations;
-    }
-
-    public Integer getKeyPeriod() {
-        return keyPeriod;
-    }
-
-    public void setKeyPeriod(Integer keyPeriod) {
-        this.keyPeriod = keyPeriod;
     }
 
     public IPeriod getNextPeriod() {

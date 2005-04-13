@@ -642,6 +642,31 @@ class net.sourceforge.fenixedu.domain.teacher.OldPublication extends net.sourcef
 	"
 }
 
+class net.sourceforge.fenixedu.domain.Period extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyPeriod;
+	
+	interface"
+	public java.util.Calendar getEndDate();
+	
+	public void setEndDate(java.util.Calendar calendar);
+
+	public java.util.Calendar getStartDate();
+	
+	public void setStartDate(java.util.Calendar calendar);
+
+	public java.util.List getRoomOccupations();
+	
+	public void setRoomOccupations(java.util.List roomOccupations);
+
+	public net.sourceforge.fenixedu.domain.IPeriod getNextPeriod();
+	
+	public void setNextPeriod(net.sourceforge.fenixedu.domain.IPeriod nextPeriod);
+
+	public java.util.Calendar getEndDateOfComposite();
+	
+	public boolean intersectPeriods(IPeriod period);
+	"
+}
 
 class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.DomainObject {
 	String localidade;
