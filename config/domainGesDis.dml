@@ -202,7 +202,7 @@ class net.sourceforge.fenixedu.domain.Room extends net.sourceforge.fenixedu.doma
 	Integer capacidadeExame;
 	Integer piso;
 }
-
+/* DONE */
 class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionPeriod;
 	Integer keyShift;
@@ -393,8 +393,16 @@ relation RoomSummary {
 
 /* DONE */
 relation RoomLesson {
-	net.sourceforge.fenixedu.domain.Lesson playsRole lesson {
-		multiplicity 1;
+	net.sourceforge.fenixedu.domain.Lesson playsRole associatedLessons {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Room playsRole room;
+}
+
+/* DONE */
+relation RoomRoomOccupation {
+	net.sourceforge.fenixedu.domain.RoomOccupation playsRole roomOccupations {
+		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Room playsRole room;
 }
@@ -429,6 +437,34 @@ relation ShiftSummary {
 	}
 	net.sourceforge.fenixedu.domain.Shift playsRole shift;
 }
+
+/* DONE */
+relation ShiftSchoolClass {
+	net.sourceforge.fenixedu.domain.SchoolClass playsRole associatedClasses {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Shift playsRole associatedShifts {
+		multiplicity *;
+	}
+}
+
+/* DONE */
+relation ShiftShiftProfessorship {
+	net.sourceforge.fenixedu.domain.Shift playsRole shift;
+	}
+	net.sourceforge.fenixedu.domain.ShiftProfessorship playsRole associatedShiftProfessorship {
+		multiplicity *;
+	}
+}
+
+/* DONE */
+relation ShiftShiftStudent {
+	net.sourceforge.fenixedu.domain.Shift playsRole shift;
+	net.sourceforge.fenixedu.domain.ShiftStudent playsRole studentShifts {
+		multiplicity *;
+	}
+}
+
 
 /* DONE */
 relation TeacherSummary {

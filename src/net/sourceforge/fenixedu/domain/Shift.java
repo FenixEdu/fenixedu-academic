@@ -19,10 +19,6 @@ public class Shift extends Shift_Base {
     protected TipoAula tipo;
     protected Integer ocupation;
     protected Double percentage;
-
-    private List associatedShiftProfessorship;
-    private List associatedClasses;
-    private List studentShifts;
  
     public Shift() {
     }
@@ -69,22 +65,6 @@ public class Shift extends Shift_Base {
         return result;
     }
 
-    public List getAssociatedShiftProfessorship() {
-        return associatedShiftProfessorship;
-    }
-
-    public void setAssociatedShiftProfessorship(List list) {
-        associatedShiftProfessorship = list;
-    }
-
-    public List getAssociatedClasses() {
-        return associatedClasses;
-    }
-    
-    public void setAssociatedClasses(List list) {
-        associatedClasses = list;
-    }
-
     public Integer getOcupation() {
         return ocupation;
     }
@@ -109,12 +89,5 @@ public class Shift extends Shift_Base {
             hours += lesson.hours();
         }
         return hours;
-    }
-
-    public List getStudentShifts() {
-        return studentShifts;
-    }
-    public void setStudentShifts(List studentShifts) {
-        this.studentShifts = studentShifts;
     }
 }

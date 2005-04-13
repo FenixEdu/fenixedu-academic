@@ -10,15 +10,11 @@ package net.sourceforge.fenixedu.domain;
  * 
  * @author tfc130
  */
-import java.util.List;
-
 import net.sourceforge.fenixedu.util.TipoSala;
 
 public class Room extends Room_Base {
     protected TipoSala _tipo;
-    private List roomOccupations;
 
-    
     /** Construtor sem argumentos público requerido pela moldura de objectos OJB */
     public Room() {
     }
@@ -74,12 +70,4 @@ public class Room extends Room_Base {
         result += "]";
         return result;
     }
-
-    public List getRoomOccupations() {
-        return roomOccupations;
-    }
-    
-    public void setRoomOccupations(List roomOccupations) {
-        this.roomOccupations = roomOccupations;
-    } 
 }

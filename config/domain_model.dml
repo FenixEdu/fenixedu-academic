@@ -762,8 +762,6 @@ class net.sourceforge.fenixedu.domain.Room extends net.sourceforge.fenixedu.doma
     public void setEdificio(String edificio);
 	public net.sourceforge.fenixedu.util.TipoSala getTipo();
     public void setTipo(net.sourceforge.fenixedu.util.TipoSala tipo);
-	public java.util.List getRoomOccupations();
-    public void setRoomOccupations(java.util.List roomOccupations);
 	"
 }
 
@@ -781,14 +779,6 @@ class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.dom
     public void setOcupation(Integer integer);
     public Double getPercentage();
     public void setPercentage(Double percentage);
-    
-    public java.util.List getAssociatedShiftProfessorship();
-    public void setAssociatedShiftProfessorship(java.util.List list);
-    public java.util.List getAssociatedClasses();
-    public void setAssociatedClasses(java.util.List list);
-    public java.util.List getStudentShifts();
-    public void setStudentShifts(java.util.List studentShifts);
-    
     public double hours();
 	"
 }
@@ -959,7 +949,11 @@ external class net.sourceforge.fenixedu.domain.ExecutionPeriod;
 external class net.sourceforge.fenixedu.domain.ExecutionYear;
 external class net.sourceforge.fenixedu.domain.Lesson;
 external class net.sourceforge.fenixedu.domain.Professorship;
+external class net.sourceforge.fenixedu.domain.RoomOccupation;
+external class net.sourceforge.fenixedu.domain.SchoolClass;
 external class net.sourceforge.fenixedu.domain.Section;
+external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
+external class net.sourceforge.fenixedu.domain.ShiftStudent;
 external class net.sourceforge.fenixedu.domain.Student;
 external class net.sourceforge.fenixedu.domain.Teacher;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
@@ -1177,8 +1171,17 @@ relation ProfessorshipSummary {
 
 
 relation RoomLesson {
-	net.sourceforge.fenixedu.domain.Lesson playsRole lesson {
-		multiplicity 1;
+	net.sourceforge.fenixedu.domain.Lesson playsRole associatedLessons {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Room playsRole room;
+}
+
+
+
+relation RoomRoomOccupation {
+	net.sourceforge.fenixedu.domain.RoomOccupation playsRole roomOccupations {
+		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Room playsRole room;
 }
@@ -1204,6 +1207,32 @@ relation ShiftExecutionCourse {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole disciplinaExecucao;
+}
+
+
+relation ShiftSchoolClass {
+	net.sourceforge.fenixedu.domain.SchoolClass playsRole associatedClasses {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Shift playsRole associatedShifts {
+		multiplicity *;
+	}
+}
+
+
+relation ShiftShiftProfessorship {
+	net.sourceforge.fenixedu.domain.Shift playsRole shift;
+	net.sourceforge.fenixedu.domain.ShiftProfessorship playsRole associatedShiftProfessorship {
+		multiplicity *;
+	}
+}
+
+
+relation ShiftShiftStudent {
+	net.sourceforge.fenixedu.domain.Shift playsRole shift;
+	net.sourceforge.fenixedu.domain.ShiftStudent playsRole studentShifts {
+		multiplicity *;
+	}
 }
 
 
