@@ -4,7 +4,7 @@ package net.sourceforge.fenixedu.domain;
  * @author Tânia Pousão
  *  
  */
-public class FinalEvaluation extends Evaluation implements IFinalEvaluation {
+public class FinalEvaluation extends FinalEvaluation_Base {
 
     public boolean equals(Object obj) {
         if (obj instanceof FinalEvaluation) {
