@@ -388,6 +388,41 @@ class net.sourceforge.fenixedu.domain.ExamStudentRoom extends net.sourceforge.fe
 	"
 }
 
+/*
+class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
+	String nome;
+	Double theoreticalHours;
+	String sigla;
+	Double labHours;
+	Integer keyExecutionPeriod;
+	Double praticalHours;
+	String comment;
+	Double theoPratHours;
+	
+	interface "
+	public String getSlideName();
+	
+	public net.sourceforge.fenixedu.fileSuport.INode getParentNode();
+
+	public java.util.List getGroupProperties();
+	
+	public net.sourceforge.fenixedu.domain.IGroupProperties getGroupPropertiesByName(String name);
+	
+	public void addGroupPropertiesExecutionCourse(net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
+	
+	public void removeGroupPropertiesExecutionCourse(net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
+
+	public boolean existsGroupPropertiesExecutionCourse(net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
+		
+	public boolean existsGroupPropertiesExecutionCourse();
+	
+	public boolean hasProposals();
+	
+    public boolean isMasterDegreeOnly();
+    "
+}
+*/
+
 
 class net.sourceforge.fenixedu.domain.ExecutionDegree extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPeriodExamsSecondSemester;
@@ -980,11 +1015,14 @@ external class net.sourceforge.fenixedu.domain.CurricularCourseScope;
 external class net.sourceforge.fenixedu.domain.Curriculum;
 external class net.sourceforge.fenixedu.domain.Degree;
 external class net.sourceforge.fenixedu.domain.DepartmentCourse;
+external class net.sourceforge.fenixedu.domain.EvaluationMethod;
 external class net.sourceforge.fenixedu.domain.ExecutionCourse;
+external class net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty;
 external class net.sourceforge.fenixedu.domain.ExecutionPeriod;
 external class net.sourceforge.fenixedu.domain.ExecutionYear;
 external class net.sourceforge.fenixedu.domain.Lesson;
 external class net.sourceforge.fenixedu.domain.Professorship;
+external class net.sourceforge.fenixedu.domain.ResponsibleFor;
 external class net.sourceforge.fenixedu.domain.RoomOccupation;
 external class net.sourceforge.fenixedu.domain.SchoolClass;
 external class net.sourceforge.fenixedu.domain.ScientificArea;
@@ -1138,6 +1176,56 @@ relation DelegateStudent {
 }
 
 
+relation ExamExecutionCourse {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole associatedExecutionCourses {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Exam playsRole associatedExams {
+		multiplicity *;
+	}
+}
+
+
+relation ExecutionCourseAttends {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+	net.sourceforge.fenixedu.domain.Attends playsRole attends {
+		multiplicity *;
+	}
+}
+
+
+relation ExecutionCourseBibliographicReference {
+	net.sourceforge.fenixedu.domain.BibliographicReference playsRole associatedBibliographicReferences {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+}
+
+
+relation ExecutionCourseEvaluationMethod {
+	net.sourceforge.fenixedu.domain.EvaluationMethod playsRole associatedEvaluations {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+}
+
+
+relation ExecutionCourseExecutionCourseProperty {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+	net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty playsRole executionCourseProperties {
+		multiplicity *;
+	}
+}
+
+
+relation ExecutionCourseProfessorship {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+	net.sourceforge.fenixedu.domain.Professorship playsRole professorships {
+		multiplicity *;
+	}
+}
+
+
 relation ExecutionCourseReport {
 	net.sourceforge.fenixedu.domain.gesdis.CourseReport playsRole courseReport {
 		multiplicity 1;
@@ -1146,8 +1234,8 @@ relation ExecutionCourseReport {
 }
 
 
-relation ExecutionCourseBibliographicReference {
-	net.sourceforge.fenixedu.domain.BibliographicReference playsRole associatedBibliographicReferences {
+relation ExecutionCourseResponsibleFor {
+	net.sourceforge.fenixedu.domain.ResponsibleFor playsRole responsibleTeachers {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
@@ -1167,6 +1255,14 @@ relation ExecutionCourseSummary {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+}
+
+
+relation ExecutionPeriodExecutionCourse {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole associatedExecutionCourses {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
 }
 
 
@@ -1352,6 +1448,17 @@ relation SiteAnnouncement {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Site playsRole site;
+}
+
+
+relation StudentExecutionCourse {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourses {
+		multiplicity *;
+	}
+	
+	net.sourceforge.fenixedu.domain.Student playsRole attendingStudents {
+		multiplicity *;
+	}
 }
 
 
