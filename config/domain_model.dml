@@ -1050,7 +1050,6 @@ external class net.sourceforge.fenixedu.domain.ExecutionYear;
 external class net.sourceforge.fenixedu.domain.Lesson;
 external class net.sourceforge.fenixedu.domain.Professorship;
 external class net.sourceforge.fenixedu.domain.ResponsibleFor;
-external class net.sourceforge.fenixedu.domain.RoomOccupation;
 external class net.sourceforge.fenixedu.domain.SchoolClass;
 external class net.sourceforge.fenixedu.domain.ScientificArea;
 external class net.sourceforge.fenixedu.domain.Section;
