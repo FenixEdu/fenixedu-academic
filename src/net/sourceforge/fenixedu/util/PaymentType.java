@@ -21,6 +21,8 @@ public class PaymentType extends FenixUtil {
     public static final int NIB_TRANSFER = 4;
 
     public static final int POSTAL = 5;
+    
+    public static final int SIBS = 6;
 
     public static final PaymentType CASH_TYPE = new PaymentType(CASH);
 
@@ -31,6 +33,8 @@ public class PaymentType extends FenixUtil {
     public static final PaymentType NIB_TRANSFER_TYPE = new PaymentType(NIB_TRANSFER);
 
     public static final PaymentType POSTAL_TYPE = new PaymentType(POSTAL);
+    
+    public static final PaymentType SIBS_TYPE = new PaymentType(SIBS);
 
     public static final String CASH_STRING = "Dinheiro";
 
@@ -41,6 +45,8 @@ public class PaymentType extends FenixUtil {
     public static final String NIB_TRANSFER_STRING = "Transferência Bancária";
 
     public static final String POSTAL_STRING = "Vale de Correio";
+    
+    public static final String SIBS_STRING = "SIBS";
 
     public static final String DEFAULT_STRING = "[Escolha uma Opção]";
 
@@ -68,7 +74,8 @@ public class PaymentType extends FenixUtil {
             this.type = new Integer(PaymentType.NIB_TRANSFER);
         if (type.equals(PaymentType.POSTAL_STRING))
             this.type = new Integer(PaymentType.POSTAL);
-
+        if (type.equals(PaymentType.SIBS_STRING))
+            this.type = new Integer(PaymentType.SIBS);
     }
 
     public boolean equals(Object obj) {
@@ -88,6 +95,7 @@ public class PaymentType extends FenixUtil {
         result.add(new LabelValueBean(PaymentType.CHEQUE_STRING, PaymentType.CHEQUE_STRING));
         result.add(new LabelValueBean(PaymentType.NIB_TRANSFER_STRING, PaymentType.NIB_TRANSFER_STRING));
         result.add(new LabelValueBean(PaymentType.POSTAL_STRING, PaymentType.POSTAL_STRING));
+        result.add(new LabelValueBean(PaymentType.SIBS_STRING, PaymentType.SIBS_STRING));
         //		result.add(PaymentType.CASH_STRING);
         //		result.add(PaymentType.ATM_STRING);
         //		result.add(PaymentType.CHEQUE_STRING);
@@ -108,6 +116,8 @@ public class PaymentType extends FenixUtil {
             return PaymentType.NIB_TRANSFER_STRING;
         if (type.intValue() == PaymentType.POSTAL)
             return PaymentType.POSTAL_STRING;
+        if (type.intValue() == PaymentType.SIBS)
+            return PaymentType.SIBS_STRING;        
         return "ERRO!"; // Nunca e atingido
     }
 
