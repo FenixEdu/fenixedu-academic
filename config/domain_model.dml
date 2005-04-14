@@ -862,6 +862,25 @@ class net.sourceforge.fenixedu.domain.RoomOccupation extends net.sourceforge.fen
 	"
 }
 
+
+class net.sourceforge.fenixedu.domain.SchoolClass extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyExecutionDegree;
+	String name;
+	Integer keyExecutionPeriod;
+	Integer curricularYear;
+	
+	interface"
+	public net.sourceforge.fenixedu.domain.IExecutionDegree getExecutionDegree();
+	
+	public void setExecutionDegree(net.sourceforge.fenixedu.domain.IExecutionDegree executionDegree);
+
+	public net.sourceforge.fenixedu.domain.IExecutionPeriod getExecutionPeriod();
+
+	public void setExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
+	"
+}
+
+
 class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer availabilityFinal;
 	Integer chaveDisciplinaExecucao;
@@ -1050,7 +1069,6 @@ external class net.sourceforge.fenixedu.domain.ExecutionYear;
 external class net.sourceforge.fenixedu.domain.Lesson;
 external class net.sourceforge.fenixedu.domain.Professorship;
 external class net.sourceforge.fenixedu.domain.ResponsibleFor;
-external class net.sourceforge.fenixedu.domain.SchoolClass;
 external class net.sourceforge.fenixedu.domain.ScientificArea;
 external class net.sourceforge.fenixedu.domain.Section;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;

@@ -39,13 +39,13 @@ public class CriarTurma implements IService {
 
         final ITurmaPersistente classDAO = sp.getITurmaPersistente();
         final List listClasses = classDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(turma
-                .getExecutionPeriod(), turma.getAnoCurricular(), turma.getExecutionDegree());
+                .getExecutionPeriod(), turma.getCurricularYear(), turma.getExecutionDegree());
 
         final ISchoolClass existingClass = (ISchoolClass) CollectionUtils.find(listClasses, new Predicate() {
 
             public boolean evaluate(Object arg0) {
                 final ISchoolClass schoolClass = (ISchoolClass) arg0;
-                return infoTurma.getNome().equalsIgnoreCase(schoolClass.getNome());
+                return infoTurma.getNome().equalsIgnoreCase(schoolClass.getName());
             }
 
         });

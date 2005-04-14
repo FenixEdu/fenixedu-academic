@@ -36,7 +36,7 @@ public class RemoverTurno implements IService {
             IShift shiftToDelete = sp.getITurnoPersistente().readByNameAndExecutionCourse(
                     shift.getNome(), shift.getDisciplinaExecucao());
             ISchoolClass classToDelete = sp.getITurmaPersistente()
-                    .readByNameAndExecutionDegreeAndExecutionPeriod(classTemp.getNome(),
+                    .readByNameAndExecutionDegreeAndExecutionPeriod(classTemp.getName(),
                             classTemp.getExecutionDegree(), classTemp.getExecutionPeriod());
             ISchoolClassShift turmaTurnoToDelete = null;
             if ((shiftToDelete != null) && (classToDelete != null)) {

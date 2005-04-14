@@ -81,7 +81,7 @@ public class PublicSiteComponentBuilder {
             IExecutionDegree executionDegree = domainClass.getExecutionDegree();
 
             classes = classDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(executionPeriod,
-                    domainClass.getAnoCurricular(), executionDegree);
+                    domainClass.getCurricularYear(), executionDegree);
 
             for (int i = 0; i < classes.size(); i++) {
                 ISchoolClass taux = (ISchoolClass) classes.get(i);
@@ -209,8 +209,8 @@ public class PublicSiteComponentBuilder {
         if (taux != null) {
             infoClass = new InfoClass();
             infoClass.setIdInternal(taux.getIdInternal());
-            infoClass.setNome(taux.getNome());
-            infoClass.setAnoCurricular(taux.getAnoCurricular());
+            infoClass.setNome(taux.getName());
+            infoClass.setAnoCurricular(taux.getCurricularYear());
             infoClass.setInfoExecutionPeriod(copyIExecutionPeriod2InfoExecutionPeriod(taux
                     .getExecutionPeriod()));
         }

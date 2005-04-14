@@ -108,8 +108,8 @@ public class InfoClass extends InfoObject {
     public void copyFromDomain(ISchoolClass turma) {
         super.copyFromDomain(turma);
         if (turma != null) {
-            setNome(turma.getNome());
-            setAnoCurricular(turma.getAnoCurricular());
+            setNome(turma.getName());
+            setAnoCurricular(turma.getCurricularYear());
         }
     }
 
