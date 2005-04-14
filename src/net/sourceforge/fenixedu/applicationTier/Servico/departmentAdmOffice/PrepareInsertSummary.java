@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
@@ -13,6 +14,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSummaries;
@@ -20,6 +23,7 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IShift;
@@ -75,12 +79,18 @@ public class PrepareInsertSummary implements IService {
                 infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
 
                     public Object transform(Object arg0) {
-                        IShift turno = (IShift) arg0;
-
-						InfoShift infoShift = InfoShift.newInfoFromDomain(turno);
-						return infoShift;
-                    }
-                });
+                        final IShift turno = (IShift) arg0;
+                        final InfoShift infoShift = InfoShift.newInfoFromDomain(turno);
+                        infoShift.setInfoLessons(new ArrayList(turno.getAssociatedLessons().size()));
+                        for (final Iterator iterator = turno.getAssociatedLessons().iterator(); iterator.hasNext(); ) {
+                            final ILesson lesson = (ILesson) iterator.next();
+                            final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
+                            final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(lesson.getSala());
+                            infoLesson.setInfoSala(infoRoom);
+                            infoShift.getInfoLessons().add(infoLesson);
+                        }
+                        return infoShift;
+                    }                });
             }
 
             IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
