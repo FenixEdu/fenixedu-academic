@@ -137,7 +137,7 @@ public class ReadSummaries implements IServico {
 
             IPersistentSummary persistentSummary = persistentSuport.getIPersistentSummary();
             List summaries = null;
-            if (summaryType != null && summaryType.intValue() > 0) {
+            if (summaryType != null && summaryType.intValue() > 0) {                
                 List summariesBySummaryType = persistentSummary
                         .readByExecutionCourseShiftsAndTypeLesson(executionCourse, new TipoAula(
                                 summaryType));
@@ -212,7 +212,7 @@ public class ReadSummaries implements IServico {
                 Iterator iter = summaries.iterator();
                 while (iter.hasNext()) {
                     ISummary summary = (ISummary) iter.next();
-					InfoSummary infoSummary = InfoSummary.newInfoFromDomain(summary);
+					InfoSummary infoSummary = InfoSummary.newInfoFromDomain(summary);					
                     result.add(infoSummary);
                 }
             }

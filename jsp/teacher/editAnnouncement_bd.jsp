@@ -6,7 +6,7 @@
 
 <logic:present name="siteView"> 
 <bean:define id="announcement" name="siteView" property="component"/>
-<bean:define id="information" name="announcement" property="information"/>
+<!--<bean:define id="information" name="announcement" property="information"/>-->
 
 <html:form action="/editAnnouncement" focus="title" >
 <html:hidden property="page" value="1"/>

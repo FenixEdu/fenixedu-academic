@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.ISummary;
 import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Room;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -92,7 +93,8 @@ public class InsertSummary implements IService {
                 summary.setIsExtraLesson(Boolean.FALSE);
 
                 ILesson lesson = SummaryUtils.findlesson(shift, infoSummary);
-
+                summary.setSummaryType(lesson.getTipo());
+                
                 //room
                 summary.setRoom(lesson.getSala());//not necessary
 
@@ -107,7 +109,7 @@ public class InsertSummary implements IService {
 
             summary.setSummaryDate(infoSummary.getSummaryDate());
             summary.setSummaryHour(infoSummary.getSummaryHour());
-
+            
             //after verify summary date and hour
             //and before continue check if this summary exists
             if (persistentSummary.readSummaryByUnique(shift, infoSummary.getSummaryDate(), infoSummary

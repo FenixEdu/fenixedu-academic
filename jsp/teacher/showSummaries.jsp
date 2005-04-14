@@ -89,14 +89,15 @@
 		</tr>
 		</logic:notEmpty>
 		</logic:present>
-
+		<!--
 		<logic:present name="summary" property="infoShift">
 		<tr>
-		   	<td>
+		   	<td>		    
 		       	<logic:empty name="summary" property="isExtraLesson">
 		       		<!-- normal lesson -->
 			       	<bean:message key="label.summary.lesson" />
-		       	</logic:empty>
+		       	</logic:empty>				       			        	
+
 		       	<logic:notEmpty name="summary" property="isExtraLesson">
 		       		<logic:equal name="summary" property="isExtraLesson" value="false">		
 			       		<!-- normal lesson -->
@@ -108,6 +109,7 @@
 			    		<bean:message key="label.extra.lesson" />
 		       		</logic:equal>
 		       	</logic:notEmpty>
+
 		       	<bean:write name="summary" property="infoShift.tipo.fullNameTipoAula" />		       	
 			    &nbsp;<bean:write name="summary" property="summaryDateInput"/>
 	           	&nbsp;<bean:write name="summary" property="summaryHourInput"/>     			       				       			       	
@@ -120,17 +122,36 @@
 		   	</td>
 		</tr>
 		</logic:present>
-		<logic:notPresent name="summary" property="infoShift">
+		-->
+		<!--<logic:notPresent name="summary" property="infoShift">-->
 			<tr>
 			   	<td>
-				   	<bean:message key="label.summary.lesson" />
+				   	<logic:empty name="summary" property="isExtraLesson">
+			       		<!-- normal lesson -->
+				       	<bean:message key="label.summary.lesson" />
+			       	</logic:empty>
+			       	
+			       	<logic:notEmpty name="summary" property="isExtraLesson">
+			       		<logic:equal name="summary" property="isExtraLesson" value="false">		
+				       		<!-- normal lesson -->
+					       	<bean:message key="label.summary.lesson" />
+					       	<logic:notEmpty name="summary" property="summaryType">
+				   				<bean:write name="summary" property="summaryType.fullNameTipoAula" />						   	
+			       			</logic:notEmpty>
+			       		</logic:equal>
+			       	
+			       		<logic:equal name="summary" property="isExtraLesson" value="true">		     
+			       	   		<!-- extra lesson -->
+				    		<bean:message key="label.extra.lesson" />
+			       		</logic:equal>
+			       	</logic:notEmpty>
+			       				       	
 			       	&nbsp;<bean:write name="summary" property="summaryDateInput"/>
 		           	&nbsp;<bean:write name="summary" property="summaryHourInput"/>
 		   		</td>
 			</tr>		
-		</logic:notPresent>
-				
-		
+		<!--</logic:notPresent>-->
+
 		<tr>
 			<td>
 				<logic:notEmpty name="summary" property="infoProfessorship">

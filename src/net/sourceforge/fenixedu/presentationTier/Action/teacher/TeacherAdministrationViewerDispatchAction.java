@@ -229,8 +229,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         ISiteComponent announcementComponent = new InfoAnnouncement();
         SiteView siteView = readSiteView(request, announcementComponent, null, announcementCode, null);
         
+        String information = ((InfoAnnouncement)siteView.getComponent()).getInformation();
         DynaActionForm actionForm = (DynaActionForm)form;
-        actionForm.set("information", ((InfoAnnouncement)siteView.getComponent()).getInformation());
+        if(information != null)
+            actionForm.set("information", information);
         
         if(request.getAttribute("announcementTextFlag")!=null)
             ((InfoAnnouncement)siteView.getComponent()).setInformation((String) request.getAttribute("announcementTextFlag"));
@@ -279,7 +281,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Object args[] = { objectCode, announcementCode, newTitle, newInformation };
         try {
             ServiceManagerServiceFactory.executeService(userView, "EditAnnouncementService", args);
-        } catch (FenixServiceException e) {
+        } catch (FenixServiceException e) {            
             throw new FenixActionException(e);
         }
         ISiteComponent announecementsComponent = new InfoSiteAnnouncement();
