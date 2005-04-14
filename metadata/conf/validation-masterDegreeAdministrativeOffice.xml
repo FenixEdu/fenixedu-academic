@@ -693,6 +693,13 @@
 			<field property="name" depends="required" page="1">
 				<arg0 key="label.masterDegree.administrativeOffice.name" />
 			</field>
+			<field property="workLocationID" depends="required, integer, floatGreater" page="1">
+				<arg0 key="label.masterDegree.administrativeOffice.externalPersonWorkLocation" />		        
+		       	<var>
+					<var-name>value</var-name>
+					<var-value>0</var-value>
+				</var>
+			</field>			
 			<field property="address" depends="required" page="1">
 			 	<arg0 key="label.masterDegree.administrativeOffice.address" />
 			</field>
