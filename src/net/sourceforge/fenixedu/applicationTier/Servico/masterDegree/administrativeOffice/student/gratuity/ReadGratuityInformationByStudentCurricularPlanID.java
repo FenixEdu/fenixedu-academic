@@ -7,6 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.IGuideEntry;
@@ -62,7 +63,7 @@ public class ReadGratuityInformationByStudentCurricularPlanID implements IServic
                     if (guideEntry.getDocumentType().equals(DocumentType.GRATUITY_TYPE)) {
                         InfoGuideEntry infoGuideEntry = Cloner
                                 .copyIGuideEntry2InfoGuideEntry(guideEntry);
-                        infoGuideEntry.setInfoGuide(Cloner.copyIGuide2InfoGuide(guide));
+                        infoGuideEntry.setInfoGuide(InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide));
                         result.add(infoGuideEntry);
 
                     }

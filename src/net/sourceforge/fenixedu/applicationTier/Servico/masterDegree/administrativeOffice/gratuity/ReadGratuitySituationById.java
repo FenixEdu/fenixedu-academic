@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -16,7 +16,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 public class ReadGratuitySituationById implements IService {
 
@@ -41,8 +41,9 @@ public class ReadGratuitySituationById implements IService {
                 throw new NonExistingServiceException(
                         "error.exception.masterDegree.gratuity.notExistingGratuitySituation");
             }
-            infoGratuitySituation = Cloner
-                    .copyIGratuitySituation2InfoGratuitySituation(gratuitySituation);
+
+            infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
+                    .newInfoFromDomain(gratuitySituation);
 
         } catch (ExcepcaoPersistencia e) {
 

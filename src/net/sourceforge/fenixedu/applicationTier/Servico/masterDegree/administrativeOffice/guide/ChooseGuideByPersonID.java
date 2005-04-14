@@ -11,7 +11,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
@@ -98,7 +98,7 @@ public class ChooseGuideByPersonID implements IService {
 
             if ((numberAux == null) || (numberAux.intValue() != guide.getNumber().intValue())) {
                 numberAux = guide.getNumber();
-                result.add(Cloner.copyIGuide2InfoGuide(guide));
+                result.add(InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide));
             }
         }
         Collections.reverse(result);

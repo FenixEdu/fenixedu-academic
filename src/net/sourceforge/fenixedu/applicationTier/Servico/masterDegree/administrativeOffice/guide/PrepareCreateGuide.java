@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Guide;
@@ -47,9 +47,9 @@ public class PrepareCreateGuide implements IService {
         IContributor contributor = null;
         IMasterDegreeCandidate masterDegreeCandidate = null;
         IGuide guide = new Guide();
-        InfoGuide infoGuide = new InfoGuide();
+        InfoGuide infoGuide = new InfoGuideWithPersonAndExecutionDegreeAndContributor();
 
-        //	Read the Contributor
+        // Read the Contributor
         try {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             contributor = sp.getIPersistentContributor().readByContributorNumber(contributorNumber);
@@ -89,7 +89,7 @@ public class PrepareCreateGuide implements IService {
             throw newEx;
         }
 
-        //	Check if the Requester is a Candidate
+        // Check if the Requester is a Candidate
         if (requesterType.equals(GuideRequester.CANDIDATE_STRING)) {
 
             try {
@@ -130,7 +130,7 @@ public class PrepareCreateGuide implements IService {
             guide.setVersion(new Integer(1));
             guide.setExecutionDegree(executionDegree);
 
-            infoGuide = Cloner.copyIGuide2InfoGuide(guide);
+            infoGuide = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide);
 
             InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
             infoGuideEntry.setDescription(price.getDescription());
@@ -186,7 +186,8 @@ public class PrepareCreateGuide implements IService {
 
             guide.setExecutionDegree(executionDegree);
 
-            infoGuide = Cloner.copyIGuide2InfoGuide(guide);
+            // infoGuide = Cloner.copyIGuide2InfoGuide(guide);
+            infoGuide = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide);
 
             infoGuide.setInfoGuideEntries(new ArrayList());
             infoGuide.setGuideRequester(GuideRequester.STUDENT_TYPE);

@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
@@ -91,7 +92,7 @@ public class CreateGuideFromTransactions implements IService {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.getIPersistentGuide().simpleLockWrite(guide);
             if (situationOfGuide.equals(SituationOfGuide.PAYED_TYPE)) {
-                guide.setPaymentType(new PaymentType(PaymentType.ATM_STRING));
+                guide.setPaymentType(PaymentType.SIBS_TYPE);
                 guide.setPaymentDate(calendar.getTime());
             }
 
@@ -177,7 +178,7 @@ public class CreateGuideFromTransactions implements IService {
             throw newEx;
         }
 
-        InfoGuide result = Cloner.copyIGuide2InfoGuide(guide);
+        InfoGuide result = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide);
         result.setInfoGuideEntries(infoGuide.getInfoGuideEntries());
 
         return result;

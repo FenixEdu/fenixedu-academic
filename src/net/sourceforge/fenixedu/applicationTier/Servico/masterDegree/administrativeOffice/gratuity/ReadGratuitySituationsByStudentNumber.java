@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -20,7 +20,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 public class ReadGratuitySituationsByStudentNumber implements IService {
 
@@ -60,9 +60,8 @@ public class ReadGratuitySituationsByStudentNumber implements IService {
                 while (itGratuitySituations.hasNext()) {
                     gratuitySituation = (IGratuitySituation) itGratuitySituations.next();
                     if (gratuitySituation != null) {
-                        infoGratuitySituation = Cloner
-                                .copyIGratuitySituation2InfoGratuitySituation(gratuitySituation);
-
+                        infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
+                                .newInfoFromDomain(gratuitySituation);
                         infoGratuitySituationsList.add(infoGratuitySituation);
                     }
                 }

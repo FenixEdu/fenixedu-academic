@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -41,7 +41,7 @@ public class ListGuidesByState implements IService {
 
         List result = new ArrayList();
         while (iterator.hasNext()) {
-            result.add(Cloner.copyIGuide2InfoGuide((IGuide) iterator.next()));
+            result.add(InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain((IGuide) iterator.next()));
         }
 
         return result;

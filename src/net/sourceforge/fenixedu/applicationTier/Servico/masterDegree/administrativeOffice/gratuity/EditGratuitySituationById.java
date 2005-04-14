@@ -11,7 +11,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
@@ -131,8 +131,8 @@ public class EditGratuitySituationById implements IService {
             gratuitySituation.setExemptionValue(infoGratuitySituation.getExemptionValue());
             gratuitySituation.setExemptionType(infoGratuitySituation.getExemptionType());
 
-            infoGratuitySituation = Cloner
-                    .copyIGratuitySituation2InfoGratuitySituation(gratuitySituation);
+            infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
+                    .newInfoFromDomain(gratuitySituation);
 
         } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();

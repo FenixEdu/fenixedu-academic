@@ -13,10 +13,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituat
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.domain.Guide;
+import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.domain.IContributor;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.IGuideEntry;
 import net.sourceforge.fenixedu.domain.IGuideSituation;
@@ -44,7 +44,7 @@ public class CreateGuide implements IService {
     }
 
     public InfoGuide run(InfoGuide infoGuide, String othersRemarks, Double othersPrice, String remarks,
-            SituationOfGuide situationOfGuide, String paymentType) throws FenixServiceException {
+            SituationOfGuide situationOfGuide, String paymentType) throws FenixServiceException, ExcepcaoPersistencia {
 
         ISuportePersistente sp = null;
         IContributor contributor = null;
@@ -97,7 +97,13 @@ public class CreateGuide implements IService {
         infoGuideSituation.setDate(calendar.getTime());
         infoGuideSituation.setSituation(situationOfGuide);
 
-        guide = Cloner.copyInfoGuide2IGuide(infoGuide);
+        //guide = Cloner.copyInfoGuide2IGuide(infoGuide);
+        guide = InfoGuide.newDomainFromInfo(infoGuide);
+        //guide = (IGuide) sp.getIPersistentGuide().readByOID(Guide.class,infoGuide.getIdInternal(),true);
+        //infoGuide.copyToDomain(infoGuide,guide);
+        guide.setIdInternal(null);
+        
+        
         //      FIXME: Remove the : guide.setGuideEntries(null); WHY????
         guide.setGuideEntries(null);
         try {
@@ -109,22 +115,22 @@ public class CreateGuide implements IService {
             }
 
             // Get the Execution Degree
-            IExecutionDegree executionDegree = sp.getIPersistentExecutionDegree()
-                    .readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
-                            infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan()
-                                    .getInfoDegree().getSigla(),
-                            infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName(),
-                            Cloner.copyInfoExecutionYear2IExecutionYear(infoGuide
-                                    .getInfoExecutionDegree().getInfoExecutionYear()));
-
-            contributor = sp.getIPersistentContributor().readByContributorNumber(
-                    infoGuide.getInfoContributor().getContributorNumber());
-            person = sp.getIPessoaPersistente().lerPessoaPorUsername(
-                    infoGuide.getInfoPerson().getUsername());
-
-            guide.setExecutionDegree(executionDegree);
-            guide.setContributor(contributor);
-            guide.setPerson(person);
+//            IExecutionDegree executionDegree = sp.getIPersistentExecutionDegree()
+//                    .readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
+//                            infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan()
+//                                    .getInfoDegree().getSigla(),
+//                            infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName(),
+//                            Cloner.copyInfoExecutionYear2IExecutionYear(infoGuide
+//                                    .getInfoExecutionDegree().getInfoExecutionYear()));
+//
+//            contributor = sp.getIPersistentContributor().readByContributorNumber(
+//                    infoGuide.getInfoContributor().getContributorNumber());
+//            person = sp.getIPessoaPersistente().lerPessoaPorUsername(
+//                    infoGuide.getInfoPerson().getUsername());
+//
+//            guide.setExecutionDegree(executionDegree);
+//            guide.setContributor(contributor);
+//            guide.setPerson(person);
 
             // Write the new Guide
 
@@ -132,28 +138,35 @@ public class CreateGuide implements IService {
             Iterator iterator = infoGuide.getInfoGuideEntries().iterator();
             List guideEntries = new ArrayList();
             while (iterator.hasNext()) {
-                IGuideEntry guideEntry = Cloner.copyInfoGuideEntry2IGuideEntry((InfoGuideEntry) iterator
-                        .next());
+                IGuideEntry guideEntry = InfoGuideEntry.newDomainFromInfo((InfoGuideEntry) iterator.next());
                 sp.getIPersistentGuideEntry().simpleLockWrite(guideEntry);
                 guideEntries.add(guideEntry);
                 guideEntry.setGuide(guide);
             }
+            guide.setGuideEntries(guideEntries);
+            
+
 
             // Write the New Guide Situation
-            guideSituation = Cloner.copyInfoGuideSituation2IGuideSituation(infoGuideSituation);
+//            guideSituation = Cloner.copyInfoGuideSituation2IGuideSituation(infoGuideSituation);
+            
+            guideSituation = new GuideSituation(situationOfGuide,remarks,calendar.getTime(),guide,new State(State.ACTIVE));
             sp.getIPersistentGuideSituation().simpleLockWrite(guideSituation);
-            guideSituation.setGuide(guide);
-
+            
             guide.setGuideSituations(new ArrayList());
-
             guide.getGuideSituations().add(guideSituation);
+            
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
             throw newEx;
         }
 
-        InfoGuide result = Cloner.copyIGuide2InfoGuide(guide);
+        //InfoGuide result = Cloner.copyIGuide2InfoGuide(guide);
+        InfoGuide result = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide);
         result.setInfoGuideEntries(infoGuide.getInfoGuideEntries());
+        result.setInfoGuideSituation(infoGuideSituation);
+        result.setInfoGuideSituations(new ArrayList(1));
+        result.getInfoGuideSituations().add(infoGuideSituation);
 
         return result;
     }

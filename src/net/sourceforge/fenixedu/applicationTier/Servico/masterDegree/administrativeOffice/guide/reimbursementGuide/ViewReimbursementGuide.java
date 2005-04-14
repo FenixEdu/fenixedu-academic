@@ -52,8 +52,7 @@ public class ViewReimbursementGuide implements IService {
             if (reimbursementGuide == null) {
                 throw new NonExistingServiceException();
             }
-            InfoReimbursementGuide infoReimbursementGuide = Cloner
-                    .copyIReimbursementGuide2InfoReimbursementGuide(reimbursementGuide);
+            InfoReimbursementGuide infoReimbursementGuide = InfoReimbursementGuide.newInfoFromDomain(reimbursementGuide);
 
             List guideSituations = reimbursementGuide.getReimbursementGuideSituations();
             CollectionUtils.transform(guideSituations, new Transformer() {

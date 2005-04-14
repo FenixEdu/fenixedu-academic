@@ -12,9 +12,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NoChangeMadeServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.GuideSituation;
@@ -104,7 +105,7 @@ public class EditGuideInformation implements IService {
             throw newEx;
         }
 
-        infoGuide.setInfoContributor(Cloner.copyIContributor2InfoContributor(contributor));
+        infoGuide.setInfoContributor(InfoContributor.newInfoFromDomain(contributor));
 
         // Check the quantities of the Guide Entries
         // The items without a quantity or with a 0 quantity will be deleted if
@@ -247,8 +248,7 @@ public class EditGuideInformation implements IService {
                     Iterator guideEntryIterator = newInfoGuideEntries.iterator();
                     while (guideEntryIterator.hasNext()) {
 
-                        IGuideEntry guideEntry = Cloner
-                                .copyInfoGuideEntry2IGuideEntry((InfoGuideEntry) guideEntryIterator
+                        IGuideEntry guideEntry = InfoGuideEntry.newDomainFromInfo((InfoGuideEntry) guideEntryIterator
                                         .next());
 
                         // Reset id internal to allow persistence to write a new
@@ -342,7 +342,8 @@ public class EditGuideInformation implements IService {
             InfoGuide infoGuideTemp = new InfoGuide();
             infoGuideTemp.setInfoGuideEntries(newInfoGuideEntries);
 
-            result = Cloner.copyIGuide2InfoGuide(newGuide);
+//            result = Cloner.copyIGuide2InfoGuide(newGuide);
+            result = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(newGuide);
 
             result.setTotal(CalculateGuideTotal.calculate(result));
 

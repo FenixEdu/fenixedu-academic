@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
 import net.sourceforge.fenixedu.domain.IGratuityValues;
@@ -20,7 +20,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class ReadGratuitySituationByStudentCurricularPlanByGratuityValues implements IService {
 
@@ -50,8 +50,8 @@ public class ReadGratuitySituationByStudentCurricularPlanByGratuityValues implem
 
         InfoGratuitySituation infoGratuitySituation = null;
         if (gratuitySituation != null) {
-            infoGratuitySituation = Cloner
-                    .copyIGratuitySituation2InfoGratuitySituation(gratuitySituation);
+            infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
+                    .newInfoFromDomain(gratuitySituation);
         }
 
         return infoGratuitySituation;

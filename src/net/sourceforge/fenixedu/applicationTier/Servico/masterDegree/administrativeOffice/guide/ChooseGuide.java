@@ -12,8 +12,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuide;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide;
@@ -55,14 +55,19 @@ public class ChooseGuide implements IService {
         List result = new ArrayList();
         while (iterator.hasNext()) {
             IGuide guide = (IGuide) iterator.next();
-            InfoGuide infoGuide = Cloner.copyIGuide2InfoGuide(guide);
+            // InfoGuide infoGuide = Cloner.copyIGuide2InfoGuide(guide);
+            InfoGuide infoGuide = InfoGuideWithPersonAndExecutionDegreeAndContributor
+                    .newInfoFromDomain(guide);
             List infoReimbursementGuides = new ArrayList();
             if (guide.getReimbursementGuides() != null) {
                 Iterator iter = guide.getReimbursementGuides().iterator();
                 while (iter.hasNext()) {
                     IReimbursementGuide reimbursementGuide = (IReimbursementGuide) iter.next();
-                    InfoReimbursementGuide infoReimbursementGuide = Cloner
-                            .copyIReimbursementGuide2InfoReimbursementGuide(reimbursementGuide);
+                    InfoReimbursementGuide infoReimbursementGuide = InfoReimbursementGuide
+                            .newInfoFromDomain(reimbursementGuide);
+
+                    // InfoReimbursementGuide infoReimbursementGuide = Cloner
+                    // .copyIReimbursementGuide2InfoReimbursementGuide(reimbursementGuide);
                     infoReimbursementGuides.add(infoReimbursementGuide);
 
                 }
@@ -93,14 +98,16 @@ public class ChooseGuide implements IService {
         if (guide == null) {
             throw new NonExistingServiceException();
         }
-        InfoGuide infoGuide = Cloner.copyIGuide2InfoGuide(guide);
+        InfoGuide infoGuide = InfoGuideWithPersonAndExecutionDegreeAndContributor
+                .newInfoFromDomain(guide);
+
         List infoReimbursementGuides = new ArrayList();
         if (guide.getReimbursementGuides() != null) {
             Iterator iter = guide.getReimbursementGuides().iterator();
             while (iter.hasNext()) {
                 IReimbursementGuide reimbursementGuide = (IReimbursementGuide) iter.next();
-                InfoReimbursementGuide infoReimbursementGuide = Cloner
-                        .copyIReimbursementGuide2InfoReimbursementGuide(reimbursementGuide);
+                InfoReimbursementGuide infoReimbursementGuide = InfoReimbursementGuide
+                        .newInfoFromDomain(reimbursementGuide);
                 infoReimbursementGuides.add(infoReimbursementGuide);
 
             }
@@ -136,7 +143,7 @@ public class ChooseGuide implements IService {
         chainComparator.addComparator(versionComparator);
         Collections.sort(guides, chainComparator);
 
-        //	CollectionUtils.filter(guides,)
+        // CollectionUtils.filter(guides,)
         List result = getLatestVersions(guides);
 
         return result;
@@ -163,14 +170,16 @@ public class ChooseGuide implements IService {
 
             if ((numberAux == null) || (numberAux.intValue() != guide.getNumber().intValue())) {
                 numberAux = guide.getNumber();
-                InfoGuide infoGuide = Cloner.copyIGuide2InfoGuide(guide);
+                InfoGuide infoGuide = InfoGuideWithPersonAndExecutionDegreeAndContributor
+                        .newInfoFromDomain(guide);
+
                 List infoReimbursementGuides = new ArrayList();
                 if (guide.getReimbursementGuides() != null) {
                     Iterator iter = guide.getReimbursementGuides().iterator();
                     while (iter.hasNext()) {
                         IReimbursementGuide reimbursementGuide = (IReimbursementGuide) iter.next();
-                        InfoReimbursementGuide infoReimbursementGuide = Cloner
-                                .copyIReimbursementGuide2InfoReimbursementGuide(reimbursementGuide);
+                        InfoReimbursementGuide infoReimbursementGuide = InfoReimbursementGuide
+                                .newInfoFromDomain(reimbursementGuide);
                         infoReimbursementGuides.add(infoReimbursementGuide);
 
                     }
