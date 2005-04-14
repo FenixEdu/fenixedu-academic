@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.person.Sex;
 import net.sourceforge.fenixedu.util.EstadoCivil;
@@ -179,8 +178,8 @@ public class Person extends Person_Base {
     public EstadoCivil getEstadoCivil() {
         return estadoCivil;
     }
-    
-    /**
+
+     /**
      * Getter for property sexo.
      * 
      * @return Value of property sexo.
