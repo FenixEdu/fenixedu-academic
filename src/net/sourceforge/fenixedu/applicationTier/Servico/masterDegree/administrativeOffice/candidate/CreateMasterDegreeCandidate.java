@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.GenerateUsername;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ICandidateSituation;
@@ -36,7 +36,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * @author Joana Mota (jccm@rnl.ist.utl.pt) modified by Fernanda Quitério
- *  
+ * 
  */
 public class CreateMasterDegreeCandidate implements IService {
 
@@ -86,7 +86,7 @@ public class CreateMasterDegreeCandidate implements IService {
             ICandidateSituation candidateSituation = new CandidateSituation();
 
             sp.getIPersistentCandidateSituation().simpleLockWrite(candidateSituation);
-            //			sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
+            // sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
 
             // First candidate situation
             candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
@@ -143,7 +143,7 @@ public class CreateMasterDegreeCandidate implements IService {
             masterDegreeCandidate.setPerson(person);
 
             // Write the new Candidate
-            //sp.getIPersistentMasterDegreeCandidate().writeMasterDegreeCandidate(masterDegreeCandidate);
+            // sp.getIPersistentMasterDegreeCandidate().writeMasterDegreeCandidate(masterDegreeCandidate);
 
         } catch (ExistingPersistentException ex) {
             throw new ExistingServiceException(ex);
@@ -154,8 +154,8 @@ public class CreateMasterDegreeCandidate implements IService {
         }
 
         // Return the new Candidate
-        InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner
-                .copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
+        InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
+                .newInfoFromDomain(masterDegreeCandidate);
         return infoMasterDegreeCandidate;
     }
 }

@@ -308,6 +308,8 @@ public class InfoMasterDegreeCandidate extends InfoObject {
             setSpecializationArea(masterDegreeCandidate.getSpecializationArea());
             setSpecialization(masterDegreeCandidate.getSpecialization());
             setSubstituteOrder(masterDegreeCandidate.getSubstituteOrder());
+            setInfoCandidateSituation(InfoCandidateSituation.newInfoFromDomain(masterDegreeCandidate.getActiveCandidateSituation()));
+            setInfoExecutionDegree(InfoExecutionDegree.newInfoFromDomain(masterDegreeCandidate.getExecutionDegree()));
         }
     }
 

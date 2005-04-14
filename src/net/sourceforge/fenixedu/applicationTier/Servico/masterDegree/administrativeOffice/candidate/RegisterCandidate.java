@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.mast
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateRegistration;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
@@ -80,8 +81,8 @@ public class RegisterCandidate implements IService {
     public RegisterCandidate() {
     }
 
-    public InfoCandidateRegistration run(Integer candidateID, Integer branchID, Integer studentNumber, IUserView userView)
-            throws FenixServiceException {
+    public InfoCandidateRegistration run(Integer candidateID, Integer branchID, Integer studentNumber,
+            IUserView userView) throws FenixServiceException {
 
         ISuportePersistente sp = null;
 
@@ -95,9 +96,9 @@ public class RegisterCandidate implements IService {
                 student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(studentNumber,
                         TipoCurso.MESTRADO_OBJ);
 
-                //                if (student != null) {
-                //                    throw new ExistingServiceException();
-                //                }
+                // if (student != null) {
+                // throw new ExistingServiceException();
+                // }
             }
 
             masterDegreeCandidate = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate()
@@ -110,23 +111,23 @@ public class RegisterCandidate implements IService {
                     throw new ExistingServiceException();
                 }
 
-                //                List studentCurricularPlans =
+                // List studentCurricularPlans =
                 // student.getStudentCurricularPlans();
-                //                for (Iterator iter = studentCurricularPlans.iterator();
+                // for (Iterator iter = studentCurricularPlans.iterator();
                 // iter.hasNext();) {
-                //                    IStudentCurricularPlan studentCurricularPlan =
+                // IStudentCurricularPlan studentCurricularPlan =
                 // (IStudentCurricularPlan) iter.next();
-                //                    if (studentCurricularPlan.getCurrentState().equals(
-                //                            StudentCurricularPlanState.ACTIVE_OBJ)) {
-                //                        if
+                // if (studentCurricularPlan.getCurrentState().equals(
+                // StudentCurricularPlanState.ACTIVE_OBJ)) {
+                // if
                 // (masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan()
-                //                                .getIdInternal().equals(
-                //                                        studentCurricularPlan.getDegreeCurricularPlan().getIdInternal()))
+                // .getIdInternal().equals(
+                // studentCurricularPlan.getDegreeCurricularPlan().getIdInternal()))
                 // {
-                //                            throw new ExistingServiceException();
-                //                        }
-                //                    }
-                //                }
+                // throw new ExistingServiceException();
+                // }
+                // }
+                // }
             }
 
             if (!validSituation(masterDegreeCandidate.getActiveCandidateSituation())) {
@@ -193,21 +194,22 @@ public class RegisterCandidate implements IService {
                 }
             }
 
-            //            IStudentCurricularPlan studentCurricularPlanOld =
+            // IStudentCurricularPlan studentCurricularPlanOld =
             // sp.getIStudentCurricularPlanPersistente()
-            //                    .readActiveStudentCurricularPlan(student.getNumber(),
+            // .readActiveStudentCurricularPlan(student.getNumber(),
             // TipoCurso.MESTRADO_OBJ);
             //
-            //            if ((studentCurricularPlanOld != null)
-            //                    && (studentCurricularPlanOld.getCurrentState()
-            //                            .equals(StudentCurricularPlanState.ACTIVE_OBJ))) {
-            //                throw new
+            // if ((studentCurricularPlanOld != null)
+            // && (studentCurricularPlanOld.getCurrentState()
+            // .equals(StudentCurricularPlanState.ACTIVE_OBJ))) {
+            // throw new
             // ActiveStudentCurricularPlanAlreadyExistsServiceException();
-            //            }
+            // }
 
             IStudentCurricularPlan existingStudentCurricularPlan = sp
                     .getIStudentCurricularPlanPersistente().readByStudentDegreeCurricularPlanAndState(
-                            student, masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan(),
+                            student,
+                            masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan(),
                             StudentCurricularPlanState.ACTIVE_OBJ);
             if (existingStudentCurricularPlan != null) {
                 throw new ExistingServiceException();
@@ -337,14 +339,14 @@ public class RegisterCandidate implements IService {
                 totalValue = new Double(0);
             }
 
-            //            else if
+            // else if
             // (studentCurricularPlan.getSpecialization().equals(Specialization.ESPECIALIZACAO_TYPE))
             // {
-            //                totalValue =
+            // totalValue =
             // calculateTotalValueForSpecialization(masterDegreeCandidate.getExecutionDegree().getExecutionYear(),
             // gratuityValues,
-            //                        studentCurricularPlan);
-            //            }
+            // studentCurricularPlan);
+            // }
 
             if (totalValue == null) {
                 throw new GratuityValuesNotDefinedServiceException(
@@ -362,8 +364,8 @@ public class RegisterCandidate implements IService {
         }
 
         InfoCandidateRegistration infoCandidateRegistration = new InfoCandidateRegistration();
-        infoCandidateRegistration.setInfoMasterDegreeCandidate(Cloner
-                .copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate));
+        infoCandidateRegistration.setInfoMasterDegreeCandidate(InfoMasterDegreeCandidateWithInfoPerson
+                .newInfoFromDomain(masterDegreeCandidate));
         infoCandidateRegistration.setInfoStudentCurricularPlan(Cloner
                 .copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlanResult));
         infoCandidateRegistration.setEnrolments(new ArrayList());
@@ -420,10 +422,10 @@ public class RegisterCandidate implements IService {
         Double annualValue = gratuityValues.getAnualValue();
 
         if ((annualValue != null) && (annualValue.doubleValue() != 0)) {
-            //we have data to calculate using annual value
+            // we have data to calculate using annual value
             totalValue = annualValue;
         } else {
-            //we have to use the components (scholarship + final proof)
+            // we have to use the components (scholarship + final proof)
             // information
             totalValue = new Double(gratuityValues.getScholarShipValue().doubleValue()
                     + (gratuityValues.getFinalProofValue() == null ? 0 : gratuityValues

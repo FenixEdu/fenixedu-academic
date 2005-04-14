@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateRegistration;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
@@ -44,8 +45,9 @@ public class GetCandidateRegistrationInformation implements IService {
 
             infoCandidateRegistration = new InfoCandidateRegistration();
 
-            infoCandidateRegistration.setInfoMasterDegreeCandidate(Cloner
-                    .copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate));
+            infoCandidateRegistration
+                    .setInfoMasterDegreeCandidate(InfoMasterDegreeCandidateWithInfoPerson
+                            .newInfoFromDomain(masterDegreeCandidate));
             infoCandidateRegistration.setInfoStudentCurricularPlan(Cloner
                     .copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
 

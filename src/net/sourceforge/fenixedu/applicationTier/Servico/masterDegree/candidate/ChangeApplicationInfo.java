@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePersonalInfo;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
@@ -40,7 +41,8 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ChangeApplicationInfo implements IService {
 
     public InfoMasterDegreeCandidate run(InfoMasterDegreeCandidate newMasterDegreeCandidate,
-            InfoPerson infoPerson, IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
+            InfoPerson infoPerson, IUserView userView) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
         ISuportePersistente sp = null;
         IMasterDegreeCandidate existingMasterDegreeCandidate = null;
@@ -93,8 +95,10 @@ public class ChangeApplicationInfo implements IService {
         try {
             IPersistentCandidateSituation candidateSituationDAO = sp.getIPersistentCandidateSituation();
 
-            infoMasterDegreeCandidate = Cloner
-                    .copyIMasterDegreeCandidate2InfoMasterDegreCandidate(existingMasterDegreeCandidate);
+            infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
+                    .newInfoFromDomain(existingMasterDegreeCandidate);
+            infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
+                    .newInfoFromDomain(existingMasterDegreeCandidate);
 
             List situations = new ArrayList();
             ICandidateView candidateView = null;
@@ -106,7 +110,7 @@ public class ChangeApplicationInfo implements IService {
                             true);
             candidateSituationFromBD.setValidation(new State(State.INACTIVE));
 
-            //Create the New Candidate Situation
+            // Create the New Candidate Situation
             ICandidateSituation activeCandidateSituation = createActiveSituation(
                     existingMasterDegreeCandidate, candidateSituationDAO);
 

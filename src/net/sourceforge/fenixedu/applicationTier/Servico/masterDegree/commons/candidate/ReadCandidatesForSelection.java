@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ICandidateSituation;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
@@ -51,7 +51,7 @@ public class ReadCandidatesForSelection implements IService {
         List result = new ArrayList();
         while (candidateIterator.hasNext()) {
             ICandidateSituation candidateSituation = (ICandidateSituation) candidateIterator.next();
-            result.add(Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(candidateSituation
+            result.add(InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(candidateSituation
                     .getMasterDegreeCandidate()));
         }
 

@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ICandidateSituation;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
@@ -60,8 +61,8 @@ public class ReadPersonCandidates implements IService {
         List result = new ArrayList();
         while (iterator.hasNext()) {
             IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) iterator.next();
-            InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner
-                    .copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
+            InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
+                    .newInfoFromDomain(masterDegreeCandidate);
             Iterator situationIterator = masterDegreeCandidate.getSituations().iterator();
             List situations = new ArrayList();
             while (situationIterator.hasNext()) {

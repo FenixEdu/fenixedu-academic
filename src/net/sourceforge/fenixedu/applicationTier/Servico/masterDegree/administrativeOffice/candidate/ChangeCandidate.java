@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.ICandidateSituation;
@@ -46,7 +47,7 @@ public class ChangeCandidate implements IService {
         ISuportePersistente sp = null;
         IPerson person = null;
         IMasterDegreeCandidate masterDegreeCandidate = null;
-        //		IPerson candidatePerson = null;
+        // IPerson candidatePerson = null;
         try {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
@@ -65,17 +66,17 @@ public class ChangeCandidate implements IService {
             person.setNumeroDocumentoIdentificacao(newCandidate.getInfoPerson()
                     .getNumeroDocumentoIdentificacao());
 
-            //        } catch (ExistingPersistentException ex) {
-            //            throw new ExistingServiceException(ex);
-            //        }
+            // } catch (ExistingPersistentException ex) {
+            // throw new ExistingServiceException(ex);
+            // }
 
             // Get new Country
             ICountry nationality = null;
             if ((newCandidate.getInfoPerson().getInfoPais() != null) /*
-                                                                      * &&
-                                                                      * (person.getPais() !=
-                                                                      * null)
-                                                                      */
+                                                                         * &&
+                                                                         * (person.getPais() !=
+                                                                         * null)
+                                                                         */
             ) {
                 nationality = sp.getIPersistentCountry().readCountryByNationality(
                         newCandidate.getInfoPerson().getInfoPais().getNationality());
@@ -130,27 +131,27 @@ public class ChangeCandidate implements IService {
                     newCandidate.getInfoCandidateSituation().getSituation())) {
 
                 // Change the Active Situation
-                //			Iterator iterator =
+                // Iterator iterator =
                 // masterDegreeCandidate.getSituations().iterator();
-                //			while(iterator.hasNext()) {
-                //				ICandidateSituation candidateSituationTemp =
+                // while(iterator.hasNext()) {
+                // ICandidateSituation candidateSituationTemp =
                 // (ICandidateSituation) iterator.next();
-                //				if (candidateSituationTemp.getValidation().equals(new
+                // if (candidateSituationTemp.getValidation().equals(new
                 // State(State.ACTIVE))){
                 //					
-                //					ICandidateSituation csTemp = new CandidateSituation();
-                //					csTemp.setIdInternal(candidateSituationTemp.getIdInternal());
-                //					ICandidateSituation candidateSituationFromBD =
+                // ICandidateSituation csTemp = new CandidateSituation();
+                // csTemp.setIdInternal(candidateSituationTemp.getIdInternal());
+                // ICandidateSituation candidateSituationFromBD =
                 // (ICandidateSituation)
                 // sp.getIPersistentCandidateSituation().readByOId(csTemp,
                 // true);
-                //					candidateSituationFromBD.setValidation(new
+                // candidateSituationFromBD.setValidation(new
                 // State(State.INACTIVE));
                 //					
                 //					
                 //					
-                //				}
-                //			}
+                // }
+                // }
 
                 ICandidateSituation candidateSituationFromBD = (ICandidateSituation) sp
                         .getIPersistentCandidateSituation().readByOID(CandidateSituation.class,
@@ -184,8 +185,8 @@ public class ChangeCandidate implements IService {
                 .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
                         masterDegreeCandidate.getIdInternal());
 
-        InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner
-                .copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidateFromBD);
+        InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
+                .newInfoFromDomain(masterDegreeCandidateFromBD);
 
         List situationsList = new ArrayList();
         Iterator iterator = masterDegreeCandidateFromBD.getSituations().iterator();

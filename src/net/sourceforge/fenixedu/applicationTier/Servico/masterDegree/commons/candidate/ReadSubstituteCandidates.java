@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -41,9 +41,8 @@ public class ReadSubstituteCandidates implements IService {
                     IMasterDegreeCandidate masterDegreeCandidateToWrite = (IMasterDegreeCandidate) sp
                             .getIPersistentMasterDegreeCandidate().readByOID(
                                     MasterDegreeCandidate.class, idInternal);
-                    result
-                            .add(Cloner
-                                    .copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidateToWrite));
+                    result.add(InfoMasterDegreeCandidateWithInfoPerson
+                            .newInfoFromDomain(masterDegreeCandidateToWrite));
                 }
             }
 

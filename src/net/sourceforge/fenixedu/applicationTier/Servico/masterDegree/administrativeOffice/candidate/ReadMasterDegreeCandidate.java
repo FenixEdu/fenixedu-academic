@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ICandidateSituation;
@@ -55,8 +56,8 @@ public class ReadMasterDegreeCandidate implements IService {
         if (masterDegreeCandidate == null)
             return null;
         Iterator iterator = masterDegreeCandidate.getSituations().iterator();
-        InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner
-                .copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
+        InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
+                .newInfoFromDomain(masterDegreeCandidate);
         List situations = new ArrayList();
         while (iterator.hasNext()) {
             InfoCandidateSituation infoCandidateSituation = Cloner
@@ -98,8 +99,8 @@ public class ReadMasterDegreeCandidate implements IService {
         if (masterDegreeCandidate == null)
             return null;
         Iterator iterator = masterDegreeCandidate.getSituations().iterator();
-        InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner
-                .copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
+        InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
+                .newInfoFromDomain(masterDegreeCandidate);
         List situations = new ArrayList();
         while (iterator.hasNext()) {
             InfoCandidateSituation infoCandidateSituation = Cloner

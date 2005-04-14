@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ICandidateSituation;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
@@ -47,8 +48,8 @@ public class GetCandidatesByID implements IService {
             throw newEx;
         }
 
-        InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner
-                .copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
+        InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
+                .newInfoFromDomain(masterDegreeCandidate);
         Iterator situationIterator = masterDegreeCandidate.getSituations().iterator();
         List situations = new ArrayList();
         while (situationIterator.hasNext()) {

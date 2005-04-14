@@ -70,9 +70,6 @@ public class ReadDegreeCandidates implements IService {
             // For all candidates ...
             IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) iterator.next();
 
-            //CLONER
-            //InfoMasterDegreeCandidate infoMasterDegreeCandidate =
-            // Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
             InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
                     .newInfoFromDomain(masterDegreeCandidate);
             // Copy all Situations
