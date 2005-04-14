@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.person.Sex;
