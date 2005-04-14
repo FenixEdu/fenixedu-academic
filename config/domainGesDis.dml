@@ -102,7 +102,7 @@ class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.f
 	Integer minimumValueForAcumulatedEnrollments;
 }
 
-/** NEXT
+/* DONE */
 class net.sourceforge.fenixedu.domain.Curriculum extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPersonWhoAltered;
 	Integer keyCurricularCourse;
@@ -540,6 +540,14 @@ relation CurricularCourseCurricularCourseScope {
 	net.sourceforge.fenixedu.domain.CurricularCourseScope playsRole scopes {
 		multiplicity *;
 	}
+}
+
+/* DONE */
+relation CurriculumPerson {
+	net.sourceforge.fenixedu.domain.Curriculum playsRole associatedAlteredCurriculums {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole personWhoAltered;
 }
 
 /* ************************************

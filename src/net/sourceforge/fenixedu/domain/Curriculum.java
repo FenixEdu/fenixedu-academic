@@ -5,39 +5,12 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Date;
-
 /**
  * 
  * @author EP 15 - fjgc
  * @author João Mota
  */
-public class Curriculum extends DomainObject implements ICurriculum {
-    protected String generalObjectives;
-
-    protected String operacionalObjectives;
-
-    protected String program;
-
-    protected String generalObjectivesEn;
-
-    protected String operacionalObjectivesEn;
-
-    protected String programEn;
-
-    protected Date lastModificationDate;
-
-    protected ICurricularCourse curricularCourse;
-
-    private Integer keyCurricularCourse;
-
-    protected IPerson personWhoAltered;
-
-    private Integer keyPersonWhoAltered;
-
-    /**
-     * @return
-     */
+public class Curriculum extends Curriculum_Base {
 
     /** Creates a new instance of Curriculum */
     public Curriculum() {
@@ -70,46 +43,6 @@ public class Curriculum extends DomainObject implements ICurriculum {
         setCurricularCourse(curricularCourse);
     }
 
-    public Integer getKeyCurricularCourse() {
-        return keyCurricularCourse;
-    }
-
-    public void setKeyCurricularCourse(Integer keyExecutionCourse) {
-        this.keyCurricularCourse = keyExecutionCourse;
-    }
-
-    public String getGeneralObjectives() {
-        return generalObjectives;
-    }
-
-    public String getOperacionalObjectives() {
-        return operacionalObjectives;
-    }
-
-    public String getProgram() {
-        return program;
-    }
-
-    public ICurricularCourse getCurricularCourse() {
-        return curricularCourse;
-    }
-
-    public void setGeneralObjectives(String generalObjectives) {
-        this.generalObjectives = generalObjectives;
-    }
-
-    public void setOperacionalObjectives(String operacionalObjectives) {
-        this.operacionalObjectives = operacionalObjectives;
-    }
-
-    public void setProgram(String program) {
-        this.program = program;
-    }
-
-    public void setCurricularCourse(ICurricularCourse curricularCourse) {
-        this.curricularCourse = curricularCourse;
-    }
-
     public boolean equals(Object obj) {
         boolean result = false;
         if (obj instanceof ICurriculum) {
@@ -135,85 +68,4 @@ public class Curriculum extends DomainObject implements ICurriculum {
         result += "]";
         return result;
     }
-
-    /**
-     * @return
-     */
-    public String getGeneralObjectivesEn() {
-        return generalObjectivesEn;
-    }
-
-    /**
-     * @return
-     */
-    public String getOperacionalObjectivesEn() {
-        return operacionalObjectivesEn;
-    }
-
-    /**
-     * @return
-     */
-    public String getProgramEn() {
-        return programEn;
-    }
-
-    /**
-     * @param string
-     */
-    public void setGeneralObjectivesEn(String string) {
-        generalObjectivesEn = string;
-    }
-
-    /**
-     * @param string
-     */
-    public void setOperacionalObjectivesEn(String string) {
-        operacionalObjectivesEn = string;
-    }
-
-    /**
-     * @param string
-     */
-    public void setProgramEn(String string) {
-        programEn = string;
-    }
-
-    public Date getLastModificationDate() {
-        return lastModificationDate;
-    }
-
-    public void setLastModificationDate(Date lastModificationDate) {
-        this.lastModificationDate = lastModificationDate;
-    }
-
-    /**
-     * @return Returns the keyPersonWhoAltered.
-     */
-    public Integer getKeyPersonWhoAltered() {
-        return keyPersonWhoAltered;
-    }
-
-    /**
-     * @param keyPersonWhoAltered
-     *            The keyPersonWhoAltered to set.
-     */
-    public void setKeyPersonWhoAltered(Integer keyPersonWhoAltered) {
-        this.keyPersonWhoAltered = keyPersonWhoAltered;
-    }
-
-    /**
-     * @return Returns the personWhoAltered.
-     */
-    public IPerson getPersonWhoAltered() {
-        return personWhoAltered;
-    }
-
-    /**
-     * @param personWhoAltered
-     *            The personWhoAltered to set.
-     */
-    public void setPersonWhoAltered(IPerson personWhoAltered) {
-        this.personWhoAltered = personWhoAltered;
-    }
-
 }

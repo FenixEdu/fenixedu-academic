@@ -189,6 +189,19 @@ class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.f
 }
 
 
+class net.sourceforge.fenixedu.domain.Curriculum extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyPersonWhoAltered;
+	Integer keyCurricularCourse;
+	Date lastModificationDate;
+	String generalObjectives;
+	String operacionalObjectives;
+	String operacionalObjectivesEn;
+	String programEn;
+	String generalObjectivesEn;
+	String program;
+}
+
+
 class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourceforge.fenixedu.domain.DomainObject {
     String concreteClassForStudentCurricularPlans;
     Integer degreeDuration;
@@ -1012,7 +1025,6 @@ class net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope ext
 
 external class net.sourceforge.fenixedu.domain.Attends;
 external class net.sourceforge.fenixedu.domain.CurricularCourseScope;
-external class net.sourceforge.fenixedu.domain.Curriculum;
 external class net.sourceforge.fenixedu.domain.Degree;
 external class net.sourceforge.fenixedu.domain.DepartmentCourse;
 external class net.sourceforge.fenixedu.domain.EvaluationMethod;
@@ -1141,6 +1153,14 @@ relation CurricularCourseUniversity {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.University playsRole university;
+}
+
+
+relation CurriculumPerson {
+	net.sourceforge.fenixedu.domain.Curriculum playsRole associatedAlteredCurriculums {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole personWhoAltered;
 }
 
 
