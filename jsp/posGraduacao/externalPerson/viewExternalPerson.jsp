@@ -24,6 +24,14 @@
 		</tr>
 		<tr>
 			<th align="left">
+				<bean:message key="label.person.sex"/>&nbsp;
+			</th>
+			<td align="left">
+				<bean:write name="externalPerson" property="infoPerson.sex"/>
+			</td>
+		</tr>		
+		<tr>
+			<th align="left">
 				<bean:message key="label.masterDegree.administrativeOffice.externalPersonWorkLocation"/>:&nbsp;
 			</th>
 			<td align="left">

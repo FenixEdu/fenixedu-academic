@@ -28,6 +28,17 @@
 
 		<tr>
 			<td align="left">
+				<bean:message key="label.person.sex"/>&nbsp;
+			</td>
+            <td align="left">
+                <html:select property="sex">
+                    <html:options collection="<%= SessionConstants.SEX_LIST_KEY %>" property="value" labelProperty="label"/>
+                 </html:select>          
+            </td>			
+		</tr>
+
+		<tr>
+			<td align="left">
 				<bean:message key="label.masterDegree.administrativeOffice.externalPersonWorkLocation"/>:&nbsp;		
 			</td>
 			<td align="left">

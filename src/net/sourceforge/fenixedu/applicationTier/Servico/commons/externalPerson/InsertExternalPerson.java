@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IWorkLocation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WorkLocation;
+import net.sourceforge.fenixedu.domain.person.Sex;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -28,7 +29,7 @@ public class InsertExternalPerson implements IService {
     public InsertExternalPerson() {
     }
 
-    public void run(String name, String address, Integer workLocationID, String phone, String mobile,
+    public void run(String name, String sex, String address, Integer workLocationID, String phone, String mobile,
             String homepage, String email) throws FenixServiceException {
         IExternalPerson externalPerson = null;
         IExternalPerson storedExternalPerson = null;
@@ -56,6 +57,7 @@ public class InsertExternalPerson implements IService {
             person = new Person();
 
             person.setNome(name);
+            person.setSex(Sex.valueOf(sex));
             person.setMorada(address);
             person.setTelefone(phone);
             person.setTelemovel(mobile);
