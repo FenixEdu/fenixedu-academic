@@ -831,6 +831,36 @@ class net.sourceforge.fenixedu.domain.Room extends net.sourceforge.fenixedu.doma
 	"
 }
 
+class net.sourceforge.fenixedu.domain.RoomOccupation extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer weekOfQuinzenalStart;
+	Integer keyRoom;
+	Integer frequency;
+	Integer keyPeriod;
+	
+	interface"
+	public net.sourceforge.fenixedu.util.DiaSemana getDayOfWeek();
+	
+	public void setDayOfWeek(net.sourceforge.fenixedu.util.DiaSemana semana);
+
+	public java.util.Calendar getEndTime();
+	
+	public void setEndTime(java.util.Calendar calendar);
+
+	public java.util.Calendar getStartTime();
+
+	public void setStartTime(java.util.Calendar calendar);
+
+	public net.sourceforge.fenixedu.domain.IPeriod getPeriod();
+
+	public void setPeriod(net.sourceforge.fenixedu.domain.IPeriod period);
+	
+	public boolean roomOccupationForDateAndTime(net.sourceforge.fenixedu.domain.IRoomOccupation roomOccupation);
+	
+	public boolean roomOccupationForDateAndTime(net.sourceforge.fenixedu.domain.IPeriod period, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week, net.sourceforge.fenixedu.domain.IRoom room);
+	
+	public boolean roomOccupationForDateAndTime(net.sourceforge.fenixedu.domain.IPeriod period, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week);
+	"
+}
 
 class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer availabilityFinal;
