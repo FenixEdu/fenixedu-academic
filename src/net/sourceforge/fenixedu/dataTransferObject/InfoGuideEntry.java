@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.IGuideEntry;
 import net.sourceforge.fenixedu.util.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
@@ -172,5 +173,28 @@ public class InfoGuideEntry extends InfoObject {
         }
 
         return infoGuideEntry;
+    }
+    
+    public void copyToDomain(InfoGuideEntry infoGuideEntry, IGuideEntry guideEntry) {
+        super.copyToDomain(infoGuideEntry, guideEntry);
+        
+        guideEntry.setDescription(infoGuideEntry.getDescription());
+        guideEntry.setDocumentType(infoGuideEntry.getDocumentType());
+        guideEntry.setGraduationType(infoGuideEntry.getGraduationType());
+//        guideEntry.setGuide(null);
+        guideEntry.setPrice(infoGuideEntry.getPrice());
+        guideEntry.setQuantity(infoGuideEntry.getQuantity());
+//        guideEntry.setReimbursementGuideEntries(null);
+        
+    }
+
+    public static IGuideEntry newDomainFromInfo(InfoGuideEntry infoGuideEntry) {
+        IGuideEntry guideEntry = null;
+
+        if (infoGuideEntry != null) {
+            guideEntry = new GuideEntry();
+            infoGuideEntry.copyToDomain(infoGuideEntry, guideEntry);
+        }
+        return guideEntry;
     }
 }
