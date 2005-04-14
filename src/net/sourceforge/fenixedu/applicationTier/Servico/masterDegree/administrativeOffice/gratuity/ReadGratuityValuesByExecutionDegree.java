@@ -9,6 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValuesWithInfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -57,7 +58,7 @@ public class ReadGratuityValuesByExecutionDegree implements IService {
 
         InfoGratuityValues infoGratuityValues = null;
         if (gratuityValues != null) {
-            infoGratuityValues = Cloner.copyIGratuityValues2InfoGratuityValues(gratuityValues);
+            infoGratuityValues = InfoGratuityValuesWithInfoExecutionDegree.newInfoFromDomain(gratuityValues);
 
             infoPaymentPhases = new ArrayList();
             CollectionUtils.collect(gratuityValues.getPaymentPhaseList(), new Transformer() {
