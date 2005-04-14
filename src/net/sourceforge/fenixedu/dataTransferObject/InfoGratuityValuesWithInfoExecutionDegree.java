@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.IGratuityValues;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class InfoGratuityValuesWithInfoExecutionDegree extends InfoGratuityValues {
 
@@ -20,8 +20,8 @@ public class InfoGratuityValuesWithInfoExecutionDegree extends InfoGratuityValue
     public void copyFromDomain(IGratuityValues gratuityValues) {
         super.copyFromDomain(gratuityValues);
         if (gratuityValues != null) {
-            setInfoExecutionDegree(InfoExecutionDegree.newInfoFromDomain(gratuityValues
-                    .getExecutionDegree()));
+            setInfoExecutionDegree(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
+                    .newInfoFromDomain(gratuityValues.getExecutionDegree()));
         }
     }
 

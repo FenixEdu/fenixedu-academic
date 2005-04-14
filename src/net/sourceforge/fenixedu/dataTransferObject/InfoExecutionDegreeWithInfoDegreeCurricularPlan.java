@@ -28,6 +28,7 @@ public class InfoExecutionDegreeWithInfoDegreeCurricularPlan extends InfoExecuti
     public static InfoExecutionDegree newInfoFromDomain(IExecutionDegree executionDegree) {
         InfoExecutionDegreeWithInfoDegreeCurricularPlan infoExecutionDegree = null;
         if (executionDegree != null) {
+            infoExecutionDegree = new InfoExecutionDegreeWithInfoDegreeCurricularPlan();
             infoExecutionDegree.copyFromDomain(executionDegree);
         }
         return infoExecutionDegree;
