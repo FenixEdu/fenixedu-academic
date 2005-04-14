@@ -6,10 +6,11 @@
 
 <logic:present name="siteView"> 
 <bean:define id="announcement" name="siteView" property="component"/>
+<bean:define id="information" name="announcement" property="information"/>
 
 <html:form action="/editAnnouncement" focus="title" >
 <html:hidden property="page" value="1"/>
-<html:hidden property="information" />
+<html:hidden property="information"/>
 
 <strong><bean:message key="label.title" /></strong>
 <br />
@@ -27,7 +28,7 @@
 <strong><bean:message key="label.information" /></strong>
 <br />
 
-<script language="JavaScript" type="text/javascript"> 
+		<script language="JavaScript" type="text/javascript"> 
 		<!--
 		initEditor();		
 		//-->
@@ -39,7 +40,7 @@
 		<!--
 		writeTextEditor(200, 200, document.forms[0].information.value);		
 		//-->
-</script>
+		</script>
 
 <!--<html:textarea rows="10" cols="60" name="announcement" property="information" ></html:textarea>//-->
 <span class="error" ><html:errors property="information" /></span>

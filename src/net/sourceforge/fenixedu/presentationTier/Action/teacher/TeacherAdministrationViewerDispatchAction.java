@@ -227,13 +227,14 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         //retrieve announcement
         Integer announcementCode = getAnnouncementCode(request);
         ISiteComponent announcementComponent = new InfoAnnouncement();
-        readSiteView(request, announcementComponent, null, announcementCode, null);
+        SiteView siteView = readSiteView(request, announcementComponent, null, announcementCode, null);
         
-        if(request.getAttribute("announcementTextFlag")!=null){
-            SiteView siteView = (SiteView) request.getAttribute("siteView");
+        DynaActionForm actionForm = (DynaActionForm)form;
+        actionForm.set("information", ((InfoAnnouncement)siteView.getComponent()).getInformation());
+        
+        if(request.getAttribute("announcementTextFlag")!=null)
             ((InfoAnnouncement)siteView.getComponent()).setInformation((String) request.getAttribute("announcementTextFlag"));
-        }
-        
+         
         return mapping.findForward("editAnnouncement");
     }
     
