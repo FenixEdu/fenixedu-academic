@@ -786,13 +786,7 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 	String freguesiaMorada;
 
 	interface "
-    public java.util.List getManageableDepartmentCredits();
-
-    public void setManageableDepartmentCredits(final java.util.List manageableDepartmentCredits);
-
     public net.sourceforge.fenixedu.util.EstadoCivil getEstadoCivil();
-
-    public ICountry getPais();
 
     public java.util.Collection getPersonRoles();
 
@@ -802,17 +796,11 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 
     public void setEstadoCivil(net.sourceforge.fenixedu.util.EstadoCivil estadoCivil);
 
-    public void setPais(ICountry pais);
-
     public void setPersonRoles(java.util.Collection personRoles);
 
     public void setSex(net.sourceforge.fenixedu.domain.person.Sex sex);
 
     public void setTipoDocumentoIdentificacao(net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao tipoDocumentoIdentificacao);
-
-    public java.util.List getAdvisories();
-
-    public void setAdvisories(java.util.List list);
 
     public String getSlideName();
     "
@@ -1026,6 +1014,7 @@ class net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope ext
 external class net.sourceforge.fenixedu.domain.Attends;
 external class net.sourceforge.fenixedu.domain.CurricularCourseScope;
 external class net.sourceforge.fenixedu.domain.Degree;
+external class net.sourceforge.fenixedu.domain.Department;
 external class net.sourceforge.fenixedu.domain.DepartmentCourse;
 external class net.sourceforge.fenixedu.domain.EvaluationMethod;
 external class net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -1371,6 +1360,34 @@ relation OldInquiriesTeachersResTeacher {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+
+relation PersonAdvisory {
+	net.sourceforge.fenixedu.domain.Person playsRole associatedPersons {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Advisory playsRole advisories {
+		multiplicity *;
+	}
+}
+
+
+relation PersonCountry {
+	net.sourceforge.fenixedu.domain.Person playsRole associatedPersons {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Country playsRole pais;
+}
+
+
+relation PersonDepartment {
+	net.sourceforge.fenixedu.domain.Person playsRole associatedPersons {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Department playsRole manageableDepartmentCredits {
+		multiplicity *;
+	}
 }
 
 

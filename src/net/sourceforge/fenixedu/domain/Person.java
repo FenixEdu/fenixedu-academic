@@ -10,40 +10,13 @@ import net.sourceforge.fenixedu.util.EstadoCivil;
 import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 public class Person extends Person_Base {
-
 	private Boolean availableEmail = Boolean.FALSE;
-
     private Boolean availableWebSite = Boolean.FALSE;
-
     private EstadoCivil estadoCivil;
-
-    private ICountry pais;
-
     private Collection personRoles;
-
     private Sex sex;
-
     private TipoDocumentoIdentificacao tipoDocumentoIdentificacao;
-
-    private List manageableDepartmentCredits;
-
-    private List advisories;
-
     private Boolean availablePhoto = Boolean.FALSE;
-
-    /**
-     * @return
-     */
-    public List getManageableDepartmentCredits() {
-        return this.manageableDepartmentCredits;
-    }
-
-    /**
-     * @param manageableDepartmentCredits
-     */
-    public void setManageableDepartmentCredits(final List manageableDepartmentCredits) {
-        this.manageableDepartmentCredits = manageableDepartmentCredits;
-    }
 
     public Person() {
 		super();
@@ -208,17 +181,7 @@ public class Person extends Person_Base {
         return estadoCivil;
     }
 
-    /**
-     * Getter for property pais.
-     * 
-     * @return Value of property pais.
-     *  
-     */
-    public ICountry getPais() {
-        return pais;
-    }
-
-    /**
+     /**
      * @return List
      */
     public Collection getPersonRoles() {
@@ -254,17 +217,6 @@ public class Person extends Person_Base {
      */
     public void setEstadoCivil(EstadoCivil estadoCivil) {
         this.estadoCivil = estadoCivil;
-    }
-
-    /**
-     * Setter for property pais.
-     * 
-     * @param pais
-     *            New value of property pais.
-     *  
-     */
-    public void setPais(ICountry pais) {
-        this.pais = pais;
     }
 
     /**
@@ -308,21 +260,7 @@ public class Person extends Person_Base {
 		stringBuilder.append("]");
         return stringBuilder.toString();
     }
-
-    /**
-     * @return
-     */
-    public List getAdvisories() {
-        return advisories;
-    }
-
-    /**
-     * @param list
-     */
-    public void setAdvisories(List list) {
-        advisories = list;
-    }
-
+   
     /**
      * @return Returns the availableEmail.
      */

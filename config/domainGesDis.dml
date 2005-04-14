@@ -115,6 +115,7 @@ class net.sourceforge.fenixedu.domain.Curriculum extends net.sourceforge.fenixed
 	String program;
 }
 
+/* OTHER GROUP */
 class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionYear;
 	Date beginDate;
@@ -124,6 +125,7 @@ class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fe
 	Integer semester;
 }
 
+/* OTHER GROUP */
 class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.fenixedu.domain.DomainObject {
 	Date beginDate;
 	Date endDate;
@@ -323,6 +325,7 @@ relation CurricularCourseCurriculum {
 	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
 }
 
+/* OTHER GROUP */
 relation ExecutionPeriodExecutionCourse {
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole associatedExecutionCourses {
 		multiplicity *;
@@ -330,6 +333,7 @@ relation ExecutionPeriodExecutionCourse {
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
 }
 
+/* OTHER GROUP */
 relation ExecutionYearExecutionPeriod {
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole associatedExecutionPeriods {
 		multiplicity *;
@@ -426,7 +430,8 @@ relation LessonShift {
 	net.sourceforge.fenixedu.domain.Shift playsRole shift;
 }
 
-relation LessonExecutionPeriod {
+/* OTHER GROUP */
+relation ExecutionPeriodLesson {
 	net.sourceforge.fenixedu.domain.Lesson playsRole associatedLessons {
 		multiplicity *;
 	}
@@ -548,6 +553,60 @@ relation CurriculumPerson {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Person playsRole personWhoAltered;
+}
+
+
+/* OTHER GROUP */
+relation ExecutionPeriodPreviousExecutionPeriod {
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole ???;
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole previousExecutionPeriod;
+}
+
+
+/* OTHER GROUP */
+relation ExecutionPeriodSchoolClass {
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.SchoolClass playsRole schoolClasses {
+		multiplicity *;
+	}
+}
+
+/* DONE */
+relation PersonCountry {
+	net.sourceforge.fenixedu.domain.Person playsRole associatedPersons {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Country playsRole pais;
+}
+
+/* DONE */
+relation PersonDepartment {
+	net.sourceforge.fenixedu.domain.Person playsRole associatedPersons {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Department playsRole manageableDepartmentCredits {
+		multiplicity *;
+	}
+}
+
+/* DONE */
+relation PersonAdvisory {
+	net.sourceforge.fenixedu.domain.Person playsRole associatedPersons {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Advisory playsRole advisories {
+		multiplicity *;
+	}
+}
+
+/*  */
+relation PersonRole {
+	net.sourceforge.fenixedu.domain.Person playsRole associatedPersons {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Role playsRole personRoles {
+		multiplicity *;
+	}
 }
 
 /* ************************************
