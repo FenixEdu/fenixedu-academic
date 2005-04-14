@@ -53,4 +53,6 @@ public abstract class SessionConstants {
 
     public static final String SIBS_PAYMENT_FILE_ENTRIES = "sibs_payment_file_entries";
 
+    public static final String SEX_LIST_KEY = "sex_list_key";
+
 }
