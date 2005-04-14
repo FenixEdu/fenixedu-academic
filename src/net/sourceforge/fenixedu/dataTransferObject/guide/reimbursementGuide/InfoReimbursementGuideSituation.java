@@ -9,6 +9,7 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEmployee;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideSituation;
 import net.sourceforge.fenixedu.util.State;
 
 /**
@@ -17,7 +18,7 @@ import net.sourceforge.fenixedu.util.State;
  * This class contains all the information regarding a Reimbursement Guide. <br>
  * 
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
- *  
+ * 
  */
 public class InfoReimbursementGuideSituation extends InfoObject {
 
@@ -132,6 +133,32 @@ public class InfoReimbursementGuideSituation extends InfoObject {
      */
     public void setOfficialDate(Calendar officialDate) {
         this.officialDate = officialDate;
+    }
+
+    public void copyFromDomain(IReimbursementGuideSituation reimbursementGuideSituation) {
+        super.copyFromDomain(reimbursementGuideSituation);
+        if (reimbursementGuideSituation != null) {
+
+            setInfoEmployee(InfoEmployee.newInfoFromDomain(reimbursementGuideSituation.getEmployee()));
+            // setInfoReimbursementGuide(null);
+            setModificationDate(reimbursementGuideSituation.getModificationDate());
+            setOfficialDate(reimbursementGuideSituation.getOfficialDate());
+            setReimbursementGuideState(reimbursementGuideSituation.getReimbursementGuideState());
+            setRemarks(reimbursementGuideSituation.getRemarks());
+            setState(reimbursementGuideSituation.getState());
+
+        }
+    }
+
+    public static InfoReimbursementGuideSituation newInfoFromDomain(
+            IReimbursementGuideSituation reimbursementGuideSituation) {
+        InfoReimbursementGuideSituation infoReimbursementGuideSituation = null;
+        if (reimbursementGuideSituation != null) {
+            infoReimbursementGuideSituation = new InfoReimbursementGuideSituation();
+            infoReimbursementGuideSituation.copyFromDomain(reimbursementGuideSituation);
+        }
+
+        return infoReimbursementGuideSituation;
     }
 
 }

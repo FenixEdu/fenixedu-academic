@@ -7,12 +7,16 @@ package net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide;
 import java.util.Calendar;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideSituation;
 import net.sourceforge.fenixedu.util.State;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.Transformer;
 
 /**
  * 
@@ -20,7 +24,7 @@ import net.sourceforge.fenixedu.util.State;
  * This class contains all the information regarding a Reimbursement Guide. <br>
  * 
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
- *  
+ * 
  */
 public class InfoReimbursementGuide extends InfoObject {
 
@@ -35,7 +39,7 @@ public class InfoReimbursementGuide extends InfoObject {
     protected List infoReimbursementGuideEntries;
 
     /**
-     *  
+     * 
      */
     public InfoReimbursementGuide() {
 
@@ -130,6 +134,48 @@ public class InfoReimbursementGuide extends InfoObject {
      */
     public void setInfoReimbursementGuideEntries(List infoReimbursementGuideEntries) {
         this.infoReimbursementGuideEntries = infoReimbursementGuideEntries;
+    }
+
+    public void copyFromDomain(IReimbursementGuide reimbursementGuide) {
+        super.copyFromDomain(reimbursementGuide);
+        if (reimbursementGuide != null) {
+            setCreationDate(reimbursementGuide.getCreationDate());
+            setInfoGuide(InfoGuide.newInfoFromDomain(reimbursementGuide.getGuide()));
+            setNumber(reimbursementGuide.getNumber());
+
+            List infoReimbursementGuideEntries = (List) CollectionUtils.collect(reimbursementGuide
+                    .getReimbursementGuideEntries(), new Transformer() {
+
+                public Object transform(Object arg0) {
+                    IReimbursementGuideEntry reimbursementGuideEntry = (IReimbursementGuideEntry) arg0;
+                    return InfoReimbursementGuideEntry.newInfoFromDomain(reimbursementGuideEntry);
+                }
+            });
+
+            setInfoReimbursementGuideEntries(infoReimbursementGuideEntries);
+
+            List infoReimbursementGuideSituations = (List) CollectionUtils.collect(reimbursementGuide
+                    .getReimbursementGuideSituations(), new Transformer() {
+
+                public Object transform(Object arg0) {
+                    IReimbursementGuideSituation reimbursementGuideSituation = (IReimbursementGuideSituation) arg0;
+                    return InfoReimbursementGuideSituation
+                            .newInfoFromDomain(reimbursementGuideSituation);
+                }
+            });
+
+            setInfoReimbursementGuideSituations(infoReimbursementGuideSituations);
+
+        }
+    }
+
+    public static InfoReimbursementGuide newInfoFromDomain(IReimbursementGuide reimbursementGuide) {
+        InfoReimbursementGuide infoReimbursementGuide = null;
+        if (reimbursementGuide != null) {
+            infoReimbursementGuide = new InfoReimbursementGuide();
+            infoReimbursementGuide.copyFromDomain(reimbursementGuide);
+        }
+        return infoReimbursementGuide;
     }
 
 }

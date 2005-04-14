@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry;
 
 /**
  * 
@@ -15,7 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
  * 
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 
 public class InfoReimbursementGuideEntry extends InfoObject {
@@ -89,6 +90,27 @@ public class InfoReimbursementGuideEntry extends InfoObject {
      */
     public void setValue(Double value) {
         this.value = value;
+    }
+
+    public void copyFromDomain(IReimbursementGuideEntry reimbursementGuideEntry) {
+        super.copyFromDomain(reimbursementGuideEntry);
+        if (reimbursementGuideEntry != null) {
+            setInfoGuideEntry(InfoGuideEntry.newInfoFromDomain(reimbursementGuideEntry.getGuideEntry()));
+            // setInfoReimbursementGuide(null); to avoid circularity
+            setJustification(reimbursementGuideEntry.getJustification());
+            setValue(reimbursementGuideEntry.getValue());
+        }
+    }
+
+    public static InfoReimbursementGuideEntry newInfoFromDomain(
+            IReimbursementGuideEntry reimbursementGuideEntry) {
+        InfoReimbursementGuideEntry infoReimbursementGuideEntry = null;
+        if (reimbursementGuideEntry != null) {
+            infoReimbursementGuideEntry = new InfoReimbursementGuideEntry();
+            infoReimbursementGuideEntry.copyFromDomain(reimbursementGuideEntry);
+        }
+
+        return infoReimbursementGuideEntry;
     }
 
 }
