@@ -97,8 +97,6 @@ public class ChangeApplicationInfo implements IService {
 
             infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
                     .newInfoFromDomain(existingMasterDegreeCandidate);
-            infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
-                    .newInfoFromDomain(existingMasterDegreeCandidate);
 
             List situations = new ArrayList();
             ICandidateView candidateView = null;
