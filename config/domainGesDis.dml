@@ -599,7 +599,7 @@ relation PersonAdvisory {
 	}
 }
 
-/*  */
+/* DONE */
 relation PersonRole {
 	net.sourceforge.fenixedu.domain.Person playsRole associatedPersons {
 		multiplicity *;

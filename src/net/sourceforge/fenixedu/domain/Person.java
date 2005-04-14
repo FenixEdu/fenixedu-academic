@@ -13,7 +13,6 @@ public class Person extends Person_Base {
 	private Boolean availableEmail = Boolean.FALSE;
     private Boolean availableWebSite = Boolean.FALSE;
     private EstadoCivil estadoCivil;
-    private Collection personRoles;
     private Sex sex;
     private TipoDocumentoIdentificacao tipoDocumentoIdentificacao;
     private Boolean availablePhoto = Boolean.FALSE;
@@ -180,14 +179,7 @@ public class Person extends Person_Base {
     public EstadoCivil getEstadoCivil() {
         return estadoCivil;
     }
-
-     /**
-     * @return List
-     */
-    public Collection getPersonRoles() {
-        return personRoles;
-    }
-
+    
     /**
      * Getter for property sexo.
      * 
@@ -217,16 +209,6 @@ public class Person extends Person_Base {
      */
     public void setEstadoCivil(EstadoCivil estadoCivil) {
         this.estadoCivil = estadoCivil;
-    }
-
-    /**
-     * Sets the personRoles.
-     * 
-     * @param personRoles
-     *            The personRoles to set
-     */
-    public void setPersonRoles(Collection personRoles) {
-        this.personRoles = personRoles;
     }
 
     /**

@@ -788,15 +788,11 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 	interface "
     public net.sourceforge.fenixedu.util.EstadoCivil getEstadoCivil();
 
-    public java.util.Collection getPersonRoles();
-
     public net.sourceforge.fenixedu.domain.person.Sex getSex();
 
     public net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao getTipoDocumentoIdentificacao();
 
     public void setEstadoCivil(net.sourceforge.fenixedu.util.EstadoCivil estadoCivil);
-
-    public void setPersonRoles(java.util.Collection personRoles);
 
     public void setSex(net.sourceforge.fenixedu.domain.person.Sex sex);
 
@@ -1386,6 +1382,16 @@ relation PersonDepartment {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Department playsRole manageableDepartmentCredits {
+		multiplicity *;
+	}
+}
+
+
+relation PersonRole {
+	net.sourceforge.fenixedu.domain.Person playsRole associatedPersons {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Role playsRole personRoles {
 		multiplicity *;
 	}
 }
