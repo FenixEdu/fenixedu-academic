@@ -5,10 +5,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -74,7 +75,6 @@ import net.sourceforge.fenixedu.util.TipoAula;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -247,42 +247,35 @@ public class ReadCourseInformation implements IService {
      * @param sp
      * @return
      */
-    private List getInfoSiteEvaluationsHistory(IExecutionPeriod executionPeriodToTest, ICurricularCourse curricularCourse,
+    private List getInfoSiteEvaluationsHistory(final IExecutionPeriod executionPeriodToTest, ICurricularCourse curricularCourse,
             ISuportePersistente sp) throws ExcepcaoPersistencia {
+        
         List infoSiteEvaluationsHistory = new ArrayList();
-        List executionPeriods = (List) CollectionUtils.collect(curricularCourse
-                .getAssociatedExecutionCourses(), new Transformer() {
-            public Object transform(Object arg0) {
-                IExecutionCourse executionCourse = (IExecutionCourse) arg0;
-                return executionCourse.getExecutionPeriod();
-            }
 
-        });
-        // filter the executionPeriods by semester;
-        // also, information regarding execution years after the course's execution year must not be shown
-        final IExecutionPeriod historyExecutionPeriod = executionPeriodToTest;
-        executionPeriods = (List) CollectionUtils.select(executionPeriods, new Predicate() {
-            public boolean evaluate(Object arg0) {
-                IExecutionPeriod executionPeriod = (IExecutionPeriod) arg0;
-                return (executionPeriod.getSemester().equals(historyExecutionPeriod.getSemester()) && executionPeriod.getExecutionYear().getBeginDate().before(historyExecutionPeriod.getExecutionYear().getBeginDate()));
-            }
-        });
-        Collections.sort(executionPeriods, new Comparator() {
-            public int compare(Object o1, Object o2) {
-                IExecutionPeriod executionPeriod1 = (IExecutionPeriod) o1;
-                IExecutionPeriod executionPeriod2 = (IExecutionPeriod) o2;
-                return executionPeriod1.getExecutionYear().getYear().compareTo(
-                        executionPeriod2.getExecutionYear().getYear());
-            }
-        });
+        SortedSet<IExecutionPeriod> executionPeriods = new TreeSet(
+                new Comparator<IExecutionPeriod>() {
+                    public int compare(IExecutionPeriod executionPeriod1, IExecutionPeriod executionPeriod2) {
+                        return executionPeriod1.getExecutionYear().getYear().compareTo(executionPeriod2.getExecutionYear().getYear());
+                    }
+                });
+
+        for (Iterator executionCourseIter = curricularCourse.getAssociatedExecutionCourses().iterator(); executionCourseIter.hasNext();) {
+            IExecutionCourse executionCourse = (IExecutionCourse) executionCourseIter.next();
+            IExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+            
+            // filter the executionPeriods by semester;
+            // also, information regarding execution years after the course's execution year must not be shown
+            if (executionPeriod.getSemester().equals(executionPeriodToTest.getSemester()))
+                if (executionPeriod.getExecutionYear().getBeginDate().before(executionPeriodToTest.getExecutionYear().getBeginDate()))
+                    executionPeriods.add(executionPeriod);
+        }
+        
         Iterator iter = executionPeriods.iterator();
         while (iter.hasNext()) {
             IExecutionPeriod executionPeriod = (IExecutionPeriod) iter.next();
 
             InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
-            //infoSiteEvaluationStatistics
-            //.setInfoExecutionPeriod((InfoExecutionPeriod) Cloner
-            //.get(executionPeriod));
+
             infoSiteEvaluationStatistics.setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
                     .newInfoFromDomain(executionPeriod));
             List enrolled = getEnrolled(executionPeriod, curricularCourse, sp);
