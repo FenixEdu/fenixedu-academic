@@ -11,9 +11,9 @@ package net.sourceforge.fenixedu.domain;
  * @author tfc130
  */
 public class SchoolClassShift extends SchoolClassShift_Base {
-    protected ISchoolClass schoolClass;
+    protected ISchoolClass turma;
 
-    protected IShift shift;
+    protected IShift turno;
 
     /**
      * Construtor sem argumentos p�blico requerido pela moldura de objectos
@@ -23,42 +23,42 @@ public class SchoolClassShift extends SchoolClassShift_Base {
     }
 
     public SchoolClassShift(ISchoolClass schoolClass, IShift shift) {
-        setSchoolClass(schoolClass);
-        setShift(shift);
+        setTurma(schoolClass);
+        setTurno(shift);
     }
 
-    public ISchoolClass getSchoolClass() {
-        return schoolClass;
+    public ISchoolClass getTurma() {
+        return turma;
     }
 
-    public void setSchoolClass(ISchoolClass schoolClass) {
-        this.schoolClass = schoolClass;
+    public void setTurma(ISchoolClass schoolClass) {
+        this.turma = schoolClass;
     }
 
-    public IShift getShift() {
-        return shift;
+    public IShift getTurno() {
+        return turno;
     }
 
-    public void setShift(IShift shift) {
-        this.shift = shift;
+    public void setTurno(IShift shift) {
+        this.turno = shift;
     }
 
     public boolean equals(Object obj) {
         boolean result = false;
         if (obj instanceof ISchoolClassShift) {
             ISchoolClassShift schoolClass_shift = (ISchoolClassShift) obj;
-            result = getSchoolClass().equals(schoolClass_shift.getSchoolClass())
-                    && getShift().equals(schoolClass_shift.getShift());
+            result = getTurma().equals(schoolClass_shift.getTurma())
+                    && getTurno().equals(schoolClass_shift.getTurno());
         }
         return result;
     }
 
     public String toString() {
         String result = "[TURMA_TURNO";
-        result += ", turma=" + schoolClass;
-        result += ", turno=" + shift;
-        result += ", chaveTurma=" + getKeySchoolClass();
-        result += ", chaveTurno=" + getKeyShift();
+        result += ", turma=" + getTurma();
+        result += ", turno=" + getTurno();
+        result += ", chaveTurma=" + getChaveTurma();
+        result += ", chaveTurno=" + getChaveTurno();
         result += "]";
         return result;
     }

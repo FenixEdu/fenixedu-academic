@@ -284,16 +284,15 @@ class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixed
     Integer driftsSecond;
     String history;
     Integer degreeKey;
-    
+
     interface "
-    
+
     public net.sourceforge.fenixedu.domain.IDegree getDegree();
     public java.sql.Timestamp getLastModificationDate();
     public void setDegree(net.sourceforge.fenixedu.domain.IDegree degree);
     public void setLastModificationDate(java.sql.Timestamp lastModificationDate);
     "
 }
-
 
 
 
@@ -475,7 +474,6 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 }
 */
 
-
 class net.sourceforge.fenixedu.domain.ExecutionDegree extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPeriodExamsSecondSemester;
 	Integer keyPeriodLessonsSecondSemester;
@@ -599,6 +597,7 @@ class net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse extends net
         public void setProposalState(net.sourceforge.fenixedu.util.ProposalState proposalState);
         "
 }
+
 
 class net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes extends net.sourceforge.fenixedu.domain.DomainObject {
 	Double tolerance2_3;
@@ -897,6 +896,7 @@ class net.sourceforge.fenixedu.domain.Role extends net.sourceforge.fenixedu.doma
     "
 }
 
+
 class net.sourceforge.fenixedu.domain.Room extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyBuilding;
 	String nome;
@@ -917,7 +917,7 @@ class net.sourceforge.fenixedu.domain.RoomOccupation extends net.sourceforge.fen
 	Integer keyRoom;
 	Integer frequency;
 	Integer keyPeriod;
-	
+
 	interface"
 	public net.sourceforge.fenixedu.util.DiaSemana getDayOfWeek();
 	
@@ -963,17 +963,17 @@ class net.sourceforge.fenixedu.domain.SchoolClass extends net.sourceforge.fenixe
 
 
 class net.sourceforge.fenixedu.domain.SchoolClassShift extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keySchoolClass;
-	Integer keyShift;
+	Integer chaveTurma;
+	Integer chaveTurno;
 	
 	interface"
-	public net.sourceforge.fenixedu.domain.ISchoolClass getSchoolClass();
+	public net.sourceforge.fenixedu.domain.ISchoolClass getTurma();
 	
-	public void setSchoolClass(net.sourceforge.fenixedu.domain.ISchoolClass schoolClass);
+	public void setTurma(net.sourceforge.fenixedu.domain.ISchoolClass schoolClass);
 	
-	public net.sourceforge.fenixedu.domain.IShift getShift();
+	public net.sourceforge.fenixedu.domain.IShift getTurno();
 	
-	public void setShift(net.sourceforge.fenixedu.domain.IShift shift);
+	public void setTurno(net.sourceforge.fenixedu.domain.IShift shift);
 	"
 }
 
@@ -998,7 +998,7 @@ class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.dom
 class net.sourceforge.fenixedu.domain.ShiftStudent extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyShift;
 	Integer keyStudent;
-	
+
 	interface "
 	public net.sourceforge.fenixedu.domain.IStudent getStudent();
 
@@ -1023,7 +1023,7 @@ class net.sourceforge.fenixedu.domain.SupportLesson extends net.sourceforge.feni
 	Date endTime;
 	interface "
 	public net.sourceforge.fenixedu.domain.IProfessorship getProfessorship();
-	
+
 	public net.sourceforge.fenixedu.util.DiaSemana getWeekDay();
 	
 	public void setProfessorship(net.sourceforge.fenixedu.domain.IProfessorship professorship);

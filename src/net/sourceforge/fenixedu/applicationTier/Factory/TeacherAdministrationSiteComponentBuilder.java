@@ -2099,7 +2099,7 @@ public class TeacherAdministrationSiteComponentBuilder {
                         for (int j = 0; j < classesShifts.size(); j++)
                         	infoClasses
                         	.add(InfoClass.newInfoFromDomain(((ISchoolClassShift) classesShifts
-                                        .get(j)).getSchoolClass()));
+                                        .get(j)).getTurma()));
                         infoShift.setInfoClasses(infoClasses);
                         infoShift.setIdInternal(shift.getIdInternal());
 

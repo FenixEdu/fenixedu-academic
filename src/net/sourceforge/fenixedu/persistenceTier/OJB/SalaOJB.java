@@ -219,7 +219,7 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
         Iterator resultIterator = result.iterator();
         while (resultIterator.hasNext()) {
             ISchoolClassShift classShift = (ISchoolClassShift) resultIterator.next();
-            classList.add(classShift.getSchoolClass());
+            classList.add(classShift.getTurma());
         }
         return classList;
 

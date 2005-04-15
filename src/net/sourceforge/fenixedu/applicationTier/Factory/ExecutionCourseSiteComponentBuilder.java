@@ -568,7 +568,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
                     for (int j = 0; j < classesShifts.size(); j++)
                         infoClasses.add(InfoClassWithInfoExecutionDegree
-                                .newInfoFromDomain(((ISchoolClassShift) classesShifts.get(j)).getSchoolClass()));
+                                .newInfoFromDomain(((ISchoolClassShift) classesShifts.get(j)).getTurma()));
 
                     shiftWithAssociatedClassesAndLessons.setInfoClasses(infoClasses);
 
