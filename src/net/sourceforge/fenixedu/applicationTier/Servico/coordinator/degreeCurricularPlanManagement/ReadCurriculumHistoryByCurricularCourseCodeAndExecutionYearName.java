@@ -111,9 +111,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName imp
     private InfoCurriculum createInfoCurriculum(ICurriculum curriculum,
             IPersistentExecutionCourse persistentExecutionCourse, List allCurricularCourseScopes,
             List allExecutionCourses) throws ExcepcaoPersistencia {
-        //CLONER
-        //InfoCurriculum infoCurriculum =
-        // Cloner.copyICurriculum2InfoCurriculum(curriculum);
+
         InfoCurriculum infoCurriculum = InfoCurriculumWithInfoCurricularCourse
                 .newInfoFromDomain(curriculum);
 
@@ -121,9 +119,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName imp
         CollectionUtils.collect(allCurricularCourseScopes, new Transformer() {
             public Object transform(Object arg0) {
                 ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
-                //CLONER
-                //return Cloner
-                //        .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+
                 return InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear
                         .newInfoFromDomain(curricularCourseScope);
             }
@@ -134,10 +130,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName imp
         Iterator iterExecutionCourses = allExecutionCourses.iterator();
         while (iterExecutionCourses.hasNext()) {
             IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();
-            //CLONER
-            //InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse)
-            // Cloner
-            //        .get(executionCourse);
+
             InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
                     .newInfoFromDomain(executionCourse);
 

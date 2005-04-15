@@ -56,12 +56,9 @@ abstract public class ReadDegreeCurricularPlanBaseService implements IService {
                 CollectionUtils.collect(allActiveScopes, new Transformer() {
                     public Object transform(Object input) {
                         ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) input;
-                        //CLONER
+
                         return InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear
                                 .newInfoFromDomain(curricularCourseScope);
-                        //return
-                        // Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(
-                        //	curricularCourseScope);
                     }
                 }, infoActiveScopes);
             }

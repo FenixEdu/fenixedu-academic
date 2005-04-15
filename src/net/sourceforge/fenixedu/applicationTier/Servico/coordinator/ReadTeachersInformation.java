@@ -288,17 +288,13 @@ public class ReadTeachersInformation implements IService {
                 List infoCurricularCourses = (List) CollectionUtils.collect(curricularCourses,
                         new Transformer() {
                             public Object transform(Object o) {
-                                //CLONER
                                 ICurricularCourse curricularCourse = (ICurricularCourse) o;
-                                //return
-                                // Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+
                                 return InfoCurricularCourseWithInfoDegree
                                         .newInfoFromDomain(curricularCourse);
                             }
                         });
-                //CLONER
-                //InfoExecutionCourse infoExecutionCourse =
-                //(InfoExecutionCourse) Cloner.get(executionCourse);
+
                 InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
                         .newInfoFromDomain(executionCourse);
                 infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
@@ -317,9 +313,7 @@ public class ReadTeachersInformation implements IService {
                 new Transformer() {
                     public Object transform(Object o) {
                         IExternalActivity externalActivity = (IExternalActivity) o;
-                        //CLONER
-                        //return
-                        // Cloner.copyIExternalActivity2InfoExternalActivity(externalActivity);
+
                         return InfoExternalActivity.newInfoFromDomain(externalActivity);
                     }
                 });
@@ -352,16 +346,12 @@ public class ReadTeachersInformation implements IService {
                         new Transformer() {
                             public Object transform(Object o) {
                                 ICurricularCourse curricularCourse = (ICurricularCourse) o;
-                                //CLONER
-                                //return
-                                // Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+
                                 return InfoCurricularCourseWithInfoDegree
                                         .newInfoFromDomain(curricularCourse);
                             }
                         });
-                //CLONER
-                //InfoExecutionCourse infoExecutionCourse =
-                //(InfoExecutionCourse) Cloner.get(executionCourse);
+
                 InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
                         .newInfoFromDomain(executionCourse);
                 infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
@@ -377,10 +367,8 @@ public class ReadTeachersInformation implements IService {
         List qualifications = persistentQualification.readQualificationsByPerson(teacher.getPerson());
         List infoQualifications = (List) CollectionUtils.collect(qualifications, new Transformer() {
             public Object transform(Object o) {
-                //CLONER
                 IQualification qualification = (IQualification) o;
-                //return
-                // Cloner.copyIQualification2InfoQualification(qualification);
+
                 return InfoQualification.newInfoFromDomain(qualification);
             }
         });
@@ -411,10 +399,7 @@ public class ReadTeachersInformation implements IService {
         List infoOldPublications = (List) CollectionUtils.collect(oldCientificPublications,
                 new Transformer() {
                     public Object transform(Object o) {
-                        //CLONER
                         IOldPublication oldPublication = (IOldPublication) o;
-                        //return
-                        // Cloner.copyIOldPublication2InfoOldPublication(oldPublication);
                         return InfoOldPublication.newInfoFromDomain(oldPublication);
                     }
                 });
@@ -428,14 +413,8 @@ public class ReadTeachersInformation implements IService {
                 orientationType);
         InfoOrientation infoOrientation = null;
         if (orientation != null) {
-            //CLONER
-            //infoOrientation =
-            // Cloner.copyIOrientation2InfoOrientation(orientation);
             infoOrientation = InfoOrientation.newInfoFromDomain(orientation);
         } else {
-            //CLONER
-            //InfoTeacher infoTeacher =
-            // Cloner.copyITeacher2InfoTeacher(teacher);
             InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
             infoOrientation = new InfoOrientation();
             infoOrientation.setInfoTeacher(infoTeacher);

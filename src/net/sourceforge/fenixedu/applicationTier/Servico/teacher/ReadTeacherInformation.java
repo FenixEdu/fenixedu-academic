@@ -239,16 +239,12 @@ public class ReadTeacherInformation implements IService {
                         new Transformer() {
                             public Object transform(Object o) {
                                 ICurricularCourse curricularCourse = (ICurricularCourse) o;
-                                //CLONER
-                                //return
-                                // Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+
                                 return InfoCurricularCourseWithInfoDegree
                                         .newInfoFromDomain(curricularCourse);
                             }
                         });
-                //CLONER
-                //infoExecutionCourse = (InfoExecutionCourse)
-                // Cloner.get(executionCourse);
+
                 InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
                         .newInfoFromDomain(executionCourse);
                 infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
@@ -267,9 +263,6 @@ public class ReadTeacherInformation implements IService {
                 new Transformer() {
                     public Object transform(Object o) {
                         IExternalActivity externalActivity = (IExternalActivity) o;
-                        //CLONER
-                        //return
-                        // Cloner.copyIExternalActivity2InfoExternalActivity(externalActivity);
                         return InfoExternalActivity.newInfoFromDomain(externalActivity);
                     }
                 });
@@ -300,17 +293,13 @@ public class ReadTeacherInformation implements IService {
                         new Transformer() {
                             public Object transform(Object o) {
                                 ICurricularCourse curricularCourse = (ICurricularCourse) o;
-                                //CLONER
-                                //return
-                                // Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+
                                 return InfoCurricularCourseWithInfoDegree
                                         .newInfoFromDomain(curricularCourse);
                             }
                         });
                 InfoExecutionCourse infoExecutionCourse;
-                //CLONER
-                //infoExecutionCourse = (InfoExecutionCourse)
-                // Cloner.get(executionCourse);
+
                 infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
                         .newInfoFromDomain(executionCourse);
                 infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
@@ -327,9 +316,6 @@ public class ReadTeacherInformation implements IService {
         List infoQualifications = (List) CollectionUtils.collect(qualifications, new Transformer() {
             public Object transform(Object o) {
                 IQualification qualification = (IQualification) o;
-                //CLONER
-                //return
-                // Cloner.copyIQualification2InfoQualification(qualification);
                 return InfoQualification.newInfoFromDomain(qualification);
             }
         });
@@ -361,8 +347,6 @@ public class ReadTeacherInformation implements IService {
                 new Transformer() {
                     public Object transform(Object o) {
                         IOldPublication oldPublication = (IOldPublication) o;
-                        //return
-                        // Cloner.copyIOldPublication2InfoOldPublication(oldPublication);
                         return InfoOldPublication.newInfoFromDomain(oldPublication);
                     }
                 });
@@ -376,14 +360,8 @@ public class ReadTeacherInformation implements IService {
                 orientationType);
         InfoOrientation infoOrientation = null;
         if (orientation != null) {
-            //CLONER
-            //infoOrientation =
-            // Cloner.copyIOrientation2InfoOrientation(orientation);
             infoOrientation = InfoOrientation.newInfoFromDomain(orientation);
         } else {
-            //CLONER
-            //InfoTeacher infoTeacher =
-            // Cloner.copyITeacher2InfoTeacher(teacher);
             InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
             infoOrientation = new InfoOrientation();
             infoOrientation.setInfoTeacher(infoTeacher);

@@ -115,22 +115,6 @@ public class CreateGuide implements IService {
             }
 
             // Get the Execution Degree
-//            IExecutionDegree executionDegree = sp.getIPersistentExecutionDegree()
-//                    .readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
-//                            infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan()
-//                                    .getInfoDegree().getSigla(),
-//                            infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName(),
-//                            Cloner.copyInfoExecutionYear2IExecutionYear(infoGuide
-//                                    .getInfoExecutionDegree().getInfoExecutionYear()));
-//
-//            contributor = sp.getIPersistentContributor().readByContributorNumber(
-//                    infoGuide.getInfoContributor().getContributorNumber());
-//            person = sp.getIPessoaPersistente().lerPessoaPorUsername(
-//                    infoGuide.getInfoPerson().getUsername());
-//
-//            guide.setExecutionDegree(executionDegree);
-//            guide.setContributor(contributor);
-//            guide.setPerson(person);
 
             // Write the new Guide
 

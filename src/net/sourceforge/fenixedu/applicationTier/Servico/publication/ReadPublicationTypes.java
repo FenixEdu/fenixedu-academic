@@ -52,12 +52,6 @@ public class ReadPublicationTypes implements IServico {
 
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            //            IPersistentTeacher persistentTeacher =
-            // persistentSuport.getIPersistentTeacher();
-            //            ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
-            //            InfoTeacher infoTeacher =
-            // Cloner.copyITeacher2InfoTeacher(teacher);
-
             IPersistentPublicationType persistentPublicationType = persistentSuport
                     .getIPersistentPublicationType();
             List publicationTypeList = persistentPublicationType.readAll();

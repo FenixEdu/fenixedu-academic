@@ -54,8 +54,6 @@ public class ReadStudentCurricularPlan implements IService {
             throw new NonExistingServiceException();
         }
 
-        //return
-        // Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan);
         return InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree
                 .newInfoFromDomain(studentCurricularPlan);
     }

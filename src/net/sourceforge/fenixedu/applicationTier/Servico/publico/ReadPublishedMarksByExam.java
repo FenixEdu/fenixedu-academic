@@ -89,9 +89,7 @@ public class ReadPublishedMarksByExam implements IServico {
 
             IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
             evaluation = (IEvaluation) persistentEvaluation.readByOID(Evaluation.class, evaluationCode);
-            //CLONER
-            //infoEvaluation =
-            // Cloner.copyIEvaluation2InfoEvaluation(evaluation);
+
             infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 
             //Attends

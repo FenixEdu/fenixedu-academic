@@ -151,10 +151,7 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree implements I
 
                             public Object transform(Object input) {
                                 ICurricularCourse curricularCourse = (ICurricularCourse) input;
-                                //CLONER
-                                //InfoCurricularCourse infoCurricularCourse =
-                                // Cloner
-                                //.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+
                                 InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
                                         .newInfoFromDomain(curricularCourse);
                                 return infoCurricularCourse;

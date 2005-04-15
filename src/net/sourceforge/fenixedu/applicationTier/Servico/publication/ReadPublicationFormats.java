@@ -51,12 +51,6 @@ public class ReadPublicationFormats implements IServico {
         try {
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            //IPersistentTeacher persistentTeacher =
-            // persistentSuport.getIPersistentTeacher();
-            //ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
-            //InfoTeacher infoTeacher =
-            // Cloner.copyITeacher2InfoTeacher(teacher);
-
             IPersistentPublicationFormat persistentPublicationFormat = persistentSuport
                     .getIPersistentPublicationFormat();
 

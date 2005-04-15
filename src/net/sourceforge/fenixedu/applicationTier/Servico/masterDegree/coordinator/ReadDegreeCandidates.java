@@ -76,10 +76,6 @@ public class ReadDegreeCandidates implements IService {
             List situations = new ArrayList();
             Iterator situationIter = masterDegreeCandidate.getSituations().iterator();
             while (situationIter.hasNext()) {
-                //CLONER
-                //InfoCandidateSituation infoCandidateSituation =
-                // Cloner.copyICandidateSituation2InfoCandidateSituation((ICandidateSituation)
-                // situationIter.next());
                 InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation
                         .newInfoFromDomain((ICandidateSituation) situationIter.next());
                 situations.add(infoCandidateSituation);

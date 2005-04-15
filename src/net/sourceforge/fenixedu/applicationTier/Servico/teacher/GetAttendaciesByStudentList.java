@@ -112,15 +112,12 @@ public class GetAttendaciesByStudentList implements IService {
                     Iterator iter = shifts.iterator();
                     while (iter.hasNext()) {
                         ITurnoAluno shiftStudent = (ITurnoAluno) iter.next();
-                        //CLONER
-                        //infoShifts.put(shiftStudent.getShift().getTipo().getSiglaTipoAula(),Cloner.get(shiftStudent.getShift()));
+
                         infoShifts.put(shiftStudent.getShift().getTipo().getSiglaTipoAula(), InfoShift
                                 .newInfoFromDomain(shiftStudent.getShift()));
                     }
                 }
-                //CLONER
-                //InfoFrequenta infoFrequenta =
-                // Cloner.copyIFrequenta2InfoFrequenta(attendacy);
+
                 InfoFrequenta infoFrequenta = InfoFrequentaWithAllAndInfoStudentPlanAndInfoDegreePlan
                         .newInfoFromDomain(attendacy);
                 InfoAttendWithEnrollment infoAttendWithEnrollment = new InfoAttendWithEnrollment();

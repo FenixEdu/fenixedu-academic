@@ -77,10 +77,7 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode implements ISe
 
     private InfoDegreeCurricularPlan createInfoDegreeCurricularPlan(IExecutionDegree executionDegree,
             List allCurricularCourses) {
-        //CLONER
-        //InfoDegreeCurricularPlan infoDegreeCurricularPlan =
-        //  Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
-        //    executionDegree.getDegreeCurricularPlan());
+
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
                 .newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
 
@@ -93,18 +90,12 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode implements ISe
                 CollectionUtils.collect(curricularCourse.getScopes(), new Transformer() {
                     public Object transform(Object arg0) {
                         ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
-                        //CLONER
-                        //return
-                        // Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(
-                        //curricularCourseScope);
+
                         return InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear
                                 .newInfoFromDomain(curricularCourseScope);
                     }
                 }, allInfoCurricularCourseScopes);
 
-                //CLONER
-                //InfoCurricularCourse infoCurricularCourse =
-                //    Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
                 InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
                         .newInfoFromDomain(curricularCourse);
                 infoCurricularCourse.setInfoScopes(allInfoCurricularCourseScopes);

@@ -104,12 +104,8 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IService {
             IPersistentExecutionCourse persistentExecutionCourse, List activeCurricularCourseScopes,
             List associatedExecutionCourses) throws ExcepcaoPersistencia {
 
-        //CLONER
         InfoCurriculum infoCurriculum = InfoCurriculumWithInfoCurricularCourse
                 .newInfoFromDomain(curriculum);
-        //InfoCurriculum infoCurriculum =
-        // Cloner.copyICurriculum2InfoCurriculum(curriculum);
-        //infoCurriculum.setIdInternal(curriculum.getIdInternal());
 
         List scopes = new ArrayList();
 
@@ -133,12 +129,9 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IService {
         while (iterExecutionCourses.hasNext()) {
             IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();
 
-            //CLONER
             InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
                     .newInfoFromDomain(executionCourse);
-            //InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse)
-            // Cloner
-            //        .get(executionCourse);
+
             infoExecutionCourse.setHasSite(persistentExecutionCourse.readSite(executionCourse
                     .getIdInternal()));
             infoExecutionCourses.add(infoExecutionCourse);

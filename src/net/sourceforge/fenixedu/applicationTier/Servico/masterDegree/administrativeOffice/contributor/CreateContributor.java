@@ -41,9 +41,6 @@ public class CreateContributor implements IService {
             if (contributor != null) {
                 throw new ExistingServiceException();
             }
-            //CLONER
-            //contributor =
-            // Cloner.copyInfoContributor2IContributor(newContributor);
             contributor = InfoContributor.newDomainFromInfo(newContributor);
 
             sp.getIPersistentContributor().simpleLockWrite(contributor);

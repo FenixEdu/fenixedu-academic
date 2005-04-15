@@ -96,9 +96,7 @@ public class ReadStudentsByCurricularCourse implements IService {
             public Object transform(Object input) {
                 IEnrolment enrolment = (IEnrolment) input;
                 IStudent student = enrolment.getStudentCurricularPlan().getStudent();
-                //CLONER
-                //InfoStudent infoStudent =
-                // Cloner.copyIStudent2InfoStudent(student);
+
                 InfoStudent infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(student);
                 return infoStudent;
             }
@@ -118,9 +116,6 @@ public class ReadStudentsByCurricularCourse implements IService {
             public Object transform(Object input) {
                 IAttends attend = (IAttends) input;
                 IStudent student = attend.getAluno();
-                //CLONER
-                //InfoStudent infoStudent =
-                // Cloner.copyIStudent2InfoStudent(student);
                 InfoStudent infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(student);
                 return infoStudent;
             }
@@ -134,8 +129,6 @@ public class ReadStudentsByCurricularCourse implements IService {
         infoSiteStudents.setStudents(infoStudentList);
 
         if (curricularCourse != null) {
-            //CLONER
-            //infoSiteStudents.setInfoCurricularCourse(Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse));
             infoSiteStudents.setInfoCurricularCourse(InfoCurricularCourse
                     .newInfoFromDomain(curricularCourse));
         }

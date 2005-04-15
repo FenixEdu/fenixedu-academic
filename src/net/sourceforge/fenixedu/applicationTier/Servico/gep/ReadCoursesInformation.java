@@ -166,9 +166,6 @@ public class ReadCoursesInformation implements IService {
             ISuportePersistente sp, IExecutionYear executionYear) throws ExcepcaoPersistencia {
         InfoSiteCourseInformation infoSiteCourseInformation = new InfoSiteCourseInformation();
 
-        //CLONER
-        //InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse)
-        // Cloner.get(executionCourse);
         InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
                 .newInfoFromDomain(executionCourse);
         infoSiteCourseInformation.setInfoExecutionCourse(infoExecutionCourse);
@@ -181,9 +178,6 @@ public class ReadCoursesInformation implements IService {
             infoEvaluationMethod.setInfoExecutionCourse(infoExecutionCourse);
             infoSiteCourseInformation.setInfoEvaluationMethod(infoEvaluationMethod);
         } else {
-            //CLONER
-            //infoSiteCourseInformation.setInfoEvaluationMethod(Cloner
-            //.copyIEvaluationMethod2InfoEvaluationMethod(evaluationMethod));
             infoSiteCourseInformation.setInfoEvaluationMethod(InfoEvaluationMethod
                     .newInfoFromDomain(evaluationMethod));
         }
@@ -391,9 +385,6 @@ public class ReadCoursesInformation implements IService {
             if (curriculum == null) {
                 infoCurriculum = new InfoCurriculum();
             } else {
-                //CLONER
-                //infoCurriculum =
-                // Cloner.copyICurriculum2InfoCurriculum(curriculum);
                 infoCurriculum = InfoCurriculum.newInfoFromDomain(curriculum);
             }
             infoCurriculum.setInfoCurricularCourse(infoCurricularCourse);

@@ -72,9 +72,7 @@ public class ReadStudentsAndMarksByEvaluation implements IService {
 
             IPersistentEvaluation evaluationDAO = sp.getIPersistentEvaluation();
             evaluation = (IEvaluation) evaluationDAO.readByOID(Evaluation.class, evaluationCode);
-            //CLONER
-            //infoEvaluation =
-            // Cloner.copyIEvaluation2InfoEvaluation(evaluation);
+
             infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 
             //Attends
@@ -88,9 +86,6 @@ public class ReadStudentsAndMarksByEvaluation implements IService {
             List infoAttendList = (List) CollectionUtils.collect(attendList, new Transformer() {
                 public Object transform(Object input) {
                     IAttends attend = (IAttends) input;
-                    //CLONER
-                    //InfoFrequenta infoAttend =
-                    // Cloner.copyIFrequenta2InfoFrequenta(attend);
                     InfoFrequenta infoAttend = InfoFrequentaWithAll.newInfoFromDomain(attend);
                     //Melhoria Alterar isto depois: isto está feio assim  
                     if(attend.getEnrolment() != null) {
@@ -106,9 +101,7 @@ public class ReadStudentsAndMarksByEvaluation implements IService {
             List infoMarkList = (List) CollectionUtils.collect(marksList, new Transformer() {
                 public Object transform(Object input) {
                     IMark mark = (IMark) input;
-                    //CLONER
-                    //InfoMark infoMark =
-                    // Cloner.copyIMark2InfoMark(mark);
+
                     InfoMark infoMark = InfoMarkWithInfoAttendAndInfoStudent.newInfoFromDomain(mark);
                     return infoMark;
                 }

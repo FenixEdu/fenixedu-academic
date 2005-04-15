@@ -136,9 +136,7 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service {
         List infoCurricularCourses = new ArrayList();
         for (int i = 0; i < curricularCourses.size(); i++) {
             ICurricularCourse curricularCourse = (ICurricularCourse) curricularCourses.get(i);
-            //CLONER
-            //InfoCurricularCourse infoCurricularCourse =
-            // Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+
             InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
                     .newInfoFromDomain(curricularCourse);
             infoCurricularCourses.add(infoCurricularCourse);
@@ -154,9 +152,7 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service {
         List infoEnrolments = new ArrayList();
         for (int i = 0; i < enrollments.size(); i++) {
             IEnrolment enrollment = (IEnrolment) enrollments.get(i);
-            //CLONER
-            //InfoEnrolment infoEnrolment =
-            // Cloner.copyIEnrolment2InfoEnrolment(enrollment);
+
             InfoEnrolment infoEnrolment = InfoEnrolmentWithInfoCurricularCourse
                     .newInfoFromDomain(enrollment);
             infoEnrolments.add(infoEnrolment);
