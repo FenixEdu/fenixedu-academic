@@ -956,6 +956,22 @@ class net.sourceforge.fenixedu.domain.SchoolClass extends net.sourceforge.fenixe
 }
 
 
+class net.sourceforge.fenixedu.domain.SchoolClassShift extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keySchoolClass;
+	Integer keyShift;
+	
+	interface"
+	public net.sourceforge.fenixedu.domain.ISchoolClass getSchoolClass();
+	
+	public void setSchoolClass(net.sourceforge.fenixedu.domain.ISchoolClass schoolClass);
+	
+	public net.sourceforge.fenixedu.domain.IShift getShift();
+	
+	public void setShift(net.sourceforge.fenixedu.domain.IShift shift);
+	"
+}
+
+
 class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer availabilityFinal;
 	Integer chaveDisciplinaExecucao;
