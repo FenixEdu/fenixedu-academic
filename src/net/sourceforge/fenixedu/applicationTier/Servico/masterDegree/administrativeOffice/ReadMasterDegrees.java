@@ -10,7 +10,11 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -24,45 +28,42 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadMasterDegrees implements IService {
 
-    public List run(String executionYearString) throws FenixServiceException {
+    public List run(String executionYearString) throws FenixServiceException, ExcepcaoPersistencia {
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        ISuportePersistente sp = null;
-        List result = new ArrayList();
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-            // Get the Actual Execution Year
-            IExecutionYear executionYear = null;
-            if (executionYearString != null) {
-                executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(
-                        executionYearString);
-            } else {
-                IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
-                executionYear = executionYearDAO.readCurrentExecutionYear();
-            }
-
-            // Read the degrees
-            result = sp.getIPersistentExecutionDegree().readMasterDegrees(executionYear.getYear());
-            if (result == null || result.size() == 0) {
-                throw new NonExistingServiceException();
-            }
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
+        // Get the Actual Execution Year
+        final IExecutionYear executionYear;
+        if (executionYearString != null) {
+            executionYear = sp.getIPersistentExecutionYear()
+                    .readExecutionYearByName(executionYearString);
+        } else {
+            IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
+            executionYear = executionYearDAO.readCurrentExecutionYear();
         }
 
-        List degrees = new ArrayList();
-        Iterator iterator = result.iterator();
-        while (iterator.hasNext()) {
-            IExecutionDegree executionDegree = (IExecutionDegree) iterator.next();
-            InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+        // Read the degrees
+        final List result = sp.getIPersistentExecutionDegree().readMasterDegrees(executionYear.getYear());
+        if (result == null || result.size() == 0) {
+            throw new NonExistingServiceException();
+        }
+
+        final List degrees = new ArrayList(result.size());
+        for (final Iterator iterator = result.iterator(); iterator.hasNext(); ) {
+            final IExecutionDegree executionDegree = (IExecutionDegree) iterator.next();
+            final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
+                    .newInfoFromDomain(executionDegree);
+
+            final IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+            final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
+            infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+
+            final IDegree degree = degreeCurricularPlan.getDegree();
+            final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
+            infoDegreeCurricularPlan.setInfoDegree(infoDegree);
 
             degrees.add(infoExecutionDegree);
         }
 
         return degrees;
-
     }
 }

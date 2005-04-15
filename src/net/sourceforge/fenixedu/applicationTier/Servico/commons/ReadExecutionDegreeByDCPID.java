@@ -2,8 +2,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -32,7 +38,6 @@ public class ReadExecutionDegreeByDCPID implements IService {
 
             executionDegree = sp.getIPersistentExecutionDegree().readbyDegreeCurricularPlanID(
                     degreeCurricularPlanID);
-
         } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex);
         }
@@ -41,7 +46,21 @@ public class ReadExecutionDegreeByDCPID implements IService {
             throw new NonExistingServiceException();
         }
 
-        return InfoExecutionDegree.newInfoFromDomain(executionDegree);
+        final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+
+        final IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+        final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
+        infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+
+        final IDegree degree = degreeCurricularPlan.getDegree();
+        final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
+        infoDegreeCurricularPlan.setInfoDegree(infoDegree);
+
+        final IExecutionYear executionYear = executionDegree.getExecutionYear();
+        final InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(executionYear);
+        infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
+
+        return infoExecutionDegree;
     }
 
 }
