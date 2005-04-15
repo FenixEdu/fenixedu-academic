@@ -6,8 +6,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.ITurnoAluno;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -54,7 +54,7 @@ public class UnEnrollStudentFromShift implements IService {
                 throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
             }
 
-            ITurnoAluno studentShift = persistentSupport.getITurnoAlunoPersistente()
+            IShiftStudent studentShift = persistentSupport.getITurnoAlunoPersistente()
                     .readByTurnoAndAluno(shift, student);
             if (studentShift == null) {
                 throw new ShiftEnrolmentNotFoundServiceException();

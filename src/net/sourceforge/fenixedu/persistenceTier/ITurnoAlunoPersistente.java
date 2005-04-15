@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.ITurnoAluno;
 import net.sourceforge.fenixedu.util.TipoAula;
 
 public interface ITurnoAlunoPersistente extends IPersistentObject {
@@ -27,9 +27,9 @@ public interface ITurnoAlunoPersistente extends IPersistentObject {
     public List readByStudentAndExecutionPeriod(IStudent student, IExecutionPeriod executionPeriod)
             throws ExcepcaoPersistencia;
 
-    public ITurnoAluno readByTurnoAndAluno(IShift turno, IStudent aluno) throws ExcepcaoPersistencia;
+    public IShiftStudent readByTurnoAndAluno(IShift turno, IStudent aluno) throws ExcepcaoPersistencia;
 
-    public void delete(ITurnoAluno turnoAluno) throws ExcepcaoPersistencia;
+    public void delete(IShiftStudent turnoAluno) throws ExcepcaoPersistencia;
 
     public List readByShift(IShift shift) throws ExcepcaoPersistencia;
 
@@ -42,7 +42,7 @@ public interface ITurnoAlunoPersistente extends IPersistentObject {
 
     public List readByStudent(IStudent student) throws ExcepcaoPersistencia;
 
-    public ITurnoAluno readByStudentAndExecutionCourseAndLessonTypeAndGroup(IStudent student,
+    public IShiftStudent readByStudentAndExecutionCourseAndLessonTypeAndGroup(IStudent student,
             IExecutionCourse executionCourse, TipoAula lessonType, ISchoolClass group)
             throws ExcepcaoPersistencia;
 
@@ -60,7 +60,7 @@ public interface ITurnoAlunoPersistente extends IPersistentObject {
      * @return @throws
      *         ExcepcaoPersistencia
      */
-    public ITurnoAluno readByStudentAndExecutionCourseAndLessonType(IStudent student,
+    public IShiftStudent readByStudentAndExecutionCourseAndLessonType(IStudent student,
             IExecutionCourse executionCourse, TipoAula lessonType) throws ExcepcaoPersistencia;
 
     /**

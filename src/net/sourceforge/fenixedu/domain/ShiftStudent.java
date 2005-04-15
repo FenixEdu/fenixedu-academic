@@ -10,15 +10,10 @@ package net.sourceforge.fenixedu.domain;
  * 
  * @author tfc130
  */
-public class ShiftStudent extends DomainObject implements ITurnoAluno {
+public class ShiftStudent extends ShiftStudent_Base {
     private IShift shift;
 
     private IStudent student;
-
-    // códigos internos da base de dados
-    private Integer keyShift;
-
-    private Integer keyStudent;
 
     /** Construtor sem argumentos publico requerido pela moldura de objectos OJB */
     public ShiftStudent() {
@@ -43,8 +38,8 @@ public class ShiftStudent extends DomainObject implements ITurnoAluno {
 
     public boolean equals(Object obj) {
         boolean result = false;
-        if (obj instanceof ITurnoAluno) {
-            ITurnoAluno shiftStudent = (ITurnoAluno) obj;
+        if (obj instanceof IShiftStudent) {
+            IShiftStudent shiftStudent = (IShiftStudent) obj;
             result = getShift().equals(shiftStudent.getShift())
                     && getStudent().equals(shiftStudent.getStudent());
         }
@@ -55,24 +50,10 @@ public class ShiftStudent extends DomainObject implements ITurnoAluno {
         String result = "[SHIFT_STUDENT";
         result += ", shift=" + shift;
         result += ", student=" + student;
-        result += ", keyShift=" + keyShift;
-        result += ", keyStudent=" + keyStudent;
+        result += ", keyShift=" + getKeyShift();
+        result += ", keyStudent=" + getKeyStudent();
         result += "]";
         return result;
-    }
-
-    /**
-     * @return
-     */
-    public Integer getKeyShift() {
-        return keyShift;
-    }
-
-    /**
-     * @return
-     */
-    public Integer getKeyStudent() {
-        return keyStudent;
     }
 
     /**
@@ -82,18 +63,5 @@ public class ShiftStudent extends DomainObject implements ITurnoAluno {
         return shift;
     }
 
-    /**
-     * @param integer
-     */
-    public void setKeyShift(Integer integer) {
-        keyShift = integer;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setKeyStudent(Integer integer) {
-        keyStudent = integer;
-    }
-
+    
 }

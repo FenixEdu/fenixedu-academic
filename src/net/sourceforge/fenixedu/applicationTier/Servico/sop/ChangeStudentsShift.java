@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.SendMail;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.ITurnoAluno;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -53,13 +53,13 @@ public class ChangeStudentsShift implements IService {
 
             List newShiftStudents = persistentShiftStudent.readStudentShiftByShift(newShift);
             for (int i = 0; i < newShiftStudents.size(); i++) {
-                ITurnoAluno shiftStudent = (ITurnoAluno) newShiftStudents.get(i);
+                IShiftStudent shiftStudent = (IShiftStudent) newShiftStudents.get(i);
                 studentsInNewShiftSet.add(shiftStudent.getStudent().getIdInternal());
             }
 
             List shiftStudents = persistentShiftStudent.readStudentShiftByShift(oldShift);
             for (int i = 0; i < shiftStudents.size(); i++) {
-                ITurnoAluno shiftStudent = (ITurnoAluno) shiftStudents.get(i);
+                IShiftStudent shiftStudent = (IShiftStudent) shiftStudents.get(i);
                 IStudent student = shiftStudent.getStudent();
                 if (!studentsInNewShiftSet.contains(student.getIdInternal())) {
                     persistentShiftStudent.simpleLockWrite(shiftStudent);

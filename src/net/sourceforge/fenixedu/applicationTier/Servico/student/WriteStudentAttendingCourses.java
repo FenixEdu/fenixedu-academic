@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
-import net.sourceforge.fenixedu.domain.ITurnoAluno;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -175,7 +175,7 @@ public class WriteStudentAttendingCourses implements IService {
                     if (shiftAttendsToDelete != null) {
                         Iterator iter = shiftAttendsToDelete.iterator();
                         while (iter.hasNext()) {
-                            persistentShiftStudent.delete((ITurnoAluno) iter.next());
+                            persistentShiftStudent.delete((IShiftStudent) iter.next());
                         }
                     }
                     persistentAttends.delete(attend);

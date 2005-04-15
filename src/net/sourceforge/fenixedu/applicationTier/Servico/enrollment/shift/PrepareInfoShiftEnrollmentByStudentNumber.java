@@ -26,9 +26,9 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.ITurnoAluno;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -177,7 +177,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
             infoShiftEnrollment = (List) CollectionUtils.collect(studentShifts, new Transformer() {
 
                 public Object transform(Object input) {
-                    ITurnoAluno shiftStudent = (ITurnoAluno) input;
+                    IShiftStudent shiftStudent = (IShiftStudent) input;
                     InfoShift infoShift = InfoShiftWithInfoExecutionCourseAndInfoLessons
                             .newInfoFromDomain(shiftStudent.getShift());
                     return infoShift;

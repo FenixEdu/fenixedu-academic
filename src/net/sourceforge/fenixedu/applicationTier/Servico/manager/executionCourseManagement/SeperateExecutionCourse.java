@@ -23,8 +23,8 @@ import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.ISite;
-import net.sourceforge.fenixedu.domain.ITurnoAluno;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ResponsibleFor;
 import net.sourceforge.fenixedu.domain.Site;
@@ -177,7 +177,7 @@ public class SeperateExecutionCourse implements IService {
 
             for (Iterator studentShiftIterator = shift.getStudentShifts().iterator(); studentShiftIterator
                     .hasNext();) {
-                ITurnoAluno studentShift = (ITurnoAluno) studentShiftIterator.next();
+                IShiftStudent studentShift = (IShiftStudent) studentShiftIterator.next();
                 if (!transferedStudents.contains(studentShift.getStudent().getIdInternal())) {
                     persistentStudentShift.delete(studentShift);
                 }

@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.ShiftEnrollmentErrorReport;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.ITurnoAluno;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftStudent;
 import net.sourceforge.fenixedu.domain.Student;
@@ -107,7 +107,7 @@ public class EnrollStudentInShifts implements IService {
             ITurnoAlunoPersistente persistentShiftStudent) throws ExcepcaoPersistencia {
         Iterator iter = shiftsToUnEnroll.iterator();
         while (iter.hasNext()) {
-            ITurnoAluno shiftStudent = (ITurnoAluno) iter.next();
+            IShiftStudent shiftStudent = (IShiftStudent) iter.next();
             persistentShiftStudent.delete(shiftStudent);
         }
 
@@ -133,7 +133,7 @@ public class EnrollStudentInShifts implements IService {
             if (shift == null) {
                 errorReport.getUnExistingShifts().add(shiftId);
             } else {
-                ITurnoAluno shiftStudentToDelete = persistentShiftStudent
+                IShiftStudent shiftStudentToDelete = persistentShiftStudent
                         .readByStudentAndExecutionCourseAndLessonType(student, shift
                                 .getDisciplinaExecucao(), shift.getTipo());
 
@@ -142,7 +142,7 @@ public class EnrollStudentInShifts implements IService {
                     if (shiftStudentToDelete != null) {
                         shiftsToUnEnroll.add(shiftStudentToDelete);
                     }
-                    ITurnoAluno shiftStudentToWrite = new ShiftStudent();
+                    IShiftStudent shiftStudentToWrite = new ShiftStudent();
                     persistentShiftStudent.simpleLockWrite(shiftStudentToWrite);
                     shiftStudentToWrite.setShift(shift);
                     shiftStudentToWrite.setStudent(student);
@@ -377,7 +377,7 @@ public class EnrollStudentInShifts implements IService {
             List shiftIdsToIgnore = new ArrayList();
             Iterator iter = shiftEnrollments.iterator();
             while (iter.hasNext()) {
-                ITurnoAluno shiftStudent = (ITurnoAluno) iter.next();
+                IShiftStudent shiftStudent = (IShiftStudent) iter.next();
 
                 if (shiftIdsToEnroll.contains(shiftStudent.getShift().getIdInternal())) {
 

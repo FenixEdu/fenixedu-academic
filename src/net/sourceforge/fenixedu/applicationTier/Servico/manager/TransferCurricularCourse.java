@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.ITurnoAluno;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -84,7 +84,7 @@ public class TransferCurricularCourse implements IService {
             IShift shift = (IShift) iterator.next();
             List shiftStudents = persistentShiftStudent.readByShiftID(shift.getIdInternal());
             for (Iterator shiftStudentIterator = shiftStudents.iterator(); shiftStudentIterator.hasNext();) {
-                ITurnoAluno shiftStudent = (ITurnoAluno) shiftStudentIterator.next();
+                IShiftStudent shiftStudent = (IShiftStudent) shiftStudentIterator.next();
                 IStudent student = shiftStudent.getStudent();
                 
                 if (transferedStudents.contains(student.getIdInternal())) {

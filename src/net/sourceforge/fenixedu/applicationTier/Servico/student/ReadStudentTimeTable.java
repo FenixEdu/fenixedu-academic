@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.ITurnoAluno;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
@@ -46,7 +46,7 @@ public class ReadStudentTimeTable implements IService {
         List lessons = new ArrayList();
         Iterator shiftIter = studentShifts.iterator();
         while (shiftIter.hasNext()) {
-            ITurnoAluno shiftStudent = (ITurnoAluno) shiftIter.next();
+            IShiftStudent shiftStudent = (IShiftStudent) shiftIter.next();
             IShift shift = shiftStudent.getShift();
             lessons.addAll(shift.getAssociatedLessons());
         }

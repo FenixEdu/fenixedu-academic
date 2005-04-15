@@ -989,6 +989,17 @@ class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.dom
 	"
 }
 
+class net.sourceforge.fenixedu.domain.ShiftStudent extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyShift;
+	Integer keyStudent;
+	
+	interface "
+	public net.sourceforge.fenixedu.domain.IStudent getStudent();
+
+	public void setStudent(net.sourceforge.fenixedu.domain.IStudent student);
+	"
+}
+
 
 class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.domain.DomainObject {
 	String style;
@@ -1194,7 +1205,6 @@ external class net.sourceforge.fenixedu.domain.Lesson;
 external class net.sourceforge.fenixedu.domain.ScientificArea;
 external class net.sourceforge.fenixedu.domain.Section;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
-external class net.sourceforge.fenixedu.domain.ShiftStudent;
 external class net.sourceforge.fenixedu.domain.Student;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 external class net.sourceforge.fenixedu.domain.Teacher;

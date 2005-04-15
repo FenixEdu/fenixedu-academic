@@ -35,12 +35,12 @@ import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IGroupProperties;
 import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
-import net.sourceforge.fenixedu.domain.ITurnoAluno;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
@@ -193,7 +193,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
 	                    IStudent student = attendance.getAluno();
 	                
 	                    try {
-	                        ITurnoAluno ta = sp.getITurnoAlunoPersistente().readByTurnoAndAluno(turno, student);
+	                        IShiftStudent ta = sp.getITurnoAlunoPersistente().readByTurnoAndAluno(turno, student);
 	                        
 	                        if (ta != null)
 	                            collectedAttends.add(attendance);
@@ -344,7 +344,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         while(it.hasNext()){
             IShift sh = (IShift)it.next();
             try {
-                ITurnoAluno ta = sp.getITurnoAlunoPersistente().readByTurnoAndAluno(sh, attend.getAluno());
+                IShiftStudent ta = sp.getITurnoAlunoPersistente().readByTurnoAndAluno(sh, attend.getAluno());
                 
                 if (ta != null)
                     result.put(sh.getTipo().getSiglaTipoAula(),InfoShift.newInfoFromDomain(sh));//result.get(sh.getTipo())

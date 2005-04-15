@@ -65,7 +65,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
         //            turmaTurno = (ISchoolClassShift) iterador1.next();
         //            turmaTurnoOJB.delete(turmaTurno);
         //        }
-        //        ITurnoAluno turnoAluno = null;
+        //        IShiftStudent turnoAluno = null;
         //        TurnoAlunoOJB turnoAlunoOJB = new TurnoAlunoOJB();
         //
         //        Criteria criteria = new Criteria();
@@ -83,7 +83,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
         //        Iterator iterador2 = result2.iterator();
         //        while (iterador2.hasNext())
         //        {
-        //            turnoAluno = (ITurnoAluno) iterador2.next();
+        //            turnoAluno = (IShiftStudent) iterador2.next();
         //            turnoAlunoOJB.delete(turnoAluno);
         //        }
 

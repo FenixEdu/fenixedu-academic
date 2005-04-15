@@ -15,10 +15,10 @@ import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternal
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IGroupProperties;
+import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
-import net.sourceforge.fenixedu.domain.ITurnoAluno;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroupAttend;
@@ -140,7 +140,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
         ArrayList result = new ArrayList();
         for (Iterator iter = shifts.iterator(); iter.hasNext();)
         {
-            ITurnoAluno shiftStudent = (ITurnoAluno) iter.next();
+            IShiftStudent shiftStudent = (IShiftStudent) iter.next();
             result.add(InfoExternalShiftInfo.newFromShift(shiftStudent.getShift()));            
         }
         

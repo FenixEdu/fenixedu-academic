@@ -23,8 +23,8 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.ITurnoAluno;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -143,7 +143,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
         List shifts = (List) CollectionUtils.collect(studentShifts, new Transformer() {
 
             public Object transform(Object input) {
-                ITurnoAluno shiftStudent = (ITurnoAluno) input;
+                IShiftStudent shiftStudent = (IShiftStudent) input;
                 return shiftStudent.getShift();
             }
         });

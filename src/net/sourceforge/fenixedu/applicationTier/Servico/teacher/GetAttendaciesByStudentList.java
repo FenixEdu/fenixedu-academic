@@ -26,8 +26,8 @@ import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.ITurnoAluno;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
@@ -111,8 +111,8 @@ public class GetAttendaciesByStudentList implements IService {
                 if (shifts != null) {
                     Iterator iter = shifts.iterator();
                     while (iter.hasNext()) {
-                        ITurnoAluno shiftStudent = (ITurnoAluno) iter.next();
-
+                        IShiftStudent shiftStudent = (IShiftStudent) iter.next();
+                        
                         infoShifts.put(shiftStudent.getShift().getTipo().getSiglaTipoAula(), InfoShift
                                 .newInfoFromDomain(shiftStudent.getShift()));
                     }

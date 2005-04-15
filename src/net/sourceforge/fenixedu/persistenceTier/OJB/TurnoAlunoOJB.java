@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.ITurnoAluno;
 import net.sourceforge.fenixedu.domain.ShiftStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoAlunoPersistente;
@@ -44,7 +44,7 @@ public class TurnoAlunoOJB extends PersistentObjectOJB implements ITurnoAlunoPer
         return queryList(ShiftStudent.class, crit);
     }
 
-    public ITurnoAluno readByTurnoAndAluno(IShift turno, IStudent aluno) throws ExcepcaoPersistencia {
+    public IShiftStudent readByTurnoAndAluno(IShift turno, IStudent aluno) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
 
         criteria.addEqualTo("student.number", aluno.getNumber());
@@ -56,11 +56,11 @@ public class TurnoAlunoOJB extends PersistentObjectOJB implements ITurnoAlunoPer
         criteria.addEqualTo("shift.disciplinaExecucao.executionPeriod.executionYear.year", turno
                 .getDisciplinaExecucao().getExecutionPeriod().getExecutionYear().getYear());
 
-        return (ITurnoAluno) queryObject(ShiftStudent.class, criteria);
+        return (IShiftStudent) queryObject(ShiftStudent.class, criteria);
 
     }
 
-    public void delete(ITurnoAluno turnoAluno) throws ExcepcaoPersistencia {
+    public void delete(IShiftStudent turnoAluno) throws ExcepcaoPersistencia {
         super.delete(turnoAluno);
     }
 
@@ -102,7 +102,7 @@ public class TurnoAlunoOJB extends PersistentObjectOJB implements ITurnoAlunoPer
 
         Iterator iterator = result.iterator();
         while (iterator.hasNext()) {
-            ITurnoAluno shiftStudent = (ITurnoAluno) iterator.next();
+            IShiftStudent shiftStudent = (IShiftStudent) iterator.next();
             studentList.add(shiftStudent.getStudent());
         }
         lockRead(studentList);
@@ -134,7 +134,7 @@ public class TurnoAlunoOJB extends PersistentObjectOJB implements ITurnoAlunoPer
      * @see ServidorPersistente.ITurnoAlunoPersistente#readByStudentAndExecutionCourseAndLessonTypeAndGroup(Dominio.IStudent,
      *      Dominio.IDisciplinaExecucao, Util.TipoAula, Dominio.ISchoolClass)
      */
-    public ITurnoAluno readByStudentAndExecutionCourseAndLessonTypeAndGroup(IStudent student,
+    public IShiftStudent readByStudentAndExecutionCourseAndLessonTypeAndGroup(IStudent student,
             IExecutionCourse executionCourse, TipoAula lessonType, ISchoolClass group)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
@@ -143,10 +143,10 @@ public class TurnoAlunoOJB extends PersistentObjectOJB implements ITurnoAlunoPer
         criteria.addEqualTo("shift.tipo", lessonType);
         criteria.addEqualTo("shift.chaveDisciplinaExecucao", executionCourse.getIdInternal());
         criteria.addEqualTo("shift.associatedClasses.idInternal", group.getIdInternal());
-        return (ITurnoAluno) queryObject(ShiftStudent.class, criteria);
+        return (IShiftStudent) queryObject(ShiftStudent.class, criteria);
     }
 
-    public ITurnoAluno readByStudentAndExecutionCourseAndLessonType(IStudent student,
+    public IShiftStudent readByStudentAndExecutionCourseAndLessonType(IStudent student,
             IExecutionCourse executionCourse, TipoAula lessonType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
 
@@ -154,7 +154,7 @@ public class TurnoAlunoOJB extends PersistentObjectOJB implements ITurnoAlunoPer
         criteria.addEqualTo("shift.tipo", lessonType);
         criteria.addEqualTo("shift.disciplinaExecucao.idInternal", executionCourse.getIdInternal());
 
-        return (ITurnoAluno) queryObject(ShiftStudent.class, criteria);
+        return (IShiftStudent) queryObject(ShiftStudent.class, criteria);
     }
 
     /*
