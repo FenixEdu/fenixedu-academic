@@ -386,8 +386,6 @@ public class TeacherAdministrationSiteComponentBuilder {
             IAnnouncement iAnnouncement = (IAnnouncement) sp
                     .getIPersistentAnnouncement().readByOID(Announcement.class,
                             announcementCode);
-            //InfoAnnouncement infoAnnouncement = Cloner
-                    //.copyIAnnouncement2InfoAnnouncement(iAnnouncement);
             InfoAnnouncement infoAnnouncement = InfoAnnouncement.newInfoFromDomain(iAnnouncement);
 
             component.setCreationDate(infoAnnouncement.getCreationDate());
