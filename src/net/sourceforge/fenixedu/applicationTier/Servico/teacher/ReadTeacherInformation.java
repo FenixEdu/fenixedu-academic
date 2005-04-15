@@ -159,9 +159,6 @@ public class ReadTeacherInformation implements IService {
                 infoWeeklyOcupation.setOther(new Integer(0));
                 infoSiteTeacherInformation.setInfoWeeklyOcupation(infoWeeklyOcupation);
             } else {
-                //CLONER
-                //InfoWeeklyOcupation infoWeeklyOcupation =
-                //Cloner.copyIWeeklyOcupation2InfoWeeklyOcupation(weeklyOcupation);
                 InfoWeeklyOcupation infoWeeklyOcupation = InfoWeeklyOcupation
                         .newInfoFromDomain(weeklyOcupation);
                 infoWeeklyOcupation.setInfoTeacher(infoTeacher);
@@ -403,12 +400,8 @@ public class ReadTeacherInformation implements IService {
                 .readByTeacherAndPublicationType(teacher, publicationType);
         InfoPublicationsNumber infoPublicationsNumber = null;
         if (publicationsNumber != null) {
-            //infoPublicationsNumber =
-            //Cloner.copyIPublicationsNumber2InfoPublicationsNumber(publicationsNumber);
             infoPublicationsNumber = InfoPublicationsNumber.newInfoFromDomain(publicationsNumber);
         } else {
-            //InfoTeacher infoTeacher =
-            // Cloner.copyITeacher2InfoTeacher(teacher);
             InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
             infoPublicationsNumber = new InfoPublicationsNumber();
             infoPublicationsNumber.setInfoTeacher(infoTeacher);

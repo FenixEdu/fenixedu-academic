@@ -91,14 +91,6 @@ public class ReadFilteredExamsMap implements IService {
          */
 
         // Translate to execute following queries
-        //CLONER
-        //IExecutionDegree executionDegree =
-        //Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
-        //IExecutionDegree executionDegree =
-        // InfoExecutionDegreeWithInfoDegreeCurricularPlan.newDomainFromInfo(infoExecutionDegree);
-        //CLONER
-        //IExecutionPeriod executionPeriod =
-        //Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
         IExecutionPeriod executionPeriod = InfoExecutionPeriod.newDomainFromInfo(infoExecutionPeriod);
 
         try {
@@ -162,11 +154,6 @@ public class ReadFilteredExamsMap implements IService {
                             .getAssociatedCurricularCourses();
                     // Curricular courses
                     for (int k = 0; k < associatedCurricularCourses.size(); k++) {
-                        //CLONER
-                        //InfoCurricularCourse infoCurricularCourse =
-                        //Cloner.copyCurricularCourse2InfoCurricularCourse(
-                        //(ICurricularCourse)
-                        // associatedCurricularCourses.get(k));
                         InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
                                 .newInfoFromDomain((ICurricularCourse) associatedCurricularCourses
                                         .get(k));

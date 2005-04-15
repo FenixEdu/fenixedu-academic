@@ -98,7 +98,7 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear impl
             infoShifts = new ArrayList();
             for (int i = 0; i < shifts.size(); i++) {
                 IShift shift = (IShift) shifts.get(i);
-                //Cloner.copyShift2InfoShift((IShift) shifts.get(i));
+
                 InfoShift infoShift = new InfoShift();
                 infoShift.setAvailabilityFinal(shift.getAvailabilityFinal());
                 infoShift.setIdInternal(shift.getIdInternal());

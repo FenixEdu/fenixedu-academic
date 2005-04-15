@@ -194,9 +194,6 @@ public class ReadTeachersInformation implements IService {
             infoServiceProviderRegime.setInfoTeacher(infoTeacher);
             infoSiteTeacherInformation.setInfoServiceProviderRegime(infoServiceProviderRegime);
         } else {
-            //CLONER
-            //InfoServiceProviderRegime infoServiceProviderRegime =
-            //Cloner.copyIServiceProviderRegime2InfoServiceProviderRegime(serviceProviderRegime);
             InfoServiceProviderRegime infoServiceProviderRegime = InfoServiceProviderRegime
                     .newInfoFromDomain(serviceProviderRegime);
             infoSiteTeacherInformation.setInfoServiceProviderRegime(infoServiceProviderRegime);
@@ -222,9 +219,6 @@ public class ReadTeachersInformation implements IService {
             infoWeeklyOcupation.setOther(new Integer(0));
             infoSiteTeacherInformation.setInfoWeeklyOcupation(infoWeeklyOcupation);
         } else {
-            //CLONER
-            //InfoWeeklyOcupation infoWeeklyOcupation =
-            //Cloner.copyIWeeklyOcupation2InfoWeeklyOcupation(weeklyOcupation);
             InfoWeeklyOcupation infoWeeklyOcupation = InfoWeeklyOcupation
                     .newInfoFromDomain(weeklyOcupation);
             infoSiteTeacherInformation.setInfoWeeklyOcupation(infoWeeklyOcupation);
@@ -458,14 +452,8 @@ public class ReadTeachersInformation implements IService {
                 .readByTeacherAndPublicationType(teacher, publicationType);
         InfoPublicationsNumber infoPublicationsNumber = null;
         if (publicationsNumber != null) {
-            //CLONER
-            //infoPublicationsNumber =
-            //Cloner.copyIPublicationsNumber2InfoPublicationsNumber(publicationsNumber);
             infoPublicationsNumber = InfoPublicationsNumber.newInfoFromDomain(publicationsNumber);
         } else {
-            //CLONER
-            //InfoTeacher infoTeacher =
-            // Cloner.copyITeacher2InfoTeacher(teacher);
             InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
             infoPublicationsNumber = new InfoPublicationsNumber();
             infoPublicationsNumber.setInfoTeacher(infoTeacher);

@@ -55,7 +55,6 @@ public class ReadAuthorPublicationsToInsert implements IService {
             
             ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
             InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher); 
-                //Cloner.copyITeacher2InfoTeacher(teacher);
             infoSitePublications.setInfoTeacher(infoTeacher);
 
             
