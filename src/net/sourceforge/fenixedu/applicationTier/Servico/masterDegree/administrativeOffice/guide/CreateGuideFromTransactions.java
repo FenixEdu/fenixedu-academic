@@ -8,12 +8,13 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
+import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.domain.IContributor;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IGuide;
@@ -85,7 +86,8 @@ public class CreateGuideFromTransactions implements IService {
         //infoGuideSituation.setDate(calendar.getTime());
         infoGuideSituation.setSituation(situationOfGuide);
 
-        guide = Cloner.copyInfoGuide2IGuide(infoGuide);
+        guide = InfoGuide.newDomainFromInfo(infoGuide);
+        
         //      FIXME: Remove the : guide.setGuideEntries(null); WHY????
         guide.setGuideEntries(null);
         try {
@@ -102,7 +104,7 @@ public class CreateGuideFromTransactions implements IService {
                             infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan()
                                     .getInfoDegree().getSigla(),
                             infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName(),
-                            Cloner.copyInfoExecutionYear2IExecutionYear(infoGuide
+                            InfoExecutionYear.newDomainFromInfo(infoGuide
                                     .getInfoExecutionDegree().getInfoExecutionYear()));
 
             contributor = sp.getIPersistentContributor().readByContributorNumber(
@@ -166,9 +168,8 @@ public class CreateGuideFromTransactions implements IService {
             guide.setGuideEntries(guideEntries);
 
             // Write the New Guide Situation
-            guideSituation = Cloner.copyInfoGuideSituation2IGuideSituation(infoGuideSituation);
+            guideSituation = new GuideSituation(infoGuideSituation.getSituation(),infoGuideSituation.getRemarks(),infoGuideSituation.getDate(),guide,infoGuideSituation.getState());
             sp.getIPersistentGuideSituation().simpleLockWrite(guideSituation);
-            guideSituation.setGuide(guide);
 
             guide.setGuideSituations(new ArrayList());
 
