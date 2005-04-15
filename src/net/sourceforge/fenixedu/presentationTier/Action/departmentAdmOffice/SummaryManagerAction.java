@@ -240,17 +240,18 @@ public class SummaryManagerAction extends FenixDispatchAction {
     protected void processAnotherDate(HttpServletRequest request, ActionForm form) {
         DynaActionForm actionForm = (DynaActionForm) form;
         String summaryDateInputOption = request.getParameter("summaryDateInputOption");
+        String summaryDateInput = (String) actionForm.get("summaryDateInput");
         
-        if(summaryDateInputOption == null || summaryDateInputOption.equals("0")){
-            actionForm.set("anotherDateVisible", "true");
+        if((summaryDateInput != null) && (summaryDateInput.equals(""))){
+            actionForm.set("dateEmpty", "");
         }
-        else if(summaryDateInputOption.equals("on")){     //n esta seleccionado
-            actionForm.set("anotherDateVisible", "true");
-            actionForm.set("summaryDateInput", "");	
+        
+        if((summaryDateInputOption != null) && (summaryDateInputOption.equals("on"))){         
+            actionForm.set("dateEmpty", "");
         }
-        else{
-            actionForm.set("anotherDateVisible", "false"); //esta seleccionada
-        }
+        
+        else if((summaryDateInputOption == null) && (actionForm.get("dateEmpty") != null) && (actionForm.get("dateEmpty").equals("")))
+            actionForm.set("summaryDateInput", "");
     }
     
     

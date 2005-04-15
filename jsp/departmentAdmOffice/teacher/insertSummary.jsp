@@ -20,13 +20,11 @@
 <h2><bean:message key="title.summary.insert" /></h2>
 
 <html:form action="/summariesManagerInsertSummary">
-	<html:hidden property="forHidden" value=""/>
+	<html:hidden property="forHidden" />
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="insertSummary"/>
 	<html:hidden property="objectCode"/>
 	<html:hidden property="teacherNumber" />
-	<html:hidden property="anotherDateVisible" />
-	<html:hidden property="dateEmpty" value="" />
 
 <!-- Shifts -->
 <table width="100%">
@@ -76,7 +74,7 @@
 		<td colspan='2'>&nbsp;</td>
 	</tr>
 	<logic:present name="datesVisible">
-		<logic:notEqual name="datesVisible" value="false">
+		<logic:equal name="datesVisible" value="true">
 			<tr>
 				<td><bean:message key="label.summaryOptions"/></td>
 			</tr>	
@@ -84,46 +82,29 @@
 				<tr>
 					<bean:define id="summaryDate" type="java.lang.String"><dt:format pattern="dd/MM/yyyy"><bean:write name="date" property="time"/></dt:format></bean:define>
 					<td>&nbsp;&nbsp;&nbsp;&nbsp;<b><bean:write name="summaryDate"/></b></td>
-					<td width="50%"><html:checkbox property="summaryDateInputOption" value="<%= summaryDate %>"
-								onclick="<%= "this.form.summaryDateInput.value='"
-									+ summaryDate 
-									+ "';this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.submit();" %>"/>
-									
-					<logic:equal name="summaryForm" property="anotherDateVisible" value="false">			
-						<html:hidden property="summaryDateInput" value="<%= summaryDate %>"/>
-					</logic:equal>
-
+					<td width="50%">
+					
+						<html:checkbox property="summaryDateInputOption"
+							onclick="<%= "this.form.summaryDateInput.value='"
+					   			    + summaryDate 
+									+ "';this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.submit();" %>" />																	
 					</td>
 				</tr>
 			</logic:iterate>
-			<logic:equal name="summaryForm" property="anotherDateVisible" value="false">
-				<tr>
-					<td><bean:message key="label.summaryDateOptions"/></td>
-					<td><html:text property="dateEmpty" size="10" maxlength="10"
-							onchange="this.form.summaryDateInputOption.value='0';this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.submit();"/>
-					<bean:message key="message.dateFormat"/></td>
-				</tr>
-			</logic:equal>		
-			<logic:equal name="summaryForm" property="anotherDateVisible" value="true">
-				<tr>
-					<td><bean:message key="label.summaryDateOptions"/></td>
-					<td><html:text property="summaryDateInput" size="10" maxlength="10"
-							onchange="this.form.summaryDateInputOption.value='0';this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.submit();"/>
-					<bean:message key="message.dateFormat"/></td>
-				</tr>
-			</logic:equal>			
-		</logic:notEqual>
-	</logic:present>		
-	<logic:present name="datesVisible">
-		<logic:notEqual name="datesVisible" value="true">
 			<tr>
-				<td><bean:message key="label.summaryDate"/></td>
-				<td><html:text property="summaryDateInput" size="10" maxlength="10"/><bean:message key="message.dateFormat"/></td>
-			</tr>
-		</logic:notEqual>
+				<td><bean:message key="label.summaryDateOptions"/></td>
+				<td><html:text property="dateEmpty" size="10" maxlength="10"
+						onchange="this.form.summaryDateInputOption.value='null';this.form.summaryDateInput.value=this.form.dateEmpty.value;this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.submit();"/>
+				<bean:message key="message.dateFormat"/></td>
+			</tr>							
+		</logic:equal>
 	</logic:present>		
 	<logic:present name="forHidden">
-		<logic:notEqual name="forHidden" value="true">
+		<logic:equal name="forHidden" value="false">
+		<tr>
+			<td><bean:message key="label.summaryDate"/></td>
+			<td><html:text property="summaryDateInput" size="10" maxlength="10"/><bean:message key="message.dateFormat"/></td>
+		</tr>
 		<tr>
 			<td><bean:message key="label.summaryHour"/></td>
 			<td><html:text property="summaryHourInput" size="5" maxlength="5"/><bean:message key="message.hourFormat"/></td>		
@@ -135,10 +116,11 @@
 					<html:options collection="rooms" property="idInternal" labelProperty="nome"/>
 				</html:select></td>		
 		<tr/>	
-		</logic:notEqual>
+		</logic:equal>
 		<logic:equal name="forHidden" value="true">
 			<html:hidden property="summaryHourInput"/>
 			<html:hidden property="room"/>
+			<html:hidden property="summaryDateInput" />
 		</logic:equal>
 	</logic:present>
 	<logic:notPresent name="forHidden">

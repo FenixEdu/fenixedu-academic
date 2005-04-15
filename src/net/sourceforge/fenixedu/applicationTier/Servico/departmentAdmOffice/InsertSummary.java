@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import net.sourceforge.fenixedu.util.TipoAula;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -90,7 +91,8 @@ public class InsertSummary implements IService {
                 summary.setIsExtraLesson(Boolean.FALSE);
 
                 ILesson lesson = SummaryUtils.findlesson(shift, infoSummary);
-
+                summary.setSummaryType(lesson.getTipo());
+                
                 //room
                 summary.setRoom(lesson.getSala());//not necessary
 

@@ -10,7 +10,6 @@
 <bean:define id="bodyComponent" name="siteView" property="component"/>
 <bean:define id="infoSummary" name="bodyComponent" property="infoSummary"/>
 <bean:define id="summaryCode" name="infoSummary" property="idInternal"/>
-<bean:define id="summaryText" name="infoSummary" property="summaryText"/>
 <bean:define id="professorships" name="bodyComponent" property="infoProfessorships" />
 <bean:define id="rooms" name="bodyComponent" property="infoRooms" />
 <bean:define id="shifts" name="bodyComponent" property="infoShifts" />
@@ -29,7 +28,7 @@
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="editSummary"/>
 	<html:hidden property="objectCode"/>
-	<html:hidden property="summaryText" value="<%= summaryText.toString() %>"/>
+	<html:hidden property="summaryText" />
 	<html:hidden property="summaryCode" value="<%= summaryCode.toString() %>"/>
 
 <!-- Shifts -->

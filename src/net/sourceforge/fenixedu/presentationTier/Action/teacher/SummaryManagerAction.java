@@ -508,10 +508,15 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         SiteView siteView = null;
         try {
             siteView = (SiteView) ServiceUtils.executeService(userView, "ReadSummary", args);
-                        
-            if(request.getAttribute("summaryTextFlag")!=null)
-                ((InfoSiteSummary) siteView.getComponent()).getInfoSummary().setSummaryText((String) request.getAttribute("summaryTextFlag"));
             
+            if(request.getAttribute("summaryTextFlag") == null){
+	            String summaryText = ((InfoSiteSummary) siteView.getComponent()).getInfoSummary().getSummaryText();
+	            if(summaryText != null)
+	                summaryForm.set("summaryText", summaryText);
+            }            
+            else              
+                summaryForm.set("summaryText", (String) request.getAttribute("summaryTextFlag"));
+                
             boolean loggedIsResponsible = false;
             List responsibleTeachers = null;
             Object argsReadResponsibleTeachers[] = { executionCourseId };
@@ -659,6 +664,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             saveErrors(request, actionErrors);
             
             String text = request.getParameter("summaryText");
+            System.out.println("text");
             request.setAttribute("summaryTextFlag", text);
             
             return prepareEditSummary(mapping, form, request, response);//mudei

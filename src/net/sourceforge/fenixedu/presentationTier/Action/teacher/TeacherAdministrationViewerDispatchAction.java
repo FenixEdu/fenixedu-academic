@@ -193,17 +193,17 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String title = (String) insertAnnouncementForm.get("title");
         String information = (String) insertAnnouncementForm.get("information");
         
-        HtmlValidator htmlValidator = new HtmlValidator();
-        htmlValidator.validateHTMLString(information);
-        String errors = htmlValidator.getErrors();
-        
-        if((errors != null) && (!errors.equals(""))){
-            ActionErrors actionErrors = new ActionErrors();
-            request.setAttribute("errors", errors);
-            actionErrors.add("htmlErrors", new ActionError("html.validate.error"));
-            saveErrors(request, actionErrors);
-            return mapping.getInputForward();
-        }
+//        HtmlValidator htmlValidator = new HtmlValidator();
+//        htmlValidator.validateHTMLString(information);
+//        String errors = htmlValidator.getErrors();
+//        
+//        if((errors != null) && (!errors.equals(""))){
+//            ActionErrors actionErrors = new ActionErrors();
+//            request.setAttribute("errors", errors);
+//            actionErrors.add("htmlErrors", new ActionError("html.validate.error"));
+//            saveErrors(request, actionErrors);
+//            return mapping.getInputForward();
+//        }
         
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, title, information };
@@ -230,12 +230,13 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         SiteView siteView = readSiteView(request, announcementComponent, null, announcementCode, null);
         
         String information = ((InfoAnnouncement)siteView.getComponent()).getInformation();
+        
         DynaActionForm actionForm = (DynaActionForm)form;
         if(information != null)
             actionForm.set("information", information);
         
-        if(request.getAttribute("announcementTextFlag")!=null)
-            ((InfoAnnouncement)siteView.getComponent()).setInformation((String) request.getAttribute("announcementTextFlag"));
+        if(request.getAttribute("announcementTextFlag") != null)
+            actionForm.set("information", (String) request.getAttribute("announcementTextFlag"));
          
         return mapping.findForward("editAnnouncement");
     }
@@ -264,18 +265,18 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String newTitle = (String) insertAnnouncementForm.get("title");
         String newInformation = (String) insertAnnouncementForm.get("information");
         
-        HtmlValidator htmlValidator = new HtmlValidator();   
-        htmlValidator.validateHTMLString(newInformation);
-        String errors = htmlValidator.getErrors();
-        
-        if((errors != null) && (!errors.equals(""))){
-            ActionErrors actionErrors = new ActionErrors();
-            request.setAttribute("errors", errors);
-            actionErrors.add("htmlErrors", new ActionError("html.validate.error"));
-            saveErrors(request, actionErrors);
-            request.setAttribute("announcementTextFlag", newInformation);
-            return prepareEditAnnouncement(mapping, form, request, response);
-        }
+//        HtmlValidator htmlValidator = new HtmlValidator();   
+//        htmlValidator.validateHTMLString(newInformation);
+//        String errors = htmlValidator.getErrors();
+//        
+//        if((errors != null) && (!errors.equals(""))){
+//            ActionErrors actionErrors = new ActionErrors();
+//            request.setAttribute("errors", errors);
+//            actionErrors.add("htmlErrors", new ActionError("html.validate.error"));
+//            saveErrors(request, actionErrors);
+//            request.setAttribute("announcementTextFlag", newInformation);
+//            return prepareEditAnnouncement(mapping, form, request, response);
+//        }
         
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, announcementCode, newTitle, newInformation };
@@ -1093,17 +1094,17 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String itemName = (String) dynaForm.get("name");
         String information = (String) dynaForm.get("information");
         
-        HtmlValidator htmlValidator = new HtmlValidator();     
-        htmlValidator.validateHTMLString(information);
-        String errors = htmlValidator.getErrors();           
-  
-        if((errors != null) && (!errors.equals(""))){
-            ActionErrors actionErrors = new ActionErrors();
-            request.setAttribute("errors", errors);
-            actionErrors.add("htmlErrors", new ActionError("html.validate.error"));
-            saveErrors(request, actionErrors);
-            return mapping.getInputForward();
-        }
+//        HtmlValidator htmlValidator = new HtmlValidator();     
+//        htmlValidator.validateHTMLString(information);
+//        String errors = htmlValidator.getErrors();           
+//  
+//        if((errors != null) && (!errors.equals(""))){
+//            ActionErrors actionErrors = new ActionErrors();
+//            request.setAttribute("errors", errors);
+//            actionErrors.add("htmlErrors", new ActionError("html.validate.error"));
+//            saveErrors(request, actionErrors);
+//            return mapping.getInputForward();
+//        }
         
         String urgentString = (String) dynaForm.get("urgent");
         InfoItem newInfoItem = new InfoItem();
@@ -1157,17 +1158,17 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         DynaActionForm itemForm = (DynaActionForm) form;
         String information = (String) itemForm.get("information");
         
-        HtmlValidator htmlValidator = new HtmlValidator();     
-        htmlValidator.validateHTMLString(information);
-        String errors = htmlValidator.getErrors();           
-  
-        if((errors != null) && (!errors.equals(""))){
-            ActionErrors actionErrors = new ActionErrors();
-            request.setAttribute("errors", errors);
-            actionErrors.add("htmlErrors", new ActionError("html.validate.error"));
-            saveErrors(request, actionErrors);
-            return mapping.getInputForward();
-        }
+//        HtmlValidator htmlValidator = new HtmlValidator();     
+//        htmlValidator.validateHTMLString(information);
+//        String errors = htmlValidator.getErrors();           
+//  
+//        if((errors != null) && (!errors.equals(""))){
+//            ActionErrors actionErrors = new ActionErrors();
+//            request.setAttribute("errors", errors);
+//            actionErrors.add("htmlErrors", new ActionError("html.validate.error"));
+//            saveErrors(request, actionErrors);
+//            return mapping.getInputForward();
+//        }
         
         String name = (String) itemForm.get("name");
         Boolean urgent = new Boolean((String) itemForm.get("urgent"));
