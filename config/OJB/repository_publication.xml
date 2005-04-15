@@ -1,5 +1,50 @@
 <!-- TJBF & PFON  -->
 <!-- Carlos Pereira & Francisco Passos  -->
+<!-- Ricardo Rodrigues -->
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute" table="PUBLICATION_ATTRIBUTE">
+    <field-descriptor
+    	name="idInternal"
+     	column="ID_INTERNAL"
+     	jdbc-type="INTEGER"
+     	primarykey="true"
+     	autoincrement="true"
+    />
+	<field-descriptor
+		name="ackOptLock"
+		column="ACK_OPT_LOCK"
+		jdbc-type="INTEGER"
+		locking="true"
+	/>
+	<field-descriptor
+		name="keyPublicationType"
+		column="KEY_PUBLICATION_TYPE"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyAttribute"
+		column="KEY_ATTRIBUTE"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="required"
+		column="REQUIRED"
+		jbdc-type="BIT"
+	/>
+	<reference-descriptor
+		name="publicationType"
+		class-ref="net.sourceforge.fenixedu.domain.publication.PublicationType"
+		proxy="true">
+	    <foreignkey field-ref="keyPublicationType"/>
+    </reference-descriptor>
+    <reference-descriptor
+		name="attribute"
+		class-ref="net.sourceforge.fenixedu.domain.publication.Attribute"
+		proxy="true">
+	    <foreignkey field-ref="keyAttribute"/>
+    </reference-descriptor>
+</class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.publication.PublicationType -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.publication.PublicationType" table="PUBLICATION_TYPE">
@@ -7,31 +52,16 @@
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
 	<field-descriptor name="publicationType" column="PUBLICATION_TYPE" jdbc-type="VARCHAR"/>
 	<collection-descriptor
-			name="requiredAttributes"
-			element-class-ref="net.sourceforge.fenixedu.domain.publication.Attribute"
-			indirection-table="PUBLICATION_ATTRIBUTE"
+			name="publicationTypeAttributes"
+			element-class-ref="net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute"
 			proxy="true">
-		<fk-pointing-to-this-class column="KEY_PUBLICATION_TYPE"/>
-		<fk-pointing-to-element-class column="KEY_ATTRIBUTE"/>
-		<query-customizer class="net.sourceforge.fenixedu.persistenceTier.customQueries.RequiredAttributeFilter">
-	    </query-customizer>
-	</collection-descriptor>
-	<collection-descriptor
-			name="nonRequiredAttributes"
-			element-class-ref="net.sourceforge.fenixedu.domain.publication.Attribute"
-			indirection-table="PUBLICATION_ATTRIBUTE"
-			proxy="true">
-		<fk-pointing-to-this-class column="KEY_PUBLICATION_TYPE"/>
-		<fk-pointing-to-element-class column="KEY_ATTRIBUTE"/>
-		<query-customizer class="net.sourceforge.fenixedu.persistenceTier.customQueries.NonRequiredAttributeFilter">
-	    </query-customizer>
+		<inverse-foreignkey field-ref="keyPublicationType"/>
 	</collection-descriptor>
 	<collection-descriptor
          	name="subtypes"
          	element-class-ref="net.sourceforge.fenixedu.domain.publication.PublicationSubtype">
          <inverse-foreignkey field-ref="keyPublicationType"/>
     </collection-descriptor>
-
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.publication.Attribute -->
@@ -40,12 +70,10 @@
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
 	<field-descriptor name="attributeType" column="ATTRIBUTE_TYPE" jdbc-type="VARCHAR"/>
 	<collection-descriptor
-			name="publications"
-			element-class-ref="net.sourceforge.fenixedu.domain.publication.PublicationType"
-			indirection-table="PUBLICATION_ATTRIBUTE"
+			name="publicationTypeAttributes"
+			element-class-ref="net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute"
 			proxy="true">
-		<fk-pointing-to-this-class column="KEY_ATTRIBUTE"/>
-		<fk-pointing-to-element-class column="KEY_PUBLICATION_TYPE"/>
+		<inverse-foreignkey field-ref="keyAttribute"/>
 	</collection-descriptor>
 </class-descriptor>
 
