@@ -62,9 +62,9 @@ public class ReadClassesForCurrentAndNextPeriodByDegree implements IService {
             ISchoolClass klass = (ISchoolClass) iterator.next();
             if (isInPeriodsAndForDegree(klass, degree, currentExecutionPeriod, nextExecutionPeriod)) {
                 ClassView classView = new ClassView();
-                classView.setClassName(klass.getName());
+                classView.setClassName(klass.getNome());
                 classView.setClassOID(klass.getIdInternal());
-                classView.setCurricularYear(klass.getCurricularYear());
+                classView.setCurricularYear(klass.getAnoCurricular());
                 classView.setSemester(klass.getExecutionPeriod().getSemester());
                 classView.setDegreeCurricularPlanID(klass.getExecutionDegree().getDegreeCurricularPlan().getIdInternal());
                 classView.setDegreeInitials(klass.getExecutionDegree().getDegreeCurricularPlan().getDegree().getSigla());

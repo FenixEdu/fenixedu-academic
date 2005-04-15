@@ -27,7 +27,7 @@ public class TurmaTurnoOJB extends PersistentObjectOJB implements ITurmaTurnoPer
 
     public ISchoolClassShift readByTurmaAndTurno(ISchoolClass turma, IShift turno) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("turma.nome", turma.getName());
+        crit.addEqualTo("turma.nome", turma.getNome());
         crit.addEqualTo("turma.executionPeriod.name", turma.getExecutionPeriod().getName());
         crit.addEqualTo("turma.executionPeriod.executionYear.year", turma.getExecutionPeriod()
                 .getExecutionYear().getYear());
@@ -58,7 +58,7 @@ public class TurmaTurnoOJB extends PersistentObjectOJB implements ITurmaTurnoPer
      */
     public List readByClass(ISchoolClass group) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("turma.nome", group.getName());
+        crit.addEqualTo("turma.nome", group.getNome());
         crit.addEqualTo("turma.executionPeriod.name", group.getExecutionPeriod().getName());
         crit.addEqualTo("turma.executionPeriod.executionYear.year", group.getExecutionPeriod()
                 .getExecutionYear().getYear());

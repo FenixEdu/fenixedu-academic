@@ -109,7 +109,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
         for (int i = 0; i != result.size(); i++) {
             criteria = new Criteria();
             criteria.addEqualTo("turno.tipo", new Integer(TipoAula.PRATICA));
-            criteria.addEqualTo("turma.nome", ((SchoolClassShift) (result.get(i))).getSchoolClass().getName());
+            criteria.addEqualTo("turma.nome", ((SchoolClassShift) (result.get(i))).getSchoolClass().getNome());
             if (i == 0) {
                 result2 = queryList(SchoolClassShift.class, criteria);
             } else {
@@ -195,7 +195,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
         criteria
                 .addEqualTo(
                         "disciplinaExecucao.associatedCurricularCourses.scopes.curricularSemester.curricularYear.idInternal",
-                        schoolClass.getCurricularYear());
+                        schoolClass.getAnoCurricular());
         criteria.addEqualTo(
                 "disciplinaExecucao.associatedCurricularCourses.degreeCurricularPlan.idInternal",
                 schoolClass.getExecutionDegree().getDegreeCurricularPlan().getIdInternal());

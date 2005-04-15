@@ -36,16 +36,16 @@ public class SchoolClass extends SchoolClass_Base {
      * @param licenciatura
      */
     public SchoolClass(String name, Integer semester, Integer curricularYear, IDegree degree) {
-        setName(name);
+        setNome(name);
         //	setSemestre(semestre);
-        setCurricularYear(curricularYear);
+        setAnoCurricular(curricularYear);
         //	setLicenciatura(licenciatura);
     }
 
     public SchoolClass(String name, Integer curricularYear, IExecutionDegree executionDegree,
             IExecutionPeriod executionPeriod) {
-        setName(name);
-        setCurricularYear(curricularYear);
+        setNome(name);
+        setAnoCurricular(curricularYear);
         setExecutionDegree(executionDegree);
         setExecutionPeriod(executionPeriod);
     }
@@ -62,7 +62,7 @@ public class SchoolClass extends SchoolClass_Base {
     public String toString() {
         String result = "[TURMA";
         result += ", codigoInterno=" + getIdInternal();
-        result += ", nome=" + getName();
+        result += ", nome=" + getNome();
         result += ", executionPeriod=" + executionPeriod;
         result += ", executionDegree=" + executionDegree;
         result += "]";

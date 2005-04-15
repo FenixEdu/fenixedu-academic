@@ -44,7 +44,7 @@ public class ReadSchoolClassByNameInCurrentExecutionPeriod implements IService {
 
                         public boolean evaluate(Object arg0) {
                             ISchoolClass schoolClass = (ISchoolClass) arg0;
-                            return schoolClass.getName().equals(schoolClassName);
+                            return schoolClass.getNome().equals(schoolClassName);
                         }
                     });
             if (schoolClass != null) {
@@ -54,7 +54,7 @@ public class ReadSchoolClassByNameInCurrentExecutionPeriod implements IService {
                 SchoolClassDTO schoolClassDTO = new SchoolClassDTO();
                 schoolClassDTO.setExecutionPeriodId(executionPeriod.getIdInternal());
                 schoolClassDTO.setSchoolClassId(schoolClass.getIdInternal());
-                schoolClassDTO.setSchoolClassName(schoolClass.getName());
+                schoolClassDTO.setSchoolClassName(schoolClass.getNome());
                 schoolClassDTO.setDegreeCurricularPlanId(degreeCurricularPlan.getIdInternal());
                 schoolClassDTO.setDegreeCurricularPlanName(degreeCurricularPlan.getName());
                 schoolClassDTO.setDegreeId(degree.getIdInternal());

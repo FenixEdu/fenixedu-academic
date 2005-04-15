@@ -98,7 +98,7 @@ public class ReadStudentEnrollmentsAndClass implements IService {
             List classes = shiftStudent.getShift().getAssociatedClasses();
             if (classes.size() == 1) {
                 ISchoolClass klass = (ISchoolClass) classes.get(0);
-                infoClass.setNome(klass.getName());
+                infoClass.setNome(klass.getNome());
                 return infoClass;
             }
 
@@ -106,7 +106,7 @@ public class ReadStudentEnrollmentsAndClass implements IService {
                 ISchoolClass klass = (ISchoolClass) classes.get(j);
                 if (degreeName.equals(klass.getExecutionDegree().getDegreeCurricularPlan().getDegree()
                         .getNome())) {
-                    classesName.add(klass.getName());
+                    classesName.add(klass.getNome());
                 }
             }
 

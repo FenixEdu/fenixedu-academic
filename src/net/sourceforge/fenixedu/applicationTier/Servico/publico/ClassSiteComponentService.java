@@ -105,7 +105,7 @@ public class ClassSiteComponentService implements IService {
                 }
             } else {
                 domainClass = new SchoolClass();
-                domainClass.setCurricularYear(curricularYear);
+                domainClass.setAnoCurricular(curricularYear);
                 domainClass.setExecutionDegree(executionDegree);
                 domainClass.setExecutionPeriod(executionPeriod);
 

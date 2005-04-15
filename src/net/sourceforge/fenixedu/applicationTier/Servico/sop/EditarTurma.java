@@ -43,11 +43,11 @@ public class EditarTurma implements IService {
                         executionPeriod);
 
         if (otherClassWithSameNewName != null) {
-            throw new ExistingServiceException("Duplicate Entry: " + otherClassWithSameNewName.getName());
+            throw new ExistingServiceException("Duplicate Entry: " + otherClassWithSameNewName.getNome());
         }
 
         sp.getITurmaPersistente().simpleLockWrite(classToEdit);
-        classToEdit.setName(newClassView.getNome());
+        classToEdit.setNome(newClassView.getNome());
 
         return new Boolean(true);
     }
