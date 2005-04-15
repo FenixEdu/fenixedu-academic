@@ -342,7 +342,6 @@ public class EditGuideInformation implements IService {
             InfoGuide infoGuideTemp = new InfoGuide();
             infoGuideTemp.setInfoGuideEntries(newInfoGuideEntries);
 
-//            result = Cloner.copyIGuide2InfoGuide(newGuide);
             result = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(newGuide);
 
             result.setTotal(CalculateGuideTotal.calculate(result));

@@ -55,7 +55,7 @@ public class ChooseGuide implements IService {
         List result = new ArrayList();
         while (iterator.hasNext()) {
             IGuide guide = (IGuide) iterator.next();
-            // InfoGuide infoGuide = Cloner.copyIGuide2InfoGuide(guide);
+
             InfoGuide infoGuide = InfoGuideWithPersonAndExecutionDegreeAndContributor
                     .newInfoFromDomain(guide);
             List infoReimbursementGuides = new ArrayList();
@@ -66,8 +66,6 @@ public class ChooseGuide implements IService {
                     InfoReimbursementGuide infoReimbursementGuide = InfoReimbursementGuide
                             .newInfoFromDomain(reimbursementGuide);
 
-                    // InfoReimbursementGuide infoReimbursementGuide = Cloner
-                    // .copyIReimbursementGuide2InfoReimbursementGuide(reimbursementGuide);
                     infoReimbursementGuides.add(infoReimbursementGuide);
 
                 }

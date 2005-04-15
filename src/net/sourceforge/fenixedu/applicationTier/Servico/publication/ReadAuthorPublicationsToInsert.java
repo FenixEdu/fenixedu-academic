@@ -112,8 +112,8 @@ public class ReadAuthorPublicationsToInsert implements IService {
                             IPublication publication = (IPublication) o;
                             IPublication publication2 = publication;
                             publication2.setPublicationString(publication.toString());
+
                             return InfoPublication.newInfoFromDomain(publication2);
-                            //return Cloner.copyIPublication2InfoPublication(publication2);
                         }
                     });
         }

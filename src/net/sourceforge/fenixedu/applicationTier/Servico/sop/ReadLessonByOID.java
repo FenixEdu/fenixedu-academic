@@ -32,9 +32,6 @@ public class ReadLessonByOID implements IService {
             ILesson lesson = (ILesson) lessonDAO.readByOID(Lesson.class, oid);
             if (lesson != null) {
                 InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(lesson);
-                //				IShift shift = lesson.getShift();
-                //				InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
-                //				infoLesson.setInfoShift(infoShift);
 
                 result = infoLesson;
             }

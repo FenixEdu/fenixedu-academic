@@ -373,8 +373,6 @@ public class SubmitMarks implements IServico {
 
         InfoSiteSubmitMarks infoSiteSubmitMarks = new InfoSiteSubmitMarks();
 
-        //infoSiteSubmitMarks.setInfoEvaluation(Cloner
-        //.copyIEvaluation2InfoEvaluation(evaluation));
         infoSiteSubmitMarks.setInfoEvaluation(InfoEvaluation.newInfoFromDomain(evaluation));
         infoSiteSubmitMarks.setSubmited(submited);
 

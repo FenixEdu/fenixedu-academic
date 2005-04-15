@@ -25,10 +25,7 @@ public class RemoverAula implements IService {
 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            //IRoom room =
-            // sp.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
 
-            //IShift shift = Cloner.copyInfoShift2Shift(infoShift);
             ILesson lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
 
             sp.getIAulaPersistente().delete(lesson);

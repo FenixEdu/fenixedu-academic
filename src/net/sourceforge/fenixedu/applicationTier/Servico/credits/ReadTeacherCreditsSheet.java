@@ -376,20 +376,6 @@ public class ReadTeacherCreditsSheet implements IService {
      * @param sp
      * @return
      */
-    //    private InfoCredits readCredits(ITeacher teacher, IExecutionPeriod
-    // executionPeriod,
-    //            ISuportePersistente sp) throws ExcepcaoPersistencia {
-    //        IPersistentCredits creditsDAO = sp.getIPersistentCredits();
-    //        ICredits credits = creditsDAO.readByTeacherAndExecutionPeriod(teacher,
-    // executionPeriod);
-    //        return credits == null ? null : Cloner.copyICredits2InfoCredits(credits);
-    //    }
-    /**
-     * @param teacher
-     * @param executionPeriod
-     * @param sp
-     * @return
-     */
     private List readDetailedProfessorships(ITeacher teacher, IExecutionPeriod executionPeriod,
             ISuportePersistente sp) throws ExcepcaoPersistencia {
         IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();

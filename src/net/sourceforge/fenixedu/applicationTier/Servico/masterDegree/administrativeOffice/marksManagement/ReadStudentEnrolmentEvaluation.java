@@ -41,19 +41,7 @@ public class ReadStudentEnrolmentEvaluation implements IService {
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             enrolmentEvaluation = (IEnrolmentEvaluation) persistentEnrolmentEvaluation.readByOID(
                     EnrolmentEvaluation.class, studentEvaluationCode, false);
-            //			get curricularCourseScope for enrolmentEvaluation
-            //            ICurricularCourseScope curricularCourseScope = new
-            // CurricularCourseScope();
-            //            curricularCourseScope.setIdInternal(
-            //                enrolmentEvaluation.getEnrolment().getCurricularCourseScope().getIdInternal());
-            //            curricularCourseScope =
-            //                (ICurricularCourseScope)
-            // persistentCurricularCourseScope.readByOId(
-            //                    curricularCourseScope,
-            //                    false);
 
-            //			ICurricularCourseScope curricularCourseScopeForCriteria =
-            //				Cloner.copyInfoCurricularCourseScope2ICurricularCourseScope(infoCurricularCourseScope);
             infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
                     .newInfoFromDomain(enrolmentEvaluation.getEnrolment());
 

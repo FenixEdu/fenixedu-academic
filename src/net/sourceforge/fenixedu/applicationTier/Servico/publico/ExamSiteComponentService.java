@@ -53,11 +53,7 @@ public class ExamSiteComponentService implements IService {
             IExecutionDegree executionDegree = executionDegreeDAO
                     .readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(degreeInitials,
                             nameDegreeCurricularPlan, executionYear);
-            //			if (executionDegree != null) {
-            //				infoExecutionDegree =
-            //					Cloner.copyIExecutionDegree2InfoExecutionDegree(
-            //						executionDegree);
-            //			}
+
             ExamSiteComponentBuilder componentBuilder = ExamSiteComponentBuilder.getInstance();
 
             bodyComponent = componentBuilder.getComponent(bodyComponent, executionPeriod,

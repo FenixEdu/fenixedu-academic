@@ -186,7 +186,6 @@ public class PrepareCreateGuide implements IService {
 
             guide.setExecutionDegree(executionDegree);
 
-            // infoGuide = Cloner.copyIGuide2InfoGuide(guide);
             infoGuide = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide);
 
             infoGuide.setInfoGuideEntries(new ArrayList());

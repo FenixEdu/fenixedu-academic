@@ -407,31 +407,6 @@ public class ReadTeacherInformation implements IService {
             publication.setPublicationString(publicationTeacher.getPublication().toString());
             infoPublications.add(InfoPublication.newInfoFromDomain(publication));
         }
-//        
-//        List teacherPublications = teacher.getTeacherPublications();
-//
-//        List newPublications = new ArrayList();
-//        List infoPublications = new ArrayList();
-//
-//        if ((teacherPublications != null)
-//                || (teacherPublications.size() != PublicationConstants.ZERO_VALUE)) {
-//            Iterator iterator = teacherPublications.iterator();
-//            while (iterator.hasNext()) {
-//                IPublication publication = (IPublication) iterator.next();
-//                if (publication.getDidatic().intValue() == typePublication.intValue()) {
-//                    newPublications.add(publication);
-//                }
-//            }
-//
-//            infoPublications = (List) CollectionUtils.collect(newPublications, new Transformer() {
-//                public Object transform(Object o) {
-//                    IPublication publication = (IPublication) o;
-//                    IPublication publication2 = publication;
-//                    publication2.setPublicationString(publication.toString());
-//                    return Cloner.copyIPublication2InfoPublication(publication2);
-//                }
-//            });
-//        }
 
         return infoPublications;
     }

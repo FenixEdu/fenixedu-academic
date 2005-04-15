@@ -97,10 +97,8 @@ public class CreateGuide implements IService {
         infoGuideSituation.setDate(calendar.getTime());
         infoGuideSituation.setSituation(situationOfGuide);
 
-        //guide = Cloner.copyInfoGuide2IGuide(infoGuide);
         guide = InfoGuide.newDomainFromInfo(infoGuide);
-        //guide = (IGuide) sp.getIPersistentGuide().readByOID(Guide.class,infoGuide.getIdInternal(),true);
-        //infoGuide.copyToDomain(infoGuide,guide);
+
         guide.setIdInternal(null);
         
         
@@ -132,7 +130,6 @@ public class CreateGuide implements IService {
 
 
             // Write the New Guide Situation
-//            guideSituation = Cloner.copyInfoGuideSituation2IGuideSituation(infoGuideSituation);
             
             guideSituation = new GuideSituation(situationOfGuide,remarks,calendar.getTime(),guide,new State(State.ACTIVE));
             sp.getIPersistentGuideSituation().simpleLockWrite(guideSituation);
@@ -145,7 +142,6 @@ public class CreateGuide implements IService {
             throw newEx;
         }
 
-        //InfoGuide result = Cloner.copyIGuide2InfoGuide(guide);
         InfoGuide result = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide);
         result.setInfoGuideEntries(infoGuide.getInfoGuideEntries());
         result.setInfoGuideSituation(infoGuideSituation);

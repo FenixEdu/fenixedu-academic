@@ -94,29 +94,6 @@ public class ReadExamsByDate implements IServico {
                                 .getAssociatedExecutionCourses().get(k);
                         tempInfoExecutionCourses.add(Cloner.get(executionCourse));
 
-                        // prepare degrees associated with exam
-                        //                        tempAssociatedCurricularCourses =
-                        //                            executionCourse.getAssociatedCurricularCourses();
-                        //                        for (int j = 0; j <
-                        // tempAssociatedCurricularCourses.size(); j++)
-                        //                        {
-                        //                            tempDegree =
-                        //                                ((ICurricularCourse)
-                        // tempAssociatedCurricularCourses.get(j))
-                        //                                    .getDegreeCurricularPlan()
-                        //                                    .getDegree();
-                        //                            tempInfoDegrees.add(Cloner.copyIDegree2InfoDegree(tempDegree));
-                        //                        }
-
-                        // determine number of students attending course and
-                        // exam
-                        //                        numberStudentesAttendingCourse =
-                        //                            sp.getIFrequentaPersistente().countStudentsAttendingExecutionCourse(
-                        //                                executionCourse);
-                        //                        totalNumberStudents +=
-                        // numberStudentesAttendingCourse.intValue();
-                        //                        totalNumberStudentsForExam +=
-                        // numberStudentesAttendingCourse.intValue();
                     }
                 }
                 int numberOfStudentsForExam = 0;

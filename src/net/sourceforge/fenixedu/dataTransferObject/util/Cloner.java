@@ -309,10 +309,10 @@ public abstract class Cloner {
         sala = Cloner.copyInfoRoom2Room(infoLesson.getInfoSala());
         roomOccupation = Cloner
                 .copyInfoRoomOccupation2RoomOccupation(infoLesson.getInfoRoomOccupation());
-        // shift = Cloner.copyInfoShift2Shift(infoLesson.getInfoShift());
+
         lesson.setSala(sala);
         lesson.setRoomOccupation(roomOccupation);
-        // lesson.setShift(shift);
+
         return lesson;
     }
 
@@ -400,13 +400,12 @@ public abstract class Cloner {
         InfoRoom infoRoom = Cloner.copyRoom2InfoRoom(lesson.getSala());
         InfoRoomOccupation infoRoomOccupation = Cloner.copyIRoomOccupation2InfoRoomOccupation(lesson
                 .getRoomOccupation());
-        // InfoShift infoShift = Cloner.copyShift2InfoShift(lesson.getShift());
+
         copyObjectProperties(infoLesson, lesson);
 
         infoLesson.setInfoSala(infoRoom);
         infoLesson.setInfoRoomOccupation(infoRoomOccupation);
-        // infoLesson.setInfoShift(infoShift);
-        // infoLesson.setInfoDisciplinaExecucao(infoExecutionCourse);
+
         return infoLesson;
     }
 

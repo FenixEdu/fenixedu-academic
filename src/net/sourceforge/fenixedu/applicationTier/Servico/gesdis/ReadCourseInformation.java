@@ -493,7 +493,7 @@ public class ReadCourseInformation implements IService {
         while (iter.hasNext()) {
             IProfessorship professorship = (IProfessorship) iter.next();
             ITeacher teacher = professorship.getTeacher();
-            //infoLecturingTeachers.add(Cloner.copyITeacher2InfoTeacher(teacher));
+
             infoLecturingTeachers.add(InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher));
         }
         return infoLecturingTeachers;
