@@ -16,13 +16,17 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExam;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ILesson;
@@ -42,13 +46,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadLessonsAndExamsInWeekAndRoom implements IService {
 
-    public ReadLessonsAndExamsInWeekAndRoom() {
-    }
-
-    public final String getNome() {
-        return "ReadLessonsAndExamsInWeekAndRoom";
-    }
-
     public List run(InfoRoom infoRoom, Calendar day, InfoExecutionPeriod infoExecutionPeriod) {
         List infoShowOccupations = new ArrayList();
 
@@ -58,7 +55,6 @@ public class ReadLessonsAndExamsInWeekAndRoom implements IService {
             IAulaPersistente lessonDAO = sp.getIAulaPersistente();
             IPersistentExam examDAO = sp.getIPersistentExam();
 
-            //IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
             IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
 
             Calendar startDay = Calendar.getInstance();
@@ -79,7 +75,14 @@ public class ReadLessonsAndExamsInWeekAndRoom implements IService {
                 while (iterator.hasNext()) {
                     ILesson aula = (ILesson) iterator.next();
                     IRoomOccupation roomOccupation = aula.getRoomOccupation();
+                    InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(roomOccupation);
+
                     IPeriod period = roomOccupation.getPeriod();
+                    InfoPeriod infoPeriod = InfoPeriod.newInfoFromDomain(period);
+                    infoRoomOccupation.setInfoPeriod(infoPeriod);
+
+                    infoRoomOccupation.setInfoRoom(infoRoom);
+
                     if (period.intersectPeriods(weekPeriod)) {
 
                         boolean add = true;
@@ -100,13 +103,21 @@ public class ReadLessonsAndExamsInWeekAndRoom implements IService {
                             }
                         }
                         if (add) {
-                            InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(aula);
+                            InfoLesson infoLesson = InfoLesson.newInfoFromDomain(aula);
                             IShift shift = aula.getShift();
                             if (shift == null) {
                                 continue;
                             }
                             InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
                             infoLesson.setInfoShift(infoShift);
+
+                            infoLesson.setInfoRoomOccupation(infoRoomOccupation);
+
+                            final IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
+                            final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
+                            infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
+
+                            infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 
                             infoShowOccupations.add(infoLesson);
                         }
