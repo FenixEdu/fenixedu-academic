@@ -9,6 +9,7 @@
 
 <p><span class="error"><html:errors/></span></p>
 
+
  	<html:form action="/consultarFuncionarioEscolha" focus="diaInicioEscolha">
     	<table>
     		<tr>
