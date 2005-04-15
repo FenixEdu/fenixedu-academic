@@ -807,11 +807,7 @@ class net.sourceforge.fenixedu.domain.Professorship extends net.sourceforge.feni
 	Integer keyExecutionCourse;
 	Double hours;
 	interface "
-	public net.sourceforge.fenixedu.domain.IExecutionCourse getExecutionCourse();
-	
 	public net.sourceforge.fenixedu.domain.ITeacher getTeacher();
-	
-	public void setExecutionCourse(net.sourceforge.fenixedu.domain.IExecutionCourse executionCourse);
 	
 	public void setTeacher(net.sourceforge.fenixedu.domain.ITeacher teacher);
 	
@@ -845,11 +841,7 @@ class net.sourceforge.fenixedu.domain.ResponsibleFor extends net.sourceforge.fen
 	Integer keyExecutionCourse;
 	Integer keyTeacher;
 	interface "
-	public net.sourceforge.fenixedu.domain.IExecutionCourse getExecutionCourse();
-	
 	public net.sourceforge.fenixedu.domain.ITeacher getTeacher();
-	
-	public void setExecutionCourse(net.sourceforge.fenixedu.domain.IExecutionCourse executionCourse);
 	
 	public void setTeacher(net.sourceforge.fenixedu.domain.ITeacher teacher);
 	"
