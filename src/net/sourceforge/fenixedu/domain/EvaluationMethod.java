@@ -10,19 +10,8 @@ package net.sourceforge.fenixedu.domain;
  * 
  *  
  */
-public class EvaluationMethod extends DomainObject implements IEvaluationMethod {
+public class EvaluationMethod extends EvaluationMethod_Base {
 
-    private String evaluationElements;
-
-    private String evaluationElementsEn;
-
-    private Integer keyExecutionCourse;
-
-    private IExecutionCourse executionCourse;
-
-    /**
-     *  
-     */
     public EvaluationMethod() {
     }
 
@@ -42,48 +31,6 @@ public class EvaluationMethod extends DomainObject implements IEvaluationMethod 
         setEvaluationElementsEn(evaluationElementsEn);
     }
 
-    /**
-     * @return
-     */
-    public String getEvaluationElements() {
-        return evaluationElements;
-    }
-
-    /**
-     * @param string
-     */
-    public void setEvaluationElements(String string) {
-        evaluationElements = string;
-    }
-
-    /**
-     * @return
-     */
-    public IExecutionCourse getExecutionCourse() {
-        return executionCourse;
-    }
-
-    /**
-     * @return
-     */
-    public Integer getKeyExecutionCourse() {
-        return keyExecutionCourse;
-    }
-
-    /**
-     * @param execucao
-     */
-    public void setExecutionCourse(IExecutionCourse execucao) {
-        executionCourse = execucao;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setKeyExecutionCourse(Integer integer) {
-        keyExecutionCourse = integer;
-    }
-
     public String toString() {
         String result = "[EvaluationMethod";
         result += ", codInt=" + getIdInternal();
@@ -100,19 +47,4 @@ public class EvaluationMethod extends DomainObject implements IEvaluationMethod 
         }
         return result;
     }
-
-    /**
-     * @return
-     */
-    public String getEvaluationElementsEn() {
-        return evaluationElementsEn;
-    }
-
-    /**
-     * @param string
-     */
-    public void setEvaluationElementsEn(String string) {
-        evaluationElementsEn = string;
-    }
-
 }

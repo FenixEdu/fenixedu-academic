@@ -398,6 +398,13 @@ class net.sourceforge.fenixedu.domain.EvaluationExecutionCourse extends net.sour
 }
 
 
+class net.sourceforge.fenixedu.domain.EvaluationMethod extends net.sourceforge.fenixedu.domain.DomainObject {
+	String evaluationElements;
+	String evaluationElementsEn;
+	Integer keyExecutionCourse;
+}
+
+
 	class net.sourceforge.fenixedu.domain.ExamExecutionCourse extends net.sourceforge.fenixedu.domain.EvaluationExecutionCourse {
 		Integer keyExam;
 		
@@ -1196,7 +1203,6 @@ external class net.sourceforge.fenixedu.domain.CurricularCourseScope;
 external class net.sourceforge.fenixedu.domain.Degree;
 external class net.sourceforge.fenixedu.domain.Department;
 external class net.sourceforge.fenixedu.domain.DepartmentCourse;
-external class net.sourceforge.fenixedu.domain.EvaluationMethod;
 external class net.sourceforge.fenixedu.domain.ExecutionCourse;
 external class net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty;
 external class net.sourceforge.fenixedu.domain.ExecutionPeriod;
