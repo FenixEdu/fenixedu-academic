@@ -10,10 +10,13 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ICandidateSituation;
+import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -47,6 +50,11 @@ public class GetCandidatesByPerson implements IService {
             IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) iterator.next();
             InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
                     .newInfoFromDomain(masterDegreeCandidate);
+
+            IExecutionDegree executionDegree = masterDegreeCandidate.getExecutionDegree();
+            InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan.newInfoFromDomain(executionDegree);
+            infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
+
             Iterator situationIterator = masterDegreeCandidate.getSituations().iterator();
             List situations = new ArrayList();
             while (situationIterator.hasNext()) {
