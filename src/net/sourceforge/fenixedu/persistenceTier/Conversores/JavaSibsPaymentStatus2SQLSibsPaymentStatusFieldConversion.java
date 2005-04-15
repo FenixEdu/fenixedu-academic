@@ -28,7 +28,6 @@ public class JavaSibsPaymentStatus2SQLSibsPaymentStatusFieldConversion implement
      * @see FieldConversion#sqlToJava(Object)
      */
     public Object sqlToJava(Object source) {
-        SibsPaymentStatus sibsPaymentStatusType = null;
         if (source instanceof String) {
             String sibsPaymentStatusTypeString = (String) source;
             return SibsPaymentStatus.valueOf(sibsPaymentStatusTypeString);

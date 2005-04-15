@@ -24,4 +24,8 @@ public enum SibsPaymentStatus {
 
     UNABLE_TO_DETERMINE_STUDENT_CURRICULAR_PLAN;
 
+    public String getName() {
+        return name();
+    }
+
 }

@@ -8,12 +8,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ICandidateSituation;
+import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -29,58 +34,48 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadCandidateList implements IService {
 
     public List run(String degreeName, Specialization degreeType, SituationName candidateSituation,
-            Integer candidateNumber, String executionYearString) throws FenixServiceException {
+            Integer candidateNumber, String executionYearString) throws ExcepcaoPersistencia {
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        ISuportePersistente sp = null;
-        List result = null;
+        // Get the Actual Execution Year
+        final IExecutionYear executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(executionYearString);
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        // Read the candidates
+        final List result = sp.getIPersistentMasterDegreeCandidate().readCandidateList(degreeName, degreeType,
+                candidateSituation, candidateNumber, executionYear);
 
-            // Get the Actual Execution Year
-            IExecutionYear executionYear = null;
-
-            executionYear = sp.getIPersistentExecutionYear()
-                    .readExecutionYearByName(executionYearString);
-
-            // Read the candidates
-
-            result = sp.getIPersistentMasterDegreeCandidate().readCandidateList(degreeName, degreeType,
-                    candidateSituation, candidateNumber, executionYear);
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
-
-        List candidateList = new ArrayList();
-        Iterator iterator = result.iterator();
+        final List candidateList = new ArrayList();
+        final Iterator iterator = result.iterator();
         while (iterator.hasNext()) {
-            IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) iterator.next();
-            InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
+            final IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) iterator.next();
+            final InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
                     .newInfoFromDomain(masterDegreeCandidate);
 
-            Iterator situationIterator = masterDegreeCandidate.getSituations().iterator();
-            List situations = new ArrayList();
+            final Iterator situationIterator = masterDegreeCandidate.getSituations().iterator();
+            final List situations = new ArrayList();
             while (situationIterator.hasNext()) {
-                InfoCandidateSituation infoCandidateSituation = Cloner
+                final InfoCandidateSituation infoCandidateSituation = Cloner
                         .copyICandidateSituation2InfoCandidateSituation((ICandidateSituation) situationIterator
                                 .next());
                 situations.add(infoCandidateSituation);
-
-                // Check if this is the Active Situation
-                /*
-                 * if (infoCandidateSituation.getValidation().equals(new
-                 * State(State.ACTIVE)))
-                 * infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
-                 */
             }
             infoMasterDegreeCandidate.setSituationList(situations);
-            candidateList.add(infoMasterDegreeCandidate);
 
+            final IExecutionDegree executionDegree = masterDegreeCandidate.getExecutionDegree();
+            final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+            infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
+
+            final IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+            final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
+            infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+
+            final IDegree degree = degreeCurricularPlan.getDegree();
+            final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
+            infoDegreeCurricularPlan.setInfoDegree(infoDegree);
+
+            candidateList.add(infoMasterDegreeCandidate);
         }
 
         return candidateList;
-
     }
 }
