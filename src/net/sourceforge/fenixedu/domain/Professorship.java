@@ -1,8 +1,3 @@
-/*
- * Created on 26/Mar/2003
- *
- * 
- */
 package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
@@ -17,25 +12,15 @@ import org.apache.ojb.broker.PersistenceBrokerException;
 /**
  * @author João Mota
  */
-public class Professorship extends DomainObject implements IProfessorship, ICreditsEventOriginator,
+public class Professorship extends Professorship_Base implements IProfessorship, ICreditsEventOriginator,
         PersistenceBrokerAware {
     protected ITeacher teacher;
 
     protected IExecutionCourse executionCourse;
 
-    private Integer keyTeacher;
-
-    private Integer keyExecutionCourse;
-
     private List associatedShiftProfessorshift;
 
     private List supportLessons;
-
-    /**
-     * This attributes only matter if executionCourse is only from a master
-     * degree.
-     */
-    private Double hours;
 
     /**
      *  
@@ -56,20 +41,6 @@ public class Professorship extends DomainObject implements IProfessorship, ICred
     }
 
     /**
-     * @return Integer
-     */
-    public Integer getKeyExecutionCourse() {
-        return keyExecutionCourse;
-    }
-
-    /**
-     * @return Integer
-     */
-    public Integer getKeyTeacher() {
-        return keyTeacher;
-    }
-
-    /**
      * @return ITeacher
      */
     public ITeacher getTeacher() {
@@ -84,26 +55,6 @@ public class Professorship extends DomainObject implements IProfessorship, ICred
      */
     public void setExecutionCourse(IExecutionCourse executionCourse) {
         this.executionCourse = executionCourse;
-    }
-
-    /**
-     * Sets the keyExecutionCourse.
-     * 
-     * @param keyExecutionCourse
-     *            The keyExecutionCourse to set
-     */
-    public void setKeyExecutionCourse(Integer keyExecutionCourse) {
-        this.keyExecutionCourse = keyExecutionCourse;
-    }
-
-    /**
-     * Sets the keyTeacher.
-     * 
-     * @param keyTeacher
-     *            The keyTeacher to set
-     */
-    public void setKeyTeacher(Integer keyTeacher) {
-        this.keyTeacher = keyTeacher;
     }
 
     /**
@@ -144,19 +95,6 @@ public class Professorship extends DomainObject implements IProfessorship, ICred
                     && this.getExecutionCourse().equals(professorship.getExecutionCourse());
         }
         return false;
-    }
-
-    public Double getHours() {
-        return hours;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.IProfessorship#setCredits(java.lang.Float)
-     */
-    public void setHours(Double hours) {
-        this.hours = hours;
     }
 
     /**

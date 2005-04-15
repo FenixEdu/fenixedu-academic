@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Date;
-
 import net.sourceforge.fenixedu.domain.credits.event.CreditsEvent;
 import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
 import net.sourceforge.fenixedu.util.DiaSemana;
@@ -15,17 +13,9 @@ import org.apache.ojb.broker.PersistenceBrokerException;
  * @author Fernanda Quitério 17/10/2003
  * @author jpvl
  */
-public class SupportLesson extends DomainObject implements ISupportLesson, PersistenceBrokerAware,
+public class SupportLesson extends SupportLesson_Base implements ISupportLesson, PersistenceBrokerAware,
         ICreditsEventOriginator {
-    private Date endTime;
-
-    private Integer keyProfessorship;
-
-    private String place;
-
     private IProfessorship professorship;
-
-    private Date startTime;
 
     private DiaSemana weekDay;
 
@@ -61,38 +51,10 @@ public class SupportLesson extends DomainObject implements ISupportLesson, Persi
     }
 
     /**
-     * @return
-     */
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    /**
-     * @return Returns the keyProfessorship.
-     */
-    public Integer getKeyProfessorship() {
-        return this.keyProfessorship;
-    }
-
-    /**
-     * @return
-     */
-    public String getPlace() {
-        return place;
-    }
-
-    /**
      * @return Returns the professorship.
      */
     public IProfessorship getProfessorship() {
         return this.professorship;
-    }
-
-    /**
-     * @return
-     */
-    public Date getStartTime() {
-        return startTime;
     }
 
     /**
@@ -103,40 +65,11 @@ public class SupportLesson extends DomainObject implements ISupportLesson, Persi
     }
 
     /**
-     * @param endTime
-     */
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-
-    /**
-     * @param keyProfessorship
-     *            The keyProfessorship to set.
-     */
-    public void setKeyProfessorship(Integer keyProfessorship) {
-        this.keyProfessorship = keyProfessorship;
-    }
-
-    /**
-     * @param place
-     */
-    public void setPlace(String place) {
-        this.place = place;
-    }
-
-    /**
      * @param professorship
      *            The professorship to set.
      */
     public void setProfessorship(IProfessorship professorship) {
         this.professorship = professorship;
-    }
-
-    /**
-     * @param startTime
-     */
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
     }
 
     /**

@@ -1,8 +1,3 @@
-/*
- * Created on 26/Mar/2003
- * 
- *  
- */
 package net.sourceforge.fenixedu.domain;
 
 /**
@@ -10,14 +5,10 @@ package net.sourceforge.fenixedu.domain;
  * 
  *  
  */
-public class ResponsibleFor extends DomainObject implements IResponsibleFor {
+public class ResponsibleFor extends ResponsibleFor_Base implements IResponsibleFor {
     protected ITeacher teacher;
 
     protected IExecutionCourse executionCourse;
-
-    private Integer keyTeacher;
-
-    private Integer keyExecutionCourse;
 
     /**
      *  
@@ -38,20 +29,6 @@ public class ResponsibleFor extends DomainObject implements IResponsibleFor {
     }
 
     /**
-     * @return Integer
-     */
-    public Integer getKeyExecutionCourse() {
-        return keyExecutionCourse;
-    }
-
-    /**
-     * @return Integer
-     */
-    public Integer getKeyTeacher() {
-        return keyTeacher;
-    }
-
-    /**
      * @return ITeacher
      */
     public ITeacher getTeacher() {
@@ -66,26 +43,6 @@ public class ResponsibleFor extends DomainObject implements IResponsibleFor {
      */
     public void setExecutionCourse(IExecutionCourse executionCourse) {
         this.executionCourse = executionCourse;
-    }
-
-    /**
-     * Sets the keyExecutionCourse.
-     * 
-     * @param keyExecutionCourse
-     *            The keyExecutionCourse to set
-     */
-    public void setKeyExecutionCourse(Integer keyExecutionCourse) {
-        this.keyExecutionCourse = keyExecutionCourse;
-    }
-
-    /**
-     * Sets the keyTeacher.
-     * 
-     * @param keyTeacher
-     *            The keyTeacher to set
-     */
-    public void setKeyTeacher(Integer keyTeacher) {
-        this.keyTeacher = keyTeacher;
     }
 
     /**

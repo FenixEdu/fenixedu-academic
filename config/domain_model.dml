@@ -802,6 +802,58 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     "
 }
 
+class net.sourceforge.fenixedu.domain.Professorship extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyTeacher;
+	Integer keyExecutionCourse;
+	Double hours;
+	interface "
+	public net.sourceforge.fenixedu.domain.IExecutionCourse getExecutionCourse();
+	
+	public net.sourceforge.fenixedu.domain.ITeacher getTeacher();
+	
+	public void setExecutionCourse(net.sourceforge.fenixedu.domain.IExecutionCourse executionCourse);
+	
+	public void setTeacher(net.sourceforge.fenixedu.domain.ITeacher teacher);
+	
+	public java.util.List getAssociatedShiftProfessorship();
+	
+	public void setAssociatedShiftProfessorship(java.util.List associatedTeacherShiftPercentage);
+	
+	public java.util.List getSupportLessons();
+	
+	public void setSupportLessons(java.util.List supportLessons);
+	
+	public boolean belongsToExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
+	
+	public void beforeUpdate(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
+	
+	public void afterUpdate(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
+	
+	public void beforeInsert(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
+	
+	public void afterInsert(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
+	
+	public void beforeDelete(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
+	
+	public void afterDelete(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
+	
+	public void afterLookup(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
+	"
+}
+
+class net.sourceforge.fenixedu.domain.ResponsibleFor extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyExecutionCourse;
+	Integer keyTeacher;
+	interface "
+	public net.sourceforge.fenixedu.domain.IExecutionCourse getExecutionCourse();
+	
+	public net.sourceforge.fenixedu.domain.ITeacher getTeacher();
+	
+	public void setExecutionCourse(net.sourceforge.fenixedu.domain.IExecutionCourse executionCourse);
+	
+	public void setTeacher(net.sourceforge.fenixedu.domain.ITeacher teacher);
+	"
+}
 
 class net.sourceforge.fenixedu.domain.Role extends net.sourceforge.fenixedu.domain.DomainObject {
 	String portalSubApplication;
@@ -814,7 +866,6 @@ class net.sourceforge.fenixedu.domain.Role extends net.sourceforge.fenixedu.doma
     public void setRoleType(net.sourceforge.fenixedu.domain.person.RoleType roleType);
     "
 }
-
 
 class net.sourceforge.fenixedu.domain.Room extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyBuilding;
@@ -908,6 +959,39 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 	String alternativeSite;
 }
 
+class net.sourceforge.fenixedu.domain.SupportLesson extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyProfessorship;
+	Date startTime;
+	String place;
+	Date endTime;
+	interface "
+	public net.sourceforge.fenixedu.domain.IProfessorship getProfessorship();
+	
+	public net.sourceforge.fenixedu.util.DiaSemana getWeekDay();
+	
+	public void setProfessorship(net.sourceforge.fenixedu.domain.IProfessorship professorship);
+	
+	public void setWeekDay(net.sourceforge.fenixedu.util.DiaSemana weekDay);
+	
+	public double hours();
+	
+	public void beforeUpdate(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
+	
+	public void afterUpdate(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
+	
+	public void beforeInsert(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
+	
+	public void afterInsert(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
+	
+	public void beforeDelete(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
+	
+	public void afterDelete(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
+	
+	public void afterLookup(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
+	
+	public boolean belongsToExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
+	"
+}
 
 class net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyCurricularCourse;
@@ -1067,15 +1151,13 @@ external class net.sourceforge.fenixedu.domain.classProperties.ExecutionCoursePr
 external class net.sourceforge.fenixedu.domain.ExecutionPeriod;
 external class net.sourceforge.fenixedu.domain.ExecutionYear;
 external class net.sourceforge.fenixedu.domain.Lesson;
-external class net.sourceforge.fenixedu.domain.Professorship;
-external class net.sourceforge.fenixedu.domain.ResponsibleFor;
 external class net.sourceforge.fenixedu.domain.ScientificArea;
 external class net.sourceforge.fenixedu.domain.Section;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
 external class net.sourceforge.fenixedu.domain.ShiftStudent;
 external class net.sourceforge.fenixedu.domain.Student;
-external class net.sourceforge.fenixedu.domain.Teacher;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
+external class net.sourceforge.fenixedu.domain.Teacher;
 external class net.sourceforge.fenixedu.domain.University;
 
 
