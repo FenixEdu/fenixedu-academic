@@ -17,10 +17,10 @@
           <br>                         
           <bean:write name="numMecanografico" scope="session"/><p style="margin-top: -2px; margin-bottom: -2px">&nbsp;</p>
 		  <bean:write name="pessoa" property="nome" scope="session" /><p style="margin-top: -2px; margin-bottom: -2px">&nbsp;</p>
-          <bean:write name="centroCusto" property="sigla" scope="session" />
-          <bean:write name="centroCusto" property="departamento" scope="session" /><br>
-          <bean:write name="centroCusto" property="seccao1" scope="session" /><br>
-          <bean:write name="centroCusto" property="seccao2" scope="session" /><br>           
+          <bean:write name="centroCusto" property="code" scope="session" />
+          <bean:write name="centroCusto" property="departament" scope="session" /><br>
+          <bean:write name="centroCusto" property="section1" scope="session" /><br>
+          <bean:write name="centroCusto" property="section2" scope="session" /><br>           
       </td>
     </tr>
     <tr>
