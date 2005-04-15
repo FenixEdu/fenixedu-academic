@@ -600,7 +600,6 @@ class net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse extends net
         "
 }
 
-
 class net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes extends net.sourceforge.fenixedu.domain.DomainObject {
 	Double tolerance2_3;
 	Double deviation2_3;
@@ -947,9 +946,9 @@ class net.sourceforge.fenixedu.domain.RoomOccupation extends net.sourceforge.fen
 
 class net.sourceforge.fenixedu.domain.SchoolClass extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionDegree;
-	String name;
+	String nome;
 	Integer keyExecutionPeriod;
-	Integer curricularYear;
+	Integer anoCurricular;
 	
 	interface"
 	public net.sourceforge.fenixedu.domain.IExecutionDegree getExecutionDegree();
