@@ -366,16 +366,19 @@ public class InfoGuide extends InfoObject {
         guide.setPerson(InfoPerson.newDomainFromInfo(infoGuide.getInfoPerson()));
         guide.setExecutionDegree(InfoExecutionDegree.newDomainFromInfo(infoGuide.getInfoExecutionDegree()));
         
-        Collection guideEntries = CollectionUtils.transformedCollection(infoGuide.getInfoGuideEntries(), new Transformer() {
+        if(infoGuide.getInfoGuideEntries() != null){
+            Collection guideEntries = CollectionUtils.transformedCollection(infoGuide.getInfoGuideEntries(), new Transformer() {
+                
+                    public Object transform(Object arg0) {
+                        InfoGuideEntry infoGuideEntry = (InfoGuideEntry) arg0;
+                        return InfoGuideEntry.newDomainFromInfo(infoGuideEntry);                
+                    }
+                
+                });
+                
+                guide.setGuideEntries(new ArrayList(guideEntries));
+        }
         
-            public Object transform(Object arg0) {
-                InfoGuideEntry infoGuideEntry = (InfoGuideEntry) arg0;
-                return InfoGuideEntry.newDomainFromInfo(infoGuideEntry);                
-            }
-        
-        });
-        
-        guide.setGuideEntries(new ArrayList(guideEntries));
         
         guide.setCreationDate(infoGuide.getCreationDate());
         guide.setGuideRequester(infoGuide.getGuideRequester());
