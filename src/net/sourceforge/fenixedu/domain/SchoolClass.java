@@ -6,7 +6,6 @@
 
 package net.sourceforge.fenixedu.domain;
 
-import java.util.List;
 
 /**
  * 
