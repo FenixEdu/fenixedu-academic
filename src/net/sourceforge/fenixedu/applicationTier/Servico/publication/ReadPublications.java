@@ -18,23 +18,26 @@ import net.sourceforge.fenixedu.dataTransferObject.publication.InfoSitePublicati
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
+import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationTeacher;
+import net.sourceforge.fenixedu.util.PublicationArea;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 /**
  * @author TJBF & PFON
- *  
+ * 
  */
 public class ReadPublications implements IServico {
     private static ReadPublications service = new ReadPublications();
 
     /**
-     *  
+     * 
      */
     private ReadPublications() {
 
@@ -56,49 +59,44 @@ public class ReadPublications implements IServico {
 
     public SiteView run(String user, String publicationType) throws FenixServiceException {
         try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory
+                    .getDefaultPersistenceSupport();
 
             IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
             ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
 
+            // the cientific publication has the value zero
             Integer typePublication = new Integer(0);
 
             if (publicationType.equalsIgnoreCase(PublicationConstants.DIDATIC_STRING)) {
                 typePublication = PublicationConstants.DIDATIC;
             }
 
-            InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+            InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 
-            List publications = teacher.getTeacherPublications();
-            List newPublications = new ArrayList();
-            List result = new ArrayList();
+            IPersistentPublicationTeacher persistentPublicationTeacher = persistentSuport
+                    .getIPersistentPublicationTeacher();
 
-            if ((publications != null) || (publications.size() != PublicationConstants.ZERO_VALUE)) {
-                Iterator iterator = publications.iterator();
-                while (iterator.hasNext()) {
-                    IPublication publication = (IPublication) iterator.next();
-                    if (publication.getDidatic().intValue() == typePublication.intValue()) {
-                        newPublications.add(publication);
-                    }
-                }
+            PublicationArea publicationArea = null;
+            if (PublicationConstants.CIENTIFIC.equals(typePublication))
+                publicationArea = PublicationArea.CIENTIFIC;
+            else
+                publicationArea = PublicationArea.DIDATIC;
 
-                result = (List) CollectionUtils.collect(newPublications, new Transformer() {
-                    public Object transform(Object o) {
-                        IPublication publication = (IPublication) o;
-                        IPublication publication2 = publication;
-                        publication2.setPublicationString(publication.toString());
-                        return InfoPublication.newInfoFromDomain(publication2);
-                        //return Cloner.copyIPublication2InfoPublication(publication2);
-                    }
-                });
+            List publicationsTeacher = persistentPublicationTeacher.readByTeacherAndPublicationArea(
+                    teacher, publicationArea);
+
+            List infoPublications = new ArrayList();
+            Iterator iter = publicationsTeacher.iterator();
+            while (iter.hasNext()) {
+                IPublicationTeacher publicationTeacher = (IPublicationTeacher) iter.next();
+                IPublication publication = publicationTeacher.getPublication();
+                publication.setPublicationString(publicationTeacher.getPublication().toString());
+                infoPublications.add(InfoPublication.newInfoFromDomain(publication));
             }
 
             InfoSitePublications bodyComponent = new InfoSitePublications();
-            if (typePublication.intValue() == PublicationConstants.CIENTIFIC.intValue()) {
-                bodyComponent.setInfoCientificPublications(result);
-            } else {
-                bodyComponent.setInfoDidaticPublications(result);
-            }
+            bodyComponent.setInfoPublications(infoPublications);
             bodyComponent.setInfoTeacher(infoTeacher);
 
             SiteView siteView = new SiteView(bodyComponent);
