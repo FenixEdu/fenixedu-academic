@@ -40,9 +40,9 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
     public ActionForward prepareSearch(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         Object args[] = {};
-        List infoExecutionYears = (List) ServiceUtils.executeService(null, "ReadExecutionYearsService",
+        Collection infoExecutionYears = (List) ServiceUtils.executeService(null, "ReadExecutionYearsService",
                 args);
-        CollectionUtils.collect(infoExecutionYears, new INFO_EXECUTION_YEAR_INCREMENTER());
+        infoExecutionYears = CollectionUtils.collect(infoExecutionYears, new INFO_EXECUTION_YEAR_INCREMENTER());
         request.setAttribute("infoExecutionYears", infoExecutionYears);
         DynaActionForm finalWorkForm = (DynaActionForm) form;
         String executionYearOID = (String) finalWorkForm.get("executionYearOID");
