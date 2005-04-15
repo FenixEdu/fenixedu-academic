@@ -117,9 +117,7 @@ public class InsertEvaluationMarks implements IServico {
                     if (!isValidMark(evaluation, mark, attend.getAluno())) {
                         InfoMark infoMark = new InfoMark();
                         infoMark.setMark(mark);
-                        //CLONER
-                        //infoMark.setInfoFrequenta(Cloner
-                        //.copyIFrequenta2InfoFrequenta(attend));
+
                         infoMark.setInfoFrequenta(InfoFrequentaWithInfoStudentAndPerson
                                 .newInfoFromDomain(attend));
                         marksErrorsInvalidMark.add(infoMark);
@@ -172,9 +170,7 @@ public class InsertEvaluationMarks implements IServico {
             List marksErrorsInvalidMark, List attendList, HashMap nonExistingStudents)
             throws FenixServiceException {
         InfoSiteMarks infoSiteMarks = new InfoSiteMarks();
-        //CLONER
-        //infoSiteMarks.setInfoEvaluation(Cloner
-        //.copyIEvaluation2InfoEvaluation(evaluation));
+
         infoSiteMarks.setInfoEvaluation(InfoEvaluation.newInfoFromDomain(evaluation));
         infoSiteMarks.setHashMarks(hashMarks);
         infoSiteMarks.setMarksListErrors(marksErrorsInvalidMark);

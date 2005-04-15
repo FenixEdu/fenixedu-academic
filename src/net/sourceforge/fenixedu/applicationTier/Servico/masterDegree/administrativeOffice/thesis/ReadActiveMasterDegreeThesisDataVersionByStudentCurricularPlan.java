@@ -26,9 +26,7 @@ public class ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan impl
 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            //CLONER
-            //            IStudentCurricularPlan studentCurricularPlan = Cloner
-            //                    .copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
+
             IStudentCurricularPlan studentCurricularPlan = InfoStudentCurricularPlan
                     .newDomainFromInfo(infoStudentCurricularPlan);
             IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion = sp
@@ -39,9 +37,6 @@ public class ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan impl
                 throw new NonExistingServiceException(
                         "error.exception.masterDegree.nonExistingMasterDegreeThesis");
 
-            //CLONER
-            //            infoMasterDegreeThesisDataVersion = Cloner
-            //                    .copyIMasterDegreeThesisDataVersion2InfoMasterDegreeThesisDataVersion(masterDegreeThesisDataVersion);
             infoMasterDegreeThesisDataVersion = InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis
                     .newInfoFromDomain(masterDegreeThesisDataVersion);
 

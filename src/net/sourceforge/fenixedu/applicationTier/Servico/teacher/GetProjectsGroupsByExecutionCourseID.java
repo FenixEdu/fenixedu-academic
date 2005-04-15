@@ -101,14 +101,12 @@ public class GetProjectsGroupsByExecutionCourseID implements IServico
                             IStudentGroupAttend studentGroupAttend = (IStudentGroupAttend) input;
                             IAttends attendacy = studentGroupAttend.getAttend();
                             IStudent student = attendacy.getAluno();
-                            //CLONER
-                            //InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(student);
+
                             InfoStudent infoStudent = InfoStudent.newInfoFromDomain(student);
                             return infoStudent;
                         }
                     });
-                    //CLONER
-                    //InfoStudentGroup infoStudentGroup = Cloner.copyIStudentGroup2InfoStudentGroup(group);
+
                     InfoStudentGroup infoStudentGroup = InfoStudentGroupWithAll.newInfoFromDomain(group);
                     
                     InfoGroupProjectStudents info = new InfoGroupProjectStudents();

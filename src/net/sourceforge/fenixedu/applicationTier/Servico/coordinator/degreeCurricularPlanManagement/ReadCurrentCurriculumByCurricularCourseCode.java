@@ -113,18 +113,13 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IService {
             public Object transform(Object arg0) {
                 ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
 
-                //CLONER
                 return InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear
                         .newInfoFromDomain(curricularCourseScope);
-                //return Cloner
-                //        .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
-
             }
         }, scopes);
         infoCurriculum.getInfoCurricularCourse().setInfoScopes(scopes);
 
         List infoExecutionCourses = new ArrayList();
-        //        List executionCourses = associatedExecutionCourses;
         Iterator iterExecutionCourses = associatedExecutionCourses.iterator();
         while (iterExecutionCourses.hasNext()) {
             IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();

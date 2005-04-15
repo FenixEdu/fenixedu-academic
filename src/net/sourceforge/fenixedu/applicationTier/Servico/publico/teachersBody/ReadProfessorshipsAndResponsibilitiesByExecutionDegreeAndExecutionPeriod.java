@@ -147,9 +147,7 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionP
 
                     public Object transform(Object input) {
                         IProfessorship professorship = (IProfessorship) input;
-                        //CLONER
-                        //InfoProfessorship infoProfessorShip = Cloner
-                        //.copyIProfessorship2InfoProfessorship(professorship);
+
                         InfoProfessorship infoProfessorShip = InfoProfessorshipWithAll
                                 .newInfoFromDomain(professorship);
 

@@ -106,8 +106,7 @@ public class EditDegreeInfoByExecutionDegree implements IService {
             e.printStackTrace();
             throw new FenixServiceException(e);
         }
-        //CLONER
-        //return Cloner.copyIDegreeInfo2InfoDegree(degreeInfo);
+
         return InfoDegreeInfoWithDegree.newInfoFromDomain(degreeInfo);
     }
 

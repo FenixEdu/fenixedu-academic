@@ -58,10 +58,6 @@ public class GetEnrollmentEvaluationWithEquivalence extends EnrollmentEquivalenc
         for (int i = 0; i < input.size(); i++) {
             IEnrolmentEvaluation enrollmentEvaluation = (IEnrolmentEvaluation) input.get(i);
 
-            //CLONER
-            //InfoEnrolmentEvaluation infoEnrollmentEvaluation = Cloner
-            //	.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrollmentEvaluation);
-            //infoEnrollmentEvaluation.setInfoEnrolment(Cloner.copyIEnrolment2InfoEnrolment(enrollmentEvaluation.getEnrolment()));
             InfoEnrolmentEvaluation infoEnrollmentEvaluation = InfoEnrolmentEvaluationWithResponsibleForGrade
                     .newInfoFromDomain(enrollmentEvaluation);
             infoEnrollmentEvaluation

@@ -93,8 +93,7 @@ public class ReadDegreeInfoByDegreeAndExecutionPeriod implements IServico {
             //Find the degree info most recent
             Collections.sort(degreeInfoList, new BeanComparator("lastModificationDate"));
             IDegreeInfo degreeInfo = (IDegreeInfo) degreeInfoList.get(degreeInfoList.size() - 1);
-            //CLONER
-            //infoDegreeInfo = Cloner.copyIDegreeInfo2InfoDegree(degreeInfo);
+
             infoDegreeInfo = InfoDegreeInfoWithDegree.newInfoFromDomain(degreeInfo);
             infoDegreeInfo.recaptureNULLs(degreeInfo);
 

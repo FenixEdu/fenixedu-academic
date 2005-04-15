@@ -78,9 +78,7 @@ public class ReadStudentsEnrolledInExam implements IServico {
 
                         public Object transform(Object input) {
                             ExamStudentRoom examStudentRoom = (ExamStudentRoom) input;
-                            //CLONER
-                            //return Cloner
-                            //.copyIExamStudentRoom2InfoExamStudentRoom(examStudentRoom);
+
                             return InfoExamStudentRoomWithInfoStudentAndInfoRoom
                                     .newInfoFromDomain(examStudentRoom);
 
@@ -91,13 +89,10 @@ public class ReadStudentsEnrolledInExam implements IServico {
             Iterator iter = examStudentRoomList.iterator();
             while (iter.hasNext()) {
                 IStudent student = ((IExamStudentRoom) iter.next()).getStudent();
-                //CLONER
-                //InfoStudent infoStudent = Cloner
-                //.copyIStudent2InfoStudent(student);
+
                 infoStudents.add(InfoStudent.newInfoFromDomain(student));
             }
-            //CLONER
-            //InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
+
             InfoExam infoExam = InfoExam.newInfoFromDomain(exam);
 
             ISiteComponent component = new InfoSiteTeacherStudentsEnrolledList(infoStudents, infoExam,

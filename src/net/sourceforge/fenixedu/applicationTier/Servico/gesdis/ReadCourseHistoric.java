@@ -81,9 +81,7 @@ public class ReadCourseHistoric implements IService {
     private InfoSiteCourseHistoric getInfoSiteCourseHistoric(final IExecutionYear executionYear, ICurricularCourse curricularCourse,
             Integer semester, ISuportePersistente sp) throws ExcepcaoPersistencia {
         InfoSiteCourseHistoric infoSiteCourseHistoric = new InfoSiteCourseHistoric();
-        //CLONER
-        //InfoCurricularCourse infoCurricularCourse = Cloner
-        //.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+
         InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegreeCurricularPlan
                 .newInfoFromDomain(curricularCourse);
         infoSiteCourseHistoric.setInfoCurricularCourse(infoCurricularCourse);
@@ -94,9 +92,6 @@ public class ReadCourseHistoric implements IService {
         List infoCoursesHistoric = (List) CollectionUtils.collect(coursesHistoric, new Transformer() {
             public Object transform(Object arg0) {
                 ICourseHistoric courseHistoric = (ICourseHistoric) arg0;
-                //CLONER
-                //return Cloner
-                //.copyICourseHistoric2InfoCourseHistoric(courseHistoric);
                 return InfoCourseHistoricWithInfoCurricularCourse.newInfoFromDomain(courseHistoric);
             }
 

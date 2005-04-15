@@ -269,9 +269,7 @@ public class SearchExecutionCourses implements IServico {
                         }
 
                     }
-                    //CLONER
-                    //infoExecutionCourse = (InfoExecutionCourse) Cloner
-                    //        .get(executionCourse);
+
                     infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
                     List capacities = new ArrayList();
 

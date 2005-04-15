@@ -75,13 +75,11 @@ public class ReadStudentsByTutor implements IService {
                 return teacherAndStudentsList;
             }
 
-            //Clone
             List infoTutorStudents = new ArrayList();
             ListIterator iterator = tutorStudents.listIterator();
             while (iterator.hasNext()) {
                 ITutor tutor = (ITutor) iterator.next();
-                //CLONER
-                //InfoTutor infoTutor = Cloner.copyITutor2InfoTutor(tutor);
+
                 InfoTutor infoTutor = InfoTutorWithInfoStudent.newInfoFromDomain(tutor);
                 infoTutorStudents.add(infoTutor);
             }

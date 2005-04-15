@@ -173,8 +173,7 @@ public class ReadTeachersInformation implements IService {
 
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
         ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
-        //CLONER
-        //InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+
         InfoTeacher infoTeacher = InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher);
         infoSiteTeacherInformation.setInfoTeacher(infoTeacher);
 
@@ -249,9 +248,7 @@ public class ReadTeachersInformation implements IService {
 
         IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
         IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-        //CLONER
-        //infoSiteTeacherInformation.setInfoExecutionPeriod(
-        //(InfoExecutionPeriod) Cloner.get(executionPeriod));
+
         infoSiteTeacherInformation.setInfoExecutionPeriod(InfoExecutionPeriod
                 .newInfoFromDomain(executionPeriod));
         return infoSiteTeacherInformation;
@@ -381,9 +378,7 @@ public class ReadTeachersInformation implements IService {
         List careers = persistentCareer.readAllByTeacherAndCareerType(teacher, careerType);
         List infoCareers = (List) CollectionUtils.collect(careers, new Transformer() {
             public Object transform(Object o) {
-                //CLONER
                 ICareer career = (ICareer) o;
-                //return Cloner.copyICareer2InfoCareer(career);
                 return InfoCareer.newInfoFromDomain(career);
             }
         });

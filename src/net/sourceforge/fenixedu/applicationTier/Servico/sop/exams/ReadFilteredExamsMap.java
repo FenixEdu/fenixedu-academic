@@ -140,10 +140,6 @@ public class ReadFilteredExamsMap implements IService {
                 // For each execution course obtain curricular courses and
                 // exams
                 for (int j = 0; j < executionCourses.size(); j++) {
-                    //CLONER
-                    //InfoExecutionCourse infoExecutionCourse =
-                    //(InfoExecutionCourse) Cloner.get((IExecutionCourse)
-                    // executionCourses.get(j));
                     InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriodAndExams
                             .newInfoFromDomain((IExecutionCourse) executionCourses.get(j));
 
@@ -152,6 +148,7 @@ public class ReadFilteredExamsMap implements IService {
                     List associatedInfoCurricularCourses = new ArrayList();
                     List associatedCurricularCourses = ((IExecutionCourse) executionCourses.get(j))
                             .getAssociatedCurricularCourses();
+
                     // Curricular courses
                     for (int k = 0; k < associatedCurricularCourses.size(); k++) {
                         InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
@@ -170,9 +167,7 @@ public class ReadFilteredExamsMap implements IService {
                         if (!(associatedExams.get(k) instanceof IExam)) {
                             continue;
                         }
-                        //CLONER
-                        //InfoExam infoExam = Cloner.copyIExam2InfoExam((IExam)
-                        // associatedExams.get(k));
+
                         InfoExam infoExam = InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear
                                 .newInfoFromDomain((IExam) associatedExams.get(k));
                         int numberOfStudentsForExam = 0;

@@ -67,9 +67,6 @@ public class ReadListsOfEnrollmentsWithEquivalences extends EnrollmentEquivalenc
         infoEquivalenceContext
                 .setInfoEnrollmentsFromEquivalences(cloneEnrolmentsToInfoEnrolments(enrollmentsFromEquivalences));
 
-        //CLONER
-        //infoEquivalenceContext.setInfoStudentCurricularPlan(Cloner
-        //	.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
         infoEquivalenceContext
                 .setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree
                         .newInfoFromDomain(studentCurricularPlan));

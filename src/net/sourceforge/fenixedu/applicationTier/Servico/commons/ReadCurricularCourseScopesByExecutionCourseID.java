@@ -47,11 +47,6 @@ public class ReadCurricularCourseScopesByExecutionCourseID implements IService {
                         .readCurricularCourseScopesByCurricularCourseInExecutionPeriod(curricularCourse,
                                 executionCourse.getExecutionPeriod());
 
-                //CLONER
-                //InfoCurricularCourse infoCurricularCourse = new
-                // InfoCurricularCourse();
-                //infoCurricularCourse = Cloner
-                //        .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
                 InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
                         .newInfoFromDomain(curricularCourse);
                 infoCurricularCourse.setInfoScopes(new ArrayList());

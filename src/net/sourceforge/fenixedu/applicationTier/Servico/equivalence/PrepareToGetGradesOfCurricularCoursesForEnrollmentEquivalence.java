@@ -78,8 +78,7 @@ public class PrepareToGetGradesOfCurricularCoursesForEnrollmentEquivalence exten
         for (int i = 0; i < enrollmentsToGiveEquivalences.size(); i++) {
             IEnrolment enrollment = (IEnrolment) enrollmentsToGiveEquivalences.get(i);
             InfoEnrollmentGrade infoEnrollmentGrade = new InfoEnrollmentGrade();
-            //CLONER
-            //infoEnrollmentGrade.setInfoEnrollment(Cloner.copyIEnrolment2InfoEnrolment(enrollment));
+
             infoEnrollmentGrade.setInfoEnrollment(InfoEnrolmentWithInfoCurricularCourse
                     .newInfoFromDomain(enrollment));
 
@@ -91,8 +90,7 @@ public class PrepareToGetGradesOfCurricularCoursesForEnrollmentEquivalence exten
             ICurricularCourse curricularCourse = (ICurricularCourse) curricularCoursesToGetEquivalences
                     .get(i);
             InfoCurricularCourseGrade infoCurricularCourseGrade = new InfoCurricularCourseGrade();
-            //CLONER
-            //infoCurricularCourseGrade.setInfoCurricularCourse(Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse));
+
             infoCurricularCourseGrade.setInfoCurricularCourse(InfoCurricularCourse
                     .newInfoFromDomain(curricularCourse));
 
@@ -106,9 +104,7 @@ public class PrepareToGetGradesOfCurricularCoursesForEnrollmentEquivalence exten
                 .setChosenInfoEnrollmentGradesToGiveEquivalence(infoEnrollmentGradesToGiveEquivalences);
         infoEquivalenceContext
                 .setChosenInfoCurricularCourseGradesToGetEquivalence(infoCurricularCourseGradesToGetEquivalences);
-        //CLONER
-        //infoEquivalenceContext.setInfoStudentCurricularPlan(Cloner
-        //	.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
+
         infoEquivalenceContext
                 .setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree
                         .newInfoFromDomain(studentCurricularPlan));

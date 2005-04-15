@@ -59,12 +59,6 @@ public class SelectExecutionCourse implements IServico {
 
             IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-            //CLONER
-            //IExecutionDegree executionDegree = Cloner
-            //        .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
-            //IExecutionPeriod executionPeriod = Cloner
-            //        .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
-
             IExecutionDegree executionDegree = InfoExecutionDegree.newDomainFromInfo(infoExecutionDegree);
             if (executionDegree != null) {
                 executionDegree.setDegreeCurricularPlan(InfoDegreeCurricularPlan
@@ -83,9 +77,6 @@ public class SelectExecutionCourse implements IServico {
             for (int i = 0; i < executionCourseList.size(); i++) {
                 IExecutionCourse executionCourse = (IExecutionCourse) executionCourseList.get(i);
 
-                //CLONER
-                //InfoExecutionCourse infoExecutionCourse =
-                // (InfoExecutionCourse) Cloner.get(executionCourse);
                 InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
                         .newInfoFromDomain(executionCourse);
                 infoExecutionCourseList.add(infoExecutionCourse);

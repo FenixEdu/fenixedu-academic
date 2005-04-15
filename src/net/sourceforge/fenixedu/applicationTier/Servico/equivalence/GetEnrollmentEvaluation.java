@@ -64,8 +64,7 @@ public class GetEnrollmentEvaluation extends EnrollmentEquivalenceServiceUtils i
         }
 
         InfoEnrolmentEvaluation infoEnrolmentEvaluation = service.run(enrollment);
-        //CLONER
-        //infoEnrolmentEvaluation.setInfoEnrolment(Cloner.copyIEnrolment2InfoEnrolment(enrollment));
+
         infoEnrolmentEvaluation.setInfoEnrolment(InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
                 .newInfoFromDomain(enrollment));
 

@@ -49,10 +49,6 @@ public class ReadCurricularCoursesByDegreeCurricularPlan implements IService {
         List result = new ArrayList(allCurricularCourses.size());
 
         while (iterator.hasNext())
-            //CLONER
-            //result.add(Cloner.copyCurricularCourse2InfoCurricularCourse((ICurricularCourse)
-            // iterator
-            //        .next()));
             result.add(InfoCurricularCourseWithInfoDegree.newInfoFromDomain((ICurricularCourse) iterator
                     .next()));
 

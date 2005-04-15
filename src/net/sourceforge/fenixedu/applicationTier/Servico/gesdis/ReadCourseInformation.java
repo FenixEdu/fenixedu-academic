@@ -167,9 +167,6 @@ public class ReadCourseInformation implements IService {
                 infoCourseReport.setInfoExecutionCourse(infoExecutionCourse);
                 infoSiteCourseInformation.setInfoCourseReport(infoCourseReport);
             } else {
-                //CLONER
-                //infoSiteCourseInformation.setInfoCourseReport(Cloner
-                //.copyICourseReport2InfoCourseReport(courseReport));
                 infoSiteCourseInformation.setInfoCourseReport(InfoCourseReport
                         .newInfoFromDomain(courseReport));
             }
@@ -353,9 +350,7 @@ public class ReadCourseInformation implements IService {
             ResponsibleFor responsibleFor = (ResponsibleFor) iter.next();
             ITeacher teacher = responsibleFor.getTeacher();
             IDepartment department = persistentDepartment.readByTeacher(teacher);
-            //CLONER
-            //infoDepartments.add(Cloner
-            //.copyIDepartment2InfoDepartment(department));
+
             infoDepartments.add(InfoDepartment.newInfoFromDomain(department));
         }
         return infoDepartments;
@@ -475,10 +470,7 @@ public class ReadCourseInformation implements IService {
         Iterator iter = bibliographicReferences.iterator();
         while (iter.hasNext()) {
             IBibliographicReference bibliographicReference = (IBibliographicReference) iter.next();
-            //CLONER
-            //infoBibliographicReferences
-            //.add(Cloner
-            //.copyIBibliographicReference2InfoBibliographicReference(bibliographicReference));
+
             infoBibliographicReferences.add(InfoBibliographicReference
                     .newInfoFromDomain(bibliographicReference));
         }
@@ -521,9 +513,7 @@ public class ReadCourseInformation implements IService {
         Iterator iter = curricularCourses.iterator();
         while (iter.hasNext()) {
             ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
-            //CLONER
-            //InfoCurricularCourse infoCurricularCourse = Cloner
-            //.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+
             InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
                     .newInfoFromDomain(curricularCourse);
             List infoScopes = getInfoScopes(curricularCourse.getScopes(), sp);
@@ -535,9 +525,6 @@ public class ReadCourseInformation implements IService {
                 infoCurriculum = new InfoCurriculum();
 
             } else {
-                //CLONER
-                //infoCurriculum = Cloner
-                //.copyICurriculum2InfoCurriculum(curriculum);
                 infoCurriculum = InfoCurriculum.newInfoFromDomain(curriculum);
             }
             infoCurriculum.setInfoCurricularCourse(infoCurricularCourse);
@@ -595,9 +582,7 @@ public class ReadCourseInformation implements IService {
         Iterator iter = scopes.iterator();
         while (iter.hasNext()) {
             ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iter.next();
-            //CLONER
-            //InfoCurricularCourseScope infoCurricularCourseScope = Cloner
-            //.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+
             InfoCurricularCourseScope infoCurricularCourseScope = InfoCurricularCourseScopeWithBranchAndSemesterAndYear
                     .newInfoFromDomain(curricularCourseScope);
             infoScopes.add(infoCurricularCourseScope);

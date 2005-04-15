@@ -195,10 +195,6 @@ public class ReadTeacherInformation implements IService {
             infoSiteTeacherInformation.setInfoCientificPublications(getInfoPublications(sp, teacher,
                     PublicationConstants.CIENTIFIC));
 
-            //CLONER
-            //infoSiteTeacherInformation.setInfoExecutionPeriod(
-            //(InfoExecutionPeriod) Cloner.get(executionPeriod));
-
             // FIXME possible cause of error: this execution period is used for
             // what?
             infoSiteTeacherInformation.setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
@@ -329,8 +325,6 @@ public class ReadTeacherInformation implements IService {
         List infoCareers = (List) CollectionUtils.collect(careers, new Transformer() {
             public Object transform(Object o) {
                 ICareer career = (ICareer) o;
-                //CLONER
-                //return Cloner.copyICareer2InfoCareer(career);
                 return InfoCareer.newInfoFromDomain(career);
             }
         });

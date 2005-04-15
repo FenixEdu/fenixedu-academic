@@ -79,9 +79,6 @@ public class ReadListsOfCurricularCoursesForEnrollmentEquivalence extends
         infoEquivalenceContext
                 .setInfoCurricularCoursesToGetEquivalence(cloneCurricularCoursesToInfoCurricularCourses(curricularCoursesThatMayGetEquivalences));
 
-        //CLONER
-        //infoEquivalenceContext.setInfoStudentCurricularPlan(Cloner
-        //	.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
         infoEquivalenceContext
                 .setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree
                         .newInfoFromDomain(studentCurricularPlan));

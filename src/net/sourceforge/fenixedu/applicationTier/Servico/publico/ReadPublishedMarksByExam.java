@@ -103,9 +103,7 @@ public class ReadPublishedMarksByExam implements IServico {
             List infoAttendList = (List) CollectionUtils.collect(attendList, new Transformer() {
                 public Object transform(Object input) {
                     IAttends attend = (IAttends) input;
-                    //CLONER
-                    //InfoFrequenta infoAttend = Cloner
-                    //.copyIFrequenta2InfoFrequenta(attend);
+
                     InfoFrequenta infoAttend = InfoFrequentaWithInfoStudentAndPerson
                             .newInfoFromDomain(attend);
                     return infoAttend;
@@ -115,8 +113,7 @@ public class ReadPublishedMarksByExam implements IServico {
             List infoMarkList = (List) CollectionUtils.collect(marksList, new Transformer() {
                 public Object transform(Object input) {
                     IMark mark = (IMark) input;
-                    //CLONER
-                    //InfoMark infoMark = Cloner.copyIMark2InfoMark(mark);
+
                     InfoMark infoMark = InfoMarkWithInfoAttendAndInfoStudent.newInfoFromDomain(mark);
                     return infoMark;
                 }

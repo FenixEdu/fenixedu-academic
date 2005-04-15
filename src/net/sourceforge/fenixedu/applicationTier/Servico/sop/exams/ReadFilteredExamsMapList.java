@@ -145,10 +145,6 @@ public class ReadFilteredExamsMapList implements IServico {
 				   // For each execution course obtain curricular courses and
 				   // exams
 				   for (int j = 0; j < executionCourses.size(); j++) {
-					   //CLONER
-					   //InfoExecutionCourse infoExecutionCourse =
-					   //(InfoExecutionCourse) Cloner.get((IExecutionCourse)
-					   // executionCourses.get(j));
 					   InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriodAndExams
 							   .newInfoFromDomain((IExecutionCourse) executionCourses.get(j));
 
@@ -157,7 +153,8 @@ public class ReadFilteredExamsMapList implements IServico {
 					   List associatedInfoCurricularCourses = new ArrayList();
 					   List associatedCurricularCourses = ((IExecutionCourse) executionCourses.get(j))
 							   .getAssociatedCurricularCourses();
-					   // Curricular courses
+
+                       // Curricular courses
 					   for (int k = 0; k < associatedCurricularCourses.size(); k++) {
 						   InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
 								   .newInfoFromDomain((ICurricularCourse) associatedCurricularCourses
@@ -176,9 +173,7 @@ public class ReadFilteredExamsMapList implements IServico {
 						   if (!(associatedExams.get(k) instanceof IExam)) {
 							   continue;
 						   }
-						   //CLONER
-						   //InfoExam infoExam = Cloner.copyIExam2InfoExam((IExam)
-						   // associatedExams.get(k));
+
 						   InfoExam infoExam = InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear
 								   .newInfoFromDomain((IExam) associatedExams.get(k));
 						   int numberOfStudentsForExam = 0;
