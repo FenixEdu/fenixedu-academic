@@ -35,7 +35,7 @@ public class ReadClassesWithShiftService implements IService {
         List infoClasses = new ArrayList();
         while (iterator.hasNext()) {
             ISchoolClassShift element = (ISchoolClassShift) iterator.next();
-            infoClasses.add(InfoClass.newInfoFromDomain(element.getTurma()));
+            infoClasses.add(InfoClass.newInfoFromDomain(element.getSchoolClass()));
         }
         return infoClasses;
     }

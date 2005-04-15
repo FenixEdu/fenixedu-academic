@@ -76,7 +76,7 @@ public class TurmaTurnoOJB extends PersistentObjectOJB implements ITurmaTurnoPer
         Iterator resultIterator = result.iterator();
         while (resultIterator.hasNext()) {
             ISchoolClassShift classShift = (ISchoolClassShift) resultIterator.next();
-            shiftList.add(classShift.getTurno());
+            shiftList.add(classShift.getShift());
         }
         return shiftList;
 
@@ -97,7 +97,7 @@ public class TurmaTurnoOJB extends PersistentObjectOJB implements ITurmaTurnoPer
         Iterator resultIterator = result.iterator();
         while (resultIterator.hasNext()) {
             ISchoolClassShift classShift = (ISchoolClassShift) resultIterator.next();
-            classList.add(classShift.getTurma());
+            classList.add(classShift.getSchoolClass());
         }
         return classList;
 

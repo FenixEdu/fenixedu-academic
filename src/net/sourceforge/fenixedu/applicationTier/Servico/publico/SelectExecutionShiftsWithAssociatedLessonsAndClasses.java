@@ -87,7 +87,7 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClasses implements ISe
                     for (int j = 0; j < classesShifts.size(); j++)
                         infoClasses.add(InfoClass.newInfoFromDomain(
 								((ISchoolClassShift) classesShifts.get(j))
-                                .getTurma()));
+                                .getSchoolClass()));
 
                     shiftWithAssociatedClassesAndLessons.setInfoClasses(infoClasses);
 
