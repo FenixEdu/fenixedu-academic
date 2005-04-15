@@ -38,26 +38,19 @@ public interface IPublicationType extends IDomainObject {
     public abstract List getSubtypes();
 
     /**
-     * @param nonRequiredAttributes
-     *            The nonRequiredAttributes to set.
-     */
-    public abstract void setNonRequiredAttributes(List nonRequiredAttributes);
-
-    /**
      * @param publicationType
      *            The publicationType to set.
      */
     public abstract void setPublicationType(String publicationType);
 
-    /**
-     * @param requiredAttributes
-     *            The requiredAttributes to set.
-     */
-    public abstract void setRequiredAttributes(List requiredAttributes);
 
     /**
      * @param subtypes
      *            The subtypes to set.
      */
     public abstract void setSubtypes(List subtypes);
+    
+    public abstract List getPublicationTypeAttributes();
+    
+    public abstract void setPublicationTypeAttributes(List publicationTypeAttributes);
 }
