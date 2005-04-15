@@ -260,7 +260,39 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEICTAGUS extends net.
 class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEM extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
 }
 
-
+class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixedu.domain.DomainObject {
+    String additionalInfoEn;
+    String historyEn;
+    Double markMax;
+    String additionalInfo;
+    String professionalExitsEn;
+    String professionalExits;
+    String linksEn;
+    String classificationsEn;
+    String descriptionEn;
+    String objectives;
+    String testIngressionEn;
+    String links;
+    String classifications;
+    String testIngression;
+    Integer driftsInitial;
+    String objectivesEn;
+    Double markMin;
+    Integer driftsFirst;
+    String description;
+    Double markAverage;
+    Integer driftsSecond;
+    String history;
+    Integer degreeKey;
+    
+    interface "
+    
+    public net.sourceforge.fenixedu.domain.IDegree getDegree();
+    public java.sql.Timestamp getLastModificationDate();
+    public void setDegree(net.sourceforge.fenixedu.domain.IDegree degree);
+    public void setLastModificationDate(java.sql.Timestamp lastModificationDate);
+    "
+}
 
 
 
