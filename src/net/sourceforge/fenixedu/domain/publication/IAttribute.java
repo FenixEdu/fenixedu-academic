@@ -33,9 +33,7 @@ public interface IAttribute extends IDomainObject {
      */
     public abstract List getPublications();
 
-    /**
-     * @param publications
-     *            The publications to set.
-     */
-    public abstract void setPublications(List publications);
+    public abstract List getPublicationTypeAttributes();
+    
+    public abstract void setPublicationTypeAttributes(List publicationTypeAttributes);
 }
