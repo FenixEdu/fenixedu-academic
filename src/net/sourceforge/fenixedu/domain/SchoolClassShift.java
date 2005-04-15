@@ -10,15 +10,10 @@ package net.sourceforge.fenixedu.domain;
  * 
  * @author tfc130
  */
-public class SchoolClassShift extends DomainObject implements ISchoolClassShift {
-    protected ISchoolClass _turma;
+public class SchoolClassShift extends SchoolClassShift_Base {
+    protected ISchoolClass schoolClass;
 
-    protected IShift _turno;
-
-    // c�digos internos da base de dados
-    private Integer _chaveTurma;
-
-    private Integer _chaveTurno;
+    protected IShift shift;
 
     /**
      * Construtor sem argumentos p�blico requerido pela moldura de objectos
@@ -27,59 +22,43 @@ public class SchoolClassShift extends DomainObject implements ISchoolClassShift 
     public SchoolClassShift() {
     }
 
-    public SchoolClassShift(ISchoolClass turma, IShift turno) {
-        setTurma(turma);
-        setTurno(turno);
+    public SchoolClassShift(ISchoolClass schoolClass, IShift shift) {
+        setSchoolClass(schoolClass);
+        setShift(shift);
     }
 
-    public Integer getChaveTurma() {
-        return _chaveTurma;
+    public ISchoolClass getSchoolClass() {
+        return schoolClass;
     }
 
-    public void setChaveTurma(Integer chaveTurma) {
-        _chaveTurma = chaveTurma;
+    public void setSchoolClass(ISchoolClass schoolClass) {
+        this.schoolClass = schoolClass;
     }
 
-    public Integer getChaveTurno() {
-        return _chaveTurno;
+    public IShift getShift() {
+        return shift;
     }
 
-    public void setChaveTurno(Integer chaveTurno) {
-        _chaveTurno = chaveTurno;
-    }
-
-    public ISchoolClass getTurma() {
-        return _turma;
-    }
-
-    public void setTurma(ISchoolClass turma) {
-        _turma = turma;
-    }
-
-    public IShift getTurno() {
-        return _turno;
-    }
-
-    public void setTurno(IShift turno) {
-        _turno = turno;
+    public void setShift(IShift shift) {
+        this.shift = shift;
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
+        boolean result = false;
         if (obj instanceof ISchoolClassShift) {
-            ISchoolClassShift turma_turno = (ISchoolClassShift) obj;
-            resultado = getTurma().equals(turma_turno.getTurma())
-                    && getTurno().equals(turma_turno.getTurno());
+            ISchoolClassShift schoolClass_shift = (ISchoolClassShift) obj;
+            result = getSchoolClass().equals(schoolClass_shift.getSchoolClass())
+                    && getShift().equals(schoolClass_shift.getShift());
         }
-        return resultado;
+        return result;
     }
 
     public String toString() {
         String result = "[TURMA_TURNO";
-        result += ", turma=" + _turma;
-        result += ", turno=" + _turno;
-        result += ", chaveTurma=" + _chaveTurma;
-        result += ", chaveTurno=" + _chaveTurno;
+        result += ", turma=" + schoolClass;
+        result += ", turno=" + shift;
+        result += ", chaveTurma=" + getKeySchoolClass();
+        result += ", chaveTurno=" + getKeyShift();
         result += "]";
         return result;
     }

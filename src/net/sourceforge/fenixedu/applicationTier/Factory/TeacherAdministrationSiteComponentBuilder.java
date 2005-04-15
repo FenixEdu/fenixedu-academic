@@ -2169,7 +2169,7 @@ public class TeacherAdministrationSiteComponentBuilder {
                                                     //.get(j)).getTurma()));
                         	infoClasses
                         	.add(InfoClass.newInfoFromDomain(((ISchoolClassShift) classesShifts
-                                        .get(j)).getTurma()));
+                                        .get(j)).getSchoolClass()));
                         infoShift.setInfoClasses(infoClasses);
                         infoShift.setIdInternal(shift.getIdInternal());
 
