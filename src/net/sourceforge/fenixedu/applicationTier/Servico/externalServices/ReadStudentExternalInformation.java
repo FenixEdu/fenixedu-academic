@@ -55,6 +55,7 @@ public class ReadStudentExternalInformation implements IService
             info.setPerson(this.buildExternalPersonInfo(person));
             info.setDegree(this.buildExternalDegreeCurricularPlanInfo(student));
             info.setCourses(this.buildExternalEnrollmentsInfo(student));
+            info.setNumber(student.getNumber().toString());
 
             result.add(info);
         }

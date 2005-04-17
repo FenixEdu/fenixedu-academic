@@ -15,6 +15,7 @@ import java.util.Collection;
  */
 public class InfoStudentExternalInformation
 {
+    private String number;
     private InfoExternalPersonInfo person;
     private InfoExternalDegreeCurricularPlanInfo degree;
     private Collection courses;
@@ -59,5 +60,15 @@ public class InfoStudentExternalInformation
     public void setPerson(InfoExternalPersonInfo person)
     {
         this.person = person;
+    }
+    
+    public String getNumber()
+    {
+        return this.number;
+    }
+    
+    public void setNumber(String number)
+    {
+        this.number = number;
     }
 }

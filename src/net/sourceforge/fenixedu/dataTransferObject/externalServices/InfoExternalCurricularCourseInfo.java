@@ -17,6 +17,30 @@ public class InfoExternalCurricularCourseInfo
 {
     private String name;
     private String code;
+    private String ECTSCredits;
+    private String credits;
+    
+    
+    public String getCredits()
+    {
+        return this.credits;
+    }
+
+    
+    public void setCredits(String credits)
+    {
+        this.credits = credits;
+    }
+
+    public String getECTSCredits()
+    {
+        return this.ECTSCredits;
+    }
+    
+    public void setECTSCredits(String credits)
+    {
+        ECTSCredits = credits;
+    }
     /**
      * @return Returns the code.
      */
@@ -51,6 +75,8 @@ public class InfoExternalCurricularCourseInfo
         InfoExternalCurricularCourseInfo info = new InfoExternalCurricularCourseInfo();
         info.setCode(course.getCode());
         info.setName(course.getName());
+        info.setECTSCredits(course.getEctsCredits().toString());
+        info.setCredits(course.getCredits().toString());
         
         return info;
     }
