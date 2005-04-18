@@ -9,6 +9,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.util.CurricularCourseExecutionScope;
 import net.sourceforge.fenixedu.util.CurricularCourseType;
@@ -568,4 +569,81 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
         }
         return infoCurricularCourse;
     }
+
+    public void copyToDomain(InfoCurricularCourse infoCurricularCourse,
+            ICurricularCourse curricularCourse) {
+        super.copyToDomain(infoCurricularCourse, curricularCourse);
+        curricularCourse.setName(infoCurricularCourse.getName());
+        curricularCourse.setCode(infoCurricularCourse.getCode());
+        curricularCourse.setCredits(infoCurricularCourse.getCredits());
+        curricularCourse.setTheoreticalHours(infoCurricularCourse.getTheoreticalHours());
+        curricularCourse.setPraticalHours(infoCurricularCourse.getPraticalHours());
+        curricularCourse.setTheoPratHours(infoCurricularCourse.getTheoPratHours());
+        curricularCourse.setLabHours(infoCurricularCourse.getLabHours());
+
+        if (infoCurricularCourse.getInfoDegreeCurricularPlan() != null) {
+            curricularCourse.setDegreeCurricularPlan(InfoDegreeCurricularPlan
+                    .newDomainFromInfo(infoCurricularCourse.getInfoDegreeCurricularPlan()));
+        }
+
+        // TODO missing set on scopes...
+//        if (infoCurricularCourse.getInfoScopes() != null) {
+//            curricularCourse.setScopes(new ArrayList(infoCurricularCourse.getInfoScopes().size()));
+//            for (Object element : infoCurricularCourse.getInfoScopes()) {
+//                InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) element;
+//                curricularCourse.getScopes().add(
+//                        InfoCurricularCourseScope.newDomainFromInfo(infoCurricularCourseScope));
+//            }
+//        }
+        
+        // TODO missing set on associatedExecutionCourses...
+//        if (infoCurricularCourse.getInfoAssociatedExecutionCourses() != null) {
+//            curricularCourse.setAssociatedExecutionCourses(new ArrayList(infoCurricularCourse
+//                    .getInfoAssociatedExecutionCourses().size()));
+//            for (Object element : infoCurricularCourse.getInfoAssociatedExecutionCourses()) {
+//                InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) element;
+//                curricularCourse.getAssociatedExecutionCourses().add(
+//                        InfoExecutionCourse.newDomainFromInfo(infoExecutionCourse));
+//            }
+//        }
+        
+        curricularCourse.setType(infoCurricularCourse.getType());
+        curricularCourse.setCurricularCourseExecutionScope(infoCurricularCourse
+                .getCurricularCourseExecutionScope());
+        curricularCourse.setMandatory(infoCurricularCourse.getMandatory());
+
+        // TODO missing set on university...
+        if (infoCurricularCourse.getInfoUniversity() != null) {
+            //curricularCourse.setUniversity(InfoUniversity.newDomainFromInfo(infoCurricularCourse.getInfoUniversity()));
+        }
+        
+        curricularCourse.setBasic(infoCurricularCourse.getBasic());
+
+        // TODO missing set on scientificArea...
+        if (infoCurricularCourse.getInfoScientificArea() != null) {
+            // curricularCourse.setScientificArea(InfoScientificArea.newDomainFromInfo(infoCurricularCourse.getInfoScientificArea()));
+        }
+
+        curricularCourse.setMaximumValueForAcumulatedEnrollments(infoCurricularCourse
+                .getMaximumValueForAcumulatedEnrollments());
+        curricularCourse.setMinimumValueForAcumulatedEnrollments(infoCurricularCourse
+                .getMinimumValueForAcumulatedEnrollments());
+        curricularCourse.setEnrollmentWeigth(infoCurricularCourse.getEnrollmentWeigth());
+        curricularCourse.setEctsCredits(infoCurricularCourse.getEctsCredits());
+        curricularCourse.setWeigth(infoCurricularCourse.getWeigth());
+        curricularCourse.setMandatoryEnrollment(infoCurricularCourse.getMandatoryEnrollment());
+        curricularCourse.setEnrollmentAllowed(infoCurricularCourse.getEnrollmentAllowed());
+        curricularCourse.setAcronym(infoCurricularCourse.getAcronym());
+    }
+
+    public static ICurricularCourse newDomainFromInfo(InfoCurricularCourse infoCurricularCourse) {
+        ICurricularCourse curricularCourse = null;
+        if (infoCurricularCourse != null) {
+            curricularCourse = new CurricularCourse();
+            infoCurricularCourse.copyToDomain(infoCurricularCourse, curricularCourse);
+        }
+        return null;
+    }
+    
+
 }
