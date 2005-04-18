@@ -1254,6 +1254,17 @@ class net.sourceforge.fenixedu.domain.StudentGroupAttend extends net.sourceforge
         Integer keyAttend;        
 }
 
+class net.sourceforge.fenixedu.domain.StudentKind extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer minCoursesToEnrol;
+    Integer maxNACToEnrol;
+    Integer maxCoursesToEnrol;
+    
+    interface "
+    public abstract net.sourceforge.fenixedu.util.StudentType getStudentType();
+    public abstract void setStudentType(net.sourceforge.fenixedu.util.StudentType studentType);  
+    "
+}
+
 class net.sourceforge.fenixedu.domain.Summary extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer studentsNumber;
 	Integer keyProfessorship;

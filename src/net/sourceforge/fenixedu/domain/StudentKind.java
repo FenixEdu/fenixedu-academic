@@ -8,15 +8,9 @@ import net.sourceforge.fenixedu.util.StudentType;
  * 24/Mar/2003
  */
 
-public class StudentKind extends DomainObject implements IStudentKind {
+public class StudentKind extends StudentKind_Base {
 
     private StudentType studentType;
-
-    private Integer minCoursesToEnrol;
-
-    private Integer maxCoursesToEnrol;
-
-    private Integer maxNACToEnrol;
 
     public StudentKind() {
     }
@@ -34,9 +28,9 @@ public class StudentKind extends DomainObject implements IStudentKind {
         String result = "[" + this.getClass().getName() + "; ";
         result += "idInternal = " + this.getIdInternal() + "; ";
         result += "studentType = " + this.studentType + "; ";
-        result += "minCoursesToEnrol = " + this.minCoursesToEnrol + "; ";
-        result += "maxNACToEnrol = " + this.maxNACToEnrol + "; ";
-        result += "maxCoursesToEnrol = " + this.maxCoursesToEnrol + "]\n";
+        result += "minCoursesToEnrol = " + this.getMinCoursesToEnrol() + "; ";
+        result += "maxNACToEnrol = " + this.getMaxNACToEnrol() + "; ";
+        result += "maxCoursesToEnrol = " + this.getMaxCoursesToEnrol() + "]\n";
         return result;
     }
 
@@ -47,29 +41,4 @@ public class StudentKind extends DomainObject implements IStudentKind {
     public void setStudentType(StudentType studentType) {
         this.studentType = studentType;
     }
-
-    public Integer getMaxCoursesToEnrol() {
-        return maxCoursesToEnrol;
-    }
-
-    public Integer getMaxNACToEnrol() {
-        return maxNACToEnrol;
-    }
-
-    public Integer getMinCoursesToEnrol() {
-        return minCoursesToEnrol;
-    }
-
-    public void setMaxCoursesToEnrol(Integer maxCoursesToEnrol) {
-        this.maxCoursesToEnrol = maxCoursesToEnrol;
-    }
-
-    public void setMaxNACToEnrol(Integer maxNACToEnrol) {
-        this.maxNACToEnrol = maxNACToEnrol;
-    }
-
-    public void setMinCoursesToEnrol(Integer minCoursesToEnrol) {
-        this.minCoursesToEnrol = minCoursesToEnrol;
-    }
-
 }
