@@ -438,11 +438,15 @@
 		<delete includeEmptyDirs="true">
 			<fileset dir="${src_gen}">
 				<include name="**/*.java"/>
+				<exclude name="**/*_Base.java"/>
+				<exclude name="**/I*.java"/>
+			</fileset>
+	    </delete>
+	    <delete includeEmptyDirs="true">
+			<fileset dir="${src_gen}">
 				<include name="**/Item.java"/>
 				<include name="**/InsuranceValue.java"/>
 				<include name="**/InsuranceTransaction.java"/>
-				<exclude name="**/*_Base.java"/>
-				<exclude name="**/I*.java"/>
 			</fileset>
 	    </delete>
 		<echo level="info" message="Processing of ${dml.definition.file} finished."/>

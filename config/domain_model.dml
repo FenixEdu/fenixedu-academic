@@ -713,6 +713,14 @@ class net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse extends net
         "
 }
 
+class net.sourceforge.fenixedu.domain.Item extends net.sourceforge.fenixedu.domain.DomainObject implements net.sourceforge.fenixedu.fileSuport.INode {
+	Integer keySection;
+	Boolean urgent;
+	Integer itemOrder;
+	String information;
+	String name;
+}
+
 class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionPeriod;
 	Integer keyShift;
@@ -1210,6 +1218,14 @@ class net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent extends net.sour
     "
 }
 
+class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.domain.DomainObject implements net.sourceforge.fenixedu.fileSuport.INode {
+	Integer keySuperiorSection;
+	Integer sectionOrder;
+	Integer keySite;
+	String name;
+	Date lastModifiedDate;
+}
+
 class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer availabilityFinal;
 	Integer chaveDisciplinaExecucao;
@@ -1486,7 +1502,6 @@ external class net.sourceforge.fenixedu.domain.classProperties.ExecutionCoursePr
 external class net.sourceforge.fenixedu.domain.ExecutionPeriod;
 external class net.sourceforge.fenixedu.domain.ExecutionYear;
 external class net.sourceforge.fenixedu.domain.ScientificArea;
-external class net.sourceforge.fenixedu.domain.Section;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 external class net.sourceforge.fenixedu.domain.Teacher;
@@ -1904,6 +1919,20 @@ relation RoomSummary {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Room playsRole room;
+}
+
+relation SectionItem {
+	net.sourceforge.fenixedu.domain.Item playsRole associatedItems {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Section playsRole section;
+}
+
+relation SectionSuperiorSection {
+	net.sourceforge.fenixedu.domain.Section playsRole associatedSections {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Section playsRole superiorSection;
 }
 
 relation SchoolClassShiftShift {
