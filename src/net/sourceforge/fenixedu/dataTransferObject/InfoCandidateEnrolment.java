@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import net.sourceforge.fenixedu.domain.ICandidateEnrolment;
+
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -82,6 +84,19 @@ public class InfoCandidateEnrolment extends InfoObject {
      */
     public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
         this.infoCurricularCourse = infoCurricularCourse;
+    }
+
+    public void copyFromDomain(ICandidateEnrolment candidateEnrolment) {
+        super.copyFromDomain(candidateEnrolment);
+    }
+
+    public static InfoCandidateEnrolment newInfoFromDomain(ICandidateEnrolment candidateEnrolment) {
+        InfoCandidateEnrolment infoCandidateEnrolment = null;
+        if (candidateEnrolment != null) {
+            infoCandidateEnrolment = new InfoCandidateEnrolment();
+            infoCandidateEnrolment.copyFromDomain(candidateEnrolment);
+        }
+        return infoCandidateEnrolment;
     }
 
 }

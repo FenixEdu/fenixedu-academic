@@ -12,6 +12,15 @@ public class InfoMasterDegreeCandidateWithInfoPerson extends InfoMasterDegreeCan
         super.copyFromDomain(masterDegreeCandidate);
         if (masterDegreeCandidate != null) {
             setInfoPerson(InfoPerson.newInfoFromDomain(masterDegreeCandidate.getPerson()));
+            setAverage(masterDegreeCandidate.getAverage());
+            setCandidateNumber(masterDegreeCandidate.getCandidateNumber());
+            setGivenCredits(masterDegreeCandidate.getGivenCredits());
+            setGivenCreditsRemarks(masterDegreeCandidate.getGivenCreditsRemarks());
+            setMajorDegree(masterDegreeCandidate.getMajorDegree());
+            setMajorDegreeSchool(masterDegreeCandidate.getMajorDegreeSchool());
+            setMajorDegreeYear(masterDegreeCandidate.getMajorDegreeYear());
+            setSpecializationArea(masterDegreeCandidate.getSpecializationArea());
+            setSubstituteOrder(masterDegreeCandidate.getSubstituteOrder());
         }
     }
 

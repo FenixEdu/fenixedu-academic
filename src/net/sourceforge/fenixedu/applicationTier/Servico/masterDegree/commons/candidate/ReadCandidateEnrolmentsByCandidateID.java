@@ -6,7 +6,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateEnrolment;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateEnrolmentWithCurricularCourseAndMasterDegreeCandidateAndExecutionDegreeAndDegreeCurricularPlanAndDegree;
 import net.sourceforge.fenixedu.domain.ICandidateEnrolment;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
@@ -22,41 +23,33 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadCandidateEnrolmentsByCandidateID implements IService {
 
-    public List run(Integer candidateID) throws FenixServiceException {
+    public List run(Integer candidateID) throws FenixServiceException, ExcepcaoPersistencia {
         List result = new ArrayList();
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
-                    .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
-                            candidateID);
+        IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
+                .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
+                        candidateID);
 
-            if (masterDegreeCandidate == null) {
-                throw new NonExistingServiceException();
-            }
+        if (masterDegreeCandidate == null) {
+            throw new NonExistingServiceException();
+        }
 
-            List candidateEnrolments = sp.getIPersistentCandidateEnrolment().readByMDCandidate(
-                    masterDegreeCandidate);
+        List candidateEnrolments = sp.getIPersistentCandidateEnrolment().readByMDCandidate(
+                masterDegreeCandidate);
 
-            if (candidateEnrolments == null) {
-                throw new NonExistingServiceException();
-            }
+        if (candidateEnrolments == null) {
+            throw new NonExistingServiceException();
+        }
 
-            Iterator candidateEnrolmentIterator = candidateEnrolments.iterator();
-
-            while (candidateEnrolmentIterator.hasNext()) {
-                ICandidateEnrolment candidateEnrolmentTemp = (ICandidateEnrolment) candidateEnrolmentIterator
-                        .next();
-                result
-                        .add(Cloner
-                                .copyICandidateEnrolment2InfoCandidateEnrolment(candidateEnrolmentTemp));
-            }
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
+        for (final Iterator candidateEnrolmentIterator = candidateEnrolments.iterator(); candidateEnrolmentIterator
+                .hasNext();) {
+            ICandidateEnrolment candidateEnrolmentTemp = (ICandidateEnrolment) candidateEnrolmentIterator
+                    .next();
+            InfoCandidateEnrolment infoCandidateEnrolment = InfoCandidateEnrolmentWithCurricularCourseAndMasterDegreeCandidateAndExecutionDegreeAndDegreeCurricularPlanAndDegree
+                    .newInfoFromDomain(candidateEnrolmentTemp);
+            result.add(infoCandidateEnrolment);
         }
 
         return result;
