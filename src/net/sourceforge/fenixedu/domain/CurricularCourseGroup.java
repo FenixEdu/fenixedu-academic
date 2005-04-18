@@ -8,13 +8,7 @@ import java.util.List;
  * @author David Santos on Jul 26, 2004
  */
 
-public abstract class CurricularCourseGroup extends DomainObject {
-
-    protected Integer minimumValue;
-
-    protected Integer maximumValue;
-
-    protected Integer keyBranch;
+public abstract class CurricularCourseGroup extends CurricularCourseGroup_Base {
 
     protected IBranch branch;
 
@@ -22,40 +16,12 @@ public abstract class CurricularCourseGroup extends DomainObject {
 
     protected List scientificAreas;
 
-    protected String ojbConcreteClass;
-
-    protected String name;
-
     /**
      *  
      */
     public CurricularCourseGroup() {
         super();
-        this.ojbConcreteClass = this.getClass().getName();
-    }
-
-    public Integer getKeyBranch() {
-        return keyBranch;
-    }
-
-    public void setKeyBranch(Integer keyBranch) {
-        this.keyBranch = keyBranch;
-    }
-
-    protected Integer getMaximumValue() {
-        return maximumValue;
-    }
-
-    protected void setMaximumValue(Integer maximumValue) {
-        this.maximumValue = maximumValue;
-    }
-
-    protected Integer getMinimumValue() {
-        return minimumValue;
-    }
-
-    protected void setMinimumValue(Integer minimumValue) {
-        this.minimumValue = minimumValue;
+        this.setOjbConcreteClass(this.getClass().getName());
     }
 
     public IBranch getBranch() {
@@ -80,28 +46,5 @@ public abstract class CurricularCourseGroup extends DomainObject {
 
     public void setScientificAreas(List scientificAreas) {
         this.scientificAreas = scientificAreas;
-    }
-
-    public String getOjbConcreteClass() {
-        return ojbConcreteClass;
-    }
-
-    public void setOjbConcreteClass(String ojbConcreteClass) {
-        this.ojbConcreteClass = ojbConcreteClass;
-    }
-
-    /**
-     * @return Returns the name.
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name
-     *            The name to set.
-     */
-    public void setName(String name) {
-        this.name = name;
     }
 }

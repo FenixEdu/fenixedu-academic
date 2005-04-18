@@ -6,8 +6,7 @@ import net.sourceforge.fenixedu.util.AreaType;
  * @author David Santos on Jul 26, 2004
  */
 
-public class OptionalCurricularCourseGroup extends CurricularCourseGroup implements
-        ICurricularCourseGroup {
+public class OptionalCurricularCourseGroup extends OptionalCurricularCourseGroup_Base {
 
     public OptionalCurricularCourseGroup() {
     }

@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.util.AreaType;
  * @author David Santos on Jul 26, 2004
  */
 
-public class AreaCurricularCourseGroup extends CurricularCourseGroup implements ICurricularCourseGroup {
+public class AreaCurricularCourseGroup extends AreaCurricularCourseGroup_Base {
 
     private AreaType areaType;
 
