@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.TipoAula;
 import net.sourceforge.fenixedu.util.date.TimePeriod;
 
-public class Lesson extends DomainObject implements ILesson {
+public class Lesson extends Lesson_Base  {
     protected DiaSemana _diaSemana;
 
     protected Calendar _inicio;
@@ -26,52 +26,13 @@ public class Lesson extends DomainObject implements ILesson {
     protected TipoAula _tipo;
 
     protected IRoom _sala;
-
+    
     //  protected IExecutionCourse _disciplinaExecucao;
     protected IShift _shift;
 
     protected IExecutionPeriod executionPeriod;
 
     protected IRoomOccupation roomOccupation;
-
-    // c�digos internos da base de dados
-    private Integer _chaveSala;
-
-    private Integer _keyShift;
-
-    //    private Integer _chaveDisciplinaExecucao;
-
-    private Integer keyExecutionPeriod;
-
-    private Integer keyRoomOccupation;
-
-    /**
-     * @return
-     */
-    public IExecutionPeriod getExecutionPeriod() {
-        return executionPeriod;
-    }
-
-    /**
-     * @param executionPeriod
-     */
-    public void setExecutionPeriod(IExecutionPeriod executionPeriod) {
-        this.executionPeriod = executionPeriod;
-    }
-
-    /**
-     * @return
-     */
-    public Integer getKeyExecutionPeriod() {
-        return keyExecutionPeriod;
-    }
-
-    /**
-     * @param keyExecutionPeriod
-     */
-    public void setKeyExecutionPeriod(Integer keyExecutionPeriod) {
-        this.keyExecutionPeriod = keyExecutionPeriod;
-    }
 
     /**
      * Construtor sem argumentos p�blico requerido pela moldura de objectos
@@ -98,6 +59,20 @@ public class Lesson extends DomainObject implements ILesson {
         setRoomOccupation(roomOccupation);
         setShift(shift);
         //    setDisciplinaExecucao(disciplinaExecucao);
+    }
+    
+    /**
+     * @return
+     */
+    public IExecutionPeriod getExecutionPeriod() {
+        return executionPeriod;
+    }
+
+    /**
+     * @param executionPeriod
+     */
+    public void setExecutionPeriod(IExecutionPeriod executionPeriod) {
+        this.executionPeriod = executionPeriod;
     }
 
     public DiaSemana getDiaSemana() {
@@ -130,14 +105,6 @@ public class Lesson extends DomainObject implements ILesson {
 
     public void setTipo(TipoAula tipo) {
         _tipo = tipo;
-    }
-
-    public Integer getChaveSala() {
-        return _chaveSala;
-    }
-
-    public void setChaveSala(Integer chaveSala) {
-        _chaveSala = chaveSala;
     }
 
     /*
@@ -191,7 +158,7 @@ public class Lesson extends DomainObject implements ILesson {
         if (_fim != null)
             result += ", fim=" + _fim.get(Calendar.HOUR_OF_DAY) + ":" + _fim.get(Calendar.MINUTE);
         result += ", tipo=" + _tipo;
-        result += ", chaveSala=" + _chaveSala;
+        result += ", chaveSala=" + getChaveSala();
         //    result += ", chaveDisciplinaExecucao=" + _chaveDisciplinaExecucao;
         result += "]";
         return result;
@@ -211,20 +178,6 @@ public class Lesson extends DomainObject implements ILesson {
         this._shift = shift;
     }
 
-    /**
-     * @return
-     */
-    public Integer getKeyShift() {
-        return _keyShift;
-    }
-
-    /**
-     * @param shift
-     */
-    public void setKeyShift(Integer shift) {
-        _keyShift = shift;
-    }
-
     /*
      * (non-Javadoc)
      * 
@@ -235,13 +188,6 @@ public class Lesson extends DomainObject implements ILesson {
         return timePeriod.hours().doubleValue();
     }
 
-    public Integer getKeyRoomOccupation() {
-        return keyRoomOccupation;
-    }
-
-    public void setKeyRoomOccupation(Integer keyRoomOccupation) {
-        this.keyRoomOccupation = keyRoomOccupation;
-    }
 
     public IRoomOccupation getRoomOccupation() {
         return roomOccupation;

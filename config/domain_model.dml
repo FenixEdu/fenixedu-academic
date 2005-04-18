@@ -647,6 +647,47 @@ class net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse extends net
         "
 }
 
+class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyExecutionPeriod;
+	Integer keyShift;
+	Integer keyRoomOccupation;
+	Integer chaveSala;
+	
+	interface "
+	public net.sourceforge.fenixedu.domain.IExecutionPeriod getExecutionPeriod();
+	
+	public void setExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
+
+	public net.sourceforge.fenixedu.util.DiaSemana getDiaSemana();
+	
+	public void setDiaSemana(net.sourceforge.fenixedu.util.DiaSemana diaSemana);
+
+	public java.util.Calendar getInicio();
+	
+	public void setInicio(java.util.Calendar inicio);
+
+	public java.util.Calendar getFim();
+	
+	public void setFim(java.util.Calendar fim);
+
+	public net.sourceforge.fenixedu.util.TipoAula getTipo();
+	
+	public void setTipo(net.sourceforge.fenixedu.util.TipoAula tipo);
+
+	public net.sourceforge.fenixedu.domain.IRoom getSala();
+	
+	public void setSala(net.sourceforge.fenixedu.domain.IRoom sala);
+
+	public net.sourceforge.fenixedu.domain.IRoomOccupation getRoomOccupation();
+	
+	public void setRoomOccupation(net.sourceforge.fenixedu.domain.IRoomOccupation roomOccupation);
+
+	public double hours();
+	"
+}
+
+
+
 
 class net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes extends net.sourceforge.fenixedu.domain.DomainObject {
 	Double tolerance2_3;
@@ -1386,7 +1427,6 @@ external class net.sourceforge.fenixedu.domain.ExecutionCourse;
 external class net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty;
 external class net.sourceforge.fenixedu.domain.ExecutionPeriod;
 external class net.sourceforge.fenixedu.domain.ExecutionYear;
-external class net.sourceforge.fenixedu.domain.Lesson;
 external class net.sourceforge.fenixedu.domain.ScientificArea;
 external class net.sourceforge.fenixedu.domain.Section;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
