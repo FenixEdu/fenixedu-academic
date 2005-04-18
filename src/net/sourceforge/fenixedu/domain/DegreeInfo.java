@@ -6,8 +6,6 @@ import java.sql.Timestamp;
  * @author Tania Pousao Created on 30/Out/2003
  */
 public class DegreeInfo extends DegreeInfo_Base {
-    //private IDegree degree;
-
     private Timestamp lastModificationDate;
 
     public DegreeInfo(Integer idInternal) {
