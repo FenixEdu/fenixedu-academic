@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
  * @author David Santos in Jun 9, 2004
  */
 
-public class Precedence extends DomainObject implements IPrecedence {
+public class Precedence extends Precedence_Base {
     private Integer keyCurricularCourse;
 
     private ICurricularCourse curricularCourse;
@@ -27,14 +27,6 @@ public class Precedence extends DomainObject implements IPrecedence {
 
     public void setCurricularCourse(ICurricularCourse curricularCourse) {
         this.curricularCourse = curricularCourse;
-    }
-
-    public Integer getKeyCurricularCourse() {
-        return keyCurricularCourse;
-    }
-
-    public void setKeyCurricularCourse(Integer keyCurricularCourse) {
-        this.keyCurricularCourse = keyCurricularCourse;
     }
 
     public List getRestrictions() {

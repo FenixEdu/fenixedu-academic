@@ -4,8 +4,7 @@ package net.sourceforge.fenixedu.domain.precedences;
  * @author David Santos in Jun 9, 2004
  */
 
-public abstract class RestrictionByNumberOfCurricularCourses extends Restriction implements
-        IRestrictionByNumberOfCurricularCourses {
+public abstract class RestrictionByNumberOfCurricularCourses extends RestrictionByNumberOfCurricularCourses_Base {
     protected Integer numberOfCurricularCourses;
 
     public Integer getNumberOfCurricularCourses() {

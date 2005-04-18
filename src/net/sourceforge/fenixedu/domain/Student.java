@@ -17,9 +17,7 @@ import org.apache.commons.collections.Predicate;
  * 24/Mar/2003
  */
 
-public class Student extends DomainObject implements IStudent {
-
-    protected Integer number;
+public class Student extends Student_Base{
 
     protected StudentState state;
 
@@ -27,36 +25,15 @@ public class Student extends DomainObject implements IStudent {
 
     private IStudentKind studentKind;
 
-    private Integer studentKindKey;
-
     private AgreementType agreementType;
 
     private IPerson person;
 
-    private Integer personKey;
-
     private IExecutionYear registrationYear;
-
-    private Integer keyRegistrationYear;
 
     private EntryPhase entryPhase;
 
-    private Boolean payedTuition;
-
-    private Boolean enrollmentForbidden;
-
     protected List studentCurricularPlans;
-
-    private Boolean specialSeason;
-
-    //Nuno Correia & Ricardo Rodrigues
-    private Double entryGrade;
-
-    private String contigent;
-
-    private String ingression;
-
-    private String istUniversity;
 
     public Student(Integer idInternal) {
         setIdInternal(idInternal);
@@ -102,7 +79,7 @@ public class Student extends DomainObject implements IStudent {
     public String toString() {
         String result = "[" + this.getClass().getName() + "; ";
         result += "internalCode = " + getIdInternal() + "; ";
-        result += "number = " + this.number + "; ";
+        result += "number = " + this.getNumber() + "; ";
         result += "state = " + this.state + "; ";
         result += "degreeType = " + this.degreeType + "; ";
         result += "studentKind = " + this.studentKind + "; ";
@@ -119,14 +96,7 @@ public class Student extends DomainObject implements IStudent {
         return degreeType;
     }
 
-    /**
-     * Returns the number.
-     * 
-     * @return Integer
-     */
-    public Integer getNumber() {
-        return number;
-    }
+
 
     /**
      * Returns the person.
@@ -137,14 +107,6 @@ public class Student extends DomainObject implements IStudent {
         return person;
     }
 
-    /**
-     * Returns the personKey.
-     * 
-     * @return Integer
-     */
-    public Integer getPersonKey() {
-        return personKey;
-    }
 
     /**
      * Returns the state.
@@ -165,15 +127,6 @@ public class Student extends DomainObject implements IStudent {
         this.degreeType = degreeType;
     }
 
-    /**
-     * Sets the number.
-     * 
-     * @param number
-     *            The number to set
-     */
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
 
     /**
      * Sets the person.
@@ -185,15 +138,6 @@ public class Student extends DomainObject implements IStudent {
         this.person = person;
     }
 
-    /**
-     * Sets the personKey.
-     * 
-     * @param personKey
-     *            The personKey to set
-     */
-    public void setPersonKey(Integer personKey) {
-        this.personKey = personKey;
-    }
 
     /**
      * Sets the state.
@@ -212,12 +156,7 @@ public class Student extends DomainObject implements IStudent {
         return studentKind;
     }
 
-    /**
-     * @return
-     */
-    public Integer getStudentKindKey() {
-        return studentKindKey;
-    }
+
 
     /**
      * @param type
@@ -226,12 +165,7 @@ public class Student extends DomainObject implements IStudent {
         this.studentKind = studentKind;
     }
 
-    /**
-     * @param integer
-     */
-    public void setStudentKindKey(Integer studentKindKey) {
-        this.studentKindKey = studentKindKey;
-    }
+
 
     /**
      * @return Returns the agreementType.
@@ -263,35 +197,6 @@ public class Student extends DomainObject implements IStudent {
         this.entryPhase = entryPhase;
     }
 
-    /**
-     * @return Returns the keyRegistrationYear.
-     */
-    public Integer getKeyRegistrationYear() {
-        return keyRegistrationYear;
-    }
-
-    /**
-     * @param keyRegistrationYear
-     *            The keyRegistrationYear to set.
-     */
-    public void setKeyRegistrationYear(Integer keyRegistrationYear) {
-        this.keyRegistrationYear = keyRegistrationYear;
-    }
-
-    /**
-     * @return Returns the payedTuition.
-     */
-    public Boolean getPayedTuition() {
-        return payedTuition;
-    }
-
-    /**
-     * @param payedTuition
-     *            The payedTuition to set.
-     */
-    public void setPayedTuition(Boolean payedTuition) {
-        this.payedTuition = payedTuition;
-    }
 
     /**
      * @return Returns the registrationYear.
@@ -308,20 +213,6 @@ public class Student extends DomainObject implements IStudent {
         this.registrationYear = registrationYear;
     }
 
-    /**
-     * @return Returns the forbiddenEnrollment.
-     */
-    public Boolean getEnrollmentForbidden() {
-        return enrollmentForbidden;
-    }
-
-    /**
-     * @param forbiddenEnrollment
-     *            The forbiddenEnrollment to set.
-     */
-    public void setEnrollmentForbidden(Boolean forbiddenEnrollment) {
-        this.enrollmentForbidden = forbiddenEnrollment;
-    }
 
     public List getStudentCurricularPlans() {
         return studentCurricularPlans;
@@ -353,79 +244,6 @@ public class Student extends DomainObject implements IStudent {
         return studentCurricularPlan;
     }
 
-    //Nuno Correia & Ricardo Rodrigues
-    /**
-     * @return Returns the contigent.
-     */
-    public String getContigent() {
-        return contigent;
-    }
 
-    /**
-     * @param contigent
-     *            The contigent to set.
-     */
-    public void setContigent(String contigent) {
-        this.contigent = contigent;
-    }
 
-    /**
-     * @return Returns the entryGrade.
-     */
-    public Double getEntryGrade() {
-        return entryGrade;
-    }
-
-    /**
-     * @param entryGrade
-     *            The entryGrade to set.
-     */
-    public void setEntryGrade(Double entryGrade) {
-        this.entryGrade = entryGrade;
-    }
-
-    /**
-     * @return Returns the ingression.
-     */
-    public String getIngression() {
-        return ingression;
-    }
-
-    /**
-     * @param ingression
-     *            The ingression to set.
-     */
-    public void setIngression(String ingression) {
-        this.ingression = ingression;
-    }
-
-    /**
-     * @return Returns the istUniversity.
-     */
-    public String getIstUniversity() {
-        return istUniversity;
-    }
-
-    /**
-     * @param istUniversity
-     *            The istUniversity to set.
-     */
-    public void setIstUniversity(String istUniversity) {
-        this.istUniversity = istUniversity;
-    }
-
-    /**
-     * @return Returns the specialSeason.
-     */
-    public Boolean getSpecialSeason() {
-        return specialSeason;
-    }
-
-    /**
-     * @param specialSeason
-     *            The specialSeason to set.
-     */
-    public void setSpecialSeason(Boolean specialSeason) {
-        this.specialSeason = specialSeason;
-    }
 }

@@ -6,32 +6,13 @@ import net.sourceforge.fenixedu.domain.DomainObject;
  * @author David Santos in Jun 9, 2004
  */
 
-public abstract class Restriction extends DomainObject implements IRestriction {
-    protected String ojbConcreteClass;
-
+public abstract class Restriction extends Restriction_Base {
     protected IPrecedence precedence;
 
-    protected Integer keyPrecedence;
 
     public Restriction() {
         super();
-        this.ojbConcreteClass = this.getClass().getName();
-    }
-
-    public Integer getKeyPrecedence() {
-        return keyPrecedence;
-    }
-
-    public void setKeyPrecedence(Integer keyPrecedence) {
-        this.keyPrecedence = keyPrecedence;
-    }
-
-    public String getOjbConcreteClass() {
-        return ojbConcreteClass;
-    }
-
-    public void setOjbConcreteClass(String ojbConcreteClass) {
-        this.ojbConcreteClass = ojbConcreteClass;
+        setOjbConcreteClass(this.getClass().getName());
     }
 
     public IPrecedence getPrecedence() {

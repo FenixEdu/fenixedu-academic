@@ -13,8 +13,7 @@ import org.apache.commons.collections.Transformer;
  * @author David Santos in Jun 9, 2004
  */
 
-public class RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse extends
-        RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse implements IRestrictionByCurricularCourse {
+public class RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse extends RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse_Base {
     public RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse() {
         super();
     }

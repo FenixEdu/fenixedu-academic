@@ -12,8 +12,7 @@ import org.apache.commons.collections.Transformer;
  * @author David Santos in Jun 9, 2004
  */
 
-public class RestrictionNotDoneCurricularCourse extends RestrictionByCurricularCourse implements
-        IRestrictionByCurricularCourse {
+public class RestrictionNotDoneCurricularCourse extends RestrictionNotDoneCurricularCourse_Base {
     public RestrictionNotDoneCurricularCourse() {
         super();
     }
@@ -24,14 +23,6 @@ public class RestrictionNotDoneCurricularCourse extends RestrictionByCurricularC
                 this.getPrecedentCurricularCourse())) {
             return CurricularCourseEnrollmentType.DEFINITIVE;
         }
-
-        //        CurricularCourseEnrollmentType type =
-        // precedenceContext.getStudentCurricularPlan()
-        //                .getCurricularCourseEnrollmentType(this.getPrecedentCurricularCourse(),
-        //                        precedenceContext.getExecutionPeriod());
-        //        if (type.equals(CurricularCourseEnrollmentType.TEMPORARY)) {
-        //            return CurricularCourseEnrollmentType.TEMPORARY;
-        //        }
 
         List enrollmentsWithEnrolledStateInPreviousExecutionPeriod = precedenceContext
                 .getStudentCurricularPlan().getAllStudentEnrolledEnrollmentsInExecutionPeriod(

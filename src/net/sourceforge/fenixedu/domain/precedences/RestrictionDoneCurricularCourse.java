@@ -12,8 +12,7 @@ import org.apache.commons.collections.Transformer;
  * @author David Santos in Jun 9, 2004
  */
 
-public class RestrictionDoneCurricularCourse extends RestrictionByCurricularCourse implements
-        IRestrictionByCurricularCourse {
+public class RestrictionDoneCurricularCourse extends RestrictionDoneCurricularCourse_Base {
     public RestrictionDoneCurricularCourse() {
         super();
     }

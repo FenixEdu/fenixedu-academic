@@ -6,19 +6,9 @@ import net.sourceforge.fenixedu.domain.ICurricularCourse;
  * @author David Santos in Jun 9, 2004
  */
 
-public abstract class RestrictionByCurricularCourse extends Restriction implements
-        IRestrictionByCurricularCourse {
-    protected Integer keyPrecedentCurricularCourse;
+public abstract class RestrictionByCurricularCourse extends RestrictionByCurricularCourse_Base {
 
     protected ICurricularCourse precedentCurricularCourse;
-
-    public Integer getKeyPrecedentCurricularCourse() {
-        return keyPrecedentCurricularCourse;
-    }
-
-    public void setKeyPrecedentCurricularCourse(Integer keyPrecedentCurricularCourse) {
-        this.keyPrecedentCurricularCourse = keyPrecedentCurricularCourse;
-    }
 
     public ICurricularCourse getPrecedentCurricularCourse() {
         return precedentCurricularCourse;

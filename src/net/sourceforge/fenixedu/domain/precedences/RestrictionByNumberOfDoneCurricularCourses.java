@@ -6,8 +6,7 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
  * @author David Santos in Jun 9, 2004
  */
 
-public class RestrictionByNumberOfDoneCurricularCourses extends RestrictionByNumberOfCurricularCourses
-        implements IRestrictionByNumberOfCurricularCourses {
+public class RestrictionByNumberOfDoneCurricularCourses extends RestrictionByNumberOfDoneCurricularCourses_Base {
     public RestrictionByNumberOfDoneCurricularCourses() {
         super();
     }

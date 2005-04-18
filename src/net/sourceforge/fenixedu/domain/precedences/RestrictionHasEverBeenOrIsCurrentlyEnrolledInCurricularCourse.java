@@ -7,8 +7,7 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
  * @author David Santos in Jun 9, 2004
  */
 
-public class RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse extends
-        RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse implements IRestrictionByCurricularCourse {
+public class RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse extends RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse_Base {
     public RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse() {
         super();
     }

@@ -874,6 +874,19 @@ class net.sourceforge.fenixedu.domain.Professorship extends net.sourceforge.feni
 	"
 }
 
+
+class net.sourceforge.fenixedu.domain.precedences.Precedence extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyCurricularCourse;
+	
+	interface " 
+    	public net.sourceforge.fenixedu.domain.ICurricularCourse getCurricularCourse();
+    	public void setCurricularCourse(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
+		public java.util.List getRestrictions();
+		public void setRestrictions(java.util.List restrictions);
+		public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType evaluate(net.sourceforge.fenixedu.domain.precedences.PrecedenceContext precedenceContext);
+	"
+}
+
 class net.sourceforge.fenixedu.domain.ResponsibleFor extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionCourse;
 	Integer keyTeacher;
@@ -883,6 +896,62 @@ class net.sourceforge.fenixedu.domain.ResponsibleFor extends net.sourceforge.fen
 	public void setTeacher(net.sourceforge.fenixedu.domain.ITeacher teacher);
 	"
 }
+
+class net.sourceforge.fenixedu.domain.precedences.Restriction extends net.sourceforge.fenixedu.domain.DomainObject {
+    String ojbConcreteClass;
+	Integer keyPrecedence;	
+	
+	interface " 	
+    	public net.sourceforge.fenixedu.domain.precedences.IPrecedence getPrecedence();
+    	public void setPrecedence(net.sourceforge.fenixedu.domain.precedences.IPrecedence precedence);
+		public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType evaluate(net.sourceforge.fenixedu.domain.precedences.PrecedenceContext precedenceContext);
+	"
+}
+
+
+class net.sourceforge.fenixedu.domain.precedences.RestrictionByCurricularCourse extends net.sourceforge.fenixedu.domain.precedences.Restriction {
+	Integer keyPrecedentCurricularCourse;
+	
+	interface "
+    	public net.sourceforge.fenixedu.domain.ICurricularCourse getPrecedentCurricularCourse();
+    	public void setPrecedentCurricularCourse(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
+	"
+}
+
+
+class net.sourceforge.fenixedu.domain.precedences.RestrictionByNumberOfCurricularCourses extends net.sourceforge.fenixedu.domain.precedences.Restriction {
+	Integer numberOfCurricularCourses;
+}
+
+
+class net.sourceforge.fenixedu.domain.precedences.RestrictionByNumberOfDoneCurricularCourses extends net.sourceforge.fenixedu.domain.precedences.RestrictionByNumberOfCurricularCourses {
+}
+
+class net.sourceforge.fenixedu.domain.precedences.RestrictionDoneCurricularCourse extends net.sourceforge.fenixedu.domain.precedences.RestrictionByCurricularCourse {
+}
+
+class net.sourceforge.fenixedu.domain.precedences.RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse extends net.sourceforge.fenixedu.domain.precedences.RestrictionDoneCurricularCourse {
+}
+
+class net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse extends net.sourceforge.fenixedu.domain.precedences.RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse {
+}
+
+class net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse extends net.sourceforge.fenixedu.domain.precedences.RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse {
+}
+
+class net.sourceforge.fenixedu.domain.precedences.RestrictionNotDoneCurricularCourse extends net.sourceforge.fenixedu.domain.precedences.RestrictionByCurricularCourse {
+}
+
+class net.sourceforge.fenixedu.domain.precedences.RestrictionNotEnrolledInCurricularCourse extends net.sourceforge.fenixedu.domain.precedences.RestrictionNotDoneCurricularCourse {
+}
+
+class net.sourceforge.fenixedu.domain.precedences.RestrictionPeriodToApply extends net.sourceforge.fenixedu.domain.precedences.Restriction {
+	interface "
+    	public net.sourceforge.fenixedu.util.PeriodToApplyRestriction getPeriodToApplyRestriction();
+    	public void setPeriodToApplyRestriction(net.sourceforge.fenixedu.util.PeriodToApplyRestriction periodToApplyRestriction);
+	"
+}
+
 
 class net.sourceforge.fenixedu.domain.Role extends net.sourceforge.fenixedu.domain.DomainObject {
 	String portalSubApplication;
@@ -1050,6 +1119,43 @@ class net.sourceforge.fenixedu.domain.SupportLesson extends net.sourceforge.feni
 	"
 }
 
+class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer studentKindKey;
+	Double entryGrade;
+	String istUniversity;
+	Boolean enrollmentForbidden;
+	String ingression;
+	String contigent;
+	Integer personKey;
+	Boolean payedTuition;
+	Boolean specialSeason;
+	Integer keyRegistrationYear;
+	Integer number;
+	
+	interface "
+
+	    public net.sourceforge.fenixedu.util.StudentState getState();
+	    public net.sourceforge.fenixedu.domain.IPerson getPerson();
+	    public net.sourceforge.fenixedu.domain.IStudentKind getStudentKind();
+	    public net.sourceforge.fenixedu.util.TipoCurso getDegreeType();
+	    public net.sourceforge.fenixedu.util.AgreementType getAgreementType();
+	    public void setAgreementType(net.sourceforge.fenixedu.util.AgreementType agreementType);
+	    public void setState(net.sourceforge.fenixedu.util.StudentState state);
+	    public void setPerson(net.sourceforge.fenixedu.domain.IPerson person);
+	    public void setDegreeType(net.sourceforge.fenixedu.util.TipoCurso degreeType);
+	    public net.sourceforge.fenixedu.util.EntryPhase getEntryPhase();
+	    public void setEntryPhase(net.sourceforge.fenixedu.util.EntryPhase entryPhase);
+	    public net.sourceforge.fenixedu.domain.IExecutionYear getRegistrationYear();
+	    public void setRegistrationYear(net.sourceforge.fenixedu.domain.IExecutionYear registrationYear);
+	    public java.util.List getStudentCurricularPlans();
+	    public void setStudentCurricularPlans(java.util.List studentCurricularPlans);
+	    public net.sourceforge.fenixedu.domain.IStudentCurricularPlan getActiveStudentCurricularPlan();
+	    public void setStudentKind(net.sourceforge.fenixedu.domain.IStudentKind studentKind);
+	"
+			
+}
+
+
 class net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyCurricularCourse;
 	Date lastModificationDate;
@@ -1210,11 +1316,9 @@ external class net.sourceforge.fenixedu.domain.Lesson;
 external class net.sourceforge.fenixedu.domain.ScientificArea;
 external class net.sourceforge.fenixedu.domain.Section;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
-external class net.sourceforge.fenixedu.domain.Student;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 external class net.sourceforge.fenixedu.domain.Teacher;
 external class net.sourceforge.fenixedu.domain.University;
-
 
 /*
  * Relations definitions
