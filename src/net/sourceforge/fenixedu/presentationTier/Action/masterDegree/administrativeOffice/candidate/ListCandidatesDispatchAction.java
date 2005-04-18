@@ -49,7 +49,7 @@ import org.apache.struts.util.LabelValueBean;
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
- *  
+ * 
  */
 public class ListCandidatesDispatchAction extends DispatchAction {
 
@@ -98,9 +98,9 @@ public class ListCandidatesDispatchAction extends DispatchAction {
                 throw new Exception(e);
             }
 
-            //			BeanComparator nameComparator = new
+            // BeanComparator nameComparator = new
             // BeanComparator("infoDegreeCurricularPlan.infoDegree.nome");
-            //			Collections.sort(degreeList, nameComparator);
+            // Collections.sort(degreeList, nameComparator);
             Collections.sort(degreeList, new ComparatorByNameForInfoExecutionDegree());
             List newDegreeList = degreeList;
             List executionDegreeLabels = buildExecutionDegreeLabelValueBean(newDegreeList);
@@ -321,7 +321,8 @@ public class ListCandidatesDispatchAction extends DispatchAction {
                     .toArrayList());
             request.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY,
                     TipoDocumentoIdentificacao.toArrayList());
-            request.setAttribute(SessionConstants.SEX_LIST_KEY, Sex.getSexLabelValues((Locale) request.getAttribute(Globals.LOCALE_KEY)));
+            request.setAttribute(SessionConstants.SEX_LIST_KEY, Sex.getSexLabelValues((Locale) request
+                    .getAttribute(Globals.LOCALE_KEY)));
             request.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
             request.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
             request.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
@@ -622,7 +623,9 @@ public class ListCandidatesDispatchAction extends DispatchAction {
         editCandidateForm.set("situation", infoMasterDegreeCandidate.getInfoCandidateSituation()
                 .getSituation().toString());
         editCandidateForm.set("specializationArea", infoMasterDegreeCandidate.getSpecializationArea());
-        editCandidateForm.set("average", infoMasterDegreeCandidate.getAverage().toString());
+        if (infoMasterDegreeCandidate.getAverage() != null) {
+            editCandidateForm.set("average", infoMasterDegreeCandidate.getAverage().toString());
+        }
         editCandidateForm.set("majorDegree", infoMasterDegreeCandidate.getMajorDegree());
         editCandidateForm.set("majorDegreeSchool", infoMasterDegreeCandidate.getMajorDegreeSchool());
 
@@ -633,11 +636,13 @@ public class ListCandidatesDispatchAction extends DispatchAction {
         if (infoPerson.getEstadoCivil() != null)
             editCandidateForm.set("maritalStatus", infoPerson.getEstadoCivil().toString());
 
-        if ((infoMasterDegreeCandidate.getMajorDegreeYear().intValue() == 0))
-            editCandidateForm.set("majorDegreeYear", null);
-        else
-            editCandidateForm.set("majorDegreeYear", String.valueOf(infoMasterDegreeCandidate
-                    .getMajorDegreeYear()));
+        if (infoMasterDegreeCandidate.getMajorDegreeYear() != null) {
+            if ((infoMasterDegreeCandidate.getMajorDegreeYear().intValue() == 0))
+                editCandidateForm.set("majorDegreeYear", null);
+            else
+                editCandidateForm.set("majorDegreeYear", String.valueOf(infoMasterDegreeCandidate
+                        .getMajorDegreeYear()));
+        }
 
     }
 
