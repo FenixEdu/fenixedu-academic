@@ -1046,6 +1046,17 @@ class net.sourceforge.fenixedu.domain.SchoolClassShift extends net.sourceforge.f
 	"
 }
 
+class net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent extends net.sourceforge.fenixedu.domain.DomainObject {
+    String reasonDescription;
+    Integer keyStudent;
+    
+    interface "
+    public abstract net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason getReasonType();
+    public abstract void setReasonType(net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason reasonType);
+    public abstract net.sourceforge.fenixedu.domain.IStudent getStudent();
+    public abstract void setStudent(net.sourceforge.fenixedu.domain.IStudent student);
+    "
+}
 
 class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer availabilityFinal;
