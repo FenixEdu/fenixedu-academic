@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.ICurricularCourse;
  * Created at 31/Jul/2003, 9:20:49
  *  
  */
-public class CourseEquivalency extends DomainObject implements ICourseEquivalency {
+public class CourseEquivalency extends CourseEquivalency_Base {
 
     private ISeminary seminary;
 
@@ -26,12 +26,6 @@ public class CourseEquivalency extends DomainObject implements ICourseEquivalenc
     private IModality modality;
 
     private List themes;
-
-    private Integer seminaryIdInternal;
-
-    private Integer curricularCourseIdInternal;
-
-    private Integer modalityIdInternal;
 
     /**
      * @return
@@ -43,22 +37,8 @@ public class CourseEquivalency extends DomainObject implements ICourseEquivalenc
     /**
      * @return
      */
-    public Integer getCurricularCourseIdInternal() {
-        return curricularCourseIdInternal;
-    }
-
-    /**
-     * @return
-     */
     public ISeminary getSeminary() {
         return seminary;
-    }
-
-    /**
-     * @return
-     */
-    public Integer getSeminaryIdInternal() {
-        return seminaryIdInternal;
     }
 
     /**
@@ -69,24 +49,10 @@ public class CourseEquivalency extends DomainObject implements ICourseEquivalenc
     }
 
     /**
-     * @param integer
-     */
-    public void setCurricularCourseIdInternal(Integer integer) {
-        curricularCourseIdInternal = integer;
-    }
-
-    /**
      * @param seminary
      */
     public void setSeminary(ISeminary seminary) {
         this.seminary = seminary;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setSeminaryIdInternal(Integer integer) {
-        seminaryIdInternal = integer;
     }
 
     /**
@@ -97,24 +63,10 @@ public class CourseEquivalency extends DomainObject implements ICourseEquivalenc
     }
 
     /**
-     * @return
-     */
-    public Integer getModalityIdInternal() {
-        return modalityIdInternal;
-    }
-
-    /**
      * @param modality
      */
     public void setModality(IModality modality) {
         this.modality = modality;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setModalityIdInternal(Integer integer) {
-        modalityIdInternal = integer;
     }
 
     /**

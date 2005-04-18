@@ -136,6 +136,23 @@ class net.sourceforge.fenixedu.domain.Country extends net.sourceforge.fenixedu.d
 	String name;
 }
 
+class net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer curricularCourseIdInternal;
+    Integer seminaryIdInternal;
+    Integer modalityIdInternal;
+    
+    interface "
+
+    public abstract net.sourceforge.fenixedu.domain.ICurricularCourse getCurricularCourse();
+    public abstract net.sourceforge.fenixedu.domain.Seminaries.ISeminary getSeminary();
+    public abstract void setCurricularCourse(net.sourceforge.fenixedu.domain.ICurricularCourse course);
+    public abstract void setSeminary(net.sourceforge.fenixedu.domain.Seminaries.ISeminary seminary);
+    public net.sourceforge.fenixedu.domain.Seminaries.IModality getModality();
+    public void setModality(net.sourceforge.fenixedu.domain.Seminaries.IModality modality);
+    public java.util.List getThemes();
+    public void setThemes(java.util.List list);
+    "
+}
 
 class net.sourceforge.fenixedu.domain.gesdis.CourseHistoric extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyCurricularCourse;
