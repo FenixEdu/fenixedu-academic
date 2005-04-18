@@ -1189,10 +1189,6 @@ class net.sourceforge.fenixedu.domain.SchoolClassShift extends net.sourceforge.f
 	public net.sourceforge.fenixedu.domain.ISchoolClass getTurma();
 	
 	public void setTurma(net.sourceforge.fenixedu.domain.ISchoolClass schoolClass);
-	
-	public net.sourceforge.fenixedu.domain.IShift getTurno();
-	
-	public void setTurno(net.sourceforge.fenixedu.domain.IShift shift);
 	"
 }
 
@@ -1887,6 +1883,13 @@ relation RoomSummary {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Room playsRole room;
+}
+
+relation SchoolClassShiftShift {
+	net.sourceforge.fenixedu.domain.SchoolClassShift playsRole schoolClassShifts {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Shift playsRole turno;
 }
 
 relation SendProposal {

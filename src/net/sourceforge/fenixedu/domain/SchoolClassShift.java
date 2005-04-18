@@ -13,8 +13,6 @@ package net.sourceforge.fenixedu.domain;
 public class SchoolClassShift extends SchoolClassShift_Base {
     protected ISchoolClass turma;
 
-    protected IShift turno;
-
     /**
      * Construtor sem argumentos p�blico requerido pela moldura de objectos
      * OJB
@@ -33,14 +31,6 @@ public class SchoolClassShift extends SchoolClassShift_Base {
 
     public void setTurma(ISchoolClass schoolClass) {
         this.turma = schoolClass;
-    }
-
-    public IShift getTurno() {
-        return turno;
-    }
-
-    public void setTurno(IShift shift) {
-        this.turno = shift;
     }
 
     public boolean equals(Object obj) {
