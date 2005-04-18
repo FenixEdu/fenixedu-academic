@@ -37,9 +37,6 @@ class net.sourceforge.fenixedu.domain.Announcement extends net.sourceforge.fenix
 	"
 }
 
-class net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup extends net.sourceforge.fenixedu.domain.CurricularCourseGroup {
-}
-
 class net.sourceforge.fenixedu.domain.AttendInAttendsSet extends net.sourceforge.fenixedu.domain.DomainObject {
         Integer keyAttend;
         Integer keyAttendsSet;
@@ -238,6 +235,13 @@ class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourcefo
     "
 }
 
+    class net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup extends net.sourceforge.fenixedu.domain.CurricularCourseGroup {
+    }
+    
+    class net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup extends net.sourceforge.fenixedu.domain.CurricularCourseGroup {
+    }
+
+
 class net.sourceforge.fenixedu.domain.Curriculum extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPersonWhoAltered;
 	Integer keyCurricularCourse;
@@ -358,6 +362,59 @@ class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.f
 	"
 }
 
+/* not ready. multiple interfaces problem
+class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu.domain.DomainObject {
+    String createdBy;
+    Date creationDate;
+    Integer curricularCourseKey;
+    Integer keyExecutionPeriod;
+    String ojbConcreteClass;
+    Integer studentCurricularPlanKey;
+    Integer accumulatedWeight;
+    
+    interface "
+    
+    public net.sourceforge.fenixedu.util.enrollment.EnrollmentCondition getCondition();
+    public net.sourceforge.fenixedu.domain.ICurricularCourse getCurricularCourse();
+    public net.sourceforge.fenixedu.domain.curriculum.EnrollmentState getEnrollmentState();
+    public net.sourceforge.fenixedu.util.EnrolmentEvaluationType getEnrolmentEvaluationType();
+    public java.util.List getEvaluations();
+    public net.sourceforge.fenixedu.domain.IExecutionPeriod getExecutionPeriod();
+    public net.sourceforge.fenixedu.domain.IStudentCurricularPlan getStudentCurricularPlan();
+
+    public void setCondition(net.sourceforge.fenixedu.util.enrollment.EnrollmentCondition condition);
+    public void setCurricularCourse(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
+    public void setEnrollmentState(net.sourceforge.fenixedu.domain.curriculum.EnrollmentState state);
+    public void setEnrolmentEvaluationType(net.sourceforge.fenixedu.util.EnrolmentEvaluationType type);
+    public void setEvaluations(java.util.List list);
+    public void setExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
+    public void setStudentCurricularPlan(net.sourceforge.fenixedu.domain.IStudentCurricularPlan studentCurricularPlan);
+    "
+}
+
+class net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
+}
+
+class net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
+}
+*/
+
+class net.sourceforge.fenixedu.domain.log.EnrolmentLog extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyCurricularCourse;
+    Date date;
+    Integer keyStudent;
+    
+    interface "
+
+    public abstract net.sourceforge.fenixedu.util.EnrolmentAction getAction();
+    public abstract void setAction(net.sourceforge.fenixedu.util.EnrolmentAction action);
+    public abstract net.sourceforge.fenixedu.domain.ICurricularCourse getCurricularCourse();
+    public abstract void setCurricularCourse(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
+    public abstract net.sourceforge.fenixedu.domain.IStudent getStudent();
+    public abstract void setStudent(net.sourceforge.fenixedu.domain.IStudent student);
+    
+    "
+}
 
 class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixedu.domain.DomainObject {
 	String ojbConcreteClass;
@@ -851,8 +908,6 @@ class net.sourceforge.fenixedu.domain.teacher.OldPublication extends net.sourcef
 	"
 }
 
-class net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup extends net.sourceforge.fenixedu.domain.CurricularCourseGroup {
-}
 
 class net.sourceforge.fenixedu.domain.Period extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPeriod;

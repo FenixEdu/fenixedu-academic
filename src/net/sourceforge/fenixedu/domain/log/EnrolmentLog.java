@@ -14,20 +14,13 @@ import net.sourceforge.fenixedu.util.EnrolmentAction;
  * @author nmgo
  * @author lmre
  */
-public class EnrolmentLog extends DomainObject implements IEnrolmentLog{
+public class EnrolmentLog extends EnrolmentLog_Base {
 
-    private Date date;
-    
     private EnrolmentAction action;
     
     private IStudent student;
     
-    private Integer keyStudent;
-    
     private ICurricularCourse curricularCourse;
-    
-    private Integer keyCurricularCourse;
-    
     
     /**
      * 
@@ -47,12 +40,12 @@ public class EnrolmentLog extends DomainObject implements IEnrolmentLog{
     public EnrolmentLog(Date date, EnrolmentAction action, IStudent student,
             Integer keyStudent, ICurricularCourse curricularCourse,
             Integer keyCurricularCourse) {
-        this.date = date;
+        this.setDate(date);
         this.action = action;
         this.student = student;
-        this.keyStudent = keyStudent;
+        this.setKeyStudent(keyStudent);
         this.curricularCourse = curricularCourse;
-        this.keyCurricularCourse = keyCurricularCourse;
+        this.setKeyCurricularCourse(keyCurricularCourse);
     }
     /**
      * @return Returns the action.
@@ -78,18 +71,7 @@ public class EnrolmentLog extends DomainObject implements IEnrolmentLog{
     public void setCurricularCourse(ICurricularCourse curricularCourse) {
         this.curricularCourse = curricularCourse;
     }
-    /**
-     * @return Returns the date.
-     */
-    public Date getDate() {
-        return date;
-    }
-    /**
-     * @param date The date to set.
-     */
-    public void setDate(Date date) {
-        this.date = date;
-    }
+ 
     /**
      * @return Returns the student.
      */
@@ -101,29 +83,5 @@ public class EnrolmentLog extends DomainObject implements IEnrolmentLog{
      */
     public void setStudent(IStudent student) {
         this.student = student;
-    }
-    /**
-     * @return Returns the keyCurricularCourse.
-     */
-    public Integer getKeyCurricularCourse() {
-        return keyCurricularCourse;
-    }
-    /**
-     * @param keyCurricularCourse The keyCurricularCourse to set.
-     */
-    public void setKeyCurricularCourse(Integer keyCurricularCourse) {
-        this.keyCurricularCourse = keyCurricularCourse;
-    }
-    /**
-     * @return Returns the keyStudent.
-     */
-    public Integer getKeyStudent() {
-        return keyStudent;
-    }
-    /**
-     * @param keyStudent The keyStudent to set.
-     */
-    public void setKeyStudent(Integer keyStudent) {
-        this.keyStudent = keyStudent;
     }
 }
