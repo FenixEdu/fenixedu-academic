@@ -33,28 +33,29 @@ public class InfoGuideWithPersonAndExecutionDegreeAndContributor extends InfoGui
             setInfoContributor(InfoContributor.newInfoFromDomain(guide.getContributor()));
             setInfoGuideSituation(InfoGuideSituation.newInfoFromDomain(guide.getActiveSituation()));
 
-            List infoGuideEntryList = (List) CollectionUtils.collect(guide.getGuideEntries(),
-                    new Transformer() {
+            if (guide.getGuideEntries() != null) {
+                List infoGuideEntryList = (List) CollectionUtils.collect(guide.getGuideEntries(),
+                        new Transformer() {
 
-                        public Object transform(Object arg0) {
-                            IGuideEntry guideEntry = (IGuideEntry) arg0;
-                            return InfoGuideEntry.newInfoFromDomain(guideEntry);
-                        }
-                    });
+                            public Object transform(Object arg0) {
+                                IGuideEntry guideEntry = (IGuideEntry) arg0;
+                                return InfoGuideEntry.newInfoFromDomain(guideEntry);
+                            }
+                        });
+                setInfoGuideEntries(infoGuideEntryList);
+            }
 
-            setInfoGuideEntries(infoGuideEntryList);
+            if (guide.getGuideSituations() != null) {
+                List infoGuideSituationList = (List) CollectionUtils.collect(guide.getGuideSituations(),
+                        new Transformer() {
 
-            List infoGuideSituationList = (List) CollectionUtils.collect(guide.getGuideSituations(),
-                    new Transformer() {
-
-                        public Object transform(Object arg0) {
-                            IGuideSituation guideSituation = (IGuideSituation) arg0;
-                            return InfoGuideSituation.newInfoFromDomain(guideSituation);
-                        }
-                    });
-
-            setInfoGuideSituations(infoGuideSituationList);
-
+                            public Object transform(Object arg0) {
+                                IGuideSituation guideSituation = (IGuideSituation) arg0;
+                                return InfoGuideSituation.newInfoFromDomain(guideSituation);
+                            }
+                        });
+                setInfoGuideSituations(infoGuideSituationList);
+            }
         }
     }
 
