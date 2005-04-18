@@ -8,6 +8,8 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
+import net.sourceforge.fenixedu.domain.gesdis.IStudentCourseReport;
+import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
 
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
@@ -112,6 +114,50 @@ public class InfoStudentCourseReport extends InfoObject {
      */
     public void setWeakPoints(String weakPoints) {
         this.weakPoints = weakPoints;
+    }
+    
+    public void copyFromDomain(IStudentCourseReport scr) {
+        super.copyFromDomain(scr);
+        if (scr != null) {
+            setStrongPoints(scr.getStrongPoints());
+            setWeakPoints(scr.getWeakPoints());
+            setStudentReport(scr.getStudentReport());
+            setLastModificationDate(scr.getLastModificationDate());
+        }
+    }
+    
+    public static InfoStudentCourseReport newInfoFromDomain(IStudentCourseReport scr) {
+        InfoStudentCourseReport infoStudentCourseReport = null;
+        if (scr != null) {
+            infoStudentCourseReport = new InfoStudentCourseReport();
+            infoStudentCourseReport.copyFromDomain(scr);
+        }
+        return infoStudentCourseReport;
+    }
+    
+    public void copyToDomain(InfoStudentCourseReport infoStudentCourseReport,
+            IStudentCourseReport studentCourseReport) {
+        super.copyToDomain(infoStudentCourseReport, studentCourseReport);
+
+        studentCourseReport.setStrongPoints(infoStudentCourseReport.getStrongPoints());
+        studentCourseReport.setWeakPoints(infoStudentCourseReport.getWeakPoints());
+        studentCourseReport.setStudentReport(infoStudentCourseReport.getStudentReport());
+        studentCourseReport.setLastModificationDate(infoStudentCourseReport.getLastModificationDate());
+
+        if (infoStudentCourseReport.getInfoCurricularCourse() != null) {
+            studentCourseReport.setCurricularCourse(InfoCurricularCourse
+                    .newDomainFromInfo(infoStudentCourseReport.getInfoCurricularCourse()));
+        }
+    }
+    
+    public static IStudentCourseReport newDomainFromInfo(
+            InfoStudentCourseReport infoStudentCourseReport) {
+        IStudentCourseReport studentCourseReport = null;
+        if (infoStudentCourseReport != null) {
+            studentCourseReport = new StudentCourseReport();
+            infoStudentCourseReport.copyToDomain(infoStudentCourseReport, studentCourseReport);
+        }
+        return studentCourseReport;
     }
 
 }
