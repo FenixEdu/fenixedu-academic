@@ -77,7 +77,8 @@ class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.do
 	Integer keyExecutionPeriod;
 	Integer keyShift;
 	Integer keyRoomOccupation;
-	Integer keyRoom;
+	Integer chaveSala;
+	
 }
 
 class net.sourceforge.fenixedu.domain.SchoolClassShift extends net.sourceforge.fenixedu.domain.DomainObject {
