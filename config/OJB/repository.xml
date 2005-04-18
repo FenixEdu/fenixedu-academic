@@ -18,7 +18,6 @@
 <!ENTITY teacher-credits SYSTEM "repository_creditsTeacher.xml">
 <!ENTITY assiduousness SYSTEM "repository_assiduousness.xml">
 <!ENTITY tests SYSTEM "repository_tests.xml">
-<!ENTITY scientific_council SYSTEM "repository_scientificCouncil.xml">
 <!ENTITY seminary SYSTEM "repository_seminary.xml">
 <!ENTITY advisory SYSTEM "repository_advisory.xml">
 <!ENTITY website SYSTEM "repository_website.xml">
