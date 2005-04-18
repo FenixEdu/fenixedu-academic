@@ -37,6 +37,7 @@ class net.sourceforge.fenixedu.domain.Announcement extends net.sourceforge.fenix
 	"
 }
 
+
 class net.sourceforge.fenixedu.domain.AttendInAttendsSet extends net.sourceforge.fenixedu.domain.DomainObject {
         Integer keyAttend;
         Integer keyAttendsSet;
@@ -139,7 +140,7 @@ class net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency extends net.s
     Integer curricularCourseIdInternal;
     Integer seminaryIdInternal;
     Integer modalityIdInternal;
-    
+
     interface "
 
     public abstract net.sourceforge.fenixedu.domain.ICurricularCourse getCurricularCourse();
@@ -196,6 +197,8 @@ class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.f
 	interface "
 	public net.sourceforge.fenixedu.util.CurricularCourseType getType();
     public void setType(net.sourceforge.fenixedu.util.CurricularCourseType type);
+	public net.sourceforge.fenixedu.util.CurricularCourseExecutionScope getCurricularCourseExecutionScope();
+    public void setCurricularCourseExecutionScope(net.sourceforge.fenixedu.util.CurricularCourseExecutionScope curricularCourseExecutionScope);
     public net.sourceforge.fenixedu.domain.ICurricularYear getCurricularYearByBranchAndSemester(final net.sourceforge.fenixedu.domain.IBranch branch,final Integer semester);
     public String getCurricularCourseUniqueKeyForEnrollment();
     public boolean hasActiveScopeInGivenSemester(final Integer semester);
@@ -210,7 +213,7 @@ class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourcefo
     String name;
     Integer minimumValue;
     Integer maximumValue;
-    
+
     interface "
 
     public Integer getMaximumCredits();
@@ -371,7 +374,7 @@ class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu
     String ojbConcreteClass;
     Integer studentCurricularPlanKey;
     Integer accumulatedWeight;
-    
+
     interface "
     
     public net.sourceforge.fenixedu.util.enrollment.EnrollmentCondition getCondition();
@@ -709,7 +712,7 @@ class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.do
 	Integer keyShift;
 	Integer keyRoomOccupation;
 	Integer chaveSala;
-	
+
 	interface "
 	public net.sourceforge.fenixedu.domain.IExecutionPeriod getExecutionPeriod();
 	
@@ -907,7 +910,6 @@ class net.sourceforge.fenixedu.domain.teacher.OldPublication extends net.sourcef
 	public void setOldPublicationType(net.sourceforge.fenixedu.util.OldPublicationType oldPublicationType);
 	"
 }
-
 
 class net.sourceforge.fenixedu.domain.Period extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPeriod;
@@ -1197,7 +1199,7 @@ class net.sourceforge.fenixedu.domain.SchoolClassShift extends net.sourceforge.f
 class net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent extends net.sourceforge.fenixedu.domain.DomainObject {
     String reasonDescription;
     Integer keyStudent;
-    
+
     interface "
     public abstract net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason getReasonType();
     public abstract void setReasonType(net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason reasonType);
@@ -1488,6 +1490,7 @@ external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 external class net.sourceforge.fenixedu.domain.Teacher;
 external class net.sourceforge.fenixedu.domain.University;
+
 
 /*
  * Relations definitions
