@@ -167,6 +167,7 @@
         </form-bean>        
         <form-bean name="summaryForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="forHidden" type="java.lang.String" initial=""/>
+            <form-property name="editor" type="java.lang.String" initial="true"/>
             <form-property name="title" type="java.lang.String" initial=""/>
             <form-property name="summaryText" type="java.lang.String" initial=""/>
             <form-property name="dateEmpty" type="java.lang.String" initial=""/>
@@ -183,7 +184,7 @@
             <form-property name="objectCode" type="java.lang.String" initial=""/>
             <form-property name="page" type="java.lang.Integer" initial="0"/>
             <form-property name="save" type="java.lang.Integer" initial="0"/>            
-            <form-property name="byTeacher" type="java.lang.String"/>
+            <form-property name="byTeacher" type="java.lang.String"/>            
         </form-bean>
         <!-- evaluation form-->
         <form-bean name="evaluationForm" type="org.apache.struts.validator.DynaValidatorForm" 
@@ -229,8 +230,9 @@
         <!-- Announcement Forms  -->
         <form-bean name="insertAnnouncementForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
+            <form-property name="editor" type="java.lang.String" initial="true"/>
             <form-property name="title" type="java.lang.String" />
-            <form-property name="information" type="java.lang.String" />
+            <form-property name="information" type="java.lang.String" initial=""/>
             <form-property name="page" type="java.lang.Integer" initial="0" />
         </form-bean>
         <form-bean name="bibliographicReferenceForm" type="org.apache.struts.validator.DynaValidatorForm" 
@@ -272,6 +274,7 @@
             <form-property name="page" type="java.lang.Integer" initial="0" />
         </form-bean>
         <form-bean name="itemForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+            <form-property name="editor" type="java.lang.String" initial="true"/>
             <form-property name="information" type="java.lang.String"/>
             <form-property name="itemOrder" type="java.lang.String" />
             <form-property name="name" type="java.lang.String" />
@@ -910,9 +913,9 @@
             <forward name="viewSite" path="/viewSite.jsp"/>
         </action>
         <!-- input of actions for announcement management -->
-        <action name="insertAnnouncementForm" 
+        <action name="insertAnnouncementForm" attribute="insertAnnouncementForm"
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
-            scope="session" parameter="method" path="/announcementManagementAction" validate="true" 
+            scope="request" parameter="method" path="/announcementManagementAction" validate="true" 
             className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
             <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoSiteAnnouncement"/>
             <set-property property="inputForwardName" value="insertAnnouncement"/>
@@ -922,7 +925,7 @@
         </action>
         <action name="insertAnnouncementForm" 
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
-            scope="session" parameter="method" path="/editAnnouncement" input="/editAnnouncement.jsp" 
+            scope="request" parameter="method" path="/editAnnouncement" input="/editAnnouncement.jsp" 
             validate="true" className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
             <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoAnnouncement"/>
             <set-property property="inputForwardName" value="editAnnouncement"/>

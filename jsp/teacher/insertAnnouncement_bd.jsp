@@ -13,7 +13,10 @@
 
 <html:form action="/announcementManagementAction" focus="title" >
 	<html:hidden property="page" value="1"/>
-	<html:hidden property="information" />
+	
+	<logic:present name="verEditor">
+		<html:hidden property="information" />
+	</logic:present>	
 
 <strong><bean:message key="label.title" /></strong>
 <br />
@@ -24,8 +27,19 @@
 <br />	
 <strong><bean:message key="label.information" /></strong>
 <br />
+<br />
 
-<script language="JavaScript" type="text/javascript"> 
+<bean:message key="label.editor"/>
+<html:radio property="editor" value="true" onclick="this.form.method.value='prepareCreateAnnouncement';this.form.page.value=0;this.form.submit();"/>
+&nbsp;
+<bean:message key="label.plain.text"/>
+<html:radio property="editor" value="false" onclick="this.form.method.value='prepareCreateAnnouncement';this.form.page.value=0;this.form.submit();"/>					
+
+<br />
+<br />
+
+<logic:present name="verEditor">
+	<script language="JavaScript" type="text/javascript"> 
 		<!--
 		initEditor();		
 		//-->
@@ -37,13 +51,24 @@
 		<!--
 		writeTextEditor(200, 200, document.forms[0].information.value);		
 		//-->
-</script>
+	</script>
+</logic:present>
 
-<!-- <html:textarea rows="10" cols="60" name="insertAnnouncementForm" property="information" > </html:textarea>//-->
+<logic:notPresent name="verEditor">
+	<html:textarea rows="10" cols="60" property="information" > </html:textarea>
+</logic:notPresent>
+
 <span class="error"><html:errors property="information"/></span>
 <br />
 <br />
-<html:submit styleClass="inputbutton" onclick="this.form.information.value=update()"><bean:message key="button.save" /></html:submit>
+
+<logic:present name="verEditor">
+	<html:submit styleClass="inputbutton" onclick="this.form.information.value=update()"><bean:message key="button.save" /></html:submit>
+</logic:present>
+<logic:notPresent name="verEditor">
+	<html:submit styleClass="inputbutton"><bean:message key="button.save" /></html:submit>
+</logic:notPresent>
+
 <html:reset styleClass="inputbutton"><bean:message key="label.clear" /></html:reset>
 
 <html:hidden property="method" value="createAnnouncement" />

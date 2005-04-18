@@ -32,22 +32,22 @@ function AddTable() {
 <form name="tableForm">
 <table cellpadding="4" cellspacing="0" border="0">
 	<tr>
-		<td align="right">Rows:</td>
+		<td align="right">Linhas:</td>
 		<td><input name="rows" type="text" id="rows" value="2" size="4"></td>
-		<td align="left">Columns: <input name="columns" type="text" id="columns" value="2" size="4"></td>
+		<td align="left">Colunas: <input name="columns" type="text" id="columns" value="2" size="4"></td>
 	</tr>
 	<tr>
-		<td align="right">Table width:</td>
+		<td align="right">Largura:</td>
 		<td><input name="width" type="text" id="width" value="100" size="4"></td>
 		<td align="left">
 			<select name="widthType" id="widthType">
 				<option value="pixels">pixels</option>
-				<option value="percent" selected>percent</option>
+				<option value="percent" selected>percentagem</option>
 			</select>
 		</td>
 	</tr>
 	<tr>
-		<td align="right">Border thickness:</td>
+		<td align="right">Border:</td>
 		<td><input name="border" type="text" id="border" value="1" size="4"></td>
 		<td align="left">pixels</td>
 	</tr>
@@ -58,8 +58,8 @@ function AddTable() {
 	</tr>
 	<tr>
 		<td colspan="3" align="center">
-			<input type="button" value="Insert Table" onClick="AddTable();" />
-			<input type="button" value="Cancel" onClick="window.close();" />
+			<input type="button" value="Inserir Tabela" onClick="AddTable();" />
+			<input type="button" value="Cancelar" onClick="window.close();" />
 		</td>
 	</tr>
 </table>

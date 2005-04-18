@@ -211,7 +211,7 @@
 				</div>
 				<div class="gen-button">
 					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" />
-					<html:link page="<%= "/summariesManager.do?method=deleteSummary&amp;page=0&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;summaryCode=" + summaryCode %>" onclick="return confirm('Tem a certeza que deseja apagar este sumï¿½rio?')">
+					<html:link page="<%= "/summariesManager.do?method=deleteSummary&amp;page=0&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;summaryCode=" + summaryCode %>" onclick="return confirm('Tem a certeza que deseja apagar este sumário?')">
 						<bean:message key="button.delete" />
 					</html:link>
 				</div>

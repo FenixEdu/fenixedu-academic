@@ -19,7 +19,10 @@
 	
 <html:form action="/insertItem">
 	<html:hidden property="page" value="1"/>
-	<html:hidden property="information" />
+
+	<logic:present name="verEditor">
+		<html:hidden property="information" />
+	</logic:present>
 	
 <table>
 	<tr>
@@ -31,24 +34,46 @@
 		</td>
 	</tr>
 	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td colspan='2'>
+			<bean:message key="label.editor"/>
+			<html:radio property="editor" value="true" onclick="this.form.method.value='prepareInsertItem';this.form.page.value=0;this.form.submit();"/>
+			&nbsp;
+			<bean:message key="label.plain.text"/>
+			<html:radio property="editor" value="false" onclick="this.form.method.value='prepareInsertItem';this.form.page.value=0;this.form.submit();"/>					
+		</td>
+
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
 		<td>
 			<bean:message key="message.itemInformation"/>
 		</td>
 		<td>
-			<script language="JavaScript" type="text/javascript"> 
-			<!--
-				initEditor();		
-			//-->
-			</script>
+			<logic:present name="verEditor">
+				<script language="JavaScript" type="text/javascript"> 
+				<!--
+					initEditor();		
+				//-->
+				</script>
+				
+				<noscript>JavaScript must be enable to use this form <br> </noscript>
+				
+				<script language="JavaScript" type="text/javascript"> 
+				<!--
+					writeTextEditor(200, 200, document.forms[0].information.value);		
+				//-->
+				</script>						
+			</logic:present>	
 			
-			<noscript>JavaScript must be enable to use this form <br> </noscript>
-			
-			<script language="JavaScript" type="text/javascript"> 
-			<!--
-				writeTextEditor(200, 200, document.forms[0].information.value);		
-			//-->
-			</script>						
-			<!--<html:textarea rows="15" cols="45" property="information"/>//-->
+			<logic:notPresent name="verEditor">	
+				<html:textarea rows="15" cols="45" property="information"/>
+			</logic:notPresent>
 			<span class="error"><html:errors property="information"/></span>
 		</td>
 	</tr>
@@ -86,9 +111,17 @@
 <bean:define id="sectionCode" name="section" property="idInternal"/>	
 <html:hidden property="currentSectionCode" value="<%= sectionCode.toString() %>" />
 
-<html:submit styleClass="inputbutton" onclick="this.form.information.value=update()">
-	<bean:message key="button.save"/>
-</html:submit>
+<logic:present name="verEditor">
+	<html:submit styleClass="inputbutton" onclick="this.form.information.value=update()">
+		<bean:message key="button.save"/>
+	</html:submit>
+</logic:present>
+<logic:notPresent name="verEditor">
+	<html:submit styleClass="inputbutton">
+		<bean:message key="button.save"/>
+	</html:submit>
+</logic:notPresent>
+
 <html:reset styleClass="inputbutton">
 	<bean:message key="label.clear"/>
 </html:reset>			

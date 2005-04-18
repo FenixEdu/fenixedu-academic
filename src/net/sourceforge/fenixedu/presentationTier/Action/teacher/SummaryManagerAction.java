@@ -66,7 +66,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         Integer professorShipId = getProfessorShipId(request, actionForm, userView, executionCourseId);
         
         SiteView siteView = getSiteView(userView, executionCourseId, lessonType, shiftId, professorShipId);
-               
+        
         selectChoices(request,
                 ((InfoSiteSummaries) ((ExecutionCourseSiteView) siteView).getComponent()), lessonType);
         
@@ -230,6 +230,12 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         } catch (Exception e) {
             return showSummaries(mapping, form, request, response);
         }
+        
+        DynaActionForm actionForm = (DynaActionForm) form;
+                
+        if(actionForm.get("editor").equals("") || (actionForm.get("editor").equals("true"))){
+            request.setAttribute("verEditor", "true");    
+        }     
         
         return mapping.findForward("insertSummary");
     }
@@ -445,7 +451,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         if (request.getParameter("lesson") != null && request.getParameter("lesson").length() > 0) {
             Integer lessonId = new Integer(request.getParameter("lesson"));
             //extra lesson
-             
+            
             if (lessonId.equals(new Integer(0))) {
                 infoSummary.setIsExtraLesson(Boolean.TRUE);                
                 //Summary's hour
@@ -510,13 +516,13 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             siteView = (SiteView) ServiceUtils.executeService(userView, "ReadSummary", args);
             
             if(request.getAttribute("summaryTextFlag") == null){
-	            String summaryText = ((InfoSiteSummary) siteView.getComponent()).getInfoSummary().getSummaryText();
-	            if(summaryText != null)
-	                summaryForm.set("summaryText", summaryText);
+                String summaryText = ((InfoSiteSummary) siteView.getComponent()).getInfoSummary().getSummaryText();
+                if(summaryText != null)
+                    summaryForm.set("summaryText", summaryText);
             }            
             else              
                 summaryForm.set("summaryText", (String) request.getAttribute("summaryTextFlag"));
-                
+            
             boolean loggedIsResponsible = false;
             List responsibleTeachers = null;
             Object argsReadResponsibleTeachers[] = { executionCourseId };
@@ -579,7 +585,13 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             
             return showSummaries(mapping, form, request, response);
         }
-     
+        
+        DynaActionForm actionForm = (DynaActionForm) form;
+                    
+        if(actionForm.get("editor").equals("") || (actionForm.get("editor").equals("true"))){
+            request.setAttribute("verEditor", "true");            
+        }   
+        
         request.setAttribute("siteView", siteView);
         
         return mapping.findForward("editSummary");

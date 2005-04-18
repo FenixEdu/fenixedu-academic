@@ -67,10 +67,10 @@ function writeRichText(rte, html, width, height, buttons, readOnly) {
 		
 		//adjust minimum table widths
 		if (isIE) {
-			if (buttons && (width < 540)) width = 480;
+			if (buttons && (width < 540)) width = 600;
 			var tablewidth = width;
 		} else {
-			if (buttons && (width < 540)) width = 480;
+			if (buttons && (width < 540)) width = 600;
 			var tablewidth = width + 4;
 		}
 		
@@ -140,7 +140,7 @@ function writeRichText(rte, html, width, height, buttons, readOnly) {
 			document.writeln('		<td><img class="rteVertSep" src="' + imagesPath + 'blackdot.gif" width="1" height="20" border="0" alt=""></td>');
 			document.writeln('		<td><img class="rteImage" src="' + imagesPath + 'hyperlink.gif" width="25" height="24" alt="Insert Link" title="Inserir Link" onClick="dlgInsertLink(\'' + rte + '\', \'link\')"></td>');
 			document.writeln('		<td><img class="rteImage" src="' + imagesPath + 'image.gif" width="25" height="24" alt="Add Image" title="Adicionar Imagem" onClick="addImage(\'' + rte + '\')"></td>');
-			//document.writeln('		<td><div id="table_' + rte + '"><img class="rteImage" src="' + imagesPath + 'insert_table.gif" width="25" height="24" alt="Insert Table" title="Inserir Tabela" onClick="dlgInsertTable(\'' + rte + '\', \'table\', \'\')"></div></td>');
+			document.writeln('		<td><div id="table_' + rte + '"><img class="rteImage" src="' + imagesPath + 'insert_table.gif" width="25" height="24" alt="Insert Table" title="Inserir Tabela" onClick="dlgInsertTable(\'' + rte + '\', \'table\', \'\')"></div></td>');
 			//if (isIE) {
 			//	document.writeln('		<td><img class="rteImage" src="' + imagesPath + 'spellcheck.gif" width="25" height="24" alt="Spell Check" title="Spell Check" onClick="checkspell()"></td>');
 			//}
@@ -156,7 +156,7 @@ function writeRichText(rte, html, width, height, buttons, readOnly) {
 			document.writeln('</table>');
 		}
 		document.writeln('<iframe id="' + rte + '" name="' + rte + '" width="' + width + 'px" height="' + height + 'px" src="' + includesPath + 'blank.htm"></iframe>');
-		if (!readOnly) document.writeln('<br /><input type="checkbox" id="chkSrc' + rte + '" onclick="toggleHTMLSrc(\'' + rte + '\',' + buttons + ');" />&nbsp;<label for="chkSrc' + rte + '">Ver Código Fonte</label>');
+		//if (!readOnly) document.writeln('<br /><input type="checkbox" id="chkSrc' + rte + '" onclick="toggleHTMLSrc(\'' + rte + '\',' + buttons + ');" />&nbsp;<label for="chkSrc' + rte + '">Ver Código Fonte</label>');
 		document.writeln('<iframe width="154" height="104" id="cp' + rte + '" src="' + includesPath + 'palette.htm" marginwidth="0" marginheight="0" scrolling="no" style="visibility:hidden; position: absolute;"></iframe>');
 		document.writeln('<input type="hidden" id="hdn' + rte + '" name="' + rte + '" value="">');
 		document.writeln('</div>');
@@ -242,7 +242,7 @@ function updateRTE(rte) {
 	
 	if (isRichText && !readOnly) {
 		//if viewing source, switch back to design view
-		if (document.getElementById("chkSrc" + rte).checked) document.getElementById("chkSrc" + rte).click();
+		//if (document.getElementById("chkSrc" + rte).checked) document.getElementById("chkSrc" + rte).click();
 		setHiddenVal(rte);
 	}
 }

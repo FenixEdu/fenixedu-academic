@@ -6,11 +6,13 @@
 
 <logic:present name="siteView"> 
 <bean:define id="announcement" name="siteView" property="component"/>
-<!--<bean:define id="information" name="announcement" property="information"/>-->
 
 <html:form action="/editAnnouncement" focus="title" >
-<html:hidden property="page" value="1"/>
-<html:hidden property="information"/>
+	<html:hidden property="page" value="1"/>
+	
+	<logic:present name="verEditor">
+		<html:hidden property="information" />
+	</logic:present>	
 
 <strong><bean:message key="label.title" /></strong>
 <br />
@@ -27,27 +29,46 @@
 <br />
 <strong><bean:message key="label.information" /></strong>
 <br />
+<br />
+<bean:message key="label.editor"/>
+<html:radio property="editor" value="true" onclick="this.form.method.value='prepareEditAnnouncement';this.form.page.value=0;this.form.submit();"/>
+&nbsp;
+<bean:message key="label.plain.text"/>
+<html:radio property="editor" value="false" onclick="this.form.method.value='prepareEditAnnouncement';this.form.page.value=0;this.form.submit();"/>					
+<br />
+<br />
+<logic:present name="verEditor">
+	<script language="JavaScript" type="text/javascript"> 
+	<!--
+	initEditor();		
+	//-->
+	</script>
+	
+	<noscript>JavaScript must be enable to use this form <br> </noscript>
+	
+	<script language="JavaScript" type="text/javascript"> 
+	<!--
+	writeTextEditor(200, 200, document.forms[0].information.value);		
+	//-->
+	</script>
+</logic:present>
+<logic:notPresent name="verEditor">
+	<html:textarea rows="10" cols="60" property="information" ></html:textarea>
+</logic:notPresent>
 
-		<script language="JavaScript" type="text/javascript"> 
-		<!--
-		initEditor();		
-		//-->
-		</script>
-		
-		<noscript>JavaScript must be enable to use this form <br> </noscript>
-		
-		<script language="JavaScript" type="text/javascript"> 
-		<!--
-		writeTextEditor(200, 200, document.forms[0].information.value);		
-		//-->
-		</script>
-
-<!--<html:textarea rows="10" cols="60" name="announcement" property="information" ></html:textarea>//-->
 <span class="error" ><html:errors property="information" /></span>
 <br />
 <br />
-<html:submit styleClass="inputbutton" onclick="this.form.information.value=update()"> <bean:message key="button.save" />
-</html:submit> 
+
+<logic:present name="verEditor">
+	<html:submit styleClass="inputbutton" onclick="this.form.information.value=update()"> <bean:message key="button.save" />
+	</html:submit> 
+</logic:present>
+<logic:notPresent name="verEditor">
+	<html:submit styleClass="inputbutton"> <bean:message key="button.save" />
+	</html:submit> 
+</logic:notPresent>
+
 <html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
 </html:reset>
 

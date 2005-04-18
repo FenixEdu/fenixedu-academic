@@ -171,7 +171,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         
         HttpSession session = request.getSession(false);
-        session.removeAttribute("insertAnnouncementForm");
+        
         return mapping.findForward("insertAnnouncement");
         
     }
@@ -179,8 +179,14 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward prepareCreateAnnouncement(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         HttpSession session = request.getSession(false);
-        session.removeAttribute("insertAnnouncementForm");
         readSiteView(request, null, null, null, null);
+        
+        DynaActionForm actionForm = (DynaActionForm) form;
+        
+		if(actionForm.get("editor").equals("") || (actionForm.get("editor").equals("true"))){
+			request.setAttribute("verEditor", "true");
+		}   
+		
         return mapping.findForward("insertAnnouncement");
     }
     
@@ -236,7 +242,11 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         
         if(request.getAttribute("announcementTextFlag") != null)
             actionForm.set("information", (String) request.getAttribute("announcementTextFlag"));
-         
+                
+		if(actionForm.get("editor").equals("") || (actionForm.get("editor").equals("true"))){
+			request.setAttribute("verEditor", "true");            
+		}   
+        
         return mapping.findForward("editAnnouncement");
     }
     
@@ -313,7 +323,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             return mapping.findForward("showAnnouncements");
         }
         
-        session.removeAttribute("insertAnnouncementForm");
         return mapping.findForward("insertAnnouncement");
         
     }
@@ -1080,6 +1089,13 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer sectionCode = getSectionCode(request);
         ISiteComponent sectionComponent = new InfoSiteSection();
         readSiteView(request, sectionComponent, null, sectionCode, null);
+        
+        DynaActionForm actionForm = (DynaActionForm) form;
+        
+		if(actionForm.get("editor").equals("") || (actionForm.get("editor").equals("true"))){
+		    request.setAttribute("verEditor", "true");    
+		} 
+        
         return mapping.findForward("insertItem");
     }
     
@@ -1134,6 +1150,12 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             DynaActionForm itemForm = (DynaActionForm) form;
         	itemForm.set("information", ((InfoSiteItems)siteView.getComponent()).getItem().getInformation());
         }
+        
+        DynaActionForm actionForm = (DynaActionForm) form;
+        
+		if(actionForm.get("editor").equals("") || (actionForm.get("editor").equals("true"))){
+		    request.setAttribute("verEditor", "true");    
+		} 
         return mapping.findForward("editItem");
     }
     
