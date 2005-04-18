@@ -163,7 +163,7 @@ relation SchoolClassShiftShift {
 	net.sourceforge.fenixedu.domain.SchoolClassShift playsRole schoolClassShifts {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Shift playsRole shift;
+	net.sourceforge.fenixedu.domain.Shift playsRole turno;
 }
 
 relation LessonRoom {
