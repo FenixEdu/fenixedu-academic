@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
@@ -21,26 +20,17 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 
 public class ReadStudentsByPerson implements IService {
-    public ReadStudentsByPerson() {
-    }
 
-    public List run(InfoPerson infoPerson) throws FenixServiceException {
-        List infoStudents = new ArrayList();
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPerson person = Cloner.copyInfoPerson2IPerson(infoPerson);
-            List students = persistentSuport.getIPersistentStudent().readbyPerson(person);
-            Iterator iterator = students.iterator();
-            while (iterator.hasNext()) {
-                IStudent student = (IStudent) iterator.next();
-                InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(student);
-                infoStudents.add(infoStudent);
-            }
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw new FenixServiceException(e);
+    public List run(InfoPerson infoPerson) throws ExcepcaoPersistencia {
+        final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPerson person = Cloner.copyInfoPerson2IPerson(infoPerson);
+        final List students = persistentSuport.getIPersistentStudent().readbyPerson(person);
+        final List infoStudents = new ArrayList(students.size());
+        for (final Iterator iterator = students.iterator(); iterator.hasNext(); ) {
+            final IStudent student = (IStudent) iterator.next();
+            final InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(student);
+            infoStudents.add(infoStudent);
         }
-
         return infoStudents;
     }
 }
