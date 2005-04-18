@@ -6,7 +6,7 @@ import java.sql.Timestamp;
  * @author Tania Pousao Created on 30/Out/2003
  */
 public class DegreeInfo extends DegreeInfo_Base {
-    private IDegree degree;
+    //private IDegree degree;
 
     private Timestamp lastModificationDate;
 
@@ -61,14 +61,7 @@ public class DegreeInfo extends DegreeInfo_Base {
         this.setLastModificationDate(lastModificationDate);
     }
 
-    public IDegree getDegree() {
-        return degree;
-    }
-
-    public void setDegree(IDegree degree) {
-        this.degree = degree;
-    }
-
+ 
     public Timestamp getLastModificationDate() {
         return lastModificationDate;
     }

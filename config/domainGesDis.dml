@@ -132,7 +132,7 @@ class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.feni
 	String year;
 }
 
-/* SEE RELATIONS */
+/* DONE */
 class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.DomainObject {
 	String localidade;
 	String codigoFiscal;
@@ -197,6 +197,7 @@ class net.sourceforge.fenixedu.domain.SupportLesson extends net.sourceforge.feni
 	Date endTime;
 }
 
+/* DONE */
 class net.sourceforge.fenixedu.domain.EvaluationMethod extends net.sourceforge.fenixedu.domain.DomainObject {
 	String evaluationElements;
 	String evaluationElementsEn;
@@ -228,6 +229,7 @@ class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.dom
 	Integer lotacao;
 }
 
+/* DONE */
 class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.domain.DomainObject {
 	String concreteClassForDegreeCurricularPlans;
 	String nome;
@@ -506,11 +508,20 @@ relation DegreeCurricularPlanCurricularCourse {
 	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlan;
 }
 
+/* DONE */
 relation DegreeDegreeCurricularPlan {
 	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlans {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Degree playsRole degree;
+}
+
+/* DONE */
+relation DegreeDegreeInfo {
+	net.sourceforge.fenixedu.domain.Degree playsRole degree;
+	net.sourceforge.fenixedu.domain.DegreeInfo playsRole degreeInfos {
+		multiplicity *;
+	}
 }
 
 

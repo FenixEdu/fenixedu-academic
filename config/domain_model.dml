@@ -258,6 +258,18 @@ class net.sourceforge.fenixedu.domain.Curriculum extends net.sourceforge.fenixed
 }
 
 
+class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.domain.DomainObject {
+	String concreteClassForDegreeCurricularPlans;
+	String nome;
+	String sigla;
+	
+	interface "
+	public net.sourceforge.fenixedu.util.TipoCurso getTipoCurso();
+    public void setTipoCurso(net.sourceforge.fenixedu.util.TipoCurso tipoCurso);
+	"
+}
+
+
 class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourceforge.fenixedu.domain.DomainObject {
     String concreteClassForStudentCurricularPlans;
     Integer degreeDuration;
@@ -276,7 +288,6 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
 
     public java.util.List getAreas();
     public net.sourceforge.fenixedu.domain.IStudentCurricularPlan getNewStudentCurricularPlan();
-    public net.sourceforge.fenixedu.domain.IDegree getDegree();
     public net.sourceforge.fenixedu.util.MarkType getMarkType();
     public net.sourceforge.fenixedu.util.DegreeCurricularPlanState getState();
     public java.util.List getCurricularCourseEquivalences();
@@ -293,11 +304,9 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     public java.util.List getSpecialListOfCurricularCourses();
     
     public void setAreas(java.util.List areas);
-    public void setDegree(net.sourceforge.fenixedu.domain.IDegree degree);
     public void setMarkType(net.sourceforge.fenixedu.util.MarkType markType);
     public void setState(net.sourceforge.fenixedu.util.DegreeCurricularPlanState state);
-    public void setCurricularCourseEquivalences(java.util.List curricularCourseEquivalences);
-   
+    public void setCurricularCourseEquivalences(java.util.List curricularCourseEquivalences);  
     "
 }
 
@@ -342,10 +351,7 @@ class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixed
     Integer degreeKey;
 
     interface "
-
-    public net.sourceforge.fenixedu.domain.IDegree getDegree();
     public java.sql.Timestamp getLastModificationDate();
-    public void setDegree(net.sourceforge.fenixedu.domain.IDegree degree);
     public void setLastModificationDate(java.sql.Timestamp lastModificationDate);
     "
 }
@@ -1473,7 +1479,6 @@ class net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope ext
 
 external class net.sourceforge.fenixedu.domain.Attends;
 external class net.sourceforge.fenixedu.domain.CurricularCourseScope;
-external class net.sourceforge.fenixedu.domain.Degree;
 external class net.sourceforge.fenixedu.domain.Department;
 external class net.sourceforge.fenixedu.domain.DepartmentCourse;
 external class net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -1610,6 +1615,22 @@ relation DegreeCurricularPlanCurricularCourse {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlan;
+}
+
+
+relation DegreeDegreeCurricularPlan {
+	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlans {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Degree playsRole degree;
+}
+
+
+relation DegreeDegreeInfo {
+	net.sourceforge.fenixedu.domain.Degree playsRole degree;
+	net.sourceforge.fenixedu.domain.DegreeInfo playsRole degreeInfos {
+		multiplicity *;
+	}
 }
 
 
