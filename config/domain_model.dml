@@ -1480,7 +1480,11 @@ class net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope ext
 	 
 	public void setCurricularCourseScope(net.sourceforge.fenixedu.domain.ICurricularCourseScope curricularCourseScope);
 	"
+}
 
+class net.sourceforge.fenixedu.domain.University extends net.sourceforge.fenixedu.domain.DomainObject {
+	String code;
+	String name;
 }
 
 
@@ -1505,7 +1509,6 @@ external class net.sourceforge.fenixedu.domain.ScientificArea;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 external class net.sourceforge.fenixedu.domain.Teacher;
-external class net.sourceforge.fenixedu.domain.University;
 
 
 /*
