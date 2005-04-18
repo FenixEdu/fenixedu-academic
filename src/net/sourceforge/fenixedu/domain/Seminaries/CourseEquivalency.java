@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.domain.Seminaries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 
 /**

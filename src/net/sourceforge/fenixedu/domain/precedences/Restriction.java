@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.precedences;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
 
 /**
  * @author David Santos in Jun 9, 2004

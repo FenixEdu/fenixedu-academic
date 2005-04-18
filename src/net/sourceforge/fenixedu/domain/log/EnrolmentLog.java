@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.domain.log;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
