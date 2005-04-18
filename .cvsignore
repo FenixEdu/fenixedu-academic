@@ -61,3 +61,4 @@ ${log.image.directory}
 .settings
 .djunitplugin
 *.war
+build.properties.test
