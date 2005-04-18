@@ -11,6 +11,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.GenerateUsername;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
@@ -156,6 +158,8 @@ public class CreateMasterDegreeCandidate implements IService {
         // Return the new Candidate
         InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
                 .newInfoFromDomain(masterDegreeCandidate);
+        InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan.newInfoFromDomain(masterDegreeCandidate.getExecutionDegree());
+        infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
         return infoMasterDegreeCandidate;
     }
 }
