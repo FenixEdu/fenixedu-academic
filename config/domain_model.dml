@@ -171,6 +171,24 @@ class net.sourceforge.fenixedu.domain.gesdis.CourseReport extends net.sourceforg
 }
 
 
+class net.sourceforge.fenixedu.domain.CreditsInScientificArea extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer givenCredits;
+	Integer studentCurricularPlanKey;
+	Integer enrolmentKey;
+	Integer scientificAreaKey;
+	
+	interface "
+	
+    public net.sourceforge.fenixedu.domain.IEnrolment getEnrolment();
+    public void setEnrolment(net.sourceforge.fenixedu.domain.IEnrolment enrolment);
+    public net.sourceforge.fenixedu.domain.IScientificArea getScientificArea();
+    public void setScientificArea(net.sourceforge.fenixedu.domain.IScientificArea scientificArea);
+    public net.sourceforge.fenixedu.domain.IStudentCurricularPlan getStudentCurricularPlan();
+    public void setStudentCurricularPlan(net.sourceforge.fenixedu.domain.IStudentCurricularPlan studentCurricularPlan);
+	"
+}
+
+
 class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.fenixedu.domain.DomainObject {
 	Double ectsCredits;
 	Boolean basic;
@@ -204,6 +222,23 @@ class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.f
     public boolean hasActiveScopeInGivenSemester(final Integer semester);
     public boolean hasActiveScopeInGivenSemesterForGivenBranch(final Integer semester, final net.sourceforge.fenixedu.domain.IBranch branch);
     public boolean hasActiveScopeInGivenSemesterForCommonAndGivenBranch(final Integer semester, final net.sourceforge.fenixedu.domain.IBranch branch);
+	"
+}
+
+
+class net.sourceforge.fenixedu.domain.CurricularCourseEquivalence extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer oldCurricularCourseKey;
+	Integer equivalentCurricularCourseKey;
+	Integer degreeCurricularPlanKey;
+	
+	interface "
+	
+    public IDegreeCurricularPlan getDegreeCurricularPlan();
+    public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan);
+    public ICurricularCourse getEquivalentCurricularCourse();
+    public void setEquivalentCurricularCourse(ICurricularCourse equivalentCurricularCourse);
+    public ICurricularCourse getOldCurricularCourse();
+    public void setOldCurricularCourse(ICurricularCourse oldCurricularCourse);
 	"
 }
 
@@ -243,6 +278,7 @@ class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourcefo
     
     class net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup extends net.sourceforge.fenixedu.domain.CurricularCourseGroup {
     }
+
 
 
 class net.sourceforge.fenixedu.domain.Curriculum extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -371,6 +407,29 @@ class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.f
 	"
 }
 
+class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixedu.domain.DomainObject {
+	String code;
+	String name;
+	
+	interface "
+	    public java.util.Set getDisciplinasAssociadas();
+    	public void setDisciplinasAssociadas(java.util.Set disciplinasAssociadas);
+	"
+}
+
+
+class net.sourceforge.fenixedu.domain.DepartmentCourse extends net.sourceforge.fenixedu.domain.DomainObject {
+	String nome;
+	String sigla;
+	Integer chaveDepartamento;
+	Integer codigoInterno;
+	
+	interface "
+		public net.sourceforge.fenixedu.domain.IDepartment getDepartamento();
+		public void setDepartamento(net.sourceforge.fenixedu.domain.IDepartment departamento);
+	"
+}
+
 class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu.domain.DomainObject 
     implements org.apache.ojb.broker.PersistenceBrokerAware {
     String createdBy;
@@ -424,6 +483,10 @@ class net.sourceforge.fenixedu.domain.log.EnrolmentLog extends net.sourceforge.f
     
     "
 }
+
+
+
+
 
 class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixedu.domain.DomainObject {
 	String ojbConcreteClass;
@@ -1218,6 +1281,16 @@ class net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent extends net.sour
     "
 }
 
+
+class net.sourceforge.fenixedu.domain.ScientificArea extends net.sourceforge.fenixedu.domain.DomainObject {
+	String name;
+	
+	interface " 
+    	public java.util.List getAreaCurricularCourseGroups();
+    	public void setAreaCurricularCourseGroups(java.util.List curricularCourseGroups);
+	"
+}
+
 class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.domain.DomainObject implements net.sourceforge.fenixedu.fileSuport.INode {
 	Integer keySuperiorSection;
 	Integer sectionOrder;
@@ -1225,6 +1298,7 @@ class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.d
 	String name;
 	Date lastModifiedDate;
 }
+
 
 class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer availabilityFinal;
@@ -1467,6 +1541,12 @@ class net.sourceforge.fenixedu.domain.Summary extends net.sourceforge.fenixedu.d
 	"
 }
 
+
+class net.sourceforge.fenixedu.domain.University extends net.sourceforge.fenixedu.domain.DomainObject {
+	String code;
+	String name;
+}
+
 class net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyWrittenEvaluation;
 	Integer keyCurricularCourseScope;
@@ -1482,10 +1562,7 @@ class net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope ext
 	"
 }
 
-class net.sourceforge.fenixedu.domain.University extends net.sourceforge.fenixedu.domain.DomainObject {
-	String code;
-	String name;
-}
+
 
 
 /*
@@ -1499,13 +1576,10 @@ class net.sourceforge.fenixedu.domain.University extends net.sourceforge.fenixed
 
 external class net.sourceforge.fenixedu.domain.Attends;
 external class net.sourceforge.fenixedu.domain.CurricularCourseScope;
-external class net.sourceforge.fenixedu.domain.Department;
-external class net.sourceforge.fenixedu.domain.DepartmentCourse;
 external class net.sourceforge.fenixedu.domain.ExecutionCourse;
 external class net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty;
 external class net.sourceforge.fenixedu.domain.ExecutionPeriod;
 external class net.sourceforge.fenixedu.domain.ExecutionYear;
-external class net.sourceforge.fenixedu.domain.ScientificArea;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 external class net.sourceforge.fenixedu.domain.Teacher;

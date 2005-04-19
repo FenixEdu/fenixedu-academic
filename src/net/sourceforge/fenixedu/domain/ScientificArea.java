@@ -14,26 +14,11 @@ import java.util.List;
  * @author Ricardo Rodrigues
  */
 
-public class ScientificArea extends DomainObject implements IScientificArea {
-    private String name;
+public class ScientificArea extends ScientificArea_Base {
 
     private List areaCurricularCourseGroups;
 
     public ScientificArea() {
-    }
-
-    /**
-     * @return
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name
-     */
-    public void setName(String name) {
-        this.name = name;
     }
 
     /**
@@ -52,7 +37,7 @@ public class ScientificArea extends DomainObject implements IScientificArea {
     }
 
     public String toString() {
-        return "name[" + name + "]";
+        return "name[" + getName() + "]";
     }
 
     public boolean equals(Object obj) {

@@ -4,15 +4,7 @@ package net.sourceforge.fenixedu.domain;
  * @author David Santos Jan 14, 2004
  */
 
-public class CreditsInScientificArea extends DomainObject implements ICreditsInScientificArea {
-    private Integer studentCurricularPlanKey;
-
-    private Integer scientificAreaKey;
-
-    private Integer enrolmentKey;
-
-    private Integer givenCredits;
-
+public class CreditsInScientificArea extends CreditsInScientificArea_Base {
     private IStudentCurricularPlan studentCurricularPlan;
 
     private IScientificArea scientificArea;
@@ -57,35 +49,6 @@ public class CreditsInScientificArea extends DomainObject implements ICreditsInS
         this.enrolment = enrolment;
     }
 
-    /**
-     * @return Returns the enrolmentKey.
-     */
-    public Integer getEnrolmentKey() {
-        return enrolmentKey;
-    }
-
-    /**
-     * @param enrolmentKey
-     *            The enrolmentKey to set.
-     */
-    public void setEnrolmentKey(Integer enrolmentKey) {
-        this.enrolmentKey = enrolmentKey;
-    }
-
-    /**
-     * @return Returns the givenCredits.
-     */
-    public Integer getGivenCredits() {
-        return givenCredits;
-    }
-
-    /**
-     * @param givenCredits
-     *            The givenCredits to set.
-     */
-    public void setGivenCredits(Integer givenCredits) {
-        this.givenCredits = givenCredits;
-    }
 
     /**
      * @return Returns the scientificArea.
@@ -102,20 +65,6 @@ public class CreditsInScientificArea extends DomainObject implements ICreditsInS
         this.scientificArea = scientificArea;
     }
 
-    /**
-     * @return Returns the scientificAreaKey.
-     */
-    public Integer getScientificAreaKey() {
-        return scientificAreaKey;
-    }
-
-    /**
-     * @param scientificAreaKey
-     *            The scientificAreaKey to set.
-     */
-    public void setScientificAreaKey(Integer scientificAreaKey) {
-        this.scientificAreaKey = scientificAreaKey;
-    }
 
     /**
      * @return Returns the studentCurricularPlan.
@@ -132,18 +81,5 @@ public class CreditsInScientificArea extends DomainObject implements ICreditsInS
         this.studentCurricularPlan = studentCurricularPlan;
     }
 
-    /**
-     * @return Returns the studentCurricularPlanKey.
-     */
-    public Integer getStudentCurricularPlanKey() {
-        return studentCurricularPlanKey;
-    }
 
-    /**
-     * @param studentCurricularPlanKey
-     *            The studentCurricularPlanKey to set.
-     */
-    public void setStudentCurricularPlanKey(Integer studentCurricularPlanKey) {
-        this.studentCurricularPlanKey = studentCurricularPlanKey;
-    }
 }

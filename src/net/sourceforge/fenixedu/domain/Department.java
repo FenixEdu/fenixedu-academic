@@ -12,11 +12,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Set;
 
-public class Department extends DomainObject implements IDepartment {
-
-    private String name;
-
-    private String code;
+public class Department extends Department_Base {
 
     private Set disciplinasAssociadas;
 
@@ -40,9 +36,8 @@ public class Department extends DomainObject implements IDepartment {
     public String toString() {
         String result = "[DEPARTAMENT";
         result += ", codInt=" + getIdInternal();
-        result += ", sigla=" + code;
-        result += ", nome=" + name;
-        //result += ", disciplinasAssociadas=" + disciplinasAssociadas;
+        result += ", sigla=" + getCode();
+        result += ", nome=" + getName();
         result += "]";
         return result;
     }
@@ -56,13 +51,6 @@ public class Department extends DomainObject implements IDepartment {
         return disciplinasAssociadas;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getCode() {
-        return code;
-    }
 
     /**
      * Sets the disciplinasAssociadas.
@@ -72,14 +60,6 @@ public class Department extends DomainObject implements IDepartment {
      */
     public void setDisciplinasAssociadas(Set disciplinasAssociadas) {
         this.disciplinasAssociadas = disciplinasAssociadas;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
 }

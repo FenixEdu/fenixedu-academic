@@ -29,4 +29,5 @@ public class University extends University_Base {
         result += "name = " + this.getName() + "; ";
         return result;
     }
+	
 }
