@@ -38,7 +38,7 @@ public class ReadExecutionPeriodsByExecutionYear implements IService {
             if (infoExecutionYear == null) {
                 executionYear = executionYearDAO.readCurrentExecutionYear();
             } else {
-                executionYear = Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionYear);
+                executionYear = InfoExecutionYear.newDomainFromInfo(infoExecutionYear);
             }
 
             List executionPeriods = executionPeriodDAO.readByExecutionYear(executionYear);

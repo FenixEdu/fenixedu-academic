@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -65,7 +64,7 @@ public class ReadNonMasterExecutionDegreesByExecutionYear implements IServico {
                 IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
                 executionYear = executionYearDAO.readCurrentExecutionYear();
             } else {
-                executionYear = Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionYear);
+                executionYear = InfoExecutionYear.newDomainFromInfo(infoExecutionYear);;
             }
 
             IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();

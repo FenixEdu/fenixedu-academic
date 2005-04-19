@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -31,8 +30,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeInitials implements
 				.getDefaultPersistenceSupport();
 		final IPersistentExecutionDegree executionDegreeDAO = sp
 				.getIPersistentExecutionDegree();
-		final IExecutionYear executionYear = Cloner
-				.copyInfoExecutionYear2IExecutionYear(infoExecutionYear);
+		final IExecutionYear executionYear = InfoExecutionYear.newDomainFromInfo(infoExecutionYear);
 
 		final IExecutionDegree executionDegree = executionDegreeDAO
 				.readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(

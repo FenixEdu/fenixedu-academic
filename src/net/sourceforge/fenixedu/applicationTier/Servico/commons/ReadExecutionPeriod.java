@@ -31,8 +31,7 @@ public class ReadExecutionPeriod implements IService {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
-            IExecutionYear executionYear = Cloner
-                    .copyInfoExecutionYear2IExecutionYear(infoExecutionYear);
+            IExecutionYear executionYear = InfoExecutionYear.newDomainFromInfo(infoExecutionYear);
             IExecutionPeriod executionPeriod = executionPeriodDAO.readByNameAndExecutionYear(name,
                     executionYear);
             if (executionPeriod != null) {
