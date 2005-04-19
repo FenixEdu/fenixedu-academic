@@ -143,8 +143,8 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
             publication.setJournalName((String) dynaForm.get("journalName"));
         if (attributes.get("volume") != null)
             publication.setVolume((String) dynaForm.get("volume"));
-        if (attributes.get("firstpage") != null)
-            publication.setFirstPage((Integer) dynaForm.get("firstpage"));
+        if (attributes.get("firstPage") != null)
+            publication.setFirstPage((Integer) dynaForm.get("firstPage"));
         if (attributes.get("lastPage") != null)
             publication.setLastPage((Integer) dynaForm.get("lastPage"));
         if (attributes.get("language") != null)
