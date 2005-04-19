@@ -310,20 +310,20 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     "
 }
 
-class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEC extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
-}
-
-class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEEC extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
-}
-
-class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEIC extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
-}
-
-class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEICTAGUS extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
-}
-
-class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEM extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
-}
+    class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEC extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
+    }
+    
+    class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEEC extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
+    }
+    
+    class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEIC extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
+    }
+    
+    class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEICTAGUS extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
+    }
+    
+    class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEM extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
+    }
 
 class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixedu.domain.DomainObject {
     String additionalInfoEn;
@@ -371,8 +371,8 @@ class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.f
 	"
 }
 
-/* not ready. multiple interfaces problem
-class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu.domain.DomainObject 
+    implements org.apache.ojb.broker.PersistenceBrokerAware {
     String createdBy;
     Date creationDate;
     Integer curricularCourseKey;
@@ -401,12 +401,12 @@ class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu
     "
 }
 
-class net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
-}
+    class net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
+    }
+    
+    class net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
+    }
 
-class net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
-}
-*/
 
 class net.sourceforge.fenixedu.domain.log.EnrolmentLog extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyCurricularCourse;
@@ -1409,19 +1409,19 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
 }
 
 
-class net.sourceforge.fenixedu.domain.StudentCurricularPlanLEIC extends net.sourceforge.fenixedu.domain.StudentCurricularPlan {
-        
-    Integer creditsInSecundaryArea;
-    Integer creditsInSpecializationArea;
-    Integer secundaryBranchKey;
-}
-
-class net.sourceforge.fenixedu.domain.StudentCurricularPlanLEEC extends net.sourceforge.fenixedu.domain.StudentCurricularPlan {
-    Integer creditsInSecundaryArea;
-    Integer creditsInSpecializationArea;
-    Integer secundaryBranchKey;
-}
-
+    class net.sourceforge.fenixedu.domain.StudentCurricularPlanLEIC extends net.sourceforge.fenixedu.domain.StudentCurricularPlan {
+            
+        Integer creditsInSecundaryArea;
+        Integer creditsInSpecializationArea;
+        Integer secundaryBranchKey;
+    }
+    
+    class net.sourceforge.fenixedu.domain.StudentCurricularPlanLEEC extends net.sourceforge.fenixedu.domain.StudentCurricularPlan {
+        Integer creditsInSecundaryArea;
+        Integer creditsInSpecializationArea;
+        Integer secundaryBranchKey;
+    }
+    
 class net.sourceforge.fenixedu.domain.StudentGroup extends net.sourceforge.fenixedu.domain.DomainObject {
         Integer keyShift;
         Integer groupNumber;

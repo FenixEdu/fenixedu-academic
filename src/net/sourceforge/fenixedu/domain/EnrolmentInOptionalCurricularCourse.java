@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.domain;
  * 24/Mar/2003
  */
 
-public class EnrolmentInOptionalCurricularCourse extends Enrolment implements IEnrolment {
+public class EnrolmentInOptionalCurricularCourse extends EnrolmentInOptionalCurricularCourse_Base {
 
     public EnrolmentInOptionalCurricularCourse() {
         super();

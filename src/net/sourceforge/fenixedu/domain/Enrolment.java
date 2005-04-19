@@ -20,8 +20,7 @@ import org.apache.ojb.broker.PersistenceBrokerException;
  * 24/Mar/2003
  */
 
-public class Enrolment extends DomainObject implements IEnrolment,
-        PersistenceBrokerAware {
+public class Enrolment extends Enrolment_Base {
     private IStudentCurricularPlan studentCurricularPlan;
 
     private ICurricularCourse curricularCourse;
@@ -32,26 +31,12 @@ public class Enrolment extends DomainObject implements IEnrolment,
 
     private EnrolmentEvaluationType enrolmentEvaluationType;
 
-    private Integer studentCurricularPlanKey;
-
-    private Integer curricularCourseKey;
-
-    private Integer keyExecutionPeriod;
-
     private List evaluations;
-
-    private String ojbConcreteClass;
-
-    private Date creationDate;
 
     private EnrollmentCondition condition;
 
-    private Integer accumulatedWeight;
-
-    private String createdBy;
-
     public Enrolment() {
-        this.ojbConcreteClass = this.getClass().getName();
+        this.setOjbConcreteClass(this.getClass().getName());
     }
 
     /**
@@ -67,21 +52,6 @@ public class Enrolment extends DomainObject implements IEnrolment,
      */
     public void setCurricularCourse(ICurricularCourse curricularCourse) {
         this.curricularCourse = curricularCourse;
-    }
-
-    /**
-     * @return Returns the curricularCourseKey.
-     */
-    public Integer getCurricularCourseKey() {
-        return curricularCourseKey;
-    }
-
-    /**
-     * @param curricularCourseKey
-     *            The curricularCourseKey to set.
-     */
-    public void setCurricularCourseKey(Integer curricularCourseKey) {
-        this.curricularCourseKey = curricularCourseKey;
     }
 
     /**
@@ -146,36 +116,6 @@ public class Enrolment extends DomainObject implements IEnrolment,
     }
 
     /**
-     * @return Returns the keyExecutionPeriod.
-     */
-    public Integer getKeyExecutionPeriod() {
-        return keyExecutionPeriod;
-    }
-
-    /**
-     * @param keyExecutionPeriod
-     *            The keyExecutionPeriod to set.
-     */
-    public void setKeyExecutionPeriod(Integer keyExecutionPeriod) {
-        this.keyExecutionPeriod = keyExecutionPeriod;
-    }
-
-    /**
-     * @return Returns the ojbConcreteClass.
-     */
-    public String getOjbConcreteClass() {
-        return ojbConcreteClass;
-    }
-
-    /**
-     * @param ojbConcreteClass
-     *            The ojbConcreteClass to set.
-     */
-    public void setOjbConcreteClass(String ojbConcreteClass) {
-        this.ojbConcreteClass = ojbConcreteClass;
-    }
-
-    /**
      * @return Returns the studentCurricularPlan.
      */
     public IStudentCurricularPlan getStudentCurricularPlan() {
@@ -189,21 +129,6 @@ public class Enrolment extends DomainObject implements IEnrolment,
     public void setStudentCurricularPlan(
             IStudentCurricularPlan studentCurricularPlan) {
         this.studentCurricularPlan = studentCurricularPlan;
-    }
-
-    /**
-     * @return Returns the studentCurricularPlanKey.
-     */
-    public Integer getStudentCurricularPlanKey() {
-        return studentCurricularPlanKey;
-    }
-
-    /**
-     * @param studentCurricularPlanKey
-     *            The studentCurricularPlanKey to set.
-     */
-    public void setStudentCurricularPlanKey(Integer studentCurricularPlanKey) {
-        this.studentCurricularPlanKey = studentCurricularPlanKey;
     }
 
     public boolean equals(Object obj) {
@@ -234,21 +159,6 @@ public class Enrolment extends DomainObject implements IEnrolment,
     }
 
     /**
-     * @return Returns the creationDate.
-     */
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    /**
-     * @param creationDate
-     *            The creationDate to set.
-     */
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    /**
      * @return Returns the condition.
      */
     public EnrollmentCondition getCondition() {
@@ -261,36 +171,6 @@ public class Enrolment extends DomainObject implements IEnrolment,
      */
     public void setCondition(EnrollmentCondition condition) {
         this.condition = condition;
-    }
-
-    /**
-     * @return Returns the accumulatedWeight.
-     */
-    public Integer getAccumulatedWeight() {
-        return accumulatedWeight;
-    }
-
-    /**
-     * @param accumulatedWeight
-     *            The accumulatedWeight to set.
-     */
-    public void setAccumulatedWeight(Integer accumulatedWeight) {
-        this.accumulatedWeight = accumulatedWeight;
-    }
-
-    /**
-     * @return Returns the createdBy.
-     */
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    /**
-     * @param createdBy
-     *            The createdBy to set.
-     */
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
     }
 
     /*
