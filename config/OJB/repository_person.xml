@@ -184,7 +184,7 @@
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaTipoDocId2SqlTipoDocIdFieldConversion"
     />
     <field-descriptor
-        name="sex"
+        name="gender"
         column="SEX"
         jdbc-type="VARCHAR"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSex2SqlSexFieldConversion"
