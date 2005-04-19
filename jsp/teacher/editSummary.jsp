@@ -191,6 +191,9 @@
 		<td colspan='2'><html:text size="66" name="infoSummary" property="title"/></td>
 	</tr>
 	<tr>
+		<td colspan='2'>&nbsp;</td>
+	</tr>
+	<tr>
 		<td colspan='2'><strong><bean:message key="label.summaryText"/></strong></td>
 	</tr>
 	<tr>
@@ -201,6 +204,9 @@
 			<bean:message key="label.plain.text"/>
 			<html:radio property="editor" value="false" onclick="this.form.method.value='prepareEditSummary';this.form.page.value=0;this.form.submit();"/>			
 		</td>
+	</tr>
+	<tr>
+		<td colspan='2'>&nbsp;</td>
 	</tr>
 	<tr>
 		<logic:present name="verEditor">
@@ -215,13 +221,13 @@
 			
 			<script language="JavaScript" type="text/javascript"> 
 			<!--
-			writeTextEditor(200, 200, document.forms[0].summaryText.value);		
+			writeTextEditor(700, 500, document.forms[0].summaryText.value);		
 			//-->
 			</script>			
 			</td>
 		</logic:present>
 		<logic:notPresent name="verEditor">	
-			<td colspan='2'><html:textarea rows="7" cols="50" name="infoSummary" property="summaryText"/></td>
+			<td colspan='2'><html:textarea rows="30" cols="100" name="infoSummary" property="summaryText"/></td>
 		</logic:notPresent>
 	</tr>
 </table>

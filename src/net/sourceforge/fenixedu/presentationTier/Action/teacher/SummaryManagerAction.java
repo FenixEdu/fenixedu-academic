@@ -231,11 +231,11 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             return showSummaries(mapping, form, request, response);
         }
         
-        DynaActionForm actionForm = (DynaActionForm) form;
-                
+        DynaActionForm actionForm = (DynaActionForm) form;        
         if(actionForm.get("editor").equals("") || (actionForm.get("editor").equals("true"))){
             request.setAttribute("verEditor", "true");    
-        }     
+        }    
+        
         
         return mapping.findForward("insertSummary");
     }
@@ -585,10 +585,8 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             
             return showSummaries(mapping, form, request, response);
         }
-        
-        DynaActionForm actionForm = (DynaActionForm) form;
-                    
-        if(actionForm.get("editor").equals("") || (actionForm.get("editor").equals("true"))){
+                            
+        if(summaryForm.get("editor").equals("") || (summaryForm.get("editor").equals("true"))){
             request.setAttribute("verEditor", "true");            
         }   
         
@@ -676,7 +674,6 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             saveErrors(request, actionErrors);
             
             String text = request.getParameter("summaryText");
-            System.out.println("text");
             request.setAttribute("summaryTextFlag", text);
             
             return prepareEditSummary(mapping, form, request, response);//mudei

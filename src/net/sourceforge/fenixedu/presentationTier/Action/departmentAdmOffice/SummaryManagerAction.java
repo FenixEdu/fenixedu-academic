@@ -233,6 +233,10 @@ public class SummaryManagerAction extends FenixDispatchAction {
             e.printStackTrace();
             return showSummaries(mapping, form, request, response);
         }
+                
+        if(formBean.get("editor").equals("") || (formBean.get("editor").equals("true"))){
+            request.setAttribute("verEditor", "true");    
+        }  
         
         return mapping.findForward("insertSummary");
     }
@@ -453,8 +457,18 @@ public class SummaryManagerAction extends FenixDispatchAction {
         
         Object[] args = { teacherNumber, executionCourseId, summaryId };
         SiteView siteView = null;
+        DynaActionForm summaryForm = (DynaActionForm) form;
+        
         try {
-            siteView = (SiteView) ServiceUtils.executeService(userView, "ReadSummaryDepartment", args);                    
+            siteView = (SiteView) ServiceUtils.executeService(userView, "ReadSummaryDepartment", args);     
+            
+            if(request.getAttribute("summaryTextFlag") == null){
+                String summaryText = ((InfoSiteSummary) siteView.getComponent()).getInfoSummary().getSummaryText();
+                if(summaryText != null)
+                    summaryForm.set("summaryText", summaryText);
+            }            
+            else              
+                summaryForm.set("summaryText", (String) request.getAttribute("summaryTextFlag"));
             
             boolean loggedIsResponsible = false;
             List responsibleTeachers = null;
@@ -468,7 +482,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
                 break;
             }
             
-            request.setAttribute("loggedIsResponsible", new Boolean(loggedIsResponsible));
+            request.setAttribute("loggedIsResponsible", new Boolean(loggedIsResponsible));        
             
             if (!loggedIsResponsible) {
                 InfoTeacher infoTeacher = (InfoTeacher) ServiceManagerServiceFactory.executeService(
@@ -480,7 +494,6 @@ public class SummaryManagerAction extends FenixDispatchAction {
                 
                 request.setAttribute("loggedTeacherProfessorship", infoProfessorship.getIdInternal());
             } else {
-                DynaActionForm summaryForm = (DynaActionForm) form;
                 if ((((InfoSiteSummary) siteView.getComponent())).getInfoSummary().getInfoTeacher() != null) {
                     summaryForm.set("teacherNumber", (((InfoSiteSummary) siteView.getComponent()))
                             .getInfoSummary().getInfoTeacher().getTeacherNumber());
@@ -518,6 +531,10 @@ public class SummaryManagerAction extends FenixDispatchAction {
         } catch (Exception e) {
             e.printStackTrace();
             return showSummaries(mapping, form, request, response);
+        }            
+        
+        if(summaryForm.get("editor").equals("") || (summaryForm.get("editor").equals("true"))){
+            request.setAttribute("verEditor", "true");    
         }
         
         request.setAttribute("siteView", siteView);
@@ -589,6 +606,10 @@ public class SummaryManagerAction extends FenixDispatchAction {
             }
             actionErrors.add("error.editSummary", new ActionError("error.summary.impossible.edit"));
             saveErrors(request, actionErrors);
+            
+            String text = request.getParameter("summaryText");
+            request.setAttribute("summaryTextFlag", text);
+            
             return prepareEditSummary(mapping, form, request, response);//mudei
         }
         

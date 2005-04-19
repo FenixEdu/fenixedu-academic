@@ -122,6 +122,7 @@
         </form-bean> 
          <form-bean name="summaryForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="forHidden" type="java.lang.String"/>
+            <form-property name="editor" type="java.lang.String" initial="true"/>
             <form-property name="title" type="java.lang.String"/>
             <form-property name="summaryText" type="java.lang.String"/>
             <form-property name="dateEmpty" type="java.lang.String"/>

@@ -31,7 +31,7 @@
  <html:hidden property="save"/>
  
  <logic:present name="verEditor">
-	<html:hidden property="summaryText" />
+	<html:hidden property="summaryText"/>
  </logic:present>
   
 <!-- Shifts -->
@@ -226,17 +226,19 @@
 		<td colspan='2'><html:text size="66" property="title"/></td>
 	</tr>
 	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
 		<td colspan='2'><strong><bean:message key="label.summaryText"/></strong></td>
 	</tr>
 	<tr>
 		<td colspan='2'>		
-			<bean:message key="label.editor"/>
-			<html:radio property="editor" value="true" onclick="this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.submit();"/>
+		    <bean:message key="label.editor"/>
+			<html:radio property="editor" value="true" onclick="this.form.method.value='prepareInsertSummary';this.form.summaryText.value='';this.form.page.value=0;this.form.submit();"/>
 			&nbsp;
 			<bean:message key="label.plain.text"/>
 			<html:radio property="editor" value="false" onclick="this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.submit();"/>					
 		</td>
-
 	</tr>
 	<tr>
 		<td>&nbsp;</td>
@@ -254,13 +256,13 @@
 			
 			<script language="JavaScript" type="text/javascript"> 
 			<!--
-			writeTextEditor(200, 200, document.forms[0].summaryText.value);		
+			writeTextEditor(700, 500, document.forms[0].summaryText.value);		
 			//-->
 			</script>		
 		</td>
 	  </logic:present>
 	  <logic:notPresent name="verEditor">	 	 
-		 <td colspan='2'><html:textarea rows="7" cols="65" property="summaryText"/></td>
+		 <td colspan='2'><html:textarea rows="30" cols="100" property="summaryText"/></td>
 	  </logic:notPresent>
 	</tr>
 </table>
