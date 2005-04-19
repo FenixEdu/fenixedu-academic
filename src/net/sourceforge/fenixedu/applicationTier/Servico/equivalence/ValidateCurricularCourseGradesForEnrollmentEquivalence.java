@@ -6,9 +6,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.equivalence.InfoCurricularCourseGrade;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -47,9 +47,7 @@ public class ValidateCurricularCourseGradesForEnrollmentEquivalence extends
 
         InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) args.get(0);
 
-        IDegreeCurricularPlan degreeCurricularPlan = Cloner
-                .copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoStudentCurricularPlan
-                        .getInfoDegreeCurricularPlan());
+        IDegreeCurricularPlan degreeCurricularPlan = InfoDegreeCurricularPlanWithDegree.newDomainFromInfo(infoStudentCurricularPlan.getInfoDegreeCurricularPlan());
 
         IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
         studentCurricularPlan.setDegreeCurricularPlan(degreeCurricularPlan);
