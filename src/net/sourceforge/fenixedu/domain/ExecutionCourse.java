@@ -10,43 +10,7 @@ import net.sourceforge.fenixedu.util.TipoCurso;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-public class ExecutionCourse extends DomainObject implements IExecutionCourse {
-
-	private String nome;
-
-    private String sigla;
-
-    private Double theoreticalHours;
-
-    private Double praticalHours;
-
-    private Double theoPratHours;
-
-    private Double labHours;
-
-	private List associatedCurricularCourses = null;
-
-    private List associatedExams = null;
-
-    private List associatedEvaluations = null;
-
-    private IExecutionPeriod executionPeriod;
-
-    private Integer keyExecutionPeriod;
-
-    protected String comment;
-
-    private List attendingStudents;
-
-    private List executionCourseProperties;
-
-    private List attends;
-	
-	private List groupPropertiesExecutionCourse=null;
-
-private List responsibleTeachers;
-
-    private List professorships;
+public class ExecutionCourse extends ExecutionCourse_Base {
 
     public ExecutionCourse() {
     }
@@ -55,7 +19,7 @@ private List responsibleTeachers;
         setIdInternal(idInternal);
     }
 
-	 public ExecutionCourse(String nome, String sigla, Double theoreticalHours, Double praticalHours,
+    public ExecutionCourse(String nome, String sigla, Double theoreticalHours, Double praticalHours,
             Double theoPratHours, Double labHours, IExecutionPeriod executionPeriod) {
 
         setNome(nome);
@@ -67,8 +31,8 @@ private List responsibleTeachers;
         setExecutionPeriod(executionPeriod);
         setComment(new String());
     }
-	
-	public boolean equals(Object obj) {
+
+    public boolean equals(Object obj) {
         boolean resultado = false;
         if (obj instanceof IExecutionCourse) {
             IExecutionCourse de = (IExecutionCourse) obj;
@@ -79,379 +43,98 @@ private List responsibleTeachers;
         return resultado;
     }
 
-	public String toString() {
-		String result = "[EXECUTION_COURSE";
-		result += ", codInt=" + getIdInternal();
-		result += ", sigla=" + sigla;
-		result += ", nome=" + nome;
-		result += ", theoreticalHours=" + theoreticalHours;
-		result += ", praticalHours=" + praticalHours;
-		result += ", theoPratHours=" + theoPratHours;
-		result += ", labHours=" + labHours;
-		result += ", executionPeriod=" + getExecutionPeriod();
-		result += "]";
-		return result;
-	}
-
-	/**
-	 * Returns the associatedCurricularCourses.
-	 * @return List
-	 */
-	public List getAssociatedCurricularCourses() {
-		return associatedCurricularCourses;
-	}
-
-	/**
-	 * Returns the nome.
-	 * @return String
-	 */
-	public String getNome() {
-		return nome;
-	}
-
-	/**
-	 * Returns the sigla.
-	 * @return String
-	 */
-	public String getSigla() {
-		return sigla;
-	}
-
-	/**
-	 * Returns the theoreticalHours.
-	 * @return double
-	 */
-	public Double getTheoreticalHours() {
-		return theoreticalHours;
-	}
-
-	/**
-	 * Returns the praticalHours.
-	 * @return double
-	 */
-	public Double getPraticalHours() {
-		return praticalHours;
-	}
-
-	/**
-	 * Returns the theoPratHours.
-	 * @return double
-	 */
-	public Double getTheoPratHours() {
-		return theoPratHours;
-	}
-
-	/**
-	 * Returns the labHours.
-	 * @return double
-	 */
-	public Double getLabHours() {
-		return labHours;
-	}
-
-	/**
-	 * Sets the associatedCurricularCourses.
-	 * @param associatedCurricularCourses The associatedCurricularCourses to set
-	 */
-	public void setAssociatedCurricularCourses(List associatedCurricularCourses) {
-		this.associatedCurricularCourses = associatedCurricularCourses;
-	}
-
-	/**
-	 * Sets the nome.
-	 * @param nome The nome to set
-	 */
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	/**
-	 * Sets the sigla.
-	 * @param sigla The sigla to set
-	 */
-	public void setSigla(String sigla) {
-		this.sigla = sigla;
-	}
-
-	/**
-	 * Sets the theoreticalHours.
-	 * @param theoreticalHours The theoreticalHours to set 
-	 */
-	public void setTheoreticalHours(Double theoreticalHours) {
-		this.theoreticalHours = theoreticalHours;
-	}
-
-	/**
-	 * Sets the praticalHours.
-	 * @param praticalHours The praticalHours to set
-	 */
-	public void setPraticalHours(Double praticalHours) {
-		this.praticalHours = praticalHours;
-	}
-
-	/**
-	* Sets the theoPratHours.
-	 * @param theoPratHours The theoPratHours to set
-	 */
-	public void setTheoPratHours(Double theoPratHours) {
-		this.theoPratHours = theoPratHours;
-	}
-
-	/**
-	 * Sets the labHours.
-	 * @param labHours The labHours to set
-	 */
-	public void setLabHours(Double labHours) {
-		this.labHours = labHours;
-	}
-
-	 /**
-     * @see Dominio.IDisciplinaExecucao#getExecutionPeriod()
-     */
-    public IExecutionPeriod getExecutionPeriod() {
-        return this.executionPeriod;
+    public String toString() {
+        String result = "[EXECUTION_COURSE";
+        result += ", codInt=" + getIdInternal();
+        result += ", sigla=" + getSigla();
+        result += ", nome=" + getNome();
+        result += ", theoreticalHours=" + getTheoreticalHours();
+        result += ", praticalHours=" + getPraticalHours();
+        result += ", theoPratHours=" + getTheoPratHours();
+        result += ", labHours=" + getLabHours();
+        result += ", executionPeriod=" + getExecutionPeriod();
+        result += "]";
+        return result;
     }
 
-    /**
-     * @see Dominio.IDisciplinaExecucao#setExecutionPeriod(Dominio.IExecutionPeriod)
-     */
-    public void setExecutionPeriod(IExecutionPeriod executionPeriod) {
-        this.executionPeriod = executionPeriod;
+    public String getSlideName() {
+        String result = getParentNode().getSlideName() + "/EC" + getIdInternal();
+        return result;
     }
 
-	/**
-	 * Returns the keyExecutionPeriod.
-	 * @return Integer
-	 */
-	public Integer getKeyExecutionPeriod() {
-		return keyExecutionPeriod;
-	}
-
-	/**
-	 * Sets the keyExecutionPeriod.
-	 * @param keyExecutionPeriod The keyExecutionPeriod to set
-	 */
-	public void setKeyExecutionPeriod(Integer keyExecutionPeriod) {
-		this.keyExecutionPeriod = keyExecutionPeriod;
-	}
-
-	/**
-	 * @return
-	 */
-	public List getAssociatedExams() {
-		return associatedExams;
-	}
-
-	/**
-	 * @param list
-	 */
-	public void setAssociatedExams(List list) {
-		associatedExams = list;
-	}
-
-	/**
-	 * @return
-	 */
-	public String getComment() {
-		return comment;
-	}
-
-	/**
-	 * @param string
-	 */
-	public void setComment(String string) {
-		comment = string;
-	}
-
-	/**
-	 * @return
-	 */
-	public List getAssociatedEvaluations() {
-		return associatedEvaluations;
-	}
-
-	/**
-     * @param list
-     */
-    public void setAssociatedEvaluations(List list) {
-        associatedEvaluations = list;
+    public INode getParentNode() {
+        IExecutionPeriod executionPeriod = getExecutionPeriod();
+        return executionPeriod;
     }
 
-    /**
-     * @return
-     */
-    public List getAttendingStudents() {
-        return attendingStudents;
+    public List getGroupProperties() {
+        List groupProperties = new ArrayList();
+        Iterator iterGroupPropertiesExecutionCourse = getGroupPropertiesExecutionCourse().iterator();
+        IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = null;
+        while (iterGroupPropertiesExecutionCourse.hasNext()) {
+            groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse) iterGroupPropertiesExecutionCourse
+                    .next();
+            if (groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 1
+                    || groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 2) {
+                groupProperties.add(groupPropertiesExecutionCourse.getGroupProperties());
+            }
+        }
+        return groupProperties;
     }
 
-	/**
-	 * @param list
-	 */
-	public void setAttendingStudents(List list) {
-		attendingStudents = list;
-	}
+    public IGroupProperties getGroupPropertiesByName(String name) {
+        Iterator iter = getGroupProperties().iterator();
+        while (iter.hasNext()) {
+            IGroupProperties gp = (IGroupProperties) iter.next();
+            if ((gp.getName()).equals(name))
+                return gp;
+        }
+        return null;
 
-	/* (non-Javadoc)
-	 * @see fileSuport.INode#getSlideName()
-	 */
-	public String getSlideName() {
-		String result = getParentNode().getSlideName()+"/EC"+getIdInternal();
-		return result;
-	}
-
-	/* (non-Javadoc)
-	 * @see fileSuport.INode#getParentNode()
-	 */
-	public INode getParentNode() {	
-		IExecutionPeriod executionPeriod = getExecutionPeriod();	
-		return executionPeriod;
-	}
-
-	/**
-	 * @return Returns the executionCourseProperties.
-	 */
-	public List getExecutionCourseProperties()
-	{
-		return executionCourseProperties;
-	}
-
-	 /**
-     * @param executionCourseProperties
-     *            The executionCourseProperties to set.
-     */
-    public void setExecutionCourseProperties(List executionCourseProperties) {
-        this.executionCourseProperties = executionCourseProperties;
-    }
-	
-	
-	public List getGroupPropertiesExecutionCourse() {
-		return groupPropertiesExecutionCourse;
-	}
-	
-	public void setGroupPropertiesExecutionCourse(List groupPropertiesExecutionCourse)
-	{
-		this.groupPropertiesExecutionCourse = groupPropertiesExecutionCourse;
-	}
-	
-	
-	public List getGroupProperties() {
-		List groupProperties = new ArrayList();
-		Iterator iterGroupPropertiesExecutionCourse = 
-			getGroupPropertiesExecutionCourse().iterator();
-		IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = null;
-		while(iterGroupPropertiesExecutionCourse.hasNext()){
-			groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse)iterGroupPropertiesExecutionCourse.next();
-			if(groupPropertiesExecutionCourse.getProposalState().getState().intValue()==1
-					|| groupPropertiesExecutionCourse.getProposalState().getState().intValue()==2){
-				groupProperties.add(groupPropertiesExecutionCourse.getGroupProperties());
-			}
-		}
-		return groupProperties;
-	}
-	
-	public IGroupProperties getGroupPropertiesByName(String name){
-		Iterator iter=getGroupProperties().iterator();
-		while(iter.hasNext()){
-			IGroupProperties gp = (IGroupProperties)iter.next();
-			if((gp.getName()).equals(name))
-				return gp;
-				} 
-		return null;
-		
-	}
-	
-	public void addGroupPropertiesExecutionCourse(IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse)
-	{
-		if(this.groupPropertiesExecutionCourse==null){
-			this.groupPropertiesExecutionCourse=new ArrayList();
-			this.groupPropertiesExecutionCourse.add(groupPropertiesExecutionCourse);
-		}
-		else{
-			this.groupPropertiesExecutionCourse.add(groupPropertiesExecutionCourse);		
-		}
-	}
-	
-	public void removeGroupPropertiesExecutionCourse(IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse){
-		this.groupPropertiesExecutionCourse.remove(groupPropertiesExecutionCourse);
-	}
-
-	public boolean existsGroupPropertiesExecutionCourse(IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse){
-		return this.groupPropertiesExecutionCourse.contains(groupPropertiesExecutionCourse);
-	}
-	
-	
-	public boolean existsGroupPropertiesExecutionCourse(){
-		return this.groupPropertiesExecutionCourse.isEmpty();
-	}
-	
-	public boolean hasProposals(){
-		boolean result = false;
-		boolean found = false;
-		List groupPropertiesExecutionCourseList = this.groupPropertiesExecutionCourse;
-		Iterator iter = groupPropertiesExecutionCourseList.iterator();
-		while(iter.hasNext() && !found){
-			
-			IGroupPropertiesExecutionCourse groupPropertiesExecutionCourseAux =(IGroupPropertiesExecutionCourse)iter.next();
-			if(groupPropertiesExecutionCourseAux.getProposalState().getState().intValue()==3){
-				result=true;
-				found = true;
-			}
-			
-		}
-		return result;
-	}
-	
-	
-/**
-     * @return Returns the attends.
-     */
-    public List getAttends() {
-        return attends;
     }
 
-    /**
-     * @param attends
-     *            The attends to set.
-     */
-    public void setAttends(List attends) {
-        this.attends = attends;
+    public void addGroupPropertiesExecutionCourse(
+            IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse) {
+        if (getGroupPropertiesExecutionCourse() == null) {
+            setGroupPropertiesExecutionCourse(new ArrayList());
+            getGroupPropertiesExecutionCourse().add(groupPropertiesExecutionCourse);
+        } else {
+            getGroupPropertiesExecutionCourse().add(groupPropertiesExecutionCourse);
+        }
     }
 
-    /**
-     * @return Returns the responsibleTeachers.
-     */
-    public List getResponsibleTeachers() {
-        return responsibleTeachers;
+    public void removeGroupPropertiesExecutionCourse(
+            IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse) {
+        getGroupPropertiesExecutionCourse().remove(groupPropertiesExecutionCourse);
     }
 
-    /**
-     * @param responsibleTeachers
-     *            The responsibleTeachers to set.
-     */
-    public void setResponsibleTeachers(List responsibleTeachers) {
-        this.responsibleTeachers = responsibleTeachers;
+    public boolean existsGroupPropertiesExecutionCourse(
+            IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse) {
+        return getGroupPropertiesExecutionCourse().contains(groupPropertiesExecutionCourse);
     }
 
-    /**
-     * @return Returns the professorships.
-     */
-    public List getProfessorships() {
-        return professorships;
+    public boolean existsGroupPropertiesExecutionCourse() {
+        return getGroupPropertiesExecutionCourse().isEmpty();
     }
 
-    /**
-     * @param professorships
-     *            The professorships to set.
-     */
-    public void setProfessorships(List professorships) {
-        this.professorships = professorships;
+    public boolean hasProposals() {
+        boolean result = false;
+        boolean found = false;
+        List groupPropertiesExecutionCourseList = getGroupPropertiesExecutionCourse();
+        Iterator iter = groupPropertiesExecutionCourseList.iterator();
+        while (iter.hasNext() && !found) {
+
+            IGroupPropertiesExecutionCourse groupPropertiesExecutionCourseAux = (IGroupPropertiesExecutionCourse) iter
+                    .next();
+            if (groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 3) {
+                result = true;
+                found = true;
+            }
+
+        }
+        return result;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.IExecutionCourse#isMasterDegreeOnly()
-     */
     public boolean isMasterDegreeOnly() {
         return CollectionUtils.exists(this.getAssociatedCurricularCourses(), new Predicate() {
 
