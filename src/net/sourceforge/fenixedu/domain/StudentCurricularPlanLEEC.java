@@ -17,7 +17,7 @@ import org.apache.commons.collections.Predicate;
  * @author David Santos in Jun 24, 2004
  */
 
-public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base implements IStudentCurricularPlan {
+public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
     protected Integer secundaryBranchKey;
 
     protected IBranch secundaryBranch;

@@ -24,7 +24,7 @@ import org.apache.commons.collections.Predicate;
  * @author David Santos in Jun 25, 2004
  */
 
-public class DegreeCurricularPlanLEIC extends DegreeCurricularPlanLEIC_Base implements IDegreeCurricularPlan {
+public class DegreeCurricularPlanLEIC extends DegreeCurricularPlanLEIC_Base {
 
     public DegreeCurricularPlanLEIC() {
         setOjbConcreteClass(getClass().getName());

@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.util.AreaType;
  * @author David Santos in Jun 25, 2004
  */
 
-public class DegreeCurricularPlanLEEC extends DegreeCurricularPlanLEEC_Base implements IDegreeCurricularPlan {
+public class DegreeCurricularPlanLEEC extends DegreeCurricularPlanLEEC_Base {
     public DegreeCurricularPlanLEEC() {
         setOjbConcreteClass(getClass().getName());
     }

@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.util.AreaType;
  * @author Jo�o Mota
  */
 
-public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base implements IStudentCurricularPlan {
+public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
 
     protected Integer secundaryBranchKey;
 

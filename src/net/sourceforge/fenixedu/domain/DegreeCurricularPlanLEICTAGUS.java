@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.util.AreaType;
  * @author Jo�o Mota in Aug 10, 2004
  */
 
-public class DegreeCurricularPlanLEICTAGUS extends DegreeCurricularPlanLEICTAGUS_Base implements IDegreeCurricularPlan {
+public class DegreeCurricularPlanLEICTAGUS extends DegreeCurricularPlanLEICTAGUS_Base {
 
     public DegreeCurricularPlanLEICTAGUS() {
         setOjbConcreteClass(getClass().getName());
