@@ -11,7 +11,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IContributor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -46,7 +45,7 @@ public class ReadContributorList implements IService {
         Iterator iterator = contributors.iterator();
         while (iterator.hasNext()) {
             InfoContributor infoContributor = null;
-            infoContributor = Cloner.copyIContributor2InfoContributor((IContributor) iterator.next());
+            infoContributor = InfoContributor.newInfoFromDomain((IContributor) iterator.next());
             result.add(infoContributor);
         }
 

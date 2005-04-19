@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IContributor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -38,6 +37,6 @@ public class ReadContributor implements IService {
         if (contributor == null)
             throw new ExcepcaoInexistente("Unknown Contributor !!");
 
-        return Cloner.copyIContributor2InfoContributor(contributor);
+        return InfoContributor.newInfoFromDomain(contributor);
     }
 }

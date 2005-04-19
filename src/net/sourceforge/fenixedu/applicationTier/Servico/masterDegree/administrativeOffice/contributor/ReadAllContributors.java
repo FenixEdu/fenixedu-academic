@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.domain.IContributor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -40,7 +40,7 @@ public class ReadAllContributors implements IService {
         List contributors = new ArrayList();
         Iterator iterator = result.iterator();
         while (iterator.hasNext())
-            contributors.add(Cloner.copyIContributor2InfoContributor((IContributor) iterator.next()));
+            contributors.add(InfoContributor.newInfoFromDomain((IContributor) iterator.next()));
 
         return contributors;
 
