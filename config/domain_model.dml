@@ -1783,7 +1783,6 @@ external class net.sourceforge.fenixedu.domain.Attends;
 external class net.sourceforge.fenixedu.domain.Coordinator;
 external class net.sourceforge.fenixedu.domain.CurricularCourseScope;
 external class net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty;
-external class net.sourceforge.fenixedu.domain.Employee;
 external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
 external class net.sourceforge.fenixedu.domain.ExecutionPeriod;
 external class net.sourceforge.fenixedu.domain.ExecutionYear;
