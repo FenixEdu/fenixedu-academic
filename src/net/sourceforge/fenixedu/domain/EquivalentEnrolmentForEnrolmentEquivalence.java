@@ -7,15 +7,10 @@ package net.sourceforge.fenixedu.domain;
 /**
  * @author jpvl
  */
-public class EquivalentEnrolmentForEnrolmentEquivalence extends DomainObject implements
-        IEquivalentEnrolmentForEnrolmentEquivalence {
+public class EquivalentEnrolmentForEnrolmentEquivalence extends EquivalentEnrolmentForEnrolmentEquivalence_Base {
     private IEnrolmentEquivalence enrolmentEquivalence;
 
     private IEnrolment equivalentEnrolment;
-
-    private Integer enrolmentEquivalenceKey;
-
-    private Integer equivalentEnrolmentKey;
 
     /**
      *  
@@ -39,32 +34,15 @@ public class EquivalentEnrolmentForEnrolmentEquivalence extends DomainObject imp
         return enrolmentEquivalence;
     }
 
-    public Integer getEnrolmentEquivalenceKey() {
-        return enrolmentEquivalenceKey;
-    }
-
     public IEnrolment getEquivalentEnrolment() {
         return equivalentEnrolment;
-    }
-
-    public Integer getEquivalentEnrolmentKey() {
-        return equivalentEnrolmentKey;
     }
 
     public void setEnrolmentEquivalence(IEnrolmentEquivalence equivalence) {
         enrolmentEquivalence = equivalence;
     }
 
-    public void setEnrolmentEquivalenceKey(Integer integer) {
-        enrolmentEquivalenceKey = integer;
-    }
-
     public void setEquivalentEnrolment(IEnrolment enrolment) {
         equivalentEnrolment = enrolment;
     }
-
-    public void setEquivalentEnrolmentKey(Integer integer) {
-        equivalentEnrolmentKey = integer;
-    }
-
 }

@@ -519,6 +519,19 @@ class net.sourceforge.fenixedu.domain.EnrolmentPeriod extends net.sourceforge.fe
     class net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses extends net.sourceforge.fenixedu.domain.EnrolmentPeriod {
     }
 
+class net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer enrolmentEquivalenceKey;
+    Integer equivalentEnrolmentKey;
+    
+    interface "
+
+    public abstract net.sourceforge.fenixedu.domain.IEnrolmentEquivalence getEnrolmentEquivalence();
+    public abstract net.sourceforge.fenixedu.domain.IEnrolment getEquivalentEnrolment();
+    public abstract void setEnrolmentEquivalence(net.sourceforge.fenixedu.domain.IEnrolmentEquivalence equivalence);
+    public abstract void setEquivalentEnrolment(net.sourceforge.fenixedu.domain.IEnrolment enrolment);
+    "
+}
+
 
 class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixedu.domain.DomainObject {
 	String ojbConcreteClass;
