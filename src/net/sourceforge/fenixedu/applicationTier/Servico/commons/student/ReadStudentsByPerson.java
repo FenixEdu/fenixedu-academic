@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -23,7 +24,8 @@ public class ReadStudentsByPerson implements IService {
 
     public List run(InfoPerson infoPerson) throws ExcepcaoPersistencia {
         final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPerson person = Cloner.copyInfoPerson2IPerson(infoPerson);
+        final IPerson person = new Person();
+        person.setIdInternal(infoPerson.getIdInternal());
         final List students = persistentSuport.getIPersistentStudent().readbyPerson(person);
         final List infoStudents = new ArrayList(students.size());
         for (final Iterator iterator = students.iterator(); iterator.hasNext(); ) {
