@@ -774,6 +774,82 @@ class net.sourceforge.fenixedu.domain.support.GlossaryEntry extends net.sourcefo
 	String term;
 }
 
+class net.sourceforge.fenixedu.domain.GratuitySituation extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer exemptionPercentage;
+	String exemptionDescription;
+	Double totalValue;
+	Integer keyStudentCurricularPlan;
+	Double exemptionValue;
+	Integer keyEmployee;
+	Integer keyGratuityValues;
+	Double remainingValue;
+	
+	interface "
+		public net.sourceforge.fenixedu.domain.IEmployee getEmployee();
+	
+		public void setEmployee(net.sourceforge.fenixedu.domain.IEmployee employee);
+	
+		public java.util.Date getWhen();
+	
+		public void setWhen(java.util.Date when);
+	
+		public net.sourceforge.fenixedu.util.ExemptionGratuityType getExemptionType(); 
+	
+		public void setExemptionType(net.sourceforge.fenixedu.util.ExemptionGratuityType exemptionType); 
+	
+		public net.sourceforge.fenixedu.domain.IGratuityValues getGratuityValues();
+	
+		public void setGratuityValues(net.sourceforge.fenixedu.domain.IGratuityValues gratuity);
+	
+		public net.sourceforge.fenixedu.domain.IStudentCurricularPlan getStudentCurricularPlan();
+	
+		public void setStudentCurricularPlan(net.sourceforge.fenixedu.domain.IStudentCurricularPlan studentCurricularPlan);
+	
+		public java.util.List getTransactionList();
+	
+		public void setTransactionList(java.util.List transactionList);
+	"
+	
+}
+
+
+class net.sourceforge.fenixedu.domain.GratuityValues extends net.sourceforge.fenixedu.domain.DomainObject {
+	Double scholarShipValue;
+	Double courseValue;
+	Boolean proofRequestPayment;
+	Double anualValue;
+	Double creditValue;
+	Double finalProofValue;
+	Integer keyExecutionDegree;
+	Integer keyEmployee;
+	
+	interface "
+		public java.util.Date getWhen();
+		
+		public void setWhen(java.util.Date when);
+		
+		public java.util.Date getEndPayment();
+		
+		public void setEndPayment(java.util.Date endPayment);
+		
+		public java.util.Date getStartPayment();
+		
+		public void setStartPayment(java.util.Date startPayment);
+		
+		public net.sourceforge.fenixedu.domain.IEmployee getEmployee();
+		
+		public void setEmployee(net.sourceforge.fenixedu.domain.IEmployee employee);
+		
+		public net.sourceforge.fenixedu.domain.IExecutionDegree getExecutionDegree();
+		
+		public void setExecutionDegree(net.sourceforge.fenixedu.domain.IExecutionDegree executionDegree);
+		
+		public java.util.List getPaymentPhaseList();
+		
+		public void setPaymentPhaseList(java.util.List paymentPhaseList);
+	"
+}
+
 class net.sourceforge.fenixedu.domain.GroupProperties extends net.sourceforge.fenixedu.domain.DomainObject {
         String projectDescription;
         Integer keyAttendsSet;
