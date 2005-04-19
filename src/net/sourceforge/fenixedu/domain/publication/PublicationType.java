@@ -13,28 +13,15 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
-
 /**
  * @author TJBF & PFON
  * 
  * To change the template for this generated type comment go to Window -
  * Preferences - Java - Code Generation - Code and Comments
  */
-public class PublicationType extends DomainObject implements IPublicationType {
+public class PublicationType extends PublicationType_Base implements IPublicationType {
 
-    private String publicationType;
-
-    private List publicationTypeAttributes;
-
-    private List subtypes;
-
-    /**
-     *  
-     */
-    public PublicationType() {
-    }
-
+    
     /**
      * @return Returns the nonRequiredAttributes.
      */
@@ -84,44 +71,5 @@ public class PublicationType extends DomainObject implements IPublicationType {
         });
         return requiredAttributes;
     }
-    /**
-     * @return Returns the publicationType.
-     */
-    public String getPublicationType() {
-        return publicationType;
-    }
-
-    /**
-     * @return Returns the subtypes.
-     */
-    public List getSubtypes() {
-        return subtypes;
-    }
-
-    /**
-     * @param publicationType
-     *            The publicationType to set.
-     */
-    public void setPublicationType(String publicationType) {
-        this.publicationType = publicationType;
-    }
-
-    /**
-     * @param subtypes
-     *            The subtypes to set.
-     */
-    public void setSubtypes(List subtypes) {
-        this.subtypes = subtypes;
-    }
-
-    public List getPublicationTypeAttributes() {
-        return publicationTypeAttributes;
-    }
-    
-
-    public void setPublicationTypeAttributes(List publicationTypeAttributes) {
-        this.publicationTypeAttributes = publicationTypeAttributes;
-    }
-    
-
+   
 }

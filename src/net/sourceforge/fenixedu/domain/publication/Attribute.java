@@ -12,40 +12,13 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
-
 /**
  * @author TJBF & PFON
  * 
  * To change the template for this generated type comment go to Window -
  * Preferences - Java - Code Generation - Code and Comments
  */
-public class Attribute extends DomainObject implements IAttribute {
-
-    private String attributeType;
-    
-    private List publicationTypeAttributes;
-
-    /**
-     *  
-     */
-    public Attribute() {
-    }
-
-    /**
-     * @return Returns the attributeType.
-     */
-    public String getAttributeType() {
-        return attributeType;
-    }
-
-    /**
-     * @param attributeType
-     *            The attributeType to set.
-     */
-    public void setAttributeType(String attributeType) {
-        this.attributeType = attributeType;
-    }
+public class Attribute extends Attribute_Base implements IAttribute {
 
     /**
      * @return Returns the publications.
@@ -61,16 +34,5 @@ public class Attribute extends DomainObject implements IAttribute {
             
         });
         return publicationTypes;
-    }
-
-
-    public List getPublicationTypeAttributes() {
-        return publicationTypeAttributes;
-    }
-    
-
-    public void setPublicationTypeAttributes(List publicationTypeAttributes) {
-        this.publicationTypeAttributes = publicationTypeAttributes;
-    }
-    
+    }    
 }
