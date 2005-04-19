@@ -885,6 +885,26 @@ class net.sourceforge.fenixedu.domain.GratuityValues extends net.sourceforge.fen
 	"
 }
 
+
+class net.sourceforge.fenixedu.domain.finalDegreeWork.Group extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyExecutionDegree;
+}
+
+
+class net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyFinalDegreeWorkProposal;
+	Integer orderOfPreference;
+	Integer keyFinalDegreeDegreeWorkGroup;
+}
+
+
+class net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyFinalDegreeWorkProposalConfirmation;
+	Integer keyStudent;
+	Integer keyFinalDegreeDegreeWorkGroup;
+}
+
+
 class net.sourceforge.fenixedu.domain.GroupProperties extends net.sourceforge.fenixedu.domain.DomainObject {
         String projectDescription;
         Integer keyAttendsSet;
@@ -1257,6 +1277,41 @@ class net.sourceforge.fenixedu.domain.Professorship extends net.sourceforge.feni
 }
 
 
+class net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer minimumNumberOfGroupElements;
+	String title;
+	Integer orientatorsCreditsPercentage;
+	Integer keyCoorientator;
+	Integer keyGroupAttributedByTeacher;
+	String companionName;
+	String deliverable;
+	Integer keyExecutionDegree;
+	String url;
+	String companyAdress;
+	Integer keyGroupAttributed;
+	Integer coorientatorsCreditsPercentage;
+	String location;
+	Integer proposalNumber;
+	String observations;
+	Integer companionPhone;
+	String framing;
+	Integer maximumNumberOfGroupElements;
+	String requirements;
+	Integer keyOrientator;
+	String objectives;
+	String companyName;
+	String description;
+	String companionMail;
+	
+	interface "
+	public net.sourceforge.fenixedu.util.TipoCurso getDegreeType();
+    public void setDegreeType(net.sourceforge.fenixedu.util.TipoCurso degreeType);
+    public net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus getStatus();
+    public void setStatus(net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus status);
+	"
+}
+
+
 class net.sourceforge.fenixedu.domain.precedences.Precedence extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyCurricularCourse;
 	
@@ -1386,6 +1441,35 @@ class net.sourceforge.fenixedu.domain.RoomOccupation extends net.sourceforge.fen
 	public boolean roomOccupationForDateAndTime(net.sourceforge.fenixedu.domain.IPeriod period, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week, net.sourceforge.fenixedu.domain.IRoom room);
 	
 	public boolean roomOccupationForDateAndTime(net.sourceforge.fenixedu.domain.IPeriod period, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week);
+	"
+}
+
+
+class net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer maximumNumberOfStudents;
+	Date endOfProposalPeriodDate;
+	Date endOfProposalPeriodTime;
+	Date endOfCandidacyPeriodTime;
+	Date startOfCandidacyPeriodDate;
+	Date endOfCandidacyPeriodDate;
+	Integer minimumNumberOfStudents;
+	Integer maximumNumberOfProposalCandidaciesPerGroup;
+	Integer minimumNumberOfCompletedCourses;
+	Integer keyExecutionDegree;
+	Integer currentProposalNumber;
+	Date startOfProposalPeriodTime;
+	Date startOfProposalPeriodDate;
+	Date startOfCandidacyPeriodTime;
+	
+	interface "
+	public java.util.Date getEndOfProposalPeriod();
+    public void setEndOfProposalPeriod(java.util.Date endOfProposalPeriod);
+    public java.util.Date getStartOfProposalPeriod();
+    public void setStartOfProposalPeriod(java.util.Date startOfProposalPeriod);
+    public java.util.Date getStartOfCandidacyPeriod();
+    public void setStartOfCandidacyPeriod(java.util.Date startOfCandidacyPeriod);
+    public java.util.Date getEndOfCandidacyPeriod();
+    public void setEndOfCandidacyPeriod(java.util.Date endOfCandidacyPeriod);
 	"
 }
 
@@ -2082,6 +2166,66 @@ relation GoalExecutionCourse {
 }
 
 
+relation GroupProposal {
+	net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal playsRole proposalAttributed;
+	net.sourceforge.fenixedu.domain.finalDegreeWork.Group playsRole groupAttributed;
+}
+
+
+relation GroupProposalProposal {
+	net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal playsRole finalDegreeWorkProposal;
+	net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal playsRole groupProposals {
+		multiplicity *;
+	}
+}
+
+
+relation GroupProposalByTeacher {
+	net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal playsRole proposalAttributedByTeacher;
+	net.sourceforge.fenixedu.domain.finalDegreeWork.Group playsRole groupAttributedByTeacher;
+}
+
+
+relation GroupExecutionDegree {
+	net.sourceforge.fenixedu.domain.finalDegreeWork.Group playsRole associatedFinalDegreeWorkGroups {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
+}
+
+
+relation GroupGroupStudent {
+	net.sourceforge.fenixedu.domain.finalDegreeWork.Group playsRole finalDegreeDegreeWorkGroup;
+	net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent playsRole groupStudents {
+		multiplicity *;
+	}
+}
+
+
+relation GroupGroupProposal {
+	net.sourceforge.fenixedu.domain.finalDegreeWork.Group playsRole finalDegreeDegreeWorkGroup;
+	net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal playsRole groupProposals {
+		multiplicity *;
+	}
+}
+
+
+relation GroupStudentProposal {
+	net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent playsRole associatedGroupStudents {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal playsRole finalDegreeWorkProposalConfirmation;
+}
+
+
+relation GroupStudentStudent {
+	net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent playsRole associatedGroupStudents {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Student playsRole student;
+}
+
+
 relation GroupPropertiesAttendsSet {
 	net.sourceforge.fenixedu.domain.AttendsSet playsRole attendsSet;
 	net.sourceforge.fenixedu.domain.GroupProperties playsRole groupProperties;
@@ -2232,6 +2376,40 @@ relation PublicationTeacherTeacher {
 }
 
 
+relation ProposalTeacherByOrientator {
+	net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal playsRole associatedProposalsByOrientator {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole orientator;
+}
+
+
+relation ProposalExecutionDegree {
+	net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal playsRole associatedFinalDegreeWorkProposals {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
+}
+
+
+relation ProposalTeacherByCoorientator {
+	net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal playsRole associatedProposalsByCoorientator {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole coorientator;
+}
+
+
+relation ProposalBranch {
+	net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal playsRole associatedFinalDegreeWorkProposals {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Branch playsRole branches {
+		multiplicity *;
+	}
+}
+
+
 relation RoomLesson {
 	net.sourceforge.fenixedu.domain.Lesson playsRole associatedLessons {
 		multiplicity *;
@@ -2268,6 +2446,11 @@ relation SectionSuperiorSection {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Section playsRole superiorSection;
+}
+
+relation SchedulingExecutionDegree {
+	net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing playsRole scheduling;
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
 }
 
 relation SchoolClassShiftShift {
