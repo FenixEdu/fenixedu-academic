@@ -193,7 +193,7 @@ public abstract class Cloner {
         }
 
         InfoObject infoObject = null;
-        Class[] parameters = getParameters(domainObject);
+        Class[] parameters = getParameters(domainObject.getClass());
         Object[] args = { domainObject };
         try {
             Method method = Cloner.class.getDeclaredMethod("copy", parameters);
@@ -215,17 +215,13 @@ public abstract class Cloner {
         return infoObject;
     }
 
-    /**
-     * @param class1
-     * @return
-     */
-    private static Class[] getParameters(Object domainObject) {
-        Class[] interfaces = domainObject.getClass().getInterfaces();
+    private static Class[] getParameters(Class domainClass) {
+        Class[] interfaces = domainClass.getInterfaces();
         // Start with the most frequent case
         if (interfaces.length == 1) {
             return interfaces;
         } else if (interfaces.length == 0) {
-            return null;
+            return getParameters(domainClass.getSuperclass());
         } else {
 
             Class[] parameters = null;
