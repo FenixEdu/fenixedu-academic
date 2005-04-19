@@ -540,15 +540,6 @@
 		<filterChains/>	
 	</service>
     <service>
-        <name>ReadRoomExamsMap</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadRoomExamsMap</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="TimeTableManagerAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
         <name>LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular</name>
         <implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.sop.LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular</implementationClass>

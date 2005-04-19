@@ -1273,16 +1273,6 @@
 		<forward name="VerSala" path="/viewRoomForExams.do" />
       </action>
 
-      <action attribute="indexForm"
-              input="/manipularSalas.jsp"
-              name="indexForm"
-      		  path="/viewRoomForExams"
-              scope="session"
-              validate="true"
-              type="net.sourceforge.fenixedu.presentationTier.Action.sop.ViewRoomForExamsFormAction">
-          <forward name="Sucess" path="/viewRoomForExams.jsp"/>
-      </action>
-
 	<action   path="/listClasses"
               name="shiftForm"
               attribute="shiftForm"
