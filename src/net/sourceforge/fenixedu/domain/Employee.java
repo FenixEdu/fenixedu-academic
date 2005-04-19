@@ -11,7 +11,7 @@ import java.util.ListIterator;
  * 
  * @author Tânia Pousão
  */
-public class Employee extends Employee_Base implements IEmployee {
+public class Employee extends Employee_Base {
 
     private IPerson person = null;
 

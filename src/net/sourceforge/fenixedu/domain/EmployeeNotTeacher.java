@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.domain;
  * @author Tânia Pousão
  *  
  */
-public class EmployeeNotTeacher extends EmployeeNotTeacher_Base implements IEmployeeNotTeacher {
+public class EmployeeNotTeacher extends EmployeeNotTeacher_Base {
     private IEmployee employee;
 
     /**
