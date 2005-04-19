@@ -147,6 +147,7 @@ public class InfoStudentCourseReport extends InfoObject {
         if (infoStudentCourseReport.getInfoCurricularCourse() != null) {
             studentCourseReport.setCurricularCourse(InfoCurricularCourse
                     .newDomainFromInfo(infoStudentCourseReport.getInfoCurricularCourse()));
+            studentCourseReport.setKeyCurricularCourse(studentCourseReport.getCurricularCourse().getIdInternal());
         }
     }
     

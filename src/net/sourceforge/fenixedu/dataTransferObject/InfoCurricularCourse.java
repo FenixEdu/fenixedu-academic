@@ -642,7 +642,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
             curricularCourse = new CurricularCourse();
             infoCurricularCourse.copyToDomain(infoCurricularCourse, curricularCourse);
         }
-        return null;
+        return curricularCourse;
     }
     
 
