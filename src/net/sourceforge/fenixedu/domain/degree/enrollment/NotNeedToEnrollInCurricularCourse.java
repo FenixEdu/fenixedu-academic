@@ -8,11 +8,7 @@ import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
  * @author David Santos in Jun 17, 2004
  */
 
-public class NotNeedToEnrollInCurricularCourse extends DomainObject implements
-        INotNeedToEnrollInCurricularCourse {
-    protected Integer curricularCourseKey;
-
-    protected Integer studentCurricularPlanKey;
+public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricularCourse_Base {
 
     protected ICurricularCourse curricularCourse;
 
@@ -48,21 +44,6 @@ public class NotNeedToEnrollInCurricularCourse extends DomainObject implements
     }
 
     /**
-     * @return Returns the curricularCourseKey.
-     */
-    public Integer getCurricularCourseKey() {
-        return curricularCourseKey;
-    }
-
-    /**
-     * @param curricularCourseKey
-     *            The curricularCourseKey to set.
-     */
-    public void setCurricularCourseKey(Integer curricularCourseKey) {
-        this.curricularCourseKey = curricularCourseKey;
-    }
-
-    /**
      * @return Returns the studentCurricularPlan.
      */
     public IStudentCurricularPlan getStudentCurricularPlan() {
@@ -75,20 +56,5 @@ public class NotNeedToEnrollInCurricularCourse extends DomainObject implements
      */
     public void setStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) {
         this.studentCurricularPlan = studentCurricularPlan;
-    }
-
-    /**
-     * @return Returns the studentCurricularPlanKey.
-     */
-    public Integer getStudentCurricularPlanKey() {
-        return studentCurricularPlanKey;
-    }
-
-    /**
-     * @param studentCurricularPlanKey
-     *            The studentCurricularPlanKey to set.
-     */
-    public void setStudentCurricularPlanKey(Integer studentCurricularPlanKey) {
-        this.studentCurricularPlanKey = studentCurricularPlanKey;
     }
 }
