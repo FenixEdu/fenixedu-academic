@@ -560,7 +560,6 @@ class net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence
     "
 }
 
-
 class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixedu.domain.DomainObject {
 	String ojbConcreteClass;
 	String publishmentMessage;
@@ -1852,7 +1851,121 @@ class net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope ext
 	"
 }
 
+class net.sourceforge.fenixedu.domain.publication.Author extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyPerson;
+	String organization;
+	String author;
+			
+	interface "
+	public java.util.List getPublications();
+	"
+}
 
+class net.sourceforge.fenixedu.domain.publication.PublicationType extends net.sourceforge.fenixedu.domain.DomainObject {
+	String publicationType;
+		
+	interface "
+	
+	public java.util.List getRequiredAttributes();
+	public java.util.List getNonRequiredAttributes();
+	"
+}
+
+class net.sourceforge.fenixedu.domain.publication.PublicationTeacher extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyTeacher;
+	Integer keyPublication;
+			
+	interface "
+	public void setPublicationArea(net.sourceforge.fenixedu.util.PublicationArea publicationArea);
+	public net.sourceforge.fenixedu.util.PublicationArea getPublicationArea();
+	"
+}
+
+class net.sourceforge.fenixedu.domain.publication.Publication extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer issn;
+	String volume;
+	String observation;
+	String subType;
+	String title;
+	String editorCity;
+	String criticizedAuthor;
+	String instituition;
+	String translatedAuthor;
+	Integer edition;
+	String local;
+	String scope;
+	Integer year_end;
+	String url;
+	Integer fascicle;
+	String originalLanguage;
+	Integer firstPage;
+	Integer lastPage;
+	Integer number;
+	String month_end;
+	String month;
+	Integer serie;
+	String conference;
+	String publicationType;
+	String university;
+	Integer isbn;
+	String journalName;
+	String language;
+	Integer numberPages;
+	String editor;
+	String country;
+	Integer year;
+	Integer didatic;
+	String format;
+	Integer keyPublicationType;
+	String publicationString;
+		
+	interface "
+	
+	public java.util.List getAuthors();
+	"
+}
+
+class net.sourceforge.fenixedu.domain.teacher.PublicationsNumber extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer national;
+	Integer keyTeacher;
+	Date lastModificationDate;
+	Integer international;
+		
+	interface "
+
+	public net.sourceforge.fenixedu.util.PublicationType getPublicationType();
+	public void setPublicationType(net.sourceforge.fenixedu.util.PublicationType publicationType);
+	"
+}
+
+class net.sourceforge.fenixedu.domain.publication.PublicationFormat extends net.sourceforge.fenixedu.domain.DomainObject {
+	String format;
+}
+
+class net.sourceforge.fenixedu.domain.publication.Attribute extends net.sourceforge.fenixedu.domain.DomainObject {
+	String attributeType;
+		
+	interface "
+	public java.util.List getPublications();
+	"
+}
+
+class net.sourceforge.fenixedu.domain.publication.PublicationAuthor extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyAuthor;
+	Integer keyPublication;
+	Integer order;
+}
+
+class net.sourceforge.fenixedu.domain.publication.PublicationSubtype extends net.sourceforge.fenixedu.domain.DomainObject {
+	String subtype;
+	Integer keyPublicationType;
+}	
+
+class net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyPublicationType;
+    Integer keyAttribute;
+    Boolean required;
+}
 
 /*
  * External classes declarations
@@ -1871,9 +1984,7 @@ external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
 external class net.sourceforge.fenixedu.domain.ExecutionPeriod;
 external class net.sourceforge.fenixedu.domain.ExecutionYear;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
-external class net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
-
 
 /*
  * Relations definitions
@@ -2368,14 +2479,6 @@ relation ProfessorshipSupportLesson {
 }
 
 
-relation PublicationTeacherTeacher {
-	net.sourceforge.fenixedu.domain.publication.PublicationTeacher playsRole teacherPublications {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
-}
-
-
 relation ProposalTeacherByOrientator {
 	net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal playsRole associatedProposalsByOrientator {
 		multiplicity *;
@@ -2615,3 +2718,70 @@ relation TeacherSummary {
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
 
+
+relation PublicationTeacherPublication {
+	net.sourceforge.fenixedu.domain.publication.PublicationTeacher playsRole publicationTeachers {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.publication.Publication playsRole publication;
+}
+
+relation PublicationTeacherTeacher {
+	net.sourceforge.fenixedu.domain.publication.PublicationTeacher playsRole teacherPublications {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+relation PublicationAuthorPublication {
+	net.sourceforge.fenixedu.domain.publication.PublicationAuthor playsRole publicationAuthors {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.publication.Publication playsRole publication;
+}
+
+relation PublicationAuthorAuthor {
+	net.sourceforge.fenixedu.domain.publication.PublicationAuthor playsRole authorPublications {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.publication.Author playsRole author;
+}
+
+relation AuthorPerson {
+	net.sourceforge.fenixedu.domain.publication.Author playsRole author;
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
+relation AttributePublicationTypeAttribute {
+	net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute playsRole publicationTypeAttributes {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.publication.Attribute playsRole attribute;
+}
+
+relation PublicationTypePublicationTypeAttribute {
+	net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute playsRole publicationTypeAttributes {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.publication.PublicationType playsRole publicationType;
+}
+
+relation PublicationTypePublication {
+	net.sourceforge.fenixedu.domain.publication.PublicationType playsRole type;
+	net.sourceforge.fenixedu.domain.publication.Publication playsRole publications {
+		multiplicity *;
+	}
+	
+}
+
+relation PublicationTypePublicationSubtype {
+	net.sourceforge.fenixedu.domain.publication.PublicationType playsRole publicationType;
+	net.sourceforge.fenixedu.domain.publication.PublicationSubtype playsRole subtypes {
+		multiplicity *;
+	}
+}
+
+relation PublicationsNumberTeacher {
+	net.sourceforge.fenixedu.domain.teacher.PublicationsNumber playsRole publicationsNumber;
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
