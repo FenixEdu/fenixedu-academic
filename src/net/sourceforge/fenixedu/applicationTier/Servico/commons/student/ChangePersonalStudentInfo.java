@@ -88,8 +88,8 @@ public class ChangePersonalStudentInfo implements IService {
                 .getLocalEmissaoDocumentoIdentificacao());
         person.setNome(newInfoPerson.getNome());
 
-        person.setSex(newInfoPerson.getSex());
-        person.setEstadoCivil(newInfoPerson.getEstadoCivil());
+        person.setGender(newInfoPerson.getSexo());
+        person.setMaritalStatus(newInfoPerson.getMaritalStatus());
 
         person.setNomePai(newInfoPerson.getNomePai());
         person.setNomeMae(newInfoPerson.getNomeMae());

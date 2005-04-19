@@ -22,12 +22,12 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.person.Sex;
+import net.sourceforge.fenixedu.domain.person.MaritalStatus;
+import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
-import net.sourceforge.fenixedu.util.EstadoCivil;
 import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 import org.apache.struts.action.ActionForm;
@@ -126,13 +126,13 @@ public class EditStudentInfoDispatchAction extends DispatchAction {
             if ((aux == null) || (aux.length() == 0))
                 infoPerson.setSexo(null);
             else
-                infoPerson.setSexo(Sex.valueOf(aux));
+                infoPerson.setSexo(Gender.valueOf(aux));
 
             aux = (String) changeApplicationInfoForm.get("maritalStatus");
             if ((aux == null) || (aux.length() == 0))
-                infoPerson.setEstadoCivil(null);
+                infoPerson.setMaritalStatus(null);
             else
-                infoPerson.setEstadoCivil(new EstadoCivil(aux));
+                infoPerson.setMaritalStatus(MaritalStatus.valueOf(aux));
             infoPerson.setNacionalidade((String) changeApplicationInfoForm.get("nationality"));
             infoPerson.setInfoPais(nationality);
             infoPerson.setNomePai((String) changeApplicationInfoForm.get("fatherName"));
@@ -257,8 +257,8 @@ public class EditStudentInfoDispatchAction extends DispatchAction {
 
         if (infoPerson.getSexo() != null)
             changeApplicationInfoForm.set("sex", infoPerson.getSexo().toString());
-        if (infoPerson.getEstadoCivil() != null)
-            changeApplicationInfoForm.set("maritalStatus", infoPerson.getEstadoCivil().toString());
+        if (infoPerson.getMaritalStatus() != null)
+            changeApplicationInfoForm.set("maritalStatus", infoPerson.getMaritalStatus().toString());
     }
 
     private String getFromRequest(String parameter, HttpServletRequest request) {

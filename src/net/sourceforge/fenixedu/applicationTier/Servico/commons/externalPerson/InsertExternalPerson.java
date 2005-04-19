@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IWorkLocation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WorkLocation;
-import net.sourceforge.fenixedu.domain.person.Sex;
+import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -57,7 +57,7 @@ public class InsertExternalPerson implements IService {
             person = new Person();
 
             person.setNome(name);
-            person.setSex(Sex.valueOf(sex));
+            person.setGender(Gender.valueOf(sex));
             person.setMorada(address);
             person.setTelefone(phone);
             person.setTelemovel(mobile);

@@ -80,8 +80,10 @@
             <tr>
              <td width="150px"><bean:message key="label.person.maritalStatus" /></td>
              <td>
+             	<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.MaritalStatus"/>
                 <html:select property="maritalStatus">
-                    <html:options collection="<%= SessionConstants.MARITAL_STATUS_LIST_KEY %>" property="value" labelProperty="label"/>
+                	<html:option key="dropDown.Default" value="null"/>
+                    <html:options collection="values" property="value" labelProperty="label"/>
                  </html:select>          
              </td>
             </tr>

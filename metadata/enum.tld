@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!--
+ Copyright 2005 FenixEdu, Inc. All rights reserved.
+ IST PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+-->
+
+<!DOCTYPE taglib
+  PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+  "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+
+
+<taglib>
+
+
+  <!-- ========== Tag Library Description Elements ========================= -->
+
+
+  <tlib-version>1.0</tlib-version>
+  <jsp-version>1.2</jsp-version>
+  <short-name>e</short-name>
+  <uri>http://fenix-ashes.ist.utl.pt</uri>
+  <description>
+  	Cool Stuff to Work With Enumerations
+  </description>
+
+
+  <!-- ========== Tag Descriptions ========================================= -->
+
+  <tag>
+
+    <name>labelValues</name>
+    <tag-class>net.sourceforge.fenixedu.presentationTier.TagLib.EnumTagLib</tag-class>
+	<tei-class>net.sourceforge.fenixedu.presentationTier.TagLib.CollectionTagExtraInfo</tei-class>
+    <body-content>JSP</body-content>
+    <description>
+      Return the LabelValueBeans for enumeration
+    </description>
+
+    <attribute>
+      <name>locale</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+        Locale to use for localizing this page.  Expressions
+        must evaluate to a java.util.Locale or to a String
+        that is converted to a Locale.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>bundle</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      	Ressource Bundle
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>enumeration</name>
+      <required>true</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      	The Enum Type
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>id</name>
+      <required>true</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      	Attribute under which collection will be stored
+      </description>
+    </attribute>
+	
+  </tag>
+
+
+</taglib>

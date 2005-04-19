@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student.schoolRegistration;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,6 +23,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.student.schoolRegistration.InfoResidenceCandidacy;
+import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.TransactionalDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidPasswordActionException;
@@ -29,7 +31,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
-import net.sourceforge.fenixedu.util.EstadoCivil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -84,8 +85,8 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
             throw new InvalidPasswordActionException(e);
         }
 
-        session.setAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY, new EstadoCivil().toArrayList());
-        registrationForm.set("maritalStatus", EstadoCivil.SOLTEIRO_STRING);
+        //session.setAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY, Arrays.asList(MaritalStatus.values()));
+        registrationForm.set("maritalStatus", MaritalStatus.SINGLE.toString());
 
         //		Get List of available Countries
         Object result = null;
@@ -209,7 +210,7 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
         infoPerson.setNumContribuinte(contributorNumber);
         infoPerson.setProfissao(occupation);
         infoPerson.setPassword(newPassword);
-        infoPerson.setEstadoCivil(new EstadoCivil(maritalStatus));
+        infoPerson.setMaritalStatus(MaritalStatus.valueOf(maritalStatus));
         infoPerson.setIdInternal(idInternal);
         infoPerson.setAvailablePhoto(availablePhoto);
 

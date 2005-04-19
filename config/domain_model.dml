@@ -1213,15 +1213,15 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 	String freguesiaMorada;
 
 	interface "
-    public net.sourceforge.fenixedu.util.EstadoCivil getEstadoCivil();
+    public net.sourceforge.fenixedu.domain.person.MaritalStatus getMaritalStatus();
 
-    public net.sourceforge.fenixedu.domain.person.Sex getSex();
+    public net.sourceforge.fenixedu.domain.person.Gender getGender();
 
     public net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao getTipoDocumentoIdentificacao();
 
-    public void setEstadoCivil(net.sourceforge.fenixedu.util.EstadoCivil estadoCivil);
+    public void setMaritalStatus(net.sourceforge.fenixedu.domain.person.MaritalStatus maritalStatus);
 
-    public void setSex(net.sourceforge.fenixedu.domain.person.Sex sex);
+    public void setGender(net.sourceforge.fenixedu.domain.person.Gender gender);
 
     public void setTipoDocumentoIdentificacao(net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao tipoDocumentoIdentificacao);
 

@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWorkLocation;
-import net.sourceforge.fenixedu.domain.person.Sex;
+import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
@@ -53,7 +53,7 @@ public class InsertExternalPersonDispatchAction extends DispatchAction {
             return mapping.findForward("error");
         }
 
-        request.setAttribute(SessionConstants.SEX_LIST_KEY, Sex.getSexLabelValues((Locale) request
+        request.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
                 .getAttribute(Globals.LOCALE_KEY)));
         return mapping.findForward("start");
 
@@ -106,7 +106,7 @@ public class InsertExternalPersonDispatchAction extends DispatchAction {
         String email = (String) insertExternalPersonForm.get("email");
 
         if (workLocationID == 0) {
-            request.setAttribute(SessionConstants.SEX_LIST_KEY, Sex.getSexLabelValues((Locale) request
+            request.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
                     .getAttribute(Globals.LOCALE_KEY)));
             getWorkLocations(request);
 
@@ -123,12 +123,12 @@ public class InsertExternalPersonDispatchAction extends DispatchAction {
         try {
             ServiceUtils.executeService(userView, "InsertExternalPerson", args);
         } catch (ExistingServiceException e) {
-            request.setAttribute(SessionConstants.SEX_LIST_KEY, Sex.getSexLabelValues((Locale) request
+            request.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
                     .getAttribute(Globals.LOCALE_KEY)));
             getWorkLocations(request);
             throw new ExistingActionException(e.getMessage(), mapping.findForward("start"));
         } catch (FenixServiceException e) {
-            request.setAttribute(SessionConstants.SEX_LIST_KEY, Sex.getSexLabelValues((Locale) request
+            request.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
                     .getAttribute(Globals.LOCALE_KEY)));
             getWorkLocations(request);
             throw new FenixActionException(e.getMessage(), mapping.findForward("start"));

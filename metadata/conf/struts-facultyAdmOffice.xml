@@ -97,7 +97,7 @@
 				<form-property name="fiscalCode" type="java.lang.String"/>								
 				<form-property name="idType" type="java.lang.Integer"/>								
 				<form-property name="sex" type="java.lang.String"/>								
-				<form-property name="maritalStatus" type="java.lang.Integer"/>	
+				<form-property name="maritalStatus" type="java.lang.String"/>	
 				<form-property name="country" type="java.lang.Integer"/>
 				<!-- Page property-->
 				<form-property name="page" type="java.lang.Integer" initial="0"/>

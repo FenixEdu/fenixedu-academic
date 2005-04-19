@@ -3,15 +3,15 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.person.Sex;
-import net.sourceforge.fenixedu.util.EstadoCivil;
+import net.sourceforge.fenixedu.domain.person.MaritalStatus;
+import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 public class Person extends Person_Base {
 	private Boolean availableEmail = Boolean.FALSE;
     private Boolean availableWebSite = Boolean.FALSE;
-    private EstadoCivil estadoCivil;
-    private Sex sex;
+    private MaritalStatus maritalStatus = MaritalStatus.UNKNOWN;
+    private Gender gender;
     private TipoDocumentoIdentificacao tipoDocumentoIdentificacao;
     private Boolean availablePhoto = Boolean.FALSE;
 
@@ -35,7 +35,7 @@ public class Person extends Person_Base {
     public Person(Integer codigoInterno, String numeroDocumentoIdentificacao,
             TipoDocumentoIdentificacao tipoDocumentoIdentificacao,
             String localEmissaoDocumentoIdentificacao, Date dataEmissaoDocumentoIdentificacao,
-            Date dataValidadeDocumentoIdentificacao, String nome, Sex sex, EstadoCivil estadoCivil,
+            Date dataValidadeDocumentoIdentificacao, String nome, Gender sex, MaritalStatus estadoCivil,
             Date nascimento, String nomePai, String nomeMae, String nacionalidade,
             String freguesiaNaturalidade, String concelhoNaturalidade, String distritoNaturalidade,
             String morada, String localidade, String codigoPostal, String localidadeCodigoPostal,
@@ -49,8 +49,8 @@ public class Person extends Person_Base {
         setDataEmissaoDocumentoIdentificacao(dataEmissaoDocumentoIdentificacao);
         setDataValidadeDocumentoIdentificacao(dataValidadeDocumentoIdentificacao);
         setNome(nome);
-        setSex(sex);
-        setEstadoCivil(estadoCivil);
+        setGender(sex);
+        setMaritalStatus(estadoCivil);
         setNascimento(nascimento);
         setNomePai(nomePai);
         setNomeMae(nomeMae);
@@ -116,7 +116,7 @@ public class Person extends Person_Base {
     public Person(String numeroDocumentoIdentificacao,
             TipoDocumentoIdentificacao tipoDocumentoIdentificacao,
             String localEmissaoDocumentoIdentificacao, Date dataEmissaoDocumentoIdentificacao,
-            Date dataValidadeDocumentoIdentificacao, String nome, Sex sex, EstadoCivil estadoCivil,
+            Date dataValidadeDocumentoIdentificacao, String nome, Gender sex, MaritalStatus estadoCivil,
             Date nascimento, String nomePai, String nomeMae, String nacionalidade,
             String freguesiaNaturalidade, String concelhoNaturalidade, String distritoNaturalidade,
             String morada, String localidade, String codigoPostal, String localidadeCodigoPostal,
@@ -129,8 +129,8 @@ public class Person extends Person_Base {
         setDataEmissaoDocumentoIdentificacao(dataEmissaoDocumentoIdentificacao);
         setDataValidadeDocumentoIdentificacao(dataValidadeDocumentoIdentificacao);
         setNome(nome);
-        setSex(sex);
-        setEstadoCivil(estadoCivil);
+        setGender(sex);
+        setMaritalStatus(estadoCivil);
         setNascimento(nascimento);
         setNomePai(nomePai);
         setNomeMae(nomeMae);
@@ -174,8 +174,8 @@ public class Person extends Person_Base {
      * @return Value of property estadoCivil.
      *  
      */
-    public EstadoCivil getEstadoCivil() {
-        return estadoCivil;
+    public MaritalStatus getMaritalStatus() {
+        return maritalStatus;
     }
 
      /**
@@ -184,8 +184,8 @@ public class Person extends Person_Base {
      * @return Value of property sexo.
      *  
      */
-    public Sex getSex() {
-        return sex;
+    public Gender getGender() {
+        return gender;
     }
 
     /**
@@ -205,8 +205,8 @@ public class Person extends Person_Base {
      *            New value of property estadoCivil.
      *  
      */
-    public void setEstadoCivil(EstadoCivil estadoCivil) {
-        this.estadoCivil = estadoCivil;
+    public void setMaritalStatus(MaritalStatus maritalStatus) {
+        this.maritalStatus = maritalStatus;
     }
 
     /**
@@ -216,8 +216,8 @@ public class Person extends Person_Base {
      *            New value of property sexo.
      *  
      */
-    public void setSex(Sex sex) {
-        this.sex = sex;
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     /**

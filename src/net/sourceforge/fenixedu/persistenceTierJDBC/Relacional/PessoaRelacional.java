@@ -8,10 +8,10 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.person.Sex;
+import net.sourceforge.fenixedu.domain.person.MaritalStatus;
+import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IPessoaPersistente;
 import net.sourceforge.fenixedu.util.DataIndisponivel;
-import net.sourceforge.fenixedu.util.EstadoCivil;
 import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 /**
@@ -96,8 +96,8 @@ public class PessoaRelacional implements IPessoaPersistente {
             }
             sql.setString(30, pessoa.getCodigoFiscal());
             sql.setInt(31, pessoa.getTipoDocumentoIdentificacao().getTipo().intValue());
-            sql.setString(32, pessoa.getSex().toString());
-            sql.setInt(33, pessoa.getEstadoCivil().getEstadoCivil().intValue());
+            sql.setString(32, pessoa.getGender().toString());
+            sql.setString(33, pessoa.getMaritalStatus().toString());
             sql.setInt(34, pessoa.getIdInternal().intValue());
 
             sql.executeUpdate();
@@ -220,8 +220,8 @@ public class PessoaRelacional implements IPessoaPersistente {
             }
             sql.setString(30, pessoa.getCodigoFiscal());
             sql.setInt(31, pessoa.getTipoDocumentoIdentificacao().getTipo().intValue());
-            sql.setString(32, pessoa.getSex().toString());
-            sql.setInt(33, pessoa.getEstadoCivil().getEstadoCivil().intValue());
+            sql.setString(32, pessoa.getGender().toString());
+            sql.setString(33, pessoa.getMaritalStatus().toString());
 
             sql.executeUpdate();
             sql.close();
@@ -272,7 +272,7 @@ public class PessoaRelacional implements IPessoaPersistente {
 
             ResultSet resultadoQuery = sql.executeQuery();
 
-            //query para buscar os roles
+            // query para buscar os roles
             PreparedStatement sql2 = UtilRelacional
                     .prepararComando("SELECT * FROM ROLE WHERE ID_INTERNAL = ?");
             while (resultadoQuery.next()) {
@@ -490,8 +490,8 @@ public class PessoaRelacional implements IPessoaPersistente {
                     .getString("DOCUMENT_ID_NUMBER"), new TipoDocumentoIdentificacao(resultado
                     .getInt("TYPE_ID_DOCUMENT")), resultado
                     .getString("EMISSION_LOCATION_OF_DOCUMENT_ID"), emissionDate, experationDate,
-                    resultado.getString("NAME"), Sex.valueOf(resultado.getString("SEX")), new EstadoCivil(
-                            resultado.getInt("MARITAL_STATUS")), birthDate, resultado
+                    resultado.getString("NAME"), Gender.valueOf(resultado.getString("SEX")), MaritalStatus
+                            .valueOf(resultado.getString("MARITAL_STATUS")), birthDate, resultado
                             .getString("NAME_OF_FATHER"), resultado.getString("NAME_OF_MOTHER"),
                     resultado.getString("NATIONALITY"), resultado.getString("PARISH_OF_BIRTH"),
                     resultado.getString("DISTRICT_SUBDIVISION_OF_BIRTH"), resultado

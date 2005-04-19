@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 <%@ page import="java.util.Date" %>
  
@@ -86,7 +87,8 @@
           <!-- Estado Civil -->
           <tr>
             <td width="30%"><bean:message key="label.person.maritalStatus" /></td>
-            <td class="greytxt"><bean:write name="personalInfo" property="estadoCivil"/></td>
+            <bean:define id="maritalStatus" name="personalInfo" property="maritalStatus"/>
+            <td class="greytxt"><bean:message key='<%= maritalStatus.toString() %>'/></td>
           </tr>
 		</table>
 		<br />

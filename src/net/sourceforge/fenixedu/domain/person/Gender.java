@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 import org.apache.struts.util.LabelValueBean;
 
 
-public enum Sex {
+public enum Gender {
 
 	MALE, FEMALE;
 
@@ -25,8 +25,8 @@ public enum Sex {
 
 		 final ResourceBundle resourceBundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources", locale);
 		 labelValueBeans = new LabelValueBean[] {
-				 new LabelValueBean(resourceBundle.getString(Sex.MALE.toString()), Sex.MALE.toString()),
-				 new LabelValueBean(resourceBundle.getString(Sex.FEMALE.toString()), Sex.FEMALE.toString())
+				 new LabelValueBean(resourceBundle.getString(Gender.MALE.toString()), Gender.MALE.toString()),
+				 new LabelValueBean(resourceBundle.getString(Gender.FEMALE.toString()), Gender.FEMALE.toString())
 		 };
 		 sexLabelValuesByLocale.put(locale, labelValueBeans);
 		 return labelValueBeans;

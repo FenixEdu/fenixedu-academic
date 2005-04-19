@@ -141,8 +141,9 @@
 			<bean:message key="label.grant.owner.infoperson.maritalStatus"/>:&nbsp;
 		</td>
 		<td>
-			<logic:present name="infoGrantOwner" property="personInfo.estadoCivil">
-				<bean:write name="infoGrantOwner" property="personInfo.estadoCivil"/>
+			<logic:present name="infoGrantOwner" property="personInfo.maritalStatus">
+				<bean:define id="maritalStatus" name="personInfo" property="maritalStatus"/>
+				<bean:message key='<%= maritalStatus.toString() %>'/>
 			</logic:present>
 		</td>
 	</tr> 

@@ -190,10 +190,10 @@
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSex2SqlSexFieldConversion"
     />
     <field-descriptor
-        name="estadoCivil"
+        name="maritalStatus"
         column="MARITAL_STATUS"
-        jdbc-type="INTEGER"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaEstadoCivil2SqlEstadoCivilFieldConversion"
+        jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaMaritalStatus2SqlMaritalStatusFieldConversion"
     />
 	<field-descriptor
         name="availablePhoto"

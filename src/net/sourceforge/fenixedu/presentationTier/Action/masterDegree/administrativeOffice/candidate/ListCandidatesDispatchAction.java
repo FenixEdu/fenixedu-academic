@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.candidate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Iterator;
@@ -25,13 +26,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
-import net.sourceforge.fenixedu.domain.person.Sex;
+import net.sourceforge.fenixedu.domain.person.MaritalStatus;
+import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
-import net.sourceforge.fenixedu.util.EstadoCivil;
 import net.sourceforge.fenixedu.util.RandomStringGenerator;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.Specialization;
@@ -317,11 +318,10 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 
             request.setAttribute(SessionConstants.NATIONALITY_LIST_KEY, nationalityList);
             request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
-            request.setAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY, new EstadoCivil()
-                    .toArrayList());
+            //request.setAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY, Arrays.asList(MaritalStatus.values()));
             request.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY,
                     TipoDocumentoIdentificacao.toArrayList());
-            request.setAttribute(SessionConstants.SEX_LIST_KEY, Sex.getSexLabelValues((Locale) request
+            request.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
                     .getAttribute(Globals.LOCALE_KEY)));
             request.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
             request.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
@@ -416,13 +416,13 @@ public class ListCandidatesDispatchAction extends DispatchAction {
             if ((sex == null) || (sex.length() == 0))
                 infoPerson.setSexo(null);
             else
-                infoPerson.setSexo(Sex.valueOf(sex));
+                infoPerson.setSexo(Gender.valueOf(sex));
 
             String maritalStatus = (String) editCandidateForm.get("maritalStatus");
             if ((maritalStatus == null) || (maritalStatus.length() == 0))
-                infoPerson.setEstadoCivil(null);
+                infoPerson.setMaritalStatus(null);
             else
-                infoPerson.setEstadoCivil(new EstadoCivil(maritalStatus));
+                infoPerson.setMaritalStatus(MaritalStatus.valueOf(maritalStatus));
 
             infoPerson.setInfoPais(nationality);
             infoPerson.setNomePai((String) editCandidateForm.get("fatherName"));
@@ -633,8 +633,8 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 
         if ((infoPerson.getSexo() != null))
             editCandidateForm.set("sex", infoPerson.getSexo().toString());
-        if (infoPerson.getEstadoCivil() != null)
-            editCandidateForm.set("maritalStatus", infoPerson.getEstadoCivil().toString());
+        if (infoPerson.getMaritalStatus() != null)
+            editCandidateForm.set("maritalStatus", infoPerson.getMaritalStatus().toString());
 
         if (infoMasterDegreeCandidate.getMajorDegreeYear() != null) {
             if ((infoMasterDegreeCandidate.getMajorDegreeYear().intValue() == 0))

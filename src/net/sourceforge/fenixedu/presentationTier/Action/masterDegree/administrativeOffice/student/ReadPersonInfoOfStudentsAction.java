@@ -9,6 +9,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.student;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
@@ -23,13 +24,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.person.Sex;
+import net.sourceforge.fenixedu.domain.person.MaritalStatus;
+import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
-import net.sourceforge.fenixedu.util.EstadoCivil;
 import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
@@ -102,11 +103,10 @@ public class ReadPersonInfoOfStudentsAction extends FenixAction {
             }
 
             session.setAttribute(SessionConstants.NATIONALITY_LIST_KEY, nationalityList);
-            session.setAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY, new EstadoCivil()
-                    .toArrayList());
+            //session.setAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY, Arrays.asList(MaritalStatus.values()));
             session.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY,
                     TipoDocumentoIdentificacao.toArrayList());
-            session.setAttribute(SessionConstants.SEX_LIST_KEY, Sex.getSexLabelValues((Locale) request.getAttribute(Globals.LOCALE_KEY)));
+            session.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request.getAttribute(Globals.LOCALE_KEY)));
             session.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
             session.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
             session.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
@@ -203,8 +203,8 @@ public class ReadPersonInfoOfStudentsAction extends FenixAction {
 
         if (infoPerson.getSexo() != null)
             changeApplicationInfoForm.set("sex", infoPerson.getSexo().toString());
-        if (infoPerson.getEstadoCivil() != null)
-            changeApplicationInfoForm.set("maritalStatus", infoPerson.getEstadoCivil().toString());
+        if (infoPerson.getMaritalStatus() != null)
+            changeApplicationInfoForm.set("maritalStatus", infoPerson.getMaritalStatus().toString());
     }
 
 }

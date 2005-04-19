@@ -11,8 +11,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.person.Sex;
-import net.sourceforge.fenixedu.util.EstadoCivil;
+import net.sourceforge.fenixedu.domain.person.MaritalStatus;
+import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 /**
@@ -85,9 +85,9 @@ public class InfoPerson extends InfoObject {
 
     private TipoDocumentoIdentificacao tipoDocumentoIdentificacao;
 
-    private Sex sex;
+    private Gender gender;
 
-    private EstadoCivil estadoCivil;
+    private MaritalStatus maritalStatus;
 
     private InfoCountry infoPais;
 
@@ -102,7 +102,7 @@ public class InfoPerson extends InfoObject {
     public InfoPerson(String numeroDocumentoIdentificacao,
             TipoDocumentoIdentificacao tipoDocumentoIdentificacao,
             String localEmissaoDocumentoIdentificacao, Date dataEmissaoDocumentoIdentificacao,
-            Date dataValidadeDocumentoIdentificacao, String nome, Sex sex, EstadoCivil estadoCivil,
+            Date dataValidadeDocumentoIdentificacao, String nome, Gender sex, MaritalStatus estadoCivil,
             Date nascimento, String nomePai, String nomeMae, String nacionalidade,
             String freguesiaNaturalidade, String concelhoNaturalidade, String distritoNaturalidade,
             String morada, String localidade, String codigoPostal, String localidadeCodigoPostal,
@@ -116,8 +116,8 @@ public class InfoPerson extends InfoObject {
         setDataEmissaoDocumentoIdentificacao(dataEmissaoDocumentoIdentificacao);
         setDataValidadeDocumentoIdentificacao(dataValidadeDocumentoIdentificacao);
         setNome(nome);
-        setSex(sex);
-        setEstadoCivil(estadoCivil);
+        setSexo(sex);
+        setMaritalStatus(estadoCivil);
         setNascimento(nascimento);
         setNomePai(nomePai);
         setNomeMae(nomeMae);
@@ -261,10 +261,10 @@ public class InfoPerson extends InfoObject {
     }
 
     /**
-     * @return EstadoCivil
+     * @return MaritalStatus
      */
-    public EstadoCivil getEstadoCivil() {
-        return estadoCivil;
+    public MaritalStatus getMaritalStatus() {
+        return maritalStatus;
     }
 
     /**
@@ -379,8 +379,8 @@ public class InfoPerson extends InfoObject {
         return profissao;
     }
 
-    public Sex getSexo() {
-        return sex == Sex.MALE ? Sex.MALE : Sex.FEMALE;
+    public Gender getSexo() {
+        return gender == Gender.MALE ? Gender.MALE : Gender.FEMALE;
     }
 
     /**
@@ -517,8 +517,8 @@ public class InfoPerson extends InfoObject {
      * @param estadoCivil
      *            The estadoCivil to set
      */
-    public void setEstadoCivil(EstadoCivil estadoCivil) {
-        this.estadoCivil = estadoCivil;
+    public void setMaritalStatus(MaritalStatus estadoCivil) {
+        this.maritalStatus = estadoCivil;
     }
 
     /**
@@ -687,13 +687,13 @@ public class InfoPerson extends InfoObject {
      * @param sexo
      *            The sexo to set
      */
-    public void setSexo(Sex sexo) {
+    public void setSexo(Gender sexo) {
 		if (sexo == null) {
-			this.sex = null;
-		} else if (sexo.equals(Sex.MALE)) {
-			this.sex = Sex.MALE;
-		} else if (sexo.equals(Sex.FEMALE)) {
-			this.sex = Sex.FEMALE;
+			this.gender = null;
+		} else if (sexo.equals(Gender.MALE)) {
+			this.gender = Gender.MALE;
+		} else if (sexo.equals(Gender.FEMALE)) {
+			this.gender = Gender.FEMALE;
 		}
     }
 
@@ -821,8 +821,8 @@ public class InfoPerson extends InfoObject {
             setDataEmissaoDocumentoIdentificacao(person.getDataEmissaoDocumentoIdentificacao());
             setDataValidadeDocumentoIdentificacao(person.getDataValidadeDocumentoIdentificacao());
 
-            setSex(person.getSex());
-            setEstadoCivil(person.getEstadoCivil());
+            setSexo(person.getGender());
+            setMaritalStatus(person.getMaritalStatus());
 
             setEmail(person.getEmail());
             setAvailableEmail(person.getAvailableEmail());
@@ -888,8 +888,8 @@ public class InfoPerson extends InfoObject {
         person.setDataEmissaoDocumentoIdentificacao(infoPerson.getDataEmissaoDocumentoIdentificacao());
         person.setDataValidadeDocumentoIdentificacao(infoPerson.getDataValidadeDocumentoIdentificacao());
 
-        person.setSex(infoPerson.getSex());
-        person.setEstadoCivil(infoPerson.getEstadoCivil());
+        person.setGender(infoPerson.getSexo());
+        person.setMaritalStatus(infoPerson.getMaritalStatus());
 
         person.setEmail(infoPerson.getEmail());
         person.setAvailableEmail(infoPerson.getAvailableEmail());
@@ -935,15 +935,5 @@ public class InfoPerson extends InfoObject {
             infoPerson.copyToDomain(infoPerson, person);
         }
         return person;
-    }
-
-	public Sex getSex() {
-		return sex;
-	}
-	
-
-	public void setSex(Sex sex) {
-		this.sex = sex;
-	}
-	
+    }	
 }

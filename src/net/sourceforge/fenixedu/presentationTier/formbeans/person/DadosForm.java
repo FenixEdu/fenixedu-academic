@@ -147,7 +147,7 @@ public final class DadosForm extends ActionForm {
         return sexo;
     }
 
-    public String getEstadoCivil() {
+    public String getMaritalStatus() {
         return estadoCivil;
     }
 
@@ -315,7 +315,7 @@ public final class DadosForm extends ActionForm {
         this.sexo = sexo;
     }
 
-    public void setEstadoCivil(String estadoCivil) {
+    public void setMaritalStatus(String estadoCivil) {
         this.estadoCivil = estadoCivil;
     }
 
@@ -512,7 +512,7 @@ public final class DadosForm extends ActionForm {
          * setPrimeiroNome(pessoa.getPrimeiroNome());
          * setUltimoNome(pessoa.getUltimoNome());
          * setNomesMeio(pessoa.getNomesMeio()); setSexo(pessoa.getSexo());
-         * setEstadoCivil(pessoa.getEstadoCivil());
+         * setMaritalStatus(pessoa.getMaritalStatus());
          */
         Calendar calendar2 = Calendar.getInstance();
         calendar2.setTime(pessoa.getNascimento());
@@ -582,7 +582,7 @@ public final class DadosForm extends ActionForm {
              * pessoa.setPrimeiroNome(getPrimeiroNome());
              * pessoa.setUltimoNome(getUltimoNome());
              * pessoa.setNomesMeio(getNomesMeio()); pessoa.setSexo(getSexo());
-             * pessoa.setEstadoCivil(getEstadoCivil());
+             * pessoa.setMaritalStatus(getMaritalStatus());
              */
             calendar.set(getAnoNascimento(), getMesNascimento(), getDiaNascimento());
             pessoa.setNascimento(calendar.getTime());

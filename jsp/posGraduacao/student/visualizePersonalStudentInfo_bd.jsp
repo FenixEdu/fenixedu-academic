@@ -76,7 +76,8 @@
           <!-- Estado Civil -->
           <tr>
             <td width="30%"><bean:message key="label.person.maritalStatus" /></td>
-            <td class="greytxt"><bean:write name="infoPerson" property="estadoCivil"/></td>
+            <bean:define id="maritalStatus" name="infoPerson" property="maritalStatus"/>
+            <td class="greytxt"><bean:message key='<%= maritalStatus.toString() %>'/></td>
           </tr>
 		</table>
 		<br />

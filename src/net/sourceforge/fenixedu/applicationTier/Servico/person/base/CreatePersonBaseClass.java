@@ -55,7 +55,7 @@ public class CreatePersonBaseClass {
         personToLock.setDistritoNaturalidade(newPerson.getDistritoNaturalidade());
         personToLock.setEmail(newPerson.getEmail());
         personToLock.setEnderecoWeb(newPerson.getEnderecoWeb());
-        personToLock.setEstadoCivil(newPerson.getEstadoCivil());
+        personToLock.setMaritalStatus(newPerson.getMaritalStatus());
         personToLock.setFreguesiaMorada(newPerson.getFreguesiaMorada());
         personToLock.setFreguesiaNaturalidade(newPerson.getFreguesiaNaturalidade());
         personToLock.setLocalEmissaoDocumentoIdentificacao(newPerson
@@ -70,7 +70,7 @@ public class CreatePersonBaseClass {
         personToLock.setNumContribuinte(newPerson.getNumContribuinte());
 
         personToLock.setProfissao(newPerson.getProfissao());
-        personToLock.setSex(newPerson.getSex());
+        personToLock.setGender(newPerson.getSexo());
         personToLock.setTelefone(newPerson.getTelefone());
         personToLock.setTelemovel(newPerson.getTelemovel());
 

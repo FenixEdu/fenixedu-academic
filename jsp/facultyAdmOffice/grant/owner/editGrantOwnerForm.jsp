@@ -114,9 +114,11 @@
 			<bean:message key="label.grant.owner.infoperson.maritalStatus"/>:&nbsp;
 		</td>
 		<td>
+			<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.MaritalStatus"/>
 			<html:select property="maritalStatus">
-				<html:options collection="maritalStatusList" property="value" labelProperty="label"/>
-			</html:select>
+        		<html:option key="dropDown.Default" value="null"/>
+            	<html:options collection="values" property="value" labelProperty="label"/>
+			</html:select>            
 		</td>
 	</tr>
 		<td align="left">

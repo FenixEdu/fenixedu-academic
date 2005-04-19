@@ -13,6 +13,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
@@ -28,12 +29,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.person.Sex;
+import net.sourceforge.fenixedu.domain.person.MaritalStatus;
+import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
-import net.sourceforge.fenixedu.util.EstadoCivil;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
@@ -143,13 +144,13 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
             if ((aux == null) || (aux.length() == 0))
                 infoPerson.setSexo(null);
             else
-                infoPerson.setSexo(Sex.valueOf(aux));
+                infoPerson.setSexo(Gender.valueOf(aux));
 
             aux = (String) changeApplicationInfoForm.get("maritalStatus");
             if ((aux == null) || (aux.length() == 0))
-                infoPerson.setEstadoCivil(null);
+                infoPerson.setMaritalStatus(null);
             else
-                infoPerson.setEstadoCivil(new EstadoCivil(aux));
+                infoPerson.setMaritalStatus(MaritalStatus.valueOf(aux));
 
             infoPerson.setInfoPais(nationality);
             infoPerson.setNomePai((String) changeApplicationInfoForm.get("fatherName"));
@@ -258,11 +259,10 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
             }
 
             request.setAttribute(SessionConstants.NATIONALITY_LIST_KEY, nationalityList);
-            request.setAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY, new EstadoCivil()
-                    .toArrayList());
+            //request.setAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY, Arrays.asList(MaritalStatus.values()));
             request.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY,
                     TipoDocumentoIdentificacao.toArrayList());
-            request.setAttribute(SessionConstants.SEX_LIST_KEY, Sex.getSexLabelValues((Locale) request.getAttribute(Globals.LOCALE_KEY)));
+            request.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request.getAttribute(Globals.LOCALE_KEY)));
             request.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
             request.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
             request.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
@@ -367,8 +367,8 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 
         if (infoPerson.getSexo() != null)
             changeApplicationInfoForm.set("sex", infoPerson.getSexo().toString());
-        if (infoPerson.getEstadoCivil() != null)
-            changeApplicationInfoForm.set("maritalStatus", infoPerson.getEstadoCivil().toString());
+        if (infoPerson.getMaritalStatus() != null)
+            changeApplicationInfoForm.set("maritalStatus", infoPerson.getMaritalStatus().toString());
     }
 
 }
