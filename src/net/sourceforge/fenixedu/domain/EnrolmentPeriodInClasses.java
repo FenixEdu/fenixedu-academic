@@ -7,20 +7,9 @@ package net.sourceforge.fenixedu.domain;
 /**
  * @author Luis Cruz
  */
-public class EnrolmentPeriodInClasses extends EnrolmentPeriod implements IEnrolmentPeriodInClasses {
-
-    protected String ojbConcreteClass;
+public class EnrolmentPeriodInClasses extends EnrolmentPeriodInClasses_Base {
 
     public EnrolmentPeriodInClasses() {
-        ojbConcreteClass = EnrolmentPeriodInClasses.class.getName();
+        setOjbConcreteClass(EnrolmentPeriodInClasses.class.getName());
     }
-
-    public String getOjbConcreteClass() {
-        return ojbConcreteClass;
-    }
-
-    public void setOjbConcreteClass(String ojbConcreteClass) {
-        this.ojbConcreteClass = ojbConcreteClass;
-    }
-
 }
