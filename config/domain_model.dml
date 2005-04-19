@@ -445,6 +445,34 @@ class net.sourceforge.fenixedu.domain.DepartmentCourse extends net.sourceforge.f
 	"
 }
 
+class net.sourceforge.fenixedu.domain.Employee extends net.sourceforge.fenixedu.domain.DomainObject {
+	Boolean active;
+	Integer employeeNumber;
+	Date antiquity;
+	Integer keyPerson;
+	Integer workingHours;
+	interface "
+	public net.sourceforge.fenixedu.domain.EmployeeHistoric getEmployeeHistoric();
+	
+	public void setEmployeeHistoric(net.sourceforge.fenixedu.domain.EmployeeHistoric employeeHistoric);
+	
+	public java.util.List getHistoricList();
+	
+	public void setHistoricList(java.util.List historicList);
+	
+	public void fillEmployeeHistoric();
+	"
+}
+
+class net.sourceforge.fenixedu.domain.EmployeeNotTeacher extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyEmployee;
+	interface "
+	public net.sourceforge.fenixedu.domain.IEmployee getEmployee();
+	
+	public void setEmployee(net.sourceforge.fenixedu.domain.IEmployee employee);
+	"
+}
+
 class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu.domain.DomainObject 
     implements org.apache.ojb.broker.PersistenceBrokerAware {
     String createdBy;
