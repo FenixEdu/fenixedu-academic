@@ -18,4 +18,8 @@ public enum ReimbursementGuideState {
 
     ANNULLED;
 
+    public String getName() {
+        return name();
+    }
+
 }
