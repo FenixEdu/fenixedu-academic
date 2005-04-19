@@ -28,8 +28,7 @@ import org.apache.commons.collections.Transformer;
  * @author David Santos in Jun 24, 2004
  */
 
-public class StudentCurricularPlan extends StudentCurricularPlan_Base implements
-		IStudentCurricularPlan {
+public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	protected IStudent student;
 

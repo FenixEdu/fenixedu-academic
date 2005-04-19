@@ -28,15 +28,11 @@ import org.apache.commons.collections.Predicate;
  * @author David Santos in Jun 25, 2004
  */
 
-public class DegreeCurricularPlan extends DegreeCurricularPlan_Base implements IDegreeCurricularPlan {
-
-    protected IDegree degree;
+public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     protected DegreeCurricularPlanState state;
 
     protected MarkType markType;
-
-    protected List curricularCourses;
 
     protected List areas;
 
@@ -69,7 +65,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base implements I
         result += "state = " + this.state + "; ";
         result += "needed Credits = " + this.getNeededCredits() + "; ";
         result += "Mark Type = " + this.markType + "; ";
-        result += "degree = " + this.degree + "]\n";
+        result += "degree = " + this.getDegree() + "]\n";
         result += "NumerusClausus = " + this.getNumerusClausus() + "]\n";
 
         return result;
@@ -87,14 +83,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base implements I
         return areas;
     }
 
-    public List getCurricularCourses() {
-        return curricularCourses;
-    }
-
-    public IDegree getDegree() {
-        return degree;
-    }
-
     public MarkType getMarkType() {
         return markType;
     }
@@ -105,14 +93,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base implements I
 
     public void setAreas(List areas) {
         this.areas = areas;
-    }
-
-    public void setCurricularCourses(List curricularCourses) {
-        this.curricularCourses = curricularCourses;
-    }
-
-    public void setDegree(IDegree degree) {
-        this.degree = degree;
     }
 
     public void setMarkType(MarkType markType) {
