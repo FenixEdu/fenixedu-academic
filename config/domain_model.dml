@@ -121,6 +121,16 @@ class net.sourceforge.fenixedu.domain.Campus extends net.sourceforge.fenixedu.do
 	String name;
 }
 
+class net.sourceforge.fenixedu.domain.CandidateEnrolment extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer curricularCourseKey;
+	Integer masterDegreeCandidateKey;
+	interface "
+	public net.sourceforge.fenixedu.domain.IMasterDegreeCandidate getMasterDegreeCandidate();
+	public void setMasterDegreeCandidate(net.sourceforge.fenixedu.domain.IMasterDegreeCandidate candidate);
+    public net.sourceforge.fenixedu.domain.ICurricularCourse getCurricularCourse();	
+	public void setCurricularCourse(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
+	"
+}
 
 class net.sourceforge.fenixedu.domain.teacher.Category extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
@@ -129,6 +139,11 @@ class net.sourceforge.fenixedu.domain.teacher.Category extends net.sourceforge.f
 	String shortName;
 }
 
+class net.sourceforge.fenixedu.domain.Contributor extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer contributorNumber;
+	String contributorAddress;
+	String contributorName;
+}
 
 class net.sourceforge.fenixedu.domain.Country extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
@@ -697,6 +712,18 @@ class net.sourceforge.fenixedu.domain.ExecutionDegree extends net.sourceforge.fe
 	"
 }
 
+class net.sourceforge.fenixedu.domain.ExternalPerson extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyWorkLocation;
+	Integer keyPerson;
+	
+	interface "
+	    public void setPerson(net.sourceforge.fenixedu.domain.IPerson person);
+		public net.sourceforge.fenixedu.domain.IPerson getPerson();
+		public void setWorkLocation(net.sourceforge.fenixedu.domain.IWorkLocation workLocation);
+		public net.sourceforge.fenixedu.domain.IWorkLocation getWorkLocation();
+	"
+	
+}
 
 class net.sourceforge.fenixedu.domain.support.FAQEntry extends net.sourceforge.fenixedu.domain.DomainObject {
 	String answer;
@@ -1328,6 +1355,41 @@ class net.sourceforge.fenixedu.domain.ShiftStudent extends net.sourceforge.fenix
 	"
 }
 
+class net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile extends net.sourceforge.fenixedu.domain.DomainObject {
+	String filename;
+	
+	interface "
+		public java.util.List getSibsPaymentFileEntries();
+    	public void setSibsPaymentFileEntries(java.util.List sibsPaymentFileEntries);
+	"
+	
+}
+
+class net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer studentNumber;
+	Integer keySibsPaymentFile;
+	Integer year;
+	Double payedValue;
+	
+	interface "
+		public net.sourceforge.fenixedu.util.gratuity.SibsPaymentType getPaymentType();
+		
+		public void setPaymentType(net.sourceforge.fenixedu.util.gratuity.SibsPaymentType paymentType);
+		
+		public net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFile getSibsPaymentFile();
+		
+		public void setSibsPaymentFile(net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFile sibsPaymentFile);
+		
+		public java.sql.Timestamp getTransactionDate();
+		
+		public void setTransactionDate(java.sql.Timestamp transactionDate);
+		
+		public net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus getPaymentStatus();
+		
+		public void setPaymentStatus(net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus paymentStatus);
+	"
+	
+}
 
 class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.domain.DomainObject {
 	String style;

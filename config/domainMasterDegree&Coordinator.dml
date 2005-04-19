@@ -1,38 +1,30 @@
 
-class domain.PaymentPhase {
+class net.sourceforge.fenixedu.domain.PaymentPhase {
 	Double value;
-	Integer ackOptLock;
-	Integer idInternal;
 	String description;
 	Integer keyGratuityValues;
 }
 
-class domain.WorkLocation {
-	Integer ackOptLock;
+class net.sourceforge.fenixedu.domain.WorkLocation {
 	String name;
-	Integer idInternal;
 }
 
-class domain.transactions.Transaction {
+class net.sourceforge.fenixedu.domain.transactions.Transaction {
 }
 
-class domain.Guide {
+class net.sourceforge.fenixedu.domain.Guide {
 	Integer keyContributor;
-	Integer idInternal;
 	String remarks;
 	Integer version;
 	Double total;
-	Integer ackOptLock;
 	Integer year;
 	Integer keyPerson;
 	Integer keyExecutionDegree;
 	Integer number;
 }
 
-class domain.GratuitySituation {
-	Integer ackOptLock;
+class net.sourceforge.fenixedu.domain.GratuitySituation {
 	Integer exemptionPercentage;
-	Integer idInternal;
 	String exemptionDescription;
 	Double totalValue;
 	Integer keyStudentCurricularPlan;
@@ -42,71 +34,55 @@ class domain.GratuitySituation {
 	Double remainingValue;
 }
 
-class domain.transactions.PaymentTransaction {
+class net.sourceforge.fenixedu.domain.transactions.PaymentTransaction {
 }
 
-class domain.reimbursementGuide.ReimbursementGuideSituation {
-	Integer ackOptLock;
+class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation {
 	Integer keyReimbursementGuide;
-	Integer idInternal;
 	String remarks;
 	Integer keyEmployee;
 }
 
-class domain.transactions.ReimbursementTransaction {
+class net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction {
 	Boolean wasInternalBalance;
 	Double value;
-	Integer ackOptLock;
-	Integer idInternal;
 	Integer keyReimbursementGuideEntry;
 	String remarks;
 	Integer keyPersonAccount;
 	Integer keyResponsiblePerson;
 }
 
-class domain.ExternalPerson {
+class net.sourceforge.fenixedu.domain.ExternalPerson {
 	Integer keyWorkLocation;
 	Integer keyPerson;
-	Integer ackOptLock;
-	Integer idInternal;
 }
 
-class domain.CandidateSituation {
-	Integer ackOptLock;
-	Integer idInternal;
+class net.sourceforge.fenixedu.domain.CandidateSituation {
 	String remarks;
 	Integer candidateKey;
 }
 
 
-class domain.Gratuity {
-	Integer ackOptLock;
-	Integer idInternal;
+class net.sourceforge.fenixedu.domain.Gratuity {
 	String remarks;
 	Integer keyStudentCurricularPlan;
 }
 
 
-class domain.gratuity.masterDegree.SibsPaymentFile {
-	Integer ackOptLock;
-	Integer idInternal;
+class net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile {
 	String filename;
 }
 
-class domain.GuideEntry {
-	Integer ackOptLock;
-	Integer idInternal;
+class net.sourceforge.fenixedu.domain.GuideEntry {
 	Integer keyGuide;
 	Double price;
 	String description;
 	Integer quantity;
 }
 
-class domain.transactions.GratuityTransaction {
+class net.sourceforge.fenixedu.domain.transactions.GratuityTransaction {
 	Boolean wasInternalBalance;
 	Double value;
-	Integer ackOptLock;
-	Integer idInternal;
 	Integer keyGuideEntry;
 	String remarks;
 	Integer keyGratuitySituation;
@@ -114,45 +90,34 @@ class domain.transactions.GratuityTransaction {
 	Integer keyResponsiblePerson;
 }
 
-class domain.InsuranceValue {
+class net.sourceforge.fenixedu.domain.InsuranceValue {
 	Integer keyExecutionYear;
-	Integer ackOptLock;
-	Integer idInternal;
 	Double annualValue;
 }
 
-class domain.MasterDegreeThesisDataVersion {
+class net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion {
 	Integer keyMasterDegreeThesis;
-	Integer ackOptLock;
-	Integer idInternal;
 	String dissertationTitle;
 	Integer keyEmployee;
 }
 
-class domain.Price {
+class net.sourceforge.fenixedu.domain.Price {
 	String description;
-	Integer ackOptLock;
-	Integer internalCode;
 	Double price;
 }
 
-class domain.GuideSituation {
-	Integer ackOptLock;
-	Integer idInternal;
+class net.sourceforge.fenixedu.domain.GuideSituation {
 	Integer keyGuide;
 	String remarks;
 }
 
 
-class domain.CandidateEnrolment {
+class net.sourceforge.fenixedu.domain.CandidateEnrolment {
 	Integer curricularCourseKey;
-	Integer ackOptLock;
-	Integer idInternal;
 	Integer masterDegreeCandidateKey;
 }
 
-class domain.MasterDegreeCandidate {
-	Integer idInternal;
+class net.sourceforge.fenixedu.domain.MasterDegreeCandidate {
 	Double average;
 	String specializationArea;
 	Integer majorDegreeYear;
@@ -162,42 +127,33 @@ class domain.MasterDegreeCandidate {
 	Integer substituteOrder;
 	Double givenCredits;
 	String givenCreditsRemarks;
-	Integer ackOptLock;
 	String majorDegree;
 	Integer candidateNumber;
 }
 
-class domain.MasterDegreeProofVersion {
+class net.sourceforge.fenixedu.domain.MasterDegreeProofVersion {
 	Integer keyMasterDegreeThesis;
-	Integer ackOptLock;
-	Integer idInternal;
 	Integer attachedCopiesNumber;
 	Integer keyEmployee;
 }
 
-class domain.MasterDegreeThesis {
-	Integer ackOptLock;
-	Integer idInternal;
+class net.sourceforge.fenixedu.domain.MasterDegreeThesis {
 	Integer keyStudentCurricularPlan;
 }
 
-class domain.transactions.SmsTransaction {
+class net.sourceforge.fenixedu.domain.transactions.SmsTransaction {
 	Boolean wasInternalBalance;
 	Double value;
-	Integer ackOptLock;
-	Integer idInternal;
 	Integer keyGuideEntry;
 	String remarks;
 	Integer keyPersonAccount;
 	Integer keyResponsiblePerson;
 }
 
-class domain.GratuityValues {
+class net.sourceforge.fenixedu.domain.GratuityValues {
 	Double scholarShipValue;
-	Integer idInternal;
 	Double courseValue;
 	Boolean proofRequestPayment;
-	Integer ackOptLock;
 	Double anualValue;
 	Double creditValue;
 	Double finalProofValue;
@@ -205,519 +161,503 @@ class domain.GratuityValues {
 	Integer keyEmployee;
 }
 
-class domain.Coordinator {
+class net.sourceforge.fenixedu.domain.Coordinator {
 	Integer keyExecutionDegree;
 	Integer keyTeacher;
-	Integer ackOptLock;
-	Integer idInternal;
 	Boolean responsible;
 }
 
-class domain.reimbursementGuide.ReimbursementGuideEntry {
+class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry {
 	String justification;
 	Double value;
-	Integer ackOptLock;
 	Integer keyReimbursementGuide;
-	Integer idInternal;
 	Integer keyGuideEntry;
 }
 
-class domain.sms.SentSms {
+class net.sourceforge.fenixedu.domain.sms.SentSms {
 	Integer keyPerson;
-	Integer ackOptLock;
-	Integer idInternal;
 	Integer destinationNumber;
 }
 
-class domain.gratuity.masterDegree.SibsPaymentFileEntry {
+class net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry {
 	Integer studentNumber;
 	Integer keySibsPaymentFile;
 	Integer year;
-	Integer ackOptLock;
-	Integer idInternal;
 	Double payedValue;
 }
 
-class domain.transactions.InsuranceTransaction {
+class net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction {
 	Boolean wasInternalBalance;
 	Double value;
-	Integer idInternal;
 	Integer keyGuideEntry;
 	String remarks;
 	Integer keyPersonAccount;
 	Integer keyExecutionYear;
-	Integer ackOptLock;
 	Integer keyResponsiblePerson;
 	Integer keyStudent;
 }
 
-class domain.PersonAccount {
+class net.sourceforge.fenixedu.domain.PersonAccount {
 	Double balance;
-	Integer ackOptLock;
 	Integer keyPerson;
-	Integer idInternal;
 }
 
-class domain.Contributor {
+class net.sourceforge.fenixedu.domain.Contributor {
 	Integer contributorNumber;
-	Integer ackOptLock;
 	String contributorAddress;
 	String contributorName;
-	Integer idInternal;
 }
 
-class domain.reimbursementGuide.ReimbursementGuide {
-	Integer ackOptLock;
-	Integer idInternal;
+class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide {
 	Integer keyGuide;
 	Integer number;
 }
 
 relation ??? {
-	domain.GratuitySituation playsRole gratuitySituations {
+	net.sourceforge.fenixedu.domain.GratuitySituation playsRole gratuitySituations {
 		multiplicity *;
 	}
-	domain.StudentCurricularPlan playsRole studentCurricularPlan;
+	net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlan;
 }
 
 relation ??? {
-	domain.transactions.PaymentTransaction playsRole paymentTransactions {
+	net.sourceforge.fenixedu.domain.transactions.PaymentTransaction playsRole paymentTransactions {
 		multiplicity *;
 	}
-	domain.GuideEntry playsRole guideEntry;
+	net.sourceforge.fenixedu.domain.GuideEntry playsRole guideEntry;
 }
 
 relation ??? {
-	domain.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntries {
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntries {
 		multiplicity *;
 	}
-	domain.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuide;
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuide;
 }
 
 relation ??? {
-	domain.GratuitySituation playsRole gratuitySituations {
+	net.sourceforge.fenixedu.domain.GratuitySituation playsRole gratuitySituations {
 		multiplicity *;
 	}
-	domain.Employee playsRole employee;
+	net.sourceforge.fenixedu.domain.Employee playsRole employee;
 }
 
 relation ??? {
-	domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisDataVersions {
+	net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisDataVersions {
 		multiplicity *;
 	}
-	domain.MasterDegreeThesis playsRole masterDegreeThesis;
+	net.sourceforge.fenixedu.domain.MasterDegreeThesis playsRole masterDegreeThesis;
 }
 
 relation ??? {
-	domain.MasterDegreeCandidate playsRole masterDegreeCandidates {
+	net.sourceforge.fenixedu.domain.MasterDegreeCandidate playsRole masterDegreeCandidates {
 		multiplicity *;
 	}
-	domain.CursoExecucao playsRole executionDegree;
+	net.sourceforge.fenixedu.domain.CursoExecucao playsRole executionDegree;
 }
 
 relation ??? {
-	domain.reimbursementGuide.ReimbursementGuideSituation playsRole reimbursementGuideSituations {
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation playsRole reimbursementGuideSituations {
 		multiplicity *;
 	}
-	domain.Employee playsRole employee;
+	net.sourceforge.fenixedu.domain.Employee playsRole employee;
 }
 
 relation ??? {
-	domain.MasterDegreeProofVersion playsRole masterDegreeProofVersions {
+	net.sourceforge.fenixedu.domain.MasterDegreeProofVersion playsRole masterDegreeProofVersions {
 		multiplicity *;
 	}
-	domain.Employee playsRole responsibleEmployee;
+	net.sourceforge.fenixedu.domain.Employee playsRole responsibleEmployee;
 }
 relation ??? {
-	domain.transactions.InsuranceTransaction playsRole insuranceTransactions {
+	net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction playsRole insuranceTransactions {
 		multiplicity *;
 	}
-	domain.Student playsRole student;
-}
-
-relation ??? {
-	domain.CandidateEnrolment playsRole candidateEnrolments {
-		multiplicity *;
-	}
-	domain.CurricularCourse playsRole curricularCourse;
+	net.sourceforge.fenixedu.domain.Student playsRole student;
 }
 
 relation ??? {
-	domain.InsuranceValue playsRole insuranceValues {
+	net.sourceforge.fenixedu.domain.CandidateEnrolment playsRole candidateEnrolments {
 		multiplicity *;
 	}
-	domain.ExecutionYear playsRole executionYear;
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
 }
 
 relation ??? {
-	domain.CandidateSituation playsRole situations {
+	net.sourceforge.fenixedu.domain.InsuranceValue playsRole insuranceValues {
 		multiplicity *;
 	}
-	domain.MasterDegreeCandidate playsRole masterDegreeCandidate;
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
 
 relation ??? {
-	domain.Gratuity playsRole gratuities {
+	net.sourceforge.fenixedu.domain.CandidateSituation playsRole situations {
 		multiplicity *;
 	}
-	domain.StudentCurricularPlan playsRole studentCurricularPlan;
+	net.sourceforge.fenixedu.domain.MasterDegreeCandidate playsRole masterDegreeCandidate;
 }
 
 relation ??? {
-	domain.transactions.PaymentTransaction playsRole paymentTransactions {
+	net.sourceforge.fenixedu.domain.Gratuity playsRole gratuities {
 		multiplicity *;
 	}
-	domain.PersonAccount playsRole personAccount;
+	net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlan;
 }
 
 relation ??? {
-	domain.reimbursementGuide.ReimbursementGuideSituation playsRole reimbursementGuideSituations {
+	net.sourceforge.fenixedu.domain.transactions.PaymentTransaction playsRole paymentTransactions {
 		multiplicity *;
 	}
-	domain.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuide;
+	net.sourceforge.fenixedu.domain.PersonAccount playsRole personAccount;
 }
 
 relation ??? {
-	domain.PaymentPhase playsRole paymentPhaseList {
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation playsRole reimbursementGuideSituations {
 		multiplicity *;
 	}
-	domain.GratuityValues playsRole gratuityValues;
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuide;
 }
 
 relation ??? {
-	domain.Guide playsRole guides {
+	net.sourceforge.fenixedu.domain.PaymentPhase playsRole paymentPhaseList {
 		multiplicity *;
 	}
-	domain.CursoExecucao playsRole executionDegree;
+	net.sourceforge.fenixedu.domain.GratuityValues playsRole gratuityValues;
 }
 
 relation ??? {
-	domain.GratuityValues playsRole gratuityValues {
+	net.sourceforge.fenixedu.domain.Guide playsRole guides {
 		multiplicity *;
 	}
-	domain.Employee playsRole employee;
+	net.sourceforge.fenixedu.domain.CursoExecucao playsRole executionDegree;
 }
 
 relation ??? {
-	domain.transactions.ReimbursementTransaction playsRole reimbursementTransactions {
+	net.sourceforge.fenixedu.domain.GratuityValues playsRole gratuityValues {
 		multiplicity *;
 	}
-	domain.PersonAccount playsRole personAccount;
+	net.sourceforge.fenixedu.domain.Employee playsRole employee;
 }
 
 relation ??? {
-	domain.GratuityValues playsRole gratuityValues {
+	net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction playsRole reimbursementTransactions {
 		multiplicity *;
 	}
-	domain.CursoExecucao playsRole executionDegree;
+	net.sourceforge.fenixedu.domain.PersonAccount playsRole personAccount;
 }
 
 relation ??? {
-	domain.CandidateEnrolment playsRole candidateEnrolments {
+	net.sourceforge.fenixedu.domain.GratuityValues playsRole gratuityValues {
 		multiplicity *;
 	}
-	domain.MasterDegreeCandidate playsRole masterDegreeCandidate;
+	net.sourceforge.fenixedu.domain.CursoExecucao playsRole executionDegree;
 }
 
 relation ??? {
-	domain.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuides {
+	net.sourceforge.fenixedu.domain.CandidateEnrolment playsRole candidateEnrolments {
 		multiplicity *;
 	}
-	domain.Guide playsRole guide;
+	net.sourceforge.fenixedu.domain.MasterDegreeCandidate playsRole masterDegreeCandidate;
 }
 
 relation ??? {
-	domain.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntries {
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuides {
 		multiplicity *;
 	}
-	domain.GuideEntry playsRole guideEntry;
+	net.sourceforge.fenixedu.domain.Guide playsRole guide;
 }
 
 relation ??? {
-	domain.GuideSituation playsRole guideSituations {
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntries {
 		multiplicity *;
 	}
-	domain.Guide playsRole guide;
+	net.sourceforge.fenixedu.domain.GuideEntry playsRole guideEntry;
 }
 
 relation ??? {
-	domain.GratuitySituation playsRole gratuitySituations {
+	net.sourceforge.fenixedu.domain.GuideSituation playsRole guideSituations {
 		multiplicity *;
 	}
-	domain.GratuityValues playsRole gratuityValues;
+	net.sourceforge.fenixedu.domain.Guide playsRole guide;
 }
 
 relation ??? {
-	domain.Coordinator playsRole coordinators {
+	net.sourceforge.fenixedu.domain.GratuitySituation playsRole gratuitySituations {
 		multiplicity *;
 	}
-	domain.Teacher playsRole teacher;
+	net.sourceforge.fenixedu.domain.GratuityValues playsRole gratuityValues;
 }
 
 relation ??? {
-	domain.transactions.InsuranceTransaction playsRole insuranceTransactions {
+	net.sourceforge.fenixedu.domain.Coordinator playsRole coordinators {
 		multiplicity *;
 	}
-	domain.ExecutionYear playsRole executionYear;
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
 
 relation ??? {
-	domain.transactions.SmsTransaction playsRole smsTransactions {
+	net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction playsRole insuranceTransactions {
 		multiplicity *;
 	}
-	domain.PersonAccount playsRole personAccount;
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
 
 relation ??? {
-	domain.MasterDegreeThesis playsRole masterDegreeThesis {
+	net.sourceforge.fenixedu.domain.transactions.SmsTransaction playsRole smsTransactions {
 		multiplicity *;
 	}
-	domain.StudentCurricularPlan playsRole studentCurricularPlan;
+	net.sourceforge.fenixedu.domain.PersonAccount playsRole personAccount;
 }
 
 relation ??? {
-	domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisDataVersions {
+	net.sourceforge.fenixedu.domain.MasterDegreeThesis playsRole masterDegreeThesis {
 		multiplicity *;
 	}
-	domain.Employee playsRole responsibleEmployee;
+	net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlan;
 }
 
 relation ??? {
-	domain.gratuity.masterDegree.SibsPaymentFileEntry playsRole sibsPaymentFileEntries {
+	net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisDataVersions {
 		multiplicity *;
 	}
-	domain.gratuity.masterDegree.SibsPaymentFile playsRole sibsPaymentFile;
+	net.sourceforge.fenixedu.domain.Employee playsRole responsibleEmployee;
 }
 
 relation ??? {
-	domain.transactions.InsuranceTransaction playsRole insuranceTransaction;
-	domain.GuideEntry playsRole guideEntry;
+	net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry playsRole sibsPaymentFileEntries {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile playsRole sibsPaymentFile;
 }
 
 relation ??? {
-	domain.MasterDegreeProofVersion playsRole masterDegreeProofVersions {
-		multiplicity *;
-	}
-	domain.MasterDegreeThesis playsRole masterDegreeThesis;
+	net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction playsRole insuranceTransaction;
+	net.sourceforge.fenixedu.domain.GuideEntry playsRole guideEntry;
 }
 
 relation ??? {
-	domain.Coordinator playsRole coordinatorsList {
+	net.sourceforge.fenixedu.domain.MasterDegreeProofVersion playsRole masterDegreeProofVersions {
 		multiplicity *;
 	}
-	domain.CursoExecucao playsRole executionDegree;
+	net.sourceforge.fenixedu.domain.MasterDegreeThesis playsRole masterDegreeThesis;
 }
 
 relation ??? {
-	domain.GuideEntry playsRole guideEntries {
+	net.sourceforge.fenixedu.domain.Coordinator playsRole coordinatorsList {
 		multiplicity *;
 	}
-	domain.Guide playsRole guide;
+	net.sourceforge.fenixedu.domain.CursoExecucao playsRole executionDegree;
 }
 
 relation ??? {
-	domain.Guide playsRole guides {
+	net.sourceforge.fenixedu.domain.GuideEntry playsRole guideEntries {
 		multiplicity *;
 	}
-	domain.Pessoa playsRole person;
+	net.sourceforge.fenixedu.domain.Guide playsRole guide;
 }
 
 relation ??? {
-	domain.transactions.Transaction playsRole responsabilityTransactions {
+	net.sourceforge.fenixedu.domain.Guide playsRole guides {
 		multiplicity *;
 	}
-	domain.Pessoa playsRole responsiblePerson;
+	net.sourceforge.fenixedu.domain.Pessoa playsRole person;
 }
 
 relation ??? {
-	domain.transactions.GratuityTransaction playsRole transactionList {
+	net.sourceforge.fenixedu.domain.transactions.Transaction playsRole responsabilityTransactions {
 		multiplicity *;
 	}
-	domain.GratuitySituation playsRole gratuitySituation;
+	net.sourceforge.fenixedu.domain.Pessoa playsRole responsiblePerson;
 }
 
 relation ??? {
-	domain.transactions.Transaction playsRole transactions {
+	net.sourceforge.fenixedu.domain.transactions.GratuityTransaction playsRole transactionList {
 		multiplicity *;
 	}
-	domain.PersonAccount playsRole personAccount;
+	net.sourceforge.fenixedu.domain.GratuitySituation playsRole gratuitySituation;
 }
 
 relation ??? {
-	domain.MasterDegreeThesis playsRole masterDegreeThesis;
-	domain.MasterDegreeProofVersion playsRole masterDegreeProofVersions {
+	net.sourceforge.fenixedu.domain.transactions.Transaction playsRole transactions {
 		multiplicity *;
 	}
+	net.sourceforge.fenixedu.domain.PersonAccount playsRole personAccount;
 }
 
 relation ??? {
-	domain.MasterDegreeCandidate playsRole masterDegreeCandidates {
-		multiplicity *;
-	}
-	domain.CandidateSituation playsRole situations {
+	net.sourceforge.fenixedu.domain.MasterDegreeThesis playsRole masterDegreeThesis;
+	net.sourceforge.fenixedu.domain.MasterDegreeProofVersion playsRole masterDegreeProofVersions {
 		multiplicity *;
 	}
 }
 
 relation ??? {
-	domain.ExternalPerson playsRole externalPerson;
-	domain.Pessoa playsRole person;
-}
-
-relation ??? {
-	domain.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuide;
-	domain.reimbursementGuide.ReimbursementGuideSituation playsRole reimbursementGuideSituations {
+	net.sourceforge.fenixedu.domain.MasterDegreeCandidate playsRole masterDegreeCandidates {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.CandidateSituation playsRole situations {
 		multiplicity *;
 	}
 }
 
 relation ??? {
-	domain.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuide;
-	domain.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntries {
+	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalPerson;
+	net.sourceforge.fenixedu.domain.Pessoa playsRole person;
+}
+
+relation ??? {
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuide;
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation playsRole reimbursementGuideSituations {
 		multiplicity *;
 	}
 }
 
-
 relation ??? {
-	domain.MasterDegreeCandidate playsRole masterDegreeCandidates {
-		multiplicity *;
-	}
-	domain.Pessoa playsRole person;
-}
-
-relation ??? {
-	domain.GratuityValues playsRole gratuityValues;
-	domain.PaymentPhase playsRole paymentPhaseList {
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuide;
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntries {
 		multiplicity *;
 	}
 }
 
 
 relation ??? {
-	domain.MasterDegreeThesis playsRole masterDegreeThesis;
-	domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisDataVersions {
+	net.sourceforge.fenixedu.domain.MasterDegreeCandidate playsRole masterDegreeCandidates {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Pessoa playsRole person;
+}
+
+relation ??? {
+	net.sourceforge.fenixedu.domain.GratuityValues playsRole gratuityValues;
+	net.sourceforge.fenixedu.domain.PaymentPhase playsRole paymentPhaseList {
 		multiplicity *;
 	}
 }
 
 
 relation ??? {
-	domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisGuider {
-		multiplicity *;
-	}
-	domain.Teacher playsRole guiders {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	domain.GuideEntry playsRole guideEntry;
-	domain.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntries {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	domain.gratuity.masterDegree.SibsPaymentFile playsRole sibsPaymentFile;
-	domain.gratuity.masterDegree.SibsPaymentFileEntry playsRole sibsPaymentFileEntries {
+	net.sourceforge.fenixedu.domain.MasterDegreeThesis playsRole masterDegreeThesis;
+	net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisDataVersions {
 		multiplicity *;
 	}
 }
 
 
 relation ??? {
-	domain.MasterDegreeProofVersion playsRole masterDegreeProofsJury {
+	net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisGuider {
 		multiplicity *;
 	}
-	domain.Teacher playsRole juries {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	domain.ExternalPerson playsRole externalPersons {
-		multiplicity *;
-	}
-	domain.WorkLocation playsRole workLocation;
-}
-
-
-relation ??? {
-	domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisExternalGuider {
-		multiplicity *;
-	}
-	domain.ExternalPerson playsRole externalGuiders {
+	net.sourceforge.fenixedu.domain.Teacher playsRole guiders {
 		multiplicity *;
 	}
 }
 
 relation ??? {
-	domain.transactions.ReimbursementTransaction playsRole reimbursementTransaction;
-	domain.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntry;
-}
-
-relation ??? {
-	domain.Guide playsRole guide {
-		multiplicity *;
-	}
-	domain.GuideEntry playsRole guideEntries {
+	net.sourceforge.fenixedu.domain.GuideEntry playsRole guideEntry;
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntries {
 		multiplicity *;
 	}
 }
 
 relation ??? {
-	domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisExternalAssistentGuider {
+	net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile playsRole sibsPaymentFile;
+	net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry playsRole sibsPaymentFileEntries {
 		multiplicity *;
 	}
-	domain.ExternalPerson playsRole externalAssistentGuiders {
+}
+
+
+relation ??? {
+	net.sourceforge.fenixedu.domain.MasterDegreeProofVersion playsRole masterDegreeProofsJury {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole juries {
 		multiplicity *;
 	}
 }
 
 relation ??? {
-	domain.Guide playsRole guide;
-	domain.GuideSituation playsRole guideSituations {
+	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalPersons {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.WorkLocation playsRole workLocation;
+}
+
+
+relation ??? {
+	net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisExternalGuider {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalGuiders {
 		multiplicity *;
 	}
 }
 
 relation ??? {
-	domain.Guide playsRole guide;
-	domain.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuides {
+	net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction playsRole reimbursementTransaction;
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntry;
+}
+
+relation ??? {
+	net.sourceforge.fenixedu.domain.Guide playsRole guide {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.GuideEntry playsRole guideEntries {
 		multiplicity *;
 	}
 }
 
 relation ??? {
-	domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisAssistentGuider {
+	net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisExternalAssistentGuider {
 		multiplicity *;
 	}
-	domain.Teacher playsRole assistentGuiders {
-		multiplicity *;
-	}
-}
-
-relation ??? {
-	domain.Guide playsRole guides {
-		multiplicity *;
-	}
-	domain.Contributor playsRole contributor;
-}
-
-relation ??? {
-	domain.MasterDegreeProofVersion playsRole masterDegreeProofsExternalJury {
-		multiplicity *;
-	}
-	domain.ExternalPerson playsRole externalJuries {
+	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalAssistentGuiders {
 		multiplicity *;
 	}
 }
 
 relation ??? {
-	domain.sms.SentSms playsRole sentSms {
+	net.sourceforge.fenixedu.domain.Guide playsRole guide;
+	net.sourceforge.fenixedu.domain.GuideSituation playsRole guideSituations {
 		multiplicity *;
 	}
-	domain.Pessoa playsRole person;
+}
+
+relation ??? {
+	net.sourceforge.fenixedu.domain.Guide playsRole guide;
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuides {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisAssistentGuider {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole assistentGuiders {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	net.sourceforge.fenixedu.domain.Guide playsRole guides {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Contributor playsRole contributor;
+}
+
+relation ??? {
+	net.sourceforge.fenixedu.domain.MasterDegreeProofVersion playsRole masterDegreeProofsExternalJury {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalJuries {
+		multiplicity *;
+	}
+}
+
+relation ??? {
+	net.sourceforge.fenixedu.domain.sms.SentSms playsRole sentSms {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Pessoa playsRole person;
 }
 

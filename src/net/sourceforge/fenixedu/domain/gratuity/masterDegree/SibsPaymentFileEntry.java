@@ -3,208 +3,145 @@
  */
 package net.sourceforge.fenixedu.domain.gratuity.masterDegree;
 
+
 import java.sql.Timestamp;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
 import net.sourceforge.fenixedu.util.gratuity.SibsPaymentType;
+import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
  */
-public class SibsPaymentFileEntry extends DomainObject implements ISibsPaymentFileEntry {
+public class SibsPaymentFileEntry extends SibsPaymentFileEntry_Base {
 
-    private Integer keySibsPaymentFile;
+	private SibsPaymentType paymentType;
 
-    private Integer year;
+	private Timestamp transactionDate;
 
-    private Integer studentNumber;
+	private ISibsPaymentFile sibsPaymentFile;
 
-    private SibsPaymentType paymentType;
+	private SibsPaymentStatus paymentStatus;
 
-    private Timestamp transactionDate;
+	public SibsPaymentFileEntry() {
+	}
 
-    private Double payedValue;
+	/**
+	 * 
+	 * @param year
+	 * @param studentNumber
+	 * @param paymentType
+	 * @param transactionDate
+	 * @param payedValue
+	 * @param sibsPaymentFile
+	 * @param sibsPaymentStatusType
+	 */
+	public SibsPaymentFileEntry(Integer year, Integer studentNumber,
+			SibsPaymentType paymentType, Timestamp transactionDate,
+			Double payedValue, ISibsPaymentFile sibsPaymentFile,
+			SibsPaymentStatus paymentStatus) {
+		setYear(year);
+		setStudentNumber(studentNumber);
+		this.paymentType = paymentType;
+		this.transactionDate = transactionDate;
+		setPayedValue(payedValue);
+		this.sibsPaymentFile = sibsPaymentFile;
+		this.paymentStatus = paymentStatus;
+	}
 
-    private ISibsPaymentFile sibsPaymentFile;
+	/**
+	 * @return Returns the paymentType.
+	 */
+	public SibsPaymentType getPaymentType() {
+		return paymentType;
+	}
 
-    private SibsPaymentStatus paymentStatus;
+	/**
+	 * @param paymentType
+	 *            The paymentType to set.
+	 */
+	public void setPaymentType(SibsPaymentType paymentType) {
+		this.paymentType = paymentType;
+	}
 
-    public SibsPaymentFileEntry() {
-    }
+	/**
+	 * @return Returns the sibsFile.
+	 */
+	public ISibsPaymentFile getSibsPaymentFile() {
+		return sibsPaymentFile;
+	}
 
-    /**
-     * 
-     * @param year
-     * @param studentNumber
-     * @param paymentType
-     * @param transactionDate
-     * @param payedValue
-     * @param sibsPaymentFile
-     * @param sibsPaymentStatusType
-     */
-    public SibsPaymentFileEntry(Integer year, Integer studentNumber, SibsPaymentType paymentType,
-            Timestamp transactionDate, Double payedValue, ISibsPaymentFile sibsPaymentFile,
-            SibsPaymentStatus paymentStatus) {
-        this.year = year;
-        this.studentNumber = studentNumber;
-        this.paymentType = paymentType;
-        this.transactionDate = transactionDate;
-        this.payedValue = payedValue;
-        this.sibsPaymentFile = sibsPaymentFile;
-        this.paymentStatus = paymentStatus;
-    }
+	/**
+	 * @param sibsFile
+	 *            The sibsFile to set.
+	 */
+	public void setSibsPaymentFile(ISibsPaymentFile sibsPaymentFile) {
+		this.sibsPaymentFile = sibsPaymentFile;
+	}
 
-    /**
-     * @return Returns the keySibsFile.
-     */
-    public Integer getKeySibsPaymentFile() {
-        return keySibsPaymentFile;
-    }
+	/**
+	 * @return Returns the transactionDate.
+	 */
+	public Timestamp getTransactionDate() {
+		return transactionDate;
+	}
 
-    /**
-     * @param keySibsFile
-     *            The keySibsFile to set.
-     */
-    public void setKeySibsPaymentFile(Integer keySibsPaymentFile) {
-        this.keySibsPaymentFile = keySibsPaymentFile;
-    }
+	/**
+	 * @param transactionDate
+	 *            The transactionDate to set.
+	 */
+	public void setTransactionDate(Timestamp transactionDate) {
+		this.transactionDate = transactionDate;
+	}
 
-    /**
-     * @return Returns the paymentType.
-     */
-    public SibsPaymentType getPaymentType() {
-        return paymentType;
-    }
+	/**
+	 * @return Returns the paymentStatus.
+	 */
+	public SibsPaymentStatus getPaymentStatus() {
+		return paymentStatus;
+	}
 
-    /**
-     * @param paymentType
-     *            The paymentType to set.
-     */
-    public void setPaymentType(SibsPaymentType paymentType) {
-        this.paymentType = paymentType;
-    }
+	/**
+	 * @param paymentStatus
+	 *            The paymentStatus to set.
+	 */
+	public void setPaymentStatus(SibsPaymentStatus paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
 
-    /**
-     * @return Returns the sibsFile.
-     */
-    public ISibsPaymentFile getSibsPaymentFile() {
-        return sibsPaymentFile;
-    }
+	public boolean equals(Object obj) {
+		boolean result = false;
 
-    /**
-     * @param sibsFile
-     *            The sibsFile to set.
-     */
-    public void setSibsPaymentFile(ISibsPaymentFile sibsPaymentFile) {
-        this.sibsPaymentFile = sibsPaymentFile;
-    }
+		if ((obj instanceof ISibsPaymentFileEntry)) {
+			ISibsPaymentFileEntry sibsFileEntry = (ISibsPaymentFileEntry) obj;
+			if ((this.getIdInternal() != null)
+					&& (sibsFileEntry.getIdInternal() != null)
+					&& (this.getIdInternal().equals(sibsFileEntry
+							.getIdInternal()))) {
 
-    /**
-     * @return Returns the studentNumber.
-     */
-    public Integer getStudentNumber() {
-        return studentNumber;
-    }
+				result = true;
+			}
 
-    /**
-     * @param studentNumber
-     *            The studentNumber to set.
-     */
-    public void setStudentNumber(Integer studentNumber) {
-        this.studentNumber = studentNumber;
-    }
+		}
 
-    /**
-     * @return Returns the transactionDate.
-     */
-    public Timestamp getTransactionDate() {
-        return transactionDate;
-    }
+		return result;
+	}
 
-    /**
-     * @param transactionDate
-     *            The transactionDate to set.
-     */
-    public void setTransactionDate(Timestamp transactionDate) {
-        this.transactionDate = transactionDate;
-    }
+	public String toString() {
+		String result = "[" + this.getClass().getName() + ": \n";
+		result += "idInternal = " + getIdInternal() + "; \n";
+		result += "payedValue = " + getPayedValue() + "; \n";
+		result += "paymentType = " + this.paymentType + "; \n";
+		result += "paymentStatus = " + this.paymentStatus + "; \n";
+		result += "sibsPaymentFile = " + this.sibsPaymentFile.toString()
+				+ "; \n";
+		result += "studentNumber = " + getStudentNumber() + "; \n";
+		result += "transactionDate = " + this.transactionDate.toString()
+				+ "; \n";
+		result += "year = " + getYear() + "; \n";
+		result += "] \n";
 
-    /**
-     * @return Returns the payedValue.
-     */
-    public Double getPayedValue() {
-        return payedValue;
-    }
-
-    /**
-     * @param payedValue
-     *            The payedValue to set.
-     */
-    public void setPayedValue(Double payedValue) {
-        this.payedValue = payedValue;
-    }
-
-    /**
-     * @return Returns the year.
-     */
-    public Integer getYear() {
-        return year;
-    }
-
-    /**
-     * @param year
-     *            The year to set.
-     */
-    public void setYear(Integer year) {
-        this.year = year;
-    }
-
-    /**
-     * @return Returns the paymentStatus.
-     */
-    public SibsPaymentStatus getPaymentStatus() {
-        return paymentStatus;
-    }
-
-    /**
-     * @param paymentStatus
-     *            The paymentStatus to set.
-     */
-    public void setPaymentStatus(SibsPaymentStatus paymentStatus) {
-        this.paymentStatus = paymentStatus;
-    }
-
-    public boolean equals(Object obj) {
-        boolean result = false;
-
-        if ((obj instanceof ISibsPaymentFileEntry)) {
-            ISibsPaymentFileEntry sibsFileEntry = (ISibsPaymentFileEntry) obj;
-            if ((this.getIdInternal() != null) && (sibsFileEntry.getIdInternal() != null)
-                    && (this.getIdInternal().equals(sibsFileEntry.getIdInternal()))) {
-
-                result = true;
-            }
-
-        }
-
-        return result;
-    }
-
-    public String toString() {
-        String result = "[" + this.getClass().getName() + ": \n";
-        result += "idInternal = " + getIdInternal() + "; \n";
-        result += "payedValue = " + this.payedValue + "; \n";
-        result += "paymentType = " + this.paymentType + "; \n";
-        result += "paymentStatus = " + this.paymentStatus + "; \n";
-        result += "sibsPaymentFile = " + this.sibsPaymentFile.toString() + "; \n";
-        result += "studentNumber = " + this.studentNumber + "; \n";
-        result += "transactionDate = " + this.transactionDate.toString() + "; \n";
-        result += "year = " + this.year + "; \n";
-        result += "] \n";
-
-        return result;
-    }
+		return result;
+	}
 
 }
