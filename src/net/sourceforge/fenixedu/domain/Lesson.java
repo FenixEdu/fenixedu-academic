@@ -25,8 +25,6 @@ public class Lesson extends Lesson_Base  {
 
     protected TipoAula _tipo;
 
-    protected IRoom _sala;
-    
     //  protected IExecutionCourse _disciplinaExecucao;
     protected IShift _shift;
 
@@ -121,14 +119,6 @@ public class Lesson extends Lesson_Base  {
      * _disciplinaExecucao = disciplinaExecucao; if (disciplinaExecucao != null) {
      * setExecutionPeriod(disciplinaExecucao.getExecutionPeriod()); } }
      */
-    public IRoom getSala() {
-        return _sala;
-    }
-
-    public void setSala(IRoom sala) {
-        _sala = sala;
-    }
-
     public boolean equals(Object obj) {
         boolean resultado = false;
         if (obj instanceof ILesson) {

@@ -507,11 +507,9 @@ class net.sourceforge.fenixedu.domain.EnrolmentPeriod extends net.sourceforge.fe
     Integer keyExecutionPeriod;
     
     interface "
-    
     void setDegreeCurricularPlan(net.sourceforge.fenixedu.domain.IDegreeCurricularPlan degreeCurricularPlan);
+    
     net.sourceforge.fenixedu.domain.IDegreeCurricularPlan getDegreeCurricularPlan();
-    void setExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
-    net.sourceforge.fenixedu.domain.IExecutionPeriod getExecutionPeriod();
     "
 }
 
@@ -932,10 +930,6 @@ class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.do
 	public net.sourceforge.fenixedu.util.TipoAula getTipo();
 	
 	public void setTipo(net.sourceforge.fenixedu.util.TipoAula tipo);
-
-	public net.sourceforge.fenixedu.domain.IRoom getSala();
-	
-	public void setSala(net.sourceforge.fenixedu.domain.IRoom sala);
 
 	public net.sourceforge.fenixedu.domain.IRoomOccupation getRoomOccupation();
 	
@@ -1382,10 +1376,6 @@ class net.sourceforge.fenixedu.domain.SchoolClass extends net.sourceforge.fenixe
 	public net.sourceforge.fenixedu.domain.IExecutionDegree getExecutionDegree();
 	
 	public void setExecutionDegree(net.sourceforge.fenixedu.domain.IExecutionDegree executionDegree);
-
-	public net.sourceforge.fenixedu.domain.IExecutionPeriod getExecutionPeriod();
-
-	public void setExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
 	"
 }
 
@@ -1777,7 +1767,6 @@ relation AttendsSetHasAttend {
 	net.sourceforge.fenixedu.domain.AttendsSet playsRole attendsSet;
 }
 
-
 relation BelongsTo {
 	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
 		multiplicity *;
@@ -1914,6 +1903,14 @@ relation DelegateStudent {
 }
 
 
+relation EnrolmentPeriodExecutionPeriod {
+	net.sourceforge.fenixedu.domain.EnrolmentPeriod playsRole enrolmentPeriod {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
+
+
 relation ExamExecutionCourse {
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole associatedExecutionCourses {
 		multiplicity *;
@@ -2003,6 +2000,12 @@ relation ExecutionPeriodExecutionCourse {
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
 }
 
+relation ExecutionPeriodSchoolClass {
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+	net.sourceforge.fenixedu.domain.SchoolClass playsRole schoolClasses {
+		multiplicity *;
+	}
+}
 
 relation GoalExecutionCourse {
 	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
@@ -2142,7 +2145,7 @@ relation RoomLesson {
 	net.sourceforge.fenixedu.domain.Lesson playsRole associatedLessons {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Room playsRole room;
+	net.sourceforge.fenixedu.domain.Room playsRole sala;
 }
 
 

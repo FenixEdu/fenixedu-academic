@@ -11,8 +11,6 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
 
     private IDegreeCurricularPlan degreeCurricularPlan;
 
-    private IExecutionPeriod executionPeriod;
-
     public EnrolmentPeriod() {
 
     }
@@ -26,15 +24,6 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
         this.degreeCurricularPlan = degreeCurricularPlan;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.IEnrolmentPeriodInCurricularCourses#setExecutionPeriod(Dominio.IExecutionPeriod)
-     */
-    public void setExecutionPeriod(IExecutionPeriod executionPeriod) {
-        this.executionPeriod = executionPeriod;
-    }
-
     /**
      * @return
      */
@@ -42,10 +31,4 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
         return degreeCurricularPlan;
     }
 
-    /**
-     * @return
-     */
-    public IExecutionPeriod getExecutionPeriod() {
-        return executionPeriod;
-    }
 }

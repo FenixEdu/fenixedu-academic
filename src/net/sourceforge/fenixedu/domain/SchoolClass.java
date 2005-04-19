@@ -15,8 +15,6 @@ package net.sourceforge.fenixedu.domain;
 public class SchoolClass extends SchoolClass_Base {
     private IExecutionDegree executionDegree;
 
-    private IExecutionPeriod executionPeriod;
-
     /**
      * Construtor sem argumentos p�blico requerido pela moldura de objectos
      * OJB
@@ -63,7 +61,7 @@ public class SchoolClass extends SchoolClass_Base {
         String result = "[TURMA";
         result += ", codigoInterno=" + getIdInternal();
         result += ", nome=" + getNome();
-        result += ", executionPeriod=" + executionPeriod;
+        result += ", executionPeriod=" + getExecutionPeriod();
         result += ", executionDegree=" + executionDegree;
         result += "]";
         return result;
@@ -88,23 +86,5 @@ public class SchoolClass extends SchoolClass_Base {
         this.executionDegree = executionDegree;
     }
 
-    /**
-     * Returns the executionPeriod.
-     * 
-     * @return IExecutionPeriod
-     */
-    public IExecutionPeriod getExecutionPeriod() {
-        return executionPeriod;
-    }
-
-    /**
-     * Sets the executionPeriod.
-     * 
-     * @param executionPeriod
-     *            The executionPeriod to set
-     */
-    public void setExecutionPeriod(IExecutionPeriod executionPeriod) {
-        this.executionPeriod = executionPeriod;
-    }
 
 }
