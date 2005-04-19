@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.degree.enrollment;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 
