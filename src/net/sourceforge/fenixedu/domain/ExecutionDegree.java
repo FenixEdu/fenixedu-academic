@@ -6,7 +6,6 @@
 
 package net.sourceforge.fenixedu.domain;
 
-import java.util.List;
 
 /**
  * 
@@ -17,8 +16,6 @@ public class ExecutionDegree extends ExecutionDegree_Base {
     private IExecutionYear executionYear;
 
     private IDegreeCurricularPlan degreeCurricularPlan;
-
-    private List coordinatorsList;
 
     private ICampus campus;
 
@@ -61,8 +58,8 @@ public class ExecutionDegree extends ExecutionDegree_Base {
         result += ", executionYear=" + executionYear;
         //result += ", keyExecutionYear=" + academicYear;
         result += ", degreeCurricularPlan=" + degreeCurricularPlan;
-        if (coordinatorsList != null) {
-            result += ", coordinatorsList=" + coordinatorsList.size();
+        if (getCoordinatorsList() != null) {
+            result += ", coordinatorsList=" + getCoordinatorsList().size();
         } else {
             result += ", coordinatorsList is NULL";
         }
@@ -114,21 +111,6 @@ public class ExecutionDegree extends ExecutionDegree_Base {
      */
     public void setCampus(ICampus campus) {
         this.campus = campus;
-    }
-
-    /**
-     * @return Returns the coordinatorsList.
-     */
-    public List getCoordinatorsList() {
-        return coordinatorsList;
-    }
-
-    /**
-     * @param coordinatorsList
-     *            The coordinatorsList to set.
-     */
-    public void setCoordinatorsList(List coordinatorsList) {
-        this.coordinatorsList = coordinatorsList;
     }
 
     public IPeriod getPeriodExamsFirstSemester() {

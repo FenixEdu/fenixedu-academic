@@ -703,10 +703,6 @@ class net.sourceforge.fenixedu.domain.ExecutionDegree extends net.sourceforge.fe
 	
 	public void setDegreeCurricularPlan(net.sourceforge.fenixedu.domain.IDegreeCurricularPlan degreeCurricularPlan);
 	
-	public java.util.List getCoordinatorsList();
-	
-	public void setCoordinatorsList(java.util.List coordinatorsList);
-	
 	public net.sourceforge.fenixedu.domain.ICampus getCampus();
 	
 	public void setCampus(net.sourceforge.fenixedu.domain.ICampus campus);
@@ -1743,6 +1739,7 @@ class net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope ext
  */
 
 external class net.sourceforge.fenixedu.domain.Attends;
+external class net.sourceforge.fenixedu.domain.Coordinator;
 external class net.sourceforge.fenixedu.domain.CurricularCourseScope;
 external class net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty;
 external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
@@ -2011,6 +2008,15 @@ relation ExecutionCourseSummary {
 	}
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 }
+
+
+relation ExecutionDegreeCoordinator {
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
+	net.sourceforge.fenixedu.domain.Coordinator playsRole coordinatorsList {
+		multiplicity *;
+	}
+}
+
 
 
 relation ExecutionPeriodExecutionCourse {
