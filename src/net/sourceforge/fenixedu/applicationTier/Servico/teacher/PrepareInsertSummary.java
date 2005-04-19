@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
@@ -121,7 +122,7 @@ public class PrepareInsertSummary implements IService {
                         teacher, executionCourse);
                 if (professorship != null) {
                     professorshipSelect = professorship.getIdInternal();
-                    infoProfessorships.add(Cloner.copyIProfessorship2InfoProfessorship(professorship));
+                    infoProfessorships.add(InfoProfessorshipWithAll.newInfoFromDomain(professorship));
                 }
             }
 

@@ -8,7 +8,7 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.ISummary;
@@ -116,12 +116,10 @@ public class DissociateProfessorShipsAndResponsibleFor implements IService {
 
                     } else {
                         if (supportLessons.size() > 0) {
-                            professorshipsWithSupportLessons.add(Cloner
-                                    .copyIProfessorship2InfoProfessorship(professorship));
+                            professorshipsWithSupportLessons.add(InfoProfessorshipWithAll.newInfoFromDomain(professorship));
                         }
                         if (shiftProfessorships.size() > 0) {
-                            professorshipsWithShifts.add(Cloner
-                                    .copyIProfessorship2InfoProfessorship(professorship));
+                            professorshipsWithShifts.add(InfoProfessorshipWithAll.newInfoFromDomain(professorship));
                         }
                     }
 

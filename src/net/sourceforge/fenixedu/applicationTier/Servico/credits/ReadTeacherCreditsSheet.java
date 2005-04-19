@@ -390,8 +390,7 @@ public class ReadTeacherCreditsSheet implements IService {
 
                     public Object transform(Object input) {
                         IProfessorship professorship = (IProfessorship) input;
-                        InfoProfessorship infoProfessorShip = Cloner
-                                .copyIProfessorship2InfoProfessorship(professorship);
+                        InfoProfessorship infoProfessorShip = InfoProfessorship.newInfoFromDomain(professorship);
 
                         DetailedProfessorship detailedProfessorship = new DetailedProfessorship();
 

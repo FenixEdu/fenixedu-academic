@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IProfessorship;
@@ -58,7 +59,7 @@ public class ReadInfoTeacherByTeacherNumber implements IService {
             CollectionUtils.collect(professorShips, new Transformer() {
                 public Object transform(Object input) {
                     IProfessorship professorship = (IProfessorship) input;
-                    return Cloner.copyIProfessorship2InfoProfessorship(professorship);
+                    return InfoProfessorshipWithAll.newInfoFromDomain(professorship);
                 }
             }, infoProfessorShips);
 

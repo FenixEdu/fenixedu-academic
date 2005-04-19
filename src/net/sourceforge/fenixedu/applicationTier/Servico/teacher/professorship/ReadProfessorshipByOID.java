@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.ReadDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -50,7 +50,7 @@ public class ReadProfessorshipByOID extends ReadDomainObjectService {
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
      */
     protected InfoObject clone2InfoObject(IDomainObject domainObject) {
-        return Cloner.copyIProfessorship2InfoProfessorship((IProfessorship) domainObject);
+        return InfoProfessorshipWithAll.newInfoFromDomain((IProfessorship) domainObject);
     }
 
     /*

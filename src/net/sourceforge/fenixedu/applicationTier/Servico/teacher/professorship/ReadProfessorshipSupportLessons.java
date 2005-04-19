@@ -9,6 +9,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
+import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.ProfessorshipSupportLessonsDTO;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
@@ -57,8 +58,7 @@ public class ReadProfessorshipSupportLessons implements IServico {
             IProfessorship professorship = professorshipDAO.readByTeacherIDAndExecutionCourseID(
                     new Teacher(teacherId), new ExecutionCourse(executionCourseId));
 
-            InfoProfessorship infoProfessorship = Cloner
-                    .copyIProfessorship2InfoProfessorship(professorship);
+            InfoProfessorship infoProfessorship = InfoProfessorshipWithAll.newInfoFromDomain(professorship);
 
             professorshipSupportLessonsDTO.setInfoProfessorship(infoProfessorship);
 

@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
@@ -109,16 +110,9 @@ public class ReadSummary implements IService {
 
             IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
             List infoProfessorships = new ArrayList();
-            /*
-             * if (professorships != null && professorships.size() > 0) {
-             * infoProfessorships = (List)
-             * CollectionUtils.collect(professorships, new Transformer() {
-             * 
-             * public Object transform(Object arg0) { IProfessorship
-             * professorship = (IProfessorship) arg0; return
-             * Cloner.copyIProfessorship2InfoProfessorship(professorship); } }); }
-             */// we no longer want this. We present only the responsible
-            // teacher (by gedl)
+            
+            // We present only the responsible teacher (by gedl)
+
             //teacher logged
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             ITeacher teacher = persistentTeacher.readTeacherByUsername(userLogged);
@@ -126,7 +120,7 @@ public class ReadSummary implements IService {
                 IProfessorship professorship = persistentProfessorship.readByTeacherAndExecutionCourse(
                         teacher, executionCourse);
                 if (professorship != null) {
-                    infoProfessorships.add(Cloner.copyIProfessorship2InfoProfessorship(professorship));
+                    infoProfessorships.add(InfoProfessorshipWithAll.newInfoFromDomain(professorship));
                 }
             }
 

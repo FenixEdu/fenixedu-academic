@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
@@ -130,7 +131,7 @@ public class ReadSummaries implements IServico {
 
                     public Object transform(Object arg0) {
                         IProfessorship professorship = (IProfessorship) arg0;
-                        return Cloner.copyIProfessorship2InfoProfessorship(professorship);
+                        return InfoProfessorshipWithAll.newInfoFromDomain(professorship);
                     }
                 });
             }
