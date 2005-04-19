@@ -15,260 +15,124 @@ import net.sourceforge.fenixedu.util.ExemptionGratuityType;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * @author Tânia Pousão
  */
-public class GratuitySituation extends DomainObject implements IGratuitySituation {
+public class GratuitySituation extends GratuitySituation_Base {
 
-    private Double remainingValue;
+	private ExemptionGratuityType exemptionType;
 
-    private Double totalValue;
+	private IGratuityValues gratuityValues;
 
-    private Integer exemptionPercentage;
-    
-    private Double exemptionValue;
+	private IStudentCurricularPlan studentCurricularPlan;
 
-    private ExemptionGratuityType exemptionType;
+	private Date when;
 
-    private String exemptionDescription;
+	private IEmployee employee;
 
-    private IGratuityValues gratuityValues;
+	private List transactionList;
 
-    private Integer keyGratuityValues;
+	/**
+	 * @return Returns the employee.
+	 */
+	public IEmployee getEmployee() {
+		return employee;
+	}
 
-    private IStudentCurricularPlan studentCurricularPlan;
+	/**
+	 * @param employee
+	 *            The employee to set.
+	 */
+	public void setEmployee(IEmployee employee) {
+		this.employee = employee;
+	}
 
-    private Integer keyStudentCurricularPlan;
+	/**
+	 * @return Returns the when.
+	 */
+	public Date getWhen() {
+		return when;
+	}
 
-    private Date when;
+	/**
+	 * @param when
+	 *            The when to set.
+	 */
+	public void setWhen(Date when) {
+		this.when = when;
+	}
 
-    private IEmployee employee;
+	/**
+	 * @return Returns the exemptionType.
+	 */
+	public ExemptionGratuityType getExemptionType() {
+		return exemptionType;
+	}
 
-    private Integer keyEmployee;
+	/**
+	 * @param exemptionType
+	 *            The exemptionType to set.
+	 */
+	public void setExemptionType(ExemptionGratuityType exemptionType) {
+		this.exemptionType = exemptionType;
+	}
 
-    private List transactionList;
+	/**
+	 * @return Returns the gratuity.
+	 */
+	public IGratuityValues getGratuityValues() {
+		return gratuityValues;
+	}
 
-    /**
-     * @return Returns the employee.
-     */
-    public IEmployee getEmployee() {
-        return employee;
-    }
+	/**
+	 * @param gratuity
+	 *            The gratuity to set.
+	 */
+	public void setGratuityValues(IGratuityValues gratuity) {
+		this.gratuityValues = gratuity;
+	}
 
-    /**
-     * @param employee
-     *            The employee to set.
-     */
-    public void setEmployee(IEmployee employee) {
-        this.employee = employee;
-    }
+	/**
+	 * @return Returns the student.
+	 */
+	public IStudentCurricularPlan getStudentCurricularPlan() {
+		return studentCurricularPlan;
+	}
 
-    /**
-     * @return Returns the employeeKey.
-     */
-    public Integer getKeyEmployee() {
-        return keyEmployee;
-    }
+	/**
+	 * @param student
+	 *            The student to set.
+	 */
+	public void setStudentCurricularPlan(
+			IStudentCurricularPlan studentCurricularPlan) {
+		this.studentCurricularPlan = studentCurricularPlan;
+	}
 
-    /**
-     * @param employeeKey
-     *            The employeeKey to set.
-     */
-    public void setKeyEmployee(Integer employeeKey) {
-        this.keyEmployee = employeeKey;
-    }
+	/**
+	 * @return Returns the transactionList.
+	 */
+	public List getTransactionList() {
+		return transactionList;
+	}
 
-    /**
-     * @return Returns the when.
-     */
-    public Date getWhen() {
-        return when;
-    }
+	/**
+	 * @param transactionList
+	 *            The transactionList to set.
+	 */
+	public void setTransactionList(List transactionList) {
+		this.transactionList = transactionList;
+	}
 
-    /**
-     * @param when
-     *            The when to set.
-     */
-    public void setWhen(Date when) {
-        this.when = when;
-    }
+	/*
+	 * public String toString() { //TODO: to make return null; }
+	 */
 
-    /**
-     * @return Returns the exemptionDescription.
-     */
-    public String getExemptionDescription() {
-        return exemptionDescription;
-    }
+	/*
+	 * public boolean equals(Object object) { //TODO: to make return true; }
+	 */
 
-    /**
-     * @param exemptionDescription
-     *            The exemptionDescription to set.
-     */
-    public void setExemptionDescription(String exemptionDescription) {
-        this.exemptionDescription = exemptionDescription;
-    }
+	/*
+	 * public String toString() { //TODO: to make return null; }
+	 */
 
-    /**
-     * @return Returns the exemptionPercentage.
-     */
-    public Integer getExemptionPercentage() {
-        return exemptionPercentage;
-    }
-
-    /**
-     * @param exemptionPercentage
-     *            The exemptionPercentage to set.
-     */
-    public void setExemptionPercentage(Integer exemptionPercentage) {
-        this.exemptionPercentage = exemptionPercentage;
-    }
-
-    /**
-     * @return Returns the exemptionType.
-     */
-    public ExemptionGratuityType getExemptionType() {
-        return exemptionType;
-    }
-
-    /**
-     * @param exemptionType
-     *            The exemptionType to set.
-     */
-    public void setExemptionType(ExemptionGratuityType exemptionType) {
-        this.exemptionType = exemptionType;
-    }
-
-    /**
-     * @return Returns the gratuity.
-     */
-    public IGratuityValues getGratuityValues() {
-        return gratuityValues;
-    }
-
-    /**
-     * @param gratuity
-     *            The gratuity to set.
-     */
-    public void setGratuityValues(IGratuityValues gratuity) {
-        this.gratuityValues = gratuity;
-    }
-
-    /**
-     * @return Returns the keyGratuity.
-     */
-    public Integer getKeyGratuityValues() {
-        return keyGratuityValues;
-    }
-
-    /**
-     * @param keyGratuity
-     *            The keyGratuity to set.
-     */
-    public void setKeyGratuityValues(Integer keyGratuityValues) {
-        this.keyGratuityValues = keyGratuityValues;
-    }
-
-    /**
-     * @return Returns the keyStudent.
-     */
-    public Integer getKeyStudentCurricularPlan() {
-        return keyStudentCurricularPlan;
-    }
-
-    /**
-     * @param keyStudent
-     *            The keyStudent to set.
-     */
-    public void setKeyStudentCurricularPlan(Integer keyStudent) {
-        this.keyStudentCurricularPlan = keyStudent;
-    }
-
-    /**
-     * @return Returns the remainingValue.
-     */
-    public Double getRemainingValue() {
-        return remainingValue;
-    }
-
-    /**
-     * @param remainingValue
-     *            The remainingValue to set.
-     */
-    public void setRemainingValue(Double remainingValue) {
-        this.remainingValue = remainingValue;
-    }
-
-    /**
-     * @return Returns the totalValue.
-     */
-    public Double getTotalValue() {
-        return totalValue;
-    }
-
-    /**
-     * @param totalValue
-     *            The totalValue to set.
-     */
-    public void setTotalValue(Double totalValue) {
-        this.totalValue = totalValue;
-    }
-
-    /**
-     * @return Returns the student.
-     */
-    public IStudentCurricularPlan getStudentCurricularPlan() {
-        return studentCurricularPlan;
-    }
-
-    /**
-     * @param student
-     *            The student to set.
-     */
-    public void setStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) {
-        this.studentCurricularPlan = studentCurricularPlan;
-    }
-
-    /**
-     * @return Returns the transactionList.
-     */
-    public List getTransactionList() {
-        return transactionList;
-    }
-
-    /**
-     * @param transactionList
-     *            The transactionList to set.
-     */
-    public void setTransactionList(List transactionList) {
-        this.transactionList = transactionList;
-    }
-
-    /*
-     * public String toString() { //TODO: to make return null; }
-     */
-
-    /*
-     * public boolean equals(Object object) { //TODO: to make return true; }
-     */
-
-    /*public String toString() {
-     //TODO: to make
-     return null;
-     }*/
-
-    /*public boolean equals(Object object) {
-     //TODO: to make
-     return true;
-     }*/
-    
-  
-    /**
-     * @return Returns the exemptionValue.
-     */
-    public Double getExemptionValue() {
-        return exemptionValue;
-    }
-    /**
-     * @param exemptionValue The exemptionValue to set.
-     */
-    public void setExemptionValue(Double exemptionValue) {
-        this.exemptionValue = exemptionValue;
-    }
+	/*
+	 * public boolean equals(Object object) { //TODO: to make return true; }
+	 */
 }
