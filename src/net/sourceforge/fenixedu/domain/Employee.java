@@ -11,23 +11,13 @@ import java.util.ListIterator;
  * 
  * @author Tânia Pousão
  */
-public class Employee extends DomainObject implements IEmployee {
+public class Employee extends Employee_Base implements IEmployee {
 
     private IPerson person = null;
-
-    private Integer keyPerson = null;
-
-    private Integer employeeNumber = null;
-
-    private Integer workingHours = null;
-
-    private Date antiquity = null;
 
     private EmployeeHistoric employeeHistoric = null;
 
     private List historicList = null;
-
-    private Boolean active;
 
     public Employee() {
     }
@@ -48,40 +38,8 @@ public class Employee extends DomainObject implements IEmployee {
         setAntiquity(antiquity);
     }
 
-    public Integer getEmployeeNumber() {
-        return employeeNumber;
-    }
-
-    public Integer getWorkingHours() {
-        return workingHours;
-    }
-
-    public Date getAntiquity() {
-        return antiquity;
-    }
-
-    public Integer getKeyPerson() {
-        return keyPerson;
-    }
-
     public IPerson getPerson() {
         return person;
-    }
-
-    public void setEmployeeNumber(Integer number) {
-        employeeNumber = number;
-    }
-
-    public void setWorkingHours(Integer workingHours) {
-        this.workingHours = workingHours;
-    }
-
-    public void setAntiquity(Date antiquity) {
-        this.antiquity = antiquity;
-    }
-
-    public void setKeyPerson(Integer keyPerson) {
-        this.keyPerson = keyPerson;
     }
 
     public void setPerson(IPerson person) {
@@ -159,20 +117,5 @@ public class Employee extends DomainObject implements IEmployee {
                 }
             }
         }
-    }
-
-    /**
-     * @return Returns the active.
-     */
-    public Boolean getActive() {
-        return this.active;
-    }
-
-    /**
-     * @param active
-     *            The active to set.
-     */
-    public void setActive(Boolean active) {
-        this.active = active;
     }
 }

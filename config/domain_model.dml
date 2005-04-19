@@ -1197,18 +1197,10 @@ class net.sourceforge.fenixedu.domain.Professorship extends net.sourceforge.feni
 	Integer keyExecutionCourse;
 	Double hours;
 	interface "
-	public net.sourceforge.fenixedu.domain.ITeacher getTeacher();
-	
-	public void setTeacher(net.sourceforge.fenixedu.domain.ITeacher teacher);
-	
 	public java.util.List getAssociatedShiftProfessorship();
 	
 	public void setAssociatedShiftProfessorship(java.util.List associatedTeacherShiftPercentage);
-	
-	public java.util.List getSupportLessons();
-	
-	public void setSupportLessons(java.util.List supportLessons);
-	
+
 	public boolean belongsToExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
 	
 	public void beforeUpdate(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
@@ -1243,11 +1235,6 @@ class net.sourceforge.fenixedu.domain.precedences.Precedence extends net.sourcef
 class net.sourceforge.fenixedu.domain.ResponsibleFor extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionCourse;
 	Integer keyTeacher;
-	interface "
-	public net.sourceforge.fenixedu.domain.ITeacher getTeacher();
-	
-	public void setTeacher(net.sourceforge.fenixedu.domain.ITeacher teacher);
-	"
 }
 
 class net.sourceforge.fenixedu.domain.precedences.Restriction extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1500,12 +1487,8 @@ class net.sourceforge.fenixedu.domain.SupportLesson extends net.sourceforge.feni
 	String place;
 	Date endTime;
 	interface "
-	public net.sourceforge.fenixedu.domain.IProfessorship getProfessorship();
-
 	public net.sourceforge.fenixedu.util.DiaSemana getWeekDay();
-	
-	public void setProfessorship(net.sourceforge.fenixedu.domain.IProfessorship professorship);
-	
+
 	public void setWeekDay(net.sourceforge.fenixedu.util.DiaSemana weekDay);
 	
 	public double hours();
@@ -1697,6 +1680,36 @@ class net.sourceforge.fenixedu.domain.Summary extends net.sourceforge.fenixedu.d
 	"
 }
 
+class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer teacherNumber;
+	Integer keyPerson;
+	Integer keyCategory;
+	interface "
+	public java.util.List getDegreeFinalProjectStudents();
+	
+	public java.util.List getInstitutionWorkTimePeriods();
+	
+	public java.util.List getManagementPositions();
+	
+	public java.util.List getOtherTypeCreditLines();
+	
+	public java.util.List getServiceExemptionSituations();
+	
+	public void setDegreeFinalProjectStudents(java.util.List degreeFinalProjectStudents);
+	
+	public void setInstitutionWorkTimePeriods(java.util.List institutionWorkTimePeriods);
+	
+	public void setManagementPositions(java.util.List managementPositions);
+	
+	public void setOtherTypeCreditLines(java.util.List otherTypeCreditLines);
+	
+	public void setServiceExemptionSituations(java.util.List serviceExemptionSituations);
+	
+	public net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits getExecutionPeriodCredits(IExecutionPeriod executionPeriod);
+	
+	public void notifyCreditsChange(net.sourceforge.fenixedu.domain.credits.event.CreditsEvent creditsEvent, net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator originator);
+	"
+}
 
 class net.sourceforge.fenixedu.domain.University extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
@@ -1732,11 +1745,12 @@ class net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope ext
 external class net.sourceforge.fenixedu.domain.Attends;
 external class net.sourceforge.fenixedu.domain.CurricularCourseScope;
 external class net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty;
+external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
 external class net.sourceforge.fenixedu.domain.ExecutionPeriod;
 external class net.sourceforge.fenixedu.domain.ExecutionYear;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
+external class net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
-external class net.sourceforge.fenixedu.domain.Teacher;
 
 
 /*
@@ -1900,6 +1914,12 @@ relation DelegateStudent {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Student playsRole student;
+}
+
+
+relation EmployeePerson {
+	net.sourceforge.fenixedu.domain.Employee playsRole employee;
+	net.sourceforge.fenixedu.domain.Person playsRole person;
 }
 
 
@@ -2133,11 +2153,35 @@ relation PersonRole {
 }
 
 
+relation PersonTeacher {
+	net.sourceforge.fenixedu.domain.Teacher playsRole associatedTeachers {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
+
 relation ProfessorshipSummary {
 	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Professorship playsRole professorship;
+}
+
+
+relation ProfessorshipSupportLesson {
+	net.sourceforge.fenixedu.domain.SupportLesson playsRole supportLessons {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Professorship playsRole professorship;
+}
+
+
+relation PublicationTeacherTeacher {
+	net.sourceforge.fenixedu.domain.publication.PublicationTeacher playsRole teacherPublications {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
 
 
@@ -2312,6 +2356,22 @@ relation TeacherCategory {
 
 relation TeacherOldPublication {
 	net.sourceforge.fenixedu.domain.teacher.OldPublication playsRole oldPublication {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+
+relation TeacherProfessorship {
+	net.sourceforge.fenixedu.domain.Professorship playsRole professorships {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+
+relation TeacherResponsibleFor {
+	net.sourceforge.fenixedu.domain.ResponsibleFor playsRole associatedResponsibles {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;

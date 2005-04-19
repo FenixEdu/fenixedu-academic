@@ -13,26 +13,12 @@ import net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits;
 import net.sourceforge.fenixedu.domain.credits.event.CreditsEvent;
 import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
 import net.sourceforge.fenixedu.domain.credits.util.InfoCreditsBuilder;
-import net.sourceforge.fenixedu.domain.teacher.ICategory;
 
 /**
  * @author EP15
  * @author Ivo Brandão
  */
-public class Teacher extends DomainObject implements ITeacher {
-    private ICategory category;
-
-    private Integer keyCategory;
-
-    private Integer keyPerson;
-
-    private IPerson person;
-
-    private Integer teacherNumber;
-
-    private List teacherPublications;
-
-    private List professorships;
+public class Teacher extends Teacher_Base {
 
     private List degreeFinalProjectStudents;
 
@@ -69,13 +55,6 @@ public class Teacher extends DomainObject implements ITeacher {
     }
 
     /**
-     * @return ICategory
-     */
-    public ICategory getCategory() {
-        return category;
-    }
-
-    /**
      * @return Returns the degreeFinalProjectStudents.
      */
     public List getDegreeFinalProjectStudents() {
@@ -87,20 +66,6 @@ public class Teacher extends DomainObject implements ITeacher {
      */
     public List getInstitutionWorkTimePeriods() {
         return institutionWorkTimePeriods;
-    }
-
-    /**
-     * @return Integer
-     */
-    public Integer getKeyCategory() {
-        return keyCategory;
-    }
-
-    /**
-     * @return Integer
-     */
-    public Integer getKeyPerson() {
-        return keyPerson;
     }
 
     /**
@@ -118,50 +83,10 @@ public class Teacher extends DomainObject implements ITeacher {
     }
 
     /**
-     * @return IPerson
-     */
-    public IPerson getPerson() {
-        return person;
-    }
-
-    /**
-     * @return Returns the professorships.
-     */
-    public List getProfessorships() {
-        return professorships;
-    }
-
-    /**
      * @return Returns the serviceExemptionSituations.
      */
     public List getServiceExemptionSituations() {
         return serviceExemptionSituations;
-    }
-
-    /**
-     * @return Integer
-     */
-    public Integer getTeacherNumber() {
-        return teacherNumber;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.ITeacher#getTeacherPublications()
-     */
-    public List getTeacherPublications() {
-        return this.teacherPublications;
-    }
-
-    /**
-     * Sets the category.
-     * 
-     * @param category
-     *            The category to set
-     */
-    public void setCategory(ICategory category) {
-        this.category = category;
     }
 
     /**
@@ -181,26 +106,6 @@ public class Teacher extends DomainObject implements ITeacher {
     }
 
     /**
-     * Sets the keyCategory.
-     * 
-     * @param keyCategory
-     *            The keyCategory to set
-     */
-    public void setKeyCategory(Integer keyCategory) {
-        this.keyCategory = keyCategory;
-    }
-
-    /**
-     * Sets the keyPerson.
-     * 
-     * @param keyPerson
-     *            The keyPerson to set
-     */
-    public void setKeyPerson(Integer keyPerson) {
-        this.keyPerson = keyPerson;
-    }
-
-    /**
      * @param managementPositions
      *            The managementPositions to set.
      */
@@ -217,47 +122,11 @@ public class Teacher extends DomainObject implements ITeacher {
     }
 
     /**
-     * Sets the person.
-     * 
-     * @param person
-     *            The person to set
-     */
-    public void setPerson(IPerson person) {
-        this.person = person;
-    }
-
-    /**
-     * @param professorships
-     *            The professorships to set.
-     */
-    public void setProfessorships(List professorships) {
-        this.professorships = professorships;
-    }
-
-    /**
      * @param serviceExemptionSituations
      *            The serviceExemptionSituations to set.
      */
     public void setServiceExemptionSituations(List serviceExemptionSituations) {
         this.serviceExemptionSituations = serviceExemptionSituations;
-    }
-
-    /**
-     * Sets the teacherNumber.
-     * 
-     * @param teacherNumber
-     *            The teacherNumber to set
-     */
-    public void setTeacherNumber(Integer teacherNumber) {
-        this.teacherNumber = teacherNumber;
-    }
-
-    /**
-     * @param teacherPublications
-     *            The teacherPublications to set.
-     */
-    public void setTeacherPublications(List teacherPublications) {
-        this.teacherPublications = teacherPublications;
     }
 
     public String toString() {

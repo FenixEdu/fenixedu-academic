@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.domain;
  * 
  *  
  */
-public class ResponsibleFor extends ResponsibleFor_Base implements IResponsibleFor {
+public class ResponsibleFor extends ResponsibleFor_Base {
     protected ITeacher teacher;
 
     protected IExecutionCourse executionCourse;

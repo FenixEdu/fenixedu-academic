@@ -13,7 +13,7 @@ import org.apache.ojb.broker.PersistenceBrokerException;
  * @author Fernanda Quitério 17/10/2003
  * @author jpvl
  */
-public class SupportLesson extends SupportLesson_Base implements ISupportLesson, PersistenceBrokerAware,
+public class SupportLesson extends SupportLesson_Base implements PersistenceBrokerAware,
         ICreditsEventOriginator {
     private IProfessorship professorship;
 

@@ -12,7 +12,7 @@ import org.apache.ojb.broker.PersistenceBrokerException;
 /**
  * @author João Mota
  */
-public class Professorship extends Professorship_Base implements IProfessorship, ICreditsEventOriginator,
+public class Professorship extends Professorship_Base implements ICreditsEventOriginator,
         PersistenceBrokerAware {
     protected ITeacher teacher;
 
