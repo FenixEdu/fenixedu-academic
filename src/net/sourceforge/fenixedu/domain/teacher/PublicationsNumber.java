@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.util.PublicationType;
  * @author Sergio Montelobo
  *  
  */
-public class PublicationsNumber extends PublicationsNumber_Base implements IPublicationsNumber {
+public class PublicationsNumber extends PublicationsNumber_Base {
     
     private PublicationType publicationType;
 
