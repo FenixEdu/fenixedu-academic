@@ -41,6 +41,8 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
     private String description;
 
     private String descriptionEn;
+    
+    private String anotation;
 
     //by gedl AT rnl dot IST dot UTL dot PT (August the 3rd, 2003)
     private List curricularCourses;
@@ -84,6 +86,7 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
         result += "Numerus Clausus = " + this.numerusClausus + ";";
         result += "Curricular Courses=" + this.curricularCourses + ";";
         result += "Descrição = " + this.description + ";";
+        result += "Anotation = " + this.anotation + ";";
         result += "]";
         return result;
     }
@@ -273,6 +276,14 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
         this.descriptionEn = descriptionEn;
     }
 
+    
+    public void prepareEnglishPresentation(String language) {
+        if (language.equals("en")){        
+            this.description = this.descriptionEn;
+        }
+    }
+    
+    
     public void copyFromDomain(IDegreeCurricularPlan plan) {
         super.copyFromDomain(plan);
         if (plan != null) {
@@ -284,6 +295,9 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
             setDescription(plan.getDescription());
             setDescriptionEn(plan.getDescriptionEn());
             setNeededCredits(plan.getNeededCredits());
+            setDegreeDuration(plan.getDegreeDuration());
+            setMinimalYearForOptionalCourses(plan.getMinimalYearForOptionalCourses());
+            setAnotation(plan.getAnotation());
         }
     }
 
@@ -321,4 +335,14 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
         }
         return degreeCurricularPlan;
     }
+
+    public String getAnotation() {
+        return anotation;
+    }
+    
+
+    public void setAnotation(String anotation) {
+        this.anotation = anotation;
+    }
+    
 }
