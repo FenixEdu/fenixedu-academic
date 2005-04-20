@@ -151,10 +151,6 @@ class net.sourceforge.fenixedu.domain.Coordinator extends net.sourceforge.fenixe
 	Boolean responsible;
 	
 	interface "
-		public net.sourceforge.fenixedu.domain.IExecutionDegree getExecutionDegree();
-		
-	    public void setExecutionDegree(net.sourceforge.fenixedu.domain.IExecutionDegree executionDegree);
-	    
     	public net.sourceforge.fenixedu.domain.ITeacher getTeacher();
     	
 	    public void setTeacher(net.sourceforge.fenixedu.domain.ITeacher teacher);
@@ -2035,7 +2031,6 @@ class net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute exten
  */
 
 external class net.sourceforge.fenixedu.domain.Attends;
-external class net.sourceforge.fenixedu.domain.Coordinator;
 external class net.sourceforge.fenixedu.domain.CurricularCourseScope;
 external class net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty;
 external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
