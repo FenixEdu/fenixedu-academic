@@ -1006,6 +1006,17 @@ class net.sourceforge.fenixedu.domain.grant.owner.GrantOwner extends net.sourcef
 }
 
 
+class net.sourceforge.fenixedu.domain.grant.contract.GrantType extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer minPeriodDays;
+	String sigla;
+	Integer maxPeriodDays;
+	Double indicativeValue;
+	Date state;
+	String source;
+	String name;
+}
+
+
 class net.sourceforge.fenixedu.domain.GratuitySituation extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer exemptionPercentage;
 	String exemptionDescription;
@@ -2177,7 +2188,6 @@ class net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute exten
 external class net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty;
 external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
 external class net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
-external class net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 
