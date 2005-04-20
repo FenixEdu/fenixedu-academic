@@ -895,6 +895,19 @@ class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fe
 }
 
 
+class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.fenixedu.domain.DomainObject implements net.sourceforge.fenixedu.fileSuport.INode {
+	Date beginDate;
+	Date endDate;
+	String year;
+	
+	interface "
+	void setState(net.sourceforge.fenixedu.util.PeriodState newState);
+
+	net.sourceforge.fenixedu.util.PeriodState getState();
+	"
+}
+
+
 class net.sourceforge.fenixedu.domain.ExternalPerson extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyWorkLocation;
 	Integer keyPerson;
@@ -2109,7 +2122,6 @@ class net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute exten
 external class net.sourceforge.fenixedu.domain.Attends;
 external class net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty;
 external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
-external class net.sourceforge.fenixedu.domain.ExecutionYear;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 
