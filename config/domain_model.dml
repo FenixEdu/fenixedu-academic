@@ -509,6 +509,17 @@ class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu
     class net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
     }
 
+class net.sourceforge.fenixedu.domain.EnrolmentEquivalence extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer enrolmentKey;
+    
+    interface "
+
+    public net.sourceforge.fenixedu.domain.IEnrolment getEnrolment();
+    public java.util.List getEquivalenceRestrictions();
+    public void setEnrolment(net.sourceforge.fenixedu.domain.IEnrolment enrolment);
+    public void setEquivalenceRestrictions(java.util.List list);
+    "
+}
 
 class net.sourceforge.fenixedu.domain.log.EnrolmentLog extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyCurricularCourse;

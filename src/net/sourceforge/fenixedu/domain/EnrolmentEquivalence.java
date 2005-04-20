@@ -8,11 +8,9 @@ import java.util.List;
  * 24/Mar/2003
  */
 
-public class EnrolmentEquivalence extends DomainObject implements IEnrolmentEquivalence {
+public class EnrolmentEquivalence extends EnrolmentEquivalence_Base {
 
     private IEnrolment enrolment;
-
-    private Integer enrolmentKey;
 
     private List equivalenceRestrictions;
 
@@ -44,13 +42,6 @@ public class EnrolmentEquivalence extends DomainObject implements IEnrolmentEqui
     }
 
     /**
-     * @return Integer
-     */
-    public Integer getEnrolmentKey() {
-        return enrolmentKey;
-    }
-
-    /**
      * Sets the enrolment.
      * 
      * @param enrolment
@@ -58,16 +49,6 @@ public class EnrolmentEquivalence extends DomainObject implements IEnrolmentEqui
      */
     public void setEnrolment(IEnrolment enrolment) {
         this.enrolment = enrolment;
-    }
-
-    /**
-     * Sets the enrolmentKey.
-     * 
-     * @param enrolmentKey
-     *            The enrolmentKey to set
-     */
-    public void setEnrolmentKey(Integer enrolmentKey) {
-        this.enrolmentKey = enrolmentKey;
     }
 
     public List getEquivalenceRestrictions() {
