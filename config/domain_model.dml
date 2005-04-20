@@ -969,6 +969,15 @@ class net.sourceforge.fenixedu.domain.support.GlossaryEntry extends net.sourcefo
 	String term;
 }
 
+
+class net.sourceforge.fenixedu.domain.grant.owner.GrantOwner extends net.sourceforge.fenixedu.domain.DomainObject {
+	Date dateSendCGD;
+	Integer cardCopyNumber;
+	Integer keyPerson;
+	Integer number;
+}
+
+
 class net.sourceforge.fenixedu.domain.GratuitySituation extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer exemptionPercentage;
 	String exemptionDescription;
@@ -2139,6 +2148,7 @@ class net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute exten
 
 external class net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty;
 external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
+external class net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 
@@ -2461,6 +2471,20 @@ relation GoalExecutionCourse {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+}
+
+
+relation GrantOwnerGrantContract {
+	net.sourceforge.fenixedu.domain.grant.owner.GrantOwner playsRole grantOwner;
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole grantContracts {
+		multiplicity *;
+	}
+}
+
+
+relation GrantOwnerPerson {
+	net.sourceforge.fenixedu.domain.grant.owner.GrantOwner playsRole grantOwner;
+	net.sourceforge.fenixedu.domain.Person playsRole person;
 }
 
 

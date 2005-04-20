@@ -1,0 +1,234 @@
+/* DOMAINGRANT.DML
+ * 
+ */
+ 
+class net.sourceforge.fenixedu.domain.grant.contract.GrantType extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer minPeriodDays;
+	String sigla;
+	Integer maxPeriodDays;
+	Double indicativeValue;
+	Date state;
+	String source;
+	String name;
+}
+
+
+class net.sourceforge.fenixedu.domain.grant.contract.GrantProject extends net.sourceforge.fenixedu.domain.DomainObject {
+	String ojbConcreteClass;
+	Integer keyResponsibleTeacher;
+	Integer keyGrantCostCenter;
+	String designation;
+	String number;
+}
+
+
+class net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter extends net.sourceforge.fenixedu.domain.DomainObject {
+	String ojbConcreteClass;
+	Integer keyResponsibleTeacher;
+	String designation;
+	String number;
+}
+
+
+class net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyTeacher;
+	Integer keyGrantContract;
+	Integer costCenterKey;
+	Date dateBeginContract;
+	Integer state;
+	Date dateDispatchCC;
+	Date dateSendDispatchCC;
+	Date dateDispatchCD;
+	Date dateSendDispatchCD;
+	Date dateEndContract;
+}
+
+
+class net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement extends net.sourceforge.fenixedu.domain.DomainObject {
+	Date departureDate;
+	Integer keyGrantContract;
+	String location;
+	Date arrivalDate;
+}
+
+class net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy extends net.sourceforge.fenixedu.domain.DomainObject {
+	Double value;
+	Integer keyGrantContract;
+	Date dateEndSubsidy;
+	Integer state;
+	Double totalCost;
+	Date dateBeginSubsidy;
+	String valueFullName;
+}
+
+
+class net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyTeacher;
+	Date beginDate;
+	Date endDate;
+	Integer keyContract;
+}
+
+
+class net.sourceforge.fenixedu.domain.grant.contract.GrantContract extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer costCenterKey;
+	String endContractMotive;
+	Integer keyGrantOwner;
+	Integer contractNumber;
+	Date dateAcceptTerm;
+	Integer keyGrantType;
+}
+
+
+class net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyGrantPaymentEntity;
+	Double totalValue;
+	Integer keyGrantContract;
+	Date dateEndInsurance;
+	Date dateBeginInsurance;
+}
+
+
+class net.sourceforge.fenixedu.domain.grant.contract.GrantPart extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyGrantPaymentEntity;
+	Integer keyResponsibleTeacher;
+	Integer keyGrantSubsidy;
+	Integer percentage;
+}
+
+
+class net.sourceforge.fenixedu.domain.grant.owner.GrantOwner extends net.sourceforge.fenixedu.domain.DomainObject {
+	Date dateSendCGD;
+	Integer cardCopyNumber;
+	Integer keyPerson;
+	Integer number;
+}
+
+
+class net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity extends net.sourceforge.fenixedu.domain.DomainObject {
+}
+
+relation ??? {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantPart playsRole ??? {
+		multiplicity ???;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole responsibleTeacher;
+}
+
+
+relation ??? {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement playsRole ??? {
+		multiplicity ???;
+	}
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole grantContract;
+}
+
+
+relation ??? {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter playsRole ??? {
+		multiplicity ???;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole responsibleTeacher;
+}
+
+
+relation GrantOwnerGrantContract {
+	net.sourceforge.fenixedu.domain.grant.owner.GrantOwner playsRole grantOwner;
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole grantContracts {
+		multiplicity *;
+	}
+}
+
+
+relation ??? {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantPart playsRole ??? {
+		multiplicity ???;
+	}
+	net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy playsRole grantSubsidy;
+}
+
+
+relation ??? {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole ??? {
+		multiplicity ???;
+	}
+	net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter playsRole grantCostCenter;
+}
+
+
+relation ??? {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantProject playsRole ??? {
+		multiplicity ???;
+	}
+	net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter playsRole grantCostCenter;
+}
+
+
+relation ??? {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime playsRole ??? {
+		multiplicity ???;
+	}
+	net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter playsRole grantCostCenter;
+}
+
+
+relation ??? {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance playsRole ??? {
+		multiplicity ???;
+	}
+	net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity playsRole grantPaymentEntity;
+}
+
+
+relation ??? {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole ??? {
+		multiplicity ???;
+	}
+	net.sourceforge.fenixedu.domain.grant.contract.GrantType playsRole grantType;
+}
+
+
+relation ??? {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime playsRole ??? {
+		multiplicity ???;
+	}
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole grantContract;
+}
+
+
+relation GrantOwnerPerson {
+	net.sourceforge.fenixedu.domain.grant.owner.GrantOwner playsRole grantOwner;
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
+
+relation ??? {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime playsRole ??? {
+		multiplicity ???;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+
+relation ??? {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher playsRole ??? {
+		multiplicity ???;
+	}
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole grantContract;
+}
+
+
+relation ??? {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantProject playsRole ??? {
+		multiplicity ???;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole responsibleTeacher;
+}
+
+
+relation ??? {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantPart playsRole ??? {
+		multiplicity ???;
+	}
+	net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity playsRole grantPaymentEntity;
+}
