@@ -158,7 +158,6 @@ class net.sourceforge.fenixedu.domain.GratuityValues {
 	Double creditValue;
 	Double finalProofValue;
 	Integer keyExecutionDegree;
-	Integer keyEmployee;
 }
 
 class net.sourceforge.fenixedu.domain.Coordinator {

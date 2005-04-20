@@ -145,6 +145,23 @@ class net.sourceforge.fenixedu.domain.Contributor extends net.sourceforge.fenixe
 	String contributorName;
 }
 
+class net.sourceforge.fenixedu.domain.Coordinator extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyExecutionDegree;
+	Integer keyTeacher;
+	Boolean responsible;
+	
+	interface "
+		public net.sourceforge.fenixedu.domain.IExecutionDegree getExecutionDegree();
+		
+	    public void setExecutionDegree(net.sourceforge.fenixedu.domain.IExecutionDegree executionDegree);
+	    
+    	public net.sourceforge.fenixedu.domain.ITeacher getTeacher();
+    	
+	    public void setTeacher(net.sourceforge.fenixedu.domain.ITeacher teacher);
+	"
+	
+}
+
 class net.sourceforge.fenixedu.domain.Country extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
 	String nationality;
