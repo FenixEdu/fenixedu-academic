@@ -97,8 +97,7 @@ public class ReadAllContractsByGrantOwner implements IService {
                     }
                     IGrantContractRegime grantContractRegime = (IGrantContractRegime) grantContractRegimeActual
                             .get(0);
-                    infoGrantContract.setActive(new Boolean(grantContractRegime
-                            .getContractRegimeActive()));
+                    infoGrantContract.setActive(grantContractRegime.getContractRegimeActive());
                 }
                 contractList.add(infoGrantContract);
             } catch (ExcepcaoPersistencia e) {

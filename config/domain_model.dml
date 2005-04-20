@@ -980,6 +980,24 @@ class net.sourceforge.fenixedu.domain.grant.contract.GrantContract extends net.s
 }
 
 
+class net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyTeacher;
+	Integer keyGrantContract;
+	Integer costCenterKey;
+	Date dateBeginContract;
+	Integer state;
+	Date dateDispatchCC;
+	Date dateSendDispatchCC;
+	Date dateDispatchCD;
+	Date dateSendDispatchCD;
+	Date dateEndContract;
+	
+	interface "
+	public Boolean getContractRegimeActive();
+	"
+}
+
+
 class net.sourceforge.fenixedu.domain.grant.owner.GrantOwner extends net.sourceforge.fenixedu.domain.DomainObject {
 	Date dateSendCGD;
 	Integer cardCopyNumber;
@@ -2159,7 +2177,6 @@ class net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute exten
 external class net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty;
 external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
 external class net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
-external class net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 external class net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
@@ -2507,6 +2524,22 @@ relation GrantContractRegimeGrantContract {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole grantContract;
+}
+
+
+relation GrantContractRegimeGrantCostCenter {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime playsRole associatedGrantContractRegimes {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter playsRole grantCostCenter;
+}
+
+
+relation GrantContractRegimeTeacher {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime playsRole associatedGrantContractRegimes {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
 
 
