@@ -18,193 +18,129 @@ import java.util.Date;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
-public class CandidateSituation extends DomainObject implements ICandidateSituation {
+public class CandidateSituation extends CandidateSituation_Base {
 
-    private Date date = null; // Candidate Situation Date
+	private Date date = null; // Candidate Situation Date
 
-    private String remarks = null; // Candidate Situation Remarks
+	private State validation = null; // Candidate Situation Validation
 
-    private State validation = null; // Candidate Situation Validation
+	private SituationName situation = null; // Candidate Situation
 
-    private SituationName situation = null; // Candidate Situation
+	private IMasterDegreeCandidate masterDegreeCandidate = null; // Instance
 
-    private IMasterDegreeCandidate masterDegreeCandidate = null; // Instance
+	public CandidateSituation() {
+		masterDegreeCandidate = null;
+		situation = null;
+		date = null;
+		setRemarks(null);
+		validation = null;
+	}
 
-    // from
-    // MasterDegreeCandidate
+	public CandidateSituation(Date date, String remarks, State validation,
+			IMasterDegreeCandidate masterDegreeCandidate,
+			SituationName situation) {
+		setMasterDegreeCandidate(masterDegreeCandidate);
+		setSituation(situation);
+		setDate(date);
+		setRemarks(remarks);
+		setValidation(validation);
+	}
 
-    // Internal Keys in Tables
-    private Integer candidateKey; // Internal Code for MasterDegreeCandidate
+	public String toString() {
+		String result = "Candidate Situation:\n";
+		result += "\n  - Internal Code : " + getIdInternal();
+		result += "\n  - Date : " + date;
+		result += "\n  - Remarks : " + getRemarks();
+		result += "\n  - Validation : " + validation;
+		result += "\n  - Master Degree Candidate : " + masterDegreeCandidate;
+		result += "\n  - Situation : " + situation;
 
-    private Integer situationKey; // Internal Code for Situation
+		return result;
+	}
 
-    public CandidateSituation() {
-        masterDegreeCandidate = null;
-        situation = null;
-        date = null;
-        remarks = null;
-        validation = null;
-    }
+	public boolean equals(Object o) {
+		if (o instanceof ICandidateSituation) {
+			return this.getIdInternal().equals(
+					((CandidateSituation) o).getIdInternal());
+		}
+		return false;
+	}
 
-    public CandidateSituation(Date date, String remarks, State validation,
-            IMasterDegreeCandidate masterDegreeCandidate, SituationName situation) {
-        setMasterDegreeCandidate(masterDegreeCandidate);
-        setSituation(situation);
-        setDate(date);
-        setRemarks(remarks);
-        setValidation(validation);
-    }
+	/**
+	 * Returns the date.
+	 * 
+	 * @return Date
+	 */
+	public Date getDate() {
+		return date;
+	}
 
-    public String toString() {
-        String result = "Candidate Situation:\n";
-        result += "\n  - Internal Code : " + getIdInternal();
-        result += "\n  - Date : " + date;
-        result += "\n  - Remarks : " + remarks;
-        result += "\n  - Validation : " + validation;
-        result += "\n  - Master Degree Candidate : " + masterDegreeCandidate;
-        result += "\n  - Situation : " + situation;
+	/**
+	 * Returns the masterDegreeCandidate.
+	 * 
+	 * @return IMasterDegreeCandidate
+	 */
+	public IMasterDegreeCandidate getMasterDegreeCandidate() {
+		return masterDegreeCandidate;
+	}
 
-        return result;
-    }
+	/**
+	 * Returns the situation.
+	 * 
+	 * @return SituationName
+	 */
+	public SituationName getSituation() {
+		return situation;
+	}
 
-    public boolean equals(Object o) {
-        if (o instanceof ICandidateSituation) {
-            return this.getIdInternal().equals(((CandidateSituation) o).getIdInternal());
-        }
-        return false;
-    }
+	/**
+	 * Returns the validation.
+	 * 
+	 * @return State
+	 */
+	public State getValidation() {
+		return validation;
+	}
 
-    /**
-     * Returns the candidateKey.
-     * 
-     * @return Integer
-     */
-    public Integer getCandidateKey() {
-        return candidateKey;
-    }
+	/**
+	 * Sets the date.
+	 * 
+	 * @param date
+	 *            The date to set
+	 */
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
-    /**
-     * Returns the date.
-     * 
-     * @return Date
-     */
-    public Date getDate() {
-        return date;
-    }
+	/**
+	 * Sets the masterDegreeCandidate.
+	 * 
+	 * @param masterDegreeCandidate
+	 *            The masterDegreeCandidate to set
+	 */
+	public void setMasterDegreeCandidate(
+			IMasterDegreeCandidate masterDegreeCandidate) {
+		this.masterDegreeCandidate = masterDegreeCandidate;
+	}
 
-    /**
-     * Returns the masterDegreeCandidate.
-     * 
-     * @return IMasterDegreeCandidate
-     */
-    public IMasterDegreeCandidate getMasterDegreeCandidate() {
-        return masterDegreeCandidate;
-    }
+	/**
+	 * Sets the situation.
+	 * 
+	 * @param situation
+	 *            The situation to set
+	 */
+	public void setSituation(SituationName situation) {
+		this.situation = situation;
+	}
 
-    /**
-     * Returns the remarks.
-     * 
-     * @return String
-     */
-    public String getRemarks() {
-        return remarks;
-    }
-
-    /**
-     * Returns the situation.
-     * 
-     * @return SituationName
-     */
-    public SituationName getSituation() {
-        return situation;
-    }
-
-    /**
-     * Returns the situationKey.
-     * 
-     * @return Integer
-     */
-    public Integer getSituationKey() {
-        return situationKey;
-    }
-
-    /**
-     * Returns the validation.
-     * 
-     * @return State
-     */
-    public State getValidation() {
-        return validation;
-    }
-
-    /**
-     * Sets the candidateKey.
-     * 
-     * @param candidateKey
-     *            The candidateKey to set
-     */
-    public void setCandidateKey(Integer candidateKey) {
-        this.candidateKey = candidateKey;
-    }
-
-    /**
-     * Sets the date.
-     * 
-     * @param date
-     *            The date to set
-     */
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    /**
-     * Sets the masterDegreeCandidate.
-     * 
-     * @param masterDegreeCandidate
-     *            The masterDegreeCandidate to set
-     */
-    public void setMasterDegreeCandidate(IMasterDegreeCandidate masterDegreeCandidate) {
-        this.masterDegreeCandidate = masterDegreeCandidate;
-    }
-
-    /**
-     * Sets the remarks.
-     * 
-     * @param remarks
-     *            The remarks to set
-     */
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
-    }
-
-    /**
-     * Sets the situation.
-     * 
-     * @param situation
-     *            The situation to set
-     */
-    public void setSituation(SituationName situation) {
-        this.situation = situation;
-    }
-
-    /**
-     * Sets the situationKey.
-     * 
-     * @param situationKey
-     *            The situationKey to set
-     */
-    public void setSituationKey(Integer situationKey) {
-        this.situationKey = situationKey;
-    }
-
-    /**
-     * Sets the validation.
-     * 
-     * @param validation
-     *            The validation to set
-     */
-    public void setValidation(State validation) {
-        this.validation = validation;
-    }
+	/**
+	 * Sets the validation.
+	 * 
+	 * @param validation
+	 *            The validation to set
+	 */
+	public void setValidation(State validation) {
+		this.validation = validation;
+	}
 
 } // End of class definition

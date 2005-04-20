@@ -132,6 +132,30 @@ class net.sourceforge.fenixedu.domain.CandidateEnrolment extends net.sourceforge
 	"
 }
 
+class net.sourceforge.fenixedu.domain.CandidateSituation extends net.sourceforge.fenixedu.domain.DomainObject {
+	String remarks;
+	Integer candidateKey;
+	Integer situationKey;
+	
+	interface "
+		public java.util.Date getDate();
+		
+		public void setDate(java.util.Date date);
+		
+		public net.sourceforge.fenixedu.util.SituationName getSituation();
+		
+		public void setSituation(net.sourceforge.fenixedu.util.SituationName situation);
+		
+		public net.sourceforge.fenixedu.domain.IMasterDegreeCandidate getMasterDegreeCandidate();
+		
+		public void setMasterDegreeCandidate(net.sourceforge.fenixedu.domain.IMasterDegreeCandidate masterDegreeCandidate);
+		
+		public net.sourceforge.fenixedu.util.State getValidation();
+		
+		public void setValidation(net.sourceforge.fenixedu.util.State validation);
+	"
+}
+
 class net.sourceforge.fenixedu.domain.teacher.Category extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
 	String longName;
