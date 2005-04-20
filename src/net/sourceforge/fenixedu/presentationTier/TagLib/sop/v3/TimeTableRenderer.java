@@ -9,10 +9,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.struts.util.MessageResources;
-
 /**
  * @author jpvl
  */

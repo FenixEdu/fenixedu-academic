@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.renderers;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMap;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMapSlot;

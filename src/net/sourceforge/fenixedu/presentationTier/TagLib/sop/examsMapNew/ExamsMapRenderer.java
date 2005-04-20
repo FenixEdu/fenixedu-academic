@@ -22,7 +22,6 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.apache.tools.ant.taskdefs.BUnzip2;
 
 /*
  * @author Ana & Ricardo

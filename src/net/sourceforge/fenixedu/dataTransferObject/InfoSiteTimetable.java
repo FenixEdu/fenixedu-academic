@@ -7,8 +7,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-
 /**
  * @author João Mota
  * 
