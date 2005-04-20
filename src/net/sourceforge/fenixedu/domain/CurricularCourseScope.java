@@ -8,15 +8,7 @@ import java.util.Calendar;
  * 20/Mar/2003
  */
 
-public class CurricularCourseScope extends DomainObject implements ICurricularCourseScope {
-
-    private Integer curricularCourseKey;
-
-    private Integer curricularSemesterKey;
-
-    private Integer branchKey;
-
-    private ICurricularCourse curricularCourse;
+public class CurricularCourseScope extends CurricularCourseScope_Base {
 
     private ICurricularSemester curricularSemester;
 
@@ -71,7 +63,7 @@ public class CurricularCourseScope extends DomainObject implements ICurricularCo
     public String toString() {
         String result = "[" + this.getClass().getName() + ": ";
         result += "idInternal = " + this.getIdInternal() + "; ";
-        result += "curricularCourse = " + this.curricularCourse + "; ";
+        result += "curricularCourse = " + this.getCurricularCourse() + "; ";
         result += "curricularSemester = " + this.curricularSemester + "; ";
         result += "branch = " + this.branch + "; ";
         result += "endDate = " + this.endDate + "]\n";
@@ -118,51 +110,6 @@ public class CurricularCourseScope extends DomainObject implements ICurricularCo
     }
 
     /**
-     * @return Returns the branchKey.
-     */
-    public Integer getBranchKey() {
-        return branchKey;
-    }
-
-    /**
-     * @param branchKey
-     *            The branchKey to set.
-     */
-    public void setBranchKey(Integer branchKey) {
-        this.branchKey = branchKey;
-    }
-
-    /**
-     * @return Returns the curricularCourse.
-     */
-    public ICurricularCourse getCurricularCourse() {
-        return curricularCourse;
-    }
-
-    /**
-     * @param curricularCourse
-     *            The curricularCourse to set.
-     */
-    public void setCurricularCourse(ICurricularCourse curricularCourse) {
-        this.curricularCourse = curricularCourse;
-    }
-
-    /**
-     * @return Returns the curricularCourseKey.
-     */
-    public Integer getCurricularCourseKey() {
-        return curricularCourseKey;
-    }
-
-    /**
-     * @param curricularCourseKey
-     *            The curricularCourseKey to set.
-     */
-    public void setCurricularCourseKey(Integer curricularCourseKey) {
-        this.curricularCourseKey = curricularCourseKey;
-    }
-
-    /**
      * @return Returns the curricularSemester.
      */
     public ICurricularSemester getCurricularSemester() {
@@ -175,21 +122,6 @@ public class CurricularCourseScope extends DomainObject implements ICurricularCo
      */
     public void setCurricularSemester(ICurricularSemester curricularSemester) {
         this.curricularSemester = curricularSemester;
-    }
-
-    /**
-     * @return Returns the curricularSemesterKey.
-     */
-    public Integer getCurricularSemesterKey() {
-        return curricularSemesterKey;
-    }
-
-    /**
-     * @param curricularSemesterKey
-     *            The curricularSemesterKey to set.
-     */
-    public void setCurricularSemesterKey(Integer curricularSemesterKey) {
-        this.curricularSemesterKey = curricularSemesterKey;
     }
 
     /**

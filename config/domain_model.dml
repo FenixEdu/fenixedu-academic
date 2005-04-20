@@ -331,6 +331,41 @@ class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourcefo
     class net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup extends net.sourceforge.fenixedu.domain.CurricularCourseGroup {
     }
 
+class net.sourceforge.fenixedu.domain.CurricularCourseScope extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer branchKey;
+    Integer curricularCourseKey;
+    Integer curricularSemesterKey;
+    
+    interface "
+
+    public net.sourceforge.fenixedu.domain.IBranch getBranch();
+    public net.sourceforge.fenixedu.domain.ICurricularSemester getCurricularSemester();
+    public java.util.Calendar getBeginDate();
+    public java.util.Calendar getEndDate();
+    public void setBranch(net.sourceforge.fenixedu.domain.IBranch branch);
+    public void setCurricularSemester(net.sourceforge.fenixedu.domain.ICurricularSemester curricularSemester);
+    public void setBeginDate(java.util.Calendar beginDate);
+    public void setEndDate(java.util.Calendar endDate);
+    public Boolean isActive();
+    "
+}
+
+class net.sourceforge.fenixedu.domain.CurricularSemester extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer curricularYearKey;
+    Integer semester;
+    
+    interface "
+    
+    public net.sourceforge.fenixedu.domain.ICurricularYear getCurricularYear();
+    public java.util.List getScopes();
+    public void setCurricularYear(net.sourceforge.fenixedu.domain.ICurricularYear curricularYear);
+    public void setScopes(java.util.List scopes);
+    "
+}
+
+class net.sourceforge.fenixedu.domain.CurricularYear extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer year;
+}
 
 class net.sourceforge.fenixedu.domain.Curriculum extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPersonWhoAltered;
@@ -2055,7 +2090,6 @@ class net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute exten
  */
 
 external class net.sourceforge.fenixedu.domain.Attends;
-external class net.sourceforge.fenixedu.domain.CurricularCourseScope;
 external class net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty;
 external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
 external class net.sourceforge.fenixedu.domain.ExecutionPeriod;
