@@ -11,37 +11,19 @@ import net.sourceforge.fenixedu.util.TipoCurso;
  * @author dcs-rjao 24/Mar/2003
  */
 
-public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvaluation, Comparable {
+public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
     //private String RECTIFIED = "RECTIFICADO";
-    private String RECTIFICATION = "RECTIFICAÇÃO";
-
-    private String grade;
+    private String RECTIFICATION = "RECTIFICAï¿½ï¿½O";
 
     private EnrolmentEvaluationType enrolmentEvaluationType;
 
-    private Date examDate;
-
-    private Date gradeAvailableDate;
-
     private EnrolmentEvaluationState enrolmentEvaluationState;
-
-    private Date when;
-
-    private String checkSum;
-
-    private String observation;
 
     private IEnrolment enrolment;
 
     private IPerson personResponsibleForGrade;
 
     private IEmployee employee;
-
-    private Integer enrolmentKey;
-
-    private Integer personResponsibleForGradeKey;
-
-    private Integer employeeKey;
 
     public EnrolmentEvaluation() {
     }
@@ -58,15 +40,15 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
 
     public String toString() {
         String result = "[" + this.getClass().getName() + "; ";
-        result += "grade = " + this.grade + "; ";
+        result += "grade = " + this.getGrade() + "; ";
         result += "enrolmentEvaluationType = " + this.enrolmentEvaluationType + "; ";
-        result += "examDate = " + this.examDate + "; ";
+        result += "examDate = " + this.getExamDate() + "; ";
         result += "personResponsibleForGrade = " + this.personResponsibleForGrade + "; ";
         result += "enrolmentEvaluationState = " + this.enrolmentEvaluationState + "; ";
-        result += "when = " + this.when + "; ";
-        result += "checkSum = " + this.checkSum + "; ";
+        result += "when = " + this.getWhen() + "; ";
+        result += "checkSum = " + this.getCheckSum() + "; ";
         result += "enrolment = " + this.enrolment + "; ";
-        result += "gradeAvailableDate = " + this.gradeAvailableDate + "]\n";
+        result += "gradeAvailableDate = " + this.getGradeAvailableDate() + "]\n";
         result += "employee = " + this.employee + "; ";
         return result;
     }
@@ -75,24 +57,8 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
         return enrolment;
     }
 
-    public Integer getEnrolmentKey() {
-        return enrolmentKey;
-    }
-
     public EnrolmentEvaluationType getEnrolmentEvaluationType() {
         return enrolmentEvaluationType;
-    }
-
-    public Date getExamDate() {
-        return examDate;
-    }
-
-    public String getGrade() {
-        return grade;
-    }
-
-    public Date getGradeAvailableDate() {
-        return gradeAvailableDate;
     }
 
     public EnrolmentEvaluationState getEnrolmentEvaluationState() {
@@ -103,24 +69,8 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
         this.enrolment = enrolment;
     }
 
-    public void setEnrolmentKey(Integer integer) {
-        enrolmentKey = integer;
-    }
-
     public void setEnrolmentEvaluationType(EnrolmentEvaluationType type) {
         enrolmentEvaluationType = type;
-    }
-
-    public void setExamDate(Date date) {
-        examDate = date;
-    }
-
-    public void setGrade(String string) {
-        grade = string;
-    }
-
-    public void setGradeAvailableDate(Date date) {
-        gradeAvailableDate = date;
     }
 
     public void setEnrolmentEvaluationState(EnrolmentEvaluationState state) {
@@ -131,56 +81,16 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
         return personResponsibleForGrade;
     }
 
-    public Integer getPersonResponsibleForGradeKey() {
-        return personResponsibleForGradeKey;
-    }
-
     public void setPersonResponsibleForGrade(IPerson person) {
         personResponsibleForGrade = person;
-    }
-
-    public void setPersonResponsibleForGradeKey(Integer integer) {
-        personResponsibleForGradeKey = integer;
     }
 
     public IEmployee getEmployee() {
         return employee;
     }
 
-    public Integer getEmployeeKey() {
-        return employeeKey;
-    }
-
     public void setEmployee(IEmployee employee) {
         this.employee = employee;
-    }
-
-    public void setEmployeeKey(Integer integer) {
-        employeeKey = integer;
-    }
-
-    public String getCheckSum() {
-        return checkSum;
-    }
-
-    public Date getWhen() {
-        return when;
-    }
-
-    public void setCheckSum(String string) {
-        checkSum = string;
-    }
-
-    public void setWhen(Date date) {
-        when = date;
-    }
-
-    public String getObservation() {
-        return observation;
-    }
-
-    public void setObservation(String string) {
-        observation = string;
     }
 
     /**

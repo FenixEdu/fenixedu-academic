@@ -521,6 +521,36 @@ class net.sourceforge.fenixedu.domain.EnrolmentEquivalence extends net.sourcefor
     "
 }
 
+class net.sourceforge.fenixedu.domain.EnrolmentEvaluation extends net.sourceforge.fenixedu.domain.DomainObject 
+    implements Comparable {
+    String checkSum;
+    Date when;
+    Integer personResponsibleForGradeKey;
+    String observation;
+    Integer employeeKey;
+    Integer enrolmentKey;
+    Date gradeAvailableDate;
+    Date examDate;
+    String grade;
+    
+    interface "
+
+    public abstract net.sourceforge.fenixedu.domain.IEnrolment getEnrolment();
+    public abstract net.sourceforge.fenixedu.util.EnrolmentEvaluationType getEnrolmentEvaluationType();
+    public abstract net.sourceforge.fenixedu.util.EnrolmentEvaluationState getEnrolmentEvaluationState();
+    public abstract net.sourceforge.fenixedu.domain.IPerson getPersonResponsibleForGrade();
+    public abstract net.sourceforge.fenixedu.domain.IEmployee getEmployee();
+    public abstract void setPersonResponsibleForGrade(net.sourceforge.fenixedu.domain.IPerson teacher);
+    public abstract void setEnrolment(net.sourceforge.fenixedu.domain.IEnrolment enrolment);
+    public abstract void setEnrolmentEvaluationType(net.sourceforge.fenixedu.util.EnrolmentEvaluationType type);
+    public abstract void setEnrolmentEvaluationState(net.sourceforge.fenixedu.util.EnrolmentEvaluationState state);
+    public abstract void setEmployee(net.sourceforge.fenixedu.domain.IEmployee employee);
+    public abstract boolean isNormal();
+    public abstract boolean isImprovment();
+
+    "
+}
+
 class net.sourceforge.fenixedu.domain.log.EnrolmentLog extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyCurricularCourse;
     Date date;
