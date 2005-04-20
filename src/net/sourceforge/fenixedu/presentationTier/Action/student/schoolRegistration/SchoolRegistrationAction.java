@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student.schoolRegistration;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;

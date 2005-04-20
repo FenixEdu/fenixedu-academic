@@ -5,8 +5,6 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
 import java.io.IOException;
-import java.io.StringWriter;
-import java.util.Enumeration;
 import java.util.Locale;
 
 import javax.servlet.Filter;

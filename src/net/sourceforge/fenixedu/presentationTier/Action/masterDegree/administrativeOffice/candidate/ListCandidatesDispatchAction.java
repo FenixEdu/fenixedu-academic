@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.candidate;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Iterator;
@@ -26,8 +25,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
-import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.Gender;
+import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;

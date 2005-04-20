@@ -13,7 +13,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
@@ -29,8 +28,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.Gender;
+import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
