@@ -335,7 +335,7 @@ class net.sourceforge.fenixedu.domain.CurricularCourseScope extends net.sourcefo
     Integer branchKey;
     Integer curricularCourseKey;
     Integer curricularSemesterKey;
-    
+
     interface "
 
     public net.sourceforge.fenixedu.domain.IBranch getBranch();
@@ -877,6 +877,23 @@ class net.sourceforge.fenixedu.domain.ExecutionDegree extends net.sourceforge.fe
 	public void setPeriodExamsSecondSemester(net.sourceforge.fenixedu.domain.IPeriod periodExamsSecondSemester);
 	"
 }
+
+
+class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fenixedu.domain.DomainObject implements net.sourceforge.fenixedu.fileSuport.INode {
+	Integer keyExecutionYear;
+	Date beginDate;
+	Integer keyPreviousExecutionPeriod;
+	Date endDate;
+	String name;
+	Integer semester;
+	
+	interface "
+	void setState(net.sourceforge.fenixedu.util.PeriodState newState);
+
+	net.sourceforge.fenixedu.util.PeriodState getState();
+	"
+}
+
 
 class net.sourceforge.fenixedu.domain.ExternalPerson extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyWorkLocation;
@@ -2092,7 +2109,6 @@ class net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute exten
 external class net.sourceforge.fenixedu.domain.Attends;
 external class net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty;
 external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
-external class net.sourceforge.fenixedu.domain.ExecutionPeriod;
 external class net.sourceforge.fenixedu.domain.ExecutionYear;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
@@ -2365,13 +2381,27 @@ relation ExecutionDegreeCoordinator {
 }
 
 
-
 relation ExecutionPeriodExecutionCourse {
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole associatedExecutionCourses {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
 }
+
+
+relation ExecutionPeriodExecutionPeriod {
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole nextExecutionPeriod;
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole previousExecutionPeriod;
+}
+
+
+relation ExecutionPeriodExecutionYear {
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriods {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+}
+
 
 relation ExecutionPeriodSchoolClass {
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
