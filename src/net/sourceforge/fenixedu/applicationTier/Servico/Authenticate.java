@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
@@ -89,8 +91,8 @@ public class Authenticate implements IService, Serializable {
 			super();
 			this.utilizador = utilizador;
 			if (roles != null) {
-				final Set rolesSet = new HashSet(roles);
-				this.roles = Collections.unmodifiableSet(rolesSet);
+                final SortedSet rolesSet = new TreeSet(roles);
+                this.roles = Collections.unmodifiableSortedSet(rolesSet);
 			} else {
 				this.roles = null;
 			}
@@ -100,7 +102,8 @@ public class Authenticate implements IService, Serializable {
 			if (roles == null) {
 				return false;
 			}
-			return roles.contains(roleType);
+            final InfoRole infoRole = new InfoRole(roleType);
+            return roles.contains(infoRole);
 		}
 
 		public String getUtilizador() {

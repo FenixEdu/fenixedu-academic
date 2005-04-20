@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 /**
  * @author jpvl
  */
-public class InfoRole extends InfoObject {
+public class InfoRole extends InfoObject implements Comparable {
     private String portalSubApplication;
 
     private String page;
@@ -105,8 +105,7 @@ public class InfoRole extends InfoObject {
     }
 
     public boolean equals(Object o) {
-        return ((o instanceof InfoRole) &&
-        this.roleType.equals(((InfoRole) o).getRoleType()));
+        return ((o instanceof InfoRole) && this.roleType.equals(((InfoRole) o).getRoleType()));
     }
 
     public int hashCode() {
@@ -131,6 +130,14 @@ public class InfoRole extends InfoObject {
         }
 
         return null;
+    }
+
+    public int compareTo(Object o) {
+        if (o != null && o instanceof InfoRole) {
+            final InfoRole infoRole = (InfoRole) o;
+            return getRoleType().compareTo(infoRole.getRoleType());
+        }
+        return 0;
     }
 
 }

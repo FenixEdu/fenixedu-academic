@@ -4,12 +4,13 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 /**
  * @author jpvl
  */
-public class Role extends Role_Base {
+public class Role extends Role_Base implements Comparable {
 
     private RoleType roleType;
 
@@ -36,6 +37,14 @@ public class Role extends Role_Base {
      */
     public void setRoleType(RoleType roleType) {
         this.roleType = roleType;
+    }
+
+    public int compareTo(Object o) {
+        if (o != null && o instanceof InfoRole) {
+            final InfoRole infoRole = (InfoRole) o;
+            return getRoleType().compareTo(infoRole.getRoleType());
+        }
+        return 0;
     }
 
 }
