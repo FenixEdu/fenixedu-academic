@@ -970,6 +970,16 @@ class net.sourceforge.fenixedu.domain.support.GlossaryEntry extends net.sourcefo
 }
 
 
+class net.sourceforge.fenixedu.domain.grant.contract.GrantContract extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer costCenterKey;
+	String endContractMotive;
+	Integer keyGrantOwner;
+	Integer contractNumber;
+	Date dateAcceptTerm;
+	Integer keyGrantType;
+}
+
+
 class net.sourceforge.fenixedu.domain.grant.owner.GrantOwner extends net.sourceforge.fenixedu.domain.DomainObject {
 	Date dateSendCGD;
 	Integer cardCopyNumber;
@@ -2148,7 +2158,9 @@ class net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute exten
 
 external class net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty;
 external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
-external class net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
+external class net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
+external class net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
+external class net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 
@@ -2471,6 +2483,30 @@ relation GoalExecutionCourse {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+}
+
+
+relation GrantContractGrantCostCenter {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole associatedGrantContracts {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter playsRole grantCostCenter;
+}
+
+
+relation GrantContractGrantType {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole associatedGrantContracts {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.grant.contract.GrantType playsRole grantType;
+}
+
+
+relation GrantContractRegimeGrantContract {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime playsRole contractRegimes {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole grantContract;
 }
 
 

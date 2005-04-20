@@ -148,9 +148,9 @@ relation ??? {
 }
 
 
-relation ??? {
-	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole ??? {
-		multiplicity ???;
+relation GrantContractGrantCostCenter {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole associatedGrantContracts {
+		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter playsRole grantCostCenter;
 }
@@ -180,17 +180,17 @@ relation ??? {
 }
 
 
-relation ??? {
-	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole ??? {
-		multiplicity ???;
+relation GrantContractGrantType {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole associatedGrantContracts {
+		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.grant.contract.GrantType playsRole grantType;
 }
 
 
-relation ??? {
-	net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime playsRole ??? {
-		multiplicity ???;
+relation GrantContractRegimeGrantContract {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime playsRole contractRegimes {
+		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole grantContract;
 }
