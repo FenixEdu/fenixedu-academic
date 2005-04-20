@@ -39,10 +39,28 @@ class net.sourceforge.fenixedu.domain.Announcement extends net.sourceforge.fenix
 
 
 class net.sourceforge.fenixedu.domain.AttendInAttendsSet extends net.sourceforge.fenixedu.domain.DomainObject {
-        Integer keyAttend;
-        Integer keyAttendsSet;
+	Integer keyAttend;
+	Integer keyAttendsSet;
         
 }
+
+
+class net.sourceforge.fenixedu.domain.Attends extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer chaveDisciplinaExecucao;
+	Integer chaveAluno;
+	Integer keyEnrolment;
+	
+	interface "
+	public java.util.List getAttendsSets();
+
+	public void addAttendInAttendsSet(IAttendInAttendsSet attendInAttendsSet);
+	
+	public void removeAttendInAttendsSet(IAttendInAttendsSet attendInAttendsSet);
+	
+	public boolean existsAttendInAttendsSet(IAttendInAttendsSet attendInAttendsSet);
+	"	
+}
+
 
 class net.sourceforge.fenixedu.domain.AttendsSet extends net.sourceforge.fenixedu.domain.DomainObject {
         String name;
@@ -2119,7 +2137,6 @@ class net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute exten
  * 
  */
 
-external class net.sourceforge.fenixedu.domain.Attends;
 external class net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty;
 external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
@@ -2146,12 +2163,29 @@ relation AttendBelongsToAttendsSet {
 }
 
 
+relation AttendsEnrolment {
+	net.sourceforge.fenixedu.domain.Attends playsRole attends {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Enrolment playsRole enrolment;
+}
+
+
 relation AttendsSetHasAttend {
 	net.sourceforge.fenixedu.domain.AttendInAttendsSet playsRole attendInAttendsSet {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.AttendsSet playsRole attendsSet;
 }
+
+
+relation AttendsStudent {
+	net.sourceforge.fenixedu.domain.Attends playsRole associatedAttends {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Student playsRole aluno;
+}
+
 
 relation BelongsTo {
 	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
@@ -2314,7 +2348,7 @@ relation ExamExecutionCourse {
 
 
 relation ExecutionCourseAttends {
-	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole disciplinaExecucao;
 	net.sourceforge.fenixedu.domain.Attends playsRole attends {
 		multiplicity *;
 	}

@@ -252,7 +252,7 @@ relation RoomBuilding {
 }
 
 relation ExecutionCourseAttends {
-	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole disciplinaExecucao;
 	net.sourceforge.fenixedu.domain.Attends playsRole attends {
 		multiplicity *;
 	}
@@ -302,7 +302,7 @@ relation AttendsStudent {
 	net.sourceforge.fenixedu.domain.Attends playsRole attends {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.Student playsRole student;
+	net.sourceforge.fenixedu.domain.Student playsRole aluno;
 }
 
 relation SchoolClassExecutionDegree {
