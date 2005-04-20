@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,8 +20,10 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.Util;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixCacheFilter;
 import net.sourceforge.fenixedu.util.TipoSala;
 
+import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -47,8 +50,11 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
         if (degreeId == null)
             degreeId = Integer.valueOf(request.getParameter("degreeID"));
         request.setAttribute("degreeID", degreeId);
-
+        
+//        String language = getLocaleLanguageFromRequest(request);
+        
         Integer index = (Integer) indexForm.get("index");
+        
         request.setAttribute("index", index);
         indexForm.set("index", index);
 
@@ -83,7 +89,14 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
 
 				List executionPeriodsLabelValueList = new ArrayList();
 				InfoExecutionDegree infoExecutionDegree1 = (InfoExecutionDegree) infoExecutionDegreeList.get(0);
-				
+				//MEU
+//                InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
+//                infoDegreeCurricularPlan = infoExecutionDegree1.getInfoDegreeCurricularPlan();
+//                infoDegreeCurricularPlan.prepareEnglishPresentation(language);
+//                infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+                //
+                
+                
 				executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionDegree1.getInfoExecutionYear().getYear(), "" + infoExecutionDegree1.getInfoExecutionYear().getIdInternal()));
 				
 				 for (int i = 1; i < infoExecutionDegreeList.size(); i++) {
@@ -163,7 +176,8 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
             types.add(new LabelValueBean("Plana", (new Integer(TipoSala.PLANA)).toString()));
             request.setAttribute("publico.types", types);
 
-            return mapping.findForward("Sucess");
+            ActionForward actionForward = mapping.findForward("Sucess");
+            return actionForward;
        // }
        // throw new Exception();
     }
@@ -225,9 +239,18 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
-
+       
+//System.out.println("dAAAAAAAAAAAAAAAAAAAA"+ request.getQueryString());
+        request.setAttribute("windowLocation",FenixCacheFilter.getPageURL(request));
         RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);
         return mapping.findForward("Sucess");
+
+    }
+    private String getLocaleLanguageFromRequest(HttpServletRequest request) {
+
+        Locale locale = (Locale) request.getSession(false).getAttribute(Action.LOCALE_KEY);
+        Locale locale2 = request.getLocale();
+        return  locale.getLanguage();
 
     }
 }

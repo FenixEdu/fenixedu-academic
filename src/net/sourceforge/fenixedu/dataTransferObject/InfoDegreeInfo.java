@@ -314,6 +314,21 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
         return result;
     }
 
+    
+    public void prepareEnglishPresentation(String language) {
+        if (language.equals("en")){
+            this.additionalInfo = this.additionalInfoEn;
+            this.classifications = this.classificationsEn;
+            this.description = this.descriptionEn;
+            this.history = this.historyEn;
+            this.links = this.linksEn;
+            this.objectives = this.objectivesEn;
+            this.professionalExits = this.professionalExitsEn;
+            this.testIngression = this.testIngressionEn;    
+        }
+    }
+    
+    
     //Once copyProperties in Cloner transform a null Integer in Zero Integer
     //This method recapture all null values
     public void recaptureNULLs(IDegreeInfo degreeInfo) {

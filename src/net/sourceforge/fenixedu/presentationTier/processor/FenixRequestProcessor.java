@@ -6,12 +6,15 @@ package net.sourceforge.fenixedu.presentationTier.processor;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts.Globals;
+import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.RequestProcessor;
@@ -29,6 +32,13 @@ public class FenixRequestProcessor extends RequestProcessor {
      *      javax.servlet.http.HttpServletResponse)
      */
     protected boolean processPreprocess(HttpServletRequest request, HttpServletResponse response) {
+
+        HttpSession httpSession = request.getSession(false);
+        Locale locale = (Locale) httpSession.getAttribute(Action.LOCALE_KEY);
+        if (locale == null) {
+            httpSession.setAttribute(Action.LOCALE_KEY, Locale.getDefault());
+        }
+
         String uri = request.getRequestURI();
         try {
             request.setCharacterEncoding("ISO-8859-1");

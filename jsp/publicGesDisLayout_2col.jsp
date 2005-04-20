@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<html:html xhtml="true">
+<html:html locale="true">
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
@@ -63,6 +63,7 @@
 
 <!-- DEGREE SITE -->
 <td width="100%" colspan="3" id="main">
+
 	<tiles:insert attribute="executionCourseName" ignore="true"/>
 	<tiles:insert attribute="executionCoursePeriod" ignore="true"/>
 	<!-- CONTEXTUAL NAVIGATION -->

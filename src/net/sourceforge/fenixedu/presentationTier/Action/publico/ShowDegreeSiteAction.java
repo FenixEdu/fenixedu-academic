@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +27,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstan
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -41,7 +43,11 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
     public ActionForward showDescription(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
-
+        
+      //  Locale locale = (Locale) request.getSession(false).getAttribute(Action.LOCALE_KEY);
+      //  Locale locale2 = request.getLocale();
+        String language = getLocaleLanguageFromRequest(request);
+      
         Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
         // request.setAttribute("executionPeriodOID", executionPeriodOId);
 
@@ -49,7 +55,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
         request.setAttribute("degreeID", degreeId);
 
         Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
-        request.setAttribute("inEnglish", inEnglish);
+      //  request.setAttribute("inEnglish", inEnglish);
 
         Integer index = getFromRequest("index", request);
         request.setAttribute("index", index);
@@ -94,7 +100,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
             }
 
             Object[] args2 = { infoExecutionYear };
-
+            
             List executionPeriods = null;
             try {
                 executionPeriods = (List) ServiceManagerServiceFactory.executeService(null,
@@ -148,23 +154,23 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 
         request.setAttribute("infoDegreeInfo", infoDegreeInfo);
         request.setAttribute("infoExecutionDegrees", executionDegreeList);
+       
+//        // done by the boce
+        infoDegreeInfo.prepareEnglishPresentation(language);
+        request.setAttribute("inEnglish", inEnglish);
 
-        if (inEnglish == null || inEnglish.booleanValue() == false) {
-            return mapping.findForward("showDescription");
-        }
-
-        return mapping.findForward("showDescriptionEnglish");
+      
+        return mapping.findForward("showDescription");
 
     }
 
     public ActionForward showAccessRequirements(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
-
+        
+        String language = getLocaleLanguageFromRequest(request);
+        
         Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
-        // request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID,
-        // executionPeriodOId);
-
         Integer degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
 
@@ -172,8 +178,8 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
         request.setAttribute("executionDegreeID", executionDegreeId);
 
         Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
-        request.setAttribute("inEnglish", inEnglish);
-
+        
+        
         // degree information
         Object[] args = { executionPeriodOId, degreeId };
 
@@ -184,16 +190,15 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
         } catch (FenixServiceException e) {
             errors.add("impossibleDegreeSite", new ActionError("error.public.DegreeInfoNotPresent"));
             saveErrors(request, errors);
-            // return (new ActionForward(mapping.getInput()));
 
         }
 
+        // done by the boce
+        infoDegreeInfo.prepareEnglishPresentation(language);
+        request.setAttribute("inEnglish", inEnglish);
         request.setAttribute("infoDegreeInfo", infoDegreeInfo);
-        if (inEnglish == null || inEnglish.booleanValue() == false) {
-            return mapping.findForward("showAccessRequirements");
-        }
-
-        return mapping.findForward("showAccessRequirementsEnglish");
+        
+        return mapping.findForward("showAccessRequirements");
 
     }
 
@@ -203,7 +208,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 
         Integer degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
-
+        String language = getLocaleLanguageFromRequest(request);
         Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
@@ -226,11 +231,11 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
         }
 
         request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
-        if (inEnglish == null || inEnglish.booleanValue() == false) {
-            return mapping.findForward("showCurricularPlans");
-        }
 
-        return mapping.findForward("showCurricularPlansEnglish");
+//      done by the boce
+        infoDegreeCurricularPlan.prepareEnglishPresentation(language);
+        return mapping.findForward("showCurricularPlans");
+        
 
     }
 
@@ -472,4 +477,13 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
         return infoDegreeCurricularPlan;
 
     }
+    
+    private String getLocaleLanguageFromRequest(HttpServletRequest request) {
+
+        Locale locale = (Locale) request.getSession(false).getAttribute(Action.LOCALE_KEY);
+        Locale locale2 = request.getLocale();
+        return  locale.getLanguage();
+
+    }
+
 }

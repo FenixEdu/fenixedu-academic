@@ -6,6 +6,8 @@
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew;
 
 import java.util.Calendar;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
@@ -37,13 +39,13 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
         setUser(typeUser);
     }
 
-    public StringBuffer render() {
+    public StringBuffer render(Locale locale) {
         StringBuffer strBuffer = new StringBuffer("");
-
+        ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
         strBuffer.append("<table class='examMapContainer' cellspacing='0' cellpadding='3' width='95%'>");
         strBuffer.append("<tr>");
         strBuffer.append("<td>");
-        renderExamsMapForRoom(strBuffer);
+        renderExamsMapForRoom(strBuffer,locale,bundle);
         strBuffer.append("</td>");
         strBuffer.append("</tr>");
         strBuffer.append("</table>");
@@ -56,7 +58,7 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
         return strBuffer;
     }
 
-    private void renderExamsMapForRoom(StringBuffer strBuffer) {
+    private void renderExamsMapForRoom(StringBuffer strBuffer,Locale locale,ResourceBundle bundle) {
         strBuffer.append("<table class='examMap' cellspacing='0' cellpadding='3' width='95%'>");
 
         strBuffer.append("<tr>");
@@ -65,10 +67,10 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
 
         for (int week = 0; week < numberOfWeks; week++) {
             strBuffer.append("<tr>");
-            renderLabelsForRowOfDays(strBuffer, week);
+            renderLabelsForRowOfDays(strBuffer, week,locale,bundle);
             strBuffer.append("</tr>\r\n");
             strBuffer.append("<tr>");
-            renderExamsForRowOfDays(strBuffer, week);
+            renderExamsForRowOfDays(strBuffer, week,locale);
             strBuffer.append("</tr>\r\n");
         }
 
@@ -77,7 +79,7 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
         strBuffer.append("<br style=\"page-break-after:always;\" />");
     }
 
-    private void renderExamsForRowOfDays(StringBuffer strBuffer, int week) {
+    private void renderExamsForRowOfDays(StringBuffer strBuffer, int week,Locale locale) {
         for (int slot = 0; slot < daysOfWeek.length; slot++) {
             ExamsMapSlot examsMapSlot = (ExamsMapSlot) examsMap.getDays().get(
                     week * daysOfWeek.length + slot);
@@ -93,13 +95,13 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
             strBuffer.append("<td ").append("class='").append(classCSS).append("'>");
 
             strBuffer.append(examsMapSlotContentRenderer.renderDayContents((ExamsMapSlot) examsMap
-                    .getDays().get(week * daysOfWeek.length + slot), examsMap, user));
+                    .getDays().get(week * daysOfWeek.length + slot), examsMap, user,locale));
 
             strBuffer.append("</td>");
         }
     }
 
-    private void renderLabelsForRowOfDays(StringBuffer strBuffer, int week) {
+    private void renderLabelsForRowOfDays(StringBuffer strBuffer, int week,Locale locale,ResourceBundle bundle) {
         for (int slot = 0; slot < daysOfWeek.length; slot++) {
             ExamsMapSlot examsMapSlot = (ExamsMapSlot) examsMap.getDays().get(
                     week * daysOfWeek.length + slot);
@@ -110,7 +112,7 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
             }
 
             strBuffer.append("<td ").append("class='").append(classCSS).append("'>");
-            strBuffer.append(examsMapSlotContentRenderer.renderDayLabel(examsMapSlot, examsMap, user));
+            strBuffer.append(examsMapSlotContentRenderer.renderDayLabel(examsMapSlot, examsMap, user,locale));
             strBuffer.append("</td>");
         }
     }

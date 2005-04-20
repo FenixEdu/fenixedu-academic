@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
@@ -38,29 +39,29 @@ public class ExamsMap {
     /**
      * @param infoRoomExamsMap
      */
-    public ExamsMap(InfoRoomExamsMap infoRoomExamsMap) {
+    public ExamsMap(InfoRoomExamsMap infoRoomExamsMap,Locale locale) {
         Calendar firstDayOfSeason = infoRoomExamsMap.getStartSeason1();
         Calendar lastDayOfSeason = infoRoomExamsMap.getEndSeason2();
         this.firstDayOfSeason = infoRoomExamsMap.getStartSeason1();
         this.lastDayOfSeason = infoRoomExamsMap.getEndSeason2();
-
+        
         days = new ArrayList();
         if (firstDayOfSeason.get(Calendar.YEAR) != lastDayOfSeason.get(Calendar.YEAR)) {
             for (int day = firstDayOfSeason.get(Calendar.DAY_OF_YEAR); day < makeLastDayOfYear(
-                    firstDayOfSeason).get(Calendar.DAY_OF_YEAR); day++) {
+                    firstDayOfSeason,locale).get(Calendar.DAY_OF_YEAR); day++) {
                 Calendar tempDayToAdd = makeDay(firstDayOfSeason, day
-                        - firstDayOfSeason.get(Calendar.DAY_OF_YEAR));
+                        - firstDayOfSeason.get(Calendar.DAY_OF_YEAR),locale);
                 if (tempDayToAdd.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
                     days.add(new ExamsMapSlot(tempDayToAdd, findExamsFromListOfExams(tempDayToAdd,
                             infoRoomExamsMap.getExams())));
                 }
             }
-            firstDayOfSeason = makeFirstDayOfYear(lastDayOfSeason);
+            firstDayOfSeason = makeFirstDayOfYear(lastDayOfSeason,locale);
         }
         for (int day = firstDayOfSeason.get(Calendar.DAY_OF_YEAR); day < lastDayOfSeason
                 .get(Calendar.DAY_OF_YEAR) + 1; day++) {
             Calendar tempDayToAdd = makeDay(firstDayOfSeason, day
-                    - firstDayOfSeason.get(Calendar.DAY_OF_YEAR));
+                    - firstDayOfSeason.get(Calendar.DAY_OF_YEAR),locale);
             if (tempDayToAdd.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
                 days.add(new ExamsMapSlot(tempDayToAdd, findExamsFromListOfExams(tempDayToAdd,
                         infoRoomExamsMap.getExams())));
@@ -68,7 +69,7 @@ public class ExamsMap {
         }
     }
 
-    public ExamsMap(InfoExamsMap infoExamsMap) {
+    public ExamsMap(InfoExamsMap infoExamsMap,Locale locale) {
         this.firstDayOfSeason = infoExamsMap.getStartSeason1();
         this.lastDayOfSeason = infoExamsMap.getEndSeason2();
 
@@ -84,21 +85,22 @@ public class ExamsMap {
         days = new ArrayList();
         if (firstDayOfSeason.get(Calendar.YEAR) != lastDayOfSeason.get(Calendar.YEAR)) {
             for (int day = firstDayOfSeason.get(Calendar.DAY_OF_YEAR); day <= makeLastDayOfYear(
-                    firstDayOfSeason).get(Calendar.DAY_OF_YEAR); day++) {
+                    firstDayOfSeason,locale).get(Calendar.DAY_OF_YEAR); day++) {
                 Calendar tempDayToAdd = makeDay(firstDayOfSeason, day
-                        - firstDayOfSeason.get(Calendar.DAY_OF_YEAR));
+                        - firstDayOfSeason.get(Calendar.DAY_OF_YEAR),locale);
                 if (tempDayToAdd.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY)
                     days.add(new ExamsMapSlot(tempDayToAdd, findExams(tempDayToAdd, infoExamsMap
                             .getExecutionCourses())));
             }
 
-            firstDayOfSeason = makeFirstDayOfYear(lastDayOfSeason);
+            firstDayOfSeason = makeFirstDayOfYear(lastDayOfSeason,locale);
         }
 
         for (int day = firstDayOfSeason.get(Calendar.DAY_OF_YEAR); day < lastDayOfSeason
                 .get(Calendar.DAY_OF_YEAR) + 1; day++) {
+
             Calendar tempDayToAdd = makeDay(firstDayOfSeason, day
-                    - firstDayOfSeason.get(Calendar.DAY_OF_YEAR));
+                    - firstDayOfSeason.get(Calendar.DAY_OF_YEAR),locale);
             if (tempDayToAdd.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY)
                 days.add(new ExamsMapSlot(tempDayToAdd, findExams(tempDayToAdd, infoExamsMap
                         .getExecutionCourses())));
@@ -174,8 +176,8 @@ public class ExamsMap {
     //		
     //	}
 
-    private Calendar makeFirstDayOfYear(Calendar someDayOfSameYear) {
-        Calendar result = Calendar.getInstance();
+    private Calendar makeFirstDayOfYear(Calendar someDayOfSameYear,Locale locale) {
+        Calendar result = Calendar.getInstance(locale);
 
         result.set(Calendar.YEAR, someDayOfSameYear.get(Calendar.YEAR));
         result.set(Calendar.MONTH, Calendar.JANUARY);
@@ -187,7 +189,7 @@ public class ExamsMap {
         return result;
     }
 
-    private Calendar makeLastDayOfYear(Calendar someDayOfSameYear) {
+    private Calendar makeLastDayOfYear(Calendar someDayOfSameYear,Locale locale) {
         Calendar result = Calendar.getInstance();
 
         result.set(Calendar.YEAR, someDayOfSameYear.get(Calendar.YEAR));
@@ -200,9 +202,8 @@ public class ExamsMap {
         return result;
     }
 
-    private Calendar makeDay(Calendar dayToCopy, int offset) {
-        Calendar result = Calendar.getInstance();
-
+    private Calendar makeDay(Calendar dayToCopy, int offset,Locale locale) {
+        Calendar result = Calendar.getInstance(locale);
         result.set(Calendar.YEAR, dayToCopy.get(Calendar.YEAR));
         result.set(Calendar.DAY_OF_YEAR, dayToCopy.get(Calendar.DAY_OF_YEAR) + offset);
         result.set(Calendar.HOUR_OF_DAY, 0);

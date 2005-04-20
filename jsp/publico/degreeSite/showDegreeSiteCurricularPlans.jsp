@@ -11,28 +11,28 @@
 <logic:present name="infoDegreeCurricularPlan">
 
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
-<div class="breadcumbs"><a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a> >
-<bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>ensino/index.shtml</bean:define>
-&nbsp;&gt;&nbsp;<a href="<%= institutionUrlTeaching %>"><bean:message key="label.education" /></a>
+<div class="breadcumbs"><a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a> 
+<bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
+&nbsp;&gt;&nbsp;<a href="<%= institutionUrlTeaching %>"><bean:message key="label.education" bundle="PUBLIC_DEGREE_INFORMATION" /></a>
 		<bean:define id="degreeType" name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso" />	
 		&nbsp;&gt;&nbsp;
 		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString()  %>">
 			<bean:write name="infoDegreeCurricularPlan" property="infoDegree.sigla" />
 		</html:link>
-		 &nbsp;&gt;&nbsp;<bean:message key="label.curricularPlan"/>
+		 &nbsp;&gt;&nbsp;<bean:message key="label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
 	</div>		
 		
 	<!-- COURSE NAME -->
 	<h1>
 		<bean:write name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso" />
-		<bean:message key="label.in" />
+		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.in" />
 		<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" />
 	</h1>
 
 	<!-- CURRICULAR PLAN -->
 	<h2 class="greytxt">
-		<bean:message key="label.curricularPlan"/>
-		<bean:message key="label.of" />
+		<bean:message key="label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
+		<bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="label.of" />
 		<logic:notEmpty name="infoDegreeCurricularPlan" property="initialDate">
 			<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />		
 			<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>
@@ -51,13 +51,13 @@
 					<bean:define id="degreeInitials" name="infoDegreeCurricularPlan" property="infoDegree.sigla"/>
 					<bean:define id="nameDegreeCurricularPlan" name="infoDegreeCurricularPlan" property="name"/>
 					<html:link page="<%= "/prepareConsultCurricularPlanNew.do?method=prepare&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;nameDegreeCurricularPlan=" + pageContext.findAttribute("nameDegreeCurricularPlan") + "&amp;degreeInitials=" + pageContext.findAttribute("degreeInitials") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" >
-						<strong><bean:message key="label.courses" /></strong>
+						<strong><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.courses" /></strong>
 					</html:link>
 				</td>
 			</tr>		
 			<tr>
 				<td class="box_cell">
-					<bean:message key="label.coursesText" />
+					<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.coursesText" />
 				</td>
 			</tr>
 
@@ -66,26 +66,26 @@
 					<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="idInternal" />
 					<html:hidden property="<%=SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />	
 					<html:link page="<%= "/chooseExamsMapContextDANew.do?degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;page=1&amp;method=prepare&amp;selectAllCurricularYears=on" %>">
-						<strong><bean:message key="label.exams" /></strong>
+						<strong><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.exams" /></strong>
 					</html:link>
 				</td>
 			</tr>
 			<tr>
 				<td class="box_cell">
-					<bean:message key="label.examsText" /> 
+					<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.examsText" /> 
 				</td>
 			</tr>
 			<tr>
 				<td class="box_header">
 					<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="idInternal" />
 					<html:link page="<%= "/chooseContextDANew.do?method=prepare&nextPage=classSearch&inputPage=chooseContext&amp;degreeID=" + request.getAttribute("degreeID")+ "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString()%>" >
-						<strong><bean:message key="label.classes" /></strong>
+						<strong><bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="label.classes"  bundle="PUBLIC_DEGREE_INFORMATION" /></strong>
 					</html:link>
 				</td>
 			</tr>
 			<tr>
 				<td class="box_cell">
-					<bean:message key="label.classesText" />
+					<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.classesText" />
 				</td>
 			</tr>
 
@@ -105,7 +105,7 @@
 						<logic:present name="plansActives">		
 						<tr>
 							<td class="box_header">
-								<strong><bean:message key="label.curricularPlans" /></strong>
+								<strong><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.curricularPlans" /></strong>
 							</td>
 						</tr>
 						<tr>
@@ -139,6 +139,6 @@
 		<p><bean:write name="infoDegreeCurricularPlan" property="description" filter="false" /></p>
 	</logic:notEmpty>	
 
-	<span class="px10"><p><bean:message key="label.responsability.information.degree" /></p></span>				 
+	<span class="px10"><p><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.responsability.information.degree" /></p></span>				 
 
 </logic:present>	

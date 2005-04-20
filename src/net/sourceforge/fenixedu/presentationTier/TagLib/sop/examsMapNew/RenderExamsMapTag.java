@@ -5,11 +5,13 @@
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import org.apache.struts.Globals;
 import org.apache.struts.util.MessageResources;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
@@ -40,14 +42,16 @@ public class RenderExamsMapTag extends TagSupport {
         IExamsMapRenderer renderer = null;
         String typeUser = "";
         String typeMapType = "";
+        Locale locale = (Locale) pageContext.findAttribute(Globals.LOCALE_KEY);
+        
 
         try {
             infoExamsMap = (InfoExamsMap) pageContext.findAttribute(name);
             typeUser = user;
             typeMapType = mapType;
-            examsMap = new ExamsMap(infoExamsMap);
+            examsMap = new ExamsMap(infoExamsMap,locale);
             renderer = new ExamsMapRenderer(examsMap, this.examsMapSlotContentRenderer, typeUser,
-                    typeMapType);
+                    typeMapType,locale);
         } catch (ClassCastException e) {
             infoExamsMap = null;
         }
@@ -55,7 +59,7 @@ public class RenderExamsMapTag extends TagSupport {
             infoRoomExamsMap = (InfoRoomExamsMap) pageContext.findAttribute(name);
 
             typeUser = user;
-            examsMap = new ExamsMap(infoRoomExamsMap);
+            examsMap = new ExamsMap(infoRoomExamsMap,locale);
             renderer = new ExamsMapForRoomRenderer(examsMap, this.examsMapSlotContentRenderer, typeUser);
         } catch (ClassCastException e) {
             infoRoomExamsMap = null;
@@ -75,7 +79,7 @@ public class RenderExamsMapTag extends TagSupport {
         //				typeUser);
 
         try {
-            writer.print(renderer.render());
+            writer.print(renderer.render(locale));
         } catch (IOException e) {
             throw new JspException(messages.getMessage("generateExamsMap.io", e.toString()));
         }

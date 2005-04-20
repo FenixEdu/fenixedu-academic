@@ -7,24 +7,24 @@
 
 <logic:present name="infoDegree">
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
-<div class="breadcumbs"><a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a> >
-<bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>ensino/index.shtml</bean:define>
-&nbsp;&gt;&nbsp;<a href="<%= institutionUrlTeaching %>"><bean:message key="label.education" /></a>
+<div class="breadcumbs"><a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a> 
+<bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
+&nbsp;&gt;&nbsp;<a href="<%= institutionUrlTeaching %>"><bean:message key="label.education" bundle="PUBLIC_DEGREE_INFORMATION" /></a>
 		<bean:define id="degreeType" name="infoDegree" property="tipoCurso" />	
 		&nbsp;&gt;&nbsp;
 		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString() %>">
 			<bean:write name="infoDegree" property="sigla" />
 		</html:link>
-		&nbsp;&gt;&nbsp;<bean:message key="label.classes"/>		
+		&nbsp;&gt;&nbsp; <bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.classes"/>		
 	</div>
 
 	<h1>
 		<bean:write name="infoDegree" property="tipoCurso" />
-		<bean:message key="label.in" />
+		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.in" />
 		<bean:write name="infoDegree" property="nome" />
 	</h1>
 
-	<h2><span class="greytxt"><bean:message key="label.classes" /></span></h2>
+	<h2><span class="greytxt"><bean:message  key="label.classes"  bundle="PUBLIC_DEGREE_INFORMATION" /></span></h2>
 </logic:present>
 
 
@@ -33,14 +33,14 @@
 <table class="tab_lay" cellspacing="0" width="75%">
 	<tr>
 		<th colspan="5" scope="col">
-			<bean:write name="execution_period" property="semester"/><bean:message key="label.ordinal.semester.abbr"/>
+			<bean:write name="execution_period" property="semester"/><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.ordinal.semester.abbr"/>
 			<bean:write name="execution_period" property="infoExecutionYear.year"/>
 		</th>	
 	</tr>
 
 	<tr>
 	<% for (int year = 1; year <= 5; year++) { %>
-		<td class="subheader" width="75px"><%= String.valueOf(year) %><bean:message key="label.ordinal.year"/></td>
+		<td class="subheader" width="75px"><%= String.valueOf(year) %><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.ordinal.year"/></td>
 	<% } %>
 	</tr>
 
@@ -85,14 +85,14 @@
 <logic:present name="nextInfoExecutionPeriod">
 	<tr>
 		<th colspan="5" scope="col">
-			<bean:write name="nextInfoExecutionPeriod" property="semester"/><bean:message key="label.ordinal.semester.abbr"/>
+			<bean:write name="nextInfoExecutionPeriod" property="semester"/><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.ordinal.semester.abbr"/>
 			<bean:write name="nextInfoExecutionPeriod" property="infoExecutionYear.year"/>
 		</th>	
 	</tr>
 
 	<tr>
 	<% for (int year = 1; year <= 5; year++) { %>
-		<td class="subheader"><%= String.valueOf(year) %><bean:message key="label.ordinal.year"/></td>
+		<td class="subheader"><%= String.valueOf(year) %><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.ordinal.year"/></td>
 	<% } %>
 	</tr>
 

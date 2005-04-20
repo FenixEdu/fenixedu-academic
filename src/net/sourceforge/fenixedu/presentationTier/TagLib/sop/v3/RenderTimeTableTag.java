@@ -6,12 +6,12 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
-
-import org.apache.struts.util.MessageResources;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -29,6 +29,9 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.ShiftTi
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.SopClassRoomTimeTableLessonContentRenderer;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.SopClassTimeTableLessonContentRenderer;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.SopRoomTimeTableLessonContentRenderer;
+
+import org.apache.struts.Globals;
+import org.apache.struts.util.MessageResources;
 
 public final class RenderTimeTableTag extends TagSupport {
 
@@ -58,10 +61,13 @@ public final class RenderTimeTableTag extends TagSupport {
     // Mensagens de erro.
     protected static MessageResources messages = MessageResources
             .getMessageResources("ApplicationResources");
+    protected static MessageResources message = MessageResources
+    .getMessageResources("PublicDegreeInformation");
 
     private InfoCurricularYear infoCurricularYear = null;
 
     private InfoExecutionDegree infoExecutionDegree = null;
+    
 
     public String getName() {
         return (this.name);
@@ -71,13 +77,16 @@ public final class RenderTimeTableTag extends TagSupport {
         this.name = name;
     }
 
+   
+    
     public int doStartTag() throws JspException {
-
+ 
         try {
             infoCurricularYear = (InfoCurricularYear) pageContext
                     .findAttribute(SessionConstants.CURRICULAR_YEAR);
             infoExecutionDegree = (InfoExecutionDegree) pageContext
                     .findAttribute(SessionConstants.EXECUTION_DEGREE);
+ 
         } catch (ClassCastException e) {
             infoCurricularYear = null;
             infoExecutionDegree = null;
@@ -100,18 +109,19 @@ public final class RenderTimeTableTag extends TagSupport {
         }
 
         // Gera o horário a partir da lista de aulas.
+        Locale locale = (Locale)pageContext.findAttribute(Globals.LOCALE_KEY);
         JspWriter writer = pageContext.getOut();
-        TimeTable timeTable = generateTimeTable(infoLessonList);
+        TimeTable timeTable = generateTimeTable(infoLessonList,locale);
 
         TimeTableRenderer renderer = new TimeTableRenderer(timeTable, lessonSlotContentRenderer,
                 this.slotSizeMinutes, this.startTimeTableHour, this.endTimeTableHour, colorPicker);
-
+       
         try {
-            writer.print(renderer.render());
-            writer.print(legenda(infoLessonList));
+           writer.print(renderer.render(locale));
+           writer.print(legenda(infoLessonList,locale));
         } catch (IOException e) {
             throw new JspException(messages.getMessage("gerarHorario.io", e.toString()));
-        }
+        } 
         return (SKIP_BODY);
     }
 
@@ -121,7 +131,7 @@ public final class RenderTimeTableTag extends TagSupport {
      * @param listaAulas
      * @return TimeTable
      */
-    private TimeTable generateTimeTable(List lessonList) {
+    private TimeTable generateTimeTable(List lessonList,Locale locale) {
 
         Calendar calendar = Calendar.getInstance();
 
@@ -133,14 +143,14 @@ public final class RenderTimeTableTag extends TagSupport {
                 (endTimeTableHour.intValue() - startTimeTableHour.intValue())
                         * (60 / slotSizeMinutes.intValue()));
 
-        TimeTable timeTable = new TimeTable(numberOfHours, numberOfDays, calendar, slotSizeMinutes);
+        TimeTable timeTable = new TimeTable(numberOfHours, numberOfDays, calendar, slotSizeMinutes,locale);
 
         Iterator lessonIterator = lessonList.iterator();
 
         while (lessonIterator.hasNext()) {
 
-            //InfoLesson infoLesson = (InfoLesson) lessonIterator.next();
-            //timeTable.addLesson(infoLesson);
+//            InfoLesson infoLesson = (InfoLesson) lessonIterator.next();
+//            timeTable.addLesson(infoLesson);
             InfoShowOccupation infoShowOccupation = (InfoShowOccupation) lessonIterator.next();
             timeTable.addLesson(infoShowOccupation);
         }
@@ -156,7 +166,10 @@ public final class RenderTimeTableTag extends TagSupport {
         super.release();
     }
 
-    private StringBuffer legenda(List listaAulas) {
+    private StringBuffer legenda(List listaAulas,Locale locale) {
+        ResourceBundle bundle = ResourceBundle
+        .getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
+        
         StringBuffer result = new StringBuffer("");
         List listaAuxiliar = new ArrayList();
         Iterator iterator = listaAulas.iterator();
@@ -173,8 +186,9 @@ public final class RenderTimeTableTag extends TagSupport {
 
         if (listaAuxiliar.size() > 1) {
             Collections.sort(listaAuxiliar);
-            result
-                    .append("<br/><b>Legenda:</b><br /><br /><table cellpadding='0' cellspacing='0' style='margin-left:5px'>");
+            result.append("<br/><b>");
+            result.append(bundle.getString("label.legend"));
+            result.append("</b><br /><br /><table cellpadding='0' cellspacing='0' style='margin-left:5px'>");
             for (int i = 0; i < listaAuxiliar.size(); i++) {
                 SubtitleEntry elem = (SubtitleEntry) listaAuxiliar.get(i);
                 boolean oddElement = (i % 2 == 1);
@@ -198,7 +212,9 @@ public final class RenderTimeTableTag extends TagSupport {
             // the legend of a quinzenal lesson?
             result.append("<tr><td style='vertical-align:top'><b>[Q]</b></td>");
             result.append("<td  style='vertical-align:top'>-</td>");
-            result.append("<td wrap='wrap'>Identifica uma aula como sendo quinzenal</td></tr>");
+            result.append("<td wrap='wrap'>" );
+            result.append( bundle.getString("label.biweekly"));
+            result.append("</td></tr>");
 
             result.append("</table>");
 
@@ -287,3 +303,4 @@ public final class RenderTimeTableTag extends TagSupport {
         this.application = application;
     }
 }
+

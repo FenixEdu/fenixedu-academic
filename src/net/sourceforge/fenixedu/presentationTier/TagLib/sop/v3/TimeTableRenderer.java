@@ -6,6 +6,12 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts.util.MessageResources;
 
 /**
  * @author jpvl
@@ -22,6 +28,9 @@ public class TimeTableRenderer {
     private LessonSlotContentRenderer lessonSlotContentRenderer;
 
     private ColorPicker colorPicker;
+    
+    
+   
 
     /**
      * Constructor TimeTableRenderer.
@@ -46,14 +55,14 @@ public class TimeTableRenderer {
         this.colorPicker = colorPicker;
     }
 
-    public StringBuffer render() {
+    public StringBuffer render(Locale locale) {
         StringBuffer strBuffer = new StringBuffer("");
 
         TimeTableSlot[][] grid = timeTable.getTimeTableGrid();
 
         strBuffer.append("<table class='timetable' cellspacing='0' cellpadding='0' width='90%'>");
-
-        renderHeader(strBuffer);
+        
+        renderHeader(strBuffer,locale);
 
         for (int hourIndex = 0; hourIndex < timeTable.getNumberOfHours().intValue(); hourIndex++) {
 
@@ -193,17 +202,17 @@ public class TimeTableRenderer {
      * 
      * @param strBuffer
      */
-    private void renderHeader(StringBuffer strBuffer) {
+    private void renderHeader(StringBuffer strBuffer,Locale locale) {
 
-        //        strBuffer.append("<col />");
-        //        for (int index = 0; index <
-        // this.timeTable.getNumberOfDays().intValue(); index++) {
-        //            strBuffer.append("<col
-        // span='").append(timeTable.getDayColumn(index).getMaxColisionSize())
-        //                    .append("'/>\r\n");
-        //        }
+        //strBuffer.append("<th width='15%'>horas/dias</th>\r\n");
+        ResourceBundle bundle = ResourceBundle
+                                .getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
+       
+        
+        strBuffer.append("<th width='15%'>");
+        strBuffer.append(bundle.getString("label.timesAndDays"));
+        strBuffer.append("</th>\r\n");
 
-        strBuffer.append("<th width='15%'>horas/dias</th>\r\n");
         int cellWidth = (100 - 15) / timeTable.getNumberOfDays().intValue();
         for (int index = 0; index < this.timeTable.getNumberOfDays().intValue(); index++) {
             strBuffer.append("<th colspan='").append(timeTable.getDayColumn(index).getMaxColisionSize())

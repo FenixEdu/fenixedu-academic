@@ -175,6 +175,7 @@ public class ReadFilteredExamsMap implements IService {
                         for (int l = 0; l < infoExam.getAssociatedCurricularCourseScope().size(); l++) {
                             InfoCurricularCourseScope scope = (InfoCurricularCourseScope) infoExam
                                     .getAssociatedCurricularCourseScope().get(l);
+                         if (scope!= null){
                             InfoCurricularCourse infoCurricularCourse = scope.getInfoCurricularCourse();
                             if (!curricularCourseIDs.contains(infoCurricularCourse.getIdInternal())) {
                                 curricularCourseIDs.add(infoCurricularCourse.getIdInternal());
@@ -185,6 +186,7 @@ public class ReadFilteredExamsMap implements IService {
 
                                 numberOfStudentsForExam += numberEnroledStudentsInCurricularCourse;
                             }
+                         }
                         }
 
                         infoExam.setEnrolledStudents(new Integer(numberOfStudentsForExam));

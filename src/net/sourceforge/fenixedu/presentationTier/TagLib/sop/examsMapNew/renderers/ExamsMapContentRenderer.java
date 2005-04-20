@@ -5,14 +5,16 @@
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.renderers;
 
 import java.util.Calendar;
-
-import org.apache.commons.lang.time.DateFormatUtils;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMap;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMapSlot;
+
+import org.apache.commons.lang.time.DateFormatUtils;
 
 /**
  * @author Ana e Ricardo
@@ -21,10 +23,11 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 
     private ExamsMap examsMap;
 
-    public StringBuffer renderDayLabel(ExamsMapSlot examsMapSlot, ExamsMap examsMap, String typeUser) {
+    public StringBuffer renderDayLabel(ExamsMapSlot examsMapSlot, ExamsMap examsMap, String typeUser,Locale locale) {
         this.examsMap = examsMap;
         StringBuffer strBuffer = new StringBuffer();
-
+        ResourceBundle bundle = ResourceBundle
+            .getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
         boolean isFirstDayOfSeason = ((examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH) == examsMap
                 .getFirstDayOfSeason().get(Calendar.DAY_OF_MONTH))
                 && (examsMapSlot.getDay().get(Calendar.MONTH) == examsMap.getFirstDayOfSeason().get(
@@ -50,11 +53,13 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
         strBuffer.append(examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH));
         if ((examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH) == 1) || isFirstDayOfSeason
                 || isSecondDayOfMonthAndFirstDayWasASunday) {
-            strBuffer.append(" de ");
-            strBuffer.append(monthToString(examsMapSlot.getDay().get(Calendar.MONTH)));
+                strBuffer.append(" ");
+                strBuffer.append(bundle.getString("label.of"));
+                strBuffer.append(" ");
+            strBuffer.append(monthToString(examsMapSlot.getDay().get(Calendar.MONTH),locale));
         }
         if (examsMapSlot.getDay().get(Calendar.DAY_OF_YEAR) == 1) {
-            strBuffer.append(", ");
+            strBuffer.append(bundle.getString("labe.comma"));
             strBuffer.append(examsMapSlot.getDay().get(Calendar.YEAR));
         }
 
@@ -68,8 +73,10 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
     }
 
     public StringBuffer renderDayContents(ExamsMapSlot examsMapSlot, Integer year1, Integer year2,
-            String typeUser) {
+            String typeUser,Locale locale) {
         StringBuffer strBuffer = new StringBuffer();
+        ResourceBundle bundle = ResourceBundle
+        .getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
         for (int i = 0; i < examsMapSlot.getExams().size(); i++) {
             InfoExam infoExam = (InfoExam) examsMapSlot.getExams().get(i);
             Integer curicularYear = infoExam.getInfoExecutionCourse().getCurricularYear();
@@ -121,8 +128,10 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
                     boolean isAtValidHour = atValidHour(infoExam);
                     String hoursText = infoExam.getBeginning().get(Calendar.HOUR_OF_DAY) + "h"
                             + DateFormatUtils.format(infoExam.getBeginning().getTime(), "mm");
-
-                    strBuffer.append(" às ");
+                    strBuffer.append(" ");
+                    strBuffer.append(bundle.getString("label.as"));
+                    strBuffer.append(" ");
+                
                     if (isAtValidHour || !typeUser.equals("sop")) {
                         strBuffer.append(hoursText);
                     } else {
@@ -164,32 +173,69 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
                         || weekDay == Calendar.THURSDAY || weekDay == Calendar.SATURDAY));
     }
 
-    private String monthToString(int month) {
+    private String monthToString(int month,Locale locale) {
         switch (month) {
+       
         case Calendar.JANUARY:
+          if (locale.getLanguage().equals("pt"))
             return "Janeiro";
+          else
+            return "January";
         case Calendar.FEBRUARY:
+           if (locale.getLanguage().equals("pt"))
             return "Fevereiro";
+           else
+            return "February";
         case Calendar.MARCH:
+           if (locale.getLanguage().equals("pt"))
             return "Março";
+           else
+            return "March";
         case Calendar.APRIL:
+           if (locale.getLanguage().equals("pt"))
             return "Abril";
+           else
+            return "April";
         case Calendar.MAY:
+           if (locale.getLanguage().equals("pt"))
             return "Maio";
+           else
+            return "May";
         case Calendar.JUNE:
+           if (locale.getLanguage().equals("pt"))
             return "Junho";
+           else
+            return "June";
         case Calendar.JULY:
+           if (locale.getLanguage().equals("pt"))
             return "Julho";
+           else
+            return "July";
         case Calendar.AUGUST:
+           if (locale.getLanguage().equals("pt"))
             return "Agosto";
+           else
+            return "August";
         case Calendar.SEPTEMBER:
+           if (locale.getLanguage().equals("pt"))
             return "Setembro";
+           else
+            return "September";
         case Calendar.OCTOBER:
+           if (locale.getLanguage().equals("pt"))
             return "Outubro";
+           else
+            return "October";
         case Calendar.NOVEMBER:
+           if (locale.getLanguage().equals("pt"))
             return "Novembro";
+           else
+            return "November";
         case Calendar.DECEMBER:
+           if (locale.getLanguage().equals("pt"))
             return "Dezembro";
+           else
+            return "December";
         case Calendar.UNDECIMBER:
             return "Undecember";
         default:
@@ -203,9 +249,10 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
      * @see ServidorApresentacao.TagLib.sop.examsMap.renderers.ExamsMapSlotContentRenderer#renderDayContents(ServidorApresentacao.TagLib.sop.examsMap.ExamsMapSlot,
      *      java.lang.String)
      */
-    public StringBuffer renderDayContents(ExamsMapSlot examsMapSlot, ExamsMap examsMap, String typeUser) {
+    public StringBuffer renderDayContents(ExamsMapSlot examsMapSlot, ExamsMap examsMap, String typeUser,Locale locale) {
         StringBuffer strBuffer = new StringBuffer();
-
+        ResourceBundle bundle = ResourceBundle
+        .getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
         for (int i = 0; i < examsMapSlot.getExams().size(); i++) {
             InfoExam infoExam = (InfoExam) examsMapSlot.getExams().get(i);
             //InfoExecutionCourse infoExecutionCourse =
@@ -233,8 +280,9 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 
             if (infoExam.getBeginning() != null) {
                 String hoursText = infoExam.getBeginning().get(Calendar.HOUR_OF_DAY) + "H";
-
-                strBuffer.append(" às ");
+                strBuffer.append(" ");
+                strBuffer.append(bundle.getString("label.as"));
+                strBuffer.append(" ");
                 strBuffer.append(hoursText);
             }
 

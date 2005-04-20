@@ -37,6 +37,7 @@
         <form-property name="degreeID" type="java.lang.Integer"/>
         <form-property name="degreeCurricularPlanID" type="java.lang.Integer"/>
         <form-property name="indice" type="java.lang.Integer"/>
+        <form-property name="windowLocation" type="java.lang.String"/>
       </form-bean>
       
       <form-bean name="chooseExecutionCourseForm"
@@ -65,6 +66,7 @@
         <form-property name="degreeID" type="java.lang.Integer"/>
         <form-property name="degreeCurricularPlanID" type="java.lang.Integer"/>
         <form-property name="allCurYear" type="java.lang.Boolean"/>
+        <form-property name="method" type="java.lang.String"/>
       </form-bean>
 
 	  <!-- ROOMS -->
@@ -164,7 +166,14 @@
    		<form-property name="executionPeriodId" type="java.lang.Integer" initial="0"/>
    		<form-property name="semester" type="java.lang.Integer" initial="0"/>
 	</form-bean>
-     
+
+	<form-bean name="changeLocaleForm"
+		type="org.apache.struts.validator.DynaValidatorForm"
+		dynamic="true">
+   		<form-property name="windowLocation" type="java.lang.String"/>
+   		<form-property name="newLanguage" type="java.lang.String"/>
+   		<form-property name="newCountry" type="java.lang.String"/>
+	</form-bean>     
 
   </form-beans>     
   
@@ -201,6 +210,13 @@
 		<!-- page not found -->
 	   <action path="/notFound" forward="df.notFound"/> 
 	    <!-- page fronting actions -->
+
+	    <action path="/changeLocaleTo"
+	    		name="changeLocaleForm"
+	    		validate="false"
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.publico.ChangeLocale">
+		    <forward name="something" path="/lalaland"/>
+	    </action>
 
 	<action path="/index"
 			name="pagedIndexForm"
@@ -601,7 +617,9 @@
      		type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowDegreeSiteAction" 
      		parameter="method"
      		input="/showDegrees.do?method=nonMaster"
+     		scope="request"
      		>
+     		
 	     <forward  name="showDescription" path="showDescription"/>
 	     <forward  name="showDescriptionEnglish" path="showDescriptionEnglish"/>   	
 	     <forward  name="showAccessRequirements" path="showAccessRequirements"/> 
@@ -616,6 +634,7 @@
      		parameter="method"
      		 name="chooseContextDegreeForm"
      		input="/showDegreeSite.do?method=showCurricularPlan"
+     		scope="request"
      		>
 	     <forward  name="showDegreeCurricularPlan" path="showDegreeCurricularPlan"/>  		  
 	     <forward  name="showDegreeCurricularPlanEnglish" path="showDegreeCurricularPlanEnglish"/>
@@ -733,7 +752,20 @@
 	  <!--<controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessor" />-->
     
     <!-- ========== Message Resources Definitions ============================ -->
-    
+	<message-resources parameter="ServidorApresentacao.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
+    <message-resources parameter="ServidorApresentacao.ApplicationResources" key="DEFAULT" null="false"/>
+    <message-resources parameter="ServidorApresentacao.PortalResources" key="PORTAL_RESOURCES" null="false"/>
+    <message-resources parameter="ServidorApresentacao.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
+    <message-resources parameter="ServidorApresentacao.StudentResources" key="STUDENT_RESOURCES" null="false"/>
+    <message-resources parameter="ServidorApresentacao.TeacherCreditsSheetResources" key="TEACHER_CREDITS_SHEET_RESOURCES" null="false"/>
+    <message-resources parameter="ServidorApresentacao.GEPResources" key="GEP_RESOURCES" null="false"/>
+    <message-resources parameter="ServidorApresentacao.GEPResources_en" key="GEP_RESOURCES_EN" null="false"/>
+    <message-resources parameter="ServidorApresentacao.DegreeAdministrativeOfficeResources" key="DEGREE_ADM_OFFICE" null="false"/>
+	<message-resources parameter="ServidorApresentacao.SchoolRegistrationResources" key="SCHOOL_REGISTRATION_RESOURCES" null="false"/>
+	<message-resources parameter="ServidorApresentacao.CurriculumHistoricResources" key="CURRICULUM_HISTORIC_RESOURCES" null="false"/>
+	<message-resources parameter="ServidorApresentacao.InquiriesResources" key="INQUIRIES_RESOURCES" null="false"/>
+    <message-resources parameter="ServidorApresentacao.PublicDegreeInformation" key="PUBLIC_DEGREE_INFORMATION" null="false"/>
+
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
       <set-property property="pathnames" 

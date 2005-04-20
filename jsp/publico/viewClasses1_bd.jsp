@@ -8,8 +8,8 @@
 
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 <div class="breadcumbs"><a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a> >
-<bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>ensino/index.shtml</bean:define>
-&nbsp;&gt;&nbsp;<a href="<%= institutionUrlTeaching %>"><bean:message key="label.education" /></a>
+<bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
+&nbsp;&gt;&nbsp;<a href="<%= institutionUrlTeaching %>"><bean:message key="label.education" bundle="PUBLIC_DEGREE_INFORMATION" /></a>
 	<bean:define id="degreeType" name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLAN %>" property="infoDegree.tipoCurso" />
 	<bean:define id="infoDegreeCurricularPlan" name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLAN %>"/>
 	&nbsp;&gt;&nbsp;
@@ -18,13 +18,13 @@
 	</html:link>
 	&nbsp;&gt;&nbsp;
 	<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >
-		<bean:message key="label.curricularPlan"/>
+		<bean:message key="label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
 	</html:link>
-	&nbsp;&gt;&nbsp;<bean:message key="label.classes"/> 	
+	&nbsp;&gt;&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.classes"/> 	
 </div>	
 
 <%--
-<!-- PÁ�GINA EM INGLÊ�S -->
+<!-- P�?�GINA EM INGLÊ�S -->
 	<div class="version">
 		<span class="px10">
 			<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;inEnglish=true&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") %>" >english version</html:link> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" />
@@ -33,13 +33,13 @@
 
 <h1>
 	<bean:write name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso" />
-	<bean:message key="label.in" />
+	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.in" />
 	<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" />
 </h1>
 
 <h2 class="greytxt">
-	<bean:message key="label.curricularPlan"/>
-	<bean:message key="label.of" />
+	<bean:message key="label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
+	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.of" />
 	<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />		
 	<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>
 	<logic:notEmpty name="infoDegreeCurricularPlan" property="endDate">
@@ -50,7 +50,7 @@
 
 <logic:present name="lista" scope="request">
 	<bean:define id="listaNew" name="lista" />
-	<html:form action="/chooseContextDANew.do">
+	<html:form action="/chooseContextDANew.do" method="GET">
 		<html:hidden property="<%SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
 		<html:hidden property="page" value="1"/>
 		<html:hidden property="method" value="nextPagePublic"/>
@@ -59,10 +59,11 @@
 		<html:hidden property="lista" value="<%= pageContext.findAttribute("listaNew").toString()%>" />
 		<html:hidden property="nextPage" value="classSearch"/>
 		<html:hidden property="inputPage" value="chooseContext"/>
+		
 
 		<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
-			    <td><bean:message key="property.executionPeriod"/>:</td>
+			    <td><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="property.executionPeriod"/>:</td>
 			    <td>
 					<html:select property="indice" size="1" onchange='this.form.submit();'>
 						<logic:notEmpty name="chooseSearchContextForm" property="indice" >
@@ -79,9 +80,9 @@
 <logic:present name="classList">	
 	<table class="tab_lay" cellspacing="0" cellpadding="0" width="50%">
 		<tr>
-			<th><bean:message key="property.class"/></th>
-			<th><bean:message key="property.context.semester"/></th>
-			<th><bean:message key="property.context.curricular.year"/></th>
+			<th><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="property.class"/></th>
+			<th><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.semester"/></th>
+			<th><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.curricularYear"/></th>
 		</tr>		
 	<logic:iterate id="classview" name="classList" indexId="row">
 		<% String rowColor = row.intValue() % 2 == 0 ? "white" : "bluecell" ; %>
@@ -102,7 +103,7 @@
 <logic:notPresent name="classview"  >	
 	<table align="center" border="0" cellpadding="0" cellspacing="0">
 		<tr>
-			<td><span class="error"><bean:message key="message.public.notfound.classes"/></span></td>
+			<td><span class="error"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="message.public.notfound.classes"/></span></td>
 		</tr>
 	</table>
 </logic:notPresent>

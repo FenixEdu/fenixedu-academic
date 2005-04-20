@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.util.Collections;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +21,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -58,6 +60,8 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
         request.setAttribute("inEnglish", inEnglish);
 
         Integer curricularYear = (Integer) indexForm.get("curYear");
+        
+        String language = getLocaleLanguageFromRequest(request);
 
         indexForm.set("indice", indexForm.get("indice"));
         indexForm.set("curYear", curricularYear);
@@ -107,7 +111,7 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
             comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
             Collections.sort(infoCurriculum.getInfoCurricularCourse().getInfoScopes(), comparatorChain);
         }
-
+        infoCurriculum.prepareEnglishPresentation(language);
         request.setAttribute("infoCurriculum", infoCurriculum);
 
         if (inEnglish == null || inEnglish.booleanValue() == false) {
@@ -189,5 +193,12 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
         }
 
         return parameterBoolean;
+    }
+    private String getLocaleLanguageFromRequest(HttpServletRequest request) {
+
+        Locale locale = (Locale) request.getSession(false).getAttribute(Action.LOCALE_KEY);
+        Locale locale2 = request.getLocale();
+        return  locale.getLanguage();
+
     }
 }

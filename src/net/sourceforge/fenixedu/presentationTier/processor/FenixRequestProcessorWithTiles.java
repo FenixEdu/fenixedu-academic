@@ -5,12 +5,15 @@
 package net.sourceforge.fenixedu.presentationTier.processor;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts.Globals;
+import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.tiles.TilesRequestProcessor;
@@ -28,6 +31,13 @@ public class FenixRequestProcessorWithTiles extends TilesRequestProcessor {
      *      javax.servlet.http.HttpServletResponse)
      */
     protected boolean processPreprocess(HttpServletRequest request, HttpServletResponse response) {
+
+        HttpSession httpSession = request.getSession(false);
+        Locale locale = (Locale) httpSession.getAttribute(Action.LOCALE_KEY);
+        if (locale == null) {
+            httpSession.setAttribute(Action.LOCALE_KEY, Locale.getDefault());
+        }
+
         String uri = request.getRequestURI();
         if (((uri.indexOf("login.do") == -1) && (uri.indexOf("showErrorPage.do") == -1) && (uri
                 .indexOf("/publico/index.do") == -1)) && (uri.indexOf("/manager/manageCache.do") == -1)

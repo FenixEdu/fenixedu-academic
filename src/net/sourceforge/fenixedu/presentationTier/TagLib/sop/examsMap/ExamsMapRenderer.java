@@ -7,9 +7,8 @@ package net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMap;
 
 import java.util.Calendar;
 import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -17,6 +16,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMap.renderers.ExamsMapSlotContentRenderer;
 import net.sourceforge.fenixedu.util.Season;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 
 /*
  * @author Luis Cruz & Sara Ribeiro
@@ -34,18 +36,23 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
     private ExamsMapSlotContentRenderer examsMapSlotContentRenderer;
 
     private String user;
+    
+    private Locale locale;
 
     public ExamsMapRenderer(ExamsMap examsMap, ExamsMapSlotContentRenderer examsMapSlotContentRenderer,
-            String typeUser) {
+            String typeUser,Locale locale) {
+        
         setExamsMap(examsMap);
         setExamsMapSlotContentRenderer(examsMapSlotContentRenderer);
         numberOfWeks = examsMap.getDays().size() / 6;
         setUser(typeUser);
+        setLocale(locale);
     }
 
-    public StringBuffer render() {
+    public StringBuffer render(Locale locale) {
         StringBuffer strBuffer = new StringBuffer("");
-
+        ResourceBundle bundle = ResourceBundle
+                .getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
         // Generate maps for the specified years.
         int numberOfCurricularYearsToDisplay = this.examsMap.getCurricularYears().size();
         for (int i = 0; i < numberOfCurricularYearsToDisplay; i++) {
@@ -66,10 +73,13 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
             // Generate Exam Map
             strBuffer.append("<td width='100%'>");
             if (year2 == null) {
-                strBuffer.append("<strong>" + year1 + "º<strong> ano");
+                
+                strBuffer.append("<strong>" + year1 + "º<strong> ");
+                strBuffer.append(bundle.getString("label.year"));
             } else {
                 strBuffer.append("<strong>" + year1 + "º</strong>");
-                strBuffer.append(" e <strong>" + year2 + "º</strong> ano");
+                strBuffer.append(" e <strong>" + year2 + "º</strong> ");
+                strBuffer.append(bundle.getString("label.year"));
             }
 
             renderExamsMapForFilteredYears(strBuffer, year1, year2);
@@ -373,5 +383,15 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
     public void setUser(String string) {
         user = string;
     }
+
+    public Locale getLocale() {
+        return locale;
+    }
+    
+
+    public void setLocale(Locale locale) {
+        this.locale = locale;
+    }
+    
 
 }

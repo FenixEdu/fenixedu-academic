@@ -6,6 +6,7 @@
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMap;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMap.renderers.ExamsMapSlotContentRenderer;
 
@@ -25,16 +26,19 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
     private ExamsMapSlotContentRenderer examsMapSlotContentRenderer;
 
     private String user;
+    
+    private Locale locale;
 
     public ExamsMapForRoomRenderer(ExamsMap examsMap,
-            ExamsMapSlotContentRenderer examsMapSlotContentRenderer, String typeUser) {
+            ExamsMapSlotContentRenderer examsMapSlotContentRenderer, String typeUser,Locale locale) {
         setExamsMap(examsMap);
         setExamsMapSlotContentRenderer(examsMapSlotContentRenderer);
         numberOfWeks = examsMap.getDays().size() / 6;
         setUser(typeUser);
+        setLocale(locale);
     }
 
-    public StringBuffer render() {
+    public StringBuffer render(Locale locale) {
         StringBuffer strBuffer = new StringBuffer("");
 
         strBuffer.append("<table class='examMapContainer' cellspacing='0' cellpadding='3' width='95%'>");
@@ -109,6 +113,7 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
     private void renderHeader(StringBuffer strBuffer) {
         for (int index = 0; index < this.daysOfWeek.length; index++) {
             StringBuffer classCSS = new StringBuffer("examMap_header");
+         System.out.println(classCSS);
             if (index == 0) {
                 classCSS.append("_first");
             }
@@ -138,5 +143,15 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
     public void setUser(String string) {
         user = string;
     }
+
+    public Locale getLocale() {
+        return locale;
+    }
+    
+
+    public void setLocale(Locale locale) {
+        this.locale = locale;
+    }
+    
 
 }

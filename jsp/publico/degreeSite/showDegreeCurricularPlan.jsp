@@ -30,7 +30,7 @@
 		</html:link>&gt;&nbsp;
 		<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID").toString() + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID")%>" >
 <%-- &amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") --%>
-		<bean:message key="label.curricularPlan"/>
+		<bean:message key="label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
 		</html:link>&gt;&nbsp;
 		<bean:message key="label.curriculum"/>		
 </div>	
@@ -47,7 +47,7 @@
 
 <h2>
 <span class="greytxt">
-	<bean:message key="label.curricularPlan"/>
+	<bean:message key="label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
 	<bean:message key="label.of" />
 	<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />		
 	<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>

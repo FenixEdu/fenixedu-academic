@@ -8,11 +8,8 @@ package net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
-
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.comparators.ComparatorChain;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -20,6 +17,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.renderers.ExamsMapSlotContentRenderer;
 import net.sourceforge.fenixedu.util.Season;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.tools.ant.taskdefs.BUnzip2;
 
 /*
  * @author Ana & Ricardo
@@ -39,20 +42,35 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 	private String user;
 	
 	private String mapType;
+    
+    private Locale locale;
 	
-	public ExamsMapRenderer(ExamsMap examsMap, ExamsMapSlotContentRenderer examsMapSlotContentRenderer,
-			String typeUser, String mapType) {
+	public Locale getLocale() {
+        return locale;
+    }
+    
+
+    public void setLocale(Locale locale) {
+        this.locale = locale;
+    }
+    
+
+    public ExamsMapRenderer(ExamsMap examsMap, ExamsMapSlotContentRenderer examsMapSlotContentRenderer,
+			String typeUser, String mapType,Locale locale) {
 		setExamsMap(examsMap);
 		setExamsMapSlotContentRenderer(examsMapSlotContentRenderer);
 		numberOfWeks = examsMap.getDays().size() / 6;
 		setUser(typeUser);
 		setMapType(mapType);
+        setLocale(locale);
 	}
 	
-	public StringBuffer render() {
+	public StringBuffer render(Locale locale) {
 		StringBuffer strBuffer = new StringBuffer("");
 		
 		// Generate maps for the specified years.
+        ResourceBundle bundle = ResourceBundle
+            .getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
 		int numberOfCurricularYearsToDisplay = this.examsMap.getCurricularYears().size();
 		for (int i = 0; i < numberOfCurricularYearsToDisplay; i++) {
 			Integer year1 = (Integer) this.examsMap.getCurricularYears().get(i);
@@ -79,13 +97,17 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 							+ "</strong><br/>");
 				}
 				if (year2 == null) {
-					strBuffer.append("<h2>" + year1 + "&ordm; Ano</h2>");
+					strBuffer.append("<h2>" + year1 + "&ordm; ");
+                    strBuffer.append(bundle.getString("label.year"));
+                    strBuffer.append("</h2>");
 				} else {
 					strBuffer.append("<h2>" + year1 + "&ordm;");
-					strBuffer.append(" e " + year2 + "&ordm; Anos</h2>");
+					strBuffer.append(" e " + year2 + "&ordm; ");
+                    strBuffer.append(bundle.getString("label.years"));
+                    strBuffer.append("</h2>");
 				}
 				
-				renderExamsMapForFilteredYears(strBuffer, year1, year2);
+				renderExamsMapForFilteredYears(strBuffer, year1, year2,locale);
 			}
 			strBuffer.append("</td>");
 			strBuffer.append("</tr>");
@@ -94,10 +116,12 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 			// Generate Exam Map Side Lable
 			strBuffer.append("<td class='courseList'>");
 			if (mapType.equals("DegreeAndYear")) {
-				strBuffer.append("<h2>Calend&aacute;rio de Exames</h2><br />");
-				renderExamsExecutionCourseTableForYear(strBuffer, year1);
+				strBuffer.append("<h2>");
+                strBuffer.append(bundle.getString("label.examsCalendar"));
+                strBuffer.append("</h2><br />");
+				renderExamsExecutionCourseTableForYear(strBuffer, year1, bundle);
 			} else {
-				renderExecutionCourseListForYear(strBuffer, year1);
+				renderExecutionCourseListForYear(strBuffer, year1,bundle);
 			}
 			
 			if (year2 != null) {
@@ -107,10 +131,12 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 				strBuffer.append("<td class='courseList'>");
 				strBuffer.append("<br style='page-break-before:always;' />");
 				if (mapType.equals("DegreeAndYear")) {
-					strBuffer.append("<h2>Calend&aacute;rio de Exames</h2><br />");
-					renderExamsExecutionCourseTableForYear(strBuffer, year2);
+                    strBuffer.append("<h2>");
+                    strBuffer.append(bundle.getString("label.examsCalendar"));
+                    strBuffer.append("</h2><br />");
+					renderExamsExecutionCourseTableForYear(strBuffer, year2,bundle);
 				} else {
-					renderExecutionCourseListForYear(strBuffer, year2);
+					renderExecutionCourseListForYear(strBuffer, year2,bundle);
 				}
 				strBuffer.append("</td>");
 				strBuffer.append("</tr>");
@@ -154,19 +180,38 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 		return result;
 	}
 	
-	private void renderExecutionCourseListForYear(StringBuffer strBuffer, Integer year) {
+	private void renderExecutionCourseListForYear(StringBuffer strBuffer, Integer year,ResourceBundle bundle) {
 		
 		if (user.equals("public")) {
 			strBuffer.append("<table class='tab_exams_details' cellspacing='0px'>");
-			strBuffer.append("<tr><th rowspan='2' width='250px' class='ordYear'>"+year+"&ordm; Ano</th>");
-			strBuffer.append("<th colspan='3' width='250'>1&ordf; &Eacute;poca</th>");
-			strBuffer.append("<th colspan='3'>2&ordf; &Eacute;poca</th></tr>");
-			strBuffer.append("<tr><td class='subheader' width='70px'>Dia</td>" +
-			"<td class='subheader' width='50px'>Hora</td><td class='subheader' width='130px'>Room(s)</td>");
-			strBuffer.append("<td class='subheader' width='70px'>Dia</td>" +
-			"<td class='subheader' width='50px'>Hora</td><td class='subheader' width='130px'>Room(s)</td></tr>");			
+			strBuffer.append("<tr><th rowspan='2' width='250px' class='ordYear'>"+year+"&ordm; ");
+            strBuffer.append(bundle.getString("label.year"));
+            strBuffer.append("</th>");
+			strBuffer.append("<th colspan='3' width='250'>1&ordf; ");
+            strBuffer.append(bundle.getString("label.times"));
+            strBuffer.append("</th>");
+			strBuffer.append("<th colspan='3'>2&ordf; ");
+            strBuffer.append(bundle.getString("label.times"));
+            strBuffer.append("</th></tr>");
+			strBuffer.append("<tr><td class='subheader' width='70px'>");
+            strBuffer.append(bundle.getString("label.day"));
+            strBuffer.append("</td><td class='subheader' width='50px'>");
+            strBuffer.append(bundle.getString("label.hour"));
+            strBuffer.append("</td><td class='subheader' width='130px'>");
+            strBuffer.append(bundle.getString("label.room"));
+            strBuffer.append("</td>");
+			strBuffer.append("<td class='subheader' width='70px'>");
+            strBuffer.append(bundle.getString("label.day"));
+            strBuffer.append("</td>" +
+			"<td class='subheader' width='50px'>");
+            strBuffer.append(bundle.getString("label.hour"));
+            strBuffer.append("</td><td class='subheader' width='130px'>");
+            strBuffer.append(bundle.getString("label.room"));
+            strBuffer.append("</td></tr>");			
 		} else {
-			strBuffer.append("<strong>Disciplinas do " + year + "&ordm; ano:</strong>");
+			strBuffer.append("<strong>");
+            strBuffer.append(bundle.getString("label.courseOf"));
+            strBuffer.append(year + "&ordm; ano:</strong>");
 		}
 		
 		Collections.sort(examsMap.getExecutionCourses(), new BeanComparator("sigla"));
@@ -372,10 +417,10 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 							Integer numAlunos = season1Exam.getEnrolledStudents();
 							
 							strBuffer.append(numAlunos);
-							strBuffer.append(" alunos inscritos");						
+							strBuffer.append(bundle.getString("label.enrolledPupils"));						
 							strBuffer.append("</td>");							
 							strBuffer.append("<td>");							
-							strBuffer.append("Faltam ");
+							strBuffer.append(bundle.getString("label.lack"));
 							
 							//Obter o num de lugares de exame das salas
 							List roomOccupation = season1Exam.getAssociatedRoomOccupation();
@@ -394,7 +439,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 							//								numLugaresAPreencher = 0;
 							
 							strBuffer.append(numLugaresAPreencher);
-							strBuffer.append(" lugares");
+							strBuffer.append(bundle.getString("label.places"));
 							
 							strBuffer.append("</td>");
 							strBuffer.append("<td>");
@@ -404,7 +449,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 						
 						if (infoRoomOccupations != null && infoRoomOccupations.size() > 0) {
 							if (user.equals("sop")) {
-								strBuffer.append("Salas:");
+								strBuffer.append(bundle.getString("label.rooms"));
 								strBuffer.append("<br>");
 							} else if (user.equals("public")) {
 								strBuffer.append("<td class='"+rowClass+"'>");
@@ -420,7 +465,9 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 							if (user.equals("sop")) {
 								strBuffer.append("-");
 							} else if (user.equals("public")) {
-								strBuffer.append("<i>Sem salas atribu&iacute;das</i>");
+								strBuffer.append("<i>");
+                                strBuffer.append(bundle.getString("label.noRoomsAttributed"));
+                                strBuffer.append("</i>");
 							}
 						}
 						
@@ -438,7 +485,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 									+ SessionConstants.CURRICULAR_YEAR_OID + "=" + year.toString()
 									+ "&amp;" + SessionConstants.EXAM_OID + "="
 									+ season1Exam.getIdInternal() + "'>");
-							strBuffer.append("Apagar");
+							strBuffer.append(bundle.getString("label.delete"));
 							strBuffer.append("</a>");
 							strBuffer.append("</td>");
 						}
@@ -463,7 +510,8 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 						}
 						
 						if (user.equals("sop")) {
-							strBuffer.append("2&ordf; &Eacute;poca");
+							strBuffer.append("2&ordf; ");
+                            strBuffer.append(bundle.getString("label.times"));
 							strBuffer.append("</a>");
 							strBuffer.append("</td>");		
 							strBuffer.append("<td>");
@@ -491,11 +539,11 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 							Integer numAlunos = season2Exam.getEnrolledStudents();
 							
 							strBuffer.append(numAlunos);
-							strBuffer.append(" alunos inscritos");
+							strBuffer.append(bundle.getString("label.enrolledPupils"));
 							
 							strBuffer.append("</td>");
 							strBuffer.append("<td>");
-							strBuffer.append("Faltam ");
+							strBuffer.append(bundle.getString("label.lack"));
 							
 							//Obter o num de lugares de exame das salas
 							List roomOccupation = season2Exam.getAssociatedRoomOccupation();
@@ -514,7 +562,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 							//								numLugaresAPreencher = 0;
 							
 							strBuffer.append(numLugaresAPreencher);
-							strBuffer.append(" lugares");
+							strBuffer.append(bundle.getString("label.places"));
 							strBuffer.append("</td>");
 							
 							strBuffer.append("<td>");
@@ -524,7 +572,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 						
 						if (infoRoomOccupations != null && infoRoomOccupations.size() > 0) {
 							if (user.equals("sop")) {
-								strBuffer.append("Salas:");
+								strBuffer.append(bundle.getString("label.rooms")+":");
 								strBuffer.append("<br>");
 							} else if (user.equals("public")) {
 								strBuffer.append("<td class='"+rowClass+"'>");
@@ -544,7 +592,9 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 							if (user.equals("sop")) {
 								strBuffer.append("-");
 							} else if (user.equals("public")){
-								strBuffer.append("<i>Sem salas atribu&iacute;das</i>");
+								strBuffer.append("<i>");
+                                strBuffer.append(bundle.getString("label.noRoomsAttributed"));
+                                strBuffer.append("</i>");
 							}
 						}
 						
@@ -561,7 +611,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 									+ SessionConstants.CURRICULAR_YEAR_OID + "=" + year.toString()
 									+ "&amp;" + SessionConstants.EXAM_OID + "="
 									+ season2Exam.getIdInternal() + "'>");
-							strBuffer.append("Apagar");
+							strBuffer.append(bundle.getString("label.delete"));
 							strBuffer.append("</a>");
 							strBuffer.append("</td>");
 						}
@@ -587,16 +637,20 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 	}
 	
 
-	private void renderExamsMapForFilteredYears(StringBuffer strBuffer, Integer year1, Integer year2) {
-		strBuffer.append("<table class='examMap' cellspacing='0' cellpadding='3' width='100%'>");
+	private void renderExamsMapForFilteredYears(StringBuffer strBuffer, Integer year1, Integer year2,Locale locale) {
 		
+        
+       
+        strBuffer.append("<table class='examMap' cellspacing='0' cellpadding='3' width='100%'>");
+       
 		strBuffer.append("<tr>");
-		renderHeader(strBuffer);
+		renderHeader(strBuffer,locale);
 		strBuffer.append("</tr>");
 		
 		for (int week = 0; week < numberOfWeks; week++) {
 			strBuffer.append("<tr>");
-			renderLabelsForRowOfDays(strBuffer, week);
+ 
+			renderLabelsForRowOfDays(strBuffer, week,locale);
 			strBuffer.append("</tr>\r\n");
 			strBuffer.append("<tr>");
 			renderExamsForRowOfDays(strBuffer, week, year1, year2);
@@ -623,28 +677,40 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 			
 			strBuffer.append("<td ").append("class='").append(classCSS).append("'>");
 			strBuffer.append(examsMapSlotContentRenderer.renderDayContents((ExamsMapSlot) examsMap
-					.getDays().get(week * daysOfWeek.length + slot), year1, year2, user));
+					.getDays().get(week * daysOfWeek.length + slot), year1, year2, user,locale));
 			strBuffer.append("</td>");
 		}
 	}
 	
-	private void renderLabelsForRowOfDays(StringBuffer strBuffer, int week) {
+	private void renderLabelsForRowOfDays(StringBuffer strBuffer, int week,Locale locale) {
 		for (int slot = 0; slot < daysOfWeek.length; slot++) {
 			ExamsMapSlot examsMapSlot = (ExamsMapSlot) examsMap.getDays().get(
-					week * daysOfWeek.length + slot);
-						
+					week * daysOfWeek.length + slot);				
 			String classCSS = "exam_cell_day";
 			if (examsMapSlot.getDay().get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
 			    classCSS += "_first";
 			}
-			
+            
 			strBuffer.append("<td ").append("class='").append(classCSS).append("'>");
-			strBuffer.append(examsMapSlotContentRenderer.renderDayLabel(examsMapSlot, examsMap, user));
+            examsMapSlotContentRenderer.renderDayLabel(examsMapSlot, examsMap, user,locale);
+  // System.out.println(examsMapSlotContentRenderer.renderDayLabel(examsMapSlot, examsMap, user,locale));
+			strBuffer.append(examsMapSlotContentRenderer.renderDayLabel(examsMapSlot, examsMap, user,locale));
 			strBuffer.append("</td>");
 		}
 	}
 	
-	private void renderHeader(StringBuffer strBuffer) {
+	private void renderHeader(StringBuffer strBuffer, Locale locale) {
+        
+        ResourceBundle bundle = ResourceBundle
+            .getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
+        
+        String makeLocale =  bundle.getString("label.monday") + "," + bundle.getString("label.tusday") 
+                             + "," + bundle.getString("label.wednesday") + "," + bundle.getString("label.thursday")+ "," + bundle.getString("label.friday")
+                             + "," + bundle.getString("label.saturday");
+   
+       String[] daysOfWeek =   makeLocale.split(","); 
+       //Segunda", "Ter&ccedil;a", "Quarta", "Quinta", "Sexta", "S&aacute;bado" };
+       
 		for (int index = 0; index < this.daysOfWeek.length; index++) {
 			StringBuffer classCSS = new StringBuffer("examMap_header");
 			if (index == 0) {
@@ -655,21 +721,25 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 		}
 	}
 	
-	private void renderExamsExecutionCourseTableForYear(StringBuffer strBuffer, Integer year) {
+	private void renderExamsExecutionCourseTableForYear(StringBuffer strBuffer, Integer year,ResourceBundle bundle) {
 		// PRINT EXECUTION DEGREE
 		strBuffer.append("<strong>"
 				+ examsMap.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree()
 				.getNome() + "</strong><br />");
-		strBuffer.append("<strong>" + year + "&ordm; ano</strong>");
+		strBuffer.append("<strong>" + year + "&ordm; ");
+        strBuffer.append(bundle.getString("label.year"));
+        strBuffer.append("</strong>");
 		strBuffer.append(" - <strong>"
 				+ ((InfoExecutionCourse) examsMap.getExecutionCourses().get(0)).getInfoExecutionPeriod()
-				.getSemester() + "&ordm; semestre</strong>");
+				.getSemester() + "&ordm; ");
+        strBuffer.append(bundle.getString("label.semester"));
+        strBuffer.append("</strong>");
 		strBuffer.append(" - <strong>"
 				+ ((InfoExecutionCourse) examsMap.getExecutionCourses().get(0)).getInfoExecutionPeriod()
 				.getInfoExecutionYear().getYear() + "</strong><br />");
 		strBuffer.append("<table border='1' cellspacing='0' cellpadding='3' width='95%'>");
 		
-		renderExamsTableHeader(strBuffer);
+		renderExamsTableHeader(strBuffer,bundle);
 		
 		Collections.sort(examsMap.getExecutionCourses(), new BeanComparator("nome"));
 		
@@ -726,14 +796,26 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 		}
 	}
 	
-	private void renderExamsTableHeader(StringBuffer strBuffer) {
+	private void renderExamsTableHeader(StringBuffer strBuffer,ResourceBundle bundle) {
 		strBuffer.append("<tr>");
-		strBuffer.append("<td> Disciplina </td>");
-		strBuffer.append("<td> &Eacute;poca </td>");
-		strBuffer.append("<td> Data </td>");
-		strBuffer.append("<td> Hora In&iacute;cio </td>");
-		strBuffer.append("<td> Hora Fim </td>");
-		strBuffer.append("<td> Salas </td>");
+		strBuffer.append("<td> ");
+        strBuffer.append(bundle.getString("label.course"));
+        strBuffer.append("</td>");
+		strBuffer.append("<td> ");
+        strBuffer.append(bundle.getString("label.times"));
+        strBuffer.append("</td>");
+		strBuffer.append("<td> ");
+        strBuffer.append(bundle.getString("label.date"));   
+        strBuffer.append("</td>");
+		strBuffer.append("<td> ");
+        strBuffer.append(bundle.getString("label.inicialHour"));
+        strBuffer.append("</td>");
+		strBuffer.append("<td> ");
+        strBuffer.append(bundle.getString("label.endHour"));
+        strBuffer.append("</td>");
+		strBuffer.append("<td> ");
+        strBuffer.append(bundle.getString("label.rooms"));
+        strBuffer.append("</td>");
 		strBuffer.append("</tr>");
 	}
 	

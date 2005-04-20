@@ -130,7 +130,13 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent {
         }
         return result;
     }
-
+    public void prepareEnglishPresentation(String language) {
+        if (language.equals("en")){        
+            this.generalObjectives  = this.generalObjectivesEn;
+            this.operacionalObjectives = this.operacionalObjectivesEn;
+            this.program = this.programEn;
+        }
+    }
     public String toString() {
         String result = "[INFOCURRICULUM";
         result += ", getGeneralObjectives=" + getGeneralObjectives();

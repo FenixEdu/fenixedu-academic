@@ -18,7 +18,7 @@ public class InfoSiteTimetable extends DataTranferObject implements ISiteCompone
 
 	private List lessons;
 
-	private IExecutionPeriod executionPeriod;
+	private InfoExecutionPeriod infoExecutionPeriod;
 
     /**
      * @return
@@ -34,18 +34,14 @@ public class InfoSiteTimetable extends DataTranferObject implements ISiteCompone
         lessons = list;
     }
 
-    /**
-     * @return
-     */
-    public IExecutionPeriod getExecutionPeriod() {
-        return executionPeriod;
+    public InfoExecutionPeriod getInfoExecutionPeriod() {
+        return infoExecutionPeriod;
     }
+    
 
-    /**
-     * @param infoExecutionPeriod
-     */
-    public void setExecutionPeriod(IExecutionPeriod iExecutionPeriod) {
-    	executionPeriod = iExecutionPeriod;
-    }    
- 
+    public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
+        this.infoExecutionPeriod = infoExecutionPeriod;
+    }
+    
+
 }

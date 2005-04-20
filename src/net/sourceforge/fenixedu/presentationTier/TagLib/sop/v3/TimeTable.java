@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.util.DiaSemana;
@@ -30,7 +32,7 @@ public class TimeTable {
      * @param numberOfHours
      * @param numberOfDays
      */
-    public TimeTable(Integer numberOfHours, Integer numberOfDays, Calendar minimumHour, Integer slotSize) {
+    public TimeTable(Integer numberOfHours, Integer numberOfDays, Calendar minimumHour, Integer slotSize,Locale locale) {
         this.minimumHourInMinutes = getMinutes(minimumHour);
         this.slotSize = slotSize;
 
@@ -41,7 +43,7 @@ public class TimeTable {
 
         days = new ArrayList(numberOfDays.intValue());
         for (int day = 0; day < numberOfDays.intValue(); day++) {
-            DayColumn column = new DayColumn(day, getDiaSemanaLabel(day));
+            DayColumn column = new DayColumn(day, getDiaSemanaLabel(day,locale));
             days.add(day, column);
         }
         timeTableGrid = new TimeTableSlot[numberOfDays.intValue()][numberOfHours.intValue()];
@@ -52,22 +54,24 @@ public class TimeTable {
      * 
      * @param day
      */
-    private String getDiaSemanaLabel(int day) {
+    private String getDiaSemanaLabel(int day, Locale locale) {
+        ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
+        
         switch (day) {
         case 0:
-            return "seg";
+            return bundle.getString("label.monday");
         case 1:
-            return "ter";
+            return bundle.getString("label.tusday");
         case 2:
-            return "quar";
+            return bundle.getString("label.wednesday");
         case 3:
-            return "quin";
+            return bundle.getString("label.thursday");
         case 4:
-            return "sex";
+            return bundle.getString("label.friday");
         case 5:
-            return "sab";
+            return bundle.getString("label.saturday");
         default:
-            return "inv " + day;
+            return bundle.getString("label.invalid") + day;
 
         }
     }

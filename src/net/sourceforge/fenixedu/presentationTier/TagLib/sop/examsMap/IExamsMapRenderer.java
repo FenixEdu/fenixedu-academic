@@ -6,6 +6,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMap;
 
+import java.util.Locale;
+
 /**
  * @author marvin
  * 
@@ -13,5 +15,6 @@ package net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMap;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public interface IExamsMapRenderer {
-    public abstract StringBuffer render();
+    public abstract StringBuffer render(Locale locale);
+ 
 }

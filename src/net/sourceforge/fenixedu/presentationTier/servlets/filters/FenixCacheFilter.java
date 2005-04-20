@@ -18,10 +18,13 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.presentationTier.mapping.MappingUtils;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.cache.ResponseCacheOSCacheImpl;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.struts.action.Action;
 
 import com.opensymphony.oscache.web.filter.CacheHttpServletResponseWrapper;
 import com.opensymphony.oscache.web.filter.ResponseContent;
@@ -65,29 +68,11 @@ public class FenixCacheFilter implements Filter {
 
         //String uri = request.getRequestURI();
 
-        // customize to match parameters
-        String queryString = constructQueryString(request);
 
-        StringBuffer id = new StringBuffer(request.getRequestURI());
-        if (queryString != null) {
-            id.append("?");
-            id.append(queryString);
-        }
+        String url = getPageURL(request);
 
-      	// optionally append i18n sensitivity
-       	String localeSensitive = this.filterConfig.getInitParameter("locale-sensitive");
-       	if (localeSensitive != null) {
-       		StringWriter ldata = new StringWriter();
-       		Enumeration locales = request.getLocales();
-       		while (locales.hasMoreElements()) {
-       			Locale locale = (Locale) locales.nextElement();
-       			ldata.write(locale.getISO3Language());
-       		}
-       		id.append(ldata.toString());
-       	}
-
-       	ResponseContent respContent = ResponseCacheOSCacheImpl.getInstance().lookup(id.toString());
-       	if (respContent != null && !matchesExcludePattern(id.toString())) {
+       	ResponseContent respContent = ResponseCacheOSCacheImpl.getInstance().lookup(url);
+       	if (respContent != null && !matchesExcludePattern(url)) {
        		respContent.writeTo(response);
        	} else {
        		CacheHttpServletResponseWrapper cacheResponse = new CacheHttpServletResponseWrapper(response);
@@ -95,47 +80,47 @@ public class FenixCacheFilter implements Filter {
        		cacheResponse.flushBuffer();
 
        		// Only cache if the response was 200
-       		if (cacheResponse.getStatus() == HttpServletResponse.SC_OK && !matchesExcludePattern(id.toString())) {
+       		if (cacheResponse.getStatus() == HttpServletResponse.SC_OK && !matchesExcludePattern(url)) {
        			//Store as the cache content the result of the response
-       			ResponseCacheOSCacheImpl.getInstance().cache(id.toString(), cacheResponse.getContent());
+       			ResponseCacheOSCacheImpl.getInstance().cache(url, cacheResponse.getContent());
        		}
         }
+    }
+
+    public static String getPageURL(HttpServletRequest request) {
+        String urlId = MappingUtils.currentURL(request);
+        StringBuffer id = new StringBuffer(urlId);
+
+        HttpSession httpSession = request.getSession(false);
+        if (httpSession == null) {
+            httpSession = request.getSession();
+        }
+        Locale locale = (Locale) httpSession.getAttribute(Action.LOCALE_KEY);
+        if (locale == null) {
+            locale = Locale.getDefault();
+            httpSession.setAttribute(Action.LOCALE_KEY, locale);
+        }
+        String language = locale.getLanguage();
+        id.append(language);
+        //        System.out.println("local in cache wrapper: " + locale.getLanguage());
+//      	// optionally append i18n sensitivity
+//       	String localeSensitive = this.filterConfig.getInitParameter("locale-sensitive");
+//        if (localeSensitive != null) {
+//       		StringWriter ldata = new StringWriter();
+//       		Enumeration locales = request.getLocales();
+//       		while (locales.hasMoreElements()) {
+//       			Locale locale2 = (Locale) locales.nextElement();
+//       			ldata.write(locale2.getISO3Language());
+//       		}
+//       		id.append(ldata.toString());
+//       	}
+
+        return id.toString();
     }
 
 	private boolean matchesExcludePattern(String id) {
 		return StringUtils.contains(id, excludePattern);
 	}
 
-	private String constructQueryString(HttpServletRequest request) {
-        StringBuffer queryString = new StringBuffer();
-
-        String requestQueryString = request.getQueryString();
-        if (requestQueryString != null) {
-            queryString.append(requestQueryString);
-        }
-
-        Enumeration parameterNames = request.getParameterNames();
-        if (parameterNames != null) {
-            while (parameterNames.hasMoreElements()) {
-                String parameterName = (String) parameterNames.nextElement();
-                String[] parameterValues = request.getParameterValues(parameterName);
-                for (int i = 0; i < parameterValues.length; i++) {
-                    String parameterValue = parameterValues[i];
-                    if (queryString.length() != 0) {
-                        queryString.append("&");
-                    }
-                    queryString.append(parameterName);
-                    queryString.append("=");
-                    queryString.append(parameterValue);
-                }
-            }
-        }
-
-        if (queryString.length() != 0) {
-            return queryString.toString();
-        }
-        return null;
-
-    }
 
 }

@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +20,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.RequestUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
+import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -40,8 +42,9 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
         request.setAttribute("degreeID", degreeId);
 
         Integer executionDegreeId = getFromRequest("executionDegreeID", request);
-        request.setAttribute("executionDegreeID", executionDegreeId);
-
+        request.setAttribute("executionDegreeID", executionDegreeId); 
+        String language = getLocaleLanguageFromRequest(request);
+        
         Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
@@ -61,7 +64,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
 
         List executionPeriodsLabelValueList = new ArrayList();
         InfoExecutionDegree infoExecutionDegree1 = (InfoExecutionDegree) infoExecutionDegreeList.get(0);
-
+      
         executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionDegree1
                 .getInfoExecutionYear().getYear(), ""
                 + infoExecutionDegree1.getInfoExecutionYear().getIdInternal()));
@@ -187,15 +190,18 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
         }
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = ((InfoCurricularCourseScope) ((List) activeCurricularCourseScopes
                 .get(0)).get(0)).getInfoCurricularCourse().getInfoDegreeCurricularPlan();
-
+  
+        infoDegreeCurricularPlan.prepareEnglishPresentation(language);
+        infoExecutionDegree1.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+            
         request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
         request.setAttribute("allActiveCurricularCourseScopes", activeCurricularCourseScopes);
 
-        if (inEnglish == null || inEnglish.booleanValue() == false) {
-            return mapping.findForward("showDegreeCurricularPlan");
-        }
 
-        return mapping.findForward("showDegreeCurricularPlanEnglish");
+            return mapping.findForward("showDegreeCurricularPlan");
+
+
+
 
     }
 
@@ -230,5 +236,12 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
             }
         }
         return parameterBoolean;
+    }
+    private String getLocaleLanguageFromRequest(HttpServletRequest request) {
+
+        Locale locale = (Locale) request.getSession(false).getAttribute(Action.LOCALE_KEY);
+        Locale locale2 = request.getLocale();
+        return  locale.getLanguage();
+
     }
 }
