@@ -42,7 +42,7 @@ public class ProjectReportsDispatchAction extends FenixDispatchAction {
         if (reportType.getReportType() != null
                 && (reportType.equals(ReportType.EXPENSES) || reportType.equals(ReportType.REVENUE) || reportType.equals(ReportType.CABIMENTOS) || reportType
                         .equals(ReportType.ADIANTAMENTOS))) {
-            final List projectList = (List) ServiceUtils.executeService(userView, "ReadUserProjects", new Object[] { userView, new Boolean(true) });
+            final List projectList = (List) ServiceUtils.executeService(userView, "ReadUserProjects", new Object[] { userView.getUtilizador(), new Boolean(true) });
 
             request.setAttribute("projectList", projectList);
             request.setAttribute("reportType", reportTypeStr);
@@ -64,11 +64,11 @@ public class ProjectReportsDispatchAction extends FenixDispatchAction {
             } else if (reportType.equals(ReportType.REVENUE) || reportType.equals(ReportType.ADIANTAMENTOS)
                     || reportType.equals(ReportType.CABIMENTOS)) {
                 final Integer projectCode = getCodeFromRequest(request, "projectCode");
-                final InfoProjectReport infoReport = (InfoProjectReport) ServiceUtils.executeService(userView, "ReadReport", new Object[] { userView,
+                final InfoProjectReport infoReport = (InfoProjectReport) ServiceUtils.executeService(userView, "ReadReport", new Object[] { userView.getUtilizador(),
                         reportType, projectCode });
                 request.setAttribute("infoReport", infoReport);
             } else if (reportType.equals(ReportType.SUMMARY)) {
-                final List infoSummaryReportList = (List) ServiceUtils.executeService(userView, "ReadSummaryReport", new Object[] { userView });
+                final List infoSummaryReportList = (List) ServiceUtils.executeService(userView, "ReadSummaryReport", new Object[] { userView.getUtilizador() });
                 request.setAttribute("infoSummaryReportList", infoSummaryReportList);
             }
 
@@ -87,7 +87,7 @@ public class ProjectReportsDispatchAction extends FenixDispatchAction {
         final String rubric = request.getParameter("rubric");
 
         InfoProjectReport infoExpensesReport = (InfoProjectReport) ServiceUtils.executeService(userView, "ReadExpensesReport", new Object[] { null,
-                userView, ReportType.EXPENSES, projectCode, rubric });
+                userView.getUtilizador(), ReportType.EXPENSES, projectCode, rubric });
 
         if (infoExpensesReport != null && infoExpensesReport.getInfoProject() != null) {
             Boolean lastSpan = new Boolean(true);
@@ -115,7 +115,7 @@ public class ProjectReportsDispatchAction extends FenixDispatchAction {
             }
             if (lastSpan.booleanValue() && (rubric == null || rubric.equals(""))) {
                 infoExpensesReport = (InfoProjectReport) ServiceUtils.executeService(userView, "ReadExpensesReport", new Object[] {
-                        infoExpensesReport, userView, ReportType.EXPENSES, projectCode, rubric });
+                        infoExpensesReport, userView.getUtilizador(), ReportType.EXPENSES, projectCode, rubric });
             }
             request.setAttribute("lastSpan", lastSpan);
         }
@@ -141,17 +141,17 @@ public class ProjectReportsDispatchAction extends FenixDispatchAction {
             if (!reportType.equals(ReportType.SUMMARY))
                 projectCode = getCodeFromRequest(request, "projectCode");
             if (reportType.equals(ReportType.EXPENSES)) {
-                infoProjectReport = (InfoProjectReport) ServiceUtils.executeService(userView, "ReadExpensesReport", new Object[] { null, userView,
+                infoProjectReport = (InfoProjectReport) ServiceUtils.executeService(userView, "ReadExpensesReport", new Object[] { null, userView.getUtilizador(),
                         reportType, projectCode, request.getParameter("rubric") });
                 infoProjectReport.getReportToExcel(userView, wb, reportType);
             } else if (reportType.equals(ReportType.SUMMARY)) {
-                List infoProjectReportList = (List) ServiceUtils.executeService(userView, "ReadSummaryReport", new Object[] { userView });
+                List infoProjectReportList = (List) ServiceUtils.executeService(userView, "ReadSummaryReport", new Object[] { userView.getUtilizador() });
                 for (int i = 0; i < infoProjectReportList.size(); i++) {
                     ((InfoCoordinatorReport) infoProjectReportList.get(i)).getReportToExcel(userView, wb, reportType);
                 }
 
             } else {
-                infoProjectReport = (InfoProjectReport) ServiceUtils.executeService(userView, "ReadReport", new Object[] { userView, reportType,
+                infoProjectReport = (InfoProjectReport) ServiceUtils.executeService(userView, "ReadReport", new Object[] { userView.getUtilizador(), reportType,
                         projectCode });
                 infoProjectReport.getReportToExcel(userView, wb, reportType);
             }

@@ -38,7 +38,7 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
         final IUserView userView = SessionUtils.getUserView(request);
         try {
             final List projectsAccessesList = (List) ServiceManagerServiceFactory.executeService(userView, "ReadProjectAccesses",
-                    new Object[] { userView });
+                    new Object[] { userView.getUtilizador() });
             request.setAttribute("projectsAccessesList", projectsAccessesList);
         } catch (InvalidArgumentsServiceException e) {
         }
@@ -48,7 +48,7 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
     public ActionForward choosePerson(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException, FenixFilterException {
         final IUserView userView = SessionUtils.getUserView(request);
-        final List projectList = (List) ServiceUtils.executeService(userView, "ReadUserProjects", new Object[] { userView, new Boolean(false) });
+        final List projectList = (List) ServiceUtils.executeService(userView, "ReadUserProjects", new Object[] { userView.getUtilizador(), new Boolean(false) });
         if (projectList == null || projectList.size() == 0)
             request.setAttribute("noUserProjects", new Boolean(true));
         return mapping.findForward("choosePerson");
@@ -64,7 +64,7 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
             try {
                 if (!username.equalsIgnoreCase(userView.getUtilizador())) {
                     final List personAccessesList = (List) ServiceManagerServiceFactory.executeService(userView, "ReadProjectAccesses", new Object[] {
-                            userView, username });
+                            userView.getUtilizador(), username });
                     request.setAttribute("personAccessesList", personAccessesList);
                     if (personAccessesList == null || personAccessesList.size() == 0) {
                         final InfoPerson infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView, "ReadPersonByUsername",
@@ -72,7 +72,7 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
                         request.setAttribute("infoPerson", infoPerson);
                     }
 
-                    final List projectList = (List) ServiceUtils.executeService(userView, "ReadProjectWithoutPersonAccess", new Object[] { userView,
+                    final List projectList = (List) ServiceUtils.executeService(userView, "ReadProjectWithoutPersonAccess", new Object[] { userView.getUtilizador(),
                             username });
                     request.setAttribute("projectList", projectList);
                     return mapping.findForward("showPersonAccesses");
@@ -109,11 +109,11 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
         } else {
             if (projectCode != null && projectCode.equals(new Integer(-1))) {
                 ServiceManagerServiceFactory.executeService(userView, "InsertNewProjectAccess",
-                        new Object[] { userView, username, beginDate, endDate });
+                        new Object[] { userView.getUtilizador(), username, beginDate, endDate });
             } else {
                 final String[] projectCodes = request.getParameterValues("projectCodes");
                 if (projectCodes != null && projectCodes.length != 0)
-                    ServiceManagerServiceFactory.executeService(userView, "InsertNewProjectAccess", new Object[] { userView, username, projectCodes,
+                    ServiceManagerServiceFactory.executeService(userView, "InsertNewProjectAccess", new Object[] { userView.getUtilizador(), username, projectCodes,
                             beginDate, endDate });
                 else
                     request.setAttribute("noProjectsSelected", new Boolean(true));
@@ -128,7 +128,7 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
         final IUserView userView = SessionUtils.getUserView(request);
         final Integer projectCode = getCodeFromRequest(request, "projectCode");
         final String personUsername = request.getParameter("username");
-        ServiceManagerServiceFactory.executeService(userView, "RemoveProjectAccess", new Object[] { userView, personUsername, projectCode });
+        ServiceManagerServiceFactory.executeService(userView, "RemoveProjectAccess", new Object[] { personUsername, projectCode });
         return showProjectsAccesses(mapping, form, request, response);
     }
 
@@ -137,7 +137,7 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
         final IUserView userView = SessionUtils.getUserView(request);
         final Integer projectCode = getCodeFromRequest(request, "projectCode");
         final String personUsername = request.getParameter("username");
-        ServiceManagerServiceFactory.executeService(userView, "RemoveProjectAccess", new Object[] { userView, personUsername, projectCode });
+        ServiceManagerServiceFactory.executeService(userView, "RemoveProjectAccess", new Object[] { personUsername, projectCode });
         return showPersonAccesses(mapping, form, request, response);
     }
 
@@ -179,7 +179,7 @@ public class ProjectAccessDelegationDispatchAction extends FenixDispatchAction {
             request.setAttribute("invalidEndTime", new Boolean(true));
             return prepareEditProjectAccess(mapping, form, request, response);
         } else
-            ServiceManagerServiceFactory.executeService(userView, "EditProjectAccess", new Object[] { userView, personCode, projectCode, beginDate,
+            ServiceManagerServiceFactory.executeService(userView, "EditProjectAccess", new Object[] { personCode, projectCode, beginDate,
                     endDate });
         return showPersonAccesses(mapping, form, request, response);
     }

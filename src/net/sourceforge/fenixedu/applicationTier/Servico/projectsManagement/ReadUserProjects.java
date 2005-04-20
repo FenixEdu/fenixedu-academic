@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IPerson;
@@ -27,18 +26,18 @@ public class ReadUserProjects implements IService {
     public ReadUserProjects() {
     }
 
-    public List run(IUserView userView, Boolean all) throws ExcepcaoPersistencia {
+    public List run(String userView, Boolean all) throws ExcepcaoPersistencia {
         List infoProjectList = new ArrayList();
 
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         Integer userNumber = null;
 
-        ITeacher teacher = persistentSuport.getIPersistentTeacher().readTeacherByUsername(userView.getUtilizador());
+        ITeacher teacher = persistentSuport.getIPersistentTeacher().readTeacherByUsername(userView);
         if (teacher != null)
             userNumber = teacher.getTeacherNumber();
         else {
-            IPerson person = persistentSuport.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+            IPerson person = persistentSuport.getIPessoaPersistente().lerPessoaPorUsername(userView);
             IEmployee employee = persistentSuport.getIPersistentEmployee().readByPerson(person);
             if (employee != null)
                 userNumber = employee.getEmployeeNumber();
@@ -48,7 +47,7 @@ public class ReadUserProjects implements IService {
             List projectList = p.getIPersistentProject().readByUserLogin(userNumber.toString());
             if (all.booleanValue())
                 projectList.addAll(p.getIPersistentProject().readByProjectsCodes(
-                        persistentSuport.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndDate(userView.getUtilizador())));
+                        persistentSuport.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndDate(userView)));
             for (int i = 0; i < projectList.size(); i++)
                 infoProjectList.add(InfoProject.newInfoFromDomain((IProject) projectList.get(i)));
         }

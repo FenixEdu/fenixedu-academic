@@ -4,7 +4,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IPerson;
@@ -29,10 +28,10 @@ public class ReviewProjectAccess implements IService {
     public ReviewProjectAccess() {
     }
 
-    public void run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(String userView) throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentProjectAccess persistentProjectAccess = sp.getIPersistentProjectAccess();
-        IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+        IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView);
         if (persistentProjectAccess.countByPerson(person) == 0) {
             ITeacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(person.getUsername());
             if (teacher == null) {

@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoCoordinatorReport;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoRubric;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoSummaryReportLine;
@@ -30,7 +29,7 @@ public class ReadSummaryReport implements IService {
     public ReadSummaryReport() {
     }
 
-    public List run(IUserView userView) throws ExcepcaoPersistencia {
+    public List run(String userView) throws ExcepcaoPersistencia {
         List infoProjectReportList = new ArrayList();
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         Integer userNumber = getUserNumber(persistentSuport, userView);
@@ -38,7 +37,7 @@ public class ReadSummaryReport implements IService {
             PersistentSuportOracle p = PersistentSuportOracle.getInstance();
 
             Integer thisCoordinator = p.getIPersistentProjectUser().getUserCoordId(userNumber);
-            List coordinatorsCodes = persistentSuport.getIPersistentProjectAccess().readCoordinatorsCodesByPersonUsernameAndDates(userView.getUtilizador());
+            List coordinatorsCodes = persistentSuport.getIPersistentProjectAccess().readCoordinatorsCodesByPersonUsernameAndDates(userView);
             if (thisCoordinator != null)
                 coordinatorsCodes.add(thisCoordinator);
             for (int coord = 0; coord < coordinatorsCodes.size(); coord++) {
@@ -47,7 +46,7 @@ public class ReadSummaryReport implements IService {
                 infoReport.setInfoCoordinator(InfoRubric.newInfoFromDomain(p.getIPersistentProjectUser().readProjectCoordinator(
                         (Integer) coordinatorsCodes.get(coord))));
                 List projectCodes = persistentSuport.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndCoordinator(
-                        userView.getUtilizador(), new Integer(infoReport.getInfoCoordinator().getCode()), false);
+                        userView, new Integer(infoReport.getInfoCoordinator().getCode()), false);
                 List lines = p.getIPersistentSummaryReport().readByCoordinatorAndProjectCodes(ReportType.SUMMARY,
                         new Integer(infoReport.getInfoCoordinator().getCode()), projectCodes);
                 for (int line = 0; line < lines.size(); line++)
@@ -59,13 +58,13 @@ public class ReadSummaryReport implements IService {
         return infoProjectReportList;
     }
 
-    private Integer getUserNumber(ISuportePersistente sp, IUserView userView) throws ExcepcaoPersistencia {
+    private Integer getUserNumber(ISuportePersistente sp, String userView) throws ExcepcaoPersistencia {
         Integer userNumber = null;
-        ITeacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(userView.getUtilizador());
+        ITeacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(userView);
         if (teacher != null)
             userNumber = teacher.getTeacherNumber();
         else {
-            IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+            IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView);
             IEmployee employee = sp.getIPersistentEmployee().readByPerson(person);
             if (employee != null)
                 userNumber = employee.getEmployeeNumber();

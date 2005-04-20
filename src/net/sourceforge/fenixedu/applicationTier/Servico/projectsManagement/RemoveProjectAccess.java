@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
@@ -27,7 +26,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class RemoveProjectAccess implements IService {
 
-    public void run(IUserView userView, String personUsername, Integer projectCode) throws ExcepcaoPersistencia {
+    public void run(String personUsername, Integer projectCode) throws ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentProjectAccess persistentProjectAccess = sp.getIPersistentProjectAccess();
         IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(personUsername);

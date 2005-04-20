@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoAdiantamentosReportLine;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoCabimentosReportLine;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoExpensesReport;
@@ -39,7 +38,7 @@ public class ReadExpensesReport implements IService {
     public ReadExpensesReport() {
     }
 
-    public InfoExpensesReport run(InfoExpensesReport infoReport, IUserView userView, ReportType reportType, Integer projectCode, String rubric)
+    public InfoExpensesReport run(InfoExpensesReport infoReport, String userView, ReportType reportType, Integer projectCode, String rubric)
             throws ExcepcaoPersistencia {
 
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -48,7 +47,7 @@ public class ReadExpensesReport implements IService {
         if (userNumber != null
                 && projectCode != null
                 && (p.getIPersistentProject().isUserProject(userNumber, projectCode) || persistentSuport.getIPersistentProjectAccess()
-                        .hasPersonProjectAccess(userView.getUtilizador(), projectCode))) {
+                        .hasPersonProjectAccess(userView, projectCode))) {
 
             List infoLines = new ArrayList();
 
@@ -94,13 +93,13 @@ public class ReadExpensesReport implements IService {
         return infoReport;
     }
 
-    private Integer getUserNumber(ISuportePersistente sp, IUserView userView) throws ExcepcaoPersistencia {
+    private Integer getUserNumber(ISuportePersistente sp, String userView) throws ExcepcaoPersistencia {
         Integer userNumber = null;
-        ITeacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(userView.getUtilizador());
+        ITeacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(userView);
         if (teacher != null)
             userNumber = teacher.getTeacherNumber();
         else {
-            IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+            IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView);
             IEmployee employee = sp.getIPersistentEmployee().readByPerson(person);
             if (employee != null)
                 userNumber = employee.getEmployeeNumber();

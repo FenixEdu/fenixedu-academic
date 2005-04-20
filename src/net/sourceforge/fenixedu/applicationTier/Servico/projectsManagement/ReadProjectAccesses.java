@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -29,9 +28,9 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadProjectAccesses implements IService {
 
-    public List run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(String user) throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        ITeacher personCoordinator = sp.getIPersistentTeacher().readTeacherByUsername(userView.getUtilizador());
+        ITeacher personCoordinator = sp.getIPersistentTeacher().readTeacherByUsername(user);
         if (personCoordinator == null)
             throw new InvalidArgumentsServiceException();
 
@@ -51,7 +50,7 @@ public class ReadProjectAccesses implements IService {
         return infoProjectAcessesList;
     }
 
-    public List run(IUserView userView, String username) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(String userView, String username) throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         ITeacher personTeacher = sp.getIPersistentTeacher().readTeacherByUsername(username);
@@ -64,7 +63,7 @@ public class ReadProjectAccesses implements IService {
                 throw new InvalidArgumentsServiceException();
         }
 
-        ITeacher personCoordinator = sp.getIPersistentTeacher().readTeacherByUsername(userView.getUtilizador());
+        ITeacher personCoordinator = sp.getIPersistentTeacher().readTeacherByUsername(userView);
 
         List projectAcessesList = sp.getIPersistentProjectAccess().readByPersonUsernameAndCoordinatorAndDate(username,
                 personCoordinator.getTeacherNumber());

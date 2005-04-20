@@ -28,7 +28,7 @@ public class IndexAction extends FenixAction {
             throws FenixFilterException, FenixServiceException {
 
         final IUserView userView = SessionUtils.getUserView(request);
-        ServiceManagerServiceFactory.executeService(userView, "ReviewProjectAccess", new Object[] { userView });
+        ServiceManagerServiceFactory.executeService(userView, "ReviewProjectAccess", new Object[] { userView.getUtilizador() });
 
         return mapping.findForward("success");
     }

@@ -8,7 +8,6 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IPersonRole;
@@ -34,7 +33,7 @@ public class InsertNewProjectAccess implements IService {
     public InsertNewProjectAccess() {
     }
 
-    public void run(IUserView userView, String username, GregorianCalendar beginDate, GregorianCalendar endDate) throws ExcepcaoPersistencia {
+    public void run(String userView, String username, GregorianCalendar beginDate, GregorianCalendar endDate) throws ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
         if (person == null)
@@ -68,7 +67,7 @@ public class InsertNewProjectAccess implements IService {
         }
     }
 
-    public void run(IUserView userView, String username, String[] projectCodes, GregorianCalendar beginDate, GregorianCalendar endDate)
+    public void run(String userView, String username, String[] projectCodes, GregorianCalendar beginDate, GregorianCalendar endDate)
             throws ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
@@ -109,13 +108,13 @@ public class InsertNewProjectAccess implements IService {
         return false;
     }
 
-    private Integer getUserNumber(ISuportePersistente sp, IUserView userView) throws ExcepcaoPersistencia {
+    private Integer getUserNumber(ISuportePersistente sp, String userView) throws ExcepcaoPersistencia {
         Integer userNumber = null;
-        ITeacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(userView.getUtilizador());
+        ITeacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(userView);
         if (teacher != null)
             userNumber = teacher.getTeacherNumber();
         else {
-            IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+            IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView);
             IEmployee employee = sp.getIPersistentEmployee().readByPerson(person);
             if (employee != null)
                 userNumber = employee.getEmployeeNumber();

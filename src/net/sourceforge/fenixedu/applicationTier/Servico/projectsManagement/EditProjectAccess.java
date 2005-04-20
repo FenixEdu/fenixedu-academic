@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.projectsManagement.IProjectAccess;
@@ -24,7 +23,7 @@ public class EditProjectAccess implements IService {
     public EditProjectAccess() {
     }
 
-    public void run(IUserView userView, Integer personId, Integer projectCode, Calendar beginDate, Calendar endDate) throws FenixServiceException,
+    public void run(Integer personId, Integer projectCode, Calendar beginDate, Calendar endDate) throws FenixServiceException,
             ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentProjectAccess persistentProjectAccess = sp.getIPersistentProjectAccess();

@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
 import net.sourceforge.fenixedu.domain.projectsManagement.IProject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -25,9 +24,9 @@ public class ReadProjectWithoutPersonAccess implements IService {
     public ReadProjectWithoutPersonAccess() {
     }
 
-    public List run(IUserView userView, String username) throws ExcepcaoPersistencia {
+    public List run(String userView, String username) throws ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        Integer coordinatorId = (sp.getIPersistentTeacher().readTeacherByUsername(userView.getUtilizador())).getTeacherNumber();
+        Integer coordinatorId = (sp.getIPersistentTeacher().readTeacherByUsername(userView)).getTeacherNumber();
         List projectCodes = sp.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndCoordinator(username, coordinatorId, true);
         IPersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getInstance();
         List projectList = persistentSuportOracle.getIPersistentProject().readByCoordinatorAndNotProjectsCodes(coordinatorId, projectCodes);
