@@ -439,7 +439,7 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     
     public void setMarkType(net.sourceforge.fenixedu.util.MarkType markType);
     public void setState(net.sourceforge.fenixedu.util.DegreeCurricularPlanState state);
-    
+   
     "
 }
 
@@ -984,6 +984,15 @@ class net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime extends
 	interface "
 	public Boolean getContractRegimeActive();
 	"
+}
+
+
+class net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyGrantPaymentEntity;
+	Double totalValue;
+	Integer keyGrantContract;
+	Date dateEndInsurance;
+	Date dateBeginInsurance;
 }
 
 
@@ -2173,6 +2182,7 @@ class net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute exten
 external class net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty;
 external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
 external class net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
+external class net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 
@@ -2573,6 +2583,22 @@ relation GrantContractRegimeTeacher {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+
+relation GrantInsuranceGrantContract {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance playsRole associatedGrantInsurances {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole grantContract;
+}
+
+
+relation GrantInsuranceGrantPaymentEntity {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance playsRole associatedGrantInsurances {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity playsRole grantPaymentEntity;
 }
 
 

@@ -172,9 +172,9 @@ relation GrantContractRegimeGrantCostCenter {
 }
 
 
-relation ??? {
-	net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance playsRole ??? {
-		multiplicity ???;
+relation GrantInsuranceGrantPaymentEntity {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance playsRole associatedGrantInsurances {
+		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity playsRole grantPaymentEntity;
 }
@@ -207,6 +207,14 @@ relation GrantContractRegimeTeacher {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+
+relation GrantInsuranceGrantContract {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance playsRole associatedGrantInsurances {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole grantContract;
 }
 
 
