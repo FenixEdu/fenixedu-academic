@@ -7,6 +7,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
+
+import org.apache.struts.Globals;
+import org.apache.struts.util.RequestUtils;
+
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
@@ -32,7 +38,7 @@ public class TimeTable {
      * @param numberOfHours
      * @param numberOfDays
      */
-    public TimeTable(Integer numberOfHours, Integer numberOfDays, Calendar minimumHour, Integer slotSize,Locale locale) {
+    public TimeTable(Integer numberOfHours, Integer numberOfDays, Calendar minimumHour, Integer slotSize,Locale locale, PageContext pageContext) {
         this.minimumHourInMinutes = getMinutes(minimumHour);
         this.slotSize = slotSize;
 
@@ -43,7 +49,7 @@ public class TimeTable {
 
         days = new ArrayList(numberOfDays.intValue());
         for (int day = 0; day < numberOfDays.intValue(); day++) {
-            DayColumn column = new DayColumn(day, getDiaSemanaLabel(day,locale));
+            DayColumn column = new DayColumn(day, getDiaSemanaLabel(day,locale, pageContext));
             days.add(day, column);
         }
         timeTableGrid = new TimeTableSlot[numberOfDays.intValue()][numberOfHours.intValue()];
@@ -54,25 +60,33 @@ public class TimeTable {
      * 
      * @param day
      */
-    private String getDiaSemanaLabel(int day, Locale locale) {
+    private String getDiaSemanaLabel(int day, Locale locale, PageContext pageContext) {
         ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
         
         switch (day) {
         case 0:
-            return bundle.getString("label.monday");
+            return getMessageResource(pageContext, "label.monday", locale);
         case 1:
-            return bundle.getString("label.tusday");
+            return getMessageResource(pageContext, "label.tusday", locale);
         case 2:
-            return bundle.getString("label.wednesday");
+            return getMessageResource(pageContext, "label.wednesday", locale);
         case 3:
-            return bundle.getString("label.thursday");
+            return getMessageResource(pageContext, "label.thursday", locale);
         case 4:
-            return bundle.getString("label.friday");
+            return getMessageResource(pageContext, "label.friday", locale);
         case 5:
-            return bundle.getString("label.saturday");
+            return getMessageResource(pageContext, "label.saturday", locale);
         default:
-            return bundle.getString("label.invalid") + day;
+            return getMessageResource(pageContext, "label.invalid", locale) + day;
 
+        }
+    }
+
+    private String getMessageResource(PageContext pageContext, String key, Locale locale) {
+        try {
+            return RequestUtils.message(pageContext, "PUBLIC_DEGREE_INFORMATION", Globals.LOCALE_KEY, key);
+        } catch (JspException e) {
+            return "???" + key + "???"; 
         }
     }
 

@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
@@ -60,8 +61,6 @@ public final class RenderTimeTableTag extends TagSupport {
 
     // Mensagens de erro.
     protected static MessageResources messages = MessageResources
-            .getMessageResources("ApplicationResources");
-    protected static MessageResources message = MessageResources
     .getMessageResources("PublicDegreeInformation");
 
     private InfoCurricularYear infoCurricularYear = null;
@@ -111,13 +110,13 @@ public final class RenderTimeTableTag extends TagSupport {
         // Gera o horário a partir da lista de aulas.
         Locale locale = (Locale)pageContext.findAttribute(Globals.LOCALE_KEY);
         JspWriter writer = pageContext.getOut();
-        TimeTable timeTable = generateTimeTable(infoLessonList,locale);
+        TimeTable timeTable = generateTimeTable(infoLessonList,locale, pageContext);
 
         TimeTableRenderer renderer = new TimeTableRenderer(timeTable, lessonSlotContentRenderer,
                 this.slotSizeMinutes, this.startTimeTableHour, this.endTimeTableHour, colorPicker);
        
         try {
-           writer.print(renderer.render(locale));
+           writer.print(renderer.render(locale, pageContext));
            writer.print(legenda(infoLessonList,locale));
         } catch (IOException e) {
             throw new JspException(messages.getMessage("gerarHorario.io", e.toString()));
@@ -131,7 +130,7 @@ public final class RenderTimeTableTag extends TagSupport {
      * @param listaAulas
      * @return TimeTable
      */
-    private TimeTable generateTimeTable(List lessonList,Locale locale) {
+    private TimeTable generateTimeTable(List lessonList,Locale locale, PageContext pageContext) {
 
         Calendar calendar = Calendar.getInstance();
 
@@ -143,7 +142,7 @@ public final class RenderTimeTableTag extends TagSupport {
                 (endTimeTableHour.intValue() - startTimeTableHour.intValue())
                         * (60 / slotSizeMinutes.intValue()));
 
-        TimeTable timeTable = new TimeTable(numberOfHours, numberOfDays, calendar, slotSizeMinutes,locale);
+        TimeTable timeTable = new TimeTable(numberOfHours, numberOfDays, calendar, slotSizeMinutes,locale, pageContext);
 
         Iterator lessonIterator = lessonList.iterator();
 
@@ -302,5 +301,6 @@ public final class RenderTimeTableTag extends TagSupport {
     public void setApplication(String application) {
         this.application = application;
     }
+
 }
 

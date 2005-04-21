@@ -9,6 +9,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
+
+import org.apache.struts.Globals;
+import org.apache.struts.util.RequestUtils;
+
 /**
  * @author jpvl
  */
@@ -51,14 +57,14 @@ public class TimeTableRenderer {
         this.colorPicker = colorPicker;
     }
 
-    public StringBuffer render(Locale locale) {
+    public StringBuffer render(Locale locale, PageContext pageContext) {
         StringBuffer strBuffer = new StringBuffer("");
 
         TimeTableSlot[][] grid = timeTable.getTimeTableGrid();
 
         strBuffer.append("<table class='timetable' cellspacing='0' cellpadding='0' width='90%'>");
         
-        renderHeader(strBuffer,locale);
+        renderHeader(strBuffer,locale, pageContext);
 
         for (int hourIndex = 0; hourIndex < timeTable.getNumberOfHours().intValue(); hourIndex++) {
 
@@ -197,16 +203,20 @@ public class TimeTableRenderer {
      * Method renderHeader.
      * 
      * @param strBuffer
+     * @param pageContext 
      */
-    private void renderHeader(StringBuffer strBuffer,Locale locale) {
+    private void renderHeader(StringBuffer strBuffer,Locale locale, PageContext pageContext) {
 
         //strBuffer.append("<th width='15%'>horas/dias</th>\r\n");
-        ResourceBundle bundle = ResourceBundle
-                                .getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
-       
-        
+        String hourDaysTitle;
+        try {
+            hourDaysTitle = RequestUtils.message(pageContext, "PUBLIC_DEGREE_INFORMATION", Globals.LOCALE_KEY, "label.timesAndDays");
+        } catch (JspException e) {
+            hourDaysTitle = "???label.timesAndDays???"; 
+        }
+
         strBuffer.append("<th width='15%'>");
-        strBuffer.append(bundle.getString("label.timesAndDays"));
+        strBuffer.append(hourDaysTitle);
         strBuffer.append("</th>\r\n");
 
         int cellWidth = (100 - 15) / timeTable.getNumberOfDays().intValue();
