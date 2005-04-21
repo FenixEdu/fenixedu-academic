@@ -6,7 +6,6 @@
 
 package net.sourceforge.fenixedu.domain;
 
-import java.util.List;
 
 /**
  * 
@@ -16,24 +15,7 @@ import java.util.List;
 
 public class ScientificArea extends ScientificArea_Base {
 
-    private List areaCurricularCourseGroups;
-
     public ScientificArea() {
-    }
-
-    /**
-     * @return Returns the curricularCourseGroups.
-     */
-    public List getAreaCurricularCourseGroups() {
-        return areaCurricularCourseGroups;
-    }
-
-    /**
-     * @param curricularCourseGroups
-     *            The curricularCourseGroups to set.
-     */
-    public void setAreaCurricularCourseGroups(List curricularCourseGroups) {
-        this.areaCurricularCourseGroups = curricularCourseGroups;
     }
 
     public String toString() {

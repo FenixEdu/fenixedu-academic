@@ -314,10 +314,7 @@ class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourcefo
     public void setMaximumNumberOfOptionalCourses(Integer maximumNumberOfOptionalCourses);
     
     public net.sourceforge.fenixedu.util.AreaType getAreaType();
-    public java.util.List getScientificAreas();
     public void setAreaType(net.sourceforge.fenixedu.util.AreaType areaType);
-    public void setScientificAreas(java.util.List scientificAreas);
-    
     "
 }
 
@@ -1879,11 +1876,6 @@ class net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent extends net.sour
 
 class net.sourceforge.fenixedu.domain.ScientificArea extends net.sourceforge.fenixedu.domain.DomainObject {
 	String name;
-	
-	interface " 
-    	public java.util.List getAreaCurricularCourseGroups();
-    	public void setAreaCurricularCourseGroups(java.util.List curricularCourseGroups);
-	"
 }
 
 class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.domain.DomainObject implements net.sourceforge.fenixedu.fileSuport.INode {
@@ -2348,7 +2340,6 @@ relation AnswerExportProposal {
 	net.sourceforge.fenixedu.domain.Person playsRole receiverPerson;
 }
 
-
 relation AttendBelongsToAttendsSet {
 	net.sourceforge.fenixedu.domain.AttendInAttendsSet playsRole attendInAttendsSet {
 		multiplicity *;
@@ -2533,6 +2524,15 @@ relation CurricularCourseScientificArea {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ScientificArea playsRole scientificArea;
+}
+
+relation CurricularCourseGroupScientificArea {
+    net.sourceforge.fenixedu.domain.CurricularCourseGroup playsRole curricularCourseGroups {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.ScientificArea playsRole scientificAreas {
+        multiplicity *;
+    }
 }
 
 relation CurricularCourseScopeCurricularSemester {
@@ -3523,3 +3523,16 @@ relation PublicationsNumberTeacher {
 	net.sourceforge.fenixedu.domain.teacher.PublicationsNumber playsRole publicationsNumber;
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
+
+relation ScientificAreaAreaCurricularCourseGroup {
+
+    net.sourceforge.fenixedu.domain.ScientificArea playsRole scientificAreasForThis {
+        multiplicity *;
+    }
+
+    net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup playsRole areaCurricularCourseGroups {
+        multiplicity *;
+    }
+    
+}
+
