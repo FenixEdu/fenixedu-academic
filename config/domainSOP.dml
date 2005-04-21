@@ -466,7 +466,7 @@ relation ExamStudentRoomRoom {
 }
 
 relation EvaluationExecutionCourseEvaluation {
-	net.sourceforge.fenixedu.domain.EvaluationExecutionCourse playsRole evaluationExecutionCourses {
+	net.sourceforge.fenixedu.domain.EvaluationExecutionCourse playsRole associatedExecutionCourses {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Evaluation playsRole evaluation;
