@@ -15,12 +15,7 @@ import net.sourceforge.fenixedu.util.State;
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
  */
-public class MasterDegreeProofVersion extends DomainObject implements IMasterDegreeProofVersion {
-
-    //database internal keys
-    private Integer keyMasterDegreeThesis;
-
-    private Integer keyEmployee;
+public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
 
     //fields
     private IMasterDegreeThesis masterDegreeThesis;
@@ -34,8 +29,6 @@ public class MasterDegreeProofVersion extends DomainObject implements IMasterDeg
     private Date thesisDeliveryDate;
 
     private MasterDegreeClassification finalResult;
-
-    private Integer attachedCopiesNumber;
 
     private State currentState;
 
@@ -70,7 +63,7 @@ public class MasterDegreeProofVersion extends DomainObject implements IMasterDeg
         this.proofDate = proofDate;
         this.thesisDeliveryDate = thesisDeliveryDate;
         this.finalResult = finalResult;
-        this.attachedCopiesNumber = attachedCopiesNumber;
+        setAttachedCopiesNumber(attachedCopiesNumber);
         this.currentState = currentState;
         this.juries = juries;
         this.externalJuries = externalJuries;
@@ -90,14 +83,6 @@ public class MasterDegreeProofVersion extends DomainObject implements IMasterDeg
 
     public IMasterDegreeThesis getMasterDegreeThesis() {
         return masterDegreeThesis;
-    }
-
-    public void setKeyMasterDegreeThesis(Integer keyMasterDegreeThesis) {
-        this.keyMasterDegreeThesis = keyMasterDegreeThesis;
-    }
-
-    public Integer getKeyMasterDegreeThesis() {
-        return keyMasterDegreeThesis;
     }
 
     public void setProofDate(Date proofDate) {
@@ -124,28 +109,12 @@ public class MasterDegreeProofVersion extends DomainObject implements IMasterDeg
         return finalResult;
     }
 
-    public void setAttachedCopiesNumber(Integer attachedCopiesNumber) {
-        this.attachedCopiesNumber = attachedCopiesNumber;
-    }
-
-    public Integer getAttachedCopiesNumber() {
-        return attachedCopiesNumber;
-    }
-
     public void setResponsibleEmployee(IEmployee responsibleEmployee) {
         this.responsibleEmployee = responsibleEmployee;
     }
 
     public IEmployee getResponsibleEmployee() {
         return responsibleEmployee;
-    }
-
-    public void setKeyEmployee(Integer keyEmployee) {
-        this.keyEmployee = keyEmployee;
-    }
-
-    public Integer getKeyEmployee() {
-        return keyEmployee;
     }
 
     public void setCurrentState(State state) {
@@ -181,7 +150,7 @@ public class MasterDegreeProofVersion extends DomainObject implements IMasterDeg
         result += "proofDate = " + this.proofDate.toString() + "; \n";
         result += "thesisDeliveryDate = " + this.thesisDeliveryDate.toString() + "; \n";
         result += "finalResult = " + this.finalResult.toString() + "; \n";
-        result += "attachedCopiesNumber = " + this.attachedCopiesNumber.toString() + "; \n";
+        result += "attachedCopiesNumber = " + getAttachedCopiesNumber().toString() + "; \n";
         result += "currentState = " + this.currentState.toString() + "; \n";
         result += "] \n";
 

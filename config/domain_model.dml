@@ -1335,6 +1335,51 @@ class net.sourceforge.fenixedu.domain.MasterDegreeCandidate extends net.sourcefo
 	"
 }
 
+class net.sourceforge.fenixedu.domain.MasterDegreeProofVersion extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyMasterDegreeThesis;
+	Integer attachedCopiesNumber;
+	Integer keyEmployee;
+	
+	interface "
+	    public void setLastModification(java.sql.Timestamp lastModification);
+    	
+    	public java.sql.Timestamp getLastModification();
+	    
+	    public void setMasterDegreeThesis(net.sourceforge.fenixedu.domain.IMasterDegreeThesis masterDegreeThesis);
+	    
+	    public net.sourceforge.fenixedu.domain.IMasterDegreeThesis getMasterDegreeThesis();
+	    
+	    public void setProofDate(java.util.Date proofDate);
+	    
+	    public java.util.Date getProofDate();
+	    
+	    public void setThesisDeliveryDate(java.util.Date thesisDeliveryDate);
+	    
+	    public java.util.Date getThesisDeliveryDate();
+	    
+	    public void setFinalResult(net.sourceforge.fenixedu.util.MasterDegreeClassification finalResult);
+	    
+	    public net.sourceforge.fenixedu.util.MasterDegreeClassification getFinalResult();
+	    
+	    public void setResponsibleEmployee(net.sourceforge.fenixedu.domain.IEmployee responsibleEmployee);
+	    
+	    public net.sourceforge.fenixedu.domain.IEmployee getResponsibleEmployee();
+	    
+	    public void setCurrentState(net.sourceforge.fenixedu.util.State state);
+	    
+	    public net.sourceforge.fenixedu.util.State getCurrentState();
+	    
+	    public void setJuries(java.util.List juries);
+	    
+	    public java.util.List getJuries();
+	    
+	    public java.util.List getExternalJuries();
+	    
+	    public void setExternalJuries(java.util.List externalJuries);
+	"
+	
+}
+
 class net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer studentCurricularPlanKey;
     Integer curricularCourseKey;
