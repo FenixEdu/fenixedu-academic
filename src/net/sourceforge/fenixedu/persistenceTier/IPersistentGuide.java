@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.persistenceTier;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IGuide;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.util.SituationOfGuide;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -50,7 +50,7 @@ public interface IPersistentGuide extends IPersistentObject {
      * @throws ExcepcaoPersistencia
      */
     public List readByPerson(String identificationDocumentNumber,
-            TipoDocumentoIdentificacao identificationDocumentType) throws ExcepcaoPersistencia;
+            IDDocumentType identificationDocumentType) throws ExcepcaoPersistencia;
 
     /**
      * @param year

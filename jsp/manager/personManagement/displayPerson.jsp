@@ -41,7 +41,10 @@
           <!-- Tipo do Documento de Identificacao -->
           <tr>
             <td width="30%"><bean:message key="label.person.identificationDocumentType" /></td>
-            <td class="greytxt"><bean:write name="personalInfo" property="tipoDocumentoIdentificacao"/></td>
+            <td class="greytxt">
+            	<bean:define id="idType" name="personalInfo" property="tipoDocumentoIdentificacao"/>
+            	<bean:message key='<%=idType.toString()%>'/>
+            </td>
           </tr>
           <!-- Profissao -->
           <tr>

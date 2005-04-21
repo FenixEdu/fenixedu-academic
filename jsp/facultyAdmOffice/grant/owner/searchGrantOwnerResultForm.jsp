@@ -94,7 +94,8 @@
 				<bean:write name="infoGrantOwner" property="personInfo.numeroDocumentoIdentificacao"/>
 			</td>
 			<td class="listClasses">&nbsp;
-				<bean:write name="infoGrantOwner" property="personInfo.tipoDocumentoIdentificacao"/>
+				<bean:define id="idType" name="infoGrantOwner" property="personInfo.tipoDocumentoIdentificacao"/>
+				<bean:message key='<%=idType.toString()%>'/>
 			</td>
 			<td class="listClasses">&nbsp;
 				<%-- Person is a Grant Owner already --%>

@@ -3,16 +3,16 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.ojb.broker.query.Criteria;
-import org.apache.ojb.broker.query.QueryByCriteria;
-
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.IGuide;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGuide;
 import net.sourceforge.fenixedu.util.SituationOfGuide;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
+
+import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.QueryByCriteria;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -92,7 +92,7 @@ public class GuideOJB extends PersistentObjectOJB implements IPersistentGuide {
     }
 
     public List readByPerson(String identificationDocumentNumber,
-            TipoDocumentoIdentificacao identificationDocumentType) throws ExcepcaoPersistencia {
+            IDDocumentType identificationDocumentType) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         //QueryByCriteria query = new QueryByCriteria(Guide.class, criteria);
@@ -100,7 +100,7 @@ public class GuideOJB extends PersistentObjectOJB implements IPersistentGuide {
         //		query.addGroupBy("number");
 
         criteria.addEqualTo("person.numeroDocumentoIdentificacao", identificationDocumentNumber);
-        criteria.addEqualTo("person.tipoDocumentoIdentificacao", identificationDocumentType.getTipo());
+        criteria.addEqualTo("person.idDocumentType", identificationDocumentType);
 
         List result = queryList(Guide.class, criteria);
 

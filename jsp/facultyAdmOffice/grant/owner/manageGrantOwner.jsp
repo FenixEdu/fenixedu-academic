@@ -72,7 +72,8 @@
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.tipoDocumentoIdentificacao">
-				<bean:write name="infoGrantOwner" property="personInfo.tipoDocumentoIdentificacao"/>
+				<bean:define id="idType" name="infoGrantOwner" property="personInfo.tipoDocumentoIdentificacao"/>
+				<bean:message key='<%=idType.toString()%>'/>
 			</logic:present>
 		</td>
 	</tr>

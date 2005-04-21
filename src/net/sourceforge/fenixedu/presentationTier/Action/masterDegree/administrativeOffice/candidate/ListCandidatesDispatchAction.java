@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.person.Gender;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -35,7 +36,6 @@ import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.util.RandomStringGenerator;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.Specialization;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
@@ -318,8 +318,8 @@ public class ListCandidatesDispatchAction extends DispatchAction {
             request.setAttribute(SessionConstants.NATIONALITY_LIST_KEY, nationalityList);
             request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
             //request.setAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY, Arrays.asList(MaritalStatus.values()));
-            request.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY,
-                    TipoDocumentoIdentificacao.toArrayList());
+            /*request.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY,
+                    TipoDocumentoIdentificacao.toArrayList());*/
             request.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
                     .getAttribute(Globals.LOCALE_KEY)));
             request.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
@@ -403,8 +403,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
             InfoCountry nationality = new InfoCountry();
             nationality.setNationality((String) editCandidateForm.get("nationality"));
 
-            infoPerson.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(
-                    (String) editCandidateForm.get("identificationDocumentType")));
+            infoPerson.setTipoDocumentoIdentificacao(IDDocumentType.valueOf((String) editCandidateForm.get("identificationDocumentType")));
             infoPerson.setNumeroDocumentoIdentificacao((String) editCandidateForm
                     .get("identificationDocumentNumber"));
             infoPerson.setLocalEmissaoDocumentoIdentificacao((String) editCandidateForm

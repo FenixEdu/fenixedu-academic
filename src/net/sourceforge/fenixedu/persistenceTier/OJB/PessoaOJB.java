@@ -11,15 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.ojb.broker.query.Criteria;
-
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.ojb.broker.query.Criteria;
 
 /**
  * @author Tânia Pousão
@@ -43,7 +43,7 @@ public class PessoaOJB extends PersistentObjectOJB implements IPessoaPersistente
         // Read person from database.
         personFromDB1 = this.lerPessoaPorUsername(personToWrite.getUsername());
         personFromDB2 = this.lerPessoaPorNumDocIdETipoDocId(personToWrite
-                .getNumeroDocumentoIdentificacao(), personToWrite.getTipoDocumentoIdentificacao());
+                .getNumeroDocumentoIdentificacao(), personToWrite.getIdDocumentType());
 
         // If person is not in database, then write it.
         if ((personFromDB1 == null) && (personFromDB2 == null)) {
@@ -90,11 +90,11 @@ public class PessoaOJB extends PersistentObjectOJB implements IPessoaPersistente
     }
 
     public void apagarPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao,
-            TipoDocumentoIdentificacao tipoDocumentoIdentificacao) throws ExcepcaoPersistencia {
+            IDDocumentType tipoDocumentoIdentificacao) throws ExcepcaoPersistencia {
 
         Criteria crit = new Criteria();
         crit.addEqualTo("numeroDocumentoIdentificacao", numeroDocumentoIdentificacao);
-        crit.addEqualTo("tipoDocumentoIdentificacao", tipoDocumentoIdentificacao.getTipo());
+        crit.addEqualTo("idDocumentType", tipoDocumentoIdentificacao);
 
         List result = queryList(Person.class, crit);
         if (result != null) {
@@ -182,10 +182,10 @@ public class PessoaOJB extends PersistentObjectOJB implements IPessoaPersistente
     }
 
     public IPerson lerPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao,
-            TipoDocumentoIdentificacao tipoDocumentoIdentificacao) throws ExcepcaoPersistencia {
+            IDDocumentType tipoDocumentoIdentificacao) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("numeroDocumentoIdentificacao", numeroDocumentoIdentificacao);
-        criteria.addEqualTo("tipoDocumentoIdentificacao", tipoDocumentoIdentificacao.getTipo());
+        criteria.addEqualTo("idDocumentType", tipoDocumentoIdentificacao);
         return (IPerson) queryObject(Person.class, criteria);
     }
 
@@ -193,7 +193,7 @@ public class PessoaOJB extends PersistentObjectOJB implements IPessoaPersistente
         return queryList(Person.class, new Criteria());
     }
 
-    public void alterarPessoa(String numDocId, TipoDocumentoIdentificacao tipoDocId, IPerson pessoa) {
+    public void alterarPessoa(String numDocId, IDDocumentType tipoDocId, IPerson pessoa) {
     }
 
     /*

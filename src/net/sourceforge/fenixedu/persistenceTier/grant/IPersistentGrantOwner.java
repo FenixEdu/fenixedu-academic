@@ -9,9 +9,9 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 public interface IPersistentGrantOwner extends IPersistentObject {
 
@@ -24,7 +24,7 @@ public interface IPersistentGrantOwner extends IPersistentObject {
     public List readGrantOwnerByPersonName(String personName, Integer startIndex,
             Integer numberOfElementsInSpan) throws ExcepcaoPersistencia;
 
-    public IGrantOwner readGrantOwnerByPersonID(String idNumber, TipoDocumentoIdentificacao idType)
+    public IGrantOwner readGrantOwnerByPersonID(String idNumber, IDDocumentType idType)
             throws ExcepcaoPersistencia;
 
     public Integer readMaxGrantOwnerNumber() throws ExcepcaoPersistencia;

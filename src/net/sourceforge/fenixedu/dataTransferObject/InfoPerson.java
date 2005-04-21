@@ -11,9 +11,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.Gender;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 
 /**
  * @author tfc130
@@ -83,7 +83,7 @@ public class InfoPerson extends InfoObject {
 
     private String codigoFiscal;
 
-    private TipoDocumentoIdentificacao tipoDocumentoIdentificacao;
+    private IDDocumentType tipoDocumentoIdentificacao;
 
     private Gender gender;
 
@@ -100,7 +100,7 @@ public class InfoPerson extends InfoObject {
     }
 
     public InfoPerson(String numeroDocumentoIdentificacao,
-            TipoDocumentoIdentificacao tipoDocumentoIdentificacao,
+            IDDocumentType tipoDocumentoIdentificacao,
             String localEmissaoDocumentoIdentificacao, Date dataEmissaoDocumentoIdentificacao,
             Date dataValidadeDocumentoIdentificacao, String nome, Gender sex, MaritalStatus estadoCivil,
             Date nascimento, String nomePai, String nomeMae, String nacionalidade,
@@ -400,7 +400,7 @@ public class InfoPerson extends InfoObject {
     /**
      * @return TipoDocumentoIdentificacao
      */
-    public TipoDocumentoIdentificacao getTipoDocumentoIdentificacao() {
+    public IDDocumentType getTipoDocumentoIdentificacao() {
         return tipoDocumentoIdentificacao;
     }
 
@@ -723,7 +723,7 @@ public class InfoPerson extends InfoObject {
      * @param tipoDocumentoIdentificacao
      *            The tipoDocumentoIdentificacao to set
      */
-    public void setTipoDocumentoIdentificacao(TipoDocumentoIdentificacao tipoDocumentoIdentificacao) {
+    public void setTipoDocumentoIdentificacao(IDDocumentType tipoDocumentoIdentificacao) {
         this.tipoDocumentoIdentificacao = tipoDocumentoIdentificacao;
     }
 
@@ -816,7 +816,7 @@ public class InfoPerson extends InfoObject {
         if (person != null) {
             setNome(person.getNome());
             setNumeroDocumentoIdentificacao(person.getNumeroDocumentoIdentificacao());
-            setTipoDocumentoIdentificacao(person.getTipoDocumentoIdentificacao());
+            setTipoDocumentoIdentificacao(person.getIdDocumentType());
             setLocalEmissaoDocumentoIdentificacao(person.getLocalEmissaoDocumentoIdentificacao());
             setDataEmissaoDocumentoIdentificacao(person.getDataEmissaoDocumentoIdentificacao());
             setDataValidadeDocumentoIdentificacao(person.getDataValidadeDocumentoIdentificacao());
@@ -883,7 +883,7 @@ public class InfoPerson extends InfoObject {
 
         person.setNome(infoPerson.getNome());
         person.setNumeroDocumentoIdentificacao(infoPerson.getNumeroDocumentoIdentificacao());
-        person.setTipoDocumentoIdentificacao(infoPerson.getTipoDocumentoIdentificacao());
+        person.setIdDocumentType(infoPerson.getTipoDocumentoIdentificacao());
         person.setLocalEmissaoDocumentoIdentificacao(infoPerson.getLocalEmissaoDocumentoIdentificacao());
         person.setDataEmissaoDocumentoIdentificacao(infoPerson.getDataEmissaoDocumentoIdentificacao());
         person.setDataValidadeDocumentoIdentificacao(infoPerson.getDataValidadeDocumentoIdentificacao());

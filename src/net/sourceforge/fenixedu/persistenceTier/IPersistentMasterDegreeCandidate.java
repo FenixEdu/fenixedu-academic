@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.Specialization;
 
@@ -83,7 +84,7 @@ public interface IPersistentMasterDegreeCandidate extends IPersistentObject {
 	 * @throws ExcepcaoPersistencia
 	 */
 	public IMasterDegreeCandidate readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
-			String idDocumentNumber, Integer idDocumentType,
+			String idDocumentNumber, IDDocumentType idDocumentType,
 			IExecutionDegree executionDegree, Specialization specialization)
 			throws ExcepcaoPersistencia;
 

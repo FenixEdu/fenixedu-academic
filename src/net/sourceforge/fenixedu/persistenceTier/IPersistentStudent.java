@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.util.TipoCurso;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 /**
  * @author dcs-rjao
@@ -52,7 +52,7 @@ public interface IPersistentStudent extends IPersistentObject {
     public List readbyPerson(IPerson pessoa) throws ExcepcaoPersistencia;
 
     public List readMasterDegreeStudentsByNameIDnumberIDtypeAndStudentNumber(String studentName,
-            String idNumber, TipoDocumentoIdentificacao idType, Integer studentNumber)
+            String idNumber, IDDocumentType idType, Integer studentNumber)
             throws ExcepcaoPersistencia;
 
     public List readAllBySpan(Integer spanNumber, Integer numberOfElementsInSpan)

@@ -19,12 +19,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.Gender;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -106,8 +106,8 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
             request.setAttribute("idInternal", infoGrantOwner.getIdInternal().toString());
         }
 
-        List documentTypeList = TipoDocumentoIdentificacao.toIntegerArrayList();
-        request.setAttribute("documentTypeList", documentTypeList);
+        /*List documentTypeList = TipoDocumentoIdentificacao.toIntegerArrayList();
+        request.setAttribute("documentTypeList", documentTypeList);*/
 
         List maritalStatusList = Arrays.asList(MaritalStatus.values());
         request.setAttribute("maritalStatusList", maritalStatusList);
@@ -239,7 +239,7 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
             form.set("password", infoPerson.getPassword());
         if (infoPerson.getCodigoFiscal() != null)
             form.set("fiscalCode", infoPerson.getCodigoFiscal());
-        form.set("idType", infoPerson.getTipoDocumentoIdentificacao().getTipo());
+        form.set("idType", infoPerson.getTipoDocumentoIdentificacao().toString());
         if (infoPerson.getSexo() != null)
             form.set("sex", infoPerson.getSexo().toString());
         if (infoPerson.getMaritalStatus() != null)
@@ -336,9 +336,7 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
         if (((Integer) editGrantOwnerForm.get("idType")).equals(new Integer(0))) {
             infoPerson.setTipoDocumentoIdentificacao(null);
         } else {
-            TipoDocumentoIdentificacao tipoDocumentoIdentificacao = new TipoDocumentoIdentificacao();
-            tipoDocumentoIdentificacao.setTipo((Integer) editGrantOwnerForm.get("idType"));
-            infoPerson.setTipoDocumentoIdentificacao(tipoDocumentoIdentificacao);
+            infoPerson.setTipoDocumentoIdentificacao(IDDocumentType.valueOf((String) editGrantOwnerForm.get("idType")));
         }
         Gender sexo = Gender.valueOf((String) editGrantOwnerForm.get("sex"));
         infoPerson.setSexo(sexo);

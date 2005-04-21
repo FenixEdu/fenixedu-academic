@@ -9,13 +9,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -30,8 +30,8 @@ public class CorrectGrantOwnerAction extends FenixDispatchAction {
 
     public ActionForward prepareForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        List documentTypeList = TipoDocumentoIdentificacao.toIntegerArrayList();
-        request.setAttribute("documentTypeList", documentTypeList);
+        /*List documentTypeList = TipoDocumentoIdentificacao.toIntegerArrayList();
+        request.setAttribute("documentTypeList", documentTypeList);*/
         return mapping.findForward("correct-grant-owner");
     }
 
@@ -44,17 +44,17 @@ public class CorrectGrantOwnerAction extends FenixDispatchAction {
         //Read the values from the Form
         Integer grantOwnerNumber = null;
         Integer documentIdNumber = null;
-        Integer documentIdType = null;
+        IDDocumentType documentIdType = null;
 
         try {
             DynaValidatorForm correctGrantOwnerForm = (DynaValidatorForm) form;
             grantOwnerNumber = new Integer((String) correctGrantOwnerForm.get("grantOwnerNumber"));
             documentIdNumber = new Integer((String) correctGrantOwnerForm.get("documentIdNumber"));
-            documentIdType = (Integer) correctGrantOwnerForm.get("documentIdType");
+            documentIdType = IDDocumentType.valueOf((String) correctGrantOwnerForm.get("documentIdType"));
 
-            if (documentIdType.equals(new Integer(0))) {
+            /*if (documentIdType.equals(new Integer(0))) {
                 throw new Exception();
-            }
+            }*/
         } catch (Exception e) {
             return setError(request, mapping, "errors.grant.correction.fillAllFields", null, null);
         }
@@ -124,8 +124,8 @@ public class CorrectGrantOwnerAction extends FenixDispatchAction {
             ServiceUtils.executeService(userView, "EditGrantOwner", argsNewGrantOwner);
 
             //Set of the request variables and return
-            List documentTypeList = TipoDocumentoIdentificacao.toIntegerArrayList();
-            request.setAttribute("documentTypeList", documentTypeList);
+            //List documentTypeList = TipoDocumentoIdentificacao.toIntegerArrayList();
+            //request.setAttribute("documentTypeList", documentTypeList);
             request.setAttribute("correctionNumber1", "yes");
             return mapping.findForward("correct-grant-owner");
         } catch (Exception e) {

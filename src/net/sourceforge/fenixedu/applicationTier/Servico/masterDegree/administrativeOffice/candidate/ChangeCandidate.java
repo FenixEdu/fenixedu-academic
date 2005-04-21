@@ -61,7 +61,7 @@ public class ChangeCandidate implements IService {
             person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,
                     masterDegreeCandidate.getPerson().getIdInternal(), true);
 
-            person.setTipoDocumentoIdentificacao(newCandidate.getInfoPerson()
+            person.setIdDocumentType(newCandidate.getInfoPerson()
                     .getTipoDocumentoIdentificacao());
             person.setNumeroDocumentoIdentificacao(newCandidate.getInfoPerson()
                     .getNumeroDocumentoIdentificacao());

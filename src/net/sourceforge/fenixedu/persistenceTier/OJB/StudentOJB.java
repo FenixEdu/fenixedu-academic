@@ -17,10 +17,10 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.util.TipoCurso;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -68,7 +68,7 @@ public class StudentOJB extends PersistentObjectOJB implements IPersistentStuden
         crit.addEqualTo("degreeType", degreeType);
         crit.addEqualTo("person.username", person.getUsername());
         crit.addEqualTo("person.numeroDocumentoIdentificacao", person.getNumeroDocumentoIdentificacao());
-        crit.addEqualTo("person.tipoDocumentoIdentificacao", person.getTipoDocumentoIdentificacao());
+        crit.addEqualTo("person.idDocumentType", person.getIdDocumentType());
         return (IStudent) queryObject(Student.class, crit);
 
     }
@@ -127,7 +127,7 @@ public class StudentOJB extends PersistentObjectOJB implements IPersistentStuden
     }
 
     public List readMasterDegreeStudentsByNameIDnumberIDtypeAndStudentNumber(String studentName,
-            String idNumber, TipoDocumentoIdentificacao idType, Integer studentNumber)
+            String idNumber, IDDocumentType idType, Integer studentNumber)
             throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
@@ -141,7 +141,7 @@ public class StudentOJB extends PersistentObjectOJB implements IPersistentStuden
         }
 
         if (idType != null) {
-            criteria.addEqualTo("person.tipoDocumentoIdentificacao", idType.getTipo());
+            criteria.addEqualTo("person.idDocumentType", idType);
         }
 
         if (studentNumber != null) {

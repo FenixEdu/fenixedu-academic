@@ -6,7 +6,7 @@
 
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
@@ -21,9 +21,9 @@ public class JavaTipoDocId2SqlTipoDocIdFieldConversion implements FieldConversio
      * @see FieldConversion#javaToSql(Object)
      */
     public Object javaToSql(Object source) {
-        if (source instanceof TipoDocumentoIdentificacao) {
-            TipoDocumentoIdentificacao s = (TipoDocumentoIdentificacao) source;
-            return s.getTipo();
+        if (source instanceof IDDocumentType) {
+            IDDocumentType s = (IDDocumentType) source;
+            return s.toString();
         }
 
         return source;
@@ -34,9 +34,9 @@ public class JavaTipoDocId2SqlTipoDocIdFieldConversion implements FieldConversio
      * @see FieldConversion#sqlToJava(Object)
      */
     public Object sqlToJava(Object source) {
-        if (source instanceof Integer) {
-            Integer src = (Integer) source;
-            return new TipoDocumentoIdentificacao(src);
+        if (source instanceof String) {
+            String src = (String) source;
+            return IDDocumentType.valueOf(src);
         }
 
         return source;

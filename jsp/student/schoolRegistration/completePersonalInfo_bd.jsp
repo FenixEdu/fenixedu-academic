@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 <%@ page import="java.util.Date" %>
@@ -52,7 +53,10 @@
           <!-- Tipo do Documento de Identificacao -->
           <tr>
             <td width="30%"><bean:message key="label.person.identificationDocumentType" bundle="DEFAULT" /></td>
-            <td class="greytxt"><bean:write name="personalInfo" property="tipoDocumentoIdentificacao"/></td>
+            <td class="greytxt">
+            	<bean:define id="idType" name="personalInfo" property="tipoDocumentoIdentificacao"/>
+            	<bean:message key='<%=idType.toString()%>'/>
+            </td>
           </tr>
           <!-- Local de Emissao do Documento de Identificacao -->
           <tr>
@@ -115,7 +119,7 @@
             <td class="greytxt">
             	<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.MaritalStatus" bundle="DEFAULT"/>
                 <html:select property="maritalStatus">
-                	<html:option key="dropDown.Default" value="null"/>
+                	<html:option key="dropDown.Default" value=""/>
                     <html:options collection="values" property="value" labelProperty="label"/>
                  </html:select>          
             </td>

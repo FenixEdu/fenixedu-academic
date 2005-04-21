@@ -2,10 +2,10 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <html:form action="/guideListingByPerson.do?method=getPersonGuideList" focus="studentNumber">
 	<html:hidden property="page" value="1"/>
-	<bean:define id="identificationDocumentTypeList" name="<%= SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST %>"/>
    	<table width="100%">
        	<tr>
         	<td style="text-align:left" class="listClasses">
@@ -36,8 +36,10 @@
        	<tr>
         	<td><bean:message key="label.candidate.identificationDocumentType"/>:</td>
          	<td>
+         		<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.IDDocumentType"/>
          		<html:select property="identificationDocumentType">
-            		<html:options collection="identificationDocumentTypeList" property="value" labelProperty="label"/>
+         			<html:option key="dropDown.Default" value=""/>
+            		<html:options collection="values" property="value" labelProperty="label"/>
              	</html:select>
          	</td>
        	</tr>

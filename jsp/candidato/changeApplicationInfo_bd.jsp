@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.person.RoleType" %>
 <%@ page import="net.sourceforge.fenixedu.applicationTier.IUserView" %>
@@ -82,7 +83,7 @@
              <td>
              	<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.MaritalStatus"/>
                 <html:select property="maritalStatus">
-                	<html:option key="dropDown.Default" value="null"/>
+                	<html:option key="dropDown.Default" value=""/>
                     <html:options collection="values" property="value" labelProperty="label"/>
                  </html:select>          
              </td>

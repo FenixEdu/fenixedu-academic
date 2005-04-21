@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="java.util.Collection" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -38,7 +39,7 @@
          <td>
             <e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.MaritalStatus"/>
 			<html:select property="maritalStatus">
-        		<html:option key="dropDown.Default" value="null"/>
+        		<html:option key="dropDown.Default" value=""/>
             	<html:options collection="values" property="value" labelProperty="label"/>
 			</html:select>           
          </td>
@@ -131,8 +132,10 @@
         <tr>
          <td width="30%"><bean:message key="label.person.identificationDocumentType" /></td>
          <td>
+         	<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.IDDocumentType"/>
             <html:select property="identificationDocumentType">
-                <html:options collection="<%= SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY %>" property="value" labelProperty="label"/>
+            	<html:option key="dropDown.Default" value=""/>
+                <html:options collection="values" property="value" labelProperty="label"/>
              </html:select>          
          </td>
         </tr>

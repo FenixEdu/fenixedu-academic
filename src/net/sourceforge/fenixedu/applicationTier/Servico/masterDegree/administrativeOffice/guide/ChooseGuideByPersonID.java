@@ -55,7 +55,7 @@ public class ChooseGuideByPersonID implements IService {
         try {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             guides = sp.getIPersistentGuide().readByPerson(person.getNumeroDocumentoIdentificacao(),
-                    person.getTipoDocumentoIdentificacao());
+                    person.getIdDocumentType());
 
             BeanComparator numberComparator = new BeanComparator("number");
             BeanComparator versionComparator = new BeanComparator("version");

@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <h2><bean:message key="title.masterDegree.administrativeOffice.createCandidate" /></h2>
 <br />
@@ -9,7 +10,6 @@
    <table>
     <bean:define id="specializations" name="<%= SessionConstants.SPECIALIZATIONS %>" scope="request"/>
  
-    <bean:define id="identificationDocumentTypeList" name="<%= SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST %>" scope="request"/>
     <logic:present name="<%= SessionConstants.EXECUTION_DEGREE %>">
     	<bean:define id="executionDegree" name="<%= SessionConstants.EXECUTION_DEGREE %>" scope="request"/>
     </logic:present>
@@ -55,8 +55,11 @@
        <!-- Identification Document Type -->
        <tr>
          <td><bean:message key="label.candidate.identificationDocumentType"/>:</td>
-         <td><html:select property="identificationDocumentType">
-                <html:options collection="identificationDocumentTypeList" property="value" labelProperty="label"/>
+         <td>
+         	<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.IDDocumentType"/>
+         	<html:select property="identificationDocumentType">
+         		<html:option key="dropDown.Default" value=""/>
+                <html:options collection="values" property="value" labelProperty="label"/>
              </html:select>
          </td>
        </tr>

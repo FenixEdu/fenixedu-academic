@@ -80,7 +80,10 @@
           </tr>
           <tr>
             <td> <bean:message key="label.candidate.identificationDocumentType"/> </td>
-            <td> <bean:write name="candidate" property="infoPerson.tipoDocumentoIdentificacao"/> </td>
+            <td> 
+            	<bean:define id="idType" name="candidate" property="infoPerson.tipoDocumentoIdentificacao"/>
+            	<bean:message key='<%=idType.toString()%>'/> 
+            </td>
           </tr>
           <tr>
             <td> <bean:message key="label.candidate.username"/> </td>

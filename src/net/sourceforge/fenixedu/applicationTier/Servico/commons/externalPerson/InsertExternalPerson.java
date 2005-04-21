@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.domain.IWorkLocation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WorkLocation;
 import net.sourceforge.fenixedu.domain.person.Gender;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -64,8 +64,7 @@ public class InsertExternalPerson implements IService {
             person.setEnderecoWeb(homepage);
             person.setEmail(email);
             person.setNumeroDocumentoIdentificacao(lastDocumentIdNumber);
-            person.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(
-                    TipoDocumentoIdentificacao.EXTERNO));
+            person.setIdDocumentType(IDDocumentType.EXTERNAL);
             person.setUsername("e" + lastDocumentIdNumber);
 
             sp.getIPessoaPersistente().simpleLockWrite(person);

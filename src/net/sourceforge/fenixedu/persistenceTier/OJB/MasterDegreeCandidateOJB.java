@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -139,7 +140,7 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
     }
 
     public IMasterDegreeCandidate readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
-            String idDocumentNumber, Integer idDocumentType, IExecutionDegree executionDegree,
+            String idDocumentNumber, IDDocumentType idDocumentType, IExecutionDegree executionDegree,
             Specialization specialization) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("specialization", specialization);
@@ -150,7 +151,7 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
         crit.addEqualTo("executionDegree.degreeCurricularPlan.degree.nome", executionDegree
                 .getDegreeCurricularPlan().getDegree().getNome());
         crit.addEqualTo("person.numeroDocumentoIdentificacao", idDocumentNumber);
-        crit.addEqualTo("person.tipoDocumentoIdentificacao", idDocumentType);
+        crit.addEqualTo("person.idDocumentType", idDocumentType);
         return (IMasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
 
     }

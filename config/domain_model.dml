@@ -1453,13 +1453,13 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 
     public net.sourceforge.fenixedu.domain.person.Gender getGender();
 
-    public net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao getTipoDocumentoIdentificacao();
+    public net.sourceforge.fenixedu.domain.person.IDDocumentType getIdDocumentType();
 
     public void setMaritalStatus(net.sourceforge.fenixedu.domain.person.MaritalStatus maritalStatus);
 
     public void setGender(net.sourceforge.fenixedu.domain.person.Gender gender);
 
-    public void setTipoDocumentoIdentificacao(net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao tipoDocumentoIdentificacao);
+    public void setIdDocumentType(net.sourceforge.fenixedu.domain.person.IDDocumentType iDType);
 
     public String getSlideName();
     "

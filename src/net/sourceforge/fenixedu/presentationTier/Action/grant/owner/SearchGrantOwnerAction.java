@@ -10,14 +10,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.validator.DynaValidatorForm;
-
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.validator.DynaValidatorForm;
 
 /**
  * @author Barbosa
@@ -30,7 +30,7 @@ public class SearchGrantOwnerAction extends SearchAction {
         DynaValidatorForm searchGrantOwnerForm = (DynaValidatorForm) form;
         String name = (String) searchGrantOwnerForm.get("name");
         String idNumber = (String) searchGrantOwnerForm.get("idNumber");
-        Integer idType = (Integer) searchGrantOwnerForm.get("idType");
+        String idType = (String) searchGrantOwnerForm.get("idType");
         Integer startIndex = (Integer) searchGrantOwnerForm.get("startIndex");
         String justGrantOwner = (String) searchGrantOwnerForm.get("justGrantOwner");
 
@@ -41,7 +41,7 @@ public class SearchGrantOwnerAction extends SearchAction {
         request.setAttribute("justGrantOwner", justGrantOwner);
         request.setAttribute("name", name);
 
-        Object[] args = { name, idNumber, idType, null, onlyGrantOwner, startIndex };
+        Object[] args = { name, idNumber, IDDocumentType.valueOf(idType), null, onlyGrantOwner, startIndex };
         return args;
     }
 
@@ -75,8 +75,8 @@ public class SearchGrantOwnerAction extends SearchAction {
 
     protected void prepareFormConstants(ActionMapping mapping, HttpServletRequest request,
             ActionForm form) throws Exception {
-        List documentTypeList = TipoDocumentoIdentificacao.toIntegerArrayList();
-        request.setAttribute("documentTypeList", documentTypeList);
+        /*List documentTypeList = TipoDocumentoIdentificacao.toIntegerArrayList();
+        request.setAttribute("documentTypeList", documentTypeList);*/
     }
 
     private boolean hasNextSpan(Integer startIndex, Integer numberOfElementsInResult) {

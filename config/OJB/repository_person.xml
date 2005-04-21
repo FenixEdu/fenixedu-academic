@@ -178,9 +178,9 @@
         jdbc-type="VARCHAR"
     />
     <field-descriptor
-        name="tipoDocumentoIdentificacao"
+        name="idDocumentType"
         column="TYPE_ID_DOCUMENT"
-        jdbc-type="INTEGER"
+        jdbc-type="VARCHAR"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaTipoDocId2SqlTipoDocIdFieldConversion"
     />
     <field-descriptor

@@ -53,7 +53,10 @@
           <!-- Specialization -->
           <tr>
             <td><bean:message key="label.candidate.identificationDocumentType" /></td>
-            <td><bean:write name="newCandidate" property="infoPerson.tipoDocumentoIdentificacao"/></td>
+            <td>
+            	<bean:define id="idType" name="newCandidate" property="infoPerson.tipoDocumentoIdentificacao"/>
+            	<bean:message key='<%=idType.toString()%>'/>
+            </td>
           </tr>
 
       </logic:present>

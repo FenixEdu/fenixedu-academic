@@ -22,13 +22,13 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.Gender;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -114,8 +114,7 @@ public class EditStudentInfoDispatchAction extends DispatchAction {
             InfoCountry nationality = new InfoCountry();
             nationality.setNationality((String) changeApplicationInfoForm.get("nationality"));
 
-            infoPerson.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(
-                    (String) changeApplicationInfoForm.get("identificationDocumentType")));
+            infoPerson.setTipoDocumentoIdentificacao(IDDocumentType.valueOf((String) changeApplicationInfoForm.get("identificationDocumentType")));
             infoPerson.setNumeroDocumentoIdentificacao((String) changeApplicationInfoForm
                     .get("identificationDocumentNumber"));
             infoPerson.setLocalEmissaoDocumentoIdentificacao((String) changeApplicationInfoForm

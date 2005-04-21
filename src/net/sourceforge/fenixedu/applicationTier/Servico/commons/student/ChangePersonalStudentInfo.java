@@ -82,7 +82,7 @@ public class ChangePersonalStudentInfo implements IService {
                         .getDataEmissaoDocumentoIdentificacao());
         person.setDataValidadeDocumentoIdentificacao(newInfoPerson
                 .getDataValidadeDocumentoIdentificacao());
-        person.setTipoDocumentoIdentificacao(newInfoPerson.getTipoDocumentoIdentificacao());
+        person.setIdDocumentType(newInfoPerson.getTipoDocumentoIdentificacao());
         person.setNumeroDocumentoIdentificacao(newInfoPerson.getNumeroDocumentoIdentificacao());
         person.setLocalEmissaoDocumentoIdentificacao(newInfoPerson
                 .getLocalEmissaoDocumentoIdentificacao());

@@ -14,13 +14,13 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwnerWithPerson;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.SessionConstants;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -33,12 +33,11 @@ public class SearchGrantOwner implements IService {
     public SearchGrantOwner() {
     }
 
-    public List run(String name, String IdNumber, Integer IdType, Integer grantOwnerNumber,
+    public List run(String name, String IdNumber, IDDocumentType IdType, Integer grantOwnerNumber,
             Boolean onlyGrantOwner, Integer startIndex) throws FenixServiceException {
         ISuportePersistente persistentSupport = null;
         IPessoaPersistente persistentPerson = null;
         IPersistentGrantOwner persistentGrantOwner = null;
-        TipoDocumentoIdentificacao type = null;
         List grantOwnerList = new ArrayList();
         List personList = new ArrayList();
         List infoGrantOwnerList = new ArrayList();
@@ -61,11 +60,10 @@ public class SearchGrantOwner implements IService {
             }
             // Search by ID number and ID type
             if ((IdNumber != null) && (IdType != null)) {
-                type = new TipoDocumentoIdentificacao(IdType);
                 if (onlyGrantOwner.booleanValue())
-                    grantOwner = persistentGrantOwner.readGrantOwnerByPersonID(IdNumber, type);
+                    grantOwner = persistentGrantOwner.readGrantOwnerByPersonID(IdNumber, IdType);
                 else
-                    person = persistentPerson.lerPessoaPorNumDocIdETipoDocId(IdNumber, type);
+                    person = persistentPerson.lerPessoaPorNumDocIdETipoDocId(IdNumber, IdType);
             }
             Integer numberOfResultsByName = null;
             //Search by name IF search by ID has failed

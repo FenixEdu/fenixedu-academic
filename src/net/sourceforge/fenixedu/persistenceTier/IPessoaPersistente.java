@@ -10,8 +10,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 public interface IPessoaPersistente extends IPersistentObject {
     /**
@@ -27,7 +27,7 @@ public interface IPessoaPersistente extends IPersistentObject {
             IllegalAccessException, InvocationTargetException;
 
     public void apagarPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao,
-            TipoDocumentoIdentificacao tipoDocumentoIdentificacao) throws ExcepcaoPersistencia;
+            IDDocumentType tipoDocumentoIdentificacao) throws ExcepcaoPersistencia;
 
     public void apagarPessoa(IPerson pessoa) throws ExcepcaoPersistencia;
 
@@ -52,7 +52,7 @@ public interface IPessoaPersistente extends IPersistentObject {
     // String email, String username, String documentIdNumber) throws
     // ExcepcaoPersistencia;
     public IPerson lerPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao,
-            TipoDocumentoIdentificacao tipoDocumentoIdentificacao) throws ExcepcaoPersistencia;
+            IDDocumentType tipoDocumentoIdentificacao) throws ExcepcaoPersistencia;
 
     public List lerTodasAsPessoas() throws ExcepcaoPersistencia;
 }

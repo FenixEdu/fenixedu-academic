@@ -5,13 +5,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
-
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 public final class DadosForm extends ActionForm {
 
@@ -500,7 +500,7 @@ public final class DadosForm extends ActionForm {
     public void setForm(Person pessoa) {
         setCodigoInterno(pessoa.getIdInternal().intValue());
         setNumeroDocumentoIdentificacao(pessoa.getNumeroDocumentoIdentificacao());
-        setTipoDocumentoIdentificacao(String.valueOf(pessoa.getTipoDocumentoIdentificacao()));
+        setTipoDocumentoIdentificacao(String.valueOf(pessoa.getIdDocumentType().toString()));
         setLocalEmissaoDocumentoIdentificacao(pessoa.getLocalEmissaoDocumentoIdentificacao());
 
         Calendar calendar = Calendar.getInstance();
@@ -569,8 +569,7 @@ public final class DadosForm extends ActionForm {
         if ("Criar".equals(getAction())) {
             pessoa.setIdInternal(new Integer(getCodigoInterno()));
             pessoa.setNumeroDocumentoIdentificacao(getNumeroDocumentoIdentificacao());
-            pessoa.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(
-                    getTipoDocumentoIdentificacao()));
+            pessoa.setIdDocumentType(IDDocumentType.valueOf(getTipoDocumentoIdentificacao()));
             pessoa.setLocalEmissaoDocumentoIdentificacao(getLocalEmissaoDocumentoIdentificacao());
 
             Calendar calendar = Calendar.getInstance();

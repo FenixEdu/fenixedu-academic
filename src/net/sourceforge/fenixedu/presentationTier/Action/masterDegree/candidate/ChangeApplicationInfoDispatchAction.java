@@ -29,13 +29,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.person.Gender;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.util.SituationName;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
@@ -131,8 +131,7 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
             InfoCountry nationality = new InfoCountry();
             nationality.setNationality((String) changeApplicationInfoForm.get("nationality"));
 
-            infoPerson.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(
-                    (String) changeApplicationInfoForm.get("identificationDocumentType")));
+            infoPerson.setTipoDocumentoIdentificacao(IDDocumentType.valueOf((String) changeApplicationInfoForm.get("identificationDocumentType")));
             infoPerson.setNumeroDocumentoIdentificacao((String) changeApplicationInfoForm
                     .get("identificationDocumentNumber"));
             infoPerson.setLocalEmissaoDocumentoIdentificacao((String) changeApplicationInfoForm
@@ -259,8 +258,8 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
 
             request.setAttribute(SessionConstants.NATIONALITY_LIST_KEY, nationalityList);
             //request.setAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY, Arrays.asList(MaritalStatus.values()));
-            request.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY,
-                    TipoDocumentoIdentificacao.toArrayList());
+            /*request.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY,
+                    TipoDocumentoIdentificacao.toArrayList());*/
             request.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request.getAttribute(Globals.LOCALE_KEY)));
             request.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
             request.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());

@@ -7,11 +7,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -20,7 +20,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadStudentsByNameIDnumberIDtypeAndStudentNumber implements IService {
 
-    public List run(String studentName, String idNumber, TipoDocumentoIdentificacao idType,
+    public List run(String studentName, String idNumber, IDDocumentType idType,
             Integer studentNumber) throws FenixServiceException {
         List result = new ArrayList();
 

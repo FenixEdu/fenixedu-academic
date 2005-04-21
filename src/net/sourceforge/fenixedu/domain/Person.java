@@ -3,16 +3,16 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.Gender;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 
 public class Person extends Person_Base {
 	private Boolean availableEmail = Boolean.FALSE;
     private Boolean availableWebSite = Boolean.FALSE;
     private MaritalStatus maritalStatus = MaritalStatus.UNKNOWN;
     private Gender gender;
-    private TipoDocumentoIdentificacao tipoDocumentoIdentificacao;
+    private IDDocumentType idDocumentType;
     private Boolean availablePhoto = Boolean.FALSE;
 
     public Person() {
@@ -23,8 +23,8 @@ public class Person extends Person_Base {
         setUsername(username);
     }
 
-    public Person(TipoDocumentoIdentificacao idDocumentType, String userName) {
-		setTipoDocumentoIdentificacao(idDocumentType);
+    public Person(IDDocumentType idDocumentType, String userName) {
+		setIdDocumentType(idDocumentType);
 		setUsername(userName);
     }
 
@@ -33,7 +33,7 @@ public class Person extends Person_Base {
      * Devido ao JDBC
      */
     public Person(Integer codigoInterno, String numeroDocumentoIdentificacao,
-            TipoDocumentoIdentificacao tipoDocumentoIdentificacao,
+            IDDocumentType iDDocumentType,
             String localEmissaoDocumentoIdentificacao, Date dataEmissaoDocumentoIdentificacao,
             Date dataValidadeDocumentoIdentificacao, String nome, Gender sex, MaritalStatus estadoCivil,
             Date nascimento, String nomePai, String nomeMae, String nacionalidade,
@@ -44,7 +44,7 @@ public class Person extends Person_Base {
             String profissao, String username, String password, String codigoFiscal) {
         setIdInternal(codigoInterno);
         setNumeroDocumentoIdentificacao(numeroDocumentoIdentificacao);
-        setTipoDocumentoIdentificacao(tipoDocumentoIdentificacao);
+        setIdDocumentType(iDDocumentType);
         setLocalEmissaoDocumentoIdentificacao(localEmissaoDocumentoIdentificacao);
         setDataEmissaoDocumentoIdentificacao(dataEmissaoDocumentoIdentificacao);
         setDataValidadeDocumentoIdentificacao(dataValidadeDocumentoIdentificacao);
@@ -80,13 +80,14 @@ public class Person extends Person_Base {
      * Acrescentado por Fernanda Quitério & Tânia Pousão Devido à aplicacao
      * Assiduidade no usecase Inserir Funcionario
      */
-    public Person(String numeroDocumentoIdentificacao, int tipoDocumentoIdentificacao, String nome,
+    public Person(String numeroDocumentoIdentificacao, String tipoDocumentoIdentificacao, String nome,
             String username, String password) {
         Calendar calendario = Calendar.getInstance();
         calendario.set(1970, Calendar.JANUARY, 31, 00, 00, 00);
 
         setNumeroDocumentoIdentificacao(numeroDocumentoIdentificacao);
-        setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(tipoDocumentoIdentificacao));
+        setIdDocumentType(IDDocumentType.valueOf(tipoDocumentoIdentificacao));
+        //setIDDocumentType(new TipoDocumentoIdentificacao(tipoDocumentoIdentificacao));
         setLocalEmissaoDocumentoIdentificacao("");
         setNome(nome);
         setNomePai("");
@@ -114,7 +115,7 @@ public class Person extends Person_Base {
     }
 
     public Person(String numeroDocumentoIdentificacao,
-            TipoDocumentoIdentificacao tipoDocumentoIdentificacao,
+            IDDocumentType tipoDocumentoIdentificacao,
             String localEmissaoDocumentoIdentificacao, Date dataEmissaoDocumentoIdentificacao,
             Date dataValidadeDocumentoIdentificacao, String nome, Gender sex, MaritalStatus estadoCivil,
             Date nascimento, String nomePai, String nomeMae, String nacionalidade,
@@ -124,7 +125,7 @@ public class Person extends Person_Base {
             String telemovel, String email, String enderecoWeb, String numContribuinte,
             String profissao, String username, String password, ICountry pais, String codigoFiscal) {
         setNumeroDocumentoIdentificacao(numeroDocumentoIdentificacao);
-        setTipoDocumentoIdentificacao(tipoDocumentoIdentificacao);
+        setIdDocumentType(tipoDocumentoIdentificacao);
         setLocalEmissaoDocumentoIdentificacao(localEmissaoDocumentoIdentificacao);
         setDataEmissaoDocumentoIdentificacao(dataEmissaoDocumentoIdentificacao);
         setDataValidadeDocumentoIdentificacao(dataValidadeDocumentoIdentificacao);
@@ -161,8 +162,8 @@ public class Person extends Person_Base {
         if (obj instanceof IPerson) {
             IPerson person = (IPerson) obj;
             return (((getNumeroDocumentoIdentificacao().equals(person
-                    .getNumeroDocumentoIdentificacao())) && (this.tipoDocumentoIdentificacao
-                    .equals(person.getTipoDocumentoIdentificacao()))) || (getUsername().equals(person
+                    .getNumeroDocumentoIdentificacao())) && (this.idDocumentType
+                    .equals(person.getIdDocumentType()))) || (getUsername().equals(person
                     .getUsername())));
         }
         return false;
@@ -188,15 +189,6 @@ public class Person extends Person_Base {
         return gender;
     }
 
-    /**
-     * Getter for property tipoDocumentoIdentificacao.
-     * 
-     * @return Value of property tipoDocumentoIdentificacao.
-     *  
-     */
-    public TipoDocumentoIdentificacao getTipoDocumentoIdentificacao() {
-        return tipoDocumentoIdentificacao;
-    }
 
     /**
      * Setter for property estadoCivil.
@@ -220,16 +212,6 @@ public class Person extends Person_Base {
         this.gender = gender;
     }
 
-    /**
-     * Setter for property tipoDocumentoIdentificacao.
-     * 
-     * @param tipoDocumentoIdentificacao
-     *            New value of property tipoDocumentoIdentificacao.
-     *  
-     */
-    public void setTipoDocumentoIdentificacao(TipoDocumentoIdentificacao tipoDocumentoIdentificacao) {
-        this.tipoDocumentoIdentificacao = tipoDocumentoIdentificacao;
-    }
 
     public String toString() {
 		final StringBuilder stringBuilder = new StringBuilder();
@@ -288,5 +270,14 @@ public class Person extends Person_Base {
 
     public String getSlideName() {
         return "/photos/person/P" + getIdInternal();
+    }
+
+    public IDDocumentType getIdDocumentType() {
+        return idDocumentType;
+    }
+
+    public void setIdDocumentType(IDDocumentType idDocumentType) {
+        this.idDocumentType = idDocumentType;
+        
     }
 }

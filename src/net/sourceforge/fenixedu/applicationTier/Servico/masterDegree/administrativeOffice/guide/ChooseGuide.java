@@ -17,11 +17,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecuti
 import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuide;
 import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -193,7 +193,7 @@ public class ChooseGuide implements IService {
     }
 
     public List run(String identificationDocumentNumber,
-            TipoDocumentoIdentificacao identificationDocumentType) throws Exception {
+            IDDocumentType identificationDocumentType) throws Exception {
 
         ISuportePersistente sp = null;
         List guides = null;

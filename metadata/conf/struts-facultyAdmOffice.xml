@@ -45,7 +45,7 @@
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 				<form-property name="name" type="java.lang.String"/>
 				<form-property name="idNumber" type="java.lang.String"/>
-				<form-property name="idType" type="java.lang.Integer"/>
+				<form-property name="idType" type="java.lang.String"/>
 				<form-property name="justGrantOwner" type="java.lang.String"/>
 				<form-property name="startIndex" type="java.lang.Integer"/>
 				<form-property name="page" type="java.lang.Integer"/>
@@ -95,7 +95,7 @@
 				<form-property name="personUsername" type="java.lang.String"/>
 				<form-property name="password" type="java.lang.String"/>	
 				<form-property name="fiscalCode" type="java.lang.String"/>								
-				<form-property name="idType" type="java.lang.Integer"/>								
+				<form-property name="idType" type="java.lang.String"/>								
 				<form-property name="sex" type="java.lang.String"/>								
 				<form-property name="maritalStatus" type="java.lang.String"/>	
 				<form-property name="country" type="java.lang.Integer"/>
@@ -297,7 +297,7 @@
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 				<form-property name="grantOwnerNumber" type="java.lang.String"/>
 				<form-property name="documentIdNumber" type="java.lang.String"/>
-				<form-property name="documentIdType" type="java.lang.Integer"/>
+				<form-property name="documentIdType" type="java.lang.String"/>
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
 

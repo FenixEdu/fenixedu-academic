@@ -8,10 +8,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -67,12 +67,12 @@ public class GrantOwnerOJB extends PersistentObjectOJB implements IPersistentGra
         return new Integer(count(GrantOwner.class, criteria));
     }
 
-    public IGrantOwner readGrantOwnerByPersonID(String idNumber, TipoDocumentoIdentificacao idType)
+    public IGrantOwner readGrantOwnerByPersonID(String idNumber, IDDocumentType idType)
             throws ExcepcaoPersistencia {
         IGrantOwner grantOwner = null;
         Criteria criteria = new Criteria();
         criteria.addEqualTo("person.numeroDocumentoIdentificacao", idNumber);
-        criteria.addEqualTo("person.tipoDocumentoIdentificacao", idType);
+        criteria.addEqualTo("person.idDocumentType", idType);
         grantOwner = (IGrantOwner) queryObject(GrantOwner.class, criteria);
         return grantOwner;
     }

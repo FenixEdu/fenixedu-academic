@@ -1,9 +1,8 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-
-<bean:define id="docIDTypeList" name="docIDTypeList" scope="request"/>
 
 <h2 align="left"><bean:message key="title.masterDegree.administrativeOffice.chooseStudent"/></h2>
 
@@ -47,8 +46,10 @@
 		<tr>
 			<td align="left"><bean:message key="label.masterDegree.administrativeOffice.idType"/>:&nbsp;</td>
 			<td align="left">
+				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.IDDocumentType"/>
 				<html:select property="idType" size="1">
-					<html:options collection="docIDTypeList" property="value" labelProperty="label"/>
+					<html:option key="dropDown.Default" value=""/>
+					<html:options collection="values" property="value" labelProperty="label"/>
 				</html:select>
 			</td>
 		</tr>

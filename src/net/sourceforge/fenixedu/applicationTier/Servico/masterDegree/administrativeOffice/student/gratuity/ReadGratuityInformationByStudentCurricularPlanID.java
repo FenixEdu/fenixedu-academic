@@ -40,7 +40,7 @@ public class ReadGratuityInformationByStudentCurricularPlanID implements IServic
 
             guides = sp.getIPersistentGuide().readByPerson(
                     studentCurricularPlan.getStudent().getPerson().getNumeroDocumentoIdentificacao(),
-                    studentCurricularPlan.getStudent().getPerson().getTipoDocumentoIdentificacao());
+                    studentCurricularPlan.getStudent().getPerson().getIdDocumentType());
 
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");

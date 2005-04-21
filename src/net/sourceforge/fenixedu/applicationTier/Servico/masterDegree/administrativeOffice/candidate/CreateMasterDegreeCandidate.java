@@ -64,9 +64,8 @@ public class CreateMasterDegreeCandidate implements IService {
             IMasterDegreeCandidate masterDegreeCandidateFromDB = masterDegreeDAO
                     .readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
                             newMasterDegreeCandidate.getInfoPerson().getNumeroDocumentoIdentificacao(),
-                            newMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao()
-                                    .getTipo(), executionDegree, newMasterDegreeCandidate
-                                    .getSpecialization());
+                            newMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao(), 
+                            executionDegree, newMasterDegreeCandidate.getSpecialization());
 
             if (masterDegreeCandidateFromDB != null) {
                 throw new ExistingServiceException();
@@ -124,7 +123,7 @@ public class CreateMasterDegreeCandidate implements IService {
                 person.setNome(newMasterDegreeCandidate.getInfoPerson().getNome());
                 person.setNumeroDocumentoIdentificacao(newMasterDegreeCandidate.getInfoPerson()
                         .getNumeroDocumentoIdentificacao());
-                person.setTipoDocumentoIdentificacao(newMasterDegreeCandidate.getInfoPerson()
+                person.setIdDocumentType(newMasterDegreeCandidate.getInfoPerson()
                         .getTipoDocumentoIdentificacao());
                 person.setGender(Gender.MALE);
 

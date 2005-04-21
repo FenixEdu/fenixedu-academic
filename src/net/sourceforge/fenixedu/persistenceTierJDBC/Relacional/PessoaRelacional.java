@@ -8,11 +8,11 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.Gender;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IPessoaPersistente;
 import net.sourceforge.fenixedu.util.DataIndisponivel;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 /**
  * @author Ivo Brandão
@@ -95,7 +95,7 @@ public class PessoaRelacional implements IPessoaPersistente {
                 sql.setInt(29, 0);
             }
             sql.setString(30, pessoa.getCodigoFiscal());
-            sql.setInt(31, pessoa.getTipoDocumentoIdentificacao().getTipo().intValue());
+            sql.setString(31, pessoa.getIdDocumentType().toString());
             sql.setString(32, pessoa.getGender().toString());
             sql.setString(33, pessoa.getMaritalStatus().toString());
             sql.setInt(34, pessoa.getIdInternal().intValue());
@@ -219,7 +219,7 @@ public class PessoaRelacional implements IPessoaPersistente {
                 sql.setInt(29, 0);
             }
             sql.setString(30, pessoa.getCodigoFiscal());
-            sql.setInt(31, pessoa.getTipoDocumentoIdentificacao().getTipo().intValue());
+            sql.setString(31, pessoa.getIdDocumentType().toString());
             sql.setString(32, pessoa.getGender().toString());
             sql.setString(33, pessoa.getMaritalStatus().toString());
 
@@ -487,8 +487,8 @@ public class PessoaRelacional implements IPessoaPersistente {
                 birthDate = converteData(java.sql.Date.valueOf(resultado.getString("DATE_OF_BIRTH")));
             }
             pessoa = new Person(new Integer(resultado.getInt("ID_INTERNAL")), resultado
-                    .getString("DOCUMENT_ID_NUMBER"), new TipoDocumentoIdentificacao(resultado
-                    .getInt("TYPE_ID_DOCUMENT")), resultado
+                    .getString("DOCUMENT_ID_NUMBER"), IDDocumentType.valueOf(resultado
+                    .getString("TYPE_ID_DOCUMENT")), resultado
                     .getString("EMISSION_LOCATION_OF_DOCUMENT_ID"), emissionDate, experationDate,
                     resultado.getString("NAME"), Gender.valueOf(resultado.getString("SEX")), MaritalStatus
                             .valueOf(resultado.getString("MARITAL_STATUS")), birthDate, resultado

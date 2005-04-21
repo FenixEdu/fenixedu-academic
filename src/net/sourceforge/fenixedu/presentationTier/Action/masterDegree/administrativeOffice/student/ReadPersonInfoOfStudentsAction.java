@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.util.TipoCurso;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionError;
@@ -102,8 +101,8 @@ public class ReadPersonInfoOfStudentsAction extends FenixAction {
 
             session.setAttribute(SessionConstants.NATIONALITY_LIST_KEY, nationalityList);
             //session.setAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY, Arrays.asList(MaritalStatus.values()));
-            session.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY,
-                    TipoDocumentoIdentificacao.toArrayList());
+            /*session.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY,
+                    TipoDocumentoIdentificacao.toArrayList());*/
             session.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request.getAttribute(Globals.LOCALE_KEY)));
             session.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
             session.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());

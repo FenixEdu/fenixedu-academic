@@ -11,9 +11,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.IExternalPerson;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExternalPerson;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -80,8 +80,7 @@ public class ExternalPersonOJB extends PersistentObjectOJB implements IPersisten
         IExternalPerson externalPerson = null;
 
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("person.tipoDocumentoIdentificacao", new TipoDocumentoIdentificacao(
-                TipoDocumentoIdentificacao.EXTERNO));
+        criteria.addEqualTo("person.idDocumentType", IDDocumentType.EXTERNAL);
 
         externalPerson = (IExternalPerson) queryList(ExternalPerson.class, criteria,
                 "person.numeroDocumentoIdentificacao", false).get(0);

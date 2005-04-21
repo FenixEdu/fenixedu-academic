@@ -8,6 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionError;
@@ -16,14 +24,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
-
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
 
 /**
  * @author David Santos 2/Out/2003
@@ -34,7 +34,7 @@ public class SeeStudentAndCurricularPlansDispatchAction extends DispatchAction {
     public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        request.setAttribute("docIDTypeList", TipoDocumentoIdentificacao.toIntegerArrayList());
+        //request.setAttribute("docIDTypeList", TipoDocumentoIdentificacao.toIntegerArrayList());
         return mapping.findForward("start");
     }
 
@@ -49,7 +49,7 @@ public class SeeStudentAndCurricularPlansDispatchAction extends DispatchAction {
         String studentNumber1 = this.getFromRequest("studentNumber", request);
 
         String idNumber2 = null;
-        TipoDocumentoIdentificacao idType2 = null;
+        IDDocumentType idType2 = null;
         String studentName2 = null;
         Integer studentNumber2 = null;
 
@@ -57,8 +57,8 @@ public class SeeStudentAndCurricularPlansDispatchAction extends DispatchAction {
             idNumber2 = idNumber1;
         }
 
-        if (!idType1.equals("")) {
-            idType2 = new TipoDocumentoIdentificacao(new Integer(idType1));
+        if (idType1 != null && !idType1.equals("")) {
+            idType2 = IDDocumentType.valueOf(idType1);
         }
 
         if (!studentName1.equals("")) {
@@ -121,7 +121,7 @@ public class SeeStudentAndCurricularPlansDispatchAction extends DispatchAction {
     }
 
     private boolean isValid(HttpServletRequest request, String idNumber,
-            TipoDocumentoIdentificacao idType) {
+            IDDocumentType idType) {
         boolean result = true;
 
         if (idNumber != null && idType == null) {

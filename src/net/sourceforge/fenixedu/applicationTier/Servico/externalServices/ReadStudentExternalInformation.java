@@ -150,7 +150,7 @@ public class ReadStudentExternalInformation implements IService
     private InfoExternalIdentificationInfo buildExternalIdentificationInfo(IPerson person)
     {
         InfoExternalIdentificationInfo info = new InfoExternalIdentificationInfo();
-        info.setDocumentType(person.getTipoDocumentoIdentificacao().toString());
+        info.setDocumentType(person.getIdDocumentType().toString());
         info.setNumber(person.getNumeroDocumentoIdentificacao());
 
         return info;

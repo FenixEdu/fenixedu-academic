@@ -12,6 +12,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.util.Specialization;
+import net.sourceforge.fenixedu.util.TipoCurso;
+
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -21,21 +36,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
-
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.Specialization;
-import net.sourceforge.fenixedu.util.TipoCurso;
-import net.sourceforge.fenixedu.util.TipoDocumentoIdentificacao;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -219,8 +219,8 @@ public class CreateCandidateDispatchAction extends DispatchAction {
              * executionDegreeLabels);
              */
             // Create the type of Identification Document
-            request.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST,
-                    TipoDocumentoIdentificacao.toArrayList());
+            /*request.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST,
+                    TipoDocumentoIdentificacao.toArrayList());*/
 
             return mapping.findForward("PrepareSuccess");
         }
@@ -252,8 +252,7 @@ public class CreateCandidateDispatchAction extends DispatchAction {
         InfoPerson infoPerson = new InfoPerson();
         infoPerson.setNome(name);
         infoPerson.setNumeroDocumentoIdentificacao(identificationDocumentNumber);
-        infoPerson.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(
-                identificationDocumentType));
+        infoPerson.setTipoDocumentoIdentificacao(IDDocumentType.valueOf(identificationDocumentType));
         newMasterDegreeCandidate.setSpecialization(new Specialization(degreeType));
         newMasterDegreeCandidate.setInfoPerson(infoPerson);
 

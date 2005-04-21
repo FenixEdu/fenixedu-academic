@@ -41,7 +41,10 @@
 	          <!-- Tipo do Documento de Identificacao -->
 	          <tr>
 	            <td><bean:message key="label.person.identificationDocumentType" /></td>
-	            <td><bean:write name="candidate" property="infoPerson.tipoDocumentoIdentificacao"/></td>
+	            <td>
+	            	<bean:define id="idType" name="candidate" property="infoPerson.tipoDocumentoIdentificacao"/>
+	            	<bean:message key='<%=idType.toString()%>'/>
+	            </td>
 	          </tr>
 	          <!-- Username -->
 	          <tr>

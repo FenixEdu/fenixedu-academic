@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
 <br/><strong><p align="center"><bean:message key="label.grant.owner.edition"/></p></strong><br/>
 
@@ -59,8 +60,10 @@
 			<bean:message key="label.grant.owner.infoperson.idType"/>:&nbsp;
 		</td>
 		<td>
+			<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.IDDocumentType"/>
 			<html:select property="idType">
-				<html:options collection="documentTypeList" property="value" labelProperty="label"/>
+				<html:option key="dropDown.Default" value=""/>
+				<html:options collection="values" property="value" labelProperty="label"/>
 			</html:select><bean:message key="label.requiredfield"/>
 		</td>
 	</tr>

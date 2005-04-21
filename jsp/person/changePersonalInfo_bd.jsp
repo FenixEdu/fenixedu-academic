@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <html>
   <head>
@@ -29,7 +30,7 @@
                  <td>
                     <e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.person.MaritalStatus"/>
                 	<html:select property="maritalStatus">
-                		<html:option key="dropDown.Default" value="null"/>
+                		<html:option key="dropDown.Default" value=""/>
                     	<html:options collection="values" property="value" labelProperty="label"/>
                  	</html:select>            
                  </td>
@@ -121,7 +122,8 @@
                     <!-- <html:select property="identificationDocumentType">
                         <html:options collection="<%= SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY %>" property="value" labelProperty="label"/>
                      </html:select> -->
-                     <bean:write name="personalInfo" property="tipoDocumentoIdentificacao"/>
+                     <bean:define id="idType" name="personalInfo" property="tipoDocumentoIdentificacao"/>
+                     <bean:message key='<%=idType.toString()%>'/>
                      <html:hidden property="identificationDocumentType" />          
                  </td>
                 </tr>

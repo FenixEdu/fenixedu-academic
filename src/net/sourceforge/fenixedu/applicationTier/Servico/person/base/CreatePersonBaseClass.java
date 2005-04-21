@@ -41,7 +41,7 @@ public class CreatePersonBaseClass {
         if (newPerson.getNumeroDocumentoIdentificacao() != null)
             personToLock.setNumeroDocumentoIdentificacao(newPerson.getNumeroDocumentoIdentificacao());
         if (newPerson.getTipoDocumentoIdentificacao() != null)
-            personToLock.setTipoDocumentoIdentificacao(newPerson.getTipoDocumentoIdentificacao());
+            personToLock.setIdDocumentType(newPerson.getTipoDocumentoIdentificacao());
 
         personToLock.setCodigoFiscal(newPerson.getCodigoFiscal());
         personToLock.setCodigoPostal(newPerson.getCodigoPostal());
