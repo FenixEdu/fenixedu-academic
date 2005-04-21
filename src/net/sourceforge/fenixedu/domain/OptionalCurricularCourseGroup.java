@@ -51,6 +51,6 @@ public class OptionalCurricularCourseGroup extends OptionalCurricularCourseGroup
     public String toString() {
         return "minimumNumberOfOptionalCourses[" + super.getMinimumValue()
                 + "] maximumNumberOfOptionalCourses[" + super.getMaximumValue() + "] branch["
-                + branch.getName() + "]";
+                + getBranch().getName() + "]";
     }
 }

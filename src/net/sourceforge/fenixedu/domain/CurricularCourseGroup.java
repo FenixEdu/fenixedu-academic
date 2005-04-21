@@ -10,8 +10,6 @@ import java.util.List;
 
 public abstract class CurricularCourseGroup extends CurricularCourseGroup_Base {
 
-    protected IBranch branch;
-
     protected List curricularCourses;
 
     protected List scientificAreas;
@@ -22,14 +20,6 @@ public abstract class CurricularCourseGroup extends CurricularCourseGroup_Base {
     public CurricularCourseGroup() {
         super();
         this.setOjbConcreteClass(this.getClass().getName());
-    }
-
-    public IBranch getBranch() {
-        return branch;
-    }
-
-    public void setBranch(IBranch branch) {
-        this.branch = branch;
     }
 
     public List getCurricularCourses() {

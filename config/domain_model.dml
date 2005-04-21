@@ -117,12 +117,8 @@ class net.sourceforge.fenixedu.domain.Branch extends net.sourceforge.fenixedu.do
 
     public java.util.List getScopes();
     public net.sourceforge.fenixedu.util.BranchType getBranchType();
-    public java.util.List getAreaCurricularCourseGroups();
-    public java.util.List getOptionalCurricularCourseGroups();
-    public void setAreaCurricularCourseGroups(java.util.List curricularCourseGroups);
     public void setScopes(java.util.List scopes);
     public void setBranchType(net.sourceforge.fenixedu.util.BranchType branchType);
-    public void setOptionalCurricularCourseGroups(java.util.List optionCurricularCourseGroups);
     public java.util.List getAreaCurricularCourseGroups(net.sourceforge.fenixedu.util.AreaType areaType);
     "
 }
@@ -328,11 +324,9 @@ class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourcefo
     public void setMaximumNumberOfOptionalCourses(Integer maximumNumberOfOptionalCourses);
     
     public net.sourceforge.fenixedu.util.AreaType getAreaType();
-    public net.sourceforge.fenixedu.domain.IBranch getBranch();
     public java.util.List getCurricularCourses();
     public java.util.List getScientificAreas();
     public void setAreaType(net.sourceforge.fenixedu.util.AreaType areaType);
-    public void setBranch(net.sourceforge.fenixedu.domain.IBranch branch);
     public void setCurricularCourses(java.util.List curricularCourses);
     public void setScientificAreas(java.util.List scientificAreas);
     
@@ -2311,6 +2305,29 @@ relation BelongsTo {
 	net.sourceforge.fenixedu.domain.GroupProperties playsRole groupProperties;
 }
 
+relation BranchCurricularCourseGroup {
+    net.sourceforge.fenixedu.domain.Branch playsRole branch;
+
+    net.sourceforge.fenixedu.domain.CurricularCourseGroup playsRole curricularCourseGroups {
+        multiplicity *;
+    }
+}
+
+relation BranchAreaCurricularCourseGroup {
+    net.sourceforge.fenixedu.domain.Branch playsRole branchForWhichThisIsAreaCurricularCourseGroup;
+
+    net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup playsRole areaCurricularCourseGroups {
+        multiplicity *;
+    }
+}
+
+relation BranchOptionalCurricularCourseGroup {
+    net.sourceforge.fenixedu.domain.Branch playsRole branchForWhichThisIsOptionalCurricularCourseGroup;
+
+    net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup playsRole optionalCurricularCourseGroups {
+        multiplicity *;
+    }
+}
 
 relation BuildingRoom {
 	net.sourceforge.fenixedu.domain.Room playsRole rooms {

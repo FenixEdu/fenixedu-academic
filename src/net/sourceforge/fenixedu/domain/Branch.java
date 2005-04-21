@@ -22,10 +22,6 @@ public class Branch extends Branch_Base {
      */
     private BranchType branchType;
 
-    private List areaCurricularCourseGroups;
-
-    private List optionalCurricularCourseGroups;
-
     public Branch() {
     }
 
@@ -89,21 +85,6 @@ public class Branch extends Branch_Base {
         this.branchType = branchType;
     }
 
-    /**
-     * @return Returns the curricularCourseGroups.
-     */
-    public List getAreaCurricularCourseGroups() {
-        return areaCurricularCourseGroups;
-    }
-
-    /**
-     * @param curricularCourseGroups
-     *            The curricularCourseGroups to set.
-     */
-    public void setAreaCurricularCourseGroups(List curricularCourseGroups) {
-        this.areaCurricularCourseGroups = curricularCourseGroups;
-    }
-
     /*
      * (non-Javadoc)
      * 
@@ -118,20 +99,5 @@ public class Branch extends Branch_Base {
                 return curricularCourseGroup.getAreaType().equals(areaType);
             }
         });
-    }
-
-    /**
-     * @return Returns the optionCurricularCourseGroups.
-     */
-    public List getOptionalCurricularCourseGroups() {
-        return optionalCurricularCourseGroups;
-    }
-
-    /**
-     * @param optionCurricularCourseGroups
-     *            The optionCurricularCourseGroups to set.
-     */
-    public void setOptionalCurricularCourseGroups(List optionCurricularCourseGroups) {
-        this.optionalCurricularCourseGroups = optionCurricularCourseGroups;
     }
 }

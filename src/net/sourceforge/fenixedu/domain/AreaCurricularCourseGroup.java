@@ -53,6 +53,6 @@ public class AreaCurricularCourseGroup extends AreaCurricularCourseGroup_Base {
 
     public String toString() {
         return "minimumCredits[" + super.getMinimumValue() + "] maximumCredits["
-                + super.getMaximumValue() + "] branch[" + branch.getName() + "]";
+                + super.getMaximumValue() + "] branch[" + getBranch().getName() + "]";
     }
 }
