@@ -4,13 +4,12 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
 
 /**
  * @author Tânia Pousão
@@ -36,17 +35,15 @@ public class InfoExamWithRoomOccupations extends InfoExam {
      * @return
      */
     private List copyIRoomOccupation2InfoRoomOccupation(List associatedRoomOccupation) {
-        List infoRoomOccupation = null;
-
-        infoRoomOccupation = (List) CollectionUtils.collect(associatedRoomOccupation, new Transformer() {
-
-            public Object transform(Object arg0) {
-                IRoomOccupation roomOccupation = (IRoomOccupation) arg0;
-                return InfoRoomOccupationWithInfoRoom.newInfoFromDomain(roomOccupation);
+        final List infoRoomOccupations = new ArrayList(associatedRoomOccupation.size());
+        for (final Iterator iterator = associatedRoomOccupation.iterator(); iterator.hasNext(); ) {
+            final IRoomOccupation roomOccupation = (IRoomOccupation) iterator.next();
+            final InfoRoomOccupation infoRoomOccupation = InfoRoomOccupationWithInfoRoom.newInfoFromDomain(roomOccupation);
+            if (infoRoomOccupation != null) {
+                infoRoomOccupations.add(infoRoomOccupation);
             }
-        });
-
-        return infoRoomOccupation;
+        }
+        return infoRoomOccupations;
     }
 
     public static InfoExam newInfoFromDomain(IExam exam) {
