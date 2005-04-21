@@ -988,6 +988,14 @@ class net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance extends net.
 }
 
 
+class net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyTeacher;
+	Date beginDate;
+	Date endDate;
+	Integer keyContract;
+}
+
+
 class net.sourceforge.fenixedu.domain.grant.owner.GrantOwner extends net.sourceforge.fenixedu.domain.DomainObject {
 	Date dateSendCGD;
 	Integer cardCopyNumber;
@@ -2712,6 +2720,20 @@ relation GrantInsuranceGrantPaymentEntity {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity playsRole grantPaymentEntity;
+}
+
+
+relation GrantOrientationTeacherGrantContract {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher playsRole grantOrientationTeacher;
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole grantContract;
+}
+
+
+relation GrantOrientationTeacherTeacher {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher playsRole associatedGrantOrientationTeachers {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole orientationTeacher;
 }
 
 

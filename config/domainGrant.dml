@@ -210,6 +210,14 @@ relation GrantContractRegimeTeacher {
 }
 
 
+relation GrantOrientationTeacherTeacher {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher playsRole associatedGrantOrientationTeachers {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole orientationTeacher;
+}
+
+
 relation GrantInsuranceGrantContract {
 	net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance playsRole associatedGrantInsurances {
 		multiplicity *;
@@ -218,10 +226,8 @@ relation GrantInsuranceGrantContract {
 }
 
 
-relation ??? {
-	net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher playsRole ??? {
-		multiplicity ???;
-	}
+relation GrantOrientationTeacherGrantContract {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher playsRole grantOrientationTeacher;
 	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole grantContract;
 }
 
