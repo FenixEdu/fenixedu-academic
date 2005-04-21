@@ -11,6 +11,10 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 public class ExecutionCourse extends ExecutionCourse_Base {
+    
+	private List associatedExams = null;
+	
+	private List associatedEvaluations = null;
 
     public ExecutionCourse() {
     }
@@ -56,6 +60,35 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         result += "]";
         return result;
     }
+    
+    /**
+	 * @return
+	 */
+	public List getAssociatedEvaluations() {
+		return associatedEvaluations;
+	}
+
+	/**
+     * @param list
+     */
+    public void setAssociatedEvaluations(List list) {
+        associatedEvaluations = list;
+    }
+    
+    /**
+	 * @return
+	 */
+	public List getAssociatedExams() {
+		return associatedExams;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setAssociatedExams(List list) {
+		associatedExams = list;
+	}
+    
 
     public String getSlideName() {
         String result = getParentNode().getSlideName() + "/EC" + getIdInternal();

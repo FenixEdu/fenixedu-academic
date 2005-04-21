@@ -732,14 +732,6 @@ class net.sourceforge.fenixedu.domain.EvaluationExecutionCourse extends net.sour
 	"
 }
 
-
-class net.sourceforge.fenixedu.domain.EvaluationMethod extends net.sourceforge.fenixedu.domain.DomainObject {
-	String evaluationElements;
-	String evaluationElementsEn;
-	Integer keyExecutionCourse;
-}
-
-
 	class net.sourceforge.fenixedu.domain.ExamExecutionCourse extends net.sourceforge.fenixedu.domain.EvaluationExecutionCourse {
 		Integer keyExam;
 		
@@ -754,6 +746,15 @@ class net.sourceforge.fenixedu.domain.EvaluationMethod extends net.sourceforge.f
 		"
 	}
 
+
+class net.sourceforge.fenixedu.domain.EvaluationMethod extends net.sourceforge.fenixedu.domain.DomainObject {
+	String evaluationElements;
+	String evaluationElementsEn;
+	Integer keyExecutionCourse;
+}
+
+
+	
 
 class net.sourceforge.fenixedu.domain.ExamStudentRoom extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyRoom;
@@ -787,6 +788,15 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 	Double theoPratHours;
 	
 	interface "
+	
+	public java.util.List getAssociatedEvaluations();
+	
+	public void setAssociatedEvaluations(java.util.List list);
+	
+	public java.util.List getAssociatedExams();
+	
+	public void setAssociatedExams(java.util.List list);
+	
 	public String getSlideName();
 	
 	public net.sourceforge.fenixedu.fileSuport.INode getParentNode();
@@ -2592,17 +2602,6 @@ relation EnrolmentPeriodExecutionPeriod {
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
 }
 
-
-relation ExamExecutionCourse {
-	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole associatedExecutionCourses {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Exam playsRole associatedExams {
-		multiplicity *;
-	}
-}
-
-
 relation ExecutionCourseAttends {
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole disciplinaExecucao;
 	net.sourceforge.fenixedu.domain.Attends playsRole attends {
@@ -2620,7 +2619,7 @@ relation ExecutionCourseBibliographicReference {
 
 
 relation ExecutionCourseEvaluationMethod {
-	net.sourceforge.fenixedu.domain.EvaluationMethod playsRole associatedEvaluations {
+	net.sourceforge.fenixedu.domain.EvaluationMethod playsRole associatedEvaluationMethods {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
