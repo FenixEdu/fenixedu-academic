@@ -12,8 +12,6 @@ public class EnrolmentEquivalence extends EnrolmentEquivalence_Base {
 
     private IEnrolment enrolment;
 
-    private List equivalenceRestrictions;
-
     public EnrolmentEquivalence() {
     }
 
@@ -50,13 +48,4 @@ public class EnrolmentEquivalence extends EnrolmentEquivalence_Base {
     public void setEnrolment(IEnrolment enrolment) {
         this.enrolment = enrolment;
     }
-
-    public List getEquivalenceRestrictions() {
-        return equivalenceRestrictions;
-    }
-
-    public void setEquivalenceRestrictions(List list) {
-        equivalenceRestrictions = list;
-    }
-
 }

@@ -21,13 +21,9 @@ import org.apache.ojb.broker.PersistenceBrokerException;
 
 public class Enrolment extends Enrolment_Base {
 
-    private IExecutionPeriod executionPeriod;
-
     private EnrollmentState enrollmentState;
 
     private EnrolmentEvaluationType enrolmentEvaluationType;
-
-    private List evaluations;
 
     private EnrollmentCondition condition;
 
@@ -68,35 +64,7 @@ public class Enrolment extends Enrolment_Base {
         this.enrollmentState = enrollmentState;
     }
 
-    /**
-     * @return Returns the evaluations.
-     */
-    public List getEvaluations() {
-        return evaluations;
-    }
 
-    /**
-     * @param evaluations
-     *            The evaluations to set.
-     */
-    public void setEvaluations(List evaluations) {
-        this.evaluations = evaluations;
-    }
-
-    /**
-     * @return Returns the executionPeriod.
-     */
-    public IExecutionPeriod getExecutionPeriod() {
-        return executionPeriod;
-    }
-
-    /**
-     * @param executionPeriod
-     *            The executionPeriod to set.
-     */
-    public void setExecutionPeriod(IExecutionPeriod executionPeriod) {
-        this.executionPeriod = executionPeriod;
-    }
 
     public boolean equals(Object obj) {
         boolean result = false;

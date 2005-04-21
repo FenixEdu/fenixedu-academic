@@ -535,14 +535,9 @@ class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu
     public net.sourceforge.fenixedu.util.enrollment.EnrollmentCondition getCondition();
     public net.sourceforge.fenixedu.domain.curriculum.EnrollmentState getEnrollmentState();
     public net.sourceforge.fenixedu.util.EnrolmentEvaluationType getEnrolmentEvaluationType();
-    public java.util.List getEvaluations();
-    public net.sourceforge.fenixedu.domain.IExecutionPeriod getExecutionPeriod();
-
     public void setCondition(net.sourceforge.fenixedu.util.enrollment.EnrollmentCondition condition);
     public void setEnrollmentState(net.sourceforge.fenixedu.domain.curriculum.EnrollmentState state);
     public void setEnrolmentEvaluationType(net.sourceforge.fenixedu.util.EnrolmentEvaluationType type);
-    public void setEvaluations(java.util.List list);
-    public void setExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
     "
 }
 
@@ -558,9 +553,7 @@ class net.sourceforge.fenixedu.domain.EnrolmentEquivalence extends net.sourcefor
     interface "
 
     public net.sourceforge.fenixedu.domain.IEnrolment getEnrolment();
-    public java.util.List getEquivalenceRestrictions();
     public void setEnrolment(net.sourceforge.fenixedu.domain.IEnrolment enrolment);
-    public void setEquivalenceRestrictions(java.util.List list);
     "
 }
 
@@ -578,16 +571,10 @@ class net.sourceforge.fenixedu.domain.EnrolmentEvaluation extends net.sourceforg
     
     interface "
 
-    public abstract net.sourceforge.fenixedu.domain.IEnrolment getEnrolment();
     public abstract net.sourceforge.fenixedu.util.EnrolmentEvaluationType getEnrolmentEvaluationType();
     public abstract net.sourceforge.fenixedu.util.EnrolmentEvaluationState getEnrolmentEvaluationState();
-    public abstract net.sourceforge.fenixedu.domain.IPerson getPersonResponsibleForGrade();
-    public abstract net.sourceforge.fenixedu.domain.IEmployee getEmployee();
-    public abstract void setPersonResponsibleForGrade(net.sourceforge.fenixedu.domain.IPerson teacher);
-    public abstract void setEnrolment(net.sourceforge.fenixedu.domain.IEnrolment enrolment);
     public abstract void setEnrolmentEvaluationType(net.sourceforge.fenixedu.util.EnrolmentEvaluationType type);
     public abstract void setEnrolmentEvaluationState(net.sourceforge.fenixedu.util.EnrolmentEvaluationState state);
-    public abstract void setEmployee(net.sourceforge.fenixedu.domain.IEmployee employee);
     public abstract boolean isNormal();
     public abstract boolean isImprovment();
 
@@ -626,14 +613,6 @@ class net.sourceforge.fenixedu.domain.EnrolmentPeriod extends net.sourceforge.fe
 class net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer enrolmentEquivalenceKey;
     Integer equivalentEnrolmentKey;
-    
-    interface "
-
-    public abstract net.sourceforge.fenixedu.domain.IEnrolmentEquivalence getEnrolmentEquivalence();
-    public abstract net.sourceforge.fenixedu.domain.IEnrolment getEquivalentEnrolment();
-    public abstract void setEnrolmentEquivalence(net.sourceforge.fenixedu.domain.IEnrolmentEquivalence equivalence);
-    public abstract void setEquivalentEnrolment(net.sourceforge.fenixedu.domain.IEnrolment enrolment);
-    "
 }
 
 class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2631,6 +2610,49 @@ relation EmployeePerson {
 	net.sourceforge.fenixedu.domain.Person playsRole person;
 }
 
+relation EnrolmentEnrolmentEvaluation {
+	net.sourceforge.fenixedu.domain.Enrolment playsRole enrolment;
+
+	net.sourceforge.fenixedu.domain.EnrolmentEvaluation playsRole evaluations {
+		multiplicity *;
+	}
+}
+
+relation EnrolmentEquivalenceEquivalentEnrolmentForEnrolmentEquivalence {
+	net.sourceforge.fenixedu.domain.EnrolmentEquivalence playsRole enrolmentEquivalence;
+
+	net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence playsRole equivalenceRestrictions {
+		multiplicity *;
+	}
+}
+
+relation EnrolmentEquivalentEnrolmentForEnrolmentEquivalence {
+	net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence playsRole equivalentEnrolmentForEnrolmentEquivalences {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Enrolment playsRole equivalentEnrolment;
+}
+
+relation EnrolmentEvaluationEmployee {
+	net.sourceforge.fenixedu.domain.EnrolmentEvaluation playsRole enrolmentEvaluations {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Employee playsRole employee;
+}
+
+relation EnrolmentEvaluationPerson {
+	net.sourceforge.fenixedu.domain.EnrolmentEvaluation playsRole enrolmentEvaluations {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole personResponsibleForGrade;
+}
+
+relation EnrolmentExecutionPeriod {
+	net.sourceforge.fenixedu.domain.Enrolment playsRole enrolments {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
 
 relation EnrolmentPeriodExecutionPeriod {
 	net.sourceforge.fenixedu.domain.EnrolmentPeriod playsRole enrolmentPeriod {

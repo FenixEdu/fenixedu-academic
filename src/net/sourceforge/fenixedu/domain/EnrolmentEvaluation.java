@@ -12,18 +12,12 @@ import net.sourceforge.fenixedu.util.TipoCurso;
  */
 
 public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
-    //private String RECTIFIED = "RECTIFICADO";
-    private String RECTIFICATION = "RECTIFICA��O";
+    
+	private String RECTIFICATION = "RECTIFICA��O";
 
     private EnrolmentEvaluationType enrolmentEvaluationType;
 
     private EnrolmentEvaluationState enrolmentEvaluationState;
-
-    private IEnrolment enrolment;
-
-    private IPerson personResponsibleForGrade;
-
-    private IEmployee employee;
 
     public EnrolmentEvaluation() {
     }
@@ -43,18 +37,14 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         result += "grade = " + this.getGrade() + "; ";
         result += "enrolmentEvaluationType = " + this.enrolmentEvaluationType + "; ";
         result += "examDate = " + this.getExamDate() + "; ";
-        result += "personResponsibleForGrade = " + this.personResponsibleForGrade + "; ";
+        result += "personResponsibleForGrade = " + getPersonResponsibleForGrade() + "; ";
         result += "enrolmentEvaluationState = " + this.enrolmentEvaluationState + "; ";
         result += "when = " + this.getWhen() + "; ";
         result += "checkSum = " + this.getCheckSum() + "; ";
-        result += "enrolment = " + this.enrolment + "; ";
+        result += "enrolment = " + getEnrolment() + "; ";
         result += "gradeAvailableDate = " + this.getGradeAvailableDate() + "]\n";
-        result += "employee = " + this.employee + "; ";
+        result += "employee = " + getEmployee() + "; ";
         return result;
-    }
-
-    public IEnrolment getEnrolment() {
-        return enrolment;
     }
 
     public EnrolmentEvaluationType getEnrolmentEvaluationType() {
@@ -65,10 +55,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         return enrolmentEvaluationState;
     }
 
-    public void setEnrolment(IEnrolment enrolment) {
-        this.enrolment = enrolment;
-    }
-
     public void setEnrolmentEvaluationType(EnrolmentEvaluationType type) {
         enrolmentEvaluationType = type;
     }
@@ -77,21 +63,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         this.enrolmentEvaluationState = state;
     }
 
-    public IPerson getPersonResponsibleForGrade() {
-        return personResponsibleForGrade;
-    }
-
-    public void setPersonResponsibleForGrade(IPerson person) {
-        personResponsibleForGrade = person;
-    }
-
-    public IEmployee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(IEmployee employee) {
-        this.employee = employee;
-    }
 
     /**
      * @see java.lang.Comparable#compareTo(java.lang.Object)
