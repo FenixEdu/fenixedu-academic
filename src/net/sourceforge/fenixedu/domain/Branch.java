@@ -17,8 +17,6 @@ import org.apache.commons.collections.Predicate;
 public class Branch extends Branch_Base {
     private List scopes;
 
-    private IDegreeCurricularPlan degreeCurricularPlan;
-
     /**
      * @author Nuno Correia & Ricardo Rodrigues
      */
@@ -75,19 +73,6 @@ public class Branch extends Branch_Base {
         this.scopes = scopes;
     }
 
-    /**
-     * @return
-     */
-    public IDegreeCurricularPlan getDegreeCurricularPlan() {
-        return degreeCurricularPlan;
-    }
-
-    /**
-     * @param plan
-     */
-    public void setDegreeCurricularPlan(IDegreeCurricularPlan plan) {
-        degreeCurricularPlan = plan;
-    }
 
     /**
      * @return Returns the branchType.

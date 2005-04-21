@@ -10,17 +10,7 @@ public class CurricularCourseEquivalence extends CurricularCourseEquivalence_Bas
 
     protected ICurricularCourse equivalentCurricularCourse;
 
-    protected IDegreeCurricularPlan degreeCurricularPlan;
-
     public CurricularCourseEquivalence() {
-    }
-
-    public IDegreeCurricularPlan getDegreeCurricularPlan() {
-        return degreeCurricularPlan;
-    }
-
-    public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
-        this.degreeCurricularPlan = degreeCurricularPlan;
     }
 
     public ICurricularCourse getEquivalentCurricularCourse() {

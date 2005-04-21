@@ -13,8 +13,6 @@ package net.sourceforge.fenixedu.domain;
 
 public class DepartmentCourse extends DepartmentCourse_Base {
 
-    private IDepartment departamento;
-
     public DepartmentCourse() {
         setNome("");
         setSigla("");
@@ -42,29 +40,9 @@ public class DepartmentCourse extends DepartmentCourse_Base {
         result += ", codInt=" + getCodigoInterno();
         result += ", sigla=" + getSigla();
         result += ", nome=" + getNome();
-        result += ", departamento=" + departamento;
+        result += ", departamento=" + getDepartamento();
         result += "]";
         return result;
-    }
-
-
-    /**
-     * Returns the departamento.
-     * 
-     * @return IDepartment
-     */
-    public IDepartment getDepartamento() {
-        return departamento;
-    }
-
-    /**
-     * Sets the departamento.
-     * 
-     * @param departamento
-     *            The departamento to set
-     */
-    public void setDepartamento(IDepartment departamento) {
-        this.departamento = departamento;
     }
 
 }

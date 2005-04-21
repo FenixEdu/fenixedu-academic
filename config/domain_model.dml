@@ -116,13 +116,11 @@ class net.sourceforge.fenixedu.domain.Branch extends net.sourceforge.fenixedu.do
     interface "
 
     public java.util.List getScopes();
-    public net.sourceforge.fenixedu.domain.IDegreeCurricularPlan getDegreeCurricularPlan();
     public net.sourceforge.fenixedu.util.BranchType getBranchType();
     public java.util.List getAreaCurricularCourseGroups();
     public java.util.List getOptionalCurricularCourseGroups();
     public void setAreaCurricularCourseGroups(java.util.List curricularCourseGroups);
     public void setScopes(java.util.List scopes);
-    public void setDegreeCurricularPlan(net.sourceforge.fenixedu.domain.IDegreeCurricularPlan degreeCurricularPlan);
     public void setBranchType(net.sourceforge.fenixedu.util.BranchType branchType);
     public void setOptionalCurricularCourseGroups(java.util.List optionCurricularCourseGroups);
     public java.util.List getAreaCurricularCourseGroups(net.sourceforge.fenixedu.util.AreaType areaType);
@@ -303,8 +301,6 @@ class net.sourceforge.fenixedu.domain.CurricularCourseEquivalence extends net.so
 	
 	interface "
 	
-    public IDegreeCurricularPlan getDegreeCurricularPlan();
-    public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan);
     public ICurricularCourse getEquivalentCurricularCourse();
     public void setEquivalentCurricularCourse(ICurricularCourse equivalentCurricularCourse);
     public ICurricularCourse getOldCurricularCourse();
@@ -426,11 +422,9 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     
     interface "
 
-    public java.util.List getAreas();
     public net.sourceforge.fenixedu.domain.IStudentCurricularPlan getNewStudentCurricularPlan();
     public net.sourceforge.fenixedu.util.MarkType getMarkType();
     public net.sourceforge.fenixedu.util.DegreeCurricularPlanState getState();
-    public java.util.List getCurricularCourseEquivalences();
     public java.util.List getListOfEnrollmentRules(net.sourceforge.fenixedu.domain.IStudentCurricularPlan studentCurricularPlan,
             net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
     public java.util.List getCurricularCoursesFromArea(net.sourceforge.fenixedu.domain.IBranch area, net.sourceforge.fenixedu.util.AreaType areaType);
@@ -443,11 +437,9 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     public java.util.List getCurricularCoursesByYearAndSemesterAndBranch(int year, Integer semester, net.sourceforge.fenixedu.domain.IBranch area);
     public java.util.List getSpecialListOfCurricularCourses();
     
-    public void setAreas(java.util.List areas);
     public void setMarkType(net.sourceforge.fenixedu.util.MarkType markType);
     public void setState(net.sourceforge.fenixedu.util.DegreeCurricularPlanState state);
-    public void setCurricularCourseEquivalences(java.util.List curricularCourseEquivalences);
-   
+    
     "
 }
 
@@ -528,11 +520,6 @@ class net.sourceforge.fenixedu.domain.DepartmentCourse extends net.sourceforge.f
 	String sigla;
 	Integer chaveDepartamento;
 	Integer codigoInterno;
-	
-	interface "
-		public net.sourceforge.fenixedu.domain.IDepartment getDepartamento();
-		public void setDepartamento(net.sourceforge.fenixedu.domain.IDepartment departamento);
-	"
 }
 
 class net.sourceforge.fenixedu.domain.Employee extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -664,12 +651,6 @@ class net.sourceforge.fenixedu.domain.EnrolmentPeriod extends net.sourceforge.fe
     Date startDate;
     Integer keyDegreeCurricularPlan;
     Integer keyExecutionPeriod;
-    
-    interface "
-    void setDegreeCurricularPlan(net.sourceforge.fenixedu.domain.IDegreeCurricularPlan degreeCurricularPlan);
-    
-    net.sourceforge.fenixedu.domain.IDegreeCurricularPlan getDegreeCurricularPlan();
-    "
 }
 
     class net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses extends net.sourceforge.fenixedu.domain.EnrolmentPeriod {
@@ -2327,6 +2308,28 @@ relation CurriculumPerson {
 	net.sourceforge.fenixedu.domain.Person playsRole personWhoAltered;
 }
 
+relation DegreeCurricularPlanBranch {
+	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlan;
+
+	net.sourceforge.fenixedu.domain.Branch playsRole areas {
+		multiplicity *;
+	}
+}
+
+relation DegreeCurricularPlanCurricularCourseEquivalence {
+	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlan;
+
+	net.sourceforge.fenixedu.domain.CurricularCourseEquivalence playsRole curricularCourseEquivalences {
+		multiplicity *;
+	}
+}
+
+relation DegreeCurricularPlanEnrolmentPeriod {
+	net.sourceforge.fenixedu.domain.EnrolmentPeriod playsRole enrolmentPeriods {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlan;
+}
 
 relation DegreeCurricularPlanCurricularCourse {
 	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourses {
@@ -2373,6 +2376,14 @@ relation DelegateStudent {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Student playsRole student;
+}
+
+
+relation DepartmentDepartmentCourse {
+	net.sourceforge.fenixedu.domain.DepartmentCourse playsRole departmentCourses {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Department playsRole departamento;
 }
 
 

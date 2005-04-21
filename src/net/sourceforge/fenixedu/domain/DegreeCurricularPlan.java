@@ -36,8 +36,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     protected List areas;
 
-    protected List curricularCourseEquivalences;
-
     public DegreeCurricularPlan() {
         setOjbConcreteClass(getClass().getName());
     }
@@ -69,14 +67,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         result += "NumerusClausus = " + this.getNumerusClausus() + "]\n";
 
         return result;
-    }
-
-    public List getCurricularCourseEquivalences() {
-        return curricularCourseEquivalences;
-    }
-
-    public void setCurricularCourseEquivalences(List curricularCourseEquivalences) {
-        this.curricularCourseEquivalences = curricularCourseEquivalences;
     }
 
     public List getAreas() {
