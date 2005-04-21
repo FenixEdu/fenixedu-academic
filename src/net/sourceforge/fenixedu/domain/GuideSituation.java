@@ -10,11 +10,7 @@ import net.sourceforge.fenixedu.util.State;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class GuideSituation extends DomainObject implements IGuideSituation {
-
-    protected Integer keyGuide;
-
-    protected String remarks;
+public class GuideSituation extends GuideSituation_Base {
 
     protected SituationOfGuide situation;
 
@@ -29,7 +25,7 @@ public class GuideSituation extends DomainObject implements IGuideSituation {
 
     public GuideSituation(SituationOfGuide situation, String remarks, Date date, IGuide guide,
             State state) {
-        this.remarks = remarks;
+        setRemarks(remarks);
         this.guide = guide;
         this.situation = situation;
         this.date = date;
@@ -56,7 +52,7 @@ public class GuideSituation extends DomainObject implements IGuideSituation {
     public String toString() {
         String result = "[GUIDE SITUATION";
 
-        result += ", remarks=" + remarks;
+        result += ", remarks=" + getRemarks();
         result += ", guide=" + guide;
         result += ", guide Situtation=" + situation;
         result += ", date=" + date;
@@ -77,20 +73,6 @@ public class GuideSituation extends DomainObject implements IGuideSituation {
      */
     public IGuide getGuide() {
         return guide;
-    }
-
-    /**
-     * @return
-     */
-    public Integer getKeyGuide() {
-        return keyGuide;
-    }
-
-    /**
-     * @return
-     */
-    public String getRemarks() {
-        return remarks;
     }
 
     /**
@@ -119,20 +101,6 @@ public class GuideSituation extends DomainObject implements IGuideSituation {
      */
     public void setGuide(IGuide guide) {
         this.guide = guide;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setKeyGuide(Integer integer) {
-        keyGuide = integer;
-    }
-
-    /**
-     * @param string
-     */
-    public void setRemarks(String string) {
-        remarks = string;
     }
 
     /**

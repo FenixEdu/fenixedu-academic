@@ -1232,6 +1232,29 @@ class net.sourceforge.fenixedu.domain.GuideEntry extends net.sourceforge.fenixed
 	"
 }
 
+class net.sourceforge.fenixedu.domain.GuideSituation extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyGuide;
+	String remarks;
+	
+	interface "
+	    public java.util.Date getDate();
+	    
+	    public net.sourceforge.fenixedu.domain.IGuide getGuide();
+    	
+    	public net.sourceforge.fenixedu.util.SituationOfGuide getSituation();
+    	
+    	public net.sourceforge.fenixedu.util.State getState();
+    	
+    	public void setDate(java.util.Date date);
+    	
+    	public void setGuide(net.sourceforge.fenixedu.domain.IGuide guide);
+    	
+    	public void setSituation(net.sourceforge.fenixedu.util.SituationOfGuide guide);
+    	
+    	public void setState(net.sourceforge.fenixedu.util.State state);
+	"
+}
+
 class net.sourceforge.fenixedu.domain.Item extends net.sourceforge.fenixedu.domain.DomainObject implements net.sourceforge.fenixedu.fileSuport.INode {
 	Integer keySection;
 	Boolean urgent;
