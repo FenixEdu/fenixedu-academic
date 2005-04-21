@@ -1270,10 +1270,6 @@ class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.do
 	Integer chaveSala;
 
 	interface "
-	public net.sourceforge.fenixedu.domain.IExecutionPeriod getExecutionPeriod();
-	
-	public void setExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
-
 	public net.sourceforge.fenixedu.util.DiaSemana getDiaSemana();
 	
 	public void setDiaSemana(net.sourceforge.fenixedu.util.DiaSemana diaSemana);
@@ -3012,6 +3008,12 @@ relation GroupPropertiesAttendsSet {
 	net.sourceforge.fenixedu.domain.GroupProperties playsRole groupProperties;
 }
 
+relation LessonExecutionPeriod {
+	net.sourceforge.fenixedu.domain.Lesson playsRole lessons {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
 
 relation LessonShift {
 	net.sourceforge.fenixedu.domain.Lesson playsRole associatedLessons {

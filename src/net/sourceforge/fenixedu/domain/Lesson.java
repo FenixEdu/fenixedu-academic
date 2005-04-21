@@ -28,8 +28,6 @@ public class Lesson extends Lesson_Base  {
     //  protected IExecutionCourse _disciplinaExecucao;
     protected IShift _shift;
 
-    protected IExecutionPeriod executionPeriod;
-
     protected IRoomOccupation roomOccupation;
 
     /**
@@ -59,20 +57,6 @@ public class Lesson extends Lesson_Base  {
         //    setDisciplinaExecucao(disciplinaExecucao);
     }
     
-    /**
-     * @return
-     */
-    public IExecutionPeriod getExecutionPeriod() {
-        return executionPeriod;
-    }
-
-    /**
-     * @param executionPeriod
-     */
-    public void setExecutionPeriod(IExecutionPeriod executionPeriod) {
-        this.executionPeriod = executionPeriod;
-    }
-
     public DiaSemana getDiaSemana() {
         return _diaSemana;
     }
