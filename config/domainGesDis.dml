@@ -386,7 +386,7 @@ relation ProfessorshipSupportLesson {
 }
 
 relation ExecutionCourseEvaluationMethod {
-	net.sourceforge.fenixedu.domain.EvaluationMethod playsRole associatedEvaluations {
+	net.sourceforge.fenixedu.domain.EvaluationMethod playsRole associatedEvaluationMethods {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
