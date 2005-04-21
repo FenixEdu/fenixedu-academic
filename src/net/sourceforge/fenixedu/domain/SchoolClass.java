@@ -13,8 +13,7 @@ package net.sourceforge.fenixedu.domain;
  */
 
 public class SchoolClass extends SchoolClass_Base {
-    private IExecutionDegree executionDegree;
-
+    
     /**
      * Construtor sem argumentos p�blico requerido pela moldura de objectos
      * OJB
@@ -62,29 +61,9 @@ public class SchoolClass extends SchoolClass_Base {
         result += ", codigoInterno=" + getIdInternal();
         result += ", nome=" + getNome();
         result += ", executionPeriod=" + getExecutionPeriod();
-        result += ", executionDegree=" + executionDegree;
+        result += ", executionDegree=" + getExecutionDegree();
         result += "]";
         return result;
     }
-
-    /**
-     * Returns the executionDegree.
-     * 
-     * @return IExecutionDegree
-     */
-    public IExecutionDegree getExecutionDegree() {
-        return executionDegree;
-    }
-
-    /**
-     * Sets the executionDegree.
-     * 
-     * @param executionDegree
-     *            The executionDegree to set
-     */
-    public void setExecutionDegree(IExecutionDegree executionDegree) {
-        this.executionDegree = executionDegree;
-    }
-
 
 }

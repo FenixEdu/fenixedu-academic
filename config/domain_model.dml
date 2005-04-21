@@ -1837,12 +1837,6 @@ class net.sourceforge.fenixedu.domain.SchoolClass extends net.sourceforge.fenixe
 	String nome;
 	Integer keyExecutionPeriod;
 	Integer anoCurricular;
-	
-	interface"
-	public net.sourceforge.fenixedu.domain.IExecutionDegree getExecutionDegree();
-	
-	public void setExecutionDegree(net.sourceforge.fenixedu.domain.IExecutionDegree executionDegree);
-	"
 }
 
 
@@ -3232,6 +3226,13 @@ relation SectionSuperiorSection {
 
 relation SchedulingExecutionDegree {
 	net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing playsRole scheduling;
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
+}
+
+relation SchoolClassExecutionDegree {
+	net.sourceforge.fenixedu.domain.SchoolClass playsRole schoolClasses {
+		multiplicity *;
+	}
 	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
 }
 
