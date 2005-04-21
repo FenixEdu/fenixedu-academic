@@ -3,109 +3,19 @@
  */
 package net.sourceforge.fenixedu.domain.grant.contract;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.ITeacher;
-
 /**
  * @author pica
  * @author barbosa
  */
-public abstract class GrantPaymentEntity extends DomainObject implements IGrantPaymentEntity {
-
+public abstract class GrantPaymentEntity extends GrantPaymentEntity_Base {
     private static final String grantCostCenterOjbConcreteClass = GrantCostCenter.class.getName();
-
     private static final String grantProjectOjbConcreteClass = GrantProject.class.getName();
-
-    protected String number;
-
-    protected String designation;
-
-    protected String ojbConcreteClass;
-
-    protected ITeacher responsibleTeacher;
-
-    protected Integer keyResponsibleTeacher;
 
     /**
      * Constructor
      */
     public GrantPaymentEntity() {
-        this.ojbConcreteClass = this.getClass().getName();
-    }
-
-    /**
-     * @return Returns the designation.
-     */
-    public String getDesignation() {
-        return designation;
-    }
-
-    /**
-     * @param designation
-     *            The designation to set.
-     */
-    public void setDesignation(String designation) {
-        this.designation = designation;
-    }
-
-    /**
-     * @return Returns the number.
-     */
-    public String getNumber() {
-        return number;
-    }
-
-    /**
-     * @param number
-     *            The number to set.
-     */
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    /**
-     * @return Returns the ojbConcreteClass.
-     */
-    public String getOjbConcreteClass() {
-        return ojbConcreteClass;
-    }
-
-    /**
-     * @param ojbConcreteClass
-     *            The ojbConcreteClass to set.
-     */
-    public void setOjbConcreteClass(String ojbConcreteClass) {
-        this.ojbConcreteClass = ojbConcreteClass;
-    }
-
-    /**
-     * @return Returns the keyResponsibleTeacher.
-     */
-    public Integer getKeyResponsibleTeacher() {
-        return keyResponsibleTeacher;
-    }
-
-    /**
-     * @param keyResponsibleTeacher
-     *            The keyResponsibleTeacher to set.
-     */
-    public void setKeyResponsibleTeacher(Integer keyResponsibleTeacher) {
-        this.keyResponsibleTeacher = keyResponsibleTeacher;
-    }
-
-    /**
-     * @return Returns the responsibleTeacher.
-     */
-    public ITeacher getResponsibleTeacher() {
-        return responsibleTeacher;
-    }
-
-    /**
-     * @param responsibleTeacher
-     *            The responsibleTeacher to set.
-     */
-    public void setResponsibleTeacher(ITeacher responsibleTeacher) {
-        this.responsibleTeacher = responsibleTeacher;
+        this.setOjbConcreteClass(this.getClass().getName());
     }
 
     /**
@@ -121,4 +31,5 @@ public abstract class GrantPaymentEntity extends DomainObject implements IGrantP
     public static String getGrantProjectOjbConcreteClass() {
         return grantProjectOjbConcreteClass;
     }
+
 }

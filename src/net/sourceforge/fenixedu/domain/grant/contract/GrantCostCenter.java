@@ -7,8 +7,6 @@ package net.sourceforge.fenixedu.domain.grant.contract;
  * @author pica
  * @author barbosa
  */
-public class GrantCostCenter extends GrantPaymentEntity implements IGrantCostCenter {
+public class GrantCostCenter extends GrantCostCenter_Base {
 
-    public GrantCostCenter() {
-    }
 }

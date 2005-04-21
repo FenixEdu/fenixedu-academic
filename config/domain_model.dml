@@ -965,6 +965,20 @@ class net.sourceforge.fenixedu.domain.grant.contract.GrantPart extends net.sourc
 	Integer percentage;
 }
 
+class net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity extends net.sourceforge.fenixedu.domain.DomainObject {
+    String number;
+	String designation;
+	String ojbConcreteClass;
+	Integer keyResponsibleTeacher;
+}
+
+	class net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter extends net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity {
+	}
+
+	class net.sourceforge.fenixedu.domain.grant.contract.GrantProject extends net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity {
+		Integer keyGrantCostCenter;
+	}
+
 
 class net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy extends net.sourceforge.fenixedu.domain.DomainObject {
 	Double value;
@@ -2300,11 +2314,8 @@ class net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute exten
 
 external class net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty;
 external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
-external class net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
-external class net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
-
 
 /*
  * Relations definitions
@@ -2317,6 +2328,7 @@ relation AnswerExportProposal {
 	}
 	net.sourceforge.fenixedu.domain.Person playsRole receiverPerson;
 }
+
 
 relation AttendBelongsToAttendsSet {
 	net.sourceforge.fenixedu.domain.AttendInAttendsSet playsRole attendInAttendsSet {
@@ -2920,6 +2932,22 @@ relation GrantPartTeacher {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Teacher playsRole responsibleTeacher;
+}
+
+
+relation GrantPaymentEntityTeacher {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity playsRole associatedGrantPaymentEntities {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole responsibleTeacher;
+}
+
+
+relation GrantProjectGrantCostCenter {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantProject playsRole associatedGrantProjects {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter playsRole grantCostCenter;
 }
 
 

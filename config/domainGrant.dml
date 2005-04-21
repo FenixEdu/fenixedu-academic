@@ -14,19 +14,12 @@ class net.sourceforge.fenixedu.domain.grant.contract.GrantType extends net.sourc
 
 
 class net.sourceforge.fenixedu.domain.grant.contract.GrantProject extends net.sourceforge.fenixedu.domain.DomainObject {
-	String ojbConcreteClass;
-	Integer keyResponsibleTeacher;
 	Integer keyGrantCostCenter;
-	String designation;
-	String number;
 }
 
 
 class net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter extends net.sourceforge.fenixedu.domain.DomainObject {
-	String ojbConcreteClass;
-	Integer keyResponsibleTeacher;
-	String designation;
-	String number;
+
 }
 
 
@@ -106,6 +99,10 @@ class net.sourceforge.fenixedu.domain.grant.owner.GrantOwner extends net.sourcef
 
 
 class net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity extends net.sourceforge.fenixedu.domain.DomainObject {
+    String number;
+	String designation;
+	String ojbConcreteClass;
+	Integer keyResponsibleTeacher;
 }
 
 
@@ -126,8 +123,24 @@ relation GrantContractMovementGrantContract {
 
 
 relation ??? {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantProject playsRole ??? {
+		multiplicity ???;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole responsibleTeacher;
+}
+
+
+relation ??? {
 	net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter playsRole ??? {
 		multiplicity ???;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole responsibleTeacher;
+}
+
+
+relation GrantPaymentEntityTeacher {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity playsRole associatedGrantPaymentEntities {
+		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Teacher playsRole responsibleTeacher;
 }
@@ -157,9 +170,9 @@ relation GrantContractGrantCostCenter {
 }
 
 
-relation ??? {
-	net.sourceforge.fenixedu.domain.grant.contract.GrantProject playsRole ??? {
-		multiplicity ???;
+relation GrantProjectGrantCostCenter {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantProject playsRole associatedGrantProjects {
+		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter playsRole grantCostCenter;
 }
@@ -238,14 +251,6 @@ relation GrantInsuranceGrantContract {
 relation GrantOrientationTeacherGrantContract {
 	net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher playsRole grantOrientationTeacher;
 	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole grantContract;
-}
-
-
-relation ??? {
-	net.sourceforge.fenixedu.domain.grant.contract.GrantProject playsRole ??? {
-		multiplicity ???;
-	}
-	net.sourceforge.fenixedu.domain.Teacher playsRole responsibleTeacher;
 }
 
 
