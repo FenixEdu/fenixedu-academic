@@ -1552,10 +1552,6 @@ class net.sourceforge.fenixedu.domain.Period extends net.sourceforge.fenixedu.do
 	
 	public void setStartDate(java.util.Calendar calendar);
 
-	public java.util.List getRoomOccupations();
-	
-	public void setRoomOccupations(java.util.List roomOccupations);
-
 	public net.sourceforge.fenixedu.domain.IPeriod getNextPeriod();
 	
 	public void setNextPeriod(net.sourceforge.fenixedu.domain.IPeriod nextPeriod);
@@ -1790,10 +1786,6 @@ class net.sourceforge.fenixedu.domain.RoomOccupation extends net.sourceforge.fen
 
 	public void setStartTime(java.util.Calendar calendar);
 
-	public net.sourceforge.fenixedu.domain.IPeriod getPeriod();
-
-	public void setPeriod(net.sourceforge.fenixedu.domain.IPeriod period);
-	
 	public boolean roomOccupationForDateAndTime(net.sourceforge.fenixedu.domain.IRoomOccupation roomOccupation);
 	
 	public boolean roomOccupationForDateAndTime(net.sourceforge.fenixedu.domain.IPeriod period, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week, net.sourceforge.fenixedu.domain.IRoom room);
@@ -3082,6 +3074,12 @@ relation OldInquiriesTeachersResTeacher {
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
 
+relation PeriodRoomOccupation {
+	net.sourceforge.fenixedu.domain.Period playsRole period;
+	net.sourceforge.fenixedu.domain.RoomOccupation playsRole roomOccupations {
+		multiplicity *;
+	}
+}
 
 relation PersonAdvisory {
 	net.sourceforge.fenixedu.domain.Person playsRole associatedPersons {

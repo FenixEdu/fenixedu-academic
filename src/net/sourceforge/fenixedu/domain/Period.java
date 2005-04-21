@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Calendar;
-import java.util.List;
 
 import net.sourceforge.fenixedu.util.CalendarUtil;
 
@@ -18,8 +17,6 @@ public class Period extends Period_Base {
     protected Calendar startDate;
 
     protected Calendar endDate;
-
-    protected List roomOccupations;
 
     protected IPeriod nextPeriod;
 
@@ -74,20 +71,6 @@ public class Period extends Period_Base {
 
         }
         return false;
-    }
-
-    /**
-     * @return
-     */
-    public List getRoomOccupations() {
-        return roomOccupations;
-    }
-
-    /**
-     * @param roomOccupations
-     */
-    public void setRoomOccupations(List roomOccupations) {
-        this.roomOccupations = roomOccupations;
     }
 
     public IPeriod getNextPeriod() {
