@@ -980,6 +980,14 @@ class net.sourceforge.fenixedu.domain.grant.contract.GrantContract extends net.s
 }
 
 
+class net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement extends net.sourceforge.fenixedu.domain.DomainObject {
+	Date departureDate;
+	Integer keyGrantContract;
+	String location;
+	Date arrivalDate;
+}
+
+
 class net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyTeacher;
 	Integer keyGrantContract;
@@ -2526,6 +2534,14 @@ relation GrantContractGrantType {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.grant.contract.GrantType playsRole grantType;
+}
+
+
+relation GrantContractMovementGrantContract {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement playsRole associatedGrantContractMovements {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole grantContract;
 }
 
 

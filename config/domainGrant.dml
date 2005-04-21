@@ -116,9 +116,9 @@ relation ??? {
 }
 
 
-relation ??? {
-	net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement playsRole ??? {
-		multiplicity ???;
+relation GrantContractMovementGrantContract {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement playsRole associatedGrantContractMovements {
+		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole grantContract;
 }
