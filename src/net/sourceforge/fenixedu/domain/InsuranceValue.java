@@ -8,11 +8,7 @@ import java.util.Date;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  *  
  */
-public class InsuranceValue extends DomainObject implements IInsuranceValue {
-
-    private Double annualValue;
-
-    private Integer keyExecutionYear;
+public class InsuranceValue extends InsuranceValue_Base {
 
     private IExecutionYear executionYear;
 
@@ -24,24 +20,9 @@ public class InsuranceValue extends DomainObject implements IInsuranceValue {
 
     public InsuranceValue(IExecutionYear executionYear, Double annualValue, Date endDate) {
         this.executionYear = executionYear;
-        this.annualValue = annualValue;
+        setAnnualValue(annualValue);
         this.endDate = endDate;
 
-    }
-
-    /**
-     * @return Returns the annualValue.
-     */
-    public Double getAnnualValue() {
-        return annualValue;
-    }
-
-    /**
-     * @param annualValue
-     *            The annualValue to set.
-     */
-    public void setAnnualValue(Double annualValue) {
-        this.annualValue = annualValue;
     }
 
     /**
@@ -57,21 +38,6 @@ public class InsuranceValue extends DomainObject implements IInsuranceValue {
      */
     public void setExecutionYear(IExecutionYear executionYear) {
         this.executionYear = executionYear;
-    }
-
-    /**
-     * @return Returns the keyExecutionYear.
-     */
-    public Integer getKeyExecutionYear() {
-        return keyExecutionYear;
-    }
-
-    /**
-     * @param keyExecutionYear
-     *            The keyExecutionYear to set.
-     */
-    public void setKeyExecutionYear(Integer keyExecutionYear) {
-        this.keyExecutionYear = keyExecutionYear;
     }
 
     /**

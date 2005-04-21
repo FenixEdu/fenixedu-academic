@@ -1249,6 +1249,21 @@ class net.sourceforge.fenixedu.domain.GuideSituation extends net.sourceforge.fen
 	"
 }
 
+class net.sourceforge.fenixedu.domain.InsuranceValue extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyExecutionYear;
+	Double annualValue;
+	
+	interface "
+	    public net.sourceforge.fenixedu.domain.IExecutionYear getExecutionYear();
+    	
+    	public void setExecutionYear(net.sourceforge.fenixedu.domain.IExecutionYear executionYear);
+    	
+    	public java.util.Date getEndDate();
+    	
+    	public void setEndDate(java.util.Date endDate);
+	"
+}
+
 class net.sourceforge.fenixedu.domain.Item extends net.sourceforge.fenixedu.domain.DomainObject implements net.sourceforge.fenixedu.fileSuport.INode {
 	Integer keySection;
 	Boolean urgent;
