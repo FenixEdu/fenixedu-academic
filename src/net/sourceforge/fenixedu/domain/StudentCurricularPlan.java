@@ -30,10 +30,6 @@ import org.apache.commons.collections.Transformer;
 
 public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
-	protected IStudent student;
-
-	protected IEmployee employee;
-
 	protected StudentCurricularPlanState currentState;
 
 	protected Specialization specialization;
@@ -62,14 +58,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	public String toString() {
 		String result = "[" + this.getClass().getName() + "; ";
 		result += "internalCode = " + getIdInternal() + "; ";
-		result += "student = " + this.student + "; ";
+		result += "student = " + this.getStudent() + "; ";
 		result += "degreeCurricularPlan = " + this.getDegreeCurricularPlan() + "; ";
 		result += "startDate = " + this.getStartDate() + "; ";
 		result += "specialization = " + this.specialization + "; ";
 		result += "currentState = " + this.currentState + "]\n";
 		result += "when alter = " + this.getWhen() + "]\n";
-		if (this.employee != null) {
-			result += "employee = " + this.employee.getPerson().getNome()
+		if (this.getEmployee() != null) {
+			result += "employee = " + this.getEmployee().getPerson().getNome()
 					+ "]\n";
 		}
 		return result;
@@ -77,10 +73,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	public StudentCurricularPlanState getCurrentState() {
 		return currentState;
-	}
-
-	public IEmployee getEmployee() {
-		return employee;
 	}
 
 	public IBranch getSecundaryBranch() {
@@ -95,16 +87,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		return specialization;
 	}
 
-	public IStudent getStudent() {
-		return student;
-	}
-
 	public void setCurrentState(StudentCurricularPlanState currentState) {
 		this.currentState = currentState;
-	}
-
-	public void setEmployee(IEmployee employee) {
-		this.employee = employee;
 	}
 
 	public void setSecundaryBranch(IBranch secundaryBranch) {
@@ -115,10 +99,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	public void setSpecialization(Specialization specialization) {
 		this.specialization = specialization;
-	}
-
-	public void setStudent(IStudent student) {
-		this.student = student;
 	}
 
 	// -------------------------------------------------------------

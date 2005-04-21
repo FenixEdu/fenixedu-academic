@@ -12,8 +12,6 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 
     private ICurricularSemester curricularSemester;
 
-    private IBranch branch;
-
     private Calendar beginDate;
 
     private Calendar endDate;
@@ -65,7 +63,7 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
         result += "idInternal = " + this.getIdInternal() + "; ";
         result += "curricularCourse = " + this.getCurricularCourse() + "; ";
         result += "curricularSemester = " + this.curricularSemester + "; ";
-        result += "branch = " + this.branch + "; ";
+        result += "branch = " + this.getBranch() + "; ";
         result += "endDate = " + this.endDate + "]\n";
 
         return result;
@@ -92,21 +90,6 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
      */
     public void setBeginDate(Calendar beginDate) {
         this.beginDate = beginDate;
-    }
-
-    /**
-     * @return Returns the branch.
-     */
-    public IBranch getBranch() {
-        return branch;
-    }
-
-    /**
-     * @param branch
-     *            The branch to set.
-     */
-    public void setBranch(IBranch branch) {
-        this.branch = branch;
     }
 
     /**

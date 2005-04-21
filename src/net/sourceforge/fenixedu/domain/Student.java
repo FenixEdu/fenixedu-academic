@@ -33,8 +33,6 @@ public class Student extends Student_Base{
 
     private EntryPhase entryPhase;
 
-    protected List studentCurricularPlans;
-
     public Student(Integer idInternal) {
         setIdInternal(idInternal);
     }
@@ -211,15 +209,6 @@ public class Student extends Student_Base{
      */
     public void setRegistrationYear(IExecutionYear registrationYear) {
         this.registrationYear = registrationYear;
-    }
-
-
-    public List getStudentCurricularPlans() {
-        return studentCurricularPlans;
-    }
-
-    public void setStudentCurricularPlans(List studentCurricularPlans) {
-        this.studentCurricularPlans = studentCurricularPlans;
     }
 
     /*

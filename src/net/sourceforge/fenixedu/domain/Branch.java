@@ -15,8 +15,6 @@ import org.apache.commons.collections.Predicate;
  */
 
 public class Branch extends Branch_Base {
-    private List scopes;
-
     /**
      * @author Nuno Correia & Ricardo Rodrigues
      */
@@ -54,21 +52,6 @@ public class Branch extends Branch_Base {
         }
         return Boolean.FALSE;
     }
-
-    /**
-     * @return List
-     */
-    public List getScopes() {
-        return scopes;
-    }
-
-    /**
-     * @param scopes
-     */
-    public void setScopes(List scopes) {
-        this.scopes = scopes;
-    }
-
 
     /**
      * @return Returns the branchType.
