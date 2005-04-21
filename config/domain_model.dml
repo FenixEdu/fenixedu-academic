@@ -1322,6 +1322,40 @@ class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.do
 	"
 }
 
+class net.sourceforge.fenixedu.domain.MasterDegreeCandidate extends net.sourceforge.fenixedu.domain.DomainObject {
+	Double average;
+	String specializationArea;
+	Integer majorDegreeYear;
+	String majorDegreeSchool;
+	Integer executionDegreeKey;
+	Integer personKey;
+	Integer substituteOrder;
+	Double givenCredits;
+	String givenCreditsRemarks;
+	String majorDegree;
+	Integer candidateNumber;
+	
+	interface "
+		public net.sourceforge.fenixedu.domain.ICandidateSituation getActiveCandidateSituation();
+		
+		public net.sourceforge.fenixedu.domain.IExecutionDegree getExecutionDegree();
+		
+		public net.sourceforge.fenixedu.domain.IPerson getPerson();
+		
+		public java.util.List getSituations();
+		
+		public net.sourceforge.fenixedu.util.Specialization getSpecialization();
+		
+		public void setExecutionDegree(net.sourceforge.fenixedu.domain.IExecutionDegree execucao);
+		
+		public void setPerson(net.sourceforge.fenixedu.domain.IPerson pessoa);
+		
+		public void setSituations(java.util.List list);
+		
+		public void setSpecialization(net.sourceforge.fenixedu.util.Specialization specialization);
+	"
+}
+
 class net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer studentCurricularPlanKey;
     Integer curricularCourseKey;
