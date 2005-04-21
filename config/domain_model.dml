@@ -1157,6 +1157,62 @@ class net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse extends net
         "
 }
 
+class net.sourceforge.fenixedu.domain.Guide extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyContributor;
+	String remarks;
+	Integer version;
+	Double total;
+	Integer year;
+	Integer keyPerson;
+	Integer keyExecutionDegree;
+	Integer number;
+	
+	
+	interface "
+		public net.sourceforge.fenixedu.domain.IGuideSituation getActiveSituation();
+		
+		public net.sourceforge.fenixedu.domain.IContributor getContributor();
+		
+		public net.sourceforge.fenixedu.domain.IExecutionDegree getExecutionDegree();
+		
+		public java.util.List getGuideEntries();
+		
+		public net.sourceforge.fenixedu.util.GuideRequester getGuideRequester();
+		
+		public net.sourceforge.fenixedu.domain.IPerson getPerson();
+		
+		public void setContributor(net.sourceforge.fenixedu.domain.IContributor contributor);
+		
+		public void setExecutionDegree(net.sourceforge.fenixedu.domain.IExecutionDegree execucao);
+		
+		public void setGuideEntries(java.util.List list);
+		
+		public void setGuideRequester(net.sourceforge.fenixedu.util.GuideRequester requester);
+		
+		public void setPerson(net.sourceforge.fenixedu.domain.IPerson pessoa);
+		
+		public net.sourceforge.fenixedu.util.PaymentType getPaymentType();
+		
+		public void setPaymentType(net.sourceforge.fenixedu.util.PaymentType type);
+		
+		public java.util.List getGuideSituations();
+		
+		public void setGuideSituations(java.util.List list);
+		
+		public java.util.Date getCreationDate();
+		
+		public void setCreationDate(java.util.Date date);
+		
+		public java.util.Date getPaymentDate();
+		
+		public void setPaymentDate(java.util.Date date);
+		
+		public java.util.List getReimbursementGuides();
+		
+		public void setReimbursementGuides(java.util.List reimbursementGuides);
+	"
+}
+
 class net.sourceforge.fenixedu.domain.Item extends net.sourceforge.fenixedu.domain.DomainObject implements net.sourceforge.fenixedu.fileSuport.INode {
 	Integer keySection;
 	Boolean urgent;

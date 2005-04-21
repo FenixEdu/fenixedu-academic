@@ -12,367 +12,242 @@ import net.sourceforge.fenixedu.util.State;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class Guide extends DomainObject implements IGuide {
-    protected Integer keyPerson;
+public class Guide extends Guide_Base {
 
-    protected Integer keyContributor;
+	protected IPerson person;
 
-    protected Integer keyExecutionDegree;
+	protected IContributor contributor;
 
-    protected Integer number;
+	protected IExecutionDegree executionDegree;
 
-    protected Integer year;
+	protected PaymentType paymentType;
 
-    protected Double total;
+	protected Date creationDate;
 
-    protected String remarks;
+	protected Date paymentDate;
 
-    protected IPerson person;
+	protected GuideRequester guideRequester;
 
-    protected IContributor contributor;
+	protected List guideEntries;
 
-    protected IExecutionDegree executionDegree;
+	protected List guideSituations;
 
-    protected PaymentType paymentType;
+	protected List reimbursementGuides;
 
-    protected Date creationDate;
+	public Guide() {
+	}
 
-    protected Date paymentDate;
+	public Guide(Integer number, Integer year, Double total, String remarks,
+			IPerson person, IContributor contributor,
+			GuideRequester guideRequester, IExecutionDegree executionDegree,
+			PaymentType paymentType, Date creationDate, Integer version) {
+		this.contributor = contributor;
+		setNumber(number);
+		this.person = person;
+		setRemarks(remarks);
+		setTotal(total);
+		setYear(year);
+		this.guideRequester = guideRequester;
+		this.executionDegree = executionDegree;
+		this.paymentType = paymentType;
+		this.creationDate = creationDate;
+		setVersion(version);
+	}
 
-    protected Integer version;
+	/**
+	 * @param guideId
+	 */
+	public Guide(Integer guideId) {
+		setIdInternal(guideId);
+	}
 
-    protected GuideRequester guideRequester;
+	public boolean equals(Object obj) {
+		boolean resultado = false;
+		if (obj instanceof IGuide) {
+			IGuide guide = (IGuide) obj;
 
-    protected List guideEntries;
+			if (((getNumber() == null && guide.getNumber() == null) || (getNumber()
+					.equals(guide.getNumber())))
+					&& ((getYear() == null && guide.getYear() == null) || (getYear()
+							.equals(guide.getYear())))) {
+				resultado = true;
+			}
+		}
 
-    protected List guideSituations;
+		return resultado;
+	}
 
-    protected List reimbursementGuides;
+	public String toString() {
+		String result = "[GUIDE";
+		result += ", codInt=" + getIdInternal();
+		result += ", number=" + getNumber();
+		result += ", year=" + getYear();
+		result += ", contributor=" + contributor;
+		result += ", total=" + getTotal();
+		result += ", remarks=" + getRemarks();
+		result += ", guide Requester=" + guideRequester;
+		result += ", execution Degree=" + executionDegree;
+		result += ", payment Type=" + paymentType;
+		result += ", creation Date=" + creationDate;
+		result += ", version=" + getVersion();
+		result += ", payment Date=" + paymentDate;
+		result += "]";
+		return result;
+	}
 
-    public Guide() {
-    }
+	public IGuideSituation getActiveSituation() {
+		if (this.getGuideSituations() != null) {
+			Iterator iterator = this.getGuideSituations().iterator();
+			while (iterator.hasNext()) {
+				IGuideSituation guideSituation = (IGuideSituation) iterator
+						.next();
+				if (guideSituation.getState().equals(new State(State.ACTIVE))) {
+					return guideSituation;
+				}
+			}
+		}
+		return null;
 
-    public Guide(Integer number, Integer year, Double total, String remarks, IPerson person,
-            IContributor contributor, GuideRequester guideRequester, IExecutionDegree executionDegree,
-            PaymentType paymentType, Date creationDate, Integer version) {
-        this.contributor = contributor;
-        this.number = number;
-        this.person = person;
-        this.remarks = remarks;
-        this.total = total;
-        this.year = year;
-        this.guideRequester = guideRequester;
-        this.executionDegree = executionDegree;
-        this.paymentType = paymentType;
-        this.creationDate = creationDate;
-        this.version = version;
-    }
+	}
 
-    /**
-     * @param guideId
-     */
-    public Guide(Integer guideId) {
-        setIdInternal(guideId);
-    }
+	/**
+	 * @return
+	 */
+	public IContributor getContributor() {
+		return contributor;
+	}
 
-    public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof IGuide) {
-            IGuide guide = (IGuide) obj;
+	/**
+	 * @return
+	 */
+	public IExecutionDegree getExecutionDegree() {
+		return executionDegree;
+	}
 
-            if (((getNumber() == null && guide.getNumber() == null) || (getNumber().equals(guide
-                    .getNumber())))
-                    && ((getYear() == null && guide.getYear() == null) || (getYear().equals(guide
-                            .getYear())))) {
-                resultado = true;
-            }
-        }
+	/**
+	 * @return
+	 */
+	public List getGuideEntries() {
+		return guideEntries;
+	}
 
-        return resultado;
-    }
+	/**
+	 * @return
+	 */
+	public GuideRequester getGuideRequester() {
+		return guideRequester;
+	}
 
-    public String toString() {
-        String result = "[GUIDE";
-        result += ", codInt=" + getIdInternal();
-        result += ", number=" + number;
-        result += ", year=" + year;
-        result += ", contributor=" + contributor;
-        result += ", total=" + total;
-        result += ", remarks=" + remarks;
-        result += ", guide Requester=" + guideRequester;
-        result += ", execution Degree=" + executionDegree;
-        result += ", payment Type=" + paymentType;
-        result += ", creation Date=" + creationDate;
-        result += ", version=" + version;
-        result += ", payment Date=" + paymentDate;
-        result += "]";
-        return result;
-    }
+	/**
+	 * @return
+	 */
+	public IPerson getPerson() {
+		return person;
+	}
 
-    public IGuideSituation getActiveSituation() {
-        if (this.getGuideSituations() != null) {
-            Iterator iterator = this.getGuideSituations().iterator();
-            while (iterator.hasNext()) {
-                IGuideSituation guideSituation = (IGuideSituation) iterator.next();
-                if (guideSituation.getState().equals(new State(State.ACTIVE))) {
-                    return guideSituation;
-                }
-            }
-        }
-        return null;
+	/**
+	 * @param contributor
+	 */
+	public void setContributor(IContributor contributor) {
+		this.contributor = contributor;
+	}
 
-    }
+	/**
+	 * @param execucao
+	 */
+	public void setExecutionDegree(IExecutionDegree execucao) {
+		executionDegree = execucao;
+	}
 
-    /**
-     * @return
-     */
-    public IContributor getContributor() {
-        return contributor;
-    }
+	/**
+	 * @param list
+	 */
+	public void setGuideEntries(List list) {
+		guideEntries = list;
+	}
 
-    /**
-     * @return
-     */
-    public IExecutionDegree getExecutionDegree() {
-        return executionDegree;
-    }
+	/**
+	 * @param requester
+	 */
+	public void setGuideRequester(GuideRequester requester) {
+		guideRequester = requester;
+	}
 
-    /**
-     * @return
-     */
-    public List getGuideEntries() {
-        return guideEntries;
-    }
+	/**
+	 * @param pessoa
+	 */
+	public void setPerson(IPerson pessoa) {
+		person = pessoa;
+	}
 
-    /**
-     * @return
-     */
-    public GuideRequester getGuideRequester() {
-        return guideRequester;
-    }
+	/**
+	 * @return
+	 */
+	public PaymentType getPaymentType() {
+		return paymentType;
+	}
 
-    /**
-     * @return
-     */
-    public Integer getKeyContributor() {
-        return keyContributor;
-    }
+	/**
+	 * @param type
+	 */
+	public void setPaymentType(PaymentType type) {
+		paymentType = type;
+	}
 
-    /**
-     * @return
-     */
-    public Integer getKeyExecutionDegree() {
-        return keyExecutionDegree;
-    }
+	/**
+	 * @return
+	 */
+	public List getGuideSituations() {
+		return guideSituations;
+	}
 
-    /**
-     * @return
-     */
-    public Integer getKeyPerson() {
-        return keyPerson;
-    }
+	/**
+	 * @param list
+	 */
+	public void setGuideSituations(List list) {
+		guideSituations = list;
+	}
 
-    /**
-     * @return
-     */
-    public Integer getNumber() {
-        return number;
-    }
+	/**
+	 * @return
+	 */
+	public Date getCreationDate() {
+		return creationDate;
+	}
 
-    /**
-     * @return
-     */
-    public IPerson getPerson() {
-        return person;
-    }
+	/**
+	 * @param date
+	 */
+	public void setCreationDate(Date date) {
+		creationDate = date;
+	}
 
-    /**
-     * @return
-     */
-    public String getRemarks() {
-        return remarks;
-    }
+	/**
+	 * @return
+	 */
+	public Date getPaymentDate() {
+		return paymentDate;
+	}
 
-    /**
-     * @return
-     */
-    public Double getTotal() {
-        return total;
-    }
+	/**
+	 * @param date
+	 */
+	public void setPaymentDate(Date date) {
+		paymentDate = date;
+	}
 
-    /**
-     * @return
-     */
-    public Integer getYear() {
-        return year;
-    }
+	/**
+	 * @return Returns the reimbursementGuides.
+	 */
+	public List getReimbursementGuides() {
+		return reimbursementGuides;
+	}
 
-    /**
-     * @param contributor
-     */
-    public void setContributor(IContributor contributor) {
-        this.contributor = contributor;
-    }
-
-    /**
-     * @param execucao
-     */
-    public void setExecutionDegree(IExecutionDegree execucao) {
-        executionDegree = execucao;
-    }
-
-    /**
-     * @param list
-     */
-    public void setGuideEntries(List list) {
-        guideEntries = list;
-    }
-
-    /**
-     * @param requester
-     */
-    public void setGuideRequester(GuideRequester requester) {
-        guideRequester = requester;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setKeyContributor(Integer integer) {
-        keyContributor = integer;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setKeyExecutionDegree(Integer integer) {
-        keyExecutionDegree = integer;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setKeyPerson(Integer integer) {
-        keyPerson = integer;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setNumber(Integer integer) {
-        number = integer;
-    }
-
-    /**
-     * @param pessoa
-     */
-    public void setPerson(IPerson pessoa) {
-        person = pessoa;
-    }
-
-    /**
-     * @param string
-     */
-    public void setRemarks(String string) {
-        remarks = string;
-    }
-
-    /**
-     * @param double1
-     */
-    public void setTotal(Double double1) {
-        total = double1;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setYear(Integer integer) {
-        year = integer;
-    }
-
-    /**
-     * @return
-     */
-    public PaymentType getPaymentType() {
-        return paymentType;
-    }
-
-    /**
-     * @param type
-     */
-    public void setPaymentType(PaymentType type) {
-        paymentType = type;
-    }
-
-    /**
-     * @return
-     */
-    public List getGuideSituations() {
-        return guideSituations;
-    }
-
-    /**
-     * @param list
-     */
-    public void setGuideSituations(List list) {
-        guideSituations = list;
-    }
-
-    /**
-     * @return
-     */
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    /**
-     * @param date
-     */
-    public void setCreationDate(Date date) {
-        creationDate = date;
-    }
-
-    /**
-     * @return
-     */
-    public Integer getVersion() {
-        return version;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setVersion(Integer integer) {
-        version = integer;
-    }
-
-    /**
-     * @return
-     */
-    public Date getPaymentDate() {
-        return paymentDate;
-    }
-
-    /**
-     * @param date
-     */
-    public void setPaymentDate(Date date) {
-        paymentDate = date;
-    }
-
-    /**
-     * @return Returns the reimbursementGuides.
-     */
-    public List getReimbursementGuides() {
-        return reimbursementGuides;
-    }
-
-    /**
-     * @param reimbursementGuides
-     *            The reimbursementGuides to set.
-     */
-    public void setReimbursementGuides(List reimbursementGuides) {
-        this.reimbursementGuides = reimbursementGuides;
-    }
+	/**
+	 * @param reimbursementGuides
+	 *            The reimbursementGuides to set.
+	 */
+	public void setReimbursementGuides(List reimbursementGuides) {
+		this.reimbursementGuides = reimbursementGuides;
+	}
 }
