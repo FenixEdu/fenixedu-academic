@@ -1915,7 +1915,6 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
     
         public java.util.List getAllStudentEnrolledEnrollmentsInExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
         public java.util.List getAprovedEnrolmentsInExecutionPeriod(final net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
-        public net.sourceforge.fenixedu.domain.IBranch getBranch();
         public boolean getCanChangeSpecializationArea();
         public Integer getCreditsInSecundaryArea();
         public Integer getCreditsInSpecializationArea();
@@ -1924,7 +1923,6 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
         public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType getCurricularCourseEnrollmentType(
                 net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse, net.sourceforge.fenixedu.domain.IExecutionPeriod currentExecutionPeriod);
         public java.util.List getCurricularCoursesToEnroll(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod) throws net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
-        public net.sourceforge.fenixedu.domain.IDegreeCurricularPlan getDegreeCurricularPlan();
         public net.sourceforge.fenixedu.domain.IEmployee getEmployee();
         public java.util.List getEnrollmentReports();
         public java.util.List getEnrolments();
@@ -1943,11 +1941,9 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
         public boolean isCurricularCourseEnrolledInExecutionPeriod(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse,
                 net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
         
-        public void setBranch(net.sourceforge.fenixedu.domain.IBranch branch);
         public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea);
         public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea);
         public void setCurrentState(net.sourceforge.fenixedu.util.StudentCurricularPlanState currentState);
-        public void setDegreeCurricularPlan(net.sourceforge.fenixedu.domain.IDegreeCurricularPlan degreeCurricularPlan);
         public void setEmployee(net.sourceforge.fenixedu.domain.IEmployee employee);
         public void setEnrollmentReports(java.util.List enrollmentReports);
         public void setEnrolments(java.util.List enrolments);        
@@ -2932,6 +2928,37 @@ relation SiteAnnouncement {
 	}
 	net.sourceforge.fenixedu.domain.Site playsRole site;
 }
+
+relation StudentCurricularPlanBranch {
+    net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlans {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Branch playsRole branch;
+}
+
+relation StudentCurricularPlanDegreeCurricularPlan {
+    net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlans {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlan;
+}
+
+relation StudentCurricularPlanLEECSecundaryBranch {
+    net.sourceforge.fenixedu.domain.StudentCurricularPlanLEEC playsRole secundaryStudentCurricularPlansLEEC {
+        multiplicity *;
+    }
+    
+    net.sourceforge.fenixedu.domain.Branch playsRole secundaryBranch;
+}
+
+relation StudentCurricularPlanLEICSecundaryBranch {
+    net.sourceforge.fenixedu.domain.StudentCurricularPlanLEIC playsRole secundaryStudentCurricularPlansLEIC {
+        multiplicity *;
+    }
+    
+    net.sourceforge.fenixedu.domain.Branch playsRole secundaryBranch;
+}
+
 
 
 relation StudentExecutionCourse {

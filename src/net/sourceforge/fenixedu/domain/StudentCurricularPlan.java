@@ -32,10 +32,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	protected IStudent student;
 
-	protected IBranch branch;
-
-	protected IDegreeCurricularPlan degreeCurricularPlan;
-
 	protected IEmployee employee;
 
 	protected StudentCurricularPlanState currentState;
@@ -71,7 +67,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		String result = "[" + this.getClass().getName() + "; ";
 		result += "internalCode = " + getIdInternal() + "; ";
 		result += "student = " + this.student + "; ";
-		result += "degreeCurricularPlan = " + this.degreeCurricularPlan + "; ";
+		result += "degreeCurricularPlan = " + this.getDegreeCurricularPlan() + "; ";
 		result += "startDate = " + this.getStartDate() + "; ";
 		result += "specialization = " + this.specialization + "; ";
 		result += "currentState = " + this.currentState + "]\n";
@@ -83,16 +79,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		return result;
 	}
 
-	public IBranch getBranch() {
-		return branch;
-	}
-
 	public StudentCurricularPlanState getCurrentState() {
 		return currentState;
-	}
-
-	public IDegreeCurricularPlan getDegreeCurricularPlan() {
-		return degreeCurricularPlan;
 	}
 
 	public IEmployee getEmployee() {
@@ -119,17 +107,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		return student;
 	}
 
-	public void setBranch(IBranch branch) {
-		this.branch = branch;
-	}
-
 	public void setCurrentState(StudentCurricularPlanState currentState) {
 		this.currentState = currentState;
-	}
-
-	public void setDegreeCurricularPlan(
-			IDegreeCurricularPlan degreeCurricularPlan) {
-		this.degreeCurricularPlan = degreeCurricularPlan;
 	}
 
 	public void setEmployee(IEmployee employee) {
@@ -450,12 +429,12 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 		boolean result = true;
 		List curricularCoursesFromCommonBranches = new ArrayList();
-		List commonAreas = degreeCurricularPlan.getCommonAreas();
+		List commonAreas = getDegreeCurricularPlan().getCommonAreas();
 		int commonAreasSize = commonAreas.size();
 
 		for (int i = 0; i < commonAreasSize; i++) {
 			IBranch area = (IBranch) commonAreas.get(i);
-			curricularCoursesFromCommonBranches.addAll(degreeCurricularPlan
+			curricularCoursesFromCommonBranches.addAll(getDegreeCurricularPlan()
 					.getCurricularCoursesFromArea(area, AreaType.BASE_OBJ));
 		}
 		if (!curricularCoursesFromCommonBranches.contains(curricularCourse)) {
@@ -669,7 +648,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 				.getInstance();
 
 		final StringBuffer stringBuffer = new StringBuffer(96);
-		stringBuffer.append(degreeCurricularPlan.getIdInternal());
+		stringBuffer.append(getDegreeCurricularPlan().getIdInternal());
 		stringBuffer.append(":");
 		stringBuffer.append(curricularCourse.getName());
 		stringBuffer.append(":");

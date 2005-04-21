@@ -19,32 +19,12 @@ import net.sourceforge.fenixedu.util.AreaType;
 
 public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
 
-    protected Integer secundaryBranchKey;
-
-    protected IBranch secundaryBranch;
-
     protected Integer creditsInSpecializationArea;
 
     protected Integer creditsInSecundaryArea;
 
     public StudentCurricularPlanLEIC() {
         setOjbConcreteClass(getClass().getName());
-    }
-
-    public IBranch getSecundaryBranch() {
-        return secundaryBranch;
-    }
-
-    public Integer getSecundaryBranchKey() {
-        return secundaryBranchKey;
-    }
-
-    public void setSecundaryBranch(IBranch secundaryBranch) {
-        this.secundaryBranch = secundaryBranch;
-    }
-
-    public void setSecundaryBranchKey(Integer secundaryBranchKey) {
-        this.secundaryBranchKey = secundaryBranchKey;
     }
 
     public boolean getCanChangeSpecializationArea() {

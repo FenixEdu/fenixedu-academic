@@ -18,9 +18,6 @@ import org.apache.commons.collections.Predicate;
  */
 
 public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
-    protected Integer secundaryBranchKey;
-
-    protected IBranch secundaryBranch;
 
     protected Integer creditsInSpecializationArea;
 
@@ -28,22 +25,6 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
 
     public StudentCurricularPlanLEEC() {
         setOjbConcreteClass(getClass().getName());
-    }
-
-    public IBranch getSecundaryBranch() {
-        return secundaryBranch;
-    }
-
-    public Integer getSecundaryBranchKey() {
-        return secundaryBranchKey;
-    }
-
-    public void setSecundaryBranch(IBranch secundaryBranch) {
-        this.secundaryBranch = secundaryBranch;
-    }
-
-    public void setSecundaryBranchKey(Integer secundaryBranchKey) {
-        this.secundaryBranchKey = secundaryBranchKey;
     }
 
     public List getAllEnrollments() {
