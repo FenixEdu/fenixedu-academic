@@ -108,9 +108,10 @@ class net.sourceforge.fenixedu.domain.grant.owner.GrantOwner extends net.sourcef
 class net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity extends net.sourceforge.fenixedu.domain.DomainObject {
 }
 
-relation ??? {
-	net.sourceforge.fenixedu.domain.grant.contract.GrantPart playsRole ??? {
-		multiplicity ???;
+
+relation GrantPartTeacher {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantPart playsRole associatedGrantParts {
+		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Teacher playsRole responsibleTeacher;
 }
@@ -140,9 +141,9 @@ relation GrantOwnerGrantContract {
 }
 
 
-relation ??? {
-	net.sourceforge.fenixedu.domain.grant.contract.GrantPart playsRole ??? {
-		multiplicity ???;
+relation GrantPartGrantSubsidy {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantPart playsRole associatedGrantParts {
+		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy playsRole grantSubsidy;
 }
@@ -240,9 +241,9 @@ relation ??? {
 }
 
 
-relation ??? {
-	net.sourceforge.fenixedu.domain.grant.contract.GrantPart playsRole ??? {
-		multiplicity ???;
+relation GrantPartGrantPaymentEntity {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantPart playsRole associatedGrantParts {
+		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity playsRole grantPaymentEntity;
 }

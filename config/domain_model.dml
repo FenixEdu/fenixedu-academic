@@ -970,6 +970,14 @@ class net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance extends net.
 }
 
 
+class net.sourceforge.fenixedu.domain.grant.contract.GrantPart extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyGrantPaymentEntity;
+	Integer keyResponsibleTeacher;
+	Integer keyGrantSubsidy;
+	Integer percentage;
+}
+
+
 class net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyTeacher;
 	Date beginDate;
@@ -2255,6 +2263,7 @@ external class net.sourceforge.fenixedu.domain.classProperties.ExecutionCoursePr
 external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
 external class net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 external class net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
+external class net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 
@@ -2790,6 +2799,30 @@ relation GrantOwnerGrantContract {
 relation GrantOwnerPerson {
 	net.sourceforge.fenixedu.domain.grant.owner.GrantOwner playsRole grantOwner;
 	net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
+
+relation GrantPartGrantPaymentEntity {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantPart playsRole associatedGrantParts {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity playsRole grantPaymentEntity;
+}
+
+
+relation GrantPartGrantSubsidy {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantPart playsRole associatedGrantParts {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy playsRole grantSubsidy;
+}
+
+
+relation GrantPartTeacher {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantPart playsRole associatedGrantParts {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole responsibleTeacher;
 }
 
 
