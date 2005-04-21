@@ -36,14 +36,10 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	protected StudentCurricularPlanState currentState;
 
-	protected List enrolments;
-
 	protected Specialization specialization;
 
 	// For enrollment purposes only
 	protected Map acumulatedEnrollments;
-
-	protected List notNeedToEnrollCurricularCourses;
 
 	protected List enrollmentReports;
 
@@ -87,10 +83,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		return employee;
 	}
 
-	public List getEnrolments() {
-		return enrolments;
-	}
-
 	public IBranch getSecundaryBranch() {
 		return null;
 	}
@@ -115,10 +107,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		this.employee = employee;
 	}
 
-	public void setEnrolments(List enrolments) {
-		this.enrolments = enrolments;
-	}
-
 	public void setSecundaryBranch(IBranch secundaryBranch) {
 	}
 
@@ -136,15 +124,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	// -------------------------------------------------------------
 	// BEGIN: Only for enrollment purposes (PUBLIC)
 	// -------------------------------------------------------------
-
-	public List getNotNeedToEnrollCurricularCourses() {
-		return notNeedToEnrollCurricularCourses;
-	}
-
-	public void setNotNeedToEnrollCurricularCourses(
-			List notNeedToEnrollCurricularCourses) {
-		this.notNeedToEnrollCurricularCourses = notNeedToEnrollCurricularCourses;
-	}
 
 	public List getAllEnrollments() {
 

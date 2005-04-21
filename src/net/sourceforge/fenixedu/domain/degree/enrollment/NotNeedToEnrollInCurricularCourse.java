@@ -11,8 +11,6 @@ public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricul
 
     protected ICurricularCourse curricularCourse;
 
-    protected IStudentCurricularPlan studentCurricularPlan;
-
     public NotNeedToEnrollInCurricularCourse() {
         super();
     }
@@ -40,20 +38,5 @@ public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricul
      */
     public void setCurricularCourse(ICurricularCourse curricularCourse) {
         this.curricularCourse = curricularCourse;
-    }
-
-    /**
-     * @return Returns the studentCurricularPlan.
-     */
-    public IStudentCurricularPlan getStudentCurricularPlan() {
-        return studentCurricularPlan;
-    }
-
-    /**
-     * @param studentCurricularPlan
-     *            The studentCurricularPlan to set.
-     */
-    public void setStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) {
-        this.studentCurricularPlan = studentCurricularPlan;
     }
 }

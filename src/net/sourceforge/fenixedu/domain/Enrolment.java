@@ -20,7 +20,6 @@ import org.apache.ojb.broker.PersistenceBrokerException;
  */
 
 public class Enrolment extends Enrolment_Base {
-    private IStudentCurricularPlan studentCurricularPlan;
 
     private ICurricularCourse curricularCourse;
 
@@ -112,22 +111,6 @@ public class Enrolment extends Enrolment_Base {
      */
     public void setExecutionPeriod(IExecutionPeriod executionPeriod) {
         this.executionPeriod = executionPeriod;
-    }
-
-    /**
-     * @return Returns the studentCurricularPlan.
-     */
-    public IStudentCurricularPlan getStudentCurricularPlan() {
-        return studentCurricularPlan;
-    }
-
-    /**
-     * @param studentCurricularPlan
-     *            The studentCurricularPlan to set.
-     */
-    public void setStudentCurricularPlan(
-            IStudentCurricularPlan studentCurricularPlan) {
-        this.studentCurricularPlan = studentCurricularPlan;
     }
 
     public boolean equals(Object obj) {

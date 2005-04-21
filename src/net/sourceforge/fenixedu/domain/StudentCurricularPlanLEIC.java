@@ -19,10 +19,6 @@ import net.sourceforge.fenixedu.util.AreaType;
 
 public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
 
-    protected Integer creditsInSpecializationArea;
-
-    protected Integer creditsInSecundaryArea;
-
     public StudentCurricularPlanLEIC() {
         setOjbConcreteClass(getClass().getName());
     }
@@ -97,32 +93,10 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
                 return CurricularCourseEnrollmentType.NOT_ALLOWED;
             }
         }
-        //        List result = (List) CollectionUtils.collect(
-        //                enrollmentsWithEnrolledStateInCurrentExecutionPeriod, new Transformer() {
-        //                    public Object transform(Object obj) {
-        //                        IEnrolment enrollment = (IEnrolment) obj;
-        //                        return enrollment.getCurricularCourse();
-        //                    }
-        //                });
-        //        if (result.contains(curricularCourse)) {
-        //            return CurricularCourseEnrollmentType.NOT_ALLOWED;
-        //        }
 
         List enrollmentsWithEnrolledStateInPreviousExecutionPeriod = getAllStudentEnrolledEnrollmentsInExecutionPeriod(currentExecutionPeriod
                 .getPreviousExecutionPeriod());
 
-        //        List result = (List)
-        // CollectionUtils.collect(enrollmentsWithEnrolledStateInPreviousExecutionPeriod,
-        //                new Transformer() {
-        //                    public Object transform(Object obj) {
-        //                        IEnrolment enrollment = (IEnrolment) obj;
-        //                        return enrollment.getCurricularCourse();
-        //                    }
-        //                });
-        //
-        //        if (result.contains(curricularCourse)) {
-        //            return CurricularCourseEnrollmentType.TEMPORARY;
-        //        }
         for (int i = 0; i < enrollmentsWithEnrolledStateInPreviousExecutionPeriod.size(); i++) {
             IEnrolment enrollment = (IEnrolment) enrollmentsWithEnrolledStateInPreviousExecutionPeriod
                     .get(i);

@@ -19,10 +19,6 @@ import org.apache.commons.collections.Predicate;
 
 public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
 
-    protected Integer creditsInSpecializationArea;
-
-    protected Integer creditsInSecundaryArea;
-
     public StudentCurricularPlanLEEC() {
         setOjbConcreteClass(getClass().getName());
     }
@@ -152,16 +148,6 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
             }
             result.add(curricularCourseFromEnrollment);
         }
-//        List result = (List) CollectionUtils.collect(studentApprovedEnrollments, new Transformer() {
-//            public Object transform(Object obj) {
-//                IEnrolment enrollment = (IEnrolment) obj;
-//                return enrollment.getCurricularCourse();
-//            }
-//        });
-//
-//        if (isThisCurricularCoursesInTheList(curricularCourse, result)) {
-//            return true;
-//        }
 
         int size = result.size();
         for (int i = 0; i < size; i++) {
@@ -195,32 +181,10 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
                 return CurricularCourseEnrollmentType.NOT_ALLOWED;
             }
         }
-        //        List result = (List) CollectionUtils.collect(
-        //                enrollmentsWithEnrolledStateInCurrentExecutionPeriod, new Transformer() {
-        //                    public Object transform(Object obj) {
-        //                        IEnrolment enrollment = (IEnrolment) obj;
-        //                        return enrollment.getCurricularCourse();
-        //                    }
-        //                });
-        //        if (result.contains(curricularCourse)) {
-        //            return CurricularCourseEnrollmentType.NOT_ALLOWED;
-        //        }
 
         List enrollmentsWithEnrolledStateInPreviousExecutionPeriod = getAllStudentEnrolledEnrollmentsInExecutionPeriod(currentExecutionPeriod
                 .getPreviousExecutionPeriod());
-
-        //        List result = (List)
-        // CollectionUtils.collect(enrollmentsWithEnrolledStateInPreviousExecutionPeriod,
-        //                new Transformer() {
-        //                    public Object transform(Object obj) {
-        //                        IEnrolment enrollment = (IEnrolment) obj;
-        //                        return enrollment.getCurricularCourse();
-        //                    }
-        //                });
-        //
-        //        if (result.contains(curricularCourse)) {
-        //            return CurricularCourseEnrollmentType.TEMPORARY;
-        //        }
+      
         for (int i = 0; i < enrollmentsWithEnrolledStateInPreviousExecutionPeriod.size(); i++) {
             IEnrolment enrollment = (IEnrolment) enrollmentsWithEnrolledStateInPreviousExecutionPeriod
                     .get(i);
@@ -245,36 +209,6 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
      */
     public boolean getCanChangeSpecializationArea() {
         return true;
-    }
-
-    /**
-     * @return Returns the creditsInSecundaryArea.
-     */
-    public Integer getCreditsInSecundaryArea() {
-        return creditsInSecundaryArea;
-    }
-
-    /**
-     * @param creditsInSecundaryArea
-     *            The creditsInSecundaryArea to set.
-     */
-    public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea) {
-        this.creditsInSecundaryArea = creditsInSecundaryArea;
-    }
-
-    /**
-     * @return Returns the creditsInSpecializationArea.
-     */
-    public Integer getCreditsInSpecializationArea() {
-        return creditsInSpecializationArea;
-    }
-
-    /**
-     * @param creditsInSpecializationArea
-     *            The creditsInSpecializationArea to set.
-     */
-    public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea) {
-        this.creditsInSpecializationArea = creditsInSpecializationArea;
     }
 
     protected List getStudentEnrollmentsWithApprovedState() {
