@@ -294,14 +294,6 @@ class net.sourceforge.fenixedu.domain.CurricularCourseEquivalence extends net.so
 	Integer oldCurricularCourseKey;
 	Integer equivalentCurricularCourseKey;
 	Integer degreeCurricularPlanKey;
-	
-	interface "
-	
-    public ICurricularCourse getEquivalentCurricularCourse();
-    public void setEquivalentCurricularCourse(ICurricularCourse equivalentCurricularCourse);
-    public ICurricularCourse getOldCurricularCourse();
-    public void setOldCurricularCourse(ICurricularCourse oldCurricularCourse);
-	"
 }
 
 class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -324,10 +316,8 @@ class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourcefo
     public void setMaximumNumberOfOptionalCourses(Integer maximumNumberOfOptionalCourses);
     
     public net.sourceforge.fenixedu.util.AreaType getAreaType();
-    public java.util.List getCurricularCourses();
     public java.util.List getScientificAreas();
     public void setAreaType(net.sourceforge.fenixedu.util.AreaType areaType);
-    public void setCurricularCourses(java.util.List curricularCourses);
     public void setScientificAreas(java.util.List scientificAreas);
     
     "
@@ -557,14 +547,12 @@ class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu
     interface "
     
     public net.sourceforge.fenixedu.util.enrollment.EnrollmentCondition getCondition();
-    public net.sourceforge.fenixedu.domain.ICurricularCourse getCurricularCourse();
     public net.sourceforge.fenixedu.domain.curriculum.EnrollmentState getEnrollmentState();
     public net.sourceforge.fenixedu.util.EnrolmentEvaluationType getEnrolmentEvaluationType();
     public java.util.List getEvaluations();
     public net.sourceforge.fenixedu.domain.IExecutionPeriod getExecutionPeriod();
 
     public void setCondition(net.sourceforge.fenixedu.util.enrollment.EnrollmentCondition condition);
-    public void setCurricularCourse(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
     public void setEnrollmentState(net.sourceforge.fenixedu.domain.curriculum.EnrollmentState state);
     public void setEnrolmentEvaluationType(net.sourceforge.fenixedu.util.EnrolmentEvaluationType type);
     public void setEvaluations(java.util.List list);
@@ -629,8 +617,6 @@ class net.sourceforge.fenixedu.domain.log.EnrolmentLog extends net.sourceforge.f
 
     public abstract net.sourceforge.fenixedu.util.EnrolmentAction getAction();
     public abstract void setAction(net.sourceforge.fenixedu.util.EnrolmentAction action);
-    public abstract net.sourceforge.fenixedu.domain.ICurricularCourse getCurricularCourse();
-    public abstract void setCurricularCourse(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
     public abstract net.sourceforge.fenixedu.domain.IStudent getStudent();
     public abstract void setStudent(net.sourceforge.fenixedu.domain.IStudent student);
     
@@ -1309,12 +1295,6 @@ class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.do
 class net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer studentCurricularPlanKey;
     Integer curricularCourseKey;
-    
-    interface "
-    
-    public net.sourceforge.fenixedu.domain.ICurricularCourse getCurricularCourse();
-    public void setCurricularCourse(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
-    "
 }
 
 class net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1557,6 +1537,14 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     "
 }
 
+class net.sourceforge.fenixedu.domain.precedences.Precedence extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyCurricularCourse;
+	
+	interface " 
+ 		public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType evaluate(net.sourceforge.fenixedu.domain.precedences.PrecedenceContext precedenceContext);
+	"
+}
+
 class net.sourceforge.fenixedu.domain.Professorship extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyTeacher;
 	Integer keyExecutionCourse;
@@ -1620,18 +1608,6 @@ class net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal extends net.sourc
 }
 
 
-class net.sourceforge.fenixedu.domain.precedences.Precedence extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyCurricularCourse;
-	
-	interface " 
-    	public net.sourceforge.fenixedu.domain.ICurricularCourse getCurricularCourse();
-    	public void setCurricularCourse(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
-		public java.util.List getRestrictions();
-		public void setRestrictions(java.util.List restrictions);
-		public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType evaluate(net.sourceforge.fenixedu.domain.precedences.PrecedenceContext precedenceContext);
-	"
-}
-
 class net.sourceforge.fenixedu.domain.ResponsibleFor extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionCourse;
 	Integer keyTeacher;
@@ -1642,8 +1618,6 @@ class net.sourceforge.fenixedu.domain.precedences.Restriction extends net.source
 	Integer keyPrecedence;	
 	
 	interface " 	
-    	public net.sourceforge.fenixedu.domain.precedences.IPrecedence getPrecedence();
-    	public void setPrecedence(net.sourceforge.fenixedu.domain.precedences.IPrecedence precedence);
 		public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType evaluate(net.sourceforge.fenixedu.domain.precedences.PrecedenceContext precedenceContext);
 	"
 }
@@ -1651,11 +1625,6 @@ class net.sourceforge.fenixedu.domain.precedences.Restriction extends net.source
 
 class net.sourceforge.fenixedu.domain.precedences.RestrictionByCurricularCourse extends net.sourceforge.fenixedu.domain.precedences.Restriction {
 	Integer keyPrecedentCurricularCourse;
-	
-	interface "
-    	public net.sourceforge.fenixedu.domain.ICurricularCourse getPrecedentCurricularCourse();
-    	public void setPrecedentCurricularCourse(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
-	"
 }
 
 
@@ -2368,6 +2337,30 @@ relation BuildingRoom {
 }
 
 
+relation CurricularCourseCurricularCourseEquivalence {
+	net.sourceforge.fenixedu.domain.CurricularCourseEquivalence playsRole curricularCourseEquivalences {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole equivalentCurricularCourse;
+}
+
+
+relation OldCurricularCourseCurricularCourseEquivalence {
+	net.sourceforge.fenixedu.domain.CurricularCourseEquivalence playsRole oldCurricularCourseEquivalences {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole oldCurricularCourse;
+}
+
+relation CurricularCourseCurricularCourseGroup {
+	net.sourceforge.fenixedu.domain.CurricularCourseGroup playsRole curricularCourseGroups {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourses {
+		multiplicity *;
+	}
+}
+
 relation CurricularCourseCurricularCourseScope {
 	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
 	net.sourceforge.fenixedu.domain.CurricularCourseScope playsRole scopes {
@@ -2391,6 +2384,19 @@ relation CurricularCourseDepartmentCourse {
 	net.sourceforge.fenixedu.domain.DepartmentCourse playsRole departmentCourse;
 }
 
+relation CurricularCourseEnrolment {
+	net.sourceforge.fenixedu.domain.Enrolment playsRole enrolments {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
+}
+
+relation CurricularCourseEnrolmentLog {
+	net.sourceforge.fenixedu.domain.log.EnrolmentLog playsRole enrolmentLogs {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
+}
 
 relation CurricularCourseExecutionCourse {
 	net.sourceforge.fenixedu.domain.CurricularCourse playsRole associatedCurricularCourses {
@@ -2407,6 +2413,28 @@ relation CurricularCourseHistoric {
 	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
 }
 
+
+relation CurricularCourseNotNeedToEnrollInCurricularCourse {
+	net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse playsRole notNeedToEnrollInCurricularCourses {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
+}
+
+relation CurricularCoursePrecedence {
+	net.sourceforge.fenixedu.domain.precedences.Precedence playsRole precedences {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
+}
+
+relation CurricularCourseRestrictionByCurricularCourse {
+	net.sourceforge.fenixedu.domain.precedences.RestrictionByCurricularCourse playsRole restrictionsByCurricularCourse {
+	    multiplicity *;
+	}
+ 
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole precedentCurricularCourse;
+}
 
 relation CurricularCourseScientificArea {
 	net.sourceforge.fenixedu.domain.CurricularCourse playsRole associatedCurricularCourses {
@@ -2936,6 +2964,13 @@ relation PersonTeacher {
 	net.sourceforge.fenixedu.domain.Person playsRole person;
 }
 
+relation PrecedenceRestriction {
+	net.sourceforge.fenixedu.domain.precedences.Precedence playsRole precedence;
+
+	net.sourceforge.fenixedu.domain.precedences.Restriction playsRole restrictions {
+		multiplicity *;
+	}
+}
 
 relation ProfessorshipSummary {
 	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {

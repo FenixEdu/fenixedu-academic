@@ -21,8 +21,6 @@ import org.apache.ojb.broker.PersistenceBrokerException;
 
 public class Enrolment extends Enrolment_Base {
 
-    private ICurricularCourse curricularCourse;
-
     private IExecutionPeriod executionPeriod;
 
     private EnrollmentState enrollmentState;
@@ -37,20 +35,7 @@ public class Enrolment extends Enrolment_Base {
         this.setOjbConcreteClass(this.getClass().getName());
     }
 
-    /**
-     * @return Returns the curricularCourse.
-     */
-    public ICurricularCourse getCurricularCourse() {
-        return curricularCourse;
-    }
 
-    /**
-     * @param curricularCourse
-     *            The curricularCourse to set.
-     */
-    public void setCurricularCourse(ICurricularCourse curricularCourse) {
-        this.curricularCourse = curricularCourse;
-    }
 
     /**
      * @return Returns the enrolmentEvaluationType.

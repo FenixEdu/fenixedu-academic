@@ -6,20 +6,10 @@ package net.sourceforge.fenixedu.domain.precedences;
  */
 
 public abstract class Restriction extends Restriction_Base {
-    protected IPrecedence precedence;
-
-
+    
     public Restriction() {
         super();
         setOjbConcreteClass(this.getClass().getName());
-    }
-
-    public IPrecedence getPrecedence() {
-        return precedence;
-    }
-
-    public void setPrecedence(IPrecedence precedence) {
-        this.precedence = precedence;
     }
 
     public boolean equals(Object obj) {

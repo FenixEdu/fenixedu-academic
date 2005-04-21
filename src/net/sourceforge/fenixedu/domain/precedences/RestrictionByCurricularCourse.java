@@ -1,24 +1,12 @@
 package net.sourceforge.fenixedu.domain.precedences;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-
 /**
  * @author David Santos in Jun 9, 2004
  */
 
 public abstract class RestrictionByCurricularCourse extends RestrictionByCurricularCourse_Base {
 
-    protected ICurricularCourse precedentCurricularCourse;
-
-    public ICurricularCourse getPrecedentCurricularCourse() {
-        return precedentCurricularCourse;
-    }
-
-    public void setPrecedentCurricularCourse(ICurricularCourse precedentCurricularCourse) {
-        this.precedentCurricularCourse = precedentCurricularCourse;
-    }
-
-    public boolean equals(Object obj) {
+     public boolean equals(Object obj) {
         boolean result = super.equals(obj);
         if ((result) && (obj instanceof IRestrictionByCurricularCourse)) {
             IRestrictionByCurricularCourse restrictionByCurricularCourse = (IRestrictionByCurricularCourse) obj;

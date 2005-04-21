@@ -19,8 +19,6 @@ public class EnrolmentLog extends EnrolmentLog_Base {
     
     private IStudent student;
     
-    private ICurricularCourse curricularCourse;
-    
     /**
      * 
      */
@@ -43,7 +41,7 @@ public class EnrolmentLog extends EnrolmentLog_Base {
         this.action = action;
         this.student = student;
         this.setKeyStudent(keyStudent);
-        this.curricularCourse = curricularCourse;
+        setCurricularCourse(curricularCourse);
         this.setKeyCurricularCourse(keyCurricularCourse);
     }
     /**
@@ -58,18 +56,7 @@ public class EnrolmentLog extends EnrolmentLog_Base {
     public void setAction(EnrolmentAction action) {
         this.action = action;
     }
-    /**
-     * @return Returns the curricularCourse.
-     */
-    public ICurricularCourse getCurricularCourse() {
-        return curricularCourse;
-    }
-    /**
-     * @param curricularCourse The curricularCourse to set.
-     */
-    public void setCurricularCourse(ICurricularCourse curricularCourse) {
-        this.curricularCourse = curricularCourse;
-    }
+    
  
     /**
      * @return Returns the student.

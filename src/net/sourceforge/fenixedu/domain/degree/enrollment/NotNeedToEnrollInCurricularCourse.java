@@ -9,8 +9,6 @@ import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 
 public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricularCourse_Base {
 
-    protected ICurricularCourse curricularCourse;
-
     public NotNeedToEnrollInCurricularCourse() {
         super();
     }
@@ -25,18 +23,6 @@ public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricul
         return result;
     }
 
-    /**
-     * @return Returns the curricularCourse.
-     */
-    public ICurricularCourse getCurricularCourse() {
-        return curricularCourse;
-    }
 
-    /**
-     * @param curricularCourse
-     *            The curricularCourse to set.
-     */
-    public void setCurricularCourse(ICurricularCourse curricularCourse) {
-        this.curricularCourse = curricularCourse;
-    }
+
 }

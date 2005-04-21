@@ -12,28 +12,8 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
 public class Precedence extends Precedence_Base {
     private Integer keyCurricularCourse;
 
-    private ICurricularCourse curricularCourse;
-
-    private List restrictions;
-
     public Precedence() {
         super();
-    }
-
-    public ICurricularCourse getCurricularCourse() {
-        return curricularCourse;
-    }
-
-    public void setCurricularCourse(ICurricularCourse curricularCourse) {
-        this.curricularCourse = curricularCourse;
-    }
-
-    public List getRestrictions() {
-        return restrictions;
-    }
-
-    public void setRestrictions(List restrictions) {
-        this.restrictions = restrictions;
     }
 
     public boolean equals(Object obj) {
