@@ -78,20 +78,6 @@ public class SummaryManagerAction extends FenixDispatchAction {
         try {
             siteView = (SiteView) ServiceUtils.executeService(userView, "ReadSummariesDepartmentAdmOffice", args);
             
-//          InfoSiteSummaries infoSiteSummaries = (InfoSiteSummaries) siteView.getComponent();
-//          for (Iterator iter = infoSiteSummaries.getInfoSummaries().iterator(); iter.hasNext();)
-//          {
-//          InfoSummary infoSummary = (InfoSummary) iter.next();
-//          
-//          String stuffedSummaryTitle = infoSummary.getTitle().replaceAll("<","&lt;");
-//          stuffedSummaryTitle = stuffedSummaryTitle.replaceAll(">","&gt;");
-//          String stuffedSummaryBody = infoSummary.getSummaryText().replaceAll("<","&lt;");
-//          stuffedSummaryBody = stuffedSummaryBody.replaceAll("<","&lt;");
-//          infoSummary.setTitle(stuffedSummaryTitle);
-//          infoSummary.setSummaryText(stuffedSummaryBody);
-//          }
-//          
-            
         } catch (FenixServiceException e) {
             e.printStackTrace();
             ActionErrors errors = new ActionErrors();
