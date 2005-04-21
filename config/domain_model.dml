@@ -334,10 +334,8 @@ class net.sourceforge.fenixedu.domain.CurricularCourseScope extends net.sourcefo
 
     interface "
 
-    public net.sourceforge.fenixedu.domain.ICurricularSemester getCurricularSemester();
     public java.util.Calendar getBeginDate();
     public java.util.Calendar getEndDate();
-    public void setCurricularSemester(net.sourceforge.fenixedu.domain.ICurricularSemester curricularSemester);
     public void setBeginDate(java.util.Calendar beginDate);
     public void setEndDate(java.util.Calendar endDate);
     public Boolean isActive();
@@ -347,14 +345,6 @@ class net.sourceforge.fenixedu.domain.CurricularCourseScope extends net.sourcefo
 class net.sourceforge.fenixedu.domain.CurricularSemester extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer curricularYearKey;
     Integer semester;
-    
-    interface "
-    
-    public net.sourceforge.fenixedu.domain.ICurricularYear getCurricularYear();
-    public java.util.List getScopes();
-    public void setCurricularYear(net.sourceforge.fenixedu.domain.ICurricularYear curricularYear);
-    public void setScopes(java.util.List scopes);
-    "
 }
 
 class net.sourceforge.fenixedu.domain.CurricularYear extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2287,6 +2277,7 @@ external class net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 
+
 /*
  * Relations definitions
  * 
@@ -2486,6 +2477,12 @@ relation CurricularCourseScientificArea {
 	net.sourceforge.fenixedu.domain.ScientificArea playsRole scientificArea;
 }
 
+relation CurricularCourseScopeCurricularSemester {
+    net.sourceforge.fenixedu.domain.CurricularCourseScope playsRole scopes {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.CurricularSemester playsRole curricularSemester;
+}
 
 relation CurricularCourseStudentReport {
 	net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport playsRole studentCourseReport {
@@ -2502,6 +2499,12 @@ relation CurricularCourseUniversity {
 	net.sourceforge.fenixedu.domain.University playsRole university;
 }
 
+relation CurricularSemesterCurricularYear {
+    net.sourceforge.fenixedu.domain.CurricularSemester playsRole curricularSemesters {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.CurricularYear playsRole curricularYear;
+}
 
 relation CurriculumPerson {
 	net.sourceforge.fenixedu.domain.Curriculum playsRole associatedAlteredCurriculums {

@@ -10,8 +10,6 @@ import java.util.Calendar;
 
 public class CurricularCourseScope extends CurricularCourseScope_Base {
 
-    private ICurricularSemester curricularSemester;
-
     private Calendar beginDate;
 
     private Calendar endDate;
@@ -62,7 +60,7 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
         String result = "[" + this.getClass().getName() + ": ";
         result += "idInternal = " + this.getIdInternal() + "; ";
         result += "curricularCourse = " + this.getCurricularCourse() + "; ";
-        result += "curricularSemester = " + this.curricularSemester + "; ";
+        result += "curricularSemester = " + this.getCurricularSemester() + "; ";
         result += "branch = " + this.getBranch() + "; ";
         result += "endDate = " + this.endDate + "]\n";
 
@@ -90,21 +88,6 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
      */
     public void setBeginDate(Calendar beginDate) {
         this.beginDate = beginDate;
-    }
-
-    /**
-     * @return Returns the curricularSemester.
-     */
-    public ICurricularSemester getCurricularSemester() {
-        return curricularSemester;
-    }
-
-    /**
-     * @param curricularSemester
-     *            The curricularSemester to set.
-     */
-    public void setCurricularSemester(ICurricularSemester curricularSemester) {
-        this.curricularSemester = curricularSemester;
     }
 
     /**

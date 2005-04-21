@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.List;
-
 /**
  * @author dcs-rjao
  * 
@@ -9,11 +7,6 @@ import java.util.List;
  */
 
 public class CurricularSemester extends CurricularSemester_Base {
-
-    private ICurricularYear curricularYear;
-
-    //	private List associatedCurricularCourses;
-    private List scopes;
 
     public CurricularSemester() {
         setSemester(null);
@@ -46,39 +39,4 @@ public class CurricularSemester extends CurricularSemester_Base {
         result += "curricularYear = " + this.getCurricularYear() + "]\n";
         return result;
     }
-
-    /**
-     * @return ICurricularYear
-     */
-    public ICurricularYear getCurricularYear() {
-        return curricularYear;
-    }
-
-    /**
-     * Sets the curricularYear.
-     * 
-     * @param curricularYear
-     *            The curricularYear to set
-     */
-    public void setCurricularYear(ICurricularYear curricularYear) {
-        this.curricularYear = curricularYear;
-    }
-
-    /**
-     * @return List
-     */
-    public List getScopes() {
-        return scopes;
-    }
-
-    /**
-     * Sets the scopes.
-     * 
-     * @param scopes
-     *            The scopes to set
-     */
-    public void setScopes(List scopes) {
-        this.scopes = scopes;
-    }
-
 }
