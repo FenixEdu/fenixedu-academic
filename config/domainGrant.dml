@@ -189,6 +189,14 @@ relation GrantContractGrantType {
 }
 
 
+relation GrantSubsidyGrantContract {
+	net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy playsRole associatedGrantSubsidies {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole grantContract;
+}
+
+
 relation GrantContractRegimeGrantContract {
 	net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime playsRole contractRegimes {
 		multiplicity *;
