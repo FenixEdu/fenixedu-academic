@@ -1213,6 +1213,31 @@ class net.sourceforge.fenixedu.domain.Guide extends net.sourceforge.fenixedu.dom
 	"
 }
 
+class net.sourceforge.fenixedu.domain.GuideEntry extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyGuide;
+	Double price;
+	String description;
+	Integer quantity;
+	
+	interface "
+    	public net.sourceforge.fenixedu.util.DocumentType getDocumentType();
+    	
+    	public net.sourceforge.fenixedu.util.GraduationType getGraduationType();
+    	
+    	public net.sourceforge.fenixedu.domain.IGuide getGuide();
+    	
+    	public void setDocumentType(net.sourceforge.fenixedu.util.DocumentType type);
+    	
+    	public void setGraduationType(net.sourceforge.fenixedu.util.GraduationType type);
+    	
+    	public void setGuide(net.sourceforge.fenixedu.domain.IGuide guide);
+    	
+    	public java.util.List getReimbursementGuideEntries();
+    	
+    	public void setReimbursementGuideEntries(java.util.List reimbursementGuideEntries);
+	"
+}
+
 class net.sourceforge.fenixedu.domain.Item extends net.sourceforge.fenixedu.domain.DomainObject implements net.sourceforge.fenixedu.fileSuport.INode {
 	Integer keySection;
 	Boolean urgent;

@@ -9,19 +9,11 @@ import net.sourceforge.fenixedu.util.GraduationType;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class GuideEntry extends DomainObject implements IGuideEntry {
-
-    protected Integer keyGuide;
+public class GuideEntry extends GuideEntry_Base {
 
     protected GraduationType graduationType;
 
     protected DocumentType documentType;
-
-    protected String description;
-
-    protected Double price;
-
-    protected Integer quantity;
 
     protected List reimbursementGuideEntries;
 
@@ -32,12 +24,12 @@ public class GuideEntry extends DomainObject implements IGuideEntry {
 
     public GuideEntry(GraduationType graduationType, DocumentType documentType, String description,
             Integer quantity, Double price, IGuide guide) {
-        this.description = description;
+        setDescription(description);
         this.guide = guide;
         this.documentType = documentType;
         this.graduationType = graduationType;
-        this.price = price;
-        this.quantity = quantity;
+        setPrice(price);
+        setQuantity(quantity);
 
     }
 
@@ -64,22 +56,16 @@ public class GuideEntry extends DomainObject implements IGuideEntry {
     public String toString() {
         String result = "[GUIDE ENTRY";
 
-        result += ", description=" + description;
+        result += ", description=" + getDescription();
         result += ", guide=" + guide;
         result += ", documentType=" + documentType;
         result += ", graduationType=" + graduationType;
-        result += ", price=" + price;
-        result += ", quantity=" + quantity;
+        result += ", price=" + getPrice();
+        result += ", quantity=" + getQuantity();
         result += "]";
         return result;
     }
 
-    /**
-     * @return
-     */
-    public String getDescription() {
-        return description;
-    }
 
     /**
      * @return
@@ -103,34 +89,6 @@ public class GuideEntry extends DomainObject implements IGuideEntry {
     }
 
     /**
-     * @return
-     */
-    public Integer getKeyGuide() {
-        return keyGuide;
-    }
-
-    /**
-     * @return
-     */
-    public Double getPrice() {
-        return price;
-    }
-
-    /**
-     * @return
-     */
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    /**
-     * @param string
-     */
-    public void setDescription(String string) {
-        description = string;
-    }
-
-    /**
      * @param type
      */
     public void setDocumentType(DocumentType type) {
@@ -149,27 +107,6 @@ public class GuideEntry extends DomainObject implements IGuideEntry {
      */
     public void setGuide(IGuide guide) {
         this.guide = guide;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setKeyGuide(Integer integer) {
-        keyGuide = integer;
-    }
-
-    /**
-     * @param double1
-     */
-    public void setPrice(Double double1) {
-        price = double1;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setQuantity(Integer integer) {
-        quantity = integer;
     }
 
     /**
