@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.List;
 
 /**
  * @author dcs-rjao
