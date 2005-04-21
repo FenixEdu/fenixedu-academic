@@ -82,7 +82,7 @@
 		<tr>
 			<th><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="property.class"/></th>
 			<th><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.semester"/></th>
-			<th><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.curricularYear"/></th>
+			<th><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.curricularYear"/></th>0
 		</tr>		
 	<logic:iterate id="classview" name="classList" indexId="row">
 		<% String rowColor = row.intValue() % 2 == 0 ? "white" : "bluecell" ; %>

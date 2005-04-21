@@ -89,7 +89,7 @@
 	<table class="tab_lay" cellspacing="0" cellpadding="5">
 		<tr>
 			<th colspan="11" scope="col">
-				<bean:write name="currentYear"/><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.ordinal.year" />
+				<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.year" /> <bean:write name="currentYear"/>
 			</th>
 		</tr>
 		<tr>						

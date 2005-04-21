@@ -41,8 +41,9 @@
 	</h1>
 
 	<h2 class="greytxt">
-		<bean:write name="<%=SessionConstants.EXECUTION_PERIOD%>" property="semester" /><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.ordinal.semester.abbr" />
-		<bean:write name="<%=SessionConstants.EXECUTION_DEGREE%>" property="infoExecutionYear.year"/>
+		<bean:write name="<%=SessionConstants.EXECUTION_DEGREE%>" property="infoExecutionYear.year"/>,
+		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.semester.abbr" />
+		<bean:write name="<%=SessionConstants.EXECUTION_PERIOD%>" property="semester" />
 	</h2>
 
 	<logic:present name="<%= SessionConstants.INFO_EXAMS_MAP_LIST %>" >

@@ -10,8 +10,9 @@
 <bean:define id="executionYear" name="executionPeriod" property="executionYear" />
 	
 <h2 class="greytxt">
-	<bean:write name="executionPeriod" property="semester" /><bean:message key="label.ordinal.semester.abbr" />
-	<bean:write name="executionYear" property="year" />
+	<bean:write name="executionYear" property="year" />,
+	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.semester.abbr" />
+	<bean:write name="executionPeriod" property="semester" />
 </h2>
 
 <h2><bean:message key="property.class" />: <bean:write name="className" /></h2>

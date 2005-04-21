@@ -33,14 +33,15 @@
 <table class="tab_lay" cellspacing="0" width="75%">
 	<tr>
 		<th colspan="5" scope="col">
-			<bean:write name="execution_period" property="semester"/><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.ordinal.semester.abbr"/>
-			<bean:write name="execution_period" property="infoExecutionYear.year"/>
+			<bean:write name="execution_period" property="infoExecutionYear.year"/>,
+			<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.semester.abbr"/>
+			<bean:write name="execution_period" property="semester"/>
 		</th>	
 	</tr>
 
 	<tr>
 	<% for (int year = 1; year <= 5; year++) { %>
-		<td class="subheader" width="75px"><%= String.valueOf(year) %><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.ordinal.year"/></td>
+		<td class="subheader" width="75px"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.year"/> <%= String.valueOf(year) %></td>
 	<% } %>
 	</tr>
 
@@ -85,14 +86,14 @@
 <logic:present name="nextInfoExecutionPeriod">
 	<tr>
 		<th colspan="5" scope="col">
-			<bean:write name="nextInfoExecutionPeriod" property="semester"/><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.ordinal.semester.abbr"/>
+			<bean:write name="nextInfoExecutionPeriod" property="semester"/><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.semester.abbr"/>
 			<bean:write name="nextInfoExecutionPeriod" property="infoExecutionYear.year"/>
 		</th>	
 	</tr>
 
 	<tr>
 	<% for (int year = 1; year <= 5; year++) { %>
-		<td class="subheader"><%= String.valueOf(year) %><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.ordinal.year"/></td>
+		<td class="subheader"><%= String.valueOf(year) %><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.year"/></td>
 	<% } %>
 	</tr>
 

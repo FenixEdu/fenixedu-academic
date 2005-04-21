@@ -85,13 +85,13 @@
 				
 			<logic:notEmpty name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year">
 				<logic:notEqual name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year" value="">					
-					<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year"/>º&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.year"/>&nbsp;
+					<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.year"/>&nbsp;<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year"/>&nbsp;
 					</logic:notEqual>
 			</logic:notEmpty>
 				
 			<logic:notEmpty name="infoCurricularCourseScope" property="infoCurricularSemester.semester">
 				<logic:notEqual name="infoCurricularCourseScope" property="infoCurricularSemester.semester" value="">					
-					<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.semester"/>º&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.semester"/>&nbsp;
+					<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.semester"/>&nbsp;<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.semester"/>&nbsp;
 	 			</logic:notEqual>
 			</logic:notEmpty>
 		</li>

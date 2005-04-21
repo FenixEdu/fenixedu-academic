@@ -7,7 +7,7 @@
 	<bean:define id="executionCourse" name="commonComponent" property="executionCourse"/>
 	<bean:define id="executionPeriod" name="executionCourse" property="infoExecutionPeriod"/>	
 	<h2 class="greytxt">
-		<bean:write name="executionPeriod" property="semester" /><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.ordinal.semester.abbr" />
+		<bean:write name="executionPeriod" property="semester" /><bean:message bundle="PUBLIC_DEGREE_INFORMATION" locale="pt_PT" key="label.ordinal.semester.abbr" />
 		<bean:write name="executionPeriod" property="infoExecutionYear.year" />
 	</h2>
 </logic:present>

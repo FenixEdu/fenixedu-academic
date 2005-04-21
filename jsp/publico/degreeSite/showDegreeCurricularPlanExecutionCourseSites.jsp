@@ -31,13 +31,15 @@
 
 <ul>
 	<li><a href="#currentSem">
-			<bean:write name="execution_period" property="semester"/><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.ordinal.semester.abbr" />
-			<bean:write name="execution_period" property="infoExecutionYear.year" />
+			<bean:write name="execution_period" property="infoExecutionYear.year" />,
+			<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.semester.abbr" />
+			<bean:write name="execution_period" property="semester"/>
 		</a>
 	</li>
 	<li><a href="#otherSem">
-			<bean:write name="previousInfoExecutionPeriod" property="semester"/><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.ordinal.semester.abbr" />
-			<bean:write name="previousInfoExecutionPeriod" property="infoExecutionYear.year" />
+			<bean:write name="previousInfoExecutionPeriod" property="infoExecutionYear.year" />,
+			<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.semester.abbr" />
+			<bean:write name="previousInfoExecutionPeriod" property="semester"/>
 		</a>
 	</li>
 </ul>
@@ -46,8 +48,9 @@
 <table class="tab_lay" cellspacing="0" width="90%">
 	<tr>
 		<th colspan="2" scope="col">
-			<bean:write name="execution_period" property="semester"/><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.ordinal.semester.abbr" />
-			<bean:write name="execution_period" property="infoExecutionYear.year" />
+			<bean:write name="execution_period" property="infoExecutionYear.year" />,
+			<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.semester.abbr" />
+			<bean:write name="execution_period" property="semester"/>
 		</th>
 	</tr>
 
@@ -137,8 +140,9 @@
 <table class="tab_lay" cellspacing="0" width="90%">
 	<tr>
 		<th colspan="2" scope="col">
-			<bean:write name="previousInfoExecutionPeriod" property="semester"/><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.ordinal.semester.abbr" />
-			<bean:write name="previousInfoExecutionPeriod" property="infoExecutionYear.year" />
+			<bean:write name="previousInfoExecutionPeriod" property="infoExecutionYear.year" />,
+			<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.semester.abbr" />
+			<bean:write name="previousInfoExecutionPeriod" property="semester"/>
 		</th>
 	</tr>
 	
