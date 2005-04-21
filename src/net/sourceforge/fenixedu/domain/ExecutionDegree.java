@@ -15,8 +15,6 @@ package net.sourceforge.fenixedu.domain;
 public class ExecutionDegree extends ExecutionDegree_Base {
     private IExecutionYear executionYear;
 
-    private IDegreeCurricularPlan degreeCurricularPlan;
-
     private ICampus campus;
 
     private IPeriod periodLessonsFirstSemester;
@@ -57,7 +55,7 @@ public class ExecutionDegree extends ExecutionDegree_Base {
         result += ", codInt=" + getIdInternal();
         result += ", executionYear=" + executionYear;
         //result += ", keyExecutionYear=" + academicYear;
-        result += ", degreeCurricularPlan=" + degreeCurricularPlan;
+        result += ", degreeCurricularPlan=" + getDegreeCurricularPlan();
         if (getCoordinatorsList() != null) {
             result += ", coordinatorsList=" + getCoordinatorsList().size();
         } else {
@@ -82,20 +80,6 @@ public class ExecutionDegree extends ExecutionDegree_Base {
      */
     public void setExecutionYear(IExecutionYear executionYear) {
         this.executionYear = executionYear;
-    }
-
-    /**
-     * @return
-     */
-    public IDegreeCurricularPlan getDegreeCurricularPlan() {
-        return degreeCurricularPlan;
-    }
-
-    /**
-     * @param plan
-     */
-    public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
-        this.degreeCurricularPlan = degreeCurricularPlan;
     }
 
     /**
