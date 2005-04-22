@@ -2314,6 +2314,7 @@ external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 external class net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction ;
+external class net.sourceforge.fenixedu.domain.Mark;
 
 /*
  * Relations definitions
@@ -3089,6 +3090,10 @@ relation LessonShift {
 	net.sourceforge.fenixedu.domain.Shift playsRole shift;
 }
 
+relation MarkAttends {
+	net.sourceforge.fenixedu.domain.Mark playsRole mark;
+	net.sourceforge.fenixedu.domain.Attends playsRole attend;
+}
 
 relation MakeExportProposal {
 	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourseSender {
