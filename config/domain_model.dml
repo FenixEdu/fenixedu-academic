@@ -1367,6 +1367,24 @@ class net.sourceforge.fenixedu.domain.MasterDegreeProofVersion extends net.sourc
 	
 }
 
+class net.sourceforge.fenixedu.domain.MasterDegreeThesis extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyStudentCurricularPlan;
+	
+	interface "
+		public void setMasterDegreeProofVersions(java.util.List masterDegreeProofVersions);
+		
+		public java.util.List getMasterDegreeProofVersions();
+		
+		public void setMasterDegreeThesisDataVersions(java.util.List masterDegreeThesisDataVersions);
+		
+		public java.util.List getMasterDegreeThesisDataVersions();
+		
+		public void setStudentCurricularPlan(net.sourceforge.fenixedu.domain.IStudentCurricularPlan studentCurricularPlan);
+		
+		public net.sourceforge.fenixedu.domain.IStudentCurricularPlan getStudentCurricularPlan();
+	"
+}
+
 class net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer studentCurricularPlanKey;
     Integer curricularCourseKey;
