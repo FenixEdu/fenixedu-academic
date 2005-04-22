@@ -6,8 +6,8 @@
 
 <bean:define id="component" name="siteView" property="component" />
 <bean:define id="lessonList" name="component" property="lessons" />
-<bean:define id="executionPeriod" name="component" property="executionPeriod" />
-<bean:define id="executionYear" name="executionPeriod" property="executionYear" />
+<bean:define id="executionPeriod" name="component" property="infoExecutionPeriod" />
+<bean:define id="executionYear" name="executionPeriod" property="infoExecutionYear" />
 	
 <h2 class="greytxt">
 	<bean:write name="executionYear" property="year" />,

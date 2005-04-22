@@ -33,6 +33,7 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.SopRoom
 
 import org.apache.struts.Globals;
 import org.apache.struts.util.MessageResources;
+import org.apache.struts.util.RequestUtils;
 
 public final class RenderTimeTableTag extends TagSupport {
 
@@ -165,10 +166,15 @@ public final class RenderTimeTableTag extends TagSupport {
         super.release();
     }
 
+    private String getMessageResource(PageContext pageContext, String key) {
+        try {
+            return RequestUtils.message(pageContext, "PUBLIC_DEGREE_INFORMATION", Globals.LOCALE_KEY, key);
+        } catch (JspException e) {
+            return "???" + key + "???"; 
+        }
+    }
+
     private StringBuffer legenda(List listaAulas,Locale locale) {
-        ResourceBundle bundle = ResourceBundle
-        .getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
-        
         StringBuffer result = new StringBuffer("");
         List listaAuxiliar = new ArrayList();
         Iterator iterator = listaAulas.iterator();
@@ -186,7 +192,7 @@ public final class RenderTimeTableTag extends TagSupport {
         if (listaAuxiliar.size() > 1) {
             Collections.sort(listaAuxiliar);
             result.append("<br/><b>");
-            result.append(bundle.getString("label.legend"));
+            result.append(getMessageResource(pageContext, "public.degree.information.label.legend"));
             result.append("</b><br /><br /><table cellpadding='0' cellspacing='0' style='margin-left:5px'>");
             for (int i = 0; i < listaAuxiliar.size(); i++) {
                 SubtitleEntry elem = (SubtitleEntry) listaAuxiliar.get(i);
@@ -212,7 +218,7 @@ public final class RenderTimeTableTag extends TagSupport {
             result.append("<tr><td style='vertical-align:top'><b>[Q]</b></td>");
             result.append("<td  style='vertical-align:top'>-</td>");
             result.append("<td wrap='wrap'>" );
-            result.append( bundle.getString("label.biweekly"));
+            result.append(getMessageResource(pageContext, "public.degree.information.label.biweekly"));
             result.append("</td></tr>");
 
             result.append("</table>");

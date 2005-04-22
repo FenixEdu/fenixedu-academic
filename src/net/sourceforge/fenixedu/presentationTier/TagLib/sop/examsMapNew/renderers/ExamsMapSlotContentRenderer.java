@@ -6,6 +6,8 @@ package net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.rendere
 
 import java.util.Locale;
 
+import javax.servlet.jsp.PageContext;
+
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMap;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMapSlot;
 
@@ -15,9 +17,9 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMap
  */
 public interface ExamsMapSlotContentRenderer {
     
-    public StringBuffer renderDayLabel(ExamsMapSlot examsMapSlot, ExamsMap examsMap, String typeUser,Locale locale);
+    public StringBuffer renderDayLabel(ExamsMapSlot examsMapSlot, ExamsMap examsMap, String typeUser,PageContext pageContext);
 
-    public StringBuffer renderDayContents(ExamsMapSlot examsMapSlot, Integer year1, Integer year2, String typeUser,Locale locale);
+    public StringBuffer renderDayContents(ExamsMapSlot examsMapSlot, Integer year1, Integer year2, String typeUser,PageContext pageContext);
 
-    public StringBuffer renderDayContents(ExamsMapSlot slot, ExamsMap examsMap, String user,Locale locale);
+    public StringBuffer renderDayContents(ExamsMapSlot slot, ExamsMap examsMap, String user,PageContext pageContext);
 }

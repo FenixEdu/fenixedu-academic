@@ -8,6 +8,9 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
+
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
@@ -15,6 +18,8 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMap
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMapSlot;
 
 import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.struts.Globals;
+import org.apache.struts.util.RequestUtils;
 
 /**
  * @author Ana e Ricardo
@@ -23,11 +28,10 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 
     private ExamsMap examsMap;
 
-    public StringBuffer renderDayLabel(ExamsMapSlot examsMapSlot, ExamsMap examsMap, String typeUser,Locale locale) {
+    public StringBuffer renderDayLabel(ExamsMapSlot examsMapSlot, ExamsMap examsMap, String typeUser,PageContext pageContext) {
         this.examsMap = examsMap;
         StringBuffer strBuffer = new StringBuffer();
-        ResourceBundle bundle = ResourceBundle
-            .getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
+
         boolean isFirstDayOfSeason = ((examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH) == examsMap
                 .getFirstDayOfSeason().get(Calendar.DAY_OF_MONTH))
                 && (examsMapSlot.getDay().get(Calendar.MONTH) == examsMap.getFirstDayOfSeason().get(
@@ -54,12 +58,13 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
         if ((examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH) == 1) || isFirstDayOfSeason
                 || isSecondDayOfMonthAndFirstDayWasASunday) {
                 strBuffer.append(" ");
-                strBuffer.append(bundle.getString("label.of"));
+                strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.of"));
                 strBuffer.append(" ");
+            Locale locale = pageContext.getRequest().getLocale();
             strBuffer.append(monthToString(examsMapSlot.getDay().get(Calendar.MONTH),locale));
         }
         if (examsMapSlot.getDay().get(Calendar.DAY_OF_YEAR) == 1) {
-            strBuffer.append(bundle.getString("labe.comma"));
+            strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.comma"));
             strBuffer.append(examsMapSlot.getDay().get(Calendar.YEAR));
         }
 
@@ -72,11 +77,18 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
         return strBuffer;
     }
 
+    private String getMessageResource(PageContext pageContext, String key) {
+        try {
+            return RequestUtils.message(pageContext, "PUBLIC_DEGREE_INFORMATION", Globals.LOCALE_KEY, key);
+        } catch (JspException e) {
+            return "???" + key + "???"; 
+        }
+    }
+
     public StringBuffer renderDayContents(ExamsMapSlot examsMapSlot, Integer year1, Integer year2,
-            String typeUser,Locale locale) {
+            String typeUser,PageContext pageContext) {
         StringBuffer strBuffer = new StringBuffer();
-        ResourceBundle bundle = ResourceBundle
-        .getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
+
         for (int i = 0; i < examsMapSlot.getExams().size(); i++) {
             InfoExam infoExam = (InfoExam) examsMapSlot.getExams().get(i);
             Integer curicularYear = infoExam.getInfoExecutionCourse().getCurricularYear();
@@ -129,7 +141,7 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
                     String hoursText = infoExam.getBeginning().get(Calendar.HOUR_OF_DAY) + "h"
                             + DateFormatUtils.format(infoExam.getBeginning().getTime(), "mm");
                     strBuffer.append(" ");
-                    strBuffer.append(bundle.getString("label.as"));
+                    strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.as"));
                     strBuffer.append(" ");
                 
                     if (isAtValidHour || !typeUser.equals("sop")) {
@@ -249,10 +261,9 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
      * @see ServidorApresentacao.TagLib.sop.examsMap.renderers.ExamsMapSlotContentRenderer#renderDayContents(ServidorApresentacao.TagLib.sop.examsMap.ExamsMapSlot,
      *      java.lang.String)
      */
-    public StringBuffer renderDayContents(ExamsMapSlot examsMapSlot, ExamsMap examsMap, String typeUser,Locale locale) {
+    public StringBuffer renderDayContents(ExamsMapSlot examsMapSlot, ExamsMap examsMap, String typeUser,PageContext pageContext) {
         StringBuffer strBuffer = new StringBuffer();
-        ResourceBundle bundle = ResourceBundle
-        .getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
+
         for (int i = 0; i < examsMapSlot.getExams().size(); i++) {
             InfoExam infoExam = (InfoExam) examsMapSlot.getExams().get(i);
             //InfoExecutionCourse infoExecutionCourse =
@@ -281,7 +292,7 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
             if (infoExam.getBeginning() != null) {
                 String hoursText = infoExam.getBeginning().get(Calendar.HOUR_OF_DAY) + "H";
                 strBuffer.append(" ");
-                strBuffer.append(bundle.getString("label.as"));
+                strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.as"));
                 strBuffer.append(" ");
                 strBuffer.append(hoursText);
             }

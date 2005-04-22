@@ -661,9 +661,6 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 	
 
 	private void renderExamsMapForFilteredYears(StringBuffer strBuffer, Integer year1, Integer year2,PageContext pageContext) {
-		
-        
-       
         strBuffer.append("<table class='examMap' cellspacing='0' cellpadding='3' width='100%'>");
        
 		strBuffer.append("<tr>");
@@ -673,10 +670,10 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 		for (int week = 0; week < numberOfWeks; week++) {
 			strBuffer.append("<tr>");
  
-			renderLabelsForRowOfDays(strBuffer, week,locale);
+			renderLabelsForRowOfDays(strBuffer, week,pageContext);
 			strBuffer.append("</tr>\r\n");
 			strBuffer.append("<tr>");
-			renderExamsForRowOfDays(strBuffer, week, year1, year2);
+			renderExamsForRowOfDays(strBuffer, week, year1, year2, pageContext);
 			strBuffer.append("</tr>\r\n");
 		}
 		
@@ -684,7 +681,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 		strBuffer.append("<br />");
 	}
 	
-	private void renderExamsForRowOfDays(StringBuffer strBuffer, int week, Integer year1, Integer year2) {
+	private void renderExamsForRowOfDays(StringBuffer strBuffer, int week, Integer year1, Integer year2, PageContext pageContext) {
 		for (int slot = 0; slot < daysOfWeek.length; slot++) {
 			ExamsMapSlot examsMapSlot = (ExamsMapSlot) examsMap.getDays().get(
 					week * daysOfWeek.length + slot);
@@ -700,12 +697,12 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 			
 			strBuffer.append("<td ").append("class='").append(classCSS).append("'>");
 			strBuffer.append(examsMapSlotContentRenderer.renderDayContents((ExamsMapSlot) examsMap
-					.getDays().get(week * daysOfWeek.length + slot), year1, year2, user,locale));
+					.getDays().get(week * daysOfWeek.length + slot), year1, year2, user,pageContext));
 			strBuffer.append("</td>");
 		}
 	}
 	
-	private void renderLabelsForRowOfDays(StringBuffer strBuffer, int week,Locale locale) {
+	private void renderLabelsForRowOfDays(StringBuffer strBuffer, int week,PageContext pageContext) {
 		for (int slot = 0; slot < daysOfWeek.length; slot++) {
 			ExamsMapSlot examsMapSlot = (ExamsMapSlot) examsMap.getDays().get(
 					week * daysOfWeek.length + slot);				
@@ -715,9 +712,9 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 			}
             
 			strBuffer.append("<td ").append("class='").append(classCSS).append("'>");
-            examsMapSlotContentRenderer.renderDayLabel(examsMapSlot, examsMap, user,locale);
+            examsMapSlotContentRenderer.renderDayLabel(examsMapSlot, examsMap, user,pageContext);
   // System.out.println(examsMapSlotContentRenderer.renderDayLabel(examsMapSlot, examsMap, user,locale));
-			strBuffer.append(examsMapSlotContentRenderer.renderDayLabel(examsMapSlot, examsMap, user,locale));
+			strBuffer.append(examsMapSlotContentRenderer.renderDayLabel(examsMapSlot, examsMap, user,pageContext));
 			strBuffer.append("</td>");
 		}
 	}

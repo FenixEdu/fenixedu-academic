@@ -81,7 +81,10 @@ public class RenderExamsMapTag extends TagSupport {
         try {
             writer.print(renderer.render(locale, pageContext));
         } catch (IOException e) {
+            e.printStackTrace();
             throw new JspException(messages.getMessage("generateExamsMap.io", e.toString()));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return (SKIP_BODY);
