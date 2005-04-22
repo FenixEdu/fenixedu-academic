@@ -1296,15 +1296,11 @@ class net.sourceforge.fenixedu.domain.MasterDegreeCandidate extends net.sourcefo
 	interface "
 		public net.sourceforge.fenixedu.domain.ICandidateSituation getActiveCandidateSituation();
 		
-		public net.sourceforge.fenixedu.domain.IExecutionDegree getExecutionDegree();
-		
 		public net.sourceforge.fenixedu.domain.IPerson getPerson();
 		
 		public java.util.List getSituations();
 		
 		public net.sourceforge.fenixedu.util.Specialization getSpecialization();
-		
-		public void setExecutionDegree(net.sourceforge.fenixedu.domain.IExecutionDegree execucao);
 		
 		public void setPerson(net.sourceforge.fenixedu.domain.IPerson pessoa);
 		
@@ -3097,6 +3093,13 @@ relation MakeExportProposal {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Person playsRole senderPerson;
+}
+
+relation MasterDegreeCandidateExecutionDegree {
+	net.sourceforge.fenixedu.domain.MasterDegreeCandidate playsRole masterDegreeCandidates {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
 }
 
 relation ModalityCourseEquivalency {

@@ -23,9 +23,6 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
 
 	private Specialization specialization = null;
 
-	// Instance from class Degree
-	private IExecutionDegree executionDegree = null;
-
 	// Instance from class Country
 
 	private IPerson person;
@@ -35,7 +32,7 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
 
 	public MasterDegreeCandidate() {
 		setMajorDegree(null);
-		executionDegree = null;
+		setExecutionDegree(null);
 		setCandidateNumber(null);
 		specialization = null;
 		setMajorDegreeSchool(null);
@@ -50,7 +47,7 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
 			Specialization specialization, String majorDegree,
 			String majorDegreeSchool, Integer majorDegreeYear, Double average) {
 		this.person = person;
-		this.executionDegree = executionDegree;
+		this.setExecutionDegree(executionDegree);
 		setCandidateNumber(candidateNumber);
 		this.specialization = specialization;
 		setMajorDegree(majorDegree);
@@ -93,7 +90,7 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
 		result += "\n  - Major Degree School : " + getMajorDegreeSchool();
 		result += "\n  - Major Degree Year : " + getMajorDegreeYear();
 		result += "\n  - Major Degree Average : " + getAverage();
-		result += "\n  - Master Degree : " + executionDegree;
+		result += "\n  - Master Degree : " + getExecutionDegree();
 		result += "\n  - Specialization Area : " + getSpecializationArea();
 		result += "\n  - Substitute Order : " + getSubstituteOrder();
 		result += "\n  - Given Credits : " + getGivenCredits();
@@ -118,13 +115,6 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
 	/**
 	 * @return
 	 */
-	public IExecutionDegree getExecutionDegree() {
-		return executionDegree;
-	}
-
-	/**
-	 * @return
-	 */
 	public IPerson getPerson() {
 		return person;
 	}
@@ -141,13 +131,6 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
 	 */
 	public Specialization getSpecialization() {
 		return specialization;
-	}
-
-	/**
-	 * @param execucao
-	 */
-	public void setExecutionDegree(IExecutionDegree execucao) {
-		executionDegree = execucao;
 	}
 
 	/**
