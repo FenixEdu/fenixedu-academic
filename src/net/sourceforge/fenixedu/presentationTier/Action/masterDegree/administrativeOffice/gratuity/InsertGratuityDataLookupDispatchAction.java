@@ -216,7 +216,9 @@ public class InsertGratuityDataLookupDispatchAction extends LookupDispatchAction
                 && ((String) actionForm.get("scholarPart")).length() > 0) {
             infoGratuityValues.setScholarShipValue(Double
                     .valueOf((String) actionForm.get("scholarPart")));
-            infoGratuityValues.setFinalProofValue(Double.valueOf((String) actionForm.get("thesisPart")));
+            
+            String thesisPart = (String) actionForm.get("thesisPart");            
+            infoGratuityValues.setFinalProofValue((thesisPart.length() > 0) ? new Double(thesisPart) : 0);
         }
         if (actionForm.get("unitaryValueCredit") != null
                 && ((String) actionForm.get("unitaryValueCredit")).length() > 0) {
