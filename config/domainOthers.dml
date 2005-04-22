@@ -1,0 +1,23 @@
+/* DOMAINOTHERS.DML
+ * 
+ */
+
+ 
+class net.sourceforge.fenixedu.domain.classProperties.GeneralClassProperty extends net.sourceforge.fenixedu.domain.DomainObject {
+	String ojbConcreteClass;
+	
+	interface "
+    public net.sourceforge.fenixedu.util.classProperties.GeneralClassPropertyName getName();
+
+    public void setName(net.sourceforge.fenixedu.util.classProperties.GeneralClassPropertyName name);
+
+    public net.sourceforge.fenixedu.util.classProperties.GeneralClassPropertyValue getValue();
+
+    public void setValue(net.sourceforge.fenixedu.util.classProperties.GeneralClassPropertyValue value);
+	"
+}
+
+
+	class net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty extends net.sourceforge.fenixedu.domain.classProperties.GeneralClassProperty {
+		Integer keyExecutionCourse;
+	}

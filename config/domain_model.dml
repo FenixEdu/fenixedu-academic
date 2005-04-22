@@ -213,6 +213,7 @@ class net.sourceforge.fenixedu.domain.gesdis.CourseHistoric extends net.sourcefo
 	Integer evaluated;
 }
 
+
 class net.sourceforge.fenixedu.domain.gesdis.CourseReport extends net.sourceforge.fenixedu.domain.DomainObject {
 	String report;
 	Date lastModificationDate;
@@ -810,6 +811,7 @@ class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.feni
 	
 	interface "
 	void setState(net.sourceforge.fenixedu.util.PeriodState newState);
+
 	net.sourceforge.fenixedu.util.PeriodState getState();
 	"
 }
@@ -851,6 +853,26 @@ class net.sourceforge.fenixedu.domain.support.FAQSection extends net.sourceforge
     public void setParentSection(IFAQSection parentSection);
     "
 }
+
+
+class net.sourceforge.fenixedu.domain.classProperties.GeneralClassProperty extends net.sourceforge.fenixedu.domain.DomainObject {
+    String ojbConcreteClass;
+    
+    interface "
+    public net.sourceforge.fenixedu.util.classProperties.GeneralClassPropertyName getName();
+
+    public void setName(net.sourceforge.fenixedu.util.classProperties.GeneralClassPropertyName name);
+
+    public net.sourceforge.fenixedu.util.classProperties.GeneralClassPropertyValue getValue();
+
+    public void setValue(net.sourceforge.fenixedu.util.classProperties.GeneralClassPropertyValue value);
+    "
+}
+
+
+    class net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty extends net.sourceforge.fenixedu.domain.classProperties.GeneralClassProperty {
+        Integer keyExecutionCourse;
+    }
 
 
 class net.sourceforge.fenixedu.domain.support.GlossaryEntry extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1953,7 +1975,7 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
 	    public void setEntryPhase(net.sourceforge.fenixedu.util.EntryPhase entryPhase);
 	    public net.sourceforge.fenixedu.domain.IStudentCurricularPlan getActiveStudentCurricularPlan();
 	"
-
+			
 }
 
 
@@ -2286,7 +2308,6 @@ class net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute exten
 external class net.sourceforge.fenixedu.domain.Seminaries.Theme;
 external class net.sourceforge.fenixedu.domain.Seminaries.Modality;
 external class net.sourceforge.fenixedu.domain.Seminaries.Seminary;
-external class net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty;
 external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
@@ -2375,6 +2396,7 @@ relation BranchCurricularCourseScope {
     }
 }
 
+
 relation BuildingRoom {
 	net.sourceforge.fenixedu.domain.Room playsRole rooms {
 		multiplicity *;
@@ -2404,6 +2426,7 @@ relation CurricularCourseCurricularCourseEquivalence {
 	}
 	net.sourceforge.fenixedu.domain.CurricularCourse playsRole equivalentCurricularCourse;
 }
+
 
 relation OldCurricularCourseCurricularCourseEquivalence {
 	net.sourceforge.fenixedu.domain.CurricularCourseEquivalence playsRole oldCurricularCourseEquivalences {
@@ -2466,6 +2489,7 @@ relation CurricularCourseExecutionCourse {
 		multiplicity *;
 	}
 }
+
 
 relation CurricularCourseHistoric {
 	net.sourceforge.fenixedu.domain.gesdis.CourseHistoric playsRole courseHistoric;
@@ -3053,7 +3077,6 @@ relation ModalityCourseEquivalency {
     net.sourceforge.fenixedu.domain.Seminaries.Modality playsRole modality;
 }
 
-
 relation OldInquiriesCoursesResDegree {
 	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes playsRole oldInquiriesCoursesRes {
 		multiplicity *;
@@ -3633,7 +3656,7 @@ relation ScientificAreaAreaCurricularCourseGroup {
 
 relation SeminaryCourseEquivalency {
     net.sourceforge.fenixedu.domain.Seminaries.Seminary playsRole seminary;
-    
+
     net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency playsRole equivalencies {
         multiplicity *;
     }
