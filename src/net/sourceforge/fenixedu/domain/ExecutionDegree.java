@@ -13,8 +13,6 @@ package net.sourceforge.fenixedu.domain;
  */
 
 public class ExecutionDegree extends ExecutionDegree_Base {
-    private IExecutionYear executionYear;
-
     private IPeriod periodLessonsFirstSemester;
 
     private IPeriod periodExamsFirstSemester;
@@ -51,7 +49,7 @@ public class ExecutionDegree extends ExecutionDegree_Base {
     public String toString() {
         String result = "[CURSO_EXECUCAO";
         result += ", codInt=" + getIdInternal();
-        result += ", executionYear=" + executionYear;
+        result += ", executionYear=" + getExecutionYear();
         //result += ", keyExecutionYear=" + academicYear;
         result += ", degreeCurricularPlan=" + getDegreeCurricularPlan();
         if (getCoordinatorsList() != null) {
@@ -64,22 +62,7 @@ public class ExecutionDegree extends ExecutionDegree_Base {
         return result;
     }
 
-    /**
-     * 
-     * @see Dominio.IExecutionDegree#getExecutionYear()
-     */
-    public IExecutionYear getExecutionYear() {
-        return executionYear;
-    }
-
-    /**
-     * 
-     * @see Dominio.IExecutionDegree#setExecutionYear(IExecutionYear)
-     */
-    public void setExecutionYear(IExecutionYear executionYear) {
-        this.executionYear = executionYear;
-    }
-
+   
     public IPeriod getPeriodExamsFirstSemester() {
         return periodExamsFirstSemester;
     }

@@ -761,10 +761,6 @@ class net.sourceforge.fenixedu.domain.ExecutionDegree extends net.sourceforge.fe
 	Integer keyCampus;
 	
 	interface"
-	public net.sourceforge.fenixedu.domain.IExecutionYear getExecutionYear();
-	
-	public void setExecutionYear(net.sourceforge.fenixedu.domain.IExecutionYear executionYear);
-	
 	public net.sourceforge.fenixedu.domain.IPeriod getPeriodLessonsFirstSemester();
 	
 	public void setPeriodLessonsFirstSemester(net.sourceforge.fenixedu.domain.IPeriod periodLessonsFirstSemester);
@@ -2814,6 +2810,13 @@ relation ExecutionDegreeDegreeCurricularPlan {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlan;
+}
+
+relation ExecutionDegreeExecutionYear {
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegrees {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
 
 relation ExecutionPeriodExecutionCourse {
