@@ -30,8 +30,6 @@ public class RoomOccupation extends RoomOccupation_Base {
 
     protected DiaSemana dayOfWeek;
 
-    protected IRoom room;
-
     /**
      * Construtor
      */
@@ -44,7 +42,7 @@ public class RoomOccupation extends RoomOccupation_Base {
 
     public RoomOccupation(IRoom room, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek,
             int frequency) {
-        this.room = room;
+        this.setRoom(room);
         this.startTime = startTime;
         this.endTime = endTime;
         this.dayOfWeek = dayOfWeek;
@@ -84,7 +82,7 @@ public class RoomOccupation extends RoomOccupation_Base {
         result += ", dayOfWeek=" + dayOfWeek;
         result += ", periodId=" + getPeriod().getIdInternal();
         result += ", period=" + DateFormatUtils.format(getPeriod().getStartDate().getTime(), "yyyy-MM-dd");
-        result += ", room=" + room.getNome();
+        result += ", room=" + getRoom().getNome();
         result += "]";
         return result;
     }

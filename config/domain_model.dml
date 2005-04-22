@@ -1280,10 +1280,6 @@ class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.do
 	
 	public void setTipo(net.sourceforge.fenixedu.util.TipoAula tipo);
 
-	public net.sourceforge.fenixedu.domain.IRoomOccupation getRoomOccupation();
-	
-	public void setRoomOccupation(net.sourceforge.fenixedu.domain.IRoomOccupation roomOccupation);
-
 	public double hours();
 	"
 }
@@ -2329,6 +2325,7 @@ external class net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
+external class net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction ;
 
 /*
  * Relations definitions
@@ -3066,11 +3063,24 @@ relation GroupPropertiesAttendsSet {
 	net.sourceforge.fenixedu.domain.GroupProperties playsRole groupProperties;
 }
 
+relation InsuranceTransactionExecutionYear {
+	net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction playsRole insuranceTransactions {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+}
+
 relation LessonExecutionPeriod {
 	net.sourceforge.fenixedu.domain.Lesson playsRole lessons {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation LessonRoomOccupation {
+	net.sourceforge.fenixedu.domain.Lesson playsRole lesson;
+	
+	net.sourceforge.fenixedu.domain.RoomOccupation playsRole roomOccupation;
 }
 
 relation LessonShift {

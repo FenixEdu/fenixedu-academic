@@ -28,8 +28,6 @@ public class Lesson extends Lesson_Base  {
     //  protected IExecutionCourse _disciplinaExecucao;
     protected IShift _shift;
 
-    protected IRoomOccupation roomOccupation;
-
     /**
      * Construtor sem argumentos p�blico requerido pela moldura de objectos
      * OJB
@@ -161,14 +159,4 @@ public class Lesson extends Lesson_Base  {
         TimePeriod timePeriod = new TimePeriod(this.getInicio(), this.getFim());
         return timePeriod.hours().doubleValue();
     }
-
-
-    public IRoomOccupation getRoomOccupation() {
-        return roomOccupation;
-    }
-
-    public void setRoomOccupation(IRoomOccupation roomOccupation) {
-        this.roomOccupation = roomOccupation;
-    }
-
 }
