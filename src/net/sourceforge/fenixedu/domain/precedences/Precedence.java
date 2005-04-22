@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
  */
 
 public class Precedence extends Precedence_Base {
-    private Integer keyCurricularCourse;
 
     public Precedence() {
         super();

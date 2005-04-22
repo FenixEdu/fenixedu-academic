@@ -5,17 +5,8 @@ package net.sourceforge.fenixedu.domain.precedences;
  */
 
 public abstract class RestrictionByNumberOfCurricularCourses extends RestrictionByNumberOfCurricularCourses_Base {
-    protected Integer numberOfCurricularCourses;
-
-    public Integer getNumberOfCurricularCourses() {
-        return numberOfCurricularCourses;
-    }
-
-    public void setNumberOfCurricularCourses(Integer numberOfCurricularCourses) {
-        this.numberOfCurricularCourses = numberOfCurricularCourses;
-    }
-
-    public boolean equals(Object obj) {
+ 
+	public boolean equals(Object obj) {
         boolean result = super.equals(obj);
         if ((result) && (obj instanceof IRestrictionByNumberOfCurricularCourses)) {
             IRestrictionByNumberOfCurricularCourses restrictionByNumberOfCurricularCourses = (IRestrictionByNumberOfCurricularCourses) obj;

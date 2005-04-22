@@ -24,15 +24,7 @@ public class RestrictionDoneCurricularCourse extends RestrictionDoneCurricularCo
             return CurricularCourseEnrollmentType.DEFINITIVE;
         }
 
-        //        CurricularCourseEnrollmentType type =
-        // precedenceContext.getStudentCurricularPlan()
-        //                .getCurricularCourseEnrollmentType(this.getPrecedentCurricularCourse(),
-        //                        precedenceContext.getExecutionPeriod());
-        //
-        //        if (type.equals(CurricularCourseEnrollmentType.TEMPORARY)) {
-        //            return CurricularCourseEnrollmentType.TEMPORARY;
-        //        }
-
+     
         List enrollmentsWithEnrolledStateInPreviousExecutionPeriod = precedenceContext
                 .getStudentCurricularPlan().getAllStudentEnrolledEnrollmentsInExecutionPeriod(
                         precedenceContext.getExecutionPeriod().getPreviousExecutionPeriod());

@@ -34,8 +34,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     protected MarkType markType;
 
-    protected List areas;
-
     public DegreeCurricularPlan() {
         setOjbConcreteClass(getClass().getName());
     }
@@ -69,9 +67,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return result;
     }
 
-    public List getAreas() {
-        return areas;
-    }
+
 
     public MarkType getMarkType() {
         return markType;
@@ -79,10 +75,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public DegreeCurricularPlanState getState() {
         return state;
-    }
-
-    public void setAreas(List areas) {
-        this.areas = areas;
     }
 
     public void setMarkType(MarkType markType) {
@@ -153,7 +145,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public List getCommonAreas() {
-        return (List) CollectionUtils.select(this.areas, new Predicate() {
+        return (List) CollectionUtils.select(getAreas(), new Predicate() {
             public boolean evaluate(Object obj) {
                 IBranch branch = (IBranch) obj;
                 if (branch.getBranchType() == null) {

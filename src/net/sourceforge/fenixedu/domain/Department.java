@@ -14,7 +14,7 @@ import java.util.Set;
 
 public class Department extends Department_Base {
 
-    private Set disciplinasAssociadas;
+//    private Set disciplinasAssociadas;
 
     public Department() {
     }
@@ -42,24 +42,15 @@ public class Department extends Department_Base {
         return result;
     }
 
-    /**
-     * Returns the disciplinasAssociadas.
-     * 
-     * @return Set
-     */
+  
+/*	
     public Set getDisciplinasAssociadas() {
         return disciplinasAssociadas;
     }
 
 
-    /**
-     * Sets the disciplinasAssociadas.
-     * 
-     * @param disciplinasAssociadas
-     *            The disciplinasAssociadas to set
-     */
     public void setDisciplinasAssociadas(Set disciplinasAssociadas) {
         this.disciplinasAssociadas = disciplinasAssociadas;
     }
-
+*/
 }

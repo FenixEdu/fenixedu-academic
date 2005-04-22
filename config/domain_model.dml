@@ -225,16 +225,6 @@ class net.sourceforge.fenixedu.domain.CreditsInScientificArea extends net.source
 	Integer studentCurricularPlanKey;
 	Integer enrolmentKey;
 	Integer scientificAreaKey;
-	
-	interface "
-	
-    public net.sourceforge.fenixedu.domain.IEnrolment getEnrolment();
-    public void setEnrolment(net.sourceforge.fenixedu.domain.IEnrolment enrolment);
-    public net.sourceforge.fenixedu.domain.IScientificArea getScientificArea();
-    public void setScientificArea(net.sourceforge.fenixedu.domain.IScientificArea scientificArea);
-    public net.sourceforge.fenixedu.domain.IStudentCurricularPlan getStudentCurricularPlan();
-    public void setStudentCurricularPlan(net.sourceforge.fenixedu.domain.IStudentCurricularPlan studentCurricularPlan);
-	"
 }
 
 
@@ -461,11 +451,6 @@ class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.f
 class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
 	String name;
-	
-	interface "
-	    public java.util.Set getDisciplinasAssociadas();
-    	public void setDisciplinasAssociadas(java.util.Set disciplinasAssociadas);
-	"
 }
 
 
@@ -2634,7 +2619,7 @@ relation DelegateStudent {
 
 
 relation DepartmentDepartmentCourse {
-	net.sourceforge.fenixedu.domain.DepartmentCourse playsRole departmentCourses {
+	net.sourceforge.fenixedu.domain.DepartmentCourse playsRole disciplinasAssociadas {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Department playsRole departamento;
@@ -2644,6 +2629,13 @@ relation DepartmentDepartmentCourse {
 relation EmployeePerson {
 	net.sourceforge.fenixedu.domain.Employee playsRole employee;
 	net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
+relation EnrolmentCreditsInScientificArea {
+	net.sourceforge.fenixedu.domain.CreditsInScientificArea playsRole creditsInScientificAreas {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Enrolment playsRole enrolment;
 }
 
 relation EnrolmentEnrolmentEquivalence {
@@ -3292,6 +3284,13 @@ relation SchoolClassShiftShift {
 	net.sourceforge.fenixedu.domain.Shift playsRole turno;
 }
 
+relation ScientificAreaCreditsInScientificArea {
+	net.sourceforge.fenixedu.domain.CreditsInScientificArea playsRole creditsInScientificAreas {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ScientificArea playsRole scientificArea;
+}
+
 relation SendProposal {
 	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesSenderExecutionCourse {
 		multiplicity *;
@@ -3361,6 +3360,13 @@ relation StudentCurricularPlanBranch {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Branch playsRole branch;
+}
+
+relation StudentCurricularPlanCreditsInScientificArea {
+	net.sourceforge.fenixedu.domain.CreditsInScientificArea playsRole creditsInScientificAreas {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlan;
 }
 
 relation StudentCurricularPlanDegreeCurricularPlan {

@@ -12,7 +12,7 @@ public class RestrictionByNumberOfDoneCurricularCourses extends RestrictionByNum
     }
 
     public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
-        if (precedenceContext.getStudentCurricularPlan().getNumberOfApprovedCurricularCourses() >= numberOfCurricularCourses
+        if (precedenceContext.getStudentCurricularPlan().getNumberOfApprovedCurricularCourses() >= getNumberOfCurricularCourses()
                 .intValue()) {
             return CurricularCourseEnrollmentType.DEFINITIVE;
         }
