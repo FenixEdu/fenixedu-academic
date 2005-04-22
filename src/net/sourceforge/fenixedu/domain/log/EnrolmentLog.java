@@ -17,12 +17,8 @@ public class EnrolmentLog extends EnrolmentLog_Base {
 
     private EnrolmentAction action;
     
-    private IStudent student;
     
-    /**
-     * 
-     */
-    public EnrolmentLog() {
+	public EnrolmentLog() {
     }
     
     
@@ -39,7 +35,7 @@ public class EnrolmentLog extends EnrolmentLog_Base {
             Integer keyCurricularCourse) {
         this.setDate(date);
         this.action = action;
-        this.student = student;
+        setStudent(student);
         this.setKeyStudent(keyStudent);
         setCurricularCourse(curricularCourse);
         this.setKeyCurricularCourse(keyCurricularCourse);
@@ -55,19 +51,5 @@ public class EnrolmentLog extends EnrolmentLog_Base {
      */
     public void setAction(EnrolmentAction action) {
         this.action = action;
-    }
-    
- 
-    /**
-     * @return Returns the student.
-     */
-    public IStudent getStudent() {
-        return student;
-    }
-    /**
-     * @param student The student to set.
-     */
-    public void setStudent(IStudent student) {
-        this.student = student;
     }
 }

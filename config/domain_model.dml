@@ -546,12 +546,6 @@ class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu
 
 class net.sourceforge.fenixedu.domain.EnrolmentEquivalence extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer enrolmentKey;
-    
-    interface "
-
-    public net.sourceforge.fenixedu.domain.IEnrolment getEnrolment();
-    public void setEnrolment(net.sourceforge.fenixedu.domain.IEnrolment enrolment);
-    "
 }
 
 class net.sourceforge.fenixedu.domain.EnrolmentEvaluation extends net.sourceforge.fenixedu.domain.DomainObject 
@@ -587,9 +581,6 @@ class net.sourceforge.fenixedu.domain.log.EnrolmentLog extends net.sourceforge.f
 
     public abstract net.sourceforge.fenixedu.util.EnrolmentAction getAction();
     public abstract void setAction(net.sourceforge.fenixedu.util.EnrolmentAction action);
-    public abstract net.sourceforge.fenixedu.domain.IStudent getStudent();
-    public abstract void setStudent(net.sourceforge.fenixedu.domain.IStudent student);
-    
     "
 }
 
@@ -1875,8 +1866,6 @@ class net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent extends net.sour
     interface "
     public abstract net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason getReasonType();
     public abstract void setReasonType(net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason reasonType);
-    public abstract net.sourceforge.fenixedu.domain.IStudent getStudent();
-    public abstract void setStudent(net.sourceforge.fenixedu.domain.IStudent student);
     "
 }
 
@@ -1966,35 +1955,7 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 	String alternativeSite;
 }
 
-class net.sourceforge.fenixedu.domain.SupportLesson extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyProfessorship;
-	Date startTime;
-	String place;
-	Date endTime;
-	interface "
-	public net.sourceforge.fenixedu.util.DiaSemana getWeekDay();
 
-	public void setWeekDay(net.sourceforge.fenixedu.util.DiaSemana weekDay);
-	
-	public double hours();
-	
-	public void beforeUpdate(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
-	
-	public void afterUpdate(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
-	
-	public void beforeInsert(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
-	
-	public void afterInsert(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
-	
-	public void beforeDelete(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
-	
-	public void afterDelete(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
-	
-	public void afterLookup(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
-	
-	public boolean belongsToExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
-	"
-}
 
 class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer studentKindKey;
@@ -2012,7 +1973,6 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
 	interface "
 
 	    public net.sourceforge.fenixedu.util.StudentState getState();
-	    public net.sourceforge.fenixedu.domain.IStudentKind getStudentKind();
 	    public net.sourceforge.fenixedu.util.TipoCurso getDegreeType();
 	    public net.sourceforge.fenixedu.util.AgreementType getAgreementType();
 	    public void setAgreementType(net.sourceforge.fenixedu.util.AgreementType agreementType);
@@ -2023,7 +1983,6 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
 	    public net.sourceforge.fenixedu.domain.IExecutionYear getRegistrationYear();
 	    public void setRegistrationYear(net.sourceforge.fenixedu.domain.IExecutionYear registrationYear);
 	    public net.sourceforge.fenixedu.domain.IStudentCurricularPlan getActiveStudentCurricularPlan();
-	    public void setStudentKind(net.sourceforge.fenixedu.domain.IStudentKind studentKind);
 	"
 			
 }
@@ -2146,6 +2105,36 @@ class net.sourceforge.fenixedu.domain.Summary extends net.sourceforge.fenixedu.d
     public void setSummaryType(net.sourceforge.fenixedu.util.TipoAula summaryType);
     public java.util.Calendar getSummaryDate();
     public void setSummaryDate(java.util.Calendar summaryDate);
+	"
+}
+
+class net.sourceforge.fenixedu.domain.SupportLesson extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyProfessorship;
+	Date startTime;
+	String place;
+	Date endTime;
+	interface "
+	public net.sourceforge.fenixedu.util.DiaSemana getWeekDay();
+
+	public void setWeekDay(net.sourceforge.fenixedu.util.DiaSemana weekDay);
+	
+	public double hours();
+	
+	public void beforeUpdate(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
+	
+	public void afterUpdate(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
+	
+	public void beforeInsert(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
+	
+	public void afterInsert(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
+	
+	public void beforeDelete(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
+	
+	public void afterDelete(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
+	
+	public void afterLookup(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
+	
+	public boolean belongsToExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
 	"
 }
 
@@ -2656,6 +2645,13 @@ relation DepartmentDepartmentCourse {
 relation EmployeePerson {
 	net.sourceforge.fenixedu.domain.Employee playsRole employee;
 	net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
+relation EnrolmentEnrolmentEquivalence {
+	net.sourceforge.fenixedu.domain.EnrolmentEquivalence playsRole enrolmentEquivalences {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Enrolment playsRole enrolment;
 }
 
 relation EnrolmentEnrolmentEvaluation {
@@ -3416,6 +3412,13 @@ relation StudentCurricularPlanStudent {
     net.sourceforge.fenixedu.domain.Student playsRole student;
 }
 
+relation StudentEnrolmentLog {
+	net.sourceforge.fenixedu.domain.log.EnrolmentLog playsRole enrolmentLogs {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Student playsRole student;
+}
+
 relation StudentExecutionCourse {
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourses {
 		multiplicity *;
@@ -3465,6 +3468,21 @@ relation StudentPerson {
     
     net.sourceforge.fenixedu.domain.Person playsRole person;
 }
+
+relation StudentSecretaryEnrolmentStudent {
+	net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent playsRole secretaryEnrolmentStudents {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Student playsRole student;
+}
+
+relation StudentStudentKind {
+	net.sourceforge.fenixedu.domain.Student playsRole students {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.StudentKind playsRole studentKind;
+}
+
 
 relation TeachingCareerCategory {
 	net.sourceforge.fenixedu.domain.teacher.TeachingCareer playsRole teachingCareer {

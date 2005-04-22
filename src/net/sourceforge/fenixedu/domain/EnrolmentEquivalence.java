@@ -9,8 +9,6 @@ package net.sourceforge.fenixedu.domain;
 
 public class EnrolmentEquivalence extends EnrolmentEquivalence_Base {
 
-    private IEnrolment enrolment;
-
     public EnrolmentEquivalence() {
     }
 
@@ -27,24 +25,7 @@ public class EnrolmentEquivalence extends EnrolmentEquivalence_Base {
 
     public String toString() {
         String result = "[" + this.getClass().getName() + "; ";
-        result += "enrolment = " + this.enrolment + "; ";
+        result += "enrolment = " + getEnrolment() + "; ";
         return result;
-    }
-
-    /**
-     * @return IEnrolment
-     */
-    public IEnrolment getEnrolment() {
-        return enrolment;
-    }
-
-    /**
-     * Sets the enrolment.
-     * 
-     * @param enrolment
-     *            The enrolment to set
-     */
-    public void setEnrolment(IEnrolment enrolment) {
-        this.enrolment = enrolment;
     }
 }

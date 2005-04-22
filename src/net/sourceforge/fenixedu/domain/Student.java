@@ -23,8 +23,6 @@ public class Student extends Student_Base{
 
     protected TipoCurso degreeType;
 
-    private IStudentKind studentKind;
-
     private AgreementType agreementType;
 
     private IExecutionYear registrationYear;
@@ -78,7 +76,7 @@ public class Student extends Student_Base{
         result += "number = " + this.getNumber() + "; ";
         result += "state = " + this.state + "; ";
         result += "degreeType = " + this.degreeType + "; ";
-        result += "studentKind = " + this.studentKind + "; ";
+        result += "studentKind = " + getStudentKind() + "; ";
         return result;
     }
 
@@ -120,21 +118,6 @@ public class Student extends Student_Base{
         this.state = state;
     }
 
-    /**
-     * @return
-     */
-    public IStudentKind getStudentKind() {
-        return studentKind;
-    }
-
-
-
-    /**
-     * @param type
-     */
-    public void setStudentKind(IStudentKind studentKind) {
-        this.studentKind = studentKind;
-    }
 
 
 

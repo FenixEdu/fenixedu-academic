@@ -12,8 +12,6 @@ import net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason;
  */
 public class SecretaryEnrolmentStudent extends SecretaryEnrolmentStudent_Base {
     
-    private IStudent student;
-    
     private SecretaryEnrolmentStudentReason reasonType;
     
     /**
@@ -27,18 +25,5 @@ public class SecretaryEnrolmentStudent extends SecretaryEnrolmentStudent_Base {
      */
     public void setReasonType(SecretaryEnrolmentStudentReason reasonType) {
         this.reasonType = reasonType;
-    }
-    /**
-     * @return Returns the student.
-     */
-    public IStudent getStudent() {
-        return student;
-    }
-    /**
-     * @param student The student to set.
-     */
-    public void setStudent(IStudent student) {
-        this.student = student;
     }    
-    
 }
