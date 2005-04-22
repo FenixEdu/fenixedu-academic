@@ -6,10 +6,13 @@
 <p><span class="error"><html:errors/></span></p>
 
 <logic:present name="infoDegree">
-<bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
-<div class="breadcumbs"><a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a> 
-<bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
-&nbsp;&gt;&nbsp;<a href="<%= institutionUrlTeaching %>"><bean:message key="label.education" bundle="PUBLIC_DEGREE_INFORMATION" /></a>
+	<bean:define id="institutionUrl" type="java.lang.String">
+		<bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
+	</bean:define>
+	<div class="breadcumbs">
+		<a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a> 
+		<bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
+		&nbsp;&gt;&nbsp;<a href="<%= institutionUrlTeaching %>"><bean:message key="label.education" bundle="PUBLIC_DEGREE_INFORMATION" /></a>
 		<bean:define id="degreeType" name="infoDegree" property="tipoCurso" />	
 		&nbsp;&gt;&nbsp;
 		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString() %>">
@@ -20,11 +23,11 @@
 
 	<h1>
 		<bean:write name="infoDegree" property="tipoCurso" />
-		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.in" />
+		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.in"/>
 		<bean:write name="infoDegree" property="nome" />
 	</h1>
 
-	<h2><span class="greytxt"><bean:message  key="label.classes"  bundle="PUBLIC_DEGREE_INFORMATION" /></span></h2>
+	<h2><span class="greytxt"><bean:message  key="label.classes"  bundle="PUBLIC_DEGREE_INFORMATION"/></span></h2>
 </logic:present>
 
 
