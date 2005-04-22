@@ -3098,6 +3098,14 @@ relation MarkAttends {
 	net.sourceforge.fenixedu.domain.Attends playsRole attend;
 }
 
+relation MarkEvaluation {
+	net.sourceforge.fenixedu.domain.Mark playsRole marks {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Evaluation playsRole evaluation;
+}
+
+
 relation MakeExportProposal {
 	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourseSender {
 		multiplicity *;
