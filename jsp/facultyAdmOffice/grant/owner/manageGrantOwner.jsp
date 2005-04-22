@@ -148,7 +148,7 @@
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="personInfo.maritalStatus">
-				<bean:define id="maritalStatus" name="personInfo" property="maritalStatus"/>
+				<bean:define id="maritalStatus" name="infoGrantOwner" property="personInfo.maritalStatus"/>
 				<bean:message key='<%= maritalStatus.toString() %>'/>
 			</logic:present>
 		</td>
