@@ -109,13 +109,16 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 							+ "</strong><br/>");
 				}
 				if (year2 == null) {
-					strBuffer.append("<h2>" + year1 + "&ordm; ");
+                    strBuffer.append("<h2>");
                     strBuffer.append(getMessageResource(pageContext, "label.year"));
+					strBuffer.append(year1);
                     strBuffer.append("</h2>");
 				} else {
-					strBuffer.append("<h2>" + year1 + "&ordm;");
-					strBuffer.append(" e " + year2 + "&ordm; ");
+                    strBuffer.append("<h2>");
                     strBuffer.append(getMessageResource(pageContext, "label.years"));
+					strBuffer.append(year1);
+					strBuffer.append(getMessageResource(pageContext, "label.and"));
+                    strBuffer.append(year2);
                     strBuffer.append("</h2>");
 				}
 				
