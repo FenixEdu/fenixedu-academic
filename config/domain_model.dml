@@ -2012,13 +2012,11 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
 	interface "
 
 	    public net.sourceforge.fenixedu.util.StudentState getState();
-	    public net.sourceforge.fenixedu.domain.IPerson getPerson();
 	    public net.sourceforge.fenixedu.domain.IStudentKind getStudentKind();
 	    public net.sourceforge.fenixedu.util.TipoCurso getDegreeType();
 	    public net.sourceforge.fenixedu.util.AgreementType getAgreementType();
 	    public void setAgreementType(net.sourceforge.fenixedu.util.AgreementType agreementType);
 	    public void setState(net.sourceforge.fenixedu.util.StudentState state);
-	    public void setPerson(net.sourceforge.fenixedu.domain.IPerson person);
 	    public void setDegreeType(net.sourceforge.fenixedu.util.TipoCurso degreeType);
 	    public net.sourceforge.fenixedu.util.EntryPhase getEntryPhase();
 	    public void setEntryPhase(net.sourceforge.fenixedu.util.EntryPhase entryPhase);
@@ -3460,6 +3458,13 @@ relation StudentGroupBelongsToGroupProperties {
 	net.sourceforge.fenixedu.domain.AttendsSet playsRole attendsSet;
 }
 
+relation StudentPerson {
+    net.sourceforge.fenixedu.domain.Student playsRole students {
+        multiplicity *;
+    }
+    
+    net.sourceforge.fenixedu.domain.Person playsRole person;
+}
 
 relation TeachingCareerCategory {
 	net.sourceforge.fenixedu.domain.teacher.TeachingCareer playsRole teachingCareer {

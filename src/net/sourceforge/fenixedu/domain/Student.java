@@ -27,8 +27,6 @@ public class Student extends Student_Base{
 
     private AgreementType agreementType;
 
-    private IPerson person;
-
     private IExecutionYear registrationYear;
 
     private EntryPhase entryPhase;
@@ -81,7 +79,6 @@ public class Student extends Student_Base{
         result += "state = " + this.state + "; ";
         result += "degreeType = " + this.degreeType + "; ";
         result += "studentKind = " + this.studentKind + "; ";
-        //result += "person = " + this.person + "]";
         return result;
     }
 
@@ -93,18 +90,6 @@ public class Student extends Student_Base{
     public TipoCurso getDegreeType() {
         return degreeType;
     }
-
-
-
-    /**
-     * Returns the person.
-     * 
-     * @return IPerson
-     */
-    public IPerson getPerson() {
-        return person;
-    }
-
 
     /**
      * Returns the state.
@@ -124,18 +109,6 @@ public class Student extends Student_Base{
     public void setDegreeType(TipoCurso degreeType) {
         this.degreeType = degreeType;
     }
-
-
-    /**
-     * Sets the person.
-     * 
-     * @param person
-     *            The person to set
-     */
-    public void setPerson(IPerson person) {
-        this.person = person;
-    }
-
 
     /**
      * Sets the state.
