@@ -25,8 +25,6 @@ public class Student extends Student_Base{
 
     private AgreementType agreementType;
 
-    private IExecutionYear registrationYear;
-
     private EntryPhase entryPhase;
 
     public Student(Integer idInternal) {
@@ -149,22 +147,6 @@ public class Student extends Student_Base{
      */
     public void setEntryPhase(EntryPhase entryPhase) {
         this.entryPhase = entryPhase;
-    }
-
-
-    /**
-     * @return Returns the registrationYear.
-     */
-    public IExecutionYear getRegistrationYear() {
-        return registrationYear;
-    }
-
-    /**
-     * @param registrationYear
-     *            The registrationYear to set.
-     */
-    public void setRegistrationYear(IExecutionYear registrationYear) {
-        this.registrationYear = registrationYear;
     }
 
     /*
