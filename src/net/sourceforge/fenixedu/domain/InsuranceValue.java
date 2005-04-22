@@ -10,8 +10,6 @@ import java.util.Date;
  */
 public class InsuranceValue extends InsuranceValue_Base {
 
-    private IExecutionYear executionYear;
-
     private Date endDate;
 
     public InsuranceValue() {
@@ -19,25 +17,10 @@ public class InsuranceValue extends InsuranceValue_Base {
     }
 
     public InsuranceValue(IExecutionYear executionYear, Double annualValue, Date endDate) {
-        this.executionYear = executionYear;
+        this.setExecutionYear(executionYear);
         setAnnualValue(annualValue);
         this.endDate = endDate;
 
-    }
-
-    /**
-     * @return Returns the executionYear.
-     */
-    public IExecutionYear getExecutionYear() {
-        return executionYear;
-    }
-
-    /**
-     * @param executionYear
-     *            The executionYear to set.
-     */
-    public void setExecutionYear(IExecutionYear executionYear) {
-        this.executionYear = executionYear;
     }
 
     /**

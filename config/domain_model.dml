@@ -1239,11 +1239,7 @@ class net.sourceforge.fenixedu.domain.InsuranceValue extends net.sourceforge.fen
 	Double annualValue;
 	
 	interface "
-	    public net.sourceforge.fenixedu.domain.IExecutionYear getExecutionYear();
-    	
-    	public void setExecutionYear(net.sourceforge.fenixedu.domain.IExecutionYear executionYear);
-    	
-    	public java.util.Date getEndDate();
+	    public java.util.Date getEndDate();
     	
     	public void setEndDate(java.util.Date endDate);
 	"
@@ -3067,6 +3063,11 @@ relation InsuranceTransactionExecutionYear {
 	net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction playsRole insuranceTransactions {
 		multiplicity *;
 	}
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+}
+
+relation InsuranceValueExecutionYear {
+	net.sourceforge.fenixedu.domain.InsuranceValue playsRole insuranceValue;
 	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
 
