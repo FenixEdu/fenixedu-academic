@@ -41,8 +41,10 @@
           <tr>
             <td width="30%"><bean:message key="label.person.identificationDocumentType" /></td>
             <td class="greytxt">
-            	<bean:define id="idType" name="infoPerson" property="tipoDocumentoIdentificacao"/>
-            	<bean:message key='<%=idType.toString()%>'/>
+            	<logic:present name="infoPerson" property="tipoDocumentoIdentificacao" >
+	            	<bean:define id="idType" name="infoPerson" property="tipoDocumentoIdentificacao"/>
+	            	<bean:message key='<%=idType.toString()%>'/>
+            	</logic:present>
             </td>
           </tr>
           <!-- Local de Emissao do Documento de Identificacao -->

@@ -125,8 +125,10 @@ public class ReadPersonInfoOfStudentsAction extends FenixAction {
     private void populateForm(DynaActionForm changeApplicationInfoForm, InfoPerson infoPerson) {
         changeApplicationInfoForm.set("identificationDocumentNumber", infoPerson
                 .getNumeroDocumentoIdentificacao());
-        changeApplicationInfoForm.set("identificationDocumentType", infoPerson
-                .getTipoDocumentoIdentificacao().toString());
+        if(infoPerson.getTipoDocumentoIdentificacao() != null){
+            changeApplicationInfoForm.set("identificationDocumentType", infoPerson
+                    .getTipoDocumentoIdentificacao().toString());
+        }
         changeApplicationInfoForm.set("identificationDocumentIssuePlace", infoPerson
                 .getLocalEmissaoDocumentoIdentificacao());
         changeApplicationInfoForm.set("name", infoPerson.getNome());
