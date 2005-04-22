@@ -38,6 +38,14 @@ public class FenixRequestProcessor extends RequestProcessor {
         if (locale == null) {
             httpSession.setAttribute(Action.LOCALE_KEY, Locale.getDefault());
         }
+        locale = (Locale) httpSession.getAttribute(Globals.LOCALE_KEY);
+        if (locale == null) {
+            httpSession.setAttribute(Globals.LOCALE_KEY, Locale.getDefault());
+        }
+
+        locale = new Locale("pt", "PT");
+        httpSession.setAttribute(Action.LOCALE_KEY, Locale.getDefault());
+        httpSession.setAttribute(Globals.LOCALE_KEY, Locale.getDefault());
 
         String uri = request.getRequestURI();
         try {

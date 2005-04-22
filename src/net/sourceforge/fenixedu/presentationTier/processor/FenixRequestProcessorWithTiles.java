@@ -37,6 +37,10 @@ public class FenixRequestProcessorWithTiles extends TilesRequestProcessor {
         if (locale == null) {
             httpSession.setAttribute(Action.LOCALE_KEY, Locale.getDefault());
         }
+        locale = (Locale) httpSession.getAttribute(Globals.LOCALE_KEY);
+        if (locale == null) {
+            httpSession.setAttribute(Globals.LOCALE_KEY, Locale.getDefault());
+        }
 
         String uri = request.getRequestURI();
         if (((uri.indexOf("login.do") == -1) && (uri.indexOf("showErrorPage.do") == -1) && (uri
