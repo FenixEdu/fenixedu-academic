@@ -111,13 +111,17 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 				if (year2 == null) {
                     strBuffer.append("<h2>");
                     strBuffer.append(getMessageResource(pageContext, "label.year"));
+                    strBuffer.append(" ");
 					strBuffer.append(year1);
                     strBuffer.append("</h2>");
 				} else {
                     strBuffer.append("<h2>");
                     strBuffer.append(getMessageResource(pageContext, "label.years"));
+                    strBuffer.append(" ");
 					strBuffer.append(year1);
+                    strBuffer.append(" ");
 					strBuffer.append(getMessageResource(pageContext, "label.and"));
+                    strBuffer.append(" ");
                     strBuffer.append(year2);
                     strBuffer.append("</h2>");
 				}
@@ -199,8 +203,10 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 		
 		if (user.equals("public")) {
 			strBuffer.append("<table class='tab_exams_details' cellspacing='0px'>");
-			strBuffer.append("<tr><th rowspan='2' width='250px' class='ordYear'>"+year+"&ordm; ");
+			strBuffer.append("<tr><th rowspan='2' width='250px' class='ordYear'>");
             strBuffer.append(getMessageResource(pageContext, "label.year"));
+            strBuffer.append(" ");
+            strBuffer.append(year);
             strBuffer.append("</th>");
 			strBuffer.append("<th colspan='3' width='250'>");
             strBuffer.append(getMessageResource(pageContext, "label.times"));
