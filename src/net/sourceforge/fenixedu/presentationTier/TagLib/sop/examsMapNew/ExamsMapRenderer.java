@@ -199,11 +199,13 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 			strBuffer.append("<tr><th rowspan='2' width='250px' class='ordYear'>"+year+"&ordm; ");
             strBuffer.append(getMessageResource(pageContext, "label.year"));
             strBuffer.append("</th>");
-			strBuffer.append("<th colspan='3' width='250'>1&ordf; ");
+			strBuffer.append("<th colspan='3' width='250'>");
             strBuffer.append(getMessageResource(pageContext, "label.times"));
+            strBuffer.append(" 1");
             strBuffer.append("</th>");
-			strBuffer.append("<th colspan='3'>2&ordf; ");
+			strBuffer.append("<th colspan='3'>");
             strBuffer.append(getMessageResource(pageContext, "label.times"));
+            strBuffer.append(" 2");
             strBuffer.append("</th></tr>");
 			strBuffer.append("<tr><td class='subheader' width='70px'>");
             strBuffer.append(getMessageResource(pageContext, "label.day"));
