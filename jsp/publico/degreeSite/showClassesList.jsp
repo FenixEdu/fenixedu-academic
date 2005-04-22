@@ -89,8 +89,9 @@
 <logic:present name="nextInfoExecutionPeriod">
 	<tr>
 		<th colspan="5" scope="col">
-			<bean:write name="nextInfoExecutionPeriod" property="semester"/><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.semester.abbr"/>
-			<bean:write name="nextInfoExecutionPeriod" property="infoExecutionYear.year"/>
+			<bean:write name="nextInfoExecutionPeriod" property="infoExecutionYear.year"/>,
+			<bean:write name="nextInfoExecutionPeriod" property="semester"/>
+			<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.semester.abbr"/>
 		</th>	
 	</tr>
 
