@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.servlet.jsp.PageContext;
+
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -39,7 +41,7 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
         setUser(typeUser);
     }
 
-    public StringBuffer render(Locale locale) {
+    public StringBuffer render(Locale locale, PageContext pageContext) {
         StringBuffer strBuffer = new StringBuffer("");
         ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
         strBuffer.append("<table class='examMapContainer' cellspacing='0' cellpadding='3' width='95%'>");

@@ -79,7 +79,7 @@ public class RenderExamsMapTag extends TagSupport {
         //				typeUser);
 
         try {
-            writer.print(renderer.render(locale));
+            writer.print(renderer.render(locale, pageContext));
         } catch (IOException e) {
             throw new JspException(messages.getMessage("generateExamsMap.io", e.toString()));
         }
