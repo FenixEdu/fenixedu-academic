@@ -65,19 +65,19 @@ public class TimeTable {
         
         switch (day) {
         case 0:
-            return getMessageResource(pageContext, "label.monday", locale);
+            return getMessageResource(pageContext, "public.degree.information.label.monday", locale);
         case 1:
-            return getMessageResource(pageContext, "label.tusday", locale);
+            return getMessageResource(pageContext, "public.degree.information.label.tusday", locale);
         case 2:
-            return getMessageResource(pageContext, "label.wednesday", locale);
+            return getMessageResource(pageContext, "public.degree.information.label.wednesday", locale);
         case 3:
-            return getMessageResource(pageContext, "label.thursday", locale);
+            return getMessageResource(pageContext, "public.degree.information.label.thursday", locale);
         case 4:
-            return getMessageResource(pageContext, "label.friday", locale);
+            return getMessageResource(pageContext, "public.degree.information.label.friday", locale);
         case 5:
-            return getMessageResource(pageContext, "label.saturday", locale);
+            return getMessageResource(pageContext, "public.degree.information.label.saturday", locale);
         default:
-            return getMessageResource(pageContext, "label.invalid", locale) + day;
+            return getMessageResource(pageContext, "public.degree.information.label.invalid", locale) + day;
 
         }
     }

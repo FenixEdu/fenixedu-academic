@@ -110,17 +110,17 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 				}
 				if (year2 == null) {
                     strBuffer.append("<h2>");
-                    strBuffer.append(getMessageResource(pageContext, "label.year"));
+                    strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.year"));
                     strBuffer.append(" ");
 					strBuffer.append(year1);
                     strBuffer.append("</h2>");
 				} else {
                     strBuffer.append("<h2>");
-                    strBuffer.append(getMessageResource(pageContext, "label.years"));
+                    strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.years"));
                     strBuffer.append(" ");
 					strBuffer.append(year1);
                     strBuffer.append(" ");
-					strBuffer.append(getMessageResource(pageContext, "label.and"));
+					strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.and"));
                     strBuffer.append(" ");
                     strBuffer.append(year2);
                     strBuffer.append("</h2>");
@@ -136,7 +136,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 			strBuffer.append("<td class='courseList'>");
 			if (mapType.equals("DegreeAndYear")) {
 				strBuffer.append("<h2>");
-                strBuffer.append(getMessageResource(pageContext, "label.examsCalendar"));
+                strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.examsCalendar"));
                 strBuffer.append("</h2><br />");
 				renderExamsExecutionCourseTableForYear(strBuffer, year1, pageContext);
 			} else {
@@ -151,7 +151,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 				strBuffer.append("<br style='page-break-before:always;' />");
 				if (mapType.equals("DegreeAndYear")) {
                     strBuffer.append("<h2>");
-                    strBuffer.append(getMessageResource(pageContext, "label.examsCalendar"));
+                    strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.examsCalendar"));
                     strBuffer.append("</h2><br />");
 					renderExamsExecutionCourseTableForYear(strBuffer, year2,pageContext);
 				} else {
@@ -204,36 +204,36 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 		if (user.equals("public")) {
 			strBuffer.append("<table class='tab_exams_details' cellspacing='0px'>");
 			strBuffer.append("<tr><th rowspan='2' width='250px' class='ordYear'>");
-            strBuffer.append(getMessageResource(pageContext, "label.year"));
+            strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.year"));
             strBuffer.append(" ");
             strBuffer.append(year);
             strBuffer.append("</th>");
 			strBuffer.append("<th colspan='3' width='250'>");
-            strBuffer.append(getMessageResource(pageContext, "label.times"));
+            strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.times"));
             strBuffer.append(" 1");
             strBuffer.append("</th>");
 			strBuffer.append("<th colspan='3'>");
-            strBuffer.append(getMessageResource(pageContext, "label.times"));
+            strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.times"));
             strBuffer.append(" 2");
             strBuffer.append("</th></tr>");
 			strBuffer.append("<tr><td class='subheader' width='70px'>");
-            strBuffer.append(getMessageResource(pageContext, "label.day"));
+            strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.day"));
             strBuffer.append("</td><td class='subheader' width='50px'>");
-            strBuffer.append(getMessageResource(pageContext, "label.hour"));
+            strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.hour"));
             strBuffer.append("</td><td class='subheader' width='130px'>");
-            strBuffer.append(getMessageResource(pageContext, "label.room"));
+            strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.room"));
             strBuffer.append("</td>");
 			strBuffer.append("<td class='subheader' width='70px'>");
-            strBuffer.append(getMessageResource(pageContext, "label.day"));
+            strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.day"));
             strBuffer.append("</td>" +
 			"<td class='subheader' width='50px'>");
-            strBuffer.append(getMessageResource(pageContext, "label.hour"));
+            strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.hour"));
             strBuffer.append("</td><td class='subheader' width='130px'>");
-            strBuffer.append(getMessageResource(pageContext, "label.room"));
+            strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.room"));
             strBuffer.append("</td></tr>");			
 		} else {
 			strBuffer.append("<strong>");
-            strBuffer.append(getMessageResource(pageContext, "label.courseOf"));
+            strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.courseOf"));
             strBuffer.append(year + "&ordm; ano:</strong>");
 		}
 		
@@ -440,10 +440,10 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 							Integer numAlunos = season1Exam.getEnrolledStudents();
 							
 							strBuffer.append(numAlunos);
-							strBuffer.append(getMessageResource(pageContext, "label.enrolledPupils"));						
+							strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.enrolledPupils"));						
 							strBuffer.append("</td>");							
 							strBuffer.append("<td>");							
-							strBuffer.append(getMessageResource(pageContext, "label.lack"));
+							strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.lack"));
 							
 							//Obter o num de lugares de exame das salas
 							List roomOccupation = season1Exam.getAssociatedRoomOccupation();
@@ -462,7 +462,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 							//								numLugaresAPreencher = 0;
 							
 							strBuffer.append(numLugaresAPreencher);
-							strBuffer.append(getMessageResource(pageContext, "label.places"));
+							strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.places"));
 							
 							strBuffer.append("</td>");
 							strBuffer.append("<td>");
@@ -472,7 +472,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 						
 						if (infoRoomOccupations != null && infoRoomOccupations.size() > 0) {
 							if (user.equals("sop")) {
-								strBuffer.append(getMessageResource(pageContext, "label.rooms"));
+								strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.rooms"));
 								strBuffer.append("<br>");
 							} else if (user.equals("public")) {
 								strBuffer.append("<td class='"+rowClass+"'>");
@@ -489,7 +489,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 								strBuffer.append("-");
 							} else if (user.equals("public")) {
 								strBuffer.append("<i>");
-                                strBuffer.append(getMessageResource(pageContext, "label.noRoomsAttributed"));
+                                strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.noRoomsAttributed"));
                                 strBuffer.append("</i>");
 							}
 						}
@@ -508,7 +508,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 									+ SessionConstants.CURRICULAR_YEAR_OID + "=" + year.toString()
 									+ "&amp;" + SessionConstants.EXAM_OID + "="
 									+ season1Exam.getIdInternal() + "'>");
-							strBuffer.append(getMessageResource(pageContext, "label.delete"));
+							strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.delete"));
 							strBuffer.append("</a>");
 							strBuffer.append("</td>");
 						}
@@ -534,7 +534,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 						
 						if (user.equals("sop")) {
 							strBuffer.append("2&ordf; ");
-                            strBuffer.append(getMessageResource(pageContext, "label.times"));
+                            strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.times"));
 							strBuffer.append("</a>");
 							strBuffer.append("</td>");		
 							strBuffer.append("<td>");
@@ -562,11 +562,11 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 							Integer numAlunos = season2Exam.getEnrolledStudents();
 							
 							strBuffer.append(numAlunos);
-							strBuffer.append(getMessageResource(pageContext, "label.enrolledPupils"));
+							strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.enrolledPupils"));
 							
 							strBuffer.append("</td>");
 							strBuffer.append("<td>");
-							strBuffer.append(getMessageResource(pageContext, "label.lack"));
+							strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.lack"));
 							
 							//Obter o num de lugares de exame das salas
 							List roomOccupation = season2Exam.getAssociatedRoomOccupation();
@@ -585,7 +585,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 							//								numLugaresAPreencher = 0;
 							
 							strBuffer.append(numLugaresAPreencher);
-							strBuffer.append(getMessageResource(pageContext, "label.places"));
+							strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.places"));
 							strBuffer.append("</td>");
 							
 							strBuffer.append("<td>");
@@ -595,7 +595,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 						
 						if (infoRoomOccupations != null && infoRoomOccupations.size() > 0) {
 							if (user.equals("sop")) {
-								strBuffer.append(getMessageResource(pageContext, "label.rooms")+":");
+								strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.rooms")+":");
 								strBuffer.append("<br>");
 							} else if (user.equals("public")) {
 								strBuffer.append("<td class='"+rowClass+"'>");
@@ -616,7 +616,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 								strBuffer.append("-");
 							} else if (user.equals("public")){
 								strBuffer.append("<i>");
-                                strBuffer.append(getMessageResource(pageContext, "label.noRoomsAttributed"));
+                                strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.noRoomsAttributed"));
                                 strBuffer.append("</i>");
 							}
 						}
@@ -634,7 +634,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 									+ SessionConstants.CURRICULAR_YEAR_OID + "=" + year.toString()
 									+ "&amp;" + SessionConstants.EXAM_OID + "="
 									+ season2Exam.getIdInternal() + "'>");
-							strBuffer.append(getMessageResource(pageContext, "label.delete"));
+							strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.delete"));
 							strBuffer.append("</a>");
 							strBuffer.append("</td>");
 						}
@@ -727,9 +727,9 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
         ResourceBundle bundle = ResourceBundle
             .getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
         
-        String makeLocale =  getMessageResource(pageContext, "label.monday") + "," + getMessageResource(pageContext, "label.tusday") 
-                             + "," + getMessageResource(pageContext, "label.wednesday") + "," + getMessageResource(pageContext, "label.thursday")+ "," + getMessageResource(pageContext, "label.friday")
-                             + "," + getMessageResource(pageContext, "label.saturday");
+        String makeLocale =  getMessageResource(pageContext, "public.degree.information.label.monday") + "," + getMessageResource(pageContext, "public.degree.information.label.tusday") 
+                             + "," + getMessageResource(pageContext, "public.degree.information.label.wednesday") + "," + getMessageResource(pageContext, "public.degree.information.label.thursday")+ "," + getMessageResource(pageContext, "public.degree.information.label.friday")
+                             + "," + getMessageResource(pageContext, "public.degree.information.label.saturday");
    
        String[] daysOfWeek =   makeLocale.split(","); 
        //Segunda", "Ter&ccedil;a", "Quarta", "Quinta", "Sexta", "S&aacute;bado" };
@@ -750,12 +750,12 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 				+ examsMap.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree()
 				.getNome() + "</strong><br />");
 		strBuffer.append("<strong>" + year + "&ordm; ");
-        strBuffer.append(getMessageResource(pageContext, "label.year"));
+        strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.year"));
         strBuffer.append("</strong>");
 		strBuffer.append(" - <strong>"
 				+ ((InfoExecutionCourse) examsMap.getExecutionCourses().get(0)).getInfoExecutionPeriod()
 				.getSemester() + "&ordm; ");
-        strBuffer.append(getMessageResource(pageContext, "label.semester"));
+        strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.semester"));
         strBuffer.append("</strong>");
 		strBuffer.append(" - <strong>"
 				+ ((InfoExecutionCourse) examsMap.getExecutionCourses().get(0)).getInfoExecutionPeriod()
@@ -822,22 +822,22 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 	private void renderExamsTableHeader(StringBuffer strBuffer,PageContext pageContext) {
 		strBuffer.append("<tr>");
 		strBuffer.append("<td> ");
-        strBuffer.append(getMessageResource(pageContext, "label.course"));
+        strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.course"));
         strBuffer.append("</td>");
 		strBuffer.append("<td> ");
-        strBuffer.append(getMessageResource(pageContext, "label.times"));
+        strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.times"));
         strBuffer.append("</td>");
 		strBuffer.append("<td> ");
-        strBuffer.append(getMessageResource(pageContext, "label.date"));   
+        strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.date"));   
         strBuffer.append("</td>");
 		strBuffer.append("<td> ");
-        strBuffer.append(getMessageResource(pageContext, "label.inicialHour"));
+        strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.inicialHour"));
         strBuffer.append("</td>");
 		strBuffer.append("<td> ");
-        strBuffer.append(getMessageResource(pageContext, "label.endHour"));
+        strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.endHour"));
         strBuffer.append("</td>");
 		strBuffer.append("<td> ");
-        strBuffer.append(getMessageResource(pageContext, "label.rooms"));
+        strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.rooms"));
         strBuffer.append("</td>");
 		strBuffer.append("</tr>");
 	}

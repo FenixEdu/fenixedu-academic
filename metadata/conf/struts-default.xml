@@ -96,7 +96,6 @@
     <message-resources parameter="ServidorApresentacao.StudentResources" key="STUDENT_RESOURCES" null="false"/>
     <message-resources parameter="ServidorApresentacao.TeacherCreditsSheetResources" key="TEACHER_CREDITS_SHEET_RESOURCES" null="false"/>
     <message-resources parameter="ServidorApresentacao.GEPResources" key="GEP_RESOURCES" null="false"/>
-    <message-resources parameter="ServidorApresentacao.GEPResources_en" key="GEP_RESOURCES_EN" null="false"/>
     <message-resources parameter="ServidorApresentacao.DegreeAdministrativeOfficeResources" key="DEGREE_ADM_OFFICE" null="false"/>
 	<message-resources parameter="ServidorApresentacao.SchoolRegistrationResources" key="SCHOOL_REGISTRATION_RESOURCES" null="false"/>
 	<message-resources parameter="ServidorApresentacao.CurriculumHistoricResources" key="CURRICULUM_HISTORIC_RESOURCES" null="false"/>

@@ -9,32 +9,32 @@
 <ul class="treemenu">
 	<li>
 		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID")%>" >	 
-	    	 <bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="label.description" /> 
+	    	 <bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.description" /> 
 	    </html:link>                
     </li>
     <li>
     	<html:link page="<%= "/showDegreeSite.do?method=showAccessRequirements&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") %>" >
-        	<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="label.accessRequirements"/>
+        	<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.accessRequirements"/>
         </html:link>
 	</li>
 	<li>
     	<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" +  request.getAttribute("degreeID") %>" >
-			<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="label.curricularPlan"/>
+			<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curricularPlan"/>
         </html:link>
 	</li>
 	<li>
     	<html:link page="<%= "/showExecutionCourseSites.do?method=listSites&amp;degreeOID=" +  request.getAttribute("degreeID") + "&amp;showTwoSemesters=true" %>" >
-			<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="label.courseSites"/>
+			<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.courseSites"/>
         </html:link>
 	</li>
 	<li>
     	<html:link page="<%= "/showClasses.do?method=listClasses&amp;degreeOID=" +  request.getAttribute("degreeID") %>" >
-			<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="label.schedulesByClass"/>
+			<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.schedulesByClass"/>
         </html:link>
 	</li>
 	<li>
     	<html:link page="<%= "/chooseExamsMapContextDA.do?method=choose&amp;degreeID=" +  request.getAttribute("degreeID") %>" >
-			<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="label.exams"/>
+			<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.exams"/>
         </html:link>
 	</li>
 	

@@ -33,10 +33,10 @@
 					<bean:write name="infoDegreeCurricularPlan" property="infoDegree.sigla" />
 				</html:link>&gt;&nbsp;
 				<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;executionDegreeID="  + "&amp;index=" + request.getAttribute("index")  %>" >
-				<bean:message key="label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
+				<bean:message key="public.degree.information.label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
 				</html:link>&gt;&nbsp; 
 				<html:link page="<%= "/chooseContextDANew.do?method=nextPagePublic&nextPage=classSearch&inputPage=chooseContext&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)+ "&amp;degreeID=" + request.getAttribute("degreeID")+ "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() %>" >
-					<bean:message  key="label.classes"  bundle="PUBLIC_DEGREE_INFORMATION" />
+					<bean:message  key="public.degree.information.label.classes"  bundle="PUBLIC_DEGREE_INFORMATION" />
 				</html:link>&gt;&nbsp; 
 				<%= request.getAttribute("sigla").toString() %>
 		</div>	
@@ -46,7 +46,7 @@
 		
 		<h2>
 		<span class="greytxt">
-			<bean:message key="label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
+			<bean:message key="public.degree.information.label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
 			<bean:message key="label.of" />
 			<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />		
 			<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>

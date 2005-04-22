@@ -11,16 +11,16 @@
 	<div class="breadcumbs"><a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a>
 	<bean:define id="degreeType" name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso" />	
 	<bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
-		&nbsp;&gt;&nbsp;<a href="<%= institutionUrlTeaching %>"><bean:message key="label.education" bundle="PUBLIC_DEGREE_INFORMATION" /></a>
+		&nbsp;&gt;&nbsp;<a href="<%= institutionUrlTeaching %>"><bean:message key="public.degree.information.label.education" bundle="PUBLIC_DEGREE_INFORMATION" /></a>
 		&nbsp;&gt;&nbsp;
 		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" + request.getAttribute("degreeID").toString()  %>">
 			<bean:write name="infoDegreeCurricularPlan" property="infoDegree.sigla" />
 		</html:link>
 		&nbsp;&gt;&nbsp;
 		<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)  %>" >
-			<bean:message key="label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
+			<bean:message key="public.degree.information.label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
 		</html:link>
-		&nbsp;&gt;&nbsp;<bean:message  key="label.exams"  bundle="PUBLIC_DEGREE_INFORMATION" /> 
+		&nbsp;&gt;&nbsp;<bean:message  key="public.degree.information.label.exams"  bundle="PUBLIC_DEGREE_INFORMATION" /> 
 	</div>	
 <%--
 
@@ -36,13 +36,13 @@
 	
 	<h1>
 		<bean:write name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso" />
-			<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.in" />
+			<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in" />
 		<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" />
 	</h1>
 
 	<h2 class="greytxt">
 		<bean:write name="<%=SessionConstants.EXECUTION_DEGREE%>" property="infoExecutionYear.year"/>,
-		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.semester.abbr" />
+		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr" />
 		<bean:write name="<%=SessionConstants.EXECUTION_PERIOD%>" property="semester" />
 	</h2>
 

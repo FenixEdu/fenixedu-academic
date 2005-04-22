@@ -13,7 +13,7 @@
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 <div class="breadcumbs"><a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a>
 <bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
-&nbsp;&gt;&nbsp;<a href="<%= institutionUrlTeaching %>"><bean:message key="label.education" bundle="PUBLIC_DEGREE_INFORMATION" /></a>
+&nbsp;&gt;&nbsp;<a href="<%= institutionUrlTeaching %>"><bean:message key="public.degree.information.label.education" bundle="PUBLIC_DEGREE_INFORMATION" /></a>
 		<bean:define id="degreeType" name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso" />	
 		&nbsp;&gt;&nbsp;		
 		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString() %>">
@@ -22,22 +22,22 @@
 		&nbsp;&gt;&nbsp;
 		<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID").toString() + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString()%>" >
 <%-- &amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID") --%>
-		<bean:message key="label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
+		<bean:message key="public.degree.information.label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
 	</html:link>
-	&nbsp;&gt;&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="label.curriculum"/>		
+	&nbsp;&gt;&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="public.degree.information.label.curriculum"/>		
 </div>	
 
 	<!-- COURSE NAME -->
 	<h1>
 		<bean:write name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso" />
-		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.in" />
+		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in" />
 		<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" />
 	</h1>
 
 	<!-- CURRICULAR PLAN -->
 	<h2 class="greytxt">
-		<bean:message key="label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
-		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.of" />
+		<bean:message key="public.degree.information.label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
+		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.of" />
 		<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />		
 		<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>
 		<logic:notEmpty name="infoDegreeCurricularPlan" property="endDate">
@@ -58,7 +58,7 @@
 		
 		<table border="0" cellspacing="2" cellpadding="0">			
 			<tr>
-				<td><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.executionYear"/>:</td>
+				<td><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.executionYear"/>:</td>
 				<td>
 					<html:select property="indice" size="1" onchange="this.form.submit();">
 						<html:options property="value" labelProperty="label" collection="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD%>"/>
@@ -66,7 +66,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.curricularYear"/>:</td>
+				<td><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curricularYear"/>:</td>
 				<td>
 					<html:select property="curYear" size="1" onchange="this.form.submit();">
 						<html:options collection="curricularYearList" property="value" labelProperty="label"/>
@@ -89,25 +89,25 @@
 	<table class="tab_lay" cellspacing="0" cellpadding="5">
 		<tr>
 			<th colspan="11" scope="col">
-				<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.year" /> <bean:write name="currentYear"/>
+				<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year" /> <bean:write name="currentYear"/>
 			</th>
 		</tr>
 		<tr>						
 			<td colspan="7" class="subheader">&nbsp;</td>
-			<td colspan="4" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.hoursPerWeek" /></td>
+			<td colspan="4" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.hoursPerWeek" /></td>
 		</tr>	
 		</tr>
-			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.semester.abbr"/></td>
-			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.curricularCourse"/></td>
-			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.type"/></td>
-			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.branch"/></td>			
-			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.credits"/></td>
-			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.ects"/></td>
-			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.weight"/></td>
-			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.theoretical.abbr"/></td>
-			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.pratical.abbr"/></td>
-			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.theoPrat.abbr"/></td>
-			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.laboratorial.abbr"/></td>
+			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr"/></td>
+			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curricularCourse"/></td>
+			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.type"/></td>
+			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.branch"/></td>			
+			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.credits"/></td>
+			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.ects"/></td>
+			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.weight"/></td>
+			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.theoretical.abbr"/></td>
+			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.pratical.abbr"/></td>
+			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.theoPrat.abbr"/></td>
+			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.laboratorial.abbr"/></td>
 		</tr>
 		
 		<% int count=0; %>
@@ -117,26 +117,26 @@
 					<% if (row.intValue() % 2 !=0) count=1; else count=0; %>
 					<tr>
 						<th colspan="11" scope="col">
-							<bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>&ordm;&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.year"/>
+							<bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>&ordm;&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/>
 						</th>
 					</tr>
 					<bean:define id="currentYear" name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>
 					<tr>
 						<td colspan="7" class="subheader">&nbsp;</td>
-						<td colspan="4" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.hoursPerWeek" /></td>
+						<td colspan="4" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.hoursPerWeek" /></td>
 					</tr>
 					<tr>						
-						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.semester.abbr"/></td>
-						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.curricularCourse"/></td>
-						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.type"/></td>
-						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.branch"/></td>			
-						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.credits"/></td>
-						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.ects"/></td>
-						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.weight"/></td>							
-						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.theoretical.abbr"/></td>
-						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.pratical.abbr"/></td>
-						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.theoPrat.abbr"/></td>
-						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.laboratorial.abbr"/></td>
+						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr"/></td>
+						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curricularCourse"/></td>
+						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.type"/></td>
+						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.branch"/></td>			
+						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.credits"/></td>
+						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.ects"/></td>
+						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.weight"/></td>							
+						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.theoretical.abbr"/></td>
+						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.pratical.abbr"/></td>
+						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.theoPrat.abbr"/></td>
+						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.laboratorial.abbr"/></td>
 					</tr>
 				</logic:notEqual>
 			</logic:iterate>
@@ -173,10 +173,10 @@
 </logic:present>
 
 <logic:notPresent name="allActiveCurricularCourseScopes">
-	<p><span class="error"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="error.impossibleCurricularPlan" /></span></p>
+	<p><span class="error"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.error.impossibleCurricularPlan" /></span></p>
 </logic:notPresent>
 <logic:empty name="allActiveCurricularCourseScopes">
-	<p><span class="error"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="error.impossibleCurricularPlan" /></span></p>
+	<p><span class="error"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.error.impossibleCurricularPlan" /></span></p>
 </logic:empty>
 
 </logic:present>

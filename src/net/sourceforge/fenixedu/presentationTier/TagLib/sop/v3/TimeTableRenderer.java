@@ -209,7 +209,7 @@ public class TimeTableRenderer {
         //strBuffer.append("<th width='15%'>horas/dias</th>\r\n");
         String hourDaysTitle;
         try {
-            hourDaysTitle = RequestUtils.message(pageContext, "PUBLIC_DEGREE_INFORMATION", Globals.LOCALE_KEY, "label.timesAndDays");
+            hourDaysTitle = RequestUtils.message(pageContext, "PUBLIC_DEGREE_INFORMATION", Globals.LOCALE_KEY, "public.degree.information.label.timesAndDays");
         } catch (JspException e) {
             hourDaysTitle = "???label.timesAndDays???"; 
         }

@@ -18,7 +18,7 @@
 <div class="breadcumbs"><a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a>  > Ensino</div>
 				<div class="version"><span class="px10"><a href="#">english version</a> <img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" /></span></div> 
 
-				<h1><bean:message key="label.education" bundle="PUBLIC_DEGREE_INFORMATION" /></h1>
+				<h1><bean:message key="public.degree.information.label.education" bundle="PUBLIC_DEGREE_INFORMATION" /></h1>
 				<p class="greytxt">
 					<logic:equal name="degreeType" value="<%= TipoCurso.MESTRADO_OBJ.toString() %>">
 						<bean:message key="text.masterDegree" />

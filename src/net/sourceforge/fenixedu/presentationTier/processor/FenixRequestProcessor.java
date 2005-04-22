@@ -34,18 +34,8 @@ public class FenixRequestProcessor extends RequestProcessor {
     protected boolean processPreprocess(HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession httpSession = request.getSession(false);
-        Locale locale = (Locale) httpSession.getAttribute(Action.LOCALE_KEY);
-        if (locale == null) {
-            httpSession.setAttribute(Action.LOCALE_KEY, Locale.getDefault());
-        }
-        locale = (Locale) httpSession.getAttribute(Globals.LOCALE_KEY);
-        if (locale == null) {
-            httpSession.setAttribute(Globals.LOCALE_KEY, Locale.getDefault());
-        }
 
-        locale = new Locale("pt", "PT");
-        httpSession.setAttribute(Action.LOCALE_KEY, Locale.getDefault());
-        httpSession.setAttribute(Globals.LOCALE_KEY, Locale.getDefault());
+        setLocal(request, httpSession);
 
         String uri = request.getRequestURI();
         try {
@@ -88,6 +78,25 @@ public class FenixRequestProcessor extends RequestProcessor {
             }
         }
         return true;
+    }
+
+    public static void setLocal(HttpServletRequest request, HttpSession httpSession) {
+        Locale locale = (Locale) httpSession.getAttribute(Action.LOCALE_KEY);
+        if (locale == null) {
+            httpSession.setAttribute(Action.LOCALE_KEY, Locale.getDefault());
+        }
+        locale = (Locale) httpSession.getAttribute(Globals.LOCALE_KEY);
+        if (locale == null) {
+            httpSession.setAttribute(Globals.LOCALE_KEY, Locale.getDefault());
+        }
+        locale = (Locale) request.getAttribute(Action.LOCALE_KEY);
+        if (locale == null) {
+            request.setAttribute(Action.LOCALE_KEY, Locale.getDefault());
+        }
+        locale = (Locale) request.getAttribute(Globals.LOCALE_KEY);
+        if (locale == null) {
+            request.setAttribute(Globals.LOCALE_KEY, Locale.getDefault());
+        }
     }
 
 }

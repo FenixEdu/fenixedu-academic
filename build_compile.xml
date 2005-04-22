@@ -452,9 +452,19 @@
 		<echo level="info" message="Processing of ${dml.definition.file} finished."/>
 	</target>
 
+    <target name="i18nDefault"
+    		depends="prepare">
+		<copy todir="${build.home.webinf.classes}/ServidorApresentacao">
+			<fileset dir="${build.home.webinf.classes}/ServidorApresentacao" >
+				<include name="*_pt.properties"/>
+			</fileset>
+			<globmapper from="*_pt.properties" to="*.properties"/>
+		</copy>
+	</target>
+
     <target name="compile"
     		description="Compile application"
-    		depends="prepare, write-filter-hostnames-configuration-file, generate">
+    		depends="i18nDefault, write-filter-hostnames-configuration-file, generate">
 		<javac destdir="${build.home.webinf.classes}"
                extdirs="${lib};${env.JBOSS_HOME}/client"
                debug="${compile.debug}"

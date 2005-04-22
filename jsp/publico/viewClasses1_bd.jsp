@@ -9,7 +9,7 @@
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 <div class="breadcumbs"><a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a> >
 <bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
-&nbsp;&gt;&nbsp;<a href="<%= institutionUrlTeaching %>"><bean:message key="label.education" bundle="PUBLIC_DEGREE_INFORMATION" /></a>
+&nbsp;&gt;&nbsp;<a href="<%= institutionUrlTeaching %>"><bean:message key="public.degree.information.label.education" bundle="PUBLIC_DEGREE_INFORMATION" /></a>
 	<bean:define id="degreeType" name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLAN %>" property="infoDegree.tipoCurso" />
 	<bean:define id="infoDegreeCurricularPlan" name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLAN %>"/>
 	&nbsp;&gt;&nbsp;
@@ -18,9 +18,9 @@
 	</html:link>
 	&nbsp;&gt;&nbsp;
 	<html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >
-		<bean:message key="label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
+		<bean:message key="public.degree.information.label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
 	</html:link>
-	&nbsp;&gt;&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.classes"/> 	
+	&nbsp;&gt;&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.classes"/> 	
 </div>	
 
 <%--
@@ -33,13 +33,13 @@
 
 <h1>
 	<bean:write name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso" />
-	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.in" />
+	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in" />
 	<bean:write name="infoDegreeCurricularPlan" property="infoDegree.nome" />
 </h1>
 
 <h2 class="greytxt">
-	<bean:message key="label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
-	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.of" />
+	<bean:message key="public.degree.information.label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
+	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.of" />
 	<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />		
 	<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>
 	<logic:notEmpty name="infoDegreeCurricularPlan" property="endDate">
@@ -63,7 +63,7 @@
 
 		<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
-			    <td><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="property.executionPeriod"/>:</td>
+			    <td><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.property.executionPeriod"/>:</td>
 			    <td>
 					<html:select property="indice" size="1" onchange='this.form.submit();'>
 						<logic:notEmpty name="chooseSearchContextForm" property="indice" >
@@ -80,9 +80,9 @@
 <logic:present name="classList">	
 	<table class="tab_lay" cellspacing="0" cellpadding="0" width="50%">
 		<tr>
-			<th><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="property.class"/></th>
-			<th><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.semester"/></th>
-			<th><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="label.curricularYear"/></th>0
+			<th><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.property.class"/></th>
+			<th><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester"/></th>
+			<th><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curricularYear"/></th>0
 		</tr>		
 	<logic:iterate id="classview" name="classList" indexId="row">
 		<% String rowColor = row.intValue() % 2 == 0 ? "white" : "bluecell" ; %>
@@ -103,7 +103,7 @@
 <logic:notPresent name="classview"  >	
 	<table align="center" border="0" cellpadding="0" cellspacing="0">
 		<tr>
-			<td><span class="error"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="message.public.notfound.classes"/></span></td>
+			<td><span class="error"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.message.public.notfound.classes"/></span></td>
 		</tr>
 	</table>
 </logic:notPresent>
