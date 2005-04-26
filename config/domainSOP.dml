@@ -683,3 +683,10 @@ relation WrittenEvaluationCurricularCourseScope {
 		multiplicity *;
 	}
 }
+
+relation WrittenEvaluationCurricularCourseScopeCurricularCourseScope {
+	net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope playsRole writtenEvaluationCurricularCourseScopes {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.CurricularCourseScope playsRole curricularCourseScope;
+}
