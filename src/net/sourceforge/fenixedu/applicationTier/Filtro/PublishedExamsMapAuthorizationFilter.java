@@ -4,10 +4,15 @@ import java.util.Iterator;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEvaluation;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -45,10 +50,10 @@ public class PublishedExamsMapAuthorizationFilter extends Filtro {
 
 		private void filterUnpublishedInformation(InfoSiteEvaluation infoSiteEvaluation) {
 		    // This code is usefull for when the exams are to be filtered from the public execution course page.
-//			CollectionUtils.filter(infoSiteEvaluation.getInfoEvaluations(), new Predicate() {
-//				public boolean evaluate(Object arg0) {
-//					return !(arg0 instanceof InfoExam);
-//				}});
+			CollectionUtils.filter(infoSiteEvaluation.getInfoEvaluations(), new Predicate() {
+				public boolean evaluate(Object arg0) {
+					return !(arg0 instanceof InfoExam);
+				}});
 		}
 
 		private void filterUnpublishedInformation(InfoExamsMap infoExamsMap) {
