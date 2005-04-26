@@ -26,8 +26,6 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     protected Calendar enrollmentEndTime;
 
-    protected List associatedCurricularCourseScope;
-
     protected List associatedRoomOccupation;
 
     public WrittenEvaluation() {
@@ -154,20 +152,6 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
      */
     public void setEnrollmentEndTime(Calendar calendar) {
         enrollmentEndTime = calendar;
-    }
-
-    /**
-     * @return
-     */
-    public List getAssociatedCurricularCourseScope() {
-        return associatedCurricularCourseScope;
-    }
-
-    /**
-     * @param list
-     */
-    public void setAssociatedCurricularCourseScope(List list) {
-        associatedCurricularCourseScope = list;
     }
 
     /**

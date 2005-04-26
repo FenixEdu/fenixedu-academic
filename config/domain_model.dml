@@ -623,11 +623,7 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 	    
 	    public void setEnrollmentEndTime(java.util.Calendar calendar);
 	
-		public java.util.List getAssociatedCurricularCourseScope();
-		
-		public void setAssociatedCurricularCourseScope(java.util.List list);
-	
-	    public java.util.List getAssociatedRoomOccupation();
+		public java.util.List getAssociatedRoomOccupation();
 		
 		public void setAssociatedRoomOccupation(java.util.List list);
 		"
@@ -1874,12 +1870,6 @@ class net.sourceforge.fenixedu.domain.SchoolClass extends net.sourceforge.fenixe
 class net.sourceforge.fenixedu.domain.SchoolClassShift extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer chaveTurma;
 	Integer chaveTurno;
-	
-	interface"
-	public net.sourceforge.fenixedu.domain.ISchoolClass getTurma();
-	
-	public void setTurma(net.sourceforge.fenixedu.domain.ISchoolClass schoolClass);
-	"
 }
 
 class net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3425,6 +3415,13 @@ relation SchoolClassExecutionDegree {
 	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
 }
 
+relation SchoolClassShiftSchoolClass {
+	net.sourceforge.fenixedu.domain.SchoolClassShift playsRole schoolClassShifts {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.SchoolClass playsRole turma;
+}
+
 relation SchoolClassShiftShift {
 	net.sourceforge.fenixedu.domain.SchoolClassShift playsRole schoolClassShifts {
 		multiplicity *;
@@ -3705,6 +3702,14 @@ relation TeacherSummary {
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
 
+relation WrittenEvaluationCurricularCourseScope {
+	net.sourceforge.fenixedu.domain.WrittenEvaluation playsRole associatedWrittenEvaluations {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.CurricularCourseScope playsRole associatedCurricularCourseScope {
+		multiplicity *;
+	}
+}
 
 relation PublicationTeacherPublication {
 	net.sourceforge.fenixedu.domain.publication.PublicationTeacher playsRole publicationTeachers {
