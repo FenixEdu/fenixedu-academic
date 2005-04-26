@@ -13,14 +13,7 @@ package net.sourceforge.fenixedu.domain;
  */
 
 public class ExecutionDegree extends ExecutionDegree_Base {
-    private IPeriod periodLessonsFirstSemester;
-
-    private IPeriod periodExamsFirstSemester;
-
-    private IPeriod periodLessonsSecondSemester;
-
-    private IPeriod periodExamsSecondSemester;
-
+    
     /** Construtor sem argumentos publico requerido pela moldura de objectos OJB */
     public ExecutionDegree() {
     }
@@ -61,39 +54,4 @@ public class ExecutionDegree extends ExecutionDegree_Base {
         result += "]";
         return result;
     }
-
-   
-    public IPeriod getPeriodExamsFirstSemester() {
-        return periodExamsFirstSemester;
-    }
-
-    public void setPeriodExamsFirstSemester(IPeriod periodExamsFirstSemester) {
-        this.periodExamsFirstSemester = periodExamsFirstSemester;
-    }
-
-    public IPeriod getPeriodExamsSecondSemester() {
-        return periodExamsSecondSemester;
-    }
-
-    public void setPeriodExamsSecondSemester(IPeriod periodExamsSecondSemester) {
-        this.periodExamsSecondSemester = periodExamsSecondSemester;
-    }
-
-    public IPeriod getPeriodLessonsSecondSemester() {
-        return periodLessonsSecondSemester;
-    }
-
-    public void setPeriodLessonsSecondSemester(IPeriod periodLessonsSecondSemester) {
-        this.periodLessonsSecondSemester = periodLessonsSecondSemester;
-    }
-
-    public IPeriod getPeriodLessonsFirstSemester() {
-        return periodLessonsFirstSemester;
-    }
-
-    public void setPeriodLessonsFirstSemester(IPeriod periodLessonsFirstSemester) {
-        this.periodLessonsFirstSemester = periodLessonsFirstSemester;
-    }
-
-    
 }
