@@ -10,7 +10,6 @@
 
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Set;
 
 public class Department extends Department_Base {
 

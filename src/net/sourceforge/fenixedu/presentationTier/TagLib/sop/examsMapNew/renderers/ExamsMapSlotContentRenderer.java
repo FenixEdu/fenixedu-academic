@@ -4,8 +4,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.renderers;
 
-import java.util.Locale;
-
 import javax.servlet.jsp.PageContext;
 
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMap;

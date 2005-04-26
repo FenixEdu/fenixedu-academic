@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.rendere
 
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
