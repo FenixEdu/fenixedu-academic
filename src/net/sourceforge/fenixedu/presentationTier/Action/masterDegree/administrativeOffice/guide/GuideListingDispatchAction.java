@@ -147,7 +147,12 @@ public class GuideListingDispatchAction extends DispatchAction {
 
             String identificationDocumentNumber = (String) choosePersonForm
                     .get("identificationDocumentNumber");
-            IDDocumentType identificationDocumentType = IDDocumentType.valueOf((String) choosePersonForm.get("identificationDocumentType"));
+            
+            String identificationDocumentString = (String) choosePersonForm.get("identificationDocumentType");
+            IDDocumentType identificationDocumentType = null;
+            if(identificationDocumentString != null && !identificationDocumentString.equals("")){
+                identificationDocumentType = IDDocumentType.valueOf(identificationDocumentString);
+            }
             String studentNumber = (String) choosePersonForm.get("studentNumber");
 
             if (identificationDocumentNumber == null || identificationDocumentNumber.length() == 0) {
