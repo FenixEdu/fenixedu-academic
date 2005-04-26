@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project basedir="." default="compile" name="Compilation Scripts">
+
+    <property environment="env"/>
+	<property name="encoding" value="ISO-8859-1"/>	
+
+	<property file="build.properties"/>
+
+    <!-- Source code directories -->
+    <property name="src" location="src"/>
+    <property name="src_gen" location="src_gen"/>    
+    <property name="src_tools" location="src_tools"/>
+
+	<!-- Directories for compiled code -->
+	<property name="build.home" location="build"/>
+	<property name="build.home.temp" value="${build.home}/temp"/>
+	<property name="build.home.temp.classes" value="${build.home.temp}/temp/classes"/>
+	<property name="build.home.webinf" value="${build.home}/WEB-INF"/>
+	<property name="build.home.webinf.classes" value="${build.home.webinf}/classes"/>
+
+    <!-- Directories with libraries (JARs) -->
+    <property name="lib" location="lib" />
+
+	<!-- Compilation options -->
+	<property name="compile.debug"       value="on"/>
+  	<property name="compile.deprecation" value="off"/>
+  	<property name="compile.optimize"    value="on"/>
+
+
+    <target name="clean-all"
+    		description="Removes any generated files">
+		<delete dir="${build.home.temp}"/>
+    </target>
+
+	<target name="prepare"
+			description="Copy configuration files to compile dir">
+		<mkdir dir="${build.home}"/>
+		<mkdir dir="${build.home.temp}"/>
+		<mkdir dir="${build.home.temp.classes}"/>
+		<mkdir dir="${build.home.webinf}"/>
+		<mkdir dir="${build.home.webinf.classes}"/>
+
+		<javac destdir="${build.home.webinf.classes}"
+               extdirs="${lib}"
+               debug="${compile.debug}"
+               optimize="${compile.optimize}"
+               deprecation="${compile.deprecation}"
+               encoding="${encoding}"
+			   nowarn="true">
+			<src path="${src_gen}"/>
+			<src path="${src}"/>
+			<include name="net/sourceforge/fenixedu/persistenceTier/OJB/SuportePersistenteOJB.java"/>
+		</javac>
+	</target>
+
+    <target name="compile"
+    		description="Compile tools"
+    		depends="prepare">
+		<javac destdir="${build.home.temp.classes}"
+               extdirs="${lib}"
+               debug="${compile.debug}"
+               optimize="${compile.optimize}"
+               deprecation="${compile.deprecation}"
+               encoding="${encoding}"
+			   nowarn="true">
+			<src path="${src_tools}"/>
+		</javac>
+	</target>
+
+    <target name="generate-DAOs"
+    		description="Generate DAO skeletons."
+    		depends="compile">
+		<java classname="pt.utl.ist.codeGenerator.DAOGenerator" fork="true">
+			<classpath>
+				<pathelement path="${build.home.temp.classes}"/>
+				<pathelement path="${build.home.webinf.classes}"/>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+			</classpath>
+		</java>
+    	<antcall target="clean-all"/>
+    </target>
+
+</project>
