@@ -5,10 +5,6 @@ package net.sourceforge.fenixedu.domain;
  */
 public class WrittenEvaluationCurricularCourseScope extends WrittenEvaluationCurricularCourseScope_Base {
 
-    private IWrittenEvaluation writtenEvaluation;
-
-    private ICurricularCourseScope curricularCourseScope;
-
     public WrittenEvaluationCurricularCourseScope() {
     }
 
@@ -23,34 +19,6 @@ public class WrittenEvaluationCurricularCourseScope extends WrittenEvaluationCur
         return "[WRITTEN EVALUATION CURRICULAR COURSE SCOPE:" + " WrittenEvaluation= '"
                 + this.getWrittenEvaluation() + "'\n" + " CurricularCourseScope= '"
                 + this.getCurricularCourseScope() + "'\n" + "";
-    }
-
-    /**
-     * @return
-     */
-    public IWrittenEvaluation getWrittenEvaluation() {
-        return writtenEvaluation;
-    }
-
-    /**
-     * @return
-     */
-    public ICurricularCourseScope getCurricularCourseScope() {
-        return curricularCourseScope;
-    }
-
-    /**
-     * @param writtenEvaluation
-     */
-    public void setWrittenEvaluation(IWrittenEvaluation writtenEvaluation) {
-        this.writtenEvaluation = writtenEvaluation;
-    }
-
-    /**
-     * @param curricularCourseScope
-     */
-    public void setCurricularCourseScope(ICurricularCourseScope curricularCourseScope) {
-        this.curricularCourseScope = curricularCourseScope;
     }
 
 }

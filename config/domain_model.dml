@@ -2182,16 +2182,6 @@ class net.sourceforge.fenixedu.domain.University extends net.sourceforge.fenixed
 class net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyWrittenEvaluation;
 	Integer keyCurricularCourseScope;
-
-	interface "
-	public net.sourceforge.fenixedu.domain.IWrittenEvaluation getWrittenEvaluation();
-	 
-	public void setWrittenEvaluation(net.sourceforge.fenixedu.domain.IWrittenEvaluation writtenEvaluation);
-	 
-	public net.sourceforge.fenixedu.domain.ICurricularCourseScope getCurricularCourseScope();
-	 
-	public void setCurricularCourseScope(net.sourceforge.fenixedu.domain.ICurricularCourseScope curricularCourseScope);
-	"
 }
 
 class net.sourceforge.fenixedu.domain.publication.Author extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3709,6 +3699,20 @@ relation WrittenEvaluationCurricularCourseScope {
 	net.sourceforge.fenixedu.domain.CurricularCourseScope playsRole associatedCurricularCourseScope {
 		multiplicity *;
 	}
+}
+
+relation WrittenEvaluationCurricularCourseScopeCurricularCourseScope {
+	net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope playsRole writtenEvaluationCurricularCourseScopes {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.CurricularCourseScope playsRole curricularCourseScope;
+}
+
+relation WrittenEvaluationCurricularCourseScopeWrittenEvaluation {
+	net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope playsRole writtenEvaluationCurricularCourseScopes {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.WrittenEvaluation playsRole writtenEvaluation;
 }
 
 relation PublicationTeacherPublication {
