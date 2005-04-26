@@ -690,20 +690,6 @@ class net.sourceforge.fenixedu.domain.ExamStudentRoom extends net.sourceforge.fe
 	Integer keyRoom;
 	Integer keyStudent;
 	Integer keyExam;
-	
-	interface"
-	public net.sourceforge.fenixedu.domain.IExam getExam();
-	
-	public void setExam(net.sourceforge.fenixedu.domain.IExam exam);
-
-	public net.sourceforge.fenixedu.domain.IRoom getRoom();
-	
-	public void setRoom(net.sourceforge.fenixedu.domain.IRoom sala);
-
-	public net.sourceforge.fenixedu.domain.IStudent getStudent();
-	
-	public void setStudent(net.sourceforge.fenixedu.domain.IStudent student);
-	"
 }
 
 
@@ -2764,6 +2750,27 @@ relation EnrolmentPeriodExecutionPeriod {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation ExamStudentRoomExam {
+	net.sourceforge.fenixedu.domain.ExamStudentRoom playsRole examStudentRooms {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Exam playsRole exam;
+}
+
+relation ExamStudentRoomRoom {
+	net.sourceforge.fenixedu.domain.ExamStudentRoom playsRole examStudentRooms {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Room playsRole room;
+}
+
+relation ExamStudentRoomStudent {
+	net.sourceforge.fenixedu.domain.ExamStudentRoom playsRole examStudentRooms {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Student playsRole student;
 }
 
 relation ExecutionCourseAttends {

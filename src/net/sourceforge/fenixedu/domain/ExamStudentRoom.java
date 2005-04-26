@@ -10,12 +10,7 @@ package net.sourceforge.fenixedu.domain;
  *  
  */
 public class ExamStudentRoom extends ExamStudentRoom_Base {
-    private IExam exam;
-
-    private IStudent student;
-
-    private IRoom room;
-
+    
     /**
      *  
      */
@@ -41,47 +36,4 @@ public class ExamStudentRoom extends ExamStudentRoom_Base {
         }
         return resultado;
     }
-
-    /**
-     * @return
-     */
-    public IExam getExam() {
-        return exam;
-    }
-
-    /**
-     * @return
-     */
-    public IRoom getRoom() {
-        return room;
-    }
-
-    /**
-     * @return
-     */
-    public IStudent getStudent() {
-        return student;
-    }
-
-    /**
-     * @param exam
-     */
-    public void setExam(IExam exam) {
-        this.exam = exam;
-    }
-
-    /**
-     * @param sala
-     */
-    public void setRoom(IRoom sala) {
-        room = sala;
-    }
-
-    /**
-     * @param student
-     */
-    public void setStudent(IStudent student) {
-        this.student = student;
-    }
-
 }
