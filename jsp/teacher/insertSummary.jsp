@@ -68,7 +68,7 @@
 	</tr>
 </table>
 <br />
-<table width="100%">		
+<table width="100%">
 	<logic:iterate id="infoLesson" name="shiftSelected" property="infoLessons">
 		<bean:define id="lessonId" name="infoLesson" property="idInternal"/>
 		<tr>
@@ -79,22 +79,22 @@
 				- <dt:format pattern="HH:mm"><bean:write name="infoLesson" property="fim.timeInMillis"/></dt:format>
 				<bean:write name="infoLesson" property="infoSala.nome" />
 			:</td>
-			<logic:present name="summaryDateInputOption">	
+			<logic:present name="checked">
 				<logic:present name="verEditor">	
-					<td><html:radio property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.method.value='prepareInsertSummary';this.form.summaryDateInputOption.value='ole';this.form.forHidden.value='true';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();"/></td>
+					<td><html:radio property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.summaryDateInputOption.value='null';this.form.method.value='prepareInsertSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();"/></td>
 				</logic:present>
 				<logic:notPresent name="verEditor">	
-					<td><html:radio property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.method.value='prepareInsertSummary';this.form.summaryDateInputOption.value='ole';this.form.forHidden.value='true';this.form.page.value=0;this.form.submit();"/></td>
+					<td><html:radio property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.summaryDateInputOption.value='null';this.form.method.value='prepareInsertSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.submit();"/></td>
 				</logic:notPresent>	
-			</logic:present>	
-			<logic:notPresent name="summaryDateInputOption">	
+			</logic:present>
+			<logic:notPresent name="checked">	
 				<logic:present name="verEditor">	
 					<td><html:radio property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.method.value='prepareInsertSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();"/></td>
 				</logic:present>
 				<logic:notPresent name="verEditor">	
 					<td><html:radio property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.method.value='prepareInsertSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.submit();"/></td>
 				</logic:notPresent>	
-			</logic:notPresent>		
+			</logic:notPresent>	
 		</tr>
 	</logic:iterate>
 	<tr>
@@ -148,7 +148,7 @@
 				<bean:message key="message.dateFormat"/></td>
 			</tr>							
 		</logic:equal>
-	</logic:present>		
+	</logic:present>				
 	<logic:present name="forHidden">
 		<logic:equal name="forHidden" value="false">
 		<tr>

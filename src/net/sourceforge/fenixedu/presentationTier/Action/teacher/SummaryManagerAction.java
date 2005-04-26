@@ -231,7 +231,13 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             return showSummaries(mapping, form, request, response);
         }
         
-        DynaActionForm actionForm = (DynaActionForm) form;        
+        DynaActionForm actionForm = (DynaActionForm) form;
+        
+        System.out.println("OLAAAAAAAAAA -> " + actionForm.get("summaryDateInputOption"));
+         
+        if(actionForm.get("summaryDateInputOption").equals("on"))
+            request.setAttribute("checked", "");
+        
         if(actionForm.get("editor").equals("") || (actionForm.get("editor").equals("true"))){
             request.setAttribute("verEditor", "true");    
         }    
