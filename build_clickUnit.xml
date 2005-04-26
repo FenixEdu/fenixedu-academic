@@ -9,14 +9,15 @@
 	<property name="lib" location="lib" />
 
 	<property name="build.home" location="build"/>
-	<property name="build.app-server" value="${build.home}/app-server"/>
+	<property name="build.home.webinf" value="${build.home}/WEB-INF"/>
+	<property name="build.home.webinf.classes" value="${build.home.webinf}/classes"/>
 
     <target name="reverse-roleback-file"
     		description="Reverses the contents of the sql file with the roleback instructions.">
-		<java classname="Tools.io.ReverseFile" fork="true">
+		<java classname="net.sourceforge.fenixedu.tools.io.ReverseFile" fork="true">
 			<arg value="${roleback.filename}"/>
 			<classpath>
-				<pathelement path="${build.app-server}"/>
+				<pathelement path="${build.home.webinf.classes}"/>
                 <fileset dir="${lib}">
                     <include name="**/*.jar"/>
                 </fileset>
