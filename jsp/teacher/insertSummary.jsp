@@ -79,12 +79,22 @@
 				- <dt:format pattern="HH:mm"><bean:write name="infoLesson" property="fim.timeInMillis"/></dt:format>
 				<bean:write name="infoLesson" property="infoSala.nome" />
 			:</td>
-			<logic:present name="verEditor">	
-				<td><html:radio property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.method.value='prepareInsertSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();"/></td>
-			</logic:present>
-			<logic:notPresent name="verEditor">	
-				<td><html:radio property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.method.value='prepareInsertSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.submit();"/></td>
-			</logic:notPresent>	
+			<logic:present name="summaryDateInputOption">	
+				<logic:present name="verEditor">	
+					<td><html:radio property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.method.value='prepareInsertSummary';this.form.summaryDateInputOption.value='ole';this.form.forHidden.value='true';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();"/></td>
+				</logic:present>
+				<logic:notPresent name="verEditor">	
+					<td><html:radio property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.method.value='prepareInsertSummary';this.form.summaryDateInputOption.value='ole';this.form.forHidden.value='true';this.form.page.value=0;this.form.submit();"/></td>
+				</logic:notPresent>	
+			</logic:present>	
+			<logic:notPresent name="summaryDateInputOption">	
+				<logic:present name="verEditor">	
+					<td><html:radio property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.method.value='prepareInsertSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();"/></td>
+				</logic:present>
+				<logic:notPresent name="verEditor">	
+					<td><html:radio property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.method.value='prepareInsertSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.submit();"/></td>
+				</logic:notPresent>	
+			</logic:notPresent>		
 		</tr>
 	</logic:iterate>
 	<tr>

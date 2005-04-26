@@ -101,12 +101,12 @@
 				
 			<script language="JavaScript" type="text/javascript"> 
 			<!--
-				writeTextEditor(200, 200, document.forms[0].information.value);		
+				writeTextEditor(300, 300, document.forms[0].information.value);		
 			//-->
 			</script>	
 		</logic:present>
 		<logic:notPresent name="verEditor">
-			<html:textarea property="information" rows="15" cols="73"/>
+			<html:textarea property="information" rows="20" cols="80"/>
 		</logic:notPresent>	
 		<span class="error"><html:errors property="information"/></span>
 	</td>

@@ -48,12 +48,12 @@
 	
 	<script language="JavaScript" type="text/javascript"> 
 	<!--
-	writeTextEditor(200, 200, document.forms[0].information.value);		
+	writeTextEditor(300, 300, document.forms[0].information.value);		
 	//-->
 	</script>
 </logic:present>
 <logic:notPresent name="verEditor">
-	<html:textarea rows="10" cols="60" property="information" ></html:textarea>
+	<html:textarea rows="20" cols="80" property="information" ></html:textarea>
 </logic:notPresent>
 
 <span class="error" ><html:errors property="information" /></span>

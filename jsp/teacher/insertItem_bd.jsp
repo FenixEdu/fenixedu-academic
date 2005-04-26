@@ -66,13 +66,13 @@
 				
 				<script language="JavaScript" type="text/javascript"> 
 				<!--
-					writeTextEditor(200, 200, document.forms[0].information.value);		
+					writeTextEditor(300, 300, document.forms[0].information.value);		
 				//-->
 				</script>						
 			</logic:present>	
 			
 			<logic:notPresent name="verEditor">	
-				<html:textarea rows="15" cols="45" property="information"/>
+				<html:textarea rows="20" cols="80" property="information"/>
 			</logic:notPresent>
 			<span class="error"><html:errors property="information"/></span>
 		</td>
