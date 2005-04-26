@@ -13,6 +13,7 @@
 			<html:hidden property="infoCurriculumCode" value="<%=infoCurriculumId.toString()%>"/>
 			<html:hidden property="infoExecutionDegreeCode" value="<%=pageContext.findAttribute("infoExecutionDegreeCode").toString()%>"/>
 			<html:hidden property="infoCurricularCourseCode" value="<%=pageContext.findAttribute("infoCurricularCourseCode").toString()%>"/>
+			<html:hidden property="degreeCurricularPlanID" value="<%=pageContext.findAttribute("degreeCurricularPlanID").toString()%>"/>			
 			<html:hidden property="language" value="English"/>
 			<table>
 				<tr>
@@ -36,7 +37,7 @@
 									<br />
 								</td>
 								<td width="20%">
-									<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode")%>"><bean:message key="label.coordinator.degreeCurricularPlan.curriculum.portuguese"/></html:link>
+									<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID") + "&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode")%>"><bean:message key="label.coordinator.degreeCurricularPlan.curriculum.portuguese"/></html:link>
 									<br />
 								</td>
 							</tr>

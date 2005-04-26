@@ -207,11 +207,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        //Integer infoExecutionDegreeCode = getAndSetIntegerToRequest("infoExecutionDegreeCode", request);
         Integer infoCurricularCourseCode = getAndSetIntegerToRequest("infoCurricularCourseCode", request);
-        
-        
-        
         Integer degreeCurricularPlanID = getAndSetIntegerToRequest("degreeCurricularPlanID", request);
         
         Integer infoExecutionDegreeCode = null;
@@ -222,10 +218,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
         infoExecutionDegreeCode = infoExecutionDegree.getIdInternal();
         
-        
-        
-        
-        //		check that this user can edit curricular course information
+        // check that this user can edit curricular course information
         Boolean canEdit = new Boolean(false);
         ActionErrors errors = new ActionErrors();
         Object[] argsAuthorization = { infoExecutionDegreeCode, infoCurricularCourseCode,
@@ -271,6 +264,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
         //	»»»»»»»»»»»»»»»»» USER CAN EDIT ««««««««««««««««««««««««
 
+        request.setAttribute("infoExecutionDegreeCode", infoExecutionDegreeCode);
         request.setAttribute("canEdit", String.valueOf(canEdit.booleanValue()));
 
         // get curricular course information
@@ -353,22 +347,15 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        //Integer infoExecutionDegreeCode = getAndSetIntegerToRequest("infoExecutionDegreeCode", request);
         Integer infoCurricularCourseCode = getAndSetIntegerToRequest("infoCurricularCourseCode", request);
-        getAndSetStringToRequest("infoCurricularCourseName", request);
         String executionYear = getAndSetStringToRequest("executionYear", request);
+        Integer degreeCurricularPlanID = getAndSetIntegerToRequest("degreeCurricularPlanID", request);        
+        getAndSetStringToRequest("infoCurricularCourseName", request);
 
-        
-        Integer degreeCurricularPlanID = getAndSetIntegerToRequest("degreeCurricularPlanID", request);
-        
-        Integer infoExecutionDegreeCode = null;
         Object[] infoArgs = { degreeCurricularPlanID, new Integer(1) };
- 
 	    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan) ServiceUtils
 	    .executeService(userView, "ReadExecutionDegreeByDegreeCurricularPlanID", infoArgs);
-
-        infoExecutionDegreeCode = infoExecutionDegree.getIdInternal();
-        
+        Integer infoExecutionDegreeCode = infoExecutionDegree.getIdInternal();
         
         
         InfoCurriculum infoCurriculum = null;
@@ -422,8 +409,9 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
         Integer infoExecutionDegreeCode = getAndSetIntegerToRequest("infoExecutionDegreeCode", request);
         Integer infoCurricularCourseCode = getAndSetIntegerToRequest("infoCurricularCourseCode", request);
-
-        //		check that this user can edit curricular course information
+        Integer degreeCurricularPlanID = getAndSetIntegerToRequest("degreeCurricularPlanID", request);
+        
+        // check that this user can edit curricular course information
         Boolean canEdit = new Boolean(false);
         ActionErrors errors = new ActionErrors();
         Object[] argsAuthorization = { infoExecutionDegreeCode, infoCurricularCourseCode,
@@ -516,23 +504,12 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        Integer infoExecutionDegreeCode = new Integer(request.getParameter("infoExecutionDegreeCode"));
-        Integer infoCurricularCourseCode = new Integer(request.getParameter("infoCurricularCourseCode"));
-        Integer infoCurriculumCode = new Integer(request.getParameter("infoCurriculumCode"));
-        request.setAttribute("infoExecutionDegreeCode", infoExecutionDegreeCode);
-        request.setAttribute("infoCurricularCourseCode", infoCurricularCourseCode);
-        request.setAttribute("infoCurriculumCode", infoCurriculumCode);
-
+        Integer infoExecutionDegreeCode = getAndSetIntegerToRequest("infoExecutionDegreeCode", request);
+        Integer infoCurricularCourseCode = getAndSetIntegerToRequest("infoCurricularCourseCode", request);
+        Integer infoCurriculumCode = getAndSetIntegerToRequest("infoCurriculumCode", request);
+        
         String language = null;
         language = request.getParameter("language");
-
-        //				Integer infoExecutionDegreeCode =
-        // getAndSetIntegerToRequest("infoExecutionDegreeCode",
-        // request);
-        //		Integer infoCurricularCourseCode =
-        //			getAndSetIntegerToRequest("infoCurricularCourseCode", request);
-        //		Integer infoCurriculumCode =
-        // getAndSetIntegerToRequest("infoCurriculumCode", request);
 
         InfoCurriculum infoCurriculum = getDataFromForm(form, language);
 

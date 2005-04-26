@@ -56,7 +56,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID implements IService {
 
         Collections.sort(infoExecutionDegreeList, new Comparator() {
             public int compare(Object o1, Object o2) {
-                return ((InfoExecutionDegree) o1).getInfoExecutionYear().getBeginDate().compareTo(
+                return ((InfoExecutionDegree) o2).getInfoExecutionYear().getBeginDate().compareTo(
                         ((InfoExecutionDegree) o1).getInfoExecutionYear().getBeginDate());
             }
         });

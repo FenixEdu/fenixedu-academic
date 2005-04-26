@@ -15,7 +15,7 @@
 	</logic:present>
 	<p>
 		<logic:present name="executionYear">
-			(<html:link page="<%="/degreeCurricularPlanManagement.do?method=viewActiveCurricularCourseInformation&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") %>">
+			(<html:link page="<%="/degreeCurricularPlanManagement.do?method=viewActiveCurricularCourseInformation&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID") + "&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") %>">
 				<font color="#0066CC"><bean:message key="link.coordinator.degreeCurricularPlan.see"/>&nbsp;<bean:message key="label.coordinator.degreeCurricularPlan.current.information"/></font>
 			</html:link>)
 			<br />
@@ -39,7 +39,7 @@
 				<logic:equal name="canEdit" value="true">
 					<%-- user has authorization to edit information --%>
 					<b><bean:message key="label.generalObjectives"/></b>&nbsp;
-					(<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") %>">
+					(<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode")  +"&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID") %>">
 						<font color="#0066CC"><bean:message key="link.cooordinator.degreeCurricularPlan.edit.curriculum"/></font>
 					</html:link>)
 				</logic:equal>
@@ -65,7 +65,7 @@
 				</logic:equal>
 				<logic:equal name="canEdit" value="true">
 					<b><bean:message key="label.operacionalObjectives"/></b>&nbsp;
-					(<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode")%>">
+					(<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode")  +"&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID")%>">
 						<font color="#0066CC"><bean:message key="link.cooordinator.degreeCurricularPlan.edit.curriculum"/></font>
 					</html:link>)			
 				</logic:equal>
@@ -90,7 +90,7 @@
 				</logic:equal>
 				<logic:equal name="canEdit" value="true">	
 					<b><bean:message key="label.program"/></b>&nbsp;			
-					(<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode")%>">
+					(<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode")  +"&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID")%>">
 						<font color="#0066CC"><bean:message key="link.cooordinator.degreeCurricularPlan.edit.curriculum"/></font>
 					</html:link>)
 				</logic:equal>
@@ -115,7 +115,7 @@
 				</logic:equal>
 				<logic:equal name="canEdit" value="true">
 					<b><bean:message key="label.generalObjectives.eng"/></b>&nbsp;
-					(<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") + "&amp;language=English" %>">
+					(<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode")  +"&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID") + "&amp;language=English" %>">
 						<font color="#0066CC"><bean:message key="link.cooordinator.degreeCurricularPlan.edit.curriculum"/></font>
 					</html:link>)
 				</logic:equal>
@@ -140,7 +140,7 @@
 				</logic:equal>
 				<logic:equal name="canEdit" value="true">				
 					<b><bean:message key="label.operacionalObjectives.eng"/></b>&nbsp;
-					(<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") + "&amp;language=English" %>">
+					(<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode")  +"&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID") + "&amp;language=English" %>">
 						<font color="#0066CC"><bean:message key="link.cooordinator.degreeCurricularPlan.edit.curriculum"/></font>
 					</html:link>)
 				</logic:equal>
@@ -165,7 +165,7 @@
 				</logic:equal>
 				<logic:equal name="canEdit" value="true">
 					<b><bean:message key="label.program.eng"/></b>&nbsp;
-					(<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode") + "&amp;language=English" %>">
+					(<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode")  +"&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID") + "&amp;language=English" %>">
 						<font color="#0066CC"><bean:message key="link.cooordinator.degreeCurricularPlan.edit.curriculum"/></font>
 					</html:link>)
 				</logic:equal>
