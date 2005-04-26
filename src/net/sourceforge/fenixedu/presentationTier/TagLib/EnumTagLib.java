@@ -81,8 +81,8 @@ public class EnumTagLib extends BodyTagSupport {
                 throw new IllegalArgumentException("Expected an enum type, got: " + this.enumeration);
             }
 
-            final Method method = clazz.getMethod("values", null);
-            final Object[] objects = (Object[]) method.invoke(clazz, null);
+            final Method method = clazz.getMethod("values", (Class[]) null);
+            final Object[] objects = (Object[]) method.invoke(clazz, (Object[]) null);
             final Collection<LabelValueBean> labelValueBeans = new ArrayList<LabelValueBean>(
                     objects.length);
             for (int i = 0; i < objects.length; i++) {
