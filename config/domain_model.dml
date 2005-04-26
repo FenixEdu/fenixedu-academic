@@ -1554,6 +1554,30 @@ class net.sourceforge.fenixedu.domain.teacher.OldPublication extends net.sourcef
 	"
 }
 
+class net.sourceforge.fenixedu.domain.PaymentPhase extends net.sourceforge.fenixedu.domain.DomainObject {
+	Double value;
+	String description;
+	Integer keyGratuityValues;
+	
+	interface "
+	    public java.util.Date getEndDate();
+	    
+	    public void setEndDate(java.util.Date endDate);
+	    
+	    public java.util.Date getStartDate();
+	    
+	    public void setStartDate(java.util.Date startDate);
+	    
+	    public net.sourceforge.fenixedu.domain.IGratuityValues getGratuityValues();
+	    
+	    public void setGratuityValues(net.sourceforge.fenixedu.domain.IGratuityValues gratuityValues);
+	    
+	    public java.util.List getTransactionList();
+	    
+	    public void setTransactionList(java.util.List transactionList);
+	"
+}
+
 class net.sourceforge.fenixedu.domain.Period extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPeriod;
 	

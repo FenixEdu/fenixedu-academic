@@ -13,18 +13,12 @@ import org.apache.struts.util.MessageResources;
  * @author Tânia Pousão
  *  
  */
-public class PaymentPhase extends DomainObject implements IPaymentPhase {
+public class PaymentPhase extends PaymentPhase_Base {
     private Date startDate;
 
     private Date endDate;
 
-    private Double value;
-
-    private String description;
-
     private IGratuityValues gratuityValues;
-
-    private Integer keyGratuityValues;
 
     private List transactionList;
 
@@ -37,19 +31,11 @@ public class PaymentPhase extends DomainObject implements IPaymentPhase {
                 .getMessageResources("ServidorApresentacao.ApplicationResources");
 
         String newDescription = null;
-        newDescription = messages.getMessage(this.description);
+        newDescription = messages.getMessage(super.getDescription());
         if (newDescription == null) {
-            newDescription = this.description;
+            newDescription = super.getDescription();
         }
         return newDescription;
-    }
-
-    /**
-     * @param description
-     *            The description to set.
-     */
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     /**
@@ -83,21 +69,6 @@ public class PaymentPhase extends DomainObject implements IPaymentPhase {
     }
 
     /**
-     * @return Returns the value.
-     */
-    public Double getValue() {
-        return value;
-    }
-
-    /**
-     * @param value
-     *            The value to set.
-     */
-    public void setValue(Double value) {
-        this.value = value;
-    }
-
-    /**
      * @return Returns the gratuity.
      */
     public IGratuityValues getGratuityValues() {
@@ -110,21 +81,6 @@ public class PaymentPhase extends DomainObject implements IPaymentPhase {
      */
     public void setGratuityValues(IGratuityValues gratuityValues) {
         this.gratuityValues = gratuityValues;
-    }
-
-    /**
-     * @return Returns the keyGratuity.
-     */
-    public Integer getKeyGratuityValues() {
-        return keyGratuityValues;
-    }
-
-    /**
-     * @param keyGratuity
-     *            The keyGratuity to set.
-     */
-    public void setKeyGratuityValues(Integer keyGratuityValues) {
-        this.keyGratuityValues = keyGratuityValues;
     }
 
     /**
@@ -146,7 +102,7 @@ public class PaymentPhase extends DomainObject implements IPaymentPhase {
         StringBuffer object = new StringBuffer();
         object = object.append("\n[PaymentPhase: ").append("idInternal= ").append(getIdInternal())
                 .append(" starDate= ").append(startDate).append("; endDate= ").append(endDate).append(
-                        "; value= ").append(value).append("; description= ").append(description).append(
+                        "; value= ").append(getValue()).append("; description= ").append(getDescription()).append(
                         "\n");
 
         return object.toString();
