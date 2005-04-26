@@ -3,11 +3,16 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.IDegreeInfo;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -49,6 +54,13 @@ public class EditDegree implements IService {
             oldDegree.setNome(newInfoDegree.getNome());
             oldDegree.setSigla(newInfoDegree.getSigla());
             oldDegree.setTipoCurso(newInfoDegree.getTipoCurso());
+            
+            if(oldDegree.getDegreeInfos() == null || oldDegree.getDegreeInfos().isEmpty()){                
+                IDegreeInfo degreeInfo = new DegreeInfo();
+                degreeInfo.setDegree(oldDegree);
+                degreeInfo.setLastModificationDate(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+                persistentSuport.getIPersistentDegreeInfo().simpleLockWrite(degreeInfo);                                
+            }
 
         } catch (ExistingPersistentException ex) {
             throw new ExistingServiceException(ex);
