@@ -14,13 +14,7 @@ import net.sourceforge.fenixedu.util.State;
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
  */
-public class MasterDegreeThesisDataVersion extends DomainObject implements
-        IMasterDegreeThesisDataVersion {
-
-    //database internal keys
-    private Integer keyMasterDegreeThesis;
-
-    private Integer keyEmployee;
+public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion_Base {
 
     //fields
     private IMasterDegreeThesis masterDegreeThesis;
@@ -35,8 +29,6 @@ public class MasterDegreeThesisDataVersion extends DomainObject implements
 
     private IEmployee responsibleEmployee;
 
-    private String dissertationTitle;
-
     private Timestamp lastModification;
 
     private State currentState;
@@ -49,7 +41,7 @@ public class MasterDegreeThesisDataVersion extends DomainObject implements
             State currentState) {
         this.masterDegreeThesis = masterDegreeThesis;
         this.responsibleEmployee = responsibleEmployee;
-        this.dissertationTitle = dissertationTitle;
+        setDissertationTitle(dissertationTitle);
         this.lastModification = lastModification;
         this.currentState = currentState;
     }
@@ -73,7 +65,7 @@ public class MasterDegreeThesisDataVersion extends DomainObject implements
         this.assistentGuiders = assistentGuiders;
         this.guiders = guiders;
         this.responsibleEmployee = responsibleEmployee;
-        this.dissertationTitle = dissertationTitle;
+        setDissertationTitle(dissertationTitle);
         this.lastModification = lastModification;
         this.currentState = currentState;
     }
@@ -84,14 +76,6 @@ public class MasterDegreeThesisDataVersion extends DomainObject implements
 
     public List getAssistentGuiders() {
         return assistentGuiders;
-    }
-
-    public void setDissertationTitle(String dissertationTitle) {
-        this.dissertationTitle = dissertationTitle;
-    }
-
-    public String getDissertationTitle() {
-        return dissertationTitle;
     }
 
     public void setExternalAssistentGuiders(List externalAssistentGuiders) {
@@ -134,22 +118,6 @@ public class MasterDegreeThesisDataVersion extends DomainObject implements
         return masterDegreeThesis;
     }
 
-    public void setKeyMasterDegreeThesis(Integer keyMasterDegreeThesis) {
-        this.keyMasterDegreeThesis = keyMasterDegreeThesis;
-    }
-
-    public Integer getKeyMasterDegreeThesis() {
-        return keyMasterDegreeThesis;
-    }
-
-    public void setKeyEmployee(Integer keyEmployee) {
-        this.keyEmployee = keyEmployee;
-    }
-
-    public Integer getKeyEmployee() {
-        return keyEmployee;
-    }
-
     public void setResponsibleEmployee(IEmployee responsibleEmployee) {
         this.responsibleEmployee = responsibleEmployee;
     }
@@ -174,7 +142,7 @@ public class MasterDegreeThesisDataVersion extends DomainObject implements
         result += "assistentGuiders = " + this.assistentGuiders.toString() + "; \n";
         result += "guiders = " + this.guiders.toString() + "; \n";
         result += "responsibleEmployee = " + this.responsibleEmployee.getIdInternal() + "; \n";
-        result += "dissertationTitle = " + this.dissertationTitle.toString() + "; \n";
+        result += "dissertationTitle = " + getDissertationTitle().toString() + "; \n";
         result += "lastModification = " + this.lastModification.toString() + "; \n";
         result += "currentState = " + this.currentState.toString() + "; \n";
         result += "] \n";

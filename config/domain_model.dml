@@ -1365,6 +1365,46 @@ class net.sourceforge.fenixedu.domain.MasterDegreeThesis extends net.sourceforge
 	"
 }
 
+class net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyMasterDegreeThesis;
+	String dissertationTitle;
+	Integer keyEmployee;
+	
+	interface "
+	    public void setAssistentGuiders(java.util.List assistentGuiders);
+	    
+	    public java.util.List getAssistentGuiders();
+	    
+	    public void setExternalAssistentGuiders(java.util.List externalAssistentGuiders);
+	    
+	    public java.util.List getExternalAssistentGuiders();
+	    
+	    public void setGuiders(java.util.List guiders);
+	    
+	    public java.util.List getGuiders();
+	    
+	    public java.util.List getExternalGuiders();
+	    
+	    public void setExternalGuiders(java.util.List externalGuiders);
+	    
+	    public void setLastModification(java.sql.Timestamp lastModification);
+	    
+	    public java.sql.Timestamp getLastModification();
+	    
+	    public void setMasterDegreeThesis(net.sourceforge.fenixedu.domain.IMasterDegreeThesis masterDegreeThesis);
+	    
+	    public net.sourceforge.fenixedu.domain.IMasterDegreeThesis getMasterDegreeThesis();
+	    
+	    public void setResponsibleEmployee(net.sourceforge.fenixedu.domain.IEmployee responsibleEmployee);
+	    
+	    public net.sourceforge.fenixedu.domain.IEmployee getResponsibleEmployee();
+	    
+	    public void setCurrentState(net.sourceforge.fenixedu.util.State currentState);
+	    
+	    public net.sourceforge.fenixedu.util.State getCurrentState();
+	"
+}
+
 class net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer studentCurricularPlanKey;
     Integer curricularCourseKey;
