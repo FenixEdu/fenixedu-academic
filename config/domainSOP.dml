@@ -674,3 +674,12 @@ relation MarkEvaluation {
 	}
 	net.sourceforge.fenixedu.domain.Evaluation playsRole evaluation;
 }
+
+relation WrittenEvaluationCurricularCourseScope {
+	net.sourceforge.fenixedu.domain.WrittenEvaluation playsRole associatedWrittenEvaluations {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.CurricularCourseScope playsRole associatedCurricularCourseScope {
+		multiplicity *;
+	}
+}
