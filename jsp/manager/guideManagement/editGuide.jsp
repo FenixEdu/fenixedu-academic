@@ -14,10 +14,15 @@
 	<html:hidden property="selectedGuideEntryDocumentType" />
 	<html:hidden property="selectedGuideEntryID" />
 	<html:hidden property="guideSituationID" />
+	
 
 	<bean:define id="paymentTransactions" name="paymentTransactions" type="java.util.ArrayList"/>
 
 	<table>
+		<tr>
+			<td colspan="4"><b>Nome Aluno:</b> <bean:write name="guide" property="infoPerson.nome" />
+			</td>
+		</tr>
 		<tr>
 			<td><b>Número:</b> <bean:write name="guide" property="number" /></td>
 		</tr>
@@ -39,16 +44,17 @@
 					<html:options collection="executionYears" property="value"
 						labelProperty="label" />
 				</html:select>
-				<html:submit value="Editar"
-				onclick="this.form.method.value='editExecutionDegree'" />
 			</td>
 		</tr>		
 		<tr>
 			<td><b>Total:</b> <bean:write name="guide" property="total" /></td>
 		</tr>
 		<tr>
-			<td colspan="4"><b>Nome Aluno:</b> <bean:write name="guide" property="infoPerson.nome" />
-			</td>
+			<td><b>Tipo Pagamento:</b> 				
+			<html:select property="newPaymentType">
+				<html:options collection="paymentTypes" property="value"
+						labelProperty="label" />
+			</html:select></td>
 		</tr>
 		<tr>
 			<td>
@@ -56,6 +62,9 @@
 					this.form.method.value='deleteGuide';				
 				</bean:define>
 				<html:submit value="Apagar Versão" onclick="<%= behavior %>" />
+				
+				<html:submit value="Editar"
+				onclick="this.form.method.value='editExecutionDegree'" />
 			</td>
 		</tr>
 		

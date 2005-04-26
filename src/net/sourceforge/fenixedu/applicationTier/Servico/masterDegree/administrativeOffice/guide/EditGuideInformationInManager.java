@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import net.sourceforge.fenixedu.util.PaymentType;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -15,7 +16,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class EditGuideInformationInManager implements IService {
 
-    public void run(Integer guideID, Integer degreeCurricularPlanID, String executionYear)
+    public void run(Integer guideID, Integer degreeCurricularPlanID, String executionYear, String newPaymentType)
             throws ExcepcaoPersistencia {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -24,6 +25,7 @@ public class EditGuideInformationInManager implements IService {
         IExecutionDegree cursoExecucao = sp.getIPersistentExecutionDegree()
                 .readByDegreeCurricularPlanIDAndExecutionYear(degreeCurricularPlanID, executionYear);
 
+        guide.setPaymentType(new PaymentType(newPaymentType));
         guide.setExecutionDegree(cursoExecucao);
 
     }

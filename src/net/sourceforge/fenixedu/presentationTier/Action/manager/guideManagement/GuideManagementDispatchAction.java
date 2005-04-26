@@ -13,24 +13,25 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
-
-import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
-import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
-import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoPaymentTransaction;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
+import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoPaymentTransaction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.util.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
+import net.sourceforge.fenixedu.util.PaymentType;
 import net.sourceforge.fenixedu.util.SituationOfGuide;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 
 /**
  * @author <a href="mailto:shezad@ist.utl.pt">Shezad Anavarali </a>
@@ -131,6 +132,8 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
         request.setAttribute("days", Data.getMonthDays());
         request.setAttribute("months", Data.getMonths());
         request.setAttribute("years", Data.getYears());
+        request.setAttribute("newPaymentType", guide.getPaymentType().toString());
+        request.setAttribute("paymentTypes", PaymentType.toArrayList());
 
         return mapping.findForward("editGuide");
     }
@@ -242,8 +245,9 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
         Integer newDegreeCurricularPlanID = (Integer) guideForm.get("newDegreeCurricularPlanID");
         String newExecutionYear = (String) guideForm.get("newExecutionYear");
         Integer guideID = (Integer) guideForm.get("guideID");
+        String newPaymentType = (String) guideForm.get("newPaymentType");
 
-        Object[] args = { guideID, newDegreeCurricularPlanID, newExecutionYear };
+        Object[] args = { guideID, newDegreeCurricularPlanID, newExecutionYear, newPaymentType };
         try {
             ServiceUtils.executeService(userView, "EditGuideInformationInManager", args);
         } catch (FenixServiceException e) {
