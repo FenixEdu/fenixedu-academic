@@ -437,6 +437,7 @@
 			<form-property name="selectedGuideEntryID" type="java.lang.Integer"/>
 			<form-property name="newExecutionYear" type="java.lang.String"/> 		
 			<form-property name="newDegreeCurricularPlanID" type="java.lang.Integer"/>								
+			<form-property name="newPaymentType" type="java.lang.String"/>			
 			<form-property name="guideSituationID" type="java.lang.Integer"/>						
 		</form-bean>
 
@@ -1567,6 +1568,7 @@
 		parameter="method"
 		scope="request"
 		name="editGuideForm"
+		attribute="editGuideForm"
 	>
 		<forward name="firstPage" path="firstPageGuideManagement"/>         
 		<forward name="chooseGuide" path="chooseGuide"/>         
