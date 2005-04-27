@@ -13,6 +13,18 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
     private Calendar beginDate;
 
     private Calendar endDate;
+    
+    private String anotation;
+
+    public String getAnotation() {
+        return anotation;
+    }
+    
+
+    public void setAnotation(String anotation) {
+        this.anotation = anotation;
+    }
+    
 
     public CurricularCourseScope() {
         setIdInternal(null);

@@ -53,6 +53,12 @@
 				</html:select>				
 			</td>
 		</tr>
+		<td>
+		  <bean:message key="message.manager.degree.curricular.plan.anotation"/>
+		</td>
+		<td>
+			<html:text property="anotation" size="20" />
+		</td>
 	</table>
 	<br />
 	<br />

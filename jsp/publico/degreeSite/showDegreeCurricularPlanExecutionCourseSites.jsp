@@ -23,7 +23,7 @@
 		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in" />
 		<bean:write name="infoDegree" property="nome" />
 	</h1>
-</logic:present>
+
 
 <h2 class="greytxt">
 	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.courseSites"/>		
@@ -68,6 +68,7 @@
 			<td class="<%= rowColor %>" width="50%">
 				<logic:notEmpty name="executionCourseView">
 					<bean:define id="executionCourseOID" name="executionCourseView" property="executionCourseOID"/>
+					
 					<html:link page="<%= "/viewSiteExecutionCourse.do?method=firstPage&objectCode="
 										 + pageContext.findAttribute("executionCourseOID").toString()
 									%>" >
@@ -76,6 +77,7 @@
 				</logic:notEmpty>
 				<logic:empty name="executionCourseView">&nbsp;</logic:empty>
 			</td>
+			
 			</logic:iterate>
 		</tr>
 		<% } %>
@@ -225,5 +227,10 @@
 		</tr>
 		<% } %>
 	</logic:greaterThan>
+	
+	
 </table>
+
+</logic:present>
+
 </p>

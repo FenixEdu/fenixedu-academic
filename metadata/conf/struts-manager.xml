@@ -48,6 +48,7 @@
 				<form-property name="neededCredits" type="java.lang.String" />
 				<form-property name="markType" type="java.lang.String" />
 				<form-property name="numerusClausus" type="java.lang.String" />
+				<form-property name="anotation" type="java.lang.String" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		
@@ -97,6 +98,7 @@
 				<form-property name="curricularSemesterId" type="java.lang.String" />
 				<form-property name="curricularCourseScopeId" type="java.lang.String" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
+				<form-property name="anotation" type="java.lang.String" />
 		</form-bean>
 		
 		<form-bean name="executionDegreeForm"

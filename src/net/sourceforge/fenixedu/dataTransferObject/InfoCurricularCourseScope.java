@@ -24,6 +24,8 @@ public class InfoCurricularCourseScope extends InfoObject {
     private Calendar beginDate;
 
     private Calendar endDate;
+    
+    private String anotation;
 
     public InfoCurricularCourseScope() {
     }
@@ -56,6 +58,8 @@ public class InfoCurricularCourseScope extends InfoObject {
         result += "CurricularSemester = " + this.infoCurricularSemester + "; ";
         result += "Branch = " + this.infoBranch + "; ";
         result += "EndDate = " + this.endDate + "]\n";
+        result += "Anotation = " + this.anotation + "]\n";
+
 
         return result;
     }
@@ -160,4 +164,14 @@ public class InfoCurricularCourseScope extends InfoObject {
         }
         return infoCurricularCourseScope;
     }
+
+    public String getAnotation() {
+        return anotation;
+    }
+    
+
+    public void setAnotation(String anotation) {
+        this.anotation = anotation;
+    }
+    
 }

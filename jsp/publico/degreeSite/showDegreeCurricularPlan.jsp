@@ -68,7 +68,7 @@
 		</logic:iterate>
 	</logic:iterate>
 	<table class="tab_altrow" cellspacing="0" cellpadding="5">
-		<!-- cabeï¿½alho -->
+		<!-- cabeçalho -->
 		<tr>
 			<th colspan="4"><bean:write name="currentYear"/>ï¿½&nbsp;<bean:message key="label.curricular.year"/></th>
 		</tr>
@@ -91,7 +91,7 @@
 		<logic:iterate id="curricularCourseScopeElemList" name="allActiveCurricularCourseScopes"  indexId="row">
 			<logic:iterate id="curricularCourseScopeElem" name="curricularCourseScopeElemList" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope" length="1" >
 				<logic:notEqual name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year" value="<%= pageContext.findAttribute("currentYear").toString()%>">
-					<!-- cabeï¿½alho -->
+					<!-- cabeçalho -->
 					<tr>
 						<th colspan="4"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>ï¿½&nbsp;<bean:message key="label.curricular.year"/></th>
 					</tr>

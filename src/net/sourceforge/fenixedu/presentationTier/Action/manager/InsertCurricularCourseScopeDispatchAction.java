@@ -137,6 +137,7 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
             beginDateCalendar.setTime(Data.convertStringDate(beginDateString, "/"));
             infoCurricularCourseScope.setBeginDate(beginDateCalendar);
         }
+        infoCurricularCourseScope.setAnotation((String) dynaForm.get("anotation"));
 
         Object args[] = { infoCurricularCourseScope };
 

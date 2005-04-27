@@ -71,6 +71,7 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
                 .set("branchId", oldInfoCurricularCourseScope.getInfoBranch().getIdInternal().toString());
         dynaForm.set("curricularSemesterId", oldInfoCurricularCourseScope.getInfoCurricularSemester()
                 .getIdInternal().toString());
+        dynaForm.set("anotation",oldInfoCurricularCourseScope.getAnotation());
 
         // obtain branches to show in jsp
         Object[] args1 = { degreeCurricularPlanId };

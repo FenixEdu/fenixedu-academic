@@ -111,6 +111,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 
         if (oldInfoDegreeCP.getNumerusClausus() != null)
             dynaForm.set("numerusClausus", oldInfoDegreeCP.getNumerusClausus().toString());
+        	dynaForm.set("anotation",oldInfoDegreeCP.getAnotation());
 
         return mapping.findForward("editDegreeCP");
     }
@@ -139,6 +140,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 
         String markTypeString = (String) dynaForm.get("markType");
         String numerusClaususString = (String) dynaForm.get("numerusClausus");
+        String anotationtring = (String) dynaForm.get("anotation");
 
         DegreeCurricularPlanState state = new DegreeCurricularPlanState(stateInt);
 
@@ -185,6 +187,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
         newInfoDegreeCP.setDegreeDuration(degreeDuration);
         newInfoDegreeCP.setMinimalYearForOptionalCourses(minimalYearForOptionalCourses);
         newInfoDegreeCP.setIdInternal(oldDegreeCPId);
+        newInfoDegreeCP.setAnotation(anotationtring);
 
         Object args[] = { newInfoDegreeCP };
 

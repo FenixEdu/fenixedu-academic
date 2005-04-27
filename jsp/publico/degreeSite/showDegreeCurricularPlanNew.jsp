@@ -88,17 +88,19 @@
 	
 	<table class="tab_lay" cellspacing="0" cellpadding="5">
 		<tr>
-			<th colspan="11" scope="col">
+			
+			<th colspan="12" scope="col">
 				<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year" /> <bean:write name="currentYear"/>
 			</th>
 		</tr>
 		<tr>						
-			<td colspan="7" class="subheader">&nbsp;</td>
-			<td colspan="4" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.hoursPerWeek" /></td>
+			<td colspan="8" class="subheader">&nbsp;</td>
+			<td colspan="5" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.hoursPerWeek" /></td>
 		</tr>	
 		</tr>
 			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr"/></td>
 			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curricularCourse"/></td>
+			<td class="subheader">&nbsp;</td>
 			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.type"/></td>
 			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.branch"/></td>			
 			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.credits"/></td>
@@ -116,18 +118,21 @@
 				<logic:notEqual name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year" value="<%= pageContext.findAttribute("currentYear").toString()%>">
 					<% if (row.intValue() % 2 !=0) count=1; else count=0; %>
 					<tr>
-						<th colspan="11" scope="col">
+				
+						<th colspan="12" scope="col">
 							<bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>&ordm;&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/>
 						</th>
 					</tr>
 					<bean:define id="currentYear" name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>
 					<tr>
-						<td colspan="7" class="subheader">&nbsp;</td>
-						<td colspan="4" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.hoursPerWeek" /></td>
+						<td colspan="8" class="subheader">&nbsp;</td>
+						<td colspan="5" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.hoursPerWeek" /></td>
 					</tr>
+					
 					<tr>						
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr"/></td>
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curricularCourse"/></td>
+						<td class="subheader">&nbsp;</td>
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.type"/></td>
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.branch"/></td>			
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.credits"/></td>
@@ -140,6 +145,7 @@
 					</tr>
 				</logic:notEqual>
 			</logic:iterate>
+			
 			<bean:size id="numberOfScopes" name="curricularCourseScopeElemList"/>
 			<% String rowColor = (row.intValue()+count) % 2 == 0 ? "white" : "bluecell" ; %>						
 			<logic:iterate id="curricularCourseScopeElem" name="curricularCourseScopeElemList" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope" length="1">
@@ -151,6 +157,13 @@
 							<bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.name" />
 						</html:link>
 					</td>
+					<logic:notEmpty name="curricularCourseScopeElem" property="anotation" >
+						<bean:define id="anotationID" value="0"/>
+						<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="anotation"/></td>
+					</logic:notEmpty>
+					<logic:empty name="curricularCourseScopeElem" property="anotation" >
+						<td class="<%= rowColor %>"></td>
+					</logic:empty>
 					<td class="<%= rowColor %>"><bean:message name="curricularCourseScopeElem" property="infoCurricularCourse.type.keyName"/></td>
 					<td class="<%= rowColor %>">					
 						<bean:write name="curricularCourseScopeElem" property="infoBranch.prettyCode"/>&nbsp;
@@ -169,6 +182,21 @@
 			</logic:iterate>
 		</logic:iterate>
 	</table>
+	<logic:equal name="anotationID" value="0">
+		
+		<table>
+			<tr><th colspan="12" scope="col"></th></tr>
+			<tr><th colspan="12" scope="col"></th></tr>
+			<tr><th colspan="12" scope="col"></th></tr>
+			<tr><th colspan="12" scope="col"></th></tr>
+			<tr><th colspan="12" scope="col"></th></tr>
+			
+			<tr >
+			<th colspan="12" scope="col"><bean:write name="infoDegreeCurricularPlan" property="anotation"/></th>
+			</tr>
+			
+		</table>
+</logic:equal>
 </logic:notEmpty>
 </logic:present>
 

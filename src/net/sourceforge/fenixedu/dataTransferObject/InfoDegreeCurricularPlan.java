@@ -297,6 +297,7 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
             setNeededCredits(plan.getNeededCredits());
             setDegreeDuration(plan.getDegreeDuration());
             setMinimalYearForOptionalCourses(plan.getMinimalYearForOptionalCourses());
+            setAnotation(plan.getAnotation());
         }
     }
 
@@ -323,6 +324,7 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
         degreeCurricularPlan.setMarkType(infoDegreeCurricularPlan.getMarkType());
         degreeCurricularPlan.setNeededCredits(infoDegreeCurricularPlan.getNeededCredits());
         degreeCurricularPlan.setNumerusClausus(infoDegreeCurricularPlan.getNumerusClausus());
+        degreeCurricularPlan.setAnotation(infoDegreeCurricularPlan.getAnotation());
     }
 
     public static IDegreeCurricularPlan newDomainFromInfo(

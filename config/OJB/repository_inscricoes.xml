@@ -508,6 +508,11 @@
 		jdbc-type="INTEGER"
 	/>
 -->	
+	<field-descriptor
+		name="anotation"
+		column="ANOTATION"
+		jdbc-type="LONGVARCHAR"
+	/>
       <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"

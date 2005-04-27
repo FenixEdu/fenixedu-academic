@@ -65,6 +65,7 @@ public class EditDegreeCurricularPlan implements IService {
             oldDegreeCP.setNeededCredits(newInfoDegreeCP.getNeededCredits());
             oldDegreeCP.setMarkType(newInfoDegreeCP.getMarkType());
             oldDegreeCP.setNumerusClausus(newInfoDegreeCP.getNumerusClausus());
+            oldDegreeCP.setAnotation(newInfoDegreeCP.getAnotation());
 
         } catch (ExistingPersistentException ex) {
             throw new ExistingServiceException(ex);

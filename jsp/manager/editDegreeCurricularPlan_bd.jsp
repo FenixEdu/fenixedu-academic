@@ -98,6 +98,16 @@
 		<html:text size="7" property="numerusClausus" />
 	</td>
 </tr>	
+<tr>
+	<td>
+		<bean:message key="message.manager.degree.curricular.plan.anotation"/>
+	</td>
+	<td>
+	<html:textarea property="anotation"
+    				   rows="3"
+    				   cols="45"/>
+	</td>
+</tr>
 			
 </table>
 <html:hidden property="method" value="edit" />

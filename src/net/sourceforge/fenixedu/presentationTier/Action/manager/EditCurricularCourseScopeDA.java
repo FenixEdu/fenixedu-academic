@@ -64,6 +64,8 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
         if (oldInfoCurricularCourseScope.getBeginDate() != null)
             dynaForm.set("beginDate", Data.format2DayMonthYear(oldInfoCurricularCourseScope
                     .getBeginDate().getTime(), "/"));
+        if(oldInfoCurricularCourseScope.getAnotation() != null)
+            dynaForm.set("anotation",oldInfoCurricularCourseScope.getAnotation() );
 
         dynaForm
                 .set("branchId", oldInfoCurricularCourseScope.getInfoBranch().getIdInternal().toString());
@@ -143,6 +145,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
         String curricularSemesterIdString = (String) dynaForm.get("curricularSemesterId");
         String branchIdString = (String) dynaForm.get("branchId");
         String beginDateString = (String) dynaForm.get("beginDate");
+        String anotationString = (String) dynaForm.get("anotation");
 
         Integer curricularSemesterId = new Integer(curricularSemesterIdString);
 
@@ -162,6 +165,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
             beginDateCalendar.setTime(Data.convertStringDate(beginDateString, "/"));
             newInfoCurricularCourseScope.setBeginDate(beginDateCalendar);
         }
+        newInfoCurricularCourseScope.setAnotation(anotationString);
 
         Object args[] = { newInfoCurricularCourseScope };
 

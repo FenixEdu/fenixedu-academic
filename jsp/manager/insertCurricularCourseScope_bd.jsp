@@ -49,6 +49,15 @@
 				</html:select>				
 			</td>
 		</tr>
+		<tr>
+		<td>
+			<bean:message key="message.manager.degree.curricular.plan.anotation"/>
+		</td>
+		<td>
+			<html:text property="anotation" size="20" />
+		</td>
+</tr>
+		
 	</table>
 	<br />
 	<html:submit styleClass="inputbutton">

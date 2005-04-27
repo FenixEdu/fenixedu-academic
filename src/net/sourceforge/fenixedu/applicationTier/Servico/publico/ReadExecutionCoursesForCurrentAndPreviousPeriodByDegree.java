@@ -52,11 +52,12 @@ public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree implements 
             for (Iterator iteratorCC = curricularCourses.iterator(); iteratorCC.hasNext();) {
                 ICurricularCourse curricularCourse = (ICurricularCourse) iteratorCC.next();
                 List executionCourses = curricularCourse.getAssociatedExecutionCourses();
+               
 
                 for (Iterator iteratorEC = executionCourses.iterator(); iteratorEC.hasNext();) {
                     IExecutionCourse executionCourse = (IExecutionCourse) iteratorEC.next();
                     IExecutionPeriod executionPeriodFromExecutionCourse = executionCourse.getExecutionPeriod();
-
+                   
                     if (executionPeriodFromExecutionCourse.getIdInternal().equals(currentExecutionPeriod.getIdInternal())
                             || executionPeriodFromExecutionCourse.getIdInternal().equals(previouseExecutionPeriod.getIdInternal())) {
                         for (Iterator iteratorCCS = curricularCourse.getScopes().iterator(); iteratorCCS.hasNext();) {
@@ -71,7 +72,8 @@ public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree implements 
                                 executionCourseView.setSemester(executionCourse.getExecutionPeriod().getSemester());                        
                                 executionCourseView.setCurricularYear(curricularCourseScope.getCurricularSemester().getCurricularYear().getYear());
                                 executionCourseView.setExecutionPeriodOID(executionCourse.getExecutionPeriod().getIdInternal());
-                                
+                                executionCourseView.setAnotation(curricularCourseScope.getAnotation());
+                                executionCourseView.setDegreeCurricularPlanAnotation(degreeCurricularPlan.getAnotation());
                                 executionCourseViews.add(executionCourseView);
                                 processedExecutionCourses.add(key);
                             }

@@ -1,0 +1,1 @@
+ALTER TABLE `curricular_course_scope` ADD `ANOTATION` TEXT AFTER `END_DATE`

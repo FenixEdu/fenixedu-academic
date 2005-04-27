@@ -79,6 +79,7 @@ public class InsertCurricularCourseScopeAtCurricularCourse implements IService {
             curricularCourseScope.setCurricularSemester(curricularSemester);
             curricularCourseScope.setBeginDate(infoCurricularCourseScope.getBeginDate());
             curricularCourseScope.setEndDate(null);
+            curricularCourseScope.setAnotation(infoCurricularCourseScope.getAnotation());
         } catch (ExistingPersistentException e) {
             //FIXME: remove use of portuguese
             throw new ExistingServiceException("O âmbito com ramo " + branch.getCode() + ", do "

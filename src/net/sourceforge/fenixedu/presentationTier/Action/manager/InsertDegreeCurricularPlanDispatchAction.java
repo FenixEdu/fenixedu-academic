@@ -62,6 +62,7 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
         String neededCreditsString = (String) dynaForm.get("neededCredits");
         String markTypeString = (String) dynaForm.get("markType");
         String numerusClaususString = (String) dynaForm.get("numerusClausus");
+        String anotationString = (String) dynaForm.get("anotation");
 
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
         DegreeCurricularPlanState state = new DegreeCurricularPlanState(stateInt);
@@ -104,7 +105,7 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
         infoDegreeCurricularPlan.setState(state);
         infoDegreeCurricularPlan.setDegreeDuration(degreeDuration);
         infoDegreeCurricularPlan.setMinimalYearForOptionalCourses(minimalYearForOptionalCourses);
-
+        infoDegreeCurricularPlan.setAnotation(anotationString);
         InfoDegree infoDegree = new InfoDegree();
         infoDegree.setIdInternal(degreeId);
         infoDegreeCurricularPlan.setInfoDegree(infoDegree);

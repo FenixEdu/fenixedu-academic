@@ -21,7 +21,19 @@ public class ExecutionCourseView implements Serializable
     private Integer semester;
     private Integer curricularYear;
     private Integer executionPeriodOID;
+    
+    private String anotation;
+    
+    private String degreeCurricularPlanAnotation;
 
+    public String getAnotation() {
+        return anotation;
+    }
+    
+    public void setAnotation(String anotation) {
+        this.anotation = anotation;
+    }
+    
     public Integer getCurricularYear()
     {
         return curricularYear;
@@ -66,4 +78,15 @@ public class ExecutionCourseView implements Serializable
 	public void setExecutionPeriodOID(Integer executionPeriodOID) {
 		this.executionPeriodOID = executionPeriodOID;
 	}
+
+    public String getDegreeCurricularPlanAnotation() {
+        return degreeCurricularPlanAnotation;
+    }
+    
+
+    public void setDegreeCurricularPlanAnotation(
+            String degreeCurricularPlanAnotation) {
+        this.degreeCurricularPlanAnotation = degreeCurricularPlanAnotation;
+    }
+    
 }

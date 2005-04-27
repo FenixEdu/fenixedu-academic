@@ -52,6 +52,7 @@ public class InsertDegreeCurricularPlan implements IService {
             degreeCurricularPlan.setNeededCredits(infoDegreeCurricularPlan.getNeededCredits());
             degreeCurricularPlan.setMarkType(infoDegreeCurricularPlan.getMarkType());
             degreeCurricularPlan.setNumerusClausus(infoDegreeCurricularPlan.getNumerusClausus());
+            degreeCurricularPlan.setAnotation(infoDegreeCurricularPlan.getAnotation());
             degreeCurricularPlan.setConcreteClassForStudentCurricularPlans(degree
                     .getConcreteClassForDegreeCurricularPlans());
 

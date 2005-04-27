@@ -95,6 +95,11 @@
 		column="CLASS_NAME_FOR_STUDENT_CURRICULAR_PLANS"
 		jdbc-type="VARCHAR"
 	/>
+	<field-descriptor
+		name="anotation"
+		column="ANOTATION"
+		jdbc-type="LONGVARCHAR"
+	/>
 	<reference-descriptor
 			name="degree"
 			class-ref="net.sourceforge.fenixedu.domain.Degree"

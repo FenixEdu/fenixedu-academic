@@ -73,6 +73,7 @@ public class EditCurricularCourseScope implements IService {
             oldCurricularCourseScope.setCurricularSemester(newCurricularSemester);
             oldCurricularCourseScope.setBeginDate(newInfoCurricularCourseScope.getBeginDate());
             oldCurricularCourseScope.setEndDate(null);
+            oldCurricularCourseScope.setAnotation(newInfoCurricularCourseScope.getAnotation());
 
         } catch (ExistingPersistentException ex) {
             throw new ExistingServiceException("O âmbito com ramo " + newBranch.getCode() + ", do "
