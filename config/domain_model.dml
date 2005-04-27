@@ -252,6 +252,13 @@ class net.sourceforge.fenixedu.domain.credits.CreditLine extends net.sourceforge
         Integer keyExecutionPeriod;
     }
 
+
+class net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer givenCredits;
+    Integer studentCurricularPlanKey;
+    Integer enrolmentKey;
+}
+    
     
 class net.sourceforge.fenixedu.domain.CreditsInScientificArea extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer givenCredits;
@@ -2709,6 +2716,15 @@ relation EmployeePerson {
 	net.sourceforge.fenixedu.domain.Person playsRole person;
 }
 
+
+relation EnrolmentCreditsInAnySecundaryArea {
+    net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea playsRole creditsInAnySecundaryAreas {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Enrolment playsRole enrolment;
+}
+
+
 relation EnrolmentCreditsInScientificArea {
 	net.sourceforge.fenixedu.domain.CreditsInScientificArea playsRole creditsInScientificAreas {
 		multiplicity *;
@@ -3550,6 +3566,15 @@ relation StudentCurricularPlanBranch {
     }
     net.sourceforge.fenixedu.domain.Branch playsRole branch;
 }
+
+
+relation StudentCurricularPlanCreditsInAnySecundaryArea {
+    net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea playsRole creditsInAnySecundaryAreas {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlan;
+}
+
 
 relation StudentCurricularPlanCreditsInScientificArea {
 	net.sourceforge.fenixedu.domain.CreditsInScientificArea playsRole creditsInScientificAreas {
