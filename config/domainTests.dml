@@ -1,0 +1,215 @@
+/*
+ * DOMAINTESTS.DML
+ * 
+ */
+
+
+class net.sourceforge.fenixedu.domain.DistributedTest extends net.sourceforge.fenixedu.domain.DomainObject {
+    String testInformation;
+    Boolean imsFeedback;
+    String title;
+    Integer keyTestScope;
+    Integer numberOfQuestions;
+}
+
+
+class net.sourceforge.fenixedu.domain.DistributedTestAdvisory extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyAdvisory;
+    Integer keyDistributedTest;
+}
+
+
+class net.sourceforge.fenixedu.domain.Metadata extends net.sourceforge.fenixedu.domain.DomainObject {
+    String level;
+    Boolean visibility;
+    String metadataFile;
+    String mainSubject;
+    String description;
+    String difficulty;
+    Integer keyExecutionCourse;
+    String author;
+    Integer numberOfMembers;
+    String secondarySubject;
+}
+
+
+class net.sourceforge.fenixedu.domain.OnlineTest extends net.sourceforge.fenixedu.domain.DomainObject {
+    String ojbConcreteClass;
+    Integer keyDistributedTest;
+    String publishmentMessage;
+}
+
+
+class net.sourceforge.fenixedu.domain.Question extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyMetadata;
+    String xmlFile;
+    Boolean visibility;
+    String xmlFileName;
+}
+
+
+class net.sourceforge.fenixedu.domain.StudentTestLog extends net.sourceforge.fenixedu.domain.DomainObject {
+    String event;
+    Integer keyDistributedTest;
+    Date date;
+    Integer keyStudent;
+}
+
+
+class net.sourceforge.fenixedu.domain.StudentTestQuestion extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyQuestion;
+    Integer testQuestionOrder;
+    String optionShuffle;
+    Integer oldResponse;
+    Double testQuestionValue;
+    Integer keyDistributedTest;
+    Integer keyStudent;
+    String response;
+    Double testQuestionMark;
+}
+
+
+class net.sourceforge.fenixedu.domain.Test extends net.sourceforge.fenixedu.domain.DomainObject {
+    Date creationDate;
+    String information;
+    String title;
+    Date lastModifiedDate;
+    Integer keyTestScope;
+    Integer numberOfQuestions;
+}
+
+
+class net.sourceforge.fenixedu.domain.TestQuestion extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyTest;
+    Integer keyQuestion;
+    Integer testQuestionOrder;
+    Double testQuestionValue;
+}
+
+
+class net.sourceforge.fenixedu.domain.TestScope extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyClass;
+    String className;
+}
+
+
+relation AdvisoryDistributedTestAdvisory {
+    net.sourceforge.fenixedu.domain.Advisory playsRole advisory;
+    net.sourceforge.fenixedu.domain.DistributedTestAdvisory playsRole ??? {
+        multiplicity ???;
+    }
+}
+
+
+relation DistributedTestAdvisoryDistributedTest {
+    net.sourceforge.fenixedu.domain.DistributedTestAdvisory playsRole ??? {
+        multiplicity ???;
+    }
+    net.sourceforge.fenixedu.domain.DistributedTest playsRole distributedTest;
+}
+
+
+relation DistributedTestTestScope {
+    net.sourceforge.fenixedu.domain.DistributedTest playsRole ??? {
+        multiplicity ???;
+    }
+    net.sourceforge.fenixedu.domain.TestScope playsRole testScope;
+}
+
+
+relation DistributedTestStudentTestQuestion {
+    net.sourceforge.fenixedu.domain.DistributedTest playsRole distributedTest;
+    net.sourceforge.fenixedu.domain.StudentTestQuestion playsRole studentQuestions {
+        multiplicity *;
+    }
+}
+
+
+relation MetadataExecutionCourse {
+    net.sourceforge.fenixedu.domain.Metadata playsRole ??? {
+        multiplicity ???;
+    }
+    net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+}
+
+
+relation OnlineTestDistributedTest {
+    net.sourceforge.fenixedu.domain.OnlineTest playsRole ??? {
+        multiplicity ???;
+    }
+    net.sourceforge.fenixedu.domain.DistributedTest playsRole distributedTest;
+}
+
+
+relation OnlineTestExecutionCourse {
+    net.sourceforge.fenixedu.domain.OnlineTest playsRole ??? {
+        multiplicity ???;
+    }
+    net.sourceforge.fenixedu.domain.ExecutionCourse playsRole associatedExecutionCourses {
+        multiplicity *;
+    }
+}
+
+
+relation QuestionMetadata {
+    net.sourceforge.fenixedu.domain.Question playsRole visibleQuestions {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Metadata playsRole metadata;
+}
+
+
+relation QuestionStudentTestQuestion {
+    net.sourceforge.fenixedu.domain.Question playsRole question;
+    net.sourceforge.fenixedu.domain.StudentTestQuestion playsRole ??? {
+        multiplicity ???;
+    }
+}
+
+
+relation QuestionTestQuestion {
+    net.sourceforge.fenixedu.domain.Question playsRole question;
+    net.sourceforge.fenixedu.domain.TestQuestion playsRole ??? {
+        multiplicity ???;
+    }
+}
+
+
+relation StudentTestLogDistributedTest {
+    net.sourceforge.fenixedu.domain.StudentTestLog playsRole studentLogs {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.DistributedTest playsRole distributedTest;
+}
+
+
+relation StudentTestLogStudent {
+    net.sourceforge.fenixedu.domain.StudentTestLog playsRole ??? {
+        multiplicity ???;
+    }
+    net.sourceforge.fenixedu.domain.Student playsRole student;
+}
+
+
+relation StudentTestQuestionStudent {
+    net.sourceforge.fenixedu.domain.StudentTestQuestion playsRole ??? {
+        multiplicity ???;
+    }
+    net.sourceforge.fenixedu.domain.Student playsRole student;
+}
+
+
+relation TestQuestionTest {
+    net.sourceforge.fenixedu.domain.TestQuestion playsRole ??? {
+        multiplicity ???;
+    }
+    net.sourceforge.fenixedu.domain.Test playsRole test;
+}
+
+
+relation TestScopeTest {
+    net.sourceforge.fenixedu.domain.Test playsRole ??? {
+        multiplicity ???;
+    }
+    net.sourceforge.fenixedu.domain.TestScope playsRole testScope;
+}
