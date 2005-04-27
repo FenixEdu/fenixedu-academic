@@ -7,12 +7,13 @@ import java.lang.reflect.Method;
 
 import pt.utl.ist.codeGenerator.ClassDescriptor;
 import pt.utl.ist.codeGenerator.MethodBodyClosure;
+import pt.utl.ist.util.CollectionConstructors;
 
 public class PersistenceSupportClassDescriptor extends ClassDescriptor {
 
     private final String absoluteClazzName;
 
-    private final MethodBodyClosure methodBodyClosure;
+    protected final MethodBodyClosure methodBodyClosure;
 
     final Class mainPersistenceSupportClazz;
 
@@ -20,7 +21,7 @@ public class PersistenceSupportClassDescriptor extends ClassDescriptor {
 
     public PersistenceSupportClassDescriptor(final String absoluteClazzName, final Class extendsClazz,
             final Class implementsClazz) {
-        super(absoluteClazzName, extendsClazz, implementsClazzes(implementsClazz));
+        super(absoluteClazzName, extendsClazz, CollectionConstructors.newHashSet(implementsClazz));
         this.absoluteClazzName = absoluteClazzName;
         methodBodyClosure = new NullMethodBodyClosure();
         this.mainPersistenceSupportClazz = null;
@@ -30,7 +31,7 @@ public class PersistenceSupportClassDescriptor extends ClassDescriptor {
     public PersistenceSupportClassDescriptor(final String absoluteClazzName, final Class extendsClazz,
             final Class implementsClazz, final Class mainPersistenceSupportClazz,
             final Class secondaryPersistenceSupportClazz) {
-        super(absoluteClazzName, extendsClazz, implementsClazzes(implementsClazz));
+        super(absoluteClazzName, extendsClazz, CollectionConstructors.newHashSet(implementsClazz));
         this.absoluteClazzName = absoluteClazzName;
         methodBodyClosure = new WrapperMethodBodyClosure(mainPersistenceSupportClazz,
                 secondaryPersistenceSupportClazz);
@@ -226,23 +227,19 @@ public class PersistenceSupportClassDescriptor extends ClassDescriptor {
         final String src_gen = "src_gen";
         final String packageName = getPackageName(absoluteClazzName);
         final String absoluteDAOClazzName = packageName + "." + getDelegateDAOFromReturnType(returnType);
-        final String fileName = src_gen + "/" + absoluteDAOClazzName.replaceAll("\\.", "/") + ".java";
 
-        DAOClassDescriptor classDescriptor = new DAOClassDescriptor(absoluteDAOClazzName, returnType);
+        final DAOClassDescriptor classDescriptor;
+        if (mainPersistenceSupportClazz != null) {
+            classDescriptor = new DAOClassDescriptor(absoluteDAOClazzName, returnType);
+        } else {
+            classDescriptor = new EmptyDAOClassDescriptor(absoluteDAOClazzName, returnType);
+        }
         classDescriptor.addUnimplementedMethods();
-        write(fileName, classDescriptor.toString());
+        classDescriptor.writeToFile(src_gen);
     }
 
     public String getDelegateDAOFromReturnType(final Class returnType) {
         return getSimpleClassName(returnType.getName()).substring(1) + "Delegate";
-    }
-
-    private static void write(final String filename, final String fileContents) throws IOException {
-        final File file = new File(filename);
-        file.getParentFile().mkdirs();
-        final FileWriter fileWriter = new FileWriter(file);
-        fileWriter.write(fileContents);
-        fileWriter.close();
     }
 
 }

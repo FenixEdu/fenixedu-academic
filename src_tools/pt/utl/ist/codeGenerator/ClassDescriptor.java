@@ -1,18 +1,16 @@
 package pt.utl.ist.codeGenerator;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ClassDescriptor {
+import pt.utl.ist.util.StringAppender;
 
-    protected static Set<Class> implementsClazzes(final Class implementsClazz) {
-        final Set<Class> implementsClazzes = new HashSet<Class>(1);
-        implementsClazzes.add(implementsClazz);
-        return implementsClazzes;
-    }
+public class ClassDescriptor {
 
     private class MethodDescriptor {
         final Method method;
@@ -23,27 +21,9 @@ public class ClassDescriptor {
             this.method = method;
             this.methodBodyClosure = methodBodyClosure;
 
-            if (method.getReturnType() != null) {
-                if (!method.getReturnType().isPrimitive()) {
-                    addImport(method.getReturnType());
-                }
-            }
-
-            final Class[] parameterTypes = method.getParameterTypes();
-            if (parameterTypes != null) {
-                for (int i = 0; i < parameterTypes.length; i++) {
-                    if (!parameterTypes[i].isPrimitive()) {
-                        addImport(parameterTypes[i]);
-                    }
-                }
-            }
-
-            final Class[] excpetionTypes = method.getExceptionTypes();
-            if (excpetionTypes != null) {
-                for (int i = 0; i < excpetionTypes.length; i++) {
-                    addImport(excpetionTypes[i]);
-                }
-            }
+            addImport(method.getReturnType());
+            addImports(method.getParameterTypes());
+            addImports(method.getExceptionTypes());
         }
 
         public String toString() {
@@ -52,7 +32,7 @@ public class ClassDescriptor {
             stringBuilder.append("\t");
             stringBuilder.append(modifier(method.getModifiers()));
             stringBuilder.append(" ");
-            stringBuilder.append(returnClass(method.getReturnType()));
+            stringBuilder.append(returnClassAsString(method.getReturnType()));
             stringBuilder.append(" ");
             stringBuilder.append(method.getName());
             stringBuilder.append("(");
@@ -89,7 +69,7 @@ public class ClassDescriptor {
             return stringBuilder.toString();
         }
 
-        private String returnClass(Class returnType) {
+        private String returnClassAsString(Class returnType) {
             if (returnType != null) {
                 return getSimpleClassName(returnType.getName());
             }
@@ -164,8 +144,14 @@ public class ClassDescriptor {
     }
 
     public void addImport(final Class clazz) {
-        if (clazz != null && !clazz.getPackage().getName().equals("java.lang")) {
+        if (clazz != null && !clazz.isPrimitive() && !clazz.getPackage().getName().equals("java.lang")) {
             imports.add(clazz.getName());
+        }
+    }
+
+    public void addImports(final Class[] clazzes) {
+        for (int i = 0; i < clazzes.length; i++) {
+            addImport(clazzes[i]);
         }
     }
 
@@ -231,6 +217,19 @@ public class ClassDescriptor {
 
     public String customCode() {
         return null;
+    }
+
+    private String absoluteClassName() {
+        return StringAppender.append(packageName, ".", clazzName);
+    }
+
+    public void writeToFile(final String dir) throws IOException {
+        final String absoluteFileName = StringAppender.append(dir, "/", absoluteClassName().replaceAll("\\.", "/"), ".java");
+        final File file = new File(absoluteFileName);
+        file.getParentFile().mkdirs();
+        final FileWriter fileWriter = new FileWriter(file);
+        fileWriter.write(toString());
+        fileWriter.close();
     }
 
 }

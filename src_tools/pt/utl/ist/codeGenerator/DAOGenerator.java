@@ -7,32 +7,31 @@ import java.io.IOException;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import pt.utl.ist.codeGenerator.persistenceTier.PersistenceSupportClassDescriptor;
+import pt.utl.ist.codeGenerator.persistenceTier.VersionedObjectsPersistenceSupportClassDescriptor;
 
 public class DAOGenerator {
 
     public static void main(String[] args) {
-        final String src_gen = "src_gen";
+        // Directory where generated code will be written
+        final String dir = "src_gen";
 
+        // Class signature details
         final Class clazzToImplement = ISuportePersistente.class;
         final Class extendsClazz = null;
 
-        try {
-            final String nameVOPersistenceClaszz = "net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsPersistenceSupport";
-            final String voPersistenceSupportClazzContents = generateVersionedObjectsPersistenceSupportClazz(
-                    nameVOPersistenceClaszz, extendsClazz, clazzToImplement);
-            final String voPersistenceSupportClazzFilename = src_gen + "/"
-                    + nameVOPersistenceClaszz.replaceAll("\\.", "/") + ".java";
-            write(voPersistenceSupportClazzFilename, voPersistenceSupportClazzContents);
+        // Classes to create
+        final String versionedObjectsPersistenceSupportClaszzName = "net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsPersistenceSupport";
+        final String delegatePersistenceSupportClaszzName = "net.sourceforge.fenixedu.persistenceTier.delegatedObjects.DelegatePersistenceSupport";
 
-            final String nameDelegatePersistenceClaszz = "net.sourceforge.fenixedu.persistenceTier.versionedObjects.DelegatePersistenceSupport";
-            final Class mainPersistenceSupportClazz = SuportePersistenteOJB.class;
+        // Persistence Support Class where the "original" implementation resides
+        final Class mainPersistenceSupportToDelegateTo = SuportePersistenteOJB.class;
+
+        try {
+            generatePersistenceSupportClazz(dir, versionedObjectsPersistenceSupportClaszzName, extendsClazz, clazzToImplement);
+
             final Class secondaryPersistenceSupportClazz = null;
-            final String delegatePersistenceSupportClazzContents = generateVersionedObjectsPersistenceSupportClazz(
-                    nameDelegatePersistenceClaszz, extendsClazz, clazzToImplement,
-                    mainPersistenceSupportClazz, secondaryPersistenceSupportClazz);
-            final String delegatePersistenceSupportClazzFilename = src_gen + "/"
-                    + nameDelegatePersistenceClaszz.replaceAll("\\.", "/") + ".java";
-            write(delegatePersistenceSupportClazzFilename, delegatePersistenceSupportClazzContents);
+            generatePersistenceSupportClazz(dir, delegatePersistenceSupportClaszzName, extendsClazz, clazzToImplement,
+                    mainPersistenceSupportToDelegateTo, secondaryPersistenceSupportClazz);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -40,34 +39,24 @@ public class DAOGenerator {
         System.out.println("Generation Complete.");
     }
 
-    private static String generateVersionedObjectsPersistenceSupportClazz(
+    private static void generatePersistenceSupportClazz(final String dir,
+            final String absoluteClazzName, final Class extendsClazz, final Class implementsClazz) throws IOException {
+        final VersionedObjectsPersistenceSupportClassDescriptor classDescriptor =
+                new VersionedObjectsPersistenceSupportClassDescriptor(absoluteClazzName, extendsClazz, implementsClazz);
+        generatePersistenceSupportClazz(dir, classDescriptor);
+    }
+
+    private static void generatePersistenceSupportClazz(final String dir,
             final String absoluteClazzName, final Class extendsClazz, final Class implementsClazz,
             final Class mainPersistenceSupportClazz, final Class secondaryPersistenceSupportClazz) throws IOException {
-
-        final PersistenceSupportClassDescriptor classDescriptor = new PersistenceSupportClassDescriptor(
-                absoluteClazzName, extendsClazz, implementsClazz, mainPersistenceSupportClazz,
-                secondaryPersistenceSupportClazz);
-        classDescriptor.addUnimplementedMethods();
-
-        return classDescriptor.toString();
+        final PersistenceSupportClassDescriptor classDescriptor =
+                new PersistenceSupportClassDescriptor(absoluteClazzName, extendsClazz, implementsClazz, mainPersistenceSupportClazz, null);
+        generatePersistenceSupportClazz(dir, classDescriptor);
     }
 
-    private static String generateVersionedObjectsPersistenceSupportClazz(
-            final String absoluteClazzName, final Class extendsClazz, final Class implementsClazz) throws IOException {
-
-        final PersistenceSupportClassDescriptor classDescriptor = new PersistenceSupportClassDescriptor(
-                absoluteClazzName, extendsClazz, implementsClazz);
+    private static void generatePersistenceSupportClazz(final String dir, final ClassDescriptor classDescriptor) throws IOException {
         classDescriptor.addUnimplementedMethods();
-
-        return classDescriptor.toString();
-    }
-
-    private static void write(final String filename, final String fileContents) throws IOException {
-        final File file = new File(filename);
-        file.getParentFile().mkdirs();
-        final FileWriter fileWriter = new FileWriter(file);
-        fileWriter.write(fileContents);
-        fileWriter.close();
+        classDescriptor.writeToFile(dir);
     }
 
 }
