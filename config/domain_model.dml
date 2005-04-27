@@ -664,10 +664,6 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 		public java.util.Calendar getEnrollmentEndTime();
 	    
 	    public void setEnrollmentEndTime(java.util.Calendar calendar);
-	
-	    public java.util.List getAssociatedRoomOccupation();
-		
-		public void setAssociatedRoomOccupation(java.util.List list);
 		"
 	}
 
@@ -3773,6 +3769,14 @@ relation WrittenEvaluationCurricularCourseScopeWrittenEvaluation {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.WrittenEvaluation playsRole writtenEvaluation;
+}
+
+relation WrittenEvaluationRoomOccupation {
+	net.sourceforge.fenixedu.domain.WrittenEvaluation playsRole writtenEvaluation;
+	
+	net.sourceforge.fenixedu.domain.RoomOccupation playsRole associatedRoomOccupation {
+		multiplicity *;
+	}
 }
 
 relation PublicationTeacherPublication {

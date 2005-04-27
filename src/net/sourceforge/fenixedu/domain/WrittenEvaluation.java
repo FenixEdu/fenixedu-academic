@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * @author Ana e Ricardo
@@ -25,8 +24,6 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     protected Calendar enrollmentEndDay;
 
     protected Calendar enrollmentEndTime;
-
-    protected List associatedRoomOccupation;
 
     public WrittenEvaluation() {
     }
@@ -152,20 +149,6 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
      */
     public void setEnrollmentEndTime(Calendar calendar) {
         enrollmentEndTime = calendar;
-    }
-
-    /**
-     * @return
-     */
-    public List getAssociatedRoomOccupation() {
-        return associatedRoomOccupation;
-    }
-
-    /**
-     * @param list
-     */
-    public void setAssociatedRoomOccupation(List list) {
-        associatedRoomOccupation = list;
     }
 
 }
