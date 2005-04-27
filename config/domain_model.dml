@@ -711,10 +711,6 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 	Double theoPratHours;
 	
 	interface "
-	public java.util.List getAssociatedExams();
-	
-	public void setAssociatedExams(java.util.List list);
-	
 	public String getSlideName();
 	
 	public net.sourceforge.fenixedu.fileSuport.INode getParentNode();
@@ -2786,6 +2782,15 @@ relation EvaluationExecutionCourseExecutionCourse {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+}
+
+relation ExamExecutionCourse {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole associatedExecutionCoursesForExam {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Exam playsRole associatedExams {
+		multiplicity *;
+	}
 }
 
 relation ExamExecutionCourseExam {

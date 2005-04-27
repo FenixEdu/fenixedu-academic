@@ -12,8 +12,6 @@ import org.apache.commons.collections.Predicate;
 
 public class ExecutionCourse extends ExecutionCourse_Base {
     
-	private List associatedExams = null;
-	
 	public ExecutionCourse() {
     }
 
@@ -59,21 +57,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return result;
     }
     
-    /**
-	 * @return
-	 */
-	public List getAssociatedExams() {
-		return associatedExams;
-	}
-
-	/**
-	 * @param list
-	 */
-	public void setAssociatedExams(List list) {
-		associatedExams = list;
-	}
-    
-
     public String getSlideName() {
         String result = getParentNode().getSlideName() + "/EC" + getIdInternal();
         return result;
