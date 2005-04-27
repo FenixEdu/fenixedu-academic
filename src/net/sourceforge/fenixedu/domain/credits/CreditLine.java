@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.domain.credits;
 
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.credits.event.CreditsEvent;
-import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerAware;
@@ -14,8 +13,7 @@ import org.apache.ojb.broker.PersistenceBrokerException;
 /**
  * @author jpvl
  */
-public abstract class CreditLine extends CreditLine_Base implements ICreditsEventOriginator,
-        PersistenceBrokerAware {
+public abstract class CreditLine extends CreditLine_Base implements PersistenceBrokerAware {
 
     public void afterDelete(PersistenceBroker broker) throws PersistenceBrokerException {
         notifyTeacher();

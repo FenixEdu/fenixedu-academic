@@ -3,7 +3,7 @@
  */
 
  
-class net.sourceforge.fenixedu.domain.credits.CreditLine extends net.sourceforge.fenixedu.domain.DomainObject {
+class net.sourceforge.fenixedu.domain.credits.CreditLine extends net.sourceforge.fenixedu.domain.DomainObject implements net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator {
     Integer keyTeacher;
 }
 
@@ -11,10 +11,6 @@ class net.sourceforge.fenixedu.domain.credits.CreditLine extends net.sourceforge
     class net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine extends net.sourceforge.fenixedu.domain.credits.CreditLine {
         Date start;
         Date end;
-        
-        interface "
-        public boolean belongsToExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
-        "
     }
     
         class net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine extends net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine {
@@ -36,10 +32,6 @@ class net.sourceforge.fenixedu.domain.credits.CreditLine extends net.sourceforge
         String reason;
         Double credits;
         Integer keyExecutionPeriod;
-        
-        interface "
-        public boolean belongsToExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
-        "
     }
 
 
