@@ -11,21 +11,7 @@ import org.apache.ojb.broker.PersistenceBrokerException;
  * @author Tânia & Alexandra
  *  
  */
-public class ShiftProfessorship extends DomainObject implements IShiftProfessorship,
-        PersistenceBrokerAware, ICreditsEventOriginator {
-    private IProfessorship professorship = null;
-
-    private Integer keyProfessorship = null;
-
-    private IShift shift = null;
-
-    private Integer keyShift = null;
-
-    private Double percentage = null;
-
-    /* construtor */
-    public ShiftProfessorship() {
-    }
+public class ShiftProfessorship extends ShiftProfessorship_Base implements PersistenceBrokerAware, ICreditsEventOriginator {
 
     public boolean equals(Object obj) {
         boolean resultado = false;
@@ -46,118 +32,38 @@ public class ShiftProfessorship extends DomainObject implements IShiftProfessors
         return result;
     }
 
-    public Integer getKeyProfessorship() {
-        return keyProfessorship;
+    public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod) {
+        return this.getProfessorship().getExecutionCourse().getExecutionPeriod().equals(executionPeriod);
     }
-
-    public void setKeyProfessorship(Integer integer) {
-        keyProfessorship = integer;
-    }
-
-    public IProfessorship getProfessorship() {
-        return professorship;
-    }
-
-    public void setProfessorship(IProfessorship professorship) {
-        this.professorship = professorship;
-    }
-
-    public IShift getShift() {
-        return this.shift;
-    }
-
-    public void setShift(IShift shift) {
-        this.shift = shift;
-    }
-
-    public Integer getKeyShift() {
-        return keyShift;
-    }
-
-    public void setKeyShift(Integer integer) {
-        keyShift = integer;
-    }
-
-    public Double getPercentage() {
-        return this.percentage;
-    }
-
-    public void setPercentage(Double percentage) {
-        this.percentage = percentage;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.ojb.broker.PersistenceBrokerAware#beforeUpdate(org.apache.ojb.broker.PersistenceBroker)
-     */
-    public void beforeUpdate(PersistenceBroker pb) throws PersistenceBrokerException {
-
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.ojb.broker.PersistenceBrokerAware#afterUpdate(org.apache.ojb.broker.PersistenceBroker)
-     */
-    public void afterUpdate(PersistenceBroker pb) throws PersistenceBrokerException {
-        notifyTeacher();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.ojb.broker.PersistenceBrokerAware#beforeInsert(org.apache.ojb.broker.PersistenceBroker)
-     */
-    public void beforeInsert(PersistenceBroker pb) throws PersistenceBrokerException {
-        notifyTeacher();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.ojb.broker.PersistenceBrokerAware#afterInsert(org.apache.ojb.broker.PersistenceBroker)
-     */
-    public void afterInsert(PersistenceBroker pb) throws PersistenceBrokerException {
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.ojb.broker.PersistenceBrokerAware#beforeDelete(org.apache.ojb.broker.PersistenceBroker)
-     */
-    public void beforeDelete(PersistenceBroker pb) throws PersistenceBrokerException {
-        notifyTeacher();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.ojb.broker.PersistenceBrokerAware#afterDelete(org.apache.ojb.broker.PersistenceBroker)
-     */
-    public void afterDelete(PersistenceBroker pb) throws PersistenceBrokerException {
-        notifyTeacher();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.ojb.broker.PersistenceBrokerAware#afterLookup(org.apache.ojb.broker.PersistenceBroker)
-     */
-    public void afterLookup(PersistenceBroker pb) throws PersistenceBrokerException {
-    }
-
+    
     private void notifyTeacher() {
         ITeacher teacher = this.getProfessorship().getTeacher();
         teacher.notifyCreditsChange(CreditsEvent.LESSONS, this);
     }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.credits.event.ICreditsEventOriginator#belongsToExecutionPeriod(java.lang.Integer)
-     */
-    public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod) {
-        return this.getProfessorship().getExecutionCourse().getExecutionPeriod().equals(executionPeriod);
+    
+    public void afterUpdate(PersistenceBroker pb) throws PersistenceBrokerException {
+        notifyTeacher();
     }
+
+    public void beforeInsert(PersistenceBroker pb) throws PersistenceBrokerException {
+        notifyTeacher();
+    }
+
+    public void beforeDelete(PersistenceBroker pb) throws PersistenceBrokerException {
+        notifyTeacher();
+    }
+
+    public void afterDelete(PersistenceBroker pb) throws PersistenceBrokerException {
+        notifyTeacher();
+    }
+    
+    public void beforeUpdate(PersistenceBroker pb) throws PersistenceBrokerException {
+    }
+
+    public void afterInsert(PersistenceBroker pb) throws PersistenceBrokerException {
+    }
+
+    public void afterLookup(PersistenceBroker pb) throws PersistenceBrokerException {
+    }
+
 }

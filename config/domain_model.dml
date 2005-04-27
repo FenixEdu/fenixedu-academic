@@ -1705,10 +1705,6 @@ class net.sourceforge.fenixedu.domain.Professorship extends net.sourceforge.feni
 	Integer keyExecutionCourse;
 	Double hours;
 	interface "
-	public java.util.List getAssociatedShiftProfessorship();
-	
-	public void setAssociatedShiftProfessorship(java.util.List associatedTeacherShiftPercentage);
-
 	public boolean belongsToExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
 	
 	public void beforeUpdate(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
@@ -1987,6 +1983,14 @@ class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.dom
     public double hours();
 	"
 }
+
+
+class net.sourceforge.fenixedu.domain.ShiftProfessorship extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyShift;
+    Integer keyProfessorship;
+    Double percentage;
+}
+
 
 class net.sourceforge.fenixedu.domain.ShiftStudent extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyShift;
@@ -2395,7 +2399,6 @@ external class net.sourceforge.fenixedu.domain.Seminaries.Theme;
 external class net.sourceforge.fenixedu.domain.Seminaries.Modality;
 external class net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
-external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 external class net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction ;
 
@@ -3467,6 +3470,15 @@ relation PrecedenceRestriction {
 		multiplicity *;
 	}
 }
+
+
+relation ProfessorshipShiftProfessorship {
+    net.sourceforge.fenixedu.domain.Professorship playsRole professorship;
+    net.sourceforge.fenixedu.domain.ShiftProfessorship playsRole associatedShiftProfessorship {
+        multiplicity *;
+    }
+}
+
 
 relation ProfessorshipSummary {
 	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {

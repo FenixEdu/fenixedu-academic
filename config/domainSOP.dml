@@ -49,6 +49,14 @@ class net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope ext
 	Integer keyCurricularCourseScope;
 }
 
+
+class net.sourceforge.fenixedu.domain.ShiftProfessorship extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyShift;
+    Integer keyProfessorship;
+    Double percentage;
+}
+
+
 class net.sourceforge.fenixedu.domain.ShiftStudent extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyShift;
 	Integer keyStudent;
@@ -696,4 +704,12 @@ relation WrittenEvaluationCurricularCourseScopeCurricularCourseScope {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.CurricularCourseScope playsRole curricularCourseScope;
+}
+
+
+relation ProfessorshipShiftProfessorship {
+    net.sourceforge.fenixedu.domain.Professorship playsRole professorship;
+    net.sourceforge.fenixedu.domain.ShiftProfessorship playsRole associatedShiftProfessorship {
+        multiplicity *;
+    }
 }
