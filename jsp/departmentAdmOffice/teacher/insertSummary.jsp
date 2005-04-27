@@ -75,12 +75,22 @@
 				- <dt:format pattern="HH:mm"><bean:write name="infoLesson" property="fim.timeInMillis"/></dt:format>
 				<bean:write name="infoLesson" property="infoSala.nome" />
 			:</td>
-			<logic:present name="verEditor">
-				<td><html:radio property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.method.value='prepareInsertSummary';this.form.forHidden.value='true';this.form.summaryText.value=update();this.form.page.value=0;this.form.submit();"/></td>
+			<logic:present name="checked">
+				<logic:present name="verEditor">	
+					<td><html:radio property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.summaryDateInputOption.value='null';this.form.method.value='prepareInsertSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();"/></td>
+				</logic:present>
+				<logic:notPresent name="verEditor">	
+					<td><html:radio property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.summaryDateInputOption.value='null';this.form.method.value='prepareInsertSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.submit();"/></td>
+				</logic:notPresent>	
 			</logic:present>
-			<logic:notPresent name="verEditor">
-				<td><html:radio property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.method.value='prepareInsertSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.submit();"/></td>
-			</logic:notPresent>
+			<logic:notPresent name="checked">	
+				<logic:present name="verEditor">	
+					<td><html:radio property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.method.value='prepareInsertSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.summaryText.value=update();this.form.submit();"/></td>
+				</logic:present>
+				<logic:notPresent name="verEditor">	
+					<td><html:radio property="lesson" value="<%= lessonId.toString() %>" onclick="this.form.method.value='prepareInsertSummary';this.form.forHidden.value='true';this.form.page.value=0;this.form.submit();"/></td>
+				</logic:notPresent>	
+			</logic:notPresent>	
 		</tr>
 	</logic:iterate>
 	<tr>
@@ -223,6 +233,9 @@
 		<td colspan='2'><html:text size="66" property="title"/></td>
 	</tr>
 	<tr>
+		<td colspan='2'>&nbsp;</td>
+	</tr>
+	<tr>
 		<td colspan='2'><strong><bean:message key="label.summaryText"/></strong></td>
 	</tr>
 	<tr>
@@ -233,6 +246,9 @@
 			<bean:message key="label.plain.text"/>
 			<html:radio property="editor" value="false" onclick="this.form.method.value='prepareInsertSummary';this.form.page.value=0;this.form.submit();"/>					
 		</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
 	</tr>
 	<tr>
 	   <logic:present name="verEditor">
@@ -247,13 +263,13 @@
 			
 			<script language="JavaScript" type="text/javascript"> 
 			<!--
-			writeTextEditor(200, 200, document.forms[0].summaryText.value);		
+			writeTextEditor(700, 500, document.forms[0].summaryText.value);		
 			//-->
 			</script>		
 		</td>
 	  </logic:present>
 	  <logic:notPresent name="verEditor">	 	 
-		 <td colspan='2'><html:textarea rows="7" cols="65" property="summaryText"/></td>
+		 <td colspan='2'><html:textarea rows="30" cols="100" property="summaryText"/></td>
 	  </logic:notPresent>
 	</tr>
 </table>

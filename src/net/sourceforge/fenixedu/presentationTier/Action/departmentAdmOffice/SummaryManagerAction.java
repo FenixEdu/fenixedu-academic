@@ -210,7 +210,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
             saveErrors(request, errors);
             return showSummaries(mapping, form, request, response);
         }
-        request.setAttribute("siteView", siteView);
+        
         
         try {
             choosenShift(request, ((InfoSiteSummaries) siteView.getComponent()).getInfoShifts());
@@ -219,11 +219,15 @@ public class SummaryManagerAction extends FenixDispatchAction {
             e.printStackTrace();
             return showSummaries(mapping, form, request, response);
         }
+        
+        if(formBean.get("summaryDateInputOption").equals("on"))
+            request.setAttribute("checked", "");
                 
         if(formBean.get("editor").equals("") || (formBean.get("editor").equals("true"))){
             request.setAttribute("verEditor", "true");    
         }  
         
+        request.setAttribute("siteView", siteView);
         return mapping.findForward("insertSummary");
     }
     

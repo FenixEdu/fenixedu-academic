@@ -221,7 +221,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             saveErrors(request, errors);
             return showSummaries(mapping, form, request, response);
         }
-        request.setAttribute("siteView", siteView);
+        
         
         try {
             choosenShift(request, ((InfoSiteSummaries) siteView.getComponent()).getInfoShifts());
@@ -232,9 +232,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         }
         
         DynaActionForm actionForm = (DynaActionForm) form;
-        
-        System.out.println("OLAAAAAAAAAA -> " + actionForm.get("summaryDateInputOption"));
-         
+                 
         if(actionForm.get("summaryDateInputOption").equals("on"))
             request.setAttribute("checked", "");
         
@@ -242,7 +240,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             request.setAttribute("verEditor", "true");    
         }    
         
-        
+        request.setAttribute("siteView", siteView);
         return mapping.findForward("insertSummary");
     }
     
