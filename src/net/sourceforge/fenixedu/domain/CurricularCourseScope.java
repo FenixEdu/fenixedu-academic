@@ -14,16 +14,7 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 
     private Calendar endDate;
     
-    private String anotation;
 
-    public String getAnotation() {
-        return anotation;
-    }
-    
-
-    public void setAnotation(String anotation) {
-        this.anotation = anotation;
-    }
     
 
     public CurricularCourseScope() {
