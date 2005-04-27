@@ -10,10 +10,6 @@ package net.sourceforge.fenixedu.domain.finalDegreeWork;
  */
 public class Group extends Group_Base {  
 
-    public Group() {
-        super();
-    }
-
     public boolean equals(Object obj) {
         boolean result = false;
         if (obj instanceof IGroup) {
@@ -33,4 +29,5 @@ public class Group extends Group_Base {
         result += "]";
         return result;
     }
+    
 }
