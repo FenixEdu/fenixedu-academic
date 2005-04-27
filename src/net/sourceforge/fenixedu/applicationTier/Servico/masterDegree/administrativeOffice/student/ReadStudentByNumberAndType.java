@@ -13,7 +13,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
  */
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -25,26 +25,21 @@ public class ReadStudentByNumberAndType implements IService {
 
     // FIXME: We have to read the student by type also !!
 
-    public Object run(Integer number, TipoCurso degreeType) {
+    public Object run(Integer number, TipoCurso degreeType) throws ExcepcaoPersistencia {
 
         InfoStudent infoStudent = null;
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // Isto não é para ficar assim. Está assim temporariamente até se
-            // saber como é feita de facto a distinção
-            // dos aluno, referente ao tipo, a partir da página de login.
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////
-            IStudent student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
-                    degreeType);
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        // ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Isto não é para ficar assim. Está assim temporariamente até se
+        // saber como é feita de facto a distinção
+        // dos aluno, referente ao tipo, a partir da página de login.
+        // ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        IStudent student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
+                degreeType);
 
-            if (student != null) {
-                infoStudent = Cloner.copyIStudent2InfoStudent(student);
-            }
-
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
+        if (student != null) {
+            infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(student);
         }
 
         return infoStudent;

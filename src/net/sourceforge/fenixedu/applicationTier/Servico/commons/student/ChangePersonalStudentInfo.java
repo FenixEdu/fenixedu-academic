@@ -15,7 +15,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPersonWithInfoCountry;
 import net.sourceforge.fenixedu.domain.ICountry;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
@@ -111,7 +111,7 @@ public class ChangePersonalStudentInfo implements IService {
         person.setProfissao(newInfoPerson.getProfissao());
         person.setNacionalidade(newInfoPerson.getNacionalidade());
 
-        InfoPerson infoPerson = Cloner.copyIPerson2InfoPerson(person);
+        InfoPerson infoPerson = InfoPersonWithInfoCountry.newInfoFromDomain(person);
 
         return infoPerson;
     }
