@@ -346,15 +346,14 @@ class net.sourceforge.fenixedu.domain.CurricularCourseScope extends net.sourcefo
     Integer branchKey;
     Integer curricularCourseKey;
     Integer curricularSemesterKey;
+    String anotation;
 
     interface "
 
     public java.util.Calendar getBeginDate();
     public java.util.Calendar getEndDate();
-    public String getAnotation();
     public void setBeginDate(java.util.Calendar beginDate);
     public void setEndDate(java.util.Calendar endDate);
-    public void setAnotation(String anotation);
     public Boolean isActive();
     "
 }
