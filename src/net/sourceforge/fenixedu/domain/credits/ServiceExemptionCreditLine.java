@@ -9,8 +9,7 @@ import net.sourceforge.fenixedu.util.credits.ServiceExemptionType;
 /**
  * @author jpvl
  */
-public class ServiceExemptionCreditLine extends DatePeriodBaseCreditLine implements
-        IServiceExemptionCreditLine {
+public class ServiceExemptionCreditLine extends ServiceExemptionCreditLine_Base {
     private ServiceExemptionType type;
 
     /**
@@ -28,11 +27,6 @@ public class ServiceExemptionCreditLine extends DatePeriodBaseCreditLine impleme
         this.type = type;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.credits.CreditLine#getCreditEventGenerated()
-     */
     protected CreditsEvent getCreditEventGenerated() {
         return CreditsEvent.SERVICE_EXEMPTION;
     }

@@ -1,0 +1,122 @@
+/* DOMAINCREDITS.DML
+ * 
+ */
+
+ 
+class net.sourceforge.fenixedu.domain.credits.CreditLine extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyTeacher;
+}
+
+
+    class net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine extends net.sourceforge.fenixedu.domain.credits.CreditLine {
+        Date start;
+        Date end;
+        
+        interface "
+        public boolean belongsToExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
+        "
+    }
+    
+        class net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine extends net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine {
+            Double credits;
+            String position;
+        }    
+    
+        
+        class net.sourceforge.fenixedu.domain.credits.ServiceExemptionCreditLine extends net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine {
+            interface "
+            public net.sourceforge.fenixedu.util.credits.ServiceExemptionType getType();
+            
+            public void setType(net.sourceforge.fenixedu.util.credits.ServiceExemptionType type);
+            "
+        }
+
+        
+    class net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine extends net.sourceforge.fenixedu.domain.credits.CreditLine {
+        String reason;
+        Double credits;
+        Integer keyExecutionPeriod;
+        
+        interface "
+        public boolean belongsToExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
+        "
+    }
+
+
+
+relation CreditLineTeacher {
+    net.sourceforge.fenixedu.domain.credits.CreditLine playsRole associatedCreditLines {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+
+relation OtherTypeCreditLineExecutionPeriod {
+    net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine playsRole associatedOtherTypeCreditLines {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
+
+
+relation ??? {
+    net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine playsRole ??? {
+        multiplicity ???;
+    }
+    net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
+
+
+relation ??? {
+    net.sourceforge.fenixedu.domain.credits.ServiceExemptionCreditLine playsRole ??? {
+        multiplicity ???;
+    }
+    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+
+relation ??? {
+    net.sourceforge.fenixedu.domain.Teacher playsRole ??? {
+        multiplicity ???;
+    }
+    net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine playsRole otherTypeCreditLines {
+        multiplicity *;
+    }
+}
+
+
+relation ??? {
+    net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine playsRole ??? {
+        multiplicity ???;
+    }
+    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+
+relation ??? {
+    net.sourceforge.fenixedu.domain.Teacher playsRole ??? {
+        multiplicity ???;
+    }
+    net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine playsRole managementPositions {
+        multiplicity *;
+    }
+}
+
+
+relation ??? {
+    net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine playsRole ??? {
+        multiplicity ???;
+    }
+    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+
+relation ??? {
+    net.sourceforge.fenixedu.domain.Teacher playsRole ??? {
+        multiplicity ???;
+    }
+    net.sourceforge.fenixedu.domain.credits.ServiceExemptionCreditLine playsRole serviceExemptionSituations {
+        multiplicity *;
+    }
+}

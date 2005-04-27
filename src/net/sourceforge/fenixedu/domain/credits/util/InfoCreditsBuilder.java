@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IShiftProfessorship;
 import net.sourceforge.fenixedu.domain.ISupportLesson;
 import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.credits.IDatePeriodBasedCreditLine;
+import net.sourceforge.fenixedu.domain.credits.IDatePeriodBaseCreditLine;
 import net.sourceforge.fenixedu.domain.credits.IOtherTypeCreditLine;
 import net.sourceforge.fenixedu.domain.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.teacher.workTime.ITeacherInstitutionWorkTime;
@@ -34,8 +34,8 @@ public abstract class InfoCreditsBuilder {
         boolean exists = CollectionUtils.exists(list, new Predicate() {
 
             public boolean evaluate(Object input) {
-                IDatePeriodBasedCreditLine creditLine = (IDatePeriodBasedCreditLine) input;
-                return creditLine.belongsTo(executionPeriod);
+                IDatePeriodBaseCreditLine creditLine = (IDatePeriodBaseCreditLine) input;
+                return creditLine.belongsToExecutionPeriod(executionPeriod);
             }
         });
         infoCredits.setContainsManagementPositions(new Boolean(exists));
@@ -44,8 +44,8 @@ public abstract class InfoCreditsBuilder {
         exists = CollectionUtils.exists(list, new Predicate() {
 
             public boolean evaluate(Object input) {
-                IDatePeriodBasedCreditLine creditLine = (IDatePeriodBasedCreditLine) input;
-                return creditLine.belongsTo(executionPeriod);
+                IDatePeriodBaseCreditLine creditLine = (IDatePeriodBaseCreditLine) input;
+                return creditLine.belongsToExecutionPeriod(executionPeriod);
             }
         });
         infoCredits.setContainsServiceExemptionsSituations(new Boolean(exists));

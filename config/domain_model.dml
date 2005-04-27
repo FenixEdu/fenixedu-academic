@@ -221,6 +221,46 @@ class net.sourceforge.fenixedu.domain.gesdis.CourseReport extends net.sourceforg
 }
 
 
+class net.sourceforge.fenixedu.domain.credits.CreditLine extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyTeacher;
+}
+
+
+    class net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine extends net.sourceforge.fenixedu.domain.credits.CreditLine {
+        Date start;
+        Date end;
+        
+        interface "
+        public boolean belongsToExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
+        "
+    }
+    
+        class net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine extends net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine {
+            Double credits;
+            String position;
+        }    
+    
+        
+        class net.sourceforge.fenixedu.domain.credits.ServiceExemptionCreditLine extends net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine {
+            interface "
+            public net.sourceforge.fenixedu.util.credits.ServiceExemptionType getType();
+            
+            public void setType(net.sourceforge.fenixedu.util.credits.ServiceExemptionType type);
+            "
+        }
+
+        
+    class net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine extends net.sourceforge.fenixedu.domain.credits.CreditLine {
+        String reason;
+        Double credits;
+        Integer keyExecutionPeriod;
+        
+        interface "
+        public boolean belongsToExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
+        "
+    }
+
+    
 class net.sourceforge.fenixedu.domain.CreditsInScientificArea extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer givenCredits;
 	Integer studentCurricularPlanKey;
@@ -626,7 +666,7 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 	    
 	    public void setEnrollmentEndTime(java.util.Calendar calendar);
 	
-		public java.util.List getAssociatedRoomOccupation();
+	    public java.util.List getAssociatedRoomOccupation();
 		
 		public void setAssociatedRoomOccupation(java.util.List list);
 		"
@@ -1198,7 +1238,7 @@ class net.sourceforge.fenixedu.domain.InsuranceValue extends net.sourceforge.fen
 	Double annualValue;
 	
 	interface "
-	    public java.util.Date getEndDate();
+    	public java.util.Date getEndDate();
     	
     	public void setEndDate(java.util.Date endDate);
 	"
@@ -2422,6 +2462,15 @@ relation CourseEquivalencyTheme {
     }
 }
 
+
+relation CreditLineTeacher {
+    net.sourceforge.fenixedu.domain.credits.CreditLine playsRole associatedCreditLines {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+
 relation CurricularCourseCourseEquivalency {
     net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency playsRole courseEquivalencies {
         multiplicity *;
@@ -2443,6 +2492,15 @@ relation OldCurricularCourseCurricularCourseEquivalence {
 	}
 	net.sourceforge.fenixedu.domain.CurricularCourse playsRole oldCurricularCourse;
 }
+
+
+relation OtherTypeCreditLineExecutionPeriod {
+    net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine playsRole associatedOtherTypeCreditLines {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
+
 
 relation CurricularCourseCurricularCourseGroup {
 	net.sourceforge.fenixedu.domain.CurricularCourseGroup playsRole curricularCourseGroups {
