@@ -104,8 +104,8 @@
 	</td>
 	<td>
 	<html:textarea property="anotation"
-    				   rows="3"
-    				   cols="45"/>
+    				   rows="10"
+    				   cols="55"/>
 	</td>
 </tr>
 			
