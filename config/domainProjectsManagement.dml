@@ -1,0 +1,29 @@
+/*
+ * DOMAINPROJECTSMANAGEMENT.DML
+ * 
+ */
+
+
+class net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyProject;
+    Integer keyPerson;
+    Integer keyProjectCoordinator;
+
+    interface " 
+    public abstract java.util.Calendar getBeginDate();
+
+    public abstract void setBeginDate(java.util.Calendar beginDate);
+
+    public abstract java.util.Calendar getEndDate();
+
+    public abstract void setEndDate(java.util.Calendar endDate);
+    "
+}
+
+
+relation PersonProjectAccess {
+    net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess playsRole projectAccesses {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Person playsRole person;
+}
