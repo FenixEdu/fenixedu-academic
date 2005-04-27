@@ -33,11 +33,11 @@
 									<br />
 								</td>								
 								<td width="5%">
-									<img alt="" src="<%= request.getContextPath() %>/images/portugal-flag.gif" width="30" height="20"/>
+									<%-- <img alt="" src="<%= request.getContextPath() %>/images/portugal-flag.gif" width="30" height="20"/> --%>
 									<br />
 								</td>
 								<td width="20%">
-									<html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID") + "&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode")%>"><bean:message key="label.coordinator.degreeCurricularPlan.curriculum.portuguese"/></html:link>
+									<%-- <html:link page="<%="/degreeCurricularPlanManagement.do?method=prepareEditCurriculum&amp;degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID") + "&amp;infoExecutionDegreeCode=" + pageContext.findAttribute("infoExecutionDegreeCode") +"&amp;infoCurricularCourseCode=" + pageContext.findAttribute("infoCurricularCourseCode")%>"><bean:message key="label.coordinator.degreeCurricularPlan.curriculum.portuguese"/></html:link> --%>
 									<br />
 								</td>
 							</tr>
