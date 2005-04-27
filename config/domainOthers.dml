@@ -3,6 +3,66 @@
  * 
  */
 
+
+class net.sourceforge.fenixedu.domain.Advisory extends net.sourceforge.fenixedu.domain.DomainObject {
+    Date created;
+    String subject;
+    Boolean onlyShowOnce;
+    Date expires;
+    String message;
+    String sender;
+}
+
+
+class net.sourceforge.fenixedu.domain.Campus extends net.sourceforge.fenixedu.domain.DomainObject {
+    String name;
+}
+
+
+class net.sourceforge.fenixedu.domain.Country extends net.sourceforge.fenixedu.domain.DomainObject {
+    String code;
+    String nationality;
+    String name;
+}
+
+
+class net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult extends net.sourceforge.fenixedu.domain.DomainObject {
+    String p13;
+    String p24;
+    Double cf;
+    String p17;
+    String p28;
+    String p25;
+    String p2;
+    String p11;
+    String p22;
+    String p3;
+    String p15;
+    Integer unanswered;
+    Integer correct;
+    String p21;
+    String p7;
+    String p5;
+    String p4;
+    Integer wrong;
+    String p10;
+    String p16;
+    Integer test;
+    String p27;
+    String p8;
+    String p6;
+    String p1;
+    String p9;
+    String p14;
+    String p26;
+    String p18;
+    String p23;
+    String p12;
+    String p19;
+    String p20;
+    Integer keyStudent;
+}
+
  
 class net.sourceforge.fenixedu.domain.classProperties.GeneralClassProperty extends net.sourceforge.fenixedu.domain.DomainObject {
 	String ojbConcreteClass;
@@ -23,12 +83,101 @@ class net.sourceforge.fenixedu.domain.classProperties.GeneralClassProperty exten
 		Integer keyExecutionCourse;
 	}
 
+    
+class net.sourceforge.fenixedu.domain.finalDegreeWork.Group extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyExecutionDegree;
+}
+
+
+class net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyFinalDegreeWorkProposal;
+    Integer orderOfPreference;
+    Integer keyFinalDegreeDegreeWorkGroup;
+}
+
+
+class net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyFinalDegreeWorkProposalConfirmation;
+    Integer keyStudent;
+    Integer keyFinalDegreeDegreeWorkGroup;
+}
+    
+
+class net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer minimumNumberOfGroupElements;
+    String title;
+    Integer orientatorsCreditsPercentage;
+    Integer keyCoorientator;
+    Integer keyGroupAttributedByTeacher;
+    String companionName;
+    String deliverable;
+    Integer keyExecutionDegree;
+    String url;
+    String companyAdress;
+    Integer keyGroupAttributed;
+    Integer coorientatorsCreditsPercentage;
+    String location;
+    Integer proposalNumber;
+    String observations;
+    Integer companionPhone;
+    String framing;
+    Integer maximumNumberOfGroupElements;
+    String requirements;
+    Integer keyOrientator;
+    String objectives;
+    String companyName;
+    String description;
+    String companionMail;
+    
+    interface "
+    public net.sourceforge.fenixedu.util.TipoCurso getDegreeType();
+    public void setDegreeType(net.sourceforge.fenixedu.util.TipoCurso degreeType);
+    public net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus getStatus();
+    public void setStatus(net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus status);
+    "
+}
+
+
+class net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer maximumNumberOfStudents;
+    Date endOfProposalPeriodDate;
+    Date endOfProposalPeriodTime;
+    Date endOfCandidacyPeriodTime;
+    Date startOfCandidacyPeriodDate;
+    Date endOfCandidacyPeriodDate;
+    Integer minimumNumberOfStudents;
+    Integer maximumNumberOfProposalCandidaciesPerGroup;
+    Integer minimumNumberOfCompletedCourses;
+    Integer keyExecutionDegree;
+    Integer currentProposalNumber;
+    Date startOfProposalPeriodTime;
+    Date startOfProposalPeriodDate;
+    Date startOfCandidacyPeriodTime;
+    
+    interface "
+    public java.util.Date getEndOfProposalPeriod();
+    public void setEndOfProposalPeriod(java.util.Date endOfProposalPeriod);
+    public java.util.Date getStartOfProposalPeriod();
+    public void setStartOfProposalPeriod(java.util.Date startOfProposalPeriod);
+    public java.util.Date getStartOfCandidacyPeriod();
+    public void setStartOfCandidacyPeriod(java.util.Date startOfCandidacyPeriod);
+    public java.util.Date getEndOfCandidacyPeriod();
+    public void setEndOfCandidacyPeriod(java.util.Date endOfCandidacyPeriod);
+    "
+}
+
 
 class net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyTeacher;
     Integer keyStudent;
     Integer keyExecutionPeriod;
     Double percentage;
+}
+
+
+relation GaugingTestResultStudent {
+    net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult playsRole associatedGaugingTestResult;
+    net.sourceforge.fenixedu.domain.Student playsRole student;
 }
 
 

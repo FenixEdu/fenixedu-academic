@@ -681,7 +681,7 @@ class net.sourceforge.fenixedu.domain.EvaluationExecutionCourse extends net.sour
 
 	class net.sourceforge.fenixedu.domain.ExamExecutionCourse extends net.sourceforge.fenixedu.domain.EvaluationExecutionCourse {
 		Integer keyExam;
-	} 
+	}
 
 
 class net.sourceforge.fenixedu.domain.EvaluationMethod extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -810,6 +810,44 @@ class net.sourceforge.fenixedu.domain.support.FAQSection extends net.sourceforge
 
     public void setParentSection(IFAQSection parentSection);
     "
+}
+
+
+class net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult extends net.sourceforge.fenixedu.domain.DomainObject {
+    String p13;
+    String p24;
+    Double cf;
+    String p17;
+    String p28;
+    String p25;
+    String p2;
+    String p11;
+    String p22;
+    String p3;
+    String p15;
+    Integer unanswered;
+    Integer correct;
+    String p21;
+    String p7;
+    String p5;
+    String p4;
+    Integer wrong;
+    String p10;
+    String p16;
+    Integer test;
+    String p27;
+    String p8;
+    String p6;
+    String p1;
+    String p9;
+    String p14;
+    String p26;
+    String p18;
+    String p23;
+    String p12;
+    String p19;
+    String p20;
+    Integer keyStudent;
 }
 
 
@@ -2976,6 +3014,13 @@ relation ExecutionPeriodSchoolClass {
 		multiplicity *;
 	}
 }
+
+
+relation GaugingTestResultStudent {
+    net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult playsRole associatedGaugingTestResult;
+    net.sourceforge.fenixedu.domain.Student playsRole student;
+}
+
 
 relation GoalExecutionCourse {
 	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
