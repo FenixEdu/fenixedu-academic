@@ -311,8 +311,10 @@ class net.sourceforge.fenixedu.domain.CurricularCourseScope extends net.sourcefo
 
     public java.util.Calendar getBeginDate();
     public java.util.Calendar getEndDate();
+    public String getAnotation();
     public void setBeginDate(java.util.Calendar beginDate);
     public void setEndDate(java.util.Calendar endDate);
+    public void setAnotation(String anotation);
     public Boolean isActive();
     "
 }
@@ -364,6 +366,7 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     Double neededCredits;
     Integer numerusClausus;
     String ojbConcreteClass;
+    String anotation;
     
     interface "
 
