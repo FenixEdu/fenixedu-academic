@@ -16,11 +16,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideSituation;
-import net.sourceforge.fenixedu.domain.IContributor;
 import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.IGuideEntry;
 import net.sourceforge.fenixedu.domain.IGuideSituation;
-import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -47,10 +45,8 @@ public class CreateGuide implements IService {
             SituationOfGuide situationOfGuide, String paymentType) throws FenixServiceException, ExcepcaoPersistencia {
 
         ISuportePersistente sp = null;
-        IContributor contributor = null;
         IGuide guide = new Guide();
         IGuideSituation guideSituation = null;
-        IPerson person = null;
 
         // Check the Guide Situation
         if (situationOfGuide.equals(SituationOfGuide.ANNULLED_TYPE))
