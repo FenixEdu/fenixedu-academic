@@ -1276,6 +1276,15 @@ class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.do
 	"
 }
 
+
+class net.sourceforge.fenixedu.domain.Mark extends net.sourceforge.fenixedu.domain.DomainObject {
+    String publishedMark;
+    String mark;
+    Integer keyEvaluation;
+    Integer keyAttend;
+}
+
+
 class net.sourceforge.fenixedu.domain.MasterDegreeCandidate extends net.sourceforge.fenixedu.domain.DomainObject {
 	Double average;
 	String specializationArea;
@@ -2362,7 +2371,7 @@ external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
 external class net.sourceforge.fenixedu.domain.ShiftProfessorship;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 external class net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction ;
-external class net.sourceforge.fenixedu.domain.Mark;
+
 
 /*
  * Relations definitions
