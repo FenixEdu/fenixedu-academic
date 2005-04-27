@@ -57,6 +57,7 @@
     		description="Compile tools"
     		depends="prepare">
 		<javac destdir="${build.home.temp.classes}"
+			   classpath="${build.home.webinf.classes}"
                extdirs="${lib}"
                debug="${compile.debug}"
                optimize="${compile.optimize}"
