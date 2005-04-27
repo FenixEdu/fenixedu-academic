@@ -101,7 +101,13 @@ class net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent extends net.s
     Integer keyStudent;
     Integer keyFinalDegreeDegreeWorkGroup;
 }
-    
+
+
+class net.sourceforge.fenixedu.domain.PersonRole extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyPerson;
+    Integer keyRole;
+}
+
 
 class net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer minimumNumberOfGroupElements;
@@ -178,6 +184,22 @@ class net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProj
 relation GaugingTestResultStudent {
     net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult playsRole associatedGaugingTestResult;
     net.sourceforge.fenixedu.domain.Student playsRole student;
+}
+
+
+relation PersonRolePerson {
+    net.sourceforge.fenixedu.domain.PersonRole playsRole associatedPersonRoles {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
+
+relation RolePersonRole {
+    net.sourceforge.fenixedu.domain.Role playsRole role;
+    net.sourceforge.fenixedu.domain.PersonRole playsRole associatedPersonRoles {
+        multiplicity *;
+    }
 }
 
 

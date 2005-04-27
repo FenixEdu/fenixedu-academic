@@ -1418,10 +1418,12 @@ class net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion extends net.
 	"
 }
 
+
 class net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer studentCurricularPlanKey;
     Integer curricularCourseKey;
 }
+
 
 class net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes extends net.sourceforge.fenixedu.domain.DomainObject {
 	Double tolerance2_3;
@@ -1682,6 +1684,13 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     public String getSlideName();
     "
 }
+
+
+class net.sourceforge.fenixedu.domain.PersonRole extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyPerson;
+    Integer keyRole;
+}
+
 
 class net.sourceforge.fenixedu.domain.precedences.Precedence extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyCurricularCourse;
@@ -3418,6 +3427,14 @@ relation PersonRole {
 }
 
 
+relation PersonRolePerson {
+    net.sourceforge.fenixedu.domain.PersonRole playsRole associatedPersonRoles {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
+
 relation PersonTeacher {
 	net.sourceforge.fenixedu.domain.Teacher playsRole associatedTeachers {
 		multiplicity *;
@@ -3480,6 +3497,14 @@ relation ProposalBranch {
 	net.sourceforge.fenixedu.domain.Branch playsRole branches {
 		multiplicity *;
 	}
+}
+
+
+relation RolePersonRole {
+    net.sourceforge.fenixedu.domain.Role playsRole role;
+    net.sourceforge.fenixedu.domain.PersonRole playsRole associatedPersonRoles {
+        multiplicity *;
+    }
 }
 
 
