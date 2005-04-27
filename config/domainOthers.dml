@@ -26,6 +26,31 @@ class net.sourceforge.fenixedu.domain.Country extends net.sourceforge.fenixedu.d
 }
 
 
+class net.sourceforge.fenixedu.domain.support.FAQEntry extends net.sourceforge.fenixedu.domain.DomainObject {
+    String answer;
+    String question;
+    Integer keyParentSection;
+
+    interface "
+    public IFAQSection getParentSection();
+
+    public void setParentSection(IFAQSection parentSection);
+    "
+}
+
+
+class net.sourceforge.fenixedu.domain.support.FAQSection extends net.sourceforge.fenixedu.domain.DomainObject {
+    String sectionName;
+    Integer keyParentSection;
+
+    interface "
+    public IFAQSection getParentSection();
+
+    public void setParentSection(IFAQSection parentSection);
+    "
+}
+
+
 class net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult extends net.sourceforge.fenixedu.domain.DomainObject {
     String p13;
     String p24;
@@ -83,6 +108,12 @@ class net.sourceforge.fenixedu.domain.classProperties.GeneralClassProperty exten
 		Integer keyExecutionCourse;
 	}
 
+
+class net.sourceforge.fenixedu.domain.support.GlossaryEntry extends net.sourceforge.fenixedu.domain.DomainObject {
+    String definition;
+    String term;
+}
+    
     
 class net.sourceforge.fenixedu.domain.finalDegreeWork.Group extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyExecutionDegree;
