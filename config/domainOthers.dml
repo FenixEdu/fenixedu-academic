@@ -229,6 +229,14 @@ class net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProj
 }
 
 
+class net.sourceforge.fenixedu.domain.WebSite extends net.sourceforge.fenixedu.domain.DomainObject {
+    String ojbConcreteClass;
+    String style;
+    String mail;
+    String name;
+}
+
+
 relation GaugingTestResultStudent {
     net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult playsRole associatedGaugingTestResult;
     net.sourceforge.fenixedu.domain.Student playsRole student;

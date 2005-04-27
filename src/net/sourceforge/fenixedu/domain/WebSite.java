@@ -4,25 +4,17 @@ package net.sourceforge.fenixedu.domain;
  * @author Fernanda Quitério 23/09/2003
  *  
  */
-public class WebSite extends DomainObject implements IWebSite {
-
-    private String name;
-
-    private String mail;
-
-    private String style;
-
-    private String ojbConcreteClass;
+public class WebSite extends WebSite_Base {
 
     public WebSite() {
-        this.mail = "";
-        this.style = "";
-        this.ojbConcreteClass = this.getClass().getName();
+        setMail("");
+        setStyle("");
+        setOjbConcreteClass(this.getClass().getName());
     }
 
     public WebSite(Integer idInternal) {
-        this.mail = "";
-        this.style = "";
+        setMail("");
+        setStyle("");
         setIdInternal(idInternal);
     }
 
@@ -61,65 +53,4 @@ public class WebSite extends DomainObject implements IWebSite {
         return result;
     }
 
-    /**
-     * @return String
-     */
-    public String getOjbConcreteClass() {
-        return ojbConcreteClass;
-    }
-
-    /**
-     * @param string
-     */
-    public void setOjbConcreteClass(String string) {
-        ojbConcreteClass = string;
-    }
-
-    /**
-     * @return
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * @return String
-     */
-    public String getMail() {
-        return mail;
-    }
-
-    /**
-     * Sets the mail.
-     * 
-     * @param mail
-     *            The mail to set
-     */
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    /**
-     * @return String
-     */
-    public String getStyle() {
-        return style;
-    }
-
-    /**
-     * Sets the style.
-     * 
-     * @param style
-     *            The style to set
-     */
-    public void setStyle(String style) {
-        this.style = style;
-    }
 }

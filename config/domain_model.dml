@@ -2386,6 +2386,15 @@ class net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute exten
     Boolean required;
 }
 
+
+class net.sourceforge.fenixedu.domain.WebSite extends net.sourceforge.fenixedu.domain.DomainObject {
+    String ojbConcreteClass;
+    String style;
+    String mail;
+    String name;
+}
+
+
 /*
  * External classes declarations
  *
