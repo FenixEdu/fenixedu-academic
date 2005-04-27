@@ -2395,6 +2395,40 @@ class net.sourceforge.fenixedu.domain.WebSite extends net.sourceforge.fenixedu.d
 }
 
 
+class net.sourceforge.fenixedu.domain.WebSiteItem extends net.sourceforge.fenixedu.domain.DomainObject {
+    String authorName;
+    Date onlineEndDay;
+    String title;
+    Date itemBeginDay;
+    Integer keyWebSiteSection;
+    String keywords;
+    Date onlineBeginDay;
+    Date itemEndDay;
+    Boolean published;
+    String excerpt;
+    String authorEmail;
+    String mainEntryText;
+    Integer keyEditor;
+
+    interface "
+    public java.sql.Timestamp getCreationDate();
+    
+    public void setCreationDate(java.sql.Timestamp creationDate);
+    "
+}
+
+
+class net.sourceforge.fenixedu.domain.WebSiteSection extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyWebSite;
+    String whatToSort;
+    String ftpName;
+    Integer size;
+    Integer excerptSize;
+    String name;
+    String sortingOrder;
+}
+
+
 /*
  * External classes declarations
  *
@@ -4049,3 +4083,26 @@ relation SeminaryCourseEquivalency {
     }
 }
 
+
+relation WebSiteItemPerson {
+    net.sourceforge.fenixedu.domain.WebSiteItem playsRole editedWebSiteItems {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Person playsRole editor;
+}
+
+
+relation WebSiteItemWebSiteSection {
+    net.sourceforge.fenixedu.domain.WebSiteItem playsRole includedWebSiteItems {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.WebSiteSection playsRole webSiteSection;
+}
+
+
+relation WebSiteSectionWebSite {
+    net.sourceforge.fenixedu.domain.WebSiteSection playsRole associatedWebSiteSections {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.WebSite playsRole webSite;
+}
