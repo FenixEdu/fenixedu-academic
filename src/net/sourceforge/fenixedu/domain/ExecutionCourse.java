@@ -14,9 +14,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     
 	private List associatedExams = null;
 	
-	private List associatedEvaluations = null;
-
-    public ExecutionCourse() {
+	public ExecutionCourse() {
     }
 
     public ExecutionCourse(Integer idInternal) {
@@ -59,20 +57,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         result += ", executionPeriod=" + getExecutionPeriod();
         result += "]";
         return result;
-    }
-    
-    /**
-	 * @return
-	 */
-	public List getAssociatedEvaluations() {
-		return associatedEvaluations;
-	}
-
-	/**
-     * @param list
-     */
-    public void setAssociatedEvaluations(List list) {
-        associatedEvaluations = list;
     }
     
     /**

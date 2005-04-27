@@ -9,10 +9,6 @@ package net.sourceforge.fenixedu.domain;
  */
 public class ExamExecutionCourse extends ExamExecutionCourse_Base {
 
-    protected IExam exam;
-
-    protected IExecutionCourse executionCourse;
-
     public ExamExecutionCourse() {
     }
 
@@ -35,33 +31,4 @@ public class ExamExecutionCourse extends ExamExecutionCourse_Base {
         return "[EXAM_EXECUTIONCOURSE:" + " exam= '" + this.getExam() + "'" + " execution_course= '"
                 + this.getExecutionCourse() + "'" + "]";
     }
-
-    /**
-     * @return
-     */
-    public IExam getExam() {
-        return exam;
-    }
-
-    /**
-     * @return
-     */
-    public IExecutionCourse getExecutionCourse() {
-        return executionCourse;
-    }
-
-    /**
-     * @param exam
-     */
-    public void setExam(IExam exam) {
-        this.exam = exam;
-    }
-
-    /**
-     * @param execucao
-     */
-    public void setExecutionCourse(IExecutionCourse execucao) {
-        executionCourse = execucao;
-    }
-
 }

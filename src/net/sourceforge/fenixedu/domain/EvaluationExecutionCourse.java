@@ -6,10 +6,6 @@ package net.sourceforge.fenixedu.domain;
  */
 public class EvaluationExecutionCourse extends EvaluationExecutionCourse_Base {
 
-    private IEvaluation evaluation;
-
-    private IExecutionCourse executionCourse;
-
     public EvaluationExecutionCourse() {
     }
 
@@ -32,33 +28,4 @@ public class EvaluationExecutionCourse extends EvaluationExecutionCourse_Base {
         return "[EVALUATION_EXECUTIONCOURSE:" + " evaluation= '" + this.getEvaluation() + "'"
                 + " execution_course= '" + this.getExecutionCourse() + "'" + "]";
     }
-
-    /**
-     * @return
-     */
-    public IEvaluation getEvaluation() {
-        return evaluation;
-    }
-
-    /**
-     * @return
-     */
-    public IExecutionCourse getExecutionCourse() {
-        return executionCourse;
-    }
-
-    /**
-     * @param evaluation
-     */
-    public void setEvaluation(IEvaluation evaluation) {
-        this.evaluation = evaluation;
-    }
-
-    /**
-     * @param execucao
-     */
-    public void setExecutionCourse(IExecutionCourse execucao) {
-        executionCourse = execucao;
-    }
-
 }

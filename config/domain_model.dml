@@ -620,12 +620,6 @@ class net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence
 class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixedu.domain.DomainObject {
 	String ojbConcreteClass;
 	String publishmentMessage;
-
-    interface"
-	public java.util.List getAssociatedExecutionCourses();
-	
-	public void setAssociatedExecutionCourses(java.util.List list);
-	"
 }
 
 
@@ -683,31 +677,11 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 class net.sourceforge.fenixedu.domain.EvaluationExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionCourse;
 	Integer keyEvaluation;
-
-	interface "
-	public net.sourceforge.fenixedu.domain.IExecutionCourse getExecutionCourse();
-	
-	public void setExecutionCourse(net.sourceforge.fenixedu.domain.IExecutionCourse executionCourse);
-	
-	public net.sourceforge.fenixedu.domain.IEvaluation getEvaluation();
-	
-	public void setEvaluation(net.sourceforge.fenixedu.domain.IEvaluation evaluation);
-	"
 }
 
 	class net.sourceforge.fenixedu.domain.ExamExecutionCourse extends net.sourceforge.fenixedu.domain.EvaluationExecutionCourse {
 		Integer keyExam;
-		
-		interface"
-		public net.sourceforge.fenixedu.domain.IExam getExam();
-		
-		public void setExam(net.sourceforge.fenixedu.domain.IExam exam);
-
-		public net.sourceforge.fenixedu.domain.IExecutionCourse getExecutionCourse();
-		
-		public void setExecutionCourse(net.sourceforge.fenixedu.domain.IExecutionCourse execucao);
-		"
-	}
+	} 
 
 
 class net.sourceforge.fenixedu.domain.EvaluationMethod extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -737,11 +711,6 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 	Double theoPratHours;
 	
 	interface "
-	
-	public java.util.List getAssociatedEvaluations();
-	
-	public void setAssociatedEvaluations(java.util.List list);
-	
 	public java.util.List getAssociatedExams();
 	
 	public void setAssociatedExams(java.util.List list);
@@ -2794,6 +2763,36 @@ relation EnrolmentPeriodExecutionPeriod {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation EvaluationExecutionCourse {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole associatedExecutionCourses {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Evaluation playsRole associatedEvaluations {
+		multiplicity *;
+	}
+}
+
+relation EvaluationExecutionCourseEvaluation {
+	net.sourceforge.fenixedu.domain.EvaluationExecutionCourse playsRole evaluationExecutionCourses {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Evaluation playsRole evaluation;
+}
+
+relation EvaluationExecutionCourseExecutionCourse {
+	net.sourceforge.fenixedu.domain.EvaluationExecutionCourse playsRole evaluationExecutionCourses {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+}
+
+relation ExamExecutionCourseExam {
+	net.sourceforge.fenixedu.domain.ExamExecutionCourse playsRole examExecutionCourses {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Exam playsRole exam;
 }
 
 relation ExamStudentRoomExam {
