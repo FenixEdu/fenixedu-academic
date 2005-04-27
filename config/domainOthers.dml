@@ -1,4 +1,5 @@
-/* DOMAINOTHERS.DML
+/*
+ * DOMAINOTHERS.DML
  * 
  */
 
@@ -21,3 +22,35 @@ class net.sourceforge.fenixedu.domain.classProperties.GeneralClassProperty exten
 	class net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty extends net.sourceforge.fenixedu.domain.classProperties.GeneralClassProperty {
 		Integer keyExecutionCourse;
 	}
+
+
+class net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyTeacher;
+    Integer keyStudent;
+    Integer keyExecutionPeriod;
+    Double percentage;
+}
+
+
+relation TeacherDegreeFinalProjectStudentExecutionPeriod {
+    net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent playsRole associatedTeacherDegreeFinalProjectStudents {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
+
+
+relation TeacherDegreeFinalProjectStudentStudent {
+    net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent playsRole teacherDegreeFinalProjectStudent {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Student playsRole student;
+}
+
+
+relation TeacherDegreeFinalProjectStudentTeacher {
+    net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent playsRole degreeFinalProjectStudents {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}

@@ -2180,13 +2180,12 @@ class net.sourceforge.fenixedu.domain.SupportLesson extends net.sourceforge.feni
 	"
 }
 
+
 class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer teacherNumber;
 	Integer keyPerson;
 	Integer keyCategory;
 	interface "
-	public java.util.List getDegreeFinalProjectStudents();
-	
 	public java.util.List getInstitutionWorkTimePeriods();
 	
 	public java.util.List getManagementPositions();
@@ -2194,8 +2193,6 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	public java.util.List getOtherTypeCreditLines();
 	
 	public java.util.List getServiceExemptionSituations();
-	
-	public void setDegreeFinalProjectStudents(java.util.List degreeFinalProjectStudents);
 	
 	public void setInstitutionWorkTimePeriods(java.util.List institutionWorkTimePeriods);
 	
@@ -2210,6 +2207,15 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	public void notifyCreditsChange(net.sourceforge.fenixedu.domain.credits.event.CreditsEvent creditsEvent, net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator originator);
 	"
 }
+
+
+class net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyTeacher;
+    Integer keyStudent;
+    Integer keyExecutionPeriod;
+    Double percentage;
+}
+
 
 class net.sourceforge.fenixedu.domain.University extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
@@ -3731,6 +3737,30 @@ relation TeacherCategory {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.teacher.Category playsRole category;
+}
+
+
+relation TeacherDegreeFinalProjectStudentExecutionPeriod {
+    net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent playsRole associatedTeacherDegreeFinalProjectStudents {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
+
+
+relation TeacherDegreeFinalProjectStudentStudent {
+    net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent playsRole teacherDegreeFinalProjectStudent {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Student playsRole student;
+}
+
+
+relation TeacherDegreeFinalProjectStudentTeacher {
+    net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent playsRole degreeFinalProjectStudents {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
 
 
