@@ -144,6 +144,23 @@ class net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal extends net.sourc
 }
 
 
+class net.sourceforge.fenixedu.domain.Qualification extends net.sourceforge.fenixedu.domain.DomainObject {
+    Date lastModificationDate;
+    String degreeRecognition;
+    String equivalenceSchool;
+    String mark;
+    String title;
+    String specializationArea;
+    Date date;
+    Integer personKey;
+    String branch;
+    Date equivalenceDate;
+    String degree;
+    Integer countryKey;
+    String school;
+}
+
+
 class net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer maximumNumberOfStudents;
     Date endOfProposalPeriodDate;
@@ -191,6 +208,20 @@ relation PersonRolePerson {
     net.sourceforge.fenixedu.domain.PersonRole playsRole associatedPersonRoles {
         multiplicity *;
     }
+    net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
+
+relation QualificationCountry {
+    net.sourceforge.fenixedu.domain.Qualification playsRole associatedQualifications {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Country playsRole country;
+}
+
+
+relation QualificationPerson {
+    net.sourceforge.fenixedu.domain.Qualification playsRole qualification;
     net.sourceforge.fenixedu.domain.Person playsRole person;
 }
 
