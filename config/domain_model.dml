@@ -178,6 +178,15 @@ class net.sourceforge.fenixedu.domain.CandidateSituation extends net.sourceforge
 	"
 }
 
+
+class net.sourceforge.fenixedu.domain.Seminaries.CaseStudy extends net.sourceforge.fenixedu.domain.DomainObject {
+    String code;
+    String description;
+    Integer seminaryThemeIdInternal;
+    String name;
+}
+
+
 class net.sourceforge.fenixedu.domain.teacher.Category extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
 	String longName;
@@ -2624,6 +2633,14 @@ relation CandidacyStudent {
 }
 
 
+relation CaseStudyCaseStudyChoice {
+    net.sourceforge.fenixedu.domain.Seminaries.CaseStudy playsRole caseStudy;
+    net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice playsRole seminaryCandidacies {
+        multiplicity *;
+    }
+}
+
+
 relation CourseEquivalencyTheme {
     net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency playsRole courseEquivalencies {
         multiplicity *;
@@ -4064,6 +4081,14 @@ relation TeacherSummary {
 relation ThemeCandidacy {
     net.sourceforge.fenixedu.domain.Seminaries.Theme playsRole theme;
     net.sourceforge.fenixedu.domain.Seminaries.Candidacy playsRole associatedCandidacies {
+        multiplicity *;
+    }
+}
+
+
+relation ThemeCaseStudy {
+    net.sourceforge.fenixedu.domain.Seminaries.Theme playsRole seminaryTheme;
+    net.sourceforge.fenixedu.domain.Seminaries.CaseStudy playsRole caseStudies {
         multiplicity *;
     }
 }

@@ -142,7 +142,7 @@ relation CandidacyCurricularCourse {
 }
 
 
-relation ??? {
+relation CaseStudyCaseStudyChoice {
     net.sourceforge.fenixedu.domain.Seminaries.CaseStudy playsRole caseStudy;
     net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice playsRole seminaryCandidacies {
         multiplicity *;
