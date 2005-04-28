@@ -3,6 +3,8 @@ package pt.utl.ist.codeGenerator.persistenceTier;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
+import net.sourceforge.fenixedu.persistenceTier.delegatedObjects.DAOResultComparator;
+import net.sourceforge.fenixedu.persistenceTier.delegatedObjects.DAOResultLogger;
 import pt.utl.ist.codeGenerator.ClassDescriptor;
 import pt.utl.ist.codeGenerator.MethodBodyClosure;
 import pt.utl.ist.util.CollectionConstructors;
@@ -11,17 +13,70 @@ public class DAOClassDescriptor extends ClassDescriptor {
 
     protected static final MethodBodyClosure DAO_DELEGATOR_METHOD_CLOSURE = new MethodBodyClosure() {
 
+        final String MAIN_DAO = "mainDAO";
+
+        final String SECONDARY_DAO = "secondaryDAO";
+
+        final String MAIN_DAO_RESULT = "mainDAOResult";
+
+        final String SECONDARY_DAO_RESULT = "secondaryDAOResult";
+
+        final String COMPARISON_RESULT = "sameResult";
+
         public String generateBody(Method method) {
             final StringBuilder stringBuilder = new StringBuilder();
 
-            generateMethodCall(stringBuilder, "mainDAOResult", "mainDAO", method);
-            generateMethodCall(stringBuilder, "secondaryDAOResult", "secondaryDAO", method);
+            generateMethodCall(stringBuilder, MAIN_DAO_RESULT, MAIN_DAO, method);
+            generateMethodCall(stringBuilder, SECONDARY_DAO_RESULT, SECONDARY_DAO, method);
 
             if (!method.getReturnType().getName().equals("void")) {
+                compareDAOResults(stringBuilder);
+                logResultComparison(stringBuilder, method);
                 stringBuilder.append("\n\t\treturn mainDAOResult;\n");
             }
 
             return stringBuilder.toString();
+        }
+
+        private void compareDAOResults(final StringBuilder stringBuilder) {
+            stringBuilder.append("\n\t\tfinal boolean ");
+            stringBuilder.append(COMPARISON_RESULT);
+            stringBuilder.append(" = ");
+
+            stringBuilder.append(getSimpleClassName(DAOResultComparator.class.getName()));
+            stringBuilder.append(".compare(");
+            stringBuilder.append(MAIN_DAO_RESULT);
+            stringBuilder.append(",");
+            stringBuilder.append(SECONDARY_DAO_RESULT);
+            stringBuilder.append(");\n");
+        }
+
+        private void logResultComparison(final StringBuilder stringBuilder, Method method) {
+            stringBuilder.append("\t\tif (!");
+            stringBuilder.append(COMPARISON_RESULT);
+            stringBuilder.append(") {\n");
+            stringBuilder.append("\t\t\tfinal Object[] parameters = new Object[] {\n");
+
+            int i = 0;
+            for (final Class parameterType : method.getParameterTypes()) {
+                if (i++ > 0) {
+                    stringBuilder.append(",\n ");
+                }
+                stringBuilder.append("\t\t\t\targ");
+                stringBuilder.append(i);
+            }
+            stringBuilder.append("\n");
+
+            stringBuilder.append("\t\t\t};\n");
+            stringBuilder.append("\t\t\t");
+            stringBuilder.append(getSimpleClassName(DAOResultLogger.class.getName()));
+            stringBuilder.append(".log(");
+            stringBuilder.append(MAIN_DAO);
+            stringBuilder.append(", ");
+            stringBuilder.append(SECONDARY_DAO);
+            stringBuilder.append(", \"");
+            stringBuilder.append(method.getName());            
+            stringBuilder.append("\", parameters);\n\t\t}\n");
         }
 
         private void generateMethodCall(final StringBuilder stringBuilder, final String resultVariable,
@@ -79,11 +134,14 @@ public class DAOClassDescriptor extends ClassDescriptor {
 
     private final MethodBodyClosure methodBodyClosure;
 
-    public DAOClassDescriptor(final String absoluteClazzName, final Class daoInterface, final MethodBodyClosure methodBodyClosure) {
+    public DAOClassDescriptor(final String absoluteClazzName, final Class daoInterface,
+            final MethodBodyClosure methodBodyClosure) {
         super(absoluteClazzName, null, CollectionConstructors.newHashSet(daoInterface));
         this.absoluteClazzName = absoluteClazzName;
         this.daoInterface = daoInterface;
         this.methodBodyClosure = methodBodyClosure;
+        addImport(DAOResultComparator.class);
+        addImport(DAOResultLogger.class);
     }
 
     public DAOClassDescriptor(final String absoluteClazzName, final Class daoInterface) {
