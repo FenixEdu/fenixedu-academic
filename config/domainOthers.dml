@@ -245,6 +245,20 @@ class net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing extends net.so
 }
 
 
+class net.sourceforge.fenixedu.domain.student.Senior extends net.sourceforge.fenixedu.domain.DomainObject {
+    String extracurricularActivities;
+    String specialtyField;
+    Date lastModificationDate;
+    Date expectedDegreeTermination;
+    String informaticsSkills;
+    String professionalExperience;
+    String languageSkills;
+    Integer expectedDegreeAverageGrade;
+    String professionalInterests;
+    Integer keyStudent;
+}
+
+
 class net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyTeacher;
     Integer keyStudent;
@@ -347,6 +361,12 @@ relation RolePersonRole {
     net.sourceforge.fenixedu.domain.PersonRole playsRole associatedPersonRoles {
         multiplicity *;
     }
+}
+
+
+relation SeniorStudent {
+    net.sourceforge.fenixedu.domain.student.Senior playsRole senior;
+    net.sourceforge.fenixedu.domain.Student playsRole student;
 }
 
 

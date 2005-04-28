@@ -2093,6 +2093,20 @@ class net.sourceforge.fenixedu.domain.Seminaries.Seminary extends net.sourceforg
 }
 
 
+class net.sourceforge.fenixedu.domain.student.Senior extends net.sourceforge.fenixedu.domain.DomainObject {
+    String extracurricularActivities;
+    String specialtyField;
+    Date lastModificationDate;
+    Date expectedDegreeTermination;
+    String informaticsSkills;
+    String professionalExperience;
+    String languageSkills;
+    Integer expectedDegreeAverageGrade;
+    String professionalInterests;
+    Integer keyStudent;
+}
+
+
 class net.sourceforge.fenixedu.domain.sms.SentSms extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPerson;
 	Integer destinationNumber;
@@ -3964,6 +3978,12 @@ relation SendProposal {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole senderExecutionCourse;
+}
+
+
+relation SeniorStudent {
+    net.sourceforge.fenixedu.domain.student.Senior playsRole senior;
+    net.sourceforge.fenixedu.domain.Student playsRole student;
 }
 
 
