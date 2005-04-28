@@ -1885,6 +1885,35 @@ class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry
 	"
 }
 
+class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyReimbursementGuide;
+	String remarks;
+	Integer keyEmployee;
+	
+	interface "
+	    public net.sourceforge.fenixedu.domain.IEmployee getEmployee();
+	    
+	    public void setEmployee(net.sourceforge.fenixedu.domain.IEmployee employee);
+	    
+	    public java.util.Calendar getModificationDate();
+	    
+	    public void setModificationDate(java.util.Calendar modificationDate);
+	    
+	    public net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide getReimbursementGuide();
+	    
+	    public void setReimbursementGuide(net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide reimbursementGuide);
+	    
+	    public net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState getReimbursementGuideState();
+	    
+	    public void setReimbursementGuideState(net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState reimbursementGuideState);
+	    
+	    public net.sourceforge.fenixedu.util.State getState();
+	    
+	    public void setState(net.sourceforge.fenixedu.util.State state);
+	    
+	    public java.util.Calendar getOfficialDate();
+	"	
+}
 
 class net.sourceforge.fenixedu.domain.ResponsibleFor extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionCourse;
