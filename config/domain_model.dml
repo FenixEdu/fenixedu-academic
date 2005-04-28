@@ -824,6 +824,13 @@ class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.feni
 }
 
 
+class net.sourceforge.fenixedu.domain.teacher.ExternalActivity extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyTeacher;
+    Date lastModificationDate;
+    String activity;
+}
+
+
 class net.sourceforge.fenixedu.domain.ExternalPerson extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyWorkLocation;
 	Integer keyPerson;
@@ -3406,6 +3413,14 @@ relation ExecutionPeriodSchoolClass {
 	net.sourceforge.fenixedu.domain.SchoolClass playsRole schoolClasses {
 		multiplicity *;
 	}
+}
+
+
+relation ExternalActivityTeacher {
+    net.sourceforge.fenixedu.domain.teacher.ExternalActivity playsRole externalActivities {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
 
 
