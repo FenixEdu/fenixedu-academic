@@ -64,7 +64,7 @@ public class ReadNonMasterExecutionDegreesByExecutionYear implements IServico {
                 IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
                 executionYear = executionYearDAO.readCurrentExecutionYear();
             } else {
-                executionYear = InfoExecutionYear.newDomainFromInfo(infoExecutionYear);;
+                executionYear = InfoExecutionYear.newDomainFromInfo(infoExecutionYear);
             }
 
             IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();

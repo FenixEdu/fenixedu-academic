@@ -25,7 +25,7 @@ public class EnumTagLib extends BodyTagSupport {
 
     private String enumeration;
 
-    private String locale = Globals.LOCALE_KEY;;
+    private String locale = Globals.LOCALE_KEY;
 
     private String bundle;
 
