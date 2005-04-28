@@ -193,6 +193,11 @@ class net.sourceforge.fenixedu.domain.teacher.Career extends net.sourceforge.fen
         String function;
     }
 
+    class net.sourceforge.fenixedu.domain.teacher.TeachingCareer extends net.sourceforge.fenixedu.domain.teacher.Career {
+        String courseOrPosition;
+        Integer keyCategory;
+    }
+
 
 class net.sourceforge.fenixedu.domain.Seminaries.CaseStudy extends net.sourceforge.fenixedu.domain.DomainObject {
     String code;
@@ -2700,7 +2705,6 @@ class net.sourceforge.fenixedu.domain.WebSiteSection extends net.sourceforge.fen
  */
 
 external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
-external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 external class net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction ;
 
 
@@ -4231,7 +4235,7 @@ relation StudentStudentKind {
 
 
 relation TeachingCareerCategory {
-	net.sourceforge.fenixedu.domain.teacher.TeachingCareer playsRole teachingCareer {
+	net.sourceforge.fenixedu.domain.teacher.TeachingCareer playsRole associatedTeachingCareers {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.teacher.Category playsRole category;

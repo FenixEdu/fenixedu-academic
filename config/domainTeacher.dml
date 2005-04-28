@@ -72,3 +72,9 @@ relation CareerTeacher {
 }
 
 
+relation TeachingCareerCategory {
+    net.sourceforge.fenixedu.domain.teacher.TeachingCareer playsRole associatedTeachingCareers {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.teacher.Category playsRole category;
+}
