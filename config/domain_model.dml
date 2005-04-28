@@ -131,6 +131,18 @@ class net.sourceforge.fenixedu.domain.Campus extends net.sourceforge.fenixedu.do
 	String name;
 }
 
+
+class net.sourceforge.fenixedu.domain.Seminaries.Candidacy extends net.sourceforge.fenixedu.domain.DomainObject {
+    Boolean approved;
+    Integer studentIdInternal;
+    Integer curricularCourseIdInternal;
+    Integer seminaryIdInternal;
+    Integer themeIdInternal;
+    String motivation;
+    Integer modalityIdInternal;
+}
+
+
 class net.sourceforge.fenixedu.domain.CandidateEnrolment extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer curricularCourseKey;
 	Integer masterDegreeCandidateKey;
@@ -2478,6 +2490,7 @@ class net.sourceforge.fenixedu.domain.WebSiteSection extends net.sourceforge.fen
  * 
  */
 
+external class net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
 external class net.sourceforge.fenixedu.domain.Seminaries.Theme;
 external class net.sourceforge.fenixedu.domain.Seminaries.Modality;
 external class net.sourceforge.fenixedu.domain.Seminaries.Seminary;
@@ -2577,6 +2590,39 @@ relation BuildingRoom {
 	}
 	net.sourceforge.fenixedu.domain.Building playsRole building;
 }
+
+
+relation CandidacyCaseStudyChoice {
+    net.sourceforge.fenixedu.domain.Seminaries.Candidacy playsRole candidacy;
+    net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice playsRole caseStudyChoices {
+        multiplicity *;
+    }
+}
+
+
+relation CandidacyCurricularCourse {
+    net.sourceforge.fenixedu.domain.Seminaries.Candidacy playsRole associatedCandidancies {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
+}
+
+
+relation CandidacyModality {
+    net.sourceforge.fenixedu.domain.Seminaries.Candidacy playsRole associatedModalities {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Seminaries.Modality playsRole modality;
+}
+
+
+relation CandidacyStudent {
+    net.sourceforge.fenixedu.domain.Seminaries.Candidacy playsRole associatedCandidancies {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Student playsRole student;
+}
+
 
 relation CourseEquivalencyTheme {
     net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency playsRole courseEquivalencies {
@@ -3706,6 +3752,15 @@ relation ScientificAreaCreditsInScientificArea {
 	net.sourceforge.fenixedu.domain.ScientificArea playsRole scientificArea;
 }
 
+
+relation SeminaryCandidacy {
+    net.sourceforge.fenixedu.domain.Seminaries.Seminary playsRole seminary;
+    net.sourceforge.fenixedu.domain.Seminaries.Candidacy playsRole candidacies {
+        multiplicity *;
+    }
+}
+
+
 relation SendProposal {
 	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesSenderExecutionCourse {
 		multiplicity *;
@@ -4003,6 +4058,14 @@ relation TeacherSummary {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+
+relation ThemeCandidacy {
+    net.sourceforge.fenixedu.domain.Seminaries.Theme playsRole theme;
+    net.sourceforge.fenixedu.domain.Seminaries.Candidacy playsRole associatedCandidacies {
+        multiplicity *;
+    }
 }
 
 
