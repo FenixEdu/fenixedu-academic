@@ -1448,6 +1448,12 @@ class net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion extends net.
 }
 
 
+class net.sourceforge.fenixedu.domain.Seminaries.Modality extends net.sourceforge.fenixedu.domain.DomainObject {
+    String description;
+    String name;
+}
+
+
 class net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer studentCurricularPlanKey;
     Integer curricularCourseKey;
@@ -2604,7 +2610,6 @@ class net.sourceforge.fenixedu.domain.WebSiteSection extends net.sourceforge.fen
  */
 
 external class net.sourceforge.fenixedu.domain.Seminaries.Theme;
-external class net.sourceforge.fenixedu.domain.Seminaries.Modality;
 external class net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;

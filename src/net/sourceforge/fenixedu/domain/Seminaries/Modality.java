@@ -5,8 +5,6 @@
  */
 package net.sourceforge.fenixedu.domain.Seminaries;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
-
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
@@ -14,11 +12,7 @@ import net.sourceforge.fenixedu.domain.DomainObject;
  * Created at Jul 23, 2003, 10:15:55 AM
  *  
  */
-public class Modality extends DomainObject implements IModality {
-
-    private String description;
-
-    private String name;
+public class Modality extends Modality_Base {
 
     public Modality() {
     }
@@ -28,37 +22,6 @@ public class Modality extends DomainObject implements IModality {
         this.setName(name);
     }
 
-    /**
-     * @return
-     */
-    public String getDescription() {
-        return this.description;
-    }
-
-    /**
-     * @return
-     */
-    public String getName() {
-        return this.name;
-    }
-
-    /**
-     * @param string
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * @param string
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     *  
-     */
     public String toString() {
         String retorno;
         retorno = "[Modality:";
@@ -82,4 +45,5 @@ public class Modality extends DomainObject implements IModality {
         }
         return equalsResult;
     }
+
 }
