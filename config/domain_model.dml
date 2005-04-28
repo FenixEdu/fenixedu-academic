@@ -1912,6 +1912,8 @@ class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSitua
 	    public void setState(net.sourceforge.fenixedu.util.State state);
 	    
 	    public java.util.Calendar getOfficialDate();
+	    
+		public void setOfficialDate(java.util.Calendar officialDate);
 	"	
 }
 
@@ -2021,6 +2023,29 @@ class net.sourceforge.fenixedu.domain.RoomOccupation extends net.sourceforge.fen
 	public boolean roomOccupationForDateAndTime(net.sourceforge.fenixedu.domain.IPeriod period, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week, net.sourceforge.fenixedu.domain.IRoom room);
 	
 	public boolean roomOccupationForDateAndTime(net.sourceforge.fenixedu.domain.IPeriod period, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week);
+	"
+}
+
+class net.sourceforge.fenixedu.domain.sms.SentSms extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyPerson;
+	Integer destinationNumber;
+	
+	interface "
+	    public java.util.Date getDeliveryDate();
+	    
+	    public void setDeliveryDate(java.util.Date deliveryDate);
+	    
+	    public net.sourceforge.fenixedu.domain.sms.SmsDeliveryType getDeliveryType();
+	    
+	    public void setDeliveryType(net.sourceforge.fenixedu.domain.sms.SmsDeliveryType deliveryType);
+	    
+	    public net.sourceforge.fenixedu.domain.IPerson getPerson();
+	    
+	    public void setPerson(net.sourceforge.fenixedu.domain.IPerson person);
+	    
+	    public java.util.Date getSendDate();
+	    
+	    public void setSendDate(java.util.Date sendDate);
 	"
 }
 
