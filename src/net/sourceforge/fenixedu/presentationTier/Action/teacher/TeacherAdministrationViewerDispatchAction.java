@@ -241,7 +241,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             actionForm.set("information", information);
         
         if(request.getAttribute("announcementTextFlag") != null)
-            actionForm.set("information", (String) request.getAttribute("announcementTextFlag"));
+            actionForm.set("information", request.getAttribute("announcementTextFlag"));
                 
 		if(actionForm.get("editor").equals("") || (actionForm.get("editor").equals("true"))){
 			request.setAttribute("verEditor", "true");            
@@ -1144,7 +1144,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer itemCode = getItemCode(request);
         ISiteComponent itemsComponent = new InfoSiteItems();
         SiteView siteView = readSiteView(request, itemsComponent, null, itemCode, null);
-        String information = (String)((InfoSiteItems)siteView.getComponent()).getItem().getInformation();
+        String information = ((InfoSiteItems)siteView.getComponent()).getItem().getInformation();
                     
         if(information != null){
             DynaActionForm itemForm = (DynaActionForm) form;

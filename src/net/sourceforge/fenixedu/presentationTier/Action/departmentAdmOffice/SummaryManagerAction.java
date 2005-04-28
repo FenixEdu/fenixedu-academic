@@ -458,7 +458,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
                     summaryForm.set("summaryText", summaryText);
             }            
             else              
-                summaryForm.set("summaryText", (String) request.getAttribute("summaryTextFlag"));
+                summaryForm.set("summaryText", request.getAttribute("summaryTextFlag"));
             
             boolean loggedIsResponsible = false;
             List responsibleTeachers = null;

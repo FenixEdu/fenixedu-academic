@@ -35,7 +35,7 @@ public class RemoveProjectAccess implements IService {
             if (persistentSuportOracle.getIPersistentProject().countUserProject(getUserNumber(sp, person)) == 0) {
                 sp.getIPessoaPersistente().simpleLockWrite(person);
 
-                List oldRolesList = (List) person.getPersonRoles();
+                List oldRolesList = person.getPersonRoles();
                 person.setPersonRoles(new ArrayList());
                 for (int i = 0; i < oldRolesList.size(); i++) {
                     IRole role = (IRole) oldRolesList.get(i);
