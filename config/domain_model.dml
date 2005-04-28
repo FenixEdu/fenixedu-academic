@@ -2500,15 +2500,11 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	Integer keyPerson;
 	Integer keyCategory;
 	interface "
-	public java.util.List getInstitutionWorkTimePeriods();
-	
 	public java.util.List getManagementPositions();
 	
 	public java.util.List getOtherTypeCreditLines();
 	
 	public java.util.List getServiceExemptionSituations();
-	
-	public void setInstitutionWorkTimePeriods(java.util.List institutionWorkTimePeriods);
 	
 	public void setManagementPositions(java.util.List managementPositions);
 	
@@ -2528,6 +2524,22 @@ class net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProj
     Integer keyStudent;
     Integer keyExecutionPeriod;
     Double percentage;
+}
+
+
+class net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyTeacher;
+    Date startTime;
+    Integer keyExecutionPeriod;
+    Date endTime;
+    
+    interface "
+    public net.sourceforge.fenixedu.util.DiaSemana getWeekDay();
+    
+    public void setWeekDay(net.sourceforge.fenixedu.util.DiaSemana weekDay);
+    
+    public double hours();
+    "
 }
 
 
@@ -4306,6 +4318,22 @@ relation TeacherDegreeFinalProjectStudentStudent {
 
 relation TeacherDegreeFinalProjectStudentTeacher {
     net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent playsRole degreeFinalProjectStudents {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+
+relation TeacherInstitutionWorkTimeExecutionPeriod {
+    net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime playsRole associatedTeacherInstitutionWorkTime {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
+
+
+relation TeacherInstitutionWorkTimeTeacher {
+    net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime playsRole institutionWorkTimePeriods {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Teacher playsRole teacher;

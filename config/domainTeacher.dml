@@ -50,6 +50,14 @@ class net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTim
     Date startTime;
     Integer keyExecutionPeriod;
     Date endTime;
+    
+    interface "
+    public net.sourceforge.fenixedu.util.DiaSemana getWeekDay();
+    
+    public void setWeekDay(net.sourceforge.fenixedu.util.DiaSemana weekDay);
+    
+    public double hours();
+    "
 }
 
 
@@ -96,6 +104,22 @@ relation ExternalActivityTeacher {
 
 relation OrientationTeacher {
     net.sourceforge.fenixedu.domain.teacher.Orientation playsRole associatedOrientations {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+
+relation TeacherInstitutionWorkTimeExecutionPeriod {
+    net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime playsRole associatedTeacherInstitutionWorkTime {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
+
+
+relation TeacherInstitutionWorkTimeTeacher {
+    net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime playsRole institutionWorkTimePeriods {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
