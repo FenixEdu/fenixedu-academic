@@ -12,13 +12,13 @@ class net.sourceforge.fenixedu.domain.teacher.Career extends net.sourceforge.fen
     Date lastModificationDate;
 }
 
-    class net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer extends net.sourceforge.fenixedu.domain.DomainObject {
+    class net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer extends net.sourceforge.fenixedu.domain.teacher.Career {
         String entity;
         String function;
     }
 
     
-    class net.sourceforge.fenixedu.domain.teacher.TeachingCareer extends net.sourceforge.fenixedu.domain.DomainObject {
+    class net.sourceforge.fenixedu.domain.teacher.TeachingCareer extends net.sourceforge.fenixedu.domain.teacher.Career {
         String courseOrPosition;
         Integer keyCategory;
     }

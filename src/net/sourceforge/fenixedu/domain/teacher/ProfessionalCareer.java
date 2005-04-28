@@ -7,56 +7,16 @@ package net.sourceforge.fenixedu.domain.teacher;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
-public class ProfessionalCareer extends Career implements IProfessionalCareer {
+public class ProfessionalCareer extends ProfessionalCareer_Base {
 
-    private String entity;
-
-    private String function;
-
-    /**
-     *  
-     */
     public ProfessionalCareer() {
         super();
     }
 
-    /**
-     * @param idInternal
-     */
     public ProfessionalCareer(Integer idInternal) {
-        super(idInternal);
-    }
-
-    /**
-     * @return Returns the entity.
-     */
-    public String getEntity() {
-        return entity;
-    }
-
-    /**
-     * @param entity
-     *            The entity to set.
-     */
-    public void setEntity(String entity) {
-        this.entity = entity;
-    }
-
-    /**
-     * @return Returns the function.
-     */
-    public String getFunction() {
-        return function;
-    }
-
-    /**
-     * @param function
-     *            The function to set.
-     */
-    public void setFunction(String function) {
-        this.function = function;
+        this.setIdInternal(idInternal);
     }
 
     public String toString() {

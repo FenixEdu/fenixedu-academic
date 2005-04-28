@@ -188,6 +188,12 @@ class net.sourceforge.fenixedu.domain.teacher.Career extends net.sourceforge.fen
 }
 
 
+    class net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer extends net.sourceforge.fenixedu.domain.teacher.Career {
+        String entity;
+        String function;
+    }
+
+
 class net.sourceforge.fenixedu.domain.Seminaries.CaseStudy extends net.sourceforge.fenixedu.domain.DomainObject {
     String code;
     String description;
