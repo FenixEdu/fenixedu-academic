@@ -1685,6 +1685,20 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     "
 }
 
+class net.sourceforge.fenixedu.domain.PersonAccount extends net.sourceforge.fenixedu.domain.DomainObject {
+	Double balance;
+	Integer keyPerson;
+	
+	interface "
+	    public net.sourceforge.fenixedu.domain.IPerson getPerson();
+	    
+	    public void setPerson(net.sourceforge.fenixedu.domain.IPerson person);
+	    
+	    public java.util.List getTransactions();
+	    
+	    public void setTransactions(java.util.List transactions);
+	"
+}
 
 class net.sourceforge.fenixedu.domain.PersonRole extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyPerson;
@@ -1697,6 +1711,22 @@ class net.sourceforge.fenixedu.domain.precedences.Precedence extends net.sourcef
 	
 	interface " 
  		public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType evaluate(net.sourceforge.fenixedu.domain.precedences.PrecedenceContext precedenceContext);
+	"
+}
+
+class net.sourceforge.fenixedu.domain.Price extends net.sourceforge.fenixedu.domain.DomainObject {
+	String description;
+	Double price;
+	Integer internalCode;
+	
+	interface "
+	    public net.sourceforge.fenixedu.util.DocumentType getDocumentType();
+	    
+	    public net.sourceforge.fenixedu.util.GraduationType getGraduationType();
+	    
+	    public void setDocumentType(net.sourceforge.fenixedu.util.DocumentType type);
+	    
+	    public void setGraduationType(net.sourceforge.fenixedu.util.GraduationType type);
 	"
 }
 

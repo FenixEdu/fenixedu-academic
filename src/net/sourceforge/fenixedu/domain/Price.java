@@ -8,26 +8,21 @@ import net.sourceforge.fenixedu.util.GraduationType;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class Price extends DomainObject implements IPrice {
-    protected Integer internalCode;
+public class Price extends Price_Base {
 
     protected GraduationType graduationType;
 
     protected DocumentType documentType;
-
-    protected String description;
-
-    protected Double price;
 
     public Price() {
     }
 
     public Price(GraduationType graduationType, DocumentType documentType, String description,
             Double price) {
-        this.description = description;
+        setDescription(description);
         this.documentType = documentType;
         this.graduationType = graduationType;
-        this.price = price;
+        setPrice(price);
 
     }
 
@@ -48,11 +43,11 @@ public class Price extends DomainObject implements IPrice {
 
     public String toString() {
         String result = "[GUIDE ENTRY";
-        result += ", codInt=" + internalCode;
-        result += ", description=" + description;
+        result += ", codInt=" + getInternalCode();
+        result += ", description=" + getDescription();
         result += ", documentType=" + documentType;
         result += ", graduationType=" + graduationType;
-        result += ", price=" + price;
+        result += ", price=" + getPrice();
 
         result += "]";
         return result;
@@ -61,71 +56,29 @@ public class Price extends DomainObject implements IPrice {
     /**
      * @return
      */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * @return
-     */
     public DocumentType getDocumentType() {
-        return documentType;
-    }
+		return documentType;
+	}
 
-    /**
-     * @return
-     */
-    public GraduationType getGraduationType() {
-        return graduationType;
-    }
+	/**
+	 * @return
+	 */
+	public GraduationType getGraduationType() {
+		return graduationType;
+	}
 
-    /**
-     * @return
-     */
-    public Integer getInternalCode() {
-        return internalCode;
-    }
+	/**
+	 * @param type
+	 */
+	public void setDocumentType(DocumentType type) {
+		documentType = type;
+	}
 
-    /**
-     * @return
-     */
-    public Double getPrice() {
-        return price;
-    }
-
-    /**
-     * @param string
-     */
-    public void setDescription(String string) {
-        description = string;
-    }
-
-    /**
-     * @param type
-     */
-    public void setDocumentType(DocumentType type) {
-        documentType = type;
-    }
-
-    /**
-     * @param type
-     */
-    public void setGraduationType(GraduationType type) {
-        graduationType = type;
-    }
-
-    /**
-     * @param integer
-     */
-    public void setInternalCode(Integer integer) {
-        internalCode = integer;
-    }
-
-    /**
-     * @param double1
-     */
-    public void setPrice(Double double1) {
-        price = double1;
-    }
+	/**
+	 * @param type
+	 */
+	public void setGraduationType(GraduationType type) {
+		graduationType = type;
+	}
 
 }
