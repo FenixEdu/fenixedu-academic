@@ -1866,9 +1866,25 @@ class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide exte
 		
 		public void setReimbursementGuideEntries(java.util.List reimbursementGuideEntries);
 	"
-	
-	
 }
+
+class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry extends net.sourceforge.fenixedu.domain.DomainObject {
+	String justification;
+	Double value;
+	Integer keyReimbursementGuide;
+	Integer keyGuideEntry;
+	
+	interface "
+	    public net.sourceforge.fenixedu.domain.IGuideEntry getGuideEntry();
+	    
+	    public void setGuideEntry(net.sourceforge.fenixedu.domain.IGuideEntry guideEntry);
+	    
+	    public net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide getReimbursementGuide();
+	    
+	    public void setReimbursementGuide(net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide reimbursementGuide);
+	"
+}
+
 
 class net.sourceforge.fenixedu.domain.ResponsibleFor extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionCourse;

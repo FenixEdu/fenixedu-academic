@@ -5,7 +5,6 @@
 
 package net.sourceforge.fenixedu.domain.reimbursementGuide;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.IGuideEntry;
 
 /**
@@ -15,128 +14,62 @@ import net.sourceforge.fenixedu.domain.IGuideEntry;
  * 
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 
-public class ReimbursementGuideEntry extends DomainObject implements IReimbursementGuideEntry {
+public class ReimbursementGuideEntry extends ReimbursementGuideEntry_Base {
 
-    private Integer keyGuideEntry;
+	protected IGuideEntry guideEntry;
 
-    private Integer keyReimbursementGuide;
+	protected IReimbursementGuide reimbursementGuide;
 
-    protected Double value;
+	public ReimbursementGuideEntry() {
+	}
 
-    protected String justification;
+	/**
+	 * @return Returns the guideEntry.
+	 */
+	public IGuideEntry getGuideEntry() {
+		return guideEntry;
+	}
 
-    protected IGuideEntry guideEntry;
+	/**
+	 * @param guideEntry
+	 *            The guideEntry to set.
+	 */
+	public void setGuideEntry(IGuideEntry guideEntry) {
+		this.guideEntry = guideEntry;
+	}
 
-    protected IReimbursementGuide reimbursementGuide;
+	/**
+	 * @return Returns the reimbursementGuide.
+	 */
+	public IReimbursementGuide getReimbursementGuide() {
+		return reimbursementGuide;
+	}
 
-    public ReimbursementGuideEntry() {
-    }
+	/**
+	 * @param reimbursementGuide
+	 *            The reimbursementGuide to set.
+	 */
+	public void setReimbursementGuide(IReimbursementGuide reimbursementGuide) {
+		this.reimbursementGuide = reimbursementGuide;
+	}
 
-    /**
-     * @return Returns the guideEntry.
-     */
-    public IGuideEntry getGuideEntry() {
-        return guideEntry;
-    }
+	public boolean equals(Object obj) {
+		boolean result = false;
+		if (obj instanceof IReimbursementGuideEntry) {
+			IReimbursementGuideEntry reimbursementGuideEntry = (IReimbursementGuideEntry) obj;
 
-    /**
-     * @param guideEntry
-     *            The guideEntry to set.
-     */
-    public void setGuideEntry(IGuideEntry guideEntry) {
-        this.guideEntry = guideEntry;
-    }
+			if ((this.getIdInternal() == null && reimbursementGuideEntry
+					.getGuideEntry() == null)
+					|| (this.getIdInternal().equals(reimbursementGuideEntry
+							.getIdInternal()))) {
+				result = true;
+			}
+		}
 
-    /**
-     * @return Returns the justification.
-     */
-    public String getJustification() {
-        return justification;
-    }
-
-    /**
-     * @param justification
-     *            The justification to set.
-     */
-    public void setJustification(String justification) {
-        this.justification = justification;
-    }
-
-    /**
-     * @return Returns the keyGuideEntry.
-     */
-    public Integer getKeyGuideEntry() {
-        return keyGuideEntry;
-    }
-
-    /**
-     * @param keyGuideEntry
-     *            The keyGuideEntry to set.
-     */
-    public void setKeyGuideEntry(Integer keyGuideEntry) {
-        this.keyGuideEntry = keyGuideEntry;
-    }
-
-    /**
-     * @return Returns the keyReimbursementGuide.
-     */
-    public Integer getKeyReimbursementGuide() {
-        return keyReimbursementGuide;
-    }
-
-    /**
-     * @param keyReimbursementGuide
-     *            The keyReimbursementGuide to set.
-     */
-    public void setKeyReimbursementGuide(Integer keyReimbursementGuide) {
-        this.keyReimbursementGuide = keyReimbursementGuide;
-    }
-
-    /**
-     * @return Returns the reimbursementGuide.
-     */
-    public IReimbursementGuide getReimbursementGuide() {
-        return reimbursementGuide;
-    }
-
-    /**
-     * @param reimbursementGuide
-     *            The reimbursementGuide to set.
-     */
-    public void setReimbursementGuide(IReimbursementGuide reimbursementGuide) {
-        this.reimbursementGuide = reimbursementGuide;
-    }
-
-    /**
-     * @return Returns the value.
-     */
-    public Double getValue() {
-        return value;
-    }
-
-    /**
-     * @param value
-     *            The value to set.
-     */
-    public void setValue(Double value) {
-        this.value = value;
-    }
-
-    public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj instanceof IReimbursementGuideEntry) {
-            IReimbursementGuideEntry reimbursementGuideEntry = (IReimbursementGuideEntry) obj;
-
-            if ((this.getIdInternal() == null && reimbursementGuideEntry.getGuideEntry() == null)
-                    || (this.getIdInternal().equals(reimbursementGuideEntry.getIdInternal()))) {
-                result = true;
-            }
-        }
-
-        return result;
-    }
+		return result;
+	}
 
 }
