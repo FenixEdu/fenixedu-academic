@@ -229,6 +229,12 @@ class net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProj
 }
 
 
+class net.sourceforge.fenixedu.domain.Tutor extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer teacherKey;
+    Integer studentKey;
+}
+
+
 class net.sourceforge.fenixedu.domain.WebSite extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
     String style;
@@ -324,6 +330,20 @@ relation TeacherDegreeFinalProjectStudentStudent {
 
 relation TeacherDegreeFinalProjectStudentTeacher {
     net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent playsRole degreeFinalProjectStudents {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+
+relation TutorStudent {
+    net.sourceforge.fenixedu.domain.Tutor playsRole associatedTutor;
+    net.sourceforge.fenixedu.domain.Student playsRole student;
+}
+
+
+relation TutorTeacher {
+    net.sourceforge.fenixedu.domain.Tutor playsRole associatedTutors {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
