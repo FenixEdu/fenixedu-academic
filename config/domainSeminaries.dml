@@ -49,6 +49,24 @@ class net.sourceforge.fenixedu.domain.Seminaries.Seminary extends net.sourceforg
     Boolean hasCaseStudy;
     Integer allowedCandidaciesPerStudent;
     String name;
+    
+    interface "
+    public Calendar getEnrollmentBeginDate();
+
+    public Calendar getEnrollmentBeginTime();
+
+    public Calendar getEnrollmentEndDate();
+
+    public Calendar getEnrollmentEndTime();
+
+    public void setEnrollmentBeginDate(Calendar calendar);
+
+    public void setEnrollmentBeginTime(Calendar calendar);
+
+    public void setEnrollmentEndDate(Calendar calendar);
+
+    public void setEnrollmentEndTime(Calendar calendar);
+    "
 }
 
 

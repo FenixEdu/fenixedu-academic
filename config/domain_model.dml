@@ -2039,6 +2039,34 @@ class net.sourceforge.fenixedu.domain.RoomOccupation extends net.sourceforge.fen
 	"
 }
 
+
+class net.sourceforge.fenixedu.domain.Seminaries.Seminary extends net.sourceforge.fenixedu.domain.DomainObject {
+    Boolean hasTheme;
+    String description;
+    Boolean hasCaseStudy;
+    Integer allowedCandidaciesPerStudent;
+    String name;
+    
+    interface "
+    public java.util.Calendar getEnrollmentBeginDate();
+
+    public java.util.Calendar getEnrollmentBeginTime();
+
+    public java.util.Calendar getEnrollmentEndDate();
+
+    public java.util.Calendar getEnrollmentEndTime();
+
+    public void setEnrollmentBeginDate(java.util.Calendar calendar);
+
+    public void setEnrollmentBeginTime(java.util.Calendar calendar);
+
+    public void setEnrollmentEndDate(java.util.Calendar calendar);
+
+    public void setEnrollmentEndTime(java.util.Calendar calendar);
+    "
+}
+
+
 class net.sourceforge.fenixedu.domain.sms.SentSms extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPerson;
 	Integer destinationNumber;
@@ -2610,7 +2638,6 @@ class net.sourceforge.fenixedu.domain.WebSiteSection extends net.sourceforge.fen
  */
 
 external class net.sourceforge.fenixedu.domain.Seminaries.Theme;
-external class net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 external class net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction ;
