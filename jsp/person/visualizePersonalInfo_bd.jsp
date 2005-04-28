@@ -41,7 +41,10 @@
           <!-- Sexo -->
           <tr>
             <td width="30%"><bean:message key="label.person.sex" /></td>
-            <td class="greytxt"><bean:write name="personalInfo" property="sexo"/></td>
+            <td class="greytxt">
+            	<bean:define id="gender" name="personalInfo" property="sexo"/>
+            	<bean:message key='<%=gender.toString()%>' bundle="ENUMERATION_RESOURCES"/>
+            </td>
           </tr>
  	      <!-- Numero do Documento de Identificacao -->
           <tr>
