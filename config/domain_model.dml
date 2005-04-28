@@ -179,6 +179,15 @@ class net.sourceforge.fenixedu.domain.CandidateSituation extends net.sourceforge
 }
 
 
+class net.sourceforge.fenixedu.domain.teacher.Career extends net.sourceforge.fenixedu.domain.DomainObject {
+    String ojbConcreteClass;
+    Integer beginYear;
+    Integer endYear;
+    Integer keyTeacher;
+    Date lastModificationDate;
+}
+
+
 class net.sourceforge.fenixedu.domain.Seminaries.CaseStudy extends net.sourceforge.fenixedu.domain.DomainObject {
     String code;
     String description;
@@ -2811,6 +2820,14 @@ relation CandidacyStudent {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Student playsRole student;
+}
+
+
+relation CareerTeacher {
+    net.sourceforge.fenixedu.domain.teacher.Career playsRole associatedCareers {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
 
 
