@@ -1735,6 +1735,23 @@ class net.sourceforge.fenixedu.domain.PersonAccount extends net.sourceforge.feni
 	"
 }
 
+
+class net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers extends net.sourceforge.fenixedu.domain.DomainObject {
+    Boolean answer5;
+    Boolean answer1;
+    Boolean answer3;
+    Boolean answer7;
+    Boolean answer6;
+    Integer keyStudent;
+    Boolean answer4;
+    Boolean answer2;
+    
+    interface "
+    public void setAnswer(Integer id, Boolean answer);
+    "
+}
+
+
 class net.sourceforge.fenixedu.domain.PersonRole extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyPerson;
     Integer keyRole;
@@ -3698,6 +3715,12 @@ relation PersonAdvisory {
 	net.sourceforge.fenixedu.domain.Advisory playsRole advisories {
 		multiplicity *;
 	}
+}
+
+
+relation PersonalDataUseInquiryAnswersStudent {
+    net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers playsRole personalDataUseInquiryAnswers;
+    net.sourceforge.fenixedu.domain.Student playsRole student;
 }
 
 

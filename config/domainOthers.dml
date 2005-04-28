@@ -134,6 +134,22 @@ class net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent extends net.s
 }
 
 
+class net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers extends net.sourceforge.fenixedu.domain.DomainObject {
+    Boolean answer5;
+    Boolean answer1;
+    Boolean answer3;
+    Boolean answer7;
+    Boolean answer6;
+    Integer keyStudent;
+    Boolean answer4;
+    Boolean answer2;
+    
+    interface "
+    public void setAnswer(Integer id, Boolean answer);
+    "
+}
+
+
 class net.sourceforge.fenixedu.domain.PersonRole extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyPerson;
     Integer keyRole;
@@ -278,6 +294,12 @@ class net.sourceforge.fenixedu.domain.WebSiteSection extends net.sourceforge.fen
 
 relation GaugingTestResultStudent {
     net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult playsRole associatedGaugingTestResult;
+    net.sourceforge.fenixedu.domain.Student playsRole student;
+}
+
+
+relation PersonalDataUseInquiryAnswersStudent {
+    net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers playsRole personalDataUseInquiryAnswers;
     net.sourceforge.fenixedu.domain.Student playsRole student;
 }
 
