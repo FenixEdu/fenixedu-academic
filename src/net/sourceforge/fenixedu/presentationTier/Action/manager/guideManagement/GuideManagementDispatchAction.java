@@ -123,6 +123,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
                 .getYear());
         guideForm.set("newDegreeCurricularPlanID", guide.getInfoExecutionDegree()
                 .getInfoDegreeCurricularPlan().getIdInternal());
+        guideForm.set("newPaymentType", guide.getPaymentType().toString());   
         request.setAttribute("paymentTransactions", paymentTransactions);
         request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
         request.setAttribute("executionYears", executionYears);
@@ -132,7 +133,6 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
         request.setAttribute("days", Data.getMonthDays());
         request.setAttribute("months", Data.getMonths());
         request.setAttribute("years", Data.getYears());
-        request.setAttribute("newPaymentType", guide.getPaymentType().toString());
         request.setAttribute("paymentTypes", PaymentType.toArrayList());
 
         return mapping.findForward("editGuide");
