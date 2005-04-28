@@ -5,9 +5,6 @@
  */
 package net.sourceforge.fenixedu.domain.Seminaries;
 
-import java.util.List;
-
-import net.sourceforge.fenixedu.domain.DomainObject;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -16,14 +13,7 @@ import net.sourceforge.fenixedu.domain.DomainObject;
  * Created at Jul 23, 2003, 10:12:40 AM
  *  
  */
-public class Theme extends DomainObject implements ITheme {
-    private String description;
-
-    private String name;
-
-    private String shortName;
-
-    private List caseStudies;
+public class Theme extends Theme_Base {
 
     public Theme() {
     }
@@ -31,34 +21,6 @@ public class Theme extends DomainObject implements ITheme {
     public Theme(String name, String description) {
         this.setName(name);
         this.setDescription(description);
-    }
-
-    /**
-     * @return
-     */
-    public String getDescription() {
-        return this.description;
-    }
-
-    /**
-     * @return
-     */
-    public String getName() {
-        return this.name;
-    }
-
-    /**
-     * @param string
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * @param string
-     */
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String toString() {
@@ -84,34 +46,6 @@ public class Theme extends DomainObject implements ITheme {
                 equalsResult = this.getName().equalsIgnoreCase(theme.getName());
         }
         return equalsResult;
-    }
-
-    /**
-     * @return
-     */
-    public List getCaseStudies() {
-        return caseStudies;
-    }
-
-    /**
-     * @param list
-     */
-    public void setCaseStudies(List list) {
-        caseStudies = list;
-    }
-
-    /**
-     * @return
-     */
-    public String getShortName() {
-        return shortName;
-    }
-
-    /**
-     * @param string
-     */
-    public void setShortName(String string) {
-        shortName = string;
     }
 
 }

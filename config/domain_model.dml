@@ -2449,6 +2449,13 @@ class net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProj
 }
 
 
+class net.sourceforge.fenixedu.domain.Seminaries.Theme extends net.sourceforge.fenixedu.domain.DomainObject {
+    String description;
+    String shortName;
+    String name;
+}
+
+
 class net.sourceforge.fenixedu.domain.University extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
 	String name;
@@ -2637,7 +2644,6 @@ class net.sourceforge.fenixedu.domain.WebSiteSection extends net.sourceforge.fen
  * 
  */
 
-external class net.sourceforge.fenixedu.domain.Seminaries.Theme;
 external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
 external class net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 external class net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction ;
