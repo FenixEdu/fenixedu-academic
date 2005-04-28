@@ -1688,7 +1688,7 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 class net.sourceforge.fenixedu.domain.PersonAccount extends net.sourceforge.fenixedu.domain.DomainObject {
 	Double balance;
 	Integer keyPerson;
-	
+
 	interface "
 	    public net.sourceforge.fenixedu.domain.IPerson getPerson();
 	    
@@ -2423,6 +2423,10 @@ class net.sourceforge.fenixedu.domain.WebSite extends net.sourceforge.fenixedu.d
     String mail;
     String name;
 }
+
+
+    class net.sourceforge.fenixedu.domain.SiteIST extends net.sourceforge.fenixedu.domain.WebSite {
+    }
 
 
 class net.sourceforge.fenixedu.domain.WebSiteItem extends net.sourceforge.fenixedu.domain.DomainObject {
