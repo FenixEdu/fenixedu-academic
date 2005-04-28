@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoEx
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudent;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentAndDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
@@ -69,11 +70,9 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService {
 
             if (isStudentCurricularPlanFromChosenExecutionYear(studentCurricularPlan, executionPeriod.getExecutionYear().getYear())) {
                 IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
-                List enrollments = persistentEnrolment
-                        .readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentCurricularPlan,
-                                EnrollmentState.ENROLLED);
-
-                infoStudentEnrolmentContext = buildResult(studentCurricularPlan, enrollments, executionPeriod);
+                List enrolmentsInExecutionPeriod = studentCurricularPlan.getAllStudentEnrolledEnrollmentsInExecutionPeriod(executionPeriod);
+                
+                infoStudentEnrolmentContext = buildResult(studentCurricularPlan, enrolmentsInExecutionPeriod, executionPeriod);
 
                 if (infoStudentEnrolmentContext == null) {
                     throw new FenixServiceException();
@@ -98,7 +97,7 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService {
      */
     private InfoStudentEnrollmentContext buildResult(IStudentCurricularPlan studentCurricularPlan,
             List enrollments, IExecutionPeriod executionPeriod) {
-        InfoStudentCurricularPlan infoStudentCurricularPlan = InfoStudentCurricularPlanWithInfoStudent
+        InfoStudentCurricularPlan infoStudentCurricularPlan = InfoStudentCurricularPlanWithInfoStudentAndDegree
                 .newInfoFromDomain(studentCurricularPlan);
         
         InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod);

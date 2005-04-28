@@ -322,6 +322,7 @@ class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.f
     public boolean hasActiveScopeInGivenSemester(final Integer semester);
     public boolean hasActiveScopeInGivenSemesterForGivenBranch(final Integer semester, final net.sourceforge.fenixedu.domain.IBranch branch);
     public boolean hasActiveScopeInGivenSemesterForCommonAndGivenBranch(final Integer semester, final net.sourceforge.fenixedu.domain.IBranch branch);
+    public java.util.List<net.sourceforge.fenixedu.domain.ICurricularCourseScope> getActiveScopesInExecutionPeriod(final IExecutionPeriod executionPeriod);
 	"
 }
 
@@ -767,7 +768,7 @@ class net.sourceforge.fenixedu.domain.ExecutionDegree extends net.sourceforge.fe
 }
 
 
-class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fenixedu.domain.DomainObject implements net.sourceforge.fenixedu.fileSuport.INode {
+class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fenixedu.domain.DomainObject implements net.sourceforge.fenixedu.fileSuport.INode, java.lang.Comparable{
 	Integer keyExecutionYear;
 	Date beginDate;
 	Integer keyPreviousExecutionPeriod;
@@ -2201,6 +2202,8 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
         public boolean isCurricularCourseEnrolled(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
         public boolean isCurricularCourseEnrolledInExecutionPeriod(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse,
                 net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
+        public boolean isCurricularCourseApprovedInCurrentOrPreviousPeriod(ICurricularCourse course, IExecutionPeriod executionPeriod);
+		public boolean isCurricularCourseApprovedWithoutEquivalencesInCurrentOrPreviousPeriod(ICurricularCourse course, IExecutionPeriod executionPeriod);
         
         public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea);
         public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea);

@@ -15,6 +15,7 @@
 	<html:hidden property="studentNumber" />
 	<html:hidden property="executionPeriod"/>
 	<html:hidden property="degreeType"/>
+	<html:hidden property="userType"/>
 
 	<table border="0">
 		<!-- Degrees -->

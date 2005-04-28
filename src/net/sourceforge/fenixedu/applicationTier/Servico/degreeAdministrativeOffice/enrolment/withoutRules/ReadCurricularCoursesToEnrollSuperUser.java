@@ -50,12 +50,12 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author Tânia Pousão
  *  
  */
-public class ReadCurricularCoursesToEnroll implements IService {
+public class ReadCurricularCoursesToEnrollSuperUser implements IService {
     private static final int MAX_CURRICULAR_YEARS = 5;
 
     private static final int MAX_CURRICULAR_SEMESTERS = 2;
 
-    public ReadCurricularCoursesToEnroll() {
+    public ReadCurricularCoursesToEnrollSuperUser() {
     }
 
     public Object run(InfoStudent infoStudent, TipoCurso degreeType,
@@ -103,10 +103,11 @@ public class ReadCurricularCoursesToEnroll implements IService {
             final List curricularSemestersListFinal = verifySemesters(curricularSemestersList);
 
             curricularCoursesFromDegreeCurricularPlan = degreeCurricularPlan.getCurricularCourses();
+            
             curricularCoursesFromDegreeCurricularPlan = (List) CollectionUtils.select(
                     curricularCoursesFromDegreeCurricularPlan, new Predicate() {
                         public boolean evaluate(Object arg0) {
-                            return !studentCurricularPlan.isCurricularCourseApprovedInCurrentOrPreviousPeriod((ICurricularCourse) arg0, executionPeriod)
+                            return !studentCurricularPlan.isCurricularCourseApprovedWithoutEquivalencesInCurrentOrPreviousPeriod((ICurricularCourse) arg0, executionPeriod)
                                 && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod((ICurricularCourse) arg0, executionPeriod);
                         }
                     });
@@ -134,9 +135,7 @@ public class ReadCurricularCoursesToEnroll implements IService {
                                 return result;
                             }
                         });
-            }
-            
-            else {
+            } else {
                 curricularCoursesFromDegreeCurricularPlan = (List) CollectionUtils.select(
                         curricularCoursesFromDegreeCurricularPlan, new Predicate() {
                             public boolean evaluate(Object arg0) {

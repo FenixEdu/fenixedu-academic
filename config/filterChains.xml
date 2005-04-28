@@ -691,6 +691,13 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
+    <filterChain>
+        <name>EnrollmentWithoutRulesAuthorizationSuperUser</name>
+        <expression>DegreeAdministrativeOfficeSuperUserAuthorization &amp;&amp; EnrollmentWithoutRulesAuthorization </expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
 	<filterChain>
         <name>EnrolmentImprovmentAuthorization</name>
         <expression>EnrolmentImprovmentAuthorization</expression>

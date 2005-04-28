@@ -16,6 +16,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.strategy.enrolment.context.InfoStudentEnrollmentContext;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoCurricularCourse2Enroll;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.util.ExecutionDegreesFormat;
+import net.sourceforge.fenixedu.util.PeriodState;
+import net.sourceforge.fenixedu.util.TipoCurso;
+
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -28,23 +46,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
-
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoCurricularCourse2Enroll;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.applicationTier.strategy.enrolment.context.InfoStudentEnrollmentContext;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.util.ExecutionDegreesFormat;
-import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.util.TipoCurso;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Tânia Pousão
@@ -73,6 +74,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
                 degreeType = (String) actionForm.get("degreeType");
             }
         }
+              
         request.setAttribute("degreeType", degreeType);
 
         //execution years
@@ -154,7 +156,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
             infoStudentEnrolmentContext = (InfoStudentEnrollmentContext) ServiceManagerServiceFactory
                     .executeService(userView, "ReadEnrollmentsWithStateEnrolledByStudent", args);
 
-        } catch (NotAuthorizedException e) {
+        } catch (NotAuthorizedFilterException e) {
             e.printStackTrace();
 
             errors.add("notauthorized", new ActionError("error.exception.notAuthorized2"));
@@ -208,7 +210,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
         Object[] args = { infoStudent, degreeType, unenrollmentsList };
         try {
             ServiceManagerServiceFactory.executeService(userView, "DeleteEnrollmentsList", args);
-        } catch (NotAuthorizedException e) {
+        } catch (NotAuthorizedFilterException e) {
 
             errors.add("notauthorized", new ActionError("error.exception.notAuthorized2"));
             saveErrors(request, errors);
@@ -240,6 +242,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
         infoStudent.setNumber(studentNumber);
 
         String executionPeriodID = (String) prepareEnrolmentForm.get("executionPeriod");
+        String studentCurricularPlan = (String) prepareEnrolmentForm.get("studentCurricularPlan");
         /*InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
         infoExecutionYear.setYear(executionYear);*/
 
@@ -304,7 +307,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
         //maintenance of the Context with the student's number and name and
         // execution year
         InfoStudentEnrollmentContext infoStudentEnrolmentContext = maintenanceContext(infoStudent,
-                infoExecutionDegreeSelected.getInfoExecutionYear());
+                infoExecutionDegreeSelected.getInfoExecutionYear(), studentCurricularPlan);
         request.setAttribute("infoStudentEnrolmentContext", infoStudentEnrolmentContext);
 
         return mapping.findForward("choosesForEnrollment");
@@ -329,11 +332,14 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
     }
 
     private InfoStudentEnrollmentContext maintenanceContext(InfoStudent infoStudent,
-            InfoExecutionYear infoExecutionYear) {
+            InfoExecutionYear infoExecutionYear, String studentCurricularPlan) {
         InfoStudentEnrollmentContext infoStudentEnrolmentContext = new InfoStudentEnrollmentContext();
 
         InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
         infoStudentCurricularPlan.setInfoStudent(infoStudent);
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
+        infoDegreeCurricularPlan.setName(studentCurricularPlan);
+        infoStudentCurricularPlan.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
         infoStudentEnrolmentContext.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
 
         InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
@@ -374,10 +380,18 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
                 curricularYearsList, curricularSemestersList };
         InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
         try {
-            infoStudentEnrolmentContext = (InfoStudentEnrollmentContext) ServiceManagerServiceFactory
-                    .executeService(userView, "ReadCurricularCoursesToEnroll", args);
+            Integer userType = (Integer) enrollForm.get("userType");
+  
+            if(userType.equals(0)) {
+                infoStudentEnrolmentContext = (InfoStudentEnrollmentContext) ServiceManagerServiceFactory
+                .executeService(userView, "ReadCurricularCoursesToEnroll", args);
+            }
+            else {
+                infoStudentEnrolmentContext = (InfoStudentEnrollmentContext) ServiceManagerServiceFactory
+                .executeService(userView, "ReadCurricularCoursesToEnrollSuperUser", args);
+            }
 
-        } catch (NotAuthorizedException e) {
+        } catch (NotAuthorizedFilterException e) {
             e.printStackTrace();
 
             errors.add("notauthorized", new ActionError("error.exception.notAuthorized2"));
@@ -445,7 +459,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
                 optionalEnrollments, userView };
         try {
             ServiceManagerServiceFactory.executeService(userView, "WriteEnrollmentsList", args);
-        } catch (NotAuthorizedException e) {
+        } catch (NotAuthorizedFilterException e) {
             e.printStackTrace();
 
             errors.add("notauthorized", new ActionError("error.exception.notAuthorized2"));

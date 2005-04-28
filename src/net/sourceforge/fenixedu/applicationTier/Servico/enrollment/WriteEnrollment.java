@@ -115,8 +115,7 @@ public class WriteEnrollment implements IService {
             if (enrollment.getCondition().equals(EnrollmentCondition.INVISIBLE)) {
                 enrollmentDAO.simpleLockWrite(enrollment);
                 enrollment.setCondition(getEnrollmentCondition(enrollmentType));
-            }
-            if (enrollment.getEnrollmentState().equals(EnrollmentState.ANNULED)) {
+            } if (enrollment.getEnrollmentState().equals(EnrollmentState.ANNULED)) {
                 enrollmentDAO.simpleLockWrite(enrollment);
                 enrollment.setEnrollmentState(EnrollmentState.ENROLLED);
             }

@@ -30,7 +30,7 @@ public class StudentIsUserFilter extends Filtro {
             throws FilterException, Exception {
         Integer studentId = (Integer) serviceRequest.getArguments()[0];
         IUserView userView = getRemoteUser(serviceRequest);
-
+        
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IStudent student = (IStudent) persistentSupport.getIPersistentStudent().readByOID(Student.class,

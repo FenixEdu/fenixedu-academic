@@ -24,6 +24,11 @@
 			<logic:present name="executionYear">
 				<bean:write name="executionYear" />
 			</logic:present>
+			<br/>
+			<b><bean:message key="label.degreeCurricularPlan" /></b>&nbsp;
+			<logic:present name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoDegreeCurricularPlan">
+				<bean:write name="infoStudentEnrolmentContext"  property="infoStudentCurricularPlan.infoDegreeCurricularPlan.name"/>
+			</logic:present>
 		</td>
 	</tr>
 </table>

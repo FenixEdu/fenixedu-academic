@@ -48,5 +48,6 @@ public class CandidacyOwnershipFilter extends Filtro {
                         .intValue()))
             throw new NotAuthorizedException();
 
+
     }
 }

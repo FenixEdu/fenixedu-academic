@@ -30,6 +30,7 @@
 		<html:hidden property="studentNumber" />
 		<html:hidden property="executionPeriod" />
 		<html:hidden property="degreeType" />
+		<html:hidden property="userType" />
 		<logic:greaterThan name="curricularCoursesSize" value="0">
 			<table >
 			<tr>

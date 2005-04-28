@@ -65,4 +65,11 @@ public class ExecutionPeriod extends ExecutionPeriod_Base {
         return executionYear;
     }
 
+    public int compareTo(Object o) {
+        IExecutionPeriod executionPeriod = (IExecutionPeriod) o;
+        String yearThis = this.getExecutionYear().getYear() + getSemester();
+        String year = executionPeriod.getExecutionYear().getYear() + getSemester();
+        return yearThis.compareTo(year);
+    }
+
 }

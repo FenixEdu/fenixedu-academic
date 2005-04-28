@@ -6485,12 +6485,20 @@
     </service>
     <service>
         <name>WriteEnrollmentsList</name>
-        <description>Deletes enrolment of student in a curricular course</description>
         <implementationClass>
             net.sourceforge.fenixedu.applicationTier.Servico.enrollment.WriteEnrollmentsList</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
             <chain name="EnrollmentWithoutRulesAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadCurricularCoursesToEnrollSuperUser</name>
+        <implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ReadCurricularCoursesToEnrollSuperUser</implementationClass>
+        <isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="EnrollmentWithoutRulesAuthorizationSuperUser"/>
         </filterChains>
     </service>
     <service>

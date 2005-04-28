@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.util.BranchType;
@@ -85,6 +88,17 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public boolean curricularCourseIsMandatory() {
         return getMandatory().booleanValue();
+    }
+    
+    public List<ICurricularCourseScope> getActiveScopesInExecutionPeriod(final IExecutionPeriod executionPeriod){
+        List<ICurricularCourseScope> activeScopesInExecutionPeriod = new ArrayList<ICurricularCourseScope>();
+        for (Iterator iter = getScopes().iterator(); iter.hasNext();) {
+            ICurricularCourseScope scope = (ICurricularCourseScope) iter.next();
+            if((scope.getBeginDate().getTime().before(executionPeriod.getBeginDate())) && ((scope.getEndDate() == null) || (scope.getEndDate().getTime().after(executionPeriod.getEndDate())))) {
+                activeScopesInExecutionPeriod.add(scope);
+            }
+        }
+        return activeScopesInExecutionPeriod;
     }
 
     // -------------------------------------------------------------

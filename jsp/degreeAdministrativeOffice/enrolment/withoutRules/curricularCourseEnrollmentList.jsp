@@ -35,11 +35,32 @@
 			<html:hidden property="studentNumber" />
 			<html:hidden property="executionPeriod" />
 			<html:hidden property="degreeType" />
+			<html:hidden property="userType" />
 			<table >
+				<tr>
+					<td class="listClasses-header">
+						<bean:message key="label.curricular.course.name"/>
+					</td>
+					<td class="listClasses-header">
+						<bean:message key="label.degreeCurricularPlan"/>
+					</td>
+					<td class="listClasses-header">
+						<bean:message key="label.curricular.course.semester"/>
+					</td>
+					<td class="listClasses-header">
+						<bean:message key="label.course.enrollment.weight" bundle="STUDENT_RESOURCES"/>
+					</td>
+					<td class="listClasses-header">
+						<bean:message key="label.course.enrollment.acumulated.enrollments" bundle="STUDENT_RESOURCES"/>
+					</td>
+					<td class="listClasses-header">
+						<bean:message key="label.unenroll"/>
+					</td>
+				</tr>
 				<logic:iterate id="infoEnrollment" name="infoEnrollmentsWithStateEnrolled">
 					<bean:define id="infoEnrollmentId" name="infoEnrollment" property="idInternal" />
 					<tr>
-						<td class="listClasses" style="text-align:left">
+						<td class="listClasses" >
 							<bean:write name="infoEnrollment" property="infoCurricularCourse.name"/>
 							<% if ( !((InfoEnrolment) infoEnrollment).getEnrollmentTypeResourceKey().equals("option.curricularCourse.normal") ) {%>
 							(<bean:message name="infoEnrollment" property="enrollmentTypeResourceKey" bundle="DEFAULT"/>)
@@ -50,6 +71,12 @@
 						</td>
 						<td class="listClasses">
 							<bean:write name="infoEnrollment" property="infoExecutionPeriod.name"/>-<bean:write name="infoEnrollment" property="infoExecutionPeriod.infoExecutionYear.year"/>
+						</td>
+						<td class="listClasses">
+							<bean:write name="infoEnrollment" property="infoCurricularCourse.enrollmentWeigth"/>
+						</td>
+						<td class="listClasses">
+							<bean:write name="infoEnrollment" property="accumulatedWeight"/>
 						</td>
 						<td class="listClasses"><html:multibox property="unenrollments" value="<%= infoEnrollmentId.toString() %>" /></td>
 					</tr>
@@ -82,6 +109,9 @@
 	<html:hidden property="studentNumber" />
 	<html:hidden property="executionPeriod" />
 	<html:hidden property="degreeType" />
+	<html:hidden property="userType" />
+	<bean:define id="studentCurricularPlan" name="infoStudentEnrolmentContext"  property="infoStudentCurricularPlan.infoDegreeCurricularPlan.name"/>
+	<html:hidden property="studentCurricularPlan" value="<%=studentCurricularPlan.toString()%>"/>
 	<html:submit styleClass="inputbutton">
 			<bean:message key="button.enroll" bundle="DEGREE_ADM_OFFICE"/>
 	</html:submit>
@@ -93,6 +123,7 @@
 	<html:hidden property="method" value="prepareEnrollmentChooseStudentAndExecutionYear"/>
 	<html:hidden property="page" value="0"/>
 	<html:hidden property="degreeType" />
+	<html:hidden property="userType" />
 	<html:submit styleClass="inputbutton">
 			<bean:message key="button.student.other" bundle="DEGREE_ADM_OFFICE"/>
 	</html:submit>
