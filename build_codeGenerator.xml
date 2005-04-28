@@ -50,6 +50,7 @@
 			<src path="${src_gen}"/>
 			<src path="${src}"/>
 			<include name="net/sourceforge/fenixedu/persistenceTier/OJB/SuportePersistenteOJB.java"/>
+			<include name="net/sourceforge/fenixedu/persistenceTier/versionedObjects/VersionedObjectsBase.java"/>
 		</javac>
 	</target>
 
