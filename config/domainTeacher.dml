@@ -1,0 +1,74 @@
+/*
+ * DOMAINTEACHER.DML
+ * 
+ */
+
+
+class net.sourceforge.fenixedu.domain.teacher.Career extends net.sourceforge.fenixedu.domain.DomainObject {
+    String ojbConcreteClass;
+    Integer beginYear;
+    Integer endYear;
+    Integer keyTeacher;
+    Date lastModificationDate;
+}
+
+    class net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer extends net.sourceforge.fenixedu.domain.DomainObject {
+        String entity;
+        String function;
+    }
+
+    
+    class net.sourceforge.fenixedu.domain.teacher.TeachingCareer extends net.sourceforge.fenixedu.domain.DomainObject {
+        String courseOrPosition;
+        Integer keyCategory;
+    }
+
+
+class net.sourceforge.fenixedu.domain.teacher.ExternalActivity extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyTeacher;
+    Date lastModificationDate;
+    String activity;
+}
+
+
+class net.sourceforge.fenixedu.domain.teacher.Orientation extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyTeacher;
+    String description;
+    Integer numberOfStudents;
+    Date lastModificationDate;
+}
+
+
+class net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyTeacher;
+    Date startTime;
+    Integer keyExecutionPeriod;
+    Date endTime;
+}
+
+
+class net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyTeacher;
+    Date lastModificationDate;
+}
+
+
+class net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyTeacher;
+    Integer other;
+    Date lastModificationDate;
+    Integer lecture;
+    Integer management;
+    Integer research;
+    Integer support;
+}
+
+
+relation CareerTeacher {
+    net.sourceforge.fenixedu.domain.teacher.Career playsRole associatedCareers {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+
