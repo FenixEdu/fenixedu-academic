@@ -184,68 +184,56 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
                         || weekDay == Calendar.THURSDAY || weekDay == Calendar.SATURDAY));
     }
 
-    private String monthToString(int month,Locale locale) {
+    private String monthToString(int month, Locale locale) {
         switch (month) {
-       
+
         case Calendar.JANUARY:
-          if (locale.getLanguage().equals("pt"))
-            return "Janeiro";
-          else
+            if (locale.getLanguage().equals("pt"))
+                return "Janeiro";
             return "January";
         case Calendar.FEBRUARY:
-           if (locale.getLanguage().equals("pt"))
-            return "Fevereiro";
-           else
+            if (locale.getLanguage().equals("pt"))
+                return "Fevereiro";
             return "February";
         case Calendar.MARCH:
-           if (locale.getLanguage().equals("pt"))
-            return "Março";
-           else
+            if (locale.getLanguage().equals("pt"))
+                return "Março";
             return "March";
         case Calendar.APRIL:
-           if (locale.getLanguage().equals("pt"))
-            return "Abril";
-           else
+            if (locale.getLanguage().equals("pt"))
+                return "Abril";
             return "April";
         case Calendar.MAY:
-           if (locale.getLanguage().equals("pt"))
-            return "Maio";
-           else
+            if (locale.getLanguage().equals("pt"))
+                return "Maio";
             return "May";
         case Calendar.JUNE:
-           if (locale.getLanguage().equals("pt"))
-            return "Junho";
-           else
+            if (locale.getLanguage().equals("pt"))
+                return "Junho";
             return "June";
         case Calendar.JULY:
-           if (locale.getLanguage().equals("pt"))
-            return "Julho";
-           else
+            if (locale.getLanguage().equals("pt"))
+                return "Julho";
             return "July";
         case Calendar.AUGUST:
-           if (locale.getLanguage().equals("pt"))
-            return "Agosto";
-           else
+            if (locale.getLanguage().equals("pt"))
+                return "Agosto";
             return "August";
         case Calendar.SEPTEMBER:
-           if (locale.getLanguage().equals("pt"))
-            return "Setembro";
-           else
+            if (locale.getLanguage().equals("pt"))
+                return "Setembro";
             return "September";
         case Calendar.OCTOBER:
-           if (locale.getLanguage().equals("pt"))
-            return "Outubro";
-           else
+            if (locale.getLanguage().equals("pt"))
+                return "Outubro";
             return "October";
         case Calendar.NOVEMBER:
-           if (locale.getLanguage().equals("pt"))
-            return "Novembro";
-           else
+            if (locale.getLanguage().equals("pt"))
+                return "Novembro";
             return "November";
         case Calendar.DECEMBER:
-           if (locale.getLanguage().equals("pt"))
-            return "Dezembro";
-           else
+            if (locale.getLanguage().equals("pt"))
+                return "Dezembro";
             return "December";
         case Calendar.UNDECIMBER:
             return "Undecember";
