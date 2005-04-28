@@ -1842,6 +1842,32 @@ class net.sourceforge.fenixedu.domain.Qualification extends net.sourceforge.feni
     String school;
 }
 
+class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyGuide;
+	Integer number;
+	
+	interface "
+		public java.util.Calendar getCreationDate();
+		
+		public void setCreationDate(java.util.Calendar creationDate);
+		
+		public net.sourceforge.fenixedu.domain.IGuide getGuide();
+		
+		public void setGuide(net.sourceforge.fenixedu.domain.IGuide paymentGuide);
+		
+		public java.util.List getReimbursementGuideSituations();
+		
+		public void setReimbursementGuideSituations(java.util.List reimbursementGuideSituations);
+		
+		public IReimbursementGuideSituation getActiveReimbursementGuideSituation();
+		
+		public java.util.List getReimbursementGuideEntries();
+		
+		public void setReimbursementGuideEntries(java.util.List reimbursementGuideEntries);
+	"
+	
+	
+}
 
 class net.sourceforge.fenixedu.domain.ResponsibleFor extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionCourse;

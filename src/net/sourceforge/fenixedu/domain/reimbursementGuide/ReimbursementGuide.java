@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.domain.reimbursementGuide;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.util.State;
 
@@ -20,154 +19,123 @@ import org.apache.commons.collections.Predicate;
  * This class contains all the information regarding a Reimbursement Guide. <br>
  * 
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
- *  
+ * 
  */
-public class ReimbursementGuide extends DomainObject implements IReimbursementGuide {
+public class ReimbursementGuide extends ReimbursementGuide_Base {
 
-    protected Integer number;
+	protected IGuide guide;
 
-    protected IGuide guide;
+	protected Calendar creationDate;
 
-    protected Calendar creationDate;
+	protected List reimbursementGuideSituations;
 
-    protected List reimbursementGuideSituations;
+	protected List reimbursementGuideEntries;
 
-    protected List reimbursementGuideEntries;
+	/**
+	 * 
+	 */
+	public ReimbursementGuide() {
 
-    private Integer keyGuide;
+	}
 
-    /**
-     *  
-     */
-    public ReimbursementGuide() {
+	/**
+	 * @param reimbursementGuideId
+	 */
+	public ReimbursementGuide(Integer reimbursementGuideId) {
+		setIdInternal(reimbursementGuideId);
+	}
 
-    }
+	/**
+	 * @return
+	 */
+	public Calendar getCreationDate() {
+		return creationDate;
+	}
 
-    /**
-     * @param reimbursementGuideId
-     */
-    public ReimbursementGuide(Integer reimbursementGuideId) {
-        setIdInternal(reimbursementGuideId);
-    }
+	/**
+	 * @param creationDate
+	 */
+	public void setCreationDate(Calendar creationDate) {
+		this.creationDate = creationDate;
+	}
 
-    /**
-     * @return
-     */
-    public Calendar getCreationDate() {
-        return creationDate;
-    }
+	/**
+	 * @return
+	 */
+	public IGuide getGuide() {
+		return guide;
+	}
 
-    /**
-     * @param creationDate
-     */
-    public void setCreationDate(Calendar creationDate) {
-        this.creationDate = creationDate;
-    }
+	/**
+	 * @param paymentGuide
+	 */
+	public void setGuide(IGuide paymentGuide) {
+		this.guide = paymentGuide;
+	}
 
-    /**
-     * @return
-     */
-    public IGuide getGuide() {
-        return guide;
-    }
+	/**
+	 * @return
+	 */
+	public List getReimbursementGuideSituations() {
+		return reimbursementGuideSituations;
+	}
 
-    /**
-     * @param paymentGuide
-     */
-    public void setGuide(IGuide paymentGuide) {
-        this.guide = paymentGuide;
-    }
+	/**
+	 * @param reimbursementGuideSituations
+	 */
+	public void setReimbursementGuideSituations(
+			List reimbursementGuideSituations) {
+		this.reimbursementGuideSituations = reimbursementGuideSituations;
+	}
 
-    /**
-     * @return
-     */
-    public Integer getKeyGuide() {
-        return keyGuide;
-    }
+	public IReimbursementGuideSituation getActiveReimbursementGuideSituation() {
 
-    /**
-     * @param keyPaymentGuide
-     */
-    public void setKeyGuide(Integer keyPaymentGuide) {
-        this.keyGuide = keyPaymentGuide;
-    }
+		return (IReimbursementGuideSituation) CollectionUtils.find(
+				getReimbursementGuideSituations(), new Predicate() {
+					public boolean evaluate(Object obj) {
+						IReimbursementGuideSituation situation = (IReimbursementGuideSituation) obj;
+						return situation.getState().getState().intValue() == State.ACTIVE;
+					}
+				});
 
-    /**
-     * @return
-     */
-    public Integer getNumber() {
-        return number;
-    }
+	}
 
-    /**
-     * @param number
-     */
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
+	/**
+	 * @return Returns the reimbursementGuideEntries.
+	 */
+	public List getReimbursementGuideEntries() {
+		return reimbursementGuideEntries;
+	}
 
-    /**
-     * @return
-     */
-    public List getReimbursementGuideSituations() {
-        return reimbursementGuideSituations;
-    }
+	/**
+	 * @param reimbursementGuideEntries
+	 *            The reimbursementGuideEntries to set.
+	 */
+	public void setReimbursementGuideEntries(List reimbursementGuideEntries) {
+		this.reimbursementGuideEntries = reimbursementGuideEntries;
+	}
 
-    /**
-     * @param reimbursementGuideSituations
-     */
-    public void setReimbursementGuideSituations(List reimbursementGuideSituations) {
-        this.reimbursementGuideSituations = reimbursementGuideSituations;
-    }
+	public boolean equals(Object obj) {
+		boolean result = false;
+		if (obj instanceof IReimbursementGuide) {
+			IReimbursementGuide reimbursementGuide = (IReimbursementGuide) obj;
 
-    public IReimbursementGuideSituation getActiveReimbursementGuideSituation() {
+			if ((getNumber() == null && reimbursementGuide.getNumber() == null)
+					|| (getNumber().equals(reimbursementGuide.getNumber()))) {
+				result = true;
+			}
+		}
 
-        return (IReimbursementGuideSituation) CollectionUtils.find(getReimbursementGuideSituations(),
-                new Predicate() {
-                    public boolean evaluate(Object obj) {
-                        IReimbursementGuideSituation situation = (IReimbursementGuideSituation) obj;
-                        return situation.getState().getState().intValue() == State.ACTIVE;
-                    }
-                });
+		return result;
+	}
 
-    }
-
-    /**
-     * @return Returns the reimbursementGuideEntries.
-     */
-    public List getReimbursementGuideEntries() {
-        return reimbursementGuideEntries;
-    }
-
-    /**
-     * @param reimbursementGuideEntries
-     *            The reimbursementGuideEntries to set.
-     */
-    public void setReimbursementGuideEntries(List reimbursementGuideEntries) {
-        this.reimbursementGuideEntries = reimbursementGuideEntries;
-    }
-
-    public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj instanceof IReimbursementGuide) {
-            IReimbursementGuide reimbursementGuide = (IReimbursementGuide) obj;
-
-            if ((getNumber() == null && reimbursementGuide.getNumber() == null)
-                    || (getNumber().equals(reimbursementGuide.getNumber()))) {
-                result = true;
-            }
-        }
-
-        return result;
-    }
-
-    public String toString() {
-        String result = "[" + this.getClass().getName() + ": ";
-        result += " idInternal=" + getIdInternal();
-        result += ", number=" + number;
-        result += ", creation Date=" + creationDate;
-        result += "]";
-        return result;
-    }
+	public String toString() {
+		String result = "[" + this.getClass().getName() + ": ";
+		result += " idInternal=" + getIdInternal();
+		result += ", number=" + getNumber();
+		result += ", creation Date=" + creationDate;
+		result += "]";
+		return result;
+	}
 
 }
