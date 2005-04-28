@@ -36,6 +36,12 @@ class net.sourceforge.fenixedu.domain.teacher.Orientation extends net.sourceforg
     String description;
     Integer numberOfStudents;
     Date lastModificationDate;
+    
+    interface "
+    public net.sourceforge.fenixedu.util.OrientationType getOrientationType();
+    
+    public void setOrientationType(net.sourceforge.fenixedu.util.OrientationType orientationType);
+    "
 }
 
 
@@ -82,6 +88,14 @@ relation TeachingCareerCategory {
 
 relation ExternalActivityTeacher {
     net.sourceforge.fenixedu.domain.teacher.ExternalActivity playsRole externalActivities {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+
+relation OrientationTeacher {
+    net.sourceforge.fenixedu.domain.teacher.Orientation playsRole associatedOrientations {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Teacher playsRole teacher;

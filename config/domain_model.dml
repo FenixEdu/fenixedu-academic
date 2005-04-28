@@ -1649,6 +1649,21 @@ class net.sourceforge.fenixedu.domain.teacher.OldPublication extends net.sourcef
 	"
 }
 
+
+class net.sourceforge.fenixedu.domain.teacher.Orientation extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyTeacher;
+    String description;
+    Integer numberOfStudents;
+    Date lastModificationDate;
+    
+    interface "
+    public net.sourceforge.fenixedu.util.OrientationType getOrientationType();
+    
+    public void setOrientationType(net.sourceforge.fenixedu.util.OrientationType orientationType);
+    "
+}
+
+
 class net.sourceforge.fenixedu.domain.PaymentPhase extends net.sourceforge.fenixedu.domain.DomainObject {
 	Double value;
 	String description;
@@ -2894,6 +2909,14 @@ relation OldCurricularCourseCurricularCourseEquivalence {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.CurricularCourse playsRole oldCurricularCourse;
+}
+
+
+relation OrientationTeacher {
+    net.sourceforge.fenixedu.domain.teacher.Orientation playsRole associatedOrientations {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
 
 
