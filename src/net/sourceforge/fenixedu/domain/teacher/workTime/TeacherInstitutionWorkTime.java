@@ -18,7 +18,8 @@ import org.apache.ojb.broker.PersistenceBrokerException;
 /**
  * @author jpvl
  */
-public class TeacherInstitutionWorkTime extends TeacherInstitutionWorkTime_Base implements ICreditsEventOriginator, PersistenceBrokerAware {
+public class TeacherInstitutionWorkTime extends TeacherInstitutionWorkTime_Base implements
+        ICreditsEventOriginator, PersistenceBrokerAware {
 
     private DiaSemana weekDay;
 
@@ -46,7 +47,7 @@ public class TeacherInstitutionWorkTime extends TeacherInstitutionWorkTime_Base 
         }
         return false;
     }
-    
+
     public double hours() {
         TimePeriod timePeriod = new TimePeriod(this.getStartTime(), this.getEndTime());
         return timePeriod.hours().doubleValue();
@@ -60,7 +61,7 @@ public class TeacherInstitutionWorkTime extends TeacherInstitutionWorkTime_Base 
         ITeacher teacher = this.getTeacher();
         teacher.notifyCreditsChange(CreditsEvent.WORKING_TIME, this);
     }
-    
+
     public void afterUpdate(PersistenceBroker broker) throws PersistenceBrokerException {
         notifyTeacher();
     }
@@ -72,7 +73,7 @@ public class TeacherInstitutionWorkTime extends TeacherInstitutionWorkTime_Base 
     public void afterDelete(PersistenceBroker broker) throws PersistenceBrokerException {
         notifyTeacher();
     }
-    
+
     public void beforeUpdate(PersistenceBroker broker) throws PersistenceBrokerException {
     }
 
