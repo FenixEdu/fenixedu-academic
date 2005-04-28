@@ -2238,6 +2238,19 @@ class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.d
 	Date lastModifiedDate;
 }
 
+
+class net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyTeacher;
+    Date lastModificationDate;
+    
+    interface "
+    public net.sourceforge.fenixedu.util.ProviderRegimeType getProviderRegimeType();
+    
+    public void setProviderRegimeType(net.sourceforge.fenixedu.util.ProviderRegimeType providerRegimeType);
+    "
+}
+
+
 class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer availabilityFinal;
 	Integer chaveDisciplinaExecucao;
@@ -4007,6 +4020,13 @@ relation SectionSuperiorSection {
 	}
 	net.sourceforge.fenixedu.domain.Section playsRole superiorSection;
 }
+
+
+relation ServiceProviderRegimeTeacher {
+    net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime playsRole serviceProviderRegime;
+    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
 
 relation SchedulingExecutionDegree {
 	net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing playsRole scheduling;

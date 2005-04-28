@@ -45,6 +45,17 @@ class net.sourceforge.fenixedu.domain.teacher.Orientation extends net.sourceforg
 }
 
 
+class net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyTeacher;
+    Date lastModificationDate;
+
+    interface "
+    public net.sourceforge.fenixedu.util.ProviderRegimeType getProviderRegimeType();
+    
+    public void setProviderRegimeType(net.sourceforge.fenixedu.util.ProviderRegimeType providerRegimeType);
+    "
+}
+
 class net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyTeacher;
     Date startTime;
@@ -58,12 +69,6 @@ class net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTim
     
     public double hours();
     "
-}
-
-
-class net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer keyTeacher;
-    Date lastModificationDate;
 }
 
 
@@ -122,5 +127,11 @@ relation TeacherInstitutionWorkTimeTeacher {
     net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime playsRole institutionWorkTimePeriods {
         multiplicity *;
     }
+    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+
+relation ServiceProviderRegimeTeacher {
+    net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime playsRole serviceProviderRegime;
     net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
