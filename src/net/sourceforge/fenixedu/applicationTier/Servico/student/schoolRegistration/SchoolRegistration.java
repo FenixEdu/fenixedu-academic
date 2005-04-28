@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.IPersonalDataUseInquiryAnswers;
-import net.sourceforge.fenixedu.domain.student.IResidenceCandidancies;
+import net.sourceforge.fenixedu.domain.student.IResidenceCandidacies;
 import net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers;
 import net.sourceforge.fenixedu.domain.student.ResidenceCandidacies;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -179,7 +179,7 @@ public class SchoolRegistration implements IService {
             IPersistentResidenceCandidacies pResidenceCandidacies = sp
                     .getIPersistentResidenceCandidacies();
 
-            IResidenceCandidancies residenceCandidacy = new ResidenceCandidacies();
+            IResidenceCandidacies residenceCandidacy = new ResidenceCandidacies();
             pResidenceCandidacies.simpleLockWrite(residenceCandidacy);
 
             residenceCandidacy.setStudent(student);

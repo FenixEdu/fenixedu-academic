@@ -1947,6 +1947,15 @@ class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSitua
 	"	
 }
 
+
+class net.sourceforge.fenixedu.domain.student.ResidenceCandidacies extends net.sourceforge.fenixedu.domain.DomainObject {
+    Date creationDate;
+    String observations;
+    Boolean dislocated;
+    Integer keyStudent;
+}
+
+
 class net.sourceforge.fenixedu.domain.ResponsibleFor extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionCourse;
 	Integer keyTeacher;
@@ -3851,6 +3860,14 @@ relation QualificationCountry {
 relation QualificationPerson {
     net.sourceforge.fenixedu.domain.Qualification playsRole qualification;
     net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
+
+relation ResidenceCandidaciesStudent {
+    net.sourceforge.fenixedu.domain.student.ResidenceCandidacies playsRole associatedResidenceCandidacies {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Student playsRole student;
 }
 
 
