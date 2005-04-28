@@ -2234,7 +2234,6 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
         public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType getCurricularCourseEnrollmentType(
                 net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse, net.sourceforge.fenixedu.domain.IExecutionPeriod currentExecutionPeriod);
         public java.util.List getCurricularCoursesToEnroll(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod) throws net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
-        public java.util.List getEnrollmentReports();
         public Integer getMaximumNumberOfAcumulatedEnrollments();
         public Integer getMaximumNumberOfCoursesToEnroll();
         public Integer getMinimumNumberOfCoursesToEnroll();
@@ -2253,7 +2252,6 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
         public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea);
         public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea);
         public void setCurrentState(net.sourceforge.fenixedu.util.StudentCurricularPlanState currentState);
-        public void setEnrollmentReports(java.util.List enrollmentReports);
         public void setSecundaryBranch(net.sourceforge.fenixedu.domain.IBranch secundaryBranch);
         public void setSpecialization(net.sourceforge.fenixedu.util.Specialization specialization);
     "

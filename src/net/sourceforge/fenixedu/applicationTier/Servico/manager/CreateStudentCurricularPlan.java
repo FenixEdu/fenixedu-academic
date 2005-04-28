@@ -62,7 +62,6 @@ public void run(final Integer studentNumber, final TipoCurso degreeType,
         persistentStudentCurricularPlan.simpleLockWrite(studentCurricularPlan);
         studentCurricularPlan.setCurrentState(studentCurricularPlanState);
         studentCurricularPlan.setDegreeCurricularPlan(degreeCurricularPlan);
-        studentCurricularPlan.setEnrollmentReports(new ArrayList(0));
         studentCurricularPlan.setEnrolments(new ArrayList(0));
         studentCurricularPlan.setNotNeedToEnrollCurricularCourses(new ArrayList(0));
         studentCurricularPlan.setStartDate(startDate);

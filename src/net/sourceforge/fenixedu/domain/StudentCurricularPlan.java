@@ -38,8 +38,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	// For enrollment purposes only
 	protected Map acumulatedEnrollments;
 
-	protected List enrollmentReports;
-
 	public StudentCurricularPlan() {
 		setOjbConcreteClass(getClass().getName());
 	}
@@ -547,21 +545,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	public void setCreditsInSpecializationArea(
 			Integer creditsInSpecializationArea) {
 		// do nothing
-	}
-
-	/**
-	 * @return Returns the enrollmentReports.
-	 */
-	public List getEnrollmentReports() {
-		return enrollmentReports;
-	}
-
-	/**
-	 * @param enrollmentReports
-	 *            The enrollmentReports to set.
-	 */
-	public void setEnrollmentReports(List enrollmentReports) {
-		this.enrollmentReports = enrollmentReports;
 	}
 
 	public List getAprovedEnrolmentsInExecutionPeriod(
