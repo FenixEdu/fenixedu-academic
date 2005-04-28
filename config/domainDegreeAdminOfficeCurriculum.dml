@@ -18,12 +18,6 @@ class net.sourceforge.fenixedu.domain.Branch extends net.sourceforge.fenixedu.do
     "
 }
 
-class net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency extends net.sourceforge.fenixedu.domain.DomainObject {
-    Integer curricularCourseIdInternal;
-    Integer seminaryIdInternal;
-    Integer modalityIdInternal;
-}
-
 class net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer givenCredits;
     Integer studentCurricularPlanKey;
@@ -473,18 +467,6 @@ class net.sourceforge.fenixedu.domain.University extends net.sourceforge.fenixed
     String name;
 }
 
-/*
- * External classes declarations
- *
- * The following declarations allow the DmlCompiler to recognize the classes in
- * the relations definitions. Remove each declaration once the corresponding 
- * class definition is included.
- * 
- */
-
-external class net.sourceforge.fenixedu.domain.Seminaries.Theme;
-external class net.sourceforge.fenixedu.domain.Seminaries.Modality;
-external class net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 
 /*
  * Relations definitions
@@ -535,22 +517,6 @@ relation BranchCurricularCourseScope {
     net.sourceforge.fenixedu.domain.CurricularCourseScope playsRole scopes {
         multiplicity *;
     }
-}
-
-relation CourseEquivalencyTheme {
-    net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency playsRole courseEquivalencies {
-        multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.Seminaries.Theme playsRole themes {
-        multiplicity *;
-    }
-}
-
-relation CurricularCourseCourseEquivalency {
-    net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency playsRole courseEquivalencies {
-        multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
 }
 
 relation CurricularCourseCurricularCourseEquivalence {
@@ -807,13 +773,6 @@ relation GroupStudentStudent {
     net.sourceforge.fenixedu.domain.Student playsRole student;
 }
 
-relation ModalityCourseEquivalency {
-    net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency playsRole courseEquivalencies {
-        multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.Seminaries.Modality playsRole modality;
-}
-
 relation PersonDepartment {
     net.sourceforge.fenixedu.domain.Person playsRole associatedPersons {
         multiplicity *;
@@ -980,13 +939,5 @@ relation ScientificAreaAreaCurricularCourseGroup {
         multiplicity *;
     }
     
-}
-
-relation SeminaryCourseEquivalency {
-    net.sourceforge.fenixedu.domain.Seminaries.Seminary playsRole seminary;
-    
-    net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency playsRole equivalencies {
-        multiplicity *;
-    }
 }
 

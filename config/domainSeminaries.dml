@@ -1,0 +1,158 @@
+/*
+ * DOMAINSEMINARIES.DML
+ * 
+ */
+
+
+class net.sourceforge.fenixedu.domain.Seminaries.Candidacy extends net.sourceforge.fenixedu.domain.DomainObject {
+    Boolean approved;
+    Integer studentIdInternal;
+    Integer curricularCourseIdInternal;
+    Integer seminaryIdInternal;
+    Integer themeIdInternal;
+    String motivation;
+    Integer modalityIdInternal;
+}
+
+
+class net.sourceforge.fenixedu.domain.Seminaries.CaseStudy extends net.sourceforge.fenixedu.domain.DomainObject {
+    String code;
+    String description;
+    Integer seminaryThemeIdInternal;
+    String name;
+}
+
+
+class net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer caseStudyIdInternal;
+    Integer order;
+    Integer candidacyIdInternal;
+}
+
+
+class net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer curricularCourseIdInternal;
+    Integer seminaryIdInternal;
+    Integer modalityIdInternal;
+}
+
+
+class net.sourceforge.fenixedu.domain.Seminaries.Modality extends net.sourceforge.fenixedu.domain.DomainObject {
+    String description;
+    String name;
+}
+
+
+class net.sourceforge.fenixedu.domain.Seminaries.Seminary extends net.sourceforge.fenixedu.domain.DomainObject {
+    Boolean hasTheme;
+    String description;
+    Boolean hasCaseStudy;
+    Integer allowedCandidaciesPerStudent;
+    String name;
+}
+
+
+class net.sourceforge.fenixedu.domain.Seminaries.Theme extends net.sourceforge.fenixedu.domain.DomainObject {
+    String description;
+    String shortName;
+    String name;
+}
+
+
+relation CourseEquivalencyTheme {
+    net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency playsRole courseEquivalencies {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Seminaries.Theme playsRole themes {
+        multiplicity *;
+    }
+}
+
+
+relation CurricularCourseCourseEquivalency {
+    net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency playsRole courseEquivalencies {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
+}
+
+
+relation ModalityCourseEquivalency {
+    net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency playsRole courseEquivalencies {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Seminaries.Modality playsRole modality;
+}
+
+
+relation SeminaryCourseEquivalency {
+    net.sourceforge.fenixedu.domain.Seminaries.Seminary playsRole seminary;
+    
+    net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency playsRole equivalencies {
+        multiplicity *;
+    }
+}
+
+
+relation ThemeCandidacy {
+    net.sourceforge.fenixedu.domain.Seminaries.Theme playsRole theme;
+    net.sourceforge.fenixedu.domain.Seminaries.Candidacy playsRole associatedCandidacies {
+        multiplicity *;
+    }
+}
+
+
+relation ThemeCaseStudy {
+    net.sourceforge.fenixedu.domain.Seminaries.Theme playsRole seminaryTheme;
+    net.sourceforge.fenixedu.domain.Seminaries.CaseStudy playsRole caseStudies {
+        multiplicity *;
+    }
+}
+
+
+relation CandidacyModality {
+    net.sourceforge.fenixedu.domain.Seminaries.Candidacy playsRole associatedModalities {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Seminaries.Modality playsRole modality;
+}
+
+
+relation SeminaryCandidacy {
+    net.sourceforge.fenixedu.domain.Seminaries.Seminary playsRole seminary;
+    net.sourceforge.fenixedu.domain.Seminaries.Candidacy playsRole candidacies {
+        multiplicity *;
+    }
+}
+
+
+relation CandidacyStudent {
+    net.sourceforge.fenixedu.domain.Seminaries.Candidacy playsRole associatedCandidancies {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Student playsRole student;
+}
+
+
+relation CandidacyCurricularCourse {
+    net.sourceforge.fenixedu.domain.Seminaries.Candidacy playsRole associatedCandidancies {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
+}
+
+
+relation ??? {
+    net.sourceforge.fenixedu.domain.Seminaries.CaseStudy playsRole caseStudy;
+    net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice playsRole seminaryCandidacies {
+        multiplicity *;
+    }
+}
+
+
+relation CandidacyCaseStudyChoice {
+    net.sourceforge.fenixedu.domain.Seminaries.Candidacy playsRole candidacy;
+    net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice playsRole caseStudyChoices {
+        multiplicity *;
+    }
+}
