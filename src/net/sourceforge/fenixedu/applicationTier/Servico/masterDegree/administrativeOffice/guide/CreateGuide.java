@@ -42,7 +42,7 @@ public class CreateGuide implements IService {
     }
 
     public InfoGuide run(InfoGuide infoGuide, String othersRemarks, Double othersPrice, String remarks,
-            SituationOfGuide situationOfGuide, String paymentType) throws FenixServiceException, ExcepcaoPersistencia {
+            SituationOfGuide situationOfGuide, String paymentType) throws FenixServiceException {
 
         ISuportePersistente sp = null;
         IGuide guide = new Guide();
