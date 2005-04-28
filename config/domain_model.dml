@@ -187,6 +187,13 @@ class net.sourceforge.fenixedu.domain.Seminaries.CaseStudy extends net.sourcefor
 }
 
 
+class net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer caseStudyIdInternal;
+    Integer order;
+    Integer candidacyIdInternal;
+}
+
+
 class net.sourceforge.fenixedu.domain.teacher.Category extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
 	String longName;
@@ -1846,7 +1853,7 @@ class net.sourceforge.fenixedu.domain.Qualification extends net.sourceforge.feni
 class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyGuide;
 	Integer number;
-	
+
 	interface "
 		public java.util.Calendar getCreationDate();
 		
@@ -2029,7 +2036,7 @@ class net.sourceforge.fenixedu.domain.RoomOccupation extends net.sourceforge.fen
 class net.sourceforge.fenixedu.domain.sms.SentSms extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPerson;
 	Integer destinationNumber;
-	
+
 	interface "
 	    public java.util.Date getDeliveryDate();
 	    
@@ -2596,7 +2603,6 @@ class net.sourceforge.fenixedu.domain.WebSiteSection extends net.sourceforge.fen
  * 
  */
 
-external class net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
 external class net.sourceforge.fenixedu.domain.Seminaries.Theme;
 external class net.sourceforge.fenixedu.domain.Seminaries.Modality;
 external class net.sourceforge.fenixedu.domain.Seminaries.Seminary;
