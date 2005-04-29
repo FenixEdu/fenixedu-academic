@@ -16,8 +16,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import org.apache.ojb.broker.query.Criteria;
-
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
@@ -26,11 +24,12 @@ import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeCandidate;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.util.State;
+
+import org.apache.ojb.broker.query.Criteria;
 
 public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
         IPersistentMasterDegreeCandidate {
@@ -66,8 +65,7 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
         // Write the Person first to see if there's no clash
 
         try {
-            PersistenceSupportFactory.getDefaultPersistenceSupport().getIPessoaPersistente().escreverPessoa(
-                    masterDegreeCandidateToWrite.getPerson());
+            new PessoaOJB().escreverPessoa(masterDegreeCandidateToWrite.getPerson());
         } catch (ExistingPersistentException e) {
             throw new ExistingPersistentException("Existing Person !");
         } catch (ExcepcaoPersistencia e) {

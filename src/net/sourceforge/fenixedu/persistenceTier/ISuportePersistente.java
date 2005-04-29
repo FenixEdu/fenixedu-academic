@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersisten
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuideEntry;
+import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentCostCenter;
@@ -479,4 +480,6 @@ public interface ISuportePersistente {
     public IPersistentProjectAccess getIPersistentProjectAccess();
 
     public IPersistentBuilding getIPersistentBuilding();
+
+    public IPersistentOldInquiriesCoursesRes getIPersistentOldInquiriesCoursesRes();
 }

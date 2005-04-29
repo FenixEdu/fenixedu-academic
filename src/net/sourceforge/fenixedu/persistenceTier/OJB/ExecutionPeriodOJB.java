@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.ojb.broker.query.Criteria;
@@ -46,17 +45,13 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         List executionCourses = new ArrayList();
         List classes = new ArrayList();
         try {
-
-            executionCourses = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentExecutionCourse()
-                    .readByExecutionPeriod(executionPeriod);
-            classes = PersistenceSupportFactory.getDefaultPersistenceSupport().getITurmaPersistente().readByExecutionPeriod(
-                    executionPeriod);
+            executionCourses = new ExecutionCourseOJB().readByExecutionPeriod(executionPeriod);
+            classes = new TurmaOJB().readByExecutionPeriod(executionPeriod);
 
             if (classes.isEmpty() && executionCourses.isEmpty()) {
                 super.delete(executionPeriod);
             } else
                 return false;
-
         } catch (ExcepcaoPersistencia e) {
             return false;
         }

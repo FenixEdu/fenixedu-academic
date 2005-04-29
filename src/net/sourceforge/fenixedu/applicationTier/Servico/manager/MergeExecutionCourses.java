@@ -321,13 +321,9 @@ public class MergeExecutionCourses implements IService {
         while (iter.hasNext()) {
             IAttends attend = (IAttends) iter.next();
             if (!alreadyAttendingDestination.containsKey(attend.getAluno().getNumber().toString())) {
+                ps.getIFrequentaPersistente().simpleLockWrite(attend);
                 attend.setDisciplinaExecucao(destination);
-                try {
-                    PersistenceSupportFactory.getOJBPersistenceSupport().currentBroker().store(attend);
-                } catch (Exception e) {
-                    throw new ExcepcaoPersistencia("Error storing attend", e);
-                }
-
+                ps.getIFrequentaPersistente().simpleLockWrite(attend);
             }
         }
 

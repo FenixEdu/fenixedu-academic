@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentAdvisory;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.AdvisoryRecipients;
 
 import org.apache.ojb.broker.query.Criteria;
@@ -53,8 +52,6 @@ public class AdvisoryOJB extends PersistentObjectOJB implements IPersistentAdvis
         int numberOfRecipients = count(Person.class, criteria);
         int numberOfElementsInSpan = 500;
         for (int i = 0; ((i - 1) * numberOfElementsInSpan) < numberOfRecipients; i++) {
-            PersistenceSupportFactory.getDefaultPersistenceSupport().confirmarTransaccao();
-            PersistenceSupportFactory.getDefaultPersistenceSupport().iniciarTransaccao();
             List people = readSpan(Person.class, criteria, new Integer(numberOfElementsInSpan),
                     new Integer(i));
 

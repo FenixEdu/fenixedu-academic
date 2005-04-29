@@ -13,8 +13,6 @@ import net.sourceforge.fenixedu.domain.publication.IPublicationAuthor;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPublicationAuthor;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
 
@@ -36,29 +34,6 @@ public class PublicationOJB extends PersistentObjectOJB implements IPersistentPu
         super();
     }
 
-//    /*
-//     * When a Publication is read it automatically sorts the Publication_Authors List so that
-//     * they are sorted along with ther order of presentations (see: PublicationAuthor.order);
-//     */
-//    public IDomainObject readByOID(Class classToQuery, Integer oid) throws ExcepcaoPersistencia {
-//        Publication publication  = (Publication) super.readByOID(classToQuery,oid);
-//        if (publication != null) {
-//	        final int numAuthors = publication.getPublicationAuthors().size();
-//	        Collections.sort(publication.getPublicationAuthors(), new Comparator () {
-//	            public int compare (Object o1, Object o2){
-//	                IPublicationAuthor pa1 = (IPublicationAuthor) o1;
-//	                IPublicationAuthor pa2 = (IPublicationAuthor) o2;
-//	                if (pa1.getOrder() == null) pa1.setOrder(new Integer(numAuthors+1));
-//	                if (pa2.getOrder() == null) pa2.setOrder(new Integer(numAuthors+1));
-//	                return pa1.getOrder().compareTo(pa2.getOrder());
-//	            }
-//	        });
-//	        return publication;
-//        }
-//        else throw new ExcepcaoPersistencia("PublicacaoInexistente");
-//        
-//    }
-
     /*
      * This lockWrite methor not only writes the Publication itself, but also the
      * Publication_Authors associated with it  
@@ -66,8 +41,7 @@ public class PublicationOJB extends PersistentObjectOJB implements IPersistentPu
     public void lockWrite(Object obj) throws ExcepcaoPersistencia {
         super.lockWrite(obj);
         IPublication publication = (IPublication) obj;
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentPublicationAuthor ppa = sp.getIPersistentPublicationAuthor();
+        IPersistentPublicationAuthor ppa = new PublicationAuthorOJB();
         
         Iterator it = publication.getPublicationAuthors().iterator();
         while (it.hasNext()){
@@ -83,8 +57,7 @@ public class PublicationOJB extends PersistentObjectOJB implements IPersistentPu
     public void delete(Object obj) throws ExcepcaoPersistencia{
         super.delete(obj);
         IPublication publication = (IPublication) obj;
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentPublicationAuthor ppa = sp.getIPersistentPublicationAuthor();
+        IPersistentPublicationAuthor ppa = new PublicationAuthorOJB();
         
         Iterator it = publication.getPublicationAuthors().iterator();
         while (it.hasNext()){

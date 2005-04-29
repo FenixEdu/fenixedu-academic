@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -133,7 +132,7 @@ public class DepartmentOJB extends PersistentObjectOJB implements IPersistentDep
      * @return
      */
     private EmployeeHistoric getEmployee(ITeacher teacher) throws ExcepcaoPersistencia {
-        IPersistentEmployee employeeDAO = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentEmployee();
+        IPersistentEmployee employeeDAO = new EmployeeOJB();
 
         IEmployee employee = employeeDAO.readByNumber(teacher.getTeacherNumber());
         employee.setHistoricList(employeeDAO.readHistoricByKeyEmployee(employee.getIdInternal()

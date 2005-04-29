@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.SchoolClassShift;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.TipoAula;
 
 import org.apache.ojb.broker.query.Criteria;
@@ -39,56 +38,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
     }
 
     public void delete(IShift turno) throws ExcepcaoPersistencia {
-
-        //        Criteria crit = new Criteria();
-        //        crit.addEqualTo("chaveTurno", turno.getIdInternal());
-        //        ITurnoAula turnoAula = null;
-        //        TurnoAulaOJB turnoAulaOJB = new TurnoAulaOJB();
-        //
-        //        List result = queryList(TurnoAula.class, crit);
-        //        lockRead(result);
-        //        Iterator iterador = result.iterator();
-        //        while (iterador.hasNext())
-        //        {
-        //            turnoAula = (ITurnoAula) iterador.next();
-        //            turnoAulaOJB.delete(turnoAula);
-        //        }
-
-        //        Criteria crit = new Criteria();
-        //        crit.addEqualTo("chaveTurno", turno.getIdInternal());
-        //        ISchoolClassShift turmaTurno = null;
-        //        TurmaTurnoOJB turmaTurnoOJB = new TurmaTurnoOJB();
-        //        List result1 = queryList(SchoolClassShift.class, crit);
-        //        Iterator iterador1 = result1.iterator();
-        //        while (iterador1.hasNext())
-        //        {
-        //            turmaTurno = (ISchoolClassShift) iterador1.next();
-        //            turmaTurnoOJB.delete(turmaTurno);
-        //        }
-        //        IShiftStudent turnoAluno = null;
-        //        TurnoAlunoOJB turnoAlunoOJB = new TurnoAlunoOJB();
-        //
-        //        Criteria criteria = new Criteria();
-        //        criteria.addEqualTo("shift.nome", turno.getNome());
-        //        criteria.addEqualTo("shift.disciplinaExecucao.sigla",
-        // turno.getDisciplinaExecucao().getSigla());
-        //        criteria.addEqualTo(
-        //            "shift.disciplinaExecucao.executionPeriod.name",
-        //            turno.getDisciplinaExecucao().getExecutionPeriod().getName());
-        //        criteria.addEqualTo(
-        //            "shift.disciplinaExecucao.executionPeriod.executionYear.year",
-        //            turno.getDisciplinaExecucao().getExecutionPeriod().getExecutionYear().getYear());
-        //        List result2 = queryList(ShiftStudent.class, criteria);
-        //
-        //        Iterator iterador2 = result2.iterator();
-        //        while (iterador2.hasNext())
-        //        {
-        //            turnoAluno = (IShiftStudent) iterador2.next();
-        //            turnoAlunoOJB.delete(turnoAluno);
-        //        }
-
         super.delete(turno);
-
     }
 
     public Integer countAllShiftsOfAllClassesAssociatedWithShift(IShift shift)
@@ -204,8 +154,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
 
         List shifts = queryList(Shift.class, criteria, true);
 
-        List classShifts = PersistenceSupportFactory.getDefaultPersistenceSupport().getITurmaTurnoPersistente().readByClass(
-                schoolClass);
+        List classShifts = new TurmaTurnoOJB().readByClass(schoolClass);
 
         shifts.removeAll(classShifts);
 

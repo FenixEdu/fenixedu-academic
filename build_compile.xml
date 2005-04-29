@@ -284,9 +284,11 @@
 
 			<replace dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
-				<include name="configurationSQLInstructions.properties"/>
+				<include name="configuration.properties"/>
 				<replacefilter token="@roleback.filename@"
 		    			   property="roleback.filename"/>
+				<replacefilter token="@default.persistenceSupport@"
+		    			   property="default.persistenceSupport"/>
 			</replace>
 
 			<replace dir="${build.home.webinf.classes}"

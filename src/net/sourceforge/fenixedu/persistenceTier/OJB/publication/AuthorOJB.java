@@ -71,8 +71,7 @@ public class AuthorOJB extends PersistentObjectOJB implements IPersistentAuthor 
      */
     public void delete (Object obj) throws ExcepcaoPersistencia {
         super.delete(obj);
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentPublicationAuthor ppa = sp.getIPersistentPublicationAuthor();
+        IPersistentPublicationAuthor ppa = new PublicationAuthorOJB();
         
         IAuthor author = (IAuthor) obj;
         Iterator it = author.getPublications().iterator();

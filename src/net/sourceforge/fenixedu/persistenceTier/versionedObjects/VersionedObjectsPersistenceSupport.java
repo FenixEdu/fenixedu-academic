@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects;
 
+import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentCostCenter;
@@ -955,5 +956,9 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 	public IPersistentCategory getIPersistentCategory()  {
 		return null;
 	}
+
+    public IPersistentOldInquiriesCoursesRes getIPersistentOldInquiriesCoursesRes() {
+        return null;
+    }
 
 }

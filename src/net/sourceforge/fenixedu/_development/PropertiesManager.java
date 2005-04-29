@@ -20,7 +20,7 @@ public class PropertiesManager {
 
     static {
         try {
-            loadProperties(properties, "/configurationSQLInstructions.properties");
+            loadProperties(properties, "/configuration.properties");
         } catch (IOException e) {
             throw new RuntimeException("Unable to load properties file.", e);
         }

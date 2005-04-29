@@ -8,28 +8,33 @@ package net.sourceforge.fenixedu.persistenceTier;
  * 
  * @author Luis Cruz
  */
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
-import net.sourceforge.fenixedu.persistenceTier.delegatedObjects.DelegatePersistenceSupport;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsPersistenceSupport;
+import java.lang.reflect.Method;
+
+import net.sourceforge.fenixedu._development.PropertiesManager;
+
+import org.apache.log4j.Logger;
 
 public class PersistenceSupportFactory {
 
+    private static final Logger logger = Logger.getLogger(PersistenceSupportFactory.class);
+
+    private static final ISuportePersistente defaultPersistenceSupport;
+
+    static {
+        final String defaultPersistenceSupportClassName = PropertiesManager.getProperty("default.persistenceSupport");
+        try {
+            final Class defaultPersistenceSupportClass = Class.forName(defaultPersistenceSupportClassName);
+            final Method getInstanceMethod = defaultPersistenceSupportClass.getMethod("getInstance", null);
+            defaultPersistenceSupport = (ISuportePersistente) getInstanceMethod.invoke(null, null);
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to determine/obtain a default persistence support", e);
+        }
+
+        logger.info("Default PersistenceSupport is set to: " + defaultPersistenceSupportClassName);
+    }
+
     public static ISuportePersistente getDefaultPersistenceSupport() throws ExcepcaoPersistencia {
-        return getDelegatePersistenceSupport();
-    }
-
-    public static SuportePersistenteOJB getOJBPersistenceSupport() throws ExcepcaoPersistencia {
-        return SuportePersistenteOJB.getInstance();
-    }
-
-    public static VersionedObjectsPersistenceSupport getVersionedObjectsPersistenceSupport()
-            throws ExcepcaoPersistencia {
-        return VersionedObjectsPersistenceSupport.getInstance();
-    }
-
-    public static DelegatePersistenceSupport getDelegatePersistenceSupport()
-            throws ExcepcaoPersistencia {
-        return DelegatePersistenceSupport.getInstance();
+        return defaultPersistenceSupport;
     }
 
 }
