@@ -2335,6 +2335,20 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 }
 
 
+class net.sourceforge.fenixedu.domain.StatusAssiduidade extends net.sourceforge.fenixedu.domain.DomainObject {
+    String designacao;
+    String sigla;
+    String estado;
+    String assiduidade;
+    Integer quem;
+    
+    interface "
+    public java.sql.Timestamp getQuando();
+    
+    public void setQuando(java.sql.Timestamp quando);
+    "
+}
+
 
 class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer studentKindKey;

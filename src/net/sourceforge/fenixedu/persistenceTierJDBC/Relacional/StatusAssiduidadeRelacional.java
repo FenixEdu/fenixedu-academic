@@ -23,7 +23,7 @@ public class StatusAssiduidadeRelacional implements IStatusAssiduidadePersistent
                     + "codigoInterno = ? , " + "sigla = ? , " + "designacao = ? , " + "estado = ? , "
                     + "assiduidade = ?, " + "quem = ? , " + "quando = ? " + "WHERE sigla = ?");
 
-            sql.setInt(1, status.getCodigoInterno());
+            sql.setInt(1, status.getIdInternal());
             sql.setString(2, status.getSigla());
             sql.setString(3, status.getDesignacao());
             sql.setString(4, status.getEstado());
@@ -51,7 +51,7 @@ public class StatusAssiduidadeRelacional implements IStatusAssiduidadePersistent
         try {
             PreparedStatement sql = UtilRelacional
                     .prepararComando("INSERT INTO ass_STATUS VALUES(?, ?, ? ,?, ?, ?, ?, null)");
-            sql.setInt(1, status.getCodigoInterno());
+            sql.setInt(1, status.getIdInternal());
             sql.setString(2, status.getSigla());
             sql.setString(3, status.getDesignacao());
             sql.setString(4, status.getEstado());

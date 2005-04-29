@@ -11,3 +11,89 @@ class net.sourceforge.fenixedu.domain.CostCenter extends net.sourceforge.fenixed
     String departament;
 }
 
+
+class net.sourceforge.fenixedu.domain.EmployeeHistoric extends net.sourceforge.fenixedu.domain.DomainObject {
+    String calendar;
+    Integer keyWorkingPlaceCostCenter;
+    Date beginDate;
+    Integer keySalaryCostCenter;
+    Integer keyMailingCostCenter;
+    Integer keyResponsableEmployee;
+    Date endDate;
+    Integer keyStatus;
+    Integer who;
+    Integer keyEmployee;
+}
+
+
+class net.sourceforge.fenixedu.domain.StatusAssiduidade extends net.sourceforge.fenixedu.domain.DomainObject {
+    String designacao;
+    String sigla;
+    String estado;
+    String assiduidade;
+    Integer quem;
+    
+    interface "
+    public java.sql.Timestamp getQuando();
+    
+    public void setQuando(java.sql.Timestamp quando);
+    "
+}
+
+
+relation ??? {
+    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole ??? {
+        multiplicity ???;
+    }
+    net.sourceforge.fenixedu.domain.StatusAssiduidade playsRole status;
+}
+
+
+relation ??? {
+    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole ??? {
+        multiplicity ???;
+    }
+    net.sourceforge.fenixedu.domain.Employee playsRole responsableEmployee;
+}
+
+
+relation ??? {
+    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole ??? {
+        multiplicity ???;
+    }
+    net.sourceforge.fenixedu.domain.Employee playsRole employee;
+}
+
+
+relation ??? {
+    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole ??? {
+        multiplicity ???;
+    }
+    net.sourceforge.fenixedu.domain.CostCenter playsRole salaryCostCenter;
+}
+
+
+relation ??? {
+    net.sourceforge.fenixedu.domain.Employee playsRole ??? {
+        multiplicity ???;
+    }
+    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole historicList {
+        multiplicity *;
+    }
+}
+
+
+relation ??? {
+    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole ??? {
+        multiplicity ???;
+    }
+    net.sourceforge.fenixedu.domain.CostCenter playsRole mailingCostCenter;
+}
+
+
+relation ??? {
+    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole ??? {
+        multiplicity ???;
+    }
+    net.sourceforge.fenixedu.domain.CostCenter playsRole workingPlaceCostCenter;
+}

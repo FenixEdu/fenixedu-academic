@@ -264,7 +264,7 @@
 	class="net.sourceforge.fenixedu.domain.StatusAssiduidade" 
 	table="ass_STATUS">
   <field-descriptor 
-  	name="codigoInterno" 
+  	name="idInternal" 
   	column="codigoInterno" 
   	jdbc-type="INTEGER"
     primarykey="true" autoincrement="true"/>
