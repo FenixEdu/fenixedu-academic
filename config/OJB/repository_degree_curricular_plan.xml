@@ -127,6 +127,13 @@
              refresh="true">
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
+	<collection-descriptor
+			name="executionDegrees"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
+			proxy="true"
+            refresh="true">
+		<inverse-foreignkey field-ref="keyCurricularPlan"/>
+	</collection-descriptor>
 </class-descriptor>
 
 <!-- *************************************************************************************************************** -->
@@ -246,6 +253,13 @@
             refresh="true"
 			proxy="true">
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="executionDegrees"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
+			proxy="true"
+            refresh="true">
+		<inverse-foreignkey field-ref="keyCurricularPlan"/>
 	</collection-descriptor>
 </class-descriptor>
 
@@ -368,6 +382,13 @@
              refresh="true">
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
+	<collection-descriptor
+			name="executionDegrees"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
+			proxy="true"
+            refresh="true">
+		<inverse-foreignkey field-ref="keyCurricularPlan"/>
+	</collection-descriptor>
 </class-descriptor>
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEICTAGUS --> 
@@ -487,6 +508,13 @@
 			proxy="true"
              refresh="true">
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="executionDegrees"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
+			proxy="true"
+            refresh="true">
+		<inverse-foreignkey field-ref="keyCurricularPlan"/>
 	</collection-descriptor>
 </class-descriptor>
 <!-- *************************************************************************************************************** -->
@@ -608,6 +636,13 @@
              refresh="true">
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
+	<collection-descriptor
+			name="executionDegrees"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
+			proxy="true"
+            refresh="true">
+		<inverse-foreignkey field-ref="keyCurricularPlan"/>
+	</collection-descriptor>
 </class-descriptor>
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEM --> 
@@ -727,5 +762,12 @@
 			proxy="true"
              refresh="true">
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="executionDegrees"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
+			proxy="true"
+            refresh="true">
+		<inverse-foreignkey field-ref="keyCurricularPlan"/>
 	</collection-descriptor>
 </class-descriptor>

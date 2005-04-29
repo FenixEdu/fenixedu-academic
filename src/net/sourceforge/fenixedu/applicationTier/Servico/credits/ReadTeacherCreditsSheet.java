@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.credits.InfoServiceExemptionC
 import net.sourceforge.fenixedu.dataTransferObject.credits.TeacherCreditsSheetDTO;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProfessorship;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProfessorshipWithProfessorshipAndExecutionCourseAndShiftAndLessons;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.DetailedProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime;
@@ -126,7 +127,8 @@ public class ReadTeacherCreditsSheet implements IService {
         List infoShiftProfessorships = new ArrayList();
         for (int i = 0; i < shiftProfessorships.size(); i++) {
             IShiftProfessorship shiftProfessorship = (IShiftProfessorship) shiftProfessorships.get(i);
-            InfoShiftProfessorship infoShiftProfessorship = InfoShiftProfessorship.newInfoFromDomain(shiftProfessorship);
+            InfoShiftProfessorship infoShiftProfessorship = InfoShiftProfessorshipWithProfessorshipAndExecutionCourseAndShiftAndLessons
+                    .newInfoFromDomain(shiftProfessorship);
             infoShiftProfessorships.add(infoShiftProfessorship);
         }
         return infoShiftProfessorships;
@@ -390,7 +392,8 @@ public class ReadTeacherCreditsSheet implements IService {
 
                     public Object transform(Object input) {
                         IProfessorship professorship = (IProfessorship) input;
-                        InfoProfessorship infoProfessorShip = InfoProfessorship.newInfoFromDomain(professorship);
+                        InfoProfessorship infoProfessorShip = InfoProfessorshipWithInfoExecutionCourse
+                                .newInfoFromDomain(professorship);
 
                         DetailedProfessorship detailedProfessorship = new DetailedProfessorship();
 

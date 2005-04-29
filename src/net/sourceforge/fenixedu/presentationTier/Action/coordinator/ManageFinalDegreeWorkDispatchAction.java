@@ -57,8 +57,6 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
         IUserView userView = SessionUtils.getUserView(request);
 
-//        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
-//                .getAttribute(SessionConstants.MASTER_DEGREE);
         Integer degreeCurricularPlanID = null;
         if(request.getParameter("degreeCurricularPlanID") != null){
             degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
@@ -66,11 +64,11 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         }
         InfoExecutionDegree infoExecutionDegree = null;
 
-        Object args_tmp[] = { degreeCurricularPlanID, new Integer(2) };
+        Object args_tmp[] = { degreeCurricularPlanID };
         
         try {
             infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(userView,
-                    "ReadExecutionDegreeByDegreeCurricularPlanID", args_tmp);
+                    "ReadCurrentExecutionDegreeByDegreeCurricularPlanID", args_tmp);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

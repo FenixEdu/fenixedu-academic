@@ -7839,6 +7839,17 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>ReadCurrentExecutionDegreeByDegreeCurricularPlanID</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadCurrentExecutionDegreeByDegreeCurricularPlanID
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="MasterOrCoordinatorDegreeAdministrativeOfficeAuthorization"/>
+		</filterChains>
+	</service>
+	<service>
 		<name>ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement.ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID

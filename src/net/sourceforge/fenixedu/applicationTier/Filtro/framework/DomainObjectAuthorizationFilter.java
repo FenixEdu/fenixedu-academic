@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -19,19 +20,9 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
  *  
  */
 public abstract class DomainObjectAuthorizationFilter extends AuthorizationByRoleFilter {
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-     */
+
     abstract protected RoleType getRoleType();
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
-     */
     public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
             Exception {
         try {
@@ -52,5 +43,5 @@ public abstract class DomainObjectAuthorizationFilter extends AuthorizationByRol
         }
     }
 
-    abstract protected boolean verifyCondition(IUserView id, Integer objectId);
+    abstract protected boolean verifyCondition(IUserView id, Integer objectId) throws ExcepcaoPersistencia;
 }

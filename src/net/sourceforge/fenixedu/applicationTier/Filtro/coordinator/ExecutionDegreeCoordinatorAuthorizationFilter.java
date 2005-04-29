@@ -21,47 +21,25 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class ExecutionDegreeCoordinatorAuthorizationFilter extends DomainObjectAuthorizationFilter {
-    /**
-     *  
-     */
-    public ExecutionDegreeCoordinatorAuthorizationFilter() {
-        super();
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter#getRoleType()
-     */
     protected RoleType getRoleType() {
         return RoleType.COORDINATOR;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter#verifyCondition(ServidorAplicacao.IUserView,
-     *      java.lang.Integer)
-     */
-    protected boolean verifyCondition(IUserView id, Integer objectId) {
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+    protected boolean verifyCondition(IUserView id, Integer objectId) throws ExcepcaoPersistencia {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
+        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
-            IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
-                    ExecutionDegree.class, objectId);
-            ITeacher coordinator = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            List executionDegrees = persistentExecutionDegree.readByTeacher(coordinator);
+        IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                ExecutionDegree.class, objectId);
 
-            return executionDegrees.contains(executionDegree);
-        } catch (ExcepcaoPersistencia e) {
-            return false;
-        } catch (Exception e) {
-            return false;
-        }
+        ITeacher coordinator = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+        List executionDegrees = persistentExecutionDegree.readByTeacher(coordinator);
+
+        return executionDegrees.contains(executionDegree);
     }
 }
