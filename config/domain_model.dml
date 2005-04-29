@@ -566,7 +566,8 @@ class net.sourceforge.fenixedu.domain.Employee extends net.sourceforge.fenixedu.
 	Date antiquity;
 	Integer keyPerson;
 	Integer workingHours;
-	interface "
+
+    interface "
 	public net.sourceforge.fenixedu.domain.EmployeeHistoric getEmployeeHistoric();
 	
 	public void setEmployeeHistoric(net.sourceforge.fenixedu.domain.EmployeeHistoric employeeHistoric);
@@ -581,11 +582,6 @@ class net.sourceforge.fenixedu.domain.Employee extends net.sourceforge.fenixedu.
 
 class net.sourceforge.fenixedu.domain.EmployeeNotTeacher extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyEmployee;
-	interface "
-	public net.sourceforge.fenixedu.domain.IEmployee getEmployee();
-	
-	public void setEmployee(net.sourceforge.fenixedu.domain.IEmployee employee);
-	"
 }
 
 class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu.domain.DomainObject 
@@ -3199,6 +3195,14 @@ relation DepartmentDepartmentCourse {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Department playsRole departamento;
+}
+
+
+relation EmployeeNotTeacherEmployee {
+    net.sourceforge.fenixedu.domain.EmployeeNotTeacher playsRole employeesNotTeacher {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Employee playsRole employee;
 }
 
 

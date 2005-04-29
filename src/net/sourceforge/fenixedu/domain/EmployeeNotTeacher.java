@@ -9,21 +9,5 @@ package net.sourceforge.fenixedu.domain;
  *  
  */
 public class EmployeeNotTeacher extends EmployeeNotTeacher_Base {
-    private IEmployee employee;
-
-    /**
-     * @return Returns the employee.
-     */
-    public IEmployee getEmployee() {
-        return employee;
-    }
-
-    /**
-     * @param employee
-     *            The employee to set.
-     */
-    public void setEmployee(IEmployee employee) {
-        this.employee = employee;
-    }
 
 }

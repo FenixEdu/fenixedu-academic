@@ -12,9 +12,6 @@ import java.util.ListIterator;
  * @author Tânia Pousão
  */
 public class Employee extends Employee_Base {
-
-    private IPerson person = null;
-
     private EmployeeHistoric employeeHistoric = null;
 
     private List historicList = null;
@@ -36,14 +33,6 @@ public class Employee extends Employee_Base {
         setEmployeeNumber(employeeNumber);
         setWorkingHours(workingHours);
         setAntiquity(antiquity);
-    }
-
-    public IPerson getPerson() {
-        return person;
-    }
-
-    public void setPerson(IPerson person) {
-        this.person = person;
     }
 
     public EmployeeHistoric getEmployeeHistoric() {
