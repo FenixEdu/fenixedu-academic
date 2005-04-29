@@ -1,0 +1,13 @@
+/*
+ * DOMAINASSIDUOUSNESS.DML
+ * 
+ */
+
+
+class net.sourceforge.fenixedu.domain.CostCenter extends net.sourceforge.fenixedu.domain.DomainObject {
+    String code;
+    String section2;
+    String section1;
+    String departament;
+}
+
