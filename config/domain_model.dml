@@ -572,17 +572,35 @@ class net.sourceforge.fenixedu.domain.Employee extends net.sourceforge.fenixedu.
 	
 	public void setEmployeeHistoric(net.sourceforge.fenixedu.domain.EmployeeHistoric employeeHistoric);
 	
-	public java.util.List getHistoricList();
-	
-	public void setHistoricList(java.util.List historicList);
-	
 	public void fillEmployeeHistoric();
 	"
 }
 
+
+class net.sourceforge.fenixedu.domain.EmployeeHistoric extends net.sourceforge.fenixedu.domain.DomainObject {
+    String calendar;
+    Integer keyWorkingPlaceCostCenter;
+    Date beginDate;
+    Integer keySalaryCostCenter;
+    Integer keyMailingCostCenter;
+    Integer keyResponsableEmployee;
+    Date endDate;
+    Integer keyStatus;
+    Integer who;
+    Integer keyEmployee;
+    
+    interface "
+    public java.sql.Timestamp getWhen();
+
+    public void setWhen(java.sql.Timestamp when);
+    "
+}
+
+
 class net.sourceforge.fenixedu.domain.EmployeeNotTeacher extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyEmployee;
 }
+
 
 class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu.domain.DomainObject 
     implements org.apache.ojb.broker.PersistenceBrokerAware {
@@ -2786,7 +2804,6 @@ class net.sourceforge.fenixedu.domain.WebSiteSection extends net.sourceforge.fen
  * 
  */
 
-external class net.sourceforge.fenixedu.domain.EmployeeHistoric;
 external class net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction ;
 
 
@@ -3208,6 +3225,54 @@ relation DepartmentDepartmentCourse {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Department playsRole departamento;
+}
+
+
+relation EmployeeHistoricEmployee {
+    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole historicList {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Employee playsRole employee;
+}
+
+
+relation EmployeeHistoricMailingCostCenter {
+    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole mailingCostCenterAssociatedEmployeeHistorics {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.CostCenter playsRole mailingCostCenter;
+}
+
+
+relation EmployeeHistoricResponsibleEmployee {
+    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole responsibleEmployeeAssociatedEmployeeHistorics {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Employee playsRole responsableEmployee;
+}
+
+
+relation EmployeeHistoricSalaryCostCenter {
+    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole salaryCostCenterAssociatedEmployeeHistorics {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.CostCenter playsRole salaryCostCenter;
+}
+
+
+relation EmployeeHistoricStatusAssiduidade {
+    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole associatedEmployeeHistorics {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.StatusAssiduidade playsRole status;
+}
+
+
+relation EmployeeHistoricWorkingPlaceCostCenter {
+    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole workingPlaceCostCenterAssociatedEmployeeHistorics {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.CostCenter playsRole workingPlaceCostCenter;
 }
 
 

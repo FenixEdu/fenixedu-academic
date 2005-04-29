@@ -24,10 +24,6 @@ class net.sourceforge.fenixedu.domain.Employee extends net.sourceforge.fenixedu.
     
     public void setEmployeeHistoric(net.sourceforge.fenixedu.domain.EmployeeHistoric employeeHistoric);
 
-    public java.util.List getHistoricList();
-    
-    public void setHistoricList(java.util.List historicList);
-    
     public void fillEmployeeHistoric();
     "
 }
@@ -44,6 +40,12 @@ class net.sourceforge.fenixedu.domain.EmployeeHistoric extends net.sourceforge.f
     Integer keyStatus;
     Integer who;
     Integer keyEmployee;
+
+    interface "
+    public java.sql.Timestamp getWhen();
+
+    public void setWhen(java.sql.Timestamp when);
+    "
 }
 
 
@@ -88,59 +90,49 @@ relation NonTeacherEmployeeEmployee {
 }
 
 
-relation ??? {
-    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole ??? {
-        multiplicity ???;
-    }
-    net.sourceforge.fenixedu.domain.StatusAssiduidade playsRole status;
-}
-
-
-relation ??? {
-    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole ??? {
-        multiplicity ???;
-    }
-    net.sourceforge.fenixedu.domain.Employee playsRole responsableEmployee;
-}
-
-
-relation ??? {
-    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole ??? {
-        multiplicity ???;
+relation EmployeeHistoricEmployee {
+    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole historicList {
+        multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Employee playsRole employee;
 }
 
 
-relation ??? {
-    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole ??? {
-        multiplicity ???;
-    }
-    net.sourceforge.fenixedu.domain.CostCenter playsRole salaryCostCenter;
-}
-
-
-relation ??? {
-    net.sourceforge.fenixedu.domain.Employee playsRole ??? {
-        multiplicity ???;
-    }
-    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole historicList {
+relation EmployeeHistoricMailingCostCenter {
+    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole mailingCostCenterAssociatedEmployeeHistorics {
         multiplicity *;
-    }
-}
-
-
-relation ??? {
-    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole ??? {
-        multiplicity ???;
     }
     net.sourceforge.fenixedu.domain.CostCenter playsRole mailingCostCenter;
 }
 
 
-relation ??? {
-    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole ??? {
-        multiplicity ???;
+relation EmployeeHistoricResponsibleEmployee {
+    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole responsibleEmployeeAssociatedEmployeeHistorics {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Employee playsRole responsableEmployee;
+}
+
+
+relation EmployeeHistoricSalaryCostCenter {
+    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole salaryCostCenterAssociatedEmployeeHistorics {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.CostCenter playsRole salaryCostCenter;
+}
+
+
+relation EmployeeHistoricStatusAssiduidade {
+    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole associatedEmployeeHistorics {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.StatusAssiduidade playsRole status;
+}
+
+
+relation EmployeeHistoricWorkingPlaceCostCenter {
+    net.sourceforge.fenixedu.domain.EmployeeHistoric playsRole workingPlaceCostCenterAssociatedEmployeeHistorics {
+        multiplicity *;
     }
     net.sourceforge.fenixedu.domain.CostCenter playsRole workingPlaceCostCenter;
 }

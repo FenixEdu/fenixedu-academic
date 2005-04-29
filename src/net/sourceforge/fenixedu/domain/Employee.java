@@ -4,7 +4,6 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Date;
-import java.util.List;
 import java.util.ListIterator;
 
 /**
@@ -13,8 +12,6 @@ import java.util.ListIterator;
  */
 public class Employee extends Employee_Base {
     private EmployeeHistoric employeeHistoric = null;
-
-    private List historicList = null;
 
     public Employee() {
     }
@@ -43,28 +40,20 @@ public class Employee extends Employee_Base {
         this.employeeHistoric = employeeHistoric;
     }
 
-    public List getHistoricList() {
-        return historicList;
-    }
-
-    public void setHistoricList(List historicList) {
-        this.historicList = historicList;
-    }
-
-    public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof IEmployee) {
-            resultado = getEmployeeNumber().equals(((IEmployee) obj).getEmployeeNumber());
-        }
-        return resultado;
-    }
-
     public String toString() {
         String result = "[Dominio.Employee ";
         result += ", employeeNumber=" + getEmployeeNumber();
         result += ", person=" + getPerson();
         result += "]";
         return result;
+    }
+    
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof IEmployee) {
+            resultado = getEmployeeNumber().equals(((IEmployee) obj).getEmployeeNumber());
+        }
+        return resultado;
     }
 
     public void fillEmployeeHistoric() {
@@ -107,4 +96,5 @@ public class Employee extends Employee_Base {
             }
         }
     }
+
 }
