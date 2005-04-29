@@ -123,4 +123,18 @@
     	<antcall target="clean-all"/>
     </target>
 
+    <target name="dmlGenerator"
+    		description="Generate DML file from OJB Mapping.">
+		<java classname="net.sourceforge.fenixedu.tools.DMLGenerator" fork="true">
+			<classpath>
+				<pathelement path="${build.home.webinf.classes}"/>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                	<exclude name="**/berserk.jar"/>
+                </fileset>
+			</classpath>
+		</java>
+    	<antcall target="clean-all"/>
+    </target>
+
 </project>
