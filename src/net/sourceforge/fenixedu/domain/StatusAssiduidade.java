@@ -16,27 +16,7 @@ public class StatusAssiduidade extends StatusAssiduidade_Base {
 	    setQuem(0);
     }
 
-    public StatusAssiduidade(String sigla, String designacao, String estado, String assiduidade) {
-        setIdInternal(0);
-        setSigla(sigla);
-        setDesignacao(designacao);
-        setEstado(estado);
-        setAssiduidade(assiduidade);
-        setQuem(0);
-    }
-
-    public StatusAssiduidade(String sigla, String designacao, String estado, String assiduidade,
-            int quem, Timestamp quando) {
-        setIdInternal(0);
-        setSigla(sigla);
-        setDesignacao(designacao);
-        setEstado(estado);
-        setAssiduidade(assiduidade);
-        setQuem(quem);
-        setQuando(quando);
-    }
-
-    public StatusAssiduidade(int codigoInterno, String sigla, String designacao, String estado,
+    public StatusAssiduidade(Integer codigoInterno, String sigla, String designacao, String estado,
             String assiduidade) {
         setIdInternal(codigoInterno);
         setSigla(sigla);
@@ -46,8 +26,8 @@ public class StatusAssiduidade extends StatusAssiduidade_Base {
         setQuem(0);
     }
 
-    public StatusAssiduidade(int codigoInterno, String sigla, String designacao, String estado,
-            String assiduidade, int quem, Timestamp quando) {
+    public StatusAssiduidade(Integer codigoInterno, String sigla, String designacao, String estado,
+            String assiduidade, Integer quem, Timestamp quando) {
         setIdInternal(codigoInterno);
         setSigla(sigla);
         setDesignacao(designacao);
