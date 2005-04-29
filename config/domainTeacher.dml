@@ -135,3 +135,11 @@ relation ServiceProviderRegimeTeacher {
     net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime playsRole serviceProviderRegime;
     net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
+
+
+relation WeeklyOcupationTeacher {
+    net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation playsRole weeklyOcupations {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}

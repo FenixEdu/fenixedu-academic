@@ -2568,6 +2568,18 @@ class net.sourceforge.fenixedu.domain.University extends net.sourceforge.fenixed
 	String name;
 }
 
+
+class net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyTeacher;
+    Integer other;
+    Date lastModificationDate;
+    Integer lecture;
+    Integer management;
+    Integer research;
+    Integer support;
+}
+
+
 class net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyWrittenEvaluation;
 	Integer keyCurricularCourseScope;
@@ -4416,6 +4428,14 @@ relation TutorStudent {
 
 relation TutorTeacher {
     net.sourceforge.fenixedu.domain.Tutor playsRole associatedTutors {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+
+relation WeeklyOcupationTeacher {
+    net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation playsRole weeklyOcupations {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
