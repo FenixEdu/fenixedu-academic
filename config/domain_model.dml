@@ -1485,6 +1485,11 @@ class net.sourceforge.fenixedu.domain.Seminaries.Modality extends net.sourceforg
 }
 
 
+class net.sourceforge.fenixedu.domain.NonTeacherEmployee extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer chaveFuncionario;
+}
+
+
 class net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer studentCurricularPlanKey;
     Integer curricularCourseKey;
@@ -2956,6 +2961,14 @@ relation CurricularCourseCurricularCourseEquivalence {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.CurricularCourse playsRole equivalentCurricularCourse;
+}
+
+
+relation NonTeacherEmployeeEmployee {
+    net.sourceforge.fenixedu.domain.NonTeacherEmployee playsRole nonTeacherEmployees {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Employee playsRole funcionario;
 }
 
 

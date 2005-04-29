@@ -52,6 +52,11 @@ class net.sourceforge.fenixedu.domain.EmployeeNotTeacher extends net.sourceforge
 }
 
 
+class net.sourceforge.fenixedu.domain.NonTeacherEmployee extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyFuncionario;
+}
+
+
 class net.sourceforge.fenixedu.domain.StatusAssiduidade extends net.sourceforge.fenixedu.domain.DomainObject {
     String designacao;
     String sigla;
@@ -72,6 +77,14 @@ relation EmployeeNotTeacherEmployee {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Employee playsRole employee;
+}
+
+
+relation NonTeacherEmployeeEmployee {
+    net.sourceforge.fenixedu.domain.NonTeacherEmployee playsRole nonTeacherEmployees {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.Employee playsRole funcionario;
 }
 
 

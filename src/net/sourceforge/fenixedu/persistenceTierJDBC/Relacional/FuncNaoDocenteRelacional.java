@@ -18,9 +18,9 @@ public class FuncNaoDocenteRelacional implements IFuncNaoDocentePersistente {
             PreparedStatement sql = UtilRelacional.prepararComando("UPDATE ass_FUNC_NAO_DOCENTE SET "
                     + "codigoInterno = ? , " + "chaveFuncionario = ? " + "WHERE codigoInterno = ? ");
 
-            sql.setInt(1, funcionario.getCodigoInterno());
+            sql.setInt(1, funcionario.getIdInternal());
             sql.setInt(2, funcionario.getChaveFuncionario());
-            sql.setInt(3, funcionario.getCodigoInterno());
+            sql.setInt(3, funcionario.getIdInternal());
 
             sql.executeUpdate();
             sql.close();
@@ -56,7 +56,7 @@ public class FuncNaoDocenteRelacional implements IFuncNaoDocentePersistente {
             PreparedStatement sql = UtilRelacional.prepararComando("INSERT INTO ass_FUNC_NAO_DOCENTE "
                     + "VALUES (?, ?, 1)");
 
-            sql.setInt(1, funcionario.getCodigoInterno());
+            sql.setInt(1, funcionario.getIdInternal());
             sql.setInt(2, funcionario.getChaveFuncionario());
 
             sql.executeUpdate();

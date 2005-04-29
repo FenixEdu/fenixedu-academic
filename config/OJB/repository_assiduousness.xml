@@ -236,7 +236,7 @@
   table="ass_FUNC_NAO_DOCENTE"
 >
   <field-descriptor id="0"
-    name="codigoInterno"
+    name="idInternal"
     column="codigoInterno"
     jdbc-type="INTEGER"
     primarykey="true"
