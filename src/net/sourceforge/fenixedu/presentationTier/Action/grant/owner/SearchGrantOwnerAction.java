@@ -41,7 +41,14 @@ public class SearchGrantOwnerAction extends SearchAction {
         request.setAttribute("justGrantOwner", justGrantOwner);
         request.setAttribute("name", name);
 
-        Object[] args = { name, idNumber, IDDocumentType.valueOf(idType), null, onlyGrantOwner, startIndex };
+        final IDDocumentType documentType;
+        if (idType != null && idType.length() > 0) {
+            documentType = IDDocumentType.valueOf(idType);
+        } else {
+            documentType = null;
+        }
+
+        Object[] args = { name, idNumber, documentType, null, onlyGrantOwner, startIndex };
         return args;
     }
 
