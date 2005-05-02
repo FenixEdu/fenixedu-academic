@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.marksManagement;
 
 import java.text.DateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
@@ -9,6 +10,26 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
+import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.util.Data;
+import net.sourceforge.fenixedu.util.FormataData;
+
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -16,26 +37,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
-
-import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.Data;
-import net.sourceforge.fenixedu.util.EnrolmentEvaluationType;
-import net.sourceforge.fenixedu.util.FormataData;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Angela 30/06/2003 Modified by Fernanda Quitério
@@ -228,7 +229,7 @@ public class ChangeMarkDispatchAction extends DispatchAction {
         studentNumberForm.set("grade", newEnrolmentEvaluation.getGrade());
         studentNumberForm.set("observation", newEnrolmentEvaluation.getObservation());
         studentNumberForm.set("enrolmentEvaluationType", String.valueOf(newEnrolmentEvaluation
-                .getEnrolmentEvaluationType().getType()));
+                .getEnrolmentEvaluationType().toString()));
         studentNumberForm.set("studentNumber", studentNumber);
         //		responsible teacher
         InfoTeacher infoTeacher = null;
@@ -246,8 +247,7 @@ public class ChangeMarkDispatchAction extends DispatchAction {
         } else {
             studentNumberForm.set("teacherNumber", "");
         }
-        request.setAttribute(SessionConstants.ENROLMENT_EVALUATION_TYPE_LIST,
-                new EnrolmentEvaluationType().toArrayList());
+        request.setAttribute(SessionConstants.ENROLMENT_EVALUATION_TYPE_LIST, Arrays.asList(EnrolmentEvaluationType.getSexLabelValues(null)));
         request.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
         request.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
         request.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
@@ -270,10 +270,9 @@ public class ChangeMarkDispatchAction extends DispatchAction {
                 "teacherCode", request));
         String grade = MarksManagementDispatchAction.getFromRequest("grade", request);
 
-        Integer evaluation = Integer.valueOf(MarksManagementDispatchAction.getFromRequest(
-                "enrolmentEvaluationType", request));
+        String evaluation = MarksManagementDispatchAction.getFromRequest("enrolmentEvaluationType", request);
 
-        EnrolmentEvaluationType enrolmentEvaluationType = new EnrolmentEvaluationType(evaluation);
+        EnrolmentEvaluationType enrolmentEvaluationType = EnrolmentEvaluationType.valueOf(evaluation);
 
         Integer teacherNumber = null;
 

@@ -19,12 +19,12 @@ import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
-import net.sourceforge.fenixedu.util.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -116,7 +116,7 @@ public class ReadImprovmentsToEnroll implements IService  {
 
                     public boolean evaluate(Object arg0) {
                         IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) arg0;
-                        if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ))
+                        if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT))
                             return true;
                         return false;
                     }
@@ -137,7 +137,7 @@ public class ReadImprovmentsToEnroll implements IService  {
 
                     public boolean evaluate(Object arg0) {
                         IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) arg0;
-                        if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ))
+                        if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT))
                             return true;
                         return false;
                     }
@@ -190,7 +190,7 @@ public class ReadImprovmentsToEnroll implements IService  {
             public boolean evaluate(Object obj) {
                 IEnrolment enrollment = (IEnrolment) obj;
                 if (enrollment.getEnrolmentEvaluationType().equals(
-                        EnrolmentEvaluationType.EQUIVALENCE_OBJ))
+                        EnrolmentEvaluationType.EQUIVALENCE))
                     return false;
                 return true;
             }

@@ -49,7 +49,7 @@
 			<form-property name="unenrollments" type="java.lang.Integer[]"/>
             <form-property name="enrollmentTypes" type="java.util.HashMap"/>			
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
-			<form-property name="userType" type="java.lang.Integer"/>
+			<form-property name="userType" type="java.lang.Integer" initial="0"/>
 			<form-property name="studentCurricularPlan" type="java.lang.String"/>
 		</form-bean>
 		

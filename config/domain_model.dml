@@ -614,12 +614,12 @@ class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu
 
     interface "
     
-    public net.sourceforge.fenixedu.util.enrollment.EnrollmentCondition getCondition();
+    public net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition getCondition();
     public net.sourceforge.fenixedu.domain.curriculum.EnrollmentState getEnrollmentState();
-    public net.sourceforge.fenixedu.util.EnrolmentEvaluationType getEnrolmentEvaluationType();
-    public void setCondition(net.sourceforge.fenixedu.util.enrollment.EnrollmentCondition condition);
+    public net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType getEnrolmentEvaluationType();
+    public void setCondition(net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition condition);
     public void setEnrollmentState(net.sourceforge.fenixedu.domain.curriculum.EnrollmentState state);
-    public void setEnrolmentEvaluationType(net.sourceforge.fenixedu.util.EnrolmentEvaluationType type);
+    public void setEnrolmentEvaluationType(net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType type);
     "
 }
 
@@ -647,9 +647,9 @@ class net.sourceforge.fenixedu.domain.EnrolmentEvaluation extends net.sourceforg
     
     interface "
 
-    public abstract net.sourceforge.fenixedu.util.EnrolmentEvaluationType getEnrolmentEvaluationType();
+    public abstract net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType getEnrolmentEvaluationType();
     public abstract net.sourceforge.fenixedu.util.EnrolmentEvaluationState getEnrolmentEvaluationState();
-    public abstract void setEnrolmentEvaluationType(net.sourceforge.fenixedu.util.EnrolmentEvaluationType type);
+    public abstract void setEnrolmentEvaluationType(net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType type);
     public abstract void setEnrolmentEvaluationState(net.sourceforge.fenixedu.util.EnrolmentEvaluationState state);
     public abstract boolean isNormal();
     public abstract boolean isImprovment();

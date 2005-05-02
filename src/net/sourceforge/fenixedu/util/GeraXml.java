@@ -34,7 +34,9 @@ import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentPeriodInCurricularCourses;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
@@ -45,7 +47,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.tools.SmartDataSetGeneratorForLEECTestBattery;
-import net.sourceforge.fenixedu.util.enrollment.EnrollmentCondition;
 
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.database.DatabaseConnection;
@@ -184,7 +185,7 @@ public class GeraXml extends FenixUtil {
         String curricularCourseName = curricularCourseData[0].toUpperCase();
 
         EnrollmentState enrollmentState = EnrollmentState.valueOf(curricularCourseData[1]);
-        EnrolmentEvaluationType enrolmentEvaluationType = EnrolmentEvaluationType.NORMAL_OBJ;
+        EnrolmentEvaluationType enrolmentEvaluationType = EnrolmentEvaluationType.NORMAL;
 
         IEnrolment enrolment = null;
         try {

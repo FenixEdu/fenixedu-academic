@@ -31,12 +31,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGroupProperties;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.AttendacyStateSelectionType;
-import net.sourceforge.fenixedu.util.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.util.TipoAula;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -216,10 +216,10 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
             String attendacyType = "";
             if (infoAttends.getInfoEnrolment() != null) {
                 if (infoAttends.getInfoEnrolment().getEnrolmentEvaluationType().equals(
-                        EnrolmentEvaluationType.NORMAL_OBJ)) {
+                        EnrolmentEvaluationType.NORMAL)) {
                     attendacyType = ATTENDACY_TYPE_NORMAL;
                 } else if (infoAttends.getInfoEnrolment().getEnrolmentEvaluationType().equals(
-                        EnrolmentEvaluationType.IMPROVEMENT_OBJ)) {
+                        EnrolmentEvaluationType.IMPROVEMENT)) {
                     attendacyType = ATTENDACY_TYPE_IMPROVEMENT;
                 }
             } else

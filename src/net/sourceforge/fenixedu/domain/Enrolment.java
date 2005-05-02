@@ -2,12 +2,12 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Date;
 
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.log.IEnrolmentLog;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
-import net.sourceforge.fenixedu.util.EnrolmentEvaluationType;
-import net.sourceforge.fenixedu.util.enrollment.EnrollmentCondition;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerException;

@@ -42,6 +42,7 @@ import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
@@ -49,7 +50,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.AttendacyStateSelectionType;
-import net.sourceforge.fenixedu.util.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.util.TipoAula;
 
@@ -227,10 +227,10 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
                 if (iFrequenta.getEnrolment() != null){
                     EnrolmentEvaluationType enrollmentEvaluationType = null;
                     if (iFrequenta.getEnrolment().getExecutionPeriod().equals(executionCourse.getExecutionPeriod())){
-                        enrollmentEvaluationType = EnrolmentEvaluationType.NORMAL_OBJ;
+                        enrollmentEvaluationType = EnrolmentEvaluationType.NORMAL;
                     }
                     else{
-                        enrollmentEvaluationType = EnrolmentEvaluationType.IMPROVEMENT_OBJ;                        
+                        enrollmentEvaluationType = EnrolmentEvaluationType.IMPROVEMENT;                        
                     }
                     infoFrequenta.getInfoEnrolment().setEnrolmentEvaluationType(enrollmentEvaluationType);                    
                 }

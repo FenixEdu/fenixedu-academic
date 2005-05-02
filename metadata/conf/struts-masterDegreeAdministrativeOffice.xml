@@ -21,8 +21,10 @@
 			<form-property name="curricularSemesters" type="java.lang.Integer[]"/>
 			<form-property name="curricularCourses" type="java.lang.String[]"/>
 			<form-property name="unenrollments" type="java.lang.Integer[]"/>
-            <form-property name="enrollmentTypes" type="java.util.HashMap"/>			
+            <form-property name="enrollmentTypes" type="java.util.HashMap"/>
+            <form-property name="userType" type="java.lang.Integer" initial="0"/>			
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="studentCurricularPlan" type="java.lang.String"/>
 		</form-bean>
 		
 		<form-bean name="getStudentByNumberAndDegreeTypeForThesisForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
@@ -2572,6 +2574,7 @@
     <!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="ServidorApresentacao.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
 	<message-resources parameter="ServidorApresentacao.ApplicationResources" key="DEFAULT" null="false"/>
+    <message-resources parameter="ServidorApresentacao.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>	
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

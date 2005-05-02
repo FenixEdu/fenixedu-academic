@@ -42,7 +42,9 @@ import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
@@ -50,7 +52,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuityValues;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
-import net.sourceforge.fenixedu.util.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.GratuityState;
 import net.sourceforge.fenixedu.util.SituationName;
@@ -60,7 +61,6 @@ import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.util.StudentState;
 import net.sourceforge.fenixedu.util.StudentType;
 import net.sourceforge.fenixedu.util.TipoCurso;
-import net.sourceforge.fenixedu.util.enrollment.EnrollmentCondition;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -242,8 +242,7 @@ public class RegisterCandidate implements IService {
                 IEnrolment enrolment = new Enrolment();
                 sp.getIPersistentEnrolment().simpleLockWrite(enrolment);
                 enrolment.setCurricularCourse(candidateEnrolment.getCurricularCourse());
-                enrolment.setEnrolmentEvaluationType(new EnrolmentEvaluationType(
-                        EnrolmentEvaluationType.NORMAL));
+                enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
                 enrolment.setEnrollmentState(EnrollmentState.ENROLLED);
                 enrolment.setExecutionPeriod(sp.getIPersistentExecutionPeriod()
                         .readActualExecutionPeriod());
@@ -255,8 +254,7 @@ public class RegisterCandidate implements IService {
                 sp.getIPersistentEnrolmentEvaluation().simpleLockWrite(enrolmentEvaluation);
                 enrolmentEvaluation.setEnrolment(enrolment);
                 enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
-                enrolmentEvaluation.setEnrolmentEvaluationType(new EnrolmentEvaluationType(
-                        EnrolmentEvaluationType.NORMAL));
+                enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
 
                 enrolment.getEvaluations().add(enrolmentEvaluation);
                 enrolment.setCreationDate(new Date());

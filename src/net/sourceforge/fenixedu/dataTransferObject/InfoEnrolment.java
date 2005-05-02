@@ -6,9 +6,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.IEnrolment;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
-import net.sourceforge.fenixedu.util.EnrolmentEvaluationType;
-import net.sourceforge.fenixedu.util.enrollment.EnrollmentCondition;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 
 /**
  * @author dcs-rjao

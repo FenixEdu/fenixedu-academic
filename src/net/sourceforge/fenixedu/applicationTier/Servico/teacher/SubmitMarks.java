@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.ResponsibleFor;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
@@ -49,7 +50,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
-import net.sourceforge.fenixedu.util.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.util.Ftp;
 import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.util.middleware.CreateFile;
@@ -184,10 +184,10 @@ public class SubmitMarks implements IServico {
                 
                 IMark mark = getMark(evaluation, markList, attend);
                 if(isImprovment(enrolment, executionCourse)) {
-                    enrolmentEvaluation = getEnrolmentEvaluation(userView, executionCourse, enrolment, evaluationDate, employee, teacher, mark, EnrolmentEvaluationType.IMPROVEMENT_OBJ);
+                    enrolmentEvaluation = getEnrolmentEvaluation(userView, executionCourse, enrolment, evaluationDate, employee, teacher, mark, EnrolmentEvaluationType.IMPROVEMENT);
                     improvmentEnrolmentEvaluationTableByDegree.put(enrolment.getStudentCurricularPlan().getDegreeCurricularPlan().getDegree().getIdInternal(), enrolmentEvaluation);
                 } else {
-                    enrolmentEvaluation = getEnrolmentEvaluation(userView, executionCourse, enrolment, evaluationDate, employee, teacher, mark, EnrolmentEvaluationType.NORMAL_OBJ);
+                    enrolmentEvaluation = getEnrolmentEvaluation(userView, executionCourse, enrolment, evaluationDate, employee, teacher, mark, EnrolmentEvaluationType.NORMAL);
                     enrolmentEvaluationTableByDegree.put(enrolment.getStudentCurricularPlan().getDegreeCurricularPlan().getDegree().getIdInternal(), enrolmentEvaluation);
                 }
                 submited++;

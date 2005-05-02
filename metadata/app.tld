@@ -34,7 +34,7 @@
 
     <name>checkLogon</name>
 
-    <tagclass>actions.CheckLogonTag</tagclass>
+    <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.assiduousness.CheckLogonTag</tagclass>
 
     <bodycontent>empty</bodycontent>
 

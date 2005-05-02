@@ -24,7 +24,9 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
@@ -36,8 +38,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
-import net.sourceforge.fenixedu.util.EnrolmentEvaluationType;
-import net.sourceforge.fenixedu.util.enrollment.EnrollmentCondition;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -102,7 +102,7 @@ public class WriteEnrollment implements IService {
             enrollmentToWrite.setEnrollmentState(EnrollmentState.ENROLLED);
             enrollmentToWrite.setExecutionPeriod(executionPeriod);
             enrollmentToWrite.setStudentCurricularPlan(studentCurricularPlan);
-            enrollmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+            enrollmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
             enrollmentToWrite.setCreationDate(new Date());
             enrollmentToWrite.setCondition(getEnrollmentCondition(enrollmentType));
             enrollmentToWrite.setCreatedBy(userView.getUtilizador());
@@ -197,14 +197,14 @@ public class WriteEnrollment implements IService {
 
         IEnrolmentEvaluation enrolmentEvaluation = enrollmentEvaluationDAO
                 .readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGrade(enrolment,
-                        EnrolmentEvaluationType.NORMAL_OBJ, null);
+                        EnrolmentEvaluationType.NORMAL, null);
 
         if (enrolmentEvaluation == null) {
             enrolmentEvaluation = new EnrolmentEvaluation();
             enrollmentEvaluationDAO.simpleLockWrite(enrolmentEvaluation);
             enrolmentEvaluation.setEnrolment(enrolment);
             enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
-            enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+            enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
             enrolmentEvaluation.setCheckSum(null);
             enrolmentEvaluation.setEmployee(null);
             enrolmentEvaluation.setExamDate(null);
@@ -226,13 +226,13 @@ public class WriteEnrollment implements IService {
     protected EnrollmentCondition getEnrollmentCondition(CurricularCourseEnrollmentType enrollmentType) {
         switch (enrollmentType) {
         case TEMPORARY:
-            return EnrollmentCondition.getEnum(2);
+            return EnrollmentCondition.TEMPORARY;
         case DEFINITIVE:
-            return EnrollmentCondition.getEnum(1);
+            return EnrollmentCondition.FINAL;
         case NOT_ALLOWED:
-            return EnrollmentCondition.getEnum(3);
+            return EnrollmentCondition.IMPOSSIBLE;
         case VALIDATED:
-            return EnrollmentCondition.getEnum(4);
+            return EnrollmentCondition.VALIDATED;
         default:
             return null;
         }

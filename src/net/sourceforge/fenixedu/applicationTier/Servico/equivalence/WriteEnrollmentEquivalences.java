@@ -27,7 +27,9 @@ import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
@@ -41,9 +43,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
-import net.sourceforge.fenixedu.util.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.util.TipoCurso;
-import net.sourceforge.fenixedu.util.enrollment.EnrollmentCondition;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -189,7 +189,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
             enrollmentDAO.simpleLockWrite(enrollmentToWrite);
 
             enrollmentToWrite.setCurricularCourse(curricularCourse);
-            enrollmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.EQUIVALENCE_OBJ);
+            enrollmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.EQUIVALENCE);
             enrollmentToWrite.setEnrollmentState(getEnrollmentStateByGrade(grade));
             enrollmentToWrite.setExecutionPeriod(executionPeriod);
             enrollmentToWrite.setStudentCurricularPlan(toStudentCurricularPlan);
@@ -214,7 +214,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
 
         IEnrolmentEvaluation enrollmentEvaluationToWrite = enrollmentEvaluationDAO
                 .readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGradeAndWhenAlteredDate(
-                        newEnrollment, EnrolmentEvaluationType.EQUIVALENCE_OBJ, grade, newEnrollment
+                        newEnrollment, EnrolmentEvaluationType.EQUIVALENCE, grade, newEnrollment
                                 .getCreationDate());
 
         if (enrollmentEvaluationToWrite == null) {
@@ -225,7 +225,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
             enrollmentEvaluationToWrite.setEnrolment(newEnrollment);
             enrollmentEvaluationToWrite.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
             enrollmentEvaluationToWrite
-                    .setEnrolmentEvaluationType(EnrolmentEvaluationType.EQUIVALENCE_OBJ);
+                    .setEnrolmentEvaluationType(EnrolmentEvaluationType.EQUIVALENCE);
             enrollmentEvaluationToWrite.setExamDate(newEnrollment.getCreationDate());
             enrollmentEvaluationToWrite.setGrade(grade);
             enrollmentEvaluationToWrite.setObservation("EQUIVALÊNCIA");

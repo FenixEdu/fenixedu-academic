@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.util.enrollment.EnrollmentCondition;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
@@ -13,7 +13,7 @@ public class JavaEnrollmentCondition2SqlEnrollmentConditionFieldConversion imple
     public Object javaToSql(Object source) {
         if (source instanceof EnrollmentCondition) {
             EnrollmentCondition condition = (EnrollmentCondition) source;
-            return condition.getName();
+            return condition.toString();
         }
         return source;
 
@@ -22,7 +22,7 @@ public class JavaEnrollmentCondition2SqlEnrollmentConditionFieldConversion imple
     public Object sqlToJava(Object source) {
         if (source instanceof String) {
             String src = (String) source;
-            return EnrollmentCondition.getEnum(src);
+            return EnrollmentCondition.valueOf(src);
         }
         return source;
 

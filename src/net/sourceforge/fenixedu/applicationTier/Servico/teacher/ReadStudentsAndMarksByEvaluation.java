@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IMark;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluation;
@@ -32,7 +33,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.EnrolmentEvaluationType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -90,7 +90,7 @@ public class ReadStudentsAndMarksByEvaluation implements IService {
                     //Melhoria Alterar isto depois: isto está feio assim  
                     if(attend.getEnrolment() != null) {
                         if(!attend.getEnrolment().getExecutionPeriod().equals(executionCourse.getExecutionPeriod())) {
-                            infoAttend.getInfoEnrolment().setEnrolmentEvaluationType(EnrolmentEvaluationType.IMPROVEMENT_OBJ);
+                            infoAttend.getInfoEnrolment().setEnrolmentEvaluationType(EnrolmentEvaluationType.IMPROVEMENT);
                         }
                     }
                         

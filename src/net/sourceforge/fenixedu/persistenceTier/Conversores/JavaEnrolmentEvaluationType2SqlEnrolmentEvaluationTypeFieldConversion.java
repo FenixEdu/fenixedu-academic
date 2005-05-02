@@ -6,7 +6,7 @@
 
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.util.EnrolmentEvaluationType;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
@@ -19,7 +19,7 @@ public class JavaEnrolmentEvaluationType2SqlEnrolmentEvaluationTypeFieldConversi
     public Object javaToSql(Object source) {
         if (source instanceof EnrolmentEvaluationType) {
             EnrolmentEvaluationType s = (EnrolmentEvaluationType) source;
-            return s.getType();
+            return s.toString();
         }
 
         return source;
@@ -30,9 +30,9 @@ public class JavaEnrolmentEvaluationType2SqlEnrolmentEvaluationTypeFieldConversi
      * @see FieldConversion#sqlToJava(Object)
      */
     public Object sqlToJava(Object source) {
-        if (source instanceof Integer) {
-            Integer src = (Integer) source;
-            return new EnrolmentEvaluationType(src);
+        if (source instanceof String) {
+            String src = (String) source;
+            return EnrolmentEvaluationType.valueOf(src);
         }
 
         return source;

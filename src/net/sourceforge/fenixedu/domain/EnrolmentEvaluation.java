@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
-import net.sourceforge.fenixedu.util.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
@@ -85,7 +85,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
             return 1;
         } else if (enrolmentEvaluation.getObservation() != null
                 && enrolmentEvaluation.getObservation().equals(this.RECTIFICATION)) {
-            if(this.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ)){
+            if(this.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT)){
                 return compareForEqualStates(myEnrolmentState,otherEnrolmentState,otherGrade,otherWhenAltered);
             }
             return -1;
@@ -194,7 +194,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
      * @see Dominio.IEnrolmentEvaluation#isNormal()
      */
     public boolean isNormal() {
-        if(enrolmentEvaluationType.equals(EnrolmentEvaluationType.NORMAL_OBJ))
+        if(enrolmentEvaluationType.equals(EnrolmentEvaluationType.NORMAL))
             return true;
         return false;
     }
@@ -203,7 +203,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
      * @see Dominio.IEnrolmentEvaluation#isImprovment()
      */
     public boolean isImprovment() {
-        if(enrolmentEvaluationType.equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ))
+        if(enrolmentEvaluationType.equals(EnrolmentEvaluationType.IMPROVEMENT))
             return true;
         return false;
     }
