@@ -34,106 +34,94 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class SubmitFinalWorkProposal implements IService {
 
-    /**
-     *  
-     */
-    public SubmitFinalWorkProposal() {
-        super();
-    }
+    public void run(InfoProposal infoProposal) throws FenixServiceException, ExcepcaoPersistencia {
 
-    public void run(InfoProposal infoProposal) throws FenixServiceException {
-        try {
-            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IPersistentFinalDegreeWork persistentFinalWork = persistentSupport
-                    .getIPersistentFinalDegreeWork();
-            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-            IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
-                    .getIPersistentExecutionCourse();
-            IPersistentBranch persistentBranch = persistentSupport.getIPersistentBranch();
+        IPersistentFinalDegreeWork persistentFinalWork = persistentSupport
+                .getIPersistentFinalDegreeWork();
+        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
+        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
+                .getIPersistentExecutionCourse();
+        IPersistentBranch persistentBranch = persistentSupport.getIPersistentBranch();
 
-            Integer executionDegreeId = infoProposal.getExecutionDegree().getIdInternal();
-            IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionCourse.readByOID(
-                    ExecutionDegree.class, executionDegreeId);
+        Integer executionDegreeId = infoProposal.getExecutionDegree().getIdInternal();
+        IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionCourse.readByOID(
+                ExecutionDegree.class, executionDegreeId);
 
-            IScheduleing scheduleing = persistentFinalWork
-                    .readFinalDegreeWorkScheduleing(executionDegreeId);
-            if(scheduleing == null){
-                throw new OutOfPeriodException(null, null, null);
-            }
+        IScheduleing scheduleing = persistentFinalWork.readFinalDegreeWorkScheduleing(executionDegreeId);
+        if (scheduleing == null) {
+            throw new OutOfPeriodException(null, null, null);
+        }
 
-            IProposal proposal = null;
-            if (infoProposal.getIdInternal() != null) {
-                proposal = (IProposal) persistentFinalWork.readByOID(Proposal.class, infoProposal
-                        .getIdInternal());
-            }
-            if (proposal == null) {
-                proposal = new Proposal();
-                persistentFinalWork.simpleLockWrite(proposal);
-                int proposalNumber = scheduleing.getCurrentProposalNumber().intValue();
-                proposal.setProposalNumber(new Integer(proposalNumber));
-                persistentFinalWork.simpleLockWrite(scheduleing);
-                scheduleing.setCurrentProposalNumber(new Integer(proposalNumber + 1));
-            } else {
-                persistentFinalWork.simpleLockWrite(proposal);
-            }
+        IProposal proposal = null;
+        if (infoProposal.getIdInternal() != null) {
+            proposal = (IProposal) persistentFinalWork.readByOID(Proposal.class, infoProposal
+                    .getIdInternal());
+        }
+        if (proposal == null) {
+            proposal = new Proposal();
+            persistentFinalWork.simpleLockWrite(proposal);
+            int proposalNumber = scheduleing.getCurrentProposalNumber().intValue();
+            proposal.setProposalNumber(new Integer(proposalNumber));
+            persistentFinalWork.simpleLockWrite(scheduleing);
+            scheduleing.setCurrentProposalNumber(new Integer(proposalNumber + 1));
+        } else {
+            persistentFinalWork.simpleLockWrite(proposal);
+        }
 
-            proposal.setCompanionName(infoProposal.getCompanionName());
-            proposal.setCompanionMail(infoProposal.getCompanionMail());
-            proposal.setCompanionPhone(infoProposal.getCompanionPhone());
-            proposal.setCompanyAdress(infoProposal.getCompanyAdress());
-            proposal.setCompanyName(infoProposal.getCompanyName());
+        proposal.setCompanionName(infoProposal.getCompanionName());
+        proposal.setCompanionMail(infoProposal.getCompanionMail());
+        proposal.setCompanionPhone(infoProposal.getCompanionPhone());
+        proposal.setCompanyAdress(infoProposal.getCompanyAdress());
+        proposal.setCompanyName(infoProposal.getCompanyName());
 
-            if (infoProposal.getCoorientator() != null) {
-                Integer coorientatorId = infoProposal.getCoorientator().getIdInternal();
-                ITeacher coorientator = (ITeacher) persistentTeacher.readByOID(Teacher.class,
-                        coorientatorId);
-                proposal.setCoorientator(coorientator);
-            } else {
-                proposal.setCoorientator(null);
-            }
+        if (infoProposal.getCoorientator() != null) {
+            Integer coorientatorId = infoProposal.getCoorientator().getIdInternal();
+            ITeacher coorientator = (ITeacher) persistentTeacher
+                    .readByOID(Teacher.class, coorientatorId);
+            proposal.setCoorientator(coorientator);
+        } else {
+            proposal.setCoorientator(null);
+        }
 
-            proposal.setCoorientatorsCreditsPercentage(infoProposal.getCoorientatorsCreditsPercentage());
-            proposal.setDegreeType(infoProposal.getDegreeType());
-            proposal.setDeliverable(infoProposal.getDeliverable());
-            proposal.setDescription(infoProposal.getDescription());
+        proposal.setCoorientatorsCreditsPercentage(infoProposal.getCoorientatorsCreditsPercentage());
+        proposal.setDegreeType(infoProposal.getDegreeType());
+        proposal.setDeliverable(infoProposal.getDeliverable());
+        proposal.setDescription(infoProposal.getDescription());
 
-            proposal.setExecutionDegree(executionDegree);
-            proposal.setFraming(infoProposal.getFraming());
-            proposal.setLocation(infoProposal.getLocation());
+        proposal.setExecutionDegree(executionDegree);
+        proposal.setFraming(infoProposal.getFraming());
+        proposal.setLocation(infoProposal.getLocation());
 
-            proposal.setMaximumNumberOfGroupElements(infoProposal.getMaximumNumberOfGroupElements());
-            proposal.setMinimumNumberOfGroupElements(infoProposal.getMinimumNumberOfGroupElements());
-            proposal.setObjectives(infoProposal.getObjectives());
-            proposal.setObservations(infoProposal.getObservations());
+        proposal.setMaximumNumberOfGroupElements(infoProposal.getMaximumNumberOfGroupElements());
+        proposal.setMinimumNumberOfGroupElements(infoProposal.getMinimumNumberOfGroupElements());
+        proposal.setObjectives(infoProposal.getObjectives());
+        proposal.setObservations(infoProposal.getObservations());
 
-            Integer orientatorId = infoProposal.getOrientator().getIdInternal();
-            ITeacher orientator = (ITeacher) persistentTeacher.readByOID(Teacher.class, orientatorId);
+        Integer orientatorId = infoProposal.getOrientator().getIdInternal();
+        ITeacher orientator = (ITeacher) persistentTeacher.readByOID(Teacher.class, orientatorId);
 
-            proposal.setOrientator(orientator);
-            proposal.setOrientatorsCreditsPercentage(infoProposal.getOrientatorsCreditsPercentage());
-            proposal.setRequirements(infoProposal.getRequirements());
-            proposal.setTitle(infoProposal.getTitle());
-            proposal.setUrl(infoProposal.getUrl());
+        proposal.setOrientator(orientator);
+        proposal.setOrientatorsCreditsPercentage(infoProposal.getOrientatorsCreditsPercentage());
+        proposal.setRequirements(infoProposal.getRequirements());
+        proposal.setTitle(infoProposal.getTitle());
+        proposal.setUrl(infoProposal.getUrl());
 
-            proposal.setBranches(new ArrayList());
-            if (infoProposal.getBranches() != null && !infoProposal.getBranches().isEmpty()) {
-                for (int i = 0; i < infoProposal.getBranches().size(); i++) {
-                    InfoBranch infoBranch = (InfoBranch) infoProposal.getBranches().get(i);
-                    if (infoBranch != null && infoBranch.getIdInternal() != null) {
-                        IBranch branch = (IBranch) persistentBranch.readByOID(Branch.class, infoBranch
-                                .getIdInternal());
-                        if (branch != null) {
-                            proposal.getBranches().add(branch);
-                        }
+        proposal.setBranches(new ArrayList());
+        if (infoProposal.getBranches() != null && !infoProposal.getBranches().isEmpty()) {
+            for (int i = 0; i < infoProposal.getBranches().size(); i++) {
+                InfoBranch infoBranch = (InfoBranch) infoProposal.getBranches().get(i);
+                if (infoBranch != null && infoBranch.getIdInternal() != null) {
+                    IBranch branch = (IBranch) persistentBranch.readByOID(Branch.class, infoBranch
+                            .getIdInternal());
+                    if (branch != null) {
+                        proposal.getBranches().add(branch);
                     }
                 }
             }
-
-            proposal.setStatus(infoProposal.getStatus());
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
         }
 
+        proposal.setStatus(infoProposal.getStatus());
     }
 }
