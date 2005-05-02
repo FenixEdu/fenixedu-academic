@@ -302,6 +302,12 @@
 							   property="log4j.email.smtp.to"/>
 				<replacefilter token="@log4j.email.smtp.subject@"
 							   property="log4j.email.smtp.subject"/>
+			  	<replacefilter token="@log.image.directory@"
+			  				   property="log.image.directory"/>
+			  	<replacefilter token="@log.profile.dir@"
+			  				   property="log.profile.dir"/>
+			  	<replacefilter token="@log.profile.filename@"
+			  				   property="log.profile.filename"/>
 			</replace>
 
 			<replace dir="${build.home.webinf.classes}"
