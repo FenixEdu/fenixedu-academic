@@ -82,7 +82,15 @@
 					<br/>
 					<br/>
 				</li>
-		</ul>
+				
+				<li>
+					<html:link page='<%= "/student/displayStudentThesisList.faces?degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>'>
+						<bean:message key="link.coordinator.studentByThesis"/>
+					</html:link>
+					<br/>
+					<br/>
+				</li>			
+			</ul>
 		</p>	
 	</logic:equal>
 	
