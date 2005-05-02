@@ -42,7 +42,7 @@
 				<bean:write name="smsDeliveryReport" property="destinationNumber"/>
 			</td>
 			<td align="center">			
-				<bean:define id="stateName" value="<%= "label.smsDeliveryType." + ((InfoSentSms)smsDeliveryReport).getDeliveryType().getName() %>"/>
+				<bean:define id="stateName" value="<%= "label.smsDeliveryType." + ((InfoSentSms)smsDeliveryReport).getDeliveryType() %>"/>
 				<bean:message name="stateName"/>
 			</td>
 			<td align="center">			

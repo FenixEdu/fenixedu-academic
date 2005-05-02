@@ -94,8 +94,9 @@
 				
 				
 				<td align="left">
+				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType"/>
 				<html:select name="enrolmentEvaluation" property="enrolmentEvaluationType.type">
-               		<html:options collection="<%= SessionConstants.ENROLMENT_EVALUATION_TYPE_LIST %>"  property="value" labelProperty="label"/>
+               		<html:options collection="values" property="value" labelProperty="label" />
              	</html:select>    
 <%--<html:text name="enrolmentEvaluation" property="enrolmentEvaluationType" size="10"  />--%>
 				</td>

@@ -9,9 +9,9 @@
 	
 <html:select property="<%= property.toString() %>">
 	<html:option value="">---------</html:option>
-	<logic:iterate id="enum" name="enumList">
-		<bean:define id="value" name="enum" property="value"/>
-		<bean:define id="key" name="enum" property="name"/>
+	<logic:iterate id="enumVar" name="enumList">
+		<bean:define id="value" name="enumVar" property="value"/>
+		<bean:define id="key" name="enumVar" property="name"/>
 		<html:option bundle="ENUMERATION_RESOURCES" key="<%= key.toString() %>" value="<%= value.toString() %>" />
 	</logic:iterate>
 </html:select>

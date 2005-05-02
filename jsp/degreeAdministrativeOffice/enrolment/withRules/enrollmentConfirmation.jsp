@@ -117,7 +117,10 @@
 				<bean:write name="enrollmentElem" property="infoCurricularCourse.name"/>
 			</td>
 			<td class="listClasses">
-				<a href="@enrollment.faq.url@" target="_blank"><bean:message name="enrollmentElem" property="condition.name" bundle="ENUMERATION_RESOURCES"/></a>
+				<a href="@enrollment.faq.url@" target="_blank">
+					<bean:define id="condition" name="enrollmentElem" property="condition"/>
+					<bean:message key='<%=condition.toString()%>' bundle="ENUMERATION_RESOURCES"/>
+				</a>
 			</td>
 		</tr>
 	</logic:iterate>

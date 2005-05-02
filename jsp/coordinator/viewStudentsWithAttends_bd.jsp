@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.util.TipoAula" %>
-<%@ page import="net.sourceforge.fenixedu.util.EnrolmentEvaluationType" %>
+<%@ page import="net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType" %>
 <%@ page import="net.sourceforge.fenixedu.util.AttendacyStateSelectionType" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan" %>
@@ -361,10 +361,10 @@ function cleanSelect(checkboxes) {
 							type="EnrolmentEvaluationType" 
 							name="attendacy" property="infoEnrolment.enrolmentEvaluationType"/>
 						
-						<logic:equal name="enrollmentEvaluationType" value='<%= EnrolmentEvaluationType.NORMAL_OBJ.toString() %>' >
+						<logic:equal name="enrollmentEvaluationType" value='<%= EnrolmentEvaluationType.NORMAL.toString() %>' >
 							<bean:message key="label.attends.enrollmentState.normal"/>
 						</logic:equal>
-						<logic:equal name="enrollmentEvaluationType" value='<%= EnrolmentEvaluationType.IMPROVEMENT_OBJ.toString() %>' >
+						<logic:equal name="enrollmentEvaluationType" value='<%= EnrolmentEvaluationType.IMPROVEMENT.toString() %>' >
 							<bean:message key="label.attends.enrollmentState.improvement"/>
 						</logic:equal>
 					</logic:present>

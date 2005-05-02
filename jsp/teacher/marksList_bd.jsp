@@ -82,7 +82,7 @@
 
 		    	<logic:notEmpty name="markElem" property="infoEnrolment">
 		      		<bean:define id="infoEnrolment" name="markElem" property="infoEnrolment"/>					
-					<bean:define id="evaluationType" name="markElem" property="infoEnrolment.enrolmentEvaluationType" type="net.sourceforge.fenixedu.util.EnrolmentEvaluationType"/>
+					<bean:define id="evaluationType" name="markElem" property="infoEnrolment.enrolmentEvaluationType" type="net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType"/>
 		  		</logic:notEmpty>
 				<bean:define id="studentMark" value=""/>
 				<logic:notEmpty name="marksListComponent" property='<%="marks(" + studentNumber + ")"%>'>
