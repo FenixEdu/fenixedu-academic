@@ -1,7 +1,12 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
+import net.sourceforge.fenixedu.domain.GuiderType;
 import net.sourceforge.fenixedu.domain.IExternalPerson;
 import net.sourceforge.fenixedu.domain.IMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.domain.ITeacher;
@@ -11,9 +16,50 @@ import org.apache.commons.collections.Transformer;
 
 /**
  * @author Fernanda Quitério Created on 6/Set/2004
- *  
+ * 
  */
 public class InfoMasterDegreeThesisDataVersionWithGuiders extends InfoMasterDegreeThesisDataVersion {
+
+    private List<GuiderDTO> allGuiders;
+
+    public List getAllGuiders() {
+
+        Properties properties = new Properties();
+
+        InputStream inputStream = getClass().getResourceAsStream(
+                "/ServidorApresentacao/GlobalResources.properties");
+        try {
+            properties.load(inputStream);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        String institution = properties.getProperty("institution.name.abbreviation");
+
+        this.allGuiders = new ArrayList<GuiderDTO>();
+
+        for (InfoTeacher guider : (List<InfoTeacher>) this.getInfoGuiders()) {
+            this.allGuiders.add(new GuiderDTO(GuiderType.GUIDER, guider.getInfoPerson().getNome(),
+                    guider.getTeacherNumber(), institution));
+        }
+
+        for (InfoExternalPerson guider : (List<InfoExternalPerson>) this.getInfoExternalGuiders()) {
+            this.allGuiders.add(new GuiderDTO(GuiderType.EXTERNAL_GUIDER, guider.getInfoPerson()
+                    .getNome(), null, guider.getInfoWorkLocation().getName()));
+        }
+
+        for (InfoTeacher assistentGuider : (List<InfoTeacher>) this.getInfoAssistentGuiders()) {
+            this.allGuiders.add(new GuiderDTO(GuiderType.ASSISTENT, assistentGuider.getInfoPerson()
+                    .getNome(), assistentGuider.getTeacherNumber(), institution));
+        }
+
+        for (InfoExternalPerson assistentGuider : (List<InfoExternalPerson>) this
+                .getInfoExternalAssistentGuiders()) {
+            this.allGuiders.add(new GuiderDTO(GuiderType.EXTERNAL_ASSISTENT, assistentGuider
+                    .getInfoPerson().getNome(), null, assistentGuider.getInfoWorkLocation().getName()));
+        }
+
+        return this.allGuiders;
+    }
 
     public void copyFromDomain(IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion) {
         super.copyFromDomain(masterDegreeThesisDataVersion);
