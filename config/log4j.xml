@@ -66,6 +66,11 @@
 		<appender-ref ref="ConsoleAppender"/>
 	</logger>
 
+	<logger name="pt.utl.ist.domain.DomainDMLOJBVerifier" additivity="false">
+		<level value="info"/>
+		<appender-ref ref="ConsoleAppender"/>
+	</logger>
+
 	<root>
 		<priority value="warn"/>
 		<appender-ref ref="ConsoleAppender"/>
