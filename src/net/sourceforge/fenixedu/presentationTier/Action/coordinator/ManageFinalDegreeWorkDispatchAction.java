@@ -14,6 +14,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfPeriodException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader;
+import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
+import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
+import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoScheduleing;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.utils.CommonServiceRequests;
+import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
+import net.sourceforge.fenixedu.util.TipoCurso;
+
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
@@ -26,27 +46,6 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.action.DynaActionFormClass;
 import org.apache.struts.config.FormBeanConfig;
-
-import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader;
-import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
-import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
-import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoScheduleing;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfPeriodException;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.utils.CommonServiceRequests;
-import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
-import net.sourceforge.fenixedu.util.TipoCurso;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Luis Cruz
@@ -210,7 +209,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
     public ActionForward viewFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
         
-        String finalDegreeWorkProposalOIDString = request.getParameter("finalDegreeWorkProposalOID");
+        final String finalDegreeWorkProposalOIDString = request.getParameter("finalDegreeWorkProposalOID");
         Integer degreeCurricularPlanID = null;
         if(request.getParameter("degreeCurricularPlanID") != null){
             degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
@@ -492,14 +491,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         Integer degreeCurricularPlanID = (Integer) finalWorkForm.get("degreeCurricularPlanID");
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         
-        
-        Object[] args = { degreeCurricularPlanID, new Integer(1)};
-        InfoExecutionDegree infoExecutionDegree = null;
-
-            infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView,
-                    "ReadExecutionDegreeByDegreeCurricularPlanID", args);
-        
-        String idInternal = infoExecutionDegree.getIdInternal().toString();
+        String idInternal = (String) finalWorkForm.get("idInternal");
         String title = (String) finalWorkForm.get("title");
         String responsibleCreditsPercentage = (String) finalWorkForm.get("responsibleCreditsPercentage");
         String coResponsibleCreditsPercentage = (String) finalWorkForm
