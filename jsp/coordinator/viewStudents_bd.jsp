@@ -291,13 +291,13 @@
 					{
 					
 						InfoGroupProjectStudents groupInfo= (InfoGroupProjectStudents) groupsIterator.next();
-						if (projectIdInternal == groupInfo.getStudentGroup().getInfoGroupProperties().getIdInternal().intValue() &&
+						if (projectIdInternal == groupInfo.getStudentGroup().getInfoAttendsSet().getInfoGroupProperties().getIdInternal().intValue() &&
 							groupInfo.isStudentMemberOfThisGroup(studentNumber))
 						{
 							groupNumber = groupInfo.getStudentGroup().getGroupNumber().intValue();
 							studentGroupCode = groupInfo.getStudentGroup().getIdInternal().intValue();
 							shiftCode = groupInfo.getStudentGroup().getInfoShift().getIdInternal().intValue();
-							executionCourseCode = groupInfo.getStudentGroup().getInfoGroupProperties().getInfoExecutionCourse().getIdInternal().intValue();
+							executionCourseCode = groupInfo.getStudentGroup().getInfoShift().getInfoDisciplinaExecucao().getIdInternal().intValue();
 							break;
 						}
 					}
