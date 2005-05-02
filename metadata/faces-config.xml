@@ -4,6 +4,8 @@
   "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
 <faces-config>
 
+	<!-- MANAGED BEANS -->
+
 	<managed-bean>
 		<description>InfoExecutionPeriod</description>
 		<managed-bean-name>infoExecutionPeriod</managed-bean-name>
@@ -21,8 +23,20 @@
 		<managed-bean-name>executionPeriods</managed-bean-name>
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.example.ExecutionPeriods</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>		
+	</managed-bean>
 
+	<managed-bean>
+		<managed-bean-name>listStudentThesis</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.ListStudentThesis</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>degreeCurricularPlanID</property-name>
+			<value>#{param.degreeCurricularPlanID}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<!-- NAVIGATION RULES -->
+	
 	<navigation-rule>
 		<from-view-id>/manager/somePage.jsp</from-view-id>
 		<navigation-case>
@@ -30,5 +44,5 @@
 			<to-view-id>/manager/somePageListExecutionPeriods.jsp</to-view-id>
 		</navigation-case>			
 	</navigation-rule>
-
+	
 </faces-config>
