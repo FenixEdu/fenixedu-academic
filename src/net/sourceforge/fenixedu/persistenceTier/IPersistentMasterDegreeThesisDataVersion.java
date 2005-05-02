@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 /**
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 public interface IPersistentMasterDegreeThesisDataVersion extends IPersistentObject {
     public IMasterDegreeThesisDataVersion readActiveByMasterDegreeThesis(
@@ -27,4 +27,8 @@ public interface IPersistentMasterDegreeThesisDataVersion extends IPersistentObj
 
     public List readNotActivesVersionsByStudentCurricularPlan(
             IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia;
+
+    public List readActiveByDegreeCurricularPlan(Integer degreeCurricularPlanID)
+            throws ExcepcaoPersistencia;
+
 }
