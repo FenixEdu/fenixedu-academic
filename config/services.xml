@@ -2106,7 +2106,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
+            <chain name="ManagerOrMasterDegreeAdministrativeOfficeAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -8679,4 +8679,15 @@
 			<chain name="TeacherAuthorization"/>
 		</filterChains>
 	</service>
+	<service>
+		<name>ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan</name>
+		<implementationClass> 
+			net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis.ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan	
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="CoordinatorAuthorization"/>
+		</filterChains>
+	</service>	
 </serviceDefinitions>
