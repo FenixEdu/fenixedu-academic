@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPersonAccount;
 import net.sourceforge.fenixedu.domain.transactions.IPaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.IReimbursementTransaction;
 import net.sourceforge.fenixedu.domain.transactions.ITransaction;
-import net.sourceforge.fenixedu.util.PaymentType;
+import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.util.transactions.TransactionType;
 
 /**

@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.util.GuideRequester;
-import net.sourceforge.fenixedu.util.PaymentType;
 import net.sourceforge.fenixedu.util.State;
 
 /**

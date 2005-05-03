@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 import net.sourceforge.fenixedu.domain.IGuideEntry;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IPersonAccount;
-import net.sourceforge.fenixedu.util.PaymentType;
 import net.sourceforge.fenixedu.util.transactions.TransactionType;
 
 /**

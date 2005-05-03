@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.IGratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.IInsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
+import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuityValues;
@@ -39,7 +40,6 @@ import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersisten
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentGratuityTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
-import net.sourceforge.fenixedu.util.PaymentType;
 import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.util.gratuity.SibsPaymentType;
@@ -217,7 +217,7 @@ public class ProcessSibsPaymentFile implements IService {
                         // execution year
                         IInsuranceTransaction insuranceTransaction = new InsuranceTransaction(
                                 sibsPaymentFileEntry.getPayedValue(),
-                                new Timestamp(new Date().getTime()), null, PaymentType.ATM_TYPE,
+                                new Timestamp(new Date().getTime()), null, PaymentType.SIBS,
                                 TransactionType.INSURANCE_PAYMENT, new Boolean(false),
                                 responsiblePerson, personAccount, null, executionYear, student);
 
@@ -295,7 +295,7 @@ public class ProcessSibsPaymentFile implements IService {
                     .getPaymentType());
 
             IGratuityTransaction gratuityTransaction = new GratuityTransaction(sibsPaymentFileEntry
-                    .getPayedValue(), new Timestamp(new Date().getTime()), null, PaymentType.ATM_TYPE,
+                    .getPayedValue(), new Timestamp(new Date().getTime()), null, PaymentType.SIBS,
                     transactionType, new Boolean(false), responsiblePerson, personAccount, null,
                     gratuitySituation);
 

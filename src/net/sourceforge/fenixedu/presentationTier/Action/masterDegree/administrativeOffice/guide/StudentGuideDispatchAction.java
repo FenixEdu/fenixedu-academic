@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoChangeMadeA
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
-import net.sourceforge.fenixedu.util.PaymentType;
 import net.sourceforge.fenixedu.util.SituationOfGuide;
 
 /**
@@ -148,7 +147,6 @@ public class StudentGuideDispatchAction extends DispatchAction {
             saveToken(request);
 
             request.setAttribute(SessionConstants.GUIDE, infoGuide);
-            request.setAttribute(SessionConstants.PAYMENT_TYPE, PaymentType.toArrayList());
 
             List guideSituations = new ArrayList();
             guideSituations.add(new LabelValueBean(SituationOfGuide.NON_PAYED_STRING,

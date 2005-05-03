@@ -1,6 +1,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
 <h2><bean:message key="label.editGuide" /></h2>
 
@@ -50,11 +51,13 @@
 			<td><b>Total:</b> <bean:write name="guide" property="total" /></td>
 		</tr>
 		<tr>
-			<td><b>Tipo Pagamento:</b> 				
-			<html:select property="newPaymentType">
-				<html:options collection="paymentTypes" property="value"
-						labelProperty="label" />
-			</html:select></td>
+			<td><b>Tipo Pagamento:</b>
+				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.transactions.PaymentType" bundle="ENUMERATION_RESOURCES"/>
+	            <html:select property="newPaymentType">
+	               	<html:option key="dropDown.Default" value=""/>
+	                <html:options collection="values" property="value" labelProperty="label"/>
+	            </html:select>
+			</td>
 		</tr>
 		<tr>
 			<td>

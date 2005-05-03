@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.util.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
-import net.sourceforge.fenixedu.util.PaymentType;
 import net.sourceforge.fenixedu.util.SituationOfGuide;
 
 import org.apache.struts.action.ActionForm;
@@ -123,7 +122,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
                 .getYear());
         guideForm.set("newDegreeCurricularPlanID", guide.getInfoExecutionDegree()
                 .getInfoDegreeCurricularPlan().getIdInternal());
-        guideForm.set("newPaymentType", guide.getPaymentType().toString());   
+        guideForm.set("newPaymentType", (guide.getPaymentType() != null) ? guide.getPaymentType().name() : null);   
         request.setAttribute("paymentTransactions", paymentTransactions);
         request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
         request.setAttribute("executionYears", executionYears);
@@ -133,7 +132,6 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
         request.setAttribute("days", Data.getMonthDays());
         request.setAttribute("months", Data.getMonths());
         request.setAttribute("years", Data.getYears());
-        request.setAttribute("paymentTypes", PaymentType.toArrayList());
 
         return mapping.findForward("editGuide");
     }

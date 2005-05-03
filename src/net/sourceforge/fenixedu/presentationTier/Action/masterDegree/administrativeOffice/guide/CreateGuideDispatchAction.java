@@ -42,7 +42,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstan
 import net.sourceforge.fenixedu.util.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
 import net.sourceforge.fenixedu.util.GuideRequester;
-import net.sourceforge.fenixedu.util.PaymentType;
 import net.sourceforge.fenixedu.util.RandomStringGenerator;
 import net.sourceforge.fenixedu.util.SituationOfGuide;
 import net.sourceforge.fenixedu.util.Specialization;
@@ -238,8 +237,6 @@ public class CreateGuideDispatchAction extends DispatchAction {
             }
             session.setAttribute(SessionConstants.GUIDE, infoGuide);
 
-            request.setAttribute(SessionConstants.PAYMENT_TYPE, PaymentType.toArrayList());
-
             List guideSituations = new ArrayList();
             guideSituations.add(new LabelValueBean(SituationOfGuide.NON_PAYED_STRING,
                     SituationOfGuide.NON_PAYED_STRING));
@@ -320,7 +317,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
         // type has been chosen
 
         if ((guideSituationString.equals(SituationOfGuide.PAYED_STRING))
-                && (paymentType.equals(PaymentType.DEFAULT_STRING))) {
+                && (paymentType.equals(""))) {
             ActionError actionError = new ActionError("error.paymentTypeRequired");
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("Unknown", actionError);

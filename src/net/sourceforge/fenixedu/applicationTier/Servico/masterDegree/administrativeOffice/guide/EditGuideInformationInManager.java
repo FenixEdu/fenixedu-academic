@@ -3,10 +3,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IGuide;
+import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.PaymentType;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -25,7 +25,7 @@ public class EditGuideInformationInManager implements IService {
         IExecutionDegree cursoExecucao = sp.getIPersistentExecutionDegree()
                 .readByDegreeCurricularPlanIDAndExecutionYear(degreeCurricularPlanID, executionYear);
 
-        guide.setPaymentType(new PaymentType(newPaymentType));
+        guide.setPaymentType(PaymentType.valueOf(newPaymentType));
         guide.setExecutionDegree(cursoExecucao);
 
     }

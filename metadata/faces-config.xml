@@ -26,6 +26,12 @@
 	</managed-bean>
 
 	<managed-bean>
+		<managed-bean-name>guideEdition</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.guide.GuideEdition</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
 		<managed-bean-name>listStudentThesis</managed-bean-name>
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.ListStudentThesis</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
@@ -44,5 +50,17 @@
 			<to-view-id>/manager/somePageListExecutionPeriods.jsp</to-view-id>
 		</navigation-case>			
 	</navigation-rule>
-	
+
+	<navigation-rule>
+		<from-view-id>/manager/guideManagement/*</from-view-id>
+		<navigation-case>
+			<from-outcome>guideChoosen</from-outcome>
+			<to-view-id>/manager/guideManagement/editGuideInJSF.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>firstPage</from-outcome>
+			<to-view-id>/manager/guideManagement/chooseGuideInJSF.jsp</to-view-id>
+		</navigation-case>		
+	</navigation-rule>
+
 </faces-config>

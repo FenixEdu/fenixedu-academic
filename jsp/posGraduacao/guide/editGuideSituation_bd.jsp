@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation" %>
@@ -63,7 +64,12 @@
        %>
        			<tr>
     				<td><bean:message key="label.masterDegree.administrativeOffice.payment" /></td>
-    				<td><bean:write name="infoGuide" property="paymentType"/></td>
+    				<td>
+        				<bean:define id="paymentType" >
+        					<bean:write name="infoGuide" property="paymentType"/>
+        				</bean:define>
+        				<bean:message name="paymentType" bundle="ENUMERATION_RESOURCES" />
+    				</td>
     			</tr>
     			
     			<tr>
@@ -151,9 +157,11 @@
     					<bean:message key="label.masterDegree.administrativeOffice.payment" />
     				</td>
     				<td>
-    					<html:select property="paymentType">
-    						<html:options collection="<%= SessionConstants.PAYMENT_TYPE %>" property="value" labelProperty="label" />
-    					</html:select>     
+    					<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.transactions.PaymentType" bundle="ENUMERATION_RESOURCES"/>
+    				    <html:select property="paymentType">
+					       	<html:option key="dropDown.Default" value=""/>
+					        <html:options collection="values" property="value" labelProperty="label"/>
+					    </html:select> 
     				</td>
     			</tr>
 

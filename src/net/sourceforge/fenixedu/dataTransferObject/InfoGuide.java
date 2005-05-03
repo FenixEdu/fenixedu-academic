@@ -11,8 +11,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.IGuide;
+import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.util.GuideRequester;
-import net.sourceforge.fenixedu.util.PaymentType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;

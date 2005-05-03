@@ -1230,9 +1230,9 @@ class net.sourceforge.fenixedu.domain.Guide extends net.sourceforge.fenixedu.dom
 		
 		public void setPerson(net.sourceforge.fenixedu.domain.IPerson pessoa);
 		
-		public net.sourceforge.fenixedu.util.PaymentType getPaymentType();
+		public net.sourceforge.fenixedu.domain.transactions.PaymentType getPaymentType();
 		
-		public void setPaymentType(net.sourceforge.fenixedu.util.PaymentType type);
+		public void setPaymentType(net.sourceforge.fenixedu.domain.transactions.PaymentType type);
 		
 		public java.util.List getGuideSituations();
 		
@@ -2807,9 +2807,9 @@ class net.sourceforge.fenixedu.domain.transactions.Transaction extends net.sourc
 	
 		public void setTransactionDate(java.sql.Timestamp transactionDate);
 		
-		public net.sourceforge.fenixedu.util.PaymentType getPaymentType();
+		public net.sourceforge.fenixedu.domain.transactions.PaymentType getPaymentType();
 		
-		public void setPaymentType(net.sourceforge.fenixedu.util.PaymentType paymentType);
+		public void setPaymentType(net.sourceforge.fenixedu.domain.transactions.PaymentType paymentType);
 		
 		public net.sourceforge.fenixedu.util.transactions.TransactionType getTransactionType();
 		

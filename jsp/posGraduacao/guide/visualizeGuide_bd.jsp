@@ -143,7 +143,12 @@
 	           <% if (((InfoGuideSituation) guideSituation).getSituation().equals(SituationOfGuide.PAYED_TYPE)) { %>
 	           		<tr>
 	        			<td><bean:message key="label.masterDegree.administrativeOffice.payment" /></td>
-	        			<td><bean:write name="infoGuide" property="paymentType"/></td>
+	        			<td>
+	        				<bean:define id="paymentType" >
+	        					<bean:write name="infoGuide" property="paymentType"/>
+	        				</bean:define>
+	        				<bean:message name="paymentType" bundle="ENUMERATION_RESOURCES" />
+	        			</td>
 	        		</tr>
 	           		<tr>
 	        			<td><bean:message key="label.masterDegree.administrativeOffice.paymentDate" /></td>

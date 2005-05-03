@@ -36,7 +36,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonValidChangeActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
-import net.sourceforge.fenixedu.util.PaymentType;
 import net.sourceforge.fenixedu.util.SituationOfGuide;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
@@ -79,7 +78,6 @@ public class EditGuideDispatchAction extends DispatchAction {
             session.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
             session.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
             session.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
-            session.setAttribute(SessionConstants.PAYMENT_TYPE, PaymentType.toArrayList());
             session.setAttribute(SessionConstants.GUIDE, infoGuide);
             session.setAttribute(SessionConstants.GUIDE_SITUATION_LIST, SituationOfGuide.toArrayList());
 
@@ -140,7 +138,7 @@ public class EditGuideDispatchAction extends DispatchAction {
             }
 
             if ((situationOfGuide.equals(SituationOfGuide.PAYED_STRING))
-                    && (paymentType.equals(PaymentType.DEFAULT_STRING))) {
+                    && (paymentType.equals(""))) {
                 ActionError actionError = new ActionError("error.required.paymentType");
                 actionErrors.add("UnNecessary2", actionError);
             }

@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.lang.Integer" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
@@ -105,9 +106,11 @@
 
 	
     <bean:message key="label.masterDegree.administrativeOffice.payment" />
+	<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.transactions.PaymentType"  bundle="ENUMERATION_RESOURCES"/>
     <html:select property="paymentType">
-	    <html:options collection="<%= SessionConstants.PAYMENT_TYPE %>" property="value" labelProperty="label" />
-    </html:select>     
+       	<html:option key="dropDown.Default" value=""/>
+        <html:options collection="values" property="value" labelProperty="label"/>
+    </html:select> 
 
    <html:submit property="Criar">Criar Guia</html:submit>
       </html:form>

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.util.PaymentType;
+
+import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
@@ -14,16 +15,16 @@ public class JavaPaymentType2SqlPaymentTypeFieldConversion implements FieldConve
     public Object javaToSql(Object source) {
         if (source instanceof PaymentType) {
             PaymentType s = (PaymentType) source;
-            return s.getType();
+            return s.name();
         }
         return source;
 
     }
 
     public Object sqlToJava(Object source) {
-        if (source instanceof Integer) {
-            Integer src = (Integer) source;
-            return new PaymentType(src);
+        if (source instanceof String) {
+            String src = (String) source;
+            return PaymentType.valueOf(src);
         }
         return source;
 

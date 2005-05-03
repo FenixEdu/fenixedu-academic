@@ -90,7 +90,12 @@
 						<bean:message name="transactionType"/>
 					</td>
 									
-					<td align="center"><bean:write name="transaction" property="paymentType"/></td>				
+					<td align="center">
+        				<bean:define id="paymentType" >
+        					<bean:write name="transaction" property="paymentType"/>
+        				</bean:define>
+        				<bean:message name="paymentType" bundle="ENUMERATION_RESOURCES" />						
+					</td>				
 					<td align="left"><bean:write name="transaction" property="value"/></td>
 				
 				</tr>			

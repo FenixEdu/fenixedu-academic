@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.IPaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
+import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonAccount;
@@ -38,7 +39,6 @@ import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentExc
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransaction;
 import net.sourceforge.fenixedu.util.DocumentType;
-import net.sourceforge.fenixedu.util.PaymentType;
 import net.sourceforge.fenixedu.util.SituationOfGuide;
 import net.sourceforge.fenixedu.util.State;
 import net.sourceforge.fenixedu.util.TipoCurso;
@@ -109,7 +109,7 @@ public class ChangeGuideSituation implements IService {
             guideSituation.setRemarks(remarks);
             if (guideSituation.getSituation().equals(SituationOfGuide.PAYED_TYPE)) {
                 guide.setPaymentDate(paymentDate);
-                guide.setPaymentType(new PaymentType(paymentType));
+                guide.setPaymentType(PaymentType.valueOf(paymentType));
             }
             guide.getGuideSituations().add(guideSituation);
         } else {
@@ -130,7 +130,7 @@ public class ChangeGuideSituation implements IService {
                 if (situationOfGuide.equals(SituationOfGuide.PAYED_TYPE)) {
                     sp.getIPersistentGuide().simpleLockWrite(guide);
                     guide.setPaymentDate(paymentDate);
-                    guide.setPaymentType(new PaymentType(paymentType));
+                    guide.setPaymentType(PaymentType.valueOf(paymentType));
 
                     //For Transactions Creation
                     IPersistentTransaction persistentTransaction = sp.getIPersistentTransaction();
