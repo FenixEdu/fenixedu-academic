@@ -55,12 +55,7 @@ public class CreateAnnouncement implements IService {
             String newAnnouncementInformation) throws FenixServiceException {
         ISite site = null;
 
-        //retrieve current date
         Calendar calendar = Calendar.getInstance();
-        //		calendar.set(Calendar.HOUR_OF_DAY,0);
-        //		calendar.set(Calendar.MINUTE,0);
-        //		calendar.set(Calendar.SECOND,0);
-        //		calendar.set(Calendar.MILLISECOND,0);
 
         try {
             persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
