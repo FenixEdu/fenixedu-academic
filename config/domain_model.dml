@@ -2895,7 +2895,8 @@ class net.sourceforge.fenixedu.domain.WorkLocation extends net.sourceforge.fenix
 	String name;
 }
 
-*
+/*
+ *
  * External classes declarations
  *
  * The following declarations allow the DmlCompiler to recognize the classes in
