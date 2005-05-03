@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject.projectsManagement;
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.domain.projectsManagement.IMovementReportLine;
 import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
+import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -133,7 +134,7 @@ public class InfoMovementReportLine extends DataTranferObject implements IReport
         }
     }
 
-    public void getHeaderToExcel(HSSFSheet sheet, ExcelStyle excelStyle) {
+    public void getHeaderToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
         HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
         HSSFCell cell = row.createCell((short) 0);
         cell.setCellValue("Id Mov");
@@ -161,7 +162,7 @@ public class InfoMovementReportLine extends DataTranferObject implements IReport
         cell.setCellStyle(excelStyle.getHeaderStyle());
     }
 
-    public void getLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle) {
+    public void getLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
         HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
         HSSFCell cell = row.createCell((short) 0);
         cell.setCellValue(getMovementId());
@@ -199,7 +200,7 @@ public class InfoMovementReportLine extends DataTranferObject implements IReport
             cell.setCellStyle(excelStyle.getDoubleStyle());
     }
 
-    public void getTotalLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle) {
+    public void getTotalLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
     }
 
     public int getNumberOfColumns() {

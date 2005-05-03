@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/struts-report.tld" prefix="report"%>
+<%@ taglib uri="/WEB-INF/projectReports.tld" prefix="report"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
@@ -14,8 +14,8 @@
 <body style="background: #fff;">
 <table id="bodycontent" width="100%">
 	<tr>
-		<td><logic:present name="infoReport">
-			<logic:notEmpty name="infoReport" property="infoProject">
+		<td><logic:present name="infoExpensesReport">
+			<logic:notEmpty name="infoExpensesReport" property="infoProject">
 				<table>
 					<tr>
 						<td rowspan="7">
@@ -24,10 +24,10 @@
 					</tr>
 					<tr>
 						<td colspan="3">
-						<h2><bean:message key="title.revenueReport" /></h2>
+						<h2><bean:message key="title.completeExpensesReport" /></h2>
 						</td>
 					</tr>
-					<bean:define id="infoProject" name="infoReport" property="infoProject" />
+					<bean:define id="infoProject" name="infoExpensesReport" property="infoProject" />
 
 					<tr>
 						<td><strong><bean:message key="label.acronym" />:</strong></td>
@@ -54,41 +54,65 @@
 				<br />
 				<br />
 				<br />
-				<logic:notEmpty name="infoReport" property="lines">
-					<bean:define id="revenueLines" name="infoReport" property="lines" />
+				<logic:notEmpty name="infoExpensesReport" property="lines">
+					<bean:define id="expensesLines" name="infoExpensesReport" property="lines" />
 
 					<table class="report-table">
 						<tr>
 							<td class="report-hdr"><bean:message key="label.idMov" /></td>
-							<td class="report-hdr"><bean:message key="label.financialEntity" /></td>
+							<td class="report-hdr"><bean:message key="label.member" /></td>					
+							<td class="report-hdr"><bean:message key="label.supplier" /></td>
+							<td class="report-hdr"><bean:message key="label.docType" /></td>
+							<td class="report-hdr"><bean:message key="label.docNumber" /></td>
+							<td class="report-hdr"><bean:message key="label.financingSource" /></td>
 							<td class="report-hdr"><bean:message key="label.rubric" /></td>
+							<td class="report-hdr"><bean:message key="label.type" /></td>
 							<td class="report-hdr"><bean:message key="label.date" /></td>
 							<td class="report-hdr"><bean:message key="label.description" /></td>
+							<td class="report-hdr"><bean:message key="label.ivaPercentage" /></td>
 							<td class="report-hdr"><bean:message key="label.value" /></td>
+							<td class="report-hdr"><bean:message key="label.tax" /></td>
+							<td class="report-hdr"><bean:message key="label.total" /></td>
+							<td class="report-hdr"><bean:message key="label.imputedPercentage" /></td>
 						</tr>
-						<logic:iterate id="line" name="revenueLines" indexId="lineIndex">
+						<logic:iterate id="line" name="expensesLines" indexId="lineIndex">
 							<tr>
 								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="movementId" /></td>
-								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="financialEntity" /></td>
+								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="member" /></td>
+								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="supplierDescription" /></td>
+								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="documentType" /></td>
+								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="documentNumber" /></td>
+								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="financingSource" /></td>
 								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="rubric" /></td>
+								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="movementType" /></td>
 								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="date" /></td>
 								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="left"><bean:write name="line" property="description" /></td>
+								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="right"><bean:write name="line" property="ivaPercentage" /></td>
 								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="right"><report:formatDoubleValue name="line" property="value" /></td>
-							</tr>
+								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="right"><report:formatDoubleValue name="line" property="tax" /></td>
+								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="right"><report:formatDoubleValue name="line" property="total" /></td>
+								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="right"><bean:write name="line" property="imputedPercentage" /></td>
+						</tr>
 						</logic:iterate>
 						<tr>
-							<td class="report-line-total-first" colspan="5"><bean:message key="label.total" /></td>
-							<td class="report-line-total"><report:sumColumn id="revenueLines" column="5" /></td>
+							<td class="report-line-total-first" colspan="11"><bean:message key="label.total" /></td>
+							<td class="report-line-total"><report:sumColumn id="expensesLines" column="11" /></td>
+							<td class="report-line-total"><report:sumColumn id="expensesLines" column="12" /></td>
+							<td class="report-line-total"><report:sumColumn id="expensesLines" column="13" /></td>
+							<td class="report-line-total-last"></td>
 						</tr>
 					</table>
-					<br />
+					<br />		
 					<bean:message key="message.listReport" />
 					<br />
 					<br />
+					<logic:present name="infoExpensesReport" property="summaryPTEReport">
+						<jsp:include page="showExtraReportLines.jsp" />
+					</logic:present>
 				</logic:notEmpty>
 			</logic:notEmpty>
 		</logic:present></td>
 	</tr>
 </table>
 </body>
-</html>
+</html:html>

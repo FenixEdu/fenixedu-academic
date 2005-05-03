@@ -59,17 +59,18 @@
         parameter="method" scope="request"  validate="true" name="rubricForm" >
         <forward name="index" path="df.page.projectManager"/>
         <forward name="projectList" path="project-List"/>
+		<forward name="coordinatorsList" path="coordinators-List"/>
 		<forward name="showsummaryReport" path="show-Summary-Report"/>
 		<forward name="showexpensesReport" path="show-Expenses-Report"/>
 		<forward name="showrevenueReport" path="show-Revenue-Report"/>
 		<forward name="showcabimentosReport" path="show-Movements-Report"/>
 		<forward name="showadiantamentosReport" path="show-Movements-Report"/>
+		<forward name="showcompleteExpensesReport" path="show-Complete-Expenses-Report"/>
+		<forward name="showopeningProjectFileReport" path="show-Opening-Project-File-Report"/>
+		<forward name="showprojectBudgetaryBalanceReport" path="show-Project-Budgetary-Balance-Report"/>
 		<forward name="helpPage" path="help-Page"/>
 		<forward name="printexpensesReport" path="/printExpensesReport.jsp"/>
-		<forward name="printrevenueReport" path="/printRevenueReport.jsp"/>
-		<forward name="printsummaryReport" path="/printSummaryReport.jsp"/>
-		<forward name="printcabimentosReport" path="/printMovementsReport.jsp"/>
-		<forward name="printadiantamentosReport" path="/printMovementsReport.jsp"/>
+		<forward name="printcompleteExpensesReport" path="/printCompleteExpensesReport.jsp"/>
     </action>
     <action path="/projectAccess" name="accessForm"
 	    input="/projectAccess.do?method=showPersonAccesses&amp;page=0" scope="request"

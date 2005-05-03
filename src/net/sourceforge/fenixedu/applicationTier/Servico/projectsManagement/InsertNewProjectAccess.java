@@ -42,12 +42,8 @@ public class InsertNewProjectAccess implements IService {
         IPersistentSuportOracle po = PersistentSuportOracle.getInstance();
         Integer coordinatorCode = po.getIPersistentProjectUser().getUserCoordId(getUserNumber(sp, userView));
         if (!hasProjectsManagerRole(person)) {
-            IRole role = sp.getIPersistentRole().readByRoleType(RoleType.PROJECTS_MANAGER);
-            role.setRoleType(RoleType.PROJECTS_MANAGER);
-            IPersonRole personRole = new PersonRole();
-            personRole.setPerson(person);
-            personRole.setRole(role);
-            sp.getIPersistentPersonRole().simpleLockWrite(personRole);
+            sp.getIPessoaPersistente().simpleLockWrite(person);
+            person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(RoleType.PROJECTS_MANAGER));
         }
         List projectCodes = sp.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndCoordinator(username, coordinatorCode, true);
         List projectList = po.getIPersistentProject().readByCoordinatorAndNotProjectsCodes(coordinatorCode, projectCodes);
@@ -75,12 +71,8 @@ public class InsertNewProjectAccess implements IService {
             throw new IllegalArgumentException();
         sp.getIPersistentProjectAccess().deleteByPersonAndDate(person);
         if (!hasProjectsManagerRole(person)) {
-            IRole role = sp.getIPersistentRole().readByRoleType(RoleType.PROJECTS_MANAGER);
-            role.setRoleType(RoleType.PROJECTS_MANAGER);
-            IPersonRole personRole = new PersonRole();
-            personRole.setPerson(person);
-            personRole.setRole(role);
-            sp.getIPersistentPersonRole().simpleLockWrite(personRole);
+            sp.getIPessoaPersistente().simpleLockWrite(person);
+            person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(RoleType.PROJECTS_MANAGER));
         }
 
         for (int i = 0; i < projectCodes.length; i++) {

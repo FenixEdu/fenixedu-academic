@@ -2,11 +2,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/struts-report.tld" prefix="report"%>
+<%@ taglib uri="/WEB-INF/projectReports.tld" prefix="report"%>
 <logic:present name="infoReport">
 	<logic:notEmpty name="infoReport" property="infoProject">
 		<bean:define id="infoProject" name="infoReport" property="infoProject" />
-		<table width="100%" cellspacing="0">
+		<table class="viewHeader" width="100%" cellspacing="0">
 			<tr>
 				<td class="infoop"><bean:define id="reportType" value="<%=request.getAttribute("reportType").toString()%>" />
 				<h2><bean:message key="<%="title."+reportType%>" /></h2>
@@ -17,16 +17,21 @@
 						page="<%="/projectReport.do?method=exportToExcel&amp;reportType="+reportType+"&amp;projectCode="+projectCode%>">
 						<html:img border="0" src="<%= request.getContextPath() + "/images/excel.bmp"%>" altKey="link.exportToExcel" align="right" />
 					</html:link></td>
-					<td class="infoop" width="20"><html:link target="_blank"
-						page="<%="/projectReport.do?method=getReport&amp;reportType="+reportType+"&amp;projectCode="+projectCode+"&amp;print=true"%>">
-						<html:img border="0" src="<%= request.getContextPath() + "/images/printer.gif"%>" altKey="label.print" align="right" />
-					</html:link></td>
 				</logic:notEmpty>
 			</tr>
 
 		</table>
 		<br />
 		<table>
+			<tr class="printHeader">
+				<td rowspan="7"><img height="110" alt="Logo <bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/>"
+					src="<bean:message key="university.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>" /></td>
+			</tr>
+			<tr class="printHeader">
+				<td colspan="2">
+				<h2><bean:message key="<%="title."+reportType%>" /></h2>
+				</td>
+			</tr>
 			<tr>
 				<td><strong><bean:message key="label.acronym" />:</strong></td>
 				<td><bean:write name="infoProject" property="title" /></td>
@@ -53,14 +58,18 @@
 		<br />
 		<br />
 		<%double parentTotal = 0;
-        double totalJustified = 0;%>
+        double totalJustified = 0;
+
+        %>
 		<logic:notEmpty name="infoReport" property="lines">
 			<bean:define id="parentLines" name="infoReport" property="lines" />
 			<logic:iterate id="parentLine" name="parentLines">
 				<bean:define id="parentValue" name="parentLine" property="parentValue" />
 				<%parentTotal = parentTotal + ((Double) pageContext.findAttribute("parentValue")).doubleValue();
-        double thisTotal = 0;%>
-				<strong><bean:message key="<%="label."+reportType%>" /></strong>
+        double thisTotal = 0;
+
+        %>
+				<p class="noBreak"><strong><bean:message key="<%="label."+reportType%>" /></strong>
 				<table width="100%" cellspacing="0">
 					<tr>
 						<td class="listClasses-header"><strong><bean:message key="label.idMov" /></strong></td>
@@ -79,9 +88,10 @@
 						<td class="listClasses" align="right"><report:formatDoubleValue name="parentLine" property="parentValue" /></td>
 					</tr>
 				</table>
+				</p>
 				<logic:notEmpty name="parentLine" property="movements">
 					<br />
-					<strong><bean:message key="<%="label.executionsOf."+reportType%>" /></strong>
+					<p class="noBreak"><strong><bean:message key="<%="label.executionsOf."+reportType%>" /></strong>
 					<table class="report-table">
 						<tr>
 							<td class="report-hdr"><bean:message key="label.idMov" /></td>
@@ -106,16 +116,20 @@
 								<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="right"><report:formatDoubleValue name="line" property="total" /></td>
 								<bean:define id="total" name="line" property="total" />
 							</tr>
-							<%
-        thisTotal = net.sourceforge.fenixedu.util.projectsManagement.FormatDouble.round(thisTotal + ((Double) pageContext.findAttribute("total")).doubleValue());
-        totalJustified = net.sourceforge.fenixedu.util.projectsManagement.FormatDouble.round(totalJustified + ((Double) pageContext.findAttribute("total")).doubleValue());%>
+							<%thisTotal = net.sourceforge.fenixedu.util.projectsManagement.FormatDouble.round(thisTotal
+                + ((Double) pageContext.findAttribute("total")).doubleValue());
+        totalJustified = net.sourceforge.fenixedu.util.projectsManagement.FormatDouble.round(totalJustified
+                + ((Double) pageContext.findAttribute("total")).doubleValue());
+
+        %>
 						</logic:iterate>
-						<tr>
-							<td class="report-line-total-first" colspan="5"><bean:message key="label.total" /></td>
-							<td class="report-line-total"><report:sumColumn id="lines" column="5" /></td>
-							<td class="report-line-total"><report:sumColumn id="lines" column="6" /></td>
-							<td class="report-line-total-last"><report:sumColumn id="lines" column="7" /></td>
-						</tr>
+					</p>
+					<tr>
+						<td class="report-line-total-first" colspan="5"><bean:message key="label.total" /></td>
+						<td class="report-line-total"><report:sumColumn id="lines" column="5" /></td>
+						<td class="report-line-total"><report:sumColumn id="lines" column="6" /></td>
+						<td class="report-line-total-last"><report:sumColumn id="lines" column="7" /></td>
+					</tr>
 					</table>
 					<table>
 						<tr>
@@ -124,11 +138,12 @@
 						</tr>
 						<tr>
 							<td><strong><bean:message key="<%="label.totalExecuted."+reportType%>" />:</strong></td>
-							<td><%= net.sourceforge.fenixedu.util.projectsManagement.FormatDouble.convertDoubleToString(thisTotal)%></td>
+							<td><%=net.sourceforge.fenixedu.util.projectsManagement.FormatDouble.convertDoubleToString(thisTotal)%></td>
 						</tr>
 						<tr>
 							<td><strong><bean:message key="<%="label.forExecute."+reportType%>" />:</strong></td>
-							<td><%= net.sourceforge.fenixedu.util.projectsManagement.FormatDouble.convertDoubleToString(((Double) pageContext.findAttribute("parentValue")).doubleValue()
+							<td><%=net.sourceforge.fenixedu.util.projectsManagement.FormatDouble.convertDoubleToString(((Double) pageContext
+                        .findAttribute("parentValue")).doubleValue()
                         - thisTotal)%></td>
 						</tr>
 					</table>
@@ -145,15 +160,15 @@
 				</tr>
 				<tr>
 					<td><strong><bean:message key="<%="label.total."+reportType%>" />:</strong></td>
-					<td align="right"><%= net.sourceforge.fenixedu.util.projectsManagement.FormatDouble.convertDoubleToString(parentTotal)%></td>
+					<td align="right"><%=net.sourceforge.fenixedu.util.projectsManagement.FormatDouble.convertDoubleToString(parentTotal)%></td>
 				</tr>
 				<tr>
 					<td><strong><bean:message key="<%="label.returnsExecuted."+reportType%>" />:</strong></td>
-					<td align="right"><%= net.sourceforge.fenixedu.util.projectsManagement.FormatDouble.convertDoubleToString(totalJustified)%></td>
+					<td align="right"><%=net.sourceforge.fenixedu.util.projectsManagement.FormatDouble.convertDoubleToString(totalJustified)%></td>
 				</tr>
 				<tr>
 					<td><strong><bean:message key="<%="label.toExecute."+reportType%>" />:</strong></td>
-					<td align="right"><%= net.sourceforge.fenixedu.util.projectsManagement.FormatDouble.convertDoubleToString(parentTotal - totalJustified)%></td>
+					<td align="right"><%=net.sourceforge.fenixedu.util.projectsManagement.FormatDouble.convertDoubleToString(parentTotal - totalJustified)%></td>
 				</tr>
 			</table>
 			<br />

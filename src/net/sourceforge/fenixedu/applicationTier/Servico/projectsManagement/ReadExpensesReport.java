@@ -56,7 +56,13 @@ public class ReadExpensesReport implements IService {
 
                 infoReport.setInfoProject(InfoProject.newInfoFromDomain(p.getIPersistentProject().readProject(projectCode)));
                 List lines = null;
-                IPersistentExpensesReport persistentExpensesReport = p.getIPersistentExpensesReport();
+
+                IPersistentExpensesReport persistentExpensesReport = null;
+                if (reportType.equals(ReportType.EXPENSES)) {
+                    persistentExpensesReport = p.getIPersistentExpensesReport();
+                } else {
+                    persistentExpensesReport = p.getIPersistentCompleteExpensesReport();
+                }
                 if (rubric == null || rubric.equals(""))
                     lines = persistentExpensesReport.getCompleteReport(reportType, projectCode);
                 else
@@ -66,7 +72,6 @@ public class ReadExpensesReport implements IService {
                 infoReport.setLines(infoLines);
                 infoReport.setRubricList(persistentExpensesReport.getRubricList(reportType, projectCode));
             } else {
-
                 List lines = p.getIPersistentAdiantamentosReport().getCompleteReport(ReportType.SUMMARY_ADIANTAMENTOS, projectCode);
                 for (int i = 0; i < lines.size(); i++)
                     infoLines.add(InfoAdiantamentosReportLine.newInfoFromDomain((IAdiantamentosReportLine) lines.get(i)));
@@ -87,9 +92,7 @@ public class ReadExpensesReport implements IService {
                     infoLines.add(InfoSummaryEURReportLine.newInfoFromDomain((ISummaryEURReportLine) lines.get(i)));
                 infoReport.setSummaryEURReport(infoLines);
             }
-
         }
-
         return infoReport;
     }
 

@@ -16,6 +16,8 @@ public class InfoRubric extends DataTranferObject {
 
     String description;
 
+    Double value;
+
     public InfoRubric() {
     }
 
@@ -40,10 +42,19 @@ public class InfoRubric extends DataTranferObject {
         this.description = description;
     }
 
+    public Double getValue() {
+        return value;
+    }
+
+    public void setValue(Double value) {
+        this.value = value;
+    }
+
     public void copyFromDomain(IRubric rubric) {
         if (rubric != null) {
             setCode(rubric.getCode());
             setDescription(rubric.getDescription());
+            setValue(rubric.getValue());
         }
     }
 
@@ -55,4 +66,5 @@ public class InfoRubric extends DataTranferObject {
         }
         return infoRubric;
     }
+
 }

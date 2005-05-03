@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.projectsManagement.IMovementReport;
 import net.sourceforge.fenixedu.domain.projectsManagement.IMovementReportLine;
 import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 import net.sourceforge.fenixedu.util.projectsManagement.FormatDouble;
+import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -137,10 +138,10 @@ public class InfoMovementReport extends DataTranferObject implements IReportLine
         return null;
     }
 
-    public void getHeaderToExcel(HSSFSheet sheet, ExcelStyle excelStyle) {
+    public void getHeaderToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
     }
 
-    public void getLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle) {
+    public void getLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
         HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 2);
         HSSFCell cell = row.createCell((short) 0);
         cell.setCellValue("Id Mov");
@@ -200,9 +201,9 @@ public class InfoMovementReport extends DataTranferObject implements IReportLine
         double totalJustified = 0;
         if (movements.size() != 0) {
             row = sheet.createRow(sheet.getLastRowNum() + 1);
-            ((IReportLine) movements.get(0)).getHeaderToExcel(sheet, excelStyle);
+            ((IReportLine) movements.get(0)).getHeaderToExcel(sheet, excelStyle, reportType);
             for (int i = 0; i < movements.size(); i++) {
-                ((IReportLine) movements.get(i)).getLineToExcel(sheet, excelStyle);
+                ((IReportLine) movements.get(i)).getLineToExcel(sheet, excelStyle, reportType);
                 totalJustified = FormatDouble.round(totalJustified + ((InfoMovementReportLine) movements.get(i)).getTotal().doubleValue());
             }
         }
@@ -243,7 +244,7 @@ public class InfoMovementReport extends DataTranferObject implements IReportLine
         row = sheet.createRow(sheet.getLastRowNum() + 1);
     }
 
-    public void getTotalLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle) {
+    public void getTotalLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
         HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 2);
         HSSFCell cell = row.createCell((short) 0);
         cell.setCellValue("Resumo");

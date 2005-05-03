@@ -42,4 +42,12 @@ public interface IPersistentSuportOracle {
     public abstract IPersistentReport getIPersistentSummaryEURReport();
 
     public abstract IPersistentReport getIPersistentMovementReport();
+
+    public abstract IPersistentExpensesReport getIPersistentCompleteExpensesReport();
+
+    public abstract IPersistentOpeningProjectFileReport getIPersistentOpeningProjectFileReport();
+
+    public abstract IPersistentReport getIPersistentProjectMemberBudget();
+
+    public abstract IPersistentReport getIPersistentProjectBudgetaryBalanceReport();
 }

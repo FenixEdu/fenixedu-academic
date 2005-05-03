@@ -11,6 +11,10 @@
 		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
 		<put name="body" value="/projectsManagement/projectList.jsp" />
 	</definition>
+	<definition name="coordinators-List" extends="definition.projectManager.two-column">
+		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
+		<put name="body" value="/projectsManagement/coordinatorsList.jsp" />
+	</definition>
 	<definition name="show-Summary-Report" extends="definition.projectManager.two-column">
 		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
 		<put name="body" value="/projectsManagement/showSummaryReport.jsp" />
@@ -26,6 +30,18 @@
 	<definition name="show-Movements-Report" extends="definition.projectManager.two-column">
 		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
 		<put name="body" value="/projectsManagement/showMovementsReport.jsp" />
+	</definition>
+	<definition name="show-Complete-Expenses-Report" extends="definition.projectManager.two-column">
+		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
+		<put name="body" value="/projectsManagement/showCompleteExpensesReport.jsp" />
+	</definition>
+	<definition name="show-Opening-Project-File-Report" extends="definition.projectManager.two-column">
+		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
+		<put name="body" value="/projectsManagement/showOpeningProjectFileReport.jsp" />
+	</definition>
+	<definition name="show-Project-Budgetary-Balance-Report" extends="definition.projectManager.two-column">
+		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
+		<put name="body" value="/projectsManagement/showProjectBudgetaryBalanceReport.jsp" />
 	</definition>
 	<definition name="help-Page" extends="definition.projectManager.two-column">
 		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>

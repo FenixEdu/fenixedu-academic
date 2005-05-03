@@ -18,9 +18,21 @@ public class ExpensesReportLine implements Serializable, IExpensesReportLine {
 
     private String member;
 
+    private String supplier;
+
+    private String supplierDescription;
+
+    private String documentType;
+
+    private String documentNumber;
+
+    private String financingSource;
+
     private Integer rubric;
 
-    private String type;
+    private String movementType;
+
+    private Double ivaPercentage;
 
     private String date;
 
@@ -31,6 +43,8 @@ public class ExpensesReportLine implements Serializable, IExpensesReportLine {
     private Double tax;
 
     private Double total;
+
+    private Double imputedPercentage;
 
     public String getDate() {
         return date;
@@ -46,6 +60,46 @@ public class ExpensesReportLine implements Serializable, IExpensesReportLine {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDocumentNumber() {
+        return documentNumber;
+    }
+
+    public void setDocumentNumber(String documentNumber) {
+        this.documentNumber = documentNumber;
+    }
+
+    public String getDocumentType() {
+        return documentType;
+    }
+
+    public void setDocumentType(String documentType) {
+        this.documentType = documentType;
+    }
+
+    public String getFinancingSource() {
+        return financingSource;
+    }
+
+    public void setFinancingSource(String financingSource) {
+        this.financingSource = financingSource;
+    }
+
+    public Double getImputedPercentage() {
+        return imputedPercentage;
+    }
+
+    public void setImputedPercentage(Double imputedPercentage) {
+        this.imputedPercentage = imputedPercentage;
+    }
+
+    public Double getIvaPercentage() {
+        return ivaPercentage;
+    }
+
+    public void setIvaPercentage(Double ivaPercentage) {
+        this.ivaPercentage = ivaPercentage;
     }
 
     public String getMember() {
@@ -64,6 +118,14 @@ public class ExpensesReportLine implements Serializable, IExpensesReportLine {
         this.movementId = movementId;
     }
 
+    public String getMovementType() {
+        return movementType;
+    }
+
+    public void setMovementType(String movementType) {
+        this.movementType = movementType;
+    }
+
     public Integer getProjectCode() {
         return projectCode;
     }
@@ -78,6 +140,22 @@ public class ExpensesReportLine implements Serializable, IExpensesReportLine {
 
     public void setRubric(Integer rubric) {
         this.rubric = rubric;
+    }
+
+    public String getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
+    }
+
+    public String getSupplierDescription() {
+        return supplierDescription;
+    }
+
+    public void setSupplierDescription(String supplierDescription) {
+        this.supplierDescription = supplierDescription;
     }
 
     public Double getTax() {
@@ -96,14 +174,6 @@ public class ExpensesReportLine implements Serializable, IExpensesReportLine {
         this.total = total;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public Double getValue() {
         return value;
     }
@@ -111,4 +181,5 @@ public class ExpensesReportLine implements Serializable, IExpensesReportLine {
     public void setValue(Double value) {
         this.value = value;
     }
+
 }

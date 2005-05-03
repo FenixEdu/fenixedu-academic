@@ -30,8 +30,14 @@ public class PersistentAdiantamentosReport extends PersistentReport implements I
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
 
-            String query = new String("select \"ADIANTAMENTOS\", \"JUST_ADIANTAMENTOS\", \"TOTAL\" from " + tableOrView + " where PROJECTCODE='"
-                    + projectCode + "'");
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append("select \"ADIANTAMENTOS\", \"JUST_ADIANTAMENTOS\", \"TOTAL\" from ");
+            stringBuffer.append(tableOrView);
+            stringBuffer.append(" where PROJECTCODE='");
+            stringBuffer.append(projectCode);
+            stringBuffer.append("'");
+            String query = stringBuffer.toString();
+
             PreparedStatement stmt = p.prepareStatement(query);
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {

@@ -15,6 +15,8 @@ public class Rubric implements IRubric, Serializable {
 
     String description;
 
+    Double value;
+
     public Rubric() {
     }
 
@@ -37,5 +39,13 @@ public class Rubric implements IRubric, Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Double getValue() {
+        return value;
+    }
+
+    public void setValue(Double value) {
+        this.value = value;
     }
 }

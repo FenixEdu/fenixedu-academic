@@ -1,0 +1,14 @@
+@import url("dotist_print.css");
+
+h2 {
+	font: bold 14px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #223d4a;
+}
+
+.printHeader {
+	display: block;
+}
+
+.viewHeader {
+	display: none;
+}

@@ -18,4 +18,8 @@ public interface IRubric extends Serializable {
     public abstract String getDescription();
 
     public abstract void setDescription(String description);
+
+    public abstract Double getValue();
+
+    public abstract void setValue(Double value);
 }

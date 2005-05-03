@@ -29,33 +29,34 @@ public class ReadSummaryReport implements IService {
     public ReadSummaryReport() {
     }
 
-    public List run(String userView) throws ExcepcaoPersistencia {
-        List infoProjectReportList = new ArrayList();
+    public InfoCoordinatorReport run(String userView, Integer coordinatorCode) throws ExcepcaoPersistencia {
+        InfoCoordinatorReport infoReport = null;
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         Integer userNumber = getUserNumber(persistentSuport, userView);
         if (userNumber != null) {
             PersistentSuportOracle p = PersistentSuportOracle.getInstance();
+            if (coordinatorCode == null)
+                coordinatorCode = userNumber;
+            List lines = null;
+            if (userNumber.equals(coordinatorCode)) {
+                lines = p.getIPersistentSummaryReport().readByCoordinatorCode(ReportType.SUMMARY, coordinatorCode);
+            } else {
+                List<Integer> projectCodes = persistentSuport.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndCoordinator(userView,
+                        coordinatorCode, false);
+                if (projectCodes != null && projectCodes.size() != 0)
+                    lines = p.getIPersistentSummaryReport().readByCoordinatorAndProjectCodes(ReportType.SUMMARY, coordinatorCode, projectCodes);
+            }
+            if (lines != null) {
+                infoReport = new InfoCoordinatorReport();
+                infoReport.setInfoCoordinator(InfoRubric.newInfoFromDomain(p.getIPersistentProjectUser().readProjectCoordinator(coordinatorCode)));
+                List<InfoSummaryReportLine> infoLines = new ArrayList<InfoSummaryReportLine>();
 
-            Integer thisCoordinator = p.getIPersistentProjectUser().getUserCoordId(userNumber);
-            List coordinatorsCodes = persistentSuport.getIPersistentProjectAccess().readCoordinatorsCodesByPersonUsernameAndDates(userView);
-            if (thisCoordinator != null)
-                coordinatorsCodes.add(thisCoordinator);
-            for (int coord = 0; coord < coordinatorsCodes.size(); coord++) {
-                InfoCoordinatorReport infoReport = new InfoCoordinatorReport();
-                List infoLines = new ArrayList();
-                infoReport.setInfoCoordinator(InfoRubric.newInfoFromDomain(p.getIPersistentProjectUser().readProjectCoordinator(
-                        (Integer) coordinatorsCodes.get(coord))));
-                List projectCodes = persistentSuport.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndCoordinator(
-                        userView, new Integer(infoReport.getInfoCoordinator().getCode()), false);
-                List lines = p.getIPersistentSummaryReport().readByCoordinatorAndProjectCodes(ReportType.SUMMARY,
-                        new Integer(infoReport.getInfoCoordinator().getCode()), projectCodes);
                 for (int line = 0; line < lines.size(); line++)
                     infoLines.add(InfoSummaryReportLine.newInfoFromDomain((ISummaryReportLine) lines.get(line)));
                 infoReport.setLines(infoLines);
-                infoProjectReportList.add(infoReport);
             }
         }
-        return infoProjectReportList;
+        return infoReport;
     }
 
     private Integer getUserNumber(ISuportePersistente sp, String userView) throws ExcepcaoPersistencia {

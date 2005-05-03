@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ taglib uri="/WEB-INF/struts-report.tld" prefix="report"%>
+<%@ taglib uri="/WEB-INF/projectReports.tld" prefix="report"%>
 
 <logic:present name="infoExpensesReport">
 	<br />

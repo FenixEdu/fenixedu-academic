@@ -10,8 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.projectsManagement.CabimentosReportLine;
-import net.sourceforge.fenixedu.domain.projectsManagement.ICabimentosReportLine;
+import net.sourceforge.fenixedu.domain.projectsManagement.IProjectBudgetaryBalanceReportLine;
+import net.sourceforge.fenixedu.domain.projectsManagement.ProjectBudgetaryBalanceReportLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentReport;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
  * @author Susana Fernandes
  * 
  */
-public class PersistentCabimentosReport extends PersistentReport implements IPersistentReport {
+public class PersistentProjectBudgetaryBalanceReport extends PersistentReport implements IPersistentReport {
 
     public List getCompleteReport(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia {
         List result = new ArrayList();
@@ -31,9 +31,9 @@ public class PersistentCabimentosReport extends PersistentReport implements IPer
             String tableOrView = getTableOrViewName(p, reportType);
 
             StringBuffer stringBuffer = new StringBuffer();
-            stringBuffer.append("select \"CABIMENTOS\", \"JUST_CABIMENTOS\", \"TOTAL\" from ");
+            stringBuffer.append("select \"RUBRICA\", \"DESCRICAORUBRICA\", \"ORÇAMENTADO\", \"EXECUTADO\", \"SALDO\"from ");
             stringBuffer.append(tableOrView);
-            stringBuffer.append(" where PROJECTCODE='");
+            stringBuffer.append(" where PROJECTO='");
             stringBuffer.append(projectCode);
             stringBuffer.append("'");
             String query = stringBuffer.toString();
@@ -41,11 +41,12 @@ public class PersistentCabimentosReport extends PersistentReport implements IPer
             PreparedStatement stmt = p.prepareStatement(query);
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                ICabimentosReportLine report = new CabimentosReportLine();
-                report.setProjectCode(projectCode);
-                report.setCabimentos(new Double(rs.getDouble("CABIMENTOS")));
-                report.setJustifications(new Double(rs.getDouble("JUST_CABIMENTOS")));
-                report.setTotal(new Double(rs.getDouble("TOTAL")));
+                IProjectBudgetaryBalanceReportLine report = new ProjectBudgetaryBalanceReportLine();
+                report.setRubric(new Integer(rs.getInt("RUBRICA")));
+                report.setRubricDescription(rs.getString("DESCRICAORUBRICA"));
+                report.setBudget(new Double(rs.getDouble("ORÇAMENTADO")));
+                report.setExecuted(new Double(rs.getDouble("EXECUTADO")));
+                report.setBalance(new Double(rs.getDouble("SALDO")));
                 result.add(report);
             }
 

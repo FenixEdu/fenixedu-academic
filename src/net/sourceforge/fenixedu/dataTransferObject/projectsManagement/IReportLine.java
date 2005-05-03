@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.projectsManagement;
 
 import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
+import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 
@@ -17,10 +18,10 @@ public interface IReportLine {
 
     public Double getValue(int column);
 
-    public void getHeaderToExcel(HSSFSheet sheet, ExcelStyle excelStyle);
+    public void getHeaderToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType);
 
-    public void getLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle);
+    public void getLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType);
 
-    public void getTotalLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle);
+    public void getTotalLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType);
 
 }

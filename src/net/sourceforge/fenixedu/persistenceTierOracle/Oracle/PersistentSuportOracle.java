@@ -16,6 +16,7 @@ import java.util.Properties;
 
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentExpensesReport;
+import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentOpeningProjectFileReport;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentProject;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentProjectUser;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentReport;
@@ -176,6 +177,22 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
 
     public IPersistentReport getIPersistentMovementReport() {
         return new PersistentMovementReport();
+    }
+
+    public IPersistentExpensesReport getIPersistentCompleteExpensesReport() {
+        return new PersistentCompleteExpensesReport();
+    }
+
+    public IPersistentOpeningProjectFileReport getIPersistentOpeningProjectFileReport() {
+        return new PersistentOpeningProjectFileReport();
+    }
+
+    public IPersistentReport getIPersistentProjectMemberBudget() {
+        return new PersistentProjectMemberBudget();
+    }
+
+    public IPersistentReport getIPersistentProjectBudgetaryBalanceReport() {
+        return new PersistentProjectBudgetaryBalanceReport();
     }
 
 }

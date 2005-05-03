@@ -81,12 +81,12 @@ public class InfoCoordinatorReport extends DataTranferObject {
         int lastRowNum = sheet.getLastRowNum() + 2;
         if (lines != null && lines.size() > 0) {
             row = sheet.createRow(lastRowNum);
-            ((IReportLine) lines.get(0)).getHeaderToExcel(sheet, excelStyle);
+            ((IReportLine) lines.get(0)).getHeaderToExcel(sheet, excelStyle, reportType);
             lastRowNum++;
             for (int i = 0; i < lines.size(); i++) {
-                ((IReportLine) lines.get(i)).getLineToExcel(sheet, excelStyle);
+                ((IReportLine) lines.get(i)).getLineToExcel(sheet, excelStyle, reportType);
             }
-            ((IReportLine) lines.get(0)).getTotalLineToExcel(sheet, excelStyle);
+            ((IReportLine) lines.get(0)).getTotalLineToExcel(sheet, excelStyle, reportType);
         }
 
         row = sheet.createRow((short) sheet.getLastRowNum() + 2);

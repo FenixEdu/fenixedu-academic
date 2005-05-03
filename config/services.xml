@@ -8195,6 +8195,17 @@
         </filterChains>
 	</service>
 	<service>
+		<name>ReadCoordinators</name>
+		<implementationClass>
+			net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReadCoordinators
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+            <chain name="ProjectsManagerAuthorization"/>
+        </filterChains>
+	</service>
+	<service>
 		<name>ReadReport</name>
 		<implementationClass>
 			net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReadReport
@@ -8231,6 +8242,17 @@
 		<name>ReadRubric</name>
 		<implementationClass>
 			net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReadRubric
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+            <chain name="ProjectsManagerAuthorization"/>
+        </filterChains>
+	</service>
+	<service>
+		<name>ReadOpeningProjectFileReport</name>
+		<implementationClass>
+			net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReadOpeningProjectFileReport
 		</implementationClass>
 		<description/>
 		<isTransactional>true</isTransactional>
