@@ -15,7 +15,7 @@ public abstract class VersionedObjectsBase {
         throw new RuntimeException("This method should not be called by the Versioned Object DAO's!");
     }
 
-    protected void lockWrite(Object obj) throws ExcepcaoPersistencia {
+    public void lockWrite(Object obj) throws ExcepcaoPersistencia {
         throw new RuntimeException("This method should not be called by the Versioned Object DAO's!");
     }
 
@@ -27,8 +27,12 @@ public abstract class VersionedObjectsBase {
         }
     }
 
-    protected void simpleLockWrite(IDomainObject obj) throws ExcepcaoPersistencia {
-        throw new RuntimeException("This method should not be called by the Versioned Object DAO's!");
+    public void simpleLockWrite(IDomainObject obj) {
+        try {
+            SuportePersistenteOJB.getInstance().getIPersistentObject().simpleLockWrite(obj);
+        } catch (ExcepcaoPersistencia e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public final IDomainObject readByOID(final Class classToQuery, final Integer oid) throws ExcepcaoPersistencia {
@@ -43,15 +47,15 @@ public abstract class VersionedObjectsBase {
         return null;
     }
 
-    protected Object lockIteratorNextObj(Iterator iterator) throws ExcepcaoPersistencia {
+    public Object lockIteratorNextObj(Iterator iterator) throws ExcepcaoPersistencia {
         throw new RuntimeException("This method should not be called by the Versioned Object DAO's!");
     }
 
-    protected int count(Class classToQuery, Criteria criteria) {
+    public int count(Class classToQuery, Criteria criteria) {
         throw new RuntimeException("This method should not be called by the Versioned Object DAO's!");
     }
 
-    protected IDomainObject materialize(IDomainObject domainObject) {
+    public IDomainObject materialize(IDomainObject domainObject) {
         throw new RuntimeException("This method should not be called by the Versioned Object DAO's!");
     }
 

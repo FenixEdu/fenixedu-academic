@@ -6,7 +6,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Advisory;
 import net.sourceforge.fenixedu.domain.IAdvisory;
-import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.Person;
@@ -15,8 +14,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentAdvisory;
 import net.sourceforge.fenixedu.util.AdvisoryRecipients;
 import net.sourceforge.fenixedu.util.StringAppender;
-
-import org.apache.ojb.broker.query.Criteria;
 
 /**
  * 
@@ -36,6 +33,9 @@ public class AdvisoryVO extends VersionedObjectsBase implements IPersistentAdvis
     }
 
     public void write(final IAdvisory advisory, final IPerson person) {
+        simpleLockWrite(advisory);
+        simpleLockWrite(person);
+
         person.getAdvisories().add(advisory);
         advisory.getPeople().add(person);
     }
@@ -80,26 +80,6 @@ public class AdvisoryVO extends VersionedObjectsBase implements IPersistentAdvis
         }
 
         people.clear();
-    }
-
-    public void lockWrite(final Object obj) {
-        // nothing to do :o)
-    }
-
-    public void simpleLockWrite(final IDomainObject obj) {
-        // nothing to do :o)
-    }
-
-    public Object lockIteratorNextObj(final Iterator iterator) {
-        return null;
-    }
-
-    public int count(final Class classToQuery, final Criteria criteria) {
-        return -1;
-    }
-
-    public IDomainObject materialize(final IDomainObject domainObject) {
-        return null;
     }
 
 }
