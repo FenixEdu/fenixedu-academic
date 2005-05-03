@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
 
@@ -104,7 +103,7 @@ public class DomainDMLOJBVerifier {
         for (final Iterator iterator = collectionDescriptors.iterator(); iterator.hasNext(); ) {
             final CollectionDescriptor collectionDescriptor = (CollectionDescriptor) iterator.next();
             if (!hasGetterAndSetter(baseClass, collectionDescriptor.getAttributeName(), collectionDescriptor.getItemClass())) {
-                unmappedObjectReferenceAttributes.add(classDescriptor.getClassNameOfObject() + "." + collectionDescriptor.getAttributeName());
+                unmappedCollectionReferenceAttributes.add(classDescriptor.getClassNameOfObject() + "." + collectionDescriptor.getAttributeName());
             }
         }
     }
