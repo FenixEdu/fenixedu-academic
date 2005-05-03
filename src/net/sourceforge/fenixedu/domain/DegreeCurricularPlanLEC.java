@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LECOptionalPairGr
  * @author David Santos in Jun 25, 2004
  */
 
-public class DegreeCurricularPlanLEC extends DegreeCurricularPlan implements IDegreeCurricularPlan {
+public class DegreeCurricularPlanLEC extends DegreeCurricularPlanLEC_Base implements IDegreeCurricularPlan {
 
     public DegreeCurricularPlanLEC() {
         setOjbConcreteClass(getClass().getName());

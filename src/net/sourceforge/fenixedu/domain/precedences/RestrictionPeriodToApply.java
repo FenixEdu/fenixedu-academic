@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.util.PeriodToApplyRestriction;
  * @author David Santos in Jun 9, 2004
  */
 
-public class RestrictionPeriodToApply extends Restriction implements IRestrictionPeriodToApply {
+public class RestrictionPeriodToApply extends RestrictionPeriodToApply_Base implements IRestrictionPeriodToApply {
     protected PeriodToApplyRestriction periodToApplyRestriction;
 
     public RestrictionPeriodToApply() {
