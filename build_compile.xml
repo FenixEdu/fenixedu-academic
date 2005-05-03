@@ -17,6 +17,8 @@
 	<property name="build.home.webinf" value="${build.home}/WEB-INF"/>
 	<property name="build.home.webinf.classes" value="${build.home.webinf}/classes"/>
 	<property name="build.home.webinf.libs" value="${build.home.webinf}/lib"/>
+	<property name="build.home.jsp_gen_code" value="${build.home}/Jsp-Code"/>
+	<property name="build.home.jsp_gen_code.classes" value="${build.home.jsp_gen_code}/classes"/>
 
 	<!-- Directories for deploy -->
 	<property name="deploy.home" location="deploy"/>
@@ -529,6 +531,28 @@
 			<lib dir="${build.home.webinf.libs}"/>
 			<classes dir="${build.home.webinf.classes}"/>
 		</war>
+	</target>
+	
+	<target name="jsp-precompile" depends="compile">
+		<mkdir dir="${build.home.jsp_gen_code}"/>
+		<jspc srcdir="${build.home}" destdir="${build.home.jsp_gen_code}"
+				package="net.sourceforge.fenixedu.jsp" compiler="jasper41" verbose="0"  uriroot="${build.home}">
+			<classpath>
+				<fileset dir="${env.CATALINA_HOME}/common/lib">
+					<include name="*.jar"/>
+				</fileset>
+			</classpath>
+			<include name="**/*.jsp"/>
+		</jspc>
+		<javac destdir="${build.home.jsp_gen_code.classes}"
+               extdirs="${lib};${build.home.webinf.classes}"
+               debug="${compile.debug}"
+               optimize="${compile.optimize}"
+               deprecation="${compile.deprecation}"
+               encoding="${encoding}"
+			   nowarn="true">
+			<src path="${build.home.jsp_gen_code}"/>
+		</javac>
 	</target>
 
 </project>
