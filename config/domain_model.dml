@@ -4030,7 +4030,7 @@ relation PeriodRoomOccupation {
 }
 
 relation PersonAdvisory {
-	net.sourceforge.fenixedu.domain.Person playsRole associatedPersons {
+	net.sourceforge.fenixedu.domain.Person playsRole people {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Advisory playsRole advisories {
