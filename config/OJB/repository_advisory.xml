@@ -2,10 +2,11 @@
      to avoid mixing user defined and system mappings. -->   
 <!-- Mapping of User defined classes starts here -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.Advisory -->
-   <class-descriptor
-   	  class="net.sourceforge.fenixedu.domain.Advisory"
-   	  table="ADVISORY"
-   >
+
+<class-descriptor
+		class="net.sourceforge.fenixedu.domain.Advisory"
+		table="ADVISORY"
+		>
       <field-descriptor id="1"
          name="idInternal"
          column="ID_INTERNAL"
@@ -50,5 +51,15 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-   </class-descriptor>
+	<collection-descriptor
+			name="people"
+			element-class-ref="net.sourceforge.fenixedu.domain.Person"
+			proxy="true"
+			indirection-table="PERSON_ADVISORY"
+			refresh="true"
+			>
+		<fk-pointing-to-element-class column="KEY_PERSON" />
+		<fk-pointing-to-this-class column="KEY_ADVISORY" />
+	</collection-descriptor>
+</class-descriptor>
 <!-- Mapping of User defined classses ends here -->
