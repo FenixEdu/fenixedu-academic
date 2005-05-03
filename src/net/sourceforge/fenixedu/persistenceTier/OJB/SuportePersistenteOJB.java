@@ -613,10 +613,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new StudentGroupOJB();
     }
 
-    public IPersistentGratuity getIPersistentGratuity() {
-        return new GratuityOJB();
-    }
-
     public IPersistentStudentGroupAttend getIPersistentStudentGroupAttend() {
         return new StudentGroupAttendOJB();
     }

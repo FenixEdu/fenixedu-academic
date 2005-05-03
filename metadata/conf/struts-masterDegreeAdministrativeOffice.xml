@@ -447,18 +447,6 @@
         	<form-property name="degreeCurricularPlanID" type="java.lang.Integer"/>
       </form-bean>
       
-      <!-- Bean to Choose the Course List for Study Plan  -->
-      <form-bean name="gratuityChangeForm" 
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-
-            <form-property name="page" type="java.lang.Integer" />
-   	        <form-property name="studentCPID" type="java.lang.Integer"/>
-   	        <form-property name="situation" type="java.lang.String"/>
-        	<form-property name="othersRemarks" type="java.lang.String"/>
-      </form-bean>
-
-
       <form-bean name="chooseGuideStateForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
@@ -1751,13 +1739,7 @@
 	         <forward name="ShowMarksManagementMenu" path="/marksManagement.do?method=getStudentMarksList"/> 	         
       </action>
 		<!-- END OF MARKS MANAGEMENT -->
-      
-	  <action path="/studentGratuity"
-		      parameter="method"
-              type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
-			  >
-	         <forward name="Success" path="/student/chooseStudent.jsp"/> 
-      </action>
+
       
        <action path="/chooseStudent"
       		  input="/student/chooseStudent.jsp"
@@ -1773,45 +1755,7 @@
 	         <forward name="ShowCurricularPlans" path="/student/showCurricularPlans.jsp"/> 
 	         <forward name="StudentCurricularPlanChosen" path="/gratuityOperations.do?method=getInformation&amp;page=0"/> 
       </action>
-       
-      
-      
-      
-        <action path="/gratuityOperations"
-      		  input="/student/chooseStudent.jsp"
-      	      name="chooseStudentForm"
-		      parameter="method"
-		      scope="request"
-              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.student.GratuityOperationsDispatchAction"
-              validate="false">
-     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
-		                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-              
-	         <forward name="ShowGratuityInformation" path="/gratuityChange.do?method=prepareChange&amp;page=0"/> 
-      </action>
-      
-      
-        <action path="/gratuityChange"
-      		  input="/gratuityChange.do?method=getInformation&amp;page=0"
-      	      name="gratuityChangeForm"
-		      parameter="method"
-		      scope="request"
-              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.student.GratuityOperationsDispatchAction"
-              validate="true">
-     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
-		                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidChangeActionException"
-		                key="ServidorApresentacao.Action.exceptions.InvalidChangeActionException"
-                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-              
-	         <forward name="ShowGratuityInformationReady" path="/student/showGratuityInformation.jsp"/> 
-	         <forward name="ShowGratuityInformation" path="/gratuityChange.do?method=prepareChange&amp;page=0"/> 	         
-	         <forward name="ChangeSuccess" path="/student/gratuityChangeSuccess.jsp"/> 	         
-	         
-      </action>
-      
+                   
       <!-- Choose Execution Year to Register Candidates -->
       <action path="/chooseExecutionYearToCandidateRegistration"
       		  input="/chooseExecutionYear.jsp"

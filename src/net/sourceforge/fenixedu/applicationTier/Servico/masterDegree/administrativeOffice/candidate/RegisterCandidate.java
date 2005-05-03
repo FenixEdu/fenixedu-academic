@@ -22,14 +22,12 @@ import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.Gratuity;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.ICandidateEnrolment;
 import net.sourceforge.fenixedu.domain.ICandidateSituation;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IGratuity;
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
 import net.sourceforge.fenixedu.domain.IGratuityValues;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
@@ -53,7 +51,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.EntryPhase;
-import net.sourceforge.fenixedu.util.GratuityState;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.util.State;
@@ -274,14 +271,6 @@ public class RegisterCandidate implements IService {
             candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
             candidateSituation.setValidation(new State(State.ACTIVE));
             candidateSituation.setSituation(SituationName.ENROLLED_OBJ);
-
-            // Inicial Gratuity State
-            IGratuity gratuity = new Gratuity();
-            sp.getIPersistentGratuity().simpleLockWrite(gratuity);
-            gratuity.setDate(Calendar.getInstance().getTime());
-            gratuity.setGratuityState(GratuityState.NOT_PAYED);
-            gratuity.setState(new State(State.ACTIVE));
-            gratuity.setStudentCurricularPlan(studentCurricularPlan);
 
             // Copy Qualifications
 

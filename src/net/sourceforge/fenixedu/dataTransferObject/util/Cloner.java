@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.constants.publication.PublicationConstants;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAdvisory;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsSet;
@@ -41,7 +42,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta;
-import net.sourceforge.fenixedu.dataTransferObject.InfoGratuity;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGroupProperties;
@@ -175,7 +175,6 @@ import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.domain.teacher.workTime.ITeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.constants.publication.PublicationConstants;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
@@ -2084,21 +2083,6 @@ public abstract class Cloner {
             summary.setRoom(room);
         }
         return summary;
-    }
-
-    /**
-     * @param gratuity
-     * @return InfoGratuity
-     */
-    public static InfoGratuity copyIGratuity2InfoGratuity(IGratuity gratuity) {
-
-        InfoGratuity infoGratuity = new InfoGratuity();
-        copyObjectProperties(infoGratuity, gratuity);
-
-        infoGratuity.setInfoStudentCurricularPlan(Cloner
-                .copyIStudentCurricularPlan2InfoStudentCurricularPlan(gratuity
-                        .getStudentCurricularPlan()));
-        return infoGratuity;
     }
 
     /**

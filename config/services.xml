@@ -1900,36 +1900,6 @@
         </filterChains>
     </service>
     <service>
-        <name>ReadActiveGratuityByStudentCurricularPlanID</name>
-        <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.gratuity.ReadActiveGratuityByStudentCurricularPlanID</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>ReadGratuityInformationByStudentCurricularPlanID</name>
-        <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.gratuity.ReadGratuityInformationByStudentCurricularPlanID</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>ChangeGratuityState</name>
-        <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.gratuity.ChangeGratuityState</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
         <name>FinalResult</name>
         <implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.enrolment.FinalResult</implementationClass>

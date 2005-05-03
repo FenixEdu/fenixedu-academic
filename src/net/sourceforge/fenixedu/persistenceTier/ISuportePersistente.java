@@ -224,8 +224,6 @@ public interface ISuportePersistente {
 
     public IPersistentCandidateEnrolment getIPersistentCandidateEnrolment();
 
-    public IPersistentGratuity getIPersistentGratuity();
-
     public IPersistentStudentGroup getIPersistentStudentGroup();
 
     public IPersistentStudentGroupAttend getIPersistentStudentGroupAttend();

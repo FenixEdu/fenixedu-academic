@@ -1329,67 +1329,6 @@
    
 <!-- End of definitions for class net.sourceforge.fenixedu.domain.WorkLocation -->
 
-<!-- Definitions for class GRATUITY -->
-<class-descriptor
-              class="net.sourceforge.fenixedu.domain.Gratuity"
-              table="GRATUITY"
-      >
-        <field-descriptor 
-           name="idInternal"    
-           column="ID_INTERNAL"  
-           jdbc-type="INTEGER"
-           primarykey="true"
-           autoincrement="true"
-        />
-
-        <field-descriptor
-           name="keyStudentCurricularPlan"
-           column="KEY_STUDENT_CURRICULAR_PLAN"
-           jdbc-type="INTEGER"
-         />
- 
-         <field-descriptor
-            name="state"
-            column="STATE"
-            jdbc-type="INTEGER"
-       	    conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaState2SQLStateFieldConversion"
-         />
-         <field-descriptor 
-            name="gratuityState"
-            column="GRATUITY_STATE"
-            jdbc-type="INTEGER"
-       	    conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGratuityState2SQLGratuityStateFieldConversion"
-         />
-         <field-descriptor 
-            name="date"
-            column="DATE"
-            jdbc-type="DATE"
-         />
-         <field-descriptor 
-            name="remarks"
-		    column="REMARKS"
-            jdbc-type="LONGVARCHAR"
-         />
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
-
-	   <reference-descriptor
-         	name="studentCurricularPlan"
-         	class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
-         	proxy="true"
-			refresh="true"
-      	  >
-          <foreignkey field-ref="keyStudentCurricularPlan"/>
-      </reference-descriptor>
-
- 
-  </class-descriptor>
-<!-- End of definitions for class Gratuity -->
-
 <!-- Definitions for class GratuityValues -->
 <class-descriptor
 		class="net.sourceforge.fenixedu.domain.GratuityValues"

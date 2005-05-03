@@ -45,7 +45,6 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractMo
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPrice;
 import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuity;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseReport;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentSenior;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentPaymentTransaction;
@@ -722,10 +721,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 	}
 
 	public IPersistentFinalDegreeWork getIPersistentFinalDegreeWork()  {
-		return null;
-	}
-
-	public IPersistentGratuity getIPersistentGratuity()  {
 		return null;
 	}
 
