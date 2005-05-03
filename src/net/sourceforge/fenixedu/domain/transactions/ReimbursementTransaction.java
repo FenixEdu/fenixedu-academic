@@ -13,9 +13,7 @@ import net.sourceforge.fenixedu.util.transactions.TransactionType;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  *  
  */
-public class ReimbursementTransaction extends Transaction implements IReimbursementTransaction {
-
-    private Integer keyReimbursementGuideEntry;
+public class ReimbursementTransaction extends ReimbursementTransaction_Base {
 
     private IReimbursementGuideEntry reimbursementGuideEntry;
 
@@ -38,24 +36,15 @@ public class ReimbursementTransaction extends Transaction implements IReimbursem
             PaymentType paymentType, TransactionType transactionType, Boolean wasInternalBalance,
             IPerson responsiblePerson, IPersonAccount personAccount,
             IReimbursementGuideEntry reimbursementGuideEntry) {
-        super(value, transactionDate, remarks, paymentType, transactionType, wasInternalBalance,
-                responsiblePerson, personAccount);
+		setValue(value);
+		setTransactionDate(transactionDate);
+		setRemarks(remarks);
+		setPaymentType(paymentType);
+		setTransactionType(transactionType);
+		setWasInternalBalance(wasInternalBalance);
+		setResponsiblePerson(responsiblePerson);
+		setPersonAccount(personAccount);
         this.reimbursementGuideEntry = reimbursementGuideEntry;
-    }
-
-    /**
-     * @return Returns the keyReimbursementGuideEntry.
-     */
-    public Integer getKeyReimbursementGuideEntry() {
-        return keyReimbursementGuideEntry;
-    }
-
-    /**
-     * @param keyReimbursementGuideEntry
-     *            The keyReimbursementGuideEntry to set.
-     */
-    public void setKeyReimbursementGuideEntry(Integer keyReimbursementGuideEntry) {
-        this.keyReimbursementGuideEntry = keyReimbursementGuideEntry;
     }
 
     /**

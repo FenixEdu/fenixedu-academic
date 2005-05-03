@@ -13,102 +13,59 @@ import net.sourceforge.fenixedu.util.transactions.TransactionType;
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
-public class InsuranceTransaction extends PaymentTransaction implements IInsuranceTransaction {
+public class InsuranceTransaction extends InsuranceTransaction_Base {
 
-    private Integer keyExecutionYear;
+	private IStudent student;
 
-    private IExecutionYear executionYear;
+	public InsuranceTransaction() {
 
-    private Integer keyStudent;
+	}
 
-    private IStudent student;
+	/**
+	 * @param value
+	 * @param transactionDate
+	 * @param remarks
+	 * @param paymentType
+	 * @param transactionType
+	 * @param wasInternalBalance
+	 * @param responsiblePerson
+	 * @param personAccount
+	 * @param guideEntry
+	 * @param executionYear
+	 * @param student
+	 */
+	public InsuranceTransaction(Double value, Timestamp transactionDate,
+			String remarks, PaymentType paymentType,
+			TransactionType transactionType, Boolean wasInternalBalance,
+			IPerson responsiblePerson, IPersonAccount personAccount,
+			IGuideEntry guideEntry, IExecutionYear executionYear,
+			IStudent student) {
+		setValue(value);
+		setTransactionDate(transactionDate);
+		setRemarks(remarks);
+		setPaymentType(paymentType);
+		setTransactionType(transactionType);
+		setWasInternalBalance(wasInternalBalance);
+		setResponsiblePerson(responsiblePerson);
+		setPersonAccount(personAccount);
+		setExecutionYear(executionYear);
+		this.student = student;
+	}
 
-    public InsuranceTransaction() {
+	/**
+	 * @return Returns the student.
+	 */
+	public IStudent getStudent() {
+		return student;
+	}
 
-    }
-
-    /**
-     * @param value
-     * @param transactionDate
-     * @param remarks
-     * @param paymentType
-     * @param transactionType
-     * @param wasInternalBalance
-     * @param responsiblePerson
-     * @param personAccount
-     * @param guideEntry
-     * @param executionYear
-     * @param student
-     */
-    public InsuranceTransaction(Double value, Timestamp transactionDate, String remarks,
-            PaymentType paymentType, TransactionType transactionType, Boolean wasInternalBalance,
-            IPerson responsiblePerson, IPersonAccount personAccount, IGuideEntry guideEntry,
-            IExecutionYear executionYear, IStudent student) {
-        super(value, transactionDate, remarks, paymentType, transactionType, wasInternalBalance,
-                responsiblePerson, personAccount, guideEntry);
-        this.executionYear = executionYear;
-        this.student = student;
-    }
-
-    /**
-     * @return Returns the executionYear.
-     */
-    public IExecutionYear getExecutionYear() {
-        return executionYear;
-    }
-
-    /**
-     * @param executionYear
-     *            The executionYear to set.
-     */
-    public void setExecutionYear(IExecutionYear executionYear) {
-        this.executionYear = executionYear;
-    }
-
-    /**
-     * @return Returns the student.
-     */
-    public IStudent getStudent() {
-        return student;
-    }
-
-    /**
-     * @param student
-     *            The student to set.
-     */
-    public void setStudent(IStudent student) {
-        this.student = student;
-    }
-
-    /**
-     * @return Returns the keyExecutionYear.
-     */
-    public Integer getKeyExecutionYear() {
-        return keyExecutionYear;
-    }
-
-    /**
-     * @param keyExecutionYear
-     *            The keyExecutionYear to set.
-     */
-    public void setKeyExecutionYear(Integer keyExecutionYear) {
-        this.keyExecutionYear = keyExecutionYear;
-    }
-
-    /**
-     * @return Returns the keyStudent.
-     */
-    public Integer getKeyStudent() {
-        return keyStudent;
-    }
-
-    /**
-     * @param keyStudent
-     *            The keyStudent to set.
-     */
-    public void setKeyStudent(Integer keyStudent) {
-        this.keyStudent = keyStudent;
-    }
+	/**
+	 * @param student
+	 *            The student to set.
+	 */
+	public void setStudent(IStudent student) {
+		this.student = student;
+	}
 }

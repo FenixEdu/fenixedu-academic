@@ -8,32 +8,16 @@ package net.sourceforge.fenixedu.domain;
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
-public class WorkLocation extends DomainObject implements IWorkLocation {
-    private String name;
+public class WorkLocation extends WorkLocation_Base {
 
-    /**
-     * @return Returns the name.
-     */
-    public String getName() {
-        return name;
-    }
+	public boolean equals(Object obj) {
+		boolean result = false;
 
-    /**
-     * @param name
-     *            The name to set.
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public boolean equals(Object obj) {
-        boolean result = false;
-
-        if (obj instanceof IWorkLocation) {
-            IWorkLocation workLocation = (IWorkLocation) obj;
-            result = this.name.equals(workLocation.getName());
-        }
-        return result;
-    }
+		if (obj instanceof IWorkLocation) {
+			IWorkLocation workLocation = (IWorkLocation) obj;
+			result = getName().equals(workLocation.getName());
+		}
+		return result;
+	}
 
 }

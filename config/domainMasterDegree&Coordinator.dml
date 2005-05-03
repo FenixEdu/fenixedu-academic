@@ -183,7 +183,6 @@ class net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry
 	Integer keySibsPaymentFile;
 	Integer year;
 	Double payedValue;
-}
 
 class net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction {
 	Boolean wasInternalBalance;

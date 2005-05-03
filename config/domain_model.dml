@@ -2794,8 +2794,108 @@ class net.sourceforge.fenixedu.domain.WebSiteSection extends net.sourceforge.fen
     String sortingOrder;
 }
 
+class net.sourceforge.fenixedu.domain.transactions.Transaction extends net.sourceforge.fenixedu.domain.DomainObject {
+	
+	Double value;
+	String remarks;
+	Boolean wasInternalBalance;
+	Integer keyResponsiblePerson;
+	Integer keyPersonAccount;
+	
+	interface "
+		public net.sourceforge.fenixedu.domain.IPersonAccount getPersonAccount();
+		
+		public void setPersonAccount(net.sourceforge.fenixedu.domain.IPersonAccount personAccount);
+		
+		public net.sourceforge.fenixedu.domain.IPerson getResponsiblePerson();
+		
+		public void setResponsiblePerson(net.sourceforge.fenixedu.domain.IPerson responsiblePerson);
+		
+		public java.sql.Timestamp getTransactionDate();
+	
+		public void setTransactionDate(java.sql.Timestamp transactionDate);
+		
+		public net.sourceforge.fenixedu.util.PaymentType getPaymentType();
+		
+		public void setPaymentType(net.sourceforge.fenixedu.util.PaymentType paymentType);
+		
+		public net.sourceforge.fenixedu.util.transactions.TransactionType getTransactionType();
+		
+		public void setTransactionType(net.sourceforge.fenixedu.util.transactions.TransactionType transactionType);
+	"	
+}
 
-/*
+class net.sourceforge.fenixedu.domain.transactions.PaymentTransaction extends net.sourceforge.fenixedu.domain.transactions.Transaction {
+
+	interface "
+		public net.sourceforge.fenixedu.domain.IGuideEntry getGuideEntry();
+		
+		public void setGuideEntry(net.sourceforge.fenixedu.domain.IGuideEntry guideEntry);
+	"
+}
+
+class net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction extends net.sourceforge.fenixedu.domain.transactions.Transaction {
+	Boolean wasInternalBalance;
+	Double value;
+	Integer keyReimbursementGuideEntry;
+	String remarks;
+	Integer keyPersonAccount;
+	Integer keyResponsiblePerson;
+	
+	interface "
+	    public net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry getReimbursementGuideEntry();
+	    
+	    public void setReimbursementGuideEntry(net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry reimbursementGuideEntry);	
+	"
+}
+
+class net.sourceforge.fenixedu.domain.transactions.GratuityTransaction extends net.sourceforge.fenixedu.domain.transactions.PaymentTransaction {
+	Boolean wasInternalBalance;
+	Double value;
+	Integer keyGuideEntry;
+	String remarks;
+	Integer keyGratuitySituation;
+	Integer keyPersonAccount;
+	Integer keyResponsiblePerson;
+	
+	interface "
+		public net.sourceforge.fenixedu.domain.IGratuitySituation getGratuitySituation();
+		
+		public void setGratuitySituation(net.sourceforge.fenixedu.domain.IGratuitySituation gratuitySituation);
+	"
+}
+
+class net.sourceforge.fenixedu.domain.transactions.SmsTransaction extends net.sourceforge.fenixedu.domain.transactions.PaymentTransaction {
+	Boolean wasInternalBalance;
+	Double value;
+	Integer keyGuideEntry;
+	String remarks;
+	Integer keyPersonAccount;
+	Integer keyResponsiblePerson;
+}
+
+class net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction extends net.sourceforge.fenixedu.domain.transactions.PaymentTransaction {
+	Boolean wasInternalBalance;
+	Double value;
+	Integer keyGuideEntry;
+	String remarks;
+	Integer keyPersonAccount;
+	Integer keyExecutionYear;
+	Integer keyResponsiblePerson;
+	Integer keyStudent;
+	
+	interface "
+		public net.sourceforge.fenixedu.domain.IStudent getStudent();
+		
+		public void setStudent(net.sourceforge.fenixedu.domain.IStudent student);	
+	"
+}
+
+class net.sourceforge.fenixedu.domain.WorkLocation extends net.sourceforge.fenixedu.domain.DomainObject {
+	String name;
+}
+
+*
  * External classes declarations
  *
  * The following declarations allow the DmlCompiler to recognize the classes in
@@ -2804,7 +2904,6 @@ class net.sourceforge.fenixedu.domain.WebSiteSection extends net.sourceforge.fen
  * 
  */
 
-external class net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction ;
 
 
 /*
