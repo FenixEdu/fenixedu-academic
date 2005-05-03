@@ -9,6 +9,12 @@
 		</layout>
 	</appender>
 
+	<appender name="BasicConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name= "ConversionPattern" value= "%m%n"/>
+		</layout>
+	</appender>
+
 	<appender name= "profileLog" class= "org.apache.log4j.DailyRollingFileAppender">
 		<param name= "File" value= "@log.profile.dir@/@log.profile.filename@"/>
 		<param name= "DatePattern" value= "'.'yyyy-MM-dd"/>
@@ -68,7 +74,7 @@
 
 	<logger name="pt.utl.ist.domain.DomainDMLOJBVerifier" additivity="false">
 		<level value="info"/>
-		<appender-ref ref="ConsoleAppender"/>
+		<appender-ref ref="BasicConsoleAppender"/>
 	</logger>
 
 	<root>
