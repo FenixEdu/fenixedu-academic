@@ -325,18 +325,18 @@
 
 			<replace dir="${build.home.webinf.classes}/ServidorApresentacao"
 					 propertyFile="build.properties">
-				<include name="ApplicationResources.properties"/>
-				<include name="ApplicationResourcesSOP.properties"/>
-				<include name="ManagerResources.properties"/>
+				<include name="ApplicationResources*.properties"/>
+				<include name="ApplicationResourcesSOP*.properties"/>
+				<include name="ManagerResources*.properties"/>
 			  	<replacefilter token="@login.page@"
-			  				   property="login.page"/>
+							   value="${login.page}"/>
 			</replace>
 
 			<replace dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="logAnalyser.properties"/>
 			  	<replacefilter token="@login.page@"
-			  				   property="login.page"/>
+					  		   value="${login.page}"/>
 			  	<replacefilter token="@log.image.directory@"
 			  				   property="log.image.directory"/>
 			  	<replacefilter token="@log.profile.dir@"
