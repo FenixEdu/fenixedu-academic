@@ -337,7 +337,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 	}
 
 	public IPersistentAdvisory getIPersistentAdvisory()  {
-		return null;
+		return new AdvisoryVO();
 	}
 
 	public IPersistentMasterDegreeCandidate getIPersistentMasterDegreeCandidate()  {
