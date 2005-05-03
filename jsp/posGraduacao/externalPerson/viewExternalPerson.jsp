@@ -27,7 +27,7 @@
 				<bean:message key="label.person.sex"/>&nbsp;
 			</th>
 			<td align="left">
-				<bean:write name="externalPerson" property="infoPerson.sex"/>
+				<bean:write name="externalPerson" property="infoPerson.sexo"/>
 			</td>
 		</tr>		
 		<tr>
