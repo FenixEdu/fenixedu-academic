@@ -17,9 +17,3 @@
 		<bean:message key="label.editGuide" />
 	</html:link>
 </strong></p>
-
-<p><strong>&raquo;
-	<html:link page="/guideManagement/chooseGuideInJSF.faces">
-		<bean:message key="label.editGuide" />
-	</html:link>
-</strong></p>

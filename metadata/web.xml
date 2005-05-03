@@ -302,19 +302,13 @@
     </servlet-mapping>
 	<session-config>
 			<session-timeout>120</session-timeout>
-	</session-config>  
-	
-	<context-param>
-		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
-		<param-value>client</param-value>
-	</context-param>  
+	</session-config>    
 
-	<!-- 
+
 	<error-page>
 	    <exception-type>java.lang.Exception</exception-type>
 	    <location>/showErrorPage.do</location>
 	</error-page> 
-	 -->
 
     <taglib>
         <taglib-uri>/WEB-INF/struts-html.tld</taglib-uri>
