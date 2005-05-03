@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project basedir="." default="ojb2dmlVerifier" name="Compilation Scripts">
+
+    <property environment="env"/>
+	<property name="encoding" value="ISO-8859-1"/>	
+
+	<property file="build.properties"/>
+
+	<property name="config" location="config"/>
+
+    <!-- Source code directories -->
+    <property name="src" location="src"/>
+    <property name="src_gen" location="src_gen"/>    
+    <property name="src_tools" location="src_tools"/>
+
+	<!-- Directories for compiled code -->
+	<property name="build.home" location="build"/>
+	<property name="build.home.temp" value="${build.home}/temp"/>
+	<property name="build.home.temp.classes" value="${build.home.temp}/temp/classes"/>
+	<property name="build.home.webinf" value="${build.home}/WEB-INF"/>
+	<property name="build.home.webinf.classes" value="${build.home.webinf}/classes"/>
+
+    <!-- Directories with libraries (JARs) -->
+    <property name="lib" location="lib" />
+
+	<!-- Compilation options -->
+	<property name="compile.debug"       value="on"/>
+  	<property name="compile.deprecation" value="off"/>
+  	<property name="compile.optimize"    value="on"/>
+
+
+    <target name="ojb2dmlVerifier"
+    		description="Verify DML mapping from OJB Mapping.">
+    	<ant antfile="build_compile.xml" target="compile" />
+    	<ant antfile="build_codeGenerator.xml" target="compile" />
+		<java classname="pt.utl.ist.domain.DomainDMLOJBVerifier" fork="true">
+			<classpath>
+				<pathelement path="${build.home.temp.classes}"/>
+				<pathelement path="${build.home.webinf.classes}"/>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                	<exclude name="**/berserk.jar"/>
+                </fileset>
+			</classpath>
+		</java>
+    </target>
+
+</project>
