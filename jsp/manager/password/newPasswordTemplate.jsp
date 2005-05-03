@@ -63,7 +63,7 @@
             <td> <bean:message key="label.candidate.identificationDocumentType"/> </td>
             <td>
             	<bean:define id="idType" name="infoPerson" property="tipoDocumentoIdentificacao"/> 
-            	<bean:message key='<%=idType.toString()%>'/> 
+            	<bean:message bundle="ENUMERATION_RESOURCES" key='<%=idType.toString()%>'/> 
             </td>
           </tr>
           <tr>
