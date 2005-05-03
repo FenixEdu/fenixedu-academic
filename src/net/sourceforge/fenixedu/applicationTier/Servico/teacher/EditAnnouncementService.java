@@ -32,7 +32,7 @@ public class EditAnnouncementService implements IService {
     public EditAnnouncementService() {
     }
 
-    private void checkIfAnnouncementExists(String oldAnnouncementTitle, Timestamp date,
+    private void checkIfAnnouncementExists(String oldAnnouncementTitle, Date date,
             String announcementTitle, ISite announcementSite) throws FenixServiceException {
         IAnnouncement announcement = null;
         if (!oldAnnouncementTitle.equals(announcementTitle)) {
@@ -56,7 +56,7 @@ public class EditAnnouncementService implements IService {
             String announcementNewTitle, String announcementNewInformation) throws FenixServiceException {
 
         ISite site = null;
-        Timestamp date = null;
+        Date date = null;
         IAnnouncement iAnnouncement = null;
         try {
             persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();

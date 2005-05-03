@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.IAnnouncement;
 
@@ -14,9 +14,9 @@ public class InfoAnnouncement extends InfoObject implements Comparable, ISiteCom
 
     private String title;
 
-    private Timestamp creationDate;
+    private Date creationDate;
 
-    private Timestamp lastModifiedDate;
+    private Date lastModifiedDate;
 
     private String information;
 
@@ -25,7 +25,7 @@ public class InfoAnnouncement extends InfoObject implements Comparable, ISiteCom
     public InfoAnnouncement() {
     }
 
-    public InfoAnnouncement(String title, Timestamp creationDate, Timestamp lastModifiedDate,
+    public InfoAnnouncement(String title, Date creationDate, Date lastModifiedDate,
             String information, InfoSite infoSite) {
         this.title = title;
         this.creationDate = creationDate;
@@ -58,96 +58,46 @@ public class InfoAnnouncement extends InfoObject implements Comparable, ISiteCom
         return result;
     }
 
-    /**
-     * @return Timestamp
-     */
-    public Timestamp getCreationDate() {
+    public Date getCreationDate() {
         return creationDate;
     }
 
-    /**
-     * @return String
-     */
     public String getInformation() {
         return information;
     }
 
-    /**
-     * @return InfoSite
-     */
     public InfoSite getInfoSite() {
         return infoSite;
     }
 
-    /**
-     * @return Timestamp
-     */
-    public Timestamp getLastModifiedDate() {
+    public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    /**
-     * @return String
-     */
     public String getTitle() {
         return title;
     }
 
-    /**
-     * Sets the creationDate.
-     * 
-     * @param creationDate
-     *            The creationDate to set
-     */
-    public void setCreationDate(Timestamp creationDate) {
+    public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
 
-    /**
-     * Sets the information.
-     * 
-     * @param information
-     *            The information to set
-     */
     public void setInformation(String information) {
         this.information = information;
     }
 
-    /**
-     * Sets the infoSite.
-     * 
-     * @param infoSite
-     *            The infoSite to set
-     */
     public void setInfoSite(InfoSite infoSite) {
         this.infoSite = infoSite;
     }
 
-    /**
-     * Sets the lastModifiedDate.
-     * 
-     * @param lastModifiedDate
-     *            The lastModifiedDate to set
-     */
-    public void setLastModifiedDate(Timestamp lastModifiedDate) {
+    public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    /**
-     * Sets the title.
-     * 
-     * @param title
-     *            The title to set
-     */
     public void setTitle(String title) {
         this.title = title;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
     public int compareTo(Object arg0) {
         if (getYoungerDate().after(((InfoAnnouncement) arg0).getYoungerDate())) {
             return -1;
@@ -170,10 +120,9 @@ public class InfoAnnouncement extends InfoObject implements Comparable, ISiteCom
         String result = this.lastModifiedDate.toString();
 
         return result.substring(0, result.indexOf("."));
-
     }
 
-    private Timestamp getYoungerDate() {
+    private Date getYoungerDate() {
 
         if (getLastModifiedDate() != null && getLastModifiedDate().after(getCreationDate())) {
             return getLastModifiedDate();

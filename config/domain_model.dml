@@ -25,16 +25,8 @@ class net.sourceforge.fenixedu.domain.Announcement extends net.sourceforge.fenix
 	Integer keySite;
 	String information;
 	String title;
-	
-	interface "
-	public java.sql.Timestamp getCreationDate();
-    
-    public void setCreationDate(java.sql.Timestamp creationDate);
-
-    public java.sql.Timestamp getLastModifiedDate();
-
-    public void setLastModifiedDate(java.sql.Timestamp lastModifiedDate);	
-	"
+    Date creationDate;
+    Date lastModifiedDate;
 }
 
 

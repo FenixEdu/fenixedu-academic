@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Announcement;
@@ -16,7 +16,8 @@ import org.apache.ojb.broker.query.Criteria;
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
  */
 public class AnnouncementOJB extends PersistentObjectOJB implements IPersistentAnnouncement {
-    public IAnnouncement readAnnouncementByTitleAndCreationDateAndSite(String title, Timestamp cDate,
+    
+    public IAnnouncement readAnnouncementByTitleAndCreationDateAndSite(String title, Date cDate,
             ISite site) throws ExcepcaoPersistencia {
 
         Criteria crit = new Criteria();

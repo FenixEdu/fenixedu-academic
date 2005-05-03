@@ -4,7 +4,7 @@ package net.sourceforge.fenixedu.persistenceTier;
  * @author EP15
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a>
  */
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IAnnouncement;
@@ -14,7 +14,7 @@ public interface IPersistentAnnouncement extends IPersistentObject {
 
     public IAnnouncement readAnnouncementByTitleAndCreationDateAndSite(
         String title,
-        Timestamp date,
+        Date date,
         ISite site)
         throws ExcepcaoPersistencia;
     

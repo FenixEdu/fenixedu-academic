@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -32,7 +33,7 @@ public class CreateAnnouncement implements IService {
     }
 
     private void checkIfAnnouncementExists(String announcementTitle, ISite announcementSite,
-            Timestamp currentDate) throws FenixServiceException {
+            Date currentDate) throws FenixServiceException {
         IAnnouncement announcement = null;
         persistentAnnouncement = persistentSupport.getIPersistentAnnouncement();
 
@@ -79,8 +80,7 @@ public class CreateAnnouncement implements IService {
                 new Timestamp(calendar.getTime().getTime()));
 
         try {
-            IAnnouncement newAnnouncement = new Announcement(newAnnouncementTitle, new Timestamp(
-                    calendar.getTime().getTime()), new Timestamp(calendar.getTime().getTime()),
+            IAnnouncement newAnnouncement = new Announcement(newAnnouncementTitle, calendar.getTime(), calendar.getTime(),
                     newAnnouncementInformation, site);
             persistentAnnouncement.simpleLockWrite(newAnnouncement);
 
