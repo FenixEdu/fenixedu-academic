@@ -3,9 +3,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.utils.MockUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSubmitMarks;
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -14,6 +13,7 @@ import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluation;
@@ -26,106 +26,79 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
+
 /**
  * @author Tânia Pousão
  *  
  */
-public class ValidateSubmitMarks implements IServico {
-    private static ValidateSubmitMarks _service = new ValidateSubmitMarks();
+public class ValidateSubmitMarks implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    private ValidateSubmitMarks() {
+    public InfoSiteSubmitMarks run(Integer executionCourseCode, Integer evaluationCode,
+            IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
 
-    }
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-    /**
-     * Returns Service Name
-     */
-    public String getNome() {
-        return "ValidateSubmitMarks";
-    }
+        //execution course and execution course's site
+        IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+        IPersistentEnrolmentEvaluation enrolmentEvaluationDAO = sp.getIPersistentEnrolmentEvaluation();
 
-    /**
-     * Returns the _servico.
-     * 
-     * @return ReadExecutionCourse
-     */
-    public static ValidateSubmitMarks getService() {
-        return _service;
-    }
+        final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                ExecutionCourse.class, executionCourseCode);
 
-    public InfoSiteSubmitMarks run(Integer executionCourseCode, Integer evaluationCode, MockUserView userView)
-            throws FenixServiceException {
+        //evaluation
+        IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
+        IEvaluation evaluation = (IEvaluation) persistentEvaluation.readByOID(Evaluation.class,
+                evaluationCode);
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        //attend list
+        IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
+        List attendList = persistentAttend.readByExecutionCourse(executionCourse);
 
-            //execution course and execution course's site
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            IPersistentEnrolmentEvaluation enrolmentEvaluationDAO = sp
-                    .getIPersistentEnrolmentEvaluation();
+        //verifySubmitMarks(attendList);
 
-            final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
-                    ExecutionCourse.class, executionCourseCode);
+        List enrolmentListIds = (List) CollectionUtils.collect(attendList, new Transformer() {
 
-            //evaluation
-            IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
-            IEvaluation evaluation = (IEvaluation) persistentEvaluation.readByOID(Evaluation.class,
-                    evaluationCode);
-
-            //attend list
-            IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
-            List attendList = persistentAttend.readByExecutionCourse(executionCourse);
-
-            //verifySubmitMarks(attendList);
-
-            List enrolmentListIds = (List) CollectionUtils.collect(attendList, new Transformer() {
-
-                public Object transform(Object input) {
-                    IAttends attend = (IAttends) input;
-                    IEnrolment enrolment = attend.getEnrolment();
-                    if(enrolment != null) {
-                        if(enrolment.getExecutionPeriod().equals(executionCourse.getExecutionPeriod()))
-                            return enrolment.getIdInternal();
-                    }
-                    return null;
+            public Object transform(Object input) {
+                IAttends attend = (IAttends) input;
+                IEnrolment enrolment = attend.getEnrolment();
+                if (enrolment != null) {
+                    if (enrolment.getExecutionPeriod().equals(executionCourse.getExecutionPeriod()))
+                        return enrolment.getIdInternal();
                 }
-            });
-
-            enrolmentListIds = (List) CollectionUtils.select(enrolmentListIds, new Predicate() {
-                public boolean evaluate(Object arg0) {
-                    return arg0 != null;
-                }
-            });
-            
-            List alreadySubmiteMarks = new ArrayList();
-            if(!enrolmentListIds.isEmpty()) {
-                alreadySubmiteMarks = enrolmentEvaluationDAO.readAlreadySubmitedMarks(enrolmentListIds);
+                return null;
             }
+        });
 
-            if (!alreadySubmiteMarks.isEmpty()) {
-                throw new FenixServiceException("errors.submitMarks.yetSubmited");
+        enrolmentListIds = (List) CollectionUtils.select(enrolmentListIds, new Predicate() {
+            public boolean evaluate(Object arg0) {
+                return arg0 != null;
             }
+        });
 
-            //marks list
-            IPersistentMark persistentMark = sp.getIPersistentMark();
-            List markList = persistentMark.readBy(evaluation);
-
-            //Check if there is any mark. If not, we can not submit
-            if (markList.isEmpty()) {
-                throw new FenixServiceException("errors.submitMarks.noMarks");
-            }
-
-            InfoSiteSubmitMarks infoSiteSubmitMarks = new InfoSiteSubmitMarks();
-
-            infoSiteSubmitMarks.setInfoEvaluation(InfoEvaluation.newInfoFromDomain(evaluation));
-
-            return infoSiteSubmitMarks;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new FenixServiceException(e.getMessage());
+        List alreadySubmiteMarks = new ArrayList();
+        if (!enrolmentListIds.isEmpty()) {
+            alreadySubmiteMarks = enrolmentEvaluationDAO.readAlreadySubmitedMarks(enrolmentListIds);
         }
+
+        if (!alreadySubmiteMarks.isEmpty()) {
+            throw new FenixServiceException("errors.submitMarks.yetSubmited");
+        }
+
+        //marks list
+        IPersistentMark persistentMark = sp.getIPersistentMark();
+        List markList = persistentMark.readBy(evaluation);
+
+        //Check if there is any mark. If not, we can not submit
+        if (markList.isEmpty()) {
+            throw new FenixServiceException("errors.submitMarks.noMarks");
+        }
+
+        InfoSiteSubmitMarks infoSiteSubmitMarks = new InfoSiteSubmitMarks();
+
+        infoSiteSubmitMarks.setInfoEvaluation(InfoEvaluation.newInfoFromDomain(evaluation));
+
+        return infoSiteSubmitMarks;
+
     }
 }
