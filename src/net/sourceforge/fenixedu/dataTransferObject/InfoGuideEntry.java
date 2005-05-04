@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.IGuideEntry;
-import net.sourceforge.fenixedu.util.DocumentType;
+import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
 
 /**

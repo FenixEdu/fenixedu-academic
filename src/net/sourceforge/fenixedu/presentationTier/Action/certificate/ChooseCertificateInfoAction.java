@@ -32,7 +32,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.CertificateList;
 import net.sourceforge.fenixedu.util.DocumentReason;
-import net.sourceforge.fenixedu.util.DocumentType;
+import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
 import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
@@ -63,7 +63,7 @@ public class ChooseCertificateInfoAction extends DispatchAction {
             List documentReason = DocumentReason.toArrayList();
 
             List types = new ArrayList();
-            types.add(DocumentType.CERTIFICATE_TYPE);
+            types.add(DocumentType.CERTIFICATE);
 
             //			 inputs
             Object args[] = { GraduationType.MASTER_DEGREE_TYPE, types };

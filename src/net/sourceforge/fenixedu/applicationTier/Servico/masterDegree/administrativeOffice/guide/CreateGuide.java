@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.CalculateGuideTotal;
-import net.sourceforge.fenixedu.util.DocumentType;
+import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
 import net.sourceforge.fenixedu.util.SituationOfGuide;
 import net.sourceforge.fenixedu.util.State;
@@ -57,7 +57,7 @@ public class CreateGuide implements IService {
             infoGuideEntry.setDescription(othersRemarks);
             infoGuideEntry.setPrice(othersPrice);
             infoGuideEntry.setInfoGuide(infoGuide);
-            infoGuideEntry.setDocumentType(DocumentType.OTHERS_TYPE);
+            infoGuideEntry.setDocumentType(DocumentType.OTHERS);
             infoGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE_TYPE);
             infoGuideEntry.setQuantity(new Integer(1));
             List entries = infoGuide.getInfoGuideEntries();

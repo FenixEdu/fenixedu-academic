@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.IGuideEntry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGuideEntry;
-import net.sourceforge.fenixedu.util.DocumentType;
+import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
 
 /**
@@ -42,7 +42,7 @@ public class GuideEntryOJB extends PersistentObjectOJB implements IPersistentGui
 
         crit.addEqualTo("guide.version", guide.getVersion());
         crit.addEqualTo("graduationType", graduationType.getType());
-        crit.addEqualTo("documentType", documentType.getType());
+        crit.addEqualTo("documentType", documentType.name());
         crit.addEqualTo("description", description);
         return (IGuideEntry) queryObject(GuideEntry.class, crit);
 

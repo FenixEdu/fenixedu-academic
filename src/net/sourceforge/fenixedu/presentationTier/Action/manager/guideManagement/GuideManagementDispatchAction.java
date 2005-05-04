@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
-import net.sourceforge.fenixedu.util.DocumentType;
+import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
 import net.sourceforge.fenixedu.util.SituationOfGuide;
 
@@ -127,7 +127,6 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
         request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
         request.setAttribute("executionYears", executionYears);
         request.setAttribute("guide", guide);
-        request.setAttribute("documentTypes", DocumentType.toArrayListWithIntValues());
         request.setAttribute("situationTypes", SituationOfGuide.toArrayList());
         request.setAttribute("days", Data.getMonthDays());
         request.setAttribute("months", Data.getMonths());
@@ -146,10 +145,10 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
         String newEntryDescription = (String) guideForm.get("newEntryDescription");
         Integer newEntryQuantity = (Integer) guideForm.get("newEntryQuantity");
         Double newEntryPrice = (Double) guideForm.get("newEntryPrice");
-        Integer newEntryDocumentType = (Integer) guideForm.get("newEntryDocumentType");
+        String newEntryDocumentType = (String) guideForm.get("newEntryDocumentType");
 
         Object[] args = { guideID, GraduationType.MASTER_DEGREE_TYPE,
-                new DocumentType(newEntryDocumentType), newEntryDescription, newEntryPrice,
+                DocumentType.valueOf(newEntryDocumentType), newEntryDescription, newEntryPrice,
                 newEntryQuantity };
         try {
             ServiceUtils.executeService(userView, "CreateGuideEntry", args);
@@ -210,7 +209,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
         DynaActionForm guideForm = (DynaActionForm) actionForm;
 
-        Integer selectedGuideEntryDocumentType = (Integer) guideForm
+        String selectedGuideEntryDocumentType = (String) guideForm
                 .get("selectedGuideEntryDocumentType");
         Integer selectedGuideEntryID = (Integer) guideForm.get("selectedGuideEntryID");
 
@@ -218,9 +217,9 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
         try {
 
-            if (selectedGuideEntryDocumentType.intValue() == DocumentType.GRATUITY) {
+            if (selectedGuideEntryDocumentType.equals(DocumentType.GRATUITY.name())) {
                 ServiceUtils.executeService(userView, "CreateGratuityTransaction", args);
-            } else if (selectedGuideEntryDocumentType.intValue() == DocumentType.INSURANCE) {
+            } else if (selectedGuideEntryDocumentType.equals(DocumentType.INSURANCE.name())) {
                 ServiceUtils.executeService(userView, "CreateInsuranceTransaction", args);
             }
 

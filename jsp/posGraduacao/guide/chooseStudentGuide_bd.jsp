@@ -2,7 +2,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <h2><bean:message key="label.masterDegree.administrativeOffice.studentGuide" /></h2>
  <bean:define id="studentGuideList" name="<%= SessionConstants.CERTIFICATE_LIST %>"/>
@@ -24,7 +23,8 @@
     <logic:iterate id="price" name="certificateList" >
     	<tr>
     		<td>
-	  			<bean:write name="price" property="documentType" /> : <bean:write name="price" property="description" />
+				<bean:define id="documentType"><bean:write name="price" property="documentType"/></bean:define>
+				<bean:message name="documentType" bundle="ENUMERATION_RESOURCES" /> : <bean:write name="price" property="description" />
   	        </td>
   	       
     		<td>

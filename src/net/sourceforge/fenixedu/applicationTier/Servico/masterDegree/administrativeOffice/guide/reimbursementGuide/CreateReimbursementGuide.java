@@ -36,7 +36,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuideEntry;
-import net.sourceforge.fenixedu.util.DocumentType;
+import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.SituationOfGuide;
 import net.sourceforge.fenixedu.util.State;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -147,7 +147,7 @@ public class CreateReimbursementGuide implements IService {
                 reimbursementGuideEntry = (IReimbursementGuideEntry) it.next();
 
                 if (reimbursementGuideEntry.getGuideEntry().getDocumentType().equals(
-                        DocumentType.INSURANCE_TYPE)
+                        DocumentType.INSURANCE)
                         && !reimbursementGuideEntry.getValue().equals(
                                 reimbursementGuideEntry.getGuideEntry().getPrice())) {
                     throw new InvalidReimbursementValueServiceException(

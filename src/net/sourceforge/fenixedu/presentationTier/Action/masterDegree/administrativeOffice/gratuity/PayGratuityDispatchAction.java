@@ -34,7 +34,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.DocumentType;
+import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
 import net.sourceforge.fenixedu.util.GuideRequester;
 import net.sourceforge.fenixedu.util.SituationOfGuide;
@@ -177,7 +177,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
                     gratuitySituationId);
 
             InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
-            infoGuideEntry.setDocumentType(new DocumentType(DocumentType.GRATUITY));
+            infoGuideEntry.setDocumentType(DocumentType.GRATUITY);
             infoGuideEntry.setPrice(infoGratuitySituation.getRemainingValue());
             infoGuideEntry.setQuantity(new Integer(1));
             infoGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE_TYPE);
@@ -214,7 +214,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
                     insuranceExecutionYearId);
 
             InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
-            infoGuideEntry.setDocumentType(new DocumentType(DocumentType.INSURANCE));
+            infoGuideEntry.setDocumentType(DocumentType.INSURANCE);
             infoGuideEntry.setPrice(infoInsuranceValue.getAnnualValue());
             infoGuideEntry.setQuantity(new Integer(1));
             infoGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE_TYPE);

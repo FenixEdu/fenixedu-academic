@@ -77,7 +77,10 @@
 		
 	<logic:iterate id="reimbursementGuideEntry" name="reimbursementGuide" property="infoReimbursementGuideEntries">
 		<tr align="center">
-			<td><bean:write name="reimbursementGuideEntry" property="infoGuideEntry.documentType"/></td>
+			<td>
+				<bean:define id="documentType"><bean:write name="reimbursementGuideEntry" property="infoGuideEntry.documentType"/></bean:define>
+				<bean:message name="documentType" bundle="ENUMERATION_RESOURCES" />
+			</td>
 			<td><bean:write name="reimbursementGuideEntry" property="infoGuideEntry.description"/></td>		
 			<td><bean:write name="reimbursementGuideEntry" property="value"/>&nbsp;<bean:message key="label.currencySymbol"/></td>							
 			<td><bean:write name="reimbursementGuideEntry" property="justification"/></td>							

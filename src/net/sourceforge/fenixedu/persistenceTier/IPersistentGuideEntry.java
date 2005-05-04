@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.IGuideEntry;
-import net.sourceforge.fenixedu.util.DocumentType;
+import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
 
 /**

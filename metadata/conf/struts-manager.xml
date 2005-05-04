@@ -429,13 +429,13 @@
 			<form-property name="newEntryDescription" type="java.lang.String"/> 
 			<form-property name="newEntryQuantity" type="java.lang.Integer"/> 
 			<form-property name="newEntryPrice" type="java.lang.Double"/> 
-			<form-property name="newEntryDocumentType" type="java.lang.Integer"/> 		
+			<form-property name="newEntryDocumentType" type="java.lang.String"/> 		
 			<form-property name="newSituationRemarks" type="java.lang.String"/> 
 			<form-property name="newSituationDay" type="java.lang.Integer"/> 
 			<form-property name="newSituationMonth" type="java.lang.Integer"/> 
 			<form-property name="newSituationYear" type="java.lang.Integer"/> 
 			<form-property name="newSituationType" type="java.lang.String"/> 
-			<form-property name="selectedGuideEntryDocumentType" type="java.lang.Integer"/>
+			<form-property name="selectedGuideEntryDocumentType" type="java.lang.String"/>
 			<form-property name="selectedGuideEntryID" type="java.lang.Integer"/>
 			<form-property name="newExecutionYear" type="java.lang.String"/> 		
 			<form-property name="newDegreeCurricularPlanID" type="java.lang.Integer"/>								

@@ -38,7 +38,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransaction;
-import net.sourceforge.fenixedu.util.DocumentType;
+import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.SituationOfGuide;
 import net.sourceforge.fenixedu.util.State;
 import net.sourceforge.fenixedu.util.TipoCurso;
@@ -157,7 +157,7 @@ public class ChangeGuideSituation implements IService {
                         IExecutionDegree executionDegree = guide.getExecutionDegree();
 
                         //Write Gratuity Transaction
-                        if (guideEntry.getDocumentType().equals(DocumentType.GRATUITY_TYPE)) {
+                        if (guideEntry.getDocumentType().equals(DocumentType.GRATUITY)) {
 
                             executionDegree = guide.getExecutionDegree();
                             gratuitySituation = persistentGratuitySituation
@@ -185,7 +185,7 @@ public class ChangeGuideSituation implements IService {
                         }
 
                         //Write Insurance Transaction
-                        if (guideEntry.getDocumentType().equals(DocumentType.INSURANCE_TYPE)) {
+                        if (guideEntry.getDocumentType().equals(DocumentType.INSURANCE)) {
 
                             IPersistentInsuranceTransaction insuranceTransactionDAO = sp
                                     .getIPersistentInsuranceTransaction();

@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.util.DocumentType;
+import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
 
 /**

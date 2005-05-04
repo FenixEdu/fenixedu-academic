@@ -1259,13 +1259,13 @@ class net.sourceforge.fenixedu.domain.GuideEntry extends net.sourceforge.fenixed
 	Integer quantity;
 	
 	interface "
-    	public net.sourceforge.fenixedu.util.DocumentType getDocumentType();
+    	public net.sourceforge.fenixedu.domain.DocumentType getDocumentType();
     	
     	public net.sourceforge.fenixedu.util.GraduationType getGraduationType();
     	
     	public net.sourceforge.fenixedu.domain.IGuide getGuide();
     	
-    	public void setDocumentType(net.sourceforge.fenixedu.util.DocumentType type);
+    	public void setDocumentType(net.sourceforge.fenixedu.domain.DocumentType type);
     	
     	public void setGraduationType(net.sourceforge.fenixedu.util.GraduationType type);
     	
@@ -1833,11 +1833,11 @@ class net.sourceforge.fenixedu.domain.Price extends net.sourceforge.fenixedu.dom
 	Integer internalCode;
 	
 	interface "
-	    public net.sourceforge.fenixedu.util.DocumentType getDocumentType();
+	    public net.sourceforge.fenixedu.domain.DocumentType getDocumentType();
 	    
 	    public net.sourceforge.fenixedu.util.GraduationType getGraduationType();
 	    
-	    public void setDocumentType(net.sourceforge.fenixedu.util.DocumentType type);
+	    public void setDocumentType(net.sourceforge.fenixedu.domain.DocumentType type);
 	    
 	    public void setGraduationType(net.sourceforge.fenixedu.util.GraduationType type);
 	"

@@ -72,7 +72,10 @@
 		<logic:notEmpty name="infoGuide" property="infoGuideEntries">
          <logic:iterate id="guideEntry" name="infoGuide" property="infoGuideEntries">
            <tr>
-            <td><bean:write name="guideEntry" property="documentType"/></td>
+            <td>
+            	<bean:define id="documentType"><bean:write name="guideEntry" property="documentType"/></bean:define>
+				<bean:message name="documentType" bundle="ENUMERATION_RESOURCES" />
+            </td>
             <td><bean:write name="guideEntry" property="description"/></td>
             <td><bean:write name="guideEntry" property="quantity"/></td>
             <td align="right"><bean:write name="guideEntry" property="price"/> <bean:message key="label.currencySymbol" /></td>

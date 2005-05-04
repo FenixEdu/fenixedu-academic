@@ -39,7 +39,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransaction;
 import net.sourceforge.fenixedu.util.CalculateGuideTotal;
-import net.sourceforge.fenixedu.util.DocumentType;
+import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
 import net.sourceforge.fenixedu.util.SituationOfGuide;
 import net.sourceforge.fenixedu.util.State;
@@ -141,7 +141,7 @@ public class EditGuideInformation implements IService {
             change = true;
             othersGuideEntry = new GuideEntry();
             othersGuideEntry.setDescription(othersRemarks);
-            othersGuideEntry.setDocumentType(DocumentType.OTHERS_TYPE);
+            othersGuideEntry.setDocumentType(DocumentType.OTHERS);
             // TODO : In the future it's possible to be a Major Degree
             othersGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE_TYPE);
             othersGuideEntry.setPrice(othersPrice);
@@ -263,7 +263,7 @@ public class EditGuideInformation implements IService {
                         IExecutionDegree executionDegree = guide.getExecutionDegree();
 
                         //Write Gratuity Transaction
-                        if (guideEntry.getDocumentType().equals(DocumentType.GRATUITY_TYPE)) {
+                        if (guideEntry.getDocumentType().equals(DocumentType.GRATUITY)) {
 
                             executionDegree = guide.getExecutionDegree();
                             gratuitySituation = persistentGratuitySituation
@@ -289,7 +289,7 @@ public class EditGuideInformation implements IService {
                         }
 
                         //Write Insurance Transaction
-                        if (guideEntry.getDocumentType().equals(DocumentType.INSURANCE_TYPE)) {
+                        if (guideEntry.getDocumentType().equals(DocumentType.INSURANCE)) {
                             paymentTransaction = new InsuranceTransaction(guideEntry.getPrice(),
                                     new Timestamp(Calendar.getInstance().getTimeInMillis()), guideEntry
                                             .getDescription(), infoGuide.getPaymentType(),

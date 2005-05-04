@@ -88,7 +88,9 @@
 				property="infoGuideEntries" indexId="index">
 		<tr>				
 				<td>
-				<bean:write name="guideEntry" property="documentType.type" /> </td><td>
+					<bean:define id="documentType"><bean:write name="guideEntry" property="documentType"/></bean:define>
+					<bean:message name="documentType" bundle="ENUMERATION_RESOURCES" />
+				</td><td>
 				<bean:write name="guideEntry" property="description" /> </td> <td>
 					<bean:write name="guideEntry" property="quantity" />  </td><td>
 					<bean:write name="guideEntry" property="price" /> </td><td>
@@ -105,7 +107,7 @@
 					<bean:define id="behavior" >
 						this.form.method.value='createPaymentTransaction';
 						this.form.selectedGuideEntryID.value='<bean:write name="guideEntry" property="idInternal" />';
-						this.form.selectedGuideEntryDocumentType.value='<bean:write name="guideEntry" property="documentType.type" />';
+						this.form.selectedGuideEntryDocumentType.value='<bean:write name="documentType" />';
 					</bean:define>
 					<html:submit value="Criar Transação" onclick="<%= behavior %>" />				
 				<% }%>	
@@ -133,10 +135,13 @@
 			<td><b>Preço: </b></td>
 		</tr>
 		<tr>
-			<td ><html:select property="newEntryDocumentType">
-				<html:options collection="documentTypes" property="value"
-					labelProperty="label" />
-			</html:select></td>
+			<td>
+				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.DocumentType" bundle="ENUMERATION_RESOURCES"/>
+				<html:select property="newEntryDocumentType">
+					<html:option key="dropDown.Default" value=""/>
+					<html:options collection="values" property="value" labelProperty="label" />
+				</html:select>
+			</td>
 			<td><html:text property="newEntryDescription" /></td>
 			<td><html:text size="4" property="newEntryQuantity" /></td>
 			<td><html:text size="4" property="newEntryPrice" /></td>

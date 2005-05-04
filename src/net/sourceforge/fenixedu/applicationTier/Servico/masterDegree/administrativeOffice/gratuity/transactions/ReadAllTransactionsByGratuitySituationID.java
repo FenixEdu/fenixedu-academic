@@ -8,6 +8,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoTransaction;
+import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
 import net.sourceforge.fenixedu.domain.IGuideEntry;
@@ -24,8 +25,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
-import net.sourceforge.fenixedu.util.DocumentType;
-
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
@@ -94,8 +93,8 @@ public class ReadAllTransactionsByGratuitySituationID implements IService {
                 IGuideEntry guideEntry = paymentTransaction.getGuideEntry();
 
                 if ((guideEntry != null)
-                        && ((guideEntry.getDocumentType().equals(DocumentType.INSURANCE_TYPE) || (guideEntry
-                                .getDocumentType().equals(DocumentType.GRATUITY_TYPE))))) {
+                        && ((guideEntry.getDocumentType().equals(DocumentType.INSURANCE) || (guideEntry
+                                .getDocumentType().equals(DocumentType.GRATUITY))))) {
 
                     List reimbursementGuideEntryList = guideEntry.getReimbursementGuideEntries();
 

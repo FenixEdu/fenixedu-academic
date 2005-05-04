@@ -206,7 +206,7 @@
 	  <field-descriptor id="2"
 	     name="documentType"
 	     column="DOCUMENT_TYPE"
-	     jdbc-type="INTEGER"
+	     jdbc-type="VARCHAR"
 	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDocumentType2SqlDocumentTypeFieldConversion"
 	  />
 	  <field-descriptor 
@@ -408,7 +408,7 @@
 	  <field-descriptor 
 	     name="documentType"
 	     column="DOCUMENT_TYPE"
-	     jdbc-type="INTEGER"
+	     jdbc-type="VARCHAR"
 	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDocumentType2SqlDocumentTypeFieldConversion"
 	  />
 	  <field-descriptor 

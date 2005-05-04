@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.DocumentType;
+import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
 import net.sourceforge.fenixedu.util.GuideRequester;
 import net.sourceforge.fenixedu.util.Specialization;
@@ -109,7 +109,7 @@ public class PrepareCreateGuide implements IService {
             IPrice price = null;
             try {
                 price = sp.getIPersistentPrice().readByGraduationTypeAndDocumentTypeAndDescription(
-                        GraduationType.MASTER_DEGREE_TYPE, DocumentType.APPLICATION_EMOLUMENT_TYPE,
+                        GraduationType.MASTER_DEGREE_TYPE, DocumentType.APPLICATION_EMOLUMENT,
                         graduationType);
             } catch (ExcepcaoPersistencia ex) {
                 FenixServiceException newEx = new FenixServiceException("Persistence layer error");

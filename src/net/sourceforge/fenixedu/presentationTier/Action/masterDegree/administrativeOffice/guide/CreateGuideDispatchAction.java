@@ -39,7 +39,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituat
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoActiveStudentCurricularPlanActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.util.DocumentType;
+import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
 import net.sourceforge.fenixedu.util.GuideRequester;
 import net.sourceforge.fenixedu.util.RandomStringGenerator;
@@ -174,13 +174,13 @@ public class CreateGuideDispatchAction extends DispatchAction {
 
             List types = new ArrayList();
             //types.add(DocumentType.INSURANCE_TYPE);
-            types.add(DocumentType.CERTIFICATE_TYPE);
-            types.add(DocumentType.ENROLMENT_TYPE);
-            types.add(DocumentType.EMOLUMENT_TYPE);
-            types.add(DocumentType.FINE_TYPE);
-            types.add(DocumentType.CERTIFICATE_OF_DEGREE_TYPE);
-            types.add(DocumentType.ACADEMIC_PROOF_EMOLUMENT_TYPE);
-            types.add(DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS_TYPE);
+            types.add(DocumentType.CERTIFICATE);
+            types.add(DocumentType.ENROLMENT);
+            types.add(DocumentType.EMOLUMENT);
+            types.add(DocumentType.FINE);
+            types.add(DocumentType.CERTIFICATE_OF_DEGREE);
+            types.add(DocumentType.ACADEMIC_PROOF_EMOLUMENT);
+            types.add(DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS);
             //types.add(DocumentType.GRATUITY_TYPE);
             Object argsAux[] = { GraduationType.MASTER_DEGREE_TYPE, types };
             List studentGuideList = null;

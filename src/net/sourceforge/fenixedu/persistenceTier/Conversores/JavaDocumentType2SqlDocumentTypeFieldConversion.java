@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
-import net.sourceforge.fenixedu.util.DocumentType;
+import net.sourceforge.fenixedu.domain.DocumentType;
 
 /**
  * 
@@ -14,16 +14,16 @@ public class JavaDocumentType2SqlDocumentTypeFieldConversion implements FieldCon
     public Object javaToSql(Object source) {
         if (source instanceof DocumentType) {
             DocumentType s = (DocumentType) source;
-            return s.getType();
+            return s.name();
         }
         return source;
 
     }
 
     public Object sqlToJava(Object source) {
-        if (source instanceof Integer) {
-            Integer src = (Integer) source;
-            return new DocumentType(src);
+        if (source instanceof String) {
+            String src = (String) source;
+            return DocumentType.valueOf(src);
         }
         return source;
 

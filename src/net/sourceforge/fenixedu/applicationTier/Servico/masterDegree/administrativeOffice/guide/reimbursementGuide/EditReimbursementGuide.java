@@ -44,7 +44,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuideEntry;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
-import net.sourceforge.fenixedu.util.DocumentType;
+import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.State;
 import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.util.transactions.TransactionType;
@@ -154,7 +154,7 @@ public class EditReimbursementGuide implements IService {
 
                     }
                     if (reimbursementGuideEntry.getGuideEntry().getDocumentType().equals(
-                            DocumentType.GRATUITY_TYPE)) {
+                            DocumentType.GRATUITY)) {
 
                         //                        // because of an OJB with cache bug we have to read
                         // the guide entry again
@@ -196,7 +196,7 @@ public class EditReimbursementGuide implements IService {
                     }
 
                     if (reimbursementGuideEntry.getGuideEntry().getDocumentType().equals(
-                            DocumentType.INSURANCE_TYPE)) {
+                            DocumentType.INSURANCE)) {
 
                         reimbursementTransaction = new ReimbursementTransaction(reimbursementGuideEntry
                                 .getValue(), new Timestamp(Calendar.getInstance().getTimeInMillis()),

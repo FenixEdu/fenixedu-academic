@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IPrice;
-import net.sourceforge.fenixedu.util.DocumentType;
+import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
 
 /**

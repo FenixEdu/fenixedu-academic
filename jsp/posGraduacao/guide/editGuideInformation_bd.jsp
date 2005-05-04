@@ -5,7 +5,7 @@
 
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.util.SituationOfGuide" %>
-<%@ page import="net.sourceforge.fenixedu.util.DocumentType" %>
+<%@ page import="net.sourceforge.fenixedu.domain.DocumentType" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry" %>
 
    	  <bean:define id="infoGuide" name="<%= SessionConstants.GUIDE %>" scope="session" type="net.sourceforge.fenixedu.dataTransferObject.InfoGuide"/>  		
@@ -98,7 +98,10 @@
            	  		<bean:define id="entryQuantity" name="guideEntry" property="quantity" />  		
         
            			<tr>
-            			<td><bean:write name="guideEntry" property="documentType"/></td>
+            			<td>
+            				<bean:define id="documentType"><bean:write name="guideEntry" property="documentType"/></bean:define>
+							<bean:message name="documentType" bundle="ENUMERATION_RESOURCES" />
+            			</td>
             			<td><bean:write name="guideEntry" property="description"/></td>
             			<input type="hidden" name="<%= new String("quantityList" + pageContext.findAttribute("position").toString()) %>" value='<%= pageContext.findAttribute("entryQuantity").toString() %>' >
             			<td><bean:write name="entryQuantity" /></td>
@@ -121,10 +124,13 @@
            	  		<bean:define id="entryQuantity" name="guideEntry" property="quantity" />  		
         
            			<tr>
-            			<td><bean:write name="guideEntry" property="documentType"/></td>
+            			<td>
+            				<bean:define id="documentType"><bean:write name="guideEntry" property="documentType"/></bean:define>
+							<bean:message name="documentType" bundle="ENUMERATION_RESOURCES" />
+            			</td>
             			<td><bean:write name="guideEntry" property="description"/></td>
 						
-						<% if(((InfoGuideEntry)guideEntry).getDocumentType().equals(DocumentType.GRATUITY_TYPE) || ((InfoGuideEntry)guideEntry).getDocumentType().equals(DocumentType.INSURANCE_TYPE)){ %>
+						<% if(((InfoGuideEntry)guideEntry).getDocumentType().equals(DocumentType.GRATUITY) || ((InfoGuideEntry)guideEntry).getDocumentType().equals(DocumentType.INSURANCE)){ %>
 							
 							<input type="hidden" name="<%= new String("quantityList" + pageContext.findAttribute("position").toString()) %>" value='<%= pageContext.findAttribute("entryQuantity").toString() %>' >
 							<td><bean:write name="entryQuantity" /></td>

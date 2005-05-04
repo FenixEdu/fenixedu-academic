@@ -1,17 +1,17 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import org.apache.ojb.broker.query.Criteria;
-
+import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.IPrice;
 import net.sourceforge.fenixedu.domain.Price;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPrice;
-import net.sourceforge.fenixedu.util.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+import org.apache.ojb.broker.query.Criteria;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -36,7 +36,7 @@ public class PriceOJB extends PersistentObjectOJB implements IPersistentPrice {
             DocumentType documentType, String description) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("graduationType", graduationType.getType());
-        crit.addEqualTo("documentType", documentType.getType());
+        crit.addEqualTo("documentType", documentType.name());
         crit.addEqualTo("description", description);
         return (IPrice) queryObject(Price.class, crit);
 
@@ -46,7 +46,7 @@ public class PriceOJB extends PersistentObjectOJB implements IPersistentPrice {
             DocumentType documentType) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("graduationType", graduationType.getType());
-        crit.addEqualTo("documentType", documentType.getType());
+        crit.addEqualTo("documentType", documentType.name());
 
         return queryList(Price.class, crit);
 
@@ -58,13 +58,14 @@ public class PriceOJB extends PersistentObjectOJB implements IPersistentPrice {
         Criteria criteria = new Criteria();
         Criteria criteriaDocs = new Criteria();
         criteria.addEqualTo("graduationType", graduationType.getType());
-        List typesInteger = new ArrayList();
-        Iterator iterator = types.iterator();
-        while (iterator.hasNext()) {
-            typesInteger.add(((DocumentType) iterator.next()).getType());
-
-        }
-        criteriaDocs.addIn("documentType", typesInteger);
+        
+        CollectionUtils.transform(types, new Transformer() {        
+            public Object transform(Object arg0) {                
+                return ((DocumentType)arg0).name();
+            }        
+        });
+        
+        criteriaDocs.addIn("documentType", types);
         criteria.addAndCriteria(criteriaDocs);
         List result = queryList(Price.class, criteria);
         return result;
