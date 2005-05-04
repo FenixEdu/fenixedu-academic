@@ -1746,9 +1746,9 @@
             <set-property property="requestAttribute" value="infoProfessionalCareer" />
             <set-property property="infoObjectClassName" value="net.sourceforge.fenixedu.dataTransferObject.teacher.InfoProfessionalCareer" />
             <forward name="show-form" path="edit-professional-career"/>
-            <forward name="successfull-edit" path="/readCareers.do?careerType=Professional&amp;page=0"/>
-            <forward name="successfull-read" path="/readCareers.do?careerType=Professional&amp;page=0"/>
-            <forward name="successfull-delete" path="/readCareers.do?careerType=Professional&amp;page=0"/>
+            <forward name="successfull-edit" path="/readCareers.do?careerType=PROFESSIONAL&amp;page=0"/>
+            <forward name="successfull-read" path="/readCareers.do?careerType=PROFESSIONAL&amp;page=0"/>
+            <forward name="successfull-delete" path="/readCareers.do?careerType=PROFESSIONAL&amp;page=0"/>
         </action>
         <!-- Teaching Career -->
         <action type="net.sourceforge.fenixedu.presentationTier.Action.teacher.CareerAction" path="/teachingCareer" 
@@ -1762,9 +1762,9 @@
             <set-property property="requestAttribute" value="infoTeachingCareer" />
             <set-property property="infoObjectClassName" value="net.sourceforge.fenixedu.dataTransferObject.teacher.InfoTeachingCareer" />
             <forward name="show-form" path="edit-teaching-career"/>
-            <forward name="successfull-edit" path="/readCareers.do?careerType=Teaching&amp;page=0"/>
-            <forward name="successfull-read" path="/readCareers.do?careerType=Teaching&amp;page=0"/>
-            <forward name="successfull-delete" path="/readCareers.do?careerType=Teaching&amp;page=0"/>
+            <forward name="successfull-edit" path="/readCareers.do?careerType=TEACHING&amp;page=0"/>
+            <forward name="successfull-read" path="/readCareers.do?careerType=TEACHING&amp;page=0"/>
+            <forward name="successfull-delete" path="/readCareers.do?careerType=TEACHING&amp;page=0"/>
         </action>
         <!-- Read Careers -->
         <action type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ReadCareersAction" path="/readCareers" 

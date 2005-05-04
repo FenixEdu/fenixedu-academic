@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftPercentage;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProfessorship;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProfessorshipAndTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.TeacherExecutionCourseProfessorshipShiftsDTO;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -85,7 +86,7 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IService {
                             && (!shiftProfessorship.getProfessorship().getTeacher().equals(teacher))) {
                         availablePercentage -= shiftProfessorship.getPercentage().doubleValue();
                     }
-                    infoShiftProfessorship = InfoShiftProfessorship.newInfoFromDomain(shiftProfessorship);
+                    infoShiftProfessorship = InfoShiftProfessorshipAndTeacher.newInfoFromDomain(shiftProfessorship);
                     infoShiftPercentage.addInfoShiftProfessorship(infoShiftProfessorship);
                 }
 

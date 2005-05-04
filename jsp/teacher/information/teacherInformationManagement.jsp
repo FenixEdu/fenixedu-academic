@@ -83,7 +83,7 @@
 		<p class="infoop"><span class="emphasis-box">2</span>
 		<bean:message key="message.teacherInformation.teachingCareer" /></p>
 		<div class="gen-button">
-			<html:link page="/readCareers.do?careerType=Teaching&amp;page=0">
+			<html:link page="<%= "/readCareers.do?careerType=" + net.sourceforge.fenixedu.domain.CareerType.TEACHING.toString() + "&amp;page=0" %>">
 				<bean:message key="label.teacherInformation.manage" />
 			</html:link>
 		</div>
@@ -112,7 +112,7 @@
 		<p class="infoop"><span class="emphasis-box">3</span>
 		<bean:message key="message.teacherInformation.professionalCareer" /></p>
 		<div class="gen-button">
-			<html:link page="/readCareers.do?careerType=Professional&amp;page=0">
+			<html:link page="<%= "/readCareers.do?careerType=" + net.sourceforge.fenixedu.domain.CareerType.PROFESSIONAL.toString() + "&amp;page=0" %>">
 				<bean:message key="label.teacherInformation.manage" />
 			</html:link>
 		</div>

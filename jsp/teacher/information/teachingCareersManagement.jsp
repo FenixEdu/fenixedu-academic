@@ -55,7 +55,7 @@
 </table>
 <br />
 <div class="gen-button">
-	<html:link page="/teachingCareer.do?method=prepareEdit&amp;page=0&amp;careerType=Teaching" 
+	<html:link page="<%= "/teachingCareer.do?method=prepareEdit&amp;page=0&amp;careerType=" + net.sourceforge.fenixedu.domain.CareerType.TEACHING.toString() %>" 
 			   paramId="infoTeacher#idInternal" 
 			   paramName="infoSiteCareers" 
 			   paramProperty="infoTeacher.idInternal" >
