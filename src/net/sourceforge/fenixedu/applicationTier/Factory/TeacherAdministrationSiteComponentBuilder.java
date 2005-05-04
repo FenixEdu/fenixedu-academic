@@ -345,7 +345,7 @@ public class TeacherAdministrationSiteComponentBuilder {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             List announcementsList = sp.getIPersistentAnnouncement()
-                    .readAnnouncementsBySite(site);
+                    .readAnnouncementsBySite(site.getIdInternal());
             List infoAnnouncementsList = new ArrayList();
 
             if (announcementsList != null

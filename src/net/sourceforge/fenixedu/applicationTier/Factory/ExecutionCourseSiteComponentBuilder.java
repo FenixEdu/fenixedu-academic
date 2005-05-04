@@ -801,7 +801,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
         ISite site = persistentSupport.getIPersistentSite().readByExecutionCourse(executionCourse);
         List announcementsList = persistentSupport.getIPersistentAnnouncement().readAnnouncementsBySite(
-                site);
+                site.getIdInternal());
 
         List infoAnnouncementsList = new ArrayList();
 
@@ -834,7 +834,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            List announcementsList = sp.getIPersistentAnnouncement().readAnnouncementsBySite(site);
+            List announcementsList = sp.getIPersistentAnnouncement().readAnnouncementsBySite(site.getIdInternal());
             List infoAnnouncementsList = new ArrayList();
 
             if (announcementsList != null && announcementsList.isEmpty() == false) {
@@ -901,7 +901,7 @@ public class ExecutionCourseSiteComponentBuilder {
             IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
         ISite site = persistentSupport.getIPersistentSite().readByExecutionCourse(executionCourse);
         IAnnouncement announcement = persistentSupport.getIPersistentAnnouncement()
-                .readLastAnnouncementForSite(site);
+                .readLastAnnouncementForSite(site.getIdInternal());
         InfoAnnouncement infoAnnouncement = null;
         if (announcement != null) {
             infoAnnouncement = copyFromDomain(announcement);

@@ -39,7 +39,7 @@ public class CreateAnnouncement implements IService {
 
         try {
             announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite(
-                    announcementTitle, currentDate, announcementSite);
+                    announcementTitle, currentDate, announcementSite.getIdInternal());
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia.getMessage());
         }

@@ -33,7 +33,7 @@ public class ReadLastAnnouncement implements IService {
             ISite site = persistentSupport.getIPersistentSite().readByExecutionCourse(executionCourse);
 
             IAnnouncement announcement = persistentSupport.getIPersistentAnnouncement()
-                    .readLastAnnouncementForSite(site);
+                    .readLastAnnouncementForSite(site.getIdInternal());
 
             InfoAnnouncement infoAnnouncement = null;
             if (announcement != null)

@@ -18,24 +18,20 @@ import org.apache.ojb.broker.query.Criteria;
 public class AnnouncementOJB extends PersistentObjectOJB implements IPersistentAnnouncement {
     
     public IAnnouncement readAnnouncementByTitleAndCreationDateAndSite(String title, Date cDate,
-            ISite site) throws ExcepcaoPersistencia {
+            Integer siteOID) throws ExcepcaoPersistencia {
 
         Criteria crit = new Criteria();
         crit.addEqualTo("title", title);
         crit.addEqualTo("creationDate", cDate);
-        crit.addEqualTo("site.idInternal", site.getIdInternal());
+        crit.addEqualTo("site.idInternal", siteOID);
         return (IAnnouncement) queryObject(Announcement.class, crit);
 
     }
 
-    public void delete(IAnnouncement announcement) throws ExcepcaoPersistencia {
-        super.delete(announcement);
-    }
-
-    public List readAnnouncementsBySite(ISite site) throws ExcepcaoPersistencia {
+    public List readAnnouncementsBySite(Integer siteOID) throws ExcepcaoPersistencia {
 
         Criteria crit = new Criteria();
-        crit.addEqualTo("site.idInternal", site.getIdInternal());
+        crit.addEqualTo("site.idInternal", siteOID);
         return queryList(Announcement.class, crit, "lastModifiedDate", false);
 
     }
@@ -43,9 +39,9 @@ public class AnnouncementOJB extends PersistentObjectOJB implements IPersistentA
     /**
      * @see ServidorPersistente.IPersistentAnnouncement#readLastAnnouncement()
      */
-    public IAnnouncement readLastAnnouncementForSite(ISite site) throws ExcepcaoPersistencia {
+    public IAnnouncement readLastAnnouncementForSite(Integer siteOID) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("site.idInternal", site.getIdInternal());
+        crit.addEqualTo("site.idInternal", siteOID);
         List result = queryList(Announcement.class, crit, "lastModifiedDate", false);
         if (result != null && !result.isEmpty()) {
             return (IAnnouncement) result.get(0);
@@ -53,26 +49,6 @@ public class AnnouncementOJB extends PersistentObjectOJB implements IPersistentA
 
         return null;
 
-    }
-    
-    /**
-     * except the (real) last one
-     */
-    public List readLastAnnouncementsForSite(ISite site, int n) throws ExcepcaoPersistencia
-	{
-    		Criteria crit = new Criteria();
-    		crit.addEqualTo("site.idInternal", site.getIdInternal());
-    		// [ccfp] - change this method 
-    		crit.addOrderBy("lastModifiedDate", false);
-    		List result = queryList(Announcement.class, crit);
-    		
-    		if (result != null && !result.isEmpty())	 {
-    			if (result.size() < n) {	
-    				return result.subList(1,result.size());
-    			}
-                return result.subList(1,n);
-    		}
-            return null;
     }
 
 }

@@ -41,7 +41,7 @@ public class ReadAnnouncements implements IService {
 
             ISite site = sp.getIPersistentSite().readByExecutionCourse(executionCourse);
 
-            List announcementsList = sp.getIPersistentAnnouncement().readAnnouncementsBySite(site);
+            List announcementsList = sp.getIPersistentAnnouncement().readAnnouncementsBySite(site.getIdInternal());
             List infoAnnouncementsList = new ArrayList();
 
             if (announcementsList != null && announcementsList.isEmpty() == false) {

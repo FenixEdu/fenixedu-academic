@@ -12,15 +12,11 @@ import net.sourceforge.fenixedu.domain.ISite;
 
 public interface IPersistentAnnouncement extends IPersistentObject {
 
-    public IAnnouncement readAnnouncementByTitleAndCreationDateAndSite(
-        String title,
-        Date date,
-        ISite site)
-        throws ExcepcaoPersistencia;
-    
-    public void delete(IAnnouncement announcement) throws ExcepcaoPersistencia;
-    public List readAnnouncementsBySite(ISite site) throws ExcepcaoPersistencia;
-    public IAnnouncement readLastAnnouncementForSite(ISite site) throws ExcepcaoPersistencia;
-    public List readLastAnnouncementsForSite(ISite site, int n) throws ExcepcaoPersistencia;
+    public IAnnouncement readAnnouncementByTitleAndCreationDateAndSite(String title, Date date,
+            Integer siteOID) throws ExcepcaoPersistencia;
+
+    public List readAnnouncementsBySite(Integer siteOID) throws ExcepcaoPersistencia;
+
+    public IAnnouncement readLastAnnouncementForSite(Integer siteOID) throws ExcepcaoPersistencia;
 
 }

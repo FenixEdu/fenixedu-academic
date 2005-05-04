@@ -11,7 +11,7 @@ import org.apache.ojb.broker.query.Criteria;
 
 public abstract class VersionedObjectsBase {
 
-    protected void deleteByOID(Class classToQuery, Integer oid) throws ExcepcaoPersistencia {
+    public void deleteByOID(Class classToQuery, Integer oid) throws ExcepcaoPersistencia {
         throw new RuntimeException("This method should not be called by the Versioned Object DAO's!");
     }
 

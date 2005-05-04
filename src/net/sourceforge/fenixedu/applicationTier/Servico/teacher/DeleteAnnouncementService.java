@@ -30,7 +30,7 @@ public class DeleteAnnouncementService implements IService {
                     Announcement.class, announcementCode);
 
             if (iAnnouncement != null) {
-                persistentAnnouncement.delete(iAnnouncement);
+                persistentAnnouncement.deleteByOID(Announcement.class, iAnnouncement.getIdInternal());
             }
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);

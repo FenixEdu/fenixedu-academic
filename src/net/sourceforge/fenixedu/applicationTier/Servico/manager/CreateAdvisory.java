@@ -4,11 +4,19 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import java.util.Collection;
+import java.util.Iterator;
+
 import net.sourceforge.fenixedu.dataTransferObject.InfoAdvisory;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IAdvisory;
+import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.IRole;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentAdvisory;
+import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.AdvisoryRecipients;
@@ -19,24 +27,44 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class CreateAdvisory implements IService {
 
+    private boolean hasRole(final IPerson person, final RoleType roleType) {
+        final Collection roles = person.getPersonRoles();
+        for (final Iterator iterator = roles.iterator(); iterator.hasNext();) {
+            final IRole role = (IRole) iterator.next();
+            if (roleType.equals(role.getRoleType())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Boolean run(InfoAdvisory infoAdvisory, AdvisoryRecipients advisoryRecipients)
-            throws FenixServiceException {
+            throws ExcepcaoPersistencia {
+        final ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentAdvisory persistentAdvisory = persistenceSupport.getIPersistentAdvisory();
+        final IPessoaPersistente persistentPerson = persistenceSupport.getIPessoaPersistente();
 
-        Boolean result = new Boolean(false);
+        final IAdvisory advisory = Cloner.copyInfoAdvisory2IAdvisory(infoAdvisory);
+        persistentAdvisory.simpleLockWrite(advisory);
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final Collection people = persistentPerson.lerTodasAsPessoas();
+        for (final Iterator iterator = people.iterator(); iterator.hasNext();) {
+            final IPerson person = (IPerson) iterator.next();
 
-            IAdvisory advisory = Cloner.copyInfoAdvisory2IAdvisory(infoAdvisory);
+            if ((advisoryRecipients.equals(AdvisoryRecipients.STUDENTS) && hasRole(person,
+                    RoleType.STUDENT))
+                    || (advisoryRecipients.equals(AdvisoryRecipients.TEACHERS) && hasRole(person,
+                            RoleType.TEACHER))
+                    || (advisoryRecipients.equals(AdvisoryRecipients.EMPLOYEES) && hasRole(person,
+                            RoleType.EMPLOYEE))) {
+                persistentPerson.simpleLockWrite(person);
 
-            sp.getIPersistentAdvisory().write(advisory, advisoryRecipients);
-
-            result = new Boolean(true);
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex.getMessage());
+                person.getAdvisories().add(advisory);
+                advisory.getPeople().add(person);
+            }
         }
 
-        return result;
+        return new Boolean(true);
     }
 
 }

@@ -38,7 +38,7 @@ public class EditAnnouncementService implements IService {
         if (!oldAnnouncementTitle.equals(announcementTitle)) {
             try {
                 announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite(
-                        announcementTitle, date, announcementSite);
+                        announcementTitle, date, announcementSite.getIdInternal());
             } catch (ExcepcaoPersistencia excepcaoPersistencia) {
                 throw new FenixServiceException(excepcaoPersistencia.getMessage());
             }
