@@ -146,12 +146,6 @@ class net.sourceforge.fenixedu.domain.Seminaries.Candidacy extends net.sourcefor
 class net.sourceforge.fenixedu.domain.CandidateEnrolment extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer curricularCourseKey;
 	Integer masterDegreeCandidateKey;
-	interface "
-	public net.sourceforge.fenixedu.domain.IMasterDegreeCandidate getMasterDegreeCandidate();
-	public void setMasterDegreeCandidate(net.sourceforge.fenixedu.domain.IMasterDegreeCandidate candidate);
-    public net.sourceforge.fenixedu.domain.ICurricularCourse getCurricularCourse();	
-	public void setCurricularCourse(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
-	"
 }
 
 class net.sourceforge.fenixedu.domain.CandidateSituation extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -167,10 +161,6 @@ class net.sourceforge.fenixedu.domain.CandidateSituation extends net.sourceforge
 		public net.sourceforge.fenixedu.util.SituationName getSituation();
 		
 		public void setSituation(net.sourceforge.fenixedu.util.SituationName situation);
-		
-		public net.sourceforge.fenixedu.domain.IMasterDegreeCandidate getMasterDegreeCandidate();
-		
-		public void setMasterDegreeCandidate(net.sourceforge.fenixedu.domain.IMasterDegreeCandidate masterDegreeCandidate);
 		
 		public net.sourceforge.fenixedu.util.State getValidation();
 		
@@ -231,13 +221,6 @@ class net.sourceforge.fenixedu.domain.Coordinator extends net.sourceforge.fenixe
 	Integer keyExecutionDegree;
 	Integer keyTeacher;
 	Boolean responsible;
-	
-	interface "
-    	public net.sourceforge.fenixedu.domain.ITeacher getTeacher();
-    	
-	    public void setTeacher(net.sourceforge.fenixedu.domain.ITeacher teacher);
-	"
-	
 }
 
 class net.sourceforge.fenixedu.domain.Country extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -848,14 +831,6 @@ class net.sourceforge.fenixedu.domain.teacher.ExternalActivity extends net.sourc
 class net.sourceforge.fenixedu.domain.ExternalPerson extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyWorkLocation;
 	Integer keyPerson;
-
-	interface "
-	    public void setPerson(net.sourceforge.fenixedu.domain.IPerson person);
-		public net.sourceforge.fenixedu.domain.IPerson getPerson();
-		public void setWorkLocation(net.sourceforge.fenixedu.domain.IWorkLocation workLocation);
-		public net.sourceforge.fenixedu.domain.IWorkLocation getWorkLocation();
-	"
-	
 }
 
 class net.sourceforge.fenixedu.domain.support.FAQEntry extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1063,9 +1038,6 @@ class net.sourceforge.fenixedu.domain.GratuitySituation extends net.sourceforge.
 	Double remainingValue;
 	
 	interface "
-		public net.sourceforge.fenixedu.domain.IEmployee getEmployee();
-	
-		public void setEmployee(net.sourceforge.fenixedu.domain.IEmployee employee);
 	
 		public java.util.Date getWhen();
 	
@@ -1075,17 +1047,9 @@ class net.sourceforge.fenixedu.domain.GratuitySituation extends net.sourceforge.
 	
 		public void setExemptionType(net.sourceforge.fenixedu.util.ExemptionGratuityType exemptionType); 
 	
-		public net.sourceforge.fenixedu.domain.IGratuityValues getGratuityValues();
-	
-		public void setGratuityValues(net.sourceforge.fenixedu.domain.IGratuityValues gratuity);
-	
 		public net.sourceforge.fenixedu.domain.IStudentCurricularPlan getStudentCurricularPlan();
 	
 		public void setStudentCurricularPlan(net.sourceforge.fenixedu.domain.IStudentCurricularPlan studentCurricularPlan);
-	
-		public java.util.List getTransactionList();
-	
-		public void setTransactionList(java.util.List transactionList);
 	"
 	
 }
@@ -1113,18 +1077,6 @@ class net.sourceforge.fenixedu.domain.GratuityValues extends net.sourceforge.fen
 		public java.util.Date getStartPayment();
 		
 		public void setStartPayment(java.util.Date startPayment);
-		
-		public net.sourceforge.fenixedu.domain.IEmployee getEmployee();
-		
-		public void setEmployee(net.sourceforge.fenixedu.domain.IEmployee employee);
-		
-		public net.sourceforge.fenixedu.domain.IExecutionDegree getExecutionDegree();
-		
-		public void setExecutionDegree(net.sourceforge.fenixedu.domain.IExecutionDegree executionDegree);
-		
-		public java.util.List getPaymentPhaseList();
-		
-		public void setPaymentPhaseList(java.util.List paymentPhaseList);
 	"
 }
 
@@ -1210,33 +1162,13 @@ class net.sourceforge.fenixedu.domain.Guide extends net.sourceforge.fenixedu.dom
 	interface "
 		public net.sourceforge.fenixedu.domain.IGuideSituation getActiveSituation();
 		
-		public net.sourceforge.fenixedu.domain.IContributor getContributor();
-		
-		public net.sourceforge.fenixedu.domain.IExecutionDegree getExecutionDegree();
-		
-		public java.util.List getGuideEntries();
-		
 		public net.sourceforge.fenixedu.util.GuideRequester getGuideRequester();
 		
-		public net.sourceforge.fenixedu.domain.IPerson getPerson();
-		
-		public void setContributor(net.sourceforge.fenixedu.domain.IContributor contributor);
-		
-		public void setExecutionDegree(net.sourceforge.fenixedu.domain.IExecutionDegree execucao);
-		
-		public void setGuideEntries(java.util.List list);
-		
 		public void setGuideRequester(net.sourceforge.fenixedu.util.GuideRequester requester);
-		
-		public void setPerson(net.sourceforge.fenixedu.domain.IPerson pessoa);
 		
 		public net.sourceforge.fenixedu.domain.transactions.PaymentType getPaymentType();
 		
 		public void setPaymentType(net.sourceforge.fenixedu.domain.transactions.PaymentType type);
-		
-		public java.util.List getGuideSituations();
-		
-		public void setGuideSituations(java.util.List list);
 		
 		public java.util.Date getCreationDate();
 		
@@ -1245,10 +1177,6 @@ class net.sourceforge.fenixedu.domain.Guide extends net.sourceforge.fenixedu.dom
 		public java.util.Date getPaymentDate();
 		
 		public void setPaymentDate(java.util.Date date);
-		
-		public java.util.List getReimbursementGuides();
-		
-		public void setReimbursementGuides(java.util.List reimbursementGuides);
 	"
 }
 
@@ -1263,17 +1191,9 @@ class net.sourceforge.fenixedu.domain.GuideEntry extends net.sourceforge.fenixed
     	
     	public net.sourceforge.fenixedu.util.GraduationType getGraduationType();
     	
-    	public net.sourceforge.fenixedu.domain.IGuide getGuide();
-    	
     	public void setDocumentType(net.sourceforge.fenixedu.domain.DocumentType type);
     	
     	public void setGraduationType(net.sourceforge.fenixedu.util.GraduationType type);
-    	
-    	public void setGuide(net.sourceforge.fenixedu.domain.IGuide guide);
-    	
-    	public java.util.List getReimbursementGuideEntries();
-    	
-    	public void setReimbursementGuideEntries(java.util.List reimbursementGuideEntries);
 	"
 }
 
@@ -1283,16 +1203,12 @@ class net.sourceforge.fenixedu.domain.GuideSituation extends net.sourceforge.fen
 	
 	interface "
 	    public java.util.Date getDate();
-	    
-	    public net.sourceforge.fenixedu.domain.IGuide getGuide();
     	
     	public net.sourceforge.fenixedu.util.SituationOfGuide getSituation();
     	
     	public net.sourceforge.fenixedu.util.State getState();
     	
     	public void setDate(java.util.Date date);
-    	
-    	public void setGuide(net.sourceforge.fenixedu.domain.IGuide guide);
     	
     	public void setSituation(net.sourceforge.fenixedu.util.SituationOfGuide guide);
     	
@@ -1371,15 +1287,7 @@ class net.sourceforge.fenixedu.domain.MasterDegreeCandidate extends net.sourcefo
 	interface "
 		public net.sourceforge.fenixedu.domain.ICandidateSituation getActiveCandidateSituation();
 		
-		public net.sourceforge.fenixedu.domain.IPerson getPerson();
-		
-		public java.util.List getSituations();
-		
 		public net.sourceforge.fenixedu.util.Specialization getSpecialization();
-		
-		public void setPerson(net.sourceforge.fenixedu.domain.IPerson pessoa);
-		
-		public void setSituations(java.util.List list);
 		
 		public void setSpecialization(net.sourceforge.fenixedu.util.Specialization specialization);
 	"
@@ -1395,10 +1303,6 @@ class net.sourceforge.fenixedu.domain.MasterDegreeProofVersion extends net.sourc
     	
     	public java.sql.Timestamp getLastModification();
 	    
-	    public void setMasterDegreeThesis(net.sourceforge.fenixedu.domain.IMasterDegreeThesis masterDegreeThesis);
-	    
-	    public net.sourceforge.fenixedu.domain.IMasterDegreeThesis getMasterDegreeThesis();
-	    
 	    public void setProofDate(java.util.Date proofDate);
 	    
 	    public java.util.Date getProofDate();
@@ -1411,41 +1315,15 @@ class net.sourceforge.fenixedu.domain.MasterDegreeProofVersion extends net.sourc
 	    
 	    public net.sourceforge.fenixedu.util.MasterDegreeClassification getFinalResult();
 	    
-	    public void setResponsibleEmployee(net.sourceforge.fenixedu.domain.IEmployee responsibleEmployee);
-	    
-	    public net.sourceforge.fenixedu.domain.IEmployee getResponsibleEmployee();
-	    
 	    public void setCurrentState(net.sourceforge.fenixedu.util.State state);
 	    
 	    public net.sourceforge.fenixedu.util.State getCurrentState();
-	    
-	    public void setJuries(java.util.List juries);
-	    
-	    public java.util.List getJuries();
-	    
-	    public java.util.List getExternalJuries();
-	    
-	    public void setExternalJuries(java.util.List externalJuries);
 	"
 	
 }
 
 class net.sourceforge.fenixedu.domain.MasterDegreeThesis extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyStudentCurricularPlan;
-	
-	interface "
-		public void setMasterDegreeProofVersions(java.util.List masterDegreeProofVersions);
-		
-		public java.util.List getMasterDegreeProofVersions();
-		
-		public void setMasterDegreeThesisDataVersions(java.util.List masterDegreeThesisDataVersions);
-		
-		public java.util.List getMasterDegreeThesisDataVersions();
-		
-		public void setStudentCurricularPlan(net.sourceforge.fenixedu.domain.IStudentCurricularPlan studentCurricularPlan);
-		
-		public net.sourceforge.fenixedu.domain.IStudentCurricularPlan getStudentCurricularPlan();
-	"
 }
 
 class net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1454,33 +1332,9 @@ class net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion extends net.
 	Integer keyEmployee;
 	
 	interface "
-	    public void setAssistentGuiders(java.util.List assistentGuiders);
-	    
-	    public java.util.List getAssistentGuiders();
-	    
-	    public void setExternalAssistentGuiders(java.util.List externalAssistentGuiders);
-	    
-	    public java.util.List getExternalAssistentGuiders();
-	    
-	    public void setGuiders(java.util.List guiders);
-	    
-	    public java.util.List getGuiders();
-	    
-	    public java.util.List getExternalGuiders();
-	    
-	    public void setExternalGuiders(java.util.List externalGuiders);
-	    
 	    public void setLastModification(java.sql.Timestamp lastModification);
 	    
 	    public java.sql.Timestamp getLastModification();
-	    
-	    public void setMasterDegreeThesis(net.sourceforge.fenixedu.domain.IMasterDegreeThesis masterDegreeThesis);
-	    
-	    public net.sourceforge.fenixedu.domain.IMasterDegreeThesis getMasterDegreeThesis();
-	    
-	    public void setResponsibleEmployee(net.sourceforge.fenixedu.domain.IEmployee responsibleEmployee);
-	    
-	    public net.sourceforge.fenixedu.domain.IEmployee getResponsibleEmployee();
 	    
 	    public void setCurrentState(net.sourceforge.fenixedu.util.State currentState);
 	    
@@ -1697,10 +1551,6 @@ class net.sourceforge.fenixedu.domain.PaymentPhase extends net.sourceforge.fenix
 	    
 	    public void setStartDate(java.util.Date startDate);
 	    
-	    public net.sourceforge.fenixedu.domain.IGratuityValues getGratuityValues();
-	    
-	    public void setGratuityValues(net.sourceforge.fenixedu.domain.IGratuityValues gratuityValues);
-	    
 	    public java.util.List getTransactionList();
 	    
 	    public void setTransactionList(java.util.List transactionList);
@@ -1789,10 +1639,6 @@ class net.sourceforge.fenixedu.domain.PersonAccount extends net.sourceforge.feni
 	    public net.sourceforge.fenixedu.domain.IPerson getPerson();
 	    
 	    public void setPerson(net.sourceforge.fenixedu.domain.IPerson person);
-	    
-	    public java.util.List getTransactions();
-	    
-	    public void setTransactions(java.util.List transactions);
 	"
 }
 
@@ -1943,19 +1789,7 @@ class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide exte
 		
 		public void setCreationDate(java.util.Calendar creationDate);
 		
-		public net.sourceforge.fenixedu.domain.IGuide getGuide();
-		
-		public void setGuide(net.sourceforge.fenixedu.domain.IGuide paymentGuide);
-		
-		public java.util.List getReimbursementGuideSituations();
-		
-		public void setReimbursementGuideSituations(java.util.List reimbursementGuideSituations);
-		
 		public IReimbursementGuideSituation getActiveReimbursementGuideSituation();
-		
-		public java.util.List getReimbursementGuideEntries();
-		
-		public void setReimbursementGuideEntries(java.util.List reimbursementGuideEntries);
 	"
 }
 
@@ -1964,16 +1798,6 @@ class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry
 	Double value;
 	Integer keyReimbursementGuide;
 	Integer keyGuideEntry;
-	
-	interface "
-	    public net.sourceforge.fenixedu.domain.IGuideEntry getGuideEntry();
-	    
-	    public void setGuideEntry(net.sourceforge.fenixedu.domain.IGuideEntry guideEntry);
-	    
-	    public net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide getReimbursementGuide();
-	    
-	    public void setReimbursementGuide(net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide reimbursementGuide);
-	"
 }
 
 class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1982,17 +1806,9 @@ class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSitua
 	Integer keyEmployee;
 	
 	interface "
-	    public net.sourceforge.fenixedu.domain.IEmployee getEmployee();
-	    
-	    public void setEmployee(net.sourceforge.fenixedu.domain.IEmployee employee);
-	    
 	    public java.util.Calendar getModificationDate();
 	    
 	    public void setModificationDate(java.util.Calendar modificationDate);
-	    
-	    public net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide getReimbursementGuide();
-	    
-	    public void setReimbursementGuide(net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide reimbursementGuide);
 	    
 	    public net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState getReimbursementGuideState();
 	    
@@ -2181,10 +1997,6 @@ class net.sourceforge.fenixedu.domain.sms.SentSms extends net.sourceforge.fenixe
 	    
 	    public void setDeliveryType(net.sourceforge.fenixedu.domain.sms.SmsDeliveryType deliveryType);
 	    
-	    public net.sourceforge.fenixedu.domain.IPerson getPerson();
-	    
-	    public void setPerson(net.sourceforge.fenixedu.domain.IPerson person);
-	    
 	    public java.util.Date getSendDate();
 	    
 	    public void setSendDate(java.util.Date sendDate);
@@ -2302,12 +2114,6 @@ class net.sourceforge.fenixedu.domain.ShiftStudent extends net.sourceforge.fenix
 
 class net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile extends net.sourceforge.fenixedu.domain.DomainObject {
 	String filename;
-
-	interface "
-		public java.util.List getSibsPaymentFileEntries();
-    	public void setSibsPaymentFileEntries(java.util.List sibsPaymentFileEntries);
-	"
-	
 }
 
 class net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2320,10 +2126,6 @@ class net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry
 		public net.sourceforge.fenixedu.util.gratuity.SibsPaymentType getPaymentType();
 		
 		public void setPaymentType(net.sourceforge.fenixedu.util.gratuity.SibsPaymentType paymentType);
-		
-		public net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFile getSibsPaymentFile();
-		
-		public void setSibsPaymentFile(net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFile sibsPaymentFile);
 		
 		public java.sql.Timestamp getTransactionDate();
 		
@@ -2793,14 +2595,6 @@ class net.sourceforge.fenixedu.domain.transactions.Transaction extends net.sourc
 	Integer keyPersonAccount;
 	
 	interface "
-		public net.sourceforge.fenixedu.domain.IPersonAccount getPersonAccount();
-		
-		public void setPersonAccount(net.sourceforge.fenixedu.domain.IPersonAccount personAccount);
-		
-		public net.sourceforge.fenixedu.domain.IPerson getResponsiblePerson();
-		
-		public void setResponsiblePerson(net.sourceforge.fenixedu.domain.IPerson responsiblePerson);
-		
 		public java.sql.Timestamp getTransactionDate();
 	
 		public void setTransactionDate(java.sql.Timestamp transactionDate);
@@ -2833,12 +2627,6 @@ class net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction exte
 	String remarks;
 	Integer keyPersonAccount;
 	Integer keyResponsiblePerson;
-	
-	interface "
-	    public net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry getReimbursementGuideEntry();
-	    
-	    public void setReimbursementGuideEntry(net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry reimbursementGuideEntry);	
-	"
 }
 
 class net.sourceforge.fenixedu.domain.transactions.GratuityTransaction extends net.sourceforge.fenixedu.domain.transactions.PaymentTransaction {
@@ -2848,12 +2636,6 @@ class net.sourceforge.fenixedu.domain.transactions.GratuityTransaction extends n
 	Integer keyGratuitySituation;
 	Integer keyPersonAccount;
 	Integer keyResponsiblePerson;
-	
-	interface "
-		public net.sourceforge.fenixedu.domain.IGratuitySituation getGratuitySituation();
-		
-		public void setGratuitySituation(net.sourceforge.fenixedu.domain.IGratuitySituation gratuitySituation);
-	"
 }
 
 class net.sourceforge.fenixedu.domain.transactions.SmsTransaction extends net.sourceforge.fenixedu.domain.transactions.PaymentTransaction {
@@ -2872,12 +2654,6 @@ class net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction extends 
 	Integer keyExecutionYear;
 	Integer keyResponsiblePerson;
 	Integer keyStudent;
-	
-	interface "
-		public net.sourceforge.fenixedu.domain.IStudent getStudent();
-		
-		public void setStudent(net.sourceforge.fenixedu.domain.IStudent student);	
-	"
 }
 
 class net.sourceforge.fenixedu.domain.WorkLocation extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3020,6 +2796,26 @@ relation CandidacyStudent {
     net.sourceforge.fenixedu.domain.Student playsRole student;
 }
 
+relation CandidateEnrolmentCurricularCourse {
+	net.sourceforge.fenixedu.domain.CandidateEnrolment playsRole candidateEnrolments {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
+}
+
+relation CandidateEnrolmentMasterDegreeCandidate {
+	net.sourceforge.fenixedu.domain.CandidateEnrolment playsRole candidateEnrolments {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.MasterDegreeCandidate playsRole masterDegreeCandidate;
+}
+
+relation CandidateSituationMasterDegreeCandidate {
+	net.sourceforge.fenixedu.domain.CandidateSituation playsRole situations {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.MasterDegreeCandidate playsRole masterDegreeCandidate;
+}
 
 relation CareerTeacher {
     net.sourceforge.fenixedu.domain.teacher.Career playsRole associatedCareers {
@@ -3036,6 +2832,12 @@ relation CaseStudyCaseStudyChoice {
     }
 }
 
+relation CoordinatorTeacher {
+	net.sourceforge.fenixedu.domain.Coordinator playsRole coordinators {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
 
 relation CourseEquivalencyTheme {
     net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency playsRole courseEquivalencies {
@@ -3676,6 +3478,17 @@ relation ExternalActivityTeacher {
     net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
 
+relation ExternalPersonPerson {
+	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalPerson;
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
+relation ExternalPersonWorkLocation {
+	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalPersons {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.WorkLocation playsRole workLocation;
+}
 
 relation GaugingTestResultStudent {
     net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult playsRole associatedGaugingTestResult;
@@ -3830,6 +3643,33 @@ relation GrantSubsidyGrantContract {
 	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole grantContract;
 }
 
+relation GratuitySituationGratuityValues {
+	net.sourceforge.fenixedu.domain.GratuitySituation playsRole gratuitySituations {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.GratuityValues playsRole gratuityValues;
+}
+
+relation GratuityTransactionGratuitySituation {
+	net.sourceforge.fenixedu.domain.transactions.GratuityTransaction playsRole transactionList {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.GratuitySituation playsRole gratuitySituation;
+}
+
+relation GratuityValuesEmployee {
+	net.sourceforge.fenixedu.domain.GratuityValues playsRole gratuityValues {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Employee playsRole employee;
+}
+
+relation GratuityValuesExecutionDegree {
+	net.sourceforge.fenixedu.domain.GratuityValues playsRole gratuityValues {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
+}
 
 relation GroupProposal {
 	net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal playsRole proposalAttributed;
@@ -3896,6 +3736,41 @@ relation GroupPropertiesAttendsSet {
 	net.sourceforge.fenixedu.domain.GroupProperties playsRole groupProperties;
 }
 
+relation GuideContributor {
+	net.sourceforge.fenixedu.domain.Guide playsRole guides {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Contributor playsRole contributor;
+}
+
+relation GuideEntryGuide {
+	net.sourceforge.fenixedu.domain.GuideEntry playsRole guideEntries {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Guide playsRole guide;
+}
+
+relation GuideExecutionDegree {
+	net.sourceforge.fenixedu.domain.Guide playsRole guides {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
+}
+
+relation GuidePerson {
+	net.sourceforge.fenixedu.domain.Guide playsRole guides {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
+relation GuideSituationGuide {
+	net.sourceforge.fenixedu.domain.GuideSituation playsRole guideSituations {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Guide playsRole guide;
+}
+
 relation InsuranceTransactionExecutionYear {
 	net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction playsRole insuranceTransactions {
 		multiplicity *;
@@ -3903,9 +3778,21 @@ relation InsuranceTransactionExecutionYear {
 	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
 
+relation InsuranceTransactionGuideEntry {
+	net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction playsRole insuranceTransaction;
+	net.sourceforge.fenixedu.domain.GuideEntry playsRole guideEntry;
+}
+
 relation InsuranceValueExecutionYear {
 	net.sourceforge.fenixedu.domain.InsuranceValue playsRole insuranceValue;
 	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
+}
+
+relation InsuranceTransactionStudent {
+	net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction playsRole insuranceTransactions {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Student playsRole student;
 }
 
 relation LessonExecutionPeriod {
@@ -3953,6 +3840,102 @@ relation MasterDegreeCandidateExecutionDegree {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
+}
+
+relation MasterDegreeCandidatePerson {
+	net.sourceforge.fenixedu.domain.MasterDegreeCandidate playsRole masterDegreeCandidates {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
+relation MasterDegreeProofVersionEmployee {
+	net.sourceforge.fenixedu.domain.MasterDegreeProofVersion playsRole masterDegreeProofVersions {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Employee playsRole responsibleEmployee;
+}
+
+relation MasterDegreeProofVersionExternalPerson {
+	net.sourceforge.fenixedu.domain.MasterDegreeProofVersion playsRole masterDegreeProofsExternalJury {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalJuries {
+		multiplicity *;
+	}
+}
+
+relation MasterDegreeProofVersionTeacher {
+	net.sourceforge.fenixedu.domain.MasterDegreeProofVersion playsRole masterDegreeProofsJury {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole juries {
+		multiplicity *;
+	}
+}
+
+relation MasterDegreeProofVersionMasterDegreeThesis {
+	net.sourceforge.fenixedu.domain.MasterDegreeProofVersion playsRole masterDegreeProofVersions {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.MasterDegreeThesis playsRole masterDegreeThesis;
+}
+
+relation MasterDegreeThesisStudentCurricularPlan {
+	net.sourceforge.fenixedu.domain.MasterDegreeThesis playsRole masterDegreeThesis {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlan;
+}
+
+relation MasterDegreeThesisDataVersionEmployee {
+	net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisDataVersions {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Employee playsRole responsibleEmployee;
+}
+
+relation MasterDegreeThesisDataVersionExternalGuider {
+	net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisExternalGuider {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalGuiders {
+		multiplicity *;
+	}
+}
+
+relation MasterDegreeThesisDataVersionExternalAssistentGuider {
+	net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisExternalAssistentGuider {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalAssistentGuiders {
+		multiplicity *;
+	}
+}
+
+relation MasterDegreeThesisDataVersionMasterDegreeThesis {
+	net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisDataVersions {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.MasterDegreeThesis playsRole masterDegreeThesis;
+}
+
+relation MasterDegreeThesisDataVersionTeacher {
+	net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisGuider {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole guiders {
+		multiplicity *;
+	}
+}
+
+relation MasterDegreeThesisDataVersionAssistentTeacher {
+	net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisAssistentGuider {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole assistentGuiders {
+		multiplicity *;
+	}
 }
 
 relation ModalityCourseEquivalency {
@@ -4017,6 +4000,20 @@ relation OldInquiriesTeachersResTeacher {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+relation PaymentPhaseGratuityValues {
+	net.sourceforge.fenixedu.domain.PaymentPhase playsRole paymentPhaseList {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.GratuityValues playsRole gratuityValues;
+}
+
+relation PaymentTransactionPersonAccount {
+	net.sourceforge.fenixedu.domain.transactions.PaymentTransaction playsRole paymentTransactions {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.PersonAccount playsRole personAccount;
 }
 
 relation PeriodRoomOccupation {
@@ -4171,6 +4168,52 @@ relation QualificationPerson {
     net.sourceforge.fenixedu.domain.Person playsRole person;
 }
 
+relation ReimbursementGuideEntryGuideEntry {
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntries {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.GuideEntry playsRole guideEntry;
+}
+
+relation ReimbursementGuideEntryReimbursementGuide {
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntries {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuide;
+}
+
+relation ReimbursementGuideGuide {
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuides {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Guide playsRole guide;
+}
+
+relation ReimbursementGuideSituationEmployee {
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation playsRole reimbursementGuideSituations {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Employee playsRole employee;
+}
+
+relation ReimbursementGuideSituationReimbursementGuide {
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation playsRole reimbursementGuideSituations {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuide;
+}
+
+relation ReimbursementTransactionPersonAccount {
+	net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction playsRole reimbursementTransactions {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.PersonAccount playsRole personAccount;
+}
+
+relation ReimbursementTransactionReimbursementGuideEntry {
+	net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction playsRole reimbursementTransaction;
+	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntry;
+}
 
 relation ResidenceCandidaciesStudent {
     net.sourceforge.fenixedu.domain.student.ResidenceCandidacies playsRole associatedResidenceCandidacies {
@@ -4282,6 +4325,12 @@ relation SendProposal {
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole senderExecutionCourse;
 }
 
+relation SentSmsPerson {
+	net.sourceforge.fenixedu.domain.sms.SentSms playsRole sentSms {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+}
 
 relation SeniorStudent {
     net.sourceforge.fenixedu.domain.student.Senior playsRole senior;
@@ -4336,6 +4385,12 @@ relation ShiftSummary {
 	net.sourceforge.fenixedu.domain.Shift playsRole shift;
 }
 
+relation SibsPaymentFileEntrySibsPaymentFile {
+	net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry playsRole sibsPaymentFileEntries {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile playsRole sibsPaymentFile;
+}
 
 relation SiteSection {
 	net.sourceforge.fenixedu.domain.Section playsRole associatedSections {
@@ -4349,6 +4404,13 @@ relation SiteAnnouncement {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Site playsRole site;
+}
+
+relation SmsTransactionPersonAccount {
+	net.sourceforge.fenixedu.domain.transactions.SmsTransaction playsRole smsTransactions {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.PersonAccount playsRole personAccount;
 }
 
 relation StudentCurricularPlanBranch {
@@ -4612,6 +4674,19 @@ relation ThemeCaseStudy {
     }
 }
 
+relation TransactionPerson {
+	net.sourceforge.fenixedu.domain.transactions.Transaction playsRole responsabilityTransactions {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole responsiblePerson;
+}
+
+relation TransactionPersonAccount {
+	net.sourceforge.fenixedu.domain.transactions.Transaction playsRole transactions {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.PersonAccount playsRole personAccount;
+}
 
 relation TutorStudent {
     net.sourceforge.fenixedu.domain.Tutor playsRole associatedTutor;

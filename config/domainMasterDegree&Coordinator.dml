@@ -246,11 +246,11 @@ relation MasterDegreeThesisDataVersionMasterDegreeThesis {
 	net.sourceforge.fenixedu.domain.MasterDegreeThesis playsRole masterDegreeThesis;
 }
 
-relation MasterDegreeCandidateCursoExecucao {
+relation MasterDegreeCandidateExecutionDegree {
 	net.sourceforge.fenixedu.domain.MasterDegreeCandidate playsRole masterDegreeCandidates {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.CursoExecucao playsRole executionDegree;
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
 }
 
 relation ReimbursementGuideSituationEmployee {
@@ -287,18 +287,11 @@ relation InsuranceValueExecutionYear {
 	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
 
-relation CandidateSituation {
+relation CandidateSituationMasterDegreeCandidate {
 	net.sourceforge.fenixedu.domain.CandidateSituation playsRole situations {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.MasterDegreeCandidate playsRole masterDegreeCandidate;
-}
-
-relation GratuityStudentCurricularPlan {
-	net.sourceforge.fenixedu.domain.Gratuity playsRole gratuities {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlan;
 }
 
 relation PaymentTransactionPersonAccount {
@@ -322,11 +315,11 @@ relation PaymentPhaseGratuityValues {
 	net.sourceforge.fenixedu.domain.GratuityValues playsRole gratuityValues;
 }
 
-relation GuideCursoExecucao {
+relation GuideExecutionDegree {
 	net.sourceforge.fenixedu.domain.Guide playsRole guides {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.CursoExecucao playsRole executionDegree;
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
 }
 
 relation GratuityValuesEmployee {
@@ -343,11 +336,11 @@ relation ReimbursementTransactionPersonAccount {
 	net.sourceforge.fenixedu.domain.PersonAccount playsRole personAccount;
 }
 
-relation GratuityValuesCursoExecucao {
+relation GratuityValuesExecutionDegree {
 	net.sourceforge.fenixedu.domain.GratuityValues playsRole gratuityValues {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.CursoExecucao playsRole executionDegree;
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
 }
 
 relation CandidateEnrolmentMasterDegreeCandidate {
@@ -439,11 +432,11 @@ relation MasterDegreeProofVersionMasterDegreeThesis {
 	net.sourceforge.fenixedu.domain.MasterDegreeThesis playsRole masterDegreeThesis;
 }
 
-relation CoordinatorCursoExecucao {
+relation CoordinatorExecutionDegree {
 	net.sourceforge.fenixedu.domain.Coordinator playsRole coordinatorsList {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.CursoExecucao playsRole executionDegree;
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
 }
 
 relation GuideEntryGuide {
@@ -481,39 +474,9 @@ relation TransactionPersonAccount {
 	net.sourceforge.fenixedu.domain.PersonAccount playsRole personAccount;
 }
 
-relation MasterDegreeThesisMasterDegreeProofVersion {
-	net.sourceforge.fenixedu.domain.MasterDegreeThesis playsRole masterDegreeThesis;
-	net.sourceforge.fenixedu.domain.MasterDegreeProofVersion playsRole masterDegreeProofVersions {
-		multiplicity *;
-	}
-}
-
-relation MasterDegreeCandidateCandidateSituation {
-	net.sourceforge.fenixedu.domain.MasterDegreeCandidate playsRole masterDegreeCandidates {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.CandidateSituation playsRole situations {
-		multiplicity *;
-	}
-}
-
 relation ExternalPersonPerson {
 	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalPerson;
 	net.sourceforge.fenixedu.domain.Person playsRole person;
-}
-
-relation ReimbursementGuideReimbursementGuideSituation {
-	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuide;
-	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation playsRole reimbursementGuideSituations {
-		multiplicity *;
-	}
-}
-
-relation ReimbursementGuideReimbursementGuideEntry {
-	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuide;
-	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntries {
-		multiplicity *;
-	}
 }
 
 
@@ -522,21 +485,6 @@ relation MasterDegreeCandidatePerson {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Person playsRole person;
-}
-
-relation GratuityValuesPaymentPhase {
-	net.sourceforge.fenixedu.domain.GratuityValues playsRole gratuityValues;
-	net.sourceforge.fenixedu.domain.PaymentPhase playsRole paymentPhaseList {
-		multiplicity *;
-	}
-}
-
-
-relation MasterDegreeThesisMasterDegreeThesisDataVersion {
-	net.sourceforge.fenixedu.domain.MasterDegreeThesis playsRole masterDegreeThesis;
-	net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisDataVersions {
-		multiplicity *;
-	}
 }
 
 
@@ -549,19 +497,6 @@ relation MasterDegreeThesisDataVersionTeacher {
 	}
 }
 
-relation GuideEntryReimbursementGuideEntry {
-	net.sourceforge.fenixedu.domain.GuideEntry playsRole guideEntry;
-	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntries {
-		multiplicity *;
-	}
-}
-
-relation SibsPaymentFileSibsPaymentFileEntry {
-	net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile playsRole sibsPaymentFile;
-	net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry playsRole sibsPaymentFileEntries {
-		multiplicity *;
-	}
-}
 
 
 relation MasterDegreeProofVersionTeacher {
@@ -595,37 +530,6 @@ relation ReimbursementTransactionReimbursementGuideEntry {
 	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntry;
 }
 
-relation GuideGuideEntry {
-	net.sourceforge.fenixedu.domain.Guide playsRole guide {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.GuideEntry playsRole guideEntries {
-		multiplicity *;
-	}
-}
-
-relation MasterDegreeThesisDataVersionExternalPerson {
-	net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisExternalAssistentGuider {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalAssistentGuiders {
-		multiplicity *;
-	}
-}
-
-relation GuideGuideSituation {
-	net.sourceforge.fenixedu.domain.Guide playsRole guide;
-	net.sourceforge.fenixedu.domain.GuideSituation playsRole guideSituations {
-		multiplicity *;
-	}
-}
-
-relation GuideReimbursementGuide {
-	net.sourceforge.fenixedu.domain.Guide playsRole guide;
-	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuides {
-		multiplicity *;
-	}
-}
 
 relation MasterDegreeThesisDataVersionTeacher {
 	net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion playsRole masterDegreeThesisAssistentGuider {

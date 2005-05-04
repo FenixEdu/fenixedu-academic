@@ -13,7 +13,7 @@ package net.sourceforge.fenixedu.domain;
 public class Coordinator extends Coordinator_Base {
 
 	private ITeacher teacher;
-
+    private IExecutionDegree executionDegree = null;
 	/**
 	 * @param integer
 	 */
@@ -37,5 +37,14 @@ public class Coordinator extends Coordinator_Base {
 	public void setTeacher(ITeacher teacher) {
 		this.teacher = teacher;
 	}
+	
+    
+    public net.sourceforge.fenixedu.domain.IExecutionDegree getExecutionDegree() {
+        return executionDegree;
+    }
+    
+    public void setExecutionDegree(net.sourceforge.fenixedu.domain.IExecutionDegree executionDegree) {
+        this.executionDegree = executionDegree;
+    }
 
 }
