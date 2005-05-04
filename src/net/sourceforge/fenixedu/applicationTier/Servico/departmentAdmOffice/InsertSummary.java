@@ -104,13 +104,13 @@ public class InsertSummary implements IService {
                 }
             }
 
-            summary.setSummaryDate(infoSummary.getSummaryDate());
-            summary.setSummaryHour(infoSummary.getSummaryHour());
+            summary.setSummaryDate(infoSummary.getSummaryDate().getTime());
+            summary.setSummaryHour(infoSummary.getSummaryHour().getTime());
 
             //after verify summary date and hour
             //and before continue check if this summary exists
-            if (persistentSummary.readSummaryByUnique(shift, infoSummary.getSummaryDate(), infoSummary
-                    .getSummaryHour()) != null) {
+            if (persistentSummary.readSummaryByUnique(shift, infoSummary.getSummaryDate().getTime(), infoSummary
+                    .getSummaryHour().getTime()) != null) {
                 throw new FenixServiceException("error.summary.already.exists");
             }
 

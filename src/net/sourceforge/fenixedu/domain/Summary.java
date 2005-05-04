@@ -5,8 +5,6 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Calendar;
-
 import net.sourceforge.fenixedu.util.TipoAula;
 
 /**
@@ -17,8 +15,6 @@ import net.sourceforge.fenixedu.util.TipoAula;
  *  
  */
 public class Summary extends Summary_Base {
-    private Calendar summaryDate;
-    private Calendar summaryHour;
     private TipoAula summaryType;
 
     public Summary() {
@@ -28,28 +24,12 @@ public class Summary extends Summary_Base {
         setIdInternal(summaryId);
     }
 
-    public Calendar getSummaryHour() {
-        return summaryHour;
-    }
-
-    public void setSummaryHour(Calendar summaryHour) {
-        this.summaryHour = summaryHour;
-    }
-
     public TipoAula getSummaryType() {
         return summaryType;
     }
 
     public void setSummaryType(TipoAula summaryType) {
         this.summaryType = summaryType;
-    }
-
-    public Calendar getSummaryDate() {
-        return summaryDate;
-    }
-
-    public void setSummaryDate(Calendar summaryDate) {
-        this.summaryDate = summaryDate;
     }
 
     public boolean compareTo(Object obj) {
@@ -65,5 +45,4 @@ public class Summary extends Summary_Base {
         }
         return resultado;
     }
-
 }

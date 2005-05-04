@@ -518,13 +518,12 @@
         name="summaryDate"
         column="SUMMARY_DATE"
         jdbc-type="DATE"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion"
 	/>
 	  <field-descriptor id="4"
         name="summaryHour"
         column="SUMMARY_HOUR"
         jdbc-type="TIME"
-         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2TimeFieldConversion"
+         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Date2TimeFieldConversion"
 	/>
     <field-descriptor id="5"
         name="lastModifiedDate"

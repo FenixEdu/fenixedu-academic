@@ -66,13 +66,15 @@ public class ReadLastSummary implements IService {
             
 			List summaries = persistentSummary.readByShift(executionCourse, shift);
 			if(summaries != null && summaries.size() > 0){
-				Comparator comparator = new BeanComparator("summaryDate.timeInMillis");
+				Comparator comparator = new BeanComparator("summaryDate.time");
 				Collections.sort(summaries, comparator);
 				DiaSemana diaSemana = aula.getDiaSemana();
+				Calendar summaryDate = Calendar.getInstance();
 				int summaryDayOfWeek;
 				for(int i = summaries.size() - 1; i >= 0; i--){
-				    ISummary summary1 = (ISummary) summaries.get(i);				    
-				    summaryDayOfWeek = summary1.getSummaryDate().get(Calendar.DAY_OF_WEEK);
+				    ISummary summary1 = (ISummary) summaries.get(i);
+				    summaryDate.setTime(summary1.getSummaryDate());
+				    summaryDayOfWeek = summaryDate.get(Calendar.DAY_OF_WEEK);
 				    if(summaryDayOfWeek == diaSemana.getDiaSemana().intValue()){
 				        summary = InfoSummary.newInfoFromDomain(summary1);
 				        break;	

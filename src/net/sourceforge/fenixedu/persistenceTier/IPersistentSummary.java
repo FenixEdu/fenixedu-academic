@@ -6,7 +6,7 @@
 
 package net.sourceforge.fenixedu.persistenceTier;
 
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -40,7 +40,7 @@ public interface IPersistentSummary extends IPersistentObject {
 
     public List readByOtherTeachers(IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
 
-    public ISummary readSummaryByUnique(IShift shift, Calendar summaryDate, Calendar summaryHour)
+    public ISummary readSummaryByUnique(IShift shift, Date summaryDate, Date summaryHour)
             throws ExcepcaoPersistencia;
 
     public abstract void delete(ISummary summary) throws ExcepcaoPersistencia;

@@ -609,8 +609,15 @@ public class InfoSummary extends InfoObject implements Comparable {
             setIsExtraLesson(summary.getIsExtraLesson());
             setLastModifiedDate(summary.getLastModifiedDate());
             setStudentsNumber(summary.getStudentsNumber());
-            setSummaryDate(summary.getSummaryDate());
-            setSummaryHour(summary.getSummaryHour());
+            
+            Calendar summaryDate = Calendar.getInstance();
+            summaryDate.setTime(summary.getSummaryDate());
+            setSummaryDate(summaryDate);
+            
+            Calendar summaryHour = Calendar.getInstance();
+            summaryHour.setTime(summary.getSummaryHour());
+            setSummaryHour(summaryHour);
+            
             setSummaryText(summary.getSummaryText());
             setTeacherName(summary.getTeacherName());
             setTitle(summary.getTitle());

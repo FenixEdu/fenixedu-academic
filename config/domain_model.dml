@@ -2499,14 +2499,12 @@ class net.sourceforge.fenixedu.domain.Summary extends net.sourceforge.fenixedu.d
 	Date lastModifiedDate;
 	Integer keyShift;
 	Boolean isExtraLesson;
+    Date summaryDate;
+    Date summaryHour;
 	
 	interface "
-	public java.util.Calendar getSummaryHour();
-    public void setSummaryHour(java.util.Calendar summaryHour);
     public net.sourceforge.fenixedu.util.TipoAula getSummaryType();
     public void setSummaryType(net.sourceforge.fenixedu.util.TipoAula summaryType);
-    public java.util.Calendar getSummaryDate();
-    public void setSummaryDate(java.util.Calendar summaryDate);
 	"
 }
 

@@ -338,26 +338,29 @@ public class ExecutionCourseSiteComponentBuilder {
                 ISummary summary = (ISummary) iterator.next();
 
                 Calendar dateAndHourSummary = Calendar.getInstance();
-                dateAndHourSummary.set(Calendar.DAY_OF_MONTH, summary.getSummaryDate().get(
-                        Calendar.DAY_OF_MONTH));
-                dateAndHourSummary.set(Calendar.MONTH, summary.getSummaryDate().get(Calendar.MONTH));
-                dateAndHourSummary.set(Calendar.YEAR, summary.getSummaryDate().get(Calendar.YEAR));
-                dateAndHourSummary.set(Calendar.HOUR_OF_DAY, summary.getSummaryHour().get(
-                        Calendar.HOUR_OF_DAY));
-                dateAndHourSummary.set(Calendar.MINUTE, summary.getSummaryHour().get(Calendar.MINUTE));
+                
+                Calendar summaryDate = Calendar.getInstance();
+                summaryDate.setTime(summary.getSummaryDate());
+                
+                Calendar summaryHour = Calendar.getInstance();
+                summaryHour.setTime(summary.getSummaryHour());
+                
+                dateAndHourSummary.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
+                dateAndHourSummary.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
+                dateAndHourSummary.set(Calendar.YEAR, summaryDate.get(Calendar.YEAR));
+                dateAndHourSummary.set(Calendar.HOUR_OF_DAY, summaryHour.get(Calendar.HOUR_OF_DAY));
+                dateAndHourSummary.set(Calendar.MINUTE, summaryHour.get(Calendar.MINUTE));
                 dateAndHourSummary.set(Calendar.SECOND, 00);
 
                 Calendar beginLesson = Calendar.getInstance();
-                beginLesson.set(Calendar.DAY_OF_MONTH, summary.getSummaryDate().get(
-                        Calendar.DAY_OF_MONTH));
-                beginLesson.set(Calendar.MONTH, summary.getSummaryDate().get(Calendar.MONTH));
-                beginLesson.set(Calendar.YEAR, summary.getSummaryDate().get(Calendar.YEAR));
+                beginLesson.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
+                beginLesson.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
+                beginLesson.set(Calendar.YEAR, summaryDate.get(Calendar.YEAR));
 
                 Calendar endLesson = Calendar.getInstance();
-                endLesson
-                        .set(Calendar.DAY_OF_MONTH, summary.getSummaryDate().get(Calendar.DAY_OF_MONTH));
-                endLesson.set(Calendar.MONTH, summary.getSummaryDate().get(Calendar.MONTH));
-                endLesson.set(Calendar.YEAR, summary.getSummaryDate().get(Calendar.YEAR));
+                endLesson.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
+                endLesson.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
+                endLesson.set(Calendar.YEAR, summaryDate.get(Calendar.YEAR));
 
                 boolean removeSummary = true;
                 if (shift.getAssociatedLessons() != null && shift.getAssociatedLessons().size() > 0) {

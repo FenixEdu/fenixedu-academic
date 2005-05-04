@@ -5,7 +5,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -140,7 +140,7 @@ public class SummaryOJB extends PersistentObjectOJB implements IPersistentSummar
      * @see ServidorPersistente.IPersistentSummary#readSummaryByUnique(Dominio.IShift,
      *      java.util.Calendar, java.util.Calendar)
      */
-    public ISummary readSummaryByUnique(IShift shift, Calendar summaryDate, Calendar summaryHour)
+    public ISummary readSummaryByUnique(IShift shift, Date summaryDate, Date summaryHour)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("shift.idInternal", shift.getIdInternal());
