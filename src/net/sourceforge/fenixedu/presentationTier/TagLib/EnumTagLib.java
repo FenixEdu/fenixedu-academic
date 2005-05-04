@@ -7,7 +7,9 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
@@ -28,6 +30,10 @@ public class EnumTagLib extends BodyTagSupport {
     private String locale = Globals.LOCALE_KEY;
 
     private String bundle;
+
+    private String excludedFields;
+
+    private String includedFields;
 
     protected static MessageResources messages = MessageResources
             .getMessageResources("org.apache.struts.taglib.bean.LocalStrings");
@@ -56,6 +62,14 @@ public class EnumTagLib extends BodyTagSupport {
         this.locale = locale;
     }
 
+    public void setExcludedFields(String excludedFields) {
+        this.excludedFields = excludedFields;
+    }
+
+    public void setIncludedFields(String includedFields) {
+        this.includedFields = includedFields;
+    }
+
     public Collection<LabelValueBean> getLabelValues() {
         Map<String, Collection<LabelValueBean>> map = labelValueBeansMap.get(this.enumeration);
         if (map == null) {
@@ -81,22 +95,47 @@ public class EnumTagLib extends BodyTagSupport {
                 throw new IllegalArgumentException("Expected an enum type, got: " + this.enumeration);
             }
 
+            if (this.excludedFields != null && this.includedFields != null) {
+                throw new IllegalArgumentException(
+                        "includedFields and excludedFields are both not empty");
+            }
+
             final Method method = clazz.getMethod("values", (Class[]) null);
             final Object[] objects = (Object[]) method.invoke(clazz, (Object[]) null);
             final Collection<LabelValueBean> labelValueBeans = new ArrayList<LabelValueBean>(
                     objects.length);
-            for (int i = 0; i < objects.length; i++) {
-                String message = RequestUtils.message(pageContext, this.bundle,
-                        this.locale, objects[i].toString(), null);
 
-                labelValueBeans.add(new LabelValueBean(message,
-                        objects[i].toString()));
+            final Set<String> excludedFieldsNames = new HashSet();
+            fillSetWithSplittedString(excludedFieldsNames, this.excludedFields);
+            final Set<String> includedFieldsNames = new HashSet();
+            fillSetWithSplittedString(includedFieldsNames, this.includedFields);
+
+            for (int i = 0; i < objects.length; i++) {
+                String value = objects[i].toString();
+
+                if ((!excludedFieldsNames.isEmpty() && !excludedFieldsNames.contains(value))
+                        || (!includedFieldsNames.isEmpty() && includedFieldsNames.contains(value)) || (includedFieldsNames
+                                .isEmpty() && excludedFieldsNames.isEmpty())) {
+                    String message = RequestUtils.message(pageContext, this.bundle, this.locale, value,
+                            null);
+                    labelValueBeans.add(new LabelValueBean(message, value));
+                }
             }
+
             return labelValueBeans;
         } catch (Exception e) {
             throw new IllegalArgumentException("Expected an enum type, got: " + this.enumeration);
         }
 
+    }
+
+    private void fillSetWithSplittedString(final Set<String> fieldsNamesSet, String fieldNamesString) {
+        if (fieldNamesString != null && fieldNamesString.length() > 0) {
+            String[] fieldsNamesArray = fieldNamesString.split(",");
+            for (String fieldName : fieldsNamesArray) {
+                fieldsNamesSet.add(fieldName);
+            }
+        }
     }
 
 }

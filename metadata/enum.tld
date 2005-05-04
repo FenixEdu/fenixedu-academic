@@ -75,6 +75,24 @@
       </description>
     </attribute>
 	
+	<attribute>
+      <name>excludedFields</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      	Comma-delimited list of fields of the enumeration that will excluded from the collection
+      </description>
+    </attribute>
+
+	<attribute>
+      <name>includedFields</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      	Comma-delimited list of fields of the enumeration that will included in the collection
+      </description>
+    </attribute>
+	
   </tag>
 
 
