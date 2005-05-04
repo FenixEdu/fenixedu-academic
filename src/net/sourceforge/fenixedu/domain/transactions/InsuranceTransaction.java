@@ -50,6 +50,7 @@ public class InsuranceTransaction extends InsuranceTransaction_Base {
 		setResponsiblePerson(responsiblePerson);
 		setPersonAccount(personAccount);
 		setExecutionYear(executionYear);
+        setGuideEntry(guideEntry);
 		this.student = student;
 	}
 

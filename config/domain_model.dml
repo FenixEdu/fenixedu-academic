@@ -2819,6 +2819,8 @@ class net.sourceforge.fenixedu.domain.transactions.Transaction extends net.sourc
 
 class net.sourceforge.fenixedu.domain.transactions.PaymentTransaction extends net.sourceforge.fenixedu.domain.transactions.Transaction {
 
+	Integer keyGuideEntry;
+
 	interface "
 		public net.sourceforge.fenixedu.domain.IGuideEntry getGuideEntry();
 		
@@ -2843,8 +2845,7 @@ class net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction exte
 
 class net.sourceforge.fenixedu.domain.transactions.GratuityTransaction extends net.sourceforge.fenixedu.domain.transactions.PaymentTransaction {
 	Boolean wasInternalBalance;
-	Double value;
-	Integer keyGuideEntry;
+	Double value;	
 	String remarks;
 	Integer keyGratuitySituation;
 	Integer keyPersonAccount;
@@ -2860,7 +2861,6 @@ class net.sourceforge.fenixedu.domain.transactions.GratuityTransaction extends n
 class net.sourceforge.fenixedu.domain.transactions.SmsTransaction extends net.sourceforge.fenixedu.domain.transactions.PaymentTransaction {
 	Boolean wasInternalBalance;
 	Double value;
-	Integer keyGuideEntry;
 	String remarks;
 	Integer keyPersonAccount;
 	Integer keyResponsiblePerson;
@@ -2869,7 +2869,6 @@ class net.sourceforge.fenixedu.domain.transactions.SmsTransaction extends net.so
 class net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction extends net.sourceforge.fenixedu.domain.transactions.PaymentTransaction {
 	Boolean wasInternalBalance;
 	Double value;
-	Integer keyGuideEntry;
 	String remarks;
 	Integer keyPersonAccount;
 	Integer keyExecutionYear;

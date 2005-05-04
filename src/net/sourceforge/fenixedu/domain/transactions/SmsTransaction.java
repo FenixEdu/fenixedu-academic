@@ -38,5 +38,6 @@ public class SmsTransaction extends SmsTransaction_Base {
 		setWasInternalBalance(wasInternalBalance);
 		setResponsiblePerson(responsiblePerson);
 		setPersonAccount(personAccount);
+        setGuideEntry(guideEntry);
 	}
 }

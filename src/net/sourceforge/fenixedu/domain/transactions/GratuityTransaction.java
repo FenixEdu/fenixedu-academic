@@ -45,6 +45,7 @@ public class GratuityTransaction extends GratuityTransaction_Base {
 		setWasInternalBalance(wasInternalBalance);
 		setResponsiblePerson(responsiblePerson);
 		setPersonAccount(personAccount);
+        setGuideEntry(guideEntry);
 		this.gratuitySituation = gratuitySituation;
 	}
 
