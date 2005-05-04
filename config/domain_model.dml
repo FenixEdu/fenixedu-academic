@@ -1038,7 +1038,10 @@ class net.sourceforge.fenixedu.domain.GratuitySituation extends net.sourceforge.
 	Double remainingValue;
 	
 	interface "
+		public net.sourceforge.fenixedu.domain.IEmployee getEmployee();
 	
+		public void setEmployee(net.sourceforge.fenixedu.domain.IEmployee employee);
+
 		public java.util.Date getWhen();
 	
 		public void setWhen(java.util.Date when);
