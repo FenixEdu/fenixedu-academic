@@ -60,6 +60,7 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
         infoCurricularCourse.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
         infoCurricularCourse.setMandatory(new Boolean(mandatory));
         infoCurricularCourse.setName((String) dynaForm.get("name"));
+        infoCurricularCourse.setNameEn((String) dynaForm.get("nameEn"));
         infoCurricularCourse.setType(new CurricularCourseType(new Integer(type)));
 
         String credits = (String) dynaForm.get("credits");

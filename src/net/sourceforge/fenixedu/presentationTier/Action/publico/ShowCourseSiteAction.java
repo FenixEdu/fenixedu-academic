@@ -10,10 +10,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithSemesterAndYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteFirstPage;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSection;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -33,6 +39,7 @@ import org.apache.struts.action.DynaActionForm;
  * @author Tânia Pousão Create on 20/Nov/2003
  */
 public class ShowCourseSiteAction extends FenixContextDispatchAction {
+    
     public ActionForward showCurricularCourseSite(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
@@ -111,6 +118,8 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
             comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
             Collections.sort(infoCurriculum.getInfoCurricularCourse().getInfoScopes(), comparatorChain);
         }
+        infoCurriculum.getInfoCurricularCourse().getInfoDegreeCurricularPlan().getInfoDegree().prepareEnglishPresentation(language);
+       
         infoCurriculum.prepareEnglishPresentation(language);
         request.setAttribute("infoCurriculum", infoCurriculum);
 

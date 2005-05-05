@@ -52,6 +52,7 @@ public class InsertCurricularCourseAtDegreeCurricularPlan implements IService {
                 throw new NonExistingServiceException();
 
             String name = infoCurricularCourse.getName();
+            String nameEn = infoCurricularCourse.getNameEn();
             String code = infoCurricularCourse.getCode();
             final String acronym = infoCurricularCourse.getAcronym();
             
@@ -82,6 +83,7 @@ public class InsertCurricularCourseAtDegreeCurricularPlan implements IService {
 	            curricularCourse.setDegreeCurricularPlan(degreeCurricularPlan);
 	            curricularCourse.setMandatory(infoCurricularCourse.getMandatory());
 	            curricularCourse.setName(name);
+                curricularCourse.setNameEn(nameEn);
 	            curricularCourse.setType(infoCurricularCourse.getType());
 	            curricularCourse.setTheoreticalHours(infoCurricularCourse.getTheoreticalHours());
 	            curricularCourse.setTheoPratHours(infoCurricularCourse.getTheoPratHours());

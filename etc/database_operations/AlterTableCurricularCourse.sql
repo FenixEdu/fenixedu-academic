@@ -1,0 +1,1 @@
+ALTER TABLE `curricular_course` ADD `NAME_EN` VARCHAR(100)  AFTER `NAME`

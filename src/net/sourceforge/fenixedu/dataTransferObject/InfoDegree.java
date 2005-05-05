@@ -19,6 +19,8 @@ public class InfoDegree extends InfoObject implements Comparable {
     protected String sigla;
 
     protected String nome;
+    
+    protected String nameEn;
 
     protected TipoCurso tipoCurso;
 
@@ -34,9 +36,10 @@ public class InfoDegree extends InfoObject implements Comparable {
         setNome(nome);
     }
 
-    public InfoDegree(String sigla, String nome, TipoCurso degreeType) {
+    public InfoDegree(String sigla, String nome,String nameEn, TipoCurso degreeType) {
         setSigla(sigla);
         setNome(nome);
+        setNameEn(nameEn);
         setTipoCurso(degreeType);
     }
 
@@ -128,6 +131,7 @@ public class InfoDegree extends InfoObject implements Comparable {
             setNome(degree.getNome());
             setSigla(degree.getSigla());
             setTipoCurso(degree.getTipoCurso());
+            setNameEn(degree.getNameEn());
         }
     }
 
@@ -149,6 +153,7 @@ public class InfoDegree extends InfoObject implements Comparable {
         degree.setNome(infoDegree.getNome());
         degree.setSigla(infoDegree.getSigla());
         degree.setTipoCurso(infoDegree.getTipoCurso());
+        degree.setNameEn(infoDegree.getNameEn());
     }
 
     public static IDegree newDomainFromInfo(InfoDegree infoDegree) {
@@ -158,5 +163,22 @@ public class InfoDegree extends InfoObject implements Comparable {
             infoDegree.copyToDomain(infoDegree, degree);
         }
         return degree;
+    }
+
+    public String getNameEn() {
+        return nameEn;
+    }
+    
+
+    public void setNameEn(String nameEn) {
+        this.nameEn = nameEn;
+    }
+    
+    public void prepareEnglishPresentation(String language) {
+        if (language.equals("en")){ 
+            if (!(this.nameEn==null)&&!(this.nameEn.length()==0)&&!(this.nameEn=="")){
+                this.nome = this.nameEn;
+            }
+        }
     }
 }

@@ -135,6 +135,7 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent {
             this.generalObjectives  = this.generalObjectivesEn;
             this.operacionalObjectives = this.operacionalObjectivesEn;
             this.program = this.programEn;
+           // this.infoCurricularCourse.prepareEnglishPresentation(language);
         }
     }
     public String toString() {
@@ -233,6 +234,7 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent {
         if (curriculum != null) {
             infoCurriculum = new InfoCurriculum();
             infoCurriculum.copyFromDomain(curriculum);
+            
         }
         return infoCurriculum;
     }

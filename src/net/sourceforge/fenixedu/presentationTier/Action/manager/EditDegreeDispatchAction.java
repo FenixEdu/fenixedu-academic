@@ -58,6 +58,7 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 
         readDegreeForm.set("name", oldInfoDegree.getNome());
         readDegreeForm.set("code", oldInfoDegree.getSigla());
+        readDegreeForm.set("nameEn",oldInfoDegree.getNameEn());
         readDegreeForm.set("degreeType", degreeType.getTipoCurso());
         return mapping.findForward("editDegree");
     }
@@ -71,10 +72,11 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
         Integer oldDegreeId = new Integer(request.getParameter("degreeId"));
         String code = (String) editDegreeForm.get("code");
         String name = (String) editDegreeForm.get("name");
+        String nameEn = (String) editDegreeForm.get("nameEn");
         Integer degreeTypeInt = (Integer) editDegreeForm.get("degreeType");
 
         TipoCurso degreeType = new TipoCurso(degreeTypeInt);
-        InfoDegree newInfoDegree = new InfoDegree(code, name, degreeType);
+        InfoDegree newInfoDegree = new InfoDegree(code, name,nameEn, degreeType);
         newInfoDegree.setIdInternal(oldDegreeId);
 
         Object args[] = { newInfoDegree };

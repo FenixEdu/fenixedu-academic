@@ -6,11 +6,14 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTimetable;
@@ -20,10 +23,12 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
+import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
 
 /**
  * @author João Mota
@@ -62,6 +67,8 @@ public class ViewClassTimeTableActionNew extends FenixContextAction {
         Integer degreeId = Integer.valueOf(request.getParameter("degreeID"));
         request.setAttribute("degreeID", degreeId);
         Integer classId = null;
+        String language = getLocaleLanguageFromRequest(request);
+        
         if (classIdString != null) {
             classId = new Integer(classIdString);
         } else {
@@ -77,7 +84,11 @@ public class ViewClassTimeTableActionNew extends FenixContextAction {
         } catch (FenixServiceException e1) {
             throw new FenixActionException(e1);
         }
-
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
+        infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
+        infoDegreeCurricularPlan.prepareEnglishPresentation(language);
+ 
+        infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
         request.setAttribute(SessionConstants.INFO_DEGREE_CURRICULAR_PLAN, infoExecutionDegree
                 .getInfoDegreeCurricularPlan());
 
@@ -95,6 +106,13 @@ public class ViewClassTimeTableActionNew extends FenixContextAction {
         request.setAttribute("siteView", siteView);
         request.setAttribute("className", className);
         return mapping.findForward("Sucess");
+
+    }
+    private String getLocaleLanguageFromRequest(HttpServletRequest request) {
+
+        Locale locale = (Locale) request.getSession(false).getAttribute(Action.LOCALE_KEY);
+        Locale locale2 = request.getLocale();
+        return  locale.getLanguage();
 
     }
 }

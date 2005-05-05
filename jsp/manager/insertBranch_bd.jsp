@@ -22,6 +22,13 @@
 		</tr>
 		<tr>
 			<td>
+				<bean:message key="label.nameEn"/>
+			</td>
+			<td>
+				<html:text size="60" property="nameEn" />
+			</td>
+		<tr>
+			<td>
 				<bean:message key="label.manager.code"/>
 			</td>
 			<td>

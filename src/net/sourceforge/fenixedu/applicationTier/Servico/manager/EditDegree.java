@@ -52,6 +52,7 @@ public class EditDegree implements IService {
             }
             persistentDegree.simpleLockWrite(oldDegree);
             oldDegree.setNome(newInfoDegree.getNome());
+            oldDegree.setNameEn(newInfoDegree.getNameEn());
             oldDegree.setSigla(newInfoDegree.getSigla());
             oldDegree.setTipoCurso(newInfoDegree.getTipoCurso());
             

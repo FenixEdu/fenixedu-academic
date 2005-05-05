@@ -103,6 +103,7 @@ class net.sourceforge.fenixedu.domain.Branch extends net.sourceforge.fenixedu.do
     Integer keyDegreeCurricularPlan;
     Integer specializationCredits;
     String name;
+    String nameEn;
     String acronym;
     
     interface "
@@ -319,6 +320,7 @@ class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.f
 	Double praticalHours;
 	Boolean mandatory;
 	String name;
+	String nameEn;
 	String acronym;
 	Integer minimumValueForAcumulatedEnrollments;
 	
@@ -414,6 +416,7 @@ class net.sourceforge.fenixedu.domain.Curriculum extends net.sourceforge.fenixed
 class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.domain.DomainObject {
 	String concreteClassForDegreeCurricularPlans;
 	String nome;
+	String nameEn;
 	String sigla;
 	
 	interface "

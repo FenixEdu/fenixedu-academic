@@ -23,6 +23,14 @@
 		</tr>
 		<tr>
 			<td>
+				<bean:message key="message.manager.degree.curricular.plan.nameEn"/>
+			</td>
+			<td>
+				<html:text size="60" property="nameEn" />
+			</td>
+		</tr>
+		<tr>
+			<td>
 				<bean:message key="label.manager.curricularCourse.code"/>
 			</td>
 			<td>

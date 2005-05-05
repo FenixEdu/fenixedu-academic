@@ -16,6 +16,8 @@ public class InfoBranch extends InfoObject {
 
     private String name;
 
+    private String nameEn;
+    
     private String code;
 
     private Integer specializationCredits;
@@ -30,6 +32,7 @@ public class InfoBranch extends InfoObject {
 
     public InfoBranch() {
         setName(null);
+        setNameEn(null);
         setCode(null);
         setInfoDegreeCurricularPlan(null);
 
@@ -38,6 +41,7 @@ public class InfoBranch extends InfoObject {
     public InfoBranch(String name, String code) {
         this();
         setName(name);
+        setNameEn(nameEn);
         setCode(code);
     }
 
@@ -46,6 +50,7 @@ public class InfoBranch extends InfoObject {
         result += "name = " + this.name + "; ";
         result += "code = " + this.code + "; ";
         result += "idInternal = " + this.getIdInternal() + "]";
+        result += "nameEn = " + this.nameEn + "; ";
         return result;
     }
 
@@ -189,6 +194,8 @@ public class InfoBranch extends InfoObject {
             setBranchType(branch.getBranchType());
             setCode(branch.getCode());
             setName(branch.getName());
+            setNameEn(branch.getNameEn());
+
             setSecondaryCredits(branch.getSecondaryCredits());
             setSpecializationCredits(branch.getSpecializationCredits());
         }
@@ -202,4 +209,22 @@ public class InfoBranch extends InfoObject {
         }
         return infoBranch;
     }
+
+    public String getNameEn() {
+        return nameEn;
+    }
+    
+
+    public void setNameEn(String nameEn) {
+        this.nameEn = nameEn;
+    }
+    
+    public void prepareEnglishPresentation(String language) {
+        if (language.equals("en")){ 
+            if (!(this.nameEn==null)&&!(this.nameEn.length()==0)&&!(this.nameEn=="")){
+                this.name = this.nameEn;
+            }
+        }
+    }
+    
 }

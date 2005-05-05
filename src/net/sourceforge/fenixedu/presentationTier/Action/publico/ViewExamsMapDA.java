@@ -10,6 +10,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +20,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -28,6 +30,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
+import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -54,7 +57,7 @@ public class ViewExamsMapDA extends FenixContextDispatchAction {
         	
           Integer degreeId = getFromRequest("degreeID", request);
           request.setAttribute("degreeID", degreeId);
-
+          String language = getLocaleLanguageFromRequest(request);
           Integer executionDegreeId = getFromRequest("executionDegreeID", request);
           request.setAttribute("executionDegreeID", executionDegreeId);
 
@@ -81,6 +84,7 @@ public class ViewExamsMapDA extends FenixContextDispatchAction {
 					
 					if (infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal()!= degreeCurricularPlanId )
 						infoExecutionDegree =  (InfoExecutionDegree)infoExecutionDegreeList.get(i);
+                    
 				}
 				request.setAttribute(SessionConstants.INFO_EXAMS_MAP,infoExamsMap);
 
@@ -88,6 +92,15 @@ public class ViewExamsMapDA extends FenixContextDispatchAction {
 				infoExamsMap = getInfoExamsMap(infoExecutionDegree,infoExecutionPeriod,curricularYears,userView,request);
 				request.removeAttribute(SessionConstants.INFO_EXAMS_MAP_LIST);
             }
+            
+            InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
+            infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
+            infoDegreeCurricularPlan.prepareEnglishPresentation(language);
+     
+            infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+            infoExamsMap.setInfoExecutionDegree(infoExecutionDegree);
+           
+       
 			request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
 			request.setAttribute("infoDegreeCurricularPlan", infoExecutionDegree
 						.getInfoDegreeCurricularPlan());
@@ -155,6 +168,13 @@ public class ViewExamsMapDA extends FenixContextDispatchAction {
 		   return infoExamsMap;
 	   
 		}
+    private String getLocaleLanguageFromRequest(HttpServletRequest request) {
+
+        Locale locale = (Locale) request.getSession(false).getAttribute(Action.LOCALE_KEY);
+        Locale locale2 = request.getLocale();
+        return  locale.getLanguage();
+
+    }
 	
 
 }

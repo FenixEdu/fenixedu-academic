@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -29,6 +31,7 @@ import org.apache.struts.util.LabelValueBean;
 
 import net.sourceforge.fenixedu.dataTransferObject.CurricularYearAndSemesterAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
@@ -348,9 +351,17 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
             return mapping.findForward("Licenciatura execucao inexistente");
         }
 
+        String language = getLocaleLanguageFromRequest(request);
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
+        infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
+        infoDegreeCurricularPlan.prepareEnglishPresentation(language);
+ 
+        infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+       
         RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);
 		request.setAttribute(SessionConstants.INFO_DEGREE_CURRICULAR_PLAN, infoExecutionDegree
 					   .getInfoDegreeCurricularPlan());
+        
 		request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
 		request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod
 				.getIdInternal().toString());
@@ -462,4 +473,11 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
 				  }
 			  return executionPeriodsLabelValueList;
 	  }
+       private String getLocaleLanguageFromRequest(HttpServletRequest request) {
+
+        Locale locale = (Locale) request.getSession(false).getAttribute(Action.LOCALE_KEY);
+        Locale locale2 = request.getLocale();
+        return  locale.getLanguage();
+
+    }
 }

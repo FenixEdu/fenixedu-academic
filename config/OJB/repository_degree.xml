@@ -20,6 +20,11 @@
 		jdbc-type="VARCHAR"
 	/>
 	<field-descriptor
+		name="nameEn"
+		column="NAME_EN"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
 		name="tipoCurso"
 		column="TYPE_DEGREE"
 		jdbc-type="INTEGER"

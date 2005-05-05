@@ -179,6 +179,11 @@
 		jdbc-type="VARCHAR"
 	/>
 	<field-descriptor
+		name="nameEn"
+		column="NAME_EN"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
 		name="code"
 		column="CODE"
 		jdbc-type="VARCHAR"

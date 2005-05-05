@@ -44,6 +44,7 @@ public class InsertBranch implements IService {
                 throw new NonExistingServiceException();
 
             String name = infoBranch.getName();
+            String nameEn = infoBranch.getNameEn();
             code = infoBranch.getCode();
 
             IPersistentBranch persistentBranch = persistentSuport.getIPersistentBranch();
@@ -52,6 +53,7 @@ public class InsertBranch implements IService {
             persistentBranch.simpleLockWrite(branch);
             branch.setCode(code);
             branch.setName(name);
+            branch.setNameEn(nameEn);
             branch.setDegreeCurricularPlan(degreeCurricularPlan);
 
         } catch (ExistingPersistentException existingException) {

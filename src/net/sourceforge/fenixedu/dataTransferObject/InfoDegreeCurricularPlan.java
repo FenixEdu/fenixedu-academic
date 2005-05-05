@@ -280,6 +280,7 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
     public void prepareEnglishPresentation(String language) {
         if (language.equals("en")){        
             this.description = this.descriptionEn;
+            this.infoDegree.prepareEnglishPresentation(language);
         }
     }
     

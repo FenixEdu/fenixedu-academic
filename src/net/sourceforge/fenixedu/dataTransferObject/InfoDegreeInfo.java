@@ -325,6 +325,8 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
             this.objectives = this.objectivesEn;
             this.professionalExits = this.professionalExitsEn;
             this.testIngression = this.testIngressionEn;    
+            this.infoDegree.prepareEnglishPresentation(language);
+  
         }
     }
     

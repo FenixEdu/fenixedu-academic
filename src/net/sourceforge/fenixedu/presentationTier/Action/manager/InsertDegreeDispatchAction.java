@@ -43,10 +43,11 @@ public class InsertDegreeDispatchAction extends FenixDispatchAction {
         DynaActionForm dynaForm = (DynaValidatorForm) form;
         String code = (String) dynaForm.get("code");
         String name = (String) dynaForm.get("name");
+        String nameEn = (String) dynaForm.get("nameEn");
         Integer degreeTypeInt = (Integer) dynaForm.get("degreeType");
 
         TipoCurso degreeType = new TipoCurso(degreeTypeInt);
-        InfoDegree infoDegree = new InfoDegree(code, name, degreeType);
+        InfoDegree infoDegree = new InfoDegree(code, name, nameEn,degreeType);
 
         Object args[] = { infoDegree };
 

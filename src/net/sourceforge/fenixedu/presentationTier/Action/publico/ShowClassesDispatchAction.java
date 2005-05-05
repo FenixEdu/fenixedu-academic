@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +22,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatc
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
+import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -41,8 +43,8 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
 
         List classViewsForCurrentAndNextPeriods = getClassViewsForCurrentAndNextPeriods(request,
                 degreeOID);
-
-        getInfoDegreeCurricularPlan(request, degreeOID);
+        String language = getLocaleLanguageFromRequest(request);
+        getInfoDegreeCurricularPlan(request, degreeOID,language);
 
         //InfoExecutionPeriod previouseInfoExecutionPeriod = getPreviouseExecutionPeriod(request);
 
@@ -134,14 +136,21 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
                 "ReadClassesForCurrentAndNextPeriodByDegree", args);
     }
 
-    private void getInfoDegreeCurricularPlan(HttpServletRequest request, Integer degreeOID)
+    private void getInfoDegreeCurricularPlan(HttpServletRequest request, Integer degreeOID,String language)
             throws FenixServiceException, FenixFilterException {
         Object[] args = { degreeOID };
 
         InfoDegree infoDegree = (InfoDegree) ServiceManagerServiceFactory.executeService(null,
                 "ReadDegreeByOID", args);
-
+        infoDegree.prepareEnglishPresentation(language);
         request.setAttribute("infoDegree", infoDegree);
     }
+    private String getLocaleLanguageFromRequest(HttpServletRequest request) {
 
+        Locale locale = (Locale) request.getSession(false).getAttribute(Action.LOCALE_KEY);
+        Locale locale2 = request.getLocale();
+
+        return  locale.getLanguage();
+
+    }
 }

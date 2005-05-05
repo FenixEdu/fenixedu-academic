@@ -92,6 +92,7 @@ abstract public class ReadDegreeCurricularPlanBaseService implements IService {
                             return Cloner
                                     .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
                         }
+                       
                     }, infoActiveScopes);
                 }
             }

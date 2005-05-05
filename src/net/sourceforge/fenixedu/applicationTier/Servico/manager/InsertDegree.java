@@ -32,12 +32,14 @@ public class InsertDegree implements IService {
 
         String code = infoDegree.getSigla();
         String name = infoDegree.getNome();
+        String nameEn = infoDegree.getNameEn();
         TipoCurso type = infoDegree.getTipoCurso();
 
         IDegree degree = new Degree();
         persistentDegree.simpleLockWrite(degree);
         degree.setSigla(code);
         degree.setNome(name);
+        degree.setNameEn(nameEn);
         degree.setTipoCurso(type);
         degree.setConcreteClassForDegreeCurricularPlans(DegreeCurricularPlan.class.getName());
 

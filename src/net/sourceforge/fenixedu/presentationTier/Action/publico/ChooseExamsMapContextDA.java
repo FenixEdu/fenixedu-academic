@@ -118,12 +118,8 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 
             request.setAttribute("curricularYearList", curricularYears);
 
-         //   int index = Integer.parseInt((String) chooseExamContextoForm.get("index"));
-
             Object argsLerLicenciaturas[] = { infoExecutionPeriod.getIdInternal(),degreeId };
 
-//            List infoExecutionDegreeList = (List) ServiceUtils.executeService(null,
-//                    "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
 			List infoExecutionDegreeList = (List) ServiceUtils.executeService(null,
 							  "ReadExecutionDegreesByDegreeAndExecutionPeriod", argsLerLicenciaturas);
 			
@@ -135,14 +131,14 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
             if (infoExecutionDegreeList.size() == 1) {
                 
 				infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList.get(0);
-				
+       
                 infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
                 infoDegreeCurricularPlan.prepareEnglishPresentation(language);
+         
                 infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-               
+        
                 request.setAttribute("degreeCurricularPlanID", infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
             }
-            	
            
             request.setAttribute("degreeID", degreeId);
             request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
@@ -160,7 +156,12 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
                                 .toString());
                 RequestUtils.setExecutionDegreeToRequest(request, infoExecutionDegree);
             } else {
-								infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList.get(0);
+					infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList.get(0);
+//                    infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
+//                    infoDegreeCurricularPlan.prepareEnglishPresentation(language);
+//             
+//                    infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+               
                               //  infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 				request.setAttribute(SessionConstants.EXECUTION_DEGREE_LIST, infoExecutionDegreeList);		
 //                return mapping.findForward("Licenciatura execucao inexistente");

@@ -68,6 +68,8 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     private Boolean enrollmentAllowed;
     
     private String acronym;
+    
+    private String nameEn;
 
     /**
      * @return
@@ -558,6 +560,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
             setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan.newInfoFromDomain(curricularCourse
                     .getDegreeCurricularPlan()));
             setAcronym(curricularCourse.getAcronym());
+            setNameEn(curricularCourse.getNameEn());
         }
     }
 
@@ -580,6 +583,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
         curricularCourse.setPraticalHours(infoCurricularCourse.getPraticalHours());
         curricularCourse.setTheoPratHours(infoCurricularCourse.getTheoPratHours());
         curricularCourse.setLabHours(infoCurricularCourse.getLabHours());
+        curricularCourse.setNameEn(infoCurricularCourse.getNameEn());
 
         if (infoCurricularCourse.getInfoDegreeCurricularPlan() != null) {
             curricularCourse.setDegreeCurricularPlan(InfoDegreeCurricularPlan
@@ -643,6 +647,23 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
             infoCurricularCourse.copyToDomain(infoCurricularCourse, curricularCourse);
         }
         return curricularCourse;
+    }
+
+    public String getNameEn() {
+        return nameEn;
+    }
+    
+
+    public void setNameEn(String nameEn) {
+        this.nameEn = nameEn;
+    }
+    
+    public void prepareEnglishPresentation(String language) {
+        if (language.equals("en")){        
+            if (!(this.nameEn==null)&&!(this.nameEn.length()==0)&&!(this.nameEn=="")){
+                this.name = this.nameEn;
+           }
+        }
     }
     
 

@@ -35,6 +35,7 @@ public class EditCurricularCourse implements IService {
         IPersistentCurricularCourse persistentCurricularCourse = null;
         ICurricularCourse oldCurricularCourse = null;
         String newName = null;
+        String newNameEn = null;
         String newCode = null;
       
         try {
@@ -45,6 +46,7 @@ public class EditCurricularCourse implements IService {
                     CurricularCourse.class, newInfoCurricularCourse.getIdInternal(), true);
 
             newName = newInfoCurricularCourse.getName();
+            newNameEn = newInfoCurricularCourse.getNameEn();
             newCode = newInfoCurricularCourse.getCode();
             final String newAcronym = newInfoCurricularCourse.getAcronym();
 
@@ -67,6 +69,7 @@ public class EditCurricularCourse implements IService {
             if (cCourse == null || newAcronym.equalsIgnoreCase(oldCurricularCourse.getAcronym())){
             	
             	oldCurricularCourse.setName(newName);
+                oldCurricularCourse.setNameEn(newNameEn);
                 oldCurricularCourse.setCode(newCode);
                 oldCurricularCourse.setAcronym(newInfoCurricularCourse.getAcronym());
                 oldCurricularCourse.setType(newInfoCurricularCourse.getType());

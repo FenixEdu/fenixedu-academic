@@ -51,6 +51,7 @@ public class EditBranch implements IService {
             }
             persistentbranch.simpleLockWrite(branch);
             branch.setName(infoBranch.getName());
+            branch.setNameEn(infoBranch.getNameEn());
             branch.setCode(code);
 
         } catch (ExistingPersistentException ex) {

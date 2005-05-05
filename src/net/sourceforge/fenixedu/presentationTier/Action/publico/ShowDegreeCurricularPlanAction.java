@@ -44,6 +44,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
         Integer executionDegreeId = getFromRequest("executionDegreeID", request);
         request.setAttribute("executionDegreeID", executionDegreeId); 
         String language = getLocaleLanguageFromRequest(request);
+
         
         Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
@@ -113,12 +114,20 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
         InfoExecutionPeriod selectedExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
 
+
         Integer curricularYear = (Integer) indexForm.get("curYear");
         if (curricularYear == null) {
             curricularYear = new Integer(0);
         }
-
+   
+       if(indexForm.get("indice") == null){
+           indexForm.set("indice",infoExecutionDegreeForPeriod.getInfoExecutionYear().getIdInternal());  
+           curricularYear = new Integer(0);
+          // selectedExecutionPeriod=null;
+       }
+       
         if (selectedExecutionPeriod != null) {
+       
             indexForm.set("indice", indexForm.get("indice"));
             indexForm.set("curYear", new Integer(anosCurriculares.indexOf(anosCurriculares
                     .get(curricularYear.intValue()))));
@@ -129,8 +138,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
         }
 
         /** *************************************************** */
-
-        Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
+        Integer executionPeriodOId = selectedExecutionPeriod.getIdInternal();
 
         Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
         request.setAttribute("inEnglish", inEnglish);
@@ -158,7 +166,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
 
         if (curricularYear.intValue() != 0) {
 
-            Object[] args = { infoExecutionDegree, selectedExecutionPeriod, curricularYear };
+            Object[] args = { infoExecutionDegree, selectedExecutionPeriod, curricularYear ,language};
             try {
                 activeCurricularCourseScopes = (List) ServiceManagerServiceFactory.executeService(null,
                         "ReadActiveDegreeCurricularPlanByID", args);
@@ -171,7 +179,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
             }
         } else {
 
-            Object[] args = { degreeCurricularPlanId, executionPeriodOId };
+            Object[] args = { degreeCurricularPlanId, executionPeriodOId ,language,""};
             try {
                 activeCurricularCourseScopes = (List) ServiceManagerServiceFactory.executeService(null,
                         "ReadActiveDegreeCurricularPlanByID", args);
@@ -188,10 +196,10 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
             errors.add("noDegreeCurricularPlan", new ActionError("error.impossibleCurricularPlan"));
             saveErrors(request, errors);
         }
-        InfoDegreeCurricularPlan infoDegreeCurricularPlan = ((InfoCurricularCourseScope) ((List) activeCurricularCourseScopes
-                .get(0)).get(0)).getInfoCurricularCourse().getInfoDegreeCurricularPlan();
-  
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan = ((InfoCurricularCourseScope) ((List) activeCurricularCourseScopes.get(0)).get(0)).getInfoCurricularCourse().getInfoDegreeCurricularPlan();
+
         infoDegreeCurricularPlan.prepareEnglishPresentation(language);
+        
         infoExecutionDegree1.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
             
         request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
@@ -241,6 +249,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
 
         Locale locale = (Locale) request.getSession(false).getAttribute(Action.LOCALE_KEY);
         Locale locale2 = request.getLocale();
+
         return  locale.getLanguage();
 
     }

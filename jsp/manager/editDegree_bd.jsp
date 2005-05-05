@@ -23,6 +23,14 @@
 </tr>
 <tr>
 	<td>
+		<bean:message key="message.degreeNameEn"/>
+	</td>
+	<td>
+		<html:text size="60" property="nameEn" />
+	</td>
+</tr>
+<tr>
+	<td>
 		<bean:message key="message.degreeCode"/>
 	</td>
 	<td>

@@ -168,6 +168,7 @@ public class ManageBranchesDA extends FenixDispatchAction {
 
         DynaActionForm insertForm = (DynaActionForm) form;
         String name = (String) insertForm.get("name");
+        String nameEn = (String) insertForm.get("nameEn");
         String code = (String) insertForm.get("code");
 
         // Constructing errors in case the user doesn´t submit the name or the
@@ -185,6 +186,7 @@ public class ManageBranchesDA extends FenixDispatchAction {
         InfoBranch infoBranch = new InfoBranch();
         infoBranch.setCode(code);
         infoBranch.setName(name);
+        infoBranch.setNameEn(nameEn);
         infoBranch.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
         Object[] args = { infoBranch };
@@ -226,6 +228,7 @@ public class ManageBranchesDA extends FenixDispatchAction {
         }
 
         editForm.set("name", infoBranch.getName());
+        editForm.set("nameEn", infoBranch.getNameEn());
         editForm.set("code", infoBranch.getCode());
         return mapping.findForward("editBranch");
     }
@@ -241,6 +244,7 @@ public class ManageBranchesDA extends FenixDispatchAction {
 
         DynaActionForm editForm = (DynaActionForm) form;
         String name = (String) editForm.get("name");
+        String nameEn = (String) editForm.get("nameEn");
         String code = (String) editForm.get("code");
 
         // Constructing errors in case the user doesn´t submit the name or the
@@ -255,6 +259,7 @@ public class ManageBranchesDA extends FenixDispatchAction {
         InfoBranch infoBranch = new InfoBranch();
         infoBranch.setCode(code);
         infoBranch.setName(name);
+        infoBranch.setNameEn(nameEn);
         infoBranch.setIdInternal(branchId);
 
         Object[] args = { infoBranch };
