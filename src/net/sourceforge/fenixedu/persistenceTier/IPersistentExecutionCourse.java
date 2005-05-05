@@ -15,16 +15,6 @@ public interface IPersistentExecutionCourse extends IPersistentObject {
 
     public List readAll() throws ExcepcaoPersistencia;
 
-    /**
-     * @param sigla
-     * @param anoLectivo
-     * @param siglaLicenciatura
-     * @return IDisciplinaExecucao
-     * @throws ExcepcaoPersistencia
-     */
-    public IExecutionCourse readBySiglaAndAnoLectivoAndSiglaLicenciatura(String sigla,
-            String anoLectivo, String siglaLicenciatura) throws ExcepcaoPersistencia;
-
     public List readByCurricularYearAndExecutionPeriodAndExecutionDegree(Integer anoCurricular,
             IExecutionPeriod executionPeriod, IExecutionDegree executionDegree)
             throws ExcepcaoPersistencia;

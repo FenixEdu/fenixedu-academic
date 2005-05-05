@@ -45,17 +45,6 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
         return queryList(ExecutionCourse.class, new Criteria());
     }
 
-    public IExecutionCourse readBySiglaAndAnoLectivoAndSiglaLicenciatura(String sigla,
-            String anoLectivo, String siglaLicenciatura) throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();
-        crit.addEqualTo("sigla", sigla);
-        crit.addEqualTo("executionPeriod.executionYear.year", anoLectivo);
-        crit.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.degree.sigla",
-                siglaLicenciatura);
-        return (IExecutionCourse) queryObject(ExecutionCourse.class, crit);
-
-    }
-
     /**
      * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByCurricularYearAndExecutionPeriodAndExecutionDegree(java.lang.Integer,
      *      Dominio.IExecutionPeriod, java.lang.String)
