@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -19,7 +20,7 @@ public class AnnouncementVO extends VersionedObjectsBase implements IPersistentA
 
     public List readAnnouncementsBySite(final Integer siteOID) throws ExcepcaoPersistencia {
         final ISite site = (ISite) readByOID(Site.class, siteOID);
-        return (site != null) ? site.getAssociatedAnnouncements() : null;
+        return (site != null) ? site.getAssociatedAnnouncements() : new ArrayList();
     }
 
     public IAnnouncement readAnnouncementByTitleAndCreationDateAndSite(final String title,

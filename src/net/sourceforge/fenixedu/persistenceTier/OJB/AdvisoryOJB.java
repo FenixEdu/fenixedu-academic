@@ -20,16 +20,4 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class AdvisoryOJB extends PersistentObjectOJB implements IPersistentAdvisory {
 
-    public void write(final IAdvisory advisory, final List group) throws ExcepcaoPersistencia {
-        simpleLockWrite(advisory);
-
-        for (final Iterator iterator = group.iterator(); iterator.hasNext();) {
-            final IPerson person = (IPerson) iterator.next();
-            simpleLockWrite(person);
-
-            person.getAdvisories().add(advisory);
-            advisory.getPeople().add(person);
-        }
-    }
-
 }

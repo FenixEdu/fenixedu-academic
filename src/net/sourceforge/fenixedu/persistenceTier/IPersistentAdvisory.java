@@ -14,6 +14,4 @@ import net.sourceforge.fenixedu.util.AdvisoryRecipients;
  */
 public interface IPersistentAdvisory extends IPersistentObject {
 
-    public void write(IAdvisory advisory, List group) throws ExcepcaoPersistencia;
-
 }

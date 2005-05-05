@@ -14,12 +14,4 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
  */
 public class AdvisoryVO extends VersionedObjectsBase implements IPersistentAdvisory {
 
-    public void write(final IAdvisory advisory, final List group) {
-        for (final Iterator iterator = group.iterator(); iterator.hasNext();) {
-            final IPerson person = (IPerson) iterator.next();
-            person.getAdvisories().add(advisory);
-            advisory.getPeople().add(person);
-        }
-    }
-
 }
