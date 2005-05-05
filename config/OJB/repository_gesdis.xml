@@ -61,6 +61,16 @@
 	<foreignkey field-ref="keyExecutionCourse"/>
 	
 	</reference-descriptor>
+
+
+	<collection-descriptor
+		name="associatedAnnouncements"
+		element-class-ref="net.sourceforge.fenixedu.domain.Announcement"
+		proxy="true"
+		refresh="true">
+		<inverse-foreignkey field-ref="keySite"/>
+  </collection-descriptor>
+
 </class-descriptor>
 
 

@@ -1,21 +1,15 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Announcement;
 import net.sourceforge.fenixedu.domain.IAnnouncement;
 import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentAnnouncement;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
-
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.ojb.broker.query.Criteria;
 
 /**
  * 
@@ -24,8 +18,8 @@ import org.apache.ojb.broker.query.Criteria;
 public class AnnouncementVO extends VersionedObjectsBase implements IPersistentAnnouncement {
 
     public List readAnnouncementsBySite(final Integer siteOID) throws ExcepcaoPersistencia {
-        final ISite site = (ISite) readByOID(Announcement.class, siteOID);
-        return site.getAssociatedAnnouncements();
+        final ISite site = (ISite) readByOID(Site.class, siteOID);
+        return (site != null) ? site.getAssociatedAnnouncements() : null;
     }
 
     public IAnnouncement readAnnouncementByTitleAndCreationDateAndSite(final String title,
