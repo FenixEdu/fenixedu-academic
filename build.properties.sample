@@ -39,10 +39,17 @@ manager.url=http://localhost:8080/manager
 # Data Repository Configuration
 #------------------------------------------------------------------------------
 #
+#   default.persistenceSupport: fully qualified classname of the default
+#                               persistence support class. Available values:
+#         net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB
+#         net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsPersistenceSupport
+#         net.sourceforge.fenixedu.persistenceTier.delegatedObjects.DelegatePersistenceSupport
 #   db.name: name of the database used by the application
+#
 #   db.user: username with necessary authorization to access the database
 #   db.pass: password for indicated username
 #   db.alias: alias used to connect to database
+#
 #   db.assiduousness.name: 
 #   db.assiduousness.platform: 
 #   db.assiduousness.driver: 
@@ -52,6 +59,7 @@ manager.url=http://localhost:8080/manager
 #   db.assiduousness.pass: 
 #   db.assiduousness.alias: 
 #   db.assiduousness.validationQuery: 
+#
 #   db.personFilter.name: 
 #   db.personFilter.platform: 
 #   db.personFilter.driver: 
@@ -64,12 +72,15 @@ manager.url=http://localhost:8080/manager
 #   db.personFilter.other: 
 #   db.personFilter.errorFile: 
 #   db.personFilter.log: 
+#
 #   db.slide.driver: 
 #   db.slide.alias: 
 #   db.slide.user: 
 #   db.slide.pass: 
 #   slide.config: 
 #
+default.persistenceSupport=net.sourceforge.fenixedu.persistenceTier.delegatedObjects.DelegatePersistenceSupport
+
 db.name=ciapl
 db.user=root
 db.pass=
@@ -112,7 +123,7 @@ db.slide.driver=com.mysql.jdbc.Driver
 db.slide.alias=mysql://localhost:3306/slide
 db.slide.user=root
 db.slide.pass=
-slide.config=/home/marvin/workspace/fenix_head/build/standalone/ciapl/WEB-INF/classes/Domain.xml
+slide.config=/home/marvin/workspace/fenix_head/build/WEB-INF/classes/Domain.xml
 #
 #
 #------------------------------------------------------------------------------
@@ -130,7 +141,7 @@ filter.hostname.localhost=PERSON,STUDENT,TEACHER,TIME_TABLE_MANAGER,MASTER_DEGRE
 	MASTER_DEGREE_ADMINISTRATIVE_OFFICE,TREASURY,COORDINATOR,EMPLOYEE,MANAGEMENT_ASSIDUOUSNESS, \
 	MANAGER, DEGREE_ADMINISTRATIVE_OFFICE, CREDITS_MANAGER, DEPARTMENT_CREDITS_MANAGER, ERASMUS, \
     DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER, SCIENTIFIC_COUNCIL, ADMINISTRATOR, OPERATOR, \
-    SEMINARIES_COORDINATOR, WEBSITE_MANAGER, GRANT_OWNER, GRANT_OWNER_MANAGER, DEPARTMENT_MEMBER, \
+    SEMINARIES_COORDINATOR, WEBSITE_MANAGER, GRANT_OWNER_MANAGER, DEPARTMENT_MEMBER, \
     GEP, DIRECTIVE_COUNCIL, DELEGATE, FIRST_TIME_STUDENT, PROJECTS_MANAGER
 #
 #
