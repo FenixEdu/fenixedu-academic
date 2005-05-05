@@ -6,7 +6,7 @@
 <logic:present name="<%= SessionConstants.DOCUMENT_REASON_LIST %>">	
 	<p>Este certificado destina-se a fins comprovativos de:</p>
 	<p><b><logic:iterate id="item" name="<%= SessionConstants.DOCUMENT_REASON_LIST %>" >
-			<bean:write name="item" /><br />
+			<bean:message name="item" bundle="ENUMERATION_RESOURCES"/><br />
 		</logic:iterate></b></p>
 </logic:present>
 <logic:notPresent name="<%= SessionConstants.DOCUMENT_REASON_LIST %>">

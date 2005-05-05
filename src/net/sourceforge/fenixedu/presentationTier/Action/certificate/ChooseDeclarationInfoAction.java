@@ -20,11 +20,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.masterDegree.DocumentReason;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.util.DocumentReason;
 import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.util.TipoCurso;
@@ -47,9 +47,8 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
             session.removeAttribute(SessionConstants.DOCUMENT_REASON);
 
             List specializations = Specialization.toArrayList();
-            List documentReason = DocumentReason.toArrayList();
-
-            session.setAttribute(SessionConstants.DOCUMENT_REASON, documentReason);
+            
+            session.setAttribute(SessionConstants.DOCUMENT_REASON, DocumentReason.values());
             session.setAttribute(SessionConstants.SPECIALIZATIONS, specializations);
 
             return mapping.findForward("PrepareReady");

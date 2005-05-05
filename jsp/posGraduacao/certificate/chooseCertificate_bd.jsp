@@ -49,7 +49,7 @@
        			<html:multibox property="destination">
 					<bean:write name="item" />
 				</html:multibox>	
-				<bean:write name="item" />
+				<bean:message name="item" property="name" bundle="ENUMERATION_RESOURCES"/>
 		    </td>
 	       </tr>
 		</logic:iterate>
