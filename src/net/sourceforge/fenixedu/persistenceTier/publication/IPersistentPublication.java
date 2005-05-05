@@ -4,10 +4,6 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.publication;
 
-import java.util.List;
-
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
 /**
@@ -17,10 +13,4 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 public interface IPersistentPublication extends IPersistentObject
 {
 
-    List readAllByPersonAndPublicationType(IPerson pessoa, Integer publicationType)
-        throws ExcepcaoPersistencia;
-    
-    List readAll() throws ExcepcaoPersistencia;
-
-    List readByPublicationsTypeId(Integer publicationTypeId) throws ExcepcaoPersistencia;
 }

@@ -4,8 +4,15 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 
+import java.util.Iterator;
+import java.util.List;
+
+import net.sourceforge.fenixedu.domain.publication.IPublication;
+import net.sourceforge.fenixedu.domain.publication.IPublicationAuthor;
 import net.sourceforge.fenixedu.domain.publication.Publication;
+import net.sourceforge.fenixedu.domain.publication.PublicationAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentPublicationAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
@@ -17,15 +24,26 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class DeletePublication implements IService {
 
-	public DeletePublication() {
-	}
-
 	public void run(final Integer publicationId) throws ExcepcaoPersistencia {
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		
-		IPersistentPublication persistentPublication = sp.getIPersistentPublication();
+		final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentPublication persistentPublication = sp.getIPersistentPublication();
+        final IPersistentPublicationAuthor persistentPublicationAuthor = sp.getIPersistentPublicationAuthor();
 
-		persistentPublication.deleteByOID(Publication.class,publicationId);
-		
+        final IPublication publication = (IPublication) persistentPublication.readByOID(Publication.class, publicationId);
+
+        final List publicationAuthors = publication.getPublicationAuthors();
+        for (final Iterator iterator = publicationAuthors.iterator(); iterator.hasNext(); ) {
+            final IPublicationAuthor publicationAuthor = (IPublicationAuthor) iterator.next();
+            publicationAuthor.setPublication(null);
+            publicationAuthor.setAuthor(null);
+            persistentPublicationAuthor.deleteByOID(PublicationAuthor.class, publicationAuthor.getIdInternal());
+        }
+
+        final List teachers = publication.getPublicationTeachers();
+        //TODO DOME XXX FIXME Mostrar ao Ricardo
+        
+
+		persistentPublication.deleteByOID(Publication.class, publicationId);		
 	}
+
 }

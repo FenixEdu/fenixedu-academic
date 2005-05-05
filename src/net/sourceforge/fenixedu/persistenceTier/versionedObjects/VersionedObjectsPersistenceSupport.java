@@ -70,6 +70,7 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentSmsTrans
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransaction;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AdvisoryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AnnouncementVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationVO;
 
 public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
@@ -182,7 +183,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 	}
 
 	public IPersistentPublication getIPersistentPublication()  {
-		return null;
+		return new PublicationVO();
 	}
 
 	public IPersistentMasterDegreeThesis getIPersistentMasterDegreeThesis()  {
