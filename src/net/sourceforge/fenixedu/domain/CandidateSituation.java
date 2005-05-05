@@ -19,21 +19,15 @@ import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
 public class CandidateSituation extends CandidateSituation_Base {
-
-	private Date date = null; // Candidate Situation Date
-
 	private State validation = null; // Candidate Situation Validation
-
 	private SituationName situation = null; // Candidate Situation
 
-	private IMasterDegreeCandidate masterDegreeCandidate = null; // Instance
-
 	public CandidateSituation() {
-		masterDegreeCandidate = null;
-		situation = null;
-		date = null;
-		setRemarks(null);
-		validation = null;
+	    setMasterDegreeCandidate(null);
+	    setSituation(null);
+	    setDate(null);
+	    setRemarks(null);
+	    setValidation(null);   
 	}
 
 	public CandidateSituation(Date date, String remarks, State validation,
@@ -49,11 +43,11 @@ public class CandidateSituation extends CandidateSituation_Base {
 	public String toString() {
 		String result = "Candidate Situation:\n";
 		result += "\n  - Internal Code : " + getIdInternal();
-		result += "\n  - Date : " + date;
+		result += "\n  - Date : " + getDate();
 		result += "\n  - Remarks : " + getRemarks();
-		result += "\n  - Validation : " + validation;
-		result += "\n  - Master Degree Candidate : " + masterDegreeCandidate;
-		result += "\n  - Situation : " + situation;
+		result += "\n  - Validation : " + getValidation();
+		result += "\n  - Master Degree Candidate : " + getMasterDegreeCandidate();
+		result += "\n  - Situation : " + getSituation();
 
 		return result;
 	}
@@ -65,25 +59,7 @@ public class CandidateSituation extends CandidateSituation_Base {
 		}
 		return false;
 	}
-
-	/**
-	 * Returns the date.
-	 * 
-	 * @return Date
-	 */
-	public Date getDate() {
-		return date;
-	}
-
-	/**
-	 * Returns the masterDegreeCandidate.
-	 * 
-	 * @return IMasterDegreeCandidate
-	 */
-	public IMasterDegreeCandidate getMasterDegreeCandidate() {
-		return masterDegreeCandidate;
-	}
-
+	
 	/**
 	 * Returns the situation.
 	 * 
@@ -102,26 +78,6 @@ public class CandidateSituation extends CandidateSituation_Base {
 		return validation;
 	}
 
-	/**
-	 * Sets the date.
-	 * 
-	 * @param date
-	 *            The date to set
-	 */
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	/**
-	 * Sets the masterDegreeCandidate.
-	 * 
-	 * @param masterDegreeCandidate
-	 *            The masterDegreeCandidate to set
-	 */
-	public void setMasterDegreeCandidate(
-			IMasterDegreeCandidate masterDegreeCandidate) {
-		this.masterDegreeCandidate = masterDegreeCandidate;
-	}
 
 	/**
 	 * Sets the situation.

@@ -153,12 +153,9 @@ class net.sourceforge.fenixedu.domain.CandidateSituation extends net.sourceforge
 	String remarks;
 	Integer candidateKey;
 	Integer situationKey;
+	Date date;
 	
 	interface "
-		public java.util.Date getDate();
-		
-		public void setDate(java.util.Date date);
-		
 		public net.sourceforge.fenixedu.util.SituationName getSituation();
 		
 		public void setSituation(net.sourceforge.fenixedu.util.SituationName situation);
