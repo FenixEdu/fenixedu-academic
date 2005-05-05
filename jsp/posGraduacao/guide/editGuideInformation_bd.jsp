@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<%@ page import="net.sourceforge.fenixedu.util.SituationOfGuide" %>
+<%@ page import="net.sourceforge.fenixedu.domain.GuideState" %>
 <%@ page import="net.sourceforge.fenixedu.domain.DocumentType" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry" %>
 
@@ -62,7 +62,11 @@
 
 	<br>
 	
-	<bean:define id="link">/editGuideInformation.do?method=editGuideInformation<%= "&" %>page=0<%= "&" %>year=<bean:write name="year"/><%= "&" %>number=<bean:write name="number"/><%= "&" %>version=<bean:write name="version"/>
+	<bean:define id="link">/editGuideInformation.do?method=editGuideInformation<%= "&" 
+%>page=0<%= "&" 
+%>year=<bean:write name="year"/><%= "&" 
+%>number=<bean:write name="number"/><%= "&" 
+%>version=<bean:write name="version"/>
     </bean:define>
 
     <html:form action='<%= pageContext.findAttribute("link").toString() %>'>
@@ -91,9 +95,10 @@
 		</tr>
 		
 		<%
-			if (infoGuide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.PAYED_TYPE))
+			if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.PAYED))
 			{
-		%>
+		
+%>
 				<logic:iterate id="guideEntry" name="infoGuide" property="infoGuideEntries" indexId="position">
            	  		<bean:define id="entryQuantity" name="guideEntry" property="quantity" />  		
         

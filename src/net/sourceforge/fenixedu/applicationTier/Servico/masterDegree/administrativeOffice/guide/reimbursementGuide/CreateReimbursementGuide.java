@@ -37,7 +37,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.DocumentType;
-import net.sourceforge.fenixedu.util.SituationOfGuide;
+import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.util.State;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -84,7 +84,7 @@ public class CreateReimbursementGuide implements IService {
 
             IGuide guide = (IGuide) persistentGuide.readByOID(Guide.class, guideId, true);
 
-            if (!guide.getActiveSituation().getSituation().equals(SituationOfGuide.PAYED_TYPE)) {
+            if (!guide.getActiveSituation().getSituation().equals(GuideState.PAYED)) {
                 throw new InvalidGuideSituationServiceException(
                         "error.exception.masterDegree.invalidGuideSituation");
             }

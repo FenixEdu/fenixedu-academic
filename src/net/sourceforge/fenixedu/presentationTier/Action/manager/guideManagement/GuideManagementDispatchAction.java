@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
-import net.sourceforge.fenixedu.util.SituationOfGuide;
+import net.sourceforge.fenixedu.domain.GuideState;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -127,7 +127,6 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
         request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
         request.setAttribute("executionYears", executionYears);
         request.setAttribute("guide", guide);
-        request.setAttribute("situationTypes", SituationOfGuide.toArrayList());
         request.setAttribute("days", Data.getMonthDays());
         request.setAttribute("months", Data.getMonths());
         request.setAttribute("years", Data.getYears());
@@ -184,7 +183,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
         Date date = (new GregorianCalendar(newSituationYear.intValue(), newSituationMonth.intValue(),
                 newSituationDay.intValue())).getTime();
 
-        Object[] args = { guideID, newSituationRemarks, new SituationOfGuide(newSituationType), date };
+        Object[] args = { guideID, newSituationRemarks, GuideState.valueOf(newSituationType), date };
 
         try {
             ServiceUtils.executeService(userView, "CreateGuideSituation", args);

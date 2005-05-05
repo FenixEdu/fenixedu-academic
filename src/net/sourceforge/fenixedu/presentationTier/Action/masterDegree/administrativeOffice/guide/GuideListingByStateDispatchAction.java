@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.NumberUtils;
-import net.sourceforge.fenixedu.util.SituationOfGuide;
+import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -40,8 +40,6 @@ public class GuideListingByStateDispatchAction extends DispatchAction {
 
         chooseGuide.set("year", String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
 
-        request.setAttribute("situations", SituationOfGuide.toArrayList());
-
         return mapping.findForward("PrepareSuccess");
     }
 
@@ -57,9 +55,9 @@ public class GuideListingByStateDispatchAction extends DispatchAction {
         Integer year = new Integer((String) chooseGuide.get("year"));
         String state = (String) chooseGuide.get("state");
 
-        SituationOfGuide situationOfGuide = null;
+        GuideState situationOfGuide = null;
         if ((state != null) && (state.length() > 0)) {
-            situationOfGuide = new SituationOfGuide(state);
+            situationOfGuide = GuideState.valueOf(state);
         }
 
         List guideList = null;
@@ -99,18 +97,18 @@ public class GuideListingByStateDispatchAction extends DispatchAction {
         while (iterator.hasNext()) {
             InfoGuide infoGuide = (InfoGuide) iterator.next();
 
-            if (infoGuide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.ANNULLED_TYPE)) {
+            if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.ANNULLED)) {
                 annulledGuides.add(infoGuide);
                 annulledGuidesTotal = NumberUtils.formatNumber(new Double(annulledGuidesTotal
                         .floatValue()
                         + infoGuide.getTotal().floatValue()), 2);
             } else if (infoGuide.getInfoGuideSituation().getSituation().equals(
-                    SituationOfGuide.PAYED_TYPE)) {
+                    GuideState.PAYED)) {
                 payedGuides.add(infoGuide);
                 payedGuidesTotal = NumberUtils.formatNumber(new Double(payedGuidesTotal.floatValue()
                         + infoGuide.getTotal().floatValue()), 2);
             } else if (infoGuide.getInfoGuideSituation().getSituation().equals(
-                    SituationOfGuide.NON_PAYED_TYPE)) {
+                    GuideState.NON_PAYED)) {
                 nonPayedGuides.add(infoGuide);
                 nonPayedGuidesTotal = NumberUtils.formatNumber(new Double(nonPayedGuidesTotal
                         .floatValue()
@@ -124,7 +122,7 @@ public class GuideListingByStateDispatchAction extends DispatchAction {
         if (!annulledGuides.isEmpty()) {
             InfoGuideList infoGuideList = new InfoGuideList();
             infoGuideList.setGuides(annulledGuides);
-            infoGuideList.setSituation(SituationOfGuide.ANNULLED_STRING);
+            infoGuideList.setSituation(GuideState.ANNULLED.name());
             infoGuideList.setTotal(annulledGuidesTotal);
             result.add(infoGuideList);
         }
@@ -132,7 +130,7 @@ public class GuideListingByStateDispatchAction extends DispatchAction {
         if (!payedGuides.isEmpty()) {
             InfoGuideList infoGuideList = new InfoGuideList();
             infoGuideList.setGuides(payedGuides);
-            infoGuideList.setSituation(SituationOfGuide.PAYED_STRING);
+            infoGuideList.setSituation(GuideState.PAYED.name());
             infoGuideList.setTotal(payedGuidesTotal);
             result.add(infoGuideList);
         }
@@ -140,7 +138,7 @@ public class GuideListingByStateDispatchAction extends DispatchAction {
         if (!nonPayedGuides.isEmpty()) {
             InfoGuideList infoGuideList = new InfoGuideList();
             infoGuideList.setGuides(nonPayedGuides);
-            infoGuideList.setSituation(SituationOfGuide.NON_PAYED_STRING);
+            infoGuideList.setSituation(GuideState.NON_PAYED.name());
             infoGuideList.setTotal(nonPayedGuidesTotal);
             result.add(infoGuideList);
         }

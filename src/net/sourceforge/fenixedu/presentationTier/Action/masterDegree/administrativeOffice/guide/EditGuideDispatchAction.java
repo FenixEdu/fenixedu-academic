@@ -36,7 +36,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonValidChangeActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
-import net.sourceforge.fenixedu.util.SituationOfGuide;
+import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -79,7 +79,6 @@ public class EditGuideDispatchAction extends DispatchAction {
             session.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
             session.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
             session.setAttribute(SessionConstants.GUIDE, infoGuide);
-            session.setAttribute(SessionConstants.GUIDE_SITUATION_LIST, SituationOfGuide.toArrayList());
 
             return mapping.findForward("EditReady");
         }
@@ -116,7 +115,7 @@ public class EditGuideDispatchAction extends DispatchAction {
             ActionErrors actionErrors = new ActionErrors();
 
             Calendar calendar = Calendar.getInstance();
-            if (situationOfGuide.equals(SituationOfGuide.PAYED_STRING)) {
+            if (situationOfGuide.equals(GuideState.PAYED)) {
                 if ((day == null) || (day.length() == 0) || (month == null) || (month.length() == 0)
                         || (year == null) || (year.length() == 0)) {
 
@@ -137,7 +136,7 @@ public class EditGuideDispatchAction extends DispatchAction {
                 }
             }
 
-            if ((situationOfGuide.equals(SituationOfGuide.PAYED_STRING))
+            if ((situationOfGuide.equals(GuideState.PAYED))
                     && (paymentType.equals(""))) {
                 ActionError actionError = new ActionError("error.required.paymentType");
                 actionErrors.add("UnNecessary2", actionError);

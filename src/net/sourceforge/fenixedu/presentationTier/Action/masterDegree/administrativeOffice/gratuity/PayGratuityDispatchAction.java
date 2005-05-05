@@ -37,12 +37,12 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
 import net.sourceforge.fenixedu.util.GuideRequester;
-import net.sourceforge.fenixedu.util.SituationOfGuide;
+import net.sourceforge.fenixedu.domain.GuideState;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 public class PayGratuityDispatchAction extends FenixDispatchAction {
 
@@ -88,11 +88,11 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
         request.setAttribute(SessionConstants.STUDENT, infoStudent);
 
         if (gratuitySituationId.intValue() > 0) {
-            //Read Gratuity Situation
+            // Read Gratuity Situation
             InfoGratuitySituation infoGratuitySituation = readGratuitySituation(userView,
                     gratuitySituationId);
 
-            //Read Insurance Situation
+            // Read Insurance Situation
             InfoInsuranceTransaction infoInsuranceTransaction = null;
             Integer executionYearID = infoGratuitySituation.getInfoGratuityValues()
                     .getInfoExecutionDegree().getInfoExecutionYear().getIdInternal();
@@ -122,7 +122,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
         }
 
         if (insuranceExecutionYearId.intValue() > 0) {
-            //Read Insurance Value
+            // Read Insurance Value
             InfoInsuranceValue infoInsuranceValue = readInsuranceValue(userView,
                     insuranceExecutionYearId);
 
@@ -131,7 +131,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
                     "link.masterDegree.administrativeOffice.gratuity.payInsurance");
         }
 
-        //Read Contributor
+        // Read Contributor
         InfoContributor infoContributor = null;
         try {
             infoContributor = readContributor(mapping, userView, contributorNumber);
@@ -163,7 +163,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 
         InfoGuide infoGuide = new InfoGuide();
 
-        //Read Contributor
+        // Read Contributor
         InfoContributor infoContributor = readContributor(mapping, userView, contributorNumber);
 
         // Read Student
@@ -209,7 +209,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
         }
 
         if ((insuranceExecutionYearId != null) && (insuranceExecutionYearId.intValue() > 0)) {
-            //Read Insurance Transaction
+            // Read Insurance Transaction
             InfoInsuranceValue infoInsuranceValue = readInsuranceValue(userView,
                     insuranceExecutionYearId);
 
@@ -281,8 +281,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
         infoGuide.setVersion(new Integer(1));
         infoGuide.setYear(new Integer(Calendar.getInstance().get(Calendar.YEAR)));
 
-        Object argsGuide[] = { infoGuide, "", null, "",
-                new SituationOfGuide(SituationOfGuide.NON_PAYED), "" };
+        Object argsGuide[] = { infoGuide, "", null, "", GuideState.NON_PAYED, "" };
         try {
             infoGuide = (InfoGuide) ServiceUtils.executeService(userView, "CreateGuide", argsGuide);
 
@@ -300,12 +299,13 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
      * @param errorMapping
      * @param userView
      * @param contributorNumber
-     * @return @throws
-     *         NonExistingActionException
+     * @return
+     * @throws NonExistingActionException
      * @throws FenixActionException
      */
     private InfoContributor readContributor(ActionMapping errorMapping, IUserView userView,
-            Integer contributorNumber) throws NonExistingActionException, FenixActionException, FenixFilterException {
+            Integer contributorNumber) throws NonExistingActionException, FenixActionException,
+            FenixFilterException {
 
         InfoContributor infoContributor = null;
         Object argsContributor[] = { contributorNumber };
@@ -327,8 +327,8 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
     /**
      * @param userView
      * @param gratuitySituationId
-     * @return @throws
-     *         FenixActionException
+     * @return
+     * @throws FenixActionException
      */
     private InfoGratuitySituation readGratuitySituation(IUserView userView, Integer gratuitySituationId)
             throws FenixActionException, FenixFilterException {
@@ -350,8 +350,8 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
      * @param mapping
      * @param userView
      * @param studentId
-     * @return @throws
-     *         FenixActionException
+     * @return
+     * @throws FenixActionException
      * @throws NonExistingActionException
      */
     private InfoStudent readStudent(ActionMapping mapping, IUserView userView, Integer studentId)
@@ -376,8 +376,8 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
     /**
      * @param userView
      * @param insuranceExecutionYearId
-     * @return @throws
-     *         FenixActionException
+     * @return
+     * @throws FenixActionException
      */
     private InfoInsuranceValue readInsuranceValue(IUserView userView, Integer insuranceExecutionYearId)
             throws FenixActionException, FenixFilterException {

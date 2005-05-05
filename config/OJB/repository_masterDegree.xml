@@ -480,7 +480,7 @@
 	  <field-descriptor 
 	     name="situation"
 	     column="SITUATION"
-	     jdbc-type="INTEGER"
+	     jdbc-type="VARCHAR"
 	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGuideSituation2SqlGuideSituationFieldConversion"
 	  />
 	  <field-descriptor 

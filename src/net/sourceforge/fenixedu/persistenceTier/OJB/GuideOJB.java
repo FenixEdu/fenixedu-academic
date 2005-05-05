@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGuide;
-import net.sourceforge.fenixedu.util.SituationOfGuide;
+import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.ojb.broker.query.Criteria;
@@ -107,7 +107,7 @@ public class GuideOJB extends PersistentObjectOJB implements IPersistentGuide {
         return result;
     }
 
-    public List readByYearAndState(Integer guideYear, SituationOfGuide situationOfGuide)
+    public List readByYearAndState(Integer guideYear, GuideState situationOfGuide)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
 
@@ -147,8 +147,8 @@ public class GuideOJB extends PersistentObjectOJB implements IPersistentGuide {
         }
 
         criteria.addEqualTo("guideSituations.state", new State(State.ACTIVE));
-        criteria.addEqualTo("guideSituations.situation", SituationOfGuide.PAYED_TYPE);
-        criteria.addNotEqualTo("guideSituations.situation", SituationOfGuide.ANNULLED_TYPE);
+        criteria.addEqualTo("guideSituations.situation", GuideState.PAYED);
+        criteria.addNotEqualTo("guideSituations.situation", GuideState.ANNULLED);
 
         return queryList(Guide.class, criteria);
     }
@@ -161,8 +161,8 @@ public class GuideOJB extends PersistentObjectOJB implements IPersistentGuide {
         }
 
         criteria.addEqualTo("guideSituations.state", new State(State.ACTIVE));
-        criteria.addEqualTo("guideSituations.situation", SituationOfGuide.PAYED_TYPE);
-        criteria.addNotEqualTo("guideSituations.situation", SituationOfGuide.ANNULLED_TYPE);
+        criteria.addEqualTo("guideSituations.situation", GuideState.PAYED);
+        criteria.addNotEqualTo("guideSituations.situation", GuideState.ANNULLED);
 
         return queryList(Guide.class, criteria);
     }

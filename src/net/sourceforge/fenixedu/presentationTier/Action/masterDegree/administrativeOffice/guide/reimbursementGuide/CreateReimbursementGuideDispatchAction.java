@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoEntryChosen
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.SituationOfGuide;
+import net.sourceforge.fenixedu.domain.GuideState;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -58,7 +58,7 @@ public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction 
             throw new FenixActionException(e);
         }
 
-        if (infoGuide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.PAYED_TYPE)) {
+        if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.PAYED)) {
             return mapping.findForward("start");
         }
 

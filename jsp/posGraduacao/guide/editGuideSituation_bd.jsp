@@ -7,7 +7,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
-<%@ page import="net.sourceforge.fenixedu.util.SituationOfGuide" %>
+<%@ page import="net.sourceforge.fenixedu.domain.GuideState" %>
 
    		<bean:define id="infoGuide" name="<%= SessionConstants.GUIDE %>" scope="session"/>  		
    		<bean:define id="guideSituation" name="infoGuide" property="infoGuideSituation"/>  		
@@ -49,7 +49,7 @@
        </tr>
        <tr>
 		<td><bean:message key="label.masterDegree.administrativeOffice.situation" /></td>
-        <td><bean:write name="guideSituation" property="situation"/></td>
+        <td><bean:message name="guideSituation" property="situation.name" bundle="ENUMERATION_RESOURCES"/></td>
        </tr>
        <tr>
 		<td><bean:message key="label.masterDegree.administrativeOffice.situationDate" /></td>
@@ -59,7 +59,7 @@
 		</logic:present>
        </tr>
        <% 
-       		if (((InfoGuideSituation) guideSituation).getSituation().equals(SituationOfGuide.PAYED_TYPE)) 
+       		if (((InfoGuideSituation) guideSituation).getSituation().equals(GuideState.PAYED)) 
        		{ 
        %>
        			<tr>
@@ -122,8 +122,10 @@
         				<bean:message key="label.masterDegree.administrativeOffice.newGuideSituation" />
         			</td>
         			<td>
+        				<e:labelValues id="situations" enumeration="net.sourceforge.fenixedu.domain.GuideState" bundle="ENUMERATION_RESOURCES"/>
             			<html:select property="guideSituation">
-           					<html:options collection="<%= SessionConstants.GUIDE_SITUATION_LIST %>" property="value" labelProperty="label" />
+            				<html:option key="dropDown.Default" value=""/>
+           					<html:options collection="situations" property="value" labelProperty="label" />
             			</html:select>          
        				</td>
        			</tr>

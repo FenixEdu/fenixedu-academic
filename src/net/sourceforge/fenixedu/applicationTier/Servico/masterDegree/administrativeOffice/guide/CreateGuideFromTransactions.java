@@ -32,7 +32,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
 import net.sourceforge.fenixedu.util.NumberUtils;
-import net.sourceforge.fenixedu.util.SituationOfGuide;
+import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.util.State;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -50,7 +50,7 @@ public class CreateGuideFromTransactions implements IService {
     public CreateGuideFromTransactions() {
     }
 
-    public InfoGuide run(InfoGuide infoGuide, String remarks, SituationOfGuide situationOfGuide,
+    public InfoGuide run(InfoGuide infoGuide, String remarks, GuideState situationOfGuide,
             List transactionsIDs) throws FenixServiceException {
 
         ISuportePersistente sp = null;
@@ -60,7 +60,7 @@ public class CreateGuideFromTransactions implements IService {
         IPerson person = null;
 
         // Check the Guide Situation
-        if (situationOfGuide.equals(SituationOfGuide.ANNULLED_TYPE))
+        if (situationOfGuide.equals(GuideState.ANNULLED))
             throw new InvalidSituationServiceException();
 
         // Get the Guide Number
@@ -93,7 +93,7 @@ public class CreateGuideFromTransactions implements IService {
         try {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.getIPersistentGuide().simpleLockWrite(guide);
-            if (situationOfGuide.equals(SituationOfGuide.PAYED_TYPE)) {
+            if (situationOfGuide.equals(GuideState.PAYED)) {
                 guide.setPaymentType(PaymentType.SIBS);
                 guide.setPaymentDate(calendar.getTime());
             }

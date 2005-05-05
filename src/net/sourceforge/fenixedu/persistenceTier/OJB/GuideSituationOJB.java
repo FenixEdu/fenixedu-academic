@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.IGuideSituation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGuideSituation;
-import net.sourceforge.fenixedu.util.SituationOfGuide;
+import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.util.State;
 
 /**
@@ -36,13 +36,13 @@ public class GuideSituationOJB extends PersistentObjectOJB implements IPersisten
         return (IGuideSituation) queryObject(GuideSituation.class, crit);
     }
 
-    public IGuideSituation readByGuideAndSituation(IGuide guide, SituationOfGuide situationOfGuide)
+    public IGuideSituation readByGuideAndSituation(IGuide guide, GuideState situationOfGuide)
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("guide.number", guide.getNumber());
         crit.addEqualTo("guide.year", guide.getYear());
         crit.addEqualTo("guide.version", guide.getVersion());
-        crit.addEqualTo("situation", situationOfGuide.getSituation());
+        crit.addEqualTo("situation", situationOfGuide.name());
         return (IGuideSituation) queryObject(GuideSituation.class, crit);
 
     }

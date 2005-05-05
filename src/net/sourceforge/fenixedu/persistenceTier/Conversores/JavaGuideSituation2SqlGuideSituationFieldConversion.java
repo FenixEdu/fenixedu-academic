@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.util.SituationOfGuide;
+import net.sourceforge.fenixedu.domain.GuideState;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
@@ -12,18 +12,18 @@ import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 public class JavaGuideSituation2SqlGuideSituationFieldConversion implements FieldConversion {
 
     public Object javaToSql(Object source) {
-        if (source instanceof SituationOfGuide) {
-            SituationOfGuide s = (SituationOfGuide) source;
-            return s.getSituation();
+        if (source instanceof GuideState) {
+            GuideState s = (GuideState) source;
+            return s.name();
         }
         return source;
 
     }
 
     public Object sqlToJava(Object source) {
-        if (source instanceof Integer) {
-            Integer src = (Integer) source;
-            return new SituationOfGuide(src);
+        if (source instanceof String) {
+            String src = (String) source;
+            return GuideState.valueOf(src);
         }
         return source;
 

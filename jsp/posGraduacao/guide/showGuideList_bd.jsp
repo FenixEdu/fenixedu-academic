@@ -10,7 +10,6 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate" %>
 <%@ page import="net.sourceforge.fenixedu.util.State" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
-<%@ page import="net.sourceforge.fenixedu.util.SituationOfGuide" %>
 
    <span class="error"><html:errors/></span>
 
@@ -47,7 +46,7 @@
 	                        <bean:define id="date" name="guideSituation" property="date" />
 							<td><%= Data.format2DayMonthYear((Date) date) %></td>   
 						</logic:present>
-                        <td><bean:write name="guideSituation" property="situation"/></td>
+                        <td><bean:message name="guideSituation" property="situation.name" bundle="ENUMERATION_RESOURCES"/></td>
                         
                         
 			        	<bean:define id="personLink">

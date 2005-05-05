@@ -39,7 +39,7 @@ import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentExc
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransaction;
 import net.sourceforge.fenixedu.domain.DocumentType;
-import net.sourceforge.fenixedu.util.SituationOfGuide;
+import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.util.State;
 import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.util.transactions.TransactionType;
@@ -76,7 +76,7 @@ public class ChangeGuideSituation implements IService {
             throw new ExcepcaoInexistente("Unknown Guide !!");
         }
         sp.getIPersistentGuide().simpleLockWrite(guide);
-        SituationOfGuide situationOfGuide = new SituationOfGuide(situationOfGuideString);
+        GuideState situationOfGuide = GuideState.valueOf(situationOfGuideString);
 
         IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
         IPerson employeePerson = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
@@ -107,7 +107,7 @@ public class ChangeGuideSituation implements IService {
         sp.getIPersistentGuideSituation().simpleLockWrite(guideSituation);
         if (situationOfGuide.equals(guideSituation.getSituation())) {
             guideSituation.setRemarks(remarks);
-            if (guideSituation.getSituation().equals(SituationOfGuide.PAYED_TYPE)) {
+            if (guideSituation.getSituation().equals(GuideState.PAYED)) {
                 guide.setPaymentDate(paymentDate);
                 guide.setPaymentType(PaymentType.valueOf(paymentType));
             }
@@ -127,7 +127,7 @@ public class ChangeGuideSituation implements IService {
                 newGuideSituation.setSituation(situationOfGuide);
                 newGuideSituation.setState(new State(State.ACTIVE));
 
-                if (situationOfGuide.equals(SituationOfGuide.PAYED_TYPE)) {
+                if (situationOfGuide.equals(GuideState.PAYED)) {
                     sp.getIPersistentGuide().simpleLockWrite(guide);
                     guide.setPaymentDate(paymentDate);
                     guide.setPaymentType(PaymentType.valueOf(paymentType));
@@ -224,12 +224,12 @@ public class ChangeGuideSituation implements IService {
     }
 
     private boolean verifyChangeValidation(IGuideSituation activeGuideSituation,
-            SituationOfGuide situationOfGuide) {
-        if (activeGuideSituation.equals(SituationOfGuide.ANNULLED_TYPE))
+            GuideState situationOfGuide) {
+        if (activeGuideSituation.equals(GuideState.ANNULLED))
             return false;
 
-        if ((activeGuideSituation.getSituation().equals(SituationOfGuide.PAYED_TYPE))
-                && (situationOfGuide.equals(SituationOfGuide.NON_PAYED_TYPE)))
+        if ((activeGuideSituation.getSituation().equals(GuideState.PAYED))
+                && (situationOfGuide.equals(GuideState.NON_PAYED)))
             return false;
 
         return true;

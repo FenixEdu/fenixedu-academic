@@ -20,7 +20,7 @@
 					<h2><bean:message key="label.masterDegree.administrativeOffice.situation" /></h2>
 				</td>
 				<td>
-					<h3><bean:write name="guideInfo" property="situation" /></h3>
+					<h3><bean:message name="guideInfo" property="situation" bundle="ENUMERATION_RESOURCES" /></h3>
 				</td>
 			</tr>
 		</table>

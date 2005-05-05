@@ -1044,7 +1044,7 @@ class net.sourceforge.fenixedu.domain.GratuitySituation extends net.sourceforge.
 		public net.sourceforge.fenixedu.domain.IEmployee getEmployee();
 	
 		public void setEmployee(net.sourceforge.fenixedu.domain.IEmployee employee);
-
+	
 		public java.util.Date getWhen();
 	
 		public void setWhen(java.util.Date when);
@@ -1209,14 +1209,14 @@ class net.sourceforge.fenixedu.domain.GuideSituation extends net.sourceforge.fen
 	
 	interface "
 	    public java.util.Date getDate();
-    	
-    	public net.sourceforge.fenixedu.util.SituationOfGuide getSituation();
+	    
+	    public net.sourceforge.fenixedu.domain.GuideState getSituation();
     	
     	public net.sourceforge.fenixedu.util.State getState();
     	
     	public void setDate(java.util.Date date);
     	
-    	public void setSituation(net.sourceforge.fenixedu.util.SituationOfGuide guide);
+    	public void setSituation(net.sourceforge.fenixedu.domain.GuideState guide);
     	
     	public void setState(net.sourceforge.fenixedu.util.State state);
 	"

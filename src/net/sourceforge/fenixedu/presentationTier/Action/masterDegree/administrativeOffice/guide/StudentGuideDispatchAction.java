@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoChangeMadeA
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
-import net.sourceforge.fenixedu.util.SituationOfGuide;
+import net.sourceforge.fenixedu.domain.GuideState;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -148,12 +148,12 @@ public class StudentGuideDispatchAction extends DispatchAction {
 
             request.setAttribute(SessionConstants.GUIDE, infoGuide);
 
-            List guideSituations = new ArrayList();
-            guideSituations.add(new LabelValueBean(SituationOfGuide.NON_PAYED_STRING,
-                    SituationOfGuide.NON_PAYED_STRING));
-            guideSituations.add(new LabelValueBean(SituationOfGuide.PAYED_STRING,
-                    SituationOfGuide.PAYED_STRING));
-            request.setAttribute(SessionConstants.GUIDE_SITUATION_LIST, guideSituations);
+//            List guideSituations = new ArrayList();
+//            guideSituations.add(new LabelValueBean(GuideState.NON_PAYED,
+//                    GuideState.NON_PAYED));
+//            guideSituations.add(new LabelValueBean(GuideState.PAYED,
+//                    GuideState.PAYED));
+//            request.setAttribute(SessionConstants.GUIDE_SITUATION_LIST, guideSituations);
 
             Integer number = new Integer(request.getParameter("number"));
             request.setAttribute(SessionConstants.REQUESTER_NUMBER, number);

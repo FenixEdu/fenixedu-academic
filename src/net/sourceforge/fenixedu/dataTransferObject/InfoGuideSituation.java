@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Date;
 
+import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.IGuideSituation;
-import net.sourceforge.fenixedu.util.SituationOfGuide;
 import net.sourceforge.fenixedu.util.State;
 
 /**
@@ -14,7 +14,7 @@ public class InfoGuideSituation extends InfoObject {
 
     protected String remarks;
 
-    protected SituationOfGuide situation;
+    protected GuideState situation;
 
     protected Date date;
 
@@ -25,7 +25,7 @@ public class InfoGuideSituation extends InfoObject {
     public InfoGuideSituation() {
     }
 
-    public InfoGuideSituation(String remarks, SituationOfGuide situationOfGuide, Date date, State state,
+    public InfoGuideSituation(String remarks, GuideState situationOfGuide, Date date, State state,
             InfoGuide infoGuide) {
         this.remarks = remarks;
         this.situation = situationOfGuide;
@@ -81,7 +81,7 @@ public class InfoGuideSituation extends InfoObject {
     /**
      * @return
      */
-    public SituationOfGuide getSituation() {
+    public GuideState getSituation() {
         return situation;
     }
 
@@ -116,7 +116,7 @@ public class InfoGuideSituation extends InfoObject {
     /**
      * @param guide
      */
-    public void setSituation(SituationOfGuide guide) {
+    public void setSituation(GuideState guide) {
         situation = guide;
     }
 

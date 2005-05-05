@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.SituationOfGuide;
+import net.sourceforge.fenixedu.domain.GuideState;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -57,7 +57,7 @@ public class ViewReimbursementGuidesDispatchAction extends FenixDispatchAction {
                     "error.exception.masterDegree.nonExistingReimbursementGuides", mapping
                             .findForward("error"));
 
-        if (infoGuide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.PAYED_TYPE)) {
+        if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.PAYED)) {
             return mapping.findForward("start");
         }
 

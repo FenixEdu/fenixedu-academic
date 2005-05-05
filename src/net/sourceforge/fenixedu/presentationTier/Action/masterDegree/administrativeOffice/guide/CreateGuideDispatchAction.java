@@ -43,7 +43,7 @@ import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
 import net.sourceforge.fenixedu.util.GuideRequester;
 import net.sourceforge.fenixedu.util.RandomStringGenerator;
-import net.sourceforge.fenixedu.util.SituationOfGuide;
+import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
@@ -237,12 +237,12 @@ public class CreateGuideDispatchAction extends DispatchAction {
             }
             session.setAttribute(SessionConstants.GUIDE, infoGuide);
 
-            List guideSituations = new ArrayList();
-            guideSituations.add(new LabelValueBean(SituationOfGuide.NON_PAYED_STRING,
-                    SituationOfGuide.NON_PAYED_STRING));
-            guideSituations.add(new LabelValueBean(SituationOfGuide.PAYED_STRING,
-                    SituationOfGuide.PAYED_STRING));
-            request.setAttribute(SessionConstants.GUIDE_SITUATION_LIST, guideSituations);
+//            List guideSituations = new ArrayList();
+//            guideSituations.add(new LabelValueBean(GuideState.NON_PAYED,
+//                    GuideState.NON_PAYED));
+//            guideSituations.add(new LabelValueBean(GuideState.PAYED,
+//                    GuideState.PAYED));
+//            request.setAttribute(SessionConstants.GUIDE_SITUATION_LIST, guideSituations);
 
             request.setAttribute(SessionConstants.REQUESTER_NUMBER, number);
             request.setAttribute("graduationType", graduationType);
@@ -316,7 +316,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
         // Check if the Guide will have a "Payed" situation and if the payment
         // type has been chosen
 
-        if ((guideSituationString.equals(SituationOfGuide.PAYED_STRING))
+        if ((guideSituationString.equals(GuideState.PAYED))
                 && (paymentType.equals(""))) {
             ActionError actionError = new ActionError("error.paymentTypeRequired");
             ActionErrors actionErrors = new ActionErrors();
@@ -325,7 +325,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
             return mapping.getInputForward();
         }
 
-        SituationOfGuide situationOfGuide = new SituationOfGuide(guideSituationString);
+        GuideState situationOfGuide = GuideState.valueOf(guideSituationString);
         InfoGuide infoGuide = (InfoGuide) session.getAttribute(SessionConstants.GUIDE);
 
         InfoGuide newInfoGuide = null;
@@ -357,7 +357,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
         // We need to check if the Guide has been payed
         if (requesterType.equals(GuideRequester.CANDIDATE_STRING)) {
 
-            if (situationOfGuide.equals(SituationOfGuide.PAYED_TYPE)) {
+            if (situationOfGuide.equals(GuideState.PAYED)) {
 
                 // The Candidate will now have a new Situation
 

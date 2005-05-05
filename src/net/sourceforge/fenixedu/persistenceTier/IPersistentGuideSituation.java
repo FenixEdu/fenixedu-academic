@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.IGuideSituation;
-import net.sourceforge.fenixedu.util.SituationOfGuide;
+import net.sourceforge.fenixedu.domain.GuideState;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -31,7 +31,7 @@ public interface IPersistentGuideSituation extends IPersistentObject {
      * @return IGuideSituation
      * @throws ExcepcaoPersistencia
      */
-    public IGuideSituation readByGuideAndSituation(IGuide guide, SituationOfGuide guideSituation)
+    public IGuideSituation readByGuideAndSituation(IGuide guide, GuideState guideSituation)
             throws ExcepcaoPersistencia;
 
 }

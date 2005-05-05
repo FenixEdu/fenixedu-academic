@@ -2,8 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
 <h2><bean:message key="label.masterDegree.administrativeOffice.listGuideByState"/></h2>
 <br />    
@@ -22,7 +21,9 @@
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.guideSituation"/>: </td>
          <td>
+         	<e:labelValues id="situations" enumeration="net.sourceforge.fenixedu.domain.GuideState" bundle="ENUMERATION_RESOURCES"/>
          	<html:select property="state">
+         		<html:option key="dropDown.Default" value=""/>
                 <html:options collection="situations" property="value" labelProperty="label"/>
              </html:select>
          </td>

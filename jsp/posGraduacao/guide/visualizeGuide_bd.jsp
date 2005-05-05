@@ -13,7 +13,7 @@
 <%@ page import="net.sourceforge.fenixedu.util.State" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 
-<%@ page import="net.sourceforge.fenixedu.util.SituationOfGuide" %>
+<%@ page import="net.sourceforge.fenixedu.domain.GuideState" %>
 
      <bean:define id="infoGuide" name="<%= SessionConstants.GUIDE %>" scope="request" />
      <bean:define id="number" name="infoGuide" property="number" />
@@ -101,7 +101,8 @@
 			<td><bean:message key="label.masterDegree.administrativeOffice.creationDate" /></td>
             <logic:present name="infoGuide" property="creationDate" >
 	            <bean:define id="date" name="infoGuide" property="creationDate" />
-				<td><%= Data.format2DayMonthYear((Date) date,"-") %></td>   
+				<td><%= Data.format2DayMonthYear((Date) date,"-") 
+%></td>   
 			</logic:present>
 		</tr>
 		<tr>
@@ -122,28 +123,32 @@
 		<logic:notEmpty name="infoGuide" property="infoGuideSituations">
 	         <logic:iterate id="guideSituation" name="infoGuide" property="infoGuideSituations">
 		      <table>
-	            <% if (((InfoGuideSituation) guideSituation).getState().equals(new State(State.ACTIVE))) { %>
+	            <% if (((InfoGuideSituation) guideSituation).getState().equals(new State(State.ACTIVE))) { 
+%>
 		            
 					<tr>
 	         	    <td><p><b><center><bean:message key="label.masterDegree.administrativeOffice.activeSituation" /></center></b></p></td>
 					</tr>
-	         	<% } %>
+	         	<% } 
+%>
 	           <tr>
 				<td><bean:message key="label.masterDegree.administrativeOffice.remarks" /></td>
 	            <td><bean:write name="guideSituation" property="remarks"/></td>
 	           </tr>
 	           <tr>
 				<td><bean:message key="label.masterDegree.administrativeOffice.situation" /></td>
-	            <td><bean:write name="guideSituation" property="situation"/></td>
+	            <td><bean:message name="guideSituation" property="situation.name" bundle="ENUMERATION_RESOURCES"/></td>
 	           </tr>
 	           <tr>
 				<td><bean:message key="label.masterDegree.administrativeOffice.situationDate" /></td>
 	            <logic:present name="guideSituation" property="date" >
 		            <bean:define id="date" name="guideSituation" property="date" />
-					<td><%= Data.format2DayMonthYear((Date) date, "-") %></td>   			
+					<td><%= Data.format2DayMonthYear((Date) date, "-") 
+%></td>   			
 				</logic:present>
 	           </tr>
-	           <% if (((InfoGuideSituation) guideSituation).getSituation().equals(SituationOfGuide.PAYED_TYPE)) { %>
+	           <% if (((InfoGuideSituation) guideSituation).getSituation().equals(GuideState.PAYED)) { 
+%>
 	           		<tr>
 	        			<td><bean:message key="label.masterDegree.administrativeOffice.payment" /></td>
 	        			<td>
@@ -157,10 +162,12 @@
 	        			<td><bean:message key="label.masterDegree.administrativeOffice.paymentDate" /></td>
 			            <logic:present name="infoGuide" property="paymentDate" >
 				            <bean:define id="date" name="infoGuide" property="paymentDate" />
-							<td><%= Data.format2DayMonthYear((Date) date, "-") %></td>   			
+							<td><%= Data.format2DayMonthYear((Date) date, "-") 
+%></td>   			
 						</logic:present>
 	        		</tr>
-	         	<% } %>
+	         	<% } 
+%>
 	          </table>
 	          <br><br>
 	         </logic:iterate>
@@ -173,14 +180,19 @@
 	<br>	
 	<br>
 
-    <bean:define id="arguments"><%= "&" %>page=0<%= "&" %>year=<bean:write name="year"/><%= "&" %>number=<bean:write name="number"/><%= "&" %>version=<bean:write name="version"/>
+    <bean:define id="arguments"><%= "&" 
+%>page=0<%= "&" 
+%>year=<bean:write name="year"/><%= "&" 
+%>number=<bean:write name="number"/><%= "&" 
+%>version=<bean:write name="version"/>
     </bean:define>
 	
 
 			<% List guideList = (List) request.getAttribute(SessionConstants.GUIDE_LIST);
 			   InfoGuide guide = (InfoGuide) request.getAttribute(SessionConstants.GUIDE);
-			   if(guide.getVersion().equals(new Integer(guideList.size())) && guide.getInfoGuideSituation() != null && !guide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.ANNULLED_TYPE)) {
-			%>	
+			   if(guide.getVersion().equals(new Integer(guideList.size())) && guide.getInfoGuideSituation() != null && !guide.getInfoGuideSituation().getSituation().equals(GuideState.ANNULLED)) {
+			
+%>	
         	<table>
         		<tr>
         		<td width="20%">
@@ -190,7 +202,8 @@
         				<bean:message key="link.masterDegree.administrativeOffice.changeGuideSituation" />
         			</html:link>
         		</td>
-        		<% if (guide.getInfoGuideSituation() != null && guide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.NON_PAYED_TYPE)) { %>
+        		<% if (guide.getInfoGuideSituation() != null && guide.getInfoGuideSituation().getSituation().equals(GuideState.NON_PAYED)) { 
+%>
 					<td width="20%">
 						<bean:define id="linkChangeInformation">/editGuideInformation.do?method=prepareEditInformation<bean:write name="arguments"/>
 						</bean:define>
@@ -198,7 +211,8 @@
 							<bean:message key="link.masterDegree.administrativeOffice.changeGuideInformation" />
 						</html:link>
 					</td>
-        		<% } %>
+        		<% } 
+%>
         		<td width="20%">
         			<bean:define id="linkCreateReimbursementGuide">/createReimbursementGuide.do?method=prepare<bean:write name="arguments"/>
                 	</bean:define>
@@ -223,7 +237,8 @@
         		
         		</tr>
         	</table> 
-        	<% } else if (guide.getInfoGuideSituation() != null && guide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.ANNULLED_TYPE)) {  %>
+        	<% } else if (guide.getInfoGuideSituation() != null && guide.getInfoGuideSituation().getSituation().equals(GuideState.ANNULLED)) {  
+%>
         		<strong><bean:message key="label.masterDegree.administrativeOffice.nonChangeableGuide" /></strong>
         	<% } %>
         	

@@ -41,7 +41,7 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransact
 import net.sourceforge.fenixedu.util.CalculateGuideTotal;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
-import net.sourceforge.fenixedu.util.SituationOfGuide;
+import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.util.State;
 import net.sourceforge.fenixedu.util.transactions.TransactionType;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -148,7 +148,7 @@ public class EditGuideInformation implements IService {
             othersGuideEntry.setQuantity(othersQuantity);
         }
 
-        if (infoGuide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.NON_PAYED_TYPE)) {
+        if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.NON_PAYED)) {
             // If there's a change ...
             if (change) {
 
@@ -200,7 +200,7 @@ public class EditGuideInformation implements IService {
 
             }
 
-        } else if (infoGuide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.PAYED_TYPE)) {
+        } else if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.PAYED)) {
             // If there's a change ...
             if (change) {
 
@@ -363,7 +363,7 @@ public class EditGuideInformation implements IService {
         List guides = null;
 
         // Annuled Guides cannot be changed
-        if (infoGuide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.ANNULLED_TYPE))
+        if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.ANNULLED))
             throw new InvalidChangeServiceException("Situation of Guide Is Annulled");
 
         try {

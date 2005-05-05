@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.IGuideSituation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.SituationOfGuide;
+import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.util.State;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -21,7 +21,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class CreateGuideSituation implements IService {
 
-    public void run(Integer guideID, String remarks, SituationOfGuide situation, Date date)
+    public void run(Integer guideID, String remarks, GuideState situation, Date date)
             throws ExcepcaoPersistencia {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();

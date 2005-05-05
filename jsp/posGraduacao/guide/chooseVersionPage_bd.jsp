@@ -9,7 +9,7 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation" %>
 <%@ page import="net.sourceforge.fenixedu.util.State" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
-<%@ page import="net.sourceforge.fenixedu.util.SituationOfGuide" %>
+<%@ page import="net.sourceforge.fenixedu.domain.GuideState" %>
 
    <span class="error"><html:errors/></span>
 

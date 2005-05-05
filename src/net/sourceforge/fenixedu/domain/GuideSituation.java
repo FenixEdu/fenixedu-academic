@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.util.SituationOfGuide;
+import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.util.State;
 
 /**
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.util.State;
 
 public class GuideSituation extends GuideSituation_Base {
 
-    protected SituationOfGuide situation;
+    protected GuideState situation;
 
     protected Date date;
 
@@ -23,7 +23,7 @@ public class GuideSituation extends GuideSituation_Base {
     public GuideSituation() {
     }
 
-    public GuideSituation(SituationOfGuide situation, String remarks, Date date, IGuide guide,
+    public GuideSituation(GuideState situation, String remarks, Date date, IGuide guide,
             State state) {
         setRemarks(remarks);
         this.guide = guide;
@@ -78,7 +78,7 @@ public class GuideSituation extends GuideSituation_Base {
     /**
      * @return
      */
-    public SituationOfGuide getSituation() {
+    public GuideState getSituation() {
         return situation;
     }
 
@@ -106,7 +106,7 @@ public class GuideSituation extends GuideSituation_Base {
     /**
      * @param guide
      */
-    public void setSituation(SituationOfGuide guide) {
+    public void setSituation(GuideState guide) {
         situation = guide;
     }
 
