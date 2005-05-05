@@ -99,8 +99,9 @@
         <td><bean:message key="label.masterDegree.administrativeOffice.remarks"/> </td>
        	<td><html:textarea property="remarks"/></td>
         <td><bean:message key="label.masterDegree.administrativeOffice.newGuideSituation" />
+        	<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.GuideState" bundle="ENUMERATION_RESOURCES" includedFields="NON_PAYED,PAYED"/>  
             <html:select property="guideSituation">
-           		<html:options collection="<%= SessionConstants.GUIDE_SITUATION_LIST %>" property="value" labelProperty="label" />
+           		<html:options collection="values" property="value" labelProperty="label" />
             </html:select>          
        	</td>
        </tr>
