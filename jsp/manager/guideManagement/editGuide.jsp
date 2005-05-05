@@ -206,9 +206,11 @@
 						labelProperty="label" />
 				</html:select>					
 			</td>
-			<td colspan="2"><html:select property="newSituationType">
-				<html:options collection="situationTypes" property="value"
-					labelProperty="label" />
+			<td colspan="2">
+			<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.GuideState" bundle="ENUMERATION_RESOURCES"/>
+			<html:select property="newSituationType">
+				<html:option key="dropDown.Default" value=""/>
+				<html:options collection="values" property="value" labelProperty="label" />
 			</html:select></td>
 		</tr>		
 		<tr>

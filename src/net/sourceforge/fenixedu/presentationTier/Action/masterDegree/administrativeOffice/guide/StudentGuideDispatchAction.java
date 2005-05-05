@@ -8,22 +8,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPrice;
+import net.sourceforge.fenixedu.domain.DocumentType;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidInformationInFormActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoChangeMadeActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.util.GraduationType;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
-import org.apache.struts.util.LabelValueBean;
-
-import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
-import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPrice;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidInformationInFormActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoChangeMadeActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.domain.DocumentType;
-import net.sourceforge.fenixedu.util.GraduationType;
-import net.sourceforge.fenixedu.domain.GuideState;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -147,13 +145,6 @@ public class StudentGuideDispatchAction extends DispatchAction {
             saveToken(request);
 
             request.setAttribute(SessionConstants.GUIDE, infoGuide);
-
-//            List guideSituations = new ArrayList();
-//            guideSituations.add(new LabelValueBean(GuideState.NON_PAYED,
-//                    GuideState.NON_PAYED));
-//            guideSituations.add(new LabelValueBean(GuideState.PAYED,
-//                    GuideState.PAYED));
-//            request.setAttribute(SessionConstants.GUIDE_SITUATION_LIST, guideSituations);
 
             Integer number = new Integer(request.getParameter("number"));
             request.setAttribute(SessionConstants.REQUESTER_NUMBER, number);
