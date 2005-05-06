@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IPersonAccount;
-import net.sourceforge.fenixedu.util.transactions.TransactionType;
+import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>

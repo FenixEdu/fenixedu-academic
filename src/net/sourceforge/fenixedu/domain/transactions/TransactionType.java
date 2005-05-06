@@ -1,0 +1,33 @@
+package net.sourceforge.fenixedu.domain.transactions;
+
+public enum TransactionType {
+
+    GRATUITY_FULL_PAYMENT,
+
+    GRATUITY_FIRST_PHASE_PAYMENT,
+
+    GRATUITY_SECOND_PHASE_PAYMENT,
+
+    GRATUITY_THIRD_PHASE_PAYMENT,
+
+    GRATUITY_FOURTH_PHASE_PAYMENT,
+
+    GRATUITY_FIFTH_PHASE_PAYMENT,
+
+    GRATUITY_ADHOC_PAYMENT,
+
+    USER_SENT_SMS_PAYMENT,
+
+    SYSTEM_SENT_SMS_TO_USER_PAYMENT,
+
+    GRATUITY_REIMBURSEMENT,
+
+    INSURANCE_PAYMENT,
+
+    INSURANCE_REIMBURSEMENT;
+
+    public String getName() {
+        return name();
+    }
+    
+}

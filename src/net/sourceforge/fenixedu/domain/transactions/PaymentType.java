@@ -14,4 +14,8 @@ public enum PaymentType {
 
     SIBS;
 
+    public String getName() {
+        return name();
+    }
+
 }

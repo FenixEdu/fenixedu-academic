@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.IPaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
+import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonAccount;
@@ -42,7 +43,6 @@ import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.util.State;
 import net.sourceforge.fenixedu.util.TipoCurso;
-import net.sourceforge.fenixedu.util.transactions.TransactionType;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ChangeGuideSituation implements IService {

@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.transactions.IGratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.IInsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
+import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuityValues;
@@ -44,7 +45,6 @@ import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.util.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsPaymentFileUtils;
-import net.sourceforge.fenixedu.util.transactions.TransactionType;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**

@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntr
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation;
 import net.sourceforge.fenixedu.domain.transactions.IReimbursementTransaction;
 import net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction;
+import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
@@ -47,7 +48,6 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimburs
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.State;
 import net.sourceforge.fenixedu.util.TipoCurso;
-import net.sourceforge.fenixedu.util.transactions.TransactionType;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**

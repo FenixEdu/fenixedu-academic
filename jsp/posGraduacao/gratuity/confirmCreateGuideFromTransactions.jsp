@@ -82,19 +82,13 @@
 				<html:hidden property="transactionsWithoutGuide" value="<%= transactionIdStr.toString() %>"/>				
 				<tr>
 					<td align="left"><bean:write name="transaction" property="transactionDate"/></td>
-					
-					<bean:define id="transactionType">
-							label.transaction.transactionType.<bean:write name="transaction" property="transactionType.name"/>
-					</bean:define> 
+
 					<td align="center">
-						<bean:message name="transactionType"/>
+						<bean:message name="transaction" property="transactionType.name" bundle="ENUMERATION_RESOURCES"/>
 					</td>
 									
 					<td align="center">
-        				<bean:define id="paymentType" >
-        					<bean:write name="transaction" property="paymentType"/>
-        				</bean:define>
-        				<bean:message name="paymentType" bundle="ENUMERATION_RESOURCES" />						
+        				<bean:message name="transaction" property="paymentType.name" bundle="ENUMERATION_RESOURCES" />						
 					</td>				
 					<td align="left"><bean:write name="transaction" property="value"/></td>
 				
