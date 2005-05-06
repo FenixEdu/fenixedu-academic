@@ -51,8 +51,16 @@
 					</html:reset>
 				</div>
 			</html:form>
+			<br />
+			<div id="txt">
+				<center>
+				<p>
+					<bean:message key="message.footer.help" bundle="GLOBAL_RESOURCES"/>:
+					<bean:message key="institution.email.support" bundle="GLOBAL_RESOURCES"/>
+				</p>
+				</center>
+			</div>
 		</div>
-
 		<%-- Invalidate session. This is to work with FenixActionServlet --%>
 		<% 	try {
 				session.invalidate();
