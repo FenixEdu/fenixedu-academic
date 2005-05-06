@@ -11,10 +11,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoDegreeCurricularPlanAndExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
@@ -29,6 +27,8 @@ public class ReadExecutionDegreesByExecutionYear implements IService {
 
     public List run(InfoExecutionYear infoExecutionYear) throws ExcepcaoPersistencia {
 
+        System.out.println("infoExecutionYear: " + infoExecutionYear);
+
         final List infoExecutionDegreeList = new ArrayList();
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -39,18 +39,11 @@ public class ReadExecutionDegreesByExecutionYear implements IService {
         for (final Iterator iterator = executionDegrees.iterator(); iterator.hasNext();) {
             final IExecutionDegree executionDegree = (IExecutionDegree) iterator.next();
             if (executionDegree != null) {
-                final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYear
+                final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoDegreeCurricularPlanAndExecutionYear
                         .newInfoFromDomain(executionDegree);
-                if (executionDegree.getDegreeCurricularPlan() != null) {
-                    infoExecutionDegree.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan
-                            .newInfoFromDomain(executionDegree.getDegreeCurricularPlan()));
-                    if (executionDegree.getDegreeCurricularPlan().getDegree() != null) {
-                        infoExecutionDegree.getInfoDegreeCurricularPlan().setInfoDegree(
-                                InfoDegree.newInfoFromDomain(executionDegree.getDegreeCurricularPlan()
-                                        .getDegree()));
-                    }
-                    infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
-                }
+                System.out.print("infoExecutionDegree" + infoExecutionDegree.getIdInternal());
+                System.out.print("infodcp" + infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
+                System.out.print("infodegree" + infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal());
                 infoExecutionDegreeList.add(infoExecutionDegree);
             }
         }

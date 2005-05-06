@@ -29,6 +29,7 @@ public class FenixContainerExceptionHandler extends FenixExceptionHandler {
             ActionForm formInstance, HttpServletRequest request, HttpServletResponse response)
             throws ServletException {
 
+        ex.printStackTrace();
         if (!(ex instanceof FenixServiceException) && !(ex instanceof FenixActionException)) {
             logger.error(ex);
         }
