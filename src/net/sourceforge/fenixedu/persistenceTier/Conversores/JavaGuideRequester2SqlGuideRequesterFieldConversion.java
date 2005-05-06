@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.util.GuideRequester;
+import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
@@ -14,16 +14,16 @@ public class JavaGuideRequester2SqlGuideRequesterFieldConversion implements Fiel
     public Object javaToSql(Object source) {
         if (source instanceof GuideRequester) {
             GuideRequester s = (GuideRequester) source;
-            return s.getType();
+            return s.name();
         }
         return source;
 
     }
 
     public Object sqlToJava(Object source) {
-        if (source instanceof Integer) {
-            Integer src = (Integer) source;
-            return new GuideRequester(src);
+        if (source instanceof String) {
+            String src = (String) source;
+            return GuideRequester.valueOf(src);
         }
         return source;
 

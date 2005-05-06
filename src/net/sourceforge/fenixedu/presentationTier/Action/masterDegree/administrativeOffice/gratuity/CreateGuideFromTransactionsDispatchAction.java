@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.GuideRequester;
+import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
 import net.sourceforge.fenixedu.domain.GuideState;
 
 /**
@@ -121,7 +121,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
 
         InfoGuide infoGuide = new InfoGuide();
         infoGuide.setCreationDate(Calendar.getInstance().getTime());
-        infoGuide.setGuideRequester(new GuideRequester(GuideRequester.STUDENT));
+        infoGuide.setGuideRequester(GuideRequester.STUDENT);
         infoGuide.setInfoContributor(infoContributor);
         infoGuide.setInfoExecutionDegree(infoGratuitySituation.getInfoGratuityValues()
                 .getInfoExecutionDegree());

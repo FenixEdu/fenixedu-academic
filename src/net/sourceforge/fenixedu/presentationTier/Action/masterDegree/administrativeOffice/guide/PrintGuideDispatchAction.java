@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.util.GuideRequester;
+import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
 import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
@@ -49,7 +49,7 @@ public class PrintGuideDispatchAction extends DispatchAction {
                 request.setAttribute(SessionConstants.REQUESTER_NUMBER, numberRequester);
             }
 
-            if (infoGuide.getGuideRequester().equals(GuideRequester.CANDIDATE_TYPE)) {
+            if (infoGuide.getGuideRequester().equals(GuideRequester.CANDIDATE.name())) {
                 // Read The Candidate
                 InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
                 try {
@@ -123,7 +123,7 @@ public class PrintGuideDispatchAction extends DispatchAction {
                 throw new FenixActionException();
             }
 
-            if (infoGuide.getGuideRequester().equals(GuideRequester.STUDENT_TYPE)) {
+            if (infoGuide.getGuideRequester().equals(GuideRequester.STUDENT.name())) {
 
                 InfoStudent infoStudent = null;
                 List infoStudents = null;

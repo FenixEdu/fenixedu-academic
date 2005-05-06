@@ -1165,9 +1165,9 @@ class net.sourceforge.fenixedu.domain.Guide extends net.sourceforge.fenixedu.dom
 	interface "
 		public net.sourceforge.fenixedu.domain.IGuideSituation getActiveSituation();
 		
-		public net.sourceforge.fenixedu.util.GuideRequester getGuideRequester();
+		public net.sourceforge.fenixedu.domain.masterDegree.GuideRequester getGuideRequester();
 		
-		public void setGuideRequester(net.sourceforge.fenixedu.util.GuideRequester requester);
+		public void setGuideRequester(net.sourceforge.fenixedu.domain.masterDegree.GuideRequester requester);
 		
 		public net.sourceforge.fenixedu.domain.transactions.PaymentType getPaymentType();
 		

@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
-import net.sourceforge.fenixedu.util.GuideRequester;
+import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
 import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -90,7 +90,7 @@ public class PrepareCreateGuide implements IService {
         }
 
         // Check if the Requester is a Candidate
-        if (requesterType.equals(GuideRequester.CANDIDATE_STRING)) {
+        if (requesterType.equals(GuideRequester.CANDIDATE.name())) {
 
             try {
                 masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
@@ -144,11 +144,11 @@ public class PrepareCreateGuide implements IService {
             infoGuideEntries.add(infoGuideEntry);
 
             infoGuide.setInfoGuideEntries(infoGuideEntries);
-            infoGuide.setGuideRequester(GuideRequester.CANDIDATE_TYPE);
+            infoGuide.setGuideRequester(GuideRequester.CANDIDATE);
 
         }
 
-        if (requesterType.equals(GuideRequester.STUDENT_STRING)) {
+        if (requesterType.equals(GuideRequester.STUDENT.name())) {
             IStudent student = null;
 
             try {
@@ -189,7 +189,7 @@ public class PrepareCreateGuide implements IService {
             infoGuide = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide);
 
             infoGuide.setInfoGuideEntries(new ArrayList());
-            infoGuide.setGuideRequester(GuideRequester.STUDENT_TYPE);
+            infoGuide.setGuideRequester(GuideRequester.STUDENT);
         }
 
         return infoGuide;

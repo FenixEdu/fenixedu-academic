@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <h2><bean:message key="title.masterDegree.administraiveOffice.createGuide"/></h2>
 <span class="error"><html:errors/></span>
@@ -33,8 +34,10 @@
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.requesterType"/>: </td>
          <td>
+            <e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.masterDegree.GuideRequester" bundle="ENUMERATION_RESOURCES"/>
             <html:select property="requester">
-                <html:options collection="<%= SessionConstants.GUIDE_REQUESTER_LIST %>" property="value" labelProperty="label"/>
+            	<html:option key="dropDown.Default" value=""/>
+                <html:options collection="values" property="value" labelProperty="label"/>
              </html:select>          
          </td>
         </tr>

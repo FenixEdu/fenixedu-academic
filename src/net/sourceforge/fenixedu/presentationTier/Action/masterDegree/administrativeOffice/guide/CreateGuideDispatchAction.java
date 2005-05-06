@@ -41,7 +41,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
-import net.sourceforge.fenixedu.util.GuideRequester;
+import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
 import net.sourceforge.fenixedu.util.RandomStringGenerator;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.util.Specialization;
@@ -119,8 +119,6 @@ public class CreateGuideDispatchAction extends DispatchAction {
                         infoContributor.getContributorNumber().toString()));
             }
             request.setAttribute(SessionConstants.CONTRIBUTOR_LIST, contributorList);
-
-            request.setAttribute(SessionConstants.GUIDE_REQUESTER_LIST, GuideRequester.toArrayList());
 
             return mapping.findForward("PrepareSuccess");
         }
@@ -241,7 +239,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
             request.setAttribute("graduationType", graduationType);
             request.setAttribute(SessionConstants.REQUESTER_TYPE, requesterType);
 
-            if (requesterType.equals(GuideRequester.CANDIDATE_STRING)) {
+            if (requesterType.equals(GuideRequester.CANDIDATE.name())) {
                 session.removeAttribute(SessionConstants.REQUESTER_TYPE);
                 generateToken(request);
                 saveToken(request);
@@ -249,7 +247,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
                 return mapping.findForward("CreateCandidateGuide");
             }
 
-            if (requesterType.equals(GuideRequester.STUDENT_STRING)) {
+            if (requesterType.equals(GuideRequester.STUDENT.name())) {
 
                 session.removeAttribute(SessionConstants.REQUESTER_TYPE);
                 return mapping.findForward("CreateStudentGuide");
@@ -348,7 +346,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
             requesterType = (String) createGuideForm.get("requester");
 
         // We need to check if the Guide has been payed
-        if (requesterType.equals(GuideRequester.CANDIDATE_STRING)) {
+        if (requesterType.equals(GuideRequester.CANDIDATE.name())) {
 
             if (situationOfGuide.equals(GuideState.PAYED)) {
 

@@ -277,7 +277,7 @@
 	  <field-descriptor 
 	     name="guideRequester"
 	     column="GUIDE_REQUESTER"
-	     jdbc-type="INTEGER"
+	     jdbc-type="VARCHAR"
 	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGuideRequester2SqlGuideRequesterFieldConversion"
 	  />
 	  <field-descriptor 

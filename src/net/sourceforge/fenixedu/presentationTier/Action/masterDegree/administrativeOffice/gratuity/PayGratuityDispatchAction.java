@@ -36,7 +36,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
-import net.sourceforge.fenixedu.util.GuideRequester;
+import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
 import net.sourceforge.fenixedu.domain.GuideState;
 
 /**
@@ -273,7 +273,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
         }
 
         infoGuide.setCreationDate(Calendar.getInstance().getTime());
-        infoGuide.setGuideRequester(new GuideRequester(GuideRequester.STUDENT));
+        infoGuide.setGuideRequester(GuideRequester.STUDENT);
         infoGuide.setInfoContributor(infoContributor);
 
         infoGuide.setInfoGuideEntries(infoGuideEntries);
