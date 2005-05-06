@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.util.ExemptionGratuityType;
+import net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -65,8 +65,8 @@ public class ExemptionGratuityLAAction extends LookupDispatchAction {
             DynaActionForm exemptionForm) {
         Integer valueExemptionGratuity = Integer.valueOf((String) exemptionForm
                 .get("valueExemptionGratuity"));
-        Integer justificationExemptionGratuity = Integer.valueOf((String) exemptionForm
-                .get("justificationExemptionGratuity"));
+        String justificationExemptionGratuity = (String) exemptionForm
+                .get("justificationExemptionGratuity");
         Double adHocValueExemptionGratuity = (Double) exemptionForm.get("adHocValueExemptionGratuity");
         String otherValueExemptionGratuityString = (String) exemptionForm
                 .get("otherValueExemptionGratuity");
@@ -95,9 +95,8 @@ public class ExemptionGratuityLAAction extends LookupDispatchAction {
 
         // justification
         if (justificationExemptionGratuity != null) {
-            infoGratuitySituation.setExemptionType(ExemptionGratuityType
-                    .getEnum(justificationExemptionGratuity.intValue()));
-            if (justificationExemptionGratuity.equals(new Integer(ExemptionGratuityType.OTHER_TYPE))) {
+            infoGratuitySituation.setExemptionType(ExemptionGratuityType.valueOf(justificationExemptionGratuity)); 
+            if (justificationExemptionGratuity.equals(ExemptionGratuityType.OTHER.name())) {
                 infoGratuitySituation.setExemptionDescription(otherJustificationExemptionGratuity);
             }
         }

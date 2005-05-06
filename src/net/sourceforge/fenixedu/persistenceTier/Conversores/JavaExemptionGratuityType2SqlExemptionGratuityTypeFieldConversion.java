@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.util.ExemptionGratuityType;
+import net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
@@ -20,16 +20,16 @@ public class JavaExemptionGratuityType2SqlExemptionGratuityTypeFieldConversion i
     public Object javaToSql(Object source) {
         if (source instanceof ExemptionGratuityType) {
             ExemptionGratuityType exemptionGratuityType = (ExemptionGratuityType) source;
-            return new Integer(exemptionGratuityType.getValue());
+            return exemptionGratuityType.name();
         }
         return source;
 
     }
 
     public Object sqlToJava(Object source) {
-        if (source instanceof Integer) {
-            Integer src = (Integer) source;
-            return ExemptionGratuityType.getEnum(src.intValue());
+        if (source instanceof String) {
+            String src = (String) source;
+            return ExemptionGratuityType.valueOf(src);
         }
         return source;
 

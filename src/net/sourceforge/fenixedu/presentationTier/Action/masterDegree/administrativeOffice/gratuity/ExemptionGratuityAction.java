@@ -32,7 +32,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.util.ExemptionGratuityType;
+import net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType;
 import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
@@ -42,23 +42,26 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
  */
 public class ExemptionGratuityAction extends DispatchAction {
 
-    public ActionForward prepareReadStudent(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward prepareReadStudent(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
 
         // execution years
         List executionYears = null;
         Object[] args = {};
         try {
-            executionYears = (List) ServiceManagerServiceFactory.executeService(null,
-                    "ReadNotClosedExecutionYears", args);
+            executionYears = (List) ServiceManagerServiceFactory
+                    .executeService(null, "ReadNotClosedExecutionYears", args);
         } catch (FenixServiceException e) {
-            errors.add("noExecutionYears", new ActionError("error.impossible.insertExemptionGratuity"));
+            errors.add("noExecutionYears", new ActionError(
+                    "error.impossible.insertExemptionGratuity"));
             saveErrors(request, errors);
             return mapping.getInputForward();
         }
         if (executionYears == null || executionYears.size() <= 0) {
-            errors.add("noExecutionYears", new ActionError("error.impossible.insertExemptionGratuity"));
+            errors.add("noExecutionYears", new ActionError(
+                    "error.impossible.insertExemptionGratuity"));
             saveErrors(request, errors);
             return mapping.getInputForward();
         }
@@ -82,20 +85,23 @@ public class ExemptionGratuityAction extends DispatchAction {
             public Object transform(Object arg0) {
                 InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
 
-                LabelValueBean executionYear = new LabelValueBean(infoExecutionYear.getYear(),
-                        infoExecutionYear.getYear());
+                LabelValueBean executionYear = new LabelValueBean(
+                        infoExecutionYear.getYear(), infoExecutionYear
+                                .getYear());
                 return executionYear;
             }
         }, executionYearLabels);
         return executionYearLabels;
     }
 
-    public ActionForward readStudent(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward readStudent(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
         HttpSession session = request.getSession();
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session
+                .getAttribute(SessionConstants.U_VIEW);
 
         // Read parameters
         String executionYear = request.getParameter("executionYear");
@@ -106,7 +112,8 @@ public class ExemptionGratuityAction extends DispatchAction {
         try {
             studentNumber = new Integer(parameter);
         } catch (NumberFormatException e) {
-            errors.add("errors", new ActionError("error.tutor.numberAndRequired"));
+            errors.add("errors", new ActionError(
+                    "error.tutor.numberAndRequired"));
             saveErrors(request, errors);
             return mapping.getInputForward();
         }
@@ -115,18 +122,23 @@ public class ExemptionGratuityAction extends DispatchAction {
         List studentCurricularPlans = null;
         Object[] args = { studentNumber, TipoCurso.MESTRADO_OBJ };
         try {
-            studentCurricularPlans = (List) ServiceManagerServiceFactory.executeService(userView,
-                    "ReadStudentCurricularPlansByNumberAndDegreeTypeInMasterDegree", args);
+            studentCurricularPlans = (List) ServiceManagerServiceFactory
+                    .executeService(
+                            userView,
+                            "ReadStudentCurricularPlansByNumberAndDegreeTypeInMasterDegree",
+                            args);
         } catch (FenixServiceException fenixServiceException) {
             fenixServiceException.printStackTrace();
-            errors.add("noStudentCurricularPlans", new ActionError("error.impossible.readStudent"));
+            errors.add("noStudentCurricularPlans", new ActionError(
+                    "error.impossible.readStudent"));
             saveErrors(request, errors);
             return mapping.getInputForward();
         }
 
         if (studentCurricularPlans.size() == 1) {
             request.setAttribute("studentCurricularPlanID",
-                    ((InfoStudentCurricularPlan) studentCurricularPlans.get(0)).getIdInternal());
+                    ((InfoStudentCurricularPlan) studentCurricularPlans.get(0))
+                            .getIdInternal());
             return mapping.findForward("readExemptionGratuity");
         }
 
@@ -135,15 +147,19 @@ public class ExemptionGratuityAction extends DispatchAction {
 
     }
 
-    public ActionForward readExemptionGratuity(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward readExemptionGratuity(ActionMapping mapping,
+            ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
         HttpSession session = request.getSession();
 
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = (IUserView) session
+                .getAttribute(SessionConstants.U_VIEW);
 
-        request.setAttribute("percentageOfExemption", ExemptionGratuityType.percentageOfExemption());
-        request.setAttribute("exemptionGratuityList", ExemptionGratuityType.getEnumList());
+        request.setAttribute("percentageOfExemption", ExemptionGratuityType
+                .percentageOfExemption());
+        request.setAttribute("exemptionGratuityList", ExemptionGratuityType
+                .values());
 
         // Read executionYear
         String executionYear = (String) request.getAttribute("executionYear");
@@ -152,36 +168,49 @@ public class ExemptionGratuityAction extends DispatchAction {
         }
         request.setAttribute("executionYear", executionYear);
 
-        Integer studentCurricularPlanID = getFromRequest("studentCurricularPlanID", request);
-        request.setAttribute("studentCurricularPlanID", studentCurricularPlanID);
+        Integer studentCurricularPlanID = getFromRequest(
+                "studentCurricularPlanID", request);
+        request
+                .setAttribute("studentCurricularPlanID",
+                        studentCurricularPlanID);
 
         // read student curricular plan only for show in jsp
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
         Object[] args = { studentCurricularPlanID };
         try {
             infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceManagerServiceFactory
-                    .executeService(userView, "ReadStudentCurricularPlanInMasterDegree", args);
+                    .executeService(userView,
+                            "ReadStudentCurricularPlanInMasterDegree", args);
         } catch (FenixServiceException fenixServiceException) {
             fenixServiceException.printStackTrace();
-            errors.add("noStudentCurricularPlans", new ActionError("error.impossible.readStudent"));
+            errors.add("noStudentCurricularPlans", new ActionError(
+                    "error.impossible.readStudent"));
             saveErrors(request, errors);
             return mapping.getInputForward();
         }
-        request.setAttribute("studentCurricularPlan", infoStudentCurricularPlan);
+        request
+                .setAttribute("studentCurricularPlan",
+                        infoStudentCurricularPlan);
 
         // read gratuity values of the execution course
         InfoGratuityValues infoGratuityValues = null;
-        Object args3[] = { infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getIdInternal(),
-                executionYear };
+        Object args3[] = {
+                infoStudentCurricularPlan.getInfoDegreeCurricularPlan()
+                        .getIdInternal(), executionYear };
         try {
-            infoGratuityValues = (InfoGratuityValues) ServiceManagerServiceFactory.executeService(
-                    userView, "ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear", args3);
+            infoGratuityValues = (InfoGratuityValues) ServiceManagerServiceFactory
+                    .executeService(
+                            userView,
+                            "ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear",
+                            args3);
         } catch (FenixServiceException fenixServiceException) {
             fenixServiceException.printStackTrace();
-            errors.add("noGratuitySituation",
-                    new ActionError("error.impossible.insertExemptionGratuity"));
-            errors.add("noGratuityValues", new ActionError("error.impossible.problemsWithDegree",
-                    infoStudentCurricularPlan.getInfoDegreeCurricularPlan().getInfoDegree().getNome()));
+            errors.add("noGratuitySituation", new ActionError(
+                    "error.impossible.insertExemptionGratuity"));
+            errors.add("noGratuityValues", new ActionError(
+                    "error.impossible.problemsWithDegree",
+                    infoStudentCurricularPlan.getInfoDegreeCurricularPlan()
+                            .getInfoDegree().getNome()));
             saveErrors(request, errors);
             return mapping.findForward("chooseStudent");
         }
@@ -189,29 +218,36 @@ public class ExemptionGratuityAction extends DispatchAction {
         // that this degree hasn't gratuity values defined
         if (infoGratuityValues == null) {
             request.setAttribute("noGratuityValues", "true");
-            errors.add("noGratuityValues", new ActionError("error.impossible.noGratuityValues"));
+            errors.add("noGratuityValues", new ActionError(
+                    "error.impossible.noGratuityValues"));
             saveErrors(request, errors);
             return mapping.findForward("chooseStudent");
         }
 
-        request.setAttribute("gratuityValuesID", infoGratuityValues.getIdInternal());
+        request.setAttribute("gratuityValuesID", infoGratuityValues
+                .getIdInternal());
 
         // read gratuity situation of the student
         InfoGratuitySituation infoGratuitySituation = null;
-        Object args2[] = { studentCurricularPlanID, infoGratuityValues.getIdInternal() };
+        Object args2[] = { studentCurricularPlanID,
+                infoGratuityValues.getIdInternal() };
         try {
-            infoGratuitySituation = (InfoGratuitySituation) ServiceManagerServiceFactory.executeService(
-                    userView, "ReadGratuitySituationByStudentCurricularPlanByGratuityValues", args2);
+            infoGratuitySituation = (InfoGratuitySituation) ServiceManagerServiceFactory
+                    .executeService(
+                            userView,
+                            "ReadGratuitySituationByStudentCurricularPlanByGratuityValues",
+                            args2);
         } catch (FenixServiceException fenixServiceException) {
             fenixServiceException.printStackTrace();
-            errors.add("noGratuitySituation",
-                    new ActionError("error.impossible.insertExemptionGratuity"));
+            errors.add("noGratuitySituation", new ActionError(
+                    "error.impossible.insertExemptionGratuity"));
             saveErrors(request, errors);
             return mapping.getInputForward();
         }
         // if infoGratuitySituation is null than it will be created in next step
         if (infoGratuitySituation != null) {
-            request.setAttribute("gratuitySituationID", infoGratuitySituation.getIdInternal());
+            request.setAttribute("gratuitySituationID", infoGratuitySituation
+                    .getIdInternal());
         }
 
         DynaActionForm exemptionGrauityForm = (DynaActionForm) actionForm;
@@ -220,32 +256,34 @@ public class ExemptionGratuityAction extends DispatchAction {
         return mapping.findForward("manageExemptionGratuity");
     }
 
-    private void fillForm(InfoGratuitySituation infoGratuitySituation, HttpServletRequest request,
-            DynaActionForm exemptionGrauityForm) {
+    private void fillForm(InfoGratuitySituation infoGratuitySituation,
+            HttpServletRequest request, DynaActionForm exemptionGrauityForm) {
         if (infoGratuitySituation != null) {
-            Integer exemptionPercentage = infoGratuitySituation.getExemptionPercentage();
+            Integer exemptionPercentage = infoGratuitySituation
+                    .getExemptionPercentage();
             if (exemptionPercentage != null) {
-                if (ExemptionGratuityType.percentageOfExemption().contains(exemptionPercentage)) {
+                if (ExemptionGratuityType.percentageOfExemption().contains(
+                        exemptionPercentage)) {
                     exemptionGrauityForm.set("valueExemptionGratuity", String
                             .valueOf(exemptionPercentage));
                 } else if (exemptionPercentage.intValue() > 0) {
                     exemptionGrauityForm.set("valueExemptionGratuity", "-1");
-                    exemptionGrauityForm.set("otherValueExemptionGratuity", String
-                            .valueOf(exemptionPercentage));
+                    exemptionGrauityForm.set("otherValueExemptionGratuity",
+                            String.valueOf(exemptionPercentage));
                 }
             }
 
             if (infoGratuitySituation.getExemptionValue() != null) {
-                exemptionGrauityForm.set("adHocValueExemptionGratuity", infoGratuitySituation
-                        .getExemptionValue());
+                exemptionGrauityForm.set("adHocValueExemptionGratuity",
+                        infoGratuitySituation.getExemptionValue());
             }
 
             if (infoGratuitySituation.getExemptionType() != null) {
-                exemptionGrauityForm.set("justificationExemptionGratuity", String
-                        .valueOf(infoGratuitySituation.getExemptionType().getValue()));
+                exemptionGrauityForm.set("justificationExemptionGratuity",
+                        infoGratuitySituation.getExemptionType().name());
             }
-            exemptionGrauityForm.set("otherJustificationExemptionGratuity", infoGratuitySituation
-                    .getExemptionDescription());
+            exemptionGrauityForm.set("otherJustificationExemptionGratuity",
+                    infoGratuitySituation.getExemptionDescription());
         }
     }
 
@@ -263,7 +301,8 @@ public class ExemptionGratuityAction extends DispatchAction {
         {
             if (request.getAttribute(parameter) instanceof String) {
                 try {
-                    parameterCode = new Integer((String) request.getAttribute(parameter));
+                    parameterCode = new Integer((String) request
+                            .getAttribute(parameter));
                 } catch (Exception exception) {
                     return null;
                 }

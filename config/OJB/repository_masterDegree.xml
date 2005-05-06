@@ -1469,7 +1469,7 @@
    	<field-descriptor
    		name="exemptionType"
    		column="EXEMPTION_TYPE"
-   		jdbc-type="INTEGER"   	
+   		jdbc-type="VARCHAR"   	
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaExemptionGratuityType2SqlExemptionGratuityTypeFieldConversion"   			   		
    	/>
    	<field-descriptor

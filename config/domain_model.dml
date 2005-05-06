@@ -108,7 +108,7 @@ class net.sourceforge.fenixedu.domain.Branch extends net.sourceforge.fenixedu.do
     
     interface "
 
-    public net.sourceforge.fenixedu.util.BranchType getBranchType();
+	public net.sourceforge.fenixedu.util.BranchType getBranchType();
     public void setBranchType(net.sourceforge.fenixedu.util.BranchType branchType);
     public java.util.List getAreaCurricularCourseGroups(net.sourceforge.fenixedu.util.AreaType areaType);
     "
@@ -1042,9 +1042,9 @@ class net.sourceforge.fenixedu.domain.GratuitySituation extends net.sourceforge.
 	
 		public void setWhen(java.util.Date when);
 	
-		public net.sourceforge.fenixedu.util.ExemptionGratuityType getExemptionType(); 
+		public net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType getExemptionType(); 
 	
-		public void setExemptionType(net.sourceforge.fenixedu.util.ExemptionGratuityType exemptionType); 
+		public void setExemptionType(net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType exemptionType); 
 	
 		public net.sourceforge.fenixedu.domain.IStudentCurricularPlan getStudentCurricularPlan();
 	

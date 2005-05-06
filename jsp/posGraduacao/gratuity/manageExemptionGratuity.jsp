@@ -91,25 +91,23 @@
 			<!-- JUSTIFICATION OF EXEMPTION -->			
 			<table border="0" width='100%'>
 				<logic:iterate id="exemptionGratuity" name="exemptionGratuityList">
-					<logic:notEqual name="exemptionGratuity" property="value" value="10">
+					<logic:notEqual name="exemptionGratuity" property="name" value="OTHER">
 					<tr>						
-						<td>
-							<bean:define id="exemptionGratuityName" name="exemptionGratuity" property="name"/>
-							<bean:define id="exemptionGratuityNameKEY" value="<%= "label.exemptionGratuity."+exemptionGratuityName.toString() %>"/>
-							<bean:message name="exemptionGratuityNameKEY"/>&nbsp;
+						<td>	
+							<bean:message name="exemptionGratuity" property="name" bundle="ENUMERATION_RESOURCES" />&nbsp;
 						</td>
 						<td>								
-							<html:radio property="justificationExemptionGratuity" idName="exemptionGratuity" value="value"/>
+							<html:radio property="justificationExemptionGratuity" idName="exemptionGratuity" value="name"/>
 						</td>
 					</tr>
 					</logic:notEqual>
 				</logic:iterate>	
 				<tr>
 					<td>
-						<bean:message key="label.masterDegree.gratuity.anotherOne" />&nbsp;
+						<bean:message key="OTHER" bundle="ENUMERATION_RESOURCES" />&nbsp;
 					</td>
 					<td>																							
-						<html:radio property="justificationExemptionGratuity" value="<%= String.valueOf(ExemptionGratuityType.OTHER.getValue()) %>"/>
+						<html:radio property="justificationExemptionGratuity" value="OTHER"/>
 					</td>
 				</tr>	
 				<tr>

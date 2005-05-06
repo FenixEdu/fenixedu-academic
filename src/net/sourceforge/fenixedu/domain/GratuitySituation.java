@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.util.ExemptionGratuityType;
+import net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType;
 
 /**
  * 

@@ -11,6 +11,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.IEmployee;
@@ -33,11 +34,12 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class EditGratuitySituationById implements IService {
 
-    public Object run(InfoGratuitySituation infoGratuitySituation) throws FenixServiceException {
+    public Object run(InfoGratuitySituation infoGratuitySituation)
+            throws FenixServiceException {
         ISuportePersistente sp = null;
         try {
             if (infoGratuitySituation == null) {
@@ -49,26 +51,31 @@ public class EditGratuitySituationById implements IService {
                     .getIPersistentGratuitySituation();
 
             IGratuityValues gratuityValues = new GratuityValues();
-            gratuityValues.setIdInternal(infoGratuitySituation.getInfoGratuityValues().getIdInternal());
+            gratuityValues.setIdInternal(infoGratuitySituation
+                    .getInfoGratuityValues().getIdInternal());
 
             IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
-            studentCurricularPlan.setIdInternal(infoGratuitySituation.getInfoStudentCurricularPlan()
-                    .getIdInternal());
+            studentCurricularPlan.setIdInternal(infoGratuitySituation
+                    .getInfoStudentCurricularPlan().getIdInternal());
 
             IGratuitySituation gratuitySituation = persistentGratuitySituation
                     .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
                             studentCurricularPlan, gratuityValues);
             if (gratuitySituation == null) {
-                throw new NonExistingServiceException("Gratuity Situation not exist yet.");
+                throw new NonExistingServiceException(
+                        "Gratuity Situation not exist yet.");
             }
 
-            //employee who made register
+            // employee who made register
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-            IPerson person = persistentPerson.lerPessoaPorUsername(infoGratuitySituation
-                    .getInfoEmployee().getPerson().getUsername());
+            IPerson person = persistentPerson
+                    .lerPessoaPorUsername(infoGratuitySituation
+                            .getInfoEmployee().getPerson().getUsername());
             if (person != null) {
-                IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
-                IEmployee employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
+                IPersistentEmployee persistentEmployee = sp
+                        .getIPersistentEmployee();
+                IEmployee employee = persistentEmployee.readByPerson(person
+                        .getIdInternal().intValue());
                 gratuitySituation.setEmployee(employee);
             }
 
@@ -77,15 +84,20 @@ public class EditGratuitySituationById implements IService {
             Calendar now = Calendar.getInstance();
             gratuitySituation.setWhen(now.getTime());
 
-            //Update remaining value
-            double exemptionValue = gratuitySituation.getTotalValue().doubleValue()
-                    * (infoGratuitySituation.getExemptionPercentage().doubleValue() / 100.0);
-            
-            if(infoGratuitySituation.getExemptionValue() != null){
-                exemptionValue += infoGratuitySituation.getExemptionValue().doubleValue(); 
+            // Update remaining value
+            double exemptionValue = gratuitySituation.getTotalValue()
+                    .doubleValue()
+                    * (infoGratuitySituation.getExemptionPercentage()
+                            .doubleValue() / 100.0);
+
+            if (infoGratuitySituation.getExemptionValue() != null) {
+                exemptionValue += infoGratuitySituation.getExemptionValue()
+                        .doubleValue();
             }
-            
-            double newRemainingValue = gratuitySituation.getTotalValue().doubleValue() - exemptionValue;
+
+            double newRemainingValue = gratuitySituation.getTotalValue()
+                    .doubleValue()
+                    - exemptionValue;
 
             List transactionList = gratuitySituation.getTransactionList();
             List reimbursementGuideEntries = null;
@@ -100,22 +112,25 @@ public class EditGratuitySituationById implements IService {
 
                 if (gratuityTransaction.getGuideEntry() != null) {
 
-                    reimbursementGuideEntries = gratuityTransaction.getGuideEntry()
-                            .getReimbursementGuideEntries();
+                    reimbursementGuideEntries = gratuityTransaction
+                            .getGuideEntry().getReimbursementGuideEntries();
 
                     if (reimbursementGuideEntries != null) {
 
-                        Iterator reimbursementIterator = reimbursementGuideEntries.iterator();
+                        Iterator reimbursementIterator = reimbursementGuideEntries
+                                .iterator();
                         IReimbursementGuideEntry reimbursementGuideEntry = null;
 
                         while (reimbursementIterator.hasNext()) {
                             reimbursementGuideEntry = (IReimbursementGuideEntry) reimbursementIterator
                                     .next();
                             if (reimbursementGuideEntry.getReimbursementGuide()
-                                    .getActiveReimbursementGuideSituation().getReimbursementGuideState()
-                                    .equals(ReimbursementGuideState.PAYED)) {
+                                    .getActiveReimbursementGuideSituation()
+                                    .getReimbursementGuideState().equals(
+                                            ReimbursementGuideState.PAYED)) {
 
-                                reimbursedValue += reimbursementGuideEntry.getValue().doubleValue();
+                                reimbursedValue += reimbursementGuideEntry
+                                        .getValue().doubleValue();
                             }
                         }
                     }
@@ -123,15 +138,19 @@ public class EditGratuitySituationById implements IService {
 
             }
 
-            gratuitySituation.setRemainingValue(new Double(newRemainingValue - payedValue
-                    + reimbursedValue));
+            gratuitySituation.setRemainingValue(new Double(newRemainingValue
+                    - payedValue + reimbursedValue));
 
-            gratuitySituation.setExemptionDescription(infoGratuitySituation.getExemptionDescription());
-            gratuitySituation.setExemptionPercentage(infoGratuitySituation.getExemptionPercentage());
-            gratuitySituation.setExemptionValue(infoGratuitySituation.getExemptionValue());
-            gratuitySituation.setExemptionType(infoGratuitySituation.getExemptionType());
+            gratuitySituation.setExemptionDescription(infoGratuitySituation
+                    .getExemptionDescription());
+            gratuitySituation.setExemptionPercentage(infoGratuitySituation
+                    .getExemptionPercentage());
+            gratuitySituation.setExemptionValue(infoGratuitySituation
+                    .getExemptionValue());
+            gratuitySituation.setExemptionType(infoGratuitySituation
+                    .getExemptionType());
 
-            infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree
+            infoGratuitySituation = InfoGratuitySituationWithAll
                     .newInfoFromDomain(gratuitySituation);
 
         } catch (ExcepcaoPersistencia e) {

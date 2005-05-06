@@ -2,7 +2,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ page import="net.sourceforge.fenixedu.util.ExemptionGratuityType" %>
 
 <span class="error"><html:errors/></span>
 
@@ -55,12 +54,10 @@
 <br />
 
 <b><bean:message key="label.exemptionGratuity.justification" />:</b>&nbsp;
-<logic:notEqual name="exemptionGratuity" property="exemptionType.value" value="<%= String.valueOf(ExemptionGratuityType.OTHER_TYPE) %>">
-	<bean:define id="exemptionGratuityName" name="exemptionGratuity" property="exemptionType.name"/>
-	<bean:define id="exemptionGratuityNameKEY" value="<%= "label.exemptionGratuity."+exemptionGratuityName.toString() %>"/>
-	<bean:message name="exemptionGratuityNameKEY"/>&nbsp;
+<logic:notEqual name="exemptionGratuity" property="exemptionType.name" value="OTHER">
+	<bean:message name="exemptionGratuity" property="exemptionType.name" bundle="ENUMERATION_RESOURCES"/>&nbsp;
 </logic:notEqual>		
-<logic:equal name="exemptionGratuity" property="exemptionType.value" value="<%= String.valueOf(ExemptionGratuityType.OTHER_TYPE) %>">
+<logic:equal name="exemptionGratuity" property="exemptionType.name" value="OTHER">
 	<bean:write name="exemptionGratuity" property="exemptionDescription" />
 </logic:equal>		
 <br /><br />	
