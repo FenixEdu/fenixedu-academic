@@ -28,7 +28,8 @@
 		<form-bean name="degreeForm"
 			type="org.apache.struts.validator.DynaValidatorForm"
                 dynamic="true">
-				<form-property name="name" type="java.lang.String" />       
+				<form-property name="name" type="java.lang.String" />
+				<form-property name="nameEn" type="java.lang.String" />       
 				<form-property name="code" type="java.lang.String" />
 				<form-property name="degreeType" type="java.lang.Integer" />
 				<form-property name="internalIds" type="java.lang.Integer[]" />
