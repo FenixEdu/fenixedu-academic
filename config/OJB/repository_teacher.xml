@@ -200,5 +200,59 @@
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
 </class-descriptor>  
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.NonAffiliatedTeacher -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.NonAffiliatedTeacher" table="NON_AFFILIATED_TEACHER">
+	<field-descriptor 
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="name"
+		column="NAME"
+		jdbc-type="VARCHAR"
+	/>
+    <field-descriptor
+    	name="keyInstitution" 
+    	column="KEY_INSTITUTION" 
+    	jdbc-type="INTEGER"
+    /> 
+    <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+    />
+    <reference-descriptor
+    	name="institution"
+    	class-ref="net.sourceforge.fenixedu.domain.Institution" proxy="false">
+		<foreignkey field-ref="keyInstitution"/>
+	</reference-descriptor>
+</class-descriptor>  
+
+<!-- Definitions for net.sourceforge.fenixedu.domain.Institution -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.Institution" table="INSTITUTION">
+	<field-descriptor 
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="name"
+		column="NAME"
+		jdbc-type="VARCHAR"
+	/>
+    <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+    />
+</class-descriptor>  
 				  		
 <!-- Mapping of User defined classses ends here -->
