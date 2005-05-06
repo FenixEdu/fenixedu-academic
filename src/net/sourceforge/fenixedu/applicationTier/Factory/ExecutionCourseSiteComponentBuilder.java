@@ -697,7 +697,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
             IExecutionCourse executionCourse = site.getExecutionCourse();
 
-            references = persistentBibliographicReference.readBibliographicReference(executionCourse);
+            references = persistentBibliographicReference.readBibliographicReference(executionCourse.getIdInternal());
 
             Iterator iterator = references.iterator();
             infoBibRefs = new ArrayList();

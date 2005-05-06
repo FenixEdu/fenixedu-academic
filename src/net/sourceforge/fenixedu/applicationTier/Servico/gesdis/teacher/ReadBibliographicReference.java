@@ -55,7 +55,7 @@ public class ReadBibliographicReference implements IService {
             IExecutionCourse executionCourse = persistentExecutionCourse
                     .readByExecutionCourseInitialsAndExecutionPeriod(infoExecutionCourse.getSigla(),
                             executionPeriod);
-            references = persistentBibliographicReference.readBibliographicReference(executionCourse);
+            references = persistentBibliographicReference.readBibliographicReference(executionCourse.getIdInternal());
 
             Iterator iterator = references.iterator();
             infoBibRefs = new ArrayList();

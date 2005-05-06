@@ -12,6 +12,7 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
@@ -56,7 +57,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 29/Nov/2003
- * 
+ *  
  */
 public class MergeExecutionCourses implements IService {
 
@@ -90,7 +91,7 @@ public class MergeExecutionCourses implements IService {
             throw new SourceAndDestinationAreTheSameException();
         }
 
-       ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExecutionCourse persistentExecutionCourse = ps.getIPersistentExecutionCourse();
         IExecutionCourse destination;
         IExecutionCourse source;
@@ -212,10 +213,6 @@ public class MergeExecutionCourses implements IService {
 
     }
 
-    /**
-     * @param executionCourse1
-     * @param executionCourse2
-     */
     private void copyEvaluations(IExecutionCourse destination, IExecutionCourse source,
             ISuportePersistente ps) throws ExcepcaoPersistencia, InvalidArgumentsServiceException {
 
@@ -236,21 +233,18 @@ public class MergeExecutionCourses implements IService {
 
     }
 
-    /**
-     * @param executionCourse1
-     * @param executionCourse2
-     */
     private void copyBibliography(IExecutionCourse destination, IExecutionCourse source,
             ISuportePersistente ps) throws ExcepcaoPersistencia {
+
         IPersistentBibliographicReference persistentBibliographicReference = ps
                 .getIPersistentBibliographicReference();
         List destinationBibliographicReferences = persistentBibliographicReference
-                .readBibliographicReference(destination);
+                .readBibliographicReference(destination.getIdInternal());
         if (destinationBibliographicReferences == null) {
             destinationBibliographicReferences = new ArrayList();
         }
         List sourceBibliographicReferences = persistentBibliographicReference
-                .readBibliographicReference(source);
+                .readBibliographicReference(source.getIdInternal());
         if (sourceBibliographicReferences != null) {
             Iterator iter = sourceBibliographicReferences.iterator();
             while (iter.hasNext()) {
@@ -271,7 +265,10 @@ public class MergeExecutionCourses implements IService {
                     bibliographicReference.setExecutionCourse(destination);
 
                 } else {
-                    persistentBibliographicReference.delete(bibliographicReference);
+                    bibliographicReference.getExecutionCourse().getAssociatedBibliographicReferences()
+                            .remove(bibliographicReference);
+                    persistentBibliographicReference.deleteByOID(BibliographicReference.class,
+                            bibliographicReference.getIdInternal());
                 }
 
             }
@@ -279,35 +276,19 @@ public class MergeExecutionCourses implements IService {
 
     }
 
-    /**
-     * @param executionCourse1
-     * @param executionCourse2
-     */
     private void copyShiftsAndLessons(IExecutionCourse destination, IExecutionCourse source,
             ISuportePersistente ps) throws ExcepcaoPersistencia {
         ITurnoPersistente persistentShift = ps.getITurnoPersistente();
-        // IAulaPersistente persistentLesson = ps.getIAulaPersistente();
         List sourceShifts = persistentShift.readByExecutionCourse(source);
         Iterator iter = sourceShifts.iterator();
         while (iter.hasNext()) {
             IShift shift = (IShift) iter.next();
-            /*
-             * List sourceLessons = shift.getAssociatedLessons(); Iterator
-             * iterator = sourceLessons.iterator(); while (iterator.hasNext()) {
-             * ILesson lesson = (ILesson) iterator.next();
-             * persistentLesson.simpleLockWrite(lesson);
-             * lesson.setDisciplinaExecucao(destination); }
-             */
             persistentShift.simpleLockWrite(shift);
             shift.setDisciplinaExecucao(destination);
         }
 
     }
 
-    /**
-     * @param executionCourse1
-     * @param executionCourse2
-     */
     private void copyAttends(IExecutionCourse destination, IExecutionCourse source,
             ISuportePersistente ps) throws ExcepcaoPersistencia {
 
@@ -326,44 +307,8 @@ public class MergeExecutionCourses implements IService {
                 ps.getIFrequentaPersistente().simpleLockWrite(attend);
             }
         }
-
-        // List destinationAttends =
-        // persistentAttend.readByExecutionCourse(destination);
-        // if (destinationAttends == null) {
-        // destinationAttends = new ArrayList();
-        // }
-        // List sourceAttends = persistentAttend.readByExecutionCourse(source);
-        // if (sourceAttends != null) {
-        // Iterator iter = sourceAttends.iterator();
-        // while (iter.hasNext()) {
-        // IAttends attend = (IAttends) iter.next();
-        // final IAttends attend2Compare = attend;
-        // if (CollectionUtils.find(destinationAttends, new Predicate() {
-        //
-        // public boolean evaluate(Object arg0) {
-        // IAttends frequenta = (IAttends) arg0;
-        // if (frequenta.getAluno() == attend2Compare.getAluno()) {
-        // return true;
-        // }
-        // return false;
-        //
-        // }
-        // }) == null) {
-        // persistentAttend.simpleLockWrite(attend);
-        // attend.setDisciplinaExecucao(destination);
-        //
-        // } else {
-        // persistentAttend.delete(attend);
-        // }
-        //
-        // }
-        // }
     }
 
-    /**
-     * @param executionCourse1
-     * @param executionCourse2
-     */
     private void copySites(IExecutionCourse destination, IExecutionCourse source, ISuportePersistente ps)
             throws ExcepcaoPersistencia {
         IPersistentSite persistentSite = ps.getIPersistentSite();
@@ -375,10 +320,6 @@ public class MergeExecutionCourses implements IService {
 
     }
 
-    /**
-     * @param executionCourse1
-     * @param executionCourse2
-     */
     private void copyProfessorshipsAndResponsibleFors(IExecutionCourse destination,
             IExecutionCourse source, ISuportePersistente ps) throws ExcepcaoPersistencia {
         IPersistentProfessorship persistentProfessorship = ps.getIPersistentProfessorship();
@@ -428,9 +369,11 @@ public class MergeExecutionCourses implements IService {
                     }
 
                     IPersistentSummary persistentSummary = ps.getIPersistentSummary();
-                    List summaryList = persistentSummary.readByTeacher(professorship.getExecutionCourse(), professorship.getTeacher());
+                    List summaryList = persistentSummary.readByTeacher(professorship
+                            .getExecutionCourse(), professorship.getTeacher());
                     if (summaryList != null && !summaryList.isEmpty()) {
-                        for (Iterator iteratorSummaries = summaryList.iterator(); iteratorSummaries.hasNext(); ) {
+                        for (Iterator iteratorSummaries = summaryList.iterator(); iteratorSummaries
+                                .hasNext();) {
                             ISummary summary = (ISummary) iteratorSummaries.next();
                             persistentSummary.simpleLockWrite(summary);
                             summary.setProfessorship(null);
@@ -472,7 +415,5 @@ public class MergeExecutionCourses implements IService {
                 }
             }
         }
-
     }
-
 }

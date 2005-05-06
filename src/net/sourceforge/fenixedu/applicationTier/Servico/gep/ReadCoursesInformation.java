@@ -67,16 +67,9 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadCoursesInformation implements IService {
 
-    /**
-     *  
-     */
-    public ReadCoursesInformation() {
-        super();
-    }
-
     public List run(Integer executionDegreeId, Boolean basic, String executionYearString)
-            throws FenixServiceException {
-        try {
+            throws FenixServiceException, ExcepcaoPersistencia {
+        
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
             IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
@@ -90,12 +83,6 @@ public class ReadCoursesInformation implements IService {
                 executionYear = persistentExecutionYear.readCurrentExecutionYear();
             }
             if (executionDegreeId == null) {
-                //FIXME
-                // this piece of code is getting only degrees in case the choice
-                // made for search was
-                // null execution degree and null basic. when search starts to
-                // be made for master degrees also
-                // this code should be replaced bythe code bellow
                 List executionDegrees = null;
                 executionDegrees = persistentExecutionDegree.readByExecutionYearAndDegreeType(
                         executionYear, TipoCurso.LICENCIATURA_OBJ);
@@ -105,17 +92,6 @@ public class ReadCoursesInformation implements IService {
                     professorships = persistentProfessorship.readByExecutionDegreesAndBasic(
                             executionDegrees, basic);
                 }
-                //                List executionDegrees = persistentExecutionDegree
-                //                .readByExecutionYear(executionYear.getYear());
-                //
-                //                if (basic == null) {
-                //                    professorships = persistentProfessorship
-                //                            .readByExecutionDegrees(executionDegrees);
-                //                } else {
-                //                    professorships = persistentProfessorship
-                //                            .readByExecutionDegreesAndBasic(executionDegrees,
-                //                                    basic);
-                //                }
             } else {
                 IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
                         ExecutionDegree.class, executionDegreeId);
@@ -142,15 +118,8 @@ public class ReadCoursesInformation implements IService {
             }
 
             return infoSiteCoursesInformation;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e.getMessage());
-        }
     }
 
-    /**
-     * @param executionCourses
-     * @return
-     */
     private List removeDuplicates(List executionCourses) {
         List result = new ArrayList();
         Iterator iter = executionCourses.iterator();
@@ -222,11 +191,6 @@ public class ReadCoursesInformation implements IService {
         return infoSiteCourseInformation;
     }
 
-    /**
-     * @param infoLessons
-     * @param i
-     * @return
-     */
     private Integer getNumberOfLessons(List infoLessons, int lessonType, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         final int lessonTypeForPredicate = lessonType;
@@ -271,8 +235,6 @@ public class ReadCoursesInformation implements IService {
      * Filter all the lessons to remove duplicates entries of lessons with the
      * same type
      * 
-     * @param infoLessons
-     * @return
      */
     private List getFilteredInfoLessons(List infoLessons) {
         List filteredInfoLessons = new ArrayList();
@@ -291,12 +253,6 @@ public class ReadCoursesInformation implements IService {
         return filteredInfoLessons;
     }
 
-    /**
-     * Filter the lessons to select the first element of the given type
-     * 
-     * @param infoLessons
-     * @return
-     */
     private InfoLesson getFilteredInfoLessonByType(List infoLessons, TipoAula type) {
         final TipoAula lessonType = type;
         InfoLesson infoLesson = (InfoLesson) CollectionUtils.find(infoLessons, new Predicate() {
@@ -309,17 +265,12 @@ public class ReadCoursesInformation implements IService {
         return infoLesson;
     }
 
-    /**
-     * @param executionCourse
-     * @param sp
-     * @return
-     */
     private List getInfoBibliographicReferences(IExecutionCourse executionCourse, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         IPersistentBibliographicReference persistentBibliographicReference = sp
                 .getIPersistentBibliographicReference();
         List bibliographicReferences = persistentBibliographicReference
-                .readBibliographicReference(executionCourse);
+                .readBibliographicReference(executionCourse.getIdInternal());
         List infoBibliographicReferences = new ArrayList();
         Iterator iter = bibliographicReferences.iterator();
         while (iter.hasNext()) {
@@ -331,12 +282,6 @@ public class ReadCoursesInformation implements IService {
         return infoBibliographicReferences;
     }
 
-    /**
-     * @param executionCourse
-     * @param sp
-     * @return @throws
-     *         ExcepcaoPersistencia
-     */
     private List getInfoLecturingTeachers(IExecutionCourse executionCourse, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
@@ -351,13 +296,6 @@ public class ReadCoursesInformation implements IService {
         return infoLecturingTeachers;
     }
 
-    /**
-     * @param curricularCourses
-     * @param sp
-     * @param executionYear
-     * @return @throws
-     *         ExcepcaoPersistencia
-     */
     private List getInfoCurriculums(List curricularCourses, ISuportePersistente sp,
             IExecutionYear executionYear) throws ExcepcaoPersistencia {
         IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
@@ -384,12 +322,6 @@ public class ReadCoursesInformation implements IService {
         return infoCurriculums;
     }
 
-    /**
-     * @param executionCourse
-     * @param sp
-     * @return @throws
-     *         ExcepcaoPersistencia
-     */
     private List getInfoResponsibleTeachers(IExecutionCourse executionCourse, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
@@ -404,13 +336,6 @@ public class ReadCoursesInformation implements IService {
         return infoResponsibleTeachers;
     }
 
-    /**
-     * @param curricularCourses
-     * @param sp
-     * @param executionYear
-     * @return @throws
-     *         ExcepcaoPersistencia
-     */
     private List getInfoCurricularCourses(List curricularCourses, ISuportePersistente sp,
             IExecutionYear executionYear) throws ExcepcaoPersistencia {
         List infoCurricularCourses = new ArrayList();
@@ -430,11 +355,6 @@ public class ReadCoursesInformation implements IService {
         return infoCurricularCourses;
     }
 
-    /**
-     * @param scopes
-     * @param sp
-     * @return
-     */
     private List getInfoScopes(List scopes, ISuportePersistente sp) {
         List infoScopes = new ArrayList();
         Iterator iter = scopes.iterator();
@@ -447,12 +367,6 @@ public class ReadCoursesInformation implements IService {
         return infoScopes;
     }
 
-    /**
-     * @param executionCourse
-     * @param sp
-     * @return @throws
-     *         ExcepcaoPersistencia
-     */
     private List getInfoLessons(IExecutionCourse executionCourse, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
 

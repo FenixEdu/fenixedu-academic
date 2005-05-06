@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.IBibliographicReference;
@@ -8,43 +7,31 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Fernanda Quitério
  *  
  */
-public class DeleteBibliographicReference implements IServico {
+public class DeleteBibliographicReference implements IService {
 
-    private static DeleteBibliographicReference service = new DeleteBibliographicReference();
+    public boolean run(Integer infoExecutionCourseCode, Integer bibliographicReferenceOID)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-    public static DeleteBibliographicReference getService() {
-        return service;
-    }
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentBibliographicReference persistentBibliographicReference = persistentSupport
+                .getIPersistentBibliographicReference();
 
-    private DeleteBibliographicReference() {
-    }
+        IBibliographicReference bibliographicReference = (IBibliographicReference) persistentBibliographicReference
+                .readByOID(BibliographicReference.class, bibliographicReferenceOID);
 
-    public final String getNome() {
-        return "DeleteBibliographicReference";
-    }
-
-    public boolean run(Integer infoExecutionCourseCode, Integer bibliographicReferenceCode)
-            throws FenixServiceException {
-
-        try {
-            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentBibliographicReference persistentBibliographicReference = persistentSupport
-                    .getIPersistentBibliographicReference();
-
-            IBibliographicReference ibibliographicReference = (IBibliographicReference) persistentBibliographicReference
-                    .readByOID(BibliographicReference.class, bibliographicReferenceCode);
-
-            if (ibibliographicReference != null) {
-                persistentBibliographicReference.delete(ibibliographicReference);
-            }
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+        if (bibliographicReference != null) {
+            bibliographicReference.getExecutionCourse().getAssociatedBibliographicReferences().remove(
+                    bibliographicReference);
+            persistentBibliographicReference.deleteByOID(BibliographicReference.class,
+                    bibliographicReference.getIdInternal());
         }
+
         return true;
     }
 }

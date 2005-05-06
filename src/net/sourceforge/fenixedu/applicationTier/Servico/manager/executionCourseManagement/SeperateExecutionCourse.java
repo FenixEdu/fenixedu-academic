@@ -64,11 +64,12 @@ public class SeperateExecutionCourse implements IService {
         IExecutionCourse destinationExecutionCourse = (IExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, destinationExecutionCourseId);
         if (destinationExecutionCourse == null) {
-            destinationExecutionCourse = createNewExecutionCourse(persistentObject, originExecutionCourse);
+            destinationExecutionCourse = createNewExecutionCourse(persistentObject,
+                    originExecutionCourse);
             createNewSite(persistentObject, destinationExecutionCourse);
             copyEvaluationMethod(sp, persistentObject, destinationExecutionCourse, originExecutionCourse);
-            copyBibliographicReferences(sp, persistentObject, destinationExecutionCourse, originExecutionCourse);
-            //copySummaries(sp, persistentObject, destinationExecutionCourse, originExecutionCourse);
+            copyBibliographicReferences(sp, persistentObject, destinationExecutionCourse,
+                    originExecutionCourse);
         }
 
         final Collection curricularCoursesToTransfer = getCurricularCoursesToTransfer(
@@ -88,35 +89,16 @@ public class SeperateExecutionCourse implements IService {
         destinationExecutionCourse.getAssociatedCurricularCourses().addAll(curricularCoursesToTransfer);
     }
 
-//    private void copySummaries(ISuportePersistente sp, IPersistentObject persistentObject, IExecutionCourse destinationExecutionCourse, IExecutionCourse originExecutionCourse) throws ExcepcaoPersistencia {
-//        IPersistentSummary persistentSummary = sp.getIPersistentSummary();
-//        List summaries = persistentSummary.readByExecutionCourse(originExecutionCourse);
-//        for (int i = 0; i < summaries.size(); i++) {
-//            ISummary summary = (ISummary) summaries.get(i);
-//            ISummary newSummary = new Summary();
-//            persistentObject.simpleLockWrite(newSummary);
-//            summary.setExecutionCourse(destinationExecutionCourse);
-//            summary.setIsExtraLesson(summary.getIsExtraLesson());
-//            summary.setLastModifiedDate(summary.getLastModifiedDate());
-//            summary.setProfessorship();
-//            summary.setRoom(summary.getRoom());
-//            summary.setShift(summary.getShift());
-//            summary.setStudentsNumber(summary.getStudentsNumber());
-//            summary.setSummaryDate(summary.getSummaryDate());
-//            summary.setSummaryHour(summary.getSummaryHour());
-//            summary.setSummaryText(summary.getSummaryText());
-//            summary.setSummaryType(summary.getSummaryType());
-//            summary.setTeacher(summary.getTeacher());
-//            summary.setTeacherName(summary.getTeacherName());
-//            summary.setTitle(summary.getTitle());
-//        }
-//    }
-
-    private void copyBibliographicReferences(ISuportePersistente sp, IPersistentObject persistentObject, IExecutionCourse destinationExecutionCourse, IExecutionCourse originExecutionCourse) throws ExcepcaoPersistencia {
-        IPersistentBibliographicReference persistentBibliographicReference = sp.getIPersistentBibliographicReference();
-        List bibliographicReferences = persistentBibliographicReference.readBibliographicReference(originExecutionCourse);
+    private void copyBibliographicReferences(ISuportePersistente sp, IPersistentObject persistentObject,
+            IExecutionCourse destinationExecutionCourse, IExecutionCourse originExecutionCourse)
+            throws ExcepcaoPersistencia {
+        IPersistentBibliographicReference persistentBibliographicReference = sp
+                .getIPersistentBibliographicReference();
+        List bibliographicReferences = persistentBibliographicReference
+                .readBibliographicReference(originExecutionCourse.getIdInternal());
         for (int i = 0; i < bibliographicReferences.size(); i++) {
-            IBibliographicReference bibliographicReference = (IBibliographicReference) bibliographicReferences.get(i);
+            IBibliographicReference bibliographicReference = (IBibliographicReference) bibliographicReferences
+                    .get(i);
             IBibliographicReference newibliographicReference = new BibliographicReference();
             persistentObject.simpleLockWrite(newibliographicReference);
             newibliographicReference.setAuthors(bibliographicReference.getAuthors());
@@ -128,9 +110,12 @@ public class SeperateExecutionCourse implements IService {
         }
     }
 
-    private void copyEvaluationMethod(ISuportePersistente sp, IPersistentObject persistentObject, IExecutionCourse destinationExecutionCourse, IExecutionCourse originExecutionCourse) throws ExcepcaoPersistencia {
+    private void copyEvaluationMethod(ISuportePersistente sp, IPersistentObject persistentObject,
+            IExecutionCourse destinationExecutionCourse, IExecutionCourse originExecutionCourse)
+            throws ExcepcaoPersistencia {
         IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();
-        IEvaluationMethod evaluationMethod = persistentEvaluationMethod.readByExecutionCourse(originExecutionCourse);
+        IEvaluationMethod evaluationMethod = persistentEvaluationMethod
+                .readByExecutionCourse(originExecutionCourse);
         if (evaluationMethod != null) {
             IEvaluationMethod newEvaluationMethod = new EvaluationMethod();
             persistentObject.simpleLockWrite(newEvaluationMethod);
@@ -140,7 +125,8 @@ public class SeperateExecutionCourse implements IService {
         }
     }
 
-    private void createNewSite(IPersistentObject persistentObject, IExecutionCourse destinationExecutionCourse) throws ExcepcaoPersistencia {
+    private void createNewSite(IPersistentObject persistentObject,
+            IExecutionCourse destinationExecutionCourse) throws ExcepcaoPersistencia {
         ISite site = new Site();
         persistentObject.simpleLockWrite(site);
         site.setExecutionCourse(destinationExecutionCourse);
@@ -162,11 +148,12 @@ public class SeperateExecutionCourse implements IService {
             if (contains(shiftIdsToTransfer, shift.getIdInternal())) {
                 persistentObject.simpleLockWrite(shift);
                 shift.setDisciplinaExecucao(destinationExecutionCourse);
-                
+
                 // This is very ugly code to find in a service. It should not
-                // be necessary. The above lock and set should take care of 
-                // everything. However, the first shift doesn't get transfered...
-                // and I don't know why. This is the workaround we found unit 
+                // be necessary. The above lock and set should take care of
+                // everything. However, the first shift doesn't get
+                // transfered...
+                // and I don't know why. This is the workaround we found unit
                 // the mystory can be resolved.
                 try {
                     ((SuportePersistenteOJB) sp).currentBroker().store(shift);
@@ -216,8 +203,8 @@ public class SeperateExecutionCourse implements IService {
         });
     }
 
-    private IExecutionCourse createNewExecutionCourse(IPersistentObject persistentObject, IExecutionCourse originExecutionCourse)
-            throws ExcepcaoPersistencia {
+    private IExecutionCourse createNewExecutionCourse(IPersistentObject persistentObject,
+            IExecutionCourse originExecutionCourse) throws ExcepcaoPersistencia {
         IExecutionCourse destinationExecutionCourse = new ExecutionCourse();
         destinationExecutionCourse.setAssociatedCurricularCourses(new ArrayList());
         destinationExecutionCourse.setAssociatedEvaluations(new ArrayList());
@@ -233,7 +220,8 @@ public class SeperateExecutionCourse implements IService {
 
         destinationExecutionCourse.setProfessorships(new ArrayList());
         for (int i = 0; i < originExecutionCourse.getProfessorships().size(); i++) {
-            IProfessorship professorship = (IProfessorship) originExecutionCourse.getProfessorships().get(i);
+            IProfessorship professorship = (IProfessorship) originExecutionCourse.getProfessorships()
+                    .get(i);
             IProfessorship newProfessorship = new Professorship();
             persistentObject.simpleLockWrite(newProfessorship);
             newProfessorship.setExecutionCourse(destinationExecutionCourse);
@@ -243,7 +231,8 @@ public class SeperateExecutionCourse implements IService {
 
         destinationExecutionCourse.setResponsibleTeachers(new ArrayList());
         for (int i = 0; i < originExecutionCourse.getResponsibleTeachers().size(); i++) {
-            IResponsibleFor responsibleFor = (IResponsibleFor) originExecutionCourse.getResponsibleTeachers().get(i);
+            IResponsibleFor responsibleFor = (IResponsibleFor) originExecutionCourse
+                    .getResponsibleTeachers().get(i);
             IResponsibleFor newResponsibleFor = new ResponsibleFor();
             persistentObject.simpleLockWrite(newResponsibleFor);
             newResponsibleFor.setExecutionCourse(destinationExecutionCourse);

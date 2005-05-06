@@ -588,7 +588,7 @@ public class TeacherAdministrationSiteComponentBuilder {
             IExecutionCourse executionCourse = site.getExecutionCourse();
 
             references = persistentBibliographicReference
-                    .readBibliographicReference(executionCourse);
+                    .readBibliographicReference(executionCourse.getIdInternal());
 
             if (references != null) {
                 Iterator iterator = references.iterator();
