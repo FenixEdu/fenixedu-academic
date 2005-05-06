@@ -136,7 +136,7 @@ public class EditDegreeInfoByDegreeCurricularPlanID implements IService {
         return InfoDegreeInfoWithDegree.newInfoFromDomain(degreeInfo);
     }
 
-    private boolean verifyExecutionYear(Timestamp lastModificationDate, IExecutionYear year) {
+    private boolean verifyExecutionYear(Date lastModificationDate, IExecutionYear year) {
         boolean result = false;
 
         if ((!lastModificationDate.before(year.getBeginDate()))

@@ -1,12 +1,11 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * @author Tania Pousao Created on 30/Out/2003
  */
 public class DegreeInfo extends DegreeInfo_Base {
-    private Timestamp lastModificationDate;
 
     public DegreeInfo(Integer idInternal) {
         setIdInternal(idInternal);
@@ -18,7 +17,7 @@ public class DegreeInfo extends DegreeInfo_Base {
     public DegreeInfo(IDegree degree, String objectives, String history, String professionalExits,
             String additionalInfo, String links, String testIngression, Integer driftsInitial,
             Integer driftsFirst, Integer driftsSecond, String classifications, Double markMin,
-            Double markMax, Double markAverage, Timestamp lastModificationDate) {
+            Double markMax, Double markAverage, Date lastModificationDate) {
         this.setDegreeKey(degree.getIdInternal());
         this.setDegree(degree);
         this.setObjectives(objectives);
@@ -40,7 +39,7 @@ public class DegreeInfo extends DegreeInfo_Base {
     public DegreeInfo(Integer degreeKey, IDegree degree, String objectives, String history,
             String professionalExits, String additionalInfo, String links, String testIngression,
             Integer driftsInitial, Integer driftsFirst, Integer driftsSecond, String classifications,
-            Double markMin, Double markMax, Double markAverage, Timestamp lastModificationDate) {
+            Double markMin, Double markMax, Double markAverage, Date lastModificationDate) {
         this.setDegreeKey(degreeKey);
         this.setDegree(degree);
         this.setObjectives(objectives);
@@ -57,15 +56,6 @@ public class DegreeInfo extends DegreeInfo_Base {
         this.setMarkMax(markMax);
         this.setMarkAverage(markAverage);
         this.setLastModificationDate(lastModificationDate);
-    }
-
- 
-    public Timestamp getLastModificationDate() {
-        return lastModificationDate;
-    }
-
-    public void setLastModificationDate(Timestamp lastModificationDate) {
-        this.lastModificationDate = lastModificationDate;
     }
 
     public boolean equals(Object obj) {

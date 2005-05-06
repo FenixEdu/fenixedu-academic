@@ -1,11 +1,12 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.IDegreeInfo;
 
 /**
- * @author Tânia Pousão Created on 30/Out/2003
+ * @author Tï¿½nia Pousï¿½o Created on 30/Out/2003
  */
 public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
 
@@ -144,6 +145,10 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
 
     public void setLastModificationDate(Timestamp lastModificationDate) {
         this.lastModificationDate = lastModificationDate;
+    }
+    
+    public void setLastModificationDate(Date lastModificationDate) {
+        this.lastModificationDate = new Timestamp(lastModificationDate.getTime());
     }
 
     public String getLinks() {
@@ -287,29 +292,29 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
         String result = "[INFODEGREE_INFO:";
         result += " codigo interno= " + getIdInternal();
         result += " degree= " + getInfoDegree();
-        result += " descrição= " + getDescription();
+        result += " descriï¿½ï¿½o= " + getDescription();
         result += " objectivos= " + getObjectives();
         result += " historial= " + getHistory();
         result += " saidas profissionais=" + getProfessionalExits();
-        result += " informação adicional= " + getAdditionalInfo();
+        result += " informaï¿½ï¿½o adicional= " + getAdditionalInfo();
         result += " links= " + getLinks();
         result += " provas de ingresso= " + getTestIngression();
-        result += " classificações= " + getClassifications();
-        result += " descrição(En)= " + getDescriptionEn();
+        result += " classificaï¿½ï¿½es= " + getClassifications();
+        result += " descriï¿½ï¿½o(En)= " + getDescriptionEn();
         result += " objectivos(En)= " + getObjectivesEn();
         result += " historial(En)= " + getHistoryEn();
         result += " saidas profissionais(En)=" + getProfessionalExitsEn();
-        result += " informação adicional(En)= " + getAdditionalInfoEn();
+        result += " informaï¿½ï¿½o adicional(En)= " + getAdditionalInfoEn();
         result += " links(En)= " + getLinksEn();
         result += " provas de ingresso(En)= " + getTestIngressionEn();
-        result += " classificações(En)= " + getClassificationsEn();
+        result += " classificaï¿½ï¿½es(En)= " + getClassificationsEn();
         result += " vagas iniciais= " + getDriftsInitial();
-        result += " vagas 1ª fase= " + getDriftsFirst();
-        result += " vagas 2ªfase= " + getDriftsSecond();
+        result += " vagas 1ï¿½ fase= " + getDriftsFirst();
+        result += " vagas 2ï¿½fase= " + getDriftsSecond();
         result += " nota minima= " + getMarkMin();
-        result += " nota máxima= " + getMarkMax();
-        result += " nota média= " + getMarkAverage();
-        result += " data última modificação= " + getLastModificationDate();
+        result += " nota mï¿½xima= " + getMarkMax();
+        result += " nota mï¿½dia= " + getMarkAverage();
+        result += " data ï¿½ltima modificaï¿½ï¿½o= " + getLastModificationDate();
         result += "]";
         return result;
     }

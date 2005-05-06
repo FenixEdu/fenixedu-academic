@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeInfo;
@@ -20,7 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
- * @author Tânia Pousão Created on 5/Nov/2003
+ * @author Tï¿½nia Pousï¿½o Created on 5/Nov/2003
  */
 public class EditDegreeInfoByExecutionDegree implements IService {
 
@@ -110,7 +111,7 @@ public class EditDegreeInfoByExecutionDegree implements IService {
         return InfoDegreeInfoWithDegree.newInfoFromDomain(degreeInfo);
     }
 
-    private boolean verifyExecutionYear(Timestamp lastModificationDate, IExecutionYear year) {
+    private boolean verifyExecutionYear(Date lastModificationDate, IExecutionYear year) {
         boolean result = false;
 
         if ((!lastModificationDate.before(year.getBeginDate()))

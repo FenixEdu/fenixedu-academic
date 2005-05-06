@@ -500,11 +500,7 @@ class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixed
     Integer driftsSecond;
     String history;
     Integer degreeKey;
-
-    interface "
-    public java.sql.Timestamp getLastModificationDate();
-    public void setLastModificationDate(java.sql.Timestamp lastModificationDate);
-    "
+    Date lastModificationDate;
 }
 
 
