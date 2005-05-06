@@ -1712,6 +1712,14 @@ class net.sourceforge.fenixedu.domain.Professorship extends net.sourceforge.feni
 	public void afterDelete(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
 	
 	public void afterLookup(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
+	
+	public Integer getKeyNonAffiliatedTeacher();
+
+    public void setKeyNonAffiliatedTeacher(Integer keyNonAffiliatedTeacher);
+    
+    public net.sourceforge.fenixedu.domain.INonAffiliatedTeacher getNonAffiliatedTeacher();
+    
+    public void setNonAffiliatedTeacher(net.sourceforge.fenixedu.domain.INonAffiliatedTeacher nonAffiliatedTeacher);	
 	"
 }
 
