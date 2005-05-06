@@ -6,7 +6,7 @@
 
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.util.MasterDegreeClassification;
+import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
@@ -19,7 +19,7 @@ public class JavaMasterDegreeClassification2SQLMasterDegreeClassificationFieldCo
     public Object javaToSql(Object source) {
         if (source instanceof MasterDegreeClassification) {
             MasterDegreeClassification masterDegreeClassification = (MasterDegreeClassification) source;
-            return new Integer(masterDegreeClassification.getValue());
+            return masterDegreeClassification.name();
         }
 
         return source;
@@ -31,10 +31,10 @@ public class JavaMasterDegreeClassification2SQLMasterDegreeClassificationFieldCo
      */
     public Object sqlToJava(Object source) {
         MasterDegreeClassification masterDegreeClassification = null;
-        if (source instanceof Integer) {
-            Integer masterDegreeClassificationID = (Integer) source;
-            masterDegreeClassification = MasterDegreeClassification.getEnum(masterDegreeClassificationID
-                    .intValue());
+        if (source instanceof String) {
+            String masterDegreeClassificationString = (String) source;
+            masterDegreeClassification = MasterDegreeClassification
+                    .valueOf(masterDegreeClassificationString);
 
             if (masterDegreeClassification == null) {
                 throw new IllegalArgumentException(this.getClass().getName()
@@ -46,4 +46,3 @@ public class JavaMasterDegreeClassification2SQLMasterDegreeClassificationFieldCo
         return masterDegreeClassification;
     }
 }
-

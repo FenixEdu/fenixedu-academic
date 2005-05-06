@@ -680,9 +680,6 @@
 	        	<var-value>thesisDeliveryDateDay</var-value>
 	        </var>
         </field>
-		<field property="finalResult" depends="integer" page="1">
-	        <arg0 key="label.masterDegree.administrativeOffice.finalResult" />
-		</field>
 		<field property="attachedCopiesNumber" depends="integer" page="1">
 	        <arg0 key="label.masterDegree.administrativeOffice.attachedCopiesNumber" />
 		</field>

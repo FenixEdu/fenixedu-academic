@@ -528,7 +528,7 @@
    	        <form-property name="removedExternalJuriesIDs" type="java.lang.Integer[]"/>   	        
    	        <form-property name="externalJuriesIDs" type="java.lang.Integer[]"/>
    	        <form-property name="externalJuryName" type="java.lang.String"/>
-   	        <form-property name="finalResult" type="java.lang.Integer"/>
+   	        <form-property name="finalResult" type="java.lang.String"/>
    	        <form-property name="attachedCopiesNumber" type="java.lang.Integer"/>
    	        <form-property name="proofDateDay" type="java.lang.String"/>
    	        <form-property name="proofDateMonth" type="java.lang.String"/>

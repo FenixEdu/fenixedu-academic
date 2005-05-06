@@ -8,7 +8,6 @@
 
 
 <bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request"/>
-<bean:define id="finalResult" name="<%= SessionConstants.FINAL_RESULT %>" />
 <bean:define id="attachedCopiesNumber" name="<%= SessionConstants.ATTACHED_COPIES_NUMBER %>" />
 <bean:define id="responsibleEmployee" name="<%= SessionConstants.RESPONSIBLE_EMPLOYEE %>" scope="request"/>
 <bean:define id="lastModification" name="<%= SessionConstants.LAST_MODIFICATION %>" scope="request"/>
@@ -86,7 +85,9 @@
 			<th align="left" >
 				<bean:message key="label.masterDegree.administrativeOffice.finalResult"/>:&nbsp;
 			</th>
-			<td><bean:write name="finalResult"/></td>
+			<td>
+				<bean:message name="<%= SessionConstants.FINAL_RESULT %>" bundle="ENUMERATION_RESOURCES" />
+			</td>
 		</tr>
 					
 		

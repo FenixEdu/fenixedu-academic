@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
-import net.sourceforge.fenixedu.util.MasterDegreeClassification;
+import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
 import net.sourceforge.fenixedu.util.Specialization;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -44,20 +44,20 @@ import org.apache.struts.actions.DispatchAction;
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
- *  
+ * 
  */
 public class PrintCertificateDispatchAction extends DispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
-        //		String[] destination = null;
-        //		InfoStudent infoStudent = new InfoStudent();
-        //		InfoDegree infoDegree = new InfoDegree();
-        //		InfoPerson infoPerson = new InfoPerson();
-        //		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new
+        // String[] destination = null;
+        // InfoStudent infoStudent = new InfoStudent();
+        // InfoDegree infoDegree = new InfoDegree();
+        // InfoPerson infoPerson = new InfoPerson();
+        // InfoDegreeCurricularPlan infoDegreeCurricularPlan = new
         // InfoDegreeCurricularPlan();
-        //		InfoEnrolment infoEnrolment = new InfoEnrolment();
-        //		InfoStudentCurricularPlan newInfoStudentCurricularPlan = new
+        // InfoEnrolment infoEnrolment = new InfoEnrolment();
+        // InfoStudentCurricularPlan newInfoStudentCurricularPlan = new
         // InfoStudentCurricularPlan();
         if (session != null) {
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -131,10 +131,10 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                     }
                 }
             } else {
-                //get informations
+                // get informations
                 List enrolmentList = null;
                 if (certificate.equals("Inscrição")) {
-                    //					, EnrolmentState.ENROLED
+                    // , EnrolmentState.ENROLED
                     Object args[] = { infoStudentCurricularPlan.getIdInternal() };
                     try {
                         enrolmentList = (List) ServiceManagerServiceFactory.executeService(userView,
@@ -150,7 +150,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                     }
                     List normalEnrolment = new ArrayList();
                     List extraEnrolment = new ArrayList();
-                    //		InfoEnrolment infoEnrolment = new InfoEnrolment();
+                    // InfoEnrolment infoEnrolment = new InfoEnrolment();
                     Object result = null;
                     Iterator iterator = enrolmentList.iterator();
                     while (iterator.hasNext()) {
@@ -201,7 +201,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                         }
                         List normalEnrolment = new ArrayList();
                         List extraEnrolment = new ArrayList();
-                        //	InfoEnrolment infoEnrolment = new InfoEnrolment();
+                        // InfoEnrolment infoEnrolment = new InfoEnrolment();
                         Object result = null;
                         Iterator iterator = enrolmentList.iterator();
                         while (iterator.hasNext()) {
@@ -228,16 +228,16 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                                         .getInfoExecutionPeriod().getInfoExecutionYear().getYear();
                             }
                         }
-                        //					Object result = null;
-                        //					Iterator iterator = enrolmentList.iterator();
-                        //					while(iterator.hasNext()) {
-                        //						result = (InfoEnrolment) iterator.next();
-                        //						if (result instanceof
+                        // Object result = null;
+                        // Iterator iterator = enrolmentList.iterator();
+                        // while(iterator.hasNext()) {
+                        // result = (InfoEnrolment) iterator.next();
+                        // if (result instanceof
                         // InfoEnrolmentInExtraCurricularCourse)
-                        //							extraEnrolment.add(result);
-                        //						else
-                        //							normalEnrolment.add(result);
-                        //					}
+                        // extraEnrolment.add(result);
+                        // else
+                        // normalEnrolment.add(result);
+                        // }
                         session.setAttribute(SessionConstants.ENROLMENT_LIST, normalEnrolment);
                         session.setAttribute(SessionConstants.EXTRA_ENROLMENT_LIST, extraEnrolment);
                         if (certificate.equals("Aproveitamento")) {
@@ -285,7 +285,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                                             "error.exception.unreached"));
                                     saveErrors(request, actionErrors);
                                     return mapping.findForward("insucesso");
-                                    //								throw new
+                                    // throw new
                                     // FinalResulUnreachedActionException("aqui");
                                 }
                                 Object args[] = { infoStudentCurricularPlan.getIdInternal(),
@@ -303,7 +303,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                                     saveErrors(request, errors);
                                     return new ActionForward(mapping.getInput());
                                 }
-                                //		InfoEnrolmentEvaluation
+                                // InfoEnrolmentEvaluation
                                 // infoEnrolmentEvaluation = new
                                 // InfoEnrolmentEvaluation();
                                 String conclusionDate = null;
@@ -317,11 +317,11 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                                     throw new FenixActionException(e);
                                 }
                                 conclusionDate = Data.format2DayMonthYear(endOfScholarshipDate, "-");
-                                //			String dataAux = null;
-                                //							Object result = null;
+                                // String dataAux = null;
+                                // Object result = null;
                                 List normalEnrolment = new ArrayList();
                                 List extraEnrolment = new ArrayList();
-                                //		InfoEnrolment infoEnrolment = new
+                                // InfoEnrolment infoEnrolment = new
                                 // InfoEnrolment();
                                 Object result = null;
                                 Iterator iterator = enrolmentList.iterator();
@@ -351,25 +351,25 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                                                 .getYear();
                                     }
                                 }
-                                //Iterator iterator = enrolmentList.iterator();
-                                //							int i = 0;
-                                //							while(iterator.hasNext()) {
-                                //								result = iterator.next();
-                                //								infoEnrolmentEvaluation =
+                                // Iterator iterator = enrolmentList.iterator();
+                                // int i = 0;
+                                // while(iterator.hasNext()) {
+                                // result = iterator.next();
+                                // infoEnrolmentEvaluation =
                                 // (InfoEnrolmentEvaluation)(((InfoEnrolment)
                                 // result).getInfoEvaluations().get(i));
-                                //// dataAux =
+                                // // dataAux =
                                 // DateFormat.getDateInstance().format(infoEnrolmentEvaluation.getExamDate());
-                                //// if (conclusionDate.compareTo(dataAux) ==
+                                // // if (conclusionDate.compareTo(dataAux) ==
                                 // -1){
-                                //// conclusionDate = dataAux;
-                                //// }
-                                //								if (result instanceof
+                                // // conclusionDate = dataAux;
+                                // // }
+                                // if (result instanceof
                                 // InfoEnrolmentInExtraCurricularCourse)
-                                //									extraEnrolment.add(result);
-                                //								else
-                                //									normalEnrolment.add(result);
-                                //							}
+                                // extraEnrolment.add(result);
+                                // else
+                                // normalEnrolment.add(result);
+                                // }
                                 //							
                                 Object argsAux[] = { infoStudentCurricularPlan };
                                 Date date = null;
@@ -407,10 +407,13 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 
                                 {
                                     if (infoMasterDegreeProofVersion != null) {
-                                        if (infoMasterDegreeProofVersion.getFinalResult().getValue() != 3) {
+                                        if (!infoMasterDegreeProofVersion.getFinalResult().equals(
+                                                MasterDegreeClassification.UNDEFINED)) {
                                             String notString = " ";
-                                            if (infoMasterDegreeProofVersion.getFinalResult().getValue() == 2)
+                                            if (infoMasterDegreeProofVersion.getFinalResult().equals(
+                                                    MasterDegreeClassification.NOT_APPROVED)) {
                                                 notString = " não ";
+                                            }
                                             session.setAttribute("notString", notString);
                                             session
                                                     .setAttribute(
@@ -420,13 +423,10 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                                                     infoMasterDegreeProofVersion.getProofDate());
                                             session.setAttribute(SessionConstants.CONCLUSION_DATE,
                                                     dataFinal);
-                                            int value = infoMasterDegreeProofVersion.getFinalResult()
-                                                    .getValue();
-                                            session.setAttribute(SessionConstants.FINAL_RESULT,
-                                                    MasterDegreeClassification
-                                                    //												infoMasterDegreeProofVersion
-                                                            //													.getFinalResult()
-                                                            .getClassificationString(value));
+                                            session
+                                                    .setAttribute(SessionConstants.FINAL_RESULT,
+                                                            infoMasterDegreeProofVersion
+                                                                    .getFinalResult().name());
                                         } else {
                                             ActionErrors errors = new ActionErrors();
                                             errors.add("AlunoNãoExiste", new ActionError(
@@ -438,7 +438,8 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                                 }
                             } else {
                                 if ((certificate.equals("Fim de curso de Mestrado simples"))) {
-                                    if (infoMasterDegreeProofVersion.getFinalResult().getValue() != 3) {
+                                    if (!infoMasterDegreeProofVersion.getFinalResult().equals(
+                                            MasterDegreeClassification.UNDEFINED)) {
                                         session.setAttribute(
                                                 SessionConstants.FINAL_RESULT_DEGREE_SIMPLE, certificate
                                                         .toUpperCase());
@@ -450,17 +451,16 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                                         session
                                                 .setAttribute(SessionConstants.CONCLUSION_DATE,
                                                         dataFinal);
-                                        int value = infoMasterDegreeProofVersion.getFinalResult()
-                                                .getValue();
+
                                         String notString = " ";
-                                        if (value == 2)
+                                        if (infoMasterDegreeProofVersion.getFinalResult().equals(
+                                                MasterDegreeClassification.NOT_APPROVED)) {
                                             notString = " não ";
+                                        }
+
                                         session.setAttribute("notString", notString);
                                         session.setAttribute(SessionConstants.FINAL_RESULT,
-                                                MasterDegreeClassification
-                                                //											infoMasterDegreeProofVersion
-                                                        //												.getFinalResult()
-                                                        .getClassificationString(value));
+                                                infoMasterDegreeProofVersion.getFinalResult().name());
                                         session.setAttribute(
                                                 SessionConstants.MASTER_DEGREE_THESIS_DATA_VERSION,
                                                 infoMasterDegreeThesisDataVersion);

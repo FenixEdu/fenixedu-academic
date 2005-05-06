@@ -13,7 +13,6 @@
 
 <bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request"/>
 <bean:define id="dissertationTitle" name="<%= SessionConstants.DISSERTATION_TITLE %>" />
-<bean:define id="finalResult" name="<%= SessionConstants.FINAL_RESULT %>" />
 <bean:define id="attachedCopiesNumber" name="<%= SessionConstants.ATTACHED_COPIES_NUMBER %>" />
 <logic:present name="<%= SessionConstants.PROOF_DATE %>" scope="request">
 	<bean:define id="proofDate" name="<%= SessionConstants.PROOF_DATE %>" />
@@ -101,7 +100,9 @@
 			<th align="left" >
 				<bean:message key="label.masterDegree.administrativeOffice.finalResult"/>:&nbsp;
 			</th>
-			<td><bean:write name="finalResult"/></td>
+			<td>
+				<bean:message name="<%= SessionConstants.FINAL_RESULT %>" bundle="ENUMERATION_RESOURCES" />
+			</td>
 		</tr>
 					
 		

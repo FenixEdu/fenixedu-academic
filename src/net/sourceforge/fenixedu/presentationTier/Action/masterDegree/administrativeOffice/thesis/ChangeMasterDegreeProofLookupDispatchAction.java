@@ -32,7 +32,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
-import net.sourceforge.fenixedu.util.MasterDegreeClassification;
+import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
 import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
@@ -225,8 +225,8 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 
         Integer degreeType = (Integer) changeMasterDegreeProofForm.get("degreeType");
         Integer studentNumber = (Integer) changeMasterDegreeProofForm.get("studentNumber");
-        MasterDegreeClassification finalResult = MasterDegreeClassification
-                .getEnum(((Integer) changeMasterDegreeProofForm.get("finalResult")).intValue());
+        String finalResultString = (String) changeMasterDegreeProofForm.get("finalResult");
+        MasterDegreeClassification finalResult = (finalResultString.length() == 0) ? MasterDegreeClassification.UNDEFINED :  MasterDegreeClassification.valueOf(finalResultString); 
         Integer attachedCopiesNumber = (Integer) changeMasterDegreeProofForm.get("attachedCopiesNumber");
 
         String proofDateDay = (String) changeMasterDegreeProofForm.get("proofDateDay");
@@ -357,10 +357,6 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
         DynaActionForm masterDegreeProofForm = (DynaActionForm) form;
         String dissertationTitle = (String) masterDegreeProofForm.get("dissertationTitle");
         request.setAttribute(SessionConstants.DISSERTATION_TITLE, dissertationTitle);
-
-        // final result options
-        List finalResult = MasterDegreeClassification.toArrayList();
-        request.setAttribute(SessionConstants.CLASSIFICATION, finalResult);
 
         // dates combo boxes options
         request.setAttribute(SessionConstants.DAYS_LIST, Data.getMonthDays());

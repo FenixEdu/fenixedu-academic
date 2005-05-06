@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.util.MasterDegreeClassification;
+import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
 import net.sourceforge.fenixedu.util.State;
 
 /**

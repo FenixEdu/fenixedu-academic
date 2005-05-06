@@ -970,7 +970,7 @@
         <field-descriptor 
            name="finalResult"    
            column="FINAL_RESULT"  
-           jdbc-type="INTEGER"
+           jdbc-type="VARCHAR"
            conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaMasterDegreeClassification2SQLMasterDegreeClassificationFieldConversion"
         />          
 

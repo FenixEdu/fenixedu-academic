@@ -33,7 +33,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
-import net.sourceforge.fenixedu.util.MasterDegreeClassification;
+import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
 import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
@@ -172,8 +172,8 @@ public class ChangeMasterDegreeProofDispatchAction extends DispatchAction {
         changeMasterDegreeThesisForm.set("degreeType", degreeType);
         changeMasterDegreeThesisForm.set("dissertationTitle", infoMasterDegreeThesisDataVersion
                 .getDissertationTitle());
-        changeMasterDegreeThesisForm.set("finalResult", new Integer(infoMasterDegreeProofVersion
-                .getFinalResult().getValue()));
+        changeMasterDegreeThesisForm.set("finalResult", infoMasterDegreeProofVersion
+                .getFinalResult().name());
         changeMasterDegreeThesisForm.set("attachedCopiesNumber", infoMasterDegreeProofVersion
                 .getAttachedCopiesNumber());
         changeMasterDegreeThesisForm.set("proofDateDay", proofDateDay);
@@ -191,8 +191,7 @@ public class ChangeMasterDegreeProofDispatchAction extends DispatchAction {
         changeMasterDegreeThesisForm.set("degreeType", degreeType);
         changeMasterDegreeThesisForm.set("dissertationTitle", infoMasterDegreeThesisDataVersion
                 .getDissertationTitle());
-        changeMasterDegreeThesisForm.set("finalResult", new Integer(
-                MasterDegreeClassification.UNDEFINED_TYPE));
+        changeMasterDegreeThesisForm.set("finalResult", MasterDegreeClassification.UNDEFINED.name());
         changeMasterDegreeThesisForm.set("attachedCopiesNumber", new Integer(0));
         changeMasterDegreeThesisForm.set("proofDateDay", null);
         changeMasterDegreeThesisForm.set("proofDateMonth", null);
@@ -206,9 +205,6 @@ public class ChangeMasterDegreeProofDispatchAction extends DispatchAction {
             InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion) {
         request.setAttribute(SessionConstants.DISSERTATION_TITLE, infoMasterDegreeThesisDataVersion
                 .getDissertationTitle());
-
-        List finalResult = MasterDegreeClassification.toArrayList();
-        request.setAttribute(SessionConstants.CLASSIFICATION, finalResult);
 
         request.setAttribute(SessionConstants.DAYS_LIST, Data.getMonthDays());
         request.setAttribute(SessionConstants.MONTHS_LIST, Data.getMonths());
@@ -287,10 +283,6 @@ public class ChangeMasterDegreeProofDispatchAction extends DispatchAction {
         DynaActionForm masterDegreeProofForm = (DynaActionForm) form;
         String dissertationTitle = (String) masterDegreeProofForm.get("dissertationTitle");
         request.setAttribute(SessionConstants.DISSERTATION_TITLE, dissertationTitle);
-
-        // final result options
-        List finalResult = MasterDegreeClassification.toArrayList();
-        request.setAttribute(SessionConstants.CLASSIFICATION, finalResult);
 
         // dates combo boxes options
         request.setAttribute(SessionConstants.DAYS_LIST, Data.getMonthDays());

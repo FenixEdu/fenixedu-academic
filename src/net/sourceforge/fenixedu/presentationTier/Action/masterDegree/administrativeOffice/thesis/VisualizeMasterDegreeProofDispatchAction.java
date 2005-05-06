@@ -7,27 +7,26 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
-
-import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion;
-import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersion;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ScholarshipNotFinishedServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersion;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ScholarshipNotFinishedActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.MasterDegreeClassification;
 import net.sourceforge.fenixedu.util.TipoCurso;
+
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.actions.DispatchAction;
 
 /**
  * 
@@ -136,8 +135,6 @@ public class VisualizeMasterDegreeProofDispatchAction extends DispatchAction {
                     .getInfoExternalJuries());
         }
 
-        int classification = infoMasterDegreeProofVersion.getFinalResult().getValue();
-
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
         String formattedProofDate = null;
@@ -158,8 +155,7 @@ public class VisualizeMasterDegreeProofDispatchAction extends DispatchAction {
 
         request.setAttribute(SessionConstants.DISSERTATION_TITLE, infoMasterDegreeThesisDataVersion
                 .getDissertationTitle());
-        request.setAttribute(SessionConstants.FINAL_RESULT, MasterDegreeClassification
-                .getClassificationString(classification));
+        request.setAttribute(SessionConstants.FINAL_RESULT, infoMasterDegreeProofVersion.getFinalResult().name());
         request.setAttribute(SessionConstants.ATTACHED_COPIES_NUMBER, infoMasterDegreeProofVersion
                 .getAttachedCopiesNumber());
         request.setAttribute(SessionConstants.PROOF_DATE, formattedProofDate);

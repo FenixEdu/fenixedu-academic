@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudent" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher" %>
@@ -11,10 +12,6 @@
 <bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request"/>
 <bean:define id="dissertationTitleFromRequest" name="<%= SessionConstants.DISSERTATION_TITLE %>" />
 		
-<logic:present name="<%= SessionConstants.CLASSIFICATION %>" scope="request">
-	<bean:define id="classification" name="<%= SessionConstants.CLASSIFICATION %>" type="java.util.List"/>
-</logic:present>	
-				
 <h2 align="center"><bean:message key="link.masterDegree.administrativeOffice.thesis.changeProof"/></h2>
 <center>
 <span class="error"><html:errors/></span>
@@ -121,8 +118,10 @@
 		<tr>	
 			<th align="left" colspan="3">
 				<bean:message key="label.masterDegree.administrativeOffice.finalResult"/>:&nbsp;
+				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification" bundle="ENUMERATION_RESOURCES"/>	            
 			    <html:select property="finalResult">
-			    	<html:options collection="<%= SessionConstants.CLASSIFICATION %>" property="value" labelProperty="label" />
+			    	<html:option key="dropDown.Default" value=""/>
+			    	<html:options collection="values" property="value" labelProperty="label" />
 			   </html:select> 
 			</th>
 		</tr>

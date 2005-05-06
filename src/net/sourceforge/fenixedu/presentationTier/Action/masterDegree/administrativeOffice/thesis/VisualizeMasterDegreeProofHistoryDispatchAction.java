@@ -6,22 +6,21 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
-
-import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.MasterDegreeClassification;
+
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.actions.DispatchAction;
 
 /**
  * 
@@ -72,9 +71,7 @@ public class VisualizeMasterDegreeProofHistoryDispatchAction extends DispatchAct
             request.setAttribute(SessionConstants.EXTERNAL_JURIES_LIST, infoMasterDegreeProofVersion
                     .getInfoExternalJuries());
         }
-
-        int classification = infoMasterDegreeProofVersion.getFinalResult().getValue();
-
+        
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
         String proofDate = null;
@@ -96,8 +93,7 @@ public class VisualizeMasterDegreeProofHistoryDispatchAction extends DispatchAct
         simpleDateFormat.applyPattern("dd-MM-yyyy k:mm:ss");
         String formattedLastModification = simpleDateFormat.format(lastModification);
 
-        request.setAttribute(SessionConstants.FINAL_RESULT, MasterDegreeClassification
-                .getClassificationString(classification));
+        request.setAttribute(SessionConstants.FINAL_RESULT, infoMasterDegreeProofVersion.getFinalResult().name());
         request.setAttribute(SessionConstants.ATTACHED_COPIES_NUMBER, infoMasterDegreeProofVersion
                 .getAttachedCopiesNumber());
 
