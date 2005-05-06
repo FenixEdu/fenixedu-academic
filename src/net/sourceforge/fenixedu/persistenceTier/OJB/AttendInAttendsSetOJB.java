@@ -17,21 +17,15 @@ import org.apache.ojb.broker.query.Criteria;
  * @author joaosa & rmalo
  */
 
-public class AttendInAttendsSetOJB extends ObjectFenixOJB 
-				implements IPersistentAttendInAttendsSet
-				{
+public class AttendInAttendsSetOJB extends ObjectFenixOJB implements IPersistentAttendInAttendsSet {
 
-
-    
-        public List readAll() throws ExcepcaoPersistencia
-    {
+    public List readAll() throws ExcepcaoPersistencia {
         return queryList(AttendInAttendsSet.class, new Criteria());
 
     }
 
-    
-    public void delete(IAttendInAttendsSet attendInAttendsSet) throws ExcepcaoPersistencia
-    {
-            super.delete(attendInAttendsSet);
-    }       
+    public void delete(IAttendInAttendsSet attendInAttendsSet) throws ExcepcaoPersistencia {
+        super.delete(attendInAttendsSet);
+    }
+
 }
