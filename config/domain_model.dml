@@ -108,7 +108,7 @@ class net.sourceforge.fenixedu.domain.Branch extends net.sourceforge.fenixedu.do
     
     interface "
 
-	public net.sourceforge.fenixedu.util.BranchType getBranchType();
+    public net.sourceforge.fenixedu.util.BranchType getBranchType();
     public void setBranchType(net.sourceforge.fenixedu.util.BranchType branchType);
     public java.util.List getAreaCurricularCourseGroups(net.sourceforge.fenixedu.util.AreaType areaType);
     "
@@ -1310,9 +1310,9 @@ class net.sourceforge.fenixedu.domain.MasterDegreeProofVersion extends net.sourc
 	    
 	    public java.util.Date getThesisDeliveryDate();
 	    
-	    public void setFinalResult(net.sourceforge.fenixedu.util.MasterDegreeClassification finalResult);
+	    public void setFinalResult(net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification finalResult);
 	    
-	    public net.sourceforge.fenixedu.util.MasterDegreeClassification getFinalResult();
+	    public net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification getFinalResult();
 	    
 	    public void setCurrentState(net.sourceforge.fenixedu.util.State state);
 	    
@@ -2610,9 +2610,9 @@ class net.sourceforge.fenixedu.domain.transactions.Transaction extends net.sourc
 		
 		public void setPaymentType(net.sourceforge.fenixedu.domain.transactions.PaymentType paymentType);
 		
-		public net.sourceforge.fenixedu.util.transactions.TransactionType getTransactionType();
+		public net.sourceforge.fenixedu.domain.transactions.TransactionType getTransactionType();
 		
-		public void setTransactionType(net.sourceforge.fenixedu.util.transactions.TransactionType transactionType);
+		public void setTransactionType(net.sourceforge.fenixedu.domain.transactions.TransactionType transactionType);
 	"	
 }
 
