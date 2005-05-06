@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
 import net.sourceforge.fenixedu.domain.publication.IPublicationAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublicationType;
+import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.PublicationAuthor;
 import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -46,8 +47,9 @@ public class InsertPublication implements IService {
         final List authors = ipa.insertAuthors(infoAuthorsList);
 
         //Write the Publication
-
-        IPublication publication = InfoPublication.newDomainFromInfo(infoPublication);
+        IPublication publication = new Publication();
+        infoPublication.copyToDomain(infoPublication,publication);
+        
         persistentPublication.simpleLockWrite(publication);
 
         IPublicationType publicationType = (IPublicationType) persistentPublicationType.readByOID(

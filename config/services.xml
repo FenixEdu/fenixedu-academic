@@ -3279,6 +3279,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
+	        <!-- <chain name="PublicationAuthorAuthorization"/> -->
             <chain name="TeacherAuthorization"/>
         </filterChains>
     </service>
@@ -3328,15 +3329,6 @@
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="TeacherAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>EditPublication</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.EditPublication</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="PublicationAuthorAuthorization"/>
         </filterChains>
     </service>
 	<service>

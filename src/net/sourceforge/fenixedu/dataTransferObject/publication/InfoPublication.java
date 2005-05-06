@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.publication.Author;
 import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
-import net.sourceforge.fenixedu.domain.publication.Publication;
 
 /**
  * @author TJBF & PFON
@@ -225,16 +224,7 @@ public class InfoPublication extends InfoObject {
 
         }
     }
-
-	public static IPublication newDomainFromInfo(InfoPublication infoPublication) {
-        IPublication publication = null;
-        if (infoPublication != null) {
-            publication = new Publication();
-            infoPublication.copyToDomain(infoPublication, publication);
-        }
-        return publication;
-    }
-
+    
 	public static List copyAuthorsFromInfo(InfoPublication infoPublication){
         
         Iterator it = infoPublication.getInfoPublicationAuthors().iterator();

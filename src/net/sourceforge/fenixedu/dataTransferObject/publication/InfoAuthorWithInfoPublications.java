@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.publication.Author;
 import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
-import net.sourceforge.fenixedu.domain.publication.Publication;
 
 /**
  * @author <a href="mailto:cgmp@mega.ist.utl.pt">Carlos Pereira </a> & <a href="mailto:fmmp@mega.ist.utl.pt">Francisco Passos </a>
@@ -74,25 +73,7 @@ public class InfoAuthorWithInfoPublications extends InfoAuthor {
         }
         return author;
     }
-       
-    /**
-     * @param infoAuthor is the InfoAuthor from wich the publications will be
-     * retrieved
-     * @return a the list of infoPublications that belong to the author
-     */
-    public static List copyPublicationsFromInfo(InfoAuthorWithInfoPublications infoAuthor){
-        
-        Iterator it = infoAuthor.getInfoPublications().iterator();
-        List listaInfoPublicacoes = new ArrayList();
-        while(it.hasNext()){
-            InfoPublication infoPublication = (InfoPublication) it.next();
-            IPublication publication = new Publication();
-            infoPublication.copyToDomain(infoPublication, publication);
-            listaInfoPublicacoes.add(publication);
-        }
-        return listaInfoPublicacoes;
-    }
-     
+
 	public InfoAuthorWithInfoPublications(){
 		super();
 	}

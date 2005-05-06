@@ -9,7 +9,6 @@ package net.sourceforge.fenixedu.dataTransferObject.publication;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.publication.IPublicationAuthor;
-import net.sourceforge.fenixedu.domain.publication.PublicationAuthor;
 
 /**
  * @author <a href="mailto:cgmp@mega.ist.utl.pt">Carlos Pereira </a> & <a href="mailto:fmmp@mega.ist.utl.pt">Francisco Passos </a>
@@ -41,24 +40,14 @@ public class InfoPublicationAuthor extends InfoObject {
         }
     }
   
+    /* Does not copy Object's, merely primitive type variables */
     public void copyToDomain(InfoPublicationAuthor infoPublicationAuthor, IPublicationAuthor publicationAuthor){
         if (infoPublicationAuthor != null && publicationAuthor != null){
             super.copyToDomain(infoPublicationAuthor, publicationAuthor);
             publicationAuthor.setKeyAuthor(infoPublicationAuthor.getKeyAuthor());
             publicationAuthor.setKeyPublication(infoPublicationAuthor.getKeyPublication());
             publicationAuthor.setOrder(infoPublicationAuthor.getOrder());
-            publicationAuthor.setAuthor(InfoAuthor.newDomainFromInfo(infoPublicationAuthor.getInfoAuthor()));
-            publicationAuthor.setPublication(InfoPublication.newDomainFromInfo(infoPublicationAuthor.getInfoPublication()));
         }
-    }
-    
-    public static IPublicationAuthor newDomainFromInfo(InfoPublicationAuthor infoPublicationAuthor){
-        IPublicationAuthor publicationAuthor = null;
-        if(infoPublicationAuthor != null){
-            publicationAuthor = new PublicationAuthor();
-            infoPublicationAuthor.copyToDomain(infoPublicationAuthor, publicationAuthor);
-        }
-        return publicationAuthor;
     }
        
 	public InfoPublicationAuthor(){

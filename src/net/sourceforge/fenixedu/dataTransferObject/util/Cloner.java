@@ -146,7 +146,6 @@ import net.sourceforge.fenixedu.domain.publication.IPublication;
 import net.sourceforge.fenixedu.domain.publication.IPublicationFormat;
 import net.sourceforge.fenixedu.domain.publication.IPublicationSubtype;
 import net.sourceforge.fenixedu.domain.publication.IPublicationType;
-import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry;
@@ -3239,47 +3238,6 @@ public abstract class Cloner {
         infoPublication.setInfoPublicationAuthors(infoPublicationAuthors);
         infoPublication.setInfoPublicationType(infoPublicationType);
         return infoPublication;
-    }
-
-    public static IPublication copyInfoPublication2IPublication(InfoPublication infoPublication) {
-        IPublication publication = new Publication();
-        List infoPublicationAuthors = infoPublication.getInfoPublicationAuthors();
-        List infoPublicationTeachers = infoPublication.getInfoPublicationTeachers();
-
-        copyObjectProperties(publication, infoPublication);
-        IPublicationType publicationType = Cloner
-                .copyInfoPublicationType2IPublicationType(infoPublication.getInfoPublicationType());
-
-        List publicationAuthors = new ArrayList();
-        List publicationTeachers = new ArrayList();
-
-        if ((infoPublicationAuthors != null)
-                || (infoPublicationAuthors.size() != PublicationConstants.ZERO_VALUE)) {
-            publicationAuthors = (List) CollectionUtils.collect(infoPublicationAuthors,
-                    new Transformer() {
-                        public Object transform(Object o) {
-                            InfoAuthor infoAuthor = (InfoAuthor) o;
-                            return Cloner.copyInfoAuthor2IAuthor(infoAuthor);
-                        }
-                    });
-        }
-
-        publication.setPublicationAuthors(publicationAuthors);
-        publication.setType(publicationType);
-
-        if (infoPublicationTeachers == null) {
-            return publication;
-        }
-        publicationTeachers = (List) CollectionUtils.collect(infoPublicationTeachers, new Transformer() {
-            public Object transform(Object o) {
-                InfoTeacher infoTeacher = (InfoTeacher) o;
-                return Cloner.copyInfoTeacher2Teacher(infoTeacher);
-            }
-        });
-
-        publication.setPublicationTeachers(publicationTeachers);
-        return publication;
-
     }
 
     public static InfoPublicationType copyIPublicationType2InfoPublicationType(
