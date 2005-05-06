@@ -27,7 +27,7 @@
 	&nbsp;&gt;&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="public.degree.information.label.curriculum"/>		
 </div>	
 
-<style>@import "/ciapl/CSS/table-adjustment.css";</style>
+<style>@import "<%= request.getContextPath() %>/CSS/table-adjustment.css";</style>
 
 	<!-- COURSE NAME -->
 	<h1>
