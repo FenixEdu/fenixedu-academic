@@ -71,6 +71,7 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentSmsTrans
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransaction;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AdvisoryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AnnouncementVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.BibliographicReferenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationVO;
 
 public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
@@ -88,7 +89,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 	}
 
 	public IPersistentBibliographicReference getIPersistentBibliographicReference()  {
-		return null;
+		return new BibliographicReferenceVO();
 	}
 
 	public IPersistentStudentGroup getIPersistentStudentGroup()  {
