@@ -13,9 +13,4 @@ import net.sourceforge.fenixedu.domain.IAttendInAttendsSet;
  */
 public interface IPersistentAttendInAttendsSet extends IPersistentObject{
 
-	public List readAll() throws ExcepcaoPersistencia;
-
-	public void delete(IAttendInAttendsSet attendInAttendsSet) 
-		throws ExcepcaoPersistencia;
-		
 }

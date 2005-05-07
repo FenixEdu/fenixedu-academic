@@ -71,6 +71,7 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentSmsTrans
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransaction;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AdvisoryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AnnouncementVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AttendInAttendsSetVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.BibliographicReferenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationVO;
 
@@ -601,7 +602,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 	}
 
 	public IPersistentAttendInAttendsSet getIPersistentAttendInAttendsSet()  {
-		return null;
+		return new AttendInAttendsSetVO();
 	}
 
 	public IPersistentSibsPaymentFileEntry getIPersistentSibsPaymentFileEntry()  {

@@ -7,6 +7,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
+
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -14,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituat
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
+import net.sourceforge.fenixedu.domain.AttendInAttendsSet;
 import net.sourceforge.fenixedu.domain.AttendsSet;
 import net.sourceforge.fenixedu.domain.IAttendInAttendsSet;
 import net.sourceforge.fenixedu.domain.IAttends;
@@ -30,110 +33,74 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author joaosa & rmalo
- *
+ * 
  */
 
-public class DeleteAttendsSetMembers implements IServico {
+public class DeleteAttendsSetMembers implements IService {
 
-    private static DeleteAttendsSetMembers service = new DeleteAttendsSetMembers();
+    public boolean run(Integer executionCourseCode, Integer attendsSetCode, List studentUsernames)
+            throws FenixServiceException, ExcepcaoPersistencia {
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static DeleteAttendsSetMembers getService() {
-        return service;
-    }
+        IPersistentAttendsSet persistentAttendsSet = persistentSupport.getIPersistentAttendsSet();
+        IPersistentAttendInAttendsSet persistentAttendInAttendsSet = persistentSupport
+                .getIPersistentAttendInAttendsSet();
+        IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSupport
+                .getIPersistentStudentGroupAttend();
 
-    /**
-     * The constructor of this class.
-     */
-    private DeleteAttendsSetMembers() {
-    }
+        IAttendsSet attendsSet = (IAttendsSet) persistentAttendsSet.readByOID(AttendsSet.class,
+                attendsSetCode);
 
-    /**
-     * The name of the service
-     */
-    public final String getNome() {
-        return "DeleteAttendsSetMembers";
-    }
-
-    /**
-     * Executes the service.
-     */
-
-    public boolean run(Integer executionCourseCode, Integer attendsSetCode,
-            List studentUsernames) throws FenixServiceException {
-        IPersistentAttendsSet persistentAttendsSet = null;
-        IPersistentAttendInAttendsSet persistentAttendInAttendsSet = null;
-        IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
-        
-        try {
-
-            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-            persistentAttendsSet = persistentSupport.getIPersistentAttendsSet();
-            persistentAttendInAttendsSet = persistentSupport.getIPersistentAttendInAttendsSet();
-            persistentStudentGroupAttend = persistentSupport.getIPersistentStudentGroupAttend();
-
-            IAttendsSet attendsSet = (IAttendsSet) persistentAttendsSet
-            		.readByOID(AttendsSet.class, attendsSetCode);
-
-            if (attendsSet == null) {
-                throw new ExistingServiceException();
-            }
-            
-            IGroupProperties groupProperties = attendsSet.getGroupProperties();
-            
-            IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-            .getInstance();
-            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-            .getGroupEnrolmentStrategyInstance(groupProperties);
-            
-            if(!strategy.checkStudentsUserNamesInAttendsSet(studentUsernames,groupProperties)){
-                throw new InvalidSituationServiceException();
-            }
-            
-
-            Iterator iterator = studentUsernames.iterator();
-            while (iterator.hasNext()) {
-            	String username = (String)iterator.next();
-            	List attendInAttendsSetList = attendsSet.getAttendInAttendsSet();
-				Iterator iterAttendInAttendsSet = attendInAttendsSetList.iterator();
-				IAttendInAttendsSet attendInAttendsSet=null;
-				boolean found1 = false;
-            	while(iterAttendInAttendsSet.hasNext() && !found1){
-            	 	attendInAttendsSet = (IAttendInAttendsSet)iterAttendInAttendsSet.next();
-            	 	if(attendInAttendsSet.getAttend().getAluno().getPerson().getUsername().equals(username)){
-            	 		found1= true;
-            	 	}
-            	 }
-                     
-           	    IAttends attend = attendInAttendsSet.getAttend();
-                
-                boolean found = false;
-                Iterator iterStudentsGroups = attendsSet.getStudentGroups().iterator();
-                while (iterStudentsGroups.hasNext() && !found) {
-                        
-                	IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend
-														.readBy((IStudentGroup)iterStudentsGroups.next(), attend);
-                	if (oldStudentGroupAttend != null) {
-                		persistentStudentGroupAttend.delete(oldStudentGroupAttend);
-                		found = true;
-                	} 
-                }                	
-
-                
-                attendsSet.removeAttendInAttendsSet(attendInAttendsSet);
-                attend.removeAttendInAttendsSet(attendInAttendsSet);
-                persistentAttendInAttendsSet.delete(attendInAttendsSet);
-                
-            }            
-            
-            
-
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia.getMessage());
+        if (attendsSet == null) {
+            throw new ExistingServiceException();
         }
+
+        IGroupProperties groupProperties = attendsSet.getGroupProperties();
+
+        IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
+                .getInstance();
+        IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
+                .getGroupEnrolmentStrategyInstance(groupProperties);
+
+        if (!strategy.checkStudentsUserNamesInAttendsSet(studentUsernames, groupProperties)) {
+            throw new InvalidSituationServiceException();
+        }
+
+        Iterator iterator = studentUsernames.iterator();
+        while (iterator.hasNext()) {
+            String username = (String) iterator.next();
+            List attendInAttendsSetList = attendsSet.getAttendInAttendsSet();
+            Iterator iterAttendInAttendsSet = attendInAttendsSetList.iterator();
+            IAttendInAttendsSet attendInAttendsSet = null;
+            boolean found1 = false;
+            while (iterAttendInAttendsSet.hasNext() && !found1) {
+                attendInAttendsSet = (IAttendInAttendsSet) iterAttendInAttendsSet.next();
+                if (attendInAttendsSet.getAttend().getAluno().getPerson().getUsername().equals(username)) {
+                    found1 = true;
+                }
+            }
+
+            IAttends attend = attendInAttendsSet.getAttend();
+
+            boolean found = false;
+            Iterator iterStudentsGroups = attendsSet.getStudentGroups().iterator();
+            while (iterStudentsGroups.hasNext() && !found) {
+
+                IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend.readBy(
+                        (IStudentGroup) iterStudentsGroups.next(), attend);
+                if (oldStudentGroupAttend != null) {
+                    persistentStudentGroupAttend.delete(oldStudentGroupAttend);
+                    found = true;
+                }
+            }
+
+            attendsSet.removeAttendInAttendsSet(attendInAttendsSet);
+            attend.removeAttendInAttendsSet(attendInAttendsSet);
+            persistentAttendInAttendsSet.deleteByOID(AttendInAttendsSet.class, attendInAttendsSet
+                    .getIdInternal());
+
+        }
+
         return true;
     }
 }

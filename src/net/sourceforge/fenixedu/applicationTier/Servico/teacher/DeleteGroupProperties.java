@@ -9,6 +9,7 @@ import java.util.Iterator;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
+import net.sourceforge.fenixedu.domain.AttendInAttendsSet;
 import net.sourceforge.fenixedu.domain.AttendsSet;
 import net.sourceforge.fenixedu.domain.GroupProperties;
 import net.sourceforge.fenixedu.domain.IAttendInAttendsSet;
@@ -28,77 +29,61 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
-public class DeleteGroupProperties implements IService
-{
+public class DeleteGroupProperties implements IService {
 
-	public DeleteGroupProperties()
-	{
+    public Boolean run(Integer executionCourseId, Integer groupPropertiesId)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-	}
+        if (groupPropertiesId == null) {
+            return Boolean.FALSE;
+        }
 
-	public Boolean run(Integer executionCourseId, Integer groupPropertiesId)
-			throws FenixServiceException
-	{
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentGroupProperties persistentGroupProperties = sp.getIPersistentGroupProperties();
+        IPersistentGroupPropertiesExecutionCourse persistentGroupPropertiesExecutionCourse = sp
+                .getIPersistentGroupPropertiesExecutionCourse();
+        IPersistentAttendsSet persistentAttendsSet = sp.getIPersistentAttendsSet();
+        IPersistentAttendInAttendsSet persistentAttendInAttendsSet = sp
+                .getIPersistentAttendInAttendsSet();
 
-		Boolean result = Boolean.FALSE;
+        IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties.readByOID(
+                GroupProperties.class, groupPropertiesId);
 
-		if (groupPropertiesId == null)
-		{
-			return result;
-		}
+        if (groupProperties == null) {
+            throw new ExistingServiceException();
+        }
 
-		
-		try
-		{
+        if (!groupProperties.getAttendsSet().getStudentGroups().isEmpty()) {
+            throw new InvalidSituationServiceException();
+        }
 
-			ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-			IPersistentGroupProperties persistentGroupProperties = sp.getIPersistentGroupProperties();
-			IPersistentGroupPropertiesExecutionCourse persistentGroupPropertiesExecutionCourse = sp.getIPersistentGroupPropertiesExecutionCourse();
-			IPersistentAttendsSet persistentAttendsSet = sp.getIPersistentAttendsSet();
-			IPersistentAttendInAttendsSet persistentAttendInAttendsSet = sp.getIPersistentAttendInAttendsSet();
+        IAttendsSet attendsSet = groupProperties.getAttendsSet();
+        Iterator iterAttendInAttendsSet = attendsSet.getAttendInAttendsSet().iterator();
+        while (iterAttendInAttendsSet.hasNext()) {
+            IAttendInAttendsSet attendInAttendsSet = (IAttendInAttendsSet) iterAttendInAttendsSet.next();
+            IAttends frequenta = attendInAttendsSet.getAttend();
+            frequenta.removeAttendInAttendsSet(attendInAttendsSet);
+            persistentAttendInAttendsSet.deleteByOID(AttendInAttendsSet.class, attendInAttendsSet
+                    .getIdInternal());
+        }
 
-			IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties.readByOID(GroupProperties.class,
-			        groupPropertiesId);
+        Iterator iterGroupPropertiesExecutionCourse = groupProperties
+                .getGroupPropertiesExecutionCourse().iterator();
+        while (iterGroupPropertiesExecutionCourse.hasNext()) {
+            IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse) (iterGroupPropertiesExecutionCourse
+                    .next());
+            IExecutionCourse executionCourse = groupPropertiesExecutionCourse.getExecutionCourse();
+            executionCourse.removeGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);
+            persistentGroupPropertiesExecutionCourse.delete(groupPropertiesExecutionCourse);
 
-			if (groupProperties == null) {
-                throw new ExistingServiceException();
-            }
-			
-			if(!groupProperties.getAttendsSet().getStudentGroups().isEmpty()){
-				throw new InvalidSituationServiceException();
-			} 
-			
-			IAttendsSet attendsSet = groupProperties.getAttendsSet();
-			Iterator iterAttendInAttendsSet = attendsSet.getAttendInAttendsSet().iterator();
-			while(iterAttendInAttendsSet.hasNext()){
-				IAttendInAttendsSet attendInAttendsSet = (IAttendInAttendsSet)iterAttendInAttendsSet.next();
-				IAttends frequenta = attendInAttendsSet.getAttend();
-				frequenta.removeAttendInAttendsSet(attendInAttendsSet);
-				persistentAttendInAttendsSet.delete(attendInAttendsSet);
-			}
-			
-			Iterator iterGroupPropertiesExecutionCourse = groupProperties.getGroupPropertiesExecutionCourse().iterator();
-			while(iterGroupPropertiesExecutionCourse.hasNext()){
-				IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = 
-					(IGroupPropertiesExecutionCourse)(iterGroupPropertiesExecutionCourse.next());
-				IExecutionCourse executionCourse = groupPropertiesExecutionCourse.getExecutionCourse();
-				executionCourse.removeGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);
-				persistentGroupPropertiesExecutionCourse.delete(groupPropertiesExecutionCourse);
-				
-			}
-				persistentAttendsSet.deleteByOID(AttendsSet.class, groupProperties.getAttendsSet().getIdInternal());
-				persistentGroupProperties.deleteByOID(GroupProperties.class, groupPropertiesId);
-			
+        }
+        persistentAttendsSet.deleteByOID(AttendsSet.class, groupProperties.getAttendsSet()
+                .getIdInternal());
+        persistentGroupProperties.deleteByOID(GroupProperties.class, groupPropertiesId);
 
-			result = Boolean.TRUE;
-		} catch (ExcepcaoPersistencia e)
-		{
-			e.printStackTrace();
-			throw new FenixServiceException("error.groupProperties.delete");
-		}
+        return Boolean.TRUE;
+    }
 
-		return result;
-	}
 }
