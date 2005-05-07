@@ -1034,10 +1034,6 @@ class net.sourceforge.fenixedu.domain.GratuitySituation extends net.sourceforge.
 	Double remainingValue;
 	
 	interface "
-		public net.sourceforge.fenixedu.domain.IEmployee getEmployee();
-	
-		public void setEmployee(net.sourceforge.fenixedu.domain.IEmployee employee);
-	
 		public java.util.Date getWhen();
 	
 		public void setWhen(java.util.Date when);
@@ -2619,12 +2615,6 @@ class net.sourceforge.fenixedu.domain.transactions.Transaction extends net.sourc
 class net.sourceforge.fenixedu.domain.transactions.PaymentTransaction extends net.sourceforge.fenixedu.domain.transactions.Transaction {
 
 	Integer keyGuideEntry;
-
-	interface "
-		public net.sourceforge.fenixedu.domain.IGuideEntry getGuideEntry();
-		
-		public void setGuideEntry(net.sourceforge.fenixedu.domain.IGuideEntry guideEntry);
-	"
 }
 
 class net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction extends net.sourceforge.fenixedu.domain.transactions.Transaction {
@@ -3650,6 +3640,13 @@ relation GrantSubsidyGrantContract {
 	net.sourceforge.fenixedu.domain.grant.contract.GrantContract playsRole grantContract;
 }
 
+relation GratuitySituationEmployee {
+	net.sourceforge.fenixedu.domain.GratuitySituation playsRole gratuitySituations {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Employee playsRole employee;
+}
+
 relation GratuitySituationGratuityValues {
 	net.sourceforge.fenixedu.domain.GratuitySituation playsRole gratuitySituations {
 		multiplicity *;
@@ -4014,6 +4011,13 @@ relation PaymentPhaseGratuityValues {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.GratuityValues playsRole gratuityValues;
+}
+
+relation PaymentTransactionGuideEntry {
+	net.sourceforge.fenixedu.domain.transactions.PaymentTransaction playsRole paymentTransactions {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.GuideEntry playsRole guideEntry;
 }
 
 relation PaymentTransactionPersonAccount {

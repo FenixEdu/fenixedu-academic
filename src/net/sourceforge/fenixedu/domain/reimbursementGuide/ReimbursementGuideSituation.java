@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.domain.reimbursementGuide;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.util.State;
 
@@ -19,11 +18,7 @@ public class ReimbursementGuideSituation extends
 		ReimbursementGuideSituation_Base {
 
 	protected State state;
-
-	protected IReimbursementGuide reimbursementGuide;
-
-	protected IEmployee employee;
-
+	
 	protected Calendar modificationDate;
 
 	protected Calendar officialDate;
@@ -39,20 +34,6 @@ public class ReimbursementGuideSituation extends
 	/**
 	 * @return
 	 */
-	public IEmployee getEmployee() {
-		return employee;
-	}
-
-	/**
-	 * @param employee
-	 */
-	public void setEmployee(IEmployee employee) {
-		this.employee = employee;
-	}
-
-	/**
-	 * @return
-	 */
 	public Calendar getModificationDate() {
 		return modificationDate;
 	}
@@ -62,20 +43,6 @@ public class ReimbursementGuideSituation extends
 	 */
 	public void setModificationDate(Calendar modificationDate) {
 		this.modificationDate = modificationDate;
-	}
-
-	/**
-	 * @return
-	 */
-	public IReimbursementGuide getReimbursementGuide() {
-		return reimbursementGuide;
-	}
-
-	/**
-	 * @param reimbursementGuide
-	 */
-	public void setReimbursementGuide(IReimbursementGuide reimbursementGuide) {
-		this.reimbursementGuide = reimbursementGuide;
 	}
 
 	/**

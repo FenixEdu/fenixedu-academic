@@ -5,12 +5,10 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Date;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType;
 
 /**
- * 
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * @author Tânia Pousão
@@ -19,30 +17,7 @@ public class GratuitySituation extends GratuitySituation_Base {
 
 	private ExemptionGratuityType exemptionType;
 
-	private IGratuityValues gratuityValues;
-
-	private IStudentCurricularPlan studentCurricularPlan;
-
 	private Date when;
-
-	private IEmployee employee;
-
-	private List transactionList;
-
-	/**
-	 * @return Returns the employee.
-	 */
-	public IEmployee getEmployee() {
-		return employee;
-	}
-
-	/**
-	 * @param employee
-	 *            The employee to set.
-	 */
-	public void setEmployee(IEmployee employee) {
-		this.employee = employee;
-	}
 
 	/**
 	 * @return Returns the when.
@@ -75,25 +50,10 @@ public class GratuitySituation extends GratuitySituation_Base {
 	}
 
 	/**
-	 * @return Returns the gratuity.
-	 */
-	public IGratuityValues getGratuityValues() {
-		return gratuityValues;
-	}
-
-	/**
-	 * @param gratuity
-	 *            The gratuity to set.
-	 */
-	public void setGratuityValues(IGratuityValues gratuity) {
-		this.gratuityValues = gratuity;
-	}
-
-	/**
 	 * @return Returns the student.
 	 */
 	public IStudentCurricularPlan getStudentCurricularPlan() {
-		return studentCurricularPlan;
+		return getStudentCurricularPlan();
 	}
 
 	/**
@@ -102,22 +62,7 @@ public class GratuitySituation extends GratuitySituation_Base {
 	 */
 	public void setStudentCurricularPlan(
 			IStudentCurricularPlan studentCurricularPlan) {
-		this.studentCurricularPlan = studentCurricularPlan;
-	}
-
-	/**
-	 * @return Returns the transactionList.
-	 */
-	public List getTransactionList() {
-		return transactionList;
-	}
-
-	/**
-	 * @param transactionList
-	 *            The transactionList to set.
-	 */
-	public void setTransactionList(List transactionList) {
-		this.transactionList = transactionList;
+		setStudentCurricularPlan(studentCurricularPlan);
 	}
 
 	/*

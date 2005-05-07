@@ -5,31 +5,20 @@
 package net.sourceforge.fenixedu.domain.reimbursementGuide;
 
 import java.util.Calendar;
-import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 /**
- * 
- * 
  * This class contains all the information regarding a Reimbursement Guide. <br>
  * 
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
- * 
  */
 public class ReimbursementGuide extends ReimbursementGuide_Base {
 
-	protected IGuide guide;
-
 	protected Calendar creationDate;
-
-	protected List reimbursementGuideSituations;
-
-	protected List reimbursementGuideEntries;
 
 	/**
 	 * 
@@ -59,35 +48,6 @@ public class ReimbursementGuide extends ReimbursementGuide_Base {
 		this.creationDate = creationDate;
 	}
 
-	/**
-	 * @return
-	 */
-	public IGuide getGuide() {
-		return guide;
-	}
-
-	/**
-	 * @param paymentGuide
-	 */
-	public void setGuide(IGuide paymentGuide) {
-		this.guide = paymentGuide;
-	}
-
-	/**
-	 * @return
-	 */
-	public List getReimbursementGuideSituations() {
-		return reimbursementGuideSituations;
-	}
-
-	/**
-	 * @param reimbursementGuideSituations
-	 */
-	public void setReimbursementGuideSituations(
-			List reimbursementGuideSituations) {
-		this.reimbursementGuideSituations = reimbursementGuideSituations;
-	}
-
 	public IReimbursementGuideSituation getActiveReimbursementGuideSituation() {
 
 		return (IReimbursementGuideSituation) CollectionUtils.find(
@@ -98,21 +58,6 @@ public class ReimbursementGuide extends ReimbursementGuide_Base {
 					}
 				});
 
-	}
-
-	/**
-	 * @return Returns the reimbursementGuideEntries.
-	 */
-	public List getReimbursementGuideEntries() {
-		return reimbursementGuideEntries;
-	}
-
-	/**
-	 * @param reimbursementGuideEntries
-	 *            The reimbursementGuideEntries to set.
-	 */
-	public void setReimbursementGuideEntries(List reimbursementGuideEntries) {
-		this.reimbursementGuideEntries = reimbursementGuideEntries;
 	}
 
 	public boolean equals(Object obj) {

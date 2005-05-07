@@ -37,7 +37,7 @@ public class ReadCandidateEnrolmentsByCandidateID implements IService {
         }
 
         List candidateEnrolments = sp.getIPersistentCandidateEnrolment().readByMDCandidate(
-                masterDegreeCandidate);
+                masterDegreeCandidate.getIdInternal());
 
         if (candidateEnrolments == null) {
             throw new NonExistingServiceException();

@@ -16,8 +16,6 @@ import net.sourceforge.fenixedu.domain.transactions.TransactionType;
  */
 public class InsuranceTransaction extends InsuranceTransaction_Base {
 
-	private IStudent student;
-
 	public InsuranceTransaction() {
 
 	}
@@ -51,21 +49,6 @@ public class InsuranceTransaction extends InsuranceTransaction_Base {
 		setPersonAccount(personAccount);
 		setExecutionYear(executionYear);
         setGuideEntry(guideEntry);
-		this.student = student;
-	}
-
-	/**
-	 * @return Returns the student.
-	 */
-	public IStudent getStudent() {
-		return student;
-	}
-
-	/**
-	 * @param student
-	 *            The student to set.
-	 */
-	public void setStudent(IStudent student) {
-		this.student = student;
+		setStudent(student);
 	}
 }

@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- * 
  */
 public abstract class Transaction extends Transaction_Base {
 
@@ -18,10 +17,6 @@ public abstract class Transaction extends Transaction_Base {
 	private PaymentType paymentType;
 
 	private TransactionType transactionType;
-
-	private IPerson responsiblePerson;
-
-	private IPersonAccount personAccount;
 
 	public Transaction() {
 	}
@@ -46,38 +41,8 @@ public abstract class Transaction extends Transaction_Base {
 		this.paymentType = paymentType;
 		this.transactionType = transactionType;
 		setWasInternalBalance(wasInternalBalance);
-		this.responsiblePerson = responsiblePerson;
-		this.personAccount = personAccount;
-	}
-
-	/**
-	 * @return Returns the personAccount.
-	 */
-	public IPersonAccount getPersonAccount() {
-		return personAccount;
-	}
-
-	/**
-	 * @param personAccount
-	 *            The personAccount to set.
-	 */
-	public void setPersonAccount(IPersonAccount personAccount) {
-		this.personAccount = personAccount;
-	}
-
-	/**
-	 * @return Returns the responsiblePerson.
-	 */
-	public IPerson getResponsiblePerson() {
-		return responsiblePerson;
-	}
-
-	/**
-	 * @param responsiblePerson
-	 *            The responsiblePerson to set.
-	 */
-	public void setResponsiblePerson(IPerson responsiblePerson) {
-		this.responsiblePerson = responsiblePerson;
+		setResponsiblePerson(responsiblePerson);
+		setPersonAccount(personAccount);
 	}
 
 	/**

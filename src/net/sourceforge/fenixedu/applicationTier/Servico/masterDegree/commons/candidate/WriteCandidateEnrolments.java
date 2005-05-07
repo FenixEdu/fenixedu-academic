@@ -124,7 +124,7 @@ public class WriteCandidateEnrolments implements IService {
             IMasterDegreeCandidate masterDegreeCandidate, List candidateEnrollmentsToDelete,
             List curricularCoursesToEnroll) throws ExcepcaoPersistencia {
         List existentCandidateEnrollments = persistentCandidateEnrolment
-                .readByMDCandidate(masterDegreeCandidate);
+                .readByMDCandidate(masterDegreeCandidate.getIdInternal());
         Iterator iterCandidateEnrollment = existentCandidateEnrollments.iterator();
         while (iterCandidateEnrollment.hasNext()) {
             ICandidateEnrolment existentCandidateEnrolment = (ICandidateEnrolment) iterCandidateEnrollment

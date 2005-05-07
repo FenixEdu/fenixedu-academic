@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.transactions.TransactionType;
  */
 public class ReimbursementTransaction extends ReimbursementTransaction_Base {
 
-    private IReimbursementGuideEntry reimbursementGuideEntry;
 
     public ReimbursementTransaction() {
 
@@ -43,21 +42,6 @@ public class ReimbursementTransaction extends ReimbursementTransaction_Base {
 		setWasInternalBalance(wasInternalBalance);
 		setResponsiblePerson(responsiblePerson);
 		setPersonAccount(personAccount);
-        this.reimbursementGuideEntry = reimbursementGuideEntry;
-    }
-
-    /**
-     * @return Returns the reimbursementGuideEntry.
-     */
-    public IReimbursementGuideEntry getReimbursementGuideEntry() {
-        return reimbursementGuideEntry;
-    }
-
-    /**
-     * @param reimbursementGuideEntry
-     *            The reimbursementGuideEntry to set.
-     */
-    public void setReimbursementGuideEntry(IReimbursementGuideEntry reimbursementGuideEntry) {
-        this.reimbursementGuideEntry = reimbursementGuideEntry;
+        setReimbursementGuideEntry(reimbursementGuideEntry);
     }
 }

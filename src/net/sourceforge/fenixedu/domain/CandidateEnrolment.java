@@ -8,10 +8,6 @@ import net.sourceforge.fenixedu.domain.CandidateEnrolment_Base;
 
 public class CandidateEnrolment extends CandidateEnrolment_Base {
 
-	private IMasterDegreeCandidate masterDegreeCandidate;
-
-	private ICurricularCourse curricularCourse;
-
 	public CandidateEnrolment() {
 	}
 
@@ -42,37 +38,9 @@ public class CandidateEnrolment extends CandidateEnrolment_Base {
 	public String toString() {
 		String result = "[CANDIDATE_ENROLMENT";
 		result += ", codInt=" + getIdInternal();
-		result += ", masterDegreeCandidate=" + masterDegreeCandidate;
-		result += ", curricularCourse=" + curricularCourse;
+		result += ", masterDegreeCandidate=" + getMasterDegreeCandidate();
+		result += ", curricularCourse=" + getCurricularCourse();
 		result += "]";
 		return result;
-	}
-
-	/**
-	 * @return
-	 */
-	public IMasterDegreeCandidate getMasterDegreeCandidate() {
-		return masterDegreeCandidate;
-	}
-
-	/**
-	 * @param candidate
-	 */
-	public void setMasterDegreeCandidate(IMasterDegreeCandidate candidate) {
-		masterDegreeCandidate = candidate;
-	}
-
-	/**
-	 * @return
-	 */
-	public ICurricularCourse getCurricularCourse() {
-		return curricularCourse;
-	}
-
-	/**
-	 * @param curricularCourse
-	 */
-	public void setCurricularCourse(ICurricularCourse curricularCourse) {
-		this.curricularCourse = curricularCourse;
 	}
 }

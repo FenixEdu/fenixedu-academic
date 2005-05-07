@@ -15,8 +15,6 @@ import net.sourceforge.fenixedu.domain.transactions.TransactionType;
  */
 public class GratuityTransaction extends GratuityTransaction_Base {
 
-	private IGratuitySituation gratuitySituation;
-
 	public GratuityTransaction() {
 	}
 
@@ -46,22 +44,8 @@ public class GratuityTransaction extends GratuityTransaction_Base {
 		setResponsiblePerson(responsiblePerson);
 		setPersonAccount(personAccount);
         setGuideEntry(guideEntry);
-		this.gratuitySituation = gratuitySituation;
+		setGratuitySituation(gratuitySituation);
 	}
 
-	/**
-	 * @return Returns the gratuitySituation.
-	 */
-	public IGratuitySituation getGratuitySituation() {
-		return gratuitySituation;
-	}
-
-	/**
-	 * @param gratuitySituation
-	 *            The gratuitySituation to set.
-	 */
-	public void setGratuitySituation(IGratuitySituation gratuitySituation) {
-		this.gratuitySituation = gratuitySituation;
-	}
 
 }

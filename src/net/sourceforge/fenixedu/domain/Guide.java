@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
@@ -14,12 +13,6 @@ import net.sourceforge.fenixedu.util.State;
 
 public class Guide extends Guide_Base {
 
-	protected IPerson person;
-
-	protected IContributor contributor;
-
-	protected IExecutionDegree executionDegree;
-
 	protected PaymentType paymentType;
 
 	protected Date creationDate;
@@ -28,12 +21,6 @@ public class Guide extends Guide_Base {
 
 	protected GuideRequester guideRequester;
 
-	protected List guideEntries;
-
-	protected List guideSituations;
-
-	protected List reimbursementGuides;
-
 	public Guide() {
 	}
 
@@ -41,14 +28,14 @@ public class Guide extends Guide_Base {
 			IPerson person, IContributor contributor,
 			GuideRequester guideRequester, IExecutionDegree executionDegree,
 			PaymentType paymentType, Date creationDate, Integer version) {
-		this.contributor = contributor;
+		setContributor(contributor);
 		setNumber(number);
-		this.person = person;
+		setPerson(person);
 		setRemarks(remarks);
 		setTotal(total);
 		setYear(year);
 		this.guideRequester = guideRequester;
-		this.executionDegree = executionDegree;
+		setExecutionDegree(executionDegree);
 		this.paymentType = paymentType;
 		this.creationDate = creationDate;
 		setVersion(version);
@@ -82,11 +69,11 @@ public class Guide extends Guide_Base {
 		result += ", codInt=" + getIdInternal();
 		result += ", number=" + getNumber();
 		result += ", year=" + getYear();
-		result += ", contributor=" + contributor;
+		result += ", contributor=" + getContributor();
 		result += ", total=" + getTotal();
 		result += ", remarks=" + getRemarks();
 		result += ", guide Requester=" + guideRequester;
-		result += ", execution Degree=" + executionDegree;
+		result += ", execution Degree=" + getExecutionDegree();
 		result += ", payment Type=" + paymentType;
 		result += ", creation Date=" + creationDate;
 		result += ", version=" + getVersion();
@@ -113,57 +100,8 @@ public class Guide extends Guide_Base {
 	/**
 	 * @return
 	 */
-	public IContributor getContributor() {
-		return contributor;
-	}
-
-	/**
-	 * @return
-	 */
-	public IExecutionDegree getExecutionDegree() {
-		return executionDegree;
-	}
-
-	/**
-	 * @return
-	 */
-	public List getGuideEntries() {
-		return guideEntries;
-	}
-
-	/**
-	 * @return
-	 */
 	public GuideRequester getGuideRequester() {
 		return guideRequester;
-	}
-
-	/**
-	 * @return
-	 */
-	public IPerson getPerson() {
-		return person;
-	}
-
-	/**
-	 * @param contributor
-	 */
-	public void setContributor(IContributor contributor) {
-		this.contributor = contributor;
-	}
-
-	/**
-	 * @param execucao
-	 */
-	public void setExecutionDegree(IExecutionDegree execucao) {
-		executionDegree = execucao;
-	}
-
-	/**
-	 * @param list
-	 */
-	public void setGuideEntries(List list) {
-		guideEntries = list;
 	}
 
 	/**
@@ -171,13 +109,6 @@ public class Guide extends Guide_Base {
 	 */
 	public void setGuideRequester(GuideRequester requester) {
 		guideRequester = requester;
-	}
-
-	/**
-	 * @param pessoa
-	 */
-	public void setPerson(IPerson pessoa) {
-		person = pessoa;
 	}
 
 	/**
@@ -192,20 +123,6 @@ public class Guide extends Guide_Base {
 	 */
 	public void setPaymentType(PaymentType type) {
 		paymentType = type;
-	}
-
-	/**
-	 * @return
-	 */
-	public List getGuideSituations() {
-		return guideSituations;
-	}
-
-	/**
-	 * @param list
-	 */
-	public void setGuideSituations(List list) {
-		guideSituations = list;
 	}
 
 	/**
@@ -234,20 +151,5 @@ public class Guide extends Guide_Base {
 	 */
 	public void setPaymentDate(Date date) {
 		paymentDate = date;
-	}
-
-	/**
-	 * @return Returns the reimbursementGuides.
-	 */
-	public List getReimbursementGuides() {
-		return reimbursementGuides;
-	}
-
-	/**
-	 * @param reimbursementGuides
-	 *            The reimbursementGuides to set.
-	 */
-	public void setReimbursementGuides(List reimbursementGuides) {
-		this.reimbursementGuides = reimbursementGuides;
 	}
 }

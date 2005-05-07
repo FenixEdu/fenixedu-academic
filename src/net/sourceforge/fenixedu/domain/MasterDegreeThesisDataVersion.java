@@ -14,153 +14,114 @@ import net.sourceforge.fenixedu.util.State;
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
  */
-public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion_Base {
+public class MasterDegreeThesisDataVersion extends
+		MasterDegreeThesisDataVersion_Base {
 
-    //fields
-    private IMasterDegreeThesis masterDegreeThesis;
+	// fields
+	private List externalAssistentGuiders;
 
-    private List externalAssistentGuiders;
+	private Timestamp lastModification;
 
-    private List assistentGuiders;
+	private State currentState;
 
-    private List guiders;
+	public MasterDegreeThesisDataVersion() {
+	}
 
-    private List externalGuiders;
+	public MasterDegreeThesisDataVersion(
+			IMasterDegreeThesis masterDegreeThesis,
+			IEmployee responsibleEmployee, String dissertationTitle,
+			Timestamp lastModification, State currentState) {
+		setMasterDegreeThesis(masterDegreeThesis);
+		setResponsibleEmployee(responsibleEmployee);
+		setDissertationTitle(dissertationTitle);
+		this.lastModification = lastModification;
+		this.currentState = currentState;
+	}
 
-    private IEmployee responsibleEmployee;
+	/**
+	 * @param masterDegreeThesis
+	 * @param externalAssistentGuiders
+	 * @param assistentGuiders
+	 * @param guiders
+	 * @param responsibleEmployee
+	 * @param dissertationTitle
+	 * @param lastModification
+	 * @param currentState
+	 */
+	public MasterDegreeThesisDataVersion(
+			IMasterDegreeThesis masterDegreeThesis,
+			List externalAssistentGuiders, List assistentGuiders, List guiders,
+			IEmployee responsibleEmployee, String dissertationTitle,
+			Timestamp lastModification, State currentState) {
+		setMasterDegreeThesis(masterDegreeThesis);
+		this.externalAssistentGuiders = externalAssistentGuiders;
+		setAssistentGuiders(assistentGuiders);
+		setGuiders(guiders);
+		setResponsibleEmployee(responsibleEmployee);
+		setDissertationTitle(dissertationTitle);
+		this.lastModification = lastModification;
+		this.currentState = currentState;
+	}
 
-    private Timestamp lastModification;
+	public void setExternalAssistentGuiders(List externalAssistentGuiders) {
+		this.externalAssistentGuiders = externalAssistentGuiders;
+	}
 
-    private State currentState;
+	public List getExternalAssistentGuiders() {
+		return externalAssistentGuiders;
+	}
 
-    public MasterDegreeThesisDataVersion() {
-    }
+	public void setLastModification(Timestamp lastModification) {
+		this.lastModification = lastModification;
+	}
 
-    public MasterDegreeThesisDataVersion(IMasterDegreeThesis masterDegreeThesis,
-            IEmployee responsibleEmployee, String dissertationTitle, Timestamp lastModification,
-            State currentState) {
-        this.masterDegreeThesis = masterDegreeThesis;
-        this.responsibleEmployee = responsibleEmployee;
-        setDissertationTitle(dissertationTitle);
-        this.lastModification = lastModification;
-        this.currentState = currentState;
-    }
+	public Timestamp getLastModification() {
+		return lastModification;
+	}
 
-    /**
-     * @param masterDegreeThesis
-     * @param externalAssistentGuiders
-     * @param assistentGuiders
-     * @param guiders
-     * @param responsibleEmployee
-     * @param dissertationTitle
-     * @param lastModification
-     * @param currentState
-     */
-    public MasterDegreeThesisDataVersion(IMasterDegreeThesis masterDegreeThesis,
-            List externalAssistentGuiders, List assistentGuiders, List guiders,
-            IEmployee responsibleEmployee, String dissertationTitle, Timestamp lastModification,
-            State currentState) {
-        this.masterDegreeThesis = masterDegreeThesis;
-        this.externalAssistentGuiders = externalAssistentGuiders;
-        this.assistentGuiders = assistentGuiders;
-        this.guiders = guiders;
-        this.responsibleEmployee = responsibleEmployee;
-        setDissertationTitle(dissertationTitle);
-        this.lastModification = lastModification;
-        this.currentState = currentState;
-    }
+	public void setCurrentState(State currentState) {
+		this.currentState = currentState;
+	}
 
-    public void setAssistentGuiders(List assistentGuiders) {
-        this.assistentGuiders = assistentGuiders;
-    }
+	public State getCurrentState() {
+		return currentState;
+	}
 
-    public List getAssistentGuiders() {
-        return assistentGuiders;
-    }
+	public String toString() {
+		String result = "[" + this.getClass().getName() + ": \n";
+		result += "idInternal = " + getIdInternal() + "; \n";
+		result += "masterDegreeThesis = "
+				+ getMasterDegreeThesis().getIdInternal() + "; \n";
+		result += "externalAssistentGuiders = "
+				+ this.externalAssistentGuiders.toString() + "; \n";
+		result += "assistentGuiders = " + getAssistentGuiders().toString()
+				+ "; \n";
+		result += "guiders = " + getGuiders().toString() + "; \n";
+		result += "responsibleEmployee = "
+				+ getResponsibleEmployee().getIdInternal() + "; \n";
+		result += "dissertationTitle = " + getDissertationTitle().toString()
+				+ "; \n";
+		result += "lastModification = " + this.lastModification.toString()
+				+ "; \n";
+		result += "currentState = " + this.currentState.toString() + "; \n";
+		result += "] \n";
 
-    public void setExternalAssistentGuiders(List externalAssistentGuiders) {
-        this.externalAssistentGuiders = externalAssistentGuiders;
-    }
+		return result;
+	}
 
-    public List getExternalAssistentGuiders() {
-        return externalAssistentGuiders;
-    }
+	public boolean equals(Object obj) {
+		boolean result = false;
 
-    public void setGuiders(List guiders) {
-        this.guiders = guiders;
-    }
+		if (obj instanceof IMasterDegreeThesisDataVersion) {
+			IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion = (IMasterDegreeThesisDataVersion) obj;
+			result = getMasterDegreeThesis().equals(
+					masterDegreeThesisDataVersion.getMasterDegreeThesis())
+					&& this.lastModification
+							.equals(masterDegreeThesisDataVersion
+									.getLastModification());
+		}
 
-    public List getGuiders() {
-        return guiders;
-    }
-
-    public List getExternalGuiders() {
-        return externalGuiders;
-    }
-
-    public void setExternalGuiders(List externalGuiders) {
-        this.externalGuiders = externalGuiders;
-    }
-
-    public void setLastModification(Timestamp lastModification) {
-        this.lastModification = lastModification;
-    }
-
-    public Timestamp getLastModification() {
-        return lastModification;
-    }
-
-    public void setMasterDegreeThesis(IMasterDegreeThesis masterDegreeThesis) {
-        this.masterDegreeThesis = masterDegreeThesis;
-    }
-
-    public IMasterDegreeThesis getMasterDegreeThesis() {
-        return masterDegreeThesis;
-    }
-
-    public void setResponsibleEmployee(IEmployee responsibleEmployee) {
-        this.responsibleEmployee = responsibleEmployee;
-    }
-
-    public IEmployee getResponsibleEmployee() {
-        return responsibleEmployee;
-    }
-
-    public void setCurrentState(State currentState) {
-        this.currentState = currentState;
-    }
-
-    public State getCurrentState() {
-        return currentState;
-    }
-
-    public String toString() {
-        String result = "[" + this.getClass().getName() + ": \n";
-        result += "idInternal = " + getIdInternal() + "; \n";
-        result += "masterDegreeThesis = " + this.masterDegreeThesis.getIdInternal() + "; \n";
-        result += "externalAssistentGuiders = " + this.externalAssistentGuiders.toString() + "; \n";
-        result += "assistentGuiders = " + this.assistentGuiders.toString() + "; \n";
-        result += "guiders = " + this.guiders.toString() + "; \n";
-        result += "responsibleEmployee = " + this.responsibleEmployee.getIdInternal() + "; \n";
-        result += "dissertationTitle = " + getDissertationTitle().toString() + "; \n";
-        result += "lastModification = " + this.lastModification.toString() + "; \n";
-        result += "currentState = " + this.currentState.toString() + "; \n";
-        result += "] \n";
-
-        return result;
-    }
-
-    public boolean equals(Object obj) {
-        boolean result = false;
-
-        if (obj instanceof IMasterDegreeThesisDataVersion) {
-            IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion = (IMasterDegreeThesisDataVersion) obj;
-            result = this.masterDegreeThesis.equals(masterDegreeThesisDataVersion
-                    .getMasterDegreeThesis())
-                    && this.lastModification.equals(masterDegreeThesisDataVersion.getLastModification());
-        }
-
-        return result;
-    }
+		return result;
+	}
 
 }

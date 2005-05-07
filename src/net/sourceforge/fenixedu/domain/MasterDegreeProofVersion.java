@@ -17,155 +17,124 @@ import net.sourceforge.fenixedu.util.State;
  */
 public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
 
-    //fields
-    private IMasterDegreeThesis masterDegreeThesis;
+	// fields
+	private Timestamp lastModification;
 
-    private IEmployee responsibleEmployee;
+	private Date proofDate;
 
-    private Timestamp lastModification;
+	private Date thesisDeliveryDate;
 
-    private Date proofDate;
+	private MasterDegreeClassification finalResult;
 
-    private Date thesisDeliveryDate;
+	private State currentState;
 
-    private MasterDegreeClassification finalResult;
+	/**
+	 * Default Constructor
+	 */
+	public MasterDegreeProofVersion() {
 
-    private State currentState;
+	}
 
-    private List juries; /* Teachers */
+	/**
+	 * @param masterDegreeThesis
+	 * @param responsibleEmployee
+	 * @param lastModification
+	 * @param proofDate
+	 * @param thesisDeliveryDate
+	 * @param finalResult
+	 * @param attachedCopiesNumber
+	 * @param currentState
+	 */
+	public MasterDegreeProofVersion(IMasterDegreeThesis masterDegreeThesis,
+			IEmployee responsibleEmployee, Timestamp lastModification,
+			Date proofDate, Date thesisDeliveryDate,
+			MasterDegreeClassification finalResult,
+			Integer attachedCopiesNumber, State currentState, List juries,
+			List externalJuries) {
+		setMasterDegreeThesis(masterDegreeThesis);
+		setResponsibleEmployee(responsibleEmployee);
+		this.lastModification = lastModification;
+		this.proofDate = proofDate;
+		this.thesisDeliveryDate = thesisDeliveryDate;
+		this.finalResult = finalResult;
+		setAttachedCopiesNumber(attachedCopiesNumber);
+		this.currentState = currentState;
+		setJuries(juries);
+		setExternalJuries(externalJuries);
+	}
 
-    private List externalJuries; /* External Persons */
+	public void setLastModification(Timestamp lastModification) {
+		this.lastModification = lastModification;
+	}
 
-    /**
-     * Default Constructor
-     */
-    public MasterDegreeProofVersion() {
+	public Timestamp getLastModification() {
+		return lastModification;
+	}
 
-    }
+	public void setProofDate(Date proofDate) {
+		this.proofDate = proofDate;
+	}
 
-    /**
-     * @param masterDegreeThesis
-     * @param responsibleEmployee
-     * @param lastModification
-     * @param proofDate
-     * @param thesisDeliveryDate
-     * @param finalResult
-     * @param attachedCopiesNumber
-     * @param currentState
-     */
-    public MasterDegreeProofVersion(IMasterDegreeThesis masterDegreeThesis,
-            IEmployee responsibleEmployee, Timestamp lastModification, Date proofDate,
-            Date thesisDeliveryDate, MasterDegreeClassification finalResult,
-            Integer attachedCopiesNumber, State currentState, List juries, List externalJuries) {
-        this.masterDegreeThesis = masterDegreeThesis;
-        this.responsibleEmployee = responsibleEmployee;
-        this.lastModification = lastModification;
-        this.proofDate = proofDate;
-        this.thesisDeliveryDate = thesisDeliveryDate;
-        this.finalResult = finalResult;
-        setAttachedCopiesNumber(attachedCopiesNumber);
-        this.currentState = currentState;
-        this.juries = juries;
-        this.externalJuries = externalJuries;
-    }
+	public Date getProofDate() {
+		return proofDate;
+	}
 
-    public void setLastModification(Timestamp lastModification) {
-        this.lastModification = lastModification;
-    }
+	public void setThesisDeliveryDate(Date thesisDeliveryDate) {
+		this.thesisDeliveryDate = thesisDeliveryDate;
+	}
 
-    public Timestamp getLastModification() {
-        return lastModification;
-    }
+	public Date getThesisDeliveryDate() {
+		return thesisDeliveryDate;
+	}
 
-    public void setMasterDegreeThesis(IMasterDegreeThesis masterDegreeThesis) {
-        this.masterDegreeThesis = masterDegreeThesis;
-    }
+	public void setFinalResult(MasterDegreeClassification finalResult) {
+		this.finalResult = finalResult;
+	}
 
-    public IMasterDegreeThesis getMasterDegreeThesis() {
-        return masterDegreeThesis;
-    }
+	public MasterDegreeClassification getFinalResult() {
+		return finalResult;
+	}
 
-    public void setProofDate(Date proofDate) {
-        this.proofDate = proofDate;
-    }
+	public void setCurrentState(State state) {
+		this.currentState = state;
+	}
 
-    public Date getProofDate() {
-        return proofDate;
-    }
+	public State getCurrentState() {
+		return currentState;
+	}
 
-    public void setThesisDeliveryDate(Date thesisDeliveryDate) {
-        this.thesisDeliveryDate = thesisDeliveryDate;
-    }
+	public String toString() {
+		String result = "[" + this.getClass().getName() + ": \n";
+		result += "idInternal = " + getIdInternal() + "; \n";
+		result += "masterDegreeThesis = "
+				+ getMasterDegreeThesis().getIdInternal() + "; \n";
+		result += "responsibleEmployee = "
+				+ getResponsibleEmployee().getIdInternal() + "; \n";
+		result += "lastModification = " + this.lastModification.toString()
+				+ "; \n";
+		result += "proofDate = " + this.proofDate.toString() + "; \n";
+		result += "thesisDeliveryDate = " + this.thesisDeliveryDate.toString()
+				+ "; \n";
+		result += "finalResult = " + this.finalResult.toString() + "; \n";
+		result += "attachedCopiesNumber = "
+				+ getAttachedCopiesNumber().toString() + "; \n";
+		result += "currentState = " + this.currentState.toString() + "; \n";
+		result += "] \n";
 
-    public Date getThesisDeliveryDate() {
-        return thesisDeliveryDate;
-    }
+		return result;
+	}
 
-    public void setFinalResult(MasterDegreeClassification finalResult) {
-        this.finalResult = finalResult;
-    }
+	public boolean equals(Object obj) {
+		boolean result = false;
 
-    public MasterDegreeClassification getFinalResult() {
-        return finalResult;
-    }
+		if (obj instanceof IMasterDegreeProofVersion) {
+			IMasterDegreeProofVersion masterDegreeProofVersion = (IMasterDegreeProofVersion) obj;
+			result = getMasterDegreeThesis().equals(
+					masterDegreeProofVersion.getMasterDegreeThesis())
+					&& this.lastModification.equals(masterDegreeProofVersion
+							.getLastModification());
+		}
 
-    public void setResponsibleEmployee(IEmployee responsibleEmployee) {
-        this.responsibleEmployee = responsibleEmployee;
-    }
-
-    public IEmployee getResponsibleEmployee() {
-        return responsibleEmployee;
-    }
-
-    public void setCurrentState(State state) {
-        this.currentState = state;
-    }
-
-    public State getCurrentState() {
-        return currentState;
-    }
-
-    public void setJuries(List juries) {
-        this.juries = juries;
-    }
-
-    public List getJuries() {
-        return juries;
-    }
-
-    public List getExternalJuries() {
-        return externalJuries;
-    }
-
-    public void setExternalJuries(List externalJuries) {
-        this.externalJuries = externalJuries;
-    }
-
-    public String toString() {
-        String result = "[" + this.getClass().getName() + ": \n";
-        result += "idInternal = " + getIdInternal() + "; \n";
-        result += "masterDegreeThesis = " + this.masterDegreeThesis.getIdInternal() + "; \n";
-        result += "responsibleEmployee = " + this.responsibleEmployee.getIdInternal() + "; \n";
-        result += "lastModification = " + this.lastModification.toString() + "; \n";
-        result += "proofDate = " + this.proofDate.toString() + "; \n";
-        result += "thesisDeliveryDate = " + this.thesisDeliveryDate.toString() + "; \n";
-        result += "finalResult = " + this.finalResult.toString() + "; \n";
-        result += "attachedCopiesNumber = " + getAttachedCopiesNumber().toString() + "; \n";
-        result += "currentState = " + this.currentState.toString() + "; \n";
-        result += "] \n";
-
-        return result;
-    }
-
-    public boolean equals(Object obj) {
-        boolean result = false;
-
-        if (obj instanceof IMasterDegreeProofVersion) {
-            IMasterDegreeProofVersion masterDegreeProofVersion = (IMasterDegreeProofVersion) obj;
-            result = this.masterDegreeThesis.equals(masterDegreeProofVersion.getMasterDegreeThesis())
-                    && this.lastModification.equals(masterDegreeProofVersion.getLastModification());
-        }
-
-        return result;
-    }
+		return result;
+	}
 }

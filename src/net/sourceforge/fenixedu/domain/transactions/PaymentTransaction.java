@@ -14,8 +14,6 @@ import net.sourceforge.fenixedu.domain.transactions.TransactionType;
  */
 public abstract class PaymentTransaction extends PaymentTransaction_Base {
 
-	private IGuideEntry guideEntry;
-
 	public PaymentTransaction() {
 
 	}
@@ -36,7 +34,7 @@ public abstract class PaymentTransaction extends PaymentTransaction_Base {
 			TransactionType transactionType, Boolean wasInternalBalance,
 			IPerson responsiblePerson, IPersonAccount personAccount,
 			IGuideEntry guideEntry) {
-		this.guideEntry = guideEntry;
+		setGuideEntry(guideEntry);
 		setValue(value);
 		setTransactionDate(transactionDate);
 		setRemarks(remarks);
@@ -45,20 +43,5 @@ public abstract class PaymentTransaction extends PaymentTransaction_Base {
 		setWasInternalBalance(wasInternalBalance);
 		setResponsiblePerson(responsiblePerson);
 		setPersonAccount(personAccount);
-	}
-
-	/**
-	 * @return Returns the guideEntry.
-	 */
-	public IGuideEntry getGuideEntry() {
-		return guideEntry;
-	}
-
-	/**
-	 * @param guideEntry
-	 *            The guideEntry to set.
-	 */
-	public void setGuideEntry(IGuideEntry guideEntry) {
-		this.guideEntry = guideEntry;
 	}
 }

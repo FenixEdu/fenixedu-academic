@@ -17,9 +17,7 @@ public class PaymentPhase extends PaymentPhase_Base {
     private Date startDate;
 
     private Date endDate;
-
-    private IGratuityValues gratuityValues;
-
+	
     private List transactionList;
 
     /**
@@ -66,21 +64,6 @@ public class PaymentPhase extends PaymentPhase_Base {
      */
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
-    }
-
-    /**
-     * @return Returns the gratuity.
-     */
-    public IGratuityValues getGratuityValues() {
-        return gratuityValues;
-    }
-
-    /**
-     * @param gratuity
-     *            The gratuity to set.
-     */
-    public void setGratuityValues(IGratuityValues gratuityValues) {
-        this.gratuityValues = gratuityValues;
     }
 
     /**

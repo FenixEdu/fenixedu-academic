@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.List;
-
-import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
 
 /**
@@ -11,117 +8,86 @@ import net.sourceforge.fenixedu.util.GraduationType;
 
 public class GuideEntry extends GuideEntry_Base {
 
-    protected GraduationType graduationType;
+	protected GraduationType graduationType;
 
-    protected DocumentType documentType;
+	protected DocumentType documentType;
 
-    protected List reimbursementGuideEntries;
+	public GuideEntry() {
+	}
 
-    protected IGuide guide;
+	public GuideEntry(GraduationType graduationType, DocumentType documentType,
+			String description, Integer quantity, Double price, IGuide guide) {
+		setDescription(description);
+		setGuide(guide);
+		this.documentType = documentType;
+		this.graduationType = graduationType;
+		setPrice(price);
+		setQuantity(quantity);
 
-    public GuideEntry() {
-    }
+	}
 
-    public GuideEntry(GraduationType graduationType, DocumentType documentType, String description,
-            Integer quantity, Double price, IGuide guide) {
-        setDescription(description);
-        this.guide = guide;
-        this.documentType = documentType;
-        this.graduationType = graduationType;
-        setPrice(price);
-        setQuantity(quantity);
+	public boolean equals(Object obj) {
+		boolean resultado = false;
+		if (obj instanceof IGuideEntry) {
+			IGuideEntry guideEntry = (IGuideEntry) obj;
 
-    }
+			if (((getGuide() == null && guideEntry.getGuide() == null) || (getGuide()
+					.equals(guideEntry.getGuide())))
+					&& ((getGraduationType() == null && guideEntry
+							.getGraduationType() == null) || (getGraduationType()
+							.equals(guideEntry.getGraduationType())))
+					&& ((getDocumentType() == null && guideEntry
+							.getDocumentType() == null) || (getDocumentType()
+							.equals(guideEntry.getDocumentType())))
+					&& ((getDescription() == null && guideEntry
+							.getDescription() == null) || (getDescription()
+							.equals(guideEntry.getDescription())))) {
+				resultado = true;
+			}
+		}
 
-    public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof IGuideEntry) {
-            IGuideEntry guideEntry = (IGuideEntry) obj;
+		return resultado;
+	}
 
-            if (((getGuide() == null && guideEntry.getGuide() == null) || (getGuide().equals(guideEntry
-                    .getGuide())))
-                    && ((getGraduationType() == null && guideEntry.getGraduationType() == null) || (getGraduationType()
-                            .equals(guideEntry.getGraduationType())))
-                    && ((getDocumentType() == null && guideEntry.getDocumentType() == null) || (getDocumentType()
-                            .equals(guideEntry.getDocumentType())))
-                    && ((getDescription() == null && guideEntry.getDescription() == null) || (getDescription()
-                            .equals(guideEntry.getDescription())))) {
-                resultado = true;
-            }
-        }
+	public String toString() {
+		String result = "[GUIDE ENTRY";
 
-        return resultado;
-    }
+		result += ", description=" + getDescription();
+		result += ", guide=" + getGuide();
+		result += ", documentType=" + documentType;
+		result += ", graduationType=" + graduationType;
+		result += ", price=" + getPrice();
+		result += ", quantity=" + getQuantity();
+		result += "]";
+		return result;
+	}
 
-    public String toString() {
-        String result = "[GUIDE ENTRY";
+	/**
+	 * @return
+	 */
+	public DocumentType getDocumentType() {
+		return documentType;
+	}
 
-        result += ", description=" + getDescription();
-        result += ", guide=" + guide;
-        result += ", documentType=" + documentType;
-        result += ", graduationType=" + graduationType;
-        result += ", price=" + getPrice();
-        result += ", quantity=" + getQuantity();
-        result += "]";
-        return result;
-    }
+	/**
+	 * @return
+	 */
+	public GraduationType getGraduationType() {
+		return graduationType;
+	}
 
+	/**
+	 * @param type
+	 */
+	public void setDocumentType(DocumentType type) {
+		documentType = type;
+	}
 
-    /**
-     * @return
-     */
-    public DocumentType getDocumentType() {
-        return documentType;
-    }
-
-    /**
-     * @return
-     */
-    public GraduationType getGraduationType() {
-        return graduationType;
-    }
-
-    /**
-     * @return
-     */
-    public IGuide getGuide() {
-        return guide;
-    }
-
-    /**
-     * @param type
-     */
-    public void setDocumentType(DocumentType type) {
-        documentType = type;
-    }
-
-    /**
-     * @param type
-     */
-    public void setGraduationType(GraduationType type) {
-        graduationType = type;
-    }
-
-    /**
-     * @param guide
-     */
-    public void setGuide(IGuide guide) {
-        this.guide = guide;
-    }
-
-    /**
-     * @return Returns the reimbursementGuideEntries.
-     */
-    public List getReimbursementGuideEntries() {
-        return reimbursementGuideEntries;
-    }
-
-    /**
-     * @param reimbursementGuideEntries
-     *            The reimbursementGuideEntries to set.
-     */
-    public void setReimbursementGuideEntries(List reimbursementGuideEntries) {
-        this.reimbursementGuideEntries = reimbursementGuideEntries;
-    }
+	/**
+	 * @param type
+	 */
+	public void setGraduationType(GraduationType type) {
+		graduationType = type;
+	}
 
 }

@@ -6,12 +6,9 @@ package net.sourceforge.fenixedu.domain.sms;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.IPerson;
-
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- * 
  */
 public class SentSms extends SentSms_Base {
 
@@ -20,8 +17,6 @@ public class SentSms extends SentSms_Base {
 	protected Date deliveryDate;
 
 	protected SmsDeliveryType deliveryType;
-
-	protected IPerson person;
 
 	public SentSms() {
 		super();
@@ -55,21 +50,6 @@ public class SentSms extends SentSms_Base {
 	 */
 	public void setDeliveryType(SmsDeliveryType deliveryType) {
 		this.deliveryType = deliveryType;
-	}
-
-	/**
-	 * @return Returns the person.
-	 */
-	public IPerson getPerson() {
-		return person;
-	}
-
-	/**
-	 * @param person
-	 *            The person to set.
-	 */
-	public void setPerson(IPerson person) {
-		this.person = person;
 	}
 
 	/**

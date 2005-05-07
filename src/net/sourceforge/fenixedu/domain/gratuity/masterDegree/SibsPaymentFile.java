@@ -3,15 +3,11 @@
  */
 package net.sourceforge.fenixedu.domain.gratuity.masterDegree;
 
-import java.util.List;
-
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
  */
 public class SibsPaymentFile extends SibsPaymentFile_Base {
-
-	private List sibsPaymentFileEntries;
 
 	public SibsPaymentFile() {
 	}
@@ -22,21 +18,6 @@ public class SibsPaymentFile extends SibsPaymentFile_Base {
 	public SibsPaymentFile(String filename) {
 		super();
 		setFilename(filename);
-	}
-
-	/**
-	 * @return Returns the sibsFileEntries.
-	 */
-	public List getSibsPaymentFileEntries() {
-		return sibsPaymentFileEntries;
-	}
-
-	/**
-	 * @param sibsFileEntries
-	 *            The sibsFileEntries to set.
-	 */
-	public void setSibsPaymentFileEntries(List sibsPaymentFileEntries) {
-		this.sibsPaymentFileEntries = sibsPaymentFileEntries;
 	}
 
 	public boolean equals(Object obj) {

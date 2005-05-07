@@ -3,11 +3,10 @@
  */
 package net.sourceforge.fenixedu.domain.gratuity.masterDegree;
 
-
 import java.sql.Timestamp;
 
-import net.sourceforge.fenixedu.util.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
+import net.sourceforge.fenixedu.util.gratuity.SibsPaymentType;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
@@ -19,15 +18,12 @@ public class SibsPaymentFileEntry extends SibsPaymentFileEntry_Base {
 
 	private Timestamp transactionDate;
 
-	private ISibsPaymentFile sibsPaymentFile;
-
 	private SibsPaymentStatus paymentStatus;
 
 	public SibsPaymentFileEntry() {
 	}
 
 	/**
-	 * 
 	 * @param year
 	 * @param studentNumber
 	 * @param paymentType
@@ -45,7 +41,7 @@ public class SibsPaymentFileEntry extends SibsPaymentFileEntry_Base {
 		this.paymentType = paymentType;
 		this.transactionDate = transactionDate;
 		setPayedValue(payedValue);
-		this.sibsPaymentFile = sibsPaymentFile;
+		setSibsPaymentFile(sibsPaymentFile);
 		this.paymentStatus = paymentStatus;
 	}
 
@@ -62,21 +58,6 @@ public class SibsPaymentFileEntry extends SibsPaymentFileEntry_Base {
 	 */
 	public void setPaymentType(SibsPaymentType paymentType) {
 		this.paymentType = paymentType;
-	}
-
-	/**
-	 * @return Returns the sibsFile.
-	 */
-	public ISibsPaymentFile getSibsPaymentFile() {
-		return sibsPaymentFile;
-	}
-
-	/**
-	 * @param sibsFile
-	 *            The sibsFile to set.
-	 */
-	public void setSibsPaymentFile(ISibsPaymentFile sibsPaymentFile) {
-		this.sibsPaymentFile = sibsPaymentFile;
 	}
 
 	/**
@@ -133,7 +114,7 @@ public class SibsPaymentFileEntry extends SibsPaymentFileEntry_Base {
 		result += "payedValue = " + getPayedValue() + "; \n";
 		result += "paymentType = " + this.paymentType + "; \n";
 		result += "paymentStatus = " + this.paymentStatus + "; \n";
-		result += "sibsPaymentFile = " + this.sibsPaymentFile.toString()
+		result += "sibsPaymentFile = " + getSibsPaymentFile().toString()
 				+ "; \n";
 		result += "studentNumber = " + getStudentNumber() + "; \n";
 		result += "transactionDate = " + this.transactionDate.toString()

@@ -14,7 +14,6 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Iterator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.util.State;
@@ -25,11 +24,6 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
 
 	// Instance from class Country
 
-	private IPerson person;
-
-	// List of Situations
-	private List situations;
-
 	public MasterDegreeCandidate() {
 		setMajorDegree(null);
 		setExecutionDegree(null);
@@ -38,15 +32,15 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
 		setMajorDegreeSchool(null);
 		setMajorDegreeYear(null);
 		setAverage(null);
-		situations = null;
-		person = null;
+		setSituations(null);
+		setPerson(null);
 	}
 
 	public MasterDegreeCandidate(IPerson person,
 			IExecutionDegree executionDegree, Integer candidateNumber,
 			Specialization specialization, String majorDegree,
 			String majorDegreeSchool, Integer majorDegreeYear, Double average) {
-		this.person = person;
+		setPerson(person);
 		this.setExecutionDegree(executionDegree);
 		setCandidateNumber(candidateNumber);
 		this.specialization = specialization;
@@ -83,7 +77,7 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
 	public String toString() {
 		String result = "Master Degree Candidate :\n";
 		result += "\n  - Internal Code : " + getIdInternal();
-		result += "\n  - Person : " + person;
+		result += "\n  - Person : " + getPerson();
 		result += "\n  - Major Degree : " + getMajorDegree();
 		result += "\n  - Candidate Number : " + getCandidateNumber();
 		result += "\n  - Specialization : " + specialization;
@@ -115,36 +109,8 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
 	/**
 	 * @return
 	 */
-	public IPerson getPerson() {
-		return person;
-	}
-
-	/**
-	 * @return
-	 */
-	public List getSituations() {
-		return situations;
-	}
-
-	/**
-	 * @return
-	 */
 	public Specialization getSpecialization() {
 		return specialization;
-	}
-
-	/**
-	 * @param pessoa
-	 */
-	public void setPerson(IPerson pessoa) {
-		person = pessoa;
-	}
-
-	/**
-	 * @param set
-	 */
-	public void setSituations(List list) {
-		situations = list;
 	}
 
 	/**

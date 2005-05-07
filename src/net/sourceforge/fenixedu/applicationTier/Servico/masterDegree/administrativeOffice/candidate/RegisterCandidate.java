@@ -230,7 +230,7 @@ public class RegisterCandidate implements IService {
             // Get the Candidate Enrolments
 
             List candidateEnrolments = sp.getIPersistentCandidateEnrolment().readByMDCandidate(
-                    masterDegreeCandidate);
+                    masterDegreeCandidate.getIdInternal());
 
             Iterator iterator = candidateEnrolments.iterator();
             while (iterator.hasNext()) {
