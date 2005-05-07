@@ -54,7 +54,7 @@ public class LerAulasDeDisciplinaExecucao implements IService {
             List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
             for (int i = 0; i < shifts.size(); i++) {
                 IShift shift = (IShift) shifts.get(i);
-                List aulasTemp = sp.getIAulaPersistente().readLessonsByShift(shift);
+                List aulasTemp = shift.getAssociatedLessons();
 
                 aulas.addAll(aulasTemp);
             }

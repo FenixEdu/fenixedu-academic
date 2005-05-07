@@ -52,7 +52,7 @@ public class LerAulasDeSalaEmSemestre implements IService {
 
             IRoom room = Cloner.copyInfoRoom2Room(infoRoom);
 
-            List lessonList = lessonDAO.readByRoomAndExecutionPeriod(room, executionPeriod);
+            List lessonList = lessonDAO.readByRoomAndExecutionPeriod(room.getIdInternal(), executionPeriod.getIdInternal());
 
             Iterator iterator = lessonList.iterator();
             infoAulas = new ArrayList();

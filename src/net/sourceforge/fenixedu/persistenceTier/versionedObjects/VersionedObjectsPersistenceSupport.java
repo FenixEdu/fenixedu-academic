@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects;
 
+import sun.security.krb5.internal.ktab.ay;
 import net.sourceforge.fenixedu.persistenceTier.*;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
@@ -72,6 +73,8 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransact
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AdvisoryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AnnouncementVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AttendInAttendsSetVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AttendsSetVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AulaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.BibliographicReferenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationVO;
 
@@ -262,7 +265,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 	}
 
 	public IPersistentAttendsSet getIPersistentAttendsSet()  {
-		return null;
+		return new AttendsSetVO();
 	}
 
 	public IPersistentRole getIPersistentRole()  {
@@ -598,7 +601,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 	}
 
 	public IAulaPersistente getIAulaPersistente()  {
-		return null;
+		return new AulaVO();
 	}
 
 	public IPersistentAttendInAttendsSet getIPersistentAttendInAttendsSet()  {

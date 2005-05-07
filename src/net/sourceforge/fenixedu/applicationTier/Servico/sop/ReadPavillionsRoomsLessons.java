@@ -61,7 +61,7 @@ public class ReadPavillionsRoomsLessons implements IService {
             final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
             infoViewRoomSchedule.setInfoRoom(infoRoom);
 
-            final List lessons = lessonDAO.readByRoomAndExecutionPeriod(room, executionPeriod);
+            final List lessons = lessonDAO.readByRoomAndExecutionPeriod(room.getIdInternal(), executionPeriod.getIdInternal());
             final List infoLessons = new ArrayList(lessons.size());
             for (final Iterator iterator2 = lessons.iterator(); iterator2.hasNext(); ) {
                 final ILesson lesson = (ILesson) iterator2.next();

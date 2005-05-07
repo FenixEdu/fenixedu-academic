@@ -18,26 +18,15 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class RemoverAula implements IService {
 
-    // FIXME : O serviço nao devolve False quando a aula nao existe!...
+    public Object run(final InfoLesson infoLesson, final InfoShift infoShift)
+            throws ExcepcaoPersistencia {
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-    public Object run(InfoLesson infoLesson, InfoShift infoShift) {
-        boolean result = false;
+        final ILesson lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        DeleteLessons.deleteLesson(sp, lesson.getIdInternal());
 
-            ILesson lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
-
-            sp.getIAulaPersistente().delete(lesson);
-            //      sp.getITurnoAulaPersistente().delete(shift,
-            // infoLesson.getDiaSemana(),
-            //                                           infoLesson.getInicio(), infoLesson.getFim(), room);
-            result = true;
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
-        }
-
-        return new Boolean(result);
+        return new Boolean(true);
     }
 
 }

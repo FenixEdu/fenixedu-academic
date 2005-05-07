@@ -956,12 +956,6 @@
           <forward name="Sucesso" path="/prepararEditarAulasDeTurno.do"/>
       </action>
 
-      <action path="/prepararAdicionarAulasDeTurno"
-              type="net.sourceforge.fenixedu.presentationTier.Action.sop.PrepararAdicionarAulasDeTurnoFormAction"
-              scope="request">
-          <forward name="Sucesso" path="/adicionarAulas.jsp"/>
-      </action>
-
               <!--input="/adicionarAulas.jsp"-->
       <action attribute="adicionarAulasForm"
               input="/prepararAdicionarAulasDeTurno.do"

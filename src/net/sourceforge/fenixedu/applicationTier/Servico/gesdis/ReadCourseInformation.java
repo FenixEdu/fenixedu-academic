@@ -590,15 +590,12 @@ public class ReadCourseInformation implements IService {
      */
     private List getInfoLessons(IExecutionCourse executionCourse, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
-        //IAulaPersistente persistentLesson = sp.getIAulaPersistente();
-        //List lessons =
-        // persistentLesson.readByExecutionCourse(executionCourse);
         List lessons = new ArrayList();
 
         List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
         for (int i = 0; i < shifts.size(); i++) {
             IShift shift = (IShift) shifts.get(i);
-            List aulasTemp = sp.getIAulaPersistente().readLessonsByShift(shift);
+            List aulasTemp = shift.getAssociatedLessons();
 
             lessons.addAll(aulasTemp);
         }

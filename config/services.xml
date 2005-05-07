@@ -283,16 +283,6 @@
         <filterChains/>
     </service>
     <service>
-        <name>LerAulasDeDisciplinaExecucaoETipo</name>
-        <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.sop.LerAulasDeDisciplinaExecucaoETipo</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="TimeTableManagerAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
         <name>LerAulasDeSalaEmSemestre</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.LerAulasDeSalaEmSemestre</implementationClass>
         <description/>
@@ -359,13 +349,6 @@
         <filterChains>
             <chain name="TimeTableManagerAuthorization"/>
         </filterChains>
-    </service>
-    <service>
-        <name>ReadEmptyRoomsService</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadEmptyRoomsService</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains/>
     </service>
     <service>
         <name>ReadLessonByOID</name>

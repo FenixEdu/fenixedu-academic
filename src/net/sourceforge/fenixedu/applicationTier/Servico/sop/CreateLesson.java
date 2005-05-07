@@ -118,17 +118,6 @@ public class CreateLesson implements IService {
         } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex);
         }
-
-        /*
-         * try { ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-         * IAulaPersistente persistentLesson = sp.getIAulaPersistente(); List
-         * lessonMatchList = persistentLesson.readLessonsInBroadPeriod(lesson,
-         * null, executionPeriod); if (lessonMatchList.size() > 0) { if
-         * (lessonMatchList.contains(lesson)) { throw new
-         * ExistingServiceException(); } else { throw new
-         * InterceptingServiceException(); } } else { return true; } } catch
-         * (ExcepcaoPersistencia e) { return false; }
-         */
     }
 
     private InfoLessonServiceResult validTimeInterval(ILesson lesson) {
@@ -173,27 +162,11 @@ public class CreateLesson implements IService {
     }
 
     private double getTotalHoursOfShiftType(IShift shift) throws ExcepcaoPersistencia {
-        /*
-         * IShift shiftCriteria = new Shift();
-         * shiftCriteria.setNome(shift.getNome());
-         * shiftCriteria.setDisciplinaExecucao(shift.getDisciplinaExecucao());
-         * 
-         * List lessonsOfShiftType = SuportePersistenteOJB .getInstance()
-         * .getITurnoAulaPersistente() .readLessonsByShift(shiftCriteria);
-         * 
-         * ILesson lesson = null; double duration = 0; for (int i = 0; i <
-         * lessonsOfShiftType.size(); i++) { lesson = ((ITurnoAula)
-         * lessonsOfShiftType.get(i)).getAula(); try { lesson.getIdInternal();
-         * duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60); }
-         * catch (Exception ex) { // all is ok // the lesson contained a proxy
-         * to null. } } return duration;
-         */
         ILesson lesson = null;
         double duration = 0;
         List associatedLessons = shift.getAssociatedLessons();
         if (associatedLessons == null) {
-            associatedLessons = PersistenceSupportFactory.getDefaultPersistenceSupport().getIAulaPersistente()
-                    .readLessonsByShift(shift);
+            associatedLessons = shift.getAssociatedLessons();
             shift.setAssociatedLessons(associatedLessons);
         }
         for (int i = 0; i < associatedLessons.size(); i++) {

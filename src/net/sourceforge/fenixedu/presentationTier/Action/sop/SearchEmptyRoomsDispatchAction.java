@@ -7,17 +7,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.validator.DynaValidatorForm;
-
 import net.sourceforge.fenixedu.dataTransferObject.comparators.RoomAlphabeticComparator;
 import net.sourceforge.fenixedu.domain.Period;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
-import net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadEmptyRoomsService.InvalidTimeInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidTimeIntervalActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -25,67 +17,28 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.Util;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.validator.DynaValidatorForm;
+
 /**
  * @author jpvl
  */
 public class SearchEmptyRoomsDispatchAction extends FenixContextDispatchAction {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.struts.actions.DispatchAction#dispatchMethod(org.apache.struts.action.ActionMapping,
-     *      org.apache.struts.action.ActionForm,
-     *      javax.servlet.http.HttpServletRequest,
-     *      javax.servlet.http.HttpServletResponse, java.lang.String)
-     */
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        //		HttpSession session = request.getSession(false);
         request.setAttribute("minutes", Util.getMinutes());
         request.setAttribute("hours", Util.getHours());
         request.setAttribute("weekDays", Util.getDaysOfWeek());
 
-        /*
-         * IUserView userView = (IUserView)
-         * session.getAttribute(SessionConstants.U_VIEW);
-         * 
-         * Object argsReadExecutionPeriods[] = { }; ArrayList executionPeriods =
-         * (ArrayList) ServiceManagerServiceFactory.executeService( userView,
-         * "ReadNotClosedExecutionPeriods", argsReadExecutionPeriods); // if
-         * executionPeriod was previously selected,form has that // value as
-         * default InfoExecutionPeriod selectedExecutionPeriod =
-         * (InfoExecutionPeriod) request.getAttribute(
-         * SessionConstants.EXECUTION_PERIOD); if (selectedExecutionPeriod !=
-         * null) { DynaActionForm searchForm = (DynaActionForm) form;
-         * searchForm.set( "executionPeriodIndex", new
-         * Integer(executionPeriods.indexOf(selectedExecutionPeriod))); }
-         * //----------------------------------------------
-         * 
-         * 
-         * ArrayList executionPeriodsLabelValueList = new ArrayList(); for (int
-         * i = 0; i < executionPeriods.size(); i++) { InfoExecutionPeriod
-         * infoExecutionPeriod = (InfoExecutionPeriod) executionPeriods.get(i);
-         * executionPeriodsLabelValueList.add( new LabelValueBean(
-         * infoExecutionPeriod.getName() + " - " +
-         * infoExecutionPeriod.getInfoExecutionYear().getYear(), "" + i)); } //
-         * request.setAttribute( // SessionConstants.LIST_INFOEXECUTIONPERIOD, //
-         * executionPeriods);
-         * 
-         * request.setAttribute( SessionConstants.LABELLIST_EXECUTIONPERIOD,
-         * executionPeriodsLabelValueList);
-         */
         return mapping.findForward("searchPage");
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.struts.actions.DispatchAction#dispatchMethod(org.apache.struts.action.ActionMapping,
-     *      org.apache.struts.action.ActionForm,
-     *      javax.servlet.http.HttpServletRequest,
-     *      javax.servlet.http.HttpServletResponse, java.lang.String)
-     */
     public ActionForward doSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
@@ -171,8 +124,6 @@ public class SearchEmptyRoomsDispatchAction extends FenixContextDispatchAction {
 
             return mapping.findForward("showSearchResult");
 
-        } catch (InvalidTimeInterval ex) {
-            throw new InvalidTimeIntervalActionException(ex);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }

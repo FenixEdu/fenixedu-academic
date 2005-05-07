@@ -93,7 +93,7 @@ public class RoomSiteComponentBuilder {
             Period lessonsPeriod = calculateLessonsSeason(executionPeriod);
             if (lessonsPeriod.intersectPeriods(weekPeriod)) {
                 //adicionar as aulas
-                List lessonList = lessonDAO.readByRoomAndExecutionPeriod(room, executionPeriod);
+                List lessonList = lessonDAO.readByRoomAndExecutionPeriod(room.getIdInternal(), executionPeriod.getIdInternal());
                 Iterator iterator = lessonList.iterator();
 
                 while (iterator.hasNext()) {
