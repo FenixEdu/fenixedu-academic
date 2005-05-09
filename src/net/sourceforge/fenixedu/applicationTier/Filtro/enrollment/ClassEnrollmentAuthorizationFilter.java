@@ -13,11 +13,11 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.IEnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -46,11 +46,11 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
         IStudentCurricularPlan studentCurricularPlan = null;
 
         studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(id
-                .getUtilizador(), TipoCurso.LICENCIATURA_OBJ);
+                .getUtilizador(), DegreeType.DEGREE);
 
         if (studentCurricularPlan == null) {
             studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(id
-                    .getUtilizador(), TipoCurso.MESTRADO_OBJ);
+                    .getUtilizador(), DegreeType.MASTER_DEGREE);
         }
 
         if (studentCurricularPlan != null) {

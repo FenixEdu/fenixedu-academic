@@ -97,8 +97,8 @@ class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.do
     String sigla;
     
     interface "
-    public net.sourceforge.fenixedu.util.TipoCurso getTipoCurso();
-    public void setTipoCurso(net.sourceforge.fenixedu.util.TipoCurso tipoCurso);
+    public net.sourceforge.fenixedu.domain.degree.DegreeType getTipoCurso();
+    public void setTipoCurso(net.sourceforge.fenixedu.domain.degree.DegreeType tipoCurso);
     "
 }
 
@@ -372,11 +372,11 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
     interface "
 
         public net.sourceforge.fenixedu.util.StudentState getState();
-        public net.sourceforge.fenixedu.util.TipoCurso getDegreeType();
+        public net.sourceforge.fenixedu.domain.degree.DegreeType getDegreeType();
         public net.sourceforge.fenixedu.util.AgreementType getAgreementType();
         public void setAgreementType(net.sourceforge.fenixedu.util.AgreementType agreementType);
         public void setState(net.sourceforge.fenixedu.util.StudentState state);
-        public void setDegreeType(net.sourceforge.fenixedu.util.TipoCurso degreeType);
+        public void setDegreeType(net.sourceforge.fenixedu.domain.degree.DegreeType degreeType);
         public net.sourceforge.fenixedu.util.EntryPhase getEntryPhase();
         public void setEntryPhase(net.sourceforge.fenixedu.util.EntryPhase entryPhase);
         public net.sourceforge.fenixedu.domain.IStudentCurricularPlan getActiveStudentCurricularPlan();

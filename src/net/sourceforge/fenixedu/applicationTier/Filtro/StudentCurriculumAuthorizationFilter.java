@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.ITutor;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
@@ -27,7 +28,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -182,7 +182,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
         roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
             if (!studentCurricularPlan.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(
-                    TipoCurso.MESTRADO_OBJ)
+                    DegreeType.MASTER_DEGREE)
                     && !(roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE) || roles
                             .contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))) {
                 return "noAuthorization";
@@ -306,7 +306,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
         roleTemp.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
             if (!studentCurricularPlan.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(
-                    TipoCurso.LICENCIATURA_OBJ)) {
+                    DegreeType.DEGREE)) {
                 return "noAuthorization";
             }
             return null;

@@ -15,12 +15,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 public class ReadNonMasterExecutionDegreesByExecutionYear implements IServico {
 
@@ -69,7 +69,7 @@ public class ReadNonMasterExecutionDegreesByExecutionYear implements IServico {
 
             IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
             List executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear,
-                    new TipoCurso(1));
+                    DegreeType.DEGREE);
 
             Iterator iterator = executionDegrees.iterator();
             infoExecutionDegreeList = new ArrayList();

@@ -21,9 +21,9 @@ import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.util.classProperties.ExecutionCoursePropertyName;
 
 import org.apache.ojb.broker.PersistenceBroker;
@@ -167,7 +167,7 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
      * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByExecutionPeriod(Dominio.IExecutionPeriod,
      *      Util.TipoCurso)
      */
-    public List readByExecutionPeriod(IExecutionPeriod executionPeriod, TipoCurso curso)
+    public List readByExecutionPeriod(IExecutionPeriod executionPeriod, DegreeType curso)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());

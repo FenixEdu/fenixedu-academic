@@ -8,10 +8,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -19,7 +19,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadAllMasterDegrees implements IService {
 
-    public List run(TipoCurso degreeType) throws FenixServiceException {
+    public List run(DegreeType degreeType) throws FenixServiceException {
 
         ISuportePersistente sp = null;
         List result = new ArrayList();

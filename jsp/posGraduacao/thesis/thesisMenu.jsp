@@ -12,22 +12,22 @@
 	java.util.Hashtable paramsVisuzalizeProof = new java.util.Hashtable();
 	InfoStudent infoStudent = (InfoStudent) student;
 	
-	paramsVisuzalize.put("degreeType", infoStudent.getDegreeType().getTipoCurso());
+	paramsVisuzalize.put("degreeType", infoStudent.getDegreeType().toString());
 	paramsVisuzalize.put("studentNumber", infoStudent.getNumber());
 	paramsVisuzalize.put("method", "getStudentAndMasterDegreeThesisDataVersion");
 	pageContext.setAttribute("parametersVisuzalize", paramsVisuzalize, PageContext.PAGE_SCOPE);
 	
-	paramsChange.put("degreeType", infoStudent.getDegreeType().getTipoCurso());
+	paramsChange.put("degreeType", infoStudent.getDegreeType().toString());
 	paramsChange.put("studentNumber", infoStudent.getNumber());
 	paramsChange.put("method", "getStudentAndMasterDegreeThesisDataVersion");
 	pageContext.setAttribute("parametersChange", paramsChange, PageContext.PAGE_SCOPE);
 	
-	paramsChangeProof.put("degreeType", infoStudent.getDegreeType().getTipoCurso());
+	paramsChangeProof.put("degreeType", infoStudent.getDegreeType().toString());
 	paramsChangeProof.put("studentNumber", infoStudent.getNumber());
 	paramsChangeProof.put("method", "getStudentAndMasterDegreeProofVersion");
 	pageContext.setAttribute("parametersChangeProof", paramsChangeProof, PageContext.PAGE_SCOPE);
 	
-	paramsVisuzalizeProof.put("degreeType", infoStudent.getDegreeType().getTipoCurso());
+	paramsVisuzalizeProof.put("degreeType", infoStudent.getDegreeType().toString());
 	paramsVisuzalizeProof.put("studentNumber", infoStudent.getNumber());
 	paramsVisuzalizeProof.put("method", "getStudentAndMasterDegreeProofVersion");
 	pageContext.setAttribute("parametersVisuzalizeProof", paramsVisuzalizeProof, PageContext.PAGE_SCOPE);

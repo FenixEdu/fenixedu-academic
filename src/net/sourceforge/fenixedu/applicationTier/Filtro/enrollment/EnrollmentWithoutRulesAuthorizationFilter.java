@@ -13,12 +13,12 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesF
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * @author Tânia Pousão
@@ -26,9 +26,9 @@ import net.sourceforge.fenixedu.util.TipoCurso;
  */
 public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByManyRolesFilter {
 
-    private static TipoCurso DEGREE_TYPE = TipoCurso.LICENCIATURA_OBJ;
+    private static DegreeType DEGREE_TYPE = DegreeType.DEGREE;
 
-    private static TipoCurso MASTER_DEGREE_TYPE = TipoCurso.MESTRADO_OBJ;
+    private static DegreeType MASTER_DEGREE_TYPE = DegreeType.MASTER_DEGREE;
 
     protected Collection getNeededRoles() {
         List roles = new ArrayList();
@@ -88,7 +88,7 @@ public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByMa
         }
     }
 
-    private boolean verifyDegreeType(Object[] arguments, TipoCurso degreeType) {
+    private boolean verifyDegreeType(Object[] arguments, DegreeType degreeType) {
         boolean isEqual = false;
 
         if (arguments != null && arguments[1] != null) {
@@ -98,7 +98,7 @@ public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByMa
         return isEqual;
     }
 
-    private boolean verifyStudentType(Object[] arguments, ISuportePersistente sp, TipoCurso degreeType)
+    private boolean verifyStudentType(Object[] arguments, ISuportePersistente sp, DegreeType degreeType)
             throws ExcepcaoPersistencia {
         boolean isRightType = false;
 

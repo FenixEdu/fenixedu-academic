@@ -326,7 +326,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		}
 
 		if (curricularCourseAcumulatedEnrolments.intValue() >= curricularCourse
-				.getMinimumValueForAcumulatedEnrollments().intValue()) {
+				.getMaximumValueForAcumulatedEnrollments().intValue()) {
 			curricularCourseAcumulatedEnrolments = curricularCourse
 					.getMaximumValueForAcumulatedEnrollments();
 		}
@@ -353,6 +353,21 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 					}
 				}));
 	}
+    
+    public List getAllStudentEnrollmentsInExecutionPeriod(
+            final IExecutionPeriod executionPeriod) {
+
+        calculateStudentAcumulatedEnrollments();
+        return initAcumulatedEnrollments((List) CollectionUtils.select(
+                getEnrolments(), new Predicate() {
+
+                    public boolean evaluate(Object arg0) {
+
+                        return ((IEnrolment) arg0).getExecutionPeriod()
+                                .equals(executionPeriod);
+                    }
+                }));
+    }
 
 	public List getStudentTemporarilyEnrolledEnrollments() {
 

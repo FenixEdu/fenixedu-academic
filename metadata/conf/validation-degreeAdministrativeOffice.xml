@@ -51,7 +51,7 @@
 			<field property="executionPeriod" depends="required" page="1">
 				<arg0 key="label.student.enrollment.executionPeriod" resource="true"/>
 			</field>
-			<field property="degreeType" depends="required,integer" page="1">
+			<field property="degreeType" depends="required" page="1">
 				<arg0 key="label.degree.type" resource="true"/>
 			</field>	
 			<field property="executionDegree" depends="required" page="2">

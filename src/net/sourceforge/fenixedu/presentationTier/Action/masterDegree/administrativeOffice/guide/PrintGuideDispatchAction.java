@@ -17,13 +17,13 @@ import org.apache.struts.actions.DispatchAction;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -137,7 +137,7 @@ public class PrintGuideDispatchAction extends DispatchAction {
                     Iterator it = infoStudents.iterator();
                     while (it.hasNext()) {
                         infoStudent = (InfoStudent) it.next();
-                        if (infoStudent.getDegreeType().equals(TipoCurso.MESTRADO_OBJ))
+                        if (infoStudent.getDegreeType().equals(DegreeType.MASTER_DEGREE))
                             break;
                     }
                     request.setAttribute(SessionConstants.STUDENT, infoStudent.getNumber());

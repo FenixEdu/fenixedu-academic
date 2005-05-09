@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -37,7 +38,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -57,7 +57,7 @@ public class ReadCurricularCoursesToEnroll implements IService {
     public ReadCurricularCoursesToEnroll() {
     }
 
-    public Object run(InfoStudent infoStudent, TipoCurso degreeType,
+    public Object run(InfoStudent infoStudent, DegreeType degreeType,
             Integer executionPeriodID, Integer executionDegreeID, List curricularYearsList,
             List curricularSemestersList) throws FenixServiceException {
         InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
@@ -256,7 +256,7 @@ public class ReadCurricularCoursesToEnroll implements IService {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentStudent studentDAO = persistentSuport.getIPersistentStudent();
 
-        return studentDAO.readStudentByNumberAndDegreeType(studentNumber, TipoCurso.LICENCIATURA_OBJ);
+        return studentDAO.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
     }
 
     /**

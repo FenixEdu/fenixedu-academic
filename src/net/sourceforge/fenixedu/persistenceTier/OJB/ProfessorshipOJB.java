@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -109,7 +109,7 @@ public class ProfessorshipOJB extends PersistentObjectOJB implements IPersistent
      * @see ServidorPersistente.IPersistentProfessorship#readByTeacherAndTypeOfDegree(Dominio.ITeacher,
      *      Util.TipoCurso)
      */
-    public List readByTeacherAndTypeOfDegree(ITeacher teacher, TipoCurso degreeType)
+    public List readByTeacherAndTypeOfDegree(ITeacher teacher, DegreeType degreeType)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyTeacher", teacher.getIdInternal());

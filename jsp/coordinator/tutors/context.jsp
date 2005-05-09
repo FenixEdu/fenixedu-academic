@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<%@ page import="net.sourceforge.fenixedu.util.TipoCurso" %>
+<%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td align="center" class="infoselected">

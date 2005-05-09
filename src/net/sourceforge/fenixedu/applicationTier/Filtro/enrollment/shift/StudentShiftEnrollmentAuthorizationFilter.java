@@ -13,11 +13,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -100,10 +100,10 @@ public class StudentShiftEnrollmentAuthorizationFilter extends Filtro {
                     .getIStudentCurricularPlanPersistente();
 
             studentCurricularPlan = persistentStudentCurricularPlan
-                    .readActiveByStudentNumberAndDegreeType(studentNumber, TipoCurso.LICENCIATURA_OBJ);
+                    .readActiveByStudentNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
             if (studentCurricularPlan == null) {
                 studentCurricularPlan = persistentStudentCurricularPlan
-                        .readActiveByStudentNumberAndDegreeType(studentNumber, TipoCurso.MESTRADO_OBJ);
+                        .readActiveByStudentNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
             }
 
         } catch (Exception e) {

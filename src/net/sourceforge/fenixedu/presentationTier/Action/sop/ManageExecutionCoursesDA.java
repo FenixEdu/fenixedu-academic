@@ -16,6 +16,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.apache.struts.util.MessageResources;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseOccupancy;
@@ -100,9 +101,11 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
             e.printStackTrace();
         }
 
+        
+        MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
         /* Generate a label list for the above list of degrees */
         List labelListOfExecutionDegrees = ExecutionDegreesFormat
-                .buildExecutionDegreeLabelValueBean(executionDegreeList);//ContextUtils.getLabelListOfExecutionDegrees(executionDegreeList);
+                .buildExecutionDegreeLabelValueBean(executionDegreeList, messageResources);//ContextUtils.getLabelListOfExecutionDegrees(executionDegreeList);
         request.setAttribute(SessionConstants.LIST_INFOEXECUTIONDEGREE, labelListOfExecutionDegrees);
 
         return mapping.findForward("ShowSearchForm");

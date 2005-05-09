@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.ResponsibleFor;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
@@ -53,7 +54,6 @@ import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseReport;
 import net.sourceforge.fenixedu.util.TipoAula;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -85,7 +85,7 @@ public class ReadCoursesInformation implements IService {
             if (executionDegreeId == null) {
                 List executionDegrees = null;
                 executionDegrees = persistentExecutionDegree.readByExecutionYearAndDegreeType(
-                        executionYear, TipoCurso.LICENCIATURA_OBJ);
+                        executionYear, DegreeType.DEGREE);
                 if (basic == null) {
                     professorships = persistentProfessorship.readByExecutionDegrees(executionDegrees);
                 } else {

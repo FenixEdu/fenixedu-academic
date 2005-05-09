@@ -14,10 +14,10 @@ import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -38,10 +38,10 @@ public class GetCandidateRegistrationInformation implements IService {
                             candidateID);
 
             IStudent student = sp.getIPersistentStudent().readByPersonAndDegreeType(
-                    masterDegreeCandidate.getPerson(), TipoCurso.MESTRADO_OBJ);
+                    masterDegreeCandidate.getPerson(), DegreeType.MASTER_DEGREE);
 
             IStudentCurricularPlan studentCurricularPlan = sp.getIStudentCurricularPlanPersistente()
-                    .readActiveStudentCurricularPlan(student.getNumber(), TipoCurso.MESTRADO_OBJ);
+                    .readActiveStudentCurricularPlan(student.getNumber(), DegreeType.MASTER_DEGREE);
 
             infoCandidateRegistration = new InfoCandidateRegistration();
 

@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
@@ -34,7 +35,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -206,7 +206,7 @@ public class AlterStudentEnrolmentEvaluation implements IService {
             IStudent student = new Student();
             student = persistentStudent.readStudentByNumberAndDegreeType(infoEnrolmentEvaluation
                     .getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent().getNumber(),
-                    new TipoCurso(TipoCurso.MESTRADO));
+                    DegreeType.MASTER_DEGREE);
             infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().setInfoStudent(
                     Cloner.copyIStudent2InfoStudent(student));
 

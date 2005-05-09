@@ -20,12 +20,12 @@ import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -54,7 +54,7 @@ public class ReadImprovmentsToEnroll implements IService  {
 
             //Read Student
             IStudent student = sp.getIPersistentStudent()
-                    .readStudentByNumberAndDegreeType(studentNumber, TipoCurso.LICENCIATURA_OBJ);
+                    .readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
             
             if(student == null) {
                 throw new InvalidArgumentsServiceException("error.student.notExist");

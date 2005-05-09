@@ -7,8 +7,8 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.StudentState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * @author tfc130
@@ -22,7 +22,7 @@ public class InfoStudent extends InfoObject {
 
     private InfoPerson infoPerson;
 
-    protected TipoCurso degreeType;
+    protected DegreeType degreeType;
 
     private InfoStudentKind infoStudentKind;
 
@@ -31,7 +31,7 @@ public class InfoStudent extends InfoObject {
     public InfoStudent() {
     }
 
-    public InfoStudent(Integer numero, StudentState estado, InfoPerson pessoa, TipoCurso degreeType) {
+    public InfoStudent(Integer numero, StudentState estado, InfoPerson pessoa, DegreeType degreeType) {
         setNumber(numero);
         setState(estado);
         setInfoPerson(pessoa);
@@ -62,11 +62,11 @@ public class InfoStudent extends InfoObject {
         state = estado;
     }
 
-    public TipoCurso getDegreeType() {
+    public DegreeType getDegreeType() {
         return degreeType;
     }
 
-    public void setDegreeType(TipoCurso degreeType) {
+    public void setDegreeType(DegreeType degreeType) {
         this.degreeType = degreeType;
     }
 

@@ -45,8 +45,8 @@
 	<td>
 		
 		<html:select property="degreeType">
-    		<html:option key="option.editDegree.degree" value="1"/>
-    		<html:option key="option.editDegree.masterDegree" value="2"/>
+    		<html:option key="option.editDegree.degree" value="DEGREE"/>
+    		<html:option key="option.editDegree.masterDegree" value="MASTER_DEGREE"/>
     	</html:select>
 		
 	</td>

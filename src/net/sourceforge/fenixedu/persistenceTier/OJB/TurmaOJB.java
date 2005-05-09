@@ -18,9 +18,9 @@ import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -134,7 +134,7 @@ public class TurmaOJB extends PersistentObjectOJB implements ITurmaPersistente {
 
     }
 
-    public List readByExecutionPeriodAndDegreeType(IExecutionPeriod executionPeriod, TipoCurso tipoCurso)
+    public List readByExecutionPeriodAndDegreeType(IExecutionPeriod executionPeriod, DegreeType tipoCurso)
             throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();

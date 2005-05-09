@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<%@ page import="net.sourceforge.fenixedu.util.TipoCurso" %>
+<%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 
 <p><span class="error"><html:errors/></span></p>
 
@@ -26,8 +26,6 @@
 	</html:link>
 	&nbsp;&gt;&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="public.degree.information.label.curriculum"/>		
 </div>	
-
-<style>@import "<%= request.getContextPath() %>/CSS/table-adjustment.css";</style>
 
 	<!-- COURSE NAME -->
 	<h1>
@@ -64,7 +62,6 @@
 				<td>
 					<html:select property="indice" size="1" onchange="this.form.submit();">
 						<html:options property="value" labelProperty="label" collection="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD%>"/>
-						<bean:define id="indiceID" name="chooseContextDegreeForm" property="indice"/>
 					</html:select>
 				</td>
 			</tr>
@@ -87,60 +84,25 @@
 		<logic:iterate id="curricularCourseScopeElem" name="curricularCourseScopeElemList" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope" length="1">
 			<bean:define id="currentYear" name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>
 		</logic:iterate>
-		<logic:iterate id="curricularCourseScopeElem" name="curricularCourseScopeElemList" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope" length="1">
-			<bean:define id="currentCode" name="curricularCourseScopeElem" property="infoBranch.code"/>
-		</logic:iterate>
 	</logic:iterate>
-
+	
 	<table class="tab_lay" cellspacing="0" cellpadding="5">
 		<tr>
-			<% if (pageContext.findAttribute("indiceID").toString().equals("44")){%>
-				<th colspan="11" scope="col">
-				<logic:equal name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language" value="en">
-					<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/>&nbsp;<bean:write name="currentYear"/>
-				</logic:equal>
-				<logic:equal name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language" value="pt">
-					<bean:write name="currentYear"/>&ordm;&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/>
-				</logic:equal>
-				</th>
-			<%}else{ %>
-				<th colspan="10" scope="col">
-				<logic:equal name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language" value="en">
-					<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/>&nbsp;<bean:write name="currentYear"/>
-				</logic:equal>
-				<logic:equal name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language" value="pt">
-					<bean:write name="currentYear"/>&ordm;&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/>
-				</logic:equal>
-				</th>
-			<%}%>
-		</tr>
-		<tr>
-			<% if (pageContext.findAttribute("indiceID").toString().equals("44")){%>		
-				<th colspan="11" scope="col">
-					 <center><bean:write name="curricularCourseScopeElem" property="infoBranch.name"/></center>
-				</th>
-			<%}else{ %>
-				<th colspan="10" scope="col">
-					 <center><bean:write name="curricularCourseScopeElem" property="infoBranch.name"/></center>
-				</th>
-			<%}%>
+			
+			<th colspan="12" scope="col">
+				<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year" /> <bean:write name="currentYear"/>
+			</th>
 		</tr>
 		<tr>						
-			<% if (pageContext.findAttribute("indiceID").toString().equals("44")){%>				
-				<td colspan="7" class="subheader">&nbsp;</td>
-				<td colspan="4" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.hoursPerWeek" /></td>
-			<%}else{ %>
-				<td colspan="6" class="subheader">&nbsp;</td>
-				<td colspan="4" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.hoursPerWeek" /></td>
-			<%}%>
+			<td colspan="8" class="subheader">&nbsp;</td>
+			<td colspan="5" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.hoursPerWeek" /></td>
 		</tr>	
 		</tr>
 			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr"/></td>
 			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curricularCourse"/></td>
-			<% if (pageContext.findAttribute("indiceID").toString().equals("44")){%>
-				<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.anotation"/></td>
-			<%}%>
+			<td class="subheader">&nbsp;</td>
 			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.type"/></td>
+			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.branch"/></td>			
 			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.credits"/></td>
 			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.ects"/></td>
 			<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.weight"/></td>
@@ -153,108 +115,26 @@
 		<% int count=0; %>
 		<logic:iterate id="curricularCourseScopeElemList" name="allActiveCurricularCourseScopes" indexId="row">
 			<logic:iterate id="curricularCourseScopeElem" name="curricularCourseScopeElemList" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope" length="1">
-				<logic:notEqual name="curricularCourseScopeElem" property="infoBranch.code" value="<%= pageContext.findAttribute("currentCode").toString()%>">
-				  <logic:equal name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year" value="<%= pageContext.findAttribute("currentYear").toString()%>">					 
-						<tr>
-							<% if (pageContext.findAttribute("indiceID").toString().equals("44")){%>		
-								<th colspan="11" scope="col">
-									 <center><bean:write name="curricularCourseScopeElem" property="infoBranch.name"/></center>
-								</th>
-							<%}else{ %>
-								<th colspan="10" scope="col">
-									 <center><bean:write name="curricularCourseScopeElem" property="infoBranch.name"/></center>
-								</th>
-							<%}%>
-						</tr>
-						<bean:define id="currentCode" name="curricularCourseScopeElem" property="infoBranch.code"/>
-						<bean:define id="currentYear" name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>
-						<tr>
-							<% if (pageContext.findAttribute("indiceID").toString().equals("44")){%>				
-								<td colspan="7" class="subheader">&nbsp;</td>
-								<td colspan="4" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.hoursPerWeek" /></td>
-							<%}else{ %>
-								<td colspan="6" class="subheader">&nbsp;</td>
-								<td colspan="4" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.hoursPerWeek" /></td>
-							<%}%>
-						</tr>
-						
-						<tr>						
-							<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr"/></td>
-							<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curricularCourse"/></td>
-							<% if (pageContext.findAttribute("indiceID").toString().equals("44")){%>
-								<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.anotation"/></td>
-							<%}%>
-							<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.type"/></td>
-							<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.credits"/></td>
-							<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.ects"/></td>
-							<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.weight"/></td>							
-							<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.theoretical.abbr"/></td>
-							<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.pratical.abbr"/></td>
-							<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.theoPrat.abbr"/></td>
-							<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.laboratorial.abbr"/></td>
-						</tr>
-					</logic:equal>
-					</logic:notEqual>
-			        <logic:equal name="curricularCourseScopeElem" property="infoBranch.code" value="<%= pageContext.findAttribute("currentCode").toString()%>">
-					<logic:notEqual name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year" value="<%= pageContext.findAttribute("currentYear").toString()%>">
-					</table>
-					<br/>
-					 <table class="tab_lay" cellspacing="0" cellpadding="5">
-					 
+				<logic:notEqual name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year" value="<%= pageContext.findAttribute("currentYear").toString()%>">
 					<% if (row.intValue() % 2 !=0) count=1; else count=0; %>
-	
 					<tr>
-					<% if (pageContext.findAttribute("indiceID").toString().equals("44")){%>		
-							<th colspan="11" scope="col">
-							<logic:equal name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language" value="en">
-								<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/>&nbsp;<bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>
-							</logic:equal>
-							<logic:equal name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language" value="pt">
-								<bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>&ordm;&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/>
-							</logic:equal>
-							</th>
-					<%}else{ %>
-							<th colspan="10" scope="col">
-							<logic:equal name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language" value="en">
-								<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/>&nbsp;<bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>
-							</logic:equal>
-							<logic:equal name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language" value="pt">
-								<bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>&ordm;&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/>
-							</logic:equal>
-							</th>
-					<%}%>
+				
+						<th colspan="12" scope="col">
+							<bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>&ordm;&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/>
+						</th>
 					</tr>
 					<bean:define id="currentYear" name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>
-					<bean:define id="currentCode" name="curricularCourseScopeElem" property="infoBranch.code"/>
 					<tr>
-						<% if (pageContext.findAttribute("indiceID").toString().equals("44")){%>		
-							<th colspan="11" scope="col">
-								 <center><bean:write name="curricularCourseScopeElem" property="infoBranch.name"/></center>
-							</th>
-						<%}else{ %>
-							<th colspan="10" scope="col">
-								 <center><bean:write name="curricularCourseScopeElem" property="infoBranch.name"/></center>
-							</th>
-						<%}%>
-						</tr>
-					<tr>
-						<% if (pageContext.findAttribute("indiceID").toString().equals("44")){%>				
-							<td colspan="7" class="subheader">&nbsp;</td>
-							<td colspan="4" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.hoursPerWeek" /></td>
-						<%}else{ %>
-							<td colspan="6" class="subheader">&nbsp;</td>
-							<td colspan="4" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.hoursPerWeek" /></td>
-						<%}%>
+						<td colspan="8" class="subheader">&nbsp;</td>
+						<td colspan="5" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.hoursPerWeek" /></td>
 					</tr>
 					
 					<tr>						
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr"/></td>
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curricularCourse"/></td>
-						<% if (pageContext.findAttribute("indiceID").toString().equals("44")){%>
-							<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.anotation"/></td>
-						<%}%>
+						<td class="subheader">&nbsp;</td>
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.type"/></td>
-<!--						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.branch"/></td>	-->
+						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.branch"/></td>			
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.credits"/></td>
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.ects"/></td>
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.weight"/></td>							
@@ -263,77 +143,6 @@
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.theoPrat.abbr"/></td>
 						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.laboratorial.abbr"/></td>
 					</tr>
-					</logic:notEqual>
-				</logic:equal>
-				<logic:notEqual name="curricularCourseScopeElem" property="infoBranch.code" value="<%= pageContext.findAttribute("currentCode").toString()%>">
-					 <logic:notEqual name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year" value="<%= pageContext.findAttribute("currentYear").toString()%>">
-					
-					</table>
-					<p/>
-					 <table class="tab_lay" cellspacing="0" cellpadding="5">
-					 <% if (row.intValue() % 2 !=0) count=1; else count=0; %>
-
-					<tr>
-					<% if (pageContext.findAttribute("indiceID").toString().equals("44")){%>		
-							<th colspan="11" scope="col">
-								<logic:equal name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language" value="en">
-								<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/>&nbsp;<bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>
-							</logic:equal>
-							<logic:equal name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language" value="pt">
-								<bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>&ordm;&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/>
-							</logic:equal>
-							</th>
-					<%}else{ %>
-							<th colspan="10" scope="col">
-								<logic:equal name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language" value="en">
-								<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/>&nbsp;<bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>
-							</logic:equal>
-							<logic:equal name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language" value="pt">
-								<bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>&ordm;&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.year"/>
-							</logic:equal>
-							</th>
-					<%}%>
-					</tr>
-					<bean:define id="currentYear" name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>
-					<bean:define id="currentCode" name="curricularCourseScopeElem" property="infoBranch.code"/>
-					<tr>
-							<% if (pageContext.findAttribute("indiceID").toString().equals("44")){%>		
-								<th colspan="11" scope="col">
-									 <center><bean:write name="curricularCourseScopeElem" property="infoBranch.name"/></center>
-								</th>
-							<%}else{ %>
-								<th colspan="10" scope="col">
-									 <center><bean:write name="curricularCourseScopeElem" property="infoBranch.name"/></center>
-								</th>
-							<%}%>
-						</tr>
-					<tr>
-						<% if (pageContext.findAttribute("indiceID").toString().equals("44")){%>				
-							<td colspan="7" class="subheader">&nbsp;</td>
-							<td colspan="4" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.hoursPerWeek" /></td>
-						<%}else{ %>
-							<td colspan="6" class="subheader">&nbsp;</td>
-							<td colspan="4" class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.hoursPerWeek" /></td>
-						<%}%>
-					</tr>
-					
-					<tr>						
-						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr"/></td>
-						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.curricularCourse"/></td>
-						<% if (pageContext.findAttribute("indiceID").toString().equals("44")){%>
-							<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.anotation"/></td>
-						<%}%>
-						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.type"/></td>
-<!--						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.branch"/></td>	-->
-						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.credits"/></td>
-						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.ects"/></td>
-						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.weight"/></td>							
-						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.theoretical.abbr"/></td>
-						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.pratical.abbr"/></td>
-						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.theoPrat.abbr"/></td>
-						<td class="subheader"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.laboratorial.abbr"/></td>
-					</tr>
-				</logic:notEqual>
 				</logic:notEqual>
 			</logic:iterate>
 			
@@ -348,22 +157,20 @@
 							<bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.name" />
 						</html:link>
 					</td>
-					<% if (pageContext.findAttribute("indiceID").toString().equals("44")){%>
-						<logic:notEmpty name="curricularCourseScopeElem" property="anotation" >
-							<bean:define id="anotationID" value="0"/>
-							<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="anotation"/></td>
-						</logic:notEmpty>
-						<logic:empty name="curricularCourseScopeElem" property="anotation" >
-							<td class="<%= rowColor %>"></td>
-						</logic:empty>
-					<%}%>
+					<logic:notEmpty name="curricularCourseScopeElem" property="anotation" >
+						<bean:define id="anotationID" value="0"/>
+						<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="anotation"/></td>
+					</logic:notEmpty>
+					<logic:empty name="curricularCourseScopeElem" property="anotation" >
+						<td class="<%= rowColor %>"></td>
+					</logic:empty>
 					<td class="<%= rowColor %>"><bean:message name="curricularCourseScopeElem" property="infoCurricularCourse.type.keyName"/></td>
-					<!--<td class="<%= rowColor %>">					
-						<bean:write name="curricularCourseScopeElem" property="infoBranch.name"/>&nbsp;
+					<td class="<%= rowColor %>">					
+						<bean:write name="curricularCourseScopeElem" property="infoBranch.prettyCode"/>&nbsp;
 						<logic:iterate id="curricularCourseScopeElem" name="curricularCourseScopeElemList" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope" offset="1">
-							<bean:write name="curricularCourseScopeElem" property="infoBranch.name"/>&nbsp;				
+							<bean:write name="curricularCourseScopeElem" property="infoBranch.prettyCode"/>&nbsp;				
 						</logic:iterate>
-					</td>-->
+					</td>
 					<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.credits"/></td>
 					<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.ectsCredits"/></td>
 					<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.weigth"/></td>
@@ -372,21 +179,24 @@
 					<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.theoPratHours"/></td>
 					<td class="<%= rowColor %>"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.labHours"/></td>					
 				</tr>	
-				
 			</logic:iterate>
-		
 		</logic:iterate>
-		
 	</table>
 	<logic:equal name="anotationID" value="0">
-
-    <% if (pageContext.findAttribute("indiceID").toString().equals("44")){%>	
-		<logic:equal name="anotationID" value="0">
-			<pre><bean:write name="infoDegreeCurricularPlan" property="anotation" /> </pre>
-		</logic:equal>
-	<%}%>
+		
+		<table>
+			<tr><th colspan="12" scope="col"></th></tr>
+			<tr><th colspan="12" scope="col"></th></tr>
+			<tr><th colspan="12" scope="col"></th></tr>
+			<tr><th colspan="12" scope="col"></th></tr>
+			<tr><th colspan="12" scope="col"></th></tr>
+			
+			<tr >
+			<th colspan="12" scope="col"><bean:write name="infoDegreeCurricularPlan" property="anotation"/></th>
+			</tr>
+			
+		</table>
 </logic:equal>
-
 </logic:notEmpty>
 </logic:present>
 
@@ -396,5 +206,5 @@
 <logic:empty name="allActiveCurricularCourseScopes">
 	<p><span class="error"><bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.error.impossibleCurricularPlan" /></span></p>
 </logic:empty>
-	
+
 </logic:present>

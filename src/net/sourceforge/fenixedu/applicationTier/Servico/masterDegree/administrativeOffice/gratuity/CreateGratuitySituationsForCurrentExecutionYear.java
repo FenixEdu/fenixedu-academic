@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
 import net.sourceforge.fenixedu.domain.IGratuityValues;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
@@ -23,7 +24,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.Specialization;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -63,7 +63,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
 
             // read master degree and specialization execution degrees
             List executionDegreeList = sp.getIPersistentExecutionDegree()
-                    .readByExecutionYearAndDegreeType(executionYear, TipoCurso.MESTRADO_OBJ);
+                    .readByExecutionYearAndDegreeType(executionYear, DegreeType.MASTER_DEGREE);
 
             for (Iterator iter = executionDegreeList.iterator(); iter.hasNext();) {
 

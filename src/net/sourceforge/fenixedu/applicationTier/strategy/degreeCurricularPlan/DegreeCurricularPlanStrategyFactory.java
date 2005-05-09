@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.st
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.MasterDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.util.TipoCurso;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 /**
  * 
@@ -40,9 +40,9 @@ public class DegreeCurricularPlanStrategyFactory implements IDegreeCurricularPla
         if (degreeCurricularPlan == null)
             throw new IllegalArgumentException("Must initialize Degree Curricular Plan!");
 
-        if (degreeCurricularPlan.getDegree().getTipoCurso().equals(TipoCurso.LICENCIATURA_OBJ)) {
+        if (degreeCurricularPlan.getDegree().getTipoCurso().equals(DegreeType.DEGREE)) {
             strategyInstance = new DegreeCurricularPlanStrategy(degreeCurricularPlan);
-        } else if (degreeCurricularPlan.getDegree().getTipoCurso().equals(TipoCurso.MESTRADO_OBJ)) {
+        } else if (degreeCurricularPlan.getDegree().getTipoCurso().equals(DegreeType.MASTER_DEGREE)) {
             strategyInstance = new MasterDegreeCurricularPlanStrategy(degreeCurricularPlan);
         }
         return strategyInstance;

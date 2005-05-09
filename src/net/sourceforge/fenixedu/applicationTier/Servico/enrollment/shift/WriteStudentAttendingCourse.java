@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
@@ -22,7 +23,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /*
@@ -132,13 +132,13 @@ public class WriteStudentAttendingCourse implements IService {
 
             IStudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan
                     .readActiveByStudentNumberAndDegreeType(infoStudent.getNumber(),
-                            TipoCurso.LICENCIATURA_OBJ);
+                            DegreeType.DEGREE);
 
             if (studentCurricularPlan == null) {
 
                 studentCurricularPlan = persistentStudentCurricularPlan
                         .readActiveByStudentNumberAndDegreeType(infoStudent.getNumber(),
-                                TipoCurso.MESTRADO_OBJ);
+                                DegreeType.MASTER_DEGREE);
 
             }
             if (studentCurricularPlan == null) {

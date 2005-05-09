@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -24,7 +25,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -113,7 +113,7 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
             IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
 
             IStudent student = studentDAO.readStudentByNumberAndDegreeType(infoStudent.getNumber(),
-                    TipoCurso.LICENCIATURA_OBJ);
+                    DegreeType.DEGREE);
 
             IExecutionPeriod executionPeriod = new ExecutionPeriod(infoTeacherDegreeFinalProjectStudent
                     .getInfoExecutionPeriod().getIdInternal());
@@ -194,7 +194,7 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
         IPersistentStudent studentDAO = sp.getIPersistentStudent();
 
         student = studentDAO.readStudentByNumberAndDegreeType(student.getNumber(),
-                TipoCurso.LICENCIATURA_OBJ);
+                DegreeType.DEGREE);
         if (student == null) {
             throw new StudentNotFoundServiceException();
         }

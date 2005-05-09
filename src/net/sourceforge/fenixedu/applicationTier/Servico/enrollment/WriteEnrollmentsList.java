@@ -18,13 +18,13 @@ import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -35,7 +35,7 @@ public class WriteEnrollmentsList implements IService {
     public WriteEnrollmentsList() {
     }
 
-    public void run(InfoStudent infoStudent, TipoCurso degreeType, Integer executionPeriodId,
+    public void run(InfoStudent infoStudent, DegreeType degreeType, Integer executionPeriodId,
             List curricularCoursesList, Map optionalEnrollments, IUserView userView)
             throws FenixServiceException {
         try {
@@ -90,7 +90,7 @@ public class WriteEnrollmentsList implements IService {
     }
 
     public static IExecutionPeriod findExecutionPeriod(ISuportePersistente sp,
-            IExecutionYear executionYear, Integer curricularCourseID, TipoCurso degreeType)
+            IExecutionYear executionYear, Integer curricularCourseID, DegreeType degreeType)
             throws ExcepcaoPersistencia, FenixServiceException {
         IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
         IExecutionPeriod executionPeriod = null;

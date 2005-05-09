@@ -15,13 +15,13 @@ import net.sourceforge.fenixedu.domain.IGuideEntry;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IPersonAccount;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.IGratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -39,7 +39,7 @@ public class CreateGratuityTransaction implements IService {
 
         IGuide guide = guideEntry.getGuide();
         IStudent student = sp.getIPersistentStudent().readByPersonAndDegreeType(guide.getPerson(),
-                TipoCurso.MESTRADO_OBJ);
+                DegreeType.MASTER_DEGREE);
         IGratuitySituation gratuitySituation = sp.getIPersistentGratuitySituation()
                 .readGratuitySituationByExecutionDegreeAndStudent(guide.getExecutionDegree(), student);
         IPersonAccount personAccount = sp.getIPersistentPersonAccount().readByPerson(guide.getPerson());

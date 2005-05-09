@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.CurricularCourseType;
 import net.sourceforge.fenixedu.util.DegreeCurricularPlanState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * @author dcs-rjao 25/Mar/2003
@@ -68,7 +68,7 @@ public interface IPersistentCurricularCourse extends IPersistentObject {
             IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;
 
     public List readbyCourseCodeAndDegreeTypeAndDegreeCurricularPlanState(String courseCode,
-            TipoCurso degreeType, DegreeCurricularPlanState degreeCurricularPlanState)
+            DegreeType degreeType, DegreeCurricularPlanState degreeCurricularPlanState)
             throws ExcepcaoPersistencia;
 
     public List readbyCourseNameAndDegreeCurricularPlan(String curricularCourseName,

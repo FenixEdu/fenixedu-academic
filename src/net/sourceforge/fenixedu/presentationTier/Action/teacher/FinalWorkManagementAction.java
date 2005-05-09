@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWo
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupProposal;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoScheduleing;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -40,7 +41,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstan
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.CommonServiceRequests;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -149,7 +149,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 				maximumNumberOfGroupElements));
 		infoFinalWorkProposal.setObservations(observations);
 		infoFinalWorkProposal.setLocation(location);
-		TipoCurso tipoCurso = new TipoCurso(new Integer(degreeType));
+		DegreeType tipoCurso = DegreeType.valueOf(degreeType);
 		infoFinalWorkProposal.setDegreeType(tipoCurso);
 
 		infoFinalWorkProposal.setOrientator(new InfoTeacher());
@@ -257,7 +257,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
 		final List executionDegreeList = (List) ServiceUtils.executeService(
 				userView, "ReadExecutionDegreesByExecutionYearAndDegreeType",
-				new Object[] { infoExecutionYear, TipoCurso.LICENCIATURA_OBJ });
+				new Object[] { infoExecutionYear, DegreeType.DEGREE });
 		final BeanComparator name = new BeanComparator(
 				"infoDegreeCurricularPlan.infoDegree.nome");
 		Collections.sort(executionDegreeList, name);
@@ -347,7 +347,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 		DynaActionForm finalWorkForm = (DynaActionForm) form;
 		String role = (String) finalWorkForm.get("role");
 		String degreeId = (String) finalWorkForm.get("degree");
-		finalWorkForm.set("degreeType", "" + TipoCurso.LICENCIATURA);
+		finalWorkForm.set("degreeType", DegreeType.DEGREE.toString());
 
 		InfoExecutionDegree infoExecutionDegree = CommonServiceRequests
 				.getInfoExecutionDegree(userView, new Integer(degreeId));
@@ -638,10 +638,9 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 								infoProposal.getMinimumNumberOfGroupElements()
 										.toString());
 					}
-					if (infoProposal.getDegreeType() != null
-							&& infoProposal.getDegreeType().getTipoCurso() != null) {
+					if (infoProposal.getDegreeType() != null) {
 						finalWorkForm.set("degreeType", infoProposal
-								.getDegreeType().getTipoCurso().toString());
+								.getDegreeType().toString());
 					}
 					finalWorkForm.set("observations", infoProposal
 							.getObservations());

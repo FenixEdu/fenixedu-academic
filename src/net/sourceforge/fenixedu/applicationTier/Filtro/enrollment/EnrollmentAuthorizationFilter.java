@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.ITutor;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
@@ -29,7 +30,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -218,7 +218,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
         } else {
             studentCurricularPlan = persistentStudentCurricularPlan
                     .readActiveByStudentNumberAndDegreeType((Integer) arguments[2],
-                            TipoCurso.LICENCIATURA_OBJ);
+                            DegreeType.DEGREE);
         }
         return studentCurricularPlan;
     }

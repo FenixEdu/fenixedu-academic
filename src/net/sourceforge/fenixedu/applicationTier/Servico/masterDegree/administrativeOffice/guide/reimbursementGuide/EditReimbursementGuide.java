@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.IGuideEntry;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IPersonAccount;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry;
@@ -47,7 +48,6 @@ import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGu
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -173,7 +173,7 @@ public class EditReimbursementGuide implements IService {
 
                         IPerson studentPerson = reimbursementGuide.getGuide().getPerson();
                         IStudent student = ps.getIPersistentStudent().readByPersonAndDegreeType(
-                                studentPerson, TipoCurso.MESTRADO_OBJ);
+                                studentPerson, DegreeType.MASTER_DEGREE);
                         IExecutionDegree executionDegree = reimbursementGuide.getGuide()
                                 .getExecutionDegree();
 

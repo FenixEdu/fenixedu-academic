@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * @author Luis Cruz
@@ -61,7 +61,7 @@ public class InfoProposal extends InfoObject {
 
     private String location;
 
-    private TipoCurso degreeType;
+    private DegreeType degreeType;
 
     private String observations;
 
@@ -150,7 +150,7 @@ public class InfoProposal extends InfoObject {
     /**
      * @return Returns the degreeType.
      */
-    public TipoCurso getDegreeType() {
+    public DegreeType getDegreeType() {
         return degreeType;
     }
 
@@ -158,7 +158,7 @@ public class InfoProposal extends InfoObject {
      * @param degreeType
      *            The degreeType to set.
      */
-    public void setDegreeType(TipoCurso degreeType) {
+    public void setDegreeType(DegreeType degreeType) {
         this.degreeType = degreeType;
     }
 

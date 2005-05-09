@@ -6,7 +6,7 @@
 
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.util.TipoCurso;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
@@ -16,9 +16,9 @@ public class JavaTipoCurso2SqlTipoCursoFieldConversion implements FieldConversio
      * @see FieldConversion#javaToSql(Object)
      */
     public Object javaToSql(Object source) {
-        if (source instanceof TipoCurso) {
-            TipoCurso s = (TipoCurso) source;
-            return s.getTipoCurso();
+        if (source instanceof DegreeType) {
+            DegreeType s = (DegreeType) source;
+            return s.toString();
         }
 
         return source;
@@ -29,9 +29,9 @@ public class JavaTipoCurso2SqlTipoCursoFieldConversion implements FieldConversio
      * @see FieldConversion#sqlToJava(Object)
      */
     public Object sqlToJava(Object source) {
-        if (source instanceof Integer) {
-            Integer src = (Integer) source;
-            return new TipoCurso(src);
+        if (source instanceof String) {
+            String src = (String) source;
+            return DegreeType.valueOf(src);
         }
 
         return source;

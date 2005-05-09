@@ -15,6 +15,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -22,7 +23,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /*
@@ -37,7 +37,7 @@ public class MarksManagementDispatchAction extends DispatchAction {
 
         List masterDegrees = null;
         IUserView userView = SessionUtils.getUserView(request);
-        TipoCurso degreeType = TipoCurso.MESTRADO_OBJ;
+        DegreeType degreeType = DegreeType.MASTER_DEGREE;
         Object args[] = { degreeType };
         try {
             masterDegrees = (List) ServiceManagerServiceFactory.executeService(userView,

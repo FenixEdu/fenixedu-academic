@@ -13,11 +13,11 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -40,7 +40,7 @@ public class ChooseStudentDispatchAction extends DispatchAction {
         List result = null;
 
         try {
-            Object args[] = { studentNumber, TipoCurso.MESTRADO_OBJ };
+            Object args[] = { studentNumber, DegreeType.MASTER_DEGREE};
             result = (List) ServiceManagerServiceFactory.executeService(userView,
                     "ReadStudentCurricularPlansByNumberAndDegreeType", args);
         } catch (NonExistingServiceException e) {

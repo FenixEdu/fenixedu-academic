@@ -11,8 +11,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * @author David Santos in Apr 28, 2004
@@ -31,7 +31,7 @@ public class PrepareAplicationContextForEnrollmentEquivalenceAction extends Acti
         // executed in the use case
         // but are set for the second time the action is executed in this same
         // use case.
-        Integer degreeType = (Integer) request.getAttribute("degreeType");
+        String degreeType = (String) request.getAttribute("degreeType");
         String studentNumber = (String) request.getAttribute("studentNumber");
 
         if (StringUtils.contains(referer, "degreeAdministrativeOffice")) {
@@ -40,7 +40,7 @@ public class PrepareAplicationContextForEnrollmentEquivalenceAction extends Acti
 
             // In case ther was no degreeType attribute in request.
             if (degreeType == null) {
-                degreeType = TipoCurso.LICENCIATURA_OBJ.getTipoCurso();
+                degreeType = DegreeType.DEGREE.toString();
             }
 
         } else if (StringUtils.contains(referer, "posGraduacao")) {
@@ -49,7 +49,7 @@ public class PrepareAplicationContextForEnrollmentEquivalenceAction extends Acti
 
             // In case ther was no degreeType attribute in request.
             if (degreeType == null) {
-                degreeType = TipoCurso.MESTRADO_OBJ.getTipoCurso();
+                degreeType = DegreeType.MASTER_DEGREE.toString();
             }
 
         } else if (StringUtils.contains(referer, "coordinator")) {
@@ -60,7 +60,7 @@ public class PrepareAplicationContextForEnrollmentEquivalenceAction extends Acti
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
                     .getAttribute(SessionConstants.MASTER_DEGREE);
             degreeType = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
-                    .getTipoCurso().getTipoCurso();
+                    .getTipoCurso().toString();
         }
 
         if ((forward == null) && (backLink == null)) {
@@ -75,19 +75,19 @@ public class PrepareAplicationContextForEnrollmentEquivalenceAction extends Acti
                 if (forward.equals("enrollmentEquivalenceForDegreeAdministratorOffice")) {
                     // In case ther was no degreeType attribute in request.
                     if (degreeType == null) {
-                        degreeType = TipoCurso.LICENCIATURA_OBJ.getTipoCurso();
+                        degreeType = DegreeType.DEGREE.toString();
                     }
                 } else if (forward.equals("enrollmentEquivalenceForMasterDegreeAdministratorOffice")) {
                     // In case ther was no degreeType attribute in request.
                     if (degreeType == null) {
-                        degreeType = TipoCurso.MESTRADO_OBJ.getTipoCurso();
+                        degreeType = DegreeType.MASTER_DEGREE.toString();
                     }
                 } else if (forward.equals("enrollmentEquivalenceForCoordinator")) {
                     // In case ther was no degreeType attribute in request.
                     InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
                             .getAttribute(SessionConstants.MASTER_DEGREE);
                     degreeType = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
-                            .getTipoCurso().getTipoCurso();
+                            .getTipoCurso().toString();
                 }
             }
         }

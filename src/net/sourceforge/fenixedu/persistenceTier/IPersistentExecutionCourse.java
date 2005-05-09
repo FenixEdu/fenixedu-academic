@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.util.TipoCurso;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 public interface IPersistentExecutionCourse extends IPersistentObject {
 
@@ -49,7 +49,7 @@ public interface IPersistentExecutionCourse extends IPersistentObject {
      * @param curso
      * @return
      */
-    public List readByExecutionPeriod(IExecutionPeriod executionPeriod, TipoCurso curso)
+    public List readByExecutionPeriod(IExecutionPeriod executionPeriod, DegreeType curso)
             throws ExcepcaoPersistencia;
 
     /**

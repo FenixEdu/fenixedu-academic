@@ -21,10 +21,10 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -107,7 +107,7 @@ public class CursoExecucaoOJB extends PersistentObjectOJB implements IPersistent
     public List readMasterDegrees(String executionYear) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionYear.year", executionYear);
-        criteria.addEqualTo("degreeCurricularPlan.degree.tipoCurso", TipoCurso.MESTRADO_OBJ);
+        criteria.addEqualTo("degreeCurricularPlan.degree.tipoCurso", DegreeType.MASTER_DEGREE);
         return queryList(ExecutionDegree.class, criteria);
     }
 
@@ -142,7 +142,7 @@ public class CursoExecucaoOJB extends PersistentObjectOJB implements IPersistent
      * @see ServidorPersistente.ICursoExecucaoPersistente#readByExecutionYearAndDegreeType(Dominio.IExecutionYear,
      *      Util.TipoCurso)
      */
-    public List readByExecutionYearAndDegreeType(IExecutionYear executionYear, TipoCurso degreeType)
+    public List readByExecutionYearAndDegreeType(IExecutionYear executionYear, DegreeType degreeType)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionYear.year", executionYear.getYear());
@@ -238,12 +238,12 @@ public class CursoExecucaoOJB extends PersistentObjectOJB implements IPersistent
 
     public List readExecutionDegreesOfTypeDegree() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("degreeCurricularPlan.degree.tipoCurso", new TipoCurso(TipoCurso.LICENCIATURA));
+        criteria.addEqualTo("degreeCurricularPlan.degree.tipoCurso", DegreeType.DEGREE);
         criteria.addEqualTo("executionYear.state", new PeriodState(PeriodState.CURRENT));
         return queryList(ExecutionDegree.class, criteria);
     }
 
-    public List readByExecutionYearOIDAndDegreeType(Integer executionYearOID, TipoCurso degreeType)
+    public List readByExecutionYearOIDAndDegreeType(Integer executionYearOID, DegreeType degreeType)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionYear.idInternal", executionYearOID);
@@ -288,7 +288,7 @@ public class CursoExecucaoOJB extends PersistentObjectOJB implements IPersistent
      *      Dominio.IExecutionYear, Util.TipoCurso)
      */
     public List readListByDegreeNameAndExecutionYearAndDegreeType(String name,
-            IExecutionYear executionYear, TipoCurso degreeType) throws ExcepcaoPersistencia {
+            IExecutionYear executionYear, DegreeType degreeType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("academicYear", executionYear.getIdInternal());
         criteria.addLike("degreeCurricularPlan.degree.nome", name);

@@ -11,6 +11,7 @@ import org.apache.struts.actions.DispatchAction;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -19,7 +20,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * 
@@ -36,18 +36,18 @@ public class PrepareStudentDataForThesisOperationsDispatchAction extends Dispatc
         DynaActionForm getStudentByNumberAndDegreeTypeForm = (DynaActionForm) form;
         IUserView userView = SessionUtils.getUserView(request);
 
-        Integer degreeType = null;
+        String degreeType = null;
         Integer studentNumber = null;
         String forward = "success";
 
         try {
-            degreeType = new Integer((String) getStudentByNumberAndDegreeTypeForm.get("degreeType"));
+            degreeType = (String) getStudentByNumberAndDegreeTypeForm.get("degreeType");
             studentNumber = new Integer((String) getStudentByNumberAndDegreeTypeForm
                     .get("studentNumber"));
         } catch (Exception e) {
             //case when the user cancels the current form, and goes back to the
             // intial page of master degree thesis operations (index page)
-            degreeType = (Integer) getStudentByNumberAndDegreeTypeForm.get("degreeType");
+            degreeType = (String) getStudentByNumberAndDegreeTypeForm.get("degreeType");
             studentNumber = (Integer) getStudentByNumberAndDegreeTypeForm.get("studentNumber");
             forward = "cancel";
         }
@@ -58,7 +58,7 @@ public class PrepareStudentDataForThesisOperationsDispatchAction extends Dispatc
         // null;
 
         /* * * get student * * */
-        Object argsStudent[] = { studentNumber, new TipoCurso(degreeType) };
+        Object argsStudent[] = { studentNumber, DegreeType.valueOf(degreeType) };
         try {
             infoStudent = (InfoStudent) ServiceUtils.executeService(userView,
                     "ReadStudentByNumberAndDegreeType", argsStudent);
@@ -75,7 +75,7 @@ public class PrepareStudentDataForThesisOperationsDispatchAction extends Dispatc
         request.setAttribute(SessionConstants.STUDENT, infoStudent);
 
         /* * * get student curricular plan * * */
-        Object argsStudentCurricularPlan[] = { studentNumber, new TipoCurso(degreeType) };
+        Object argsStudentCurricularPlan[] = { studentNumber, DegreeType.valueOf(degreeType) };
         try {
             infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceUtils.executeService(
                     userView, "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",

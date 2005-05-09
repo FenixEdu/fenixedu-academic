@@ -23,12 +23,12 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrollmentStateSelectionType;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanIDDomainType;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -94,7 +94,7 @@ public class ReadStudentCurricularPlansByPersonAndCriteria implements IService
                 {
                     IStudent student = (IStudent)studentsIterator.next();
                             
-                    TipoCurso degreeType = student.getDegreeType();
+                    DegreeType degreeType = student.getDegreeType();
                     Integer studentNumber = student.getNumber();
 
                     //seleccionar todos os planos do aluno

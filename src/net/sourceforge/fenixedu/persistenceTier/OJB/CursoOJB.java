@@ -15,9 +15,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -46,13 +46,13 @@ public class CursoOJB extends PersistentObjectOJB implements ICursoPersistente {
         return queryList(Degree.class, criteria);
     }
 
-    public List readAllByDegreeType(TipoCurso degreeType) throws ExcepcaoPersistencia {
+    public List readAllByDegreeType(DegreeType degreeType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("tipoCurso", degreeType);
         return queryList(Degree.class, criteria, "nome", true);
     }
 
-    public IDegree readByNameAndDegreeType(String name, TipoCurso degreeType) throws ExcepcaoPersistencia {
+    public IDegree readByNameAndDegreeType(String name, DegreeType degreeType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("nome", name);
         criteria.addEqualTo("tipoCurso", degreeType);

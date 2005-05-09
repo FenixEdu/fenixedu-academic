@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ICoordinator;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -102,7 +102,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
         roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
             if (executionDegree.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(
-                    TipoCurso.MESTRADO_OBJ)) {
+                    DegreeType.MASTER_DEGREE)) {
 
                 return true;
             }

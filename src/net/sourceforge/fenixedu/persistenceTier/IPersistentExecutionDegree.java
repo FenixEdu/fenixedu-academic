@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.util.TipoCurso;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 public interface IPersistentExecutionDegree extends IPersistentObject {
 
@@ -97,7 +97,7 @@ public interface IPersistentExecutionDegree extends IPersistentObject {
      * @param curso
      * @return
      */
-    public List readByExecutionYearAndDegreeType(IExecutionYear executionYear, TipoCurso degreeType)
+    public List readByExecutionYearAndDegreeType(IExecutionYear executionYear, DegreeType degreeType)
             throws ExcepcaoPersistencia;
 
     /**
@@ -137,7 +137,7 @@ public interface IPersistentExecutionDegree extends IPersistentObject {
             throws ExcepcaoPersistencia;
 
     public List readListByDegreeNameAndExecutionYearAndDegreeType(String name,
-            IExecutionYear executionYear, TipoCurso degreeType) throws ExcepcaoPersistencia;
+            IExecutionYear executionYear, DegreeType degreeType) throws ExcepcaoPersistencia;
 
     /**
      * @param executionCourse
@@ -170,7 +170,7 @@ public interface IPersistentExecutionDegree extends IPersistentObject {
 
     public List readExecutionDegreesOfTypeDegree() throws ExcepcaoPersistencia;
 
-    public List readByExecutionYearOIDAndDegreeType(Integer executionYearOID, TipoCurso degreeType)
+    public List readByExecutionYearOIDAndDegreeType(Integer executionYearOID, DegreeType degreeType)
             throws ExcepcaoPersistencia;
 
     public List readExecutionDegreesbyDegreeCurricularPlanID(Integer degreeCurricularPlanID)

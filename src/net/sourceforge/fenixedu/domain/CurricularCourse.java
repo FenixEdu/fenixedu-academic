@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.BranchType;
 import net.sourceforge.fenixedu.util.CurricularCourseExecutionScope;
 import net.sourceforge.fenixedu.util.CurricularCourseType;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -46,7 +46,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public void setCode(String code) {
         super.setCode(code);
-        TipoCurso tipoCurso = (this.getDegreeCurricularPlan() != null && this.getDegreeCurricularPlan()
+        DegreeType tipoCurso = (this.getDegreeCurricularPlan() != null && this.getDegreeCurricularPlan()
                 .getDegree() != null) ? this.getDegreeCurricularPlan().getDegree().getTipoCurso() : null;
         this.uniqueKeyForEnrollment = constructUniqueEnrollmentKey(this.getCode(), this.getName(),
                 tipoCurso);
@@ -63,7 +63,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
         super.setDegreeCurricularPlan(degreeCurricularPlan);
-        TipoCurso tipoCurso = (this.getDegreeCurricularPlan() != null && this.getDegreeCurricularPlan()
+        DegreeType tipoCurso = (this.getDegreeCurricularPlan() != null && this.getDegreeCurricularPlan()
                 .getDegree() != null) ? this.getDegreeCurricularPlan().getDegree().getTipoCurso() : null;
         this.uniqueKeyForEnrollment = constructUniqueEnrollmentKey(this.getCode(), this.getName(),
                 tipoCurso);
@@ -71,7 +71,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public void setName(String name) {
         super.setName(name);
-        TipoCurso tipoCurso = (this.getDegreeCurricularPlan() != null && this.getDegreeCurricularPlan()
+        DegreeType tipoCurso = (this.getDegreeCurricularPlan() != null && this.getDegreeCurricularPlan()
                 .getDegree() != null) ? this.getDegreeCurricularPlan().getDegree().getTipoCurso() : null;
         this.uniqueKeyForEnrollment = constructUniqueEnrollmentKey(this.getCode(), this.getName(),
                 tipoCurso);
@@ -270,7 +270,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     // END: Only for enrollment purposes
     // -------------------------------------------------------------
 
-    private String constructUniqueEnrollmentKey(String code, String name, TipoCurso tipoCurso) {
+    private String constructUniqueEnrollmentKey(String code, String name, DegreeType tipoCurso) {
         StringBuffer stringBuffer = new StringBuffer(50);
         stringBuffer.append(code);
         stringBuffer.append(name);

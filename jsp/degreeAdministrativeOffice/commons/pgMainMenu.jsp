@@ -11,7 +11,7 @@
 	</li>
 
 	<li>
-		<html:link page="/changeStudentAreas.do?method=chooseStudent&amp;degreeType=1"><bean:message key="title.student.change.areas"/></html:link>
+		<html:link page="/changeStudentAreas.do?method=chooseStudent&amp;degreeType=DEGREE"><bean:message key="title.student.change.areas"/></html:link>
 	</li>
 
 	<li> 

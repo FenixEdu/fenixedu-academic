@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.domain.ResponsibleFor;
 import net.sourceforge.fenixedu.domain.credits.IManagementPositionCreditLine;
 import net.sourceforge.fenixedu.domain.credits.IOtherTypeCreditLine;
 import net.sourceforge.fenixedu.domain.credits.IServiceExemptionCreditLine;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.teacher.workTime.ITeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -49,7 +50,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPositionCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentServiceExemptionCreditLine;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -425,7 +425,7 @@ public class ReadTeacherCreditsSheet implements IService {
                                 InfoCurricularCourse infoCurricularCourse = Cloner
                                         .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
                                 if (curricularCourse.getDegreeCurricularPlan().getDegree()
-                                        .getTipoCurso().equals(TipoCurso.LICENCIATURA_OBJ)) {
+                                        .getTipoCurso().equals(DegreeType.DEGREE)) {
                                     detailedProfessorship.setMasterDegreeOnly(Boolean.FALSE);
                                 }
                                 return infoCurricularCourse;

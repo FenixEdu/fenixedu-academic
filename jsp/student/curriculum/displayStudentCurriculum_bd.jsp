@@ -72,15 +72,12 @@
 									<bean:write name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome"/>
 									<br/>
 									<bean:message key="label.curricularplan" bundle="STUDENT_RESOURCES" />:
-									<%  
-															String label = "";  
-									    
-									    label += ((InfoStudentCurricularPlan)infoStudentCurricularPlan).getStartDate()+" - ";
-									    label += "("+((InfoStudentCurricularPlan)infoStudentCurricularPlan).getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()+")";
-									    			    if (((InfoStudentCurricularPlan)infoStudentCurricularPlan).getSpecialization() != null)
-								        label += " - "+((InfoStudentCurricularPlan)infoStudentCurricularPlan).getSpecialization();
-									%>
-									<%=label%>
+									<bean:write name="infoStudentCurricularPlan" property="startDate"/> - 
+									<bean:define id="degreeType" name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.tipoCurso.name"/>
+									( <bean:message name="degreeType" bundle="ENUMERATION_RESOURCES"/> )
+									<logic:present name="infoStudentCurricularPlan" property="specialization" >
+										<bean:write name="infoStudentCurricularPlan" property="specialization" />
+									</logic:present>
 									<br/>
 									<bean:message key="label.number" />:
 									<bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/>

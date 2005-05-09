@@ -5,10 +5,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.util.DegreeCurricularPlanState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -64,7 +64,7 @@ public class DegreeCurricularPlanOJB extends PersistentObjectOJB implements
         return (IDegreeCurricularPlan) queryObject(DegreeCurricularPlan.class, criteria);
     }
 
-    public List readByDegreeTypeAndState(TipoCurso degreeType, DegreeCurricularPlanState state)
+    public List readByDegreeTypeAndState(DegreeType degreeType, DegreeCurricularPlanState state)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degree.tipoCurso", degreeType);

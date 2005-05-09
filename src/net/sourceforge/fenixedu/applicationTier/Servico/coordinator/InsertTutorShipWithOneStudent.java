@@ -12,13 +12,13 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.ITutor;
 import net.sourceforge.fenixedu.domain.Tutor;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * @author Tânia Pousão
@@ -60,7 +60,7 @@ public class InsertTutorShipWithOneStudent extends InsertTutorShip {
             //student
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
             IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
-                    TipoCurso.LICENCIATURA_OBJ);
+                    DegreeType.DEGREE);
             if (student == null) {
                 throw new NonExistingServiceException("error.tutor.unExistStudent");
             }
@@ -70,7 +70,7 @@ public class InsertTutorShipWithOneStudent extends InsertTutorShip {
                 throw new FenixServiceException("error.tutor.studentAlreadyWithTutor");
             }
 
-            if (!verifyStudentOfThisDegree(student, TipoCurso.LICENCIATURA_OBJ, degreeCode)
+            if (!verifyStudentOfThisDegree(student, DegreeType.DEGREE, degreeCode)
                     .booleanValue()) {
                 //student doesn't belong to this degree
                 throw new FenixServiceException("error.tutor.studentNoDegree");

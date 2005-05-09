@@ -15,7 +15,7 @@
 		<form-bean name="studentNumberForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
-			<form-property name="degreeType" type="java.lang.Integer"/>
+			<form-property name="degreeType" type="java.lang.String"/>
 			<form-property name="studentNumber" type="java.lang.String"/>
 			<form-property name="backLink" type="java.lang.String"/>
 		</form-bean>
@@ -23,7 +23,7 @@
 		<form-bean name="selectStudentCurricularPlansForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
-			<form-property name="degreeType" type="java.lang.Integer"/>
+			<form-property name="degreeType" type="java.lang.String"/>
 			<form-property name="studentNumber" type="java.lang.String"/>
 			<form-property name="backLink" type="java.lang.String"/>
 			<form-property name="fromStudentCurricularPlanID" type="java.lang.Integer"/>
@@ -33,7 +33,7 @@
 		<form-bean name="enrollmentEquivalenceFrom" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
-			<form-property name="degreeType" type="java.lang.Integer"/>
+			<form-property name="degreeType" type="java.lang.String"/>
 			<form-property name="studentNumber" type="java.lang.String"/>
 			<form-property name="backLink" type="java.lang.String"/>
 			<form-property name="fromStudentCurricularPlanID" type="java.lang.Integer"/>

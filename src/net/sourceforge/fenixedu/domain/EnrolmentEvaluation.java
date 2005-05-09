@@ -4,8 +4,8 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * @author dcs-rjao 24/Mar/2003
@@ -75,7 +75,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         Date otherWhenAltered = enrolmentEvaluation.getWhen();
 
         if (this.getEnrolment().getStudentCurricularPlan().getStudent().getDegreeType().equals(
-                TipoCurso.MESTRADO_OBJ)) {
+                DegreeType.MASTER_DEGREE)) {
             return compareMyWhenAlteredDateToAnotherWhenAlteredDate(otherWhenAltered);
         } else if (this.getObservation() != null && this.getObservation().equals(this.RECTIFICATION)
                 && enrolmentEvaluation.getObservation() != null

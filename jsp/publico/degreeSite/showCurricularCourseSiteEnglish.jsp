@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<%@ page import="net.sourceforge.fenixedu.util.TipoCurso" %>
+<%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 
 <p><span class="error"><html:errors/></span></p>
 
@@ -15,12 +15,12 @@
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 <div class="breadcumbs"><a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a> >
 		<bean:define id="degreeType" name="infoDegree" property="tipoCurso" />	
-		<logic:equal name="degreeType" value="<%= TipoCurso.MESTRADO_OBJ.toString() %>">
+		<logic:equal name="degreeType" value="<%= DegreeType.MASTER_DEGREE.toString() %>">
 			<%--<html:link page="<%= "/showDegrees.do?method=master&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >--%>
 			 	Ensino Mestrados
 	 		 <%--</html:link>--%>
 		</logic:equal>
-		<logic:equal name="degreeType" value="<%= TipoCurso.LICENCIATURA_OBJ.toString() %>">
+		<logic:equal name="degreeType" value="<%= DegreeType.DEGREE.toString() %>">
 			<%--<html:link page="<%= "/showDegrees.do?method=nonMaster&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >--%>
 				Ensino Licenciaturas
 			<%--</html:link>--%>

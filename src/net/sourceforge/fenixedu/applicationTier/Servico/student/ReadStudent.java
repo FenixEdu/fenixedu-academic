@@ -15,10 +15,10 @@ import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 public class ReadStudent implements IServico {
 
@@ -58,7 +58,7 @@ public class ReadStudent implements IServico {
             // dos aluno, referente ao tipo, a partir da página de login.
             //////////////////////////////////////////////////////////////////////////////////////////////////////////
             IStudent student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
-                    new TipoCurso(TipoCurso.LICENCIATURA));
+                    DegreeType.DEGREE);
 
             if (student != null) {
                 InfoPerson infoPerson = new InfoPerson();

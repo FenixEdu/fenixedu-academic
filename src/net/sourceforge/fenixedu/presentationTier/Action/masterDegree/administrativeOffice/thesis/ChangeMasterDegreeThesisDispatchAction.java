@@ -12,6 +12,7 @@ import org.apache.struts.actions.DispatchAction;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -20,7 +21,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * 
@@ -39,7 +39,7 @@ public class ChangeMasterDegreeThesisDispatchAction extends DispatchAction {
         //Integer degreeType = (Integer) request.getAttribute("degreeType");
         //Integer studentNumber = (Integer)
         // request.getAttribute("studentNumber");
-        Integer degreeType = Integer.valueOf(request.getParameter("degreeType"));
+        String degreeType = request.getParameter("degreeType");
         Integer studentNumber = Integer.valueOf(request.getParameter("studentNumber"));
 
         MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
@@ -56,7 +56,7 @@ public class ChangeMasterDegreeThesisDispatchAction extends DispatchAction {
         InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
 
         /* * * get student curricular plan * * */
-        Object argsStudentCurricularPlan[] = { studentNumber, new TipoCurso(degreeType) };
+        Object argsStudentCurricularPlan[] = { studentNumber, DegreeType.valueOf(degreeType) };
         try {
             infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceUtils.executeService(
                     userView, "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",

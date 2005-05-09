@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEquivalence;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IEquivalentEnrolmentForEnrolmentEquivalence;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEquivalence;
@@ -19,7 +20,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEquivalentEnrolmentForEnrolmentEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -31,7 +31,7 @@ public class DeleteChosenEnrollmentEquivalences extends EnrollmentEquivalenceSer
     public DeleteChosenEnrollmentEquivalences() {
     }
 
-    public InfoEquivalenceContext run(Integer studentNumber, TipoCurso degreeType,
+    public InfoEquivalenceContext run(Integer studentNumber, DegreeType degreeType,
             List idsOfChosenEnrollments) throws FenixServiceException {
         return (InfoEquivalenceContext) convertDataOutput(execute(convertDataInput(idsOfChosenEnrollments)));
     }

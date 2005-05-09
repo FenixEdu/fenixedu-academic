@@ -29,10 +29,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShiftsAndGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentInformation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -129,7 +129,7 @@ public class ShowStudentGroupInfo extends Action {
                                         result += studentInfo.getNumber();
                                         Object[] args = {
                                                 new MockUserView(studentInfo.getUsername(), new ArrayList()),
-                                                TipoCurso.LICENCIATURA_OBJ };
+                                                DegreeType.DEGREE };
                                         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
                                         try {
                                             infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceUtils

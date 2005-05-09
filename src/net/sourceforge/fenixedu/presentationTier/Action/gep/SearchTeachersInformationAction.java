@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -19,7 +20,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import org.apache.struts.action.ActionForm;
@@ -113,7 +113,7 @@ public class SearchTeachersInformationAction extends SearchAction {
 
         request.setAttribute("executionYear", infoExecutionYear.getYear());
 
-        Object[] argsExecutionDegrees = { infoExecutionYear, TipoCurso.LICENCIATURA_OBJ };
+        Object[] argsExecutionDegrees = { infoExecutionYear, DegreeType.DEGREE };
         List infoExecutionDegrees = (List) ServiceUtils.executeService(userView,
                 "ReadExecutionDegreesByExecutionYearAndDegreeType", argsExecutionDegrees);
         Collections.sort(infoExecutionDegrees, new Comparator() {

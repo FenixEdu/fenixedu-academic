@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
@@ -21,7 +22,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -90,14 +90,14 @@ public class EquivalenceAuthorizationFilter extends Filtro {
             List roles = getRoleList(userView.getRoles());
 
             Integer studentNumber = (Integer) serviceArgs[0];
-            TipoCurso degreeType = (TipoCurso) serviceArgs[1];
+            DegreeType degreeType = (DegreeType) serviceArgs[1];
 
             IStudent student = getStudent(studentNumber, degreeType);
             if (student == null) {
                 return "errors.enrollment.equivalence.no.student.with.that.number.and.degreeType";
             }
 
-            if (degreeType.equals(TipoCurso.LICENCIATURA_OBJ)) {
+            if (degreeType.equals(DegreeType.DEGREE)) {
                 if (!isThisStudentsDegreeTheOne(student)) {
                     return "errors.enrollment.equivalence.data.not.authorized";
                 }
@@ -111,11 +111,11 @@ public class EquivalenceAuthorizationFilter extends Filtro {
                 }
             } else if (roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
                     || roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
-                if (!degreeType.equals(TipoCurso.LICENCIATURA_OBJ)) {
+                if (!degreeType.equals(DegreeType.DEGREE)) {
                     return "errors.enrollment.equivalence.data.not.authorized";
                 }
             } else if (roles.contains(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
-                if (!degreeType.equals(TipoCurso.MESTRADO_OBJ)) {
+                if (!degreeType.equals(DegreeType.MASTER_DEGREE)) {
                     return "errors.enrollment.equivalence.data.not.authorized";
                 }
             } else if (roles.contains(RoleType.COORDINATOR)) {
@@ -180,7 +180,7 @@ public class EquivalenceAuthorizationFilter extends Filtro {
      * @return IStudent
      * @throws ExcepcaoPersistencia
      */
-    private IStudent getStudent(Integer studentNumber, TipoCurso degreeType) throws ExcepcaoPersistencia {
+    private IStudent getStudent(Integer studentNumber, DegreeType degreeType) throws ExcepcaoPersistencia {
         ISuportePersistente persistenceDAO = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentStudent studentDAO = persistenceDAO.getIPersistentStudent();
         return studentDAO.readStudentByNumberAndDegreeType(studentNumber, degreeType);

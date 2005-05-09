@@ -218,7 +218,7 @@
 				formattedModification = simpleDateFormat.format(modification);
 				
 				paramsHistory = new java.util.Hashtable();
-				paramsHistory.put("degreeType", infoStudent.getDegreeType().getTipoCurso());
+				paramsHistory.put("degreeType", infoStudent.getDegreeType().toString());
 				paramsHistory.put("studentNumber", infoStudent.getNumber());
 				paramsHistory.put("masterDegreeThesisDataVersionID", masterDegreeThesisDataVersion.getIdInternal());
 				paramsHistory.put("method", "getStudentAndMasterDegreeThesisDataVersion");

@@ -17,11 +17,11 @@ import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -30,7 +30,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadInfoRegistrationDeclaration implements IService {
 
-    public InfoRegistrationDeclaration run(Integer studentNumber, TipoCurso degreeType)
+    public InfoRegistrationDeclaration run(Integer studentNumber, DegreeType degreeType)
             throws FenixServiceException, ExcepcaoPersistencia {
 
         ISuportePersistente sp = null;

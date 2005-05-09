@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
-<%@ page import="net.sourceforge.fenixedu.util.TipoCurso" %>
+<%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td align="center" class="infoselected">
@@ -16,7 +16,7 @@
 						<strong><bean:message key="label.masterDegree.coordinator.curricularPlan"/></strong>
 						<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.name" />
 					</p>
-					<logic:equal name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= TipoCurso.MESTRADO_OBJ.toString() %>">
+					<logic:equal name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= DegreeType.MASTER_DEGREE.toString() %>">
 						<bean:define id="candidates" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_AMMOUNT %>" scope="session"/>
 					<p>	
 						<strong><bean:message key="label.masterDegree.coordinator.candidates"/></strong>

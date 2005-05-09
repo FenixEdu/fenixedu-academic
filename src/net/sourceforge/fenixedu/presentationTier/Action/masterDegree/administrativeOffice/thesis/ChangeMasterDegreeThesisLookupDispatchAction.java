@@ -16,6 +16,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.LookupDispatchAction;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -27,7 +28,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.GuiderAlready
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * 
@@ -407,7 +407,7 @@ public class ChangeMasterDegreeThesisLookupDispatchAction extends LookupDispatch
         DynaActionForm createMasterDegreeForm = (DynaActionForm) form;
         IUserView userView = SessionUtils.getUserView(request);
 
-        Integer degreeType = (Integer) createMasterDegreeForm.get("degreeType");
+        String degreeType = (String) createMasterDegreeForm.get("degreeType");
         Integer studentNumber = (Integer) createMasterDegreeForm.get("studentNumber");
         String dissertationTitle = (String) createMasterDegreeForm.get("dissertationTitle");
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
@@ -416,7 +416,7 @@ public class ChangeMasterDegreeThesisLookupDispatchAction extends LookupDispatch
         List infoExternalPersonExternalGuiders = null;
         List infoExternalPersonExternalAssistentGuiders = null;
 
-        Object args[] = { studentNumber, new TipoCurso(degreeType) };
+        Object args[] = { studentNumber, DegreeType.valueOf(degreeType) };
         try {
             infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceUtils.executeService(
                     userView, "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType", args);

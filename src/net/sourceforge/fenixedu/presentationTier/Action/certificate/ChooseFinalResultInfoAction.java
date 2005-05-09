@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoFinalResult;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FinalResulUnreachedActionException;
@@ -31,7 +32,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstan
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -85,7 +85,7 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
             // inputs
             InfoStudent infoStudent = new InfoStudent();
             infoStudent.setNumber(requesterNumber);
-            infoStudent.setDegreeType(new TipoCurso(TipoCurso.MESTRADO));
+            infoStudent.setDegreeType(DegreeType.MASTER_DEGREE);
             session.setAttribute(SessionConstants.DEGREE_TYPE, infoStudent.getDegreeType());
 
             // output

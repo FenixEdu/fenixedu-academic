@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
@@ -43,7 +44,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -54,7 +54,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
     public WriteEnrollmentEquivalences() {
     }
 
-    public void run(Integer studentNumber, TipoCurso degreeType,
+    public void run(Integer studentNumber, DegreeType degreeType,
             InfoEquivalenceContext infoEquivalenceContext, Integer toStudentCurricularPlanID,
             IUserView userView) throws FenixServiceException {
         List args = new ArrayList();

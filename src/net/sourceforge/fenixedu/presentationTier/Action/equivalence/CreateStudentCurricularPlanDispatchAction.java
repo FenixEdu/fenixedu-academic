@@ -17,10 +17,10 @@ import org.apache.struts.util.LabelValueBean;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -37,8 +37,7 @@ public class CreateStudentCurricularPlanDispatchAction extends DispatchAction {
         String studentNumber = request.getParameter("studentNumber");
         String backLink = request.getParameter("backLink");
 
-        TipoCurso degreeType = new TipoCurso();
-        degreeType.setTipoCurso(Integer.valueOf(degreeTypeCode));
+        DegreeType degreeType = DegreeType.valueOf(degreeTypeCode);
 
         Object args1[] = { studentNumber, degreeType };
 

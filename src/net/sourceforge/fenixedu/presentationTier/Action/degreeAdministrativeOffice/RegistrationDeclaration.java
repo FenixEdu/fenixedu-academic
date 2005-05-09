@@ -14,11 +14,11 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoRegistrationDeclaration;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -50,7 +50,7 @@ public class RegistrationDeclaration extends FenixDispatchAction {
         DynaActionForm studentForm = (DynaActionForm) form;
         String studentNumber = (String) studentForm.get("studentNumber");
 
-        Object args[] = { new Integer(studentNumber), TipoCurso.LICENCIATURA_OBJ };
+        Object args[] = { new Integer(studentNumber), DegreeType.DEGREE };
 
         infoRegistrationDeclaration = (InfoRegistrationDeclaration) ServiceManagerServiceFactory
                 .executeService(userView, "ReadInfoRegistrationDeclaration", args);        

@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.IPrice;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -31,7 +32,6 @@ import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.GraduationType;
 import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
 import net.sourceforge.fenixedu.util.Specialization;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -153,7 +153,7 @@ public class PrepareCreateGuide implements IService {
 
             try {
                 student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
-                        TipoCurso.MESTRADO_OBJ);
+                        DegreeType.MASTER_DEGREE);
                 if (student == null)
                     throw new NonExistingServiceException("O Aluno", null);
 

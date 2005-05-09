@@ -9,12 +9,12 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.ITutor;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -22,7 +22,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  *  
  */
 public class InsertTutorShip implements IService {
-    public Boolean verifyStudentOfThisDegree(IStudent student, TipoCurso degreeType, String degreeCode)
+    public Boolean verifyStudentOfThisDegree(IStudent student, DegreeType degreeType, String degreeCode)
             throws FenixServiceException {
         boolean result = false;
 

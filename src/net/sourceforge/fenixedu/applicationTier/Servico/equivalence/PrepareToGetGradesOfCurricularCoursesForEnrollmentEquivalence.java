@@ -15,12 +15,12 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -32,7 +32,7 @@ public class PrepareToGetGradesOfCurricularCoursesForEnrollmentEquivalence exten
     public PrepareToGetGradesOfCurricularCoursesForEnrollmentEquivalence() {
     }
 
-    public InfoEquivalenceContext run(Integer studentNumber, TipoCurso degreeType,
+    public InfoEquivalenceContext run(Integer studentNumber, DegreeType degreeType,
             List idsOfChosenEnrollmentsToGiveEquivalence,
             List idsOfChosenCurricularCoursesToGetEquivalence) throws FenixServiceException {
         List args = new ArrayList();
@@ -123,7 +123,7 @@ public class PrepareToGetGradesOfCurricularCoursesForEnrollmentEquivalence exten
         List input = (List) object;
 
         Integer studentNumber = (Integer) input.get(0);
-        TipoCurso degreeType = (TipoCurso) input.get(1);
+        DegreeType degreeType = (DegreeType) input.get(1);
         List idsOfChosenEnrollmentsToGiveEquivalence = (List) input.get(2);
         List idsOfChosenCurricularCoursesToGetEquivalence = (List) input.get(3);
 

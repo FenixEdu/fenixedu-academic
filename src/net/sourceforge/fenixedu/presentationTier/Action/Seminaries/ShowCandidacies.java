@@ -21,11 +21,11 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacyDetai
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudyChoice;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalency;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -202,7 +202,7 @@ public class ShowCandidacies extends FenixAction {
         List avaliableCurricularPlans = new LinkedList();
         for (Iterator iter = degrees.iterator(); iter.hasNext();) {
             InfoDegreeCurricularPlan infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) iter.next();
-            if (infoDegreeCurricularPlan.getInfoDegree().getTipoCurso().equals(TipoCurso.MESTRADO_OBJ))
+            if (infoDegreeCurricularPlan.getInfoDegree().getTipoCurso().equals(DegreeType.MASTER_DEGREE))
                 avaliableCurricularPlans.add(infoDegreeCurricularPlan);
             else if (infoDegreeCurricularPlan.getName().endsWith("2003/2004")) {
                 String newName = new String();

@@ -29,11 +29,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -120,7 +120,7 @@ public class ExemptionGratuityAction extends DispatchAction {
         request.setAttribute("studentNumber", studentNumber);
 
         List studentCurricularPlans = null;
-        Object[] args = { studentNumber, TipoCurso.MESTRADO_OBJ };
+        Object[] args = { studentNumber, DegreeType.MASTER_DEGREE};
         try {
             studentCurricularPlans = (List) ServiceManagerServiceFactory
                     .executeService(

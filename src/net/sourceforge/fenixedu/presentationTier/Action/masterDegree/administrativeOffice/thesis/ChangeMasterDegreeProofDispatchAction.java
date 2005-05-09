@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -34,7 +35,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstan
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * 
@@ -50,7 +50,7 @@ public class ChangeMasterDegreeProofDispatchAction extends DispatchAction {
 
         IUserView userView = SessionUtils.getUserView(request);
 
-        Integer degreeType = Integer.valueOf(request.getParameter("degreeType"));
+        String degreeType = request.getParameter("degreeType");
         Integer studentNumber = Integer.valueOf(request.getParameter("studentNumber"));
 
         MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
@@ -161,7 +161,7 @@ public class ChangeMasterDegreeProofDispatchAction extends DispatchAction {
 
     }
 
-    private void prepareFormForMasterDegreeProofEdition(ActionForm form, Integer degreeType,
+    private void prepareFormForMasterDegreeProofEdition(ActionForm form, String degreeType,
             Integer studentNumber, InfoMasterDegreeProofVersion infoMasterDegreeProofVersion,
             InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion, String proofDateDay,
             String proofDateMonth, String proofDateYear, String thesisDeliveryDateDay,
@@ -184,7 +184,7 @@ public class ChangeMasterDegreeProofDispatchAction extends DispatchAction {
         changeMasterDegreeThesisForm.set("thesisDeliveryDateYear", thesisDeliveryDateYear);
     }
 
-    private void prepareFormForNewMasterDegreeProofVersion(Integer degreeType, Integer studentNumber,
+    private void prepareFormForNewMasterDegreeProofVersion(String degreeType, Integer studentNumber,
             InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion,
             DynaActionForm changeMasterDegreeThesisForm) {
         changeMasterDegreeThesisForm.set("studentNumber", studentNumber);
@@ -235,11 +235,11 @@ public class ChangeMasterDegreeProofDispatchAction extends DispatchAction {
     }
 
     private InfoStudentCurricularPlan readStudentCurricularPlan(ActionMapping mapping,
-            IUserView userView, Integer degreeType, Integer studentNumber) throws FenixActionException,
+            IUserView userView, String degreeType, Integer studentNumber) throws FenixActionException,
             NonExistingActionException, FenixFilterException {
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 
-        Object argsStudentCurricularPlan[] = { studentNumber, new TipoCurso(degreeType) };
+        Object argsStudentCurricularPlan[] = { studentNumber, DegreeType.valueOf(degreeType)};
         try {
             infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceUtils.executeService(
                     userView, "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",

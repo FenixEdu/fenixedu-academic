@@ -535,6 +535,7 @@
 	
 	<target name="jsp-precompile" depends="compile">
 		<mkdir dir="${build.home.jsp_gen_code}"/>
+		<mkdir dir="${build.home.jsp_gen_code.classes}"/>
 		<jspc srcdir="${build.home}" destdir="${build.home.jsp_gen_code}"
 				package="net.sourceforge.fenixedu.jsp" compiler="jasper41" verbose="0"  uriroot="${build.home}">
 			<classpath>
@@ -544,7 +545,7 @@
 			</classpath>
 			<include name="**/*.jsp"/>
 		</jspc>
-		<javac destdir="${build.home.jsp_gen_code.classes}"
+		<javac destdir="${build.home.webinf.classes}"
                extdirs="${lib};${build.home.webinf.classes}"
                debug="${compile.debug}"
                optimize="${compile.optimize}"

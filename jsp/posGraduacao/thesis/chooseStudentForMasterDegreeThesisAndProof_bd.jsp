@@ -10,7 +10,7 @@
 <br/>
 <html:form action="/prepareStudentForMasterDegreeThesisAndProof.do" focus="studentNumber">
 	<html:hidden property="method" value="getStudentAndDegreeTypeForThesisOperations"/>
-	<html:hidden property="degreeType" value="2"/>
+	<html:hidden property="degreeType" value="MASTER_DEGREE"/>
 	<html:hidden property="page" value="1"/>
 	<table border="0">
 		<tr>

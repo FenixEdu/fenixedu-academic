@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.util.TipoCurso;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 /**
  * @author João Mota
@@ -44,7 +44,7 @@ public interface IPersistentProfessorship extends IPersistentObject {
      * @param curso
      * @return List of Dominio.IProfessorship
      */
-    public List readByTeacherAndTypeOfDegree(ITeacher teacher, TipoCurso degreeType)
+    public List readByTeacherAndTypeOfDegree(ITeacher teacher, DegreeType degreeType)
             throws ExcepcaoPersistencia;
 
     public IProfessorship readByTeacherIDandExecutionCourseID(Integer teacherID,

@@ -16,10 +16,10 @@ import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.query.Criteria;
@@ -60,7 +60,7 @@ public class FrequentaOJB extends PersistentObjectOJB implements IFrequentaPersi
         super.delete(frequenta);
     }
 
-    public List readByStudentNumber(Integer id, TipoCurso tipoCurso) throws ExcepcaoPersistencia {
+    public List readByStudentNumber(Integer id, DegreeType tipoCurso) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("aluno.number", id);
         criteria.addEqualTo("aluno.degreeType", tipoCurso);

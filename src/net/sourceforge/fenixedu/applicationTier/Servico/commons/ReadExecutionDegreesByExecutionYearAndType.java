@@ -13,11 +13,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -26,7 +26,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadExecutionDegreesByExecutionYearAndType implements IService {
 
-    public List run(Integer executionYearOID, TipoCurso typeOfCourse) throws ExcepcaoPersistencia {
+    public List run(Integer executionYearOID, DegreeType typeOfCourse) throws ExcepcaoPersistencia {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
 

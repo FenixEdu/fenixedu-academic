@@ -21,12 +21,12 @@ import org.apache.struts.actions.DispatchAction;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.equivalence.InfoCurricularCourseGrade;
 import net.sourceforge.fenixedu.dataTransferObject.equivalence.InfoEquivalenceContext;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -43,11 +43,10 @@ public class EnrollmentEquivalenceDispatchAction extends DispatchAction {
                 .getAttribute("fromStudentCurricularPlanID");
         Integer toStudentCurricularPlanID = (Integer) request.getAttribute("toStudentCurricularPlanID");
         String backLink = (String) request.getAttribute("backLink");
-        Integer degreeTypeCode = (Integer) request.getAttribute("degreeType");
+        String degreeTypeCode = (String) request.getAttribute("degreeType");
         String studentNumberSTR = (String) request.getAttribute("studentNumber");
 
-        TipoCurso degreeType = new TipoCurso();
-        degreeType.setTipoCurso(degreeTypeCode);
+        DegreeType degreeType = DegreeType.valueOf(degreeTypeCode);
         Integer studentNumber = Integer.valueOf(studentNumberSTR);
 
         InfoEquivalenceContext infoEquivalenceContext = null;
@@ -75,7 +74,7 @@ public class EnrollmentEquivalenceDispatchAction extends DispatchAction {
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         ActionErrors errors = new ActionErrors();
 
-        Integer degreeTypeCode = (Integer) makeEnrollmentEquivalenceFrom.get("degreeType");
+        String degreeTypeCode = (String) makeEnrollmentEquivalenceFrom.get("degreeType");
         String studentNumberSTR = (String) makeEnrollmentEquivalenceFrom.get("studentNumber");
         String backLink = (String) makeEnrollmentEquivalenceFrom.get("backLink");
         Integer fromStudentCurricularPlanID = (Integer) makeEnrollmentEquivalenceFrom
@@ -86,8 +85,7 @@ public class EnrollmentEquivalenceDispatchAction extends DispatchAction {
         List idsOfChosenEnrollmentsToGiveEquivalence = getIDsOfChosenEnrollmentsToGiveEquivalence(makeEnrollmentEquivalenceFrom);
         List idsOfChosenCurricularCoursesToGetEquivalence = getIDsOfChosenCurricularCoursesToGetEquivalence(makeEnrollmentEquivalenceFrom);
 
-        TipoCurso degreeType = new TipoCurso();
-        degreeType.setTipoCurso(degreeTypeCode);
+        DegreeType degreeType = DegreeType.valueOf(degreeTypeCode);
         Integer studentNumber = Integer.valueOf(studentNumberSTR);
 
         if (idsOfChosenEnrollmentsToGiveEquivalence.isEmpty()) {
@@ -132,7 +130,7 @@ public class EnrollmentEquivalenceDispatchAction extends DispatchAction {
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         ActionErrors errors = new ActionErrors();
 
-        Integer degreeTypeCode = (Integer) makeEnrollmentEquivalenceFrom.get("degreeType");
+        String degreeTypeCode = (String) makeEnrollmentEquivalenceFrom.get("degreeType");
         String studentNumberSTR = (String) makeEnrollmentEquivalenceFrom.get("studentNumber");
         String backLink = (String) makeEnrollmentEquivalenceFrom.get("backLink");
         Integer fromStudentCurricularPlanID = (Integer) makeEnrollmentEquivalenceFrom
@@ -143,8 +141,7 @@ public class EnrollmentEquivalenceDispatchAction extends DispatchAction {
         List idsOfChosenEnrollmentsToGiveEquivalence = getIDsOfChosenEnrollmentsToGiveEquivalence(makeEnrollmentEquivalenceFrom);
         List idsOfChosenCurricularCoursesToGetEquivalence = getIDsOfChosenCurricularCoursesToGetEquivalence(request);
 
-        TipoCurso degreeType = new TipoCurso();
-        degreeType.setTipoCurso(degreeTypeCode);
+        DegreeType degreeType = DegreeType.valueOf(degreeTypeCode);
         Integer studentNumber = Integer.valueOf(studentNumberSTR);
 
         InfoEquivalenceContext infoEquivalenceContext = null;
@@ -199,7 +196,7 @@ public class EnrollmentEquivalenceDispatchAction extends DispatchAction {
         HttpSession session = request.getSession();
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        Integer degreeTypeCode = (Integer) makeEnrollmentEquivalenceFrom.get("degreeType");
+        String degreeTypeCode = (String) makeEnrollmentEquivalenceFrom.get("degreeType");
         String studentNumberSTR = (String) makeEnrollmentEquivalenceFrom.get("studentNumber");
         String backLink = (String) makeEnrollmentEquivalenceFrom.get("backLink");
         Integer fromStudentCurricularPlanID = (Integer) makeEnrollmentEquivalenceFrom
@@ -210,8 +207,7 @@ public class EnrollmentEquivalenceDispatchAction extends DispatchAction {
         List idsOfChosenEnrollmentsToGiveEquivalence = getIDsOfChosenEnrollmentsToGiveEquivalence(makeEnrollmentEquivalenceFrom);
         List idsOfChosenCurricularCoursesToGetEquivalence = getIDsOfChosenCurricularCoursesToGetEquivalence(request);
 
-        TipoCurso degreeType = new TipoCurso();
-        degreeType.setTipoCurso(degreeTypeCode);
+        DegreeType degreeType = DegreeType.valueOf(degreeTypeCode);
         Integer studentNumber = Integer.valueOf(studentNumberSTR);
 
         InfoEquivalenceContext infoEquivalenceContext = null;
@@ -255,8 +251,7 @@ public class EnrollmentEquivalenceDispatchAction extends DispatchAction {
         String toStudentCurricularPlanID = request.getParameter("toStudentCurricularPlanID");
         String enrollmentID = request.getParameter("enrollmentID");
 
-        TipoCurso degreeType = new TipoCurso();
-        degreeType.setTipoCurso(Integer.valueOf(degreeTypeCode));
+        DegreeType degreeType = DegreeType.valueOf(degreeTypeCode);
         Integer studentNumber = Integer.valueOf(studentNumberSTR);
 
         InfoEquivalenceContext infoEquivalenceContext = null;
@@ -280,7 +275,7 @@ public class EnrollmentEquivalenceDispatchAction extends DispatchAction {
         }
 
         request.setAttribute("infoEnrolmentEvaluation", infoEnrolmentEvaluation);
-        setRequestAttributes(request, Integer.valueOf(degreeTypeCode), studentNumberSTR, backLink,
+        setRequestAttributes(request, degreeTypeCode, studentNumberSTR, backLink,
                 Integer.valueOf(fromStudentCurricularPlanID),
                 Integer.valueOf(toStudentCurricularPlanID), infoEquivalenceContext);
 
@@ -296,7 +291,7 @@ public class EnrollmentEquivalenceDispatchAction extends DispatchAction {
 
         String forward = null;
 
-        Integer degreeType = (Integer) request.getAttribute("degreeType");
+        String degreeType = (String) request.getAttribute("degreeType");
         String studentNumber = (String) request.getAttribute("studentNumber");
         String backLink = (String) request.getAttribute("backLink");
         Integer fromStudentCurricularPlanID = (Integer) request
@@ -305,7 +300,7 @@ public class EnrollmentEquivalenceDispatchAction extends DispatchAction {
         String commingFrom = (String) request.getAttribute("commingFrom");
 
         if (degreeType == null) {
-            degreeType = (Integer) makeEnrollmentEquivalenceFrom.get("degreeType");
+            degreeType = (String) makeEnrollmentEquivalenceFrom.get("degreeType");
         }
 
         if (studentNumber == null) {
@@ -336,8 +331,7 @@ public class EnrollmentEquivalenceDispatchAction extends DispatchAction {
             forward = PrepareAplicationContextForEnrollmentEquivalenceAction.findForward("show",
                     backLink);
         } else if (commingFrom.equals("grades")) {
-            TipoCurso realDegreeType = new TipoCurso();
-            realDegreeType.setTipoCurso(degreeType);
+            DegreeType realDegreeType = DegreeType.valueOf(degreeType);
             Integer realStudentNumber = Integer.valueOf(studentNumber);
 
             try {
@@ -353,8 +347,7 @@ public class EnrollmentEquivalenceDispatchAction extends DispatchAction {
             forward = PrepareAplicationContextForEnrollmentEquivalenceAction.findForward("show",
                     backLink);
         } else if (commingFrom.equals("confirm")) {
-            TipoCurso realDegreeType = new TipoCurso();
-            realDegreeType.setTipoCurso(degreeType);
+            DegreeType realDegreeType = DegreeType.valueOf(degreeType);
             Integer realStudentNumber = Integer.valueOf(studentNumber);
 
             List idsOfChosenEnrollmentsToGiveEquivalence = (List) request
@@ -545,7 +538,7 @@ public class EnrollmentEquivalenceDispatchAction extends DispatchAction {
      * @param toStudentCurricularPlanID
      * @param infoEquivalenceContext
      */
-    private void setRequestAttributes(HttpServletRequest request, Integer degreeType,
+    private void setRequestAttributes(HttpServletRequest request, String degreeType,
             String studentNumber, String backLink, Integer fromStudentCurricularPlanID,
             Integer toStudentCurricularPlanID, InfoEquivalenceContext infoEquivalenceContext) {
         request.setAttribute("degreeType", degreeType);
@@ -569,7 +562,7 @@ public class EnrollmentEquivalenceDispatchAction extends DispatchAction {
      * @throws FenixServiceException
      */
     private InfoEquivalenceContext runFirstService(IUserView userView, Integer studentNumber,
-            TipoCurso degreeType, Integer fromStudentCurricularPlanID, Integer toStudentCurricularPlanID)
+            DegreeType degreeType, Integer fromStudentCurricularPlanID, Integer toStudentCurricularPlanID)
             throws FenixServiceException, FenixFilterException {
         InfoEquivalenceContext infoEquivalenceContext = null;
 
@@ -591,7 +584,7 @@ public class EnrollmentEquivalenceDispatchAction extends DispatchAction {
      * @throws FenixServiceException
      */
     private InfoEquivalenceContext runSecondService(IUserView userView, Integer studentNumber,
-            TipoCurso degreeType, List idsOfChosenEnrollmentsToGiveEquivalence,
+            DegreeType degreeType, List idsOfChosenEnrollmentsToGiveEquivalence,
             List idsOfChosenCurricularCoursesToGetEquivalence) throws FenixServiceException, FenixFilterException {
         InfoEquivalenceContext infoEquivalenceContext = null;
 

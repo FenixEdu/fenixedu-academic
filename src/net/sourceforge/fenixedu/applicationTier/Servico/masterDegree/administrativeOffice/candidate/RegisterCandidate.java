@@ -43,6 +43,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
@@ -57,7 +58,6 @@ import net.sourceforge.fenixedu.util.State;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.util.StudentState;
 import net.sourceforge.fenixedu.util.StudentType;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -91,7 +91,7 @@ public class RegisterCandidate implements IService {
 
             if (studentNumber != null) {
                 student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(studentNumber,
-                        TipoCurso.MESTRADO_OBJ);
+                        DegreeType.MASTER_DEGREE);
 
                 // if (student != null) {
                 // throw new ExistingServiceException();
@@ -134,7 +134,7 @@ public class RegisterCandidate implements IService {
             // Check if a Master Degree Student Already Exists
             if (student == null) {
                 student = sp.getIPersistentStudent().readByPersonAndDegreeType(
-                        masterDegreeCandidate.getPerson(), TipoCurso.MESTRADO_OBJ);
+                        masterDegreeCandidate.getPerson(), DegreeType.MASTER_DEGREE);
             }
 
             IRole role = (IRole) CollectionUtils.find(
@@ -150,7 +150,7 @@ public class RegisterCandidate implements IService {
                 masterDegreeCandidate.getPerson().getPersonRoles().remove(role);
             }
             Integer newStudentNumber = null;
-            newStudentNumber = sp.getIPersistentStudent().generateStudentNumber(TipoCurso.MESTRADO_OBJ);
+            newStudentNumber = sp.getIPersistentStudent().generateStudentNumber(DegreeType.MASTER_DEGREE);
 
             if (studentNumber != null && studentNumber.intValue() > newStudentNumber.intValue())
                 throw new InvalidStudentNumberServiceException();
@@ -161,7 +161,7 @@ public class RegisterCandidate implements IService {
                 student.setPayedTuition(new Boolean(false));
                 student.setEnrollmentForbidden(new Boolean(false));
                 student.setEntryPhase(EntryPhase.FIRST_PHASE_OBJ);
-                student.setDegreeType(TipoCurso.MESTRADO_OBJ);
+                student.setDegreeType(DegreeType.MASTER_DEGREE);
                 student.setPerson(masterDegreeCandidate.getPerson());
                 student.setState(new StudentState(StudentState.INSCRITO));
 
@@ -194,7 +194,7 @@ public class RegisterCandidate implements IService {
             // IStudentCurricularPlan studentCurricularPlanOld =
             // sp.getIStudentCurricularPlanPersistente()
             // .readActiveStudentCurricularPlan(student.getNumber(),
-            // TipoCurso.MESTRADO_OBJ);
+            // DegreeType.MESTRADO_OBJ);
             //
             // if ((studentCurricularPlanOld != null)
             // && (studentCurricularPlanOld.getCurrentState()

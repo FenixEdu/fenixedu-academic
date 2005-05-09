@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
@@ -33,7 +34,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -77,7 +77,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IService {
             while (iterEnrolment.hasNext()) {
                 IEnrolment enrolment = (IEnrolment) iterEnrolment.next();
                 if (enrolment.getStudentCurricularPlan().getDegreeCurricularPlan().getDegree()
-                        .getTipoCurso().equals(TipoCurso.MESTRADO_OBJ)) {
+                        .getTipoCurso().equals(DegreeType.MASTER_DEGREE)) {
                     List allEnrolmentEvaluations = persistentEnrolmentEvaluation
                             .readEnrolmentEvaluationByEnrolment(enrolment);
                     IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) allEnrolmentEvaluations

@@ -13,11 +13,11 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ICoordinator;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -77,7 +77,7 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro {
         CollectionUtils.intersection(roles, getNeededRoles());
 
         Integer degreeCurricularPlanID = (Integer) arguments[0];
-        TipoCurso degreeType = (TipoCurso) arguments[1];
+        DegreeType degreeType = (DegreeType) arguments[1];
 
         IDegreeCurricularPlan degreeCurricularPlan = null;
 
@@ -99,7 +99,7 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro {
         List roleTemp = new ArrayList();
         roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
-            if (degreeCurricularPlan.getDegree().getTipoCurso().equals(TipoCurso.MESTRADO_OBJ)) {
+            if (degreeCurricularPlan.getDegree().getTipoCurso().equals(DegreeType.MASTER_DEGREE)) {
                 return true;
             }
             return false;

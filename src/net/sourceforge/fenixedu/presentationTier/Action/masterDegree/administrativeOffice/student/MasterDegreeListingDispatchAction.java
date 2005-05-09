@@ -16,6 +16,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -23,7 +24,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -46,7 +46,7 @@ public class MasterDegreeListingDispatchAction extends DispatchAction {
 
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-            TipoCurso degreeType = TipoCurso.MESTRADO_OBJ;
+            DegreeType degreeType = DegreeType.MASTER_DEGREE;
 
             Object args[] = { degreeType };
 
@@ -126,7 +126,7 @@ public class MasterDegreeListingDispatchAction extends DispatchAction {
         List result = null;
 
         try {
-            Object args[] = { degreeCurricularPlanID, TipoCurso.MESTRADO_OBJ };
+            Object args[] = { degreeCurricularPlanID, DegreeType.MASTER_DEGREE };
             result = (List) ServiceManagerServiceFactory.executeService(userView,
                     "ReadStudentsFromDegreeCurricularPlan", args);
         } catch (NotAuthorizedException e) {

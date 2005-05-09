@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -40,7 +41,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoAlunoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -71,10 +71,10 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
             //read student to enroll
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
             IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
-                    TipoCurso.LICENCIATURA_OBJ);
+                    DegreeType.DEGREE);
             if (student == null) {
                 student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
-                        TipoCurso.MESTRADO_OBJ);
+                        DegreeType.MASTER_DEGREE);
             }
             if (student == null) {
                 throw new FenixServiceException("errors.impossible.operation");
@@ -134,7 +134,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
         return infoShiftEnrollment;
     }
 
-    private List readAttendingCourses(ISuportePersistente sp, Integer studentNumber, TipoCurso tipoCurso)
+    private List readAttendingCourses(ISuportePersistente sp, Integer studentNumber, DegreeType tipoCurso)
             throws ExcepcaoPersistencia {
         List infoAttendingCourses = null;
 
@@ -219,7 +219,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
             throws ExcepcaoPersistencia, FenixServiceException {
         IPersistentExecutionDegree presistentExecutionDegree = sp.getIPersistentExecutionDegree();
         List executionDegrees = presistentExecutionDegree.readByExecutionYearAndDegreeType(
-                executionYear, TipoCurso.LICENCIATURA_OBJ);
+                executionYear, DegreeType.DEGREE);
         if (executionDegrees == null || executionDegrees.size() <= 0) {
             throw new FenixServiceException("errors.impossible.operation");
         }
@@ -284,7 +284,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
         IPersistentStudentCurricularPlan persistentCurricularPlan = sp
                 .getIStudentCurricularPlanPersistente();
         IStudentCurricularPlan studentCurricularPlan = persistentCurricularPlan
-                .readActiveByStudentNumberAndDegreeType(student.getNumber(), TipoCurso.LICENCIATURA_OBJ);
+                .readActiveByStudentNumberAndDegreeType(student.getNumber(), DegreeType.DEGREE);
         if (studentCurricularPlan == null || studentCurricularPlan.getDegreeCurricularPlan() == null
                 || studentCurricularPlan.getDegreeCurricularPlan().getDegree() == null
                 || studentCurricularPlan.getDegreeCurricularPlan().getDegree().getNome() == null) {

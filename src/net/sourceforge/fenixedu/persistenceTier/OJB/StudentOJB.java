@@ -17,10 +17,10 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -29,12 +29,12 @@ public class StudentOJB extends PersistentObjectOJB implements IPersistentStuden
     /**
      * @deprecated
      */
-    public IStudent readByNumeroAndEstado(Integer numero, Integer estado, TipoCurso degreeType)
+    public IStudent readByNumeroAndEstado(Integer numero, Integer estado, DegreeType degreeType)
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("number", numero);
         crit.addEqualTo("state", estado);
-        crit.addEqualTo("degreeType", degreeType.getTipoCurso());
+        crit.addEqualTo("degreeType", degreeType);
         return (IStudent) queryObject(Student.class, crit);
 
     }
@@ -62,7 +62,7 @@ public class StudentOJB extends PersistentObjectOJB implements IPersistentStuden
         }
     }
 
-    public IStudent readStudentByDegreeTypeAndPerson(TipoCurso degreeType, IPerson person)
+    public IStudent readStudentByDegreeTypeAndPerson(DegreeType degreeType, IPerson person)
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("degreeType", degreeType);
@@ -73,7 +73,7 @@ public class StudentOJB extends PersistentObjectOJB implements IPersistentStuden
 
     }
 
-    public IStudent readStudentByNumberAndDegreeType(Integer number, TipoCurso degreeType)
+    public IStudent readStudentByNumberAndDegreeType(Integer number, DegreeType degreeType)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("number", number);
@@ -86,7 +86,7 @@ public class StudentOJB extends PersistentObjectOJB implements IPersistentStuden
         return queryList(Student.class, new Criteria());
     }
 
-    public IStudent readByPersonAndDegreeType(IPerson person, TipoCurso degreeType)
+    public IStudent readByPersonAndDegreeType(IPerson person, DegreeType degreeType)
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("person.idInternal", person.getIdInternal());
@@ -95,7 +95,7 @@ public class StudentOJB extends PersistentObjectOJB implements IPersistentStuden
 
     }
 
-    public Integer generateStudentNumber(TipoCurso degreeType) throws ExcepcaoPersistencia {
+    public Integer generateStudentNumber(DegreeType degreeType) throws ExcepcaoPersistencia {
 
         Integer number = new Integer(0);
         Criteria crit = new Criteria();
@@ -110,7 +110,7 @@ public class StudentOJB extends PersistentObjectOJB implements IPersistentStuden
         // NA SECRETARIA QUE
         // POR UM MOTIVO OU OUTRO NAO SE ENCONTRAM NA BASE DE DADOS
 
-        if (degreeType.equals(TipoCurso.MESTRADO_OBJ) && (number.intValue() < 5411)) {
+        if (degreeType.equals(DegreeType.MASTER_DEGREE) && (number.intValue() < 5411)) {
             number = new Integer(5411);
         }
 
@@ -148,7 +148,7 @@ public class StudentOJB extends PersistentObjectOJB implements IPersistentStuden
             criteria.addEqualTo("number", studentNumber);
         }
 
-        criteria.addEqualTo("degreeType", TipoCurso.MESTRADO_OBJ.getTipoCurso());
+        criteria.addEqualTo("degreeType", DegreeType.MASTER_DEGREE);
 
         return queryList(Student.class, criteria);
     }

@@ -27,7 +27,7 @@
 			<field property="executionPeriod" depends="required" page="1">
 				<arg0 key="label.executionYear" resource="true"/>
 			</field>
-			<field property="degreeType" depends="required,integer" page="1">
+			<field property="degreeType" depends="required" page="1">
 				<arg0 key="label.degree.type" resource="true"/>
 			</field>	
 			<field property="executionDegree" depends="required" page="2">
@@ -36,7 +36,7 @@
 		</form>
 
 		<form name="getStudentByNumberAndDegreeTypeForThesisForm">
-			<field property="degreeType" depends="required,integer" page="1">
+			<field property="degreeType" depends="required" page="1">
 				<arg0 key="error.no.degree.type.selected" resource="true"/>
 			</field>
 			<field property="studentNumber" depends="required,integer" page="1">

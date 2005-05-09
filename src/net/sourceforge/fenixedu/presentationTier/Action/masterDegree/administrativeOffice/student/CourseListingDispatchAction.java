@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.TipoCurso;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -44,7 +44,7 @@ public class CourseListingDispatchAction extends DispatchAction {
 
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-            TipoCurso degreeType = TipoCurso.MESTRADO_OBJ;
+            DegreeType degreeType = DegreeType.MASTER_DEGREE;
 
             Object args[] = { degreeType };
 

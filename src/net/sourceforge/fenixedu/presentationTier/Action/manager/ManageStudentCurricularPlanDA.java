@@ -18,11 +18,11 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -32,7 +32,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 /**
- * @author Luis Crus
+ * @author Luis Cruz
  */
 public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
 
@@ -51,7 +51,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
             putStudentCurricularPlanStateLabelListInRequest(request);
 
             final Integer studentNumber = new Integer(studentNumberString);
-            final TipoCurso degreeType = new TipoCurso(new Integer(degreeTypeString));
+            final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
             putStudentCurricularInformationInRequest(request, studentNumber, degreeType);
         }
 
@@ -114,7 +114,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
         if (isPresent(degreeTypeString)) {
             putStudentCurricularPlanStateLabelListInRequest(request);
 
-            final TipoCurso degreeType = new TipoCurso(new Integer(degreeTypeString));
+            final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
 
             final IUserView userView = SessionUtils.getUserView(request);
 
@@ -148,7 +148,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
                 && isPresent(degreeCurricularPlanIdString) && isPresent(startDateString)) {
 
             final Integer studentNumber = new Integer(studentNumberString);
-            final TipoCurso degreeType = new TipoCurso(new Integer(degreeTypeString));
+            final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
             final StudentCurricularPlanState studentCurricularPlanState = new StudentCurricularPlanState(
                     studentCurricularPlanStateString);
             final Integer degreeCurricularPlanId = new Integer(degreeCurricularPlanIdString);
@@ -202,7 +202,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
     }
 
     protected void putStudentCurricularInformationInRequest(final HttpServletRequest request,
-            final Integer studentNumber, final TipoCurso degreeType) throws FenixFilterException,
+            final Integer studentNumber, final DegreeType degreeType) throws FenixFilterException,
             FenixServiceException {
         final IUserView userView = SessionUtils.getUserView(request);
         final Object[] args = new Object[] { studentNumber, degreeType };
@@ -229,7 +229,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
     }
 
     protected void putDegreeTypeLabelListInRequest(final HttpServletRequest request) {
-        request.setAttribute("degreeTypes", TipoCurso.toLabelValueBeanList());
+        //request.setAttribute("degreeTypes", DegreeType.toLabelValueBeanList());
     }
 
     protected void putStudentCurricularPlanStateLabelListInRequest(final HttpServletRequest request) {

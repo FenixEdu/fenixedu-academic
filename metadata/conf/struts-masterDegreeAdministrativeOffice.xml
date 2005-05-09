@@ -401,7 +401,7 @@
 
             <form-property name="page" type="java.lang.Integer" />
             <form-property name="number" type="java.lang.Integer"/>
-            <form-property name="degreeType" type="java.lang.Integer"/>
+            <form-property name="degreeType" type="java.lang.String"/>
        </form-bean>
 
 	  <!-- Bean to Choose the Situation for the Candidate  -->
@@ -471,7 +471,7 @@
 		<form-bean name="getStudentNumberForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
-			<form-property name="degreeType" type="java.lang.Integer"/>
+			<form-property name="degreeType" type="java.lang.String"/>
 			<form-property name="studentNumber" type="java.lang.String"/>
 		</form-bean>
 
@@ -479,7 +479,7 @@
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
             <form-property name="studentNumber" type="java.lang.Integer" />
-   	        <form-property name="degreeType" type="java.lang.Integer"/>
+   	        <form-property name="degreeType" type="java.lang.String"/>
    	        <form-property name="page" type="java.lang.Integer"/>
    	        <form-property name="method" type="java.lang.String"/>
    	        <form-property name="dissertationTitle" type="java.lang.String"/>
@@ -499,7 +499,7 @@
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
             <form-property name="studentNumber" type="java.lang.Integer" />
-   	        <form-property name="degreeType" type="java.lang.Integer"/>
+   	        <form-property name="degreeType" type="java.lang.String"/>
    	        <form-property name="page" type="java.lang.Integer"/>
    	        <form-property name="method" type="java.lang.String"/>
    	        <form-property name="dissertationTitle" type="java.lang.String"/>
@@ -519,7 +519,7 @@
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
             <form-property name="studentNumber" type="java.lang.Integer" />
-   	        <form-property name="degreeType" type="java.lang.Integer"/>
+   	        <form-property name="degreeType" type="java.lang.String"/>
    	        <form-property name="page" type="java.lang.Integer"/>
    	        <form-property name="method" type="java.lang.String"/>
    	        <form-property name="dissertationTitle" type="java.lang.String"/>
@@ -704,7 +704,7 @@
                  dynamic="true">
             <form-property name="page" type="java.lang.Integer" initial="0" />
             <form-property name="studentNumber" type="java.lang.Integer"/>
-			<form-property name="degreeType" type="java.lang.Integer"/>   	        
+			<form-property name="degreeType" type="java.lang.String"/>   	        
        </form-bean>
 
        <form-bean name="payGratuityForm" 
@@ -792,7 +792,7 @@
       	<!-- ****************** Enrollment Without Rules **************************** -->
 		<action path="/courseEnrolmentWithoutRulesManagerDA"
 			type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.withoutRules.ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction"
-			input="/courseEnrolmentWithoutRulesManagerDA.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=2&amp;page=0"
+			input="/courseEnrolmentWithoutRulesManagerDA.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=MASTER_DEGREE&amp;page=0"
 			name="curricularCoursesEnrollmentWithoutRuleForm"
 			scope="request"
 			parameter="method">

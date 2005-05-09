@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -30,7 +31,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -47,7 +47,7 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService {
     public ReadEnrollmentsWithStateEnrolledByStudent() {
     }
 
-    public Object run(InfoStudent infoStudent, TipoCurso degreeType, Integer executionPeriodID)
+    public Object run(InfoStudent infoStudent, DegreeType degreeType, Integer executionPeriodID)
             throws FenixServiceException {
         InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
         try {

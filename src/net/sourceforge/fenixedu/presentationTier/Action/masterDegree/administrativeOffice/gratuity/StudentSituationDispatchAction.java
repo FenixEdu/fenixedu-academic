@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoInsuranceValue;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoInsuranceTransaction;
 import net.sourceforge.fenixedu.dataTransferObject.transactions.InsuranceSituationDTO;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -28,7 +29,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -52,11 +52,11 @@ public class StudentSituationDispatchAction extends FenixDispatchAction {
         IUserView userView = SessionUtils.getUserView(request);
 
         Integer studentNumber = (Integer) studentSituationForm.get("studentNumber");
-        Integer degreeType = (Integer) studentSituationForm.get("degreeType");
+        String degreeType = (String) studentSituationForm.get("degreeType");
 
         InfoStudent infoStudent = null;
 
-        Object argsStudent[] = { studentNumber, new TipoCurso(degreeType) };
+        Object argsStudent[] = { studentNumber, DegreeType.valueOf(degreeType) };
 
         try {
             infoStudent = (InfoStudent) ServiceUtils.executeService(userView,

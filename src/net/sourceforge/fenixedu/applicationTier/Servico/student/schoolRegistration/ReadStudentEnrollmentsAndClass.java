@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.ShiftStudent;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -25,7 +26,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoAlunoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.TipoAula;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -57,7 +57,7 @@ public class ReadStudentEnrollmentsAndClass implements IService {
         Integer studentNumber = new Integer(user.substring(1));
 
         IStudentCurricularPlan scp = pSCP.readActiveStudentCurricularPlan(studentNumber,
-                TipoCurso.LICENCIATURA_OBJ);
+                DegreeType.DEGREE);
         List studentEnrollments = pEnrollment.readAllByStudentCurricularPlan(scp);
         IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
         List studentShifts = persistentShiftStudent.readByStudentAndExecutionPeriod(scp.getStudent(),

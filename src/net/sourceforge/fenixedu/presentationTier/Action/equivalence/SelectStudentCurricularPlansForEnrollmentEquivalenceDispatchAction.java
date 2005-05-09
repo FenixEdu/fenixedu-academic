@@ -19,6 +19,7 @@ import org.apache.struts.actions.DispatchAction;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.equivalence.InfoEquivalenceContext;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -26,7 +27,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -44,8 +44,7 @@ public class SelectStudentCurricularPlansForEnrollmentEquivalenceDispatchAction 
         String studentNumberSTR = request.getParameter("studentNumber");
         String backLink = request.getParameter("backLink");
 
-        TipoCurso degreeType = new TipoCurso();
-        degreeType.setTipoCurso(Integer.valueOf(degreeTypeSTR));
+        DegreeType degreeType = DegreeType.valueOf(degreeTypeSTR);
         Integer studentNumber = Integer.valueOf(studentNumberSTR);
 
         List infoStudentCurricularPlans = null;
@@ -53,7 +52,7 @@ public class SelectStudentCurricularPlansForEnrollmentEquivalenceDispatchAction 
             infoStudentCurricularPlans = runService(userView, studentNumber, degreeType);
         } catch (Exception e) {
             saveAcurateError(request, errors, e, "showStudentCurricularPlans", studentNumberSTR);
-            setRequestAttributes(request, degreeType.getTipoCurso(), studentNumberSTR, backLink, null,
+            setRequestAttributes(request, degreeType.toString(), studentNumberSTR, backLink, null,
                     null, new ArrayList(), null);
             request.setAttribute("commingFrom", "showStudentCurricularPlans");
             return mapping.getInputForward();
@@ -61,13 +60,13 @@ public class SelectStudentCurricularPlansForEnrollmentEquivalenceDispatchAction 
 
         if ((infoStudentCurricularPlans == null) || (infoStudentCurricularPlans.isEmpty())) {
             saveAcurateError(request, errors, null, "showStudentCurricularPlans", studentNumberSTR);
-            setRequestAttributes(request, degreeType.getTipoCurso(), studentNumberSTR, backLink, null,
+            setRequestAttributes(request, degreeType.toString(), studentNumberSTR, backLink, null,
                     null, new ArrayList(), null);
             request.setAttribute("commingFrom", "showStudentCurricularPlans");
             return mapping.getInputForward();
         }
 
-        setRequestAttributes(request, degreeType.getTipoCurso(), studentNumberSTR, backLink, null, null,
+        setRequestAttributes(request, degreeType.toString(), studentNumberSTR, backLink, null, null,
                 infoStudentCurricularPlans, buildInfoEquivalenceContext(infoStudentCurricularPlans));
 
         return mapping.findForward(PrepareAplicationContextForEnrollmentEquivalenceAction.findForward(
@@ -79,7 +78,7 @@ public class SelectStudentCurricularPlansForEnrollmentEquivalenceDispatchAction 
         DynaActionForm selectStudentCurricularPlansForm = (DynaActionForm) form;
         ActionErrors errors = new ActionErrors();
 
-        Integer degreeType = (Integer) selectStudentCurricularPlansForm.get("degreeType");
+        String degreeType = (String) selectStudentCurricularPlansForm.get("degreeType");
         String studentNumber = (String) selectStudentCurricularPlansForm.get("studentNumber");
         String backLink = (String) selectStudentCurricularPlansForm.get("backLink");
         Integer fromStudentCurricularPlanID = (Integer) selectStudentCurricularPlansForm
@@ -108,13 +107,13 @@ public class SelectStudentCurricularPlansForEnrollmentEquivalenceDispatchAction 
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         DynaActionForm selectStudentCurricularPlansForm = (DynaActionForm) form;
 
-        Integer degreeType = (Integer) request.getAttribute("degreeType");
+        String degreeType = (String) request.getAttribute("degreeType");
         String studentNumber = (String) request.getAttribute("studentNumber");
         String backLink = (String) request.getAttribute("backLink");
         String commingFrom = (String) request.getAttribute("commingFrom");
 
         if (degreeType == null) {
-            degreeType = (Integer) selectStudentCurricularPlansForm.get("degreeType");
+            degreeType = (String) selectStudentCurricularPlansForm.get("degreeType");
         }
 
         if (studentNumber == null) {
@@ -132,8 +131,7 @@ public class SelectStudentCurricularPlansForEnrollmentEquivalenceDispatchAction 
         List infoStudentCurricularPlans = null;
 
         if (commingFrom.equals("chooseStudentCurricularPlans")) {
-            TipoCurso realDegreeType = new TipoCurso();
-            realDegreeType.setTipoCurso(degreeType);
+            DegreeType realDegreeType = DegreeType.valueOf(degreeType);
             Integer realStudentNumber = Integer.valueOf(studentNumber);
 
             try {
@@ -213,7 +211,7 @@ public class SelectStudentCurricularPlansForEnrollmentEquivalenceDispatchAction 
      * @return infoStudentCurricularPlans
      * @throws FenixServiceException
      */
-    private List runService(IUserView userView, Integer studentNumber, TipoCurso degreeType)
+    private List runService(IUserView userView, Integer studentNumber, DegreeType degreeType)
             throws FenixServiceException, FenixFilterException {
         List infoStudentCurricularPlans = null;
 
@@ -238,7 +236,7 @@ public class SelectStudentCurricularPlansForEnrollmentEquivalenceDispatchAction 
      * @param infoStudentCurricularPlans
      * @param infoEquivalenceContext
      */
-    private void setRequestAttributes(HttpServletRequest request, Integer degreeType,
+    private void setRequestAttributes(HttpServletRequest request, String degreeType,
             String studentNumber, String backLink, Integer fromStudentCurricularPlanID,
             Integer toStudentCurricularPlanID, List infoStudentCurricularPlans,
             InfoEquivalenceContext infoEquivalenceContext) {

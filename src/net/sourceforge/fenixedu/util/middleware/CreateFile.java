@@ -9,7 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
-import net.sourceforge.fenixedu.util.TipoCurso;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -33,7 +33,7 @@ public class CreateFile {
             final ICurricularCourse curricularCourse = (ICurricularCourse) iterador.next();
 
             if (curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(
-                    TipoCurso.LICENCIATURA_OBJ)) {
+                    DegreeType.DEGREE)) {
                 List enrolmentEvaluationCurricularCourseList = new ArrayList();
 
                 enrolmentEvaluationCurricularCourseList = (List) CollectionUtils.select(

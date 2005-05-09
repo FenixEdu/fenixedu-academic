@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.IGuideSituation;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IPersonAccount;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.IPaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
@@ -42,7 +43,6 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransact
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ChangeGuideSituation implements IService {
@@ -152,7 +152,7 @@ public class ChangeGuideSituation implements IService {
                         IPerson studentPerson = guide.getPerson();
 
                         IStudent student = sp.getIPersistentStudent().readByPersonAndDegreeType(
-                                studentPerson, TipoCurso.MESTRADO_OBJ);
+                                studentPerson, DegreeType.MASTER_DEGREE);
 
                         IExecutionDegree executionDegree = guide.getExecutionDegree();
 

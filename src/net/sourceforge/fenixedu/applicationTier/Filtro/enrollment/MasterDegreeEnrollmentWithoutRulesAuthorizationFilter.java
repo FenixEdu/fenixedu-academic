@@ -13,12 +13,12 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesF
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * @author David Santos in Mar 1, 2004
@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.util.TipoCurso;
 
 public class MasterDegreeEnrollmentWithoutRulesAuthorizationFilter extends
         AuthorizationByManyRolesFilter {
-    private static TipoCurso DEGREE_TYPE = TipoCurso.MESTRADO_OBJ;
+    private static DegreeType DEGREE_TYPE = DegreeType.MASTER_DEGREE;
 
     protected Collection getNeededRoles() {
         List roles = new ArrayList();

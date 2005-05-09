@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IShiftProfessorship;
 import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * @author jpvl
@@ -31,7 +31,7 @@ public interface IPersistentShiftProfessorship extends IPersistentObject {
             Date startTime, Date endTime) throws ExcepcaoPersistencia;
 
     List readByTeacherAndExecutionPeriodAndDegreeType(ITeacher teacher,
-            IExecutionPeriod executionPeriod, TipoCurso curso) throws ExcepcaoPersistencia;
+            IExecutionPeriod executionPeriod, DegreeType curso) throws ExcepcaoPersistencia;
 
     List readByProfessorship(IProfessorship professorship) throws ExcepcaoPersistencia;
 

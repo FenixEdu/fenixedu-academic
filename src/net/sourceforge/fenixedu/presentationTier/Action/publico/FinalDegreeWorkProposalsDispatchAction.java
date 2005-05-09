@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -55,7 +55,7 @@ public class FinalDegreeWorkProposalsDispatchAction extends FenixContextDispatch
                 request.setAttribute("finalDegreeWorksForm", finalWorkForm);
             }
         }
-        args = new Object[] { new Integer(executionYearOID), TipoCurso.LICENCIATURA_OBJ };
+        args = new Object[] { new Integer(executionYearOID), DegreeType.DEGREE };
         List infoExecutionDegrees = (List) ServiceUtils.executeService(null,
                 "ReadExecutionDegreesByExecutionYearAndType", args);
         Collections.sort(infoExecutionDegrees, new BeanComparator(

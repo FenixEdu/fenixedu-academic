@@ -8,7 +8,7 @@
 		<html:link page="/curricularCoursesEnrollment.do?method=prepareEnrollmentChooseStudent"><bean:message key="link.student.enrollment"/></html:link>
 	</li>
 	<li>
-		<html:link page="/courseEnrolmentWithoutRulesManagerDA.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=1&amp;userType=0"><bean:message key="link.student.enrollment.without.rules"/></html:link>
+		<html:link page="/courseEnrolmentWithoutRulesManagerDA.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=DEGREE&amp;userType=0"><bean:message key="link.student.enrollment.without.rules"/></html:link>
 	</li>
 	<li>
 		<html:link page="/prepareEnrollmentChooseStudent.do"><bean:message key="link.student.enrollment.improvment"/></html:link>
@@ -16,6 +16,6 @@
 	<br />
 	<br />
 	<li>
-		<html:link page="/courseEnrolmentWithoutRulesManagerDA.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=1&amp;userType=1"><bean:message key="link.student.enrollment.without.rules.super.user"/></html:link>
+		<html:link page="/courseEnrolmentWithoutRulesManagerDA.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=DEGREE&amp;userType=1"><bean:message key="link.student.enrollment.without.rules.super.user"/></html:link>
 	</li>
 </ul>

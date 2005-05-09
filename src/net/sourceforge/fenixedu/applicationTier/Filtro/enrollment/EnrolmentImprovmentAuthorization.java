@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
@@ -20,7 +21,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * @author nmgo
@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.util.TipoCurso;
 public class EnrolmentImprovmentAuthorization extends AuthorizationByManyRolesFilter {
 
     
-    private static TipoCurso DEGREE_TYPE = TipoCurso.LICENCIATURA_OBJ;
+    private static DegreeType DEGREE_TYPE = DegreeType.DEGREE;
     /*
      * (non-Javadoc)
      * 
@@ -81,7 +81,7 @@ public class EnrolmentImprovmentAuthorization extends AuthorizationByManyRolesFi
         }
     }
 
-    private boolean verifyStudentType(Object[] arguments, ISuportePersistente sp, TipoCurso degreeType)
+    private boolean verifyStudentType(Object[] arguments, ISuportePersistente sp, DegreeType degreeType)
             throws ExcepcaoPersistencia {
         boolean isRightType = false;
 

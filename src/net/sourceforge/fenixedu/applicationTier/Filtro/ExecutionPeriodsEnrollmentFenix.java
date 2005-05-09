@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.util.TipoCurso;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.serviceManager.ServiceParameters;
@@ -36,7 +36,7 @@ public class ExecutionPeriodsEnrollmentFenix extends Filtro {
         List serviceResult = (List) response.getReturnObject();
         ServiceParameters parameters = request.getServiceParameters();
 
-        TipoCurso degreeType = (TipoCurso) parameters.getParameter(0);
+        DegreeType degreeType = (DegreeType) parameters.getParameter(0);
         // FIXME: should be replaced with:
         // 'parameters.getParameter("degreeType")',
         // when the services starts to genereate stubs
@@ -51,7 +51,7 @@ public class ExecutionPeriodsEnrollmentFenix extends Filtro {
 
             // master degree extra execution periods
             if (executionPeriod.getBeginDate().after(this.masterDegreeFirstExecutionPeriodDate)
-                    && degreeType != null && degreeType.equals(TipoCurso.MESTRADO_OBJ)) {
+                    && degreeType != null && degreeType.equals(DegreeType.MASTER_DEGREE)) {
                 newRes.add((executionPeriod));
             }
         }

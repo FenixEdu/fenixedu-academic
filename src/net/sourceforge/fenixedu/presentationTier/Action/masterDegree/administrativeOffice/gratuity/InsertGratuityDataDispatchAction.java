@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -23,7 +24,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstan
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.util.Specialization;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -97,7 +97,7 @@ public class InsertGratuityDataDispatchAction extends DispatchAction {
         InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
         infoExecutionYear.setYear(executionYear);
 
-        Object args[] = { infoExecutionYear, TipoCurso.MESTRADO_OBJ };
+        Object args[] = { infoExecutionYear, DegreeType.MASTER_DEGREE };
         List executionDegreeList = null;
         try {
             executionDegreeList = (List) ServiceManagerServiceFactory.executeService(userView,

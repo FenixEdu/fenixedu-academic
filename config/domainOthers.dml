@@ -183,8 +183,8 @@ class net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal extends net.sourc
     String companionMail;
     
     interface "
-    public net.sourceforge.fenixedu.util.TipoCurso getDegreeType();
-    public void setDegreeType(net.sourceforge.fenixedu.util.TipoCurso degreeType);
+    public net.sourceforge.fenixedu.domain.degree.DegreeType getDegreeType();
+    public void setDegreeType(net.sourceforge.fenixedu.domain.degree.DegreeType degreeType);
     public net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus getStatus();
     public void setStatus(net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus status);
     "

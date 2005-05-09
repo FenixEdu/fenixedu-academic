@@ -1,6 +1,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
 <html:form action="/studentsManagement" focus="number">
@@ -23,8 +24,9 @@
 				<html:text property="number" size="5" onchange="this.form.submit();"/>
 			</td>
 			<td class="listClasses">
+				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.degree.DegreeType" bundle="ENUMERATION_RESOURCES"/>
 				<html:select property="degreeType" size="1" onchange="this.form.submit();">
-					<html:options collection="degreeTypes" property="value" labelProperty="label"/>
+					<html:options collection="values" property="value" labelProperty="label"/>
 				</html:select>
 			</td>
 		</tr>

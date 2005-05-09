@@ -12,10 +12,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -24,7 +24,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadDegreeCurricularPlansByDegreeType implements IService {
 
-    public List run(final TipoCurso tipoCurso) throws ExcepcaoPersistencia {
+    public List run(final DegreeType tipoCurso) throws ExcepcaoPersistencia {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         final List degreeCurricularPlans = sp.getIPersistentDegreeCurricularPlan().readAll();
@@ -32,7 +32,7 @@ public class ReadDegreeCurricularPlansByDegreeType implements IService {
         return constructInfoDegreeCurricularPlans(tipoCurso, degreeCurricularPlans);
     }
 
-    protected List constructInfoDegreeCurricularPlans(final TipoCurso tipoCurso,
+    protected List constructInfoDegreeCurricularPlans(final DegreeType tipoCurso,
             final List degreeCurricularPlans) {
         final List infoDegreeCurricularPlans = new ArrayList(degreeCurricularPlans.size());
         for (final Iterator iterator = degreeCurricularPlans.iterator(); iterator.hasNext();) {

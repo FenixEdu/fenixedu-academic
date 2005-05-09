@@ -6,11 +6,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.IEnrolment;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -21,7 +21,7 @@ public class GetEnrollmentEvaluation extends EnrollmentEquivalenceServiceUtils i
     public GetEnrollmentEvaluation() {
     }
 
-    public InfoEnrolmentEvaluation run(Integer studentNumber, TipoCurso degreeType, Integer enrollmentID)
+    public InfoEnrolmentEvaluation run(Integer studentNumber, DegreeType degreeType, Integer enrollmentID)
             throws FenixServiceException {
         return (InfoEnrolmentEvaluation) convertDataOutput(execute(convertDataInput(enrollmentID)));
     }

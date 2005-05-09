@@ -226,7 +226,7 @@
 		<field property="maximumNumberOfGroupElements" depends="required,integer" page="2">
 			<arg0 key="finalWorkInformationForm.numberOfGroupElements" resource="true"/>
 		</field>
-		<field property="degreeType" depends="required,integer" page="2">
+		<field property="degreeType" depends="required" page="2">
 			<arg0 key="finalWorkInformationForm.degreeType" resource="true"/>
 		</field>
 		<field property="companionPhone" depends="integer" page="2">

@@ -14,13 +14,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupStudent;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -267,7 +267,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
                 && infoExecutionDegrees != null && !infoExecutionDegrees.isEmpty()) {
             IUserView userView = SessionUtils.getUserView(request);
 
-            Object[] args = { userView, TipoCurso.LICENCIATURA_OBJ };
+            Object[] args = { userView, DegreeType.DEGREE};
             InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceUtils
                     .executeService(userView, "ReadActiveStudentCurricularPlanByDegreeType", args);
 
@@ -292,7 +292,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(null,
                 "ReadCurrentExecutionYear", args);
 
-        args = new Object[] { infoExecutionYear.getIdInternal(), TipoCurso.LICENCIATURA_OBJ };
+        args = new Object[] { infoExecutionYear.getIdInternal(), DegreeType.DEGREE };
         List infoExecutionDegrees = (List) ServiceUtils.executeService(null,
                 "ReadExecutionDegreesByExecutionYearAndType", args);
         Collections.sort(infoExecutionDegrees, new BeanComparator(

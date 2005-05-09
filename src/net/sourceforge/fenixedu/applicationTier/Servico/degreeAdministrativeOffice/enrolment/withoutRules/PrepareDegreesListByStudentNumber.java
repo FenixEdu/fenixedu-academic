@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -26,7 +27,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -45,7 +45,7 @@ public class PrepareDegreesListByStudentNumber implements IService {
 
     }
 
-    public Object run(InfoStudent infoStudent, TipoCurso degreeType, Integer executionDegreeId,
+    public Object run(InfoStudent infoStudent, DegreeType degreeType, Integer executionDegreeId,
             Integer executionPeriodID)
     //Integer studentNumber, Integer executionDegreeIdChosen)
             throws FenixServiceException {
@@ -101,7 +101,7 @@ public class PrepareDegreesListByStudentNumber implements IService {
 
     private InfoExecutionDegree selectExecutionDegree(ISuportePersistente sp,
             List infoExecutionDegreeList, Integer executionDegreeIdChosen, IStudent student,
-            TipoCurso degreeType) throws ExcepcaoPersistencia {
+            DegreeType degreeType) throws ExcepcaoPersistencia {
         InfoExecutionDegree infoExecutionDegree = null;
 
         //read the execution degree chosen

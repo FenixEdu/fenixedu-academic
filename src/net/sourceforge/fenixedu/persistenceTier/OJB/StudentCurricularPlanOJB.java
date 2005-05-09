@@ -18,11 +18,11 @@ import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -33,7 +33,7 @@ public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
     public StudentCurricularPlanOJB() {
     }
 
-    public IStudentCurricularPlan readActiveStudentCurricularPlan(String username, TipoCurso degreeType)
+    public IStudentCurricularPlan readActiveStudentCurricularPlan(String username, DegreeType degreeType)
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("student.person.username", username);
@@ -42,9 +42,9 @@ public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
         return (IStudentCurricularPlan) queryObject(StudentCurricularPlan.class, crit);
     }
 
-    // TODO Remove TipoCurso from method interface...
+    // TODO Remove DegreeType from method interface...
     public IStudentCurricularPlan readActiveStudentCurricularPlan(Integer studentNumber,
-            TipoCurso degreeType) throws ExcepcaoPersistencia {
+            DegreeType degreeType) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("student.number", studentNumber);
         crit.addEqualTo("student.degreeType", degreeType);
@@ -123,7 +123,7 @@ public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
     }
 
     public IStudentCurricularPlan readActiveStudentAndSpecializationCurricularPlan(
-            Integer studentNumber, TipoCurso degreeType, Specialization specialization)
+            Integer studentNumber, DegreeType degreeType, Specialization specialization)
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("student.number", studentNumber);
@@ -133,7 +133,7 @@ public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
 
     }
 
-    public List readAllByStudentNumberAndSpecialization(Integer studentNumber, TipoCurso degreeType,
+    public List readAllByStudentNumberAndSpecialization(Integer studentNumber, DegreeType degreeType,
             Specialization specialization) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("student.number", studentNumber);
@@ -144,7 +144,7 @@ public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
     }
 
     public List readAllByStudentNumberAndSpecializationAndState(Integer studentNumber,
-            TipoCurso degreeType, Specialization specialization, StudentCurricularPlanState state)
+            DegreeType degreeType, Specialization specialization, StudentCurricularPlanState state)
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("student.number", studentNumber);
@@ -206,7 +206,7 @@ public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
 
     }
 
-    public List readByStudentNumberAndDegreeType(Integer number, TipoCurso degreeType)
+    public List readByStudentNumberAndDegreeType(Integer number, DegreeType degreeType)
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("student.number", number);
@@ -222,7 +222,7 @@ public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
      * version. The new version now uses Persistence Broker criteria API
      */
     public IStudentCurricularPlan readActiveByStudentNumberAndDegreeType(Integer number,
-            TipoCurso degreeType) throws ExcepcaoPersistencia {
+            DegreeType degreeType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         List studentPlanState = new ArrayList();
         studentPlanState.add(StudentCurricularPlanState.ACTIVE_OBJ);

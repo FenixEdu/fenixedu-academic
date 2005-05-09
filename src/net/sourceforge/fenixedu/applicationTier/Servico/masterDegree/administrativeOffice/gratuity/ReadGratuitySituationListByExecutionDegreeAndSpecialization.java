@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
 import net.sourceforge.fenixedu.domain.IGratuityValues;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
@@ -26,7 +27,6 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranc
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.GratuitySituationType;
 import net.sourceforge.fenixedu.util.Specialization;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -91,7 +91,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
                     executionYear = persistentExecutionYear.readExecutionYearByName(executionYearName);
                     if (executionYear != null) {
                         executionDegreeList = executionDegreeDAO.readByExecutionYearAndDegreeType(
-                                executionYear, TipoCurso.MESTRADO_OBJ);
+                                executionYear, DegreeType.MASTER_DEGREE);
                     }
                 }
             }

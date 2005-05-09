@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
@@ -215,7 +216,7 @@ public class GeraXml extends FenixUtil {
 
                 IStudentCurricularPlan studentCurricularPlan = studentCurricularPlanPersistente
                         .readActiveByStudentNumberAndDegreeType(studentNumber,
-                                TipoCurso.LICENCIATURA_OBJ);
+                                DegreeType.DEGREE);
 
                 IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
 
@@ -326,7 +327,7 @@ public class GeraXml extends FenixUtil {
             suportePersistente.iniciarTransaccao();
 
             IStudentCurricularPlan studentCurricularPlan = studentCurricularPlanPersistente
-                    .readActiveByStudentNumberAndDegreeType(studentNumber, TipoCurso.LICENCIATURA_OBJ);
+                    .readActiveByStudentNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
 
             List enrolments = persistentEnrolment.readAllByStudentCurricularPlan(studentCurricularPlan);
             Iterator iterador = enrolments.iterator();

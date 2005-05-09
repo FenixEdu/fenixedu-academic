@@ -29,11 +29,11 @@ import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -46,7 +46,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadStudentCurricularInformation implements IService {
 
-    public List run(final Integer studentNumber, final TipoCurso degreeType) throws ExcepcaoPersistencia {
+    public List run(final Integer studentNumber, final DegreeType degreeType) throws ExcepcaoPersistencia {
         final List infoStudentCurricularPlans = new ArrayList();
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();

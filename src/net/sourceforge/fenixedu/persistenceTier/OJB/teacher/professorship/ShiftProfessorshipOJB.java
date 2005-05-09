@@ -15,11 +15,11 @@ import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IShiftProfessorship;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.query.Criteria;
@@ -177,7 +177,7 @@ public class ShiftProfessorshipOJB extends PersistentObjectOJB implements IPersi
      *      Dominio.IExecutionPeriod)
      */
     public List readByTeacherAndExecutionPeriodAndDegreeType(ITeacher teacher,
-            IExecutionPeriod executionPeriod, TipoCurso degreeType) throws ExcepcaoPersistencia {
+            IExecutionPeriod executionPeriod, DegreeType degreeType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("professorship.teacher.idInternal", teacher.getIdInternal());
         criteria.addEqualTo("professorship.executionCourse.executionPeriod.idInternal", executionPeriod

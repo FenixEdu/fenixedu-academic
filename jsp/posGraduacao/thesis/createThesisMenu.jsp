@@ -8,7 +8,7 @@
 <%
 	java.util.Hashtable params = new java.util.Hashtable();
 	InfoStudent infoStudent = (InfoStudent) student;
-	params.put("degreeType", infoStudent.getDegreeType().getTipoCurso());
+	params.put("degreeType", infoStudent.getDegreeType().toString());
 	params.put("studentNumber", infoStudent.getNumber());
 	params.put("method", "getStudentForCreateMasterDegreeThesis");
 	pageContext.setAttribute("parameters", params, PageContext.PAGE_SCOPE);

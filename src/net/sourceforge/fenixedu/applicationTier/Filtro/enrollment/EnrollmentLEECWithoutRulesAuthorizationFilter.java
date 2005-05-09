@@ -15,13 +15,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * @author Tânia Pousão
@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.util.TipoCurso;
 public class EnrollmentLEECWithoutRulesAuthorizationFilter extends AuthorizationByManyRolesFilter {
     private static String DEGREE_LEEC_CODE = new String("LEEC");
 
-    private static TipoCurso DEGREE_TYPE = TipoCurso.LICENCIATURA_OBJ;
+    private static DegreeType DEGREE_TYPE = DegreeType.DEGREE;
 
     protected Collection getNeededRoles() {
         List roles = new ArrayList();

@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.AgreementType;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.util.StudentState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -21,7 +21,7 @@ public class Student extends Student_Base{
 
     protected StudentState state;
 
-    protected TipoCurso degreeType;
+    protected DegreeType degreeType;
 
     private AgreementType agreementType;
 
@@ -43,7 +43,7 @@ public class Student extends Student_Base{
         setSpecialSeason(new Boolean(false));
     }
 
-    public Student(Integer number, StudentState state, IPerson person, TipoCurso degreeType) {
+    public Student(Integer number, StudentState state, IPerson person, DegreeType degreeType) {
         this();
         setNumber(number);
         setState(state);
@@ -81,9 +81,9 @@ public class Student extends Student_Base{
     /**
      * Returns the degreeType.
      * 
-     * @return TipoCurso
+     * @return DegreeType
      */
-    public TipoCurso getDegreeType() {
+    public DegreeType getDegreeType() {
         return degreeType;
     }
 
@@ -102,7 +102,7 @@ public class Student extends Student_Base{
      * @param degreeType
      *            The degreeType to set
      */
-    public void setDegreeType(TipoCurso degreeType) {
+    public void setDegreeType(DegreeType degreeType) {
         this.degreeType = degreeType;
     }
 

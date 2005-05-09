@@ -26,6 +26,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.util.MessageResources;
 
 /**
  * @author tdi-dev (bruno) Modified by Tânia Pousão Modified by Fernanda
@@ -74,9 +75,11 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
                     && infoShiftEnrollment.getInfoExecutionDegreesList().size() > 0) {
                 Collections.sort(infoShiftEnrollment.getInfoExecutionDegreesList(),
                         new ComparatorByNameForInfoExecutionDegree());
+                
+                MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
                 infoShiftEnrollment.setInfoExecutionDegreesLabelsList(ExecutionDegreesFormat
                         .buildExecutionDegreeLabelValueBean(infoShiftEnrollment
-                                .getInfoExecutionDegreesList()));
+                                .getInfoExecutionDegreesList(), messageResources));
             }
             return mapping.findForward("selectCourses");
         }

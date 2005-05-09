@@ -10,12 +10,12 @@ import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoAreas2Choose;
 import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -44,7 +44,7 @@ public class ReadSpecializationAndSecundaryAreasByStudent implements IService {
                     .getIStudentCurricularPlanPersistente();
 
             IStudent student = studentDAO.readStudentByNumberAndDegreeType(studentNumber,
-                    TipoCurso.LICENCIATURA_OBJ);
+                    DegreeType.DEGREE);
 
             if (student == null) {
                 throw new ExistingServiceException("student");

@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * @author dcs-rjao
@@ -18,10 +18,10 @@ import net.sourceforge.fenixedu.util.TipoCurso;
 public interface IPersistentStudent extends IPersistentObject {
 
     // feitos por David \ Ricardo
-    public IStudent readStudentByNumberAndDegreeType(Integer number, TipoCurso degreeType)
+    public IStudent readStudentByNumberAndDegreeType(Integer number, DegreeType degreeType)
             throws ExcepcaoPersistencia;
 
-    public IStudent readStudentByDegreeTypeAndPerson(TipoCurso degreeType, IPerson person)
+    public IStudent readStudentByDegreeTypeAndPerson(DegreeType degreeType, IPerson person)
             throws ExcepcaoPersistencia;
 
     public List readAll() throws ExcepcaoPersistencia;
@@ -33,17 +33,17 @@ public interface IPersistentStudent extends IPersistentObject {
 
     /**
      * @param IPerson
-     * @param TipoCurso
+     * @param DegreeType
      * @return IStudent
      */
-    public IStudent readByPersonAndDegreeType(IPerson person, TipoCurso degreeType)
+    public IStudent readByPersonAndDegreeType(IPerson person, DegreeType degreeType)
             throws ExcepcaoPersistencia;
 
     /**
      * @param curso
      * @return
      */
-    public Integer generateStudentNumber(TipoCurso curso) throws ExcepcaoPersistencia;
+    public Integer generateStudentNumber(DegreeType curso) throws ExcepcaoPersistencia;
 
     /**
      * @param Person

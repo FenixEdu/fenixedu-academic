@@ -19,6 +19,7 @@ import org.apache.struts.actions.DispatchAction;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoAreas2Choose;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -27,7 +28,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -37,7 +37,7 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 public class ChangeStudentAreasDispatchAction extends DispatchAction {
     public ActionForward chooseStudent(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.setAttribute("degreeType", TipoCurso.LICENCIATURA_OBJ.getTipoCurso());
+        request.setAttribute("degreeType", DegreeType.DEGREE.toString());
         return mapping.findForward("chooseStudent");
     }
 
@@ -51,9 +51,8 @@ public class ChangeStudentAreasDispatchAction extends DispatchAction {
 
         Integer studentNumber = Integer.valueOf((String) changeStudentAreasForm.get("studentNumber"));
 
-        Integer degreeTypeCode = (Integer) changeStudentAreasForm.get("degreeType");
-        TipoCurso degreeType = new TipoCurso();
-        degreeType.setTipoCurso(degreeTypeCode);
+        String degreeTypeCode = (String) changeStudentAreasForm.get("degreeType");
+        DegreeType degreeType = DegreeType.valueOf(degreeTypeCode);
 
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
         InfoAreas2Choose infoBranches = null;
@@ -101,9 +100,8 @@ public class ChangeStudentAreasDispatchAction extends DispatchAction {
 
         Integer studentNumber = Integer.valueOf((String) changeStudentAreasForm.get("studentNumber"));
 
-        Integer degreeTypeCode = (Integer) changeStudentAreasForm.get("degreeType");
-        TipoCurso degreeType = new TipoCurso();
-        degreeType.setTipoCurso(degreeTypeCode);
+        String degreeTypeCode = (String) changeStudentAreasForm.get("degreeType");
+        DegreeType degreeType = DegreeType.valueOf(degreeTypeCode);
 
         Integer specializationAreaID = (Integer) changeStudentAreasForm.get("specializationAreaID");
 
@@ -208,10 +206,10 @@ public class ChangeStudentAreasDispatchAction extends DispatchAction {
      * @param degreeType
      * @param infoStudentCurricularPlan
      */
-    private void setFromElementsValues(DynaActionForm form, String studentNumber, TipoCurso degreeType,
+    private void setFromElementsValues(DynaActionForm form, String studentNumber, DegreeType degreeType,
             InfoStudentCurricularPlan infoStudentCurricularPlan) {
         form.set("studentNumber", studentNumber);
-        form.set("degreeType", degreeType.getTipoCurso());
+        form.set("degreeType", degreeType.toString());
         if (infoStudentCurricularPlan != null) {
             if (infoStudentCurricularPlan.getInfoBranch() != null) {
                 form.set("specializationAreaID", infoStudentCurricularPlan.getInfoBranch()

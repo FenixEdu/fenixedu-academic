@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.gaugingTests.physics.InfoGaug
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gaugingTests.physics.IGaugingTestResult;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
@@ -17,7 +18,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -48,7 +48,7 @@ public class readGaugingTestsResults implements IService {
             IPersistentStudent persistentStudent = ps.getIPersistentStudent();
 
             IStudent student = persistentStudent.readByPersonAndDegreeType(person,
-                    TipoCurso.LICENCIATURA_OBJ);
+                    DegreeType.DEGREE);
             if (student == null) {
                 return null;
             }

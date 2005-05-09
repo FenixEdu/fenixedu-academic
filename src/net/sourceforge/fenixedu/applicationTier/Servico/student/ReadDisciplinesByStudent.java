@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * @author Ricardo Nortadas & Rui Figueiredo
@@ -43,7 +43,7 @@ public class ReadDisciplinesByStudent implements IServico {
         return "ReadDisciplinesByStudent";
     }
 
-    public Object run(Integer number, TipoCurso degreeType) {
+    public Object run(Integer number, DegreeType degreeType) {
         List disciplines = new ArrayList();
         List courses = new ArrayList();
         try {

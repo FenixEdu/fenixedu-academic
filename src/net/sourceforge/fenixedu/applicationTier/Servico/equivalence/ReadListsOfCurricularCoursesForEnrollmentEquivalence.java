@@ -10,11 +10,11 @@ import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -31,7 +31,7 @@ public class ReadListsOfCurricularCoursesForEnrollmentEquivalence extends
     public ReadListsOfCurricularCoursesForEnrollmentEquivalence() {
     }
 
-    public InfoEquivalenceContext run(Integer studentNumber, TipoCurso degreeType,
+    public InfoEquivalenceContext run(Integer studentNumber, DegreeType degreeType,
             Integer fromStudentCurricularPlanID, Integer toStudentCurricularPlanID)
             throws FenixServiceException {
         List args = new ArrayList();
@@ -99,7 +99,7 @@ public class ReadListsOfCurricularCoursesForEnrollmentEquivalence extends
         Integer fromStudentCurricularPlanID = (Integer) input.get(0);
         Integer toStudentCurricularPlanID = (Integer) input.get(1);
         Integer studentNumber = (Integer) input.get(2);
-        TipoCurso degreeType = (TipoCurso) input.get(3);
+        DegreeType degreeType = (DegreeType) input.get(3);
 
         List output = new ArrayList();
 

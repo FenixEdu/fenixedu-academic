@@ -4,15 +4,15 @@
  */
 package net.sourceforge.fenixedu.domain.finalDegreeWork;
 
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * @author Luis Cruz
  *  
  */
 public class Proposal extends Proposal_Base {
-    private TipoCurso degreeType; 
+    private DegreeType degreeType; 
     private FinalDegreeWorkProposalStatus status;
 
     public Proposal() {
@@ -38,11 +38,11 @@ public class Proposal extends Proposal_Base {
         return result;
     }
 
-    public TipoCurso getDegreeType() {
+    public DegreeType getDegreeType() {
         return degreeType;
     }
 
-    public void setDegreeType(TipoCurso degreeType) {
+    public void setDegreeType(DegreeType degreeType) {
         this.degreeType = degreeType;
     }
 

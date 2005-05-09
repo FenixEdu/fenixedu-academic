@@ -11,12 +11,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWith
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -37,10 +37,10 @@ public class ReadPosGradStudentCurricularPlans implements IService {
             if (student == null) {
                 throw new InvalidArgumentsServiceException("invalidStudentId");
             }
-            if (student.getDegreeType().getTipoCurso().intValue() == TipoCurso.MESTRADO) {
+            if (student.getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
                 List resultTemp = new ArrayList();
                 resultTemp.addAll(persistentStudentCurricularPlan.readByStudentNumberAndDegreeType(
-                        student.getNumber(), new TipoCurso(TipoCurso.MESTRADO)));
+                        student.getNumber(), DegreeType.MASTER_DEGREE));
 
                 Iterator iterator = resultTemp.iterator();
                 while (iterator.hasNext()) {

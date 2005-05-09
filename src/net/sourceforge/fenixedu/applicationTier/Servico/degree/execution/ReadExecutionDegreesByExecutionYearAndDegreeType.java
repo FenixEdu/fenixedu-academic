@@ -13,12 +13,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -30,7 +30,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadExecutionDegreesByExecutionYearAndDegreeType implements IService {
 
-    public List run(InfoExecutionYear infoExecutionYear, TipoCurso degreeType)
+    public List run(InfoExecutionYear infoExecutionYear, DegreeType degreeType)
             throws ExcepcaoPersistencia {
 
         List infoExecutionDegreeList = null;

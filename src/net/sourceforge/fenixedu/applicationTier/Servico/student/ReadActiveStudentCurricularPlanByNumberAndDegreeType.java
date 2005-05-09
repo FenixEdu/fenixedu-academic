@@ -6,10 +6,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 /*
  * Created on 24/Set/2003, 11:26:29
@@ -46,7 +46,7 @@ public class ReadActiveStudentCurricularPlanByNumberAndDegreeType implements ISe
         return "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType";
     }
 
-    public InfoStudentCurricularPlan run(Integer studentNumber, TipoCurso degreeType)
+    public InfoStudentCurricularPlan run(Integer studentNumber, DegreeType degreeType)
             throws ExcepcaoInexistente, FenixServiceException {
         ISuportePersistente sp = null;
         IStudentCurricularPlan studentCurricularPlan = null;

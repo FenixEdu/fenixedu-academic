@@ -22,13 +22,13 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -72,7 +72,7 @@ public class ReadStudentMarksByCurricularCourse implements IService {
             // IStudentCurricularPlan studentCurricularPlan =
             // sp.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(
             // studentNumber,
-            // TipoCurso.MESTRADO_OBJ);
+            // DegreeType.MESTRADO_OBJ);
             //
             // if (studentCurricularPlan == null)
             // {
@@ -85,7 +85,7 @@ public class ReadStudentMarksByCurricularCourse implements IService {
             // not in active state
 
             List studentCurricularPlans = sp.getIStudentCurricularPlanPersistente()
-                    .readByStudentNumberAndDegreeType(studentNumber, TipoCurso.MESTRADO_OBJ);
+                    .readByStudentNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
 
             IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) CollectionUtils
                     .find(studentCurricularPlans, new Predicate() {

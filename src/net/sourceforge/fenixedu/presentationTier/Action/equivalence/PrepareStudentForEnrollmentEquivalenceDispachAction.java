@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.util.TipoCurso;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -32,11 +32,10 @@ public class PrepareStudentForEnrollmentEquivalenceDispachAction extends Dispatc
         DynaActionForm studentNumberForm = (DynaActionForm) form;
         ActionErrors errors = new ActionErrors();
 
-        Integer degreeTypeCode = (Integer) studentNumberForm.get("degreeType");
+        String degreeTypeCode = (String) studentNumberForm.get("degreeType");
         String studentNumberSTR = (String) studentNumberForm.get("studentNumber");
 
-        TipoCurso degreeType = new TipoCurso();
-        degreeType.setTipoCurso(degreeTypeCode);
+        DegreeType degreeType = DegreeType.valueOf(degreeTypeCode);
         Integer studentNumber = Integer.valueOf(studentNumberSTR);
 
         Object args[] = { studentNumber, degreeType };

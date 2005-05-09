@@ -16,10 +16,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranchAndInfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadStudentCurricularPlansByNumberAndDegreeType implements IService {
@@ -27,7 +27,7 @@ public class ReadStudentCurricularPlansByNumberAndDegreeType implements IService
     public ReadStudentCurricularPlansByNumberAndDegreeType() {
     }
 
-    public List run(Integer studentNumber, TipoCurso degreeType) throws ExcepcaoInexistente,
+    public List run(Integer studentNumber, DegreeType degreeType) throws ExcepcaoInexistente,
             FenixServiceException {
         ISuportePersistente sp = null;
 

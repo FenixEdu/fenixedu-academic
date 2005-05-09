@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWo
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoScheduleing;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -32,7 +33,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstan
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.CommonServiceRequests;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -259,10 +259,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                         finalWorkForm.set("minimumNumberOfGroupElements", infoProposal
                                 .getMinimumNumberOfGroupElements().toString());
                     }
-                    if (infoProposal.getDegreeType() != null
-                            && infoProposal.getDegreeType().getTipoCurso() != null) {
-                        finalWorkForm.set("degreeType", infoProposal.getDegreeType().getTipoCurso()
-                                .toString());
+                    if (infoProposal.getDegreeType() != null) {
+                        finalWorkForm.set("degreeType", infoProposal.getDegreeType().toString());
                     }
                     finalWorkForm.set("observations", infoProposal.getObservations());
                     finalWorkForm.set("location", infoProposal.getLocation());
@@ -558,8 +556,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         infoFinalWorkProposal.setMaximumNumberOfGroupElements(new Integer(maximumNumberOfGroupElements));
         infoFinalWorkProposal.setObservations(observations);
         infoFinalWorkProposal.setLocation(location);
-        TipoCurso tipoCurso = new TipoCurso(new Integer(degreeType));
-        infoFinalWorkProposal.setDegreeType(tipoCurso);
+        infoFinalWorkProposal.setDegreeType(DegreeType.valueOf(degreeType));
 
         infoFinalWorkProposal.setOrientator(new InfoTeacher());
         infoFinalWorkProposal.getOrientator().setIdInternal(new Integer(orientatorOID));
@@ -692,7 +689,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         DynaActionForm finalWorkForm = (DynaActionForm) form;
         String degreeId = (String) finalWorkForm.get("degree");
-        finalWorkForm.set("degreeType", "" + TipoCurso.LICENCIATURA);        
+        finalWorkForm.set("degreeType", DegreeType.DEGREE.toString());        
 
         Integer degreeCurricularPlanID = new Integer(Integer.parseInt(request.getParameter("degreeCurricularPlanID")));
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);

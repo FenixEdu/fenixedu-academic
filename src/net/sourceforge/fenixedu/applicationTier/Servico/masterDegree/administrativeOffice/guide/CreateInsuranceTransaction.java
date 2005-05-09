@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.IGuideEntry;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IPersonAccount;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.transactions.IInsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
@@ -23,7 +24,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -45,7 +45,7 @@ public class CreateInsuranceTransaction implements IService {
                 .getIPersistentInsuranceTransaction();
 
         IStudent student = sp.getIPersistentStudent().readByPersonAndDegreeType(guide.getPerson(),
-                TipoCurso.MESTRADO_OBJ);
+                DegreeType.MASTER_DEGREE);
         IPerson responsible = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
 
         List insuranceTransactionList = insuranceTransactionDAO

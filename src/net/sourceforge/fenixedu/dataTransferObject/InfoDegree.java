@@ -9,7 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.util.TipoCurso;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 /**
  * @author tfc130
@@ -22,7 +22,7 @@ public class InfoDegree extends InfoObject implements Comparable {
     
     protected String nameEn;
 
-    protected TipoCurso tipoCurso;
+    protected DegreeType tipoCurso;
 
     private List infoDegreeCurricularPlans;
 
@@ -36,7 +36,7 @@ public class InfoDegree extends InfoObject implements Comparable {
         setNome(nome);
     }
 
-    public InfoDegree(String sigla, String nome,String nameEn, TipoCurso degreeType) {
+    public InfoDegree(String sigla, String nome,String nameEn, DegreeType degreeType) {
         setSigla(sigla);
         setNome(nome);
         setNameEn(nameEn);
@@ -78,9 +78,9 @@ public class InfoDegree extends InfoObject implements Comparable {
     }
 
     /**
-     * @return TipoCurso
+     * @return DegreeType
      */
-    public TipoCurso getTipoCurso() {
+    public DegreeType getTipoCurso() {
         return tipoCurso;
     }
 
@@ -90,7 +90,7 @@ public class InfoDegree extends InfoObject implements Comparable {
      * @param degreeType
      *            The degreeType to set
      */
-    public void setTipoCurso(TipoCurso tipoCurso) {
+    public void setTipoCurso(DegreeType tipoCurso) {
         this.tipoCurso = tipoCurso;
     }
 

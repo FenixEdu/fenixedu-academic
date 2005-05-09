@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -16,7 +17,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -43,10 +43,10 @@ public class InsertDegreeDispatchAction extends FenixDispatchAction {
         DynaActionForm dynaForm = (DynaValidatorForm) form;
         String code = (String) dynaForm.get("code");
         String name = (String) dynaForm.get("name");
-        String nameEn = (String) dynaForm.get("nameEn");
-        Integer degreeTypeInt = (Integer) dynaForm.get("degreeType");
+                String nameEn = (String) dynaForm.get("nameEn");
+        String degreeTypeInt = (String) dynaForm.get("degreeType");
 
-        TipoCurso degreeType = new TipoCurso(degreeTypeInt);
+        DegreeType degreeType = DegreeType.valueOf(degreeTypeInt);
         InfoDegree infoDegree = new InfoDegree(code, name, nameEn,degreeType);
 
         Object args[] = { infoDegree };

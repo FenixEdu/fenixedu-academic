@@ -12,13 +12,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 
 import org.apache.struts.util.LabelValueBean;
+import org.apache.struts.util.MessageResources;
 
 /**
  * @author Tânia Pousão
  *  
  */
 public class ExecutionDegreesFormat extends FenixUtil {
-    public static List buildExecutionDegreeLabelValueBean(List executionDegreeList) {
+    public static List buildExecutionDegreeLabelValueBean(List executionDegreeList, MessageResources messageResources) {
         List executionDegreeLabels = new ArrayList();
         Iterator iterator = executionDegreeList.iterator();
         while (iterator.hasNext()) {
@@ -26,8 +27,19 @@ public class ExecutionDegreesFormat extends FenixUtil {
 
             String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-            name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()
-                    .toString()
+            String degreeType = null;
+            
+            if(messageResources != null) {
+                degreeType = messageResources.getMessage(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()
+                        .toString());
+                
+            }
+            
+            if(degreeType == null)
+                degreeType = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString();
+
+            
+            name = degreeType
                     + " em " + name;
 
             name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? " - "

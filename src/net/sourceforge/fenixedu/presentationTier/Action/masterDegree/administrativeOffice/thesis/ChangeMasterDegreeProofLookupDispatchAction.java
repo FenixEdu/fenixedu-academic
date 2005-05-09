@@ -19,6 +19,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.LookupDispatchAction;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -33,7 +34,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstan
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * 
@@ -223,7 +223,7 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 
         DynaActionForm changeMasterDegreeProofForm = (DynaActionForm) form;
 
-        Integer degreeType = (Integer) changeMasterDegreeProofForm.get("degreeType");
+        String degreeType = (String) changeMasterDegreeProofForm.get("degreeType");
         Integer studentNumber = (Integer) changeMasterDegreeProofForm.get("studentNumber");
         String finalResultString = (String) changeMasterDegreeProofForm.get("finalResult");
         MasterDegreeClassification finalResult = (finalResultString.length() == 0) ? MasterDegreeClassification.UNDEFINED :  MasterDegreeClassification.valueOf(finalResultString); 
@@ -300,11 +300,11 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
         }
     }
 
-    private InfoStudentCurricularPlan readStudentCurricularPlan(IUserView userView, Integer degreeType,
+    private InfoStudentCurricularPlan readStudentCurricularPlan(IUserView userView, String degreeType,
             Integer studentNumber) throws FenixActionException, FenixFilterException {
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 
-        Object args[] = { studentNumber, new TipoCurso(degreeType) };
+        Object args[] = { studentNumber, DegreeType.valueOf(degreeType) };
         try {
             infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceUtils.executeService(
                     userView, "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType", args);

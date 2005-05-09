@@ -26,12 +26,12 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.Season;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 public class ReadExamsSortedByExecutionDegreeAndCurricularYear implements IServico {
 
@@ -72,7 +72,7 @@ public class ReadExamsSortedByExecutionDegreeAndCurricularYear implements IServi
             IExecutionYear executionYear = executionPeriod.getExecutionYear();
 
             List executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear,
-                    new TipoCurso(TipoCurso.LICENCIATURA));
+                    DegreeType.DEGREE);
 
             for (int k = 0; k < executionDegrees.size(); k++) {
                 IExecutionDegree executionDegree = (IExecutionDegree) executionDegrees.get(k);

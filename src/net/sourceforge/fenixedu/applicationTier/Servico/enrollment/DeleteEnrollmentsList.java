@@ -12,12 +12,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.utils.enrolment.DeleteEn
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.IEnrolment;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -29,7 +29,7 @@ public class DeleteEnrollmentsList implements IService {
     }
 
     // some of these arguments may be null. they are only needed for filter
-    public void run(InfoStudent infoStudent, TipoCurso degreeType, List enrolmentIDList)
+    public void run(InfoStudent infoStudent, DegreeType degreeType, List enrolmentIDList)
             throws FenixServiceException {
         try {
             

@@ -12,11 +12,11 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeInfo;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -33,7 +33,7 @@ public class InsertDegree implements IService {
         String code = infoDegree.getSigla();
         String name = infoDegree.getNome();
         String nameEn = infoDegree.getNameEn();
-        TipoCurso type = infoDegree.getTipoCurso();
+        DegreeType type = infoDegree.getTipoCurso();
 
         IDegree degree = new Degree();
         persistentDegree.simpleLockWrite(degree);

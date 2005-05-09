@@ -56,7 +56,7 @@
 		<!-- =================== Change student areas =================== -->
 		<form-bean name="changeStudentAreasForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="studentNumber" type="java.lang.String"/>
-			<form-property name="degreeType" type="java.lang.Integer"/>
+			<form-property name="degreeType" type="java.lang.String"/>
 			<form-property name="specializationAreaID" type="java.lang.Integer"/>
 			<form-property name="secondaryAreaID" type="java.lang.Integer"/>
 			<form-property name="studentCurricularPlanID" type="java.lang.Integer"/>
@@ -66,7 +66,7 @@
 		<form-bean name="getStudentNumberForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
-			<form-property name="degreeType" type="java.lang.Integer"/>
+			<form-property name="degreeType" type="java.lang.String"/>
 			<form-property name="studentNumber" type="java.lang.String"/>
 		</form-bean>
 		
@@ -208,7 +208,7 @@
       	<!-- ****************** Enrollment Without Rules **************************** -->
 		<action path="/courseEnrolmentWithoutRulesManagerDA"
 			type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.withoutRules.ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction"
-			input="/courseEnrolmentWithoutRulesManagerDA.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=1"
+			input="/courseEnrolmentWithoutRulesManagerDA.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=DEGREE"
 			name="curricularCoursesEnrollmentWithoutRuleForm"
 			scope="request"
 			parameter="method">
@@ -225,7 +225,7 @@
 		<!-- =================== Change student areas =================== -->
 		<action path="/changeStudentAreas"
 			type="net.sourceforge.fenixedu.presentationTier.Action.degreeAdministrativeOffice.withoutRules.ChangeStudentAreasDispatchAction"
-			input="/changeStudentAreas.do?method=error&amp;page=0&amp;degreeType=1"
+			input="/changeStudentAreas.do?method=error&amp;page=0&amp;degreeType=DEGREE"
 			name="changeStudentAreasForm"
 			scope="request"
 			parameter="method">
@@ -300,6 +300,7 @@
 	<!-- ========== Message Resources Definitions =========================== -->
 	<message-resources parameter="ServidorApresentacao.DegreeAdministrativeOfficeResources" null="false"/>
 	<message-resources parameter="ServidorApresentacao.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
+    <message-resources parameter="ServidorApresentacao.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
 
 	<!-- ========== Plug Ins Configuration ================================== -->
 	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">

@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.equivalence.InfoCurricularCou
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.util.TipoCurso;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -24,7 +24,7 @@ public class ValidateCurricularCourseGradesForEnrollmentEquivalence extends
     public ValidateCurricularCourseGradesForEnrollmentEquivalence() {
     }
 
-    public String run(Integer studentNumber, TipoCurso degreeType,
+    public String run(Integer studentNumber, DegreeType degreeType,
             InfoStudentCurricularPlan infoStudentCurricularPlan, List infoCurricularCourseGrades) {
         List args = new ArrayList();
         args.add(0, infoStudentCurricularPlan);

@@ -4,10 +4,10 @@ import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * @author Ricardo Nortadas & Rui Figueiredo
@@ -38,7 +38,7 @@ public class ReadCourseByStudent implements IServico {
         return "ReadCourseByStudent";
     }
 
-    public Object run(Integer number, TipoCurso degreeType) {
+    public Object run(Integer number, DegreeType degreeType) {
 
         InfoDegree infoDegree = null;
 

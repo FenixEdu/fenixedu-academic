@@ -14,13 +14,13 @@ import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEquivalence;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IEquivalentEnrolmentForEnrolmentEquivalence;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEquivalentEnrolmentForEnrolmentEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -32,7 +32,7 @@ public class GetEnrollmentEvaluationWithEquivalence extends EnrollmentEquivalenc
     public GetEnrollmentEvaluationWithEquivalence() {
     }
 
-    public List run(Integer studentNumber, TipoCurso degreeType, Integer enrollmentID)
+    public List run(Integer studentNumber, DegreeType degreeType, Integer enrollmentID)
             throws FenixServiceException {
         return (List) convertDataOutput(execute(convertDataInput(enrollmentID)));
     }

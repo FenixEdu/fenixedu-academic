@@ -105,7 +105,7 @@
 						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.number"/></center></td>
 						<td bgcolor='#C0C0C0'>		
 							<% if(masterDegreeUser) {%>					
-							<html:link page="<%= "/studentSituation.do?method=readStudent&degreeType=2&studentNumber="+studentNumber %>" >
+							<html:link page="<%= "/studentSituation.do?method=readStudent&degreeType=MASTER_DEGREE&studentNumber="+studentNumber %>" >
 								<bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
 							</html:link>
 							<% } else {%>							
@@ -126,7 +126,7 @@
 						<td><center><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.number"/></center></td>
 						<td>
 							<% if(masterDegreeUser) {%>					
-							<html:link page="<%= "/studentSituation.do?method=readStudent&degreeType=2&studentNumber="+studentNumber %>" >
+							<html:link page="<%= "/studentSituation.do?method=readStudent&degreeType=MASTER_DEGREE&studentNumber="+studentNumber %>" >
 								<bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
 							</html:link>
 							<% } else {%>							

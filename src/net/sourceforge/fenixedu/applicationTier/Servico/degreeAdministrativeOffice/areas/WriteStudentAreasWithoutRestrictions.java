@@ -8,12 +8,12 @@ import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -26,7 +26,7 @@ public class WriteStudentAreasWithoutRestrictions implements IService {
 
     // The first 2 arguments are only used by the filter applyed to this
     // service.
-    public void run(InfoStudent infoStudent, TipoCurso degreeType, Integer studentCurricularPlanID,
+    public void run(InfoStudent infoStudent, DegreeType degreeType, Integer studentCurricularPlanID,
             Integer specializationAreaID, Integer secundaryAreaID) throws FenixServiceException {
         try {
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();

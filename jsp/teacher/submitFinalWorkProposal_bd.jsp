@@ -194,8 +194,8 @@
 		<tr height="10"></tr>
 		<tr>
 			<th><bean:message key="label.teacher.finalWork.degreeType"/>:</th>
-			<td><html:radio value="<%= "" + net.sourceforge.fenixedu.util.TipoCurso.LICENCIATURA %>" property="degreeType"/> <%= net.sourceforge.fenixedu.util.TipoCurso.LICENCIATURA_STRING %> </td>
-			<td><html:radio value="<%= "" + net.sourceforge.fenixedu.util.TipoCurso.MESTRADO %>" property="degreeType"/> <%= net.sourceforge.fenixedu.util.TipoCurso.MESTRADO_STRING %> </td>
+			<td><html:radio value="<%= net.sourceforge.fenixedu.domain.degree.DegreeType.DEGREE.toString() %>" property="degreeType"/> <%= net.sourceforge.fenixedu.domain.degree.DegreeType.DEGREE.toString() %> </td>
+			<td><html:radio value="<%= net.sourceforge.fenixedu.domain.degree.DegreeType.MASTER_DEGREE.toString() %>" property="degreeType"/> <%= net.sourceforge.fenixedu.domain.degree.DegreeType.MASTER_DEGREE.toString() %> </td>
 		</tr>
 	</table>
 	<br><hr><br>

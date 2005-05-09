@@ -19,11 +19,11 @@ import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.ResponsibleFor;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -77,9 +77,9 @@ public class ReadDetailedTeacherProfessorshipsAbstractService implements IServic
                     ICurricularCourse curricularCourse = (ICurricularCourse) input;
                     InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
                             .newInfoFromDomain(curricularCourse);
-                    TipoCurso degreeType = curricularCourse.getDegreeCurricularPlan().getDegree()
+                    DegreeType degreeType = curricularCourse.getDegreeCurricularPlan().getDegree()
                             .getTipoCurso();
-                    if (degreeType.equals(TipoCurso.LICENCIATURA_OBJ)) {
+                    if (degreeType.equals(DegreeType.DEGREE)) {
                         detailedProfessorship.setMasterDegreeOnly(Boolean.FALSE);
                     }
                     return infoCurricularCourse;

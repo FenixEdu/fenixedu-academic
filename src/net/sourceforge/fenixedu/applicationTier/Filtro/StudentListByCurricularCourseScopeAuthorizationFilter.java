@@ -13,11 +13,11 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ICoordinator;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -98,7 +98,7 @@ public class StudentListByCurricularCourseScopeAuthorizationFilter extends Filtr
         roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
             if (curricularCourseScope.getCurricularCourse().getDegreeCurricularPlan().getDegree()
-                    .getTipoCurso().equals(TipoCurso.MESTRADO_OBJ)) {
+                    .getTipoCurso().equals(DegreeType.MASTER_DEGREE)) {
                 return true;
             }
             return false;

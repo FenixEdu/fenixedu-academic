@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
@@ -20,12 +21,11 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class CreateStudentCurricularPlan implements IService {
 
-public void run(final Integer studentNumber, final TipoCurso degreeType,
+public void run(final Integer studentNumber, final DegreeType degreeType,
             final StudentCurricularPlanState studentCurricularPlanState,
             final Integer degreeCurricularPlanId, final Date startDate) throws ExcepcaoPersistencia,
             FenixServiceException {

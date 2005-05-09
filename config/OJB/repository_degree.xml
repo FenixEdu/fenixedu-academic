@@ -27,7 +27,7 @@
 	<field-descriptor
 		name="tipoCurso"
 		column="TYPE_DEGREE"
-		jdbc-type="INTEGER"
+		jdbc-type="VARCHAR"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaTipoCurso2SqlTipoCursoFieldConversion"
 	/>
 	<field-descriptor

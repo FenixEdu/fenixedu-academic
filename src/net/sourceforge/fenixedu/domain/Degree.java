@@ -6,7 +6,7 @@
 
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.util.TipoCurso;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 /**
  * 
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.util.TipoCurso;
  */
 
 public class Degree extends Degree_Base {
-    protected TipoCurso tipoCurso;
+    protected DegreeType tipoCurso;
 
     /** Construtor sem argumentos público requerido pela moldura de objectos OJB */
     public Degree() {
@@ -24,7 +24,7 @@ public class Degree extends Degree_Base {
         setIdInternal(idInternal);
     }
 
-    public Degree(String sigla, String nome, TipoCurso tipoCurso) {
+    public Degree(String sigla, String nome, DegreeType tipoCurso) {
         setSigla(sigla);
         setNome(nome);
         setTipoCurso(tipoCurso);
@@ -63,11 +63,11 @@ public class Degree extends Degree_Base {
         return result;
     }
 
-    public TipoCurso getTipoCurso() {
+    public DegreeType getTipoCurso() {
         return tipoCurso;
     }
 
-    public void setTipoCurso(TipoCurso tipoCurso) {
+    public void setTipoCurso(DegreeType tipoCurso) {
         this.tipoCurso = tipoCurso;
     }
 }

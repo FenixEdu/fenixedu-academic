@@ -28,11 +28,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoCurricularCourse2Enroll;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.ExecutionDegreesFormat;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -46,6 +46,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
+import org.apache.struts.util.MessageResources;
 
 /**
  * @author Tânia Pousão
@@ -79,7 +80,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
 
         //execution years
         List executionPeriods = null;
-        Object[] args = {new TipoCurso(new Integer(degreeType))};
+        Object[] args = {DegreeType.valueOf(degreeType)};
         try {
             executionPeriods = (List) ServiceManagerServiceFactory.executeService(null,
                     "ReadExecutionPeriodsEnrollmentFenix", args);
@@ -147,8 +148,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
         String executionPeriodID = (String) prepareEnrolmentForm.get("executionPeriod");
 
         String degreeTypeCode = (String) prepareEnrolmentForm.get("degreeType");
-        TipoCurso degreeType = new TipoCurso();
-        degreeType.setTipoCurso(Integer.valueOf(degreeTypeCode));
+        DegreeType degreeType = DegreeType.valueOf(degreeTypeCode);
 
         Object[] args = { infoStudent, degreeType, new Integer(executionPeriodID) };
         InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
@@ -199,9 +199,9 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
         infoExecutionYear.setYear(executionYear);*/
 
         String degreeTypeCode = (String) unEnrollForm.get("degreeType");
-        TipoCurso degreeType = new TipoCurso();
+        DegreeType degreeType = null;
         if (degreeTypeCode != null && degreeTypeCode.length() > 0) {
-            degreeType.setTipoCurso(Integer.valueOf(degreeTypeCode));
+            degreeType = DegreeType.valueOf(degreeTypeCode);
         }
 
         Integer[] unenrollments = (Integer[]) unEnrollForm.get("unenrollments");
@@ -247,8 +247,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
         infoExecutionYear.setYear(executionYear);*/
 
         String degreeTypeCode = (String) prepareEnrolmentForm.get("degreeType");
-        TipoCurso degreeType = new TipoCurso();
-        degreeType.setTipoCurso(Integer.valueOf(degreeTypeCode));
+        DegreeType degreeType = DegreeType.valueOf(degreeTypeCode);
 
         String executionDegreeString = (String) prepareEnrolmentForm.get("executionDegree");
         Integer executionDegreeId = null;
@@ -286,8 +285,11 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
         executionDegreeList.remove(0);
 
         Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
+        
+        MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
+        
         List executionDegreeLabels = ExecutionDegreesFormat
-                .buildExecutionDegreeLabelValueBean(executionDegreeList);
+                .buildExecutionDegreeLabelValueBean(executionDegreeList, messageResources);
         request.setAttribute(SessionConstants.DEGREE_LIST, executionDegreeLabels);
 
         //read all curricular years and semester
@@ -365,8 +367,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
         infoExecutionYear.setYear(executionYear);*/
 
         String degreeTypeCode = (String) enrollForm.get("degreeType");
-        TipoCurso degreeType = new TipoCurso();
-        degreeType.setTipoCurso(Integer.valueOf(degreeTypeCode));
+        DegreeType degreeType = DegreeType.valueOf(degreeTypeCode);
 
         Integer executionDegreeID = Integer.valueOf((String) enrollForm.get("executionDegree"));
 
@@ -449,8 +450,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
         infoExecutionYear.setYear(executionYear);*/
 
         String degreeTypeCode = (String) enrollForm.get("degreeType");
-        TipoCurso degreeType = new TipoCurso();
-        degreeType.setTipoCurso(Integer.valueOf(degreeTypeCode));
+        DegreeType degreeType = DegreeType.valueOf(degreeTypeCode);
 
         String[] curricularCourses = (String[]) enrollForm.get("curricularCourses");
         List curricularCoursesList = Arrays.asList(curricularCourses);

@@ -13,11 +13,11 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.util.CurricularCourseType;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -235,7 +235,7 @@ public class EnrollmentOJB extends PersistentObjectOJB implements IPersistentEnr
         criteria.addEqualTo("studentCurricularPlan.student.idInternal", student.getIdInternal());
         criteria.addEqualTo("studentCurricularPlan.currentState", StudentCurricularPlanState.ACTIVE_OBJ);
         criteria.addEqualTo("studentCurricularPlan.degreeCurricularPlan.degree.tipoCurso",
-                TipoCurso.LICENCIATURA_OBJ);
+                DegreeType.DEGREE);
         criteria.addEqualTo("enrollmentState", EnrollmentState.APROVED);
 
         int numberCompletedCourses = count(Enrolment.class, criteria);
@@ -249,7 +249,7 @@ public class EnrollmentOJB extends PersistentObjectOJB implements IPersistentEnr
             criteria.addNotEqualTo("studentCurricularPlan.currentState",
                     StudentCurricularPlanState.ACTIVE_OBJ);
             criteria.addEqualTo("studentCurricularPlan.degreeCurricularPlan.degree.tipoCurso",
-                    TipoCurso.LICENCIATURA_OBJ);
+                    DegreeType.DEGREE);
             criteria.addEqualTo("enrollmentState", EnrollmentState.APROVED);
 
             List enrolmentsInOtherStudentCurricularPlans = queryList(Enrolment.class, criteria);
@@ -275,7 +275,7 @@ public class EnrollmentOJB extends PersistentObjectOJB implements IPersistentEnr
         Criteria criteria = new Criteria();
         criteria.addEqualTo("student.idInternal", student.getIdInternal());
         criteria.addEqualTo("currentState", StudentCurricularPlanState.ACTIVE_OBJ);
-        criteria.addEqualTo("degreeCurricularPlan.degree.tipoCurso", TipoCurso.LICENCIATURA_OBJ);
+        criteria.addEqualTo("degreeCurricularPlan.degree.tipoCurso", DegreeType.DEGREE);
         return (IStudentCurricularPlan) queryObject(StudentCurricularPlan.class, criteria);
     }
 

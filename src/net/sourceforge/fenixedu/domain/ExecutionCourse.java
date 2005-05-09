@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.fileSuport.INode;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -141,7 +141,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             public boolean evaluate(Object input) {
                 ICurricularCourse curricularCourse = (ICurricularCourse) input;
                 return !curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(
-                        TipoCurso.LICENCIATURA_OBJ);
+                        DegreeType.DEGREE);
             }
         });
     }

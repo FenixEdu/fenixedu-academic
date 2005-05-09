@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.util.TipoCurso;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -36,7 +36,7 @@ public class ChooseDataToCreateGuideDispatchAction extends DispatchAction {
 
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-            TipoCurso degreeType = TipoCurso.MESTRADO_OBJ;
+            DegreeType degreeType = DegreeType.MASTER_DEGREE;
 
             Object args[] = { degreeType };
 

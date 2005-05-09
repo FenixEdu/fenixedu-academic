@@ -14,6 +14,7 @@ import org.apache.struts.actions.DispatchAction;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -22,7 +23,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * 
@@ -41,26 +41,26 @@ public class MasterDegreeThesisOperations extends DispatchAction {
         DynaActionForm getStudentByNumberAndDegreeTypeForm = (DynaActionForm) form;
         IUserView userView = SessionUtils.getUserView(request);
 
-        Integer degreeType = Integer.valueOf(this.getFromRequest("degreeType", request));
+        String degreeType = this.getFromRequest("degreeType", request);
         Integer studentNumber = Integer.valueOf(this.getFromRequest("studentNumber", request));
 
         if ((degreeType == null) || (studentNumber == null)) {
 
             try {
-                degreeType = new Integer((String) getStudentByNumberAndDegreeTypeForm.get("degreeType"));
+                degreeType = (String) getStudentByNumberAndDegreeTypeForm.get("degreeType");
                 studentNumber = new Integer((String) getStudentByNumberAndDegreeTypeForm
                         .get("studentNumber"));
             } catch (NumberFormatException e) {
-                degreeType = (Integer) request.getAttribute("degreeType");
+                degreeType = (String) request.getAttribute("degreeType");
                 studentNumber = (Integer) request.getAttribute("studentNumber");
-                getStudentByNumberAndDegreeTypeForm.set("degreeType", degreeType.toString());
+                getStudentByNumberAndDegreeTypeForm.set("degreeType", degreeType);
                 getStudentByNumberAndDegreeTypeForm.set("studentNumber", studentNumber.toString());
             }
         }
 
         InfoStudent infoStudent = null;
 
-        Object args[] = { studentNumber, new TipoCurso(degreeType) };
+        Object args[] = { studentNumber, DegreeType.valueOf(degreeType)};
         try {
             infoStudent = (InfoStudent) ServiceUtils.executeService(userView,
                     "ReadStudentByNumberAndDegreeType", args);

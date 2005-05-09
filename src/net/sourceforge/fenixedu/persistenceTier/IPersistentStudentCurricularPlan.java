@@ -18,16 +18,16 @@ import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 public interface IPersistentStudentCurricularPlan extends IPersistentObject {
 
     public IStudentCurricularPlan readActiveByStudentNumberAndDegreeType(Integer number,
-            TipoCurso degreeType) throws ExcepcaoPersistencia;
+            DegreeType degreeType) throws ExcepcaoPersistencia;
 
-    public IStudentCurricularPlan readActiveStudentCurricularPlan(String username, TipoCurso degreeType)
+    public IStudentCurricularPlan readActiveStudentCurricularPlan(String username, DegreeType degreeType)
             throws ExcepcaoPersistencia;
 
     /**
@@ -37,7 +37,7 @@ public interface IPersistentStudentCurricularPlan extends IPersistentObject {
      *         ExcepcaoPersistencia
      */
     public IStudentCurricularPlan readActiveStudentCurricularPlan(Integer studentNumber,
-            TipoCurso degreeType) throws ExcepcaoPersistencia;
+            DegreeType degreeType) throws ExcepcaoPersistencia;
 
     /**
      * @param studentCurricularPlan
@@ -64,7 +64,7 @@ public interface IPersistentStudentCurricularPlan extends IPersistentObject {
      *         ExcepcaoPersistencia
      */
     public IStudentCurricularPlan readActiveStudentAndSpecializationCurricularPlan(
-            Integer studentNumber, TipoCurso degreeType, Specialization specialization)
+            Integer studentNumber, DegreeType degreeType, Specialization specialization)
             throws ExcepcaoPersistencia;
 
     /**
@@ -88,7 +88,7 @@ public interface IPersistentStudentCurricularPlan extends IPersistentObject {
      * @return @throws
      *         ExcepcaoPersistencia
      */
-    public List readByStudentNumberAndDegreeType(Integer number, TipoCurso degreeType)
+    public List readByStudentNumberAndDegreeType(Integer number, DegreeType degreeType)
             throws ExcepcaoPersistencia;
 
     public List readAllByDegreeCurricularPlanAndState(IDegreeCurricularPlan degreeCurricularPlan,
@@ -131,11 +131,11 @@ public interface IPersistentStudentCurricularPlan extends IPersistentObject {
     public List readAllActiveStudentCurricularPlansByDegreeWithEnrollmentsInExecutionPeriod(
             IExecutionPeriod executionPeriod, IDegree degree) throws ExcepcaoPersistencia;
 
-    public List readAllByStudentNumberAndSpecialization(Integer studentNumber, TipoCurso degreeType,
+    public List readAllByStudentNumberAndSpecialization(Integer studentNumber, DegreeType degreeType,
             Specialization specialization) throws ExcepcaoPersistencia;
 
     public List readAllByStudentNumberAndSpecializationAndState(Integer studentNumber,
-            TipoCurso degreeType, Specialization specialization, StudentCurricularPlanState state)
+            DegreeType degreeType, Specialization specialization, StudentCurricularPlanState state)
             throws ExcepcaoPersistencia;
 
 }

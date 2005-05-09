@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -18,7 +19,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -54,12 +54,12 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
             throw new FenixActionException(fenixServiceException.getMessage());
         }
 
-        TipoCurso degreeType = oldInfoDegree.getTipoCurso();
+        DegreeType degreeType = oldInfoDegree.getTipoCurso();
 
         readDegreeForm.set("name", oldInfoDegree.getNome());
         readDegreeForm.set("code", oldInfoDegree.getSigla());
         readDegreeForm.set("nameEn",oldInfoDegree.getNameEn());
-        readDegreeForm.set("degreeType", degreeType.getTipoCurso());
+        readDegreeForm.set("degreeType", degreeType.toString());
         return mapping.findForward("editDegree");
     }
 
@@ -73,10 +73,10 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
         String code = (String) editDegreeForm.get("code");
         String name = (String) editDegreeForm.get("name");
         String nameEn = (String) editDegreeForm.get("nameEn");
-        Integer degreeTypeInt = (Integer) editDegreeForm.get("degreeType");
+        String degreeTypeInt = (String) editDegreeForm.get("degreeType");
 
-        TipoCurso degreeType = new TipoCurso(degreeTypeInt);
-        InfoDegree newInfoDegree = new InfoDegree(code, name,nameEn, degreeType);
+        DegreeType degreeType = DegreeType.valueOf(degreeTypeInt);
+        InfoDegree newInfoDegree = new InfoDegree(code, name, nameEn, degreeType);
         newInfoDegree.setIdInternal(oldDegreeId);
 
         Object args[] = { newInfoDegree };

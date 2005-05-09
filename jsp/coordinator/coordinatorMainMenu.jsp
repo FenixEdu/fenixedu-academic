@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree" %>
-<%@ page import="net.sourceforge.fenixedu.util.TipoCurso" %>
+<%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 
 <logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
 	<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session" type="InfoExecutionDegree" />
@@ -14,7 +14,7 @@
 	<%-- Start of Master Degree Coordinator Options --%>
 	<logic:equal name="infoExecutionDegree" 
 		property="infoDegreeCurricularPlan.infoDegree.tipoCurso" 
-		value="<%= TipoCurso.MESTRADO_OBJ.toString() %>">
+		value="<%= DegreeType.MASTER_DEGREE.toString() %>">
 			<p>
 			<strong>&raquo; <bean:message key="link.coordinator.candidate"/></strong>
 			<ul>
@@ -95,7 +95,7 @@
 	</logic:equal>
 	
 	<%-- Start of Degree Coordinator Options --%>
-	<logic:notEqual name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= TipoCurso.MESTRADO_OBJ.toString() %>">
+	<logic:notEqual name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= DegreeType.MASTER_DEGREE.toString() %>">
 		<br /><br />
 		<ul>
 			<li>

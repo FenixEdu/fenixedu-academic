@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.masterDegree.DocumentReason;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -27,7 +28,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -82,7 +82,7 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
             // inputs
             InfoStudent infoStudent = new InfoStudent();
             infoStudent.setNumber(requesterNumber);
-            infoStudent.setDegreeType(new TipoCurso(TipoCurso.MESTRADO));
+            infoStudent.setDegreeType(DegreeType.MASTER_DEGREE);
             session.setAttribute(SessionConstants.DEGREE_TYPE, infoStudent.getDegreeType());
 
             // output

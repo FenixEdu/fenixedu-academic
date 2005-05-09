@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCreditsInAnySecundaryArea;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCreditsInSpecificScientificArea;
@@ -22,7 +23,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEquivalentEnrolmentFo
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 /**
  * @author David Santos 9/Jul/2003
@@ -116,7 +116,7 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service {
      * @throws ExcepcaoPersistencia
      */
     protected IStudentCurricularPlan getActiveStudentCurricularPlan(Integer studentNumber,
-            TipoCurso degreeType) throws ExcepcaoPersistencia {
+            DegreeType degreeType) throws ExcepcaoPersistencia {
         ISuportePersistente persistenceDAO = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistenceDAO

@@ -4,8 +4,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.DegreeCurricularPlanState;
-import net.sourceforge.fenixedu.util.TipoCurso;
 
 public interface IPersistentDegreeCurricularPlan extends IPersistentObject {
 
@@ -22,6 +22,6 @@ public interface IPersistentDegreeCurricularPlan extends IPersistentObject {
     public List readByDegreeAndState(IDegree degree, DegreeCurricularPlanState state)
             throws ExcepcaoPersistencia;
 
-    public List readByDegreeTypeAndState(TipoCurso degreeType, DegreeCurricularPlanState state)
+    public List readByDegreeTypeAndState(DegreeType degreeType, DegreeCurricularPlanState state)
             throws ExcepcaoPersistencia;
 }

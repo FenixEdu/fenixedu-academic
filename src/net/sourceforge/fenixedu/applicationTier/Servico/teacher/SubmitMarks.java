@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.ResponsibleFor;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
@@ -51,7 +52,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.Ftp;
-import net.sourceforge.fenixedu.util.TipoCurso;
 import net.sourceforge.fenixedu.util.middleware.CreateFile;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -134,7 +134,7 @@ public class SubmitMarks implements IServico {
 
             //Send the files via FPT
             
-            Ftp.enviarFicheiros("/DegreeGradesFtpServerConfig.properties", improvmentFileList, "melhoria/");
+            Ftp.enviarFicheiros("/DegreeGradesFtpServerConfig.properties", improvmentFileList, "melhorias/");
 
             return createSiteView(site, evaluation, nSubmited, notEnrolled, postGraduate);
         } catch (Exception e) {
@@ -170,7 +170,7 @@ public class SubmitMarks implements IServico {
                 IEnrolmentEvaluation enrolmentEvaluation = null;
 
                 //check student´s degree type
-                if (attend.getAluno().getDegreeType().equals(TipoCurso.MESTRADO_OBJ)) {
+                if (attend.getAluno().getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
                     
                     postGraduate.add(InfoFrequentaWithInfoStudentAndPerson.newInfoFromDomain(attend));
                     continue;

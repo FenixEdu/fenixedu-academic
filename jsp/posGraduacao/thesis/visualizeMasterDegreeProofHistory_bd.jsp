@@ -151,7 +151,7 @@
 	java.util.Hashtable paramsVisuzalize = new java.util.Hashtable();
 	InfoStudent infoStudent = (InfoStudent) student;
 	
-	paramsVisuzalize.put("degreeType", infoStudent.getDegreeType().getTipoCurso());
+	paramsVisuzalize.put("degreeType", infoStudent.getDegreeType().toString());
 	paramsVisuzalize.put("studentNumber", infoStudent.getNumber());
 	paramsVisuzalize.put("method", "getStudentAndMasterDegreeProofVersion");
 	pageContext.setAttribute("parametersVisuzalize", paramsVisuzalize, PageContext.PAGE_SCOPE);
