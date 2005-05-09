@@ -713,7 +713,6 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
             
 			strBuffer.append("<td ").append("class='").append(classCSS).append("'>");
             examsMapSlotContentRenderer.renderDayLabel(examsMapSlot, examsMap, user,pageContext);
-  // System.out.println(examsMapSlotContentRenderer.renderDayLabel(examsMapSlot, examsMap, user,locale));
 			strBuffer.append(examsMapSlotContentRenderer.renderDayLabel(examsMapSlot, examsMap, user,pageContext));
 			strBuffer.append("</td>");
 		}

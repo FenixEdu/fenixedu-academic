@@ -48,7 +48,6 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
                 strBuffer.append("&nbsp;&nbsp;[Q]");
             }
         } else {
-            System.out.println("the else");
             InfoExam infoExam = (InfoExam) showOccupation;
             for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {
                 InfoExecutionCourse infoEC = (InfoExecutionCourse) infoExam

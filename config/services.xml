@@ -8656,5 +8656,14 @@
 		<filterChains>
 			<chain name="CoordinatorAuthorization"/>
 		</filterChains>
-	</service>	
+	</service>
+    <service>
+        <name>SwitchPublishedExamsFlag</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.SwitchPublishedExamsFlag</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TimeTableManagerAuthorization"/>
+        </filterChains>
+    </service>
 </serviceDefinitions>

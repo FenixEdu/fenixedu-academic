@@ -492,6 +492,12 @@
 				<form-property name="name" type="java.lang.String" />
 		</form-bean>      
 
+		<form-bean name="publishExamsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+				<form-property name="executionPeriodOID" type="java.lang.String" />
+				<form-property name="switchPublishedState" type="java.lang.Boolean" />
+		</form-bean>      
+
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -1512,6 +1518,17 @@
     		>
   		<forward name="showForm" path="df.page.mainExams"/>
   		<forward name="choose" path="/mainExamsNew.do?method=prepare"/>
+	</action>
+
+	<action path="/publishExams"
+			name="publishExamsForm"
+			input="/mainExamsNew.do?method=prepare&amp;page=0"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.sop.PublishExams"
+    		parameter="method"
+    		validate="false"
+    		scope="request"
+    		>
+  		<forward name="switch" path="/mainExamsNew.do?method=prepare&amp;page=0"/>
 	</action>
 				
 	<action input="/chooseDegreeAndYearContext.do?method=prepare&amp;page=0"

@@ -78,7 +78,6 @@ public class UpdateAllMoneyCostCenterByYear implements IService {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace(System.out);
             throw new FenixServiceException(e);
         }
         if (infoMoneyCostCenterUpdatedList == null

@@ -56,13 +56,11 @@ public class ExtraWorkByEmployeeAction extends FenixDispatchAction {
         Calendar firstDayCalendar = Calendar.getInstance();
         firstDayCalendar.set(year.intValue(), moth.intValue() - 1, 1, 00, 00, 00);
         Timestamp firstDay = new Timestamp(firstDayCalendar.getTimeInMillis());
-        System.out.println("-------------->" + firstDay);	
         
         int lastDayMoth = firstDayCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         Calendar lastDayCalendar = Calendar.getInstance();
         lastDayCalendar.set(year.intValue(), moth.intValue() - 1, lastDayMoth, 23, 59, 59);
         Timestamp lastDay = new Timestamp(lastDayCalendar.getTimeInMillis());
-        System.out.println("-------------->" + lastDay);
         
         Locale locale = request.getLocale();
 
@@ -95,8 +93,6 @@ public class ExtraWorkByEmployeeAction extends FenixDispatchAction {
         extraWorkByEmployeeFormBean.set("moth", moth);
         extraWorkByEmployeeFormBean.set("year", year);
 
-        System.out.println("--->" + infoExtraWorkList.size());
-
         return (mapping.findForward("extraWorkSheet"));
     }
 
@@ -126,7 +122,6 @@ public class ExtraWorkByEmployeeAction extends FenixDispatchAction {
                     }
                 }
             }
-            System.out.println("writeExtraWork--->" + infoExtraWorkList.size());
             List infoExtraWorkListAfterWrite = null;
             if (infoExtraWorkList != null && infoExtraWorkList.size() > 0) {
 

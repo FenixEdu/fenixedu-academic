@@ -61,7 +61,6 @@ public class WorkByEmployeeAction extends FenixDispatchAction {
         DynaActionForm workByEmployeeFormBean = (DynaActionForm) form;
         Integer employeeNumber = (Integer) workByEmployeeFormBean
                 .get("employeeNumber");
-        System.out.println("---->" + employeeNumber);
 
         String beginDateForm = (String) workByEmployeeFormBean.get("beginDate");
         String endDateForm = (String) workByEmployeeFormBean.get("endDate");
@@ -79,9 +78,6 @@ public class WorkByEmployeeAction extends FenixDispatchAction {
         calendar.set(Calendar.SECOND, 59);
         endDate = calendar.getTime();
         
-        System.out.println("-->bedinDate: " + bedinDate);
-        System.out.println("-->endDate: " + endDate);
-
         Locale locale = request.getLocale();
 
         // »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»

@@ -27,8 +27,6 @@ public class ReadExecutionDegreesByExecutionYear implements IService {
 
     public List run(InfoExecutionYear infoExecutionYear) throws ExcepcaoPersistencia {
 
-        System.out.println("infoExecutionYear: " + infoExecutionYear);
-
         final List infoExecutionDegreeList = new ArrayList();
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -41,9 +39,6 @@ public class ReadExecutionDegreesByExecutionYear implements IService {
             if (executionDegree != null) {
                 final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoDegreeCurricularPlanAndExecutionYear
                         .newInfoFromDomain(executionDegree);
-                System.out.print("infoExecutionDegree" + infoExecutionDegree.getIdInternal());
-                System.out.print("infodcp" + infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
-                System.out.print("infodegree" + infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal());
                 infoExecutionDegreeList.add(infoExecutionDegree);
             }
         }

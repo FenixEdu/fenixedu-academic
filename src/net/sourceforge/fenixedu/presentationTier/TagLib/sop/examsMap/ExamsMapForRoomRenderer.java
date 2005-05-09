@@ -113,7 +113,6 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
     private void renderHeader(StringBuffer strBuffer) {
         for (int index = 0; index < this.daysOfWeek.length; index++) {
             StringBuffer classCSS = new StringBuffer("examMap_header");
-         System.out.println(classCSS);
             if (index == 0) {
                 classCSS.append("_first");
             }

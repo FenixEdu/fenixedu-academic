@@ -526,6 +526,7 @@ public class ContextUtils {
         /* Sort the list of degrees */
         if (executionDegreeList != null && executionDegreeList.size() > 0) {
             Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
+            request.setAttribute("executionDegrees", executionDegreeList);
 
             /* Generate a label list for the above list of degrees */
             //List labelListOfExecutionDegrees =

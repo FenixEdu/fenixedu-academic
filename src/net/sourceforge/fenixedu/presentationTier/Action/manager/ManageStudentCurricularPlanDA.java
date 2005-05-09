@@ -179,8 +179,6 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
         final String[] enrollmentStringIDsToTransfer = (String[]) dynaActionForm
                 .get("enrollmentIDsToTransfer");
 
-		System.out.println("enrollmentStringIDsToTransfer: " + enrollmentStringIDsToTransfer);
-
         if (isPresent(selectedStudentCurricularPlanIdString) && enrollmentStringIDsToTransfer != null
 				&& enrollmentStringIDsToTransfer.length > 0) {
 
@@ -189,7 +187,6 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
 			for (int i = 0; i < enrollmentStringIDsToTransfer.length; i++) {
 				final String enrollmentStringIDToTransfer = enrollmentStringIDsToTransfer[i];
 				enrollmentIDsToTransfer[i] = new Integer(enrollmentStringIDToTransfer);
-				System.out.println("enrollmentIDsToTransfer[i]: " + enrollmentIDsToTransfer[i]);
 			}
 
             final IUserView userView = SessionUtils.getUserView(request);

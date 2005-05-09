@@ -192,7 +192,6 @@ public class ExtraWorkSheet implements IService {
         List extraWorkListPerDay = new ArrayList();
 
         _numMecanografico = employeeNumber;
-        System.out.println("-------------->" + _numMecanografico);
         _dataInicioEscolha = firstDay;
         _dataFimEscolha = lastDay;
         _oracleDB = Boolean.TRUE;
@@ -215,8 +214,6 @@ public class ExtraWorkSheet implements IService {
         IExtraWork extraWork = new ExtraWork();
         extraWork.setDay(calendario.getTime());
         if (((Long) _listaSaldos.get(0)).longValue() > 0) {
-            System.out.println("-------------->>>>Extra Work at "
-                    + new Date(((Long) _listaSaldos.get(0)).longValue()));
             extraWork.setBeginHour(calculateBeginExtraWork());
             extraWork.setEndHour(calculateEndExtraWork());
             extraWork.setTotalExtraWork(calculateHourExtraWork(0, -1, false));
@@ -338,7 +335,6 @@ public class ExtraWorkSheet implements IService {
                 // ==================================== Inicio da construcao da
                 // lista a mostrar no jsp =======================================
                 while (_dataConsulta.before(_dataFimEscolha)) {
-                    System.out.println("-------------->" + _dataConsulta);
 
                     calendario.clear();
                     calendario.setTimeInMillis(_dataConsulta.getTime());

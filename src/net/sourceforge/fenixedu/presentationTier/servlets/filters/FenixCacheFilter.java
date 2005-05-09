@@ -100,18 +100,6 @@ public class FenixCacheFilter implements Filter {
         }
         String language = locale.getLanguage();
         id.append(language);
-        //        System.out.println("local in cache wrapper: " + locale.getLanguage());
-//      	// optionally append i18n sensitivity
-//       	String localeSensitive = this.filterConfig.getInitParameter("locale-sensitive");
-//        if (localeSensitive != null) {
-//       		StringWriter ldata = new StringWriter();
-//       		Enumeration locales = request.getLocales();
-//       		while (locales.hasMoreElements()) {
-//       			Locale locale2 = (Locale) locales.nextElement();
-//       			ldata.write(locale2.getISO3Language());
-//       		}
-//       		id.append(ldata.toString());
-//       	}
 
         return id.toString();
     }
