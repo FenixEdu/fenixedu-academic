@@ -41,5 +41,17 @@ public class StringAppender
         return stringBuilder.toString();
     }
 
+    public static final String append(final String string1, final String string2, final String string3, final String string4, final String string5, final String string6, final String string7) {
+        final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(string1);
+        stringBuilder.append(string2);
+        stringBuilder.append(string3);
+        stringBuilder.append(string4);
+        stringBuilder.append(string5);
+        stringBuilder.append(string6);
+        stringBuilder.append(string7);
+        return stringBuilder.toString();
+    }
+
 }
 //
