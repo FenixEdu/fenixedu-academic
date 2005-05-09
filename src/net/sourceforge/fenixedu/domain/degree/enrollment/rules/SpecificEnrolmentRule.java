@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.util.AreaType;
+import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -107,13 +107,13 @@ public abstract class SpecificEnrolmentRule {
     protected List getSpecializationAreaCurricularCourses(IStudentCurricularPlan studentCurricularPlan) {
 
         return studentCurricularPlan.getDegreeCurricularPlan().getCurricularCoursesFromArea(
-                studentCurricularPlan.getBranch(), AreaType.SPECIALIZATION_OBJ);
+                studentCurricularPlan.getBranch(), AreaType.SPECIALIZATION);
     }
     
     protected List getSecundaryAreaCurricularCourses(IStudentCurricularPlan studentCurricularPlan) {
 
         return studentCurricularPlan.getDegreeCurricularPlan().getCurricularCoursesFromArea(
-                studentCurricularPlan.getSecundaryBranch(), AreaType.SECONDARY_OBJ);
+                studentCurricularPlan.getSecundaryBranch(), AreaType.SECONDARY);
     }
     
     protected List getCommonAreasCurricularCourses(IStudentCurricularPlan studentCurricularPlan) {
@@ -126,7 +126,7 @@ public abstract class SpecificEnrolmentRule {
         for (int i = 0; i < commonAreasSize; i++) {
             IBranch area = (IBranch) commonAreas.get(i);
             curricularCoursesFromCommonAreas.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(
-                    area, AreaType.BASE_OBJ));
+                    area, AreaType.BASE));
         }
 
         return curricularCoursesFromCommonAreas;

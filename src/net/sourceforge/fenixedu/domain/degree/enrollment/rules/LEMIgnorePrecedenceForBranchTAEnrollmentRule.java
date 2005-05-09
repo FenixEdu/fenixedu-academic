@@ -11,7 +11,8 @@ import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
-import net.sourceforge.fenixedu.util.AreaType;
+import net.sourceforge.fenixedu.tools.enrollment.AreaType;
+
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -49,7 +50,7 @@ public class LEMIgnorePrecedenceForBranchTAEnrollmentRule implements IEnrollment
                         .equals(TERMODINAMICA_APLICADA_BRANCH_CODE)) {
             List curricularCourses = studentCurricularPlan.getDegreeCurricularPlan()
                     .getCurricularCoursesFromArea(studentCurricularPlan.getBranch(),
-                            AreaType.SPECIALIZATION_OBJ);
+                            AreaType.SPECIALIZATION);
             ICurricularCourse curricularCourse = (ICurricularCourse) CollectionUtils.find(
                     curricularCourses, new Predicate() {
                         public boolean evaluate(Object arg0) {

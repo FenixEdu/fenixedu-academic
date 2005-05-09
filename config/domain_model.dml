@@ -108,9 +108,9 @@ class net.sourceforge.fenixedu.domain.Branch extends net.sourceforge.fenixedu.do
     
     interface "
 
-    public net.sourceforge.fenixedu.util.BranchType getBranchType();
-    public void setBranchType(net.sourceforge.fenixedu.util.BranchType branchType);
-    public java.util.List getAreaCurricularCourseGroups(net.sourceforge.fenixedu.util.AreaType areaType);
+	public net.sourceforge.fenixedu.domain.branch.BranchType getBranchType();
+    public void setBranchType(net.sourceforge.fenixedu.domain.branch.BranchType branchType);
+    public java.util.List getAreaCurricularCourseGroups(net.sourceforge.fenixedu.tools.enrollment.AreaType areaType);
     "
 }
 
@@ -361,8 +361,8 @@ class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourcefo
     public void setMinimumNumberOfOptionalCourses(Integer minimumNumberOfOptionalCourses);
     public void setMaximumNumberOfOptionalCourses(Integer maximumNumberOfOptionalCourses);
     
-    public net.sourceforge.fenixedu.util.AreaType getAreaType();
-    public void setAreaType(net.sourceforge.fenixedu.util.AreaType areaType);
+    public net.sourceforge.fenixedu.tools.enrollment.AreaType getAreaType();
+    public void setAreaType(net.sourceforge.fenixedu.tools.enrollment.AreaType areaType);
     "
 }
 
@@ -445,7 +445,7 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     public net.sourceforge.fenixedu.util.DegreeCurricularPlanState getState();
     public java.util.List getListOfEnrollmentRules(net.sourceforge.fenixedu.domain.IStudentCurricularPlan studentCurricularPlan,
             net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
-    public java.util.List getCurricularCoursesFromArea(net.sourceforge.fenixedu.domain.IBranch area, net.sourceforge.fenixedu.util.AreaType areaType);
+    public java.util.List getCurricularCoursesFromArea(net.sourceforge.fenixedu.domain.IBranch area, net.sourceforge.fenixedu.tools.enrollment.AreaType areaType);
     public java.util.List getCurricularCoursesFromAnyArea();
     public java.util.List getCommonAreas();
     public java.util.List getSpecializationAreas();

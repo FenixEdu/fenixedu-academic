@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.util.AreaType;
-import net.sourceforge.fenixedu.util.BranchType;
+import net.sourceforge.fenixedu.tools.enrollment.AreaType;
+import net.sourceforge.fenixedu.domain.branch.BranchType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -18,7 +18,7 @@ public class Branch extends Branch_Base {
     /**
      * @author Nuno Correia & Ricardo Rodrigues
      */
-    private BranchType branchType;
+    private net.sourceforge.fenixedu.domain.branch.BranchType branchType;
 
     public Branch() {
     }
@@ -47,7 +47,7 @@ public class Branch extends Branch_Base {
      */
     public Boolean representsCommonBranch() {
 
-        if (this.getBranchType().equals(BranchType.COMMON_BRANCH)) {
+        if (this.getBranchType().equals(net.sourceforge.fenixedu.domain.branch.BranchType.valueOf("COMMON"))) {
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
@@ -56,7 +56,7 @@ public class Branch extends Branch_Base {
     /**
      * @return Returns the branchType.
      */
-    public BranchType getBranchType() {
+    public net.sourceforge.fenixedu.domain.branch.BranchType  getBranchType() {
         return branchType;
     }
 
@@ -64,7 +64,7 @@ public class Branch extends Branch_Base {
      * @param branchType
      *            The branchType to set.
      */
-    public void setBranchType(BranchType branchType) {
+    public void setBranchType(net.sourceforge.fenixedu.domain.branch.BranchType branchType) {
         this.branchType = branchType;
     }
 

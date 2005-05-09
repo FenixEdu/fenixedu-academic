@@ -25,7 +25,7 @@
 	<field-descriptor
 		name="areaType"
 		column="AREA_TYPE"
-		jdbc-type="INTEGER"
+		jdbc-type="VARCHAR"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaAreaType2SqlAreaTypeFieldConversion"
 	/>
 	<field-descriptor

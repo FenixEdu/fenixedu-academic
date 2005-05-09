@@ -11,7 +11,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
-import net.sourceforge.fenixedu.util.AreaType;
+import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
 /**
  * @author Jo�o Mota
@@ -40,8 +40,8 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
             throw new BothAreasAreTheSameServiceException();
         }
         
-        List curricularCoursesFromSpecArea = getCurricularCoursesFromArea(specializationArea, AreaType.SPECIALIZATION_OBJ);
-        List curricularCoursesFromSecArea = getCurricularCoursesFromArea(secundaryArea, AreaType.SECONDARY_OBJ);
+        List curricularCoursesFromSpecArea = getCurricularCoursesFromArea(specializationArea, AreaType.SPECIALIZATION);
+        List curricularCoursesFromSecArea = getCurricularCoursesFromArea(secundaryArea, AreaType.SECONDARY);
 
         List curricularCoursesBelongingToAnySpecializationAndSecundaryArea = getCurricularCoursesBelongingToAnySpecializationAndSecundaryArea();
 
@@ -146,9 +146,9 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
         List secundaryAreas = getDegreeCurricularPlan().getSecundaryAreas();
 
         addAreasCurricularCoursesWithoutRepetitions(curricularCourses, specializationAreas,
-                AreaType.SPECIALIZATION_OBJ);
+                AreaType.SPECIALIZATION);
         addAreasCurricularCoursesWithoutRepetitions(curricularCourses, secundaryAreas,
-                AreaType.SECONDARY_OBJ);
+                AreaType.SECONDARY);
 
         return curricularCourses;
     }

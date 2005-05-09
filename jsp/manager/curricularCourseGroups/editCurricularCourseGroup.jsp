@@ -30,7 +30,7 @@
 <logic:match name="infoCurricularCourseGroup" property="type" value="label.curricularCourseGroup.area">
 <tr>	
 <td><bean:message key="label.areaType"/></td>
-<bean:define id="areaValue" name="infoCurricularCourseGroup" property="areaType.areaType"/>
+<bean:define id="areaValue" name="infoCurricularCourseGroup" property="areaType"/>
 <td>	
 	<html:select property="areaType" value="<%= areaValue.toString() %>">		
 		<html:options collection="areas" property="value" labelProperty="label"/>

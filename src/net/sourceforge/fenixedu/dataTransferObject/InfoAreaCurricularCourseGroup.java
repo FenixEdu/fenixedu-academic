@@ -5,7 +5,8 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
-import net.sourceforge.fenixedu.util.AreaType;
+import net.sourceforge.fenixedu.tools.enrollment.AreaType;
+
 
 /**
  * @author João Mota
@@ -35,14 +36,14 @@ public class InfoAreaCurricularCourseGroup extends InfoCurricularCourseGroup {
     /**
      * @return
      */
-    public AreaType getAreaType() {
+    public net.sourceforge.fenixedu.tools.enrollment.AreaType getAreaType() {
         return areaType;
     }
 
     /**
      * @param areaType
      */
-    public void setAreaType(AreaType areaType) {
+    public void setAreaType(net.sourceforge.fenixedu.tools.enrollment.AreaType areaType) {
         this.areaType = areaType;
     }
 

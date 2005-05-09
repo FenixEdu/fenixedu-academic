@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
-import net.sourceforge.fenixedu.util.BranchType;
+import net.sourceforge.fenixedu.domain.branch.BranchType;
 
 import org.apache.ojb.broker.query.Criteria;
 

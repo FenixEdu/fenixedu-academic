@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.util.AreaType;
+import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
 /**
  * @author David Santos on Jul 26, 2004
@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.util.AreaType;
 
 public class AreaCurricularCourseGroup extends AreaCurricularCourseGroup_Base {
 
-    private AreaType areaType;
+    private net.sourceforge.fenixedu.tools.enrollment.AreaType areaType;
 
     public AreaCurricularCourseGroup() {
     }
@@ -29,11 +29,11 @@ public class AreaCurricularCourseGroup extends AreaCurricularCourseGroup_Base {
         super.setMinimumValue(minimumCredits);
     }
 
-    public AreaType getAreaType() {
+    public net.sourceforge.fenixedu.tools.enrollment.AreaType getAreaType() {
         return areaType;
     }
 
-    public void setAreaType(AreaType areaType) {
+    public void setAreaType(net.sourceforge.fenixedu.tools.enrollment.AreaType areaType) {
         this.areaType = areaType;
     }
 

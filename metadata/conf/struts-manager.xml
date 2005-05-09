@@ -357,7 +357,7 @@
     		<form-property name="name" type="java.lang.String"/>
             <form-property type="java.lang.Integer" name="groupId"/>
             <form-property type="java.lang.Integer" name="branchId"/>
-            <form-property type="java.lang.Integer" name="areaType"/>
+            <form-property type="java.lang.String" name="areaType"/>
             <form-property type="java.lang.Integer" name="minimumValue"/>
             <form-property type="java.lang.Integer" name="maximumValue"/>
             <form-property type="java.lang.String" name="type"/>

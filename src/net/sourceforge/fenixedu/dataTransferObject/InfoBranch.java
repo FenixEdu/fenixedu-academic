@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.StringTokenizer;
 
 import net.sourceforge.fenixedu.domain.IBranch;
-import net.sourceforge.fenixedu.util.BranchType;
+import net.sourceforge.fenixedu.domain.branch.BranchType;
 
 /**
  * @author dcs-rjao

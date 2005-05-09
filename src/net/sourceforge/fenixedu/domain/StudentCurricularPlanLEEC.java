@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
-import net.sourceforge.fenixedu.util.AreaType;
+import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -70,9 +70,9 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
         List secundaryAreas = getDegreeCurricularPlan().getSecundaryAreas();
 
         addAreasCurricularCoursesWithoutRepetitions(curricularCourses, specializationAreas,
-                AreaType.SPECIALIZATION_OBJ);
+                AreaType.SPECIALIZATION);
         addAreasCurricularCoursesWithoutRepetitions(curricularCourses, secundaryAreas,
-                AreaType.SECONDARY_OBJ);
+                AreaType.SECONDARY);
 
         return curricularCourses;
     }
@@ -111,7 +111,7 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
         List curricularCoursesFromNewSpecializationArea = new ArrayList();
         List curricularCoursesFromNewSecundaryArea = new ArrayList();
 
-        List groups = specializationArea.getAreaCurricularCourseGroups(AreaType.SPECIALIZATION_OBJ);
+        List groups = specializationArea.getAreaCurricularCourseGroups(AreaType.SPECIALIZATION);
 
         Iterator iterator = groups.iterator();
         while (iterator.hasNext()) {
@@ -120,7 +120,7 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
                     .getCurricularCourses());
         }
 
-        groups = secundaryArea.getAreaCurricularCourseGroups(AreaType.SECONDARY_OBJ);
+        groups = secundaryArea.getAreaCurricularCourseGroups(AreaType.SECONDARY);
         iterator = groups.iterator();
         while (iterator.hasNext()) {
             ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) iterator.next();

@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.util.AreaType;
+import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
@@ -19,8 +19,8 @@ public class JavaAreaType2SqlAreaTypeFieldConversion implements FieldConversion 
      */
     public Object javaToSql(Object source) {
         if (source instanceof AreaType) {
-            AreaType a = (AreaType) source;
-            return a.getAreaType();
+            AreaType areaType = (AreaType) source;
+            return areaType.name();
         }
 
         return source;
@@ -31,9 +31,12 @@ public class JavaAreaType2SqlAreaTypeFieldConversion implements FieldConversion 
      * @see FieldConversion#sqlToJava(Object)
      */
     public Object sqlToJava(Object source) {
-        if (source instanceof Integer) {
-            Integer src = (Integer) source;
-            return new AreaType(src);
+        if (source instanceof String) {
+           
+            String src = (String) source;
+            if (src.equals("0"))
+                return null;
+            return AreaType.valueOf(src);
         }
 
         return source;

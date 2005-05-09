@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.util.BranchType;
+import net.sourceforge.fenixedu.domain.branch.BranchType;
 
 /**
  * @author Luis Cruz
@@ -44,7 +44,7 @@ public class CommonServiceRequests {
         while (iterator.hasNext()) {
             InfoBranch infoBranch = (InfoBranch) iterator.next();
             if (infoBranch != null && infoBranch.getBranchType() != null
-                    && !infoBranch.getBranchType().equals(BranchType.COMMON_BRANCH))
+                    && !infoBranch.getBranchType().equals(BranchType.COMNBR))
                 newBranches.add(infoBranch);
         }
         return newBranches;

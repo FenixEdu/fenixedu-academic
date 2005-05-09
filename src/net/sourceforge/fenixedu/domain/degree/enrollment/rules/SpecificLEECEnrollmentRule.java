@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup
 import net.sourceforge.fenixedu.persistenceTier.IPersistentScientificArea;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.AreaType;
+import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -173,12 +173,12 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
             // Sum credits in specialization area groups
             creditsInAreaGroups = creditsInSpecializationAreaGroups;
             branch = studentCurricularPlan.getBranch();
-            areaType = AreaType.SPECIALIZATION_OBJ;
+            areaType = AreaType.SPECIALIZATION;
         } else if (curricularCourseBelongsToSecundaryArea(curricularCourse, studentCurricularPlan)) {
             // Sum credits in secundary area groups
             creditsInAreaGroups = creditsInSecundaryAreaGroups;
             branch = studentCurricularPlan.getSecundaryBranch();
-            areaType = AreaType.SECONDARY_OBJ;
+            areaType = AreaType.SECONDARY;
         }
 
         if (creditsInAreaGroups != null && branch != null && areaType != null) {
@@ -198,7 +198,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
 
         ICurricularCourseGroup curricularCourseGroup = curricularCourseGroupDAO
                 .readByBranchAndCurricularCourseAndAreaType(studentCurricularPlan.getBranch(),
-                        curricularCourse, AreaType.SPECIALIZATION_OBJ);
+                        curricularCourse, AreaType.SPECIALIZATION);
 
         return curricularCourseGroup != null;
     }
@@ -211,7 +211,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
 
         ICurricularCourseGroup curricularCourseGroup = curricularCourseGroupDAO
                 .readByBranchAndCurricularCourseAndAreaType(studentCurricularPlan.getSecundaryBranch(),
-                        curricularCourse, AreaType.SECONDARY_OBJ);
+                        curricularCourse, AreaType.SECONDARY);
 
         return curricularCourseGroup != null;
     }
@@ -252,11 +252,11 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
 
                 ICurricularCourseGroup specializationGroup = curricularCourseGroupDAO
                         .readByBranchAndScientificAreaAndAreaType(studentCurricularPlan.getBranch(),
-                                scientificArea, AreaType.SPECIALIZATION_OBJ);
+                                scientificArea, AreaType.SPECIALIZATION);
 
                 ICurricularCourseGroup secundaryGroup = curricularCourseGroupDAO
                         .readByBranchAndScientificAreaAndAreaType(studentCurricularPlan
-                                .getSecundaryBranch(), scientificArea, AreaType.SECONDARY_OBJ);
+                                .getSecundaryBranch(), scientificArea, AreaType.SECONDARY);
 
                 if ((specializationGroup != null) && (secundaryGroup != null)) {
                     List groups = new ArrayList();
@@ -562,7 +562,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
         List secundaryAreaCurricularCourses = new ArrayList();
 
         List groups = curricularCourseGroupDAO.readByBranchAndAreaType(studentCurricularPlan
-                .getSecundaryBranch(), AreaType.SECONDARY_OBJ);
+                .getSecundaryBranch(), AreaType.SECONDARY);
 
         int size = groups.size();
         for (int i = 0; i < size; i++) {
@@ -586,7 +586,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
         List specializationAreaCurricularCourses = new ArrayList();
 
         List groups = curricularCourseGroupDAO.readByBranchAndAreaType(
-                studentCurricularPlan.getBranch(), AreaType.SPECIALIZATION_OBJ);
+                studentCurricularPlan.getBranch(), AreaType.SPECIALIZATION);
 
         int size = groups.size();
         for (int i = 0; i < size; i++) {

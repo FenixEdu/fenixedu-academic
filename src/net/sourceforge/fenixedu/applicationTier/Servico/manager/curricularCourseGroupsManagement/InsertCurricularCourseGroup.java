@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.AreaType;
+import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -33,7 +33,7 @@ public class InsertCurricularCourseGroup implements IService {
     }
 
     public void run(Integer groupId, String name, Integer branchId, Integer minimumValue,
-            Integer maximumValue, Integer areaType, String className) throws FenixServiceException {
+            Integer maximumValue, String areaType, String className) throws FenixServiceException {
 
         try {
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -61,7 +61,7 @@ public class InsertCurricularCourseGroup implements IService {
             curricularCourseGroup.setBranch(branch);
             curricularCourseGroup.setName(name);
             if (curricularCourseGroup instanceof AreaCurricularCourseGroup) {
-                curricularCourseGroup.setAreaType(new AreaType(areaType));
+                curricularCourseGroup.setAreaType(AreaType.valueOf(areaType));
                 curricularCourseGroup.setMaximumCredits(maximumValue);
                 curricularCourseGroup.setMinimumCredits(minimumValue);
             } else {

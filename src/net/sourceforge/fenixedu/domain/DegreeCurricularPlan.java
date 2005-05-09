@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.AreaType;
-import net.sourceforge.fenixedu.util.BranchType;
+import net.sourceforge.fenixedu.tools.enrollment.AreaType;
+import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.util.CurricularCourseType;
 import net.sourceforge.fenixedu.util.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.util.MarkType;
@@ -151,7 +151,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 if (branch.getBranchType() == null) {
                     return branch.getName().equals("") && branch.getCode().equals("");
                 }
-                return branch.getBranchType().equals(BranchType.COMMON_BRANCH);
+                return branch.getBranchType().equals(BranchType.valueOf("COMMON_BRANCH"));
 
             }
         });
@@ -180,7 +180,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
             public boolean evaluate(Object arg0) {
                 IBranch branch = (IBranch) arg0;
-                return branch.getBranchType().equals(BranchType.SPECIALIZATION_BRANCH);
+                return branch.getBranchType().equals(BranchType.valueOf("SPECIALIZATION_BRANCH"));
             }
 
         });
@@ -196,7 +196,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
             public boolean evaluate(Object arg0) {
                 IBranch branch = (IBranch) arg0;
-                return branch.getBranchType().equals(BranchType.SECUNDARY_BRANCH);
+                return branch.getBranchType().equals(BranchType.valueOf("SECUNDARY_BRANCH"));
             }
 
         });

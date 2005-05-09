@@ -25,8 +25,8 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPrecedence;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.AreaType;
-import net.sourceforge.fenixedu.util.BranchType;
+import net.sourceforge.fenixedu.tools.enrollment.AreaType;
+import net.sourceforge.fenixedu.domain.branch.BranchType;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -53,14 +53,14 @@ public class VerifyLEECCurricularPlan {
             Iterator iterator = branches.iterator();
             while (iterator.hasNext()) {
                 IBranch branch = (IBranch) iterator.next();
-                if (branch.getBranchType().equals(BranchType.COMMON_BRANCH)) {
+                if (branch.getBranchType().equals(BranchType.COMNBR)) {
                     System.out.println("BASES: [" + branch.getName() + "]");
-                    printItForThisAreaWithScopes(branch, AreaType.BASE_OBJ);
+                    printItForThisAreaWithScopes(branch, AreaType.BASE);
                 } else {
                     System.out.println("ÁREA DE ESPECIALIZAÇÃO: [" + branch.getName() + "]");
-                    printItForThisAreaWithScopes(branch, AreaType.SPECIALIZATION_OBJ);
+                    printItForThisAreaWithScopes(branch, AreaType.SPECIALIZATION);
                     System.out.println("ÁREA SECUNDÁRIA: [" + branch.getName() + "]");
-                    printItForThisAreaWithScopes(branch, AreaType.SECONDARY_OBJ);
+                    printItForThisAreaWithScopes(branch, AreaType.SECONDARY);
                 }
             }
 

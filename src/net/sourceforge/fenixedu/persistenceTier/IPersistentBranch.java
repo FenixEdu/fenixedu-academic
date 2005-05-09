@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.util.BranchType;
+import net.sourceforge.fenixedu.domain.branch.BranchType;
 
 /**
  * 

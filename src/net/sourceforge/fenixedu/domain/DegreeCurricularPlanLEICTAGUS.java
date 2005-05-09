@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.AreaType;
+import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
 /**
  * @author Jo�o Mota in Aug 10, 2004
@@ -71,12 +71,12 @@ public class DegreeCurricularPlanLEICTAGUS extends DegreeCurricularPlanLEICTAGUS
         
         for (Iterator iter = specializationAreas.iterator(); iter.hasNext();) {
             IBranch branch = (IBranch) iter.next();
-            curricularCourses.addAll(getCurricularCoursesFromArea(branch, AreaType.SPECIALIZATION_OBJ));
+            curricularCourses.addAll(getCurricularCoursesFromArea(branch, AreaType.SPECIALIZATION));
         }
         
         for (Iterator iter = secundaryAreas.iterator(); iter.hasNext();) {
             IBranch branch = (IBranch) iter.next();
-            curricularCourses.addAll(getCurricularCoursesFromArea(branch, AreaType.SECONDARY_OBJ));
+            curricularCourses.addAll(getCurricularCoursesFromArea(branch, AreaType.SECONDARY));
         }
 
         List result = new ArrayList();

@@ -3,9 +3,8 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.util.BranchType;
+import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.util.CurricularCourseExecutionScope;
 import net.sourceforge.fenixedu.util.CurricularCourseType;
 
@@ -233,7 +232,7 @@ public class CurricularCourse extends CurricularCourse_Base {
             public boolean evaluate(Object obj) {
                 ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
                 return ((curricularCourseScope.getBranch().getBranchType().equals(
-                        BranchType.COMMON_BRANCH) || curricularCourseScope.getBranch().equals(branch))
+                        BranchType.valueOf("COMMON_BRANCH")) || curricularCourseScope.getBranch().equals(branch))
                         && curricularCourseScope.getCurricularSemester().getSemester().equals(semester)
                         && curricularCourseScope.isActive().booleanValue());
             }

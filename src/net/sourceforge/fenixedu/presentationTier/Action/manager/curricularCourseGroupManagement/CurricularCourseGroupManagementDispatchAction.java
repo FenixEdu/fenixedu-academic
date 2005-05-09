@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.AreaType;
+import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -180,7 +180,7 @@ public class CurricularCourseGroupManagementDispatchAction extends FenixDispatch
         Integer branchId = (Integer) groupForm.get("branchId");
         Integer minimumValue = (Integer) groupForm.get("minimumValue");
         Integer maximumValue = (Integer) groupForm.get("maximumValue");
-        Integer areaType = (Integer) groupForm.get("areaType");
+        String areaType = (String) groupForm.get("areaType");
         String type = (String) groupForm.get("type");
         Object args[] = { groupId, name, branchId, minimumValue, maximumValue, areaType,
                 getClassName(type) };
@@ -299,7 +299,7 @@ public class CurricularCourseGroupManagementDispatchAction extends FenixDispatch
         actionForm.set("branchId", infoCurricularCourseGroup.getInfoBranch().getIdInternal());
         if (infoCurricularCourseGroup instanceof InfoAreaCurricularCourseGroup) {
             actionForm.set("areaType", ((InfoAreaCurricularCourseGroup) infoCurricularCourseGroup)
-                    .getAreaType().getAreaType());
+                    .getAreaType().name());
             actionForm.set("minimumValue", ((InfoAreaCurricularCourseGroup) infoCurricularCourseGroup)
                     .getMinimumCredits());
             actionForm.set("maximumValue", ((InfoAreaCurricularCourseGroup) infoCurricularCourseGroup)

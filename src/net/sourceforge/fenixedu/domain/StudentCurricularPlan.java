@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll
 import net.sourceforge.fenixedu.domain.degree.enrollment.INotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.IEnrollmentRule;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
-import net.sourceforge.fenixedu.util.AreaType;
-import net.sourceforge.fenixedu.util.BranchType;
+import net.sourceforge.fenixedu.tools.enrollment.AreaType;
+import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
 
@@ -449,7 +449,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		for (int i = 0; i < commonAreasSize; i++) {
 			IBranch area = (IBranch) commonAreas.get(i);
 			curricularCoursesFromCommonBranches.addAll(getDegreeCurricularPlan()
-					.getCurricularCoursesFromArea(area, AreaType.BASE_OBJ));
+					.getCurricularCoursesFromArea(area, AreaType.BASE));
 		}
 		if (!curricularCoursesFromCommonBranches.contains(curricularCourse)) {
 
@@ -774,19 +774,19 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		for (int i = 0; i < commonAreasSize; i++) {
 			IBranch area = (IBranch) commonAreas.get(i);
 			curricularCourses.addAll(degreeCurricularPlan
-					.getCurricularCoursesFromArea(area, AreaType.BASE_OBJ));
+					.getCurricularCoursesFromArea(area, AreaType.BASE));
 		}
 
 		if (getBranch() != null) {
 			curricularCourses.addAll(degreeCurricularPlan
 					.getCurricularCoursesFromArea(getBranch(),
-							AreaType.SPECIALIZATION_OBJ));
+							AreaType.SPECIALIZATION));
 		}
 
 		if (getSecundaryBranch() != null) {
 			curricularCourses.addAll(degreeCurricularPlan
 					.getCurricularCoursesFromArea(getSecundaryBranch(),
-							AreaType.SECONDARY_OBJ));
+							AreaType.SECONDARY));
 		}
 
 		curricularCourses.addAll(degreeCurricularPlan.getTFCs());
@@ -865,7 +865,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 				}
 			} else if (getBranch() == null) {
 				if (optionalCurricularCourseGroup.getBranch().getBranchType()
-						.equals(BranchType.COMMON_BRANCH)) {
+						.equals(BranchType.valueOf("COMMON_BRANCH"))) {
 					selectOptionaCoursesToBeRemoved(curricularCoursesToRemove,
 							curricularCoursesToKeep,
 							optionalCurricularCourseGroup);

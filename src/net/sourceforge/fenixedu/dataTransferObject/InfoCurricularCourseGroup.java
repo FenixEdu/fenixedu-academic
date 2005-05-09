@@ -8,7 +8,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
-import net.sourceforge.fenixedu.util.AreaType;
+import net.sourceforge.fenixedu.tools.enrollment.AreaType;
+
 
 /**
  * @author Nuno Correia
@@ -27,7 +28,7 @@ public abstract class InfoCurricularCourseGroup extends InfoObject {
 
     protected String name;
 
-    protected AreaType areaType;
+    protected net.sourceforge.fenixedu.tools.enrollment.AreaType areaType;
 
     protected InfoBranch infoBranch;
 
