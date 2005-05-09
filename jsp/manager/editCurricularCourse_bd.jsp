@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
 <h2><bean:message key="label.manager.edit.curricularCourse" /></h2>
 <br>
@@ -58,18 +59,9 @@
 				<bean:message key="message.manager.type"/>
 			</td>
 			<td>
+				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType" bundle="ENUMERATION_RESOURCES"/>
 				<html:select property="type">
-				<html:option key="option.curricularCourse.normal" value="1"/>
-    			<html:option key="option.curricularCourse.optional" value="2"/>
-    			<html:option key="option.curricularCourse.project" value="3"/>
-    			<html:option key="option.curricularCourse.tfc" value="4"/>
-    			<html:option key="option.curricularCourse.training" value="5"/>
-    			<html:option key="option.curricularCourse.laboratory" value="6"/>
-    			<html:option key="option.curricularCourse.mType" value="7"/>
-    			<html:option key="option.curricularCourse.pType" value="8"/>
-    			<html:option key="option.curricularCourse.dmType" value="9"/>
-    			<html:option key="option.curricularCourse.aType" value="10"/>
-    			<html:option key="option.curricularCourse.mlType" value="11"/>
+					<html:options collection="values" property="value" labelProperty="label"/>
     			</html:select>
 			</td>
 		</tr>

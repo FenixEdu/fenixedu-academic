@@ -3,10 +3,11 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.util.CurricularCourseExecutionScope;
-import net.sourceforge.fenixedu.util.CurricularCourseType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;

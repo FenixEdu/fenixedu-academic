@@ -15,11 +15,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanA
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.domain.IEnrolment;
+import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.CurricularCourseType;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -57,7 +57,7 @@ public class GetEnrolmentList implements IService {
 			}
 			
             if (!enrolment.getCurricularCourse().getType()
-                    .equals(CurricularCourseType.P_TYPE_COURSE_OBJ)) {
+                    .equals(CurricularCourseType.P_TYPE_COURSE)) {
                 InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndEvaluationsAndExecutionPeriod
                         .newInfoFromDomain(enrolment);
                 result.add(infoEnrolment);
@@ -95,7 +95,7 @@ public class GetEnrolmentList implements IService {
 			}
 			
             if (!enrolment.getCurricularCourse().getType()
-                    .equals(CurricularCourseType.P_TYPE_COURSE_OBJ)) {
+                    .equals(CurricularCourseType.P_TYPE_COURSE)) {
                 InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
                         .newInfoFromDomain(enrolment);
                 result.add(infoEnrolment);

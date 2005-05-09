@@ -45,8 +45,8 @@
 			</td>			
 			<td class="listClasses"><p align="left"><html:link page="/readDegree.do" paramId="degreeId" paramName="degree" paramProperty="idInternal"><bean:write name="degree" property="nome"/></html:link></p>
 			</td>
-			<bean:define id="tipoCurso" name="degree" property="tipoCurso"/>
-			<td class="listClasses"><%= tipoCurso.toString() %>
+			<bean:define id="tipoCurso" name="degree" property="tipoCurso.name"/>
+			<td class="listClasses"><bean:message name="tipoCurso" bundle="ENUMERATION_RESOURCES"/>
 			</td>
 	 	</tr>
 	 		

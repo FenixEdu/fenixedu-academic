@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
+import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -18,7 +19,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.CurricularCourseType;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -58,7 +58,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
         dynaForm.set("code", oldInfoCurricularCourse.getCode());
         dynaForm.set("acronym", oldInfoCurricularCourse.getAcronym());
 
-        dynaForm.set("type", oldInfoCurricularCourse.getType().getCurricularCourseType().toString());
+        dynaForm.set("type", oldInfoCurricularCourse.getType().toString());
         dynaForm.set("mandatory", oldInfoCurricularCourse.getMandatory().toString());
         dynaForm.set("basic", oldInfoCurricularCourse.getBasic().toString());
 
@@ -106,7 +106,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
         newInfoCurricularCourse.setAcronym(acronym);
         newInfoCurricularCourse.setIdInternal(oldCurricularCourseId);
 
-        CurricularCourseType type = new CurricularCourseType(new Integer(typeString));
+        CurricularCourseType type = CurricularCourseType.valueOf(typeString);
         newInfoCurricularCourse.setType(type);
 
         newInfoCurricularCourse.setMandatory(new Boolean(mandatoryString));

@@ -13,10 +13,10 @@ import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IEnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.CurricularCourseType;
 import net.sourceforge.fenixedu.util.EvaluationType;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.NumberUtils;
@@ -87,7 +87,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
             IEnrolment enrolment = (IEnrolment) iterator.next();
             if ((enrolment.getEnrollmentState().equals(EnrollmentState.APROVED))
                     && (!enrolment.getCurricularCourse().getType().equals(
-                            CurricularCourseType.P_TYPE_COURSE_OBJ))) {
+                            CurricularCourseType.P_TYPE_COURSE))) {
                 if (!(enrolment instanceof IEnrolmentInExtraCurricularCourse)) {
 
                     List newEnrolmentList = newEnrolmentList(enrolment);
@@ -134,7 +134,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
             IEnrolment enrolment = (IEnrolment) iterator.next();
             if ((enrolment.getEnrollmentState().equals(EnrollmentState.APROVED))
                     && (!enrolment.getCurricularCourse().getType().equals(
-                            CurricularCourseType.P_TYPE_COURSE_OBJ))) {
+                            CurricularCourseType.P_TYPE_COURSE))) {
                 if (!(enrolment instanceof IEnrolmentInExtraCurricularCourse)) {
                     List newEnrolmentList = newEnrolmentList(enrolment);
                     Iterator evaluations = newEnrolmentList.iterator();

@@ -13,13 +13,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.CurricularCourseType;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -61,7 +61,7 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
         infoCurricularCourse.setMandatory(new Boolean(mandatory));
         infoCurricularCourse.setName((String) dynaForm.get("name"));
         infoCurricularCourse.setNameEn((String) dynaForm.get("nameEn"));
-        infoCurricularCourse.setType(new CurricularCourseType(new Integer(type)));
+        infoCurricularCourse.setType(CurricularCourseType.valueOf(type));
 
         String credits = (String) dynaForm.get("credits");
         if (credits.compareTo("") != 0) {

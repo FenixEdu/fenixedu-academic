@@ -11,8 +11,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.util.CurricularCourseExecutionScope;
-import net.sourceforge.fenixedu.util.CurricularCourseType;
 
 /**
  * @author tfc130

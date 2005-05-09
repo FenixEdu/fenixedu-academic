@@ -6,7 +6,7 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudent" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.transactions.InfoTransaction" %>
-<%@ page import="net.sourceforge.fenixedu.util.transactions.TransactionType" %>
+<%@ page import="net.sourceforge.fenixedu.domain.transactions.TransactionType" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.List" %>
 

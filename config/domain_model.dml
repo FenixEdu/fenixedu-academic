@@ -322,8 +322,8 @@ class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.f
 	Integer minimumValueForAcumulatedEnrollments;
 	
 	interface "
-	public net.sourceforge.fenixedu.util.CurricularCourseType getType();
-    public void setType(net.sourceforge.fenixedu.util.CurricularCourseType type);
+	public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType getType();
+    public void setType(net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType type);
 	public net.sourceforge.fenixedu.util.CurricularCourseExecutionScope getCurricularCourseExecutionScope();
     public void setCurricularCourseExecutionScope(net.sourceforge.fenixedu.util.CurricularCourseExecutionScope curricularCourseExecutionScope);
     public net.sourceforge.fenixedu.domain.ICurricularYear getCurricularYearByBranchAndSemester(final net.sourceforge.fenixedu.domain.IBranch branch,final Integer semester);
