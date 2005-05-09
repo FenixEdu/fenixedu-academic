@@ -6,7 +6,7 @@
 
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.util.gratuity.SibsPaymentType;
+import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
@@ -18,7 +18,7 @@ public class JavaSibsPaymentType2SQLSibsPaymentTypeFieldConversion implements Fi
     public Object javaToSql(Object source) {
         if (source instanceof SibsPaymentType) {
             SibsPaymentType sibsPaymentType = (SibsPaymentType) source;
-            return new Integer(sibsPaymentType.getValue());
+            return sibsPaymentType.name();
         }
         return source;
 
@@ -29,10 +29,10 @@ public class JavaSibsPaymentType2SQLSibsPaymentTypeFieldConversion implements Fi
      */
     public Object sqlToJava(Object source) {
         SibsPaymentType sibsPaymentType = null;
-        if (source instanceof Integer) {
-            Integer sibsPaymentTypeID = (Integer) source;
+        if (source instanceof String) {
+            String sibsPaymentTypeString = (String) source;
 
-            sibsPaymentType = SibsPaymentType.getEnum(sibsPaymentTypeID.intValue());
+            sibsPaymentType = SibsPaymentType.valueOf(sibsPaymentTypeString);
 
             if (sibsPaymentType == null) {
                 throw new IllegalArgumentException(this.getClass().getName()
@@ -44,4 +44,3 @@ public class JavaSibsPaymentType2SQLSibsPaymentTypeFieldConversion implements Fi
         return sibsPaymentType;
     }
 }
-

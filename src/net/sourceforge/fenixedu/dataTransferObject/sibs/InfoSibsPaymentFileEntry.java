@@ -4,8 +4,9 @@ import java.sql.Timestamp;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
+import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFileEntry;
-import net.sourceforge.fenixedu.util.gratuity.SibsPaymentType;
+
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>

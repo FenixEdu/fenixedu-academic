@@ -7,9 +7,9 @@ package net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
+import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.util.gratuity.SibsPaymentType;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed

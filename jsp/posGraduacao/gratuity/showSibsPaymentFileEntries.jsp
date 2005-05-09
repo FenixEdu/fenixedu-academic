@@ -36,8 +36,7 @@
 				
 				<td><bean:write name="sibsPaymentFileEntry" property="transactionDate"/></td>
 				
-				<bean:define id="paymentType">label.<bean:write name="sibsPaymentFileEntry" property="paymentType.name"/></bean:define> 
-				<td align="center"><bean:message name="paymentType"/></td>
+				<td align="center"><bean:message name="sibsPaymentFileEntry" property="paymentType.name" bundle="ENUMERATION_RESOURCES"/></td>
 				
 				<bean:define id="paymentStatus">label.<bean:write name="sibsPaymentFileEntry" property="paymentStatus.name"/></bean:define> 
 				<td align="center"><bean:message name="paymentStatus"/></td>

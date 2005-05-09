@@ -1670,7 +1670,7 @@
    	<field-descriptor
    		name="paymentType"
    		column="PAYMENT_TYPE"
-   		jdbc-type="INTEGER"   		
+   		jdbc-type="VARCHAR"   		
         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSibsPaymentType2SQLSibsPaymentTypeFieldConversion"
    	/>
    	<field-descriptor

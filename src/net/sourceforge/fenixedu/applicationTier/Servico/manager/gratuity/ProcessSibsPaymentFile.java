@@ -22,8 +22,8 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IPersonAccount;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
+import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFile;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFileEntry;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
@@ -43,7 +43,7 @@ import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersisten
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentGratuityTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.util.Specialization;
-import net.sourceforge.fenixedu.util.gratuity.SibsPaymentType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsPaymentFileUtils;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 

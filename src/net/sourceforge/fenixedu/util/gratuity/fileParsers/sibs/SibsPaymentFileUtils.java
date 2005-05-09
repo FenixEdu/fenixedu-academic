@@ -13,13 +13,16 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.ist.utl.fenix.utils.SibsPaymentCodeFactory;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.InvalidSibsPaymentFileFormatServiceException;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
+import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFile;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFileEntry;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
-import net.sourceforge.fenixedu.util.gratuity.SibsPaymentType;
+
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
@@ -103,8 +106,7 @@ public class SibsPaymentFileUtils {
                             SibsPaymentFileConstants.FIELD_REFERENCE_PAYMENT_CODE_BEGIN_INDEX,
                             SibsPaymentFileConstants.FIELD_REFERENCE_PAYMENT_CODE_END_INDEX);
 
-                    SibsPaymentType paymentType = SibsPaymentType.getEnum(Integer
-                            .parseInt(paymentTypeString));
+                    SibsPaymentType paymentType = SibsPaymentCodeFactory.getPaymentType(new Integer(paymentTypeString));
 
                     sibsFileEntries.add(new SibsPaymentFileEntry(year, studentNumber, paymentType,
                             new Timestamp(transactionDate.getTime()), value, sibsFile,

@@ -3,10 +3,11 @@
  */
 package net.sourceforge.fenixedu.domain.gratuity.masterDegree;
 
+
 import java.sql.Timestamp;
 
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
-import net.sourceforge.fenixedu.util.gratuity.SibsPaymentType;
+import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
@@ -41,7 +42,7 @@ public class SibsPaymentFileEntry extends SibsPaymentFileEntry_Base {
 		this.paymentType = paymentType;
 		this.transactionDate = transactionDate;
 		setPayedValue(payedValue);
-		setSibsPaymentFile(sibsPaymentFile);
+		this.setSibsPaymentFile(sibsPaymentFile);
 		this.paymentStatus = paymentStatus;
 	}
 

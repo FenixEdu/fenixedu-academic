@@ -2126,9 +2126,9 @@ class net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry
 	Double payedValue;
 	
 	interface "
-		public net.sourceforge.fenixedu.util.gratuity.SibsPaymentType getPaymentType();
+		public net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType getPaymentType();
 		
-		public void setPaymentType(net.sourceforge.fenixedu.util.gratuity.SibsPaymentType paymentType);
+		public void setPaymentType(net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType paymentType);
 		
 		public java.sql.Timestamp getTransactionDate();
 		

@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.domain.IInsuranceValue;
 import net.sourceforge.fenixedu.domain.IPaymentPhase;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuityValues;
@@ -38,12 +38,13 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.util.Specialization;
-import net.sourceforge.fenixedu.util.gratuity.SibsPaymentType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsOutgoingPaymentFileConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
+import pt.ist.utl.fenix.utils.SibsPaymentCodeFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -318,7 +319,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
                                             SibsOutgoingPaymentFileConstants.ZERO_CHAR, student
                                                     .getNumber().toString(),
                                             SibsOutgoingPaymentFileConstants.MAX_STUDENT_NUMBER_LENGTH)
-                                    + SibsPaymentType.INSURANCE_TYPE);
+                                    + SibsPaymentCodeFactory.getCode(SibsPaymentType.INSURANCE));
 
                             gratuityLetterFileEntryInsurancePart.setInsuranceValue(decimalFormat
                                     .format(insuranceValue.getAnnualValue()));
@@ -559,11 +560,11 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 
         if (specialization.equals(Specialization.MESTRADO_TYPE)) {
 
-            sibsPaymentCode = SibsPaymentType.MASTER_DEGREE_GRATUTITY_TOTAL_TYPE;
+            sibsPaymentCode = SibsPaymentCodeFactory.getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_TOTAL);
 
         } else {
 
-            sibsPaymentCode = SibsPaymentType.SPECIALIZATION_GRATUTITY_TOTAL_TYPE;
+            sibsPaymentCode = SibsPaymentCodeFactory.getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_TOTAL);
         }
 
         //IMPORTANT NOTE: In future integrated master degree codes should be
@@ -586,11 +587,11 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
         if (paymentPhaseNumber == 1) {
             if (studentCurricularPlan.getSpecialization().equals(Specialization.ESPECIALIZACAO_TYPE)) {
 
-                sibsPaymentCode = SibsPaymentType.SPECIALIZATION_GRATUTITY_FIRST_PHASE_TYPE;
+                sibsPaymentCode = SibsPaymentCodeFactory.getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_FIRST_PHASE);
 
             } else {
 
-                sibsPaymentCode = SibsPaymentType.MASTER_DEGREE_GRATUTITY_FIRST_PHASE_TYPE;
+                sibsPaymentCode = SibsPaymentCodeFactory.getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_FIRST_PHASE);
             }
             // IMPORTANT NOTE: In future integrated master degree codes should
             // be inserted here
@@ -598,12 +599,11 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
         } else if (paymentPhaseNumber == 2) {
 
             if (studentCurricularPlan.getSpecialization().equals(Specialization.ESPECIALIZACAO_TYPE)) {
-
-                sibsPaymentCode = SibsPaymentType.SPECIALIZATION_GRATUTITY_SECOND_PHASE_TYPE;
+                sibsPaymentCode = SibsPaymentCodeFactory.getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_SECOND_PHASE);
 
             } else {
 
-                sibsPaymentCode = SibsPaymentType.MASTER_DEGREE_GRATUTITY_SECOND_PHASE_TYPE;
+                sibsPaymentCode = SibsPaymentCodeFactory.getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_SECOND_PHASE);
             }
 
             // IMPORTANT NOTE: In future integrated master degree codes should
