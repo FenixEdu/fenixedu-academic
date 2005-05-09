@@ -6,7 +6,6 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import net.sourceforge.fenixedu.domain.IMasterDegreeThesis;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesis;
@@ -18,20 +17,22 @@ import org.apache.ojb.broker.query.Criteria;
  *         (naat@mega.ist.utl.pt)
  *  
  */
-public class MasterDegreeThesisOJB extends PersistentObjectOJB implements IPersistentMasterDegreeThesis {
+public class MasterDegreeThesisOJB extends PersistentObjectOJB implements
+		IPersistentMasterDegreeThesis {
 
-    /** Creates a new instance of MasterDegreeCandidateOJB */
-    public MasterDegreeThesisOJB() {
-    }
+	/** Creates a new instance of MasterDegreeCandidateOJB */
+	public MasterDegreeThesisOJB() {
+	}
 
-    public IMasterDegreeThesis readByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan)
-            throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("studentCurricularPlan.idInternal", studentCurricularPlan.getIdInternal());
-        IMasterDegreeThesis storedMasterDegreeThesis = (IMasterDegreeThesis) queryObject(
-                MasterDegreeThesis.class, criteria);
+	public IMasterDegreeThesis readByStudentCurricularPlan(
+			Integer studentCurricularPlanId) throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("studentCurricularPlan.idInternal",
+				studentCurricularPlanId);
+		IMasterDegreeThesis storedMasterDegreeThesis = (IMasterDegreeThesis) queryObject(
+				MasterDegreeThesis.class, criteria);
 
-        return storedMasterDegreeThesis;
-    }
+		return storedMasterDegreeThesis;
+	}
 
 }
