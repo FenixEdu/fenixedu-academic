@@ -31,7 +31,7 @@ public class ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan impl
                     .newDomainFromInfo(infoStudentCurricularPlan);
             IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion = sp
                     .getIPersistentMasterDegreeThesisDataVersion().readActiveByStudentCurricularPlan(
-                            studentCurricularPlan);
+                    		infoStudentCurricularPlan.getIdInternal());
 
             if (masterDegreeThesisDataVersion == null)
                 throw new NonExistingServiceException(

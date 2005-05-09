@@ -73,7 +73,7 @@ public class CreateMasterDegreeThesis implements IService {
                     .copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
 
             IMasterDegreeThesis storedMasterDegreeThesis = sp.getIPersistentMasterDegreeThesis()
-                    .readByStudentCurricularPlan(studentCurricularPlan);
+                    .readByStudentCurricularPlan(infoStudentCurricularPlan.getIdInternal());
             if (storedMasterDegreeThesis != null)
                 throw new ExistingServiceException(
                         "error.exception.masterDegree.existingMasterDegreeThesis");

@@ -7,7 +7,6 @@
 package net.sourceforge.fenixedu.persistenceTier;
 
 import net.sourceforge.fenixedu.domain.IMasterDegreeThesis;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 
 /**
  * Authors : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
@@ -15,12 +14,12 @@ import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
  *  
  */
 public interface IPersistentMasterDegreeThesis extends IPersistentObject {
-    /**
-     * 
-     * @param studentCurricularPlan
-     * @return @throws
-     *         ExcepcaoPersistencia
-     */
-    public abstract IMasterDegreeThesis readByStudentCurricularPlan(
-            IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia;
+	/**
+	 * 
+	 * @param studentCurricularPlan
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+	public abstract IMasterDegreeThesis readByStudentCurricularPlan(
+			Integer studentCurricularPlanID) throws ExcepcaoPersistencia;
 }

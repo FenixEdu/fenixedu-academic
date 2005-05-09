@@ -6,7 +6,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -25,10 +24,8 @@ public class ReadNonActivesMasterDegreeThesisDataVersionsByStudentCurricularPlan
 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IStudentCurricularPlan studentCurricularPlan = Cloner
-                    .copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
             List masterDegreeThesisDataVersions = sp.getIPersistentMasterDegreeThesisDataVersion()
-                    .readNotActivesVersionsByStudentCurricularPlan(studentCurricularPlan);
+                    .readNotActivesVersionsByStudentCurricularPlan(infoStudentCurricularPlan.getIdInternal());
 
             if (masterDegreeThesisDataVersions.isEmpty() == false) {
                 infoMasterDegreeThesisDataVersions = Cloner

@@ -73,7 +73,7 @@ public class ChangeMasterDegreeThesisData implements IService {
 
             IMasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = sp
                     .getIPersistentMasterDegreeThesisDataVersion().readActiveByStudentCurricularPlan(
-                            studentCurricularPlan);
+                    		infoStudentCurricularPlan.getIdInternal());
             if (storedMasterDegreeThesisDataVersion == null)
                 throw new NonExistingServiceException(
                         "error.exception.masterDegree.nonExistentMasterDegreeThesis");
