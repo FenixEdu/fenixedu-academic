@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -51,7 +52,7 @@ public class ChangeMasterDegreeProof implements IService {
 //			IStudentCurricularPlan studentCurricularPlan = Cloner
 //					.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
 
-			IStudentCurricularPlan studentCurricularPlan = sp.getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,infoStudentCurricularPlan.getIdInternal());
+			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) sp.getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,infoStudentCurricularPlan.getIdInternal());
 			
 			IMasterDegreeThesis storedMasterDegreeThesis = sp
 					.getIPersistentMasterDegreeThesis()
