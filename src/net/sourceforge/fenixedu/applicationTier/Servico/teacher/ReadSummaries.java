@@ -140,13 +140,13 @@ public class ReadSummaries implements IServico {
             List summaries = null;
             if (summaryType != null && summaryType.intValue() > 0) {                
                 List summariesBySummaryType = persistentSummary
-                .readByExecutionCourseShiftsAndTypeLesson(executionCourse, new TipoAula(
+                .readByExecutionCourseShiftsAndTypeLesson(executionCourse.getIdInternal(), new TipoAula(
                         summaryType));
                 
                 //read summary also by execution course key
                 //and add to the last list
                 List summariesByExecutionCourseBySummaryType = persistentSummary
-                .readByExecutionCourseAndType(executionCourse, new TipoAula(summaryType));
+                .readByExecutionCourseAndType(executionCourse.getIdInternal(), new TipoAula(summaryType));
                 
                 summaries = allSummaries(summariesBySummaryType, summariesByExecutionCourseBySummaryType);
             }
@@ -157,7 +157,7 @@ public class ReadSummaries implements IServico {
                     throw new FenixServiceException("no.shift");
                 }
                 
-                List summariesByShift = persistentSummary.readByShift(executionCourse, shiftSelected);
+                List summariesByShift = persistentSummary.readByShift(executionCourse.getIdInternal(), shiftSelected.getIdInternal());
                 
                 List summariesByExecutionCourseByShift = findLesson(persistentSummary, executionCourse,
                         shiftSelected);
@@ -178,8 +178,8 @@ public class ReadSummaries implements IServico {
                     throw new FenixServiceException("no.shift");
                 }
                 
-                List summariesByProfessorship = persistentSummary.readByTeacher(executionCourse,
-                        professorshipSelected.getTeacher());
+                List summariesByProfessorship = persistentSummary.readByTeacher(executionCourse.getIdInternal(),
+                        professorshipSelected.getTeacher().getTeacherNumber());
                 
                 if (summaries != null) {
                     summaries = (List) CollectionUtils.intersection(summaries, summariesByProfessorship);
@@ -189,7 +189,7 @@ public class ReadSummaries implements IServico {
             }
             
             if (professorShiftId != null && professorShiftId.equals(new Integer(-1))) {
-                List summariesByTeacher = persistentSummary.readByOtherTeachers(executionCourse);
+                List summariesByTeacher = persistentSummary.readByOtherTeachers(executionCourse.getIdInternal());
                 
                 if (summaries != null) {
                     summaries = (List) CollectionUtils.intersection(summaries, summariesByTeacher);
@@ -201,9 +201,9 @@ public class ReadSummaries implements IServico {
             if ((summaryType == null || summaryType.intValue() == 0)
                     && (shiftId == null || shiftId.intValue() == 0)
                     && (professorShiftId == null || professorShiftId.intValue() == 0)) {
-                summaries = persistentSummary.readByExecutionCourseShifts(executionCourse);
+                summaries = persistentSummary.readByExecutionCourseShifts(executionCourse.getIdInternal());
                 List summariesByExecutionCourse = persistentSummary
-                .readByExecutionCourse(executionCourse);
+                .readByExecutionCourse(executionCourse.getIdInternal());
                 
                 summaries = allSummaries(summaries, summariesByExecutionCourse);
             }
@@ -241,7 +241,7 @@ public class ReadSummaries implements IServico {
     private List findLesson(IPersistentSummary persistentSummary, IExecutionCourse executionCourse,
             IShift shift) throws ExcepcaoPersistencia {
         
-        List summariesByExecutionCourse = persistentSummary.readByExecutionCourse(executionCourse);
+        List summariesByExecutionCourse = persistentSummary.readByExecutionCourse(executionCourse.getIdInternal());
         
         //copy the list
         List summariesByShift = new ArrayList();

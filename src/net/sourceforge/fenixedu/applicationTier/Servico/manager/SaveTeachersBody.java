@@ -127,7 +127,7 @@ public class SaveTeachersBody implements IService {
                         IProfessorship professorship2 = persistentProfessorShip
                                 .readByTeacherIDandExecutionCourseID(id, executionCourseId);
                         List summaryList = persistentSummary.readByTeacher(professorship2
-                                .getExecutionCourse(), professorship2.getTeacher());
+                                .getExecutionCourse().getIdInternal(), professorship2.getTeacher().getTeacherNumber());
                         if (summaryList != null && !summaryList.isEmpty()) {
                             for (Iterator iterator = summaryList.iterator(); iterator.hasNext();) {
                                 ISummary summary = (ISummary) iterator.next();

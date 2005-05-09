@@ -164,7 +164,7 @@ public class MergeExecutionCourses implements IService {
     private void copySummaries(IExecutionCourse destination, IExecutionCourse source,
             ISuportePersistente ps) throws ExcepcaoPersistencia {
         IPersistentSummary persistentSummary = ps.getIPersistentSummary();
-        List summaries = persistentSummary.readByExecutionCourse(source);
+        List summaries = persistentSummary.readByExecutionCourse(source.getIdInternal());
         Iterator iter = summaries.iterator();
         while (iter.hasNext()) {
             ISummary summary = (ISummary) iter.next();
@@ -370,7 +370,7 @@ public class MergeExecutionCourses implements IService {
 
                     IPersistentSummary persistentSummary = ps.getIPersistentSummary();
                     List summaryList = persistentSummary.readByTeacher(professorship
-                            .getExecutionCourse(), professorship.getTeacher());
+                            .getExecutionCourse().getIdInternal(), professorship.getTeacher().getTeacherNumber());
                     if (summaryList != null && !summaryList.isEmpty()) {
                         for (Iterator iteratorSummaries = summaryList.iterator(); iteratorSummaries
                                 .hasNext();) {

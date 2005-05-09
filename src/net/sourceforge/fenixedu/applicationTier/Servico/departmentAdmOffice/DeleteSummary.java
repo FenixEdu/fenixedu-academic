@@ -38,7 +38,18 @@ public class DeleteSummary implements IService {
 
             ISummary summary = (ISummary) persistentSummary.readByOID(Summary.class, summaryId, true);
             if (summary != null) {
-                persistentSummary.delete(summary);
+                if(summary.getExecutionCourse() != null)
+                    summary.getExecutionCourse().getAssociatedSummaries().remove(summary);
+                if(summary.getShift() != null)
+                    summary.getShift().getAssociatedSummaries().remove(summary);
+                if(summary.getRoom() != null)
+                	summary.getRoom().getAssociatedSummaries().remove(summary);                
+                if(summary.getProfessorship() != null)
+                	summary.getProfessorship().getAssociatedSummaries().remove(summary);
+                if(summary.getTeacher() != null)
+                	summary.getTeacher().getAssociatedSummaries().remove(summary);
+                                         
+                persistentSummary.deleteByOID(Summary.class, summary.getIdInternal());
             }
             return true;
         } catch (ExcepcaoPersistencia e) {

@@ -104,7 +104,7 @@ public class DissociateProfessorShipsAndResponsibleFor implements IService {
                         persistentProfessorship.delete(professorship);
 
                         IPersistentSummary persistentSummary = sp.getIPersistentSummary();
-                        List summaryList = persistentSummary.readByTeacher(professorship.getExecutionCourse(), professorship.getTeacher());
+                        List summaryList = persistentSummary.readByTeacher(professorship.getExecutionCourse().getIdInternal(), professorship.getTeacher().getTeacherNumber());
                         if (summaryList != null && !summaryList.isEmpty()) {
                             for (Iterator iterator = summaryList.iterator(); iterator.hasNext(); ) {
                                 ISummary summary = (ISummary) iterator.next();

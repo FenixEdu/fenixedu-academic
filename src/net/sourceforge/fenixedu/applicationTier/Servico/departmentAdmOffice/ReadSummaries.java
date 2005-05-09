@@ -64,8 +64,8 @@ public class ReadSummaries implements IService {
         }
 
         final Collection summaries = new ArrayList();
-        summaries.addAll(persistentSummary.readByExecutionCourse(executionCourse));
-        summaries.addAll(persistentSummary.readByExecutionCourseShifts(executionCourse));
+        summaries.addAll(persistentSummary.readByExecutionCourse(executionCourse.getIdInternal()));
+        summaries.addAll(persistentSummary.readByExecutionCourseShifts(executionCourse.getIdInternal()));
 
         final List infoSummaries = new ArrayList(summaries.size());
         for (final Iterator iterator = summaries.iterator(); iterator.hasNext(); ) {

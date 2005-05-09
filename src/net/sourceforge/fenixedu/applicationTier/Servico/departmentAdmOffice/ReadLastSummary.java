@@ -64,7 +64,7 @@ public class ReadLastSummary implements IService {
                 throw new FenixServiceException("no.executioncourse");
             }
             
-			List summaries = persistentSummary.readByShift(executionCourse, shift);
+			List summaries = persistentSummary.readByShift(executionCourse.getIdInternal(), shift.getIdInternal());
 			if(summaries != null && summaries.size() > 0){
 				Comparator comparator = new BeanComparator("summaryDate.time");
 				Collections.sort(summaries, comparator);

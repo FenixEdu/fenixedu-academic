@@ -113,7 +113,7 @@ public class EditSummary implements IService {
 
             //after verify summary date and hour
             //and before continue check if this summary exists
-            ISummary summaryInDB = persistentSummary.readSummaryByUnique(summary.getShift(), infoSummary
+            ISummary summaryInDB = persistentSummary.readSummaryByUnique(summary.getShift().getIdInternal(), infoSummary
                     .getSummaryDate().getTime(), infoSummary.getSummaryHour().getTime());
             if (summaryInDB != null && !summaryInDB.getIdInternal().equals(summary.getIdInternal())) {
                 throw new FenixServiceException("error.summary.already.exists");

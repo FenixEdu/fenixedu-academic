@@ -8,10 +8,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.ISummary;
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
@@ -34,91 +31,59 @@ public class SummaryOJB extends PersistentObjectOJB implements IPersistentSummar
     public SummaryOJB() {
     }
 
-    public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
+    public List readByExecutionCourse(Integer executionCourseID) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());
+        criteria.addEqualTo("keyExecutionCourse", executionCourseID);
         return queryList(Summary.class, criteria);
 
     }
 
-    public List readByExecutionCourseAndType(IExecutionCourse executionCourse, TipoAula summaryType)
+    public List readByExecutionCourseAndType(Integer executionCourseID, TipoAula summaryType)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());
+        criteria.addEqualTo("keyExecutionCourse", executionCourseID);
         criteria.addEqualTo("summaryType", summaryType.getTipo());
         return queryList(Summary.class, criteria);
 
     }
 
-    public void delete(ISummary summary) throws ExcepcaoPersistencia {
-        super.delete(summary);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.IPersistentSummary#readByExecutionCourseShifts(Dominio.IExecutionCourse)
-     *      TODO: This method will replace the method readByExecutionCourse
-     */
-    public List readByExecutionCourseShifts(IExecutionCourse executionCourse)
+    public List readByExecutionCourseShifts(Integer executionCourseID)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("shift.disciplinaExecucao.idInternal", executionCourse.getIdInternal());
+        criteria.addEqualTo("shift.disciplinaExecucao.idInternal", executionCourseID);
 
         return queryList(Summary.class, criteria);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.IPersistentSummary#readByExecutionCourseShiftsAndTypeLesson(Dominio.IExecutionCourse,
-     *      Util.TipoAula) TODO: This method will replace the method
-     *      readByExecutionCourseAndType
-     */
-    public List readByExecutionCourseShiftsAndTypeLesson(IExecutionCourse executionCourse,
+    public List readByExecutionCourseShiftsAndTypeLesson(Integer executionCourseID,
             TipoAula summaryType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("shift.disciplinaExecucao.idInternal", executionCourse.getIdInternal());
+        criteria.addEqualTo("shift.disciplinaExecucao.idInternal", executionCourseID);
         criteria.addEqualTo("shift.tipo", summaryType.getTipo());
 
         return queryList(Summary.class, criteria);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.IPersistentSummary#readByShift(Dominio.IShift)
-     */
-    public List readByShift(IExecutionCourse executionCourse, IShift shift) throws ExcepcaoPersistencia {
+    public List readByShift(Integer executionCourseID, Integer shiftID) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("shift.disciplinaExecucao.idInternal", executionCourse.getIdInternal());
-        criteria.addEqualTo("shift.idInternal", shift.getIdInternal());
+        criteria.addEqualTo("shift.disciplinaExecucao.idInternal", executionCourseID);
+        criteria.addEqualTo("shift.idInternal", shiftID);
 
         return queryList(Summary.class, criteria);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.IPersistentSummary#readByTeacher(Dominio.ITeacher)
-     */
-    public List readByTeacher(IExecutionCourse executionCourse, ITeacher teacher)
+    public List readByTeacher(Integer executionCourseID, Integer teacherNumber)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("shift.disciplinaExecucao.idInternal", executionCourse.getIdInternal());
-        criteria.addEqualTo("professorship.teacher.teacherNumber", teacher.getTeacherNumber());
+        criteria.addEqualTo("shift.disciplinaExecucao.idInternal", executionCourseID);
+        criteria.addEqualTo("professorship.teacher.teacherNumber", teacherNumber);
 
         return queryList(Summary.class, criteria);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.IPersistentSummary#readByOtherTeachers(Dominio.IExecutionCourse)
-     */
-    public List readByOtherTeachers(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
+    public List readByOtherTeachers(Integer executionCourseID) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("shift.disciplinaExecucao.idInternal", executionCourse.getIdInternal());
+        criteria.addEqualTo("shift.disciplinaExecucao.idInternal", executionCourseID);
         criteria.addIsNull("professorship");
 
         Criteria criteria2 = new Criteria();
@@ -134,16 +99,11 @@ public class SummaryOJB extends PersistentObjectOJB implements IPersistentSummar
         return queryList(Summary.class, criteria);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.IPersistentSummary#readSummaryByUnique(Dominio.IShift,
-     *      java.util.Calendar, java.util.Calendar)
-     */
-    public ISummary readSummaryByUnique(IShift shift, Date summaryDate, Date summaryHour)
+   
+    public ISummary readSummaryByUnique(Integer shiftID, Date summaryDate, Date summaryHour)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("shift.idInternal", shift.getIdInternal());
+        criteria.addEqualTo("shift.idInternal", shiftID);
         criteria.addEqualTo("summaryDate", summaryDate);
         criteria.addEqualTo("summaryHour", summaryHour);
 

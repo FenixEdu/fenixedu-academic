@@ -88,7 +88,7 @@ public class DeleteExecutionCourses implements IService {
                                         IPersistentSummary persistentSummary = sp
                                                 .getIPersistentSummary();
                                         List summaryList = persistentSummary.readByTeacher(professorShip
-                                                .getExecutionCourse(), professorShip.getTeacher());
+                                                .getExecutionCourse().getIdInternal(), professorShip.getTeacher().getTeacherNumber());
                                         if (summaryList != null && !summaryList.isEmpty()) {
                                             for (Iterator iteratorSummaries = summaryList.iterator(); iteratorSummaries
                                                     .hasNext();) {

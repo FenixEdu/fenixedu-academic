@@ -9,6 +9,8 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.utils.summary.SummaryUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSummary;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IRoom;
@@ -111,7 +113,7 @@ public class InsertSummary implements IService {
             
             //after verify summary date and hour
             //and before continue check if this summary exists
-            if (persistentSummary.readSummaryByUnique(shift, infoSummary.getSummaryDate().getTime(), infoSummary
+            if (persistentSummary.readSummaryByUnique(shift.getIdInternal(), infoSummary.getSummaryDate().getTime(), infoSummary
                     .getSummaryHour().getTime()) != null) {
                 throw new FenixServiceException("error.summary.already.exists");
             }
@@ -151,7 +153,8 @@ public class InsertSummary implements IService {
 
             summary.setTitle(infoSummary.getTitle());
             summary.setSummaryText(infoSummary.getSummaryText());
-            summary.setLastModifiedDate(Calendar.getInstance().getTime());
+            summary.setLastModifiedDate(Calendar.getInstance().getTime());      
+            summary.setExecutionCourse(shift.getDisciplinaExecucao());
 
             return Boolean.TRUE;
         } catch (ExcepcaoPersistencia e) {

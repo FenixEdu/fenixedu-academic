@@ -88,8 +88,8 @@ public class DeleteShift implements IServico {
 
                     //if the shift has summaries it can't be deleted
                     IPersistentSummary persistentSummary = sp.getIPersistentSummary();
-                    List summariesShift = persistentSummary.readByShift(shift.getDisciplinaExecucao(),
-                            shift);
+                    List summariesShift = persistentSummary.readByShift(shift.getDisciplinaExecucao().getIdInternal(),
+                            shift.getIdInternal());
                     if (summariesShift != null && summariesShift.size() > 0) {
                         throw new FenixServiceException("error.deleteShift.with.summaries");
                     }

@@ -109,7 +109,7 @@ public class DeleteTeacher implements IServico {
 
             if (shiftProfessorshipList.isEmpty() && supportLessonList.isEmpty()) {
                 IPersistentSummary persistentSummary = sp.getIPersistentSummary();
-                List summaryList = persistentSummary.readByTeacher(professorshipToDelete.getExecutionCourse(), professorshipToDelete.getTeacher());
+                List summaryList = persistentSummary.readByTeacher(professorshipToDelete.getExecutionCourse().getIdInternal(), professorshipToDelete.getTeacher().getTeacherNumber());
                 if (summaryList != null && !summaryList.isEmpty()) {
                     for (Iterator iterator = summaryList.iterator(); iterator.hasNext(); ) {
                         ISummary summary = (ISummary) iterator.next();

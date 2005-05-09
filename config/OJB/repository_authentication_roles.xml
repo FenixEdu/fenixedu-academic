@@ -221,6 +221,13 @@
          refresh="true"
          proxy="true">
 		<inverse-foreignkey field-ref="keyTeacher"/>
-    </collection-descriptor>  	 	
+    </collection-descriptor>  	 
+    <collection-descriptor 
+		name="associatedSummaries" 
+		element-class-ref="net.sourceforge.fenixedu.domain.Summary"
+		proxy="true"
+		refresh="true">
+		<inverse-foreignkey field-ref="keyTeacher"/>
+	</collection-descriptor>	
 
    </class-descriptor>

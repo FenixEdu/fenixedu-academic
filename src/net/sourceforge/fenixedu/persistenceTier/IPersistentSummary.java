@@ -9,10 +9,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.ISummary;
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.util.TipoAula;
 
 /**
@@ -22,26 +19,26 @@ import net.sourceforge.fenixedu.util.TipoAula;
  *  
  */
 public interface IPersistentSummary extends IPersistentObject {
-    public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
+   
+    public List readByExecutionCourse(Integer executionCourseID) throws ExcepcaoPersistencia;
 
-    public List readByExecutionCourseShifts(IExecutionCourse executionCourse)
+    public List readByExecutionCourseShifts(Integer executionCourseID)
             throws ExcepcaoPersistencia;
 
-    public List readByExecutionCourseAndType(IExecutionCourse executionCourse, TipoAula summaryType)
+    public List readByExecutionCourseAndType(Integer executionCourseID, TipoAula summaryType)
             throws ExcepcaoPersistencia;
 
-    public List readByExecutionCourseShiftsAndTypeLesson(IExecutionCourse executionCourse,
+    public List readByExecutionCourseShiftsAndTypeLesson(Integer executionCourseID,
             TipoAula summaryType) throws ExcepcaoPersistencia;
 
-    public List readByShift(IExecutionCourse executionCourse, IShift shift) throws ExcepcaoPersistencia;
+    public List readByShift(Integer executionCourseID, Integer shiftID) throws ExcepcaoPersistencia;
 
-    public List readByTeacher(IExecutionCourse executionCourse, ITeacher teacher)
+    public List readByTeacher(Integer executionCourseID, Integer teacherNumber)
             throws ExcepcaoPersistencia;
 
-    public List readByOtherTeachers(IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
+    public List readByOtherTeachers(Integer executionCourseID) throws ExcepcaoPersistencia;
 
-    public ISummary readSummaryByUnique(IShift shift, Date summaryDate, Date summaryHour)
+    public ISummary readSummaryByUnique(Integer shiftID, Date summaryDate, Date summaryHour)
             throws ExcepcaoPersistencia;
 
-    public abstract void delete(ISummary summary) throws ExcepcaoPersistencia;
 }

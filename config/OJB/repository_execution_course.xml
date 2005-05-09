@@ -156,14 +156,26 @@
 			element-class-ref="net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse"
 			proxy="true">
 		<inverse-foreignkey field-ref="keyExecutionCourse"/>
-    </collection-descriptor>
-    
+    </collection-descriptor>    
 	<collection-descriptor 
-				name="associatedBibliographicReferences" 
-				element-class-ref="net.sourceforge.fenixedu.domain.BibliographicReference"
-				proxy="true"
-				refresh="true">
-			<inverse-foreignkey field-ref="keyExecutionCourse"/>
+		name="associatedBibliographicReferences" 
+		element-class-ref="net.sourceforge.fenixedu.domain.BibliographicReference"
+		proxy="true"
+		refresh="true">
+		<inverse-foreignkey field-ref="keyExecutionCourse"/>
 	</collection-descriptor>
-	
+	<collection-descriptor 
+		name="associatedSummaries" 
+		element-class-ref="net.sourceforge.fenixedu.domain.Summary"
+		proxy="true"
+		refresh="true">
+		<inverse-foreignkey field-ref="keyExecutionCourse"/>
+	</collection-descriptor>
+	<collection-descriptor 
+		name="associatedShifts" 
+		element-class-ref="net.sourceforge.fenixedu.domain.Shift"
+		proxy="true"
+		refresh="true">
+		<inverse-foreignkey field-ref="chaveDisciplinaExecucao"/>
+	</collection-descriptor>	
 </class-descriptor>
