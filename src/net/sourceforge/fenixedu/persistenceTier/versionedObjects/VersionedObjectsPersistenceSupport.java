@@ -76,7 +76,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AttendInAtt
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AttendsSetVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AulaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.BibliographicReferenceVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DegreeInfoVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CandidateSituationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationVO;
 
 public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
@@ -578,7 +578,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 	}
 
 	public IPersistentCandidateSituation getIPersistentCandidateSituation()  {
-		return null;
+		return new CandidateSituationVO();
 	}
 
 	public Integer getNumberCachedItems()  {

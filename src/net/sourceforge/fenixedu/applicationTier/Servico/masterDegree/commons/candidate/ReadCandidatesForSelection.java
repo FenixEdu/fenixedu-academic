@@ -21,42 +21,40 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadCandidatesForSelection implements IService {
 
-    public List run(Integer executionDegreeID, List situations) throws FenixServiceException {
+	public List run(Integer executionDegreeID, List situations)
+			throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = null;
-        List resultTemp = null;
+		ISuportePersistente sp = null;
+		List resultTemp = null;
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            // Read the candidates
+		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		// Read the candidates
 
-            IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
-            IExecutionDegree executionDegree = (ExecutionDegree) executionDegreeDAO.readByOID(
-                    ExecutionDegree.class, executionDegreeID);
+		IPersistentExecutionDegree executionDegreeDAO = sp
+				.getIPersistentExecutionDegree();
+		IExecutionDegree executionDegree = (ExecutionDegree) executionDegreeDAO
+				.readByOID(ExecutionDegree.class, executionDegreeID);
 
-            resultTemp = sp.getIPersistentCandidateSituation().readActiveSituationsBySituationList(
-                    executionDegree, situations);
+		resultTemp = sp.getIPersistentCandidateSituation()
+				.readActiveSituationsByExecutionDegreeAndNames(
+						executionDegree.getIdInternal(), situations);
 
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
+		if ((resultTemp == null) || (resultTemp.size() == 0)) {
+			throw new NonExistingServiceException();
+		}
 
-            throw newEx;
-        }
+		Iterator candidateIterator = resultTemp.iterator();
+		List result = new ArrayList();
+		while (candidateIterator.hasNext()) {
+			ICandidateSituation candidateSituation = (ICandidateSituation) candidateIterator
+					.next();
+			result.add(InfoMasterDegreeCandidateWithInfoPerson
+					.newInfoFromDomain(candidateSituation
+							.getMasterDegreeCandidate()));
+		}
 
-        if ((resultTemp == null) || (resultTemp.size() == 0)) {
-            throw new NonExistingServiceException();
-        }
+		return result;
 
-        Iterator candidateIterator = resultTemp.iterator();
-        List result = new ArrayList();
-        while (candidateIterator.hasNext()) {
-            ICandidateSituation candidateSituation = (ICandidateSituation) candidateIterator.next();
-            result.add(InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(candidateSituation
-                    .getMasterDegreeCandidate()));
-        }
-
-        return result;
-
-    }
+	}
 
 }
