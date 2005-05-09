@@ -17,6 +17,8 @@ public class GratuitySituation extends GratuitySituation_Base {
 
 	private ExemptionGratuityType exemptionType;
 
+    private IStudentCurricularPlan studentCurricularPlan;
+    
 	private Date when;
 
 	/**
@@ -53,7 +55,7 @@ public class GratuitySituation extends GratuitySituation_Base {
 	 * @return Returns the student.
 	 */
 	public IStudentCurricularPlan getStudentCurricularPlan() {
-		return getStudentCurricularPlan();
+		return this.studentCurricularPlan;
 	}
 
 	/**
@@ -62,7 +64,7 @@ public class GratuitySituation extends GratuitySituation_Base {
 	 */
 	public void setStudentCurricularPlan(
 			IStudentCurricularPlan studentCurricularPlan) {
-		setStudentCurricularPlan(studentCurricularPlan);
+        this.studentCurricularPlan = studentCurricularPlan;		
 	}
 
 	/*
