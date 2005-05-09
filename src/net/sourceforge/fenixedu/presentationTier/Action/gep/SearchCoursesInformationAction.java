@@ -37,6 +37,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.util.MessageResources;
 
 /**
  * @author Leonor Almeida
@@ -615,9 +616,9 @@ public class SearchCoursesInformationAction extends SearchAction {
                                         .getNome());
             }
         });
-
+        MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
         //infoExecutionDegrees = buildLabelValueBeans(infoExecutionDegrees);
-        infoExecutionDegrees = InfoExecutionDegree.buildLabelValueBeansForList(infoExecutionDegrees);
+        infoExecutionDegrees = InfoExecutionDegree.buildLabelValueBeansForList(infoExecutionDegrees, messageResources);
 
         request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
         request.setAttribute("showNextSelects", "true");

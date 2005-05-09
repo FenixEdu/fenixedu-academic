@@ -15,6 +15,7 @@ import org.apache.commons.collections.CollectionUtils;
 
 import org.apache.commons.collections.Predicate;
 import org.apache.struts.util.LabelValueBean;
+import org.apache.struts.util.MessageResources;
 
 /**
  * @author tfc130
@@ -192,7 +193,7 @@ public class InfoExecutionDegree extends InfoObject {
         this.infoPeriodLessonsSecondSemester = infoPeriodLessonsSecondSemester;
     }
 
-    public static List buildLabelValueBeansForList(List executionDegrees) {
+    public static List buildLabelValueBeansForList(List executionDegrees, MessageResources messageResources) {
         List copyExecutionDegrees = new ArrayList();
         copyExecutionDegrees.addAll(executionDegrees);
         List result = new ArrayList();
@@ -213,14 +214,29 @@ public class InfoExecutionDegree extends InfoObject {
             });
             if (equalDegrees.size() == 1) {
                 copyExecutionDegrees.remove(infoExecutionDegree);
-                result.add(new LabelValueBean(infoExecutionDegree.getInfoDegreeCurricularPlan()
-                        .getInfoDegree().getTipoCurso().toString()
+                
+                String degreeType = null;
+                if(messageResources != null) {
+                    degreeType = messageResources.getMessage(infoExecutionDegree.getInfoDegreeCurricularPlan()
+                            .getInfoDegree().getTipoCurso().toString());
+                }
+                if(degreeType == null)
+                    degreeType = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString();
+                
+                result.add(new LabelValueBean(degreeType
                         + "  "
                         + infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome(),
                         infoExecutionDegree.getIdInternal().toString()));
             } else {
-                result.add(new LabelValueBean(infoExecutionDegree.getInfoDegreeCurricularPlan()
-                        .getInfoDegree().getTipoCurso().toString()
+                String degreeType = null;
+                if(messageResources != null) {
+                    degreeType = messageResources.getMessage(infoExecutionDegree.getInfoDegreeCurricularPlan()
+                            .getInfoDegree().getTipoCurso().toString());
+                }
+                if(degreeType == null)
+                    degreeType = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString();
+                
+                result.add(new LabelValueBean(degreeType
                         + "  "
                         + infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome()
                         + " - " + infoExecutionDegree.getInfoDegreeCurricularPlan().getName(),

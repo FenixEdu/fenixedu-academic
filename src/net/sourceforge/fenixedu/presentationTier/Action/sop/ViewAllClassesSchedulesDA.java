@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.util.MessageResources;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -45,7 +46,8 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction {
                     "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
 
             Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
-            executionDegreeList = InfoExecutionDegree.buildLabelValueBeansForList(executionDegreeList);
+            MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
+            executionDegreeList = InfoExecutionDegree.buildLabelValueBeansForList(executionDegreeList, messageResources);
 
             request.setAttribute(SessionConstants.INFO_EXECUTION_DEGREE_LIST, executionDegreeList);
 

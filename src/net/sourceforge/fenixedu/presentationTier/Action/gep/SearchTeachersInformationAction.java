@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.util.MessageResources;
 
 /**
  * @author Leonor Almeida
@@ -127,7 +128,8 @@ public class SearchTeachersInformationAction extends SearchAction {
             }
         });
 
-        infoExecutionDegrees = InfoExecutionDegree.buildLabelValueBeansForList(infoExecutionDegrees);
+        MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
+        infoExecutionDegrees = InfoExecutionDegree.buildLabelValueBeansForList(infoExecutionDegrees, messageResources);
 
         request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
         request.setAttribute("showNextSelects", "true");

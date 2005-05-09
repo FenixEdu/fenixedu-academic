@@ -32,6 +32,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
+import org.apache.struts.util.MessageResources;
 import org.apache.struts.validator.DynaValidatorForm;
 
 /**
@@ -93,7 +94,8 @@ public class CreateProfessorshipDispatchAction extends DispatchAction {
 
         Collections.sort(executionDegrees, comparatorChain);
 
-        executionDegrees = InfoExecutionDegree.buildLabelValueBeansForList(executionDegrees);
+        MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
+        executionDegrees = InfoExecutionDegree.buildLabelValueBeansForList(executionDegrees, messageResources);
 
         return executionDegrees;
     }
