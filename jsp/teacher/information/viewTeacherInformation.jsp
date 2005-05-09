@@ -17,95 +17,126 @@
 					&nbsp;<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoCategory.shortName" /></td>
 			</tr>
 		</table>
-		<br />
+		</br>
 		<p class="infoop"><span class="emphasis-box">1</span>
 		<bean:message key="message.teacherInformation.qualifications" /></p>
-		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
-			<tr>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.year" /></td>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.school" /></td>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsDegree" /></td>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsTitle" /></td>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsMark" /></td>
-			</tr>
-			<logic:iterate id="infoQualification" name="infoSiteTeacherInformation" property="infoQualifications">
-			<tr>
-				<td class="listClasses">
-					<dt:format pattern="yyyy">
-						<bean:write name="infoQualification" property="date.time" />
-					</dt:format>
-				</td>
-				<td class="listClasses"><bean:write name="infoQualification" property="school" /></td>
-				<td class="listClasses"><bean:write name="infoQualification" property="degree" /></td>
-				<td class="listClasses"><bean:write name="infoQualification" property="title" /></td>
-				<td class="listClasses">&nbsp;<bean:write name="infoQualification" property="mark" /></td>
-			</tr>
-			</logic:iterate>
-		</table>
-		<br />
+		<logic:notEmpty name="infoSiteTeacherInformation" property="infoQualifications">
+			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
+				<tr>
+					<td class="listClasses-header"><bean:message key="message.teacherInformation.year" /></td>
+					<td class="listClasses-header"><bean:message key="message.teacherInformation.school" /></td>
+					<td class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsDegree" /></td>
+					<td class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsTitle" /></td>
+					<td class="listClasses-header"><bean:message key="message.teacherInformation.qualificationsMark" /></td>
+				</tr>
+				<logic:iterate id="infoQualification" name="infoSiteTeacherInformation" property="infoQualifications">
+				<tr>
+					<td class="listClasses">
+						<logic:present name="infoQualification" property="date">
+	 							<dt:format pattern="yyyy">
+									<bean:write name="infoQualification" property="date.time" />	
+								</dt:format>
+						</logic:present>
+						<logic:notPresent name="infoQualification" property="date">-</logic:notPresent>
+					</td>
+					<td class="listClasses"><bean:write name="infoQualification" property="school" /></td>
+					<td class="listClasses"><bean:write name="infoQualification" property="degree" /></td>
+					<td class="listClasses"><bean:write name="infoQualification" property="title" /></td>
+					<td class="listClasses">&nbsp;<bean:write name="infoQualification" property="mark" /></td>
+				</tr>
+				</logic:iterate>
+			</table>
+		</logic:notEmpty>
+		<logic:empty name="infoSiteTeacherInformation" property="infoQualifications">
+			<br>&nbsp;</br>
+			<bean:message key="label.teachersInformation.notModified" />
+			<br>&nbsp;</br>			
+			</logic:empty>
+		<br/>
 		<p class="infoop"><span class="emphasis-box">2</span>
 		<bean:message key="message.teacherInformation.teachingCareer" /></p>
-		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
-			<tr>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.years" /></td>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.careerCategory" /></td>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.careerPositions" /></td>
-			</tr>
-			<logic:iterate id="infoTeachingCareer" name="infoSiteTeacherInformation" property="infoTeachingCareers">
-			<tr>
-				<td class="listClasses"><bean:write name="infoTeachingCareer" property="beginYear"/>
-					-<bean:write name="infoTeachingCareer" property="endYear"/>
-				</td>
-				<td class="listClasses">				
-					<logic:notEmpty name="infoTeachingCareer" property="infoCategory" >
-						<bean:write name="infoTeachingCareer" property="infoCategory.shortName" />
-					</logic:notEmpty>
-				</td>
-				<td class="listClasses"><bean:write name="infoTeachingCareer" property="courseOrPosition" /></td>
-			</tr>
-			</logic:iterate>
-		</table>
+		<logic:notEmpty name="infoSiteTeacherInformation" property="infoTeachingCareers">
+			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
+				<tr>
+					<td class="listClasses-header"><bean:message key="message.teacherInformation.years" /></td>
+					<td class="listClasses-header"><bean:message key="message.teacherInformation.careerCategory" /></td>
+					<td class="listClasses-header"><bean:message key="message.teacherInformation.careerPositions" /></td>
+				</tr>
+				<logic:iterate id="infoTeachingCareer" name="infoSiteTeacherInformation" property="infoTeachingCareers">
+				<tr>
+					<td class="listClasses"><bean:write name="infoTeachingCareer" property="beginYear"/>
+						-<bean:write name="infoTeachingCareer" property="endYear"/>
+					</td>
+					<td class="listClasses">				
+						<logic:notEmpty name="infoTeachingCareer" property="infoCategory" >
+							<bean:write name="infoTeachingCareer" property="infoCategory.shortName" />
+						</logic:notEmpty>
+					</td>
+					<td class="listClasses"><bean:write name="infoTeachingCareer" property="courseOrPosition" /></td>
+				</tr>
+				</logic:iterate>
+			</table>
+		</logic:notEmpty>
+		<logic:empty name="infoSiteTeacherInformation" property="infoTeachingCareers">
+			<br>&nbsp;</br>
+			<bean:message key="label.teachersInformation.notModified" />
+			<br>&nbsp;</br>			
+		</logic:empty>
 		<br />
 		<p class="infoop"><span class="emphasis-box">3</span>
 		<bean:message key="message.teacherInformation.professionalCareer" /></p>
-		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
-			<tr>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.years" /></td>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.entity" /></td>
-				<td class="listClasses-header"><bean:message key="message.teacherInformation.functions" /></td>
-			</tr>
-			<logic:iterate id="infoProfessionalCareer" 
-						   name="infoSiteTeacherInformation" 
-						   property="infoProfessionalCareers">
+		<logic:notEmpty name="infoSiteTeacherInformation" property="infoProfessionalCareers">
+			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
 				<tr>
-					<td class="listClasses">
-						<bean:write name="infoProfessionalCareer" property="beginYear"/>
-						-<bean:write name="infoProfessionalCareer" property="endYear"/>
-					</td>
-					<td class="listClasses"><bean:write name="infoProfessionalCareer" property="entity" /></td>
-					<td class="listClasses"><bean:write name="infoProfessionalCareer" property="function" /></td>
+					<td class="listClasses-header"><bean:message key="message.teacherInformation.years" /></td>
+					<td class="listClasses-header"><bean:message key="message.teacherInformation.entity" /></td>
+					<td class="listClasses-header"><bean:message key="message.teacherInformation.functions" /></td>
 				</tr>
-			</logic:iterate>
-		</table>
-		<br />
+				<logic:iterate id="infoProfessionalCareer" 
+							   name="infoSiteTeacherInformation" 
+							   property="infoProfessionalCareers">
+					<tr>
+						<td class="listClasses">
+							<bean:write name="infoProfessionalCareer" property="beginYear"/>
+							-<bean:write name="infoProfessionalCareer" property="endYear"/>
+						</td>
+						<td class="listClasses"><bean:write name="infoProfessionalCareer" property="entity" /></td>
+						<td class="listClasses"><bean:write name="infoProfessionalCareer" property="function" /></td>
+					</tr>
+				</logic:iterate>
+			</table>
+		</logic:notEmpty>
+		<logic:empty name="infoSiteTeacherInformation" property="infoProfessionalCareers">
+			<br>&nbsp;</br>
+			<bean:message key="label.teachersInformation.notModified" />
+			<br>&nbsp;</br>
+		</logic:empty>
+		<br/>
 		<p class="infoop"><span class="emphasis-box">4</span>
 			<bean:message key="message.teacherInformation.externalActivities" />
 			<bean:write name="infoSiteTeacherInformation" property="infoExecutionPeriod.infoExecutionYear.year" />
 			<bean:message key="label.doublePoint" />
 		</p>
-		<br />	
-		<table width="100%">	
-			<logic:iterate id="infoExternalActivity" name="infoSiteTeacherInformation" property="infoExternalActivities">
-				<tr>
-					<td class="listClasses" style="text-align:left">
-						<bean:write name="infoExternalActivity" property="activity" />
-					</td>
-				</tr>
-			</logic:iterate>
-		</table>
-		<br />
+		<logic:notEmpty name="infoSiteTeacherInformation" property="infoExternalActivities">
+			<table width="100%">
+				<logic:iterate id="infoExternalActivity" name="infoSiteTeacherInformation" property="infoExternalActivities">
+					<tr>
+						<td class="listClasses" style="text-align:left">
+							<bean:write name="infoExternalActivity" property="activity" />
+						</td>
+					</tr>
+				</logic:iterate>
+			</table>
+		</logic:notEmpty>
+		<logic:empty name="infoSiteTeacherInformation" property="infoExternalActivities">
+			<br>&nbsp;</br>
+			<bean:message key="label.teachersInformation.notModified" />
+			<br>&nbsp;</br>
+		</logic:empty>
+		<br/>
 		<p class="infoop"><span class="emphasis-box">5</span>
 		<bean:message key="message.teacherInformation.ownPublications" /></p>
+		<logic:notEmpty name="infoSiteTeacherInformation" property="infoOldDidacticPublications">
 			<table width="90%" border="0" cellspacing="1" style="margin-top:10px">	
 				<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldDidacticPublications">
 					<tr>
@@ -114,11 +145,17 @@
 						</td>
 					</tr>
 				</logic:iterate>
-			<br />
 			</table>
-			<br />
+		</logic:notEmpty>
+		<logic:empty name="infoSiteTeacherInformation" property="infoOldDidacticPublications">
+			<br>&nbsp;</br>
+			<bean:message key="label.teachersInformation.notModified" />
+			<br>&nbsp;</br>
+		</logic:empty>
+		<br />
 		<p class="infoop"><span class="emphasis-box">6</span>
-			<bean:message key="message.teacherInformation.cientificPublications" /></p>
+		<bean:message key="message.teacherInformation.cientificPublications" /></p>
+		<logic:notEmpty name="infoSiteTeacherInformation" property="infoOldCientificPublications">
 			<table width="90%" border="0" cellspacing="1" style="margin-top:10px">	
 				<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldCientificPublications">
 					<tr>
@@ -127,10 +164,16 @@
 						</td>
 					</tr>
 				</logic:iterate>
-			<br />
 			</table>
+		</logic:notEmpty>
+		<logic:empty name="infoSiteTeacherInformation" property="infoOldCientificPublications">
+			<br>&nbsp;</br>
+			<bean:message key="label.teachersInformation.notModified" />
+			<br>&nbsp;</br>
+		</logic:empty>
+		<br />
 		<p class="infoop"><span class="emphasis-box">7</span>
-			<bean:message key="message.teacherInformation.numberOfPublications" /></p>
+		<bean:message key="message.teacherInformation.numberOfPublications" /></p>
 		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
 			<tr>
 				<td class="listClasses-header"><bean:message key="message.teacherInformation.number" /></td>
@@ -189,20 +232,22 @@
 			<bean:write name="infoSiteTeacherInformation" property="infoExecutionPeriod.infoExecutionYear.year" />
 			<bean:message key="label.doublePoint" />
 		</p>
-		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
-			<tr>
-				<td>
-					<logic:present name="infoSiteTeacherInformation" property="infoServiceProviderRegime.providerRegimeType">
+		<logic:present name="infoSiteTeacherInformation" property="infoServiceProviderRegime.providerRegimeType">
+			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
+				<tr>
+					<td>
 						<bean:message name="infoSiteTeacherInformation" 
 									  property="infoServiceProviderRegime.providerRegimeType.name" 
 									  bundle="ENUMERATION_RESOURCES"/>
-				  	</logic:present>
-					<logic:notPresent name="infoSiteTeacherInformation" property="infoServiceProviderRegime.providerRegimeType">
-						<bean:message key="label.teachersInformation.notModified" />
-				  	</logic:notPresent>
-				</td>
-			</tr>
-		</table>
+					</td>
+				</tr>
+			</table>
+		</logic:present>
+		<logic:notPresent name="infoSiteTeacherInformation" property="infoServiceProviderRegime.providerRegimeType">
+			<br>&nbsp;</br>
+			<bean:message key="label.teachersInformation.notModified" />
+			<br>&nbsp;</br>			
+		</logic:notPresent>
 		<br />
 		<p class="infoop"><span class="emphasis-box">9</span>
 			<bean:message key="message.teacherInformation.lectureCourses" />
@@ -317,11 +362,7 @@
 			<bean:write name="infoSiteTeacherInformation" property="infoExecutionPeriod.infoExecutionYear.year" />
 			<bean:message key="label.doublePoint" />
 		</p>
-		<br />
+		<br>&nbsp;</br>
 		<bean:message key="message.teacherInformation.notYetAvailable" />
-		<%--<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
-			<tr>
-				<td><bean:write name="" property=""/></td>
-			</tr>
-		</table>--%>
+		<br>&nbsp;</br>
 </logic:present>
