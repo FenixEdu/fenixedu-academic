@@ -1,31 +1,18 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
+import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DegreeInfo;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeInfo;
 
 import org.apache.ojb.broker.query.Criteria;
 
 /**
- * @author Tânia Pousão Created on 30/Out/2003
+ * @author Tï¿½nia Pousï¿½o Created on 30/Out/2003
  */
 public class DegreeInfoOJB extends PersistentObjectOJB implements IPersistentDegreeInfo {
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.IPersistentDegreeInfo#readDegreeInfoByDegree(Dominio.IDegree)
-     */
-    public List readDegreeInfoByDegree(IDegree degree) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("degreeKey", degree.getIdInternal());
-
-        return queryList(DegreeInfo.class, criteria);
-    }
 
     /*
      * (non-Javadoc)
@@ -33,12 +20,11 @@ public class DegreeInfoOJB extends PersistentObjectOJB implements IPersistentDeg
      * @see ServidorPersistente.IPersistentDegreeInfo#readDegreeInfoByDegreeAndExecutionYear(Dominio.IDegree,
      *      Dominio.IExecutionYear)
      */
-    public List readDegreeInfoByDegreeAndExecutionYear(IDegree degree, IExecutionYear executionYear)
+    public List readDegreeInfoByDegreeAndExecutionYear(Integer degreeId, Date beginDate, Date endDate)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("degreeKey", degree.getIdInternal());
-        criteria.addBetween("lastModificationDate", executionYear.getBeginDate(), executionYear
-                .getEndDate());
+        criteria.addEqualTo("degreeKey", degreeId);
+        criteria.addBetween("lastModificationDate", beginDate, endDate);
 
         return queryList(DegreeInfo.class, criteria);
     }

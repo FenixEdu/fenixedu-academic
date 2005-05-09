@@ -19,7 +19,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
- * @author Tânia Pousão Created on 4/Nov/2003
+ * @author Tï¿½nia Pousï¿½o Created on 4/Nov/2003
  */
 public class ReadDegreeInfoByExecutionDegree implements IService {
 
@@ -49,16 +49,14 @@ public class ReadDegreeInfoByExecutionDegree implements IService {
             }
 
             //Degree
-            IDegree degree = null;
-            degree = executionDegree.getDegreeCurricularPlan().getDegree();
+            IDegree degree = executionDegree.getDegreeCurricularPlan().getDegree();
 
             if (degree == null) {
                 throw new FenixServiceException("error.impossibleDegreeInfo");
             }
 
             //Read degree information
-            IPersistentDegreeInfo persistentDegreeInfo = suportePersistente.getIPersistentDegreeInfo();
-            List degreeInfoList = persistentDegreeInfo.readDegreeInfoByDegree(degree);
+            List degreeInfoList = degree.getDegreeInfos();
 
             //Last information about this degree
             if (degreeInfoList != null && degreeInfoList.size() > 0) {

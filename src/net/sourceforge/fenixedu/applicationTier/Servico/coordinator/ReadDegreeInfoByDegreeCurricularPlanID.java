@@ -50,16 +50,14 @@ public class ReadDegreeInfoByDegreeCurricularPlanID implements IService {
             }
 
             //Degree
-            IDegree degree = null;
-            degree = degreeCurricularPlan.getDegree();
+            IDegree degree = degreeCurricularPlan.getDegree();
 
             if (degree == null) {
                 throw new FenixServiceException("error.impossibleDegreeInfo");
             }
 
             //Read degree information
-            IPersistentDegreeInfo persistentDegreeInfo = suportePersistente.getIPersistentDegreeInfo();
-            List degreeInfoList = persistentDegreeInfo.readDegreeInfoByDegree(degree);
+            List degreeInfoList = degree.getDegreeInfos();
 
             //Last information about this degree
             if (degreeInfoList != null && degreeInfoList.size() > 0) {
