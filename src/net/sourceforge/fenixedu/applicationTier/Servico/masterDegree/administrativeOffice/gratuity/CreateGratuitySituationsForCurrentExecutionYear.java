@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
 import net.sourceforge.fenixedu.domain.IGratuityValues;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
@@ -24,6 +23,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.Specialization;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -46,14 +46,13 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IExecutionYear executionYear = null;
-            
-            if(year == null || year.equals("")){
-                executionYear = sp.getIPersistentExecutionYear()
-                .readCurrentExecutionYear(); 
-            }else{
-                executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(year);                
+
+            if (year == null || year.equals("")) {
+                executionYear = sp.getIPersistentExecutionYear().readCurrentExecutionYear();
+            } else {
+                executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(year);
             }
-            
+
             IPersistentGratuityValues gratuityValuesDAO = sp.getIPersistentGratuityValues();
 
             IPersistentStudentCurricularPlan studentCurricularPlanDAO = sp
@@ -222,6 +221,23 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
     private void createGratuitySituation(IExecutionYear executionYear, IGratuityValues gratuityValues,
             IStudentCurricularPlan studentCurricularPlan,
             IPersistentGratuitySituation gratuitySituationDAO) throws ExcepcaoPersistencia {
+            
+//        if (studentCurricularPlan.getSpecialization().equals(Specialization.ESPECIALIZACAO_TYPE)) {
+//            Calendar calendar = new GregorianCalendar();
+//            calendar.setTime(studentCurricularPlan.getDegreeCurricularPlan().getInitialDate());
+//            int initialYear = calendar.get(Calendar.YEAR);
+//
+//            calendar.setTime(executionYear.getBeginDate());
+//            int gratuityYear = calendar.get(Calendar.YEAR);
+//
+//            // if itsn't the first year for a specialization curricular plan,
+//            // its not necessary, because the specialization only occurs in the
+//            // first year of ta master degree
+//            if (initialYear != gratuityYear) {
+//                return;
+//            }
+//
+//        }
 
         IGratuitySituation gratuitySituation = new GratuitySituation();
 
