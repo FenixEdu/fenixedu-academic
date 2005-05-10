@@ -8,7 +8,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
-import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
 
 /**

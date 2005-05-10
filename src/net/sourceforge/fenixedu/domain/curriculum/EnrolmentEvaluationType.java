@@ -1,14 +1,9 @@
 package net.sourceforge.fenixedu.domain.curriculum;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
-
-import net.sourceforge.fenixedu.domain.person.Gender;
-import net.sourceforge.fenixedu.util.FenixUtil;
 
 import org.apache.struts.util.LabelValueBean;
 

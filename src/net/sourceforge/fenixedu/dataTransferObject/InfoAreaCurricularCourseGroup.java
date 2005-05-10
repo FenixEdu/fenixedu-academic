@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
-import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
 
 /**

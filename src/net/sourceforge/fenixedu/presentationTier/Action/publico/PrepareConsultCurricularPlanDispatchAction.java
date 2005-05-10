@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.Util;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixCacheFilter;
 import net.sourceforge.fenixedu.util.TipoSala;
 
 import org.apache.struts.action.Action;

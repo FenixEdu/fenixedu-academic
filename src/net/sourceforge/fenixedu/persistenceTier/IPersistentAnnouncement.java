@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IAnnouncement;
-import net.sourceforge.fenixedu.domain.ISite;
 
 public interface IPersistentAnnouncement extends IPersistentObject {
 

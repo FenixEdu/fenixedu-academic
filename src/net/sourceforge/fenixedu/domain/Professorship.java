@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.domain.credits.event.CreditsEvent;
 import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
 

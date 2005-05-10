@@ -155,7 +155,6 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentPaymentT
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentSmsTransaction;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransaction;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DegreeInfoVO;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;

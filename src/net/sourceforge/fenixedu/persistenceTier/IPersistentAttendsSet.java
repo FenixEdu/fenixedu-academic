@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.persistenceTier;
 
-import java.util.List;
 
 /**
  * @author joaosa-rmalo

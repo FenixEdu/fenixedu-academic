@@ -4,8 +4,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoOpeningProjectFileReport;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IPerson;

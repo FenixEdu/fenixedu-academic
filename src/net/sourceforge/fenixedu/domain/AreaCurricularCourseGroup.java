@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
 /**
  * @author David Santos on Jul 26, 2004

@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoRubric;
@@ -50,7 +49,7 @@ public class ReadCoordinators implements IService {
             if (thisCoordinator != null)
                 coordinatorsCodes.add(thisCoordinator);
             for (int coord = 0; coord < coordinatorsCodes.size(); coord++) {
-                IRubric rubric = p.getIPersistentProjectUser().readProjectCoordinator((Integer) coordinatorsCodes.get(coord));
+                IRubric rubric = p.getIPersistentProjectUser().readProjectCoordinator(coordinatorsCodes.get(coord));
                 coordinatorsList.add(InfoRubric.newInfoFromDomain(rubric));
             }
         }

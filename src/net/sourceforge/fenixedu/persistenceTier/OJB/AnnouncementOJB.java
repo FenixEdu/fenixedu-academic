@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Announcement;
 import net.sourceforge.fenixedu.domain.IAnnouncement;
-import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentAnnouncement;
 

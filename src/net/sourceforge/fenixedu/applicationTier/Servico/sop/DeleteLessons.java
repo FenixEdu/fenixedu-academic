@@ -41,7 +41,7 @@ public class DeleteLessons implements IService {
         final IPersistentRoomOccupation persistentRoomOccupation = persistentSupport
                 .getIPersistentRoomOccupation();
 
-        final ILesson lesson = (ILesson) persistenetLesson.readByOID(Lesson.class, (Integer) lessonOID);
+        final ILesson lesson = (ILesson) persistenetLesson.readByOID(Lesson.class, lessonOID);
         final IRoomOccupation roomOccupation = lesson.getRoomOccupation();
 
         roomOccupation.setPeriod(null);

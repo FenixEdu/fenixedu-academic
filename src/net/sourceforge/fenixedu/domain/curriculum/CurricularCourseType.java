@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.curriculum;
 
-import net.sourceforge.fenixedu.util.FenixUtil;
 
 /**
  * @author dcs-rjao

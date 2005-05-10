@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
-import net.sourceforge.fenixedu.domain.projectsManagement.IOpeningProjectFileReport;
 import net.sourceforge.fenixedu.domain.projectsManagement.IProjectMemberBudget;
 import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
 

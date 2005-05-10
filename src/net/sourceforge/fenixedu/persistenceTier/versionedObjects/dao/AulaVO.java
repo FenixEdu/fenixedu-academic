@@ -11,29 +11,17 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
  * @author Luis Cruz & Sara Ribeiro
  */
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
-import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IShiftStudent;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Room;
-import net.sourceforge.fenixedu.domain.RoomOccupation;
-import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
-import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.TipoAula;
-
-import org.apache.ojb.broker.query.Criteria;
-import org.odmg.QueryException;
 
 public class AulaVO extends VersionedObjectsBase implements IAulaPersistente {
 

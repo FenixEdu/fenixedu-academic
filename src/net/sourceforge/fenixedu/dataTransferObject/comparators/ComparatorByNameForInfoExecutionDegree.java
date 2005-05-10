@@ -6,8 +6,6 @@ package net.sourceforge.fenixedu.dataTransferObject.comparators;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 
 /**

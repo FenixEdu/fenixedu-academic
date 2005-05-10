@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects;
 
-import sun.security.krb5.internal.ktab.ay;
 import net.sourceforge.fenixedu.persistenceTier.*;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;

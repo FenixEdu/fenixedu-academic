@@ -6,12 +6,6 @@
 
 package net.sourceforge.fenixedu.domain.degree;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.sourceforge.fenixedu.util.FenixUtil;
-
-import org.apache.struts.util.LabelValueBean;
 
 /**
  * 

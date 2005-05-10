@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
 import net.sourceforge.fenixedu.domain.branch.BranchType;
-import net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType;
 
 import org.apache.ojb.broker.accesslayer.conversions.ConversionException;
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;

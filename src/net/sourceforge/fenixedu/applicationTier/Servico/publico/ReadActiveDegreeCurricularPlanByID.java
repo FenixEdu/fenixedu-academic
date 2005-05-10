@@ -213,7 +213,7 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
                 InfoCurricularCourseScope scope = (InfoCurricularCourseScope) iter.next();
                 InfoCurricularYear scopeYear = scope.getInfoCurricularSemester().getInfoCurricularYear();
                 InfoCurricularCourse scopeCurricularCourse = scope.getInfoCurricularCourse();
-                InfoBranch infoBranch = (InfoBranch) scope.getInfoBranch();
+                InfoBranch infoBranch = scope.getInfoBranch();
                 infoBranch.prepareEnglishPresentation(language);
                 scope.setInfoBranch(infoBranch);
                 scopeCurricularCourse.prepareEnglishPresentation(language);

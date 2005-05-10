@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain;
 import java.util.List;
 
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
-import net.sourceforge.fenixedu.domain.branch.BranchType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
