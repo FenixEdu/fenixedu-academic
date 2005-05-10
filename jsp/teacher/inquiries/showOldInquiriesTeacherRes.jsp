@@ -3,51 +3,427 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoTeacher" %>
+<%@ page import="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesCoursesRes" %>
 <%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
 <%@ page import="net.sourceforge.fenixedu.util.NumberUtils" %>
 
 <h2>
 	<bean:message key="title.teacher.inquiries.results" bundle="INQUIRIES_RESOURCES"/>
 </h2>
-<h2>
-	<bean:message key="title.teacher.inquiries.individual.results" bundle="INQUIRIES_RESOURCES"/>
-</h2>
-
-<hr/>
 
 
-<h4>
-	<bean:write name="infoTeacher" property="infoPerson.nome" />
-	&nbsp;-&nbsp;
-	<bean:write name="infoTeacher" property="teacherNumber" />
-</h4>
-<h4>
-	<bean:write name="infoTeacher" property="infoCategory.longName" />
-</h4>
 
-<%--ISTO VAI SER PRA POR O NOME DA CADEIRA, PERÍODO DE EXECUÇÃO
-<table class="infoselected" width="100%">
-	<tr>
-		<td width="50%">
-			<bean:message key="message.teacherInformation.name" />
-			&nbsp;
-		</td> 
-		<td width="50%">
-			<bean:message key="message.teacherInformation.birthDate" />
-			&nbsp;<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoPerson.nascimento" />
-		</td>	
-	</tr>
-	<tr>
-		<td><bean:message key="message.teacherInformation.category" />
-			&nbsp;</td>
-	</tr>
-</table>
- --%>
  
+<logic:present name="oldInquiriesCoursesRes">
+	<%
+	InfoOldInquiriesCoursesRes oldInquiriesCoursesRes = (InfoOldInquiriesCoursesRes)request.getAttribute("oldInquiriesCoursesRes");
+	%>
+	<table class="listClasses" width="100%">
+		<tr>
+			<td>
+				<b>
+					<bean:write name="oldInquiriesCoursesRes" property="degree.tipoCurso"/>
+					&nbsp;em&nbsp;
+					<bean:write name="oldInquiriesCoursesRes" property="degree.nome"/>
+				</b>
+			</td>
+		</tr>
+	</table>
+
+	<br />
+
+	<table class="invisible">
+		<tr>
+			<td>
+				<bean:message key="label.inquiries.degree.courses.appreciation" bundle="INQUIRIES_RESOURCES"/>
+			</td>
+			<%
+			out.print(
+				"<td>" +
+					"CALCULAR O VALOR" +
+				"</td>");
+			%>
+		</tr>			
+		<tr>
+			<td>
+				<bean:message key="label.inquiries.degree.teachers.appreciation" bundle="INQUIRIES_RESOURCES"/>
+			</td>
+			<%
+			out.print(
+				"<td>" +
+					"CALCULAR O VALOR" +
+				"</td>");
+			%>
+		</tr>
+	</table>
+
+	<br/>
+
+	<table class="infoselected" width="100%">
+		<tr>
+			<td width="65%">
+				<b>
+					<bean:write name="oldInquiriesCoursesRes" property="gepCourseName"/>
+				</b>
+			</td> 
+			<td width="10%">
+				<logic:notEmpty name="oldInquiriesCoursesRes" property="curricularYear" >
+					<bean:write name="oldInquiriesCoursesRes" property="curricularYear" />
+					&ordm;&nbsp;
+					<bean:message key="label.inquiries.year" bundle="INQUIRIES_RESOURCES"/>
+				</logic:notEmpty>
+			</td>
+			<td width="25%" align="right">
+				<logic:notEmpty name="oldInquiriesCoursesRes" property="numberEnrollments" >
+					<%
+					out.print(InquiriesUtil.formatAnswer(oldInquiriesCoursesRes.getNumberEnrollments()));
+					%>
+					&nbsp;
+					<bean:message key="label.inquiries.enrolled.students" bundle="INQUIRIES_RESOURCES"/>
+				</logic:notEmpty>
+			</td>	
+		</tr>
+		<tr>
+			<td width="65%">
+			</td>
+			<td width="10%">
+			</td>
+			<td width="25%" align="right">
+				<%
+				Double answerRatio = new Double(Double.MIN_VALUE);
+				%>
+				<logic:notEmpty name="oldInquiriesCoursesRes" property="numberAnswers" >
+					<logic:notEmpty name="oldInquiriesCoursesRes" property="numberEnrollments" >
+						<%
+						if(oldInquiriesCoursesRes.getNumberEnrollments().doubleValue() != 0) {
+							answerRatio = new Double(
+									(oldInquiriesCoursesRes.getNumberAnswers().intValue() * 100) / 
+									oldInquiriesCoursesRes.getNumberEnrollments().doubleValue());
+						}
+						%>
+					</logic:notEmpty>
+				</logic:notEmpty>
+				
+				<%
+				out.print(InquiriesUtil.formatAnswer(NumberUtils.formatNumber(answerRatio, 1)));
+				%>
+				%&nbsp;
+				<bean:message key="label.inquiries.answers" bundle="INQUIRIES_RESOURCES"/>
+			</td>	
+		</tr>
+	</table>
+	
+	<br/>
+
+	<table width="90%"cellpadding="5" border="0">
+		<tr>
+			<td class="invisible" style="text-align:left" rowspan="10" valign="top">
+				&nbsp;&nbsp;
+			</td>
+			<td class="listClasses-header" style="text-align:left">
+				<bean:message key="table.header.inquiries.questions"  bundle="INQUIRIES_RESOURCES"/>
+			</td>
+			<td class="listClasses-header">
+				<bean:message key="table.header.inquiries.average"  bundle="INQUIRIES_RESOURCES"/>
+			</td>
+			<td class="listClasses-header">
+				<bean:message key="table.header.inquiries.deviation"  bundle="INQUIRIES_RESOURCES"/>
+			</td>
+			<td class="listClasses-header">
+				<bean:message key="table.header.inquiries.tolerance"  bundle="INQUIRIES_RESOURCES"/>
+			</td>
+			<td class="listClasses-header">
+				<bean:message key="table.header.inquiries.number.answers"  bundle="INQUIRIES_RESOURCES"/>
+			</td>
+		</tr>
+
+		<%--############ CLASS COORDINATION ############## --%>
+		<bean:define id="average2_2" name="oldInquiriesCoursesRes" property="average2_2" type="java.lang.Double"/>
+		<bean:define id="deviation2_2" name="oldInquiriesCoursesRes" property="deviation2_2" type="java.lang.Double"/>
+		<bean:define id="tolerance2_2" name="oldInquiriesCoursesRes" property="tolerance2_2" type="java.lang.Double"/>
+		<bean:define id="numAnswers2_2" name="oldInquiriesCoursesRes" property="numAnswers2_2" type="java.lang.Integer"/>
+
+		<tr>
+			<td class="listClasses" style="text-align:left">
+				<b>
+					<bean:message key="table.colname.inquiries.class.coordination"  bundle="INQUIRIES_RESOURCES"/>
+				</b>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(NumberUtils.formatNumber(average2_2, 2)));
+				%>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(NumberUtils.formatNumber(deviation2_2, 2)));
+				%>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(NumberUtils.formatNumber(tolerance2_2, 2)));
+				%>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(numAnswers2_2));
+				%>
+			</td>			
+		</tr>
+
+		<%--############ STUDY ELEMENTS CONTRIBUTION ############## --%>
+		<bean:define id="average2_3" name="oldInquiriesCoursesRes" property="average2_3" type="java.lang.Double"/>
+		<bean:define id="deviation2_3" name="oldInquiriesCoursesRes" property="deviation2_3" type="java.lang.Double"/>
+		<bean:define id="tolerance2_3" name="oldInquiriesCoursesRes" property="tolerance2_3" type="java.lang.Double"/>
+		<bean:define id="numAnswers2_3" name="oldInquiriesCoursesRes" property="numAnswers2_3" type="java.lang.Integer"/>
+
+		<tr>
+			<td class="listClasses" style="text-align:left">
+				<b>
+					<bean:message key="table.colname.inquiries.study.elements.contribution"  bundle="INQUIRIES_RESOURCES"/>
+				</b>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(NumberUtils.formatNumber(average2_3, 2)));
+				%>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(NumberUtils.formatNumber(deviation2_3, 2)));
+				%>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(NumberUtils.formatNumber(tolerance2_3, 2)));
+				%>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(numAnswers2_3));
+				%>
+			</td>			
+		</tr>
+
+		<%--############ PREVIOUS KNOWLEGDE ARTICULATION ############## --%>
+		<bean:define id="average2_4" name="oldInquiriesCoursesRes" property="average2_4" type="java.lang.Double"/>
+		<bean:define id="deviation2_4" name="oldInquiriesCoursesRes" property="deviation2_4" type="java.lang.Double"/>
+		<bean:define id="tolerance2_4" name="oldInquiriesCoursesRes" property="tolerance2_4" type="java.lang.Double"/>
+		<bean:define id="numAnswers2_4" name="oldInquiriesCoursesRes" property="numAnswers2_4" type="java.lang.Integer"/>
+
+		<tr>
+			<td class="listClasses" style="text-align:left">
+				<b>
+					<bean:message key="table.colname.inquiries.previous.knowlegde.articulation"  bundle="INQUIRIES_RESOURCES"/>
+				</b>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(NumberUtils.formatNumber(average2_4, 2)));
+				%>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(NumberUtils.formatNumber(deviation2_4, 2)));
+				%>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(NumberUtils.formatNumber(tolerance2_4, 2)));
+				%>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(numAnswers2_4));
+				%>
+			</td>			
+		</tr>
+
+		<%--############ CONTRIBUTION FOR GRADUATION ############## --%>
+		<bean:define id="average2_5" name="oldInquiriesCoursesRes" property="average2_5" type="java.lang.Double"/>
+		<bean:define id="deviation2_5" name="oldInquiriesCoursesRes" property="deviation2_5" type="java.lang.Double"/>
+		<bean:define id="tolerance2_5" name="oldInquiriesCoursesRes" property="tolerance2_5" type="java.lang.Double"/>
+		<bean:define id="numAnswers2_5_number" name="oldInquiriesCoursesRes" property="numAnswers2_5_number" type="java.lang.Integer"/>
+
+		<tr>
+			<td class="listClasses" style="text-align:left">
+				<b>
+					<bean:message key="table.colname.inquiries.course.contribution.for.graduation"  bundle="INQUIRIES_RESOURCES"/>
+				</b>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(NumberUtils.formatNumber(average2_5, 2)));
+				%>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(NumberUtils.formatNumber(deviation2_5, 2)));
+				%>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(NumberUtils.formatNumber(tolerance2_5, 2)));
+				%>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(numAnswers2_5_number));
+				%>
+			</td>			
+		</tr>
+
+		<%--############ EVALUATION METHOD ADEQUATION ############## --%>
+		<bean:define id="average2_6" name="oldInquiriesCoursesRes" property="average2_6" type="java.lang.Double"/>
+		<bean:define id="deviation2_6" name="oldInquiriesCoursesRes" property="deviation2_6" type="java.lang.Double"/>
+		<bean:define id="tolerance2_6" name="oldInquiriesCoursesRes" property="tolerance2_6" type="java.lang.Double"/>
+		<bean:define id="numAnswers2_6" name="oldInquiriesCoursesRes" property="numAnswers2_6" type="java.lang.Integer"/>
+
+		<tr>
+			<td class="listClasses" style="text-align:left">
+				<b>
+					<bean:message key="table.colname.inquiries.evaluation.method.adequation"  bundle="INQUIRIES_RESOURCES"/>
+				</b>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(NumberUtils.formatNumber(average2_6, 2)));
+				%>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(NumberUtils.formatNumber(deviation2_6, 2)));
+				%>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(NumberUtils.formatNumber(tolerance2_6, 2)));
+				%>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(numAnswers2_6));
+				%>
+			</td>			
+		</tr>
+
+		<%--############ WEEKLY SPENT HOURS ############## --%>
+		<bean:define id="average2_7" name="oldInquiriesCoursesRes" property="average2_7" type="java.lang.String"/>
+		<bean:define id="numAnswers2_7" name="oldInquiriesCoursesRes" property="numAnswers2_7" type="java.lang.Integer"/>
+
+		<tr>
+			<td class="listClasses" style="text-align:left">
+				<b>
+					<bean:message key="table.colname.inquiries.weekly.spent.hours"  bundle="INQUIRIES_RESOURCES"/>
+				</b>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(average2_7));
+				%>
+			</td>			
+			<td class="listClasses">
+				-
+			</td>			
+			<td class="listClasses">
+				-
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(numAnswers2_7));
+				%>
+			</td>			
+		</tr>
+
+		<%--############ GLOBAL APPRECIATION ############## --%>
+		<bean:define id="average2_8" name="oldInquiriesCoursesRes" property="average2_8" type="java.lang.Double"/>
+		<bean:define id="deviation2_8" name="oldInquiriesCoursesRes" property="deviation2_8" type="java.lang.Double"/>
+		<bean:define id="tolerance2_8" name="oldInquiriesCoursesRes" property="tolerance2_8" type="java.lang.Double"/>
+		<bean:define id="numAnswers2_8" name="oldInquiriesCoursesRes" property="numAnswers2_8" type="java.lang.Integer"/>
+
+		<tr>
+			<td class="listClasses" style="text-align:left">
+				<b>
+					<bean:message key="table.colname.inquiries.global.appreciation"  bundle="INQUIRIES_RESOURCES"/>
+				</b>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(NumberUtils.formatNumber(average2_8, 2)));
+				%>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(NumberUtils.formatNumber(deviation2_8, 2)));
+				%>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(NumberUtils.formatNumber(tolerance2_8, 2)));
+				%>
+			</td>			
+			<td class="listClasses">
+				<%
+				out.print(InquiriesUtil.formatAnswer(numAnswers2_8));
+				%>
+			</td>			
+		</tr>
+
+
+	</table>
+
+	
+</logic:present>
+ 
+
+	
+		
+			
 <logic:present name="oldInquiryTeachersResList">
 	<logic:iterate id="oldInquiryTeachersRes" name="oldInquiryTeachersResList" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesTeachersRes"> 
+		<h2>
+			<bean:message key="title.teacher.inquiries.individual.results" bundle="INQUIRIES_RESOURCES"/>
+		</h2>
+
+		<table class="infoselected" width="100%">
+			<tr>
+				<td width="65%">
+					<b>
+						<bean:message key="message.teacherInformation.name" />
+					</b>
+					&nbsp;
+					<bean:write name="infoTeacher" property="infoPerson.nome" />
+				</td> 
+				<td width="35%">
+					<b>
+						<bean:message key="label.teachersInformation.number" />
+					</b>
+					&nbsp;
+					<bean:write name="infoTeacher" property="teacherNumber" />
+				</td>	
+			</tr>
+			<tr>
+				<td width="65%">
+					<b>
+						<bean:message key="message.teacherInformation.category" />
+					</b>
+					&nbsp;
+					<logic:notEmpty name="infoTeacher" property="infoCategory" >
+					<bean:write name="infoTeacher" property="infoCategory.shortName" />
+					</logic:notEmpty>
+				</td>
+				<td width="35%">
+					<b>
+						<bean:message key="message.teacherInformation.birthDate" />
+					</b>
+					&nbsp;
+					<bean:write name="infoTeacher" property="infoPerson.nascimento" />
+				</td>	
+			</tr>
+		</table>
+
 		<br/>
-		<br/>
+
 		<h3>
 			<bean:write name="oldInquiryTeachersRes" property="classTypeLong" />
 		</h3>

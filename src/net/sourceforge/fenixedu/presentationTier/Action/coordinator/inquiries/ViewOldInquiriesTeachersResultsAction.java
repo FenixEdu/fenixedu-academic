@@ -101,19 +101,19 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
                     }
                 }
                 
-                if(teachersRes.size() == 1) {
-        	        request.setAttribute("oldInquiriesTeachersResList", teachersRes);
-        	        return actionMapping.findForward("showOldInquiriesTeacherRes");
-                }
+//                if(teachersRes.size() == 1) {
+//        	        request.setAttribute("oldInquiriesTeachersResList", teachersRes);
+//        	        return actionMapping.findForward("showOldInquiriesTeacherRes");
+//                }
                                                 
                 request.setAttribute("oldInquiriesTeachersResListOfLists", joinSimilarOldInquiriesByExecutionPeriodAndCurricularYearAndGepCourseName(teachersRes));
             
             } else if(executionPeriodId.intValue() < 0) {
                                 
-                if(teachersRes.size() == 1) {
-        	        request.setAttribute("oldInquiriesTeachersResList", teachersRes);
-        	        return actionMapping.findForward("showOldInquiriesTeacherRes");
-                }
+//                if(teachersRes.size() == 1) {
+//        	        request.setAttribute("oldInquiriesTeachersResList", teachersRes);
+//        	        return actionMapping.findForward("showOldInquiriesTeacherRes");
+//                }
                 request.setAttribute("oldInquiriesTeachersResListOfLists", joinSimilarOldInquiriesByExecutionPeriodAndCurricularYearAndGepCourseName(teachersRes));
             }
         }

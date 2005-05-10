@@ -13,6 +13,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.Lesson;
@@ -20,6 +21,7 @@ import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.domain.ShiftStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
+import net.sourceforge.fenixedu.util.TipoAula;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -59,6 +61,30 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
                 lessons.addAll(auxLessons);
             }
         }
+        return lessons;
+    }
+
+    public List readLessonsByShift(IShift shift) throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("keyShift", shift.getIdInternal());
+        List lessons = queryList(Lesson.class, crit);
+        return lessons;
+    }
+
+    public List readLessonsByShiftAndLessonType(IShift shift, TipoAula lessonType)
+            throws ExcepcaoPersistencia {
+
+        Criteria crit = new Criteria();
+        crit.addEqualTo("keyShift", shift.getIdInternal());
+        crit.addEqualTo("tipo", lessonType);
+        List lessons = queryList(Lesson.class, crit);
+        return lessons;
+    }
+
+	public List readLessonsByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("keyShift", executionCourse.getIdInternal());
+        List lessons = queryList(Lesson.class, crit);
         return lessons;
     }
 

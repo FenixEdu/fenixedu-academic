@@ -37,6 +37,10 @@ import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersisten
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuideEntry;
+import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesCourse;
+import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRegistry;
+import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRoom;
+import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesTeacher;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
@@ -460,7 +464,14 @@ public interface ISuportePersistente {
     public IPersistentOldInquiriesSummary getIPersistentOldInquiriesSummary();
     
     public IPersistentOldInquiriesTeachersRes getIPersistentOldInquiriesTeachersRes();
-        
+
+	public IPersistentInquiriesCourse getIPersistentInquiriesCourse();
+	
+	public IPersistentInquiriesRegistry getIPersistentInquiriesRegistry();
+	
+	public IPersistentInquiriesRoom getIPersistentInquiriesRoom();
+	
+	public IPersistentInquiriesTeacher getIPersistentInquiriesTeacher();
     //
     public IPersistentCostCenter getIPersistentCostCenter();
     

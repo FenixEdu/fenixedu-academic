@@ -46,6 +46,10 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.gratuity.masterDegree.SibsPa
 import net.sourceforge.fenixedu.persistenceTier.OJB.gratuity.masterDegree.SibsPaymentFileOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.guide.ReimbursementGuideEntryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.guide.ReimbursementGuideOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.InquiriesCourseOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.InquiriesRegistryOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.InquiriesRoomOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.InquiriesTeacherOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.OldInquiriesCoursesResOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.OldInquiriesSummaryOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.inquiries.OldInquiriesTeachersResOJB;
@@ -118,6 +122,10 @@ import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersisten
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuideEntry;
+import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesCourse;
+import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRegistry;
+import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRoom;
+import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesTeacher;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
@@ -1278,6 +1286,18 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	}
 	public IPersistentOldInquiriesCoursesRes getIPersistentOldInquiriesCoursesRes() {
 	    return new OldInquiriesCoursesResOJB();
+	}
+	public IPersistentInquiriesCourse getIPersistentInquiriesCourse() {
+		return new InquiriesCourseOJB();
+	}
+	public IPersistentInquiriesRegistry getIPersistentInquiriesRegistry() {
+		return new InquiriesRegistryOJB();
+	}
+	public IPersistentInquiriesRoom getIPersistentInquiriesRoom() {
+		return new InquiriesRoomOJB();
+	}
+	public IPersistentInquiriesTeacher getIPersistentInquiriesTeacher() {
+		return new InquiriesTeacherOJB();
 	}
 	//
     public IPersistentPublicationTeacher getIPersistentPublicationTeacher(){

@@ -852,4 +852,18 @@
 		<invocationTiming>2</invocationTiming>
 		<filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
 	</filterChain>
+    <filterChain>
+        <name>TimeTableManagerOrStudentAuthorization</name>
+        <expression>TimeTableManagerAuthorization || StudentAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    <filterChain>
+        <name>CoordinatorOrStudentAuthorization</name>
+        <expression>CoordinatorAuthorization || StudentAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
 </filterChainsDefinitions>

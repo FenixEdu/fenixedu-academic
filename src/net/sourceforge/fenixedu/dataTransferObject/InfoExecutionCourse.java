@@ -407,6 +407,7 @@ public class InfoExecutionCourse extends InfoObject {
             setLabHours(executionCourse.getLabHours());
             setPraticalHours(executionCourse.getPraticalHours());
             setComment(executionCourse.getComment());
+			setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(executionCourse.getExecutionPeriod()));
         }
     }
 

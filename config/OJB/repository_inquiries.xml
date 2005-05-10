@@ -1,0 +1,474 @@
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse"
+                  table="INQUIRIES_COURSE">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+
+    <field-descriptor
+        name="keyExecutionPeriod"
+        column="KEY_EXECUTION_PERIOD"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="executionPeriod"
+	  class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
+	  <foreignkey field-ref="keyExecutionPeriod"/>
+   </reference-descriptor>
+   
+   <field-descriptor
+        name="keyExecutionCourse"
+        column="KEY_EXECUTION_COURSE"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="executionCourse"
+	  class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse">
+	  <foreignkey field-ref="keyExecutionCourse"/>
+   </reference-descriptor>
+   
+   <field-descriptor
+        name="keyExecutionDegreeCourse"
+        column="KEY_EXECUTION_DEGREE_COURSE"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="executionDegreeCourse"
+	  class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree">
+	  <foreignkey field-ref="keyExecutionDegreeCourse"/>
+   </reference-descriptor>
+   
+   <field-descriptor
+        name="keyExecutionDegreeStudent"
+        column="KEY_EXECUTION_DEGREE_STUDENT"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="executionDegreeStudent"
+	  class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree">
+	  <foreignkey field-ref="keyExecutionDegreeStudent"/>
+   </reference-descriptor>
+   
+   <field-descriptor
+        name="keySchoolClass"
+        column="KEY_SCHOOL_CLASS"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="studentSchoolClass"
+	  class-ref="net.sourceforge.fenixedu.domain.SchoolClass">
+	  <foreignkey field-ref="keySchoolClass"/>
+   </reference-descriptor>
+   
+   <field-descriptor
+        name="studentCurricularYear"
+        column="STUDENT_CURRICULAR_YEAR"
+        jdbc-type="INTEGER"
+	/>
+
+   <field-descriptor
+        name="studentFirstEnrollment"
+        column="STUDENT_FIRST_ENROLLMENT"
+        jdbc-type="INTEGER"
+	/>
+
+   <field-descriptor
+        name="classCoordination"
+        column="CLASS_COORDINATION"
+        jdbc-type="DOUBLE"
+	/>
+
+   <field-descriptor
+        name="studyElementsContribution"
+        column="STUDY_ELEMENTS_CONTRIBUTION"
+        jdbc-type="DOUBLE"
+	/>
+
+   <field-descriptor
+        name="previousKnowledgeArticulation"
+        column="PREVIOUS_KNOWLEDGE_ARTICULATION"
+        jdbc-type="DOUBLE"
+	/>
+
+   <field-descriptor
+        name="contributionForGraduation"
+        column="CONTRIBUTION_FOR_GRADUATION"
+        jdbc-type="DOUBLE"
+	/>
+
+   <field-descriptor
+        name="evaluationMethodAdequation"
+        column="EVALUATION_METHOD_ADEQUATION"
+        jdbc-type="DOUBLE"
+	/>
+
+   <field-descriptor
+        name="weeklySpentHours"
+        column="WEEKLY_SPENT_HOURS"
+        jdbc-type="INTEGER"
+	/>
+
+   <field-descriptor
+        name="globalAppreciation"
+        column="GLOBAL_APPRECIATION"
+        jdbc-type="DOUBLE"
+	/>
+
+	<field-descriptor
+	  name="ackOptLock"
+	  column="ACK_OPT_LOCK"
+	  jdbc-type="INTEGER"
+	  locking="true"
+	/>
+
+</class-descriptor>
+
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry"
+                  table="INQUIRIES_REGISTRY">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+
+    <field-descriptor
+        name="keyExecutionPeriod"
+        column="KEY_EXECUTION_PERIOD"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="executionPeriod"
+	  class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
+	  <foreignkey field-ref="keyExecutionPeriod"/>
+   </reference-descriptor>
+   
+   <field-descriptor
+        name="keyExecutionCourse"
+        column="KEY_EXECUTION_COURSE"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="executionCourse"
+	  class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse">
+	  <foreignkey field-ref="keyExecutionCourse"/>
+   </reference-descriptor>
+   
+   <field-descriptor
+        name="keyExecutionDegreeCourse"
+        column="KEY_EXECUTION_DEGREE_COURSE"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="executionDegreeCourse"
+	  class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree">
+	  <foreignkey field-ref="keyExecutionDegreeCourse"/>
+   </reference-descriptor>
+   
+   <field-descriptor
+        name="keyExecutionDegreeStudent"
+        column="KEY_EXECUTION_DEGREE_STUDENT"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="executionDegreeStudent"
+	  class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree">
+	  <foreignkey field-ref="keyExecutionDegreeStudent"/>
+   </reference-descriptor>
+
+   <field-descriptor
+        name="keyStudent"
+        column="KEY_STUDENT"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="student"
+	  class-ref="net.sourceforge.fenixedu.domain.Student">
+	  <foreignkey field-ref="keyStudent"/>
+   </reference-descriptor>
+
+	<field-descriptor
+	  name="ackOptLock"
+	  column="ACK_OPT_LOCK"
+	  jdbc-type="INTEGER"
+	  locking="true"
+	/>
+
+</class-descriptor>
+
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom"
+                  table="INQUIRIES_ROOM">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+
+   <field-descriptor
+        name="keyInquiriesCourse"
+        column="KEY_INQUIRIES_COURSE"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="inquiriesCourse"
+	  class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse">
+	  <foreignkey field-ref="keyInquiriesCourse"/>
+   </reference-descriptor>
+   
+    <field-descriptor
+        name="keyExecutionPeriod"
+        column="KEY_EXECUTION_PERIOD"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="executionPeriod"
+	  class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
+	  <foreignkey field-ref="keyExecutionPeriod"/>
+   </reference-descriptor>
+   
+   <field-descriptor
+        name="keyExecutionCourse"
+        column="KEY_EXECUTION_COURSE"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="executionCourse"
+	  class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse">
+	  <foreignkey field-ref="keyExecutionCourse"/>
+   </reference-descriptor>
+   
+   <field-descriptor
+        name="keyExecutionDegreeCourse"
+        column="KEY_EXECUTION_DEGREE_COURSE"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="executionDegreeCourse"
+	  class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree">
+	  <foreignkey field-ref="keyExecutionDegreeCourse"/>
+   </reference-descriptor>
+   
+   <field-descriptor
+        name="keyExecutionDegreeStudent"
+        column="KEY_EXECUTION_DEGREE_STUDENT"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="executionDegreeStudent"
+	  class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree">
+	  <foreignkey field-ref="keyExecutionDegreeStudent"/>
+   </reference-descriptor>
+   
+   <field-descriptor
+        name="keyRoom"
+        column="KEY_ROOM"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="room"
+	  class-ref="net.sourceforge.fenixedu.domain.Room">
+	  <foreignkey field-ref="keyRoom"/>
+   </reference-descriptor>
+   
+   <field-descriptor
+        name="spaceAdequation"
+        column="SPACE_ADEQUATION"
+        jdbc-type="INTEGER"
+	/>
+
+   <field-descriptor
+        name="environmentalConditions"
+        column="ENVIRONMENTAL_CONDITIONS"
+        jdbc-type="INTEGER"
+	/>
+
+   <field-descriptor
+        name="equipmentQuality"
+        column="EQUIPMENT_QUALITY"
+        jdbc-type="INTEGER"
+	/>
+   
+	<field-descriptor
+	  name="ackOptLock"
+	  column="ACK_OPT_LOCK"
+	  jdbc-type="INTEGER"
+	  locking="true"
+	/>
+
+</class-descriptor>
+
+
+
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher"
+                  table="INQUIRIES_TEACHER">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+
+   <field-descriptor
+        name="keyInquiriesCourse"
+        column="KEY_INQUIRIES_COURSE"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="inquiriesCourse"
+	  class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse">
+	  <foreignkey field-ref="keyInquiriesCourse"/>
+   </reference-descriptor>
+   
+    <field-descriptor
+        name="keyExecutionPeriod"
+        column="KEY_EXECUTION_PERIOD"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="executionPeriod"
+	  class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
+	  <foreignkey field-ref="keyExecutionPeriod"/>
+   </reference-descriptor>
+   
+   <field-descriptor
+        name="keyExecutionCourse"
+        column="KEY_EXECUTION_COURSE"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="executionCourse"
+	  class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse">
+	  <foreignkey field-ref="keyExecutionCourse"/>
+   </reference-descriptor>
+   
+   <field-descriptor
+        name="keyExecutionDegreeCourse"
+        column="KEY_EXECUTION_DEGREE_COURSE"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="executionDegreeCourse"
+	  class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree">
+	  <foreignkey field-ref="keyExecutionDegreeCourse"/>
+   </reference-descriptor>
+   
+   <field-descriptor
+        name="keyExecutionDegreeStudent"
+        column="KEY_EXECUTION_DEGREE_STUDENT"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="executionDegreeStudent"
+	  class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree">
+	  <foreignkey field-ref="keyExecutionDegreeStudent"/>
+   </reference-descriptor>
+   
+   <field-descriptor
+        name="keyTeacher"
+        column="KEY_TEACHER"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="teacher"
+	  class-ref="net.sourceforge.fenixedu.domain.Teacher">
+	  <foreignkey field-ref="keyTeacher"/>
+   </reference-descriptor>
+   
+   <field-descriptor
+        name="keyNonAffiliatedTeacher"
+        column="KEY_NON_AFFILIATED_TEACHER"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+	  name="nonAffiliatedTeacher"
+	  class-ref="net.sourceforge.fenixedu.domain.NonAffiliatedTeacher">
+	  <foreignkey field-ref="keyNonAffiliatedTeacher"/>
+   </reference-descriptor>
+   
+   <field-descriptor
+        name="classType"
+        column="CLASS_TYPE"
+        jdbc-type="INTEGER"
+	/>
+
+   <field-descriptor
+        name="studentAssiduity"
+        column="STUDENT_ASSIDUITY"
+        jdbc-type="INTEGER"
+	/>
+
+   <field-descriptor
+        name="teacherAssiduity"
+        column="TEACHER_ASSIDUITY"
+        jdbc-type="INTEGER"
+	/>
+
+   <field-descriptor
+        name="teacherPunctuality"
+        column="TEACHER_PUNCTUALITY"
+        jdbc-type="DOUBLE"
+	/>
+
+   <field-descriptor
+        name="teacherClarity"
+        column="TEACHER_CLARITY"
+        jdbc-type="DOUBLE"
+	/>
+
+   <field-descriptor
+        name="teacherAssurance"
+        column="TEACHER_ASSURANCE"
+        jdbc-type="DOUBLE"
+	/>
+
+   <field-descriptor
+        name="teacherInterestStimulation"
+        column="TEACHER_INTEREST_SIMULATION"
+        jdbc-type="DOUBLE"
+	/>
+
+   <field-descriptor
+        name="teacherAvailability"
+        column="TEACHER_AVAILABILITY"
+        jdbc-type="DOUBLE"
+	/>
+
+   <field-descriptor
+        name="teacherReasoningStimulation"
+        column="TEACHER_REASONING_STIMULATION"
+        jdbc-type="DOUBLE"
+	/>
+
+   <field-descriptor
+        name="globalAppreciation"
+        column="GLOBAL_APPRECIATION"
+        jdbc-type="DOUBLE"
+	/>
+
+	<field-descriptor
+	  name="ackOptLock"
+	  column="ACK_OPT_LOCK"
+	  jdbc-type="INTEGER"
+	  locking="true"
+	/>
+
+</class-descriptor>

@@ -78,6 +78,10 @@ public interface IPersistentEnrollment extends IPersistentObject {
             IStudentCurricularPlan studentCurricularPlan, EnrollmentState enrollmentState,
             IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 
+    public List readAllEnrolmentsByStudentCurricularPlanIdAndExecutionPeriodId(
+            Integer studentCurricularPlanId, Integer executionPeriodId)
+            throws ExcepcaoPersistencia;
+
     /**
      * @param curricularCourse
      * @param executionPeriod

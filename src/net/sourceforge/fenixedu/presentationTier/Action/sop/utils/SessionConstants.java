@@ -74,7 +74,9 @@ public abstract class SessionConstants {
 
     public static final String EXECUTION_PERIOD = "execution_period";
 
-    public static final String EXECUTION_PERIOD_OID = "executionPeriodOID";
+    public static final String CURRENT_EXECUTION_PERIOD = "current_execution_period";
+
+	public static final String EXECUTION_PERIOD_OID = "executionPeriodOID";
 
     public static final String STUDENT_CURRICULAR_PLAN_OID = "student_curricular_plan_oid";
 

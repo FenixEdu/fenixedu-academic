@@ -60,7 +60,7 @@ public class InfoFrequenta extends InfoObject {
             InfoFrequenta frequenta = (InfoFrequenta) obj;
             resultado = //getCodigoInterno().equals(((Attends)obj).getCodigoInterno());
             getAluno().equals(frequenta.getAluno())
-                    && getDisciplinaExecucao().equals(getDisciplinaExecucao());
+                    && getDisciplinaExecucao().equals(frequenta.getDisciplinaExecucao());
         }
         return resultado;
     }
@@ -85,6 +85,9 @@ public class InfoFrequenta extends InfoObject {
 
     public void copyFromDomain(IAttends frequenta) {
         super.copyFromDomain(frequenta);
+		this.setAluno(InfoStudent.newInfoFromDomain(frequenta.getAluno()));
+		this.setDisciplinaExecucao(InfoExecutionCourse.newInfoFromDomain(frequenta.getDisciplinaExecucao()));
+		this.setInfoEnrolment(InfoEnrolment.newInfoFromDomain(frequenta.getEnrolment()));
     }
 
     public static InfoFrequenta newInfoFromDomain(IAttends frequenta) {

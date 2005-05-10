@@ -83,6 +83,15 @@ public class EnrollmentOJB extends PersistentObjectOJB implements IPersistentEnr
         return queryList(Enrolment.class, criteria);
     }
 
+    public List readAllEnrolmentsByStudentCurricularPlanIdAndExecutionPeriodId(
+            Integer studentCurricularPlanId, Integer executionPeriodId)
+            throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("studentCurricularPlan.idInternal", studentCurricularPlanId);
+        criteria.addEqualTo("executionPeriod.idInternal", executionPeriodId);
+        return queryList(Enrolment.class, criteria);
+    }
+
     public List readByCurricularCourseAndYear(ICurricularCourse curricularCourse, String year)
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();

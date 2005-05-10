@@ -467,7 +467,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="TimeTableManagerAuthorization"/>
+            <chain name="TimeTableManagerOrStudentAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -685,6 +685,26 @@
         <name>ReadDisciplinesByStudent</name>
         <implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.student.ReadDisciplinesByStudent</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="StudentAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>student.ReadAttendsByStudentIdAndExecutionPeriodId</name>
+        <implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.student.ReadAttendsByStudentIdAndExecutionPeriodId
+		</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="StudentAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>student.ReadAttendsByOID</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.ReadAttendsByOID</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
@@ -2829,6 +2849,15 @@
         <name>ReadTeachersByExecutionCourseProfessorship</name>
         <implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadTeachersByExecutionCourseProfessorship</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+    </service>
+    <service>
+        <name>ReadTeachersOrNonAffiliatedTeachersByExecutionCourseProfessorship</name>
+        <implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher.ReadTeachersOrNonAffiliatedTeachersByExecutionCourseProfessorship
+		</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains/>
@@ -7389,6 +7418,17 @@
         </filterChains>
     </service>
     <service>
+        <name>student.ReadEnrolledCurricularCoursesByStudentAndExecutionPeriod</name>
+        <implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.student.ReadEnrolledCurricularCoursesByStudentAndExecutionPeriod
+		</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>         
+			<chain name="StudentAuthorization" />
+        </filterChains>
+    </service>
+    <service>
         <name>ReadSeniorInfoByUsername</name>
         <implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.student.ReadSeniorInfoByUsername</implementationClass>
@@ -7822,7 +7862,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="CoordinatorAuthorization"/>
+            <chain name="CoordinatorOrStudentAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -7954,6 +7994,10 @@
         <description/>
         <isTransactional>true</isTransactional>
     </service>
+	
+	
+	<!-- ================================= INQUIRIES ================================= -->	
+	
 	<service>
 		<name>ReadOldIquiriesSummaryByDegreeIDAndExecutionPeriodID</name>
 		<implementationClass> 
@@ -8036,6 +8080,22 @@
 		<filterChains>
 			<chain name="TeacherAuthorization"/>
 		</filterChains>
+	</service>
+	<service>
+		<name>inquiries.WriteInquiry</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.WriteInquiry
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+	</service>
+	<service>
+		<name>inquiries.ReadInquiriesRegistriesByStudent</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.ReadInquiriesRegistriesByStudent
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
 	</service>
 	
 	<!-- =============================================================================================== -->

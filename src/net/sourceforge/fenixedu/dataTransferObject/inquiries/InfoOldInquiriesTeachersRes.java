@@ -805,7 +805,7 @@ public class InfoOldInquiriesTeachersRes extends InfoObject implements
         }
     }
     
-    public InfoOldInquiriesTeachersRes newInfoFromDomain(IOldInquiriesTeachersRes oldInquiriesTeachersRes) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    public static InfoOldInquiriesTeachersRes newInfoFromDomain(IOldInquiriesTeachersRes oldInquiriesTeachersRes) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         InfoOldInquiriesTeachersRes newInfo = null;
         if(oldInquiriesTeachersRes != null) {
             newInfo = new InfoOldInquiriesTeachersRes();

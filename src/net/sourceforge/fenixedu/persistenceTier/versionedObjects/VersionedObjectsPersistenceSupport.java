@@ -32,6 +32,10 @@ import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersisten
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuideEntry;
+import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesCourse;
+import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRegistry;
+import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRoom;
+import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesTeacher;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
@@ -849,6 +853,26 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     public IPersistentOldInquiriesCoursesRes getIPersistentOldInquiriesCoursesRes() {
         return null;
     }
+
+	public IPersistentInquiriesCourse getIPersistentInquiriesCourse() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public IPersistentInquiriesRegistry getIPersistentInquiriesRegistry() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public IPersistentInquiriesRoom getIPersistentInquiriesRoom() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public IPersistentInquiriesTeacher getIPersistentInquiriesTeacher() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
     public IPersistentInstitution getIPersistentInstitution() {
         return null;

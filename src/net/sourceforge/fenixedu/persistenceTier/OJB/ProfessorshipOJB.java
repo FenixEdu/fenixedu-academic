@@ -90,6 +90,12 @@ public class ProfessorshipOJB extends PersistentObjectOJB implements IPersistent
         return queryList(Professorship.class, crit);
     }
 
+    public List readByExecutionCourseId(Integer executionCourseId) throws ExcepcaoPersistencia {
+        Criteria crit = new Criteria();
+        crit.addEqualTo("executionCourse.idInternal", executionCourseId);
+        return queryList(Professorship.class, crit);
+    }
+
     public void delete(IProfessorship professorship) throws ExcepcaoPersistencia {
         super.delete(professorship);
     }

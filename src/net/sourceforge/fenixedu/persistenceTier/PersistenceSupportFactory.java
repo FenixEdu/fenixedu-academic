@@ -24,8 +24,8 @@ public class PersistenceSupportFactory {
         final String defaultPersistenceSupportClassName = PropertiesManager.getProperty("default.persistenceSupport");
         try {
             final Class defaultPersistenceSupportClass = Class.forName(defaultPersistenceSupportClassName);
-            final Method getInstanceMethod = defaultPersistenceSupportClass.getMethod("getInstance", (Class[]) null);
-            defaultPersistenceSupport = (ISuportePersistente) getInstanceMethod.invoke((Object[]) null, (Object[]) null);
+            final Method getInstanceMethod = defaultPersistenceSupportClass.getMethod("getInstance", (Class[])null);
+            defaultPersistenceSupport = (ISuportePersistente) getInstanceMethod.invoke(null, (Object[])null);
         } catch (Exception e) {
             throw new RuntimeException("Unable to determine/obtain a default persistence support", e);
         }

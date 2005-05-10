@@ -91,7 +91,9 @@
 		<table>
 			<tr>
 				<td class="invisible">
-					<h3>M&eacute;dia da Aprecia&ccedil;&atilde;o das Disciplinas da Licenciatura:&nbsp;</h3>
+					<h3>
+						<bean:message key="label.inquiries.degree.courses.appreciation" bundle="INQUIRIES_RESOURCES"/>
+					</h3>
 				</td>
 				<%
 				out.print(
@@ -102,7 +104,9 @@
 			</tr>			
 			<tr>
 				<td class="invisible">
-					<h3>M&eacute;dia da Aprecia&ccedil;&atilde;o das Docentes da Licenciatura:&nbsp;</h3>
+					<h3>
+						<bean:message key="label.inquiries.degree.teachers.appreciation" bundle="INQUIRIES_RESOURCES"/>
+					</h3>
 				</td>
 				<%
 				out.print(

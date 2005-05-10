@@ -153,4 +153,27 @@
 	</definition>
 	<!-- END SENIOR INFO DEFINITIONS -->
 	
+	<!-- =================== Fill Inquiries ============== -->
+	<definition name="inquiry-introduction" 
+		extends="definition.student.masterPage">
+		<put name="body" value="/student/inquiries/inquiryIntroduction.jsp"></put>
+	</definition>
+	<definition name="fill-inquiry"
+		extends="definition.student.masterPage">	
+		<put name="body" value="/student/inquiries/fillInquiry.jsp"></put>
+	</definition>
+	<definition name="confirm-inquiry-submition" 
+		extends="definition.student.masterPage">
+		<put name="body" value="/student/inquiries/confirmInquirySubmition.jsp"></put>
+	</definition>
+	<definition name="inquiry-submition-result" 
+		extends="definition.student.masterPage">
+		<put name="body" value="/student/inquiries/inquirySubmitionResult.jsp"></put>
+	</definition>
+	<definition name="unavailable-inquiry" 
+		extends="definition.student.masterPage">
+		<put name="body" value="/student/inquiries/unavailableInquiry.jsp"></put>
+	</definition>
+
+	
 </tiles-definitions>

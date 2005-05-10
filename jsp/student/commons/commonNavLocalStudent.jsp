@@ -8,7 +8,7 @@
 	 	<li><html:link page="/studentShiftEnrollmentManager.do?method=prepareStartViewWarning"><bean:message key="link.shift.enrolment"/></html:link></li>
 	  	<li><html:link page="/viewEnroledExecutionCourses.do" ><bean:message key="link.groupEnrolment" /></html:link></li>
 	  	<li><html:link page="/examEnrollmentManager.do?method=viewExamsToEnroll" ><bean:message key="link.exams.enrolment"/></html:link></li>
-	  	<li><html:link page="/listAllSeminaries.do"> <bean:message key="link.seminaries.enrolment"/></html:link> <a href='<bean:message key="link.seminaries.rules" />' target="_blank"><bean:message key="label.seminairies.seeRules"/></a></li>
+	  	<li><html:link page="/listAllSeminaries.do"> <bean:message key="link.seminaries.enrolment"/></html:link><br/> <a href='<bean:message key="link.seminaries.rules" />' target="_blank"><bean:message key="label.seminairies.seeRules"/></a></li>
 	</ul>
 </ul>
 <ul>
@@ -34,3 +34,15 @@
 <ul>
   	<li><html:link page="/seniorInformation.do?method=prepareEdit&amp;page=0" ><bean:message key="link.senior.info"/></html:link></li>
 </ul>
+
+<ul>
+  <li>
+	<bean:define id="title">
+		<bean:message key="link.inquiries.information" bundle="INQUIRIES_RESOURCES"/>
+	</bean:define>
+	<html:link href="<%= request.getContextPath() + "/student/fillInquiries.do?method=prepareCourses&amp;page=0" %>" title='<%= title %>'>
+		<bean:message key="link.inquiries" bundle="INQUIRIES_RESOURCES"/>
+	</html:link>
+  </li>
+</ul>
+  

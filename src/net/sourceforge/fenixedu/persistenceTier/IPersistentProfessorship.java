@@ -27,6 +27,8 @@ public interface IPersistentProfessorship extends IPersistentObject {
             IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
 
     public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
+	
+    public List readByExecutionCourseId(Integer executionCourseId) throws ExcepcaoPersistencia;
 
     public void delete(IProfessorship professorship) throws ExcepcaoPersistencia;
 

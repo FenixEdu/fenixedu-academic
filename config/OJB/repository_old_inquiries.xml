@@ -261,7 +261,14 @@
          column="AVERAGE_6_3"
     	  jdbc-type="DOUBLE"
     />
-	
+
+	<field-descriptor
+	  name="ackOptLock"
+	  column="ACK_OPT_LOCK"
+	  jdbc-type="INTEGER"
+	  locking="true"
+	/>
+
 </class-descriptor>
 
 
@@ -625,6 +632,13 @@
          jdbc-type="INTEGER"
     />
 
+	<field-descriptor
+	  name="ackOptLock"
+	  column="ACK_OPT_LOCK"
+	  jdbc-type="INTEGER"
+	  locking="true"
+	/>
+
 </class-descriptor>
 
 
@@ -903,5 +917,12 @@
          column="N_ANSWERS_2_8"
     	  jdbc-type="INTEGER"
     />
-	
+
+	<field-descriptor
+	  name="ackOptLock"
+	  column="ACK_OPT_LOCK"
+	  jdbc-type="INTEGER"
+	  locking="true"
+	/>
+
 </class-descriptor>

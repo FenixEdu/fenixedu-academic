@@ -9,6 +9,10 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
+
+import org.apache.commons.collections.Predicate;
+
 /**
  * @author Luis Cruz
  *  
@@ -41,4 +45,20 @@ public class CollectionUtils extends org.apache.commons.collections.CollectionUt
         }
         return result;
     }
+
+	public static InfoObject getByInternalId(Collection infoObjectList, final Integer idInternal) {
+		InfoObject infoObject = (InfoObject) CollectionUtils
+		.find(infoObjectList, new Predicate() {
+
+			public boolean evaluate(Object obj) {
+				InfoObject infoObj = (InfoObject) obj;
+				return infoObj.getIdInternal().equals(
+						idInternal);
+			}
+
+		});
+
+		return infoObject;
+	}
+
 }

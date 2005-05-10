@@ -159,7 +159,79 @@
 			<form-property name="lastModificationDate" type="java.util.Date" />
       </form-bean>
 
+	  <!-- =================== Fill Inquiries ============== -->
+      <form-bean name="fillInquiriesForm" 
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+				 
+        	<form-property type="java.lang.String" name="method" />
+        	<form-property type="java.lang.Integer" name="page" />
+        	<form-property type="java.lang.Integer" name="studentAttendsId" />
+			
+			<form-property type="java.lang.Integer" name="studentExecutionDegreeId" />
+			<form-property type="java.lang.Integer" name="attendingCourseExecutionDegreeId" />
+        	<form-property type="java.lang.Integer" name="attendingExecutionCourseId" />
+			
+			<form-property type="java.lang.Integer" name="curricularYear" />
+			<form-property type="java.lang.Boolean" name="firstEnrollment" />
+        	<form-property type="java.lang.Integer" name="attendingCourseSchoolClassId" />
+			
+			<form-property type="java.lang.Double" name="executionCourseQuestion22" />
+			<form-property type="java.lang.Double" name="executionCourseQuestion23" />
+			<form-property type="java.lang.Double" name="executionCourseQuestion24" />
+			<form-property type="java.lang.Double" name="executionCourseQuestion25" />
+			<form-property type="java.lang.Double" name="executionCourseQuestion26" />
+			<form-property type="java.lang.Integer" name="executionCourseQuestion27" />
+			<form-property type="java.lang.Double" name="executionCourseQuestion28" />
+			
+			<form-property type="java.lang.Integer" name="newAttendingCourseTeacherId" />
+			<form-property type="java.lang.Integer" name="newAttendingCourseNonAffiliatedTeacherId" />
+			<form-property type="java.lang.Integer" name="selectedAttendingCourseTeacherFormPosition" />
 
+			<form-property type="java.lang.Integer[]" name="selectedAttendingCourseTeachersId" />			
+            <form-property type="java.lang.Boolean[]" name="selectedAttendingCourseTeacherIsAffiliated"/>
+            <form-property type="java.lang.Boolean[]" name="selectedAttendingCourseTeachersClassTypeT"/>
+            <form-property type="java.lang.Boolean[]" name="selectedAttendingCourseTeachersClassTypeP"/>
+            <form-property type="java.lang.Boolean[]" name="selectedAttendingCourseTeachersClassTypeL"/>
+            <form-property type="java.lang.Boolean[]" name="selectedAttendingCourseTeachersClassTypeTP"/>
+			<form-property type="java.lang.Integer[]" name="selectedAttendingCourseTeachersQuestion33" />
+			<form-property type="java.lang.Integer[]" name="selectedAttendingCourseTeachersQuestion34" />
+			<form-property type="java.lang.Double[]" name="selectedAttendingCourseTeachersQuestion35" />
+			<form-property type="java.lang.Double[]" name="selectedAttendingCourseTeachersQuestion36" />
+			<form-property type="java.lang.Double[]" name="selectedAttendingCourseTeachersQuestion37" />
+			<form-property type="java.lang.Double[]" name="selectedAttendingCourseTeachersQuestion38" />
+			<form-property type="java.lang.Double[]" name="selectedAttendingCourseTeachersQuestion39" />
+			<form-property type="java.lang.Double[]" name="selectedAttendingCourseTeachersQuestion310" />
+			<form-property type="java.lang.Double[]" name="selectedAttendingCourseTeachersQuestion311" />
+			
+			<form-property type="java.lang.Integer" name="currentAttendingCourseTeacherFormPosition" />
+			<!--form-property type="java.lang.Integer" name="currentAttendingCourseTeacherId" /-->
+            <form-property type="java.lang.Integer[]" name="currentAttendingCourseTeacherClassType"/>
+			<form-property type="java.lang.Integer" name="currentAttendingCourseTeacherQuestion33" />
+			<form-property type="java.lang.Integer" name="currentAttendingCourseTeacherQuestion34" />
+			<form-property type="java.lang.Double" name="currentAttendingCourseTeacherQuestion35" />
+			<form-property type="java.lang.Double" name="currentAttendingCourseTeacherQuestion36" />
+			<form-property type="java.lang.Double" name="currentAttendingCourseTeacherQuestion37" />
+			<form-property type="java.lang.Double" name="currentAttendingCourseTeacherQuestion38" />
+			<form-property type="java.lang.Double" name="currentAttendingCourseTeacherQuestion39" />
+			<form-property type="java.lang.Double" name="currentAttendingCourseTeacherQuestion310" />
+			<form-property type="java.lang.Double" name="currentAttendingCourseTeacherQuestion311" />
+			
+			<form-property type="java.lang.Integer" name="newAttendingCourseRoomId" />
+			
+			<form-property type="java.lang.Integer" name="selectedAttendingCourseRoomId" />			
+			<form-property type="java.lang.Integer[]" name="selectedAttendingCourseRoomsId" />			
+			<form-property type="java.lang.Integer[]" name="selectedAttendingCourseRoomsQuestion41" />
+			<form-property type="java.lang.Integer[]" name="selectedAttendingCourseRoomsQuestion42" />
+			<form-property type="java.lang.Integer[]" name="selectedAttendingCourseRoomsQuestion43" />
+
+			<form-property type="java.lang.Integer" name="currentAttendingCourseRoomId" />			
+			<form-property type="java.lang.Integer" name="currentAttendingCourseRoomQuestion41" />
+			<form-property type="java.lang.Integer" name="currentAttendingCourseRoomQuestion42" />
+			<form-property type="java.lang.Integer" name="currentAttendingCourseRoomQuestion43" />
+			
+		</form-bean>
+		
      </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -738,6 +810,22 @@
 			input="/seniorInformation.do?method=prepareEdit&amp;page=0">
 			<forward name="show-form" path="senior-info-management"/>
 			<forward name="show-result" path="senior-info"/>
+		</action>
+  
+  		<!-- =================== Fill Inquiries ============== -->
+		<action path="/fillInquiries"
+			type="net.sourceforge.fenixedu.presentationTier.Action.student.inquiries.FillInquiryAction"
+			name = "fillInquiriesForm"
+			scope="request"
+			input="/fillInquiries.do?method=viewAttendingCourses&amp;page=0"
+			parameter="method"
+			>
+
+			<forward name="inquiryIntroduction" path="inquiry-introduction"/>
+			<forward name="fillInquiry" path="fill-inquiry" />
+			<forward name="confirmInquirySubmition" path="confirm-inquiry-submition"/>
+			<forward name="inquirySubmitionResult" path="inquiry-submition-result"/>
+			<forward name="unavailableInquiry" path="unavailable-inquiry"/>
 		</action>
   
 	</action-mappings>     

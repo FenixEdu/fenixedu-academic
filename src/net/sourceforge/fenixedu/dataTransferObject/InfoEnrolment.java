@@ -225,7 +225,10 @@ public class InfoEnrolment extends InfoObject {
             setEnrollmentState(enrollment.getEnrollmentState());
             setAccumulatedWeight(enrollment.getAccumulatedWeight());
             setCondition(enrollment.getCondition());
-
+			setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(enrollment.getCurricularCourse()));
+			setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(enrollment.getExecutionPeriod()));
+			setInfoStudentCurricularPlan(InfoStudentCurricularPlan.newInfoFromDomain(enrollment.getStudentCurricularPlan()));
+			
             if (enrollment instanceof EnrolmentInExtraCurricularCourse) {
                 setEnrollmentTypeResourceKey("option.curricularCourse.extra");
             } else if (enrollment instanceof EnrolmentInOptionalCurricularCourse) {

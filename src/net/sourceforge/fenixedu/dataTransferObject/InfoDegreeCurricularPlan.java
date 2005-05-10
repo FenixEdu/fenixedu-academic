@@ -299,6 +299,7 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
             setDegreeDuration(plan.getDegreeDuration());
             setMinimalYearForOptionalCourses(plan.getMinimalYearForOptionalCourses());
             setAnotation(plan.getAnotation());
+			setInfoDegree(InfoDegree.newInfoFromDomain(plan.getDegree()));
         }
     }
 

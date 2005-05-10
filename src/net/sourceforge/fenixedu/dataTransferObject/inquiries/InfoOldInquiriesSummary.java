@@ -590,6 +590,17 @@ public class InfoOldInquiriesSummary extends InfoObject implements Comparable{
     public void setSemester(Integer semester) {
         this.semester = semester;
     }
+
+    
+    public static InfoOldInquiriesSummary newInfoFromDomain(IOldInquiriesSummary oldInquiriesSummary) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+        InfoOldInquiriesSummary newInfo = null;
+        if(oldInquiriesSummary != null) {
+            newInfo = new InfoOldInquiriesSummary();
+            newInfo.copyFromDomain(oldInquiriesSummary);
+        }
+        return newInfo;
+    }
+       
     public void copyFromDomain(IOldInquiriesSummary oldInquiresSummary) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         if (oldInquiresSummary != null) {
             super.copyFromDomain(oldInquiresSummary);

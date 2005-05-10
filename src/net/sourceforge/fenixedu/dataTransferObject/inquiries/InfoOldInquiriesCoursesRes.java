@@ -614,6 +614,15 @@ public class InfoOldInquiriesCoursesRes extends InfoObject implements
         return 0;
     }
     
+    public static InfoOldInquiriesCoursesRes newInfoFromDomain(IOldInquiriesCoursesRes oldInquiriesCoursesRes) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+        InfoOldInquiriesCoursesRes newInfo = null;
+        if(oldInquiriesCoursesRes != null) {
+            newInfo = new InfoOldInquiriesCoursesRes();
+            newInfo.copyFromDomain(oldInquiriesCoursesRes);
+        }
+        return newInfo;
+    }
+       
     public void copyFromDomain(IOldInquiriesCoursesRes oldInquiriesCoursesRes) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         if (oldInquiriesCoursesRes != null) {
             super.copyFromDomain(oldInquiriesCoursesRes);

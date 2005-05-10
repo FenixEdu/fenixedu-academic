@@ -122,6 +122,7 @@ public class InfoStudent extends InfoObject {
             setDegreeType(student.getDegreeType());
             setState(student.getState());
             setPayedTuition(student.getPayedTuition());
+            setInfoPerson(InfoPerson.newInfoFromDomain(student.getPerson()));
         }
     }
 
