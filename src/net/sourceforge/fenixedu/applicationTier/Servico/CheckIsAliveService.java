@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico;
 
+import java.util.Random;
+
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.fileSuport.FileSuport;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
@@ -12,12 +14,18 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class CheckIsAliveService implements IService {
 
+    
     private static final String filename = "checkIsAlive";
-    private static final String filepath = "/" + filename;
+    private static final String filepath;
 
     private static final FileSuportObject fileSuportObject = new FileSuportObject();
 
     static {
+        final Random random = new Random(System.currentTimeMillis());
+        final int someInt = random.nextInt();
+
+        filepath = "/" + filename + System.getenv().get("HOSTNAME") + someInt;
+
         byte[] fileContents = CheckIsAliveService.class.getName().getBytes();
 
         fileSuportObject.setFileName(filename);
