@@ -488,6 +488,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 							if (user.equals("sop")) {
 								strBuffer.append("-");
 							} else if (user.equals("public")) {
+                                strBuffer.append("<td class='"+rowClass+"'>");
 								strBuffer.append("<i>");
                                 strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.noRoomsAttributed"));
                                 strBuffer.append("</i>");
@@ -615,9 +616,11 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 							if (user.equals("sop")) {
 								strBuffer.append("-");
 							} else if (user.equals("public")){
+                                strBuffer.append("<td class='"+rowClass+"'>");
 								strBuffer.append("<i>");
                                 strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.noRoomsAttributed"));
                                 strBuffer.append("</i>");
+                                strBuffer.append("</td>");
 							}
 						}
 						
