@@ -35,7 +35,13 @@
 
 	<!-- COURSE NAME -->
 	<h1>
-		<bean:write name="infoDegreeInfo" property="infoDegree.tipoCurso" />
+	    <bean:define id="degreeType" name="infoDegreeInfo" property="infoDegree.tipoCurso.name" />
+		<logic:equal name="degreeType" value="DEGREE" >
+		    <bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.degreeType" />
+		</logic:equal>    
+		<logic:equal name="degreeType" value="MASTER_DEGREE" >
+		    <bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.masterDegreeType" />
+		</logic:equal>   
 		<bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in" />
 		<bean:write name="infoDegreeInfo" property="infoDegree.nome" />
 	</h1>

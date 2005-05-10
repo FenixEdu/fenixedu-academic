@@ -16,6 +16,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularSemester;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
@@ -160,12 +161,15 @@ public class ReadFilteredExamsMap implements IService {
                     for (int h = 0; h < associatedCurricularCourseScope.size(); h++) {
                         InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) associatedCurricularCourseScope
                                 .get(h);
-
+                      boolean isCurricularYearEqual = false;
+                    
+                      if(infoCurricularCourseScope!=null){                    
                         InfoCurricularYear infoCurricularYear = infoCurricularCourseScope
                                 .getInfoCurricularSemester().getInfoCurricularYear();
 
-                        boolean isCurricularYearEqual = infoCurricularYear.getYear().equals(
+                        isCurricularYearEqual = infoCurricularYear.getYear().equals(
                                 curricularYears.get(i));
+                     
 
                         // obter o curricular plan a partir do curricular
                         // course scope
@@ -184,6 +188,7 @@ public class ReadFilteredExamsMap implements IService {
                             associatedInfoExams.add(infoExam);
                             break;
                         }
+                      } 
                     }
                 }
                 infoExecutionCourse.setAssociatedInfoExams(associatedInfoExams);
