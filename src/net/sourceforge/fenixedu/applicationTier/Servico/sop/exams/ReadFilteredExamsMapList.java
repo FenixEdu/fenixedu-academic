@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
@@ -24,6 +23,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecut
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -31,82 +31,39 @@ import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class ReadFilteredExamsMapList implements IServico {
+public class ReadFilteredExamsMapList implements IService {
 
-    private static ReadFilteredExamsMapList servico = new ReadFilteredExamsMapList();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadFilteredExamsMapList getService() {
-        return servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private ReadFilteredExamsMapList() {
-    }
-
-    /**
-     * Devolve o nome do servico
-     */
-    public String getNome() {
-        return "ReadFilteredExamsMapList";
-    }
-
-  
-    
-    
 	public InfoExamsMap run(List infoExecutionDegreeList, List curricularYears,
-			   InfoExecutionPeriod infoExecutionPeriod) {
+			   InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia {
+        final ISuportePersistente persistentSuppot = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentExecutionDegree persistentExecutionDegree = persistentSuppot.getIPersistentExecutionDegree();
 
 		   // Object to be returned
 		   InfoExamsMap infoExamsMap = new InfoExamsMap();
 
 		   // Set Execution Degree
-		   InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
-		   infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList.get(0);
+		   InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList.get(0);
 		   infoExamsMap.setInfoExecutionDegree(infoExecutionDegree);
 
 		   // Set List of Curricular Years
 		   infoExamsMap.setCurricularYears(curricularYears);
  
-		   // TODO: change this code when exams season available from database
-		   // Exam seasons hardcoded because this information
-		   // is not yet available from the database
-		   Calendar startSeason1 = Calendar.getInstance();
-		   startSeason1.set(Calendar.YEAR, 2005);
-		   startSeason1.set(Calendar.MONTH, Calendar.JANUARY);
-		   startSeason1.set(Calendar.DAY_OF_MONTH, 3);
-		   startSeason1.set(Calendar.HOUR_OF_DAY, 0);
-		   startSeason1.set(Calendar.MINUTE, 0);
-		   startSeason1.set(Calendar.SECOND, 0);
-		   startSeason1.set(Calendar.MILLISECOND, 0);
-		   Calendar endSeason2 = Calendar.getInstance();
-		   endSeason2.set(Calendar.YEAR, 2005);
-		   endSeason2.set(Calendar.MONTH, Calendar.FEBRUARY);
-		   endSeason2.set(Calendar.DAY_OF_MONTH, 12);
-		   endSeason2.set(Calendar.HOUR_OF_DAY, 0);
-		   endSeason2.set(Calendar.MINUTE, 0);
-		   endSeason2.set(Calendar.SECOND, 0);
-		   endSeason2.set(Calendar.MILLISECOND, 0);
+           final IExecutionDegree executionDegreeFromDB = (IExecutionDegree) persistentExecutionDegree.readByOID(ExecutionDegree.class, infoExecutionDegree.getIdInternal());
 
-//			 if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LEC")) {
-//				 startSeason1.set(Calendar.DAY_OF_MONTH, 21);
-//				 endSeason2.set(Calendar.DAY_OF_MONTH, 17);
-//			 }
-//			 if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LET")) {
-//				 startSeason1.set(Calendar.DAY_OF_MONTH, 21);
-//				 endSeason2.set(Calendar.DAY_OF_MONTH, 17);
-//			 }
-//			 if (infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla().equals("LA")) {
-//				 startSeason1.set(Calendar.DAY_OF_MONTH, 21);
-//				 endSeason2.set(Calendar.DAY_OF_MONTH, 17);
-//			 }
+           final Calendar startSeason1;
+           final Calendar endSeason2;
+           if (infoExecutionPeriod.getSemester().intValue() == 1) {
+               startSeason1 = executionDegreeFromDB.getPeriodExamsFirstSemester().getStartDate();
+               endSeason2 = executionDegreeFromDB.getPeriodExamsFirstSemester().getEndDate();
+           } else {
+               startSeason1 = executionDegreeFromDB.getPeriodExamsSecondSemester().getStartDate();
+               endSeason2 = executionDegreeFromDB.getPeriodExamsSecondSemester().getEndDate();
+           }
 
 		   // Set Exam Season info
 		   infoExamsMap.setStartSeason1(startSeason1);
