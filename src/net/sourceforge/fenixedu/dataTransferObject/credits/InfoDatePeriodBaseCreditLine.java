@@ -5,6 +5,8 @@ package net.sourceforge.fenixedu.dataTransferObject.credits;
 
 import java.util.Date;
 
+import net.sourceforge.fenixedu.domain.credits.IServiceExemptionCreditLine;
+
 /**
  * @author jpvl
  */
@@ -41,6 +43,11 @@ public abstract class InfoDatePeriodBaseCreditLine extends InfoCreditLine {
      */
     public void setStart(Date start) {
         this.start = start;
+    }
+
+    public void populateDomainObject(IServiceExemptionCreditLine serviceExemptionCreditLine) {
+        serviceExemptionCreditLine.setEnd(getEnd());
+        serviceExemptionCreditLine.setStart(getStart());
     }
 
 }

@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.util.credits.ServiceExemptionType;
+import net.sourceforge.fenixedu.domain.credits.ServiceExemptionType;
 
 import org.apache.commons.beanutils.ConversionException;
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
@@ -22,7 +22,7 @@ public class ServiceExemptionTypeFieldConversion implements FieldConversion {
     public Object javaToSql(Object obj) throws ConversionException {
         if (obj instanceof ServiceExemptionType) {
             ServiceExemptionType serviceExemptionType = (ServiceExemptionType) obj;
-            return new Integer(serviceExemptionType.getValue());
+            return serviceExemptionType.toString();
         }
         return obj;
     }
@@ -34,10 +34,10 @@ public class ServiceExemptionTypeFieldConversion implements FieldConversion {
      */
     public Object sqlToJava(Object obj) throws ConversionException {
         ServiceExemptionType serviceExemptionType = null;
-        if (obj instanceof Integer) {
-            Integer serviceExemptionId = (Integer) obj;
+        if (obj instanceof String) {
+            String serviceExemption = (String) obj;
 
-            serviceExemptionType = ServiceExemptionType.getEnum(serviceExemptionId.intValue());
+            serviceExemptionType = ServiceExemptionType.valueOf(serviceExemption);
 
             if (serviceExemptionType == null) {
                 throw new IllegalArgumentException(this.getClass().getName()

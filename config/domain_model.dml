@@ -268,9 +268,9 @@ class net.sourceforge.fenixedu.domain.credits.CreditLine extends net.sourceforge
         
         class net.sourceforge.fenixedu.domain.credits.ServiceExemptionCreditLine extends net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine {
             interface "
-            public net.sourceforge.fenixedu.util.credits.ServiceExemptionType getType();
+            public net.sourceforge.fenixedu.domain.credits.ServiceExemptionType getType();
             
-            public void setType(net.sourceforge.fenixedu.util.credits.ServiceExemptionType type);
+            public void setType(net.sourceforge.fenixedu.domain.credits.ServiceExemptionType type);
             "
         }
 

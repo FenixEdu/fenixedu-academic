@@ -3,7 +3,8 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.credits;
 
-import net.sourceforge.fenixedu.util.credits.ServiceExemptionType;
+import net.sourceforge.fenixedu.domain.credits.IServiceExemptionCreditLine;
+import net.sourceforge.fenixedu.domain.credits.ServiceExemptionType;
 
 /**
  * @author jpvl
@@ -24,6 +25,11 @@ public class InfoServiceExemptionCreditLine extends InfoDatePeriodBaseCreditLine
      */
     public void setType(ServiceExemptionType type) {
         this.type = type;
+    }
+
+    public void populateDomainObject(IServiceExemptionCreditLine serviceExemptionCreditLine) {
+        super.populateDomainObject(serviceExemptionCreditLine);
+        serviceExemptionCreditLine.setType(getType());
     }
 
 }

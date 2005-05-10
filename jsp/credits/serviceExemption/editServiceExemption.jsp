@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles"%>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
 
 <logic:messagesPresent>
 	<html:errors/>
@@ -24,13 +25,9 @@
 				<strong><bean:message key="label.serviceExemption.type" bundle="TEACHER_CREDITS_SHEET_RESOURCES" /></strong>
 			</td>
 			<td>
+				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.credits.ServiceExemptionType" bundle="ENUMERATION_RESOURCES"/>
 				<html:select property="type">
-					<logic:iterate id="type" name="serviceExemptionTypes">
-						<bean:define id="value" name="type" property="value"/>
-						<html:option value="<%= value.toString() %>">
-							<bean:message name="type" property="name" bundle="ENUMERATION_RESOURCES"/>
-						</html:option>
-					</logic:iterate>
+					<html:options collection="values" property="value" labelProperty="label"/>
 				</html:select>
 			</td>
 		</tr>

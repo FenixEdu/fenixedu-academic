@@ -15,11 +15,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoServiceExemptionCreditLine;
+import net.sourceforge.fenixedu.domain.credits.ServiceExemptionType;
 import net.sourceforge.fenixedu.presentationTier.Action.framework.CRUDActionByOID;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.mapping.framework.CRUDMapping;
-import net.sourceforge.fenixedu.util.credits.ServiceExemptionType;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
@@ -46,8 +46,7 @@ public class CRUDServiceExemptionAction extends CRUDActionByOID {
         serviceExemptionForm.set("teacherId", infoServiceExemptionCreditLine.getInfoTeacher()
                 .getIdInternal());
 
-        serviceExemptionForm.set("type", String.valueOf(infoServiceExemptionCreditLine.getType()
-                .getValue()));
+        serviceExemptionForm.set("type", infoServiceExemptionCreditLine.getType().toString());
 
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -66,7 +65,7 @@ public class CRUDServiceExemptionAction extends CRUDActionByOID {
         DynaActionForm serviceExemptionForm = (DynaActionForm) form;
         InfoServiceExemptionCreditLine infoServiceExemptionCreditLine = new InfoServiceExemptionCreditLine();
 
-        int type = Integer.parseInt((String) serviceExemptionForm.get("type"));
+        String type = (String) serviceExemptionForm.get("type");
         String start = (String) serviceExemptionForm.get("start");
         String end = (String) serviceExemptionForm.get("end");
 
@@ -77,7 +76,7 @@ public class CRUDServiceExemptionAction extends CRUDActionByOID {
 
         infoServiceExemptionCreditLine.setIdInternal(idInternal);
         infoServiceExemptionCreditLine.setInfoTeacher(new InfoTeacher(teacherId));
-        infoServiceExemptionCreditLine.setType(ServiceExemptionType.getEnum(type));
+        infoServiceExemptionCreditLine.setType(ServiceExemptionType.valueOf(type));
 
         try {
             infoServiceExemptionCreditLine.setStart(df.parse(start));
@@ -112,7 +111,9 @@ public class CRUDServiceExemptionAction extends CRUDActionByOID {
                 "ReadTeacherByOID", args);
         request.setAttribute("infoTeacher", infoTeacher);
 
-        request.setAttribute("serviceExemptionTypes", ServiceExemptionType.getEnumList());
+        //request.setAttribute("serviceExemptionTypes", ServiceExemptionType.getEnumList());
     }
+    
+   
 
 }

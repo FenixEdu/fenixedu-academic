@@ -62,7 +62,7 @@
 
       <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
 
-      <field-descriptor name="type" column="TYPE" jdbc-type="INTEGER" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ServiceExemptionTypeFieldConversion"/>
+      <field-descriptor name="type" column="TYPE" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ServiceExemptionTypeFieldConversion"/>
 
       <field-descriptor name="start" column="START_DATE" jdbc-type="DATE" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDate2SqlDateConversion"/>
       <field-descriptor name="end" column="END_DATE" jdbc-type="DATE" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDate2SqlDateConversion"/>            

@@ -4,7 +4,6 @@
 package net.sourceforge.fenixedu.domain.credits;
 
 import net.sourceforge.fenixedu.domain.credits.event.CreditsEvent;
-import net.sourceforge.fenixedu.util.credits.ServiceExemptionType;
 
 /**
  * @author jpvl

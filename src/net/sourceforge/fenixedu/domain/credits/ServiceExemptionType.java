@@ -1,7 +1,7 @@
 /*
  * Created on 7/Mar/2004
  */
-package net.sourceforge.fenixedu.util.credits;
+package net.sourceforge.fenixedu.domain.credits;
 
 import java.util.Iterator;
 import java.util.List;
@@ -12,7 +12,19 @@ import org.apache.commons.lang.enums.ValuedEnum;
 /**
  * @author jpvl
  */
-public class ServiceExemptionType extends ValuedEnum {
+public enum ServiceExemptionType {
+    
+    TEACHING_EXEMPTION,
+    
+    GRANT_OWNER_EQUIVALENCE,
+    
+    SABBATICAL;
+    
+    public String getName() {
+        return name();
+    }
+    
+    /*
     public static final int TEACHING_EXEMPTION_TYPE = 1;
 
     public static final int GRANT_OWNER_EQUIVALENCE_TYPE = 2;
@@ -51,5 +63,5 @@ public class ServiceExemptionType extends ValuedEnum {
     public static Iterator iterator() {
         return iterator(ServiceExemptionType.class);
     }
-
+*/
 }
