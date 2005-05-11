@@ -33,7 +33,7 @@ public class NonAffiliatedTeacherOJB extends PersistentObjectOJB implements IPer
     
     public INonAffiliatedTeacher readByNameAndInstitution(String name, IInstitution institution) throws ExcepcaoPersistencia{
         Criteria criteria = new Criteria();
-        criteria.addLike("name", name);
+        criteria.addEqualTo("name", name);
         criteria.addEqualTo("institution.idInternal",institution.getIdInternal());
         return (INonAffiliatedTeacher) queryObject(NonAffiliatedTeacher.class, criteria);
     }
