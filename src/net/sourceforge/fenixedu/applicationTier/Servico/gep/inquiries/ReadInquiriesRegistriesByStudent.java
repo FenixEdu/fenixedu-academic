@@ -9,7 +9,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRegistry;
@@ -18,64 +17,36 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRegistry;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author João Fialho & Rita Ferreira
- *
+ * 
  */
-public class ReadInquiriesRegistriesByStudent implements IServico {
+public class ReadInquiriesRegistriesByStudent implements IService {
 
-	private static ReadInquiriesRegistriesByStudent service = new ReadInquiriesRegistriesByStudent();
-	
-	public ReadInquiriesRegistriesByStudent() {
-	}
+    public List<InfoInquiriesRegistry> run(InfoStudent infoStudent) throws FenixServiceException,
+            ExcepcaoPersistencia, NoSuchMethodException, InvocationTargetException,
+            NoSuchMethodException, IllegalAccessException {
 
-	public String getNome() {
-		return "inquiries.ReadInquiriesRegistriesByStudent";
-	}
+        if (infoStudent == null) {
+            throw new FenixServiceException("nullInfoStudent");
+        }
 
-    /**
-     * @return Returns the service.
-     */
-    public static ReadInquiriesRegistriesByStudent getService() {
-        return service;
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+
+        IPersistentInquiriesRegistry inquiriesRegistryDAO = sp.getIPersistentInquiriesRegistry();
+        List<IInquiriesRegistry> inquiriesRegistries = inquiriesRegistryDAO.readByStudentId(infoStudent
+                .getIdInternal());
+
+        List<InfoInquiriesRegistry> infoInquiriesRegistries = new ArrayList<InfoInquiriesRegistry>(
+                inquiriesRegistries.size());
+
+        for (IInquiriesRegistry inquiriesRegistry : inquiriesRegistries) {
+            infoInquiriesRegistries.add(InfoInquiriesRegistry.newInfoFromDomain(inquiriesRegistry));
+        }
+
+        return infoInquiriesRegistries;
     }
-    
-	public List<InfoInquiriesRegistry> run(InfoStudent infoStudent) throws FenixServiceException {
-		
-		if(infoStudent == null) {
-			throw new FenixServiceException("nullInfoStudent");
-		}
-		
-		try {
-			ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-			
-			IPersistentInquiriesRegistry inquiriesRegistryDAO = sp.getIPersistentInquiriesRegistry();
-			List<IInquiriesRegistry> inquiriesRegistries = inquiriesRegistryDAO.readByStudentId(infoStudent.getIdInternal());
-			
-			List<InfoInquiriesRegistry> infoInquiriesRegistries = new ArrayList<InfoInquiriesRegistry>();
-			
-			for(IInquiriesRegistry inquiriesRegistry : inquiriesRegistries) {
-				infoInquiriesRegistries.add(InfoInquiriesRegistry.newInfoFromDomain(inquiriesRegistry));
-			}
-			
-			return infoInquiriesRegistries;
-			
 
-		} catch (ExcepcaoPersistencia e) {
-			e.printStackTrace();
-			throw new FenixServiceException(e);
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-			throw new FenixServiceException(e);
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-			throw new FenixServiceException(e);
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-			throw new FenixServiceException(e);
-		}
-		
-	}
-	
 }

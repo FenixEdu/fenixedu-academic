@@ -1,6 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
@@ -16,10 +20,6 @@ import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
-
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -34,28 +34,72 @@ public class ReadClassesByExecutionCourse implements IService {
                 .readByOID(ExecutionCourse.class, infoExecutionCourse.getIdInternal());
 
         final List classes = sp.getITurmaPersistente().readByExecutionCourse(executionCourse);
+        final List infoClasses = new ArrayList(classes.size());
 
-        final List infoClasses = (List) CollectionUtils.collect(classes, new Transformer() {
-            public Object transform(Object arg0) {
-                final ISchoolClass schoolClass = (ISchoolClass) arg0;
-                final InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);
+        final Map infoExecutionDegrees = new HashMap();
 
-                final IExecutionDegree executionDegree = schoolClass.getExecutionDegree();
-                final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+        for (final Iterator iterator = classes.iterator(); iterator.hasNext();) {
+            final ISchoolClass schoolClass = (ISchoolClass) iterator.next();
+            final InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);
+
+            final IExecutionDegree executionDegree = schoolClass.getExecutionDegree();
+            final InfoExecutionDegree infoExecutionDegree;
+            final String executionDegreeKey = executionDegree.getIdInternal().toString();
+            if (infoExecutionDegrees.containsKey(executionDegreeKey)) {
+                infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegrees.get(executionDegreeKey);
+            } else {
+                // final InfoExecutionDegree infoExecutionDegree =
+                // InfoExecutionDegree.newInfoFromDomain(executionDegree);
+                infoExecutionDegree = new InfoExecutionDegree();
+                infoExecutionDegrees.put(executionDegreeKey, infoExecutionDegree);
+
+                infoExecutionDegree.setIdInternal(executionDegree.getIdInternal());
                 infoClass.setInfoExecutionDegree(infoExecutionDegree);
 
-                final IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-                final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
+                final IDegreeCurricularPlan degreeCurricularPlan = executionDegree
+                        .getDegreeCurricularPlan();
+                // final InfoDegreeCurricularPlan infoDegreeCurricularPlan =
+                // InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
+                final InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
                 infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
                 final IDegree degree = degreeCurricularPlan.getDegree();
                 final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
                 infoDegreeCurricularPlan.setInfoDegree(infoDegree);
-
-                return infoClass;
             }
-        });
+
+            infoClasses.add(infoClass);
+        }
 
         return infoClasses;
+        // return (List) CollectionUtils.collect(classes, new Transformer() {
+        // public Object transform(Object arg0) {
+        // final ISchoolClass schoolClass = (ISchoolClass) arg0;
+        // final InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);
+        //
+        // final IExecutionDegree executionDegree =
+        // schoolClass.getExecutionDegree();
+        // //final InfoExecutionDegree infoExecutionDegree =
+        // InfoExecutionDegree.newInfoFromDomain(executionDegree);
+        // final InfoExecutionDegree infoExecutionDegree = new
+        // InfoExecutionDegree();
+        // infoExecutionDegree.setIdInternal(executionDegree.getIdInternal());
+        // infoClass.setInfoExecutionDegree(infoExecutionDegree);
+        //
+        // final IDegreeCurricularPlan degreeCurricularPlan =
+        // executionDegree.getDegreeCurricularPlan();
+        // //final InfoDegreeCurricularPlan infoDegreeCurricularPlan =
+        // InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
+        // final InfoDegreeCurricularPlan infoDegreeCurricularPlan = new
+        // InfoDegreeCurricularPlan();
+        // infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+        //
+        // final IDegree degree = degreeCurricularPlan.getDegree();
+        // final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
+        // infoDegreeCurricularPlan.setInfoDegree(infoDegree);
+        //
+        // return infoClass;
+        // }
+        // });
     }
 }

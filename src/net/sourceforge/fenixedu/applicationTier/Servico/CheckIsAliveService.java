@@ -15,7 +15,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class CheckIsAliveService implements IService {
 
     
-    private static final String filename = "checkIsAlive";
+    private static final String filename;
     private static final String filepath;
 
     private static final FileSuportObject fileSuportObject = new FileSuportObject();
@@ -24,7 +24,8 @@ public class CheckIsAliveService implements IService {
         final Random random = new Random(System.currentTimeMillis());
         final int someInt = random.nextInt();
 
-        filepath = "/" + filename + System.getenv().get("HOSTNAME") + someInt;
+        filename = "checkIsAlive" + System.getenv().get("HOSTNAME") + someInt;
+        filepath = "/" + filename;
 
         byte[] fileContents = CheckIsAliveService.class.getName().getBytes();
 
@@ -39,7 +40,7 @@ public class CheckIsAliveService implements IService {
 
     public Boolean run() throws ExcepcaoPersistencia {
         checkFenixDatabaseOps();
-        checkSlideDatabaseOps();
+        //checkSlideDatabaseOps();
         return new Boolean(true);
     }
 

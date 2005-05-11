@@ -30,8 +30,10 @@ import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 import net.sourceforge.fenixedu.util.TipoAula;
@@ -42,9 +44,11 @@ public class CreateLesson implements IService {
 
     public InfoLessonServiceResult run(InfoLesson infoLesson, InfoShift infoShift)
             throws FenixServiceException, ExcepcaoPersistencia {
-        InfoLessonServiceResult result = null;
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ITurnoPersistente persistentShift = sp.getITurnoPersistente();
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        InfoLessonServiceResult result = null;
+        
         IRoom sala = sp.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
 
         IRoomOccupation roomOccupation = Cloner.copyInfoRoomOccupation2RoomOccupation(infoLesson
@@ -54,7 +58,8 @@ public class CreateLesson implements IService {
         IPeriod period = Cloner.copyInfoPeriod2IPeriod(infoPeriod);
         roomOccupation.setPeriod(period);
 
-        IShift shift = Cloner.copyInfoShift2Shift(infoLesson.getInfoShift());
+        //IShift shift = Cloner.copyInfoShift2Shift(infoLesson.getInfoShift());
+        final IShift shift = (IShift) persistentShift.readByOID(Shift.class, infoShift.getIdInternal());
         IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoLesson
                 .getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod());
 

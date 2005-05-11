@@ -18,46 +18,26 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author João Fialho & Rita Ferreira
- *
+ * 
  */
 public class ReadAttendsByStudentIdAndExecutionPeriodId implements IService {
-	private static ReadAttendsByStudentIdAndExecutionPeriodId service =
-		new ReadAttendsByStudentIdAndExecutionPeriodId();
-	
-	public ReadAttendsByStudentIdAndExecutionPeriodId() {
-	}
 
-	public String getNome() {
-		return "student.ReadAttendsByStudentIdAndExecutionPeriodId";
-	}
+    public List<InfoFrequenta> run(Integer studentId, Integer executionPeriodId,
+            Boolean onlyEnrolledCourses) throws ExcepcaoPersistencia {
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
 
-    /**
-     * @return Returns the service.
-     */
-    public static ReadAttendsByStudentIdAndExecutionPeriodId getService() {
-        return service;
+        final List<IAttends> attendsList = persistentAttend.readByStudentIdAndExecutionPeriodId(
+                studentId, executionPeriodId);
+        final List<InfoFrequenta> infoAttendsList = new ArrayList<InfoFrequenta>(attendsList.size());
+
+        for (final IAttends attends : attendsList) {
+            if (!(onlyEnrolledCourses.booleanValue() && (attends.getEnrolment() == null))) {
+                infoAttendsList.add(InfoFrequenta.newInfoFromDomain(attends));
+            }
+        }
+
+        return infoAttendsList;
     }
-    
-	public List<InfoFrequenta> run(
-			Integer studentId, Integer executionPeriodId, Boolean onlyEnrolledCourses)
-	throws ExcepcaoPersistencia {
-
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
-		
-		List<IAttends> attendsList = persistentAttend.readByStudentIdAndExecutionPeriodId(studentId, executionPeriodId);
-		List<InfoFrequenta> infoAttendsList =
-			new ArrayList<InfoFrequenta>();
-		
-		for(IAttends attends : attendsList) {
-			
-			if(!(onlyEnrolledCourses && (attends.getEnrolment() == null))) {
-				infoAttendsList.add(InfoFrequenta.newInfoFromDomain(attends));				
-			}
-			
-		}
-		
-		return infoAttendsList;
-	}
 
 }

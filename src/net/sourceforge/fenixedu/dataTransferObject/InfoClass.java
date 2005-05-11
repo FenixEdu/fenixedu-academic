@@ -51,9 +51,12 @@ public class InfoClass extends InfoObject {
         boolean resultado = false;
         if (obj instanceof InfoClass) {
             InfoClass infoTurma = (InfoClass) obj;
-            resultado = getNome().equals(infoTurma.getNome())
+            resultado = getIdInternal().equals(infoTurma.getIdInternal())
+                || (getInfoExecutionPeriod() != null
+                    && getInfoExecutionDegree() != null
+                    && getNome().equals(infoTurma.getNome())
                     && getInfoExecutionPeriod().equals(infoTurma.getInfoExecutionPeriod())
-                    && getInfoExecutionDegree().equals(infoTurma.getInfoExecutionDegree());
+                    && getInfoExecutionDegree().equals(infoTurma.getInfoExecutionDegree()));
         }
         return resultado;
     }

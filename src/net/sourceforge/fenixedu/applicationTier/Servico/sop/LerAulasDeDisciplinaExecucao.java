@@ -9,11 +9,12 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoLessonWithInfoRoomAndInfoRoomOccupationAndInfoPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.ILesson;
+import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -35,17 +36,25 @@ public class LerAulasDeDisciplinaExecucao implements IService {
         final List<IShift> shifts = executionCourse.getAssociatedShifts();
 
         // An estimated upper bound for the number of elements is three lessons per shift.
-        final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>(shifts.size() * 3);
+        final int estimatedNumberOfLessons = shifts.size() * 3;
+
+        final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>(estimatedNumberOfLessons);
 
         for (final IShift shift : shifts) {
             final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
 
             final List<ILesson> lessons = shift.getAssociatedLessons();
             for (final ILesson lesson : lessons) {
-                final InfoLesson infoLesson = InfoLessonWithInfoRoomAndInfoRoomOccupationAndInfoPeriod.newInfoFromDomain(lesson);
+                //final InfoLesson infoLesson = 
+                //        InfoLessonWithInfoRoomAndInfoRoomOccupationAndInfoPeriod.newInfoFromDomain(lesson);
+                final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
+                infoLessons.add(infoLesson);
+
                 infoLesson.setInfoShift(infoShift);
 
-                infoLessons.add(infoLesson);
+                final IRoom room = lesson.getSala();
+                final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
+                infoLesson.setInfoSala(infoRoom);
             }
         }
 
