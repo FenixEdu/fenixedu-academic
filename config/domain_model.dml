@@ -748,6 +748,7 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 	String sigla;
 	Double labHours;
 	Integer keyExecutionPeriod;
+	Integer keyCourseReport;
 	Double praticalHours;
 	String comment;
 	Double theoPratHours;
@@ -773,9 +774,9 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 	
     public boolean isMasterDegreeOnly();
     
-    public java.util.List getNonAffiliatedTeacherProfessorships();
+    public java.util.List getNonAffiliatedTeachers();
     
-    public void setNonAffiliatedTeacherProfessorships(java.util.List nonAffiliatedTeacherProfessorships);
+    public void setNonAffiliatedTeachers(java.util.List nonAffiliatedTeachers);
     "
 }
 
