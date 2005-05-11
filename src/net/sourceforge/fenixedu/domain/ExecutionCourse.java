@@ -12,6 +12,8 @@ import org.apache.commons.collections.Predicate;
 
 public class ExecutionCourse extends ExecutionCourse_Base {
     
+    List nonAffiliatedTeacherProfessorships;
+    
 	public ExecutionCourse() {
     }
 
@@ -145,4 +147,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
         });
     }
+
+    public List getNonAffiliatedTeacherProfessorships() {
+        return nonAffiliatedTeacherProfessorships;
+    }
+    
+
+    public void setNonAffiliatedTeacherProfessorships(List nonAffiliatedTeacherProfessorships) {
+        this.nonAffiliatedTeacherProfessorships = nonAffiliatedTeacherProfessorships;
+    }
+    
 }
