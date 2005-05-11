@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.util.List;
+
 /**
  * @author Ricardo Rodrigues
  *
@@ -14,6 +16,7 @@ public class NonAffiliatedTeacher extends DomainObject_Base implements INonAffil
     protected String name;
     protected Integer keyInstitution;
     protected IInstitution institution;
+    protected List executionCourses;
     
     public IInstitution getInstitution() {
         return institution;
@@ -38,6 +41,16 @@ public class NonAffiliatedTeacher extends DomainObject_Base implements INonAffil
     public void setName(String name) {
         this.name = name;
     }
+
+    public List getExecutionCourses() {
+        return executionCourses;
+    }
+    
+
+    public void setExecutionCourses(List executionCourses) {
+        this.executionCourses = executionCourses;
+    }
+    
       
     
 }
