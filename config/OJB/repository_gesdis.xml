@@ -433,12 +433,7 @@
         name="hours"
         column="HOURS"
         jdbc-type="FLOAT"
-    />
-	<field-descriptor
-        name="keyNonAffiliatedTeacher"
-        column="KEY_NON_AFFILIATED_TEACHER"
-        jdbc-type="INTEGER"
-	/>        
+    />      
 	
 	<reference-descriptor
          name="teacher"
@@ -449,11 +444,6 @@
          name="executionCourse"
          class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse">
 		<foreignkey field-ref="keyExecutionCourse"/>
-    </reference-descriptor>
-    <reference-descriptor
-         name="nonAffiliatedTeacher"
-         class-ref="net.sourceforge.fenixedu.domain.NonAffiliatedTeacher">
-		<foreignkey field-ref="keyNonAffiliatedTeacher"/>
     </reference-descriptor>
 	<collection-descriptor
          name="associatedShiftProfessorship"

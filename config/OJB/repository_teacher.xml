@@ -231,6 +231,17 @@
     	class-ref="net.sourceforge.fenixedu.domain.Institution" proxy="false">
 		<foreignkey field-ref="keyInstitution"/>
 	</reference-descriptor>
+	
+	<collection-descriptor
+			name="executionCourses"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
+			proxy="true"
+			indirection-table="NON_AFFILIATED_TEACHER_PROFESSORSHIPS"
+			refresh="true"
+			>
+		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE" />
+		<fk-pointing-to-this-class column="KEY_NON_AFFILIATED_TEACHER" />
+	</collection-descriptor>
 </class-descriptor>  
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.Institution -->

@@ -156,7 +156,19 @@
 			element-class-ref="net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse"
 			proxy="true">
 		<inverse-foreignkey field-ref="keyExecutionCourse"/>
-    </collection-descriptor>    
+    </collection-descriptor>
+    <collection-descriptor
+			name="nonAffiliatedTeachers"
+			element-class-ref="net.sourceforge.fenixedu.domain.NonAffiliatedTeacher"
+			proxy="true"
+			indirection-table="NON_AFFILIATED_TEACHER_PROFESSORSHIPS"
+			refresh="true"
+			>
+		<fk-pointing-to-element-class column="KEY_NON_AFFILIATED_TEACHER" />
+		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE" />
+	</collection-descriptor>
+    
+<!--
 	<collection-descriptor 
 		name="associatedBibliographicReferences" 
 		element-class-ref="net.sourceforge.fenixedu.domain.BibliographicReference"
