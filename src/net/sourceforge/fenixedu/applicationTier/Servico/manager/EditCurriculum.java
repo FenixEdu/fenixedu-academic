@@ -29,88 +29,79 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class EditCurriculum implements IService {
 
-    /**
-     * Executes the service.
-     */
-
     public void run(InfoCurriculum infoCurriculum, String language, String username)
-            throws FenixServiceException {
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentCurricularCourse persistentCurricularCourse = persistentSuport
-                    .getIPersistentCurricularCourse();
-            IPessoaPersistente persistentPerson = persistentSuport.getIPessoaPersistente();
-            IPersistentCurriculum persistentCurriculum = persistentSuport.getIPersistentCurriculum();
-            IPersistentExecutionYear persistentExecutionYear = persistentSuport
-                    .getIPersistentExecutionYear();
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-            ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
-                    .readByOID(CurricularCourse.class, infoCurriculum.getInfoCurricularCourse()
-                            .getIdInternal());
-            if (curricularCourse == null) {
-                throw new NonExistingServiceException();
-            }
-            IPerson person = persistentPerson.lerPessoaPorUsername(username);
-            if (person == null) {
-                throw new NonExistingServiceException();
-            }
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentCurricularCourse persistentCurricularCourse = persistentSuport
+                .getIPersistentCurricularCourse();
+        IPessoaPersistente persistentPerson = persistentSuport.getIPessoaPersistente();
+        IPersistentCurriculum persistentCurriculum = persistentSuport.getIPersistentCurriculum();
+        IPersistentExecutionYear persistentExecutionYear = persistentSuport
+                .getIPersistentExecutionYear();
 
-            ICurriculum curriculum = persistentCurriculum
-                    .readCurriculumByCurricularCourse(curricularCourse);
-            boolean islockWrite = false;
-            if (curriculum == null) {
-                curriculum = new Curriculum();
-                persistentCurriculum.simpleLockWrite(curriculum);
-                islockWrite = true;
+        ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+                CurricularCourse.class, infoCurriculum.getInfoCurricularCourse().getIdInternal());
+        if (curricularCourse == null) {
+            throw new NonExistingServiceException();
+        }
+        IPerson person = persistentPerson.lerPessoaPorUsername(username);
+        if (person == null) {
+            throw new NonExistingServiceException();
+        }
 
-                curriculum.setCurricularCourse(curricularCourse);
-                Calendar today = Calendar.getInstance();
-                curriculum.setLastModificationDate(today.getTime());
-            }
-            if (!islockWrite) {
-                persistentCurriculum.simpleLockWrite(curriculum);
-            }
+        ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse
+                .getIdInternal());
+        boolean islockWrite = false;
+        if (curriculum == null) {
+            curriculum = new Curriculum();
+            persistentCurriculum.simpleLockWrite(curriculum);
+            islockWrite = true;
 
-            IExecutionYear currentExecutionYear = persistentExecutionYear.readCurrentExecutionYear();
+            curriculum.setCurricularCourse(curricularCourse);
+            Calendar today = Calendar.getInstance();
+            curriculum.setLastModificationDate(today.getTime());
+        }
+        if (!islockWrite) {
+            persistentCurriculum.simpleLockWrite(curriculum);
+        }
 
-            // modification of curriculum is made in context of an execution
-            // year
-            if (!curriculum.getLastModificationDate().before(currentExecutionYear.getBeginDate())
-                    && !curriculum.getLastModificationDate().after(currentExecutionYear.getEndDate())) {
-                if (language == null) {
-                    curriculum.setGeneralObjectives(infoCurriculum.getGeneralObjectives());
-                    curriculum.setOperacionalObjectives(infoCurriculum.getOperacionalObjectives());
-                    curriculum.setProgram(infoCurriculum.getProgram());
-                } else {
-                    curriculum.setGeneralObjectivesEn(infoCurriculum.getGeneralObjectivesEn());
-                    curriculum.setOperacionalObjectivesEn(infoCurriculum.getOperacionalObjectivesEn());
-                    curriculum.setProgramEn(infoCurriculum.getProgramEn());
-                }
-                curriculum.setPersonWhoAltered(person);
-                Calendar today = Calendar.getInstance();
-                curriculum.setLastModificationDate(today.getTime());
+        IExecutionYear currentExecutionYear = persistentExecutionYear.readCurrentExecutionYear();
+
+        // modification of curriculum is made in context of an execution
+        // year
+        if (!curriculum.getLastModificationDate().before(currentExecutionYear.getBeginDate())
+                && !curriculum.getLastModificationDate().after(currentExecutionYear.getEndDate())) {
+            if (language == null) {
+                curriculum.setGeneralObjectives(infoCurriculum.getGeneralObjectives());
+                curriculum.setOperacionalObjectives(infoCurriculum.getOperacionalObjectives());
+                curriculum.setProgram(infoCurriculum.getProgram());
             } else {
-                ICurriculum newCurriculum = new Curriculum();
-
-                persistentCurriculum.simpleLockWrite(newCurriculum);
-
-                newCurriculum.setCurricularCourse(curricularCourse);
-                if (language == null) {
-                    newCurriculum.setGeneralObjectives(infoCurriculum.getGeneralObjectives());
-                    newCurriculum.setOperacionalObjectives(infoCurriculum.getOperacionalObjectives());
-                    newCurriculum.setProgram(infoCurriculum.getProgram());
-                } else {
-                    newCurriculum.setGeneralObjectivesEn(infoCurriculum.getGeneralObjectivesEn());
-                    newCurriculum
-                            .setOperacionalObjectivesEn(infoCurriculum.getOperacionalObjectivesEn());
-                    newCurriculum.setProgramEn(infoCurriculum.getProgramEn());
-                }
-                newCurriculum.setPersonWhoAltered(person);
-                Calendar today = Calendar.getInstance();
-                newCurriculum.setLastModificationDate(today.getTime());
+                curriculum.setGeneralObjectivesEn(infoCurriculum.getGeneralObjectivesEn());
+                curriculum.setOperacionalObjectivesEn(infoCurriculum.getOperacionalObjectivesEn());
+                curriculum.setProgramEn(infoCurriculum.getProgramEn());
             }
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
+            curriculum.setPersonWhoAltered(person);
+            Calendar today = Calendar.getInstance();
+            curriculum.setLastModificationDate(today.getTime());
+        } else {
+            ICurriculum newCurriculum = new Curriculum();
+
+            persistentCurriculum.simpleLockWrite(newCurriculum);
+
+            newCurriculum.setCurricularCourse(curricularCourse);
+            if (language == null) {
+                newCurriculum.setGeneralObjectives(infoCurriculum.getGeneralObjectives());
+                newCurriculum.setOperacionalObjectives(infoCurriculum.getOperacionalObjectives());
+                newCurriculum.setProgram(infoCurriculum.getProgram());
+            } else {
+                newCurriculum.setGeneralObjectivesEn(infoCurriculum.getGeneralObjectivesEn());
+                newCurriculum.setOperacionalObjectivesEn(infoCurriculum.getOperacionalObjectivesEn());
+                newCurriculum.setProgramEn(infoCurriculum.getProgramEn());
+            }
+            newCurriculum.setPersonWhoAltered(person);
+            Calendar today = Calendar.getInstance();
+            newCurriculum.setLastModificationDate(today.getTime());
         }
     }
 }

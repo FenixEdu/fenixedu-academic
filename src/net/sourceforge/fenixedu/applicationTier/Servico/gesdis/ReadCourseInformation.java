@@ -511,7 +511,7 @@ public class ReadCourseInformation implements IService {
             List infoScopes = getInfoScopes(curricularCourse.getScopes(), sp);
             infoCurricularCourse.setInfoScopes(infoScopes);
             ICurriculum curriculum = persistentCurriculum
-                    .readCurriculumByCurricularCourse(curricularCourse);
+                    .readCurriculumByCurricularCourse(curricularCourse.getIdInternal());
             InfoCurriculum infoCurriculum = null;
             if (curriculum == null) {
                 infoCurriculum = new InfoCurriculum();

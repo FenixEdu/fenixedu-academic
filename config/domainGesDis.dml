@@ -55,7 +55,7 @@ class net.sourceforge.fenixedu.domain.BibliographicReference extends net.sourcef
 	String reference;
 }
 
-/* DONE */
+/* DONE: DML and VO */
 class net.sourceforge.fenixedu.domain.gesdis.CourseReport extends net.sourceforge.fenixedu.domain.DomainObject {
 	String report;
 	Date lastModificationDate;

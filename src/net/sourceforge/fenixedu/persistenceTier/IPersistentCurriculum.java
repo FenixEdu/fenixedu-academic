@@ -6,24 +6,16 @@
 
 package net.sourceforge.fenixedu.persistenceTier;
 
-import java.util.List;
+import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurriculum;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
 
 public interface IPersistentCurriculum extends IPersistentObject {
 
-    public ICurriculum readCurriculumByCurricularCourse(ICurricularCourse curricularCourse)
-            throws ExcepcaoPersistencia;
-
-    public List readCurriculumHistoryByCurricularCourse(ICurricularCourse curricularCourse)
+    public ICurriculum readCurriculumByCurricularCourse(Integer curricularCourseOID)
             throws ExcepcaoPersistencia;
 
     public ICurriculum readCurriculumByCurricularCourseAndExecutionYear(
-            ICurricularCourse curricularCourse, IExecutionYear executionYear)
+            Integer curricularCourseOID, Date executionYearEndDate)
             throws ExcepcaoPersistencia;
-
-    public void delete(ICurriculum curriculum) throws ExcepcaoPersistencia;
-
 }

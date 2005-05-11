@@ -417,7 +417,7 @@ public class TeacherAdministrationSiteComponentBuilder {
                 ICurricularCourse curricularCourse = (ICurricularCourse) iter
                         .next();
                 ICurriculum curriculum = persistentCurriculum
-                        .readCurriculumByCurricularCourse(curricularCourse);
+                        .readCurriculumByCurricularCourse(curricularCourse.getIdInternal());
                 
                 if (curriculum != null) {
                     
@@ -456,7 +456,7 @@ public class TeacherAdministrationSiteComponentBuilder {
                 ICurricularCourse curricularCourse = (ICurricularCourse) iter
                         .next();
                 ICurriculum curriculum = persistentCurriculum
-                        .readCurriculumByCurricularCourse(curricularCourse);
+                        .readCurriculumByCurricularCourse(curricularCourse.getIdInternal());
 
                 if (curriculum != null) {
                     InfoCurriculum infoCurriculum = InfoCurriculumWithInfoCurricularCourse.newInfoFromDomain(curriculum);
@@ -497,7 +497,7 @@ public class TeacherAdministrationSiteComponentBuilder {
                 ICurricularCourse curricularCourse = (ICurricularCourse) iter
                         .next();
                 ICurriculum curriculum = persistentCurriculum
-                        .readCurriculumByCurricularCourse(curricularCourse);
+                        .readCurriculumByCurricularCourse(curricularCourse.getIdInternal());
 
                 if (curriculum != null) {
                     infoEvaluationMethods.add(InfoCurriculum.newInfoFromDomain(curriculum));
@@ -555,7 +555,7 @@ public class TeacherAdministrationSiteComponentBuilder {
                     .getIPersistentCurriculum();
 
             ICurriculum curriculum = persistentCurriculum
-                    .readCurriculumByCurricularCourse(curricularCourse);
+                    .readCurriculumByCurricularCourse(curricularCourse.getIdInternal());
             InfoCurriculum infoCurriculum = null;
 
             if (curriculum != null) {

@@ -306,7 +306,14 @@
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseScope"
 			proxy="true">
 		<inverse-foreignkey field-ref="curricularCourseKey"/>
-	</collection-descriptor>    
+	</collection-descriptor>   
+	<collection-descriptor
+			name="associatedCurriculums"
+			element-class-ref="net.sourceforge.fenixedu.domain.Curriculum"
+			proxy="true"
+			refresh="true">
+		<inverse-foreignkey field-ref="keyCurricularCourse"/>
+	</collection-descriptor> 
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->

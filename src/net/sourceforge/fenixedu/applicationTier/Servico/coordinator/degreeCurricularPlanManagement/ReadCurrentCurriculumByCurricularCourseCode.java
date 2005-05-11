@@ -39,64 +39,57 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadCurrentCurriculumByCurricularCourseCode implements IService {
 
     public InfoCurriculum run(Integer executionDegreeCode, Integer curricularCourseCode)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
 
         InfoCurriculum infoCurriculum = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-            IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
-            IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
-                    .getIPersistentCurricularCourseScope();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
-            if (curricularCourseCode == null) {
-                throw new FenixServiceException("nullCurricularCourse");
-            }
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+        IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
+        IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
+                .getIPersistentCurricularCourseScope();
+        IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
-            ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
-                    .readByOID(CurricularCourse.class, curricularCourseCode);
-            if (curricularCourse == null) {
-                throw new NonExistingServiceException();
-            }
-            //selects active curricular course scopes
-            List activeCurricularCourseScopes = persistentCurricularCourseScope
-                    .readActiveCurricularCourseScopesByCurricularCourse(curricularCourse);
-
-            activeCurricularCourseScopes = (List) CollectionUtils.select(activeCurricularCourseScopes,
-                    new Predicate() {
-                        public boolean evaluate(Object arg0) {
-                            ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
-                            if (curricularCourseScope.isActive().booleanValue()) {
-                                return true;
-                            }
-                            return false;
-                        }
-                    });
-
-            //selects execution courses for current execution period
-            final IExecutionPeriod executionPeriod = persistentExecutionPeriod
-                    .readActualExecutionPeriod();
-            List associatedExecutionCourses = persistentExecutionCourse
-                    .readListbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
-
-            ICurriculum curriculum = persistentCurriculum
-                    .readCurriculumByCurricularCourse(curricularCourse);
-            if (curriculum == null) {
-                curriculum = new Curriculum();
-                curriculum.setIdInternal(new Integer(0));
-                curriculum.setCurricularCourse(curricularCourse);
-            }
-
-            //            curriculum.getCurricularCourse().setScopes(activeCurricularCourseScopes);
-            //            curriculum.getCurricularCourse().setAssociatedExecutionCourses(associatedExecutionCourses);
-
-            infoCurriculum = createInfoCurriculum(curriculum, persistentExecutionCourse,
-                    activeCurricularCourseScopes, associatedExecutionCourses);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+        if (curricularCourseCode == null) {
+            throw new FenixServiceException("nullCurricularCourse");
         }
+
+        ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+                CurricularCourse.class, curricularCourseCode);
+        if (curricularCourse == null) {
+            throw new NonExistingServiceException();
+        }
+        //selects active curricular course scopes
+        List activeCurricularCourseScopes = persistentCurricularCourseScope
+                .readActiveCurricularCourseScopesByCurricularCourse(curricularCourse);
+
+        activeCurricularCourseScopes = (List) CollectionUtils.select(activeCurricularCourseScopes,
+                new Predicate() {
+                    public boolean evaluate(Object arg0) {
+                        ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
+                        if (curricularCourseScope.isActive().booleanValue()) {
+                            return true;
+                        }
+                        return false;
+                    }
+                });
+
+        //selects execution courses for current execution period
+        final IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+        List associatedExecutionCourses = persistentExecutionCourse
+                .readListbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
+
+        ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse
+                .getIdInternal());
+        if (curriculum == null) {
+            curriculum = new Curriculum();
+            curriculum.setIdInternal(new Integer(0));
+            curriculum.setCurricularCourse(curricularCourse);
+        }
+
+        infoCurriculum = createInfoCurriculum(curriculum, persistentExecutionCourse,
+                activeCurricularCourseScopes, associatedExecutionCourses);
         return infoCurriculum;
     }
 

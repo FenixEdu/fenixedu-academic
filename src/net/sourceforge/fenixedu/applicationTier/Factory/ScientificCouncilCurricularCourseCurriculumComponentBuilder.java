@@ -62,7 +62,7 @@ public class ScientificCouncilCurricularCourseCurriculumComponentBuilder {
             ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
                     .readByOID(CurricularCourse.class, curricularCourseId);
             ICurriculum curriculum = persistentCurriculum
-                    .readCurriculumByCurricularCourse(curricularCourse);
+                    .readCurriculumByCurricularCourse(curricularCourse.getIdInternal());
             if (curriculum != null) {
                 InfoCurriculum infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
                 component.setInfoCurriculum(infoCurriculum);

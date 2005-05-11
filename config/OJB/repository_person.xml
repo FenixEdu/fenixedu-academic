@@ -218,8 +218,7 @@
     >
     	<fk-pointing-to-this-class  column="KEY_PERSON" />
     	<fk-pointing-to-element-class column="KEY_ROLE" />
-      </collection-descriptor>    
-
+    </collection-descriptor>    
     <collection-descriptor
          name="manageableDepartmentCredits"
          element-class-ref="net.sourceforge.fenixedu.domain.Department"
@@ -229,11 +228,10 @@
          refresh="true"
          auto-update="false"
          auto-delete="false"
-      >
+    >
     	<fk-pointing-to-this-class  column="KEY_PERSON" />
     	<fk-pointing-to-element-class column="KEY_DEPARTMENT" />
-      </collection-descriptor>    
-
+    </collection-descriptor>    
     <collection-descriptor
          name="advisories"
          element-class-ref="net.sourceforge.fenixedu.domain.Advisory"
@@ -243,11 +241,18 @@
          refresh="true"
          auto-update="false"
          auto-delete="false"
-      >
+	>
     	<fk-pointing-to-this-class  column="KEY_PERSON" />
     	<fk-pointing-to-element-class column="KEY_ADVISORY" />
     	<query-customizer
 	    	class="net.sourceforge.fenixedu.persistenceTier.customQueries.AdvisoryFilter">
 	    </query-customizer>
-      </collection-descriptor>    
+    </collection-descriptor>    
+	<collection-descriptor 
+		name="associatedAlteredCurriculums" 
+		element-class-ref="net.sourceforge.fenixedu.domain.Curriculum"
+		proxy="true"
+		refresh="true">
+		<inverse-foreignkey field-ref="keyPersonWhoAltered"/>
+	</collection-descriptor>
 </class-descriptor>
