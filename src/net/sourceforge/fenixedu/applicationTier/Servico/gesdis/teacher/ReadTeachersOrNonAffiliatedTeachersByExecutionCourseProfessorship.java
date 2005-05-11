@@ -47,13 +47,13 @@ public class ReadTeachersOrNonAffiliatedTeachersByExecutionCourseProfessorship
 	                    ITeacher teacher = professorship.getTeacher();
 	                    InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
 	                    infoResult.add(infoTeacher);
-
-					} else if(professorship.getNonAffiliatedTeacher() != null) {
-						INonAffiliatedTeacher nonAffiliatedTeacher = professorship.getNonAffiliatedTeacher();
-						InfoNonAffiliatedTeacher infoNonAffiliatedTeacher = new InfoNonAffiliatedTeacher();
-						infoNonAffiliatedTeacher.copyFromDomain(nonAffiliatedTeacher);
-						infoResult.add(infoNonAffiliatedTeacher);
-					}
+                    }
+					//else if(professorship.getNonAffiliatedTeacher() != null) {
+//						INonAffiliatedTeacher nonAffiliatedTeacher = professorship.getNonAffiliatedTeacher();
+//						InfoNonAffiliatedTeacher infoNonAffiliatedTeacher = new InfoNonAffiliatedTeacher();
+//						infoNonAffiliatedTeacher.copyFromDomain(nonAffiliatedTeacher);
+//						infoResult.add(infoNonAffiliatedTeacher);
+//					}
                 }
                 return infoResult;
             }
