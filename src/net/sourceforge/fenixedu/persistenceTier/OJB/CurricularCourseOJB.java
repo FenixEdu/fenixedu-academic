@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IScientificArea;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
-import net.sourceforge.fenixedu.util.DegreeCurricularPlanState;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -245,7 +245,7 @@ public class CurricularCourseOJB extends PersistentObjectOJB implements IPersist
             IExecutionYear executionYear) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degreeCurricularPlan.degree.idInternal", curso.getIdInternal());
-        criteria.addEqualTo("degreeCurricularPlan.state", DegreeCurricularPlanState.ACTIVE_OBJ);
+        criteria.addEqualTo("degreeCurricularPlan.state", DegreeCurricularPlanState.ACTIVE);
         criteria.addEqualTo("associatedExecutionCourses.executionPeriod.executionYear.idInternal",
                 executionYear.getIdInternal());
         return queryList(CurricularCourse.class, criteria, true);
@@ -261,7 +261,7 @@ public class CurricularCourseOJB extends PersistentObjectOJB implements IPersist
             IExecutionYear executionYear) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degreeCurricularPlan.degree.idInternal", curso.getIdInternal());
-        criteria.addEqualTo("degreeCurricularPlan.state", DegreeCurricularPlanState.ACTIVE_OBJ);
+        criteria.addEqualTo("degreeCurricularPlan.state", DegreeCurricularPlanState.ACTIVE);
         criteria.addEqualTo("associatedExecutionCourses.executionPeriod.executionYear.idInternal",
                 executionYear.getIdInternal());
         criteria.addEqualTo("scopes.curricularSemester.curricularYear.year", year);

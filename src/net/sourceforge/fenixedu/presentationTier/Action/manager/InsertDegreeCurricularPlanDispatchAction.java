@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -22,7 +23,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.util.MarkType;
 
 import org.apache.struts.action.ActionForm;
@@ -53,7 +53,7 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 
         String name = (String) dynaForm.get("name");
-        Integer stateInt = new Integer((String) dynaForm.get("state"));
+        String stateString = (String) dynaForm.get("state");
         String initialDateString = (String) dynaForm.get("initialDate");
         String endDateString = (String) dynaForm.get("endDate");
         Integer degreeDuration = new Integer((String) dynaForm.get("degreeDuration"));
@@ -65,7 +65,7 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
         String anotationString = (String) dynaForm.get("anotation");
 
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
-        DegreeCurricularPlanState state = new DegreeCurricularPlanState(stateInt);
+        DegreeCurricularPlanState state = DegreeCurricularPlanState.valueOf(stateString);
 
         Calendar initialDate = Calendar.getInstance();
         if (initialDateString.compareTo("") != 0) {

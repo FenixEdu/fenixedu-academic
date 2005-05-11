@@ -442,7 +442,7 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
 
     public net.sourceforge.fenixedu.domain.IStudentCurricularPlan getNewStudentCurricularPlan();
     public net.sourceforge.fenixedu.util.MarkType getMarkType();
-    public net.sourceforge.fenixedu.util.DegreeCurricularPlanState getState();
+    public net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState getState();
     public java.util.List getListOfEnrollmentRules(net.sourceforge.fenixedu.domain.IStudentCurricularPlan studentCurricularPlan,
             net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
     public java.util.List getCurricularCoursesFromArea(net.sourceforge.fenixedu.domain.IBranch area, net.sourceforge.fenixedu.tools.enrollment.AreaType areaType);
@@ -456,7 +456,7 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     public java.util.List getSpecialListOfCurricularCourses();
     
     public void setMarkType(net.sourceforge.fenixedu.util.MarkType markType);
-    public void setState(net.sourceforge.fenixedu.util.DegreeCurricularPlanState state);
+    public void setState(net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState state);
    
     "
 }

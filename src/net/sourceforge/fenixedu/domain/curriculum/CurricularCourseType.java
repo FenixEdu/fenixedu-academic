@@ -35,7 +35,7 @@ public enum CurricularCourseType {
         return name();
     }
     
-    public String getKeyName() {
+   public String getKeyName() {
 
         String keyName = null;
 

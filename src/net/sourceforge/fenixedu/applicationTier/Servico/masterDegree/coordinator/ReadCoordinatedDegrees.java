@@ -21,10 +21,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.DegreeCurricularPlanState;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadCoordinatedDegrees implements IService {
@@ -62,7 +62,7 @@ public class ReadCoordinatedDegrees implements IService {
         while (iterator.hasNext()) {
             IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) iterator.next();
 
-            if (!degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE_OBJ)) {
+            if (!degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE)) {
                 continue;
             }
 

@@ -1,4 +1,6 @@
-package net.sourceforge.fenixedu.util;
+package net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan;
+
+import net.sourceforge.fenixedu.util.FenixUtil;
 
 /**
  * @author dcs-rjao
@@ -6,8 +8,22 @@ package net.sourceforge.fenixedu.util;
  * 19/Mar/2003
  */
 
-public class DegreeCurricularPlanState extends FenixUtil {
+public enum DegreeCurricularPlanState {
 
+    ACTIVE,
+    
+    NOT_ACTIVE,
+    
+    CONCLUDED,
+    
+    //// For use in migration process only
+    PAST;
+    
+    public String getName() {
+        return name();
+    }
+    
+    /*
     public static final int ACTIVE = 1;
 
     public static final int NOT_ACTIVE = 2;
@@ -79,6 +95,6 @@ public class DegreeCurricularPlanState extends FenixUtil {
         }
 
         return "[" + this.getClass().getName() + ": " + valueS + "]";
-    }
+    }*/
 
 }

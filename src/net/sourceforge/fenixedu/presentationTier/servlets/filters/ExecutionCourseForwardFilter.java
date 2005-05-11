@@ -29,10 +29,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.util.DegreeCurricularPlanState;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -295,8 +295,8 @@ public class ExecutionCourseForwardFilter implements Filter {
 
                         return ((infoDegreeCurricularPlan.getInitialDate().getYear() == year.intValue() - 1900)
                                 && (!infoDegreeCurricularPlan.getState().equals(
-                                        DegreeCurricularPlanState.CONCLUDED_OBJ)) && (!infoDegreeCurricularPlan
-                                .getState().equals(DegreeCurricularPlanState.PAST_OBJ)));
+                                        DegreeCurricularPlanState.CONCLUDED)) && (!infoDegreeCurricularPlan
+                                .getState().equals(DegreeCurricularPlanState.PAST)));
                     }
 
                 });

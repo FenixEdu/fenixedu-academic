@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.util.DegreeCurricularPlanState;
+import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
@@ -16,16 +16,16 @@ public class JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConv
     public Object javaToSql(Object source) {
         if (source instanceof DegreeCurricularPlanState) {
             DegreeCurricularPlanState s = (DegreeCurricularPlanState) source;
-            return s.getDegreeState();
+            return s.toString();
         }
         return source;
 
     }
 
     public Object sqlToJava(Object source) {
-        if (source instanceof Integer) {
-            Integer src = (Integer) source;
-            return new DegreeCurricularPlanState(src);
+        if (source instanceof String) {
+            String src = (String) source;
+            return DegreeCurricularPlanState.valueOf(src);
         }
         return source;
 

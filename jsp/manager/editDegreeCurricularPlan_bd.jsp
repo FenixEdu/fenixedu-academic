@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
 <h2><bean:message key="message.edit.DegreeCP" /></h2>
 <br>
@@ -24,10 +25,9 @@
 		<bean:message key="message.manager.degree.curricular.plan.state"/>
 	</td>
 	<td>
+		<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState" bundle="ENUMERATION_RESOURCES" excludedFields="PAST"/>  
 		<html:select property="state">
-		<html:option key="option.editDegreeCP.active" value="1"/>
-    	<html:option key="option.editDegreeCP.notActive" value="2"/>
-    	<html:option key="option.editDegreeCP.concluded" value="3"/>
+			<html:options collection="values" property="value" labelProperty="label" />		
     	</html:select>
 		</td>
 </tr>

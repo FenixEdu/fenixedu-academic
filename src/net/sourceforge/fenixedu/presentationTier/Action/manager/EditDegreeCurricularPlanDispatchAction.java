@@ -17,6 +17,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -30,7 +31,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateFieldConversion;
-import net.sourceforge.fenixedu.util.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.util.MarkType;
 
 /**
@@ -63,7 +63,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
         }
 
         dynaForm.set("name", oldInfoDegreeCP.getName());
-        dynaForm.set("state", oldInfoDegreeCP.getState().getDegreeState().toString());
+        dynaForm.set("state", oldInfoDegreeCP.getState().toString());
 
         if (oldInfoDegreeCP.getInitialDate() != null) {
 
@@ -127,7 +127,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
         InfoDegreeCurricularPlan newInfoDegreeCP = new InfoDegreeCurricularPlan();
 
         String name = (String) dynaForm.get("name");
-        Integer stateInt = new Integer((String) dynaForm.get("state"));
+        String stateString = (String) dynaForm.get("state");
 
         String initialDateString = (String) dynaForm.get("initialDate");
         String endDateString = (String) dynaForm.get("endDate");
@@ -142,7 +142,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
         String numerusClaususString = (String) dynaForm.get("numerusClausus");
         String anotationtring = (String) dynaForm.get("anotation");
 
-        DegreeCurricularPlanState state = new DegreeCurricularPlanState(stateInt);
+        DegreeCurricularPlanState state = DegreeCurricularPlanState.valueOf(stateString);
 
         Calendar initialDate = Calendar.getInstance();
         if (initialDateString.compareTo("") != 0) {

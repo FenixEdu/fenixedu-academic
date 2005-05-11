@@ -18,12 +18,12 @@ import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.DegreeCurricularPlanState;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -57,7 +57,7 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriodId implements IServic
             List curricularCourses = new ArrayList();
             while (iter.hasNext()) {
                 IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) iter.next();
-                if (degreeCurricularPlan.getState().getDegreeState().intValue() == DegreeCurricularPlanState.ACTIVE) {
+                if (degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE)) {
                     curricularCourses.addAll(degreeCurricularPlan.getCurricularCourses());
                 }
             }

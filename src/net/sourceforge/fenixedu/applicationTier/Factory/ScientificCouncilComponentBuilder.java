@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
@@ -32,7 +33,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.DegreeCurricularPlanState;
 
 /**
  * @author João Mota
@@ -180,7 +180,7 @@ public class ScientificCouncilComponentBuilder {
             IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
                     .getIPersistentDegreeCurricularPlan();
             List degreeCurricularPlans = persistentDegreeCurricularPlan.readByDegreeAndState(degree,
-                    new DegreeCurricularPlanState(1));
+                    DegreeCurricularPlanState.ACTIVE);
             Iterator iter = degreeCurricularPlans.iterator();
             List infoDegreeCurricularPlans = new ArrayList();
             while (iter.hasNext()) {
