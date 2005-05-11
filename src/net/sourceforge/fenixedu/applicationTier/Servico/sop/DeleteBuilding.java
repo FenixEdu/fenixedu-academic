@@ -23,7 +23,7 @@ public class DeleteBuilding implements IService {
         if (!building.getRooms().isEmpty()) {
             throw new NotEmptyServiceException();
         }
-        persistentBuilding.delete(building);
+        persistentBuilding.deleteByOID(Building.class,buildingId);
     }
 
 }

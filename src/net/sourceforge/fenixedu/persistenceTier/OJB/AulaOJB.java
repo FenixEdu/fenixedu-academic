@@ -64,28 +64,4 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
         return lessons;
     }
 
-    public List readLessonsByShift(IShift shift) throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();
-        crit.addEqualTo("keyShift", shift.getIdInternal());
-        List lessons = queryList(Lesson.class, crit);
-        return lessons;
-    }
-
-    public List readLessonsByShiftAndLessonType(IShift shift, TipoAula lessonType)
-            throws ExcepcaoPersistencia {
-
-        Criteria crit = new Criteria();
-        crit.addEqualTo("keyShift", shift.getIdInternal());
-        crit.addEqualTo("tipo", lessonType);
-        List lessons = queryList(Lesson.class, crit);
-        return lessons;
-    }
-
-	public List readLessonsByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();
-        crit.addEqualTo("keyShift", executionCourse.getIdInternal());
-        List lessons = queryList(Lesson.class, crit);
-        return lessons;
-    }
-
 }
