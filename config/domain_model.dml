@@ -772,6 +772,10 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 	public boolean hasProposals();
 	
     public boolean isMasterDegreeOnly();
+    
+    public java.util.List getNonAffiliatedTeacherProfessorships();
+    
+    public void setNonAffiliatedTeacherProfessorships(java.util.List nonAffiliatedTeacherProfessorships);
     "
 }
 
@@ -1703,15 +1707,7 @@ class net.sourceforge.fenixedu.domain.Professorship extends net.sourceforge.feni
 	
 	public void afterDelete(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
 	
-	public void afterLookup(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
-	
-	public Integer getKeyNonAffiliatedTeacher();
-
-    public void setKeyNonAffiliatedTeacher(Integer keyNonAffiliatedTeacher);
-    
-    public net.sourceforge.fenixedu.domain.INonAffiliatedTeacher getNonAffiliatedTeacher();
-    
-    public void setNonAffiliatedTeacher(net.sourceforge.fenixedu.domain.INonAffiliatedTeacher nonAffiliatedTeacher);	
+	public void afterLookup(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;	
 	"
 }
 
