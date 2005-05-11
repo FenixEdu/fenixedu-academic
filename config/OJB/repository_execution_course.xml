@@ -167,8 +167,6 @@
 		<fk-pointing-to-element-class column="KEY_NON_AFFILIATED_TEACHER" />
 		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE" />
 	</collection-descriptor>
-    
-<!--
 	<collection-descriptor 
 		name="associatedBibliographicReferences" 
 		element-class-ref="net.sourceforge.fenixedu.domain.BibliographicReference"
