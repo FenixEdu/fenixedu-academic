@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student.inquiries;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -1512,16 +1513,13 @@ public class FillInquiryAction extends FenixDispatchAction {
 
     }
 
-    private Integer[] removeFromArray(Integer[] array, Integer position) {
+    private Integer[] removeFromArray(final Integer[] array, final Integer position) {
         if (position < array.length) {
-            Integer[] removedArray = new Integer[array.length - 1];
+            final Integer[] removedArray = new Integer[array.length - 1];
 
             for (int i = 0; i < array.length; i++) {
-                if (i < position) {
+                if (i != position) {
                     removedArray[i] = array[i];
-                }
-                if (i > position) {
-                    removedArray[i - 1] = array[i];
                 }
             }
 
@@ -1532,16 +1530,13 @@ public class FillInquiryAction extends FenixDispatchAction {
         }
     }
 
-    private Double[] removeFromArray(Double[] array, Integer position) {
+    private Double[] removeFromArray(final Double[] array, final Integer position) {
         if (position < array.length) {
-            Double[] removedArray = new Double[array.length - 1];
+            final Double[] removedArray = new Double[array.length - 1];
 
             for (int i = 0; i < array.length; i++) {
-                if (i < position) {
+                if (i != position) {
                     removedArray[i] = array[i];
-                }
-                if (i > position) {
-                    removedArray[i - 1] = array[i];
                 }
             }
 
@@ -1552,16 +1547,13 @@ public class FillInquiryAction extends FenixDispatchAction {
         }
     }
 
-    private Boolean[] removeFromArray(Boolean[] array, Integer position) {
+    private Boolean[] removeFromArray(final Boolean[] array, final Integer position) {
         if (position < array.length) {
-            Boolean[] removedArray = new Boolean[array.length - 1];
+            final Boolean[] removedArray = new Boolean[array.length - 1];
 
             for (int i = 0; i < array.length; i++) {
-                if (i < position) {
+                if (i != position) {
                     removedArray[i] = array[i];
-                }
-                if (i > position) {
-                    removedArray[i - 1] = array[i];
                 }
             }
 

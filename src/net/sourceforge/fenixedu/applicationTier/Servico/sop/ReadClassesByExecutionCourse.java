@@ -72,34 +72,5 @@ public class ReadClassesByExecutionCourse implements IService {
         }
 
         return infoClasses;
-        // return (List) CollectionUtils.collect(classes, new Transformer() {
-        // public Object transform(Object arg0) {
-        // final ISchoolClass schoolClass = (ISchoolClass) arg0;
-        // final InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);
-        //
-        // final IExecutionDegree executionDegree =
-        // schoolClass.getExecutionDegree();
-        // //final InfoExecutionDegree infoExecutionDegree =
-        // InfoExecutionDegree.newInfoFromDomain(executionDegree);
-        // final InfoExecutionDegree infoExecutionDegree = new
-        // InfoExecutionDegree();
-        // infoExecutionDegree.setIdInternal(executionDegree.getIdInternal());
-        // infoClass.setInfoExecutionDegree(infoExecutionDegree);
-        //
-        // final IDegreeCurricularPlan degreeCurricularPlan =
-        // executionDegree.getDegreeCurricularPlan();
-        // //final InfoDegreeCurricularPlan infoDegreeCurricularPlan =
-        // InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
-        // final InfoDegreeCurricularPlan infoDegreeCurricularPlan = new
-        // InfoDegreeCurricularPlan();
-        // infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-        //
-        // final IDegree degree = degreeCurricularPlan.getDegree();
-        // final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
-        // infoDegreeCurricularPlan.setInfoDegree(infoDegree);
-        //
-        // return infoClass;
-        // }
-        // });
     }
 }

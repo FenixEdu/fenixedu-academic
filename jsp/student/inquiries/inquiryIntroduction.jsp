@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
+<%@ page import="net.sourceforge.fenixedu.util.StringAppender" %>
 
 <link href="<%= request.getContextPath() %>/CSS/inquiries_style.css" rel="stylesheet" type="text/css" />
 
@@ -19,7 +20,7 @@
 			Escolher disciplina para avaliar:
 		</h2>
 		<logic:iterate id="attends" name='<%= InquiriesUtil.STUDENT_ATTENDS %>' type="net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta">
-			<html:link page='<%= "/fillInquiries.do?method=prepare&amp;" + InquiriesUtil.STUDENT_ATTENDS_ID + "=" + attends.getIdInternal() %>'>
+			<html:link page='<%= StringAppender.append("/fillInquiries.do?method=prepare&amp;", InquiriesUtil.STUDENT_ATTENDS_ID, "=", attends.getIdInternal().toString()) %>'>
 				<bean:write name="attends" property="disciplinaExecucao.nome" />
 			</html:link>
 			<br/>

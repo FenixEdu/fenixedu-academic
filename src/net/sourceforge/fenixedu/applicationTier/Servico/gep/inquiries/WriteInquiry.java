@@ -8,6 +8,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
+
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
@@ -59,192 +61,177 @@ import net.sourceforge.fenixedu.util.TipoAula;
 
 /**
  * @author João Fialho & Rita Ferreira
- *
+ * 
  */
-public class WriteInquiry implements IServico {
+public class WriteInquiry implements IService {
 
-	private static WriteInquiry service = new WriteInquiry();
-	
-	public WriteInquiry() {
-	}
+    public void run(final InfoInquiry inquiry, final InfoStudent infoStudent)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-	public String getNome() {
-		return "inquiries.WriteInquiry";
-	}
+        if (inquiry == null) {
+            throw new FenixServiceException("nullInquiry");
+        }
 
-    /**
-     * @return Returns the service.
-     */
-    public static WriteInquiry getService() {
-        return service;
+        if (infoStudent == null) {
+            throw new FenixServiceException("nullInfoStudent");
+        }
+
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+
+        // Writing the inquiries course
+        IPersistentInquiriesCourse inquiriesCourseDAO = sp.getIPersistentInquiriesCourse();
+        final InfoInquiriesCourse iic = inquiry.getInquiriesCourse();
+        final IInquiriesCourse inquiriesCourse = writeInquiriesCourse(inquiriesCourseDAO, inquiry, iic,
+                sp);
+
+        // Writting the inquiries teacher
+        IPersistentInquiriesTeacher inquiriesTeacherDAO = sp.getIPersistentInquiriesTeacher();
+
+        List inquiriesTeachersList = inquiry.getInquiriesTeachersList();
+        if (inquiriesTeachersList != null) {
+            Iterator teacherIter = inquiriesTeachersList.iterator();
+            while (teacherIter.hasNext()) {
+                InfoInquiriesTeacher iit = (InfoInquiriesTeacher) teacherIter.next();
+                writeInquiriesTeacher(inquiriesTeacherDAO, iit, inquiriesCourse, sp);
+            }
+        }
+
+        // Writting the inquiries room
+        IPersistentInquiriesRoom inquiriesRoomDAO = sp.getIPersistentInquiriesRoom();
+
+        List inquiriesRoomsList = inquiry.getInquiriesRoomsList();
+        if (inquiriesRoomsList != null) {
+            Iterator roomIter = inquiriesRoomsList.iterator();
+            while (roomIter.hasNext()) {
+                InfoInquiriesRoom iir = (InfoInquiriesRoom) roomIter.next();
+                writeInquiriesRoom(inquiriesRoomDAO, iir, inquiriesCourse, sp);
+            }
+        }
+
+        // updating the registry
+        IPersistentInquiriesRegistry inquiriesRegistryDAO = sp.getIPersistentInquiriesRegistry();
+        writeInquiriesRegistry(inquiriesRegistryDAO, inquiriesCourse, infoStudent, sp);
     }
-    
-	public void run(final InfoInquiry inquiry, final InfoStudent infoStudent) throws FenixServiceException {
-		
-		if(inquiry == null) {
-			throw new FenixServiceException("nullInquiry");
-		}
-		
-		if(infoStudent == null) {
-			throw new FenixServiceException("nullInfoStudent");
-		}
-		
-		try {
-			ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-			
-			//Writing the inquiries course
-			IPersistentInquiriesCourse inquiriesCourseDAO = sp.getIPersistentInquiriesCourse();
-			final InfoInquiriesCourse iic = inquiry.getInquiriesCourse();
-			final IInquiriesCourse inquiriesCourse = writeInquiriesCourse(inquiriesCourseDAO, inquiry, iic, sp);
-			
-			//Writting the inquiries teacher
-			IPersistentInquiriesTeacher inquiriesTeacherDAO = sp.getIPersistentInquiriesTeacher();
 
-			List inquiriesTeachersList = inquiry.getInquiriesTeachersList();
-			if(inquiriesTeachersList != null) {
-				Iterator teacherIter = inquiriesTeachersList.iterator();
-				while(teacherIter.hasNext()) {
-					InfoInquiriesTeacher iit = (InfoInquiriesTeacher) teacherIter.next();
-					writeInquiriesTeacher(inquiriesTeacherDAO, iit, inquiriesCourse, sp);
-				}
-			}
-			
-			//Writting the inquiries room
-			IPersistentInquiriesRoom inquiriesRoomDAO = sp.getIPersistentInquiriesRoom();
+    private IInquiriesCourse writeInquiriesCourse(final IPersistentInquiriesCourse inquiriesCourseDAO,
+            final InfoInquiry ii, final InfoInquiriesCourse iic, final ISuportePersistente sp)
+            throws ExcepcaoPersistencia {
+        final IInquiriesCourse inquiriesCourse = new InquiriesCourse();
 
-			List inquiriesRoomsList = inquiry.getInquiriesRoomsList();
-			if(inquiriesRoomsList != null) {
-				Iterator roomIter = inquiriesRoomsList.iterator();
-				while(roomIter.hasNext()) {
-					InfoInquiriesRoom iir = (InfoInquiriesRoom) roomIter.next();
-					writeInquiriesRoom(inquiriesRoomDAO, iir, inquiriesCourse, sp);
-				}
-			}
-			
-			//updating the registry
-			IPersistentInquiriesRegistry inquiriesRegistryDAO = sp.getIPersistentInquiriesRegistry();
-			writeInquiriesRegistry(inquiriesRegistryDAO, inquiriesCourse, infoStudent, sp);
-			
-		} catch (ExcepcaoPersistencia e) {
-			e.printStackTrace();
-			throw new FenixServiceException(e);
-		}
-		
-	}
-	
-	private IInquiriesCourse writeInquiriesCourse(final IPersistentInquiriesCourse inquiriesCourseDAO,
-			final InfoInquiry ii, final InfoInquiriesCourse iic, final ISuportePersistente sp)
-	throws ExcepcaoPersistencia {
-		final IInquiriesCourse inquiriesCourse = new InquiriesCourse();
-		
-		IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
-		inquiriesCourse.setExecutionCourse((IExecutionCourse) executionCourseDAO.readByOID(
-				ExecutionCourse.class, ii.getExecutionCourse().getIdInternal()));
-		
-		IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
-		inquiriesCourse.setExecutionDegreeCourse((IExecutionDegree) executionDegreeDAO.readByOID(
-				ExecutionDegree.class, iic.getExecutionDegreeCourse().getIdInternal()));
-		inquiriesCourse.setExecutionDegreeStudent((IExecutionDegree) executionDegreeDAO.readByOID(
-				ExecutionDegree.class, ii.getExecutionDegreeStudent().getIdInternal()));
-		
-		IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
-		inquiriesCourse.setExecutionPeriod((IExecutionPeriod) executionPeriodDAO.readByOID(
-				ExecutionPeriod.class, ii.getExecutionPeriod().getIdInternal()));
-		
-		if(iic.getStudentSchoolClass() != null) {
-			ITurmaPersistente schoolClassDAO = sp.getITurmaPersistente();
-			inquiriesCourse.setStudentSchoolClass((ISchoolClass) schoolClassDAO.readByOID(
-					SchoolClass.class, iic.getStudentSchoolClass().getIdInternal()));			
-		}
-		
-		inquiriesCourse.setStudentCurricularYear(iic.getStudentCurricularYear());
-		inquiriesCourse.setStudentFirstEnrollment(iic.getStudentFirstEnrollment());
-		inquiriesCourse.setClassCoordination(iic.getClassCoordination());
-		inquiriesCourse.setStudyElementsContribution(iic.getStudyElementsContribution());
-		inquiriesCourse.setPreviousKnowledgeArticulation(iic.getPreviousKnowledgeArticulation());
-		inquiriesCourse.setContributionForGraduation(iic.getContributionForGraduation());
-		inquiriesCourse.setEvaluationMethodAdequation(iic.getEvaluationMethodAdequation());
-		inquiriesCourse.setWeeklySpentHours(iic.getWeeklySpentHours());
-		inquiriesCourse.setGlobalAppreciation(iic.getGlobalAppreciation());
-		inquiriesCourseDAO.simpleLockWrite(inquiriesCourse);
+        IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
+        inquiriesCourse.setExecutionCourse((IExecutionCourse) executionCourseDAO.readByOID(
+                ExecutionCourse.class, ii.getExecutionCourse().getIdInternal()));
 
-		return inquiriesCourse;
-	}
-	
-	private void writeInquiriesTeacher(final IPersistentInquiriesTeacher inquiriesTeacherDAO,
-			final InfoInquiriesTeacher iit, final IInquiriesCourse inquiriesCourse, final ISuportePersistente sp)
-	throws ExcepcaoPersistencia {
-		
-		for(TipoAula classType : iit.getClassTypes()) {
-			final IInquiriesTeacher inquiriesTeacher = new InquiriesTeacher();
+        IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
+        inquiriesCourse.setExecutionDegreeCourse((IExecutionDegree) executionDegreeDAO.readByOID(
+                ExecutionDegree.class, iic.getExecutionDegreeCourse().getIdInternal()));
+        inquiriesCourse.setExecutionDegreeStudent((IExecutionDegree) executionDegreeDAO.readByOID(
+                ExecutionDegree.class, ii.getExecutionDegreeStudent().getIdInternal()));
 
-			inquiriesTeacher.setExecutionCourse(inquiriesCourse.getExecutionCourse());
-			inquiriesTeacher.setExecutionDegreeCourse(inquiriesCourse.getExecutionDegreeCourse());
-			inquiriesTeacher.setExecutionDegreeStudent(inquiriesCourse.getExecutionDegreeStudent());
-			inquiriesTeacher.setExecutionPeriod(inquiriesCourse.getExecutionPeriod());
-			inquiriesTeacher.setInquiriesCourse(inquiriesCourse);
-			
-			InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes teacher = iit.getTeacherOrNonAffiliatedTeacher();
-			if(teacher.getTeacher() != null) {
-				IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-				inquiriesTeacher.setTeacher((ITeacher) teacherDAO.readByOID(Teacher.class, teacher.getIdInternal()));
-			
-			} else if(teacher.getNonAffiliatedTeacher() != null) {
-				IPersistentNonAffiliatedTeacher nonAffiliatedTeacherDAO = sp.getIPersistentNonAffiliatedTeacher();
-				inquiriesTeacher.setNonAffiliatedTeacher((INonAffiliatedTeacher) nonAffiliatedTeacherDAO.readByOID(NonAffiliatedTeacher.class, teacher.getIdInternal()));
-			}
+        IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+        inquiriesCourse.setExecutionPeriod((IExecutionPeriod) executionPeriodDAO.readByOID(
+                ExecutionPeriod.class, ii.getExecutionPeriod().getIdInternal()));
 
-			inquiriesTeacher.setClassType(classType.getTipo());
-			inquiriesTeacher.setStudentAssiduity(iit.getStudentAssiduity());
-			inquiriesTeacher.setTeacherAssiduity(iit.getTeacherAssiduity());
-			inquiriesTeacher.setTeacherPunctuality(iit.getTeacherPunctuality());
-			inquiriesTeacher.setTeacherClarity(iit.getTeacherClarity());
-			inquiriesTeacher.setTeacherAssurance(iit.getTeacherAssurance());
-			inquiriesTeacher.setTeacherInterestStimulation(iit.getTeacherInterestStimulation());
-			inquiriesTeacher.setTeacherAvailability(iit.getTeacherAvailability());
-			inquiriesTeacher.setTeacherReasoningStimulation(iit.getTeacherReasoningStimulation());
-			inquiriesTeacher.setGlobalAppreciation(iit.getGlobalAppreciation());
+        if (iic.getStudentSchoolClass() != null) {
+            ITurmaPersistente schoolClassDAO = sp.getITurmaPersistente();
+            inquiriesCourse.setStudentSchoolClass((ISchoolClass) schoolClassDAO.readByOID(
+                    SchoolClass.class, iic.getStudentSchoolClass().getIdInternal()));
+        }
 
-			inquiriesTeacherDAO.simpleLockWrite(inquiriesTeacher);
-			
-		}
+        inquiriesCourse.setStudentCurricularYear(iic.getStudentCurricularYear());
+        inquiriesCourse.setStudentFirstEnrollment(iic.getStudentFirstEnrollment());
+        inquiriesCourse.setClassCoordination(iic.getClassCoordination());
+        inquiriesCourse.setStudyElementsContribution(iic.getStudyElementsContribution());
+        inquiriesCourse.setPreviousKnowledgeArticulation(iic.getPreviousKnowledgeArticulation());
+        inquiriesCourse.setContributionForGraduation(iic.getContributionForGraduation());
+        inquiriesCourse.setEvaluationMethodAdequation(iic.getEvaluationMethodAdequation());
+        inquiriesCourse.setWeeklySpentHours(iic.getWeeklySpentHours());
+        inquiriesCourse.setGlobalAppreciation(iic.getGlobalAppreciation());
+        inquiriesCourseDAO.simpleLockWrite(inquiriesCourse);
 
-	}
+        return inquiriesCourse;
+    }
 
-	private void writeInquiriesRoom(final IPersistentInquiriesRoom inquiriesRoomDAO,
-			final InfoInquiriesRoom iir, final IInquiriesCourse inquiriesCourse, final ISuportePersistente sp)
-	throws ExcepcaoPersistencia {
-		final IInquiriesRoom inquiriesRoom = new InquiriesRoom();
+    private void writeInquiriesTeacher(final IPersistentInquiriesTeacher inquiriesTeacherDAO,
+            final InfoInquiriesTeacher iit, final IInquiriesCourse inquiriesCourse,
+            final ISuportePersistente sp) throws ExcepcaoPersistencia {
 
-		inquiriesRoom.setExecutionCourse(inquiriesCourse.getExecutionCourse());
-		inquiriesRoom.setExecutionDegreeCourse(inquiriesCourse.getExecutionDegreeCourse());
-		inquiriesRoom.setExecutionDegreeStudent(inquiriesCourse.getExecutionDegreeStudent());
-		inquiriesRoom.setExecutionPeriod(inquiriesCourse.getExecutionPeriod());
-		inquiriesRoom.setInquiriesCourse(inquiriesCourse);
+        for (TipoAula classType : iit.getClassTypes()) {
+            final IInquiriesTeacher inquiriesTeacher = new InquiriesTeacher();
 
-		ISalaPersistente roomDAO = sp.getISalaPersistente();
-		inquiriesRoom.setRoom((IRoom) roomDAO.readByOID(Room.class, iir.getRoom().getIdInternal()));
+            inquiriesTeacher.setExecutionCourse(inquiriesCourse.getExecutionCourse());
+            inquiriesTeacher.setExecutionDegreeCourse(inquiriesCourse.getExecutionDegreeCourse());
+            inquiriesTeacher.setExecutionDegreeStudent(inquiriesCourse.getExecutionDegreeStudent());
+            inquiriesTeacher.setExecutionPeriod(inquiriesCourse.getExecutionPeriod());
+            inquiriesTeacher.setInquiriesCourse(inquiriesCourse);
 
-		inquiriesRoom.setEnvironmentalConditions(iir.getEnvironmentalConditions());
-		inquiriesRoom.setEquipmentQuality(iir.getEquipmentQuality());
-		inquiriesRoom.setSpaceAdequation(iir.getSpaceAdequation());
+            InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes teacher = iit
+                    .getTeacherOrNonAffiliatedTeacher();
+            if (teacher.getTeacher() != null) {
+                IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
+                inquiriesTeacher.setTeacher((ITeacher) teacherDAO.readByOID(Teacher.class, teacher
+                        .getIdInternal()));
 
-		inquiriesRoomDAO.simpleLockWrite(inquiriesRoom);
-	}
-	
-	private IInquiriesRegistry writeInquiriesRegistry(final IPersistentInquiriesRegistry inquiriesRegistryDAO,
-			final IInquiriesCourse inquiriesCourse, final InfoStudent infoStudent, final ISuportePersistente sp)
-	throws ExcepcaoPersistencia {
-		final IInquiriesRegistry inquiriesRegistry = new InquiriesRegistry();
-		inquiriesRegistry.setExecutionCourse(inquiriesCourse.getExecutionCourse());
-		inquiriesRegistry.setExecutionDegreeCourse(inquiriesCourse.getExecutionDegreeCourse());
-		inquiriesRegistry.setExecutionDegreeStudent(inquiriesCourse.getExecutionDegreeStudent());
-		inquiriesRegistry.setExecutionPeriod(inquiriesCourse.getExecutionPeriod());
-		
-		IPersistentStudent studentDAO = sp.getIPersistentStudent();
-		inquiriesRegistry.setStudent((IStudent) studentDAO.readByOID(Student.class, infoStudent.getIdInternal()));
-		
-		inquiriesRegistryDAO.simpleLockWrite(inquiriesRegistry);
-		return inquiriesRegistry;
-	}
+            } else if (teacher.getNonAffiliatedTeacher() != null) {
+                IPersistentNonAffiliatedTeacher nonAffiliatedTeacherDAO = sp
+                        .getIPersistentNonAffiliatedTeacher();
+                inquiriesTeacher.setNonAffiliatedTeacher((INonAffiliatedTeacher) nonAffiliatedTeacherDAO
+                        .readByOID(NonAffiliatedTeacher.class, teacher.getIdInternal()));
+            }
+
+            inquiriesTeacher.setClassType(classType.getTipo());
+            inquiriesTeacher.setStudentAssiduity(iit.getStudentAssiduity());
+            inquiriesTeacher.setTeacherAssiduity(iit.getTeacherAssiduity());
+            inquiriesTeacher.setTeacherPunctuality(iit.getTeacherPunctuality());
+            inquiriesTeacher.setTeacherClarity(iit.getTeacherClarity());
+            inquiriesTeacher.setTeacherAssurance(iit.getTeacherAssurance());
+            inquiriesTeacher.setTeacherInterestStimulation(iit.getTeacherInterestStimulation());
+            inquiriesTeacher.setTeacherAvailability(iit.getTeacherAvailability());
+            inquiriesTeacher.setTeacherReasoningStimulation(iit.getTeacherReasoningStimulation());
+            inquiriesTeacher.setGlobalAppreciation(iit.getGlobalAppreciation());
+
+            inquiriesTeacherDAO.simpleLockWrite(inquiriesTeacher);
+
+        }
+
+    }
+
+    private void writeInquiriesRoom(final IPersistentInquiriesRoom inquiriesRoomDAO,
+            final InfoInquiriesRoom iir, final IInquiriesCourse inquiriesCourse,
+            final ISuportePersistente sp) throws ExcepcaoPersistencia {
+        final IInquiriesRoom inquiriesRoom = new InquiriesRoom();
+
+        inquiriesRoom.setExecutionCourse(inquiriesCourse.getExecutionCourse());
+        inquiriesRoom.setExecutionDegreeCourse(inquiriesCourse.getExecutionDegreeCourse());
+        inquiriesRoom.setExecutionDegreeStudent(inquiriesCourse.getExecutionDegreeStudent());
+        inquiriesRoom.setExecutionPeriod(inquiriesCourse.getExecutionPeriod());
+        inquiriesRoom.setInquiriesCourse(inquiriesCourse);
+
+        ISalaPersistente roomDAO = sp.getISalaPersistente();
+        inquiriesRoom.setRoom((IRoom) roomDAO.readByOID(Room.class, iir.getRoom().getIdInternal()));
+
+        inquiriesRoom.setEnvironmentalConditions(iir.getEnvironmentalConditions());
+        inquiriesRoom.setEquipmentQuality(iir.getEquipmentQuality());
+        inquiriesRoom.setSpaceAdequation(iir.getSpaceAdequation());
+
+        inquiriesRoomDAO.simpleLockWrite(inquiriesRoom);
+    }
+
+    private IInquiriesRegistry writeInquiriesRegistry(
+            final IPersistentInquiriesRegistry inquiriesRegistryDAO,
+            final IInquiriesCourse inquiriesCourse, final InfoStudent infoStudent,
+            final ISuportePersistente sp) throws ExcepcaoPersistencia {
+        final IInquiriesRegistry inquiriesRegistry = new InquiriesRegistry();
+        inquiriesRegistry.setExecutionCourse(inquiriesCourse.getExecutionCourse());
+        inquiriesRegistry.setExecutionDegreeCourse(inquiriesCourse.getExecutionDegreeCourse());
+        inquiriesRegistry.setExecutionDegreeStudent(inquiriesCourse.getExecutionDegreeStudent());
+        inquiriesRegistry.setExecutionPeriod(inquiriesCourse.getExecutionPeriod());
+
+        IPersistentStudent studentDAO = sp.getIPersistentStudent();
+        inquiriesRegistry.setStudent((IStudent) studentDAO.readByOID(Student.class, infoStudent
+                .getIdInternal()));
+
+        inquiriesRegistryDAO.simpleLockWrite(inquiriesRegistry);
+        return inquiriesRegistry;
+    }
 }

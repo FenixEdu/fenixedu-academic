@@ -71,142 +71,107 @@ public class InquiriesUtil extends FenixUtil {
 	public static final String NO_ATTENDING_COURSE_TEACHER_FORM_ERROR = "noAttendingCourseTeacherForm";
 	
 
-	public static String formatAnswer(Double answer) {
-        String result = "-";
+	public static String formatAnswer(final Double answer) {
         double ans = answer.doubleValue();
         
-        if((answer != null) && (ans > 0)) {
-            result = Math.floor(ans) == ans ?
+        if (ans > 0) {
+            return Math.floor(ans) == ans ?
                     String.valueOf(answer.intValue()) : String.valueOf(ans);
         }
-        return result;
-    }
-    
-    public static String formatAnswer(Integer answer) {
-        String result = "-";
-        int ans = answer.intValue();
-        
-        if((answer != null) && (ans > 0))
-            result = "" + ans;
-        
-        return result;
+
+        return "-";
     }
 
-    
-    public static String formatAnswer(String str) {
+    public static String formatAnswer(final Integer answer) {
+        int ans = answer.intValue();
+        return ans > 0 ? String.valueOf(ans) : "-";
+    }
+
+    public static String formatAnswer(final String str) {
         return ((str == null || str.length() == 0) ? "-" : str);
     }
-    
-    public static String formatAnswer(Double answer, Double repQuota, Double minRepQuota) {
-        if(repQuota.doubleValue() > minRepQuota.doubleValue()) {
-            return formatAnswer(answer);
 
-        }
-        return "-";
+    public static String formatAnswer(final Double answer, final Double repQuota, final Double minRepQuota) {
+        return (repQuota.doubleValue() > minRepQuota.doubleValue()) ? formatAnswer(answer) : "-";
     }
-    
-    public static String formatAnswer(String answer, Double repQuota, Double minRepQuota) {
-        if(repQuota.doubleValue() > minRepQuota.doubleValue()) {
-            return formatAnswer(answer);
 
-        }
-        return "-";
+    public static String formatAnswer(final String answer, final Double repQuota, final Double minRepQuota) {
+        return (repQuota.doubleValue() > minRepQuota.doubleValue()) ? formatAnswer(answer) : "-";
     }
-    
-    
-    public static String getTdClass(Double val, final String[] classes, final String defaultClass, final double[] values) {
-        String classVal = defaultClass;
 
-        if(val == null)
-            return classVal;
-        
-        if(classes.length == (values.length-1)) {
-            double v = val.doubleValue();
-            for(int i = 0; i < classes.length; i++) {
-                if((v >= values[i]) && (v < values[i+1])) {
-                    classVal = classes[i];
-                    break;
+    public static String getTdClass(final Double val, final String[] classes, final String defaultClass, final double[] values) {
+        if(val == null) {
+            return defaultClass;
+        }
+
+        if (classes.length == (values.length-1)) {
+            final double v = val.doubleValue();
+            for (int i = 0; i < classes.length; i++) {
+                if ((v >= values[i]) && (v < values[i+1])) {
+                    return classes[i];
                 }
             }
-            
         }
-        return classVal;
+
+        return defaultClass;
     }
     
-    public static String getTdClass(String val, final String[] classes, final String defaultClass, final String[] values) {
-        String classVal = defaultClass;
+    public static String getTdClass(final String val, final String[] classes, final String defaultClass, final String[] values) {
+        if (val == null) {
+            return defaultClass;
+        }
 
-        if(val == null)
-            return classVal;
-        
-        if(classes.length == values.length) {
-            for(int i = 0; i < classes.length; i++) {
-                if(val.equalsIgnoreCase(values[i])) {
-                    classVal = classes[i];
-                    break;
+        if (classes.length == values.length) {
+            for (int i = 0; i < classes.length; i++) {
+                if (val.equalsIgnoreCase(values[i])) {
+                    return classes[i];
                 }
             }
-            
         }
-        return classVal;
-        
+
+        return defaultClass;
     }
-	
-	public static boolean isValidAnswer(Number answer) {
+
+	public static boolean isValidAnswer(final Number answer) {
 		return ((answer != null) && (answer.doubleValue() > 0) && (answer.doubleValue() <= 5));
 	}
-    
-    public static String getTdClass(Double val, final String[] classes, final String defaultClass,
-            						final double[] values, Double repQuota, Double minRepQuota) {
 
-        if(repQuota.doubleValue() > minRepQuota.doubleValue()) {
-            return getTdClass(val, classes, defaultClass, values);
-
-        }
-        return defaultClass;
+    public static String getTdClass(final Double val, final String[] classes, final String defaultClass,
+            						final double[] values, final Double repQuota, final Double minRepQuota) {
+        return (repQuota.doubleValue() > minRepQuota.doubleValue()) ? getTdClass(val, classes, defaultClass, values) : defaultClass;
     }
 
-    public static String getTdClass(String val, final String[] classes, final String defaultClass,
-            						final String[] values, Double repQuota, Double minRepQuota) {
-
-		if(repQuota.doubleValue() > minRepQuota.doubleValue()) {
-		    return getTdClass(val, classes, defaultClass, values);
-		
-		}
-        return defaultClass;
+    public static String getTdClass(final String val, final String[] classes, final String defaultClass,
+            						final String[] values, final Double repQuota, final Double minRepQuota) {
+		return (repQuota.doubleValue() > minRepQuota.doubleValue()) ? getTdClass(val, classes, defaultClass, values) : defaultClass;
 	}
 	
 
-	public static Object getFromRequest(String name,
-			HttpServletRequest request) {
-		Object parameter = null;
-
-		parameter = request.getParameter(name);
-		if (parameter == null) {
-			parameter = request.getAttribute(name);
-		}
-
-		return parameter;
+	public static Object getFromRequest(final String name, final HttpServletRequest request) {
+        final Object parameter = request.getParameter(name);
+		return (parameter == null) ? request.getAttribute(name) : parameter;
 	}
 	
 	/**
 	 * @return Returns the list containing with only the first occurrence of the elementes based on the equals method
 	 *             the result list is ordered by the idInternal
 	 */
-	public static void removeDuplicates(List beanList) {
-		if(beanList.isEmpty())
+	public static void removeDuplicates(final List beanList) {
+		if(beanList.isEmpty()) {
 			return;
+        }
 		
 		Collections.sort(beanList, new BeanComparator ("idInternal"));
-		Iterator iter = beanList.iterator();
+
+		final Iterator iter = beanList.iterator();
 		InfoObject prev = (InfoObject) iter.next();
 		while(iter.hasNext()) {
-			InfoObject curr = (InfoObject) iter.next();
-			if(curr.equals(prev))
+			final InfoObject curr = (InfoObject) iter.next();
+			if(curr.equals(prev)) {
 				iter.remove();
+            }
 			prev = curr;
 		}
 	}
-
 
 }

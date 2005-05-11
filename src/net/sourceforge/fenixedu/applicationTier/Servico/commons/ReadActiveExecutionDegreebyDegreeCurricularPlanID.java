@@ -4,18 +4,25 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinator;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinatorWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlanAndInfoCampus;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ICoordinator;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -32,7 +39,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadActiveExecutionDegreebyDegreeCurricularPlanID implements IService {
 
-    public InfoExecutionDegree run(Integer degreeCurricularPlanID) throws FenixServiceException,
+    public InfoExecutionDegree run(final Integer degreeCurricularPlanID) throws FenixServiceException,
             ExcepcaoPersistencia {
         final ISuportePersistente suportePersistente = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
@@ -41,12 +48,9 @@ public class ReadActiveExecutionDegreebyDegreeCurricularPlanID implements IServi
         final IPersistentExecutionDegree persistentExecutionDegree = suportePersistente
                 .getIPersistentExecutionDegree();
 
-        InfoExecutionDegree infoExecutionDegree = null;
-
         // degree curricular plan
         final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
                 .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
-
         if (degreeCurricularPlan == null) {
             throw new FenixServiceException("error.impossibleEditDegreeInfo");
         }
@@ -69,43 +73,46 @@ public class ReadActiveExecutionDegreebyDegreeCurricularPlanID implements IServi
         // decide which is the execution year which we want to edit
         final IExecutionDegree executionDegree = getActiveExecutionYear(executionDegrees);
         if (executionDegree != null) {
-
-            infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlanAndInfoCampus
+            final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlanAndInfoCampus
                     .newInfoFromDomain(executionDegree);
 
             if (executionDegree.getCoordinatorsList() != null) {
                 final List infoCoordinatorList = new ArrayList();
-                final ListIterator iteratorCoordinator = executionDegree.getCoordinatorsList().listIterator();
-                while (iteratorCoordinator.hasNext()) {
-                    ICoordinator coordinator = (ICoordinator) iteratorCoordinator.next();
+                for (final Iterator iterator = executionDegree.getCoordinatorsList().iterator(); iterator
+                        .hasNext();) {
+                    final ICoordinator coordinator = (ICoordinator) iterator.next();
+                    final InfoCoordinator infoCoordinator = new InfoCoordinator();
+                    infoCoordinatorList.add(infoCoordinator);
+                    infoCoordinator.setIdInternal(coordinator.getIdInternal());
 
-                    infoCoordinatorList
-                            .add(InfoCoordinatorWithInfoPerson.newInfoFromDomain(coordinator));
+                    final ITeacher teacher = coordinator.getTeacher();
+                    final InfoTeacher infoTeacher = new InfoTeacher();
+                    infoCoordinator.setInfoTeacher(infoTeacher);
+                    infoTeacher.setIdInternal(teacher.getIdInternal());
+
+                    final IPerson person = teacher.getPerson();
+                    final InfoPerson infoPerson = new InfoPerson();
+                    infoTeacher.setInfoPerson(infoPerson);
+                    infoPerson.setIdInternal(person.getIdInternal());
+                    infoPerson.setNome(person.getNome());
                 }
 
                 infoExecutionDegree.setCoordinatorsList(infoCoordinatorList);
             }
 
-            if (executionDegree.getPeriodExamsFirstSemester() != null) {
-                infoExecutionDegree.setInfoPeriodExamsFirstSemester(Cloner
-                        .copyIPeriod2InfoPeriod(executionDegree.getPeriodExamsFirstSemester()));
-            }
-            if (executionDegree.getPeriodExamsSecondSemester() != null) {
-                infoExecutionDegree.setInfoPeriodExamsSecondSemester(Cloner
-                        .copyIPeriod2InfoPeriod(executionDegree.getPeriodExamsSecondSemester()));
-            }
-            if (executionDegree.getPeriodLessonsFirstSemester() != null) {
-                infoExecutionDegree.setInfoPeriodLessonsFirstSemester(Cloner
-                        .copyIPeriod2InfoPeriod(executionDegree.getPeriodLessonsFirstSemester()));
-            }
-            if (executionDegree.getPeriodLessonsSecondSemester() != null) {
-                infoExecutionDegree.setInfoPeriodLessonsSecondSemester(Cloner
-                        .copyIPeriod2InfoPeriod(executionDegree.getPeriodLessonsSecondSemester()));
-            }
+            infoExecutionDegree.setInfoPeriodExamsFirstSemester(InfoPeriod
+                    .newInfoFromDomain(executionDegree.getPeriodExamsFirstSemester()));
+            infoExecutionDegree.setInfoPeriodExamsSecondSemester(InfoPeriod
+                    .newInfoFromDomain(executionDegree.getPeriodExamsSecondSemester()));
+            infoExecutionDegree.setInfoPeriodLessonsFirstSemester(InfoPeriod
+                    .newInfoFromDomain(executionDegree.getPeriodLessonsFirstSemester()));
+            infoExecutionDegree.setInfoPeriodLessonsSecondSemester(InfoPeriod
+                    .newInfoFromDomain(executionDegree.getPeriodLessonsSecondSemester()));
 
+            return infoExecutionDegree;
         }
 
-        return infoExecutionDegree;
+        return null;
     }
 
     /**

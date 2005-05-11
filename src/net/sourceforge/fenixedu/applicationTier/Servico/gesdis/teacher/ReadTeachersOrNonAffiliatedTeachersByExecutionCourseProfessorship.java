@@ -10,10 +10,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.INonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -24,46 +27,32 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author João Fialho & Rita Ferreira
- *
+ * 
  */
-public class ReadTeachersOrNonAffiliatedTeachersByExecutionCourseProfessorship
-		implements IService {
+public class ReadTeachersOrNonAffiliatedTeachersByExecutionCourseProfessorship implements IService {
 
-    public List run(Integer executionCourseId) throws FenixServiceException {
-        try {
-            List result = null;
-            ISuportePersistente sp;
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-            result = persistentProfessorship.readByExecutionCourseId(executionCourseId);
+    public List run(final Integer executionCourseId) throws FenixServiceException, ExcepcaoPersistencia {
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
 
-            List infoResult = new ArrayList();
-            if (result != null) {
+        final List result = persistentProfessorship.readByExecutionCourseId(executionCourseId);
+        final List infoResult = new ArrayList(result.size());
+        for (final Iterator iterator = result.iterator(); iterator.hasNext();) {
+            final IProfessorship professorship = (IProfessorship) iterator.next();
+            final ITeacher teacher = professorship.getTeacher();
+            final InfoTeacher infoTeacher = new InfoTeacher();
+            infoResult.add(infoTeacher);
 
-                Iterator iter = result.iterator();
-                while (iter.hasNext()) {
-                    IProfessorship professorship = (IProfessorship) iter.next();
-					if(professorship.getTeacher() != null) {
-	                    ITeacher teacher = professorship.getTeacher();
-	                    InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
-	                    infoResult.add(infoTeacher);
-                    }
-					//else if(professorship.getNonAffiliatedTeacher() != null) {
-//						INonAffiliatedTeacher nonAffiliatedTeacher = professorship.getNonAffiliatedTeacher();
-//						InfoNonAffiliatedTeacher infoNonAffiliatedTeacher = new InfoNonAffiliatedTeacher();
-//						infoNonAffiliatedTeacher.copyFromDomain(nonAffiliatedTeacher);
-//						infoResult.add(infoNonAffiliatedTeacher);
-//					}
-                }
-                return infoResult;
-            }
+            infoTeacher.setIdInternal(teacher.getIdInternal());
 
-            return result;
+            final IPerson person = teacher.getPerson();
+            final InfoPerson infoPerson = new InfoPerson();
+            infoTeacher.setInfoPerson(infoPerson);
 
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+            infoPerson.setIdInternal(person.getIdInternal());
+            infoPerson.setNome(person.getNome());
         }
-
+        return infoResult;
     }
 
 }

@@ -6,6 +6,7 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiry" %>
 <%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
 <%@ page import="net.sourceforge.fenixedu.util.TipoAula" %>
+<%@ page import="net.sourceforge.fenixedu.util.StringAppender" %>
 
 <link href="<%= request.getContextPath() %>/CSS/inquiries_style.css" rel="stylesheet" type="text/css" />
 
@@ -207,7 +208,7 @@
 							</logic:notPresent>
 							<logic:present name='<%= InquiriesUtil.ATTENDING_COURSE_EXECUTION_DEGREE %>'>
 								<bean:define id="attendingCourseExecutionDegreeId" name='<%= InquiriesUtil.ATTENDING_COURSE_EXECUTION_DEGREE %>' property="idInternal" />
-								<html:hidden property="attendingCourseExecutionDegreeId" value='<%= "" + attendingCourseExecutionDegreeId %>' />
+								<html:hidden property="attendingCourseExecutionDegreeId" value='<%= attendingCourseExecutionDegreeId.toString() %>' />
 							</logic:present>
 						</td>
 					</tr>
@@ -468,7 +469,8 @@
 									<html:submit styleClass="inputbuttonlink"
 										onmouseover="this.style.textDecoration='none';"
 										onmouseout="this.style.textDecoration='underline';"
-										onclick='<%="this.form.method.value='prepareNewTeacher';this.form.newAttendingCourseTeacherId.value='" + currentTeacherId + "';" %>'
+										onclick='<%= StringAppender.append("this.form.method.value='prepareNewTeacher';this.form.newAttendingCourseTeacherId.value='",
+											currentTeacherId.toString(), "';") %>'
 										title='<%= evaluateTeacher %>'
 										>
 										<bean:write name="attendingCourseTeacher" property="teacher.infoPerson.nome" />
@@ -498,7 +500,8 @@
 									<html:submit styleClass="inputbuttonlink"
 										onmouseover="this.style.textDecoration='none';"
 										onmouseout="this.style.textDecoration='underline';"
-										onclick='<%="this.form.method.value='prepareNewTeacher';this.form.newAttendingCourseNonAffiliatedTeacherId.value='" + currentTeacherId + "';" %>'
+										onclick='<%= StringAppender.append("this.form.method.value='prepareNewTeacher';this.form.newAttendingCourseNonAffiliatedTeacherId.value='",
+											currentTeacherId.toString(), "';") %>'
 										title='<%= evaluateTeacher %>'
 										>
 										<bean:write name="attendingCourseTeacher" property="nonAffiliatedTeacher.name" />
@@ -534,7 +537,7 @@
 					<bean:define id="selectedAttendingCourseTeacherId" name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.idInternal" />
 
 								
-					<html:hidden property="selectedAttendingCourseTeachersId" value='<%= "" + selectedAttendingCourseTeacherId %>'/>
+					<html:hidden property="selectedAttendingCourseTeachersId" value='<%= selectedAttendingCourseTeacherId.toString() %>'/>
 		            <html:hidden property="selectedAttendingCourseTeachersClassTypeT" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(TipoAula.TEORICA) %>' />
             		<html:hidden property="selectedAttendingCourseTeachersClassTypeP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(TipoAula.PRATICA) %>' />
 					<html:hidden property="selectedAttendingCourseTeachersClassTypeL" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(TipoAula.LABORATORIAL) %>' />
@@ -893,7 +896,7 @@
 									<html:submit styleClass="inputbutton" onclick='<%="this.form.method.value='closeTeacher';" %>'>
 										<bean:message key="button.confirm" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
-									<html:submit styleClass="inputbutton" onclick='<%="this.form.method.value='removeTeacher';this.form.selectedAttendingCourseTeacherFormPosition.value='" + teacherPosition + "';" %>'>
+									<html:submit styleClass="inputbutton" onclick='<%= StringAppender.append("this.form.method.value='removeTeacher';this.form.selectedAttendingCourseTeacherFormPosition.value='", teacherPosition.toString(), "';") %>'>
 										<bean:message key="button.remove" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
 								</td>
@@ -936,10 +939,10 @@
 							</tr>
 							<tr>
 								<td class="left">
-									<html:submit styleClass="inputbutton" onclick='<%="this.form.method.value='editTeacher';this.form.selectedAttendingCourseTeacherFormPosition.value='" + teacherPosition + "';" %>'>
+									<html:submit styleClass="inputbutton" onclick='<%= StringAppender.append("this.form.method.value='editTeacher';this.form.selectedAttendingCourseTeacherFormPosition.value='", teacherPosition.toString(), "';") %>'>
 										<bean:message key="button.edit" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
-									<html:submit styleClass="inputbutton" onclick='<%="this.form.method.value='removeTeacher';this.form.selectedAttendingCourseTeacherFormPosition.value='" + teacherPosition + "';" %>'>
+									<html:submit styleClass="inputbutton" onclick='<%= StringAppender.append("this.form.method.value='removeTeacher';this.form.selectedAttendingCourseTeacherFormPosition.value='", teacherPosition.toString(),  "';") %>'>
 										<bean:message key="button.remove" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
 								</td>
@@ -1009,7 +1012,7 @@
 										<html:submit styleClass="inputbuttonlink"
 											onmouseover="this.style.textDecoration='none';"
 											onmouseout="this.style.textDecoration='underline';"
-											onclick='<%="this.form.method.value='prepareNewRoom';this.form.newAttendingCourseRoomId.value='" + currentRoomId + "';" %>'
+											onclick='<%= StringAppender.append("this.form.method.value='prepareNewRoom';this.form.newAttendingCourseRoomId.value='", currentRoomId.toString(), "';") %>'
 											title='<%= evaluateRoom %>'
 											>
 											<bean:write name="attendingCourseRoom" property="nome" />
@@ -1030,7 +1033,7 @@
 				<logic:iterate id="selectedAttendingCourseRoom" name='<%= InquiriesUtil.SELECTED_ATTENDING_COURSE_ROOMS %>' indexId="roomPosition" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom">
 					<bean:define id="selectedAttendingCourseRoomId" name="selectedAttendingCourseRoom" property="room.idInternal" />
 
-					<html:hidden property="selectedAttendingCourseRoomsId" value='<%= "" + selectedAttendingCourseRoomId %>'/>
+					<html:hidden property="selectedAttendingCourseRoomsId" value='<%= selectedAttendingCourseRoomId.toString() %>'/>
 					<html:hidden property="selectedAttendingCourseRoomsQuestion41" value='<%= "" + selectedAttendingCourseRoom.getSpaceAdequation() %>' />
 					<html:hidden property="selectedAttendingCourseRoomsQuestion42" value='<%= "" + selectedAttendingCourseRoom.getEnvironmentalConditions() %>' />
 					<html:hidden property="selectedAttendingCourseRoomsQuestion43" value='<%= "" + selectedAttendingCourseRoom.getEquipmentQuality() %>' />
@@ -1148,7 +1151,7 @@
 									<html:submit styleClass="inputbutton" onclick='<%="this.form.method.value='closeRoom';" %>'>
 										<bean:message key="button.confirm" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
-									<html:submit styleClass="inputbutton" onclick='<%="this.form.method.value='removeRoom';this.form.selectedAttendingCourseRoomId.value='" + selectedAttendingCourseRoomId + "';" %>'>
+									<html:submit styleClass="inputbutton" onclick='<%= StringAppender.append("this.form.method.value='removeRoom';this.form.selectedAttendingCourseRoomId.value='", selectedAttendingCourseRoomId.toString(), "';") %>'>
 										<bean:message key="button.remove" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
 								</td>
@@ -1168,10 +1171,10 @@
 							</tr>
 							<tr>
 								<td class="left">
-									<html:submit styleClass="inputbutton" onclick='<%="this.form.method.value='editRoom';this.form.selectedAttendingCourseRoomId.value='" + selectedAttendingCourseRoomId + "';" %>'>
+									<html:submit styleClass="inputbutton" onclick='<%= StringAppender.append("this.form.method.value='editRoom';this.form.selectedAttendingCourseRoomId.value='", selectedAttendingCourseRoomId.toString(), "';") %>'>
 										<bean:message key="button.edit" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
-									<html:submit styleClass="inputbutton" onclick='<%="this.form.method.value='removeRoom';this.form.selectedAttendingCourseRoomId.value='" + selectedAttendingCourseRoomId + "';" %>'>
+									<html:submit styleClass="inputbutton" onclick='<%= StringAppender.append("this.form.method.value='removeRoom';this.form.selectedAttendingCourseRoomId.value='", selectedAttendingCourseRoomId.toString(), "';") %>'>
 										<bean:message key="button.remove" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
 								</td>
