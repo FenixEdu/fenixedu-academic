@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 
 /**
@@ -15,9 +14,7 @@ public class InfoProfessorship extends InfoObject {
     protected InfoTeacher infoTeacher;
 
     protected InfoExecutionCourse infoExecutionCourse;
-    
-    protected InfoNonAffiliatedTeacher nonAffiliatedTeacher;
-
+   
     private Double hours;
 
     private String toDelete;
@@ -58,16 +55,6 @@ public class InfoProfessorship extends InfoObject {
      */
     public void setInfoTeacher(InfoTeacher teacher) {
         infoTeacher = teacher;
-    }
-
-
-    public InfoNonAffiliatedTeacher getNonAffiliatedTeacher() {
-        return nonAffiliatedTeacher;
-    }
-    
-
-    public void setNonAffiliatedTeacher(InfoNonAffiliatedTeacher nonAffiliatedTeacher) {
-        this.nonAffiliatedTeacher = nonAffiliatedTeacher;
     }
     
     /**
