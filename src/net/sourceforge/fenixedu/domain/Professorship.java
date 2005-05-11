@@ -14,11 +14,8 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         PersistenceBrokerAware {
     protected ITeacher teacher;
 
-    protected INonAffiliatedTeacher nonAffiliatedTeacher;
-    protected Integer keyNonAffiliatedTeacher;
-
     /**
-     *  
+     * 
      */
     public Professorship() {
     }
@@ -27,8 +24,6 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         setTeacher(teacher);
         setExecutionCourse(executionCourse);
     }
-
-
 
     public String toString() {
         String result = "Professorship :\n";
@@ -41,8 +36,10 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     public boolean equals(Object obj) {
         if (obj instanceof IProfessorship) {
             IProfessorship professorship = (IProfessorship) obj;
+
             return this.getTeacher().equals(professorship.getTeacher())
                     && this.getExecutionCourse().equals(professorship.getExecutionCourse());
+
         }
         return false;
     }
@@ -55,7 +52,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         if (this.getExecutionCourse().isMasterDegreeOnly()) {
             ITeacher teacher = this.getTeacher();
             teacher.notifyCreditsChange(CreditsEvent.MASTER_DEGREE_LESSONS, this);
-   		}
+        }
     }
 
     public void afterUpdate(PersistenceBroker broker) throws PersistenceBrokerException {
@@ -82,24 +79,4 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     public void afterLookup(PersistenceBroker broker) throws PersistenceBrokerException {
     }
 
-
-    public Integer getKeyNonAffiliatedTeacher() {
-        return keyNonAffiliatedTeacher;
-    }
-    
-
-    public void setKeyNonAffiliatedTeacher(Integer keyNonAffiliatedTeacher) {
-        this.keyNonAffiliatedTeacher = keyNonAffiliatedTeacher;
-    }
-    
-
-    public INonAffiliatedTeacher getNonAffiliatedTeacher() {
-        return nonAffiliatedTeacher;
-    }
-    
-
-    public void setNonAffiliatedTeacher(INonAffiliatedTeacher nonAffiliatedTeacher) {
-        this.nonAffiliatedTeacher = nonAffiliatedTeacher;
-    }
-    
 }
