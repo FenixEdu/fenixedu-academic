@@ -152,7 +152,7 @@ public class ReadCourseInformation implements IService {
                 TipoAula.LABORATORIAL, sp));
         IPersistentCourseReport persistentCourseReport = sp.getIPersistentCourseReport();
         ICourseReport courseReport = persistentCourseReport
-                .readCourseReportByExecutionCourse(executionCourse);
+                .readCourseReportByExecutionCourse(executionCourse.getIdInternal());
 
         if (courseReport == null) {
             InfoCourseReport infoCourseReport = new InfoCourseReport();

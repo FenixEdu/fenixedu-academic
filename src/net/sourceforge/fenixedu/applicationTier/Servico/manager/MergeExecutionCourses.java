@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.ISummary;
 import net.sourceforge.fenixedu.domain.ISupportLesson;
+import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
@@ -182,10 +183,10 @@ public class MergeExecutionCourses implements IService {
     private void copyCourseReport(IExecutionCourse destination, IExecutionCourse source,
             ISuportePersistente ps) throws ExcepcaoPersistencia {
         IPersistentCourseReport persistentCourseReport = ps.getIPersistentCourseReport();
-        ICourseReport courseReport = persistentCourseReport.readCourseReportByExecutionCourse(source);
+        ICourseReport courseReport = persistentCourseReport.readCourseReportByExecutionCourse(source.getIdInternal());
         if (courseReport != null) {
-
-            persistentCourseReport.delete(courseReport);
+            courseReport.getExecutionCourse().setCourseReport(null);
+            persistentCourseReport.deleteByOID(CourseReport.class, courseReport.getIdInternal());
         }
 
     }

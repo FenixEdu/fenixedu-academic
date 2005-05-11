@@ -6,7 +6,6 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.OJB.gesdis;
 
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -22,27 +21,11 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class CourseReportOJB extends PersistentObjectOJB implements IPersistentCourseReport {
 
-    /**
-     *  
-     */
-    public CourseReportOJB() {
-        super();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.gesdis.IPersistentCourseReport#readCourseReportByExecutionCourse(Dominio.IDisciplinaExecucao)
-     */
-    public ICourseReport readCourseReportByExecutionCourse(IExecutionCourse executionCourse)
+    public ICourseReport readCourseReportByExecutionCourse(Integer executionCourseOID)
             throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("executionCourse.idInternal", executionCourse.getIdInternal());
+        criteria.addEqualTo("executionCourse.idInternal", executionCourseOID);
         return (ICourseReport) queryObject(CourseReport.class, criteria);
-    }
-
-    public void delete(ICourseReport courseReport) throws ExcepcaoPersistencia {
-        super.delete(courseReport);
     }
 }

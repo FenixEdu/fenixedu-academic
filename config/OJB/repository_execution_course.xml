@@ -44,23 +44,34 @@
 		column="KEY_EXECUTION_PERIOD"
 		jdbc-type="INTEGER"
 	/>
-      <field-descriptor
-      	name="ackOptLock"
+	<field-descriptor
+		name="keyCourseReport"
+		column="KEY_COURSE_REPORT"
+		jdbc-type="INTEGER"
+	/>
+    <field-descriptor
+    	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
       	locking="true"
-      />
+    />
+	<field-descriptor
+		 name="comment"
+         column="COMMENT"
+        jdbc-type="LONGVARCHAR"
+	/>	
 	<reference-descriptor
 			name="executionPeriod"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod" 
 			proxy="false">
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
-	  <field-descriptor
-		 name="comment"
-         column="COMMENT"
-        jdbc-type="LONGVARCHAR"
-	  />	
+	<reference-descriptor
+			name="courseReport"
+			class-ref="net.sourceforge.fenixedu.domain.gesdis.CourseReport" 
+			proxy="false">
+		<foreignkey field-ref="keyCourseReport"/>
+	</reference-descriptor>
 	<collection-descriptor
 			name="associatedCurricularCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"

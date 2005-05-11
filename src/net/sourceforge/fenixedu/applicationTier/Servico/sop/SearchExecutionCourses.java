@@ -13,7 +13,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -43,37 +42,16 @@ import net.sourceforge.fenixedu.util.TipoAula;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-public class SearchExecutionCourses implements IServico {
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-    private static SearchExecutionCourses _servico = new SearchExecutionCourses();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static SearchExecutionCourses getService() {
-        return _servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private SearchExecutionCourses() {
-    }
-
-    /**
-     * Devolve o nome do servico
-     */
-    public final String getNome() {
-        return "SearchExecutionCourses";
-    }
+public class SearchExecutionCourses implements IService {
 
     public List run(InfoExecutionPeriod infoExecutionPeriod, InfoExecutionDegree infoExecutionDegree,
             InfoCurricularYear infoCurricularYear, String executionCourseName)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
 
         List result = null;
 
-        try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             final IExecutionPeriod executionPeriod = (IExecutionPeriod) sp
@@ -153,7 +131,7 @@ public class SearchExecutionCourses implements IServico {
 
                         IPersistentCourseReport persistentCourseReport = sp.getIPersistentCourseReport();
                         ICourseReport courseReport = persistentCourseReport
-                                .readCourseReportByExecutionCourse(executionCourse);
+                                .readCourseReportByExecutionCourse(executionCourse.getIdInternal());
                         if (courseReport != null) {
                             infoExecutionCourse
                                     .setCourseReportFilled(courseReport.getReport() != null ? new String(
@@ -308,9 +286,7 @@ public class SearchExecutionCourses implements IServico {
                     return infoExecutionCourse;
                 }
             });
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex.getMessage());
-        }
+
         return result;
     }
 }
