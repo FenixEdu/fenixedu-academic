@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.guide;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -190,6 +193,10 @@ public class GuideListingDispatchAction extends DispatchAction {
                         "Guias para esta pessoa");
             }
 
+            ComparatorChain comparator = new ComparatorChain();
+            comparator.addComparator(new BeanComparator("year"), false);
+            Collections.sort(result, comparator);
+            
             request.setAttribute(SessionConstants.GUIDE_LIST, result);
 
             return mapping.findForward("ShowGuideList");
