@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithInfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -48,7 +49,7 @@ public class CriarTurno implements IService {
         newShift.setAssociatedClasses(new ArrayList());
         newShift.setAssociatedShiftProfessorship(new ArrayList());
 
-        return InfoShift.newInfoFromDomain(newShift);
+        return InfoShiftWithInfoExecutionCourse.newInfoFromDomain(newShift);
 
     }
 
