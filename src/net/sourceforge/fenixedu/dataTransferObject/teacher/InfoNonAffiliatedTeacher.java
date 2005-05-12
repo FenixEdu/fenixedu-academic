@@ -39,6 +39,15 @@ public class InfoNonAffiliatedTeacher extends InfoObject {
         }
     }
 
+	public static InfoNonAffiliatedTeacher newInfoFromDomain(INonAffiliatedTeacher naTeacher) {
+        InfoNonAffiliatedTeacher infoNaTeacher = null;
+        if (naTeacher != null) {
+            infoNaTeacher = new InfoNonAffiliatedTeacher();
+            infoNaTeacher.copyFromDomain(naTeacher);
+        }
+        return infoNaTeacher;
+    }
+
     public static INonAffiliatedTeacher newDomainFromInfo(InfoNonAffiliatedTeacher infoNonAffiliatedTeacher) {
         INonAffiliatedTeacher nonAffiliatedTeacher = null;
         if (infoNonAffiliatedTeacher != null) {
@@ -84,5 +93,13 @@ public class InfoNonAffiliatedTeacher extends InfoObject {
     public void setName(String name) {
         this.name = name;
     }
+	
+    public String toString() {
+        String result = "[INFONONAFFILIATEDTEACHER";
+        result += ", nome=" + this.getName();
+        result += "]";
+        return result;
+    }
+
 
 }

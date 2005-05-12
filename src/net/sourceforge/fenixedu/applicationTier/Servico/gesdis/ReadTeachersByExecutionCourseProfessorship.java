@@ -12,8 +12,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -34,10 +32,8 @@ public class ReadTeachersByExecutionCourseProfessorship implements IService {
             List result = null;
             ISuportePersistente sp;
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IExecutionCourse executionCourse = Cloner
-                    .copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
             IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-            result = persistentProfessorship.readByExecutionCourse(executionCourse);
+            result = persistentProfessorship.readByExecutionCourseId(infoExecutionCourse.getIdInternal());
 
             List infoResult = new ArrayList();
             if (result != null) {
@@ -46,7 +42,8 @@ public class ReadTeachersByExecutionCourseProfessorship implements IService {
                 while (iter.hasNext()) {
                     IProfessorship professorship = (IProfessorship) iter.next();
                     ITeacher teacher = professorship.getTeacher();
-                    InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+                    //InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+					InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
                     infoResult.add(infoTeacher);
                 }
                 return infoResult;

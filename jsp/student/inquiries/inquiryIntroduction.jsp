@@ -13,12 +13,16 @@
 	</font>
 </noscript>
 
+<bean:message key="message.inquiries.introduction" bundle="INQUIRIES_RESOURCES"/>
 
+
+<br/>
+<hr/>
 <logic:present name='<%= InquiriesUtil.STUDENT_ATTENDS %>'>
 	<logic:notEmpty name='<%= InquiriesUtil.STUDENT_ATTENDS %>'>
-		<h2>
-			Escolher disciplina para avaliar:
-		</h2>
+		<strong></p>
+			<bean:message key="title.inquiries.choose.course" bundle="INQUIRIES_RESOURCES"/>
+		</strong></p>
 		<logic:iterate id="attends" name='<%= InquiriesUtil.STUDENT_ATTENDS %>' type="net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta">
 			<html:link page='<%= StringAppender.append("/fillInquiries.do?method=prepare&amp;", InquiriesUtil.STUDENT_ATTENDS_ID, "=", attends.getIdInternal().toString()) %>'>
 				<bean:write name="attends" property="disciplinaExecucao.nome" />
@@ -30,14 +34,23 @@
 
 <logic:present name='<%= InquiriesUtil.EVALUATED_STUDENT_ATTENDS %>'>
 	<logic:notEmpty name='<%= InquiriesUtil.EVALUATED_STUDENT_ATTENDS %>'>
-		<h2>
-			Disciplinas j&aacute; avaliadas:
-		</h2>
+		<p><strong>
+			<bean:message key="title.inquiries.evaluated.courses" bundle="INQUIRIES_RESOURCES"/>
+		</strong></p>
 		<logic:iterate id="evaluatedAttends" name='<%= InquiriesUtil.EVALUATED_STUDENT_ATTENDS %>' type="net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta">
 				<bean:write name="evaluatedAttends" property="disciplinaExecucao.nome" />
 			<br/>
 		</logic:iterate>
 	</logic:notEmpty>
 </logic:present>
+
+<logic:notPresent name='<%= InquiriesUtil.STUDENT_ATTENDS %>'>
+	<logic:present name='<%= InquiriesUtil.INQUIRY_MESSAGE_KEY %>'>
+		<bean:define id="messageKey" name='<%= InquiriesUtil.INQUIRY_MESSAGE_KEY %>' />
+		<h2>
+			<bean:message key='<%= "" + messageKey %>' bundle="INQUIRIES_RESOURCES"/>
+		</h2>
+	</logic:present>
+</logic:notPresent>
 
 

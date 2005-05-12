@@ -13,7 +13,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.Lesson;
@@ -21,7 +20,6 @@ import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.domain.ShiftStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
-import net.sourceforge.fenixedu.util.TipoAula;
 
 import org.apache.ojb.broker.query.Criteria;
 

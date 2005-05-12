@@ -8,9 +8,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries;
 import java.util.Iterator;
 import java.util.List;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
-
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesCourse;
@@ -58,6 +55,7 @@ import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRo
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesTeacher;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.util.TipoAula;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author João Fialho & Rita Ferreira

@@ -25,6 +25,8 @@ public class InquiriesUtil extends FenixUtil {
 	public static final String ATTENDING_COURSE_TEACHERS = "attendingCourseTeachers";
 	public static final String ATTENDING_EXECUTION_COURSE = "attendingExecutionCourse";
 	public static final String STUDENT_ATTENDS_ID = "studentAttendsId";
+	public static final String ATTENDING_EXECUTION_COURSE_ID = "attendingExecutionCourseId";
+	
 	public static final String ATTENDING_COURSE_TEACHER_ID = "attendingCourseTeacherId";
 	public static final String CLASS_TYPE = "classType";
 	public static final String ATTENDING_COURSE_ROOMS = "attendingCourseRooms";
@@ -69,6 +71,8 @@ public class InquiriesUtil extends FenixUtil {
 	public static final String INQUIRY = "inquiry";
 	public static final String INFO_ATTENDING_INQUIRIES_COURSE = "infoAttendingInquiriesCourse";
 	public static final String NO_ATTENDING_COURSE_TEACHER_FORM_ERROR = "noAttendingCourseTeacherForm";
+	
+	public static final String INQUIRY_MESSAGE_KEY = "inquiryMessageKey";
 	
 
 	public static String formatAnswer(final Double answer) {

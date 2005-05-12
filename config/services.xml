@@ -2854,15 +2854,6 @@
         <filterChains/>
     </service>
     <service>
-        <name>ReadTeachersOrNonAffiliatedTeachersByExecutionCourseProfessorship</name>
-        <implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher.ReadTeachersOrNonAffiliatedTeachersByExecutionCourseProfessorship
-		</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains/>
-    </service>
-    <service>
         <name>ReadTeachersByExecutionCourseResponsibility</name>
         <implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadTeachersByExecutionCourseResponsibility</implementationClass>

@@ -5,7 +5,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta;
+import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -20,13 +20,17 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadAttendsByOID implements IService {
 
-	public InfoFrequenta run(final Integer idInternal) throws ExcepcaoPersistencia {
-		final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
+	
+	public InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers run(Integer idInternal) throws ExcepcaoPersistencia {
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
 		
-		final IAttends attends = (IAttends) persistentAttend.readByOID(Attends.class, idInternal);
+		IAttends attends = (IAttends)persistentAttend.readByOID(Attends.class, idInternal);
+				
+		return InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers.newInfoFromDomain(attends);
 
-		return InfoFrequenta.newInfoFromDomain(attends);
 	}
+
+    
 
 }

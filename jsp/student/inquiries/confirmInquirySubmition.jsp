@@ -455,8 +455,6 @@
 							<td class="left" colspan="2">
 								<logic:present name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.teacher">
 									<strong>
-										<bean:write name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.teacher.teacherNumber" />
-										-
 										<bean:write name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.teacher.infoPerson.nome" />
 									</strong>
 								</logic:present>
@@ -494,8 +492,6 @@
 							</td>
 							<td class="left">
 								<logic:present name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.teacher">
-									<bean:write name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.teacher.teacherNumber" />
-									-
 									<bean:write name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.teacher.infoPerson.nome" />
 								</logic:present>
 								<logic:present name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.nonAffiliatedTeacher">
@@ -934,16 +930,21 @@
 					</table>
 
 			</logic:iterate>
-			</logic:present>
+		</logic:present>
 
-		<hr/>
+		<p class="navbottom" />
 
-		<div class="block2">
-			<html:submit styleClass="inputbutton" onclick='<%="this.form.method.value='saveInquiry';" %>'>
-				<bean:message key="button.confirm" bundle="INQUIRIES_RESOURCES"/>
+		<div id="submit" style="text-align: right;">
+			<p><Strong>
+				<a name='<%= InquiriesUtil.SUBMIT_FORM_ANCHOR  %>'>
+					<bean:message key="message.inquiries.confirmation.info" bundle="INQUIRIES_RESOURCES"/>
+				</a>
+			</Strong></p>
+			<html:submit styleClass="inquirylargebutton" onclick='<%="this.form.method.value='saveInquiry';" %>'>
+				<bean:message key="button.inquiries.confirm" bundle="INQUIRIES_RESOURCES"/>
 			</html:submit>
-			<html:submit styleClass="inputbutton" onclick='<%="this.form.method.value='editInquiry';" %>'>
-				<bean:message key="button.edit" bundle="INQUIRIES_RESOURCES"/>
+			<html:submit styleClass="inquirylargebutton" onclick='<%="this.form.method.value='editInquiry';" %>'>
+				<bean:message key="button.inquiries.edit.inquiry" bundle="INQUIRIES_RESOURCES"/>
 			</html:submit>
 		</div>
 

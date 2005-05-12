@@ -150,7 +150,7 @@ public class InfoTeacher extends InfoObject implements ISmsDTO {
         String result = "[INFOTEACHER";
         result += ", number=" + this.teacherNumber;
         // This throws a null poiter exception when infoPerson is not set!
-        //result += ", nome=" + this.infoPerson.getNome();
+        result += ", nome=" + this.infoPerson.getNome();
         result += "]";
         return result;
     }
