@@ -54,7 +54,6 @@ public class ReadClassesByExecutionCourse implements IService {
                 infoExecutionDegrees.put(executionDegreeKey, infoExecutionDegree);
 
                 infoExecutionDegree.setIdInternal(executionDegree.getIdInternal());
-                infoClass.setInfoExecutionDegree(infoExecutionDegree);
 
                 final IDegreeCurricularPlan degreeCurricularPlan = executionDegree
                         .getDegreeCurricularPlan();
@@ -67,6 +66,7 @@ public class ReadClassesByExecutionCourse implements IService {
                 final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
                 infoDegreeCurricularPlan.setInfoDegree(infoDegree);
             }
+            infoClass.setInfoExecutionDegree(infoExecutionDegree);
 
             infoClasses.add(infoClass);
         }
