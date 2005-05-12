@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
-import net.sourceforge.fenixedu.util.GratuitySituationType;
+import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
 import net.sourceforge.fenixedu.util.Specialization;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -105,9 +105,11 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
             Specialization specialization = new Specialization(specializationName);
 
             //GRATUITY SITUATION
-            GratuitySituationType gratuitySituationType = GratuitySituationType
-                    .getEnum(gratuitySituationTypeName);
-
+            GratuitySituationType gratuitySituationType = null;
+            if(!gratuitySituationTypeName.equals("all")){
+                gratuitySituationType = GratuitySituationType.valueOf(gratuitySituationTypeName);    
+            }
+            
             List infoGratuitySituationList = new ArrayList();
             double totalPayedValue = 0;
             double totalRemaingValue = 0;

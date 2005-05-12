@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
 <h2><bean:message key="link.masterDegree.administrativeOffice.gratuity.listStudents"/></h2>
@@ -82,20 +83,13 @@
 					<bean:message key="label.masterDegree.gratuity.situation"/>
 				</td>
 				<td>
+					<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType" bundle="ENUMERATION_RESOURCES"/>	            
 					<html:select property="situation">
-						<html:option value="">
-							<bean:message key="label.choose.one"/>
-						</html:option>						
+						<html:option key="dropDown.Default" value=""/>
 						<html:option value="all">
 							<bean:message key="label.gratuitySituationType.all"/>
 						</html:option>
-						<logic:iterate id="gratuitySituation" name="situations">
-							<bean:define id="gratuitySituationName" name="gratuitySituation" property="name"/>
-							<bean:define id="gratuitySituationNameKEY" value="<%= "label.gratuitySituationType." + gratuitySituationName.toString() %>"/>						
-							<html:option value="<%= gratuitySituationName.toString() %>" >
-								<bean:message name="gratuitySituationNameKEY"/>
-							</html:option>
-						</logic:iterate>
+						<html:options collection="values" property="value" labelProperty="label"/>
 					</html:select>
 				</td>
 			</tr>

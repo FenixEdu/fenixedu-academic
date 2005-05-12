@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
-import net.sourceforge.fenixedu.util.GratuitySituationType;
+import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
 import net.sourceforge.fenixedu.util.Specialization;
 
 import org.apache.ojb.broker.query.Criteria;
@@ -110,16 +110,16 @@ public class GratuitySituationOJB extends PersistentObjectOJB implements IPersis
         }
 
         if (situation != null) {
-            switch (situation.getValue()) {
-            case GratuitySituationType.CREDITOR_TYPE:
+            switch (situation) {
+            case CREDITOR:
                 //CREDITOR situation: remainingValue < 0
                 criteria.addLessThan("remainingValue", new Double(0));
                 break;
-            case GratuitySituationType.DEBTOR_TYPE:
+            case DEBTOR:
                 //DEBTOR situation: remainingValue > 0
                 criteria.addGreaterThan("remainingValue", new Double(0));
                 break;
-            case GratuitySituationType.REGULARIZED_TYPE:
+            case REGULARIZED:
                 //REGULARIZED situation: remainingValue == 0
                 criteria.addEqualTo("remainingValue", new Double(0));
                 break;
@@ -150,17 +150,17 @@ public class GratuitySituationOJB extends PersistentObjectOJB implements IPersis
 
         if (gratuitySituationType != null) {
 
-            switch (gratuitySituationType.getValue()) {
+            switch (gratuitySituationType) {
 
-            case GratuitySituationType.CREDITOR_TYPE:
+            case CREDITOR:
                 //CREDITOR situation: remainingValue < 0
                 criteria.addLessThan("remainingValue", new Double(0));
                 break;
-            case GratuitySituationType.DEBTOR_TYPE:
+            case DEBTOR:
                 //DEBTOR situation: remainingValue > 0
                 criteria.addGreaterThan("remainingValue", new Double(0));
                 break;
-            case GratuitySituationType.REGULARIZED_TYPE:
+            case REGULARIZED:
                 //REGULARIZED situation: remainingValue == 0
                 criteria.addEqualTo("remainingValue", new Double(0));
                 break;

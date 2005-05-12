@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.GratuitySituationType;
 import net.sourceforge.fenixedu.util.Specialization;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -43,13 +42,13 @@ import org.apache.struts.util.LabelValueBean;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class StudentsGratuityListAction extends DispatchAction {
 
     public ActionForward chooseExecutionYear(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-        //execution years
+        // execution years
         List executionYears = null;
         Object[] args = {};
         try {
@@ -119,26 +118,28 @@ public class StudentsGratuityListAction extends DispatchAction {
         }
 
         Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
-        List executionDegreeLabels = buildExecutionDegreeLabelValueBean(executionDegreeList);
+        List executionDegreeLabels = buildExecutionDegreeLabelValueBean(executionDegreeList, request);
 
         request.setAttribute(SessionConstants.DEGREES, executionDegreeLabels);
         request.setAttribute("specializations", Specialization.toArrayListWithoutDefault());
-        request.setAttribute("situations", GratuitySituationType.getEnumList());
         request.setAttribute("showNextSelects", "true");
 
         return chooseExecutionYear(mapping, actionForm, request, response);
     }
 
-    private List buildExecutionDegreeLabelValueBean(List executionDegreeList) {
+    private List buildExecutionDegreeLabelValueBean(List executionDegreeList, HttpServletRequest request) {
+
         List executionDegreeLabels = new ArrayList();
         Iterator iterator = executionDegreeList.iterator();
         while (iterator.hasNext()) {
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
             String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-            name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()
-                    .toString()
-                    + " em " + name;
+            String degreeType = this.getResources(request, "ENUMERATION_RESOURCES").getMessage(
+                    infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()
+                            .name());
+
+            name = degreeType + " em " + name;
 
             name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
                     + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
@@ -169,7 +170,7 @@ public class StudentsGratuityListAction extends DispatchAction {
         HttpSession session = request.getSession();
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        //read data from form
+        // read data from form
         String executionYear = null;
         String specialization = null;
         String situation = null;
@@ -199,7 +200,7 @@ public class StudentsGratuityListAction extends DispatchAction {
             saveErrors(request, errors);
             return mapping.getInputForward();
         }
-        //put data in request
+        // put data in request
         request.setAttribute("executionYear", executionYear);
         request.setAttribute("specialization", specialization);
         request.setAttribute("degree", degree);
@@ -232,7 +233,7 @@ public class StudentsGratuityListAction extends DispatchAction {
             return mapping.getInputForward();
         }
 
-        //order list
+        // order list
         List infoGratuitySituationList = (List) result.get(new Integer(0));
         orderList(infoGratuitySituationList, orderingType);
         request.setAttribute("infoGratuitySituationList", infoGratuitySituationList);
@@ -252,23 +253,22 @@ public class StudentsGratuityListAction extends DispatchAction {
         DynaActionForm studentGratuityListForm = (DynaActionForm) actionForm;
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        //data from request
+        // data from request
         Integer executionYear = null;
         Integer degreeCurricularPlanID = null;
         String orderingType = null;
 
         try {
-            
-            orderingType = request.getParameter("order");	
-            if(orderingType != null ){
+
+            orderingType = request.getParameter("order");
+            if (orderingType != null) {
                 executionYear = new Integer(Integer.parseInt(request.getParameter("chosenYear")));
                 degreeCurricularPlanID = new Integer(Integer.parseInt(request
                         .getParameter("degreeCurricularPlanID")));
-            }
-            else{
-                executionYear=(Integer)studentGratuityListForm.get("chosenYear");
-                degreeCurricularPlanID = (Integer)studentGratuityListForm.get("degreeCurricularPlanID"); 
-                orderingType = (String)studentGratuityListForm.get("order"); 
+            } else {
+                executionYear = (Integer) studentGratuityListForm.get("chosenYear");
+                degreeCurricularPlanID = (Integer) studentGratuityListForm.get("degreeCurricularPlanID");
+                orderingType = (String) studentGratuityListForm.get("order");
             }
         } catch (NumberFormatException nfe) {
             errors.add("requestParameters", new ActionError(
@@ -279,22 +279,21 @@ public class StudentsGratuityListAction extends DispatchAction {
         Object[] args = { degreeCurricularPlanID, executionYear };
         InfoExecutionDegree infoExecutionDegree = null;
         try {
-            infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(userView,
-                    "ReadExecutionDegreeByDegreeCurricularPlanID", args);
+            infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
+                    userView, "ReadExecutionDegreeByDegreeCurricularPlanID", args);
         } catch (FenixServiceException exception) {
             exception.printStackTrace();
             saveErrors(request, errors);
             return mapping.getInputForward();
         }
 
-        //required data
+        // required data
         String degree = new String(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
                 .getTipoCurso().toString()
                 + " em " + infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
         String specialization = "all";
         String situation = "all";
-        
-        
+
         Object[] yearArgs = { degreeCurricularPlanID };
         List executionYearList = null;
         try {
@@ -305,40 +304,40 @@ public class StudentsGratuityListAction extends DispatchAction {
             saveErrors(request, errors);
             return mapping.getInputForward();
         }
-        
-        
-        String year1 = ((InfoExecutionYear)executionYearList.get(0)).getYear();
-        String year2 = ((InfoExecutionYear)executionYearList.get(1)).getYear();
-        
-//        String year1 = null;
-//        String year2 = null;
-        
-//        if(executionYear.equals(new Integer(1))){
-//            //first year selected
-//            year1 = new String((executionDegreeDate.getYear()+1900) + "/" + (executionDegreeDate.getYear()+1901));
-//            year2 = new String((executionDegreeDate.getYear()+1901) + "/" + (executionDegreeDate.getYear()+1902));
-//        }
-//        else{
-//            //second year selected
-//            year1 = new String((executionDegreeDate.getYear()+1899) + "/" + (executionDegreeDate.getYear()+1900));
-//            year2 = new String((executionDegreeDate.getYear()+1900) + "/" + (executionDegreeDate.getYear()+1901));
-//        }
-        
-        
-        
-        
-        
-        //getting the gratuity list
-        Object[] gratuityArgs = { infoExecutionDegree.getIdInternal(), infoExecutionDegree.getInfoExecutionYear().getYear(), specialization, situation };
+
+        String year1 = ((InfoExecutionYear) executionYearList.get(0)).getYear();
+        String year2 = ((InfoExecutionYear) executionYearList.get(1)).getYear();
+
+        // String year1 = null;
+        // String year2 = null;
+
+        // if(executionYear.equals(new Integer(1))){
+        // //first year selected
+        // year1 = new String((executionDegreeDate.getYear()+1900) + "/" +
+        // (executionDegreeDate.getYear()+1901));
+        // year2 = new String((executionDegreeDate.getYear()+1901) + "/" +
+        // (executionDegreeDate.getYear()+1902));
+        // }
+        // else{
+        // //second year selected
+        // year1 = new String((executionDegreeDate.getYear()+1899) + "/" +
+        // (executionDegreeDate.getYear()+1900));
+        // year2 = new String((executionDegreeDate.getYear()+1900) + "/" +
+        // (executionDegreeDate.getYear()+1901));
+        // }
+
+        // getting the gratuity list
+        Object[] gratuityArgs = { infoExecutionDegree.getIdInternal(),
+                infoExecutionDegree.getInfoExecutionYear().getYear(), specialization, situation };
         HashMap gratuityList = null;
-        
+
         try {
             gratuityList = (HashMap) ServiceManagerServiceFactory.executeService(userView,
                     "ReadGratuitySituationListByExecutionDegreeAndSpecialization", gratuityArgs);
         } catch (FenixServiceException exception) {
             exception.printStackTrace();
             saveErrors(request, errors);
-           // return mapping.getInputForward();
+            // return mapping.getInputForward();
         }
         if (gratuityList == null) {
             errors.add("noList", new ActionError(
@@ -346,16 +345,16 @@ public class StudentsGratuityListAction extends DispatchAction {
             saveErrors(request, errors);
             return mapping.getInputForward();
         }
- 
-        //order list
+
+        // order list
         List infoGratuitySituationList = (List) gratuityList.get(new Integer(0));
         orderList(infoGratuitySituationList, orderingType);
-        
-        //getting total values
+
+        // getting total values
         Double totalPayedValue = (Double) gratuityList.get(new Integer(1));
         Double totalRemaingValue = (Double) gratuityList.get(new Integer(2));
-        
-        //setting data onto request
+
+        // setting data onto request
         request.setAttribute("totalPayedValue", totalPayedValue);
         request.setAttribute("totalRemaingValue", totalRemaingValue);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
@@ -365,20 +364,14 @@ public class StudentsGratuityListAction extends DispatchAction {
         request.setAttribute("chosenYear", executionYear);
         request.setAttribute("order", orderingType);
         request.setAttribute("infoGratuitySituationList", infoGratuitySituationList);
-        if(executionYear.equals(new Integer(1))){
+        if (executionYear.equals(new Integer(1))) {
             request.setAttribute("executionYear", year1);
-        }
-        else{
+        } else {
             request.setAttribute("executionYear", year2);
         }
 
         return mapping.findForward("studentsGratuityList");
     }
-    
-    
-    
-    
-    
 
     public ActionForward prepareStudentsGratuityList(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -443,25 +436,25 @@ public class StudentsGratuityListAction extends DispatchAction {
 
     private void orderList(List infoGratuitySituationList, String orderingType) {
         if (orderingType == null) {
-            //order list by student's number, it is the ordering by default
+            // order list by student's number, it is the ordering by default
             Collections.sort(infoGratuitySituationList, new BeanComparator(
                     "infoStudentCurricularPlan.infoStudent.number"));
         } else if (orderingType.equals(new String("studentNumber"))) {
-            //order list by student's number
+            // order list by student's number
             Collections.sort(infoGratuitySituationList, new BeanComparator(
                     "infoStudentCurricularPlan.infoStudent.number"));
         } else if (orderingType.equals(new String("studentName"))) {
-            //order list by student's name
+            // order list by student's name
             Collections.sort(infoGratuitySituationList, new BeanComparator(
                     "infoStudentCurricularPlan.infoStudent.infoPerson.nome"));
         } else if (orderingType.equals(new String("gratuitySituation"))) {
-            //order list by gratuity's state
+            // order list by gratuity's state
             Collections.sort(infoGratuitySituationList, new BeanComparator("situationType"));
         } else if (orderingType.equals(new String("payedValue"))) {
-            //order list by apyed value
+            // order list by apyed value
             Collections.sort(infoGratuitySituationList, new BeanComparator("payedValue"));
         } else if (orderingType.equals(new String("notPayedValue"))) {
-            //order list by total value
+            // order list by total value
             Collections.sort(infoGratuitySituationList, new BeanComparator("remainingValue"));
         } else if (orderingType.equals(new String("insurance"))) {
             Collections.sort(infoGratuitySituationList, new BeanComparator("insurancePayed"));
@@ -482,7 +475,7 @@ public class StudentsGratuityListAction extends DispatchAction {
      */
     private Integer findExecutionDegreeId(String degree) {
         Integer idInternal = null;
-        //if degree is the string "all", then all degrees are desirable
+        // if degree is the string "all", then all degrees are desirable
         if (!degree.equals(new String("all"))) {
             String idInString = degree.substring(degree.indexOf(">") + 1, degree.length());
             try {
