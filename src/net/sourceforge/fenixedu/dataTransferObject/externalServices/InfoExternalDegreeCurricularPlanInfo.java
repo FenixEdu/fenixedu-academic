@@ -6,6 +6,9 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.externalServices;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 
 /**
@@ -18,9 +21,16 @@ public class InfoExternalDegreeCurricularPlanInfo
     private String name;
     private String code;
     private InfoExternalDegreeBranchInfo branch;
+    private Collection courses;
     /**
      * @return Returns the branch.
      */
+    
+    public InfoExternalDegreeCurricularPlanInfo()
+    {
+        this.setCourses(new ArrayList());
+    }
+    
     public InfoExternalDegreeBranchInfo getBranch()
     {
         return this.branch;
@@ -67,5 +77,20 @@ public class InfoExternalDegreeCurricularPlanInfo
         externalDegreeInfo.setName(curricularPlan.getName());
         
         return externalDegreeInfo;
+    }
+    
+    public Collection getCourses()
+    {
+        return this.courses;
+    }
+    
+    public void setCourses(Collection courses)
+    {
+        this.courses = courses;
+    }
+    
+    public void addCourse(InfoExternalCurricularCourseInfo course)
+    { 
+        this.courses.add(course);
     }
 }

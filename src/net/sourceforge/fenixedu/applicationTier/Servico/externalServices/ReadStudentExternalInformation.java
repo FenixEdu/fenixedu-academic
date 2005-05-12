@@ -4,6 +4,7 @@
  * Author: Goncalo Luiz (goncalo@ist.utl.pt)
  * 
  */
+
 package net.sourceforge.fenixedu.applicationTier.Servico.externalServices;
 
 import java.util.ArrayList;
@@ -15,12 +16,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalAdressInfo;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalCitizenshipInfo;
+import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalCurricularCourseInfo;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalDegreeBranchInfo;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalDegreeCurricularPlanInfo;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalEnrollmentInfo;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalIdentificationInfo;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalPersonInfo;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoStudentExternalInformation;
+import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IPerson;
@@ -38,6 +41,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadStudentExternalInformation implements IService
 {
+
     public Collection run(String username) throws ExcepcaoPersistencia, FenixServiceException
     {
         Collection result = new ArrayList();
@@ -66,7 +70,7 @@ public class ReadStudentExternalInformation implements IService
     /**
      * @param student
      * @return
-     * @throws FenixServiceException 
+     * @throws FenixServiceException
      */
     private Collection buildExternalEnrollmentsInfo(IStudent student) throws FenixServiceException
     {
@@ -76,9 +80,9 @@ public class ReadStudentExternalInformation implements IService
         {
             IEnrolment enrollment = (IEnrolment) iter.next();
             InfoExternalEnrollmentInfo info = InfoExternalEnrollmentInfo.newFromEnrollment(enrollment);
-            
+
             GetEnrolmentGrade getEnrollmentGrade = new GetEnrolmentGrade();
-            InfoEnrolmentEvaluation infoEnrollmentEvaluation =  getEnrollmentGrade.run(enrollment);
+            InfoEnrolmentEvaluation infoEnrollmentEvaluation = getEnrollmentGrade.run(enrollment);
             info.setFinalGrade(infoEnrollmentEvaluation.getGrade());
             enrollments.add(info);
         }
@@ -101,6 +105,13 @@ public class ReadStudentExternalInformation implements IService
         info.setCode(degreeCurricularPlan.getDegree().getIdInternal().toString());
         info.setBranch(this.buildExternalDegreeBranchInfo(student));
 
+        Collection courses = student.getActiveStudentCurricularPlan().getDegreeCurricularPlan()
+                .getCurricularCourses();
+        for (Iterator iter = courses.iterator(); iter.hasNext();)
+        {
+            ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+            info.addCourse(InfoExternalCurricularCourseInfo.newFromDomain(curricularCourse));
+        }
 
         return info;
     }
@@ -152,6 +163,18 @@ public class ReadStudentExternalInformation implements IService
         InfoExternalIdentificationInfo info = new InfoExternalIdentificationInfo();
         info.setDocumentType(person.getIdDocumentType().toString());
         info.setNumber(person.getNumeroDocumentoIdentificacao());
+        if (person.getDataEmissaoDocumentoIdentificacao() != null)
+        {
+            info.setEmitionDate(person.getDataEmissaoDocumentoIdentificacao().toString());
+        }
+        if (person.getDataValidadeDocumentoIdentificacao() != null)
+        {
+            info.setExpiryDate(person.getDataValidadeDocumentoIdentificacao().toString());
+        }
+        if (person.getLocalEmissaoDocumentoIdentificacao() != null)
+        {
+            info.setEmitionLocal(person.getLocalEmissaoDocumentoIdentificacao());
+        }
 
         return info;
     }

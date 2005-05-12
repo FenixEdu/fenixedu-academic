@@ -15,6 +15,39 @@ public class InfoExternalIdentificationInfo
 {
     private String documentType;
     private String number;
+    private String expiryDate;
+    private String emitionDate;
+    private String emitionLocal;
+    
+    public String getEmitionDate()
+    {
+        return this.emitionDate;
+    }
+    
+    public void setEmitionDate(String emitionDate)
+    {
+        this.emitionDate = emitionDate;
+    }
+    
+    public String getEmitionLocal()
+    {
+        return this.emitionLocal;
+    }
+    
+    public void setEmitionLocal(String emitionLocal)
+    {
+        this.emitionLocal = emitionLocal;
+    }
+    
+    public String getExpiryDate()
+    {
+        return this.expiryDate;
+    }
+    
+    public void setExpiryDate(String expiryDate)
+    {
+        this.expiryDate = expiryDate;
+    }
     /**
      * @return Returns the documentType.
      */

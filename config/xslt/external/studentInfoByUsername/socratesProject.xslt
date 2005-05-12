@@ -33,6 +33,12 @@
 		<nota>
 			<xsl:value-of select="./finalGrade"/>
 		</nota>		
+		<creditos>
+			<xsl:value-of select="./course/credits"/>
+		</creditos>				
+		<creditos-ECTS>
+			<xsl:value-of select="./course/ECTScredits"/>
+		</creditos-ECTS>						
 </xsl:template> 
 
 <xsl:template match="degree">
@@ -46,8 +52,27 @@
 					<ramo>
 						<xsl:apply-templates select="branch"/>
 					</ramo>
+					<disciplinas>
+						<xsl:apply-templates select="courses/net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalCurricularCourseInfo"/>	
+					</disciplinas>
 				</curso>
 </xsl:template> 
+
+<xsl:template match="net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalCurricularCourseInfo">
+			<nome>
+				<xsl:value-of select="./name"/>
+			</nome>
+			<codigo>
+				<xsl:value-of select="./code"/>
+			</codigo>
+			<creditos>
+				<xsl:value-of select="./credits"/>
+			</creditos>
+			<creditos-ECTS>
+				<xsl:value-of select="./ECTSCredits"/>
+			</creditos-ECTS>
+</xsl:template>
+
 
 <xsl:template match="branch">
 					<codigo>
@@ -119,12 +144,18 @@
 </xsl:template> 
 
 <xsl:template match="identification">
-				<tipo-documento>
-					<xsl:value-of select="./documentType"/>
-				</tipo-documento>
 				<numero>
 					<xsl:value-of select="./number"/>
 				</numero>
+				<data-validade>
+					<xsl:value-of select="./expiryDate"/>
+				</data-validade>
+				<data-emissao>
+					<xsl:value-of select="./emitionDate"/>				
+				</data-emissao>
+				<local-emissao>
+					<xsl:value-of select="./emitionLocal"/>				
+				</local-emissao>				
 </xsl:template> 
 
 
