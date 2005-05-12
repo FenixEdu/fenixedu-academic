@@ -135,5 +135,14 @@ public class Specialization extends FenixUtil {
     public void setSpecialization(Integer especializacao) {
         this.specialization = especializacao;
     }
+    
+    public String getName(){
+        if (specialization.intValue() == Specialization.MESTRADO)
+            return "MESTRADO";
+        if (specialization.intValue() == Specialization.ESPECIALIZACAO)
+            return "ESPECIALIZACAO";
+        return "ERRO!"; // Nunca e atingido
+    }
+    
 
 }
