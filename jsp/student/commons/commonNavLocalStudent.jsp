@@ -34,7 +34,7 @@
 <ul>
   	<li><html:link page="/seniorInformation.do?method=prepareEdit&amp;page=0" ><bean:message key="link.senior.info"/></html:link></li>
 </ul>
-
+<%--
 <ul>
   <li>
 	<bean:define id="title">
@@ -45,4 +45,4 @@
 	</html:link>
   </li>
 </ul>
-  
+--%>

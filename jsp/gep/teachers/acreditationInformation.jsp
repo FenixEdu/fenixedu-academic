@@ -6,7 +6,7 @@
 <%@ page import="java.util.Calendar" %>
 <logic:present name="infoSiteTeachersInformation">
 	<logic:iterate id="infoSiteTeacherInformation" name="infoSiteTeachersInformation">
-		<h2><bean:message key="label.acred.teacherInfo" bundle="GEP_RESOURCES"/></h2>
+		<h2 class="break-before"><bean:message key="label.acred.teacherInfo" bundle="GEP_RESOURCES"/></h2>
 		<logic:present name="infoExecutionDegree">
 			<h2>
 				<bean:message key="label.acred.degree" bundle="GEP_RESOURCES"/>
