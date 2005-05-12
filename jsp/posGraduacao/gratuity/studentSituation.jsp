@@ -57,6 +57,8 @@
 				</td>
 				<td>
 					<bean:write name="gratuitySituation" property="infoGratuityValues.infoExecutionDegree.infoDegreeCurricularPlan.name"/>
+					 - 
+					<bean:message name="gratuitySituation" property="infoStudentCurricularPlan.specialization.name" bundle="ENUMERATION_RESOURCES"/>
 				</td>
 				<bean:define id="value" name="gratuitySituation" property="remainingValue" />
 				<% 

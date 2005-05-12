@@ -25,7 +25,12 @@
 	
 	<logic:iterate id="studentCurricularPlan" name="studentCurricularPlans">
 		<bean:define id="studentCurricularPlanID" name="studentCurricularPlan" property="idInternal" />
-	
-		<html:link page="<%= "/manageExemptionGratuity.do?method=readExemptionGratuity&amp;page=0&amp;studentCurricularPlanID=" + pageContext.getAttribute("studentCurricularPlanID") + "&amp;executionYear=" + request.getAttribute("executionYear")%>"><bean:write name="studentCurricularPlan" property="infoDegreeCurricularPlan.name" /></html:link>
+		<p>
+			<html:link page="<%= "/manageExemptionGratuity.do?method=readExemptionGratuity&amp;page=0&amp;studentCurricularPlanID=" + pageContext.getAttribute("studentCurricularPlanID") + "&amp;executionYear=" + request.getAttribute("executionYear")%>">
+				<bean:write name="studentCurricularPlan" property="infoDegreeCurricularPlan.name" />
+				 - 
+				<bean:message name="studentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
+			</html:link>
+		</p>
 	</logic:iterate>
 </logic:present>
