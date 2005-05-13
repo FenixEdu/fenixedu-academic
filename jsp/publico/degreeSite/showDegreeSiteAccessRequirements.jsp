@@ -5,8 +5,6 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 
-<p><span class="error"><html:errors/></span></p>
-
 <logic:present name="infoDegreeInfo">
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 <div class="breadcumbs"><a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a> 
@@ -19,7 +17,8 @@
 		</html:link>
 		&nbsp;&gt;&nbsp;<bean:message key="public.degree.information.label.accessRequirements"  bundle="PUBLIC_DEGREE_INFORMATION" />
 	</div>
-	
+
+<p><span class="error"><html:errors/></span></p>
 	
 	<!-- COURSE NAME -->
 	<h1>

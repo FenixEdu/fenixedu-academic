@@ -6,8 +6,6 @@
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 <%@ page import="net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState" %>
 
-<p><span class="error"><html:errors/></span></p>
-
 <logic:present name="infoDegreeCurricularPlan">
 
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
@@ -21,7 +19,9 @@
 		</html:link>
 		 &nbsp;&gt;&nbsp;<bean:message key="public.degree.information.label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />
 	</div>		
-		
+
+<p><span class="error"><html:errors/></span></p>
+
 	<!-- COURSE NAME -->
 	<h1>
 	    <bean:define id="degreeType" name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso.name"/>

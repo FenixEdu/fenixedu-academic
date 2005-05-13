@@ -3,8 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<p><span class="error"><html:errors/></span></p>
-
 <logic:present name="infoDegree">
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 <div class="breadcumbs"><a href="<%= institutionUrl %>"><bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/></a> 
@@ -17,6 +15,8 @@
 		</html:link>
 		&nbsp;&gt;&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.courseSites"/>		
 	</div>
+
+<p><span class="error"><html:errors/></span></p>
 
 	<h1>
 	    <bean:define id="degreeType" name="infoDegree" property="tipoCurso.name"/>

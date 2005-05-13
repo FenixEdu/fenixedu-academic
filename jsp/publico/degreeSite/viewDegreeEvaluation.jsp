@@ -9,8 +9,6 @@
 
 <link href="<%= request.getContextPath() %>/CSS/inquiries_style.css" rel="stylesheet" type="text/css" />
 
-<p><span class="error"><html:errors/></span></p>
-
 <logic:present name="infoDegreeCurricularPlan">
 	
 	<div class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a>
@@ -22,7 +20,9 @@
 		</html:link>
 		&nbsp;&gt;&nbsp;<bean:message key="label.degreeEvaluation"/>
 	</div>
-	
+
+<p><span class="error"><html:errors/></span></p>
+
 	<h1>
 		Avalia&ccedil;&atilde;o do Funcionamento das Disciplinas
 	</h1>

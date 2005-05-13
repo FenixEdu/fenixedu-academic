@@ -9,8 +9,6 @@
 <%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.mapping.MappingUtils" %>
 
-<p><span class="error"><html:errors/></span></p>
-
 <logic:notPresent name="infoDegreeInfo">
 
 
@@ -32,6 +30,8 @@
 &nbsp;&gt;&nbsp; <a href="<%= institutionUrlTeaching %>"><bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.education" /></a> &nbsp;&gt;&nbsp;
 <bean:write name="infoDegreeInfo" property="infoDegree.sigla" />
 	</div>
+
+<p><span class="error"><html:errors/></span></p>
 
 	<!-- COURSE NAME -->
 	<h1>
