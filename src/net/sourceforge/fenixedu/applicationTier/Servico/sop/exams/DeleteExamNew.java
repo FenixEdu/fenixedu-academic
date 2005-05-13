@@ -6,15 +6,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop.exams;
 
 /**
  * @author Ana e Ricardo
- *  
+ * 
  */
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
+import net.sourceforge.fenixedu.applicationTier.Servico.sop.DeleteExam;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IPeriod;
@@ -26,29 +26,9 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 
-public class DeleteExamNew implements IServico {
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-    private static DeleteExamNew _servico = new DeleteExamNew();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static DeleteExamNew getService() {
-        return _servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private DeleteExamNew() {
-    }
-
-    /**
-     * Devolve o nome do servico
-     */
-    public final String getNome() {
-        return "DeleteExamNew";
-    }
+public class DeleteExamNew implements IService {
 
     public Object run(Integer examOID) throws FenixServiceException {
 
@@ -93,7 +73,7 @@ public class DeleteExamNew implements IServico {
                 }
             }
 
-            sp.getIPersistentExam().delete(examToDelete);
+            new DeleteExam().run(examOID);
 
             result = true;
         } catch (ExcepcaoPersistencia ex) {

@@ -84,7 +84,7 @@ public class ViewExamsByDayAndShiftDispatchAction extends FenixDateAndTimeDispat
 
         Integer indexExam = new Integer(request.getParameter("indexExam"));
 
-        Object args[] = { (InfoViewExamByDayAndShift) infoExams.get(indexExam.intValue()) };
+        Object args[] = { ((InfoViewExamByDayAndShift) infoExams.get(indexExam.intValue())).getInfoExam().getIdInternal()};
         try {
             ServiceUtils.executeService(userView, "DeleteExam", args);
         } catch (notAuthorizedServiceDeleteException e) {
