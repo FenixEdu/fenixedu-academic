@@ -25,12 +25,6 @@ import org.apache.struts.util.RequestUtils;
  */
 public class FenixRequestProcessor extends RequestProcessor {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.struts.action.RequestProcessor#processPreprocess(javax.servlet.http.HttpServletRequest,
-     *      javax.servlet.http.HttpServletResponse)
-     */
     protected boolean processPreprocess(HttpServletRequest request, HttpServletResponse response) {
 
         HttpSession httpSession = request.getSession(false);
@@ -44,13 +38,9 @@ public class FenixRequestProcessor extends RequestProcessor {
             e1.printStackTrace();
         }
         if (((uri.indexOf("login.do") == -1) && (uri.indexOf("/publico/index.do") == -1) && (uri
-                .indexOf("showErrorPage.do") == -1)) && (uri.indexOf("/manager/manageCache.do") == -1)
-                && (uri.indexOf("/isAlive.do") == -1)) {
+                .indexOf("showErrorPage.do") == -1))
+                && (uri.indexOf("/manager/manageCache.do") == -1) && (uri.indexOf("/isAlive.do") == -1)) {
             if (request.getRemoteUser() == null) {
-                //			if ((session == null)
-                //				|| (session.isNew())
-                //				&& ((session != null)
-                //					&& (!session.getAttributeNames().hasMoreElements()))) {
                 ActionErrors errors = new ActionErrors();
 
                 errors.add("error.invalid.session", new ActionError("error.invalid.session"));
