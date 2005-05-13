@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidInformationInFormActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoChangeMadeActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.util.GraduationType;
+import net.sourceforge.fenixedu.domain.GraduationType;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -120,7 +120,7 @@ public class StudentGuideDispatchAction extends DispatchAction {
                     && (specializationGratuityQuantityString.length() != 0)) {
                 InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
                 infoGuideEntry.setDescription("Pagamento para Especialização");
-                infoGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE_TYPE);
+                infoGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE);
                 infoGuideEntry.setDocumentType(DocumentType.GRATUITY);
                 infoGuideEntry.setPrice(new Double(specializationGratuityAmountString));
 
@@ -131,7 +131,7 @@ public class StudentGuideDispatchAction extends DispatchAction {
             if (othersGratuityAmount != null) {
                 InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
                 infoGuideEntry.setDescription(othersGratuityDescription);
-                infoGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE_TYPE);
+                infoGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE);
                 infoGuideEntry.setDocumentType(DocumentType.GRATUITY);
                 infoGuideEntry.setPrice(new Double(othersGratuityAmountString));
                 infoGuideEntry.setQuantity(new Integer(1));

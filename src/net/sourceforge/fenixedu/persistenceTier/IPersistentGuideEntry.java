@@ -5,7 +5,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.IGuideEntry;
 import net.sourceforge.fenixedu.domain.DocumentType;
-import net.sourceforge.fenixedu.util.GraduationType;
+import net.sourceforge.fenixedu.domain.GraduationType;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)

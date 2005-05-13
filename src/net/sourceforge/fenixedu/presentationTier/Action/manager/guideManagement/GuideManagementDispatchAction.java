@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.domain.DocumentType;
-import net.sourceforge.fenixedu.util.GraduationType;
+import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.GuideState;
 
 import org.apache.struts.action.ActionForm;
@@ -146,7 +146,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
         Double newEntryPrice = (Double) guideForm.get("newEntryPrice");
         String newEntryDocumentType = (String) guideForm.get("newEntryDocumentType");
 
-        Object[] args = { guideID, GraduationType.MASTER_DEGREE_TYPE,
+        Object[] args = { guideID, GraduationType.MASTER_DEGREE,
                 DocumentType.valueOf(newEntryDocumentType), newEntryDescription, newEntryPrice,
                 newEntryQuantity };
         try {

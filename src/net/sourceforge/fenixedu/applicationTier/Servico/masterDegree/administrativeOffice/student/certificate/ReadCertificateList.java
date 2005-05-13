@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.IPrice;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.GraduationType;
+import net.sourceforge.fenixedu.domain.GraduationType;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**

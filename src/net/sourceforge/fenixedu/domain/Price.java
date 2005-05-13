@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.DocumentType;
-import net.sourceforge.fenixedu.util.GraduationType;
+import net.sourceforge.fenixedu.domain.GraduationType;
 
 /**
  * 

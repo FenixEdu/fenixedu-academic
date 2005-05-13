@@ -41,7 +41,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransaction;
 import net.sourceforge.fenixedu.util.CalculateGuideTotal;
 import net.sourceforge.fenixedu.domain.DocumentType;
-import net.sourceforge.fenixedu.util.GraduationType;
+import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.util.State;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -143,7 +143,7 @@ public class EditGuideInformation implements IService {
             othersGuideEntry.setDescription(othersRemarks);
             othersGuideEntry.setDocumentType(DocumentType.OTHERS);
             // TODO : In the future it's possible to be a Major Degree
-            othersGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE_TYPE);
+            othersGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE);
             othersGuideEntry.setPrice(othersPrice);
             othersGuideEntry.setQuantity(othersQuantity);
         }

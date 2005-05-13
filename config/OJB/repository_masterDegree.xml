@@ -200,7 +200,7 @@
 	  <field-descriptor 
 	     name="graduationType"
 	     column="GRADUATION_TYPE"
-	     jdbc-type="INTEGER"
+	     jdbc-type="VARCHAR"
 	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGraduationType2SqlGraduationTypeFieldConversion"
 	  />
 	  <field-descriptor id="2"
@@ -402,7 +402,7 @@
 	  <field-descriptor 
 	     name="graduationType"
 	     column="GRADUATION_TYPE"
-	     jdbc-type="INTEGER"
+	     jdbc-type="VARCHAR"
 	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaGraduationType2SqlGraduationTypeFieldConversion"
 	  />
 	  <field-descriptor 

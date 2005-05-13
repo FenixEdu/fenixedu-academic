@@ -40,7 +40,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoActiveStude
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.domain.DocumentType;
-import net.sourceforge.fenixedu.util.GraduationType;
+import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
 import net.sourceforge.fenixedu.util.RandomStringGenerator;
 import net.sourceforge.fenixedu.domain.GuideState;
@@ -180,7 +180,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
             types.add(DocumentType.ACADEMIC_PROOF_EMOLUMENT);
             types.add(DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS);
             //types.add(DocumentType.GRATUITY_TYPE);
-            Object argsAux[] = { GraduationType.MASTER_DEGREE_TYPE, types };
+            Object argsAux[] = { GraduationType.MASTER_DEGREE, types };
             List studentGuideList = null;
             try {
                 studentGuideList = (List) ServiceManagerServiceFactory.executeService(userView,

@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.domain.DocumentType;
-import net.sourceforge.fenixedu.util.GraduationType;
+import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.util.NumberUtils;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.util.State;
@@ -147,7 +147,7 @@ public class CreateGuideFromTransactions implements IService {
                 guideEntry.setQuantity(new Integer(1));
                 guideTotal += transaction.getValue().doubleValue();
 
-                guideEntry.setGraduationType(GraduationType.MASTER_DEGREE_TYPE);
+                guideEntry.setGraduationType(GraduationType.MASTER_DEGREE);
                 guideEntry.setDescription("");
 
                 sp.getIPersistentGuideEntry().simpleLockWrite(guideEntry);

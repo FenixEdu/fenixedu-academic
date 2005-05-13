@@ -35,7 +35,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.Sessi
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.domain.DocumentType;
-import net.sourceforge.fenixedu.util.GraduationType;
+import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
 import net.sourceforge.fenixedu.domain.GuideState;
 
@@ -180,7 +180,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
             infoGuideEntry.setDocumentType(DocumentType.GRATUITY);
             infoGuideEntry.setPrice(infoGratuitySituation.getRemainingValue());
             infoGuideEntry.setQuantity(new Integer(1));
-            infoGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE_TYPE);
+            infoGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE);
             infoGuideEntry.setDescription("");
 
             infoGuide.setInfoExecutionDegree(infoGratuitySituation.getInfoGratuityValues()
@@ -217,7 +217,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
             infoGuideEntry.setDocumentType(DocumentType.INSURANCE);
             infoGuideEntry.setPrice(infoInsuranceValue.getAnnualValue());
             infoGuideEntry.setQuantity(new Integer(1));
-            infoGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE_TYPE);
+            infoGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE);
             infoGuideEntry.setDescription("");
 
             List studentCurricularPlans = null;

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.IPrice;
 import net.sourceforge.fenixedu.domain.Price;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPrice;
-import net.sourceforge.fenixedu.util.GraduationType;
+import net.sourceforge.fenixedu.domain.GraduationType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -27,7 +27,7 @@ public class PriceOJB extends PersistentObjectOJB implements IPersistentPrice {
 
     public List readByGraduationType(GraduationType graduationType) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("graduationType", graduationType.getType());
+        crit.addEqualTo("graduationType", graduationType.name());
         return queryList(Price.class, crit);
 
     }
@@ -35,7 +35,7 @@ public class PriceOJB extends PersistentObjectOJB implements IPersistentPrice {
     public IPrice readByGraduationTypeAndDocumentTypeAndDescription(GraduationType graduationType,
             DocumentType documentType, String description) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("graduationType", graduationType.getType());
+        crit.addEqualTo("graduationType", graduationType.name());
         crit.addEqualTo("documentType", documentType.name());
         crit.addEqualTo("description", description);
         return (IPrice) queryObject(Price.class, crit);
@@ -45,7 +45,7 @@ public class PriceOJB extends PersistentObjectOJB implements IPersistentPrice {
     public List readByGraduationTypeAndDocumentType(GraduationType graduationType,
             DocumentType documentType) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("graduationType", graduationType.getType());
+        crit.addEqualTo("graduationType", graduationType.name());
         crit.addEqualTo("documentType", documentType.name());
 
         return queryList(Price.class, crit);
@@ -57,7 +57,7 @@ public class PriceOJB extends PersistentObjectOJB implements IPersistentPrice {
 
         Criteria criteria = new Criteria();
         Criteria criteriaDocs = new Criteria();
-        criteria.addEqualTo("graduationType", graduationType.getType());
+        criteria.addEqualTo("graduationType", graduationType.name());
         
         CollectionUtils.transform(types, new Transformer() {        
             public Object transform(Object arg0) {                
