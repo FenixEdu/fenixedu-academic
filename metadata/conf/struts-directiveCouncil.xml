@@ -71,7 +71,19 @@
 	<controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
 
 	<!-- ========== Message Resources Definitions ============================ -->
-	
+	<message-resources parameter="ServidorApresentacao.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
+    <message-resources parameter="ServidorApresentacao.ApplicationResources" key="DEFAULT" null="false"/>
+    <message-resources parameter="ServidorApresentacao.PortalResources" key="PORTAL_RESOURCES" null="false"/>
+    <message-resources parameter="ServidorApresentacao.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
+    <message-resources parameter="ServidorApresentacao.StudentResources" key="STUDENT_RESOURCES" null="false"/>
+    <message-resources parameter="ServidorApresentacao.TeacherCreditsSheetResources" key="TEACHER_CREDITS_SHEET_RESOURCES" null="false"/>
+    <message-resources parameter="ServidorApresentacao.GEPResources" key="GEP_RESOURCES" null="false"/>
+    <message-resources parameter="ServidorApresentacao.DegreeAdministrativeOfficeResources" key="DEGREE_ADM_OFFICE" null="false"/>
+	<message-resources parameter="ServidorApresentacao.SchoolRegistrationResources" key="SCHOOL_REGISTRATION_RESOURCES" null="false"/>
+	<message-resources parameter="ServidorApresentacao.CurriculumHistoricResources" key="CURRICULUM_HISTORIC_RESOURCES" null="false"/>
+	<message-resources parameter="ServidorApresentacao.InquiriesResources" key="INQUIRIES_RESOURCES" null="false"/>
+    <message-resources parameter="ServidorApresentacao.PublicDegreeInformation" key="PUBLIC_DEGREE_INFORMATION" null="false"/>
+
 	<!-- ========== Plug Ins Configuration ================================= -->
 	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
       <set-property property="pathnames" 

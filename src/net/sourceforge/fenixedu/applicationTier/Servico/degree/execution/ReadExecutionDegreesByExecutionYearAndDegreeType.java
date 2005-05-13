@@ -35,45 +35,49 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeType implements IServic
 
         List infoExecutionDegreeList = null;
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
 
-            IExecutionYear executionYear = null;
-            if (infoExecutionYear == null) {
-                IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-                executionYear = persistentExecutionYear.readCurrentExecutionYear();
-            } else {
-                executionYear = InfoExecutionYear.newDomainFromInfo(infoExecutionYear);
-            }
+        IExecutionYear executionYear = null;
+        if (infoExecutionYear == null) {
+            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+            executionYear = persistentExecutionYear.readCurrentExecutionYear();
+        } else {
+            executionYear = InfoExecutionYear.newDomainFromInfo(infoExecutionYear);
+        }
 
-            List executionDegrees = null;
+        List executionDegrees = null;
 
-            if (degreeType == null) {
-                executionDegrees = executionDegreeDAO.readByExecutionYear(executionYear.getYear());
-            } else {
-                executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear,
-                        degreeType);
-            }
+        if (degreeType == null) {
+            executionDegrees = executionDegreeDAO.readByExecutionYear(executionYear.getYear());
+        } else {
+            executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear,
+                    degreeType);
+        }
 
-            infoExecutionDegreeList = (ArrayList) CollectionUtils.collect(executionDegrees,
-                    new Transformer() {
+        infoExecutionDegreeList = (ArrayList) CollectionUtils.collect(executionDegrees,
+                new Transformer() {
 
-                        public Object transform(Object input) {
-                            IExecutionDegree executionDegree = (IExecutionDegree) input;
-							InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+                    public Object transform(Object input) {
+                        IExecutionDegree executionDegree = (IExecutionDegree) input;
+                        InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
+                                .newInfoFromDomain(executionDegree);
 
-							InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(executionDegree.getExecutionYear());
-							infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
+                        InfoExecutionYear infoExecutionYear = InfoExecutionYear
+                                .newInfoFromDomain(executionDegree.getExecutionYear());
+                        infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
 
-							InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
-							infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+                        InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
+                                .newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
+                        infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
-							InfoDegree infoDegree = InfoDegree.newInfoFromDomain(executionDegree.getDegreeCurricularPlan().getDegree());
-							infoDegreeCurricularPlan.setInfoDegree(infoDegree);
+                        InfoDegree infoDegree = InfoDegree.newInfoFromDomain(executionDegree
+                                .getDegreeCurricularPlan().getDegree());
+                        infoDegreeCurricularPlan.setInfoDegree(infoDegree);
 
-                            return infoExecutionDegree;
-                        }
-                    });
+                        return infoExecutionDegree;
+                    }
+                });
 
         return infoExecutionDegreeList;
     }

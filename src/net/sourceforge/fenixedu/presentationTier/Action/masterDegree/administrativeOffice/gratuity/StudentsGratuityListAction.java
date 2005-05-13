@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
@@ -39,6 +40,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
+import org.apache.struts.util.MessageResources;
 
 /**
  * @author Tânia Pousão
@@ -135,9 +137,11 @@ public class StudentsGratuityListAction extends DispatchAction {
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
             String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-            String degreeType = this.getResources(request, "ENUMERATION_RESOURCES").getMessage(
-                    infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()
-                            .name());
+            InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
+            InfoDegree infoDegree = infoDegreeCurricularPlan.getInfoDegree();
+            DegreeType degreeTypeEnum = infoDegree.getTipoCurso();
+            MessageResources messageResources = this.getResources(request, "ENUMERATION_RESOURCES");
+            String degreeType = messageResources.getMessage(degreeTypeEnum.name());
 
             name = degreeType + " em " + name;
 
