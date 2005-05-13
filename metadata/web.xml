@@ -36,6 +36,10 @@
 		</init-param>
 	</filter>
 	<filter>
+	    <filter-name>I18NFilter</filter-name>
+	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.I18NFilter</filter-class>
+	</filter>
+	<filter>
 	    <filter-name>ExecutionCourseForwardFilter</filter-name>
 	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.ExecutionCourseForwardFilter</filter-class>
 		<init-param>
@@ -307,7 +311,6 @@
 	<session-config>
 			<session-timeout>120</session-timeout>
 	</session-config>    
-
 
 	<error-page>
 	    <exception-type>java.lang.Exception</exception-type>
