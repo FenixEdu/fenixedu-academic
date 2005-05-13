@@ -468,10 +468,18 @@
 							<logic:present name="attendingCourseTeacher" property="teacher">
 								<bean:define id="currentTeacherId" name="attendingCourseTeacher" property="idInternal"/>
 								<li>
-									<html:submit styleClass="inquirybutton"
-										onclick='<%="this.form.method.value='prepareNewTeacher';this.form.newAttendingCourseTeacherId.value='" + currentTeacherId + "';" %>'>
-										<bean:message key="button.inquiries.evaluate" bundle="INQUIRIES_RESOURCES"/>
-									</html:submit>
+									<logic:empty name="attendingCourseTeacher" property="remainingClassTypes">
+										<bean:define id="buttonValue">
+											<bean:message key="button.inquiries.evaluate" bundle="INQUIRIES_RESOURCES"/>
+										</bean:define>
+										<input type="submit" class="inquirybutton" disabled="disabled" value='<%= buttonValue %>' />
+									</logic:empty>
+									<logic:notEmpty name="attendingCourseTeacher" property="remainingClassTypes">
+										<html:submit styleClass="inquirybutton"
+											onclick='<%="this.form.method.value='prepareNewTeacher';this.form.newAttendingCourseTeacherId.value='" + currentTeacherId + "';" %>'>
+											<bean:message key="button.inquiries.evaluate" bundle="INQUIRIES_RESOURCES"/>
+										</html:submit>
+									</logic:notEmpty>
 									&gt;
 									<bean:write name="attendingCourseTeacher" property="teacher.infoPerson.nome" />
 									
@@ -480,50 +488,41 @@
 											<font class="error"><bean:message key="message.inquiries.complete" bundle="INQUIRIES_RESOURCES"/></font>
 										</c:if>
 										<c:if test="${completeAttendingCourseTeacherId != currentTeacherId}">
-											<bean:message key="message.inquiries.complete" bundle="INQUIRIES_RESOURCES"/>
+											<strong>
+												<bean:message key="message.inquiries.complete" bundle="INQUIRIES_RESOURCES"/>
+											</strong>
 										</c:if>
 									</logic:empty>
-									<%--
-									<logic:notEmpty name="attendingCourseTeacher" property="remainingClassTypes">
-										<logic:iterate id="remainingClassType" name="attendingCourseTeacher" property="remainingClassTypes" indexId="index">
-											<c:if test="${index != 0}">
-												,&nbsp;
-											</c:if>
-											<bean:write name="remainingClassType" property="fullNameTipoAula" />
-										</logic:iterate>
-									</logic:notEmpty>
-									--%>
 								</li>
 							</logic:present>
 							<logic:present name="attendingCourseTeacher" property="nonAffiliatedTeacher">
 								<bean:define id="currentTeacherId" name="attendingCourseTeacher" property="idInternal"/>
 								<li>
-									<html:submit styleClass="inquirybutton"
-										onclick='<%="this.form.method.value='prepareNewTeacher';this.form.newAttendingCourseNonAffiliatedTeacherId.value='" + currentTeacherId + "';" %>'>
-										<bean:message key="button.inquiries.evaluate" bundle="INQUIRIES_RESOURCES"/>
-									</html:submit>
+									<logic:empty name="attendingCourseTeacher" property="remainingClassTypes">
+										<bean:define id="buttonValue">
+											<bean:message key="button.inquiries.evaluate" bundle="INQUIRIES_RESOURCES"/>
+										</bean:define>
+										<input type="submit" class="inquirybutton" disabled="disabled" value='<%= buttonValue %>' />
+									</logic:empty>
+									<logic:notEmpty name="attendingCourseTeacher" property="remainingClassTypes">
+										<html:submit styleClass="inquirybutton"
+											onclick='<%="this.form.method.value='prepareNewTeacher';this.form.newAttendingCourseNonAffiliatedTeacherId.value='" + currentTeacherId + "';" %>'>
+											<bean:message key="button.inquiries.evaluate" bundle="INQUIRIES_RESOURCES"/>
+										</html:submit>
+									</logic:notEmpty>
 									&gt;
 									<bean:write name="attendingCourseTeacher" property="nonAffiliatedTeacher.name" />
 									
 									<logic:empty name="attendingCourseTeacher" property="remainingClassTypes">
-										-
 										<c:if test="${completeAttendingCourseNonAffiliatedTeacherId == currentTeacherId}">
 											<font class="error"><bean:message key="message.inquiries.complete" bundle="INQUIRIES_RESOURCES"/></font>
 										</c:if>
 										<c:if test="${completeAttendingCourseNonAffiliatedTeacherId != currentTeacherId}">
-											<bean:message key="message.inquiries.complete" bundle="INQUIRIES_RESOURCES"/>
+											<strong>
+												<bean:message key="message.inquiries.complete" bundle="INQUIRIES_RESOURCES"/>
+											</strong>
 										</c:if>
 									</logic:empty>
-									<%--
-									<logic:notEmpty name="attendingCourseTeacher" property="remainingClassTypes">
-										<logic:iterate id="remainingClassType" name="attendingCourseTeacher" property="remainingClassTypes" indexId="index">
-											<c:if test="${index != 0}">
-												,&nbsp;
-											</c:if>
-											<bean:write name="remainingClassType" property="fullNameTipoAula" />
-										</logic:iterate>
-									</logic:notEmpty>
-									--%>
 								</li>
 							</logic:present>
 						</logic:iterate>
