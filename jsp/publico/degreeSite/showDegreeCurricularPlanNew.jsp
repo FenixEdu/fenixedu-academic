@@ -5,8 +5,6 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 
-<p><span class="error"><html:errors/></span></p>
-
 <logic:present name="infoDegreeCurricularPlan">
 	<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="idInternal" />
 
@@ -26,6 +24,8 @@
 	</html:link>
 	&nbsp;&gt;&nbsp;<bean:message bundle="PUBLIC_DEGREE_INFORMATION"  key="public.degree.information.label.curriculum"/>		
 </div>	
+
+<p><span class="error"><html:errors/></span></p>
 
 <style>@import "<%= request.getContextPath() %>/CSS/table-adjustment.css";</style>
 

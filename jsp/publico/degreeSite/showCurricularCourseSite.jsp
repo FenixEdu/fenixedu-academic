@@ -4,8 +4,6 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 
-<p><span class="error"><html:errors/></span></p>
-
 <logic:present name="infoCurriculum" >
 
 <bean:define id="infoCurricularCourse" name="infoCurriculum" property="infoCurricularCourse" />
@@ -76,6 +74,8 @@
 </div>
 </logic:greaterThan>
 </logic:present>
+
+<p><span class="error"><html:errors/></span></p>
 
 <!-- 	CURRICULAR COURSE SCOPES  -->
 <logic:present name="infoCurricularCourse" property="infoScopes">
