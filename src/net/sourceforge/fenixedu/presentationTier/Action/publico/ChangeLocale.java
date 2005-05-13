@@ -22,12 +22,11 @@ public class ChangeLocale extends FenixAction {
 
         request.getSession(false).setAttribute(Action.LOCALE_KEY, new Locale(newLanguage, newCountry));
         request.getSession(false).setAttribute(Globals.LOCALE_KEY, new Locale(newLanguage, newCountry));
-        final String method = request.getParameter("method");
-           
+
         final String windowLocation = request.getParameter("windowLocation");
 
         ActionForward actionForward = new ActionForward();
-       
+
         actionForward.setContextRelative(true);
 
         actionForward.setName(windowLocation);
