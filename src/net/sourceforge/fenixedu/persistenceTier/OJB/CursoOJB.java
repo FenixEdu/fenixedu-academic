@@ -33,14 +33,6 @@ public class CursoOJB extends PersistentObjectOJB implements ICursoPersistente {
         return (IDegree) queryObject(Degree.class, criteria);
     }
 
-    public IDegree readByIdInternal(Integer idInternal) throws ExcepcaoPersistencia {
-        return (IDegree) readByOID(Degree.class, idInternal);
-    }
-
-    public void delete(IDegree degree) throws ExcepcaoPersistencia {
-        super.delete(degree);
-    }
-
     public List readAll() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         return queryList(Degree.class, criteria);
@@ -51,12 +43,4 @@ public class CursoOJB extends PersistentObjectOJB implements ICursoPersistente {
         criteria.addEqualTo("tipoCurso", degreeType);
         return queryList(Degree.class, criteria, "nome", true);
     }
-
-    public IDegree readByNameAndDegreeType(String name, DegreeType degreeType) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("nome", name);
-        criteria.addEqualTo("tipoCurso", degreeType);
-        return (IDegree) queryObject(Degree.class, criteria);
-    }
-
 }

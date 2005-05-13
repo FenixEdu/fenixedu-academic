@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -26,7 +27,7 @@ public class ReadDegree implements IService {
 
         try {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            degree = sp.getICursoPersistente().readByIdInternal(idInternal);
+            degree = (IDegree)sp.getICursoPersistente().readByOID(Degree.class,idInternal);
 
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);

@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects;
 
 import net.sourceforge.fenixedu.persistenceTier.*;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationExecutionCourseVO;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
@@ -84,7 +83,9 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.BuildingVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CandidateSituationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CourseReportVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurriculumVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CursoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DegreeInfoVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationExecutionCourseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SummaryVO;
@@ -716,7 +717,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 	}
 
 	public ICursoPersistente getICursoPersistente()  {
-		return null;
+		return new CursoVO();
 	}
 
 	public IPersistentCurricularYear getIPersistentCurricularYear()  {

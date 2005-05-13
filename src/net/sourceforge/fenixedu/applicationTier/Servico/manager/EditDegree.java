@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeInfo;
@@ -45,7 +46,7 @@ public class EditDegree implements IService {
 
             persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentDegree = persistentSuport.getICursoPersistente();
-            oldDegree = persistentDegree.readByIdInternal(newInfoDegree.getIdInternal());
+            oldDegree = (IDegree)persistentDegree.readByOID(Degree.class,newInfoDegree.getIdInternal());
 
             if (oldDegree == null) {
                 throw new NonExistingServiceException();

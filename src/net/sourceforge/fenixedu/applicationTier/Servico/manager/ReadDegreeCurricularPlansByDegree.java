@@ -9,6 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -31,7 +32,7 @@ public class ReadDegreeCurricularPlansByDegree implements IService {
         List allDegreeCurricularPlans = null;
         try {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IDegree degree = sp.getICursoPersistente().readByIdInternal(idDegree);
+            IDegree degree = (IDegree)sp.getICursoPersistente().readByOID(Degree.class,idDegree);
             allDegreeCurricularPlans = sp.getIPersistentDegreeCurricularPlan().readByDegree(degree);
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);

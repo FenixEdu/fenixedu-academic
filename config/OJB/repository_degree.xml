@@ -52,5 +52,33 @@
 			element-class-ref="net.sourceforge.fenixedu.domain.DegreeInfo"
 			proxy="true">
 		<inverse-foreignkey field-ref="degreeKey"/>
-	</collection-descriptor>    
+	</collection-descriptor>
+	
+	<collection-descriptor
+			name="delegate"
+			element-class-ref="net.sourceforge.fenixedu.domain.student.Delegate"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyDegree"/>
+	</collection-descriptor>
+	
+	<collection-descriptor
+			name="oldInquiriesSummary"
+			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyDegree"/>
+	</collection-descriptor>
+	
+	<collection-descriptor
+			name="oldInquiriesTeachersRes"
+			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyDegree"/>
+	</collection-descriptor>
+	
+	<collection-descriptor
+			name="oldInquiriesCoursesRes"
+			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyDegree"/>
+	</collection-descriptor>
 </class-descriptor>

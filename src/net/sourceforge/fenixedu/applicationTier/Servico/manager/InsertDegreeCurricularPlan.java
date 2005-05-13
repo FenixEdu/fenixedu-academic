@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
@@ -34,8 +35,7 @@ public class InsertDegreeCurricularPlan implements IService {
                     .getIPersistentDegreeCurricularPlan();
 
             ICursoPersistente persistentDegree = persistentSuport.getICursoPersistente();
-            IDegree degree = persistentDegree.readByIdInternal(infoDegreeCurricularPlan.getInfoDegree()
-                    .getIdInternal());
+            IDegree degree = (IDegree)persistentDegree.readByOID(Degree.class,infoDegreeCurricularPlan.getInfoDegree().getIdInternal());
             if (degree == null)
                 throw new NonExistingServiceException();
 

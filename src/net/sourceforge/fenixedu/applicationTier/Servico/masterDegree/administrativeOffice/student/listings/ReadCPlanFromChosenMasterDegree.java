@@ -6,6 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -26,8 +27,7 @@ public class ReadCPlanFromChosenMasterDegree implements IService {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             // Get the Master Degree
-            IDegree degree = null;
-            degree = sp.getICursoPersistente().readByIdInternal(idInternal);
+            IDegree degree = (IDegree)sp.getICursoPersistente().readByOID(Degree.class,idInternal);
 
             // Get the List of Degree Curricular Plans
             degreeCurricularPlansList = degree.getDegreeCurricularPlans();
