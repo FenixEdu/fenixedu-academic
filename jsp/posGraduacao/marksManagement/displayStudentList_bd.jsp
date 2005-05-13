@@ -15,7 +15,7 @@
 					<b><bean:message key="label.masterDegree.administrativeOffice.degree"/>:</b>
 					<bean:write name="oneInfoEnrollment" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome" />
 					<br />
-					<b><bean:message key="label.curricularPlan"  bundle="PUBLIC_DEGREE_INFORMATION" />:</b>
+					<b><bean:message key="label.curricularPlan" />:</b>
 					<bean:write name="oneInfoEnrollment" property="infoCurricularCourse.infoDegreeCurricularPlan.name" />
 					<br />
 					<b><bean:message key="label.curricularCourse"/>:</b>
