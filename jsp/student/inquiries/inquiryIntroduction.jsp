@@ -17,30 +17,38 @@
 
 
 <br/>
-<hr/>
+<br/>
 <logic:present name='<%= InquiriesUtil.STUDENT_ATTENDS %>'>
+	<br/>
 	<logic:notEmpty name='<%= InquiriesUtil.STUDENT_ATTENDS %>'>
 		<strong></p>
 			<bean:message key="title.inquiries.choose.course" bundle="INQUIRIES_RESOURCES"/>
 		</strong></p>
-		<logic:iterate id="attends" name='<%= InquiriesUtil.STUDENT_ATTENDS %>' type="net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta">
-			<html:link page='<%= StringAppender.append("/fillInquiries.do?method=prepare&amp;", InquiriesUtil.STUDENT_ATTENDS_ID, "=", attends.getIdInternal().toString()) %>'>
-				<bean:write name="attends" property="disciplinaExecucao.nome" />
-			</html:link>
-			<br/>
-		</logic:iterate>
+		<ul style="list-style: none;">
+			<logic:iterate id="attends" name='<%= InquiriesUtil.STUDENT_ATTENDS %>' type="net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta">
+				<li>
+					<html:link page='<%= StringAppender.append("/fillInquiries.do?method=prepare&amp;", InquiriesUtil.STUDENT_ATTENDS_ID, "=", attends.getIdInternal().toString()) %>'>
+						<bean:write name="attends" property="disciplinaExecucao.nome" />
+					</html:link>
+				</li>
+			</logic:iterate>
+		</ul>
 	</logic:notEmpty>
 </logic:present>
 
 <logic:present name='<%= InquiriesUtil.EVALUATED_STUDENT_ATTENDS %>'>
+	<br/>
 	<logic:notEmpty name='<%= InquiriesUtil.EVALUATED_STUDENT_ATTENDS %>'>
 		<p><strong>
 			<bean:message key="title.inquiries.evaluated.courses" bundle="INQUIRIES_RESOURCES"/>
 		</strong></p>
-		<logic:iterate id="evaluatedAttends" name='<%= InquiriesUtil.EVALUATED_STUDENT_ATTENDS %>' type="net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta">
-				<bean:write name="evaluatedAttends" property="disciplinaExecucao.nome" />
-			<br/>
-		</logic:iterate>
+		<ul style="list-style: none;">
+			<logic:iterate id="evaluatedAttends" name='<%= InquiriesUtil.EVALUATED_STUDENT_ATTENDS %>' type="net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta">
+				<li>
+					<bean:write name="evaluatedAttends" property="disciplinaExecucao.nome" />
+				</li>
+			</logic:iterate>
+		</ul>
 	</logic:notEmpty>
 </logic:present>
 
