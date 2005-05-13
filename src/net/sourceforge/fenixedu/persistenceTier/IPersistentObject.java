@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier;
 
+import java.util.Collection;
 import java.util.Iterator;
 
 import net.sourceforge.fenixedu.domain.IDomainObject;
@@ -48,4 +49,6 @@ public interface IPersistentObject {
     public int count(Class classToQuery, Criteria criteria);
 
     public IDomainObject materialize(IDomainObject domainObject);
+
+    public Collection readAll(Class classToQuery)  throws ExcepcaoPersistencia;
 }

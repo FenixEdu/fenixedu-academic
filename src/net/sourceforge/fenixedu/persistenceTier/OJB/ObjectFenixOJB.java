@@ -8,6 +8,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
  * @author ars
  */
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -604,5 +605,9 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 
     public IDomainObject materialize(IDomainObject domainObject) {
         return (IDomainObject) ProxyHelper.getRealObject(domainObject);
+    }
+    
+    public Collection readAll(Class classToQuery) throws ExcepcaoPersistencia {
+        return queryList(classToQuery, null);
     }
 }
