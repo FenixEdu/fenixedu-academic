@@ -89,7 +89,7 @@ public class CreateProfessorshipDispatchAction extends DispatchAction {
         ComparatorChain comparatorChain = new ComparatorChain();
 
         comparatorChain.addComparator(new BeanComparator(
-                "infoDegreeCurricularPlan.infoDegree.tipoCurso.tipoCurso"));
+                "infoDegreeCurricularPlan.infoDegree.tipoCurso"));
         comparatorChain.addComparator(new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
 
         Collections.sort(executionDegrees, comparatorChain);

@@ -82,7 +82,7 @@ public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispat
         
         if (degreeCurricularPlans != null) {
             ComparatorChain comparatorChain = new ComparatorChain();
-            comparatorChain.addComparator(new BeanComparator("infoDegree.tipoCurso.tipoCurso"));
+            comparatorChain.addComparator(new BeanComparator("infoDegree.tipoCurso"));
             comparatorChain.addComparator(new BeanComparator("infoDegree.nome"));
             comparatorChain.addComparator(new BeanComparator("name"));
             Collections.sort(degreeCurricularPlans, comparatorChain);
