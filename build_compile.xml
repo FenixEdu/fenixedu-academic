@@ -345,7 +345,7 @@
 			  				   property="log.profile.filename"/>
 			</replace>
 
-			<replace dir="${build.home.webinf.classes}"
+			<replace dir="${build.home.webinf}"
 					 propertyFile="build.properties">
 				<include name="web.xml"/>
 				<replacefilter 
