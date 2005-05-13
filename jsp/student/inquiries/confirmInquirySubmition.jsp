@@ -33,31 +33,8 @@
 	--%>
 
 	<p><strong>
-		<bean:message key="title.inquiries.inquiry.structure" bundle="INQUIRIES_RESOURCES"/>
+		<bean:message key="message.inquiries.verify.data" bundle="INQUIRIES_RESOURCES"/>
 	</strong></p>
-
-	<ol>
-		<li>
-			<a href='<%= "#" + InquiriesUtil.STUDENT_FORM_ANCHOR %>'>
-				<bean:message key="link.inquiries.student" bundle="INQUIRIES_RESOURCES"/>
-			</a>
-		</li>
-		<li>
-			<a href='<%= "#" + InquiriesUtil.ATTENDING_COURSE_FORM_ANCHOR  %>'>
-				<bean:message key="link.inquiries.course" bundle="INQUIRIES_RESOURCES"/>
-			</a>
-		</li>
-		<li>
-			<a href='<%= "#" + InquiriesUtil.ATTENDING_COURSE_TEACHER_FORM_ANCHOR %>'>
-				<bean:message key="link.inquiries.teachers" bundle="INQUIRIES_RESOURCES"/>
-			</a>
-		</li>
-		<li>
-			<a href='<%= "#" + InquiriesUtil.ATTENDING_COURSE_ROOM_FORM_ANCHOR %>'>
-				<bean:message key="link.inquiries.rooms" bundle="INQUIRIES_RESOURCES"/>
-			</a>
-		</li>
-	</ol>
 
 	<html:form action="/fillInquiries">
 		<html:hidden property="method" value="defaultMethod"/>
@@ -65,7 +42,7 @@
 		<html:hidden property="studentExecutionDegreeId"/>
 		<html:hidden property="attendingCourseExecutionDegreeId"/>
 		<html:hidden property="studentAttendsId"/>
-		
+
 		<html:hidden property="curricularYear" />
 		<html:hidden property="attendingCourseSchoolClassId" />
 		<html:hidden property="firstEnrollment" />
@@ -468,7 +445,7 @@
 
 						<tr>
 							<td class="left">
-								3.1 <bean:message key="table.rowname.inquiries.teacher.form.class.type" bundle="INQUIRIES_RESOURCES"/>
+								3.1 <bean:message key="table.rowname.inquiries.teacher.form.evaluated.class.types" bundle="INQUIRIES_RESOURCES"/>
 							</td>
 							<td class="right">
 								<ul class="schoolClassType">								
@@ -932,20 +909,25 @@
 			</logic:iterate>
 		</logic:present>
 
-		<p class="navbottom" />
+		<p class="navbottom">&nbsp;</p>
 
 		<div id="submit" style="text-align: right;">
-			<p><Strong>
-				<a name='<%= InquiriesUtil.SUBMIT_FORM_ANCHOR  %>'>
-					<bean:message key="message.inquiries.confirmation.info" bundle="INQUIRIES_RESOURCES"/>
-				</a>
-			</Strong></p>
-			<html:submit styleClass="inquirylargebutton" onclick='<%="this.form.method.value='saveInquiry';" %>'>
-				<bean:message key="button.inquiries.confirm" bundle="INQUIRIES_RESOURCES"/>
-			</html:submit>
-			<html:submit styleClass="inquirylargebutton" onclick='<%="this.form.method.value='editInquiry';" %>'>
-				<bean:message key="button.inquiries.edit.inquiry" bundle="INQUIRIES_RESOURCES"/>
-			</html:submit>
+			<p>
+				<strong>
+					<bean:message key="message.inquiries.edit.info" bundle="INQUIRIES_RESOURCES"/>
+				</strong>
+				<html:submit styleClass="inquirylargebutton" onclick='<%="this.form.method.value='editInquiry';" %>'>
+					<bean:message key="button.inquiries.edit.inquiry" bundle="INQUIRIES_RESOURCES"/>
+				</html:submit>
+			</p>
+			<p>
+				<strong>
+					<bean:message key="message.inquiries.definitive.submition.info" bundle="INQUIRIES_RESOURCES"/>
+				</strong>
+				<html:submit styleClass="inquirylargebutton" onclick='<%="this.form.method.value='saveInquiry';" %>'>
+					<bean:message key="button.inquiries.submit" bundle="INQUIRIES_RESOURCES"/>
+				</html:submit>
+			</p>
 		</div>
 
 	</html:form>

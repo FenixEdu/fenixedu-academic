@@ -11,4 +11,7 @@
 	<h2>
 		<bean:message key='<%= "" + messageKey %>' bundle="INQUIRIES_RESOURCES"/>
 	</h2>
+	<html:link href="<%= request.getContextPath() + "/student/fillInquiries.do?method=prepareCourses&amp;page=0" %>">
+		<bean:message key="link.inquiries.new.course" bundle="INQUIRIES_RESOURCES"/>
+	</html:link>
 </logic:present>

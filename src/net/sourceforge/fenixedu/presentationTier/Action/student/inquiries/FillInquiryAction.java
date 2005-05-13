@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student.inquiries;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -41,6 +42,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.InquiriesUtil;
 import net.sourceforge.fenixedu.util.TipoAula;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.lang.ArrayUtils;
@@ -68,7 +70,9 @@ public class FillInquiryAction extends FenixDispatchAction {
             ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 		
-		loadInitialInformation(request, (DynaActionForm) actionForm);
+		DynaActionForm inquiryForm = (DynaActionForm) actionForm;
+		
+		loadInitialInformation(request, inquiryForm);
 
 		List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes> attendingCourseTeachers =
 			(List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_TEACHERS);
@@ -120,6 +124,8 @@ public class FillInquiryAction extends FenixDispatchAction {
 		Object[] argsStudentIdExecutionPeriodId = { infoStudent.getIdInternal(), currentExecutionPeriod.getIdInternal(), Boolean.TRUE };
 		List<InfoFrequenta> studentAttends =
 			(List<InfoFrequenta>) ServiceUtils.executeService(userView, "student.ReadAttendsByStudentIdAndExecutionPeriodId", argsStudentIdExecutionPeriodId);
+		//Order by execution course name
+		Collections.sort(studentAttends, new BeanComparator("disciplinaExecucao.nome"));
 				
 		
 		Object[] argsStudent = { infoStudent };
@@ -159,6 +165,7 @@ public class FillInquiryAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 		
 		DynaActionForm inquiryForm = (DynaActionForm) actionForm;
+		
 		loadInitialInformation(request, inquiryForm);
 
 		List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes> attendingCourseTeachers =
@@ -182,6 +189,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 		
 
 		DynaActionForm inquiryForm = (DynaActionForm) actionForm;
+
 		loadInitialInformation(request, inquiryForm);
 				
 		List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes> attendingCourseTeachers =
@@ -293,6 +301,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 		
 	
 		DynaActionForm inquiryForm = (DynaActionForm) actionForm;
+
 		loadInitialInformation(request, inquiryForm);
 				
 		List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes> attendingCourseTeachers =
@@ -391,6 +400,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 		
 
 		DynaActionForm inquiryForm = (DynaActionForm) actionForm;
+
 		loadInitialInformation(request, inquiryForm);
 
 		List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes> attendingCourseTeachers =
@@ -445,6 +455,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 	        HttpServletResponse response) throws Exception {
 		
 		DynaActionForm inquiryForm = (DynaActionForm) actionForm;
+
 		loadInitialInformation(request, inquiryForm);
 	
 		List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes> attendingCourseTeachers =
@@ -509,6 +520,7 @@ public class FillInquiryAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 		
 		DynaActionForm inquiryForm = (DynaActionForm) actionForm;
+
 		loadInitialInformation(request, inquiryForm);
 				
 		List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes> attendingCourseTeachers =
@@ -567,6 +579,7 @@ public class FillInquiryAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 		
 		DynaActionForm inquiryForm = (DynaActionForm) actionForm;
+
 		loadInitialInformation(request, inquiryForm);
 				
 		List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes> attendingCourseTeachers =
@@ -622,6 +635,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 		
 
 		DynaActionForm inquiryForm = (DynaActionForm) actionForm;
+
 		loadInitialInformation(request, inquiryForm);
 
 		List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes> attendingCourseTeachers =
@@ -668,6 +682,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 		
 
 		DynaActionForm inquiryForm = (DynaActionForm) actionForm;
+
 		loadInitialInformation(request, inquiryForm);
 
 		List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes> attendingCourseTeachers =
@@ -713,6 +728,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 			HttpServletResponse response) throws Exception {
 
 		DynaActionForm inquiryForm = (DynaActionForm) actionForm;
+
 		loadInitialInformation(request, inquiryForm);
 
 		List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes> attendingCourseTeachers = (List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes>) request
@@ -833,7 +849,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 			request.setAttribute(InquiriesUtil.INQUIRY_MESSAGE_KEY, "message.inquiries.already.evaluated.course");
 
 		}
-
+		
 		return actionMapping.findForward("inquirySubmitionResult");
 	}
 	
@@ -920,7 +936,10 @@ public class FillInquiryAction extends FenixDispatchAction {
 		Object[] argsAttendingCourse = { attends.getDisciplinaExecucao() };
 		List<InfoClass> attendingCourseSchoolClasses =
 			(List<InfoClass>) ServiceUtils.executeService(userView, "ReadClassesByExecutionCourse", argsAttendingCourse);
+		//TODO: this could be optimized
+		//sort by school class name
 		InquiriesUtil.removeDuplicates(attendingCourseSchoolClasses);
+		Collections.sort(attendingCourseSchoolClasses, new BeanComparator("nome"));
 		
 		final InfoExecutionCourse finalCourse = attends.getDisciplinaExecucao();
 
@@ -941,6 +960,8 @@ public class FillInquiryAction extends FenixDispatchAction {
                 return new InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes((InfoObject)infoObject, finalCourse);
             }
          	});
+		//sort by teacher name
+		Collections.sort(attendingCourseTeachers, new BeanComparator("teacherName"));
 
 		
 		//Obtaining the rooms associated with the attending course
@@ -952,6 +973,8 @@ public class FillInquiryAction extends FenixDispatchAction {
 				attendingCourseRooms.add(new InfoRoomWithInquiryRoomFlag(lesson.getInfoSala()));
 			}
 		}
+		//sort by class room name
+		Collections.sort(attendingCourseRooms, new BeanComparator("nome"));
 		
 		List<InfoExecutionDegree> attendingCourseExecutionDegrees = getAttendingCourseExecutionDegrees(
 					userView, attends, currentExecutionPeriod.getIdInternal());

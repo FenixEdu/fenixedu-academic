@@ -24,6 +24,7 @@ public class InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes extends
 	
 	private InfoTeacher teacher;
 	private InfoNonAffiliatedTeacher nonAffiliatedTeacher;
+	private String teacherName;
 
 	final private List<TipoAula> remainingClassTypes = new ArrayList<TipoAula>();
 
@@ -33,13 +34,15 @@ public class InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes extends
 		if(infoTeacherOrNonAffiliatedTeacher instanceof InfoTeacher) {
 			this.teacher = (InfoTeacher) infoTeacherOrNonAffiliatedTeacher;
 			this.nonAffiliatedTeacher = null;
-			setIdInternal(this.teacher.getIdInternal());
+			this.setIdInternal(this.teacher.getIdInternal());
+			this.teacherName = this.teacher.getInfoPerson().getNome();
 
 		} else if(infoTeacherOrNonAffiliatedTeacher instanceof InfoNonAffiliatedTeacher) {
 			
 			this.teacher = null;
 			this.nonAffiliatedTeacher = (InfoNonAffiliatedTeacher) infoTeacherOrNonAffiliatedTeacher;
-			setIdInternal(this.nonAffiliatedTeacher.getIdInternal());
+			this.setIdInternal(this.nonAffiliatedTeacher.getIdInternal());
+			this.teacherName = this.nonAffiliatedTeacher.getName();
 		}
 		
 		if(infoExecutionCourse.getTheoreticalHours().doubleValue() > 0) {
@@ -101,6 +104,23 @@ public class InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes extends
 		this.teacher = teacher;
 	}
 	
+	
+	/**
+	 * @return Returns the teacherName.
+	 */
+	public String getTeacherName() {
+		return teacherName;
+	}
+	
+
+	/**
+	 * @param teacherName The teacherName to set.
+	 */
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacherName;
+	}
+	
+
 	public String toString() {
 		String result = "[INFOTEACHERORNONAFFILIATEDTEACHERWITHREMAININGCLASSTYPES";
 		

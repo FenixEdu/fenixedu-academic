@@ -37,7 +37,6 @@
 	</h3>
 
 	<bean:message key="message.inquiries.instructions" bundle="INQUIRIES_RESOURCES"/>
-	<bean:message key="message.inquiries.mandatory.answers" bundle="INQUIRIES_RESOURCES"/>
 
 	<p><strong>
 		<bean:message key="title.inquiries.inquiry.structure" bundle="INQUIRIES_RESOURCES"/>
@@ -67,16 +66,17 @@
 	</ol>
 
 	<html:form action="/fillInquiries">
-		<html:hidden property="method" value="defaultMethod"/>
-		<html:hidden property="attendingExecutionCourseId"/>
-		<html:hidden property="studentExecutionDegreeId"/>
-		<html:hidden property="studentAttendsId"/>
+		<html:hidden property="method" value="defaultMethod" />
+		<html:hidden property="attendingExecutionCourseId" />
+		<html:hidden property="studentExecutionDegreeId" />
+		<html:hidden property="studentAttendsId" />
 				
 		<div id='<%= InquiriesUtil.STUDENT_FORM_ANCHOR %>' class="block">
 			<h2>
 				1. <bean:message key="header.inquiries.student.form" bundle="INQUIRIES_RESOURCES"/>
 			</h2>
-						
+			<bean:message key="message.inquiries.mandatory.answers" bundle="INQUIRIES_RESOURCES"/>
+
 			<table>
 				<logic:present name='<%= InquiriesUtil.STUDENT_FORM_ERROR %>'>
 					<tr>
@@ -415,7 +415,7 @@
 						</td>
 					</tr>
 				</table>
-
+				<%--
 				<p align="center">
 					1.
 					<a href='<%= "#" + InquiriesUtil.STUDENT_FORM_ANCHOR %>'>
@@ -437,6 +437,7 @@
 						<bean:message key="link.inquiries.rooms" bundle="INQUIRIES_RESOURCES"/>
 					</a>
 				</p>
+				--%>
 	
 			</div>
 		</logic:present>
@@ -471,11 +472,10 @@
 										onclick='<%="this.form.method.value='prepareNewTeacher';this.form.newAttendingCourseTeacherId.value='" + currentTeacherId + "';" %>'>
 										<bean:message key="button.inquiries.evaluate" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
-									&nbsp;&nbsp;
+									&gt;
 									<bean:write name="attendingCourseTeacher" property="teacher.infoPerson.nome" />
 									
 									<logic:empty name="attendingCourseTeacher" property="remainingClassTypes">
-										-
 										<c:if test="${completeAttendingCourseTeacherId == currentTeacherId}">
 											<font class="error"><bean:message key="message.inquiries.complete" bundle="INQUIRIES_RESOURCES"/></font>
 										</c:if>
@@ -502,7 +502,7 @@
 										onclick='<%="this.form.method.value='prepareNewTeacher';this.form.newAttendingCourseNonAffiliatedTeacherId.value='" + currentTeacherId + "';" %>'>
 										<bean:message key="button.inquiries.evaluate" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
-									&nbsp;&nbsp;
+									&gt;
 									<bean:write name="attendingCourseTeacher" property="nonAffiliatedTeacher.name" />
 									
 									<logic:empty name="attendingCourseTeacher" property="remainingClassTypes">
@@ -600,7 +600,7 @@
 
 							<tr>
 								<td class="left">
-									3.1 <bean:message key="table.rowname.inquiries.teacher.form.class.type" bundle="INQUIRIES_RESOURCES"/> <span class="redtext">*</span>
+									3.1 <bean:message key="table.rowname.inquiries.teacher.form.class.type" bundle="INQUIRIES_RESOURCES"/>
 								</td>
 								<td class="right">
 									<ul class="schoolClassType">								
@@ -888,7 +888,7 @@
 							</tr>
 
 							<tr>
-								<td class="left">
+								<td class="left" colspan="2">
 									<html:submit styleClass="inquirybutton" onclick='<%="this.form.method.value='closeTeacher';" %>'>
 										<bean:message key="button.inquiries.confirm.evaluation" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
@@ -896,7 +896,6 @@
 										<bean:message key="button.inquiries.remove.evaluation" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
 								</td>
-								<td class="left"></td>
 							</tr>
 						</table>
 
@@ -920,7 +919,7 @@
 							</tr>
 							<tr>
 								<td class="left">
-									<bean:message key="table.rowname.inquiries.teacher.form.class.type" bundle="INQUIRIES_RESOURCES"/>
+									<bean:message key="table.rowname.inquiries.teacher.form.evaluated.class.types" bundle="INQUIRIES_RESOURCES"/>
 								</td>
 								<td class="left">
 									<logic:iterate id="classType" name="selectedAttendingCourseTeacher" property="classTypes" indexId="index">
@@ -932,7 +931,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td class="left">
+								<td class="left" colspan="2">
 									<html:submit styleClass="inquirybutton" onclick='<%="this.form.method.value='editTeacher';this.form.selectedAttendingCourseTeacherFormPosition.value='" + teacherPosition + "';" %>'>
 										<bean:message key="button.inquiries.edit.evaluation" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
@@ -952,6 +951,7 @@
 				
 			</logic:present>
 
+			<%--
 			<p align="center">
 				1.
 				<a href='<%= "#" + InquiriesUtil.STUDENT_FORM_ANCHOR %>'>
@@ -973,6 +973,7 @@
 					<bean:message key="link.inquiries.rooms" bundle="INQUIRIES_RESOURCES"/>
 				</a>
 			</p>
+			--%>
 
 
 		</div>
@@ -1002,13 +1003,21 @@
 											>
 											<bean:message key="button.inquiries.evaluate" bundle="INQUIRIES_RESOURCES"/>
 										</html:submit>
-										&nbsp;&nbsp;
-										<bean:write name="attendingCourseRoom" property="nome" />
-
+										&gt;
 									</c:if>
 									<c:if test="${attendingCourseRoom.alreadyEvaluatedFlag}">
-										<bean:write name="attendingCourseRoom" property="nome" />
+										<bean:define id="buttonValue">
+											<bean:message key="button.inquiries.evaluate" bundle="INQUIRIES_RESOURCES"/>
+										</bean:define>
+										<input type="submit" class="inquirybutton" disabled="disabled" value='<%= buttonValue %>' />
+										&gt;
 									</c:if>
+									<bean:message key="label.inquiries.room" bundle="INQUIRIES_RESOURCES"/>
+									<bean:write name="attendingCourseRoom" property="nome" />
+
+									<%--c:if test="${attendingCourseRoom.alreadyEvaluatedFlag}">
+										<bean:write name="attendingCourseRoom" property="nome" />
+									</c:if--%>
 								</li>
 						</logic:iterate>
 					</ul>
@@ -1135,7 +1144,7 @@
 							</tr>
 							
 							<tr>
-								<td class="left">
+								<td class="left" colspan="2">
 									<html:submit styleClass="inquirybutton" onclick='<%="this.form.method.value='closeRoom';" %>'>
 										<bean:message key="button.inquiries.confirm.evaluation" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
@@ -1143,7 +1152,6 @@
 										<bean:message key="button.inquiries.remove.evaluation" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
 								</td>
-								<td class="left"></td>
 							</tr>
 						</table>
 					</c:if>
@@ -1158,7 +1166,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td class="left">
+								<td class="left" colspan="2">
 									<html:submit styleClass="inquirybutton" onclick='<%="this.form.method.value='editRoom';this.form.selectedAttendingCourseRoomId.value='" + selectedAttendingCourseRoomId + "';" %>'>
 										<bean:message key="button.inquiries.edit.evaluation" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
@@ -1200,14 +1208,22 @@
 		</div>	
 
 		<div id="submit" style="text-align: right;">
-			<p><Strong>
-				<a name='<%= InquiriesUtil.SUBMIT_FORM_ANCHOR  %>'>
-					<bean:message key="message.inquiries.submition.info" bundle="INQUIRIES_RESOURCES"/>
-				</a>
-			</Strong></p>
-			<html:submit styleClass="inquirylargebutton" onclick='<%="this.form.method.value='submitInquiry';" %>'>
-				<bean:message key="button.inquiries.submit" bundle="INQUIRIES_RESOURCES"/>
-			</html:submit>
+			<p>
+				<strong>
+					<bean:message key="message.inquiries.preview.info" bundle="INQUIRIES_RESOURCES"/>
+				</strong>
+				<html:submit styleClass="inquirylargebutton" onclick='<%="this.form.method.value='submitInquiry';" %>'>
+					<bean:message key="button.inquiries.preview.inquiry" bundle="INQUIRIES_RESOURCES"/>
+				</html:submit>
+			</p>
+			<p>
+				<strong>
+					<bean:message key="message.inquiries.definitive.submition.info" bundle="INQUIRIES_RESOURCES"/>
+				</strong>
+				<html:submit styleClass="inquirylargebutton" onclick='<%="this.form.method.value='saveInquiry';" %>'>
+					<bean:message key="button.inquiries.submit" bundle="INQUIRIES_RESOURCES"/>
+				</html:submit>
+			</p>
 		</div>
 
 	</html:form>

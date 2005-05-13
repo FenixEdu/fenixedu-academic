@@ -17,7 +17,7 @@
 
 
 <br/>
-<br/>
+<hr/>
 <logic:present name='<%= InquiriesUtil.STUDENT_ATTENDS %>'>
 	<br/>
 	<logic:notEmpty name='<%= InquiriesUtil.STUDENT_ATTENDS %>'>
