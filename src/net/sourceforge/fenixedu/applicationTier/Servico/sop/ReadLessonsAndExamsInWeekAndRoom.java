@@ -126,7 +126,7 @@ public class ReadLessonsAndExamsInWeekAndRoom implements IService {
             }
 
             //adicionar os exames
-            List examList = examDAO.readByRoomAndWeek(room, day);
+            List examList = examDAO.readByRoomAndWeek(room.getNome(), day);
             Iterator iteratorExams = examList.iterator();
 
             while (iteratorExams.hasNext()) {

@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.domain.Period;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -37,40 +36,22 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadExamsMapByRooms implements IService {
 
-    public List run(InfoExecutionPeriod infoExecutionPeriod, List infoRooms) {
+    public List run(InfoExecutionPeriod infoExecutionPeriod, List infoRooms) throws Exception {
 
         // Object to be returned
         List infoRoomExamMapList = new ArrayList();
 
-        // Exam seasons hardcoded because this information
-        // is not yet available from the database
-        /*
-         * Calendar startSeason1 = Calendar.getInstance();
-         * startSeason1.set(Calendar.YEAR, 2004);
-         * startSeason1.set(Calendar.MONTH, Calendar.JUNE);
-         * startSeason1.set(Calendar.DAY_OF_MONTH, 14);
-         * startSeason1.set(Calendar.HOUR_OF_DAY, 0);
-         * startSeason1.set(Calendar.MINUTE, 0);
-         * startSeason1.set(Calendar.SECOND, 0);
-         * startSeason1.set(Calendar.MILLISECOND, 0); Calendar endSeason2 =
-         * Calendar.getInstance(); endSeason2.set(Calendar.YEAR, 2004);
-         * endSeason2.set(Calendar.MONTH, Calendar.JULY);
-         * endSeason2.set(Calendar.DAY_OF_MONTH, 24);
-         * endSeason2.set(Calendar.HOUR_OF_DAY, 0);
-         * endSeason2.set(Calendar.MINUTE, 0); endSeason2.set(Calendar.SECOND,
-         * 0); endSeason2.set(Calendar.MILLISECOND, 0);
-         */
-        try {
+        
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             //List rooms = sp.getISalaPersistente().readForRoomReservation();
             InfoRoom room = null;
             InfoRoomExamsMap infoExamsMap = null;
+            String executionPeriodName = infoExecutionPeriod.getName();
+            String year = infoExecutionPeriod.getInfoExecutionYear().getYear();
 
-            // Translate to execute following queries
-            IExecutionPeriod executionPeriod = Cloner
-                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+            
 
-            IPeriod period = calculateExamsSeason(executionPeriod);
+            IPeriod period = calculateExamsSeason(year, infoExecutionPeriod.getSemester().intValue());
             Calendar startSeason1 = period.getStartDate();
             Calendar endSeason2 = period.getEndDate();
             // The calendar must start at a monday
@@ -88,15 +69,16 @@ public class ReadExamsMapByRooms implements IService {
                 infoExamsMap.setEndSeason1(null);
                 infoExamsMap.setStartSeason2(null);
                 infoExamsMap.setEndSeason2(endSeason2);
-                List exams = sp.getIPersistentExam().readByRoomAndExecutionPeriod(
-                        Cloner.copyInfoRoom2Room(room), executionPeriod);
+                
+                String nameRoom = room.getNome();
+                
+                
+                List exams = sp.getIPersistentExam().readByRoomAndExecutionPeriod(nameRoom, executionPeriodName, year);
                 infoExamsMap.setExams((List) CollectionUtils.collect(exams, TRANSFORM_EXAM_TO_INFOEXAM));
                 infoRoomExamMapList.add(infoExamsMap);
             }
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        
 
         return infoRoomExamMapList;
     }
@@ -110,14 +92,11 @@ public class ReadExamsMapByRooms implements IService {
         }
     };
 
-    private Period calculateExamsSeason(IExecutionPeriod executionPeriod) throws Exception {
+    private Period calculateExamsSeason(String year, int semester) throws Exception {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            int semester = executionPeriod.getSemester().intValue();
-
-            List executionDegreesList = sp.getIPersistentExecutionDegree().readByExecutionYear(
-                    executionPeriod.getExecutionYear().getYear());
+            List executionDegreesList = sp.getIPersistentExecutionDegree().readByExecutionYear(year);
             IExecutionDegree executionDegree = (IExecutionDegree) executionDegreesList.get(0);
             
             Calendar startSeason1 = null;

@@ -8,13 +8,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *  
+ * 
  */
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -31,31 +30,11 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-public class ReadAllRoomsExamsMap implements IServico {
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-    private static ReadAllRoomsExamsMap servico = new ReadAllRoomsExamsMap();
+public class ReadAllRoomsExamsMap implements IService {
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadAllRoomsExamsMap getService() {
-        return servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private ReadAllRoomsExamsMap() {
-    }
-
-    /**
-     * Devolve o nome do servico
-     */
-    public String getNome() {
-        return "ReadAllRoomsExamsMap";
-    }
-
-    public List run(InfoExecutionPeriod infoExecutionPeriod) {
+    public List run(InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia {
 
         // Object to be returned
         List infoRoomExamMapList = new ArrayList();
@@ -79,35 +58,31 @@ public class ReadAllRoomsExamsMap implements IServico {
         endSeason2.set(Calendar.SECOND, 0);
         endSeason2.set(Calendar.MILLISECOND, 0);
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            List rooms = sp.getISalaPersistente().readForRoomReservation();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        List rooms = sp.getISalaPersistente().readForRoomReservation();
 
-            for (int i = 0; i < rooms.size(); i++) {
+        for (int i = 0; i < rooms.size(); i++) {
 
-                IRoom room = (IRoom) rooms.get(i);
+            IRoom room = (IRoom) rooms.get(i);
 
-                InfoRoomExamsMap infoExamsMap = new InfoRoomExamsMap();
+            InfoRoomExamsMap infoExamsMap = new InfoRoomExamsMap();
 
-                // Set Exam Season info
-                infoExamsMap.setInfoRoom(Cloner.copyRoom2InfoRoom(room));
-                infoExamsMap.setStartSeason1(startSeason1);
-                infoExamsMap.setEndSeason1(null);
-                infoExamsMap.setStartSeason2(null);
-                infoExamsMap.setEndSeason2(endSeason2);
+            // Set Exam Season info
+            infoExamsMap.setInfoRoom(Cloner.copyRoom2InfoRoom(room));
+            infoExamsMap.setStartSeason1(startSeason1);
+            infoExamsMap.setEndSeason1(null);
+            infoExamsMap.setStartSeason2(null);
+            infoExamsMap.setEndSeason2(endSeason2);
 
-                // Translate to execute following queries
-                IExecutionPeriod executionPeriod = Cloner
-                        .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+            // Translate to execute following queries
+            IExecutionPeriod executionPeriod = Cloner
+                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 
-                List exams = sp.getIPersistentExam().readBy(room, executionPeriod);
-                infoExamsMap.setExams((List) CollectionUtils.collect(exams, TRANSFORM_EXAM_TO_INFOEXAM));
+            List exams = sp.getIPersistentExam().readByRoomAndExecutionPeriod(room.getNome(),
+                    executionPeriod.getName(), executionPeriod.getExecutionYear().getYear());
+            infoExamsMap.setExams((List) CollectionUtils.collect(exams, TRANSFORM_EXAM_TO_INFOEXAM));
 
-                infoRoomExamMapList.add(infoExamsMap);
-            }
-
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
+            infoRoomExamMapList.add(infoExamsMap);
         }
 
         return infoRoomExamMapList;
