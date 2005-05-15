@@ -15,7 +15,7 @@ app.name=ciapl
 app.context=ciapl
 application=extranet
 
-index.html.link=publico/index.html
+index.html.link=siteMap.do
 login.page=https://fenix.ist.utl.pt/privado
 institution.url=http://www.ist.utl.pt
 #

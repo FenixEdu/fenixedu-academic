@@ -22,6 +22,13 @@
             <form-property name="subject" type="java.lang.String" />
             <form-property name="body" type="java.lang.String" />
         </form-bean>
+		<form-bean name="changeLocaleForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+	   		<form-property name="windowLocation" type="java.lang.String"/>
+   			<form-property name="newLanguage" type="java.lang.String"/>
+   			<form-property name="newCountry" type="java.lang.String"/>
+		</form-bean>
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -55,6 +62,18 @@
         <action path="/naoExistente" forward="/error.jsp" />
         <action path="/nonExistingObject" forward="/nonExistingError.jsp"/>
 
+	    <action path="/changeLocaleTo"
+	    		name="changeLocaleForm"
+	    		validate="false"
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.publico.ChangeLocale">
+		    <forward name="something" path="/lalaland"/>
+	    </action>
+
+	    <action path="/siteMap"
+	    		type="net.sourceforge.fenixedu.presentationTier.Action.SiteMapAction">
+		    <forward name="site-map" path="/siteMap.jsp"/>
+	    </action>
+
         <action path="/home"
 				type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" 
             	parameter="/person/index.do"/>
@@ -86,7 +105,7 @@
     </action-mappings>
 
     <!-- ========== Controller Configuration ================================ -->
-    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
+	<controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixFacesRequestProcessorWithTiles"/>
 
     <!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="ServidorApresentacao.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
