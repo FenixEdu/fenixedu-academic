@@ -7,11 +7,11 @@ import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.De
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IMasterDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.IMasterDegreeProofVersion;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -21,18 +21,19 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan implements IService {
 
-    public InfoMasterDegreeProofVersion run(InfoStudentCurricularPlan infoStudentCurricularPlan)
+    public InfoMasterDegreeProofVersion run(Integer studentCurricularPlanID)
             throws FenixServiceException {
         InfoMasterDegreeProofVersion infoMasterDegreeProofVersion = null;
 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IStudentCurricularPlan studentCurricularPlan = Cloner
-                    .copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
+            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) sp
+                    .getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,
+                            studentCurricularPlanID);
 
             IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory
                     .getInstance();
@@ -51,29 +52,23 @@ public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan implement
                 throw new NonExistingServiceException(
                         "error.exception.masterDegree.nonExistingMasterDegreeProofVersion");
 
-            IBranch branch =
-				masterDegreeProofVersion
-					.getMasterDegreeThesis()
-					.getStudentCurricularPlan()
-					.getBranch();
+            IBranch branch = masterDegreeProofVersion.getMasterDegreeThesis().getStudentCurricularPlan()
+                    .getBranch();
 
-			if (branch != null) {
+            if (branch != null) {
 
-				branch.getIdInternal();
-			}
+                branch.getIdInternal();
+            }
 
-			infoMasterDegreeProofVersion =
-				Cloner
-					.copyIMasterDegreeProofVersion2InfoMasterDegreeProofVersion(
-					masterDegreeProofVersion);
+            infoMasterDegreeProofVersion = Cloner
+                    .copyIMasterDegreeProofVersion2InfoMasterDegreeProofVersion(masterDegreeProofVersion);
 
-		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx =
-				new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		}
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+            newEx.fillInStackTrace();
+            throw newEx;
+        }
 
-		return infoMasterDegreeProofVersion;
+        return infoMasterDegreeProofVersion;
     }
 }

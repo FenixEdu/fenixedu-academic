@@ -236,7 +236,7 @@ public class ChooseCertificateInfoAction extends DispatchAction {
                     }
 
                     /* * * get master degree proof * * */
-                    Object argsMasterDegreeProofVersion[] = { infoStudentCurricularPlan };
+                    Object argsMasterDegreeProofVersion[] = { studentCurricularPlanID };
                     try {
                         infoMasterDegreeProofVersion = (InfoMasterDegreeProofVersion) ServiceUtils
                                 .executeService(userView,

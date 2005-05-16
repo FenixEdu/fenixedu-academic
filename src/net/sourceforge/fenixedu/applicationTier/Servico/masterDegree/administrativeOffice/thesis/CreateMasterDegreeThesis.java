@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -30,7 +31,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 public class CreateMasterDegreeThesis implements IService {
 
@@ -41,7 +42,7 @@ public class CreateMasterDegreeThesis implements IService {
 
         try {
 
-            //	check duplicate guiders and assistent guiders
+            // check duplicate guiders and assistent guiders
             for (Iterator iter = infoTeacherGuiders.iterator(); iter.hasNext();) {
                 InfoTeacher guider = (InfoTeacher) iter.next();
 
@@ -69,8 +70,6 @@ public class CreateMasterDegreeThesis implements IService {
             }
 
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IStudentCurricularPlan studentCurricularPlan = Cloner
-                    .copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
 
             IMasterDegreeThesis storedMasterDegreeThesis = sp.getIPersistentMasterDegreeThesis()
                     .readByStudentCurricularPlan(infoStudentCurricularPlan.getIdInternal());
@@ -83,18 +82,22 @@ public class CreateMasterDegreeThesis implements IService {
                             dissertationTitle);
             if (storedMasterDegreeThesisDataVersion != null)
                 if (!storedMasterDegreeThesisDataVersion.getMasterDegreeThesis()
-                        .getStudentCurricularPlan().equals(studentCurricularPlan))
+                        .getStudentCurricularPlan().getIdInternal().equals(
+                                infoStudentCurricularPlan.getIdInternal()))
                     throw new ExistingServiceException(
                             "error.exception.masterDegree.dissertationTitleAlreadyChosen");
 
             IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
             IEmployee employee = sp.getIPersistentEmployee().readByPerson(
                     person.getIdInternal().intValue());
+            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) sp
+                    .getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,
+                            infoStudentCurricularPlan.getIdInternal());
 
             IMasterDegreeThesis masterDegreeThesis = new MasterDegreeThesis(studentCurricularPlan);
             sp.getIPersistentMasterDegreeThesis().simpleLockWrite(masterDegreeThesis);
 
-            //write data version
+            // write data version
             IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion = new MasterDegreeThesisDataVersion(
                     masterDegreeThesis, employee, dissertationTitle,
                     new Timestamp(new Date().getTime()), new State(State.ACTIVE));

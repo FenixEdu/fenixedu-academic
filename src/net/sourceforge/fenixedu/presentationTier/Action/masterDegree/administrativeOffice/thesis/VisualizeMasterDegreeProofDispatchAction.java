@@ -92,7 +92,7 @@ public class VisualizeMasterDegreeProofDispatchAction extends DispatchAction {
         }
 
         /* * * get master degree proof * * */
-        Object argsMasterDegreeProofVersion[] = { infoStudentCurricularPlan };
+        Object argsMasterDegreeProofVersion[] = { infoStudentCurricularPlan.getIdInternal() };
         try {
             infoMasterDegreeProofVersion = (InfoMasterDegreeProofVersion) ServiceUtils.executeService(
                     userView, "ReadActiveMasterDegreeProofVersionByStudentCurricularPlan",
