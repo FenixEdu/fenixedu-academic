@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Date;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -12,57 +11,6 @@ import java.util.Date;
  * @author Tânia Pousão
  */
 public class GratuityValues extends GratuityValues_Base {
-
-	private Date startPayment;
-
-	private Date endPayment;
-
-	private Date when;
-
-	/**
-	 * @return Returns the when.
-	 */
-	public Date getWhen() {
-		return when;
-	}
-
-	/**
-	 * @param when
-	 *            The when to set.
-	 */
-	public void setWhen(Date when) {
-		this.when = when;
-	}
-
-	/**
-	 * @return Returns the endPayment.
-	 */
-	public Date getEndPayment() {
-		return endPayment;
-	}
-
-	/**
-	 * @param endPayment
-	 *            The endPayment to set.
-	 */
-	public void setEndPayment(Date endPayment) {
-		this.endPayment = endPayment;
-	}
-
-	/**
-	 * @return Returns the startPayment.
-	 */
-	public Date getStartPayment() {
-		return startPayment;
-	}
-
-	/**
-	 * @param startPayment
-	 *            The startPayment to set.
-	 */
-	public void setStartPayment(Date startPayment) {
-		this.startPayment = startPayment;
-	}
 
 	public String toString() {
 		StringBuffer result = new StringBuffer();
@@ -79,8 +27,4 @@ public class GratuityValues extends GratuityValues_Base {
 		return result.toString();
 	}
 
-	public boolean equals(Object object) {
-		// TODO: to make
-		return true;
-	}
 }

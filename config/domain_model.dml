@@ -1049,7 +1049,10 @@ class net.sourceforge.fenixedu.domain.GratuitySituation extends net.sourceforge.
 
 
 class net.sourceforge.fenixedu.domain.GratuityValues extends net.sourceforge.fenixedu.domain.DomainObject {
-	Double scholarShipValue;
+    Date startPayment;
+    Date endPayment;
+    Date when;    
+    Double scholarShipValue;
 	Double courseValue;
 	Boolean proofRequestPayment;
 	Double anualValue;
@@ -1057,20 +1060,6 @@ class net.sourceforge.fenixedu.domain.GratuityValues extends net.sourceforge.fen
 	Double finalProofValue;
 	Integer keyExecutionDegree;
 	Integer keyEmployee;
-	
-	interface "
-		public java.util.Date getWhen();
-		
-		public void setWhen(java.util.Date when);
-		
-		public java.util.Date getEndPayment();
-		
-		public void setEndPayment(java.util.Date endPayment);
-		
-		public java.util.Date getStartPayment();
-		
-		public void setStartPayment(java.util.Date startPayment);
-	"
 }
 
 
