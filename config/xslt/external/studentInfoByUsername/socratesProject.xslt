@@ -24,21 +24,14 @@
 </xsl:template> 
 
 <xsl:template match="net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalEnrollmentInfo">
+	<disciplina>
 		<codigo>
 			<xsl:value-of select="./course/code"/>
 		</codigo>
-		<nome>
-			<xsl:value-of select="./course/name"/>
-		</nome>
 		<nota>
 			<xsl:value-of select="./finalGrade"/>
 		</nota>		
-		<creditos>
-			<xsl:value-of select="./course/credits"/>
-		</creditos>				
-		<creditos-ECTS>
-			<xsl:value-of select="./course/ECTScredits"/>
-		</creditos-ECTS>						
+	</disciplina>						
 </xsl:template> 
 
 <xsl:template match="degree">
@@ -59,6 +52,7 @@
 </xsl:template> 
 
 <xsl:template match="net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalCurricularCourseInfo">
+	<disciplina>
 			<nome>
 				<xsl:value-of select="./name"/>
 			</nome>
@@ -71,6 +65,7 @@
 			<creditos-ECTS>
 				<xsl:value-of select="./ECTSCredits"/>
 			</creditos-ECTS>
+	</disciplina>			
 </xsl:template>
 
 
