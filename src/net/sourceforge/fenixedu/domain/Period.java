@@ -10,15 +10,12 @@ import net.sourceforge.fenixedu.util.CalendarUtil;
 
 /**
  * @author Ana e Ricardo
- *  
+ * 
  */
 public class Period extends Period_Base {
-
     protected Calendar startDate;
 
     protected Calendar endDate;
-
-    protected IPeriod nextPeriod;
 
     public Period() {
     }
@@ -28,8 +25,8 @@ public class Period extends Period_Base {
     }
 
     public Period(Calendar startDate, Calendar endDate) {
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.setStartDate(startDate);
+        this.setEndDate(endDate);
     }
 
     /**
@@ -73,17 +70,9 @@ public class Period extends Period_Base {
         return false;
     }
 
-    public IPeriod getNextPeriod() {
-        return nextPeriod;
-    }
-
-    public void setNextPeriod(IPeriod nextPeriod) {
-        this.nextPeriod = nextPeriod;
-    }
-
     public Calendar getEndDateOfComposite() {
-        Calendar end = this.endDate;
-        IPeriod period = this.nextPeriod;
+        Calendar end = this.getEndDate();
+        IPeriod period = this.getNextPeriod();
         while (period != null) {
             end = period.getEndDate();
             period = period.getNextPeriod();
@@ -105,4 +94,5 @@ public class Period extends Period_Base {
         }
         return false;
     }
+
 }

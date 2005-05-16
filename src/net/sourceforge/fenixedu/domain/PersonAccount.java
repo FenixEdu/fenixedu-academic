@@ -10,23 +10,13 @@ package net.sourceforge.fenixedu.domain;
  */
 public class PersonAccount extends PersonAccount_Base {
 
-	private IPerson person;
+    public PersonAccount() {
+    }
 
-	public PersonAccount() {
-	}
+    public PersonAccount(IPerson person) {
+        setPerson(person);
+        setBalance(new Double(0));
 
-	public PersonAccount(IPerson person) {
-		this.person = person;
-		setBalance(new Double(0));
-
-	}
-
-	public IPerson getPerson() {
-		return person;
-	}
-
-	public void setPerson(IPerson person) {
-		this.person = person;
-	}
+    }
 
 }

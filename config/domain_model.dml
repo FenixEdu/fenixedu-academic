@@ -1525,10 +1525,6 @@ class net.sourceforge.fenixedu.domain.Period extends net.sourceforge.fenixedu.do
 	
 	public void setStartDate(java.util.Calendar calendar);
 
-	public net.sourceforge.fenixedu.domain.IPeriod getNextPeriod();
-	
-	public void setNextPeriod(net.sourceforge.fenixedu.domain.IPeriod nextPeriod);
-
 	public java.util.Calendar getEndDateOfComposite();
 	
 	public boolean intersectPeriods(IPeriod period);
@@ -1590,12 +1586,6 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 class net.sourceforge.fenixedu.domain.PersonAccount extends net.sourceforge.fenixedu.domain.DomainObject {
 	Double balance;
 	Integer keyPerson;
-
-	interface "
-	    public net.sourceforge.fenixedu.domain.IPerson getPerson();
-	    
-	    public void setPerson(net.sourceforge.fenixedu.domain.IPerson person);
-	"
 }
 
 
@@ -3988,6 +3978,17 @@ relation PeriodRoomOccupation {
 		multiplicity *;
 	}
 }
+
+relation PeriodNextPeriod {
+    net.sourceforge.fenixedu.domain.Period playsRole previousPeriod;
+    net.sourceforge.fenixedu.domain.Period playsRole nextPeriod;
+}
+
+relation PersonAccountPerson {
+    net.sourceforge.fenixedu.domain.PersonAccount playsRole associatedPersonAccount;
+    net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
 
 relation PersonAdvisory {
 	net.sourceforge.fenixedu.domain.Person playsRole people {
