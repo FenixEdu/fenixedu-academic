@@ -1265,27 +1265,21 @@ class net.sourceforge.fenixedu.domain.MasterDegreeProofVersion extends net.sourc
 	Integer keyMasterDegreeThesis;
 	Integer attachedCopiesNumber;
 	Integer keyEmployee;
+    Date thesisDeliveryDate;
+    Date proofDate;
 	
 	interface "
-	    public void setLastModification(java.sql.Timestamp lastModification);
-    	
-    	public java.sql.Timestamp getLastModification();
-	    
-	    public void setProofDate(java.util.Date proofDate);
-	    
-	    public java.util.Date getProofDate();
-	    
-	    public void setThesisDeliveryDate(java.util.Date thesisDeliveryDate);
-	    
-	    public java.util.Date getThesisDeliveryDate();
-	    
-	    public void setFinalResult(net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification finalResult);
-	    
-	    public net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification getFinalResult();
-	    
-	    public void setCurrentState(net.sourceforge.fenixedu.util.State state);
-	    
-	    public net.sourceforge.fenixedu.util.State getCurrentState();
+    public void setLastModification(java.sql.Timestamp lastModification);
+   	
+   	public java.sql.Timestamp getLastModification();
+    
+    public void setFinalResult(net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification finalResult);
+   
+    public net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification getFinalResult();
+    
+    public void setCurrentState(net.sourceforge.fenixedu.util.State state);
+    
+    public net.sourceforge.fenixedu.util.State getCurrentState();
 	"
 	
 }
