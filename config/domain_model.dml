@@ -1139,26 +1139,20 @@ class net.sourceforge.fenixedu.domain.Guide extends net.sourceforge.fenixedu.dom
 	Integer keyPerson;
 	Integer keyExecutionDegree;
 	Integer number;
+    Date creationDate;
+    Date paymentDate;
 	
 	
 	interface "
-		public net.sourceforge.fenixedu.domain.IGuideSituation getActiveSituation();
+	public net.sourceforge.fenixedu.domain.IGuideSituation getActiveSituation();
 		
-		public net.sourceforge.fenixedu.domain.masterDegree.GuideRequester getGuideRequester();
+	public net.sourceforge.fenixedu.domain.masterDegree.GuideRequester getGuideRequester();
 		
-		public void setGuideRequester(net.sourceforge.fenixedu.domain.masterDegree.GuideRequester requester);
+	public void setGuideRequester(net.sourceforge.fenixedu.domain.masterDegree.GuideRequester requester);
 		
-		public net.sourceforge.fenixedu.domain.transactions.PaymentType getPaymentType();
+	public net.sourceforge.fenixedu.domain.transactions.PaymentType getPaymentType();
 		
-		public void setPaymentType(net.sourceforge.fenixedu.domain.transactions.PaymentType type);
-		
-		public java.util.Date getCreationDate();
-		
-		public void setCreationDate(java.util.Date date);
-		
-		public java.util.Date getPaymentDate();
-		
-		public void setPaymentDate(java.util.Date date);
+	public void setPaymentType(net.sourceforge.fenixedu.domain.transactions.PaymentType type);
 	"
 }
 
