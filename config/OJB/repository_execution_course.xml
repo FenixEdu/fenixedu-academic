@@ -170,6 +170,7 @@
     </collection-descriptor>
     <collection-descriptor
 			name="nonAffiliatedTeachers"
+			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"			
 			element-class-ref="net.sourceforge.fenixedu.domain.NonAffiliatedTeacher"
 			proxy="true"
 			indirection-table="NON_AFFILIATED_TEACHER_PROFESSORSHIPS"

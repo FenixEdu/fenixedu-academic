@@ -234,6 +234,7 @@
 	
 	<collection-descriptor
 			name="executionCourses"
+			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"			
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 			proxy="true"
 			indirection-table="NON_AFFILIATED_TEACHER_PROFESSORSHIPS"
