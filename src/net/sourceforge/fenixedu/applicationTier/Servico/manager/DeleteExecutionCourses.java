@@ -73,7 +73,9 @@ public class DeleteExecutionCourses implements IService {
                         if (attends != null && !attends.isEmpty()) {
                             undeletedExecutionCoursesCodes.add(executionCourse.getSigla());
                         } else {
-                            exams = persistentExamExecutionCourse.readByExecutionCourse(executionCourse);
+                            exams = persistentExamExecutionCourse.readByExecutionCourse(executionCourse
+                                    .getSigla(), executionCourse.getExecutionPeriod().getName(),
+                                    executionCourse.getExecutionPeriod().getExecutionYear().getYear());
                             if (exams != null && !exams.isEmpty()) {
                                 undeletedExecutionCoursesCodes.add(executionCourse.getSigla());
                             } else {
@@ -88,7 +90,8 @@ public class DeleteExecutionCourses implements IService {
                                         IPersistentSummary persistentSummary = sp
                                                 .getIPersistentSummary();
                                         List summaryList = persistentSummary.readByTeacher(professorShip
-                                                .getExecutionCourse().getIdInternal(), professorShip.getTeacher().getTeacherNumber());
+                                                .getExecutionCourse().getIdInternal(), professorShip
+                                                .getTeacher().getTeacherNumber());
                                         if (summaryList != null && !summaryList.isEmpty()) {
                                             for (Iterator iteratorSummaries = summaryList.iterator(); iteratorSummaries
                                                     .hasNext();) {

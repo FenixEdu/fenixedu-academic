@@ -6,13 +6,12 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
 public interface IPersistentExamExecutionCourse extends IPersistentObject {
 
-    public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
+    public List readByExecutionCourse(String executionCourseAcronym, String executionPeriodName,
+            String year) throws ExcepcaoPersistencia;
 
 }
