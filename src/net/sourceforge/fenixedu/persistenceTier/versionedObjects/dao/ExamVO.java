@@ -52,7 +52,7 @@ public class ExamVO extends VersionedObjectsBase implements IPersistentExam {
 
         for (IExecutionYear executionYear : executionYears) {
             if (executionYear.getYear().equals(year)) {
-                executionYearResult = (IExecutionYear) executionYear;
+                executionYearResult = executionYear;
                 break;
             }
         }
@@ -60,7 +60,7 @@ public class ExamVO extends VersionedObjectsBase implements IPersistentExam {
         List<IExecutionPeriod> executionPeriods = executionYearResult.getExecutionPeriods();
         for (IExecutionPeriod executionPeriod : executionPeriods) {
             if (executionPeriod.getName().equals(executionPeriodName)) {
-                executionPeriodResult = (IExecutionPeriod) executionPeriod;
+                executionPeriodResult = executionPeriod;
                 break;
             }
         }
