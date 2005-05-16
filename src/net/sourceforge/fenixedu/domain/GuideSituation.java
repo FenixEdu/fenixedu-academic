@@ -9,95 +9,76 @@ import net.sourceforge.fenixedu.util.State;
  */
 
 public class GuideSituation extends GuideSituation_Base {
+    protected GuideState situation;
 
-	protected GuideState situation;
+    protected State state;
 
-	protected Date date;
+    public GuideSituation() {
+    }
 
-	protected State state;
+    public GuideSituation(GuideState situation, String remarks, Date date, IGuide guide, State state) {
+        setRemarks(remarks);
+        setGuide(guide);
+        setSituation(situation);
+        setDate(date);
+        setState(state);
 
-	public GuideSituation() {
-	}
+    }
 
-	public GuideSituation(GuideState situation, String remarks, Date date,
-			IGuide guide, State state) {
-		setRemarks(remarks);
-		setGuide(guide);
-		this.situation = situation;
-		this.date = date;
-		this.state = state;
+    public String toString() {
+        String result = "[GUIDE SITUATION";
 
-	}
+        result += ", remarks=" + getRemarks();
+        result += ", guide=" + getGuide();
+        result += ", guide Situtation=" + getSituation();
+        result += ", date=" + getDate();
+        result += ", state=" + getState();
+        result += "]";
+        return result;
+    }
 
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof GuideSituation) {
-			GuideSituation guideSituation = (GuideSituation) obj;
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof GuideSituation) {
+            GuideSituation guideSituation = (GuideSituation) obj;
 
-			if (((getGuide() == null && guideSituation.getGuide() == null) || (getGuide()
-					.equals(guideSituation.getGuide())))
-					&& ((getSituation() == null && guideSituation
-							.getSituation() == null) || (getSituation()
-							.equals(guideSituation.getSituation())))) {
-				resultado = true;
-			}
-		}
+            if (((getGuide() == null && guideSituation.getGuide() == null) || (getGuide()
+                    .equals(guideSituation.getGuide())))
+                    && ((getSituation() == null && guideSituation.getSituation() == null) || (getSituation()
+                            .equals(guideSituation.getSituation())))) {
+                resultado = true;
+            }
+        }
 
-		return resultado;
-	}
+        return resultado;
+    }
 
-	public String toString() {
-		String result = "[GUIDE SITUATION";
+    /**
+     * @return
+     */
+    public GuideState getSituation() {
+        return situation;
+    }
 
-		result += ", remarks=" + getRemarks();
-		result += ", guide=" + getGuide();
-		result += ", guide Situtation=" + situation;
-		result += ", date=" + date;
-		result += ", state=" + state;
-		result += "]";
-		return result;
-	}
+    /**
+     * @return
+     */
+    public State getState() {
+        return state;
+    }
 
-	/**
-	 * @return
-	 */
-	public Date getDate() {
-		return date;
-	}
+    /**
+     * @param guide
+     */
+    public void setSituation(GuideState guide) {
+        situation = guide;
+    }
 
-	/**
-	 * @return
-	 */
-	public GuideState getSituation() {
-		return situation;
-	}
-
-	/**
-	 * @return
-	 */
-	public State getState() {
-		return state;
-	}
-
-	/**
-	 * @param date
-	 */
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	/**
-	 * @param guide
-	 */
-	public void setSituation(GuideState guide) {
-		situation = guide;
-	}
-
-	/**
-	 * @param state
-	 */
-	public void setState(State state) {
-		this.state = state;
-	}
+    /**
+     * @param state
+     */
+    public void setState(State state) {
+        this.state = state;
+    }
 
 }

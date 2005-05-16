@@ -1174,21 +1174,18 @@ class net.sourceforge.fenixedu.domain.GuideEntry extends net.sourceforge.fenixed
 }
 
 class net.sourceforge.fenixedu.domain.GuideSituation extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyGuide;
+    Date date;
+    Integer keyGuide;
 	String remarks;
 	
 	interface "
-	    public java.util.Date getDate();
-	    
-	    public net.sourceforge.fenixedu.domain.GuideState getSituation();
-    	
-    	public net.sourceforge.fenixedu.util.State getState();
-    	
-    	public void setDate(java.util.Date date);
-    	
-    	public void setSituation(net.sourceforge.fenixedu.domain.GuideState guide);
-    	
-    	public void setState(net.sourceforge.fenixedu.util.State state);
+    public net.sourceforge.fenixedu.domain.GuideState getSituation();
+   	
+   	public net.sourceforge.fenixedu.util.State getState();
+   	
+   	public void setSituation(net.sourceforge.fenixedu.domain.GuideState guide);
+   	
+   	public void setState(net.sourceforge.fenixedu.util.State state);
 	"
 }
 
