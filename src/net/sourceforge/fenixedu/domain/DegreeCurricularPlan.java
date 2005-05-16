@@ -151,7 +151,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 if (branch.getBranchType() == null) {
                     return branch.getName().equals("") && branch.getCode().equals("");
                 }
-                return branch.getBranchType().equals(BranchType.valueOf("COMMON_BRANCH"));
+                return branch.getBranchType().equals(BranchType.COMNBR);
 
             }
         });
@@ -180,7 +180,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
             public boolean evaluate(Object arg0) {
                 IBranch branch = (IBranch) arg0;
-                return branch.getBranchType().equals(BranchType.valueOf("SPECIALIZATION_BRANCH"));
+                return branch.getBranchType().equals(BranchType.SPECBR);
             }
 
         });
@@ -196,7 +196,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
             public boolean evaluate(Object arg0) {
                 IBranch branch = (IBranch) arg0;
-                return branch.getBranchType().equals(BranchType.valueOf("SECUNDARY_BRANCH"));
+                return branch.getBranchType().equals(BranchType.SECNBR);
             }
 
         });

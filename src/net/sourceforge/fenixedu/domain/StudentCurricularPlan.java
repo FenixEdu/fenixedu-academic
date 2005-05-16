@@ -865,7 +865,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 				}
 			} else if (getBranch() == null) {
 				if (optionalCurricularCourseGroup.getBranch().getBranchType()
-						.equals(BranchType.valueOf("COMMON_BRANCH"))) {
+						.equals(BranchType.COMNBR)) {
 					selectOptionaCoursesToBeRemoved(curricularCoursesToRemove,
 							curricularCoursesToKeep,
 							optionalCurricularCourseGroup);

@@ -233,7 +233,7 @@ public class CurricularCourse extends CurricularCourse_Base {
             public boolean evaluate(Object obj) {
                 ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
                 return ((curricularCourseScope.getBranch().getBranchType().equals(
-                        BranchType.valueOf("COMMON_BRANCH")) || curricularCourseScope.getBranch().equals(branch))
+                        BranchType.COMNBR) || curricularCourseScope.getBranch().equals(branch))
                         && curricularCourseScope.getCurricularSemester().getSemester().equals(semester)
                         && curricularCourseScope.isActive().booleanValue());
             }
