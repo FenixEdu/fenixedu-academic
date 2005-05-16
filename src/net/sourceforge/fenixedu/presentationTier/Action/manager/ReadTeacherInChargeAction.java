@@ -10,11 +10,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithNonAffiliatedTeachers;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -38,11 +39,11 @@ public class ReadTeacherInChargeAction extends FenixAction {
 
         Object args[] = { executionCourseId };
 
-        InfoExecutionCourse infoExecutionCourse = null;
+        InfoExecutionCourseWithNonAffiliatedTeachers infoExecutionCourse = null;
 
         try {
-            infoExecutionCourse = (InfoExecutionCourse) ServiceUtils.executeService(userView,
-                    "ReadExecutionCourse", args);
+            infoExecutionCourse = (InfoExecutionCourseWithNonAffiliatedTeachers) ServiceUtils.executeService(userView,
+                    "ReadExecutionCourseManagerByID", args);
 
         } catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException.getMessage());
@@ -58,6 +59,7 @@ public class ReadTeacherInChargeAction extends FenixAction {
             throw new FenixActionException(fenixServiceException.getMessage());
         }
 
+        List infoNonAffiliatedTeachers = infoExecutionCourse.getNonAffiliatedTeachers();
         if (infoTeachersList != null) {
             List teachersIds = new ArrayList();
             Integer teacherId;
@@ -71,6 +73,19 @@ public class ReadTeacherInChargeAction extends FenixAction {
             DynaActionForm newForm = (DynaActionForm) form;
             newForm.set("professorShipTeachersIds", professorShipTeachersIds);
 
+            List nonAffiliatedTeacherIDs = new ArrayList();
+            Integer nonAffiliatedTeacherID;
+            
+            if(infoNonAffiliatedTeachers != null){
+                for (Iterator iterator = infoNonAffiliatedTeachers.iterator(); iterator.hasNext();) {
+                    InfoNonAffiliatedTeacher infoNonAffiliatedTeacher = (InfoNonAffiliatedTeacher) iterator.next();
+                    nonAffiliatedTeacherID = infoNonAffiliatedTeacher.getIdInternal();
+                    nonAffiliatedTeacherIDs.add(nonAffiliatedTeacherID);
+                }
+                
+                Integer[] nonAffiliatedTeacherArrayIDs = (Integer[]) nonAffiliatedTeacherIDs.toArray(new Integer[] {});
+                newForm.set("nonAffiliatedTeachersIds", nonAffiliatedTeacherArrayIDs);
+            }
             List responsiblesIds = null;
 
             try {
@@ -84,6 +99,7 @@ public class ReadTeacherInChargeAction extends FenixAction {
             Integer[] responsibleTeachersIds = (Integer[]) responsiblesIds.toArray(new Integer[] {});
             newForm.set("responsibleTeachersIds", responsibleTeachersIds);
             request.setAttribute("infoTeachersList", infoTeachersList);
+            request.setAttribute("infoNonAffiliatedTeachers", infoNonAffiliatedTeachers);
 
         }
         request.setAttribute("executionCourseName", infoExecutionCourse.getNome());
