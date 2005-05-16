@@ -41,12 +41,14 @@ public class SaveTeachersBodyAction extends FenixAction {
 
         Integer[] responsibleTeachersIds = (Integer[]) actionForm.get("responsibleTeachersIds");
         Integer[] professorShipTeachersIds = (Integer[]) actionForm.get("professorShipTeachersIds");
+        Integer[] nonAffiliatedTeachersIds = (Integer[]) actionForm.get("nonAffiliatedTeachersIds");
         List respTeachersIds = Arrays.asList(responsibleTeachersIds);
         List profTeachersIds = Arrays.asList(professorShipTeachersIds);
+        List nonAffilTeachersIds = Arrays.asList(nonAffiliatedTeachersIds);
         // TODO: Collections.sort(profTeachersIds, new BeanComparator("name"));
         Object args[] = { respTeachersIds, profTeachersIds, executionCourseId };
         Boolean result;
-
+        
         try {
             result = (Boolean) ServiceUtils.executeService(userView, "SaveTeachersBody", args);
 
@@ -54,7 +56,15 @@ public class SaveTeachersBodyAction extends FenixAction {
             throw new NonExistingActionException(e.getMessage(), mapping
                     .findForward("readCurricularCourse"));
         }
+        
+        Object args1[] = { nonAffilTeachersIds, executionCourseId };
+        try {
+            ServiceUtils.executeService(userView, "UpdateNonAffiliatedTeachersProfessorship", args1);
 
+        } catch (NonExistingServiceException e) {
+            throw new NonExistingActionException(e.getMessage(), mapping
+                    .findForward("readCurricularCourse"));
+        }
         if (!result.booleanValue())
             throw new InvalidArgumentsActionException("message.non.existing.teachers");
 
