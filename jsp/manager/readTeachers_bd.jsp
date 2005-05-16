@@ -24,6 +24,10 @@
 			<bean:message key="label.manager.insert.professorShip.by.number"/>
 		</html:link>
 	</li>
+	<li><html:link page="<%="/insertProfessorShipNonAffiliatedTeacher.do?method=prepare&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId") + "&amp;executionCourseId=" + request.getParameter("executionCourseId")%>" paramId="executionCourseName" paramName="executionCourseName">
+			<bean:message key="label.manager.insert.professorShip.notAffiliated.to.ist"/>
+		</html:link>
+	</li>
 </ul>
 	
 <logic:notPresent name="infoTeachersList">
@@ -49,7 +53,7 @@
 			</tr>
 			<logic:iterate id="infoTeacher" name="infoTeachersList">
 				<tr>
-					<bean:define id="teacherId" name="infoTeacher" property="idInternal"/>	 			
+					<bean:define id="teacherId" name="infoTeacher" property="idInternal"/>	
 					<td class="listClasses"><bean:write name="infoTeacher" property="infoPerson.nome"/>
 					</td>
 					<td class="listClasses"><bean:write name="infoTeacher" property="teacherNumber"/>
@@ -65,7 +69,24 @@
 						</html:multibox>
 					</td>
 	 			</tr>
-	 		</logic:iterate>						
+	 		</logic:iterate>
+			<logic:present name="infoNonAffiliatedTeachers">
+				<logic:iterate id="infoNonAffiliatedTeacher" name="infoNonAffiliatedTeachers">
+					<tr>
+						<bean:define id="nonAffiliatedTeacherId" name="infoNonAffiliatedTeacher" property="idInternal"/>	
+						<td class="listClasses">
+							<bean:write name="infoNonAffiliatedTeacher" property="name"/>
+						</td>
+						<td class="listClasses"></td>
+						<td class="listClasses">
+							<html:multibox property="nonAffiliatedTeachersIds">
+								<bean:write name="nonAffiliatedTeacherId"/>
+							</html:multibox>
+						</td>
+						<td class="listClasses"></td>
+		 			</tr>
+		 		</logic:iterate>
+	 		</logic:present>		 							
 		</table>
 		<br>
 		<html:submit><bean:message key="label.manager.save.modifications"/></html:submit>
