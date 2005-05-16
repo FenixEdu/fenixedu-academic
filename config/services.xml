@@ -8696,6 +8696,72 @@
 		<filterChains>
 			<chain name="TeacherAuthorization"/>
 		</filterChains>
+	</service>	
+	<service>
+		<name>InsertInstitution</name>
+		<implementationClass>
+			net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertInstitution
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>
+	</service>	
+	<service>
+		<name>ReadInstitutions</name>
+		<implementationClass>
+			net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadInstitutions
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>
+	</service>	InsertNonAffiliatedTeacher
+	<service>
+		<name>InsertNonAffiliatedTeacher</name>
+		<implementationClass>
+			net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertNonAffiliatedTeacher
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>
+	</service>	
+	<service>
+		<name>ReadNonAffiliatedTeachersByName</name>
+		<implementationClass>
+			net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadNonAffiliatedTeachersByName
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>
+	</service>	
+	<service>
+		<name>InsertProfessorShipNonAffiliatedTeacher</name>
+		<implementationClass>
+			net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertProfessorShipNonAffiliatedTeacher
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>
+	</service>	ReadExecutionCourseByID
+	<service>
+		<name>ReadExecutionCourseManagerByID</name>
+		<implementationClass>
+			net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionCourseByID
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>
 	</service>
 	<service>
 		<name>ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan</name>
@@ -8707,7 +8773,7 @@
 		<filterChains>
 			<chain name="CoordinatorAuthorization"/>
 		</filterChains>
-	</service>
+	</service>	
     <service>
         <name>SwitchPublishedExamsFlag</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.SwitchPublishedExamsFlag</implementationClass>
