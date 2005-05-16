@@ -44,7 +44,7 @@
 </h1>
 
 <h2>Consulta Por Curso</h2>
-<html:form action="/searchProfessorships" >
+<html:form action="/searchProfessorships" method="GET">
 	<html:hidden property="method" value="showProfessorshipsByExecutionDegree"/>
 	<html:hidden property="semester" value='<%= request.getAttribute("semester").toString() %>'/>
 	<html:hidden property="teacherType" value='<%= request.getAttribute("teacherType").toString() %>'/>
@@ -53,16 +53,26 @@
 		
 	<logic:iterate id="executionDegree" name="executionDegrees" > 
    <bean:define    id="executionDegreeId"   name="executionDegree" property="idInternal"/>
-		<html:option value="<%= executionDegreeId.toString() %>"> <bean:write name="executionDegree" 
-			property="infoDegreeCurricularPlan.infoDegree.tipoCurso"/> &nbsp;em&nbsp; <bean:write 
+   <bean:define id="degreeType"  name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso"/>
+       <logic:equal name="degreeType" value="DEGREE" >
+	   		<html:option value="<%= executionDegreeId.toString() %>"> 
+	   		<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.degreeType" />
+	   		&nbsp;em&nbsp; <bean:write 
 			name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/> </html:option>
+		</logic:equal>    
+		<logic:equal name="degreeType" value="MASTER_DEGREE" >
+		    <html:option value="<%= executionDegreeId.toString() %>">
+		    <bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.masterDegreeType" />
+		    	   		&nbsp;em&nbsp; <bean:write 
+			name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/> </html:option>
+		</logic:equal>   
 	  </logic:iterate>
 	</html:select>
 	<html:submit>Submeter</html:submit>
 </html:form>
 
 <h2>Consulta Por Departmento</h2>
-<html:form action="/searchProfessorships" >
+<html:form action="/searchProfessorships" method="GET" >
 	<html:hidden property="method" value="showTeachersBodyByDepartment"/>
 	<html:hidden property="semester" value='<%= request.getAttribute("semester").toString() %>'/>
 	<html:hidden property="teacherType" value='<%= request.getAttribute("teacherType").toString() %>'/>

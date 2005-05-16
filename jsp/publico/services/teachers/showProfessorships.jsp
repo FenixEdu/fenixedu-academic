@@ -14,7 +14,23 @@
 	<%= request.getAttribute("searchType").toString() %>
 </h2>
 <h2 align="center">
+<logic:present name="executionDegree">
+<bean:define id="degreeType"  name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso"/>
+
+   <logic:equal name="degreeType" value="DEGREE" >
+       <bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.degreeType" />
+    </logic:equal>
+    <logic:equal name="degreeType" value="MASTER_DEGREE" >
+		    <bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.masterDegreeType" />
+	</logic:equal>
+	<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.in" />
+	<bean:write name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/> 
+</logic:present>
+	
+
+<logic:notPresent name="executionDegree">
 	<%= request.getAttribute("searchTarget").toString() %>
+</logic:notPresent>
 </h2>
 	<br>
 

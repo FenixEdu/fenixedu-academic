@@ -8,22 +8,27 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.DetailedProfessorship;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 
+import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -148,7 +153,7 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
         Integer semester = (Integer)executionDegreeForm.get("semester");
         Integer teacherType = (Integer)executionDegreeForm.get("teacherType");
         String searchDetails = (String)executionDegreeForm.get("searchDetails");
-        
+        String language = getLocaleLanguageFromRequest(request);
         try {
 
             Object[] args = { executionDegreeId, semester, teacherType };
@@ -180,13 +185,18 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
             
             Object[] oid = { executionDegreeId };
             InfoExecutionDegree degree = (InfoExecutionDegree) ServiceUtils.executeService(null, "ReadExecutionDegreeByOID", oid);
-
+            
+            InfoDegreeCurricularPlan infoDegreeCurricularPlan = degree.getInfoDegreeCurricularPlan();
+            infoDegreeCurricularPlan.prepareEnglishPresentation(language);
+            degree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+            
             request.setAttribute("searchType", "Consulta Por Degree");
             request.setAttribute("searchTarget", degree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso() + " em " + 
             		degree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
             request.setAttribute("searchDetails", searchDetails);
             request.setAttribute("semester", semester);
            	request.setAttribute("teacherType", teacherType);
+            request.setAttribute("executionDegree",degree);
             
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
@@ -232,9 +242,8 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 	                }
 	
 	            });
-
 	            request.setAttribute("detailedProfessorShipsListofLists", detailedProfessorShipsListofLists);
-            }
+                }
             
             Object[] oid = { departmentId };
             InfoDepartment department = (InfoDepartment) ServiceUtils.executeService(null, "ReadDepartmentByOID", oid);
@@ -250,5 +259,11 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 
         return mapping.findForward("showProfessorships");
     }
+    private String getLocaleLanguageFromRequest(HttpServletRequest request) {
 
+        Locale locale = (Locale) request.getSession(false).getAttribute(Action.LOCALE_KEY);
+        Locale locale2 = request.getLocale();
+        return  locale.getLanguage();
+
+    }
 }
