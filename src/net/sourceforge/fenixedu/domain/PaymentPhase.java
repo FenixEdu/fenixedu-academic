@@ -4,20 +4,15 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.struts.util.MessageResources;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class PaymentPhase extends PaymentPhase_Base {
-    private Date startDate;
-
-    private Date endDate;
-	
     private List transactionList;
 
     /**
@@ -34,36 +29,6 @@ public class PaymentPhase extends PaymentPhase_Base {
             newDescription = super.getDescription();
         }
         return newDescription;
-    }
-
-    /**
-     * @return Returns the endDate.
-     */
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    /**
-     * @param endDate
-     *            The endDate to set.
-     */
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    /**
-     * @return Returns the startDate.
-     */
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    /**
-     * @param startDate
-     *            The startDate to set.
-     */
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
     }
 
     /**
@@ -84,15 +49,11 @@ public class PaymentPhase extends PaymentPhase_Base {
     public String toString() {
         StringBuffer object = new StringBuffer();
         object = object.append("\n[PaymentPhase: ").append("idInternal= ").append(getIdInternal())
-                .append(" starDate= ").append(startDate).append("; endDate= ").append(endDate).append(
-                        "; value= ").append(getValue()).append("; description= ").append(getDescription()).append(
-                        "\n");
+                .append(" starDate= ").append(getStartDate()).append("; endDate= ").append(getEndDate()).append(
+                        "; value= ").append(getValue()).append("; description= ").append(
+                        getDescription()).append("\n");
 
         return object.toString();
     }
 
-    public boolean equals(Object object) {
-        //TODO: to make
-        return true;
-    }
 }

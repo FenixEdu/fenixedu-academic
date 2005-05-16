@@ -1503,19 +1503,13 @@ class net.sourceforge.fenixedu.domain.PaymentPhase extends net.sourceforge.fenix
 	Double value;
 	String description;
 	Integer keyGratuityValues;
+    Date endDate;
+    Date startDate;
 	
 	interface "
-	    public java.util.Date getEndDate();
+    public java.util.List getTransactionList();
 	    
-	    public void setEndDate(java.util.Date endDate);
-	    
-	    public java.util.Date getStartDate();
-	    
-	    public void setStartDate(java.util.Date startDate);
-	    
-	    public java.util.List getTransactionList();
-	    
-	    public void setTransactionList(java.util.List transactionList);
+    public void setTransactionList(java.util.List transactionList);
 	"
 }
 
