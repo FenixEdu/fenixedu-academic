@@ -332,7 +332,7 @@
 							2.7 <bean:message key="table.rowname.inquiries.course.form.weekly.spent.hours" bundle="INQUIRIES_RESOURCES"/>
 						</td>
 						<td class="right">
-							<table class="radio">
+							<table class="radio2">
 								<tr>
 									<c:forTokens items="0-1h,2-5h,6-10h,11-15h,+15h" delims="," var="hours">
 										<td>
@@ -449,16 +449,11 @@
 							</td>
 							<td class="right">
 								<ul class="schoolClassType">								
-								<logic:iterate id="remainingClassType" name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.remainingClassTypes">
-									<li>
-										<bean:write name="remainingClassType" property="fullNameTipoAula" />
-									</li>
-								</logic:iterate>
-								<logic:iterate id="classType" name="selectedAttendingCourseTeacher" property="classTypes">
-									<li>
-										<bean:write name="classType" property="fullNameTipoAula" />
-									</li>
-								</logic:iterate>
+									<logic:iterate id="classType" name="selectedAttendingCourseTeacher" property="classTypes">
+										<li>
+											<bean:write name="classType" property="fullNameTipoAula" />
+										</li>
+									</logic:iterate>
 								</ul>
 							</td>
 						</tr>
@@ -488,7 +483,7 @@
 								3.3 <bean:message key="table.rowname.inquiries.teacher.form.student.assiduity" bundle="INQUIRIES_RESOURCES"/>
 							</td>
 							<td class="right">
-								<table class="radio">
+								<table class="radio2">
 									<tr>
 										<c:forTokens items="<50%,50%-75%,75%-85%,85%-95%,95%-100%" delims="," var="int">
 											<td>
@@ -520,7 +515,7 @@
 								3.4 <bean:message key="table.rowname.inquiries.teacher.form.teacher.assiduity" bundle="INQUIRIES_RESOURCES"/>
 							</td>
 							<td class="right">
-								<table class="radio">
+								<table class="radio2">
 									<tr>
 										<c:forTokens items="<50%,50%-75%,75%-85%,85%-95%,95%-100%" delims="," var="int">
 										<td>
@@ -814,7 +809,7 @@
 								4.1 <bean:message key="table.rowname.inquiries.room.form.space.adequation" bundle="INQUIRIES_RESOURCES"/>
 							</td>
 							<td class="right">
-								<table class="radio">
+								<table class="radio2">
 									<tr>
 										<c:forTokens items="1,2,3,4,5" delims="," var="int">
 											<td>
@@ -846,7 +841,7 @@
 								4.2 <bean:message key="table.rowname.inquiries.room.form.environmental.conditions" bundle="INQUIRIES_RESOURCES"/>
 							</td>
 							<td class="right">
-								<table class="radio">
+								<table class="radio2">
 									<tr>
 										<c:forTokens items="1,2,3,4,5" delims="," var="int">
 											<td>
@@ -878,7 +873,7 @@
 								4.3 <bean:message key="table.rowname.inquiries.room.form.equipment.quality" bundle="INQUIRIES_RESOURCES"/>
 							</td>
 							<td class="right">
-								<table class="radio">
+								<table class="radio2">
 									<tr>
 										<c:forTokens items="1,2,3,4,5" delims="," var="int">
 											<td>
