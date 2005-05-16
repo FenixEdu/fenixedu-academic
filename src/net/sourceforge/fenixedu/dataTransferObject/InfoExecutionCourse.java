@@ -40,6 +40,8 @@ public class InfoExecutionCourse extends InfoObject {
     protected Integer numberOfAttendingStudents;
 
     protected List associatedInfoShifts;
+    
+    protected List nonAffiliatedTeachers;
 
     protected String comment;
 
@@ -419,4 +421,15 @@ public class InfoExecutionCourse extends InfoObject {
         }
         return infoExecutionCourse;
     }
+
+    public List getNonAffiliatedTeachers() {
+        return nonAffiliatedTeachers;
+    }
+    
+
+    public void setNonAffiliatedTeachers(List nonAffiliatedTeachers) {
+        this.nonAffiliatedTeachers = nonAffiliatedTeachers;
+    }
+    
+    
 }
