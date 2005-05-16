@@ -1029,7 +1029,8 @@ class net.sourceforge.fenixedu.domain.grant.contract.GrantType extends net.sourc
 
 
 class net.sourceforge.fenixedu.domain.GratuitySituation extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer exemptionPercentage;
+    Date when;
+    Integer exemptionPercentage;
 	String exemptionDescription;
 	Double totalValue;
 	Integer keyStudentCurricularPlan;
@@ -1039,17 +1040,9 @@ class net.sourceforge.fenixedu.domain.GratuitySituation extends net.sourceforge.
 	Double remainingValue;
 	
 	interface "
-		public java.util.Date getWhen();
-	
-		public void setWhen(java.util.Date when);
-	
-		public net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType getExemptionType(); 
-	
-		public void setExemptionType(net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType exemptionType); 
-	
-		public net.sourceforge.fenixedu.domain.IStudentCurricularPlan getStudentCurricularPlan();
-	
-		public void setStudentCurricularPlan(net.sourceforge.fenixedu.domain.IStudentCurricularPlan studentCurricularPlan);
+    public net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType getExemptionType(); 
+
+	public void setExemptionType(net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType exemptionType); 
 	"
 	
 }
@@ -3650,6 +3643,13 @@ relation GratuitySituationGratuityValues {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.GratuityValues playsRole gratuityValues;
+}
+
+relation GratuitySituationStudentCurricularPlan {
+    net.sourceforge.fenixedu.domain.GratuitySituation playsRole gratuitySituations {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlan;
 }
 
 relation GratuityTransactionGratuitySituation {

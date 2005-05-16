@@ -4,8 +4,6 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Date;
-
 import net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType;
 
 /**
@@ -14,28 +12,8 @@ import net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType;
  * @author Tânia Pousão
  */
 public class GratuitySituation extends GratuitySituation_Base {
-
 	private ExemptionGratuityType exemptionType;
-
-    private IStudentCurricularPlan studentCurricularPlan;
-    
-	private Date when;
-
-	/**
-	 * @return Returns the when.
-	 */
-	public Date getWhen() {
-		return when;
-	}
-
-	/**
-	 * @param when
-	 *            The when to set.
-	 */
-	public void setWhen(Date when) {
-		this.when = when;
-	}
-
+        
 	/**
 	 * @return Returns the exemptionType.
 	 */
@@ -51,35 +29,4 @@ public class GratuitySituation extends GratuitySituation_Base {
 		this.exemptionType = exemptionType;
 	}
 
-	/**
-	 * @return Returns the student.
-	 */
-	public IStudentCurricularPlan getStudentCurricularPlan() {
-		return this.studentCurricularPlan;
-	}
-
-	/**
-	 * @param student
-	 *            The student to set.
-	 */
-	public void setStudentCurricularPlan(
-			IStudentCurricularPlan studentCurricularPlan) {
-        this.studentCurricularPlan = studentCurricularPlan;		
-	}
-
-	/*
-	 * public String toString() { //TODO: to make return null; }
-	 */
-
-	/*
-	 * public boolean equals(Object object) { //TODO: to make return true; }
-	 */
-
-	/*
-	 * public String toString() { //TODO: to make return null; }
-	 */
-
-	/*
-	 * public boolean equals(Object object) { //TODO: to make return true; }
-	 */
 }
