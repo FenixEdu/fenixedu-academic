@@ -1943,19 +1943,13 @@ class net.sourceforge.fenixedu.domain.student.Senior extends net.sourceforge.fen
 class net.sourceforge.fenixedu.domain.sms.SentSms extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPerson;
 	Integer destinationNumber;
+    Date deliveryDate;
+    Date sendDate;
 
 	interface "
-	    public java.util.Date getDeliveryDate();
+	public net.sourceforge.fenixedu.domain.sms.SmsDeliveryType getDeliveryType();
 	    
-	    public void setDeliveryDate(java.util.Date deliveryDate);
-	    
-	    public net.sourceforge.fenixedu.domain.sms.SmsDeliveryType getDeliveryType();
-	    
-	    public void setDeliveryType(net.sourceforge.fenixedu.domain.sms.SmsDeliveryType deliveryType);
-	    
-	    public java.util.Date getSendDate();
-	    
-	    public void setSendDate(java.util.Date sendDate);
+	public void setDeliveryType(net.sourceforge.fenixedu.domain.sms.SmsDeliveryType deliveryType);
 	"
 }
 
