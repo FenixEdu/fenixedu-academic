@@ -2275,18 +2275,6 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	Integer keyPerson;
 	Integer keyCategory;
 	interface "
-	public java.util.List getManagementPositions();
-	
-	public java.util.List getOtherTypeCreditLines();
-	
-	public java.util.List getServiceExemptionSituations();
-	
-	public void setManagementPositions(java.util.List managementPositions);
-	
-	public void setOtherTypeCreditLines(java.util.List otherTypeCreditLines);
-	
-	public void setServiceExemptionSituations(java.util.List serviceExemptionSituations);
-	
 	public net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits getExecutionPeriodCredits(IExecutionPeriod executionPeriod);
 	
 	public void notifyCreditsChange(net.sourceforge.fenixedu.domain.credits.event.CreditsEvent creditsEvent, net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator originator);
@@ -4597,11 +4585,27 @@ relation TeacherInstitutionWorkTimeTeacher {
 }
 
 
+relation TeacherManagementPositionCreditLine {
+    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+    net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine playsRole managementPositions {
+        multiplicity *;
+    }
+}
+
+
 relation TeacherOldPublication {
 	net.sourceforge.fenixedu.domain.teacher.OldPublication playsRole oldPublication {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+
+relation TeacherOtherTypeCreditLine {
+    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+    net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine playsRole otherTypeCreditLines {
+        multiplicity *;
+    }
 }
 
 
@@ -4618,6 +4622,14 @@ relation TeacherResponsibleFor {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+
+relation TeacherServiceExemptionCreditLine {
+    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+    net.sourceforge.fenixedu.domain.credits.ServiceExemptionCreditLine playsRole serviceExemptionSituations {
+        multiplicity *;
+    }
 }
 
 
