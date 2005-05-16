@@ -8764,6 +8764,17 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>UpdateNonAffiliatedTeachersProfessorship</name>
+		<implementationClass>
+			net.sourceforge.fenixedu.applicationTier.Servico.manager.UpdateNonAffiliatedTeachersProfessorship
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>
+	</service>	
+	<service>
 		<name>ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan</name>
 		<implementationClass> 
 			net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis.ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan	
