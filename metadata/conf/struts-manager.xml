@@ -169,9 +169,18 @@
 			type="org.apache.struts.validator.DynaValidatorForm"
                 dynamic="true">
                 <form-property name="professorShipTeachersIds" type="java.lang.Integer[]" />
+                <form-property name="nonAffiliatedTeachersIds" type="java.lang.Integer[]" />                
                 <form-property name="responsibleTeachersIds" type="java.lang.Integer[]" />
 				<form-property name="number" type="java.lang.String" />
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
+				<form-property name="page" type="java.lang.Integer" initial="0"/>				
+		</form-bean>
+		
+		<form-bean name="nonAffiliatedTeacherForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="nonAffiliatedTeacherName" type="java.lang.String"/>
+			<form-property name="nonAffiliatedTeacherNameToInsert" type="java.lang.String"/>			
+			<form-property name="nonAffiliatedTeacherID" type="java.lang.Integer"/>
+			<form-property name="institutionName" type="java.lang.String"/>
+			<form-property name="institutionID" type="java.lang.Integer"/>									
 		</form-bean>
 		
 		<form-bean name="executionCourseForm"
@@ -991,6 +1000,22 @@
                    handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>   
        <forward name="insertProfessorShip" path="df.page.insert-professorShip-by-number"/>
        <forward name="readTeacherInCharge" path="/readTeacherInCharge.do"/>      	      
+	</action>
+	
+	<!--Actions for inserting non affiliated teachers to IST at an execution course  -->
+	<action
+	    path="/insertProfessorShipNonAffiliatedTeacher"
+	    name="nonAffiliatedTeacherForm"
+	    input="/insertProfessorShipNonAffiliatedTeacher.do?method=prepareInsert&amp;page=0"
+		scope="request"
+		parameter="method"
+		type="net.sourceforge.fenixedu.presentationTier.Action.manager.InsertProfessorShipNonAffiliatedTeacherAction"
+        validate="true">
+        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>   
+       <forward name="insertProfessorShip" path="df.page.insert-professorShip-nonAffiliated-teacher"/>  
+       <forward name="readTeacherInCharge" path="/readTeacherInCharge.do"/>        	      
 	</action>
 	
 	<!-- Action for saving modifications at teachers body --> 
