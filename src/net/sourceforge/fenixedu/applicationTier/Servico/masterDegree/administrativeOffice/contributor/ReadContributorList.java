@@ -5,10 +5,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.contributor;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.domain.IContributor;
@@ -22,30 +20,16 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadContributorList implements IService {
 
-    public List run(Integer contributorNumber) throws FenixServiceException {
+    public List run(final Integer contributorNumber) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = null;
-        List contributors = null;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            // Read the contributor
+        final IContributor contributor = sp.getIPersistentContributor().readByContributorNumber(
+                contributorNumber);
 
-            contributors = sp.getIPersistentContributor().readContributorListByNumber(contributorNumber);
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
-
-        if (contributors == null)
-            throw new ExcepcaoInexistente("No Contributors Found !!");
-
-        List result = new ArrayList();
-        Iterator iterator = contributors.iterator();
-        while (iterator.hasNext()) {
-            InfoContributor infoContributor = null;
-            infoContributor = InfoContributor.newInfoFromDomain((IContributor) iterator.next());
+        final List result = new ArrayList();
+        if (contributor != null) {
+            final InfoContributor infoContributor = InfoContributor.newInfoFromDomain(contributor);
             result.add(infoContributor);
         }
 

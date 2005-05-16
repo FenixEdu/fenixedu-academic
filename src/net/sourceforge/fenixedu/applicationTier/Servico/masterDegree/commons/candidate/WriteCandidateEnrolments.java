@@ -81,7 +81,11 @@ public class WriteCandidateEnrolments implements IService {
         while (iterCandidateEnrollmentsToDelete.hasNext()) {
             ICandidateEnrolment candidateEnrolmentToDelete = (ICandidateEnrolment) iterCandidateEnrollmentsToDelete
                     .next();
-            persistentCandidateEnrolment.delete(candidateEnrolmentToDelete);
+			candidateEnrolmentToDelete.getCurricularCourse().getCandidateEnrolments().remove(candidateEnrolmentToDelete);
+			candidateEnrolmentToDelete.getMasterDegreeCandidate().getCandidateEnrolments().remove(candidateEnrolmentToDelete);
+			candidateEnrolmentToDelete.setCurricularCourse(null);
+			candidateEnrolmentToDelete.setMasterDegreeCandidate(null);
+            persistentCandidateEnrolment.deleteByOID(CandidateEnrolment.class, candidateEnrolmentToDelete.getIdInternal());
         }
     }
 

@@ -3,7 +3,7 @@
  * 
  *  
  */
-package net.sourceforge.fenixedu.persistenceTier.OJB;
+package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
 import java.util.List;
 
@@ -11,23 +11,28 @@ import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.IContributor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentContributor;
-
-import org.apache.ojb.broker.query.Criteria;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class ContributorOJB extends PersistentObjectOJB implements
+public class ContributorVO extends VersionedObjectsBase implements
 		IPersistentContributor {
 
 	public IContributor readByContributorNumber(Integer contributorNumber)
 			throws ExcepcaoPersistencia {
-		Criteria crit = new Criteria();
-		crit.addEqualTo("contributorNumber", contributorNumber);
-		return (IContributor) queryObject(Contributor.class, crit);
+
+		List<IContributor> contributors = readAll();
+		for (IContributor contributor : contributors) {
+			if (contributor.getContributorNumber().equals(contributorNumber)) {
+				return contributor;
+			}
+
+		}
+		return null;
 	}
 
 	public List readAll() throws ExcepcaoPersistencia {
-		return queryList(Contributor.class, null);
+		return (List) readAll(Contributor.class);
 	}
 }

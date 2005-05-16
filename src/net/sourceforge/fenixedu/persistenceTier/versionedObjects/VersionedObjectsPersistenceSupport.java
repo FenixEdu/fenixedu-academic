@@ -80,7 +80,9 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AttendsSetV
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AulaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.BibliographicReferenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.BuildingVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CandidateEnrolmentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CandidateSituationVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ContributorVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CourseReportVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurriculumVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CursoVO;
@@ -779,7 +781,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentContributor getIPersistentContributor() {
-        return null;
+        return new ContributorVO();
     }
 
     public IPersistentSecretaryEnrolmentStudent getIPersistentSecretaryEnrolmentStudent() {
@@ -827,7 +829,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentCandidateEnrolment getIPersistentCandidateEnrolment() {
-        return null;
+        return new CandidateEnrolmentVO();
     }
 
     public IPersistentDegreeInfo getIPersistentDegreeInfo() {
