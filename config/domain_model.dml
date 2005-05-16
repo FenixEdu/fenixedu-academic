@@ -838,24 +838,12 @@ class net.sourceforge.fenixedu.domain.support.FAQEntry extends net.sourceforge.f
 	String answer;
 	String question;
 	Integer keyParentSection;
-
-	interface "
-    public IFAQSection getParentSection();
-
-    public void setParentSection(IFAQSection parentSection);
-    "
 }
 
 
 class net.sourceforge.fenixedu.domain.support.FAQSection extends net.sourceforge.fenixedu.domain.DomainObject {
 	String sectionName;
 	Integer keyParentSection;
-
-	interface "
-    public IFAQSection getParentSection();
-
-    public void setParentSection(IFAQSection parentSection);
-    "
 }
 
 
@@ -3425,6 +3413,7 @@ relation ExternalPersonWorkLocation {
 	net.sourceforge.fenixedu.domain.WorkLocation playsRole workLocation;
 }
 
+
 relation GaugingTestResultStudent {
     net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult playsRole associatedGaugingTestResult;
     net.sourceforge.fenixedu.domain.Student playsRole student;
@@ -3949,6 +3938,20 @@ relation OldInquiriesTeachersResTeacher {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
+}
+
+relation ParentFAQSectionChildFAQEntry {
+    net.sourceforge.fenixedu.domain.support.FAQEntry playsRole childEntries {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.support.FAQSection playsRole parentSection;
+}
+
+relation ParentFAQSectionChildFAQSection {
+    net.sourceforge.fenixedu.domain.support.FAQSection playsRole childSections {
+        multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.support.FAQSection playsRole parentSection;
 }
 
 relation PaymentPhaseGratuityValues {
