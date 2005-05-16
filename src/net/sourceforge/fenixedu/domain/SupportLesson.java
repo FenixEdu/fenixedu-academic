@@ -15,7 +15,6 @@ import org.apache.ojb.broker.PersistenceBrokerException;
  */
 public class SupportLesson extends SupportLesson_Base implements PersistenceBrokerAware,
         ICreditsEventOriginator {
-    private IProfessorship professorship;
 
     private DiaSemana weekDay;
 
@@ -26,6 +25,25 @@ public class SupportLesson extends SupportLesson_Base implements PersistenceBrok
         setIdInternal(idInternal);
     }
 
+    /**
+     * @return
+     */
+    public DiaSemana getWeekDay() {
+        return weekDay;
+    }
+
+    /**
+     * @param weekDay
+     */
+    public void setWeekDay(DiaSemana weekDay) {
+        this.weekDay = weekDay;
+    }
+
+    public double hours() {
+        TimePeriod timePeriod = new TimePeriod(this.getStartTime(), this.getEndTime());
+        return timePeriod.hours().doubleValue();
+    }
+    
     private boolean elementsAreEqual(Object element1, Object element2) {
         boolean result = false;
         if ((element1 == null && element2 == null)
@@ -50,123 +68,37 @@ public class SupportLesson extends SupportLesson_Base implements PersistenceBrok
         return result;
     }
 
-    /**
-     * @return Returns the professorship.
-     */
-    public IProfessorship getProfessorship() {
-        return this.professorship;
+    public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod) {
+        return this.getProfessorship().getExecutionCourse().getExecutionPeriod().equals(executionPeriod);
     }
-
-    /**
-     * @return
-     */
-    public DiaSemana getWeekDay() {
-        return weekDay;
+    
+    private void notifyTeacher() {
+        ITeacher teacher = this.getProfessorship().getTeacher();
+        teacher.notifyCreditsChange(CreditsEvent.SUPPORT_LESSONS, this);
     }
-
-    /**
-     * @param professorship
-     *            The professorship to set.
-     */
-    public void setProfessorship(IProfessorship professorship) {
-        this.professorship = professorship;
-    }
-
-    /**
-     * @param weekDay
-     */
-    public void setWeekDay(DiaSemana weekDay) {
-        this.weekDay = weekDay;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.ISupportLesson#hours()
-     */
-    public double hours() {
-        TimePeriod timePeriod = new TimePeriod(this.getStartTime(), this.getEndTime());
-        return timePeriod.hours().doubleValue();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.ojb.broker.PersistenceBrokerAware#beforeUpdate(org.apache.ojb.broker.PersistenceBroker)
-     */
-    public void beforeUpdate(PersistenceBroker broker) throws PersistenceBrokerException {
-        // TODO Auto-generated method stub
-
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.ojb.broker.PersistenceBrokerAware#afterUpdate(org.apache.ojb.broker.PersistenceBroker)
-     */
+    
     public void afterUpdate(PersistenceBroker broker) throws PersistenceBrokerException {
         notifyTeacher();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.ojb.broker.PersistenceBrokerAware#beforeInsert(org.apache.ojb.broker.PersistenceBroker)
-     */
-    public void beforeInsert(PersistenceBroker broker) throws PersistenceBrokerException {
-        // TODO Auto-generated method stub
-
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.ojb.broker.PersistenceBrokerAware#afterInsert(org.apache.ojb.broker.PersistenceBroker)
-     */
     public void afterInsert(PersistenceBroker broker) throws PersistenceBrokerException {
         notifyTeacher();
     }
 
-    /**
-     *  
-     */
-    private void notifyTeacher() {
-        ITeacher teacher = this.professorship.getTeacher();
-        teacher.notifyCreditsChange(CreditsEvent.SUPPORT_LESSONS, this);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.ojb.broker.PersistenceBrokerAware#beforeDelete(org.apache.ojb.broker.PersistenceBroker)
-     */
-    public void beforeDelete(PersistenceBroker broker) throws PersistenceBrokerException {
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.ojb.broker.PersistenceBrokerAware#afterDelete(org.apache.ojb.broker.PersistenceBroker)
-     */
     public void afterDelete(PersistenceBroker broker) throws PersistenceBrokerException {
         notifyTeacher();
     }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.ojb.broker.PersistenceBrokerAware#afterLookup(org.apache.ojb.broker.PersistenceBroker)
-     */
-    public void afterLookup(PersistenceBroker broker) throws PersistenceBrokerException {
+    
+    public void beforeUpdate(PersistenceBroker broker) throws PersistenceBrokerException {
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.credits.event.ICreditsEventOriginator#belongsToExecutionPeriod(Dominio.IExecutionPeriod)
-     */
-    public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod) {
-        return this.getProfessorship().getExecutionCourse().getExecutionPeriod().equals(executionPeriod);
+    public void beforeInsert(PersistenceBroker broker) throws PersistenceBrokerException {
+    }
+
+    public void beforeDelete(PersistenceBroker broker) throws PersistenceBrokerException {
+    }
+
+    public void afterLookup(PersistenceBroker broker) throws PersistenceBrokerException {
     }
 
 }
