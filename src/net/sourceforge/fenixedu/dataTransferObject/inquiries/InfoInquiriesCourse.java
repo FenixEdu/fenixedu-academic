@@ -72,7 +72,7 @@ public class InfoInquiriesCourse extends InfoObject implements Comparable {
      * @param contributionForGraduation The contributionForGraduation to set.
      */
     public void setContributionForGraduation(Double contributionForGraduation) {
-		if(InquiriesUtil.isValidAnswer(contributionForGraduation))
+		if(InquiriesUtil.isValidAnswerWithExtraOption(contributionForGraduation))
 			this.contributionForGraduation = contributionForGraduation;
 		else
 			this.contributionForGraduation = null;

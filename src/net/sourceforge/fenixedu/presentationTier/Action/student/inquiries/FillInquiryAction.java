@@ -33,7 +33,7 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRegist
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiry;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoRoomWithInquiryRoomFlag;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoRoomWithInfoInquiriesRoom;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
@@ -82,6 +82,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 			return actionMapping.findForward("unavailableInquiry");
 			
 		} else {
+			request.setAttribute(InquiriesUtil.ANCHOR, "inquiry");
 			return actionMapping.findForward("fillInquiry");
 		}
 		
@@ -170,8 +171,8 @@ public class FillInquiryAction extends FenixDispatchAction {
 
 		List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes> attendingCourseTeachers =
 			(List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_TEACHERS);
-		List<InfoRoomWithInquiryRoomFlag> attendingCourseRooms =
-			(List<InfoRoomWithInquiryRoomFlag>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_ROOMS);
+		List<InfoRoomWithInfoInquiriesRoom> attendingCourseRooms =
+			(List<InfoRoomWithInfoInquiriesRoom>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_ROOMS);
 
 		//obtaining the selected teachers and rooms
 		List<InfoInquiriesTeacher> selectedAttendingCourseTeachers = getSelectedAttendingCourseTeachers(inquiryForm, attendingCourseTeachers);
@@ -194,8 +195,8 @@ public class FillInquiryAction extends FenixDispatchAction {
 				
 		List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes> attendingCourseTeachers =
 			(List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_TEACHERS);
-		List<InfoRoomWithInquiryRoomFlag> attendingCourseRooms =
-			(List<InfoRoomWithInquiryRoomFlag>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_ROOMS);
+		List<InfoRoomWithInfoInquiriesRoom> attendingCourseRooms =
+			(List<InfoRoomWithInfoInquiriesRoom>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_ROOMS);
 
 		//saving the answers of the previous current form
 		saveCurrentFormToSelectedForm(inquiryForm);
@@ -306,8 +307,8 @@ public class FillInquiryAction extends FenixDispatchAction {
 				
 		List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes> attendingCourseTeachers =
 			(List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_TEACHERS);
-		List<InfoRoomWithInquiryRoomFlag> attendingCourseRooms =
-			(List<InfoRoomWithInquiryRoomFlag>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_ROOMS);
+		List<InfoRoomWithInfoInquiriesRoom> attendingCourseRooms =
+			(List<InfoRoomWithInfoInquiriesRoom>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_ROOMS);
 	
 		//saving the answers of the previous current form
 		saveCurrentFormToSelectedForm(inquiryForm);
@@ -332,8 +333,8 @@ public class FillInquiryAction extends FenixDispatchAction {
 			
 			//Finding the new room
 			Integer newAttendingCourseRoomId = (Integer) inquiryForm.get("newAttendingCourseRoomId");
-			InfoRoomWithInquiryRoomFlag attendingCourseRoom = null;
-			for(InfoRoomWithInquiryRoomFlag room : attendingCourseRooms) {
+			InfoRoomWithInfoInquiriesRoom attendingCourseRoom = null;
+			for(InfoRoomWithInfoInquiriesRoom room : attendingCourseRooms) {
 				if(room.getIdInternal().equals(newAttendingCourseRoomId)) {
 					attendingCourseRoom = room;
 					break;
@@ -371,7 +372,8 @@ public class FillInquiryAction extends FenixDispatchAction {
 				//Adding the new room to the selected ones
 				InfoInquiriesRoom newAttendingCourseRoom = new InfoInquiriesRoom();
 				newAttendingCourseRoom.setRoom(attendingCourseRoom);
-				attendingCourseRoom.setAlreadyEvaluatedFlag(true);
+//				attendingCourseRoom.setAlreadyEvaluatedFlag(true);
+				attendingCourseRoom.setInquiriesRoom(newAttendingCourseRoom);
 				selectedAttendingCourseRooms.add(newAttendingCourseRoom);
 
 				int roomFormPosition = selectedAttendingCourseRooms.size() - 1;
@@ -405,8 +407,8 @@ public class FillInquiryAction extends FenixDispatchAction {
 
 		List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes> attendingCourseTeachers =
 			(List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_TEACHERS);
-		List<InfoRoomWithInquiryRoomFlag> attendingCourseRooms =
-			(List<InfoRoomWithInquiryRoomFlag>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_ROOMS);
+		List<InfoRoomWithInfoInquiriesRoom> attendingCourseRooms =
+			(List<InfoRoomWithInfoInquiriesRoom>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_ROOMS);
 
 		//saving the answers of the previous current form
 		saveCurrentFormToSelectedForm(inquiryForm);
@@ -460,8 +462,8 @@ public class FillInquiryAction extends FenixDispatchAction {
 	
 		List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes> attendingCourseTeachers =
 			(List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_TEACHERS);
-		List<InfoRoomWithInquiryRoomFlag> attendingCourseRooms =
-			(List<InfoRoomWithInquiryRoomFlag>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_ROOMS);
+		List<InfoRoomWithInfoInquiriesRoom> attendingCourseRooms =
+			(List<InfoRoomWithInfoInquiriesRoom>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_ROOMS);
 	
 		//saving the answers of the previous current form
 		saveCurrentFormToSelectedForm(inquiryForm);
@@ -525,8 +527,8 @@ public class FillInquiryAction extends FenixDispatchAction {
 				
 		List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes> attendingCourseTeachers =
 			(List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_TEACHERS);
-		List<InfoRoomWithInquiryRoomFlag> attendingCourseRooms =
-			(List<InfoRoomWithInquiryRoomFlag>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_ROOMS);
+		List<InfoRoomWithInfoInquiriesRoom> attendingCourseRooms =
+			(List<InfoRoomWithInfoInquiriesRoom>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_ROOMS);
 
 		Integer selectedAttendingCourseTeacherFormPosition = (Integer) inquiryForm.get("selectedAttendingCourseTeacherFormPosition");
 		Integer currentAttendingCourseTeacherFormPosition = (Integer) inquiryForm.get("currentAttendingCourseTeacherFormPosition");
@@ -584,8 +586,8 @@ public class FillInquiryAction extends FenixDispatchAction {
 				
 		List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes> attendingCourseTeachers =
 			(List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_TEACHERS);
-		List<InfoRoomWithInquiryRoomFlag> attendingCourseRooms =
-			(List<InfoRoomWithInquiryRoomFlag>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_ROOMS);
+		List<InfoRoomWithInfoInquiriesRoom> attendingCourseRooms =
+			(List<InfoRoomWithInfoInquiriesRoom>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_ROOMS);
 
 		Integer currentAttendingCourseRoomId = (Integer) inquiryForm.get("currentAttendingCourseRoomId");
 		Integer selectedAttendingCourseRoomId = (Integer) inquiryForm.get("selectedAttendingCourseRoomId");
@@ -640,8 +642,8 @@ public class FillInquiryAction extends FenixDispatchAction {
 
 		List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes> attendingCourseTeachers =
 			(List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_TEACHERS);
-		List<InfoRoomWithInquiryRoomFlag> attendingCourseRooms =
-			(List<InfoRoomWithInquiryRoomFlag>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_ROOMS);
+		List<InfoRoomWithInfoInquiriesRoom> attendingCourseRooms =
+			(List<InfoRoomWithInfoInquiriesRoom>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_ROOMS);
 
 		//saving the answers of the previous current form
 		saveCurrentFormToSelectedForm(inquiryForm);
@@ -687,8 +689,8 @@ public class FillInquiryAction extends FenixDispatchAction {
 
 		List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes> attendingCourseTeachers =
 			(List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_TEACHERS);
-		List<InfoRoomWithInquiryRoomFlag> attendingCourseRooms =
-			(List<InfoRoomWithInquiryRoomFlag>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_ROOMS);
+		List<InfoRoomWithInfoInquiriesRoom> attendingCourseRooms =
+			(List<InfoRoomWithInfoInquiriesRoom>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_ROOMS);
 
 		//saving the answers of the previous current form
 		saveCurrentFormToSelectedForm(inquiryForm);
@@ -733,7 +735,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 
 		List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes> attendingCourseTeachers = (List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes>) request
 				.getAttribute(InquiriesUtil.ATTENDING_COURSE_TEACHERS);
-		List<InfoRoomWithInquiryRoomFlag> attendingCourseRooms = (List<InfoRoomWithInquiryRoomFlag>) request
+		List<InfoRoomWithInfoInquiriesRoom> attendingCourseRooms = (List<InfoRoomWithInfoInquiriesRoom>) request
 				.getAttribute(InquiriesUtil.ATTENDING_COURSE_ROOMS);
 
 		// saving the answers of the previous current form
@@ -809,7 +811,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 
 		List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes> attendingCourseTeachers = (List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes>) request
 				.getAttribute(InquiriesUtil.ATTENDING_COURSE_TEACHERS);
-		List<InfoRoomWithInquiryRoomFlag> attendingCourseRooms = (List<InfoRoomWithInquiryRoomFlag>) request
+		List<InfoRoomWithInfoInquiriesRoom> attendingCourseRooms = (List<InfoRoomWithInfoInquiriesRoom>) request
 				.getAttribute(InquiriesUtil.ATTENDING_COURSE_ROOMS);
 
 		// obtaining the selected teachers and rooms
@@ -967,10 +969,10 @@ public class FillInquiryAction extends FenixDispatchAction {
 		//Obtaining the rooms associated with the attending course
 		List<InfoLesson> attendingClassLessons =
 			(List<InfoLesson>) ServiceUtils.executeService(userView, "LerAulasDeDisciplinaExecucao", argsAttendingCourse);
-		List<InfoRoomWithInquiryRoomFlag> attendingCourseRooms = new ArrayList<InfoRoomWithInquiryRoomFlag>();
+		List<InfoRoomWithInfoInquiriesRoom> attendingCourseRooms = new ArrayList<InfoRoomWithInfoInquiriesRoom>();
 		for(InfoLesson lesson : attendingClassLessons) {
 			if(!attendingCourseRooms.contains(lesson.getInfoSala())) {
-				attendingCourseRooms.add(new InfoRoomWithInquiryRoomFlag(lesson.getInfoSala()));
+				attendingCourseRooms.add(new InfoRoomWithInfoInquiriesRoom(lesson.getInfoSala()));
 			}
 		}
 		//sort by class room name
@@ -980,11 +982,13 @@ public class FillInquiryAction extends FenixDispatchAction {
 					userView, attends, currentExecutionPeriod.getIdInternal());
 		
 		inquiryForm.set("studentExecutionDegreeId", infoExecutionDegreeStudent.getIdInternal());
+		inquiryForm.set("attendingExecutionCourseId", attends.getDisciplinaExecucao().getIdInternal());
 		
 		request.setAttribute(InquiriesUtil.INFO_STUDENT, infoStudent);
 		request.setAttribute(InquiriesUtil.CURRENT_EXECUTION_PERIOD, currentExecutionPeriod);
 		request.setAttribute(InquiriesUtil.STUDENT_EXECUTION_DEGREE, infoExecutionDegreeStudent);
 		request.setAttribute(InquiriesUtil.ATTENDING_EXECUTION_COURSE, attends.getDisciplinaExecucao());
+
 //		request.setAttribute(InquiriesUtil.STUDENT_ATTENDS, attends);
 		request.setAttribute(InquiriesUtil.ATTENDING_COURSE_SCHOOL_CLASSES, attendingCourseSchoolClasses);
 		request.setAttribute(InquiriesUtil.ATTENDING_COURSE_TEACHERS, attendingCourseTeachers);
@@ -1304,6 +1308,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 					
 					InfoInquiriesTeacher infoInquiriesTeacher = new InfoInquiriesTeacher();
 					infoInquiriesTeacher.setTeacherOrNonAffiliatedTeacher(teacher);
+					teacher.setHasEvaluations(true);
 					readTeacherFormToInfoInquiriesTeacher(inquiryForm, infoInquiriesTeacher, position);
 					selectedAttendingCourseTeachers.add(infoInquiriesTeacher);
 					break;
@@ -1316,14 +1321,14 @@ public class FillInquiryAction extends FenixDispatchAction {
 	}
 
 
-	private List<InfoInquiriesRoom> getSelectedAttendingCourseRooms(DynaActionForm inquiryForm, List<InfoRoomWithInquiryRoomFlag> attendingCourseRooms) {
+	private List<InfoInquiriesRoom> getSelectedAttendingCourseRooms(DynaActionForm inquiryForm, List<InfoRoomWithInfoInquiriesRoom> attendingCourseRooms) {
 		//Building the selected rooms list
 		Integer[] selectedAttendingCourseRoomsId = (Integer[]) inquiryForm.get("selectedAttendingCourseRoomsId");		
 		List<InfoInquiriesRoom> selectedAttendingCourseRooms = new ArrayList<InfoInquiriesRoom>(selectedAttendingCourseRoomsId.length);
 		int position = 0;
 		for (Integer roomId : selectedAttendingCourseRoomsId) {
 			//Finding the selected rooms
-			for(InfoRoomWithInquiryRoomFlag room : attendingCourseRooms) {
+			for(InfoRoomWithInfoInquiriesRoom room : attendingCourseRooms) {
 				if(room.getIdInternal().equals(roomId.intValue())) {
 					InfoInquiriesRoom infoInquiriesRoom = new InfoInquiriesRoom();
 					infoInquiriesRoom.setRoom(room);
@@ -1465,7 +1470,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 		infoInquiriesRoom.setSpaceAdequation(selectedAttendingCourseRoomsQuestion41[position]);
 		infoInquiriesRoom.setEnvironmentalConditions(selectedAttendingCourseRoomsQuestion42[position]);
 		infoInquiriesRoom.setEquipmentQuality(selectedAttendingCourseRoomsQuestion43[position]);
-		infoInquiriesRoom.getRoom().setAlreadyEvaluatedFlag(true);
+		infoInquiriesRoom.getRoom().setInquiriesRoom(infoInquiriesRoom);
 		
 	}
 

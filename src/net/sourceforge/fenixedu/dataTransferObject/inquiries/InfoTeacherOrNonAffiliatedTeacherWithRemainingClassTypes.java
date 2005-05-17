@@ -27,7 +27,7 @@ public class InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes extends
 	private String teacherName;
 
 	final private List<TipoAula> remainingClassTypes = new ArrayList<TipoAula>();
-
+	private Boolean hasEvaluations = false;
 	
 	public InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes(InfoObject infoTeacherOrNonAffiliatedTeacher, InfoExecutionCourse infoExecutionCourse) {
 
@@ -118,6 +118,23 @@ public class InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes extends
 	 */
 	public void setTeacherName(String teacherName) {
 		this.teacherName = teacherName;
+	}
+	
+	
+
+	/**
+	 * @return Returns the hasEvaluations.
+	 */
+	public Boolean getHasEvaluations() {
+		return hasEvaluations;
+	}
+	
+
+	/**
+	 * @param hasEvaluations The hasEvaluations to set.
+	 */
+	public void setHasEvaluations(Boolean hasEvaluations) {
+		this.hasEvaluations = hasEvaluations;
 	}
 	
 

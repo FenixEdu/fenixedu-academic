@@ -275,9 +275,12 @@
 											<c:out value="${int}"/>
 										</td>
 									</c:forTokens>
+									<td>
+										N&atilde;o Sabe
+									</td>
 								</tr>
 								<tr>
-									<c:forTokens items="1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0" delims="," var="int">
+									<c:forTokens items="1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,0.0" delims="," var="int">
 											<bean:define id="i">
 												<c:out value="${int}"/>
 											</bean:define>
@@ -901,10 +904,12 @@
 						</tr>
 					</table>
 
-			</logic:iterate>
-		</logic:present>
+				</logic:iterate>
+			</logic:present>
 
-		<p class="navbottom">&nbsp;</p>
+			<p class="navbottom">&nbsp;</p>
+		</div>
+
 
 		<div id="submit" style="text-align: right;">
 			<p>

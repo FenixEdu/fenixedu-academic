@@ -137,7 +137,11 @@ public class InquiriesUtil extends FenixUtil {
     }
 
 	public static boolean isValidAnswer(final Number answer) {
-		return ((answer != null) && (answer.doubleValue() > 0) && (answer.doubleValue() <= 5));
+		return ((answer != null) && (answer.doubleValue() >= 1) && (answer.doubleValue() <= 5));
+	}
+
+	public static boolean isValidAnswerWithExtraOption(final Number answer) {
+		return ((answer != null) && (answer.doubleValue() >= 0) && (answer.doubleValue() <= 5));
 	}
 
     public static String getTdClass(final Double val, final String[] classes, final String defaultClass,

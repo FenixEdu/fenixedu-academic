@@ -319,9 +319,12 @@
 											<c:out value="${int}"/>
 										</td>
 									</c:forTokens>
+									<td>
+										N&atilde;o Sabe
+									</td>
 								</tr>
 								<tr>
-									<c:forTokens items="1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0" delims="," var="int">
+									<c:forTokens items="1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,0.0" delims="," var="int">
 											<bean:define id="i">
 												<c:out value="${int}"/>
 											</bean:define>
@@ -366,7 +369,7 @@
 							2.7 <bean:message key="table.rowname.inquiries.course.form.weekly.spent.hours" bundle="INQUIRIES_RESOURCES"/>
 						</td>
 						<td class="right">
-							<table class="radio">
+							<table class="radio2">
 								<tr>
 									<c:forTokens items="0-1h,2-5h,6-10h,11-15h,+15h" delims="," var="hours">
 										<td>
@@ -454,31 +457,55 @@
 				</font>
 			</logic:present>
 
+			<%
+			Integer selectedTeacherFormPosition = 0;
+			%>
+
 			<logic:present name='<%= InquiriesUtil.ATTENDING_COURSE_TEACHERS %>'>
 				<html:hidden property="newAttendingCourseTeacherId" />
 				<html:hidden property="newAttendingCourseNonAffiliatedTeacherId" />
+				<html:hidden property="selectedAttendingCourseTeacherFormPosition" />
+
 				<bean:define id="evaluateTeacher">
 					<bean:message key="message.inquiries.anchor.title.evaluate.teacher" bundle="INQUIRIES_RESOURCES"/>
 				</bean:define>
 
 				<div class="block2">
+					<bean:define id="evaluateButtonValue">
+						<bean:message key="button.inquiries.evaluate" bundle="INQUIRIES_RESOURCES"/>
+					</bean:define>
+					<bean:define id="evaluateButtonTitle">
+						<bean:message key="button.title.inquiries.new.teacher.evaluation" bundle="INQUIRIES_RESOURCES"/>
+					</bean:define>
+
+					<bean:define id="editButtonValue">
+						<bean:message key="button.inquiries.edit.evaluation" bundle="INQUIRIES_RESOURCES"/>
+					</bean:define>
+					<bean:define id="editButtonTitle">
+						<bean:message key="button.title.inquiries.edit.evaluation" bundle="INQUIRIES_RESOURCES"/>
+					</bean:define>
+
+					<bean:define id="removeButtonValue">
+						<bean:message key="button.inquiries.remove.evaluation" bundle="INQUIRIES_RESOURCES"/>
+					</bean:define>
+					<bean:define id="removeButtonTitle">
+						<bean:message key="button.title.inquiries.remove.evaluation" bundle="INQUIRIES_RESOURCES"/>
+					</bean:define>
+
 					<p><bean:message key="title.inquiries.choose.teacher" bundle="INQUIRIES_RESOURCES"/></p>
 					<ul>
 						<logic:iterate id="attendingCourseTeacher" name='<%= InquiriesUtil.ATTENDING_COURSE_TEACHERS %>' type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes">
 							<logic:present name="attendingCourseTeacher" property="teacher">
 								<bean:define id="currentTeacherId" name="attendingCourseTeacher" property="idInternal"/>
-								<li>
+								<li class="border">									
 									<logic:empty name="attendingCourseTeacher" property="remainingClassTypes">
-										<bean:define id="buttonValue">
-											<bean:message key="button.inquiries.evaluate" bundle="INQUIRIES_RESOURCES"/>
-										</bean:define>
-										<input type="submit" class="inquirybutton" disabled="disabled" value='<%= buttonValue %>' />
+										<input type="submit" class="inquirybutton" disabled="disabled" value='<%= evaluateButtonValue %>' />
 									</logic:empty>
+									
 									<logic:notEmpty name="attendingCourseTeacher" property="remainingClassTypes">
 										<html:submit styleClass="inquirybutton"
-											onclick='<%="this.form.method.value='prepareNewTeacher';this.form.newAttendingCourseTeacherId.value='" + currentTeacherId + "';" %>'>
-											<bean:message key="button.inquiries.evaluate" bundle="INQUIRIES_RESOURCES"/>
-										</html:submit>
+											onclick='<%="this.form.method.value='prepareNewTeacher';this.form.newAttendingCourseTeacherId.value='" + currentTeacherId + "';" %>'
+											value='<%= evaluateButtonValue %>' title='<%= evaluateButtonTitle %>' />
 									</logic:notEmpty>
 									&gt;
 									<bean:write name="attendingCourseTeacher" property="teacher.infoPerson.nome" />
@@ -487,28 +514,123 @@
 										<c:if test="${completeAttendingCourseTeacherId == currentTeacherId}">
 											<font class="error"><bean:message key="message.inquiries.complete" bundle="INQUIRIES_RESOURCES"/></font>
 										</c:if>
+										<%--
 										<c:if test="${completeAttendingCourseTeacherId != currentTeacherId}">
 											<strong>
 												<bean:message key="message.inquiries.complete" bundle="INQUIRIES_RESOURCES"/>
 											</strong>
 										</c:if>
+										--%>
 									</logic:empty>
+		
+									<c:if test="${attendingCourseTeacher.hasEvaluations}">
+										<table class="eval">
+											<logic:present name='<%= InquiriesUtil.SELECTED_ATTENDING_COURSE_TEACHERS %>'>
+									
+												<bean:define id="evaluatedClassTypesRowName">
+													<bean:message key="table.rowname.inquiries.teacher.form.evaluated.class.types" bundle="INQUIRIES_RESOURCES"/>
+												</bean:define>
+												
+												<logic:iterate id="selectedAttendingCourseTeacher" name='<%= InquiriesUtil.SELECTED_ATTENDING_COURSE_TEACHERS %>' indexId="teacherPosition" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher">
+													<bean:define id="selectedAttendingCourseTeacherId" name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.idInternal" />
+										
+													<%
+																		
+													Integer currentAttendingCourseTeacherFormPosition =
+														(Integer) request.getAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER_FORM_POSITION);
+													
+													if((selectedAttendingCourseTeacherId == currentTeacherId) &&
+														!((currentAttendingCourseTeacherFormPosition != null) &&
+														   (currentAttendingCourseTeacherFormPosition.intValue() == teacherPosition))) {
+													%>
+														<tr>
+															<td class="evaltype">
+																<bean:write name="evaluatedClassTypesRowName" />
+																<logic:iterate id="classType" name="selectedAttendingCourseTeacher" property="classTypes" indexId="index">
+																	<c:if test="${index != 0}">
+																		,&nbsp;
+																	</c:if>
+																	<strong>
+																		<bean:write name="classType" property="fullNameTipoAula" />
+																	</strong>
+																</logic:iterate>
+															</td>
+										
+															<td>
+																<html:submit styleClass="inquirybutton" value='<%= editButtonValue %>' title='<%= editButtonTitle %>' 
+																	onclick='<%="this.form.method.value='editTeacher';this.form.selectedAttendingCourseTeacherFormPosition.value='" + selectedTeacherFormPosition + "';" %>' />
+																	
+																<html:submit styleClass="inquirybutton" value='<%= removeButtonValue %>' title='<%= removeButtonTitle %>' 
+																	onclick='<%="this.form.method.value='removeTeacher';this.form.selectedAttendingCourseTeacherFormPosition.value='" + selectedTeacherFormPosition + "';" %>'/>
+															</td>
+														</tr>
+														<html:hidden property="selectedAttendingCourseTeachersId" value='<%= "" + selectedAttendingCourseTeacherId %>'/>
+														<html:hidden property="selectedAttendingCourseTeachersClassTypeT" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(TipoAula.TEORICA) %>' />
+														<html:hidden property="selectedAttendingCourseTeachersClassTypeP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(TipoAula.PRATICA) %>' />
+														<html:hidden property="selectedAttendingCourseTeachersClassTypeL" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(TipoAula.LABORATORIAL) %>' />
+														<html:hidden property="selectedAttendingCourseTeachersClassTypeTP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(TipoAula.TEORICO_PRATICA) %>' />
+														<html:hidden property="selectedAttendingCourseTeachersQuestion33" value='<%= "" + selectedAttendingCourseTeacher.getStudentAssiduity() %>' />
+														<html:hidden property="selectedAttendingCourseTeachersQuestion34" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAssiduity() %>' />
+														<html:hidden property="selectedAttendingCourseTeachersQuestion35" value='<%= "" + selectedAttendingCourseTeacher.getTeacherPunctuality() %>' />
+														<html:hidden property="selectedAttendingCourseTeachersQuestion36" value='<%= "" + selectedAttendingCourseTeacher.getTeacherClarity() %>' />
+														<html:hidden property="selectedAttendingCourseTeachersQuestion37" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAssurance() %>' />
+														<html:hidden property="selectedAttendingCourseTeachersQuestion38" value='<%= "" + selectedAttendingCourseTeacher.getTeacherInterestStimulation() %>' />
+														<html:hidden property="selectedAttendingCourseTeachersQuestion39" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAvailability() %>' />
+														<html:hidden property="selectedAttendingCourseTeachersQuestion310" value='<%= "" + selectedAttendingCourseTeacher.getTeacherReasoningStimulation() %>' />
+														<html:hidden property="selectedAttendingCourseTeachersQuestion311" value='<%= "" + selectedAttendingCourseTeacher.getGlobalAppreciation() %>' />
+														<html:hidden property="selectedAttendingCourseTeacherIsAffiliated" value="true"/>
+									
+													<%
+													selectedTeacherFormPosition++;
+													} else if((selectedAttendingCourseTeacherId == currentTeacherId) &&
+																((currentAttendingCourseTeacherFormPosition != null) &&
+																	(currentAttendingCourseTeacherFormPosition.intValue() == teacherPosition))) {
+													%>
+														<logic:notEmpty name="selectedAttendingCourseTeacher" property="classTypes">
+															<tr>
+																<td class="evaltypeedit">
+																	<bean:write name="evaluatedClassTypesRowName" />
+																	<logic:iterate id="classType" name="selectedAttendingCourseTeacher" property="classTypes" indexId="index">
+																		<c:if test="${index != 0}">
+																			,&nbsp;
+																		</c:if>
+																		<strong>
+																			<bean:write name="classType" property="fullNameTipoAula" />
+																		</strong>
+																	</logic:iterate>
+																</td>
+											
+																<td>
+																	<input type="submit" class="inquirybutton" disabled="disabled"
+																		value='<%= editButtonValue %>' >
+																		
+																	<input type="submit" class="inquirybutton" disabled="disabled"
+																		value='<%= removeButtonValue %>' >
+																</td>
+															</tr>
+														</logic:notEmpty>
+													<%   	
+													}
+													%>
+												</logic:iterate>
+											</logic:present>
+										</table>
+									</c:if>
 								</li>
 							</logic:present>
+
+							<%-- NON AFFILITED TEACHER --%>
 							<logic:present name="attendingCourseTeacher" property="nonAffiliatedTeacher">
 								<bean:define id="currentTeacherId" name="attendingCourseTeacher" property="idInternal"/>
-								<li>
+								<li class="border">
 									<logic:empty name="attendingCourseTeacher" property="remainingClassTypes">
-										<bean:define id="buttonValue">
-											<bean:message key="button.inquiries.evaluate" bundle="INQUIRIES_RESOURCES"/>
-										</bean:define>
-										<input type="submit" class="inquirybutton" disabled="disabled" value='<%= buttonValue %>' />
+										<input type="submit" class="inquirybutton" disabled="disabled" value='<%= evaluateButtonValue %>' />
 									</logic:empty>
+
 									<logic:notEmpty name="attendingCourseTeacher" property="remainingClassTypes">
 										<html:submit styleClass="inquirybutton"
-											onclick='<%="this.form.method.value='prepareNewTeacher';this.form.newAttendingCourseNonAffiliatedTeacherId.value='" + currentTeacherId + "';" %>'>
-											<bean:message key="button.inquiries.evaluate" bundle="INQUIRIES_RESOURCES"/>
-										</html:submit>
+											onclick='<%="this.form.method.value='prepareNewTeacher';this.form.newAttendingCourseNonAffiliatedTeacherId.value='" + currentTeacherId + "';" %>'
+											value='<%= evaluateButtonValue %>' title='<%= evaluateButtonTitle %>' />
 									</logic:notEmpty>
 									&gt;
 									<bean:write name="attendingCourseTeacher" property="nonAffiliatedTeacher.name" />
@@ -517,13 +639,111 @@
 										<c:if test="${completeAttendingCourseNonAffiliatedTeacherId == currentTeacherId}">
 											<font class="error"><bean:message key="message.inquiries.complete" bundle="INQUIRIES_RESOURCES"/></font>
 										</c:if>
+										<%--
 										<c:if test="${completeAttendingCourseNonAffiliatedTeacherId != currentTeacherId}">
 											<strong>
 												<bean:message key="message.inquiries.complete" bundle="INQUIRIES_RESOURCES"/>
 											</strong>
 										</c:if>
+										--%>
 									</logic:empty>
+									
+									<c:if test="${attendingCourseTeacher.hasEvaluations}">
+										<table class="eval">
+											<logic:present name='<%= InquiriesUtil.SELECTED_ATTENDING_COURSE_TEACHERS %>'>
+								
+												<bean:define id="evaluatedClassTypesRowName">
+													<bean:message key="table.rowname.inquiries.teacher.form.evaluated.class.types" bundle="INQUIRIES_RESOURCES"/>
+												</bean:define>
+												
+												<logic:iterate id="selectedAttendingCourseTeacher" name='<%= InquiriesUtil.SELECTED_ATTENDING_COURSE_TEACHERS %>' indexId="teacherPosition" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher">
+													<bean:define id="selectedAttendingCourseTeacherId" name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.idInternal" />
+										
+													<%
+																		
+													Integer currentAttendingCourseTeacherFormPosition =
+														(Integer) request.getAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER_FORM_POSITION);
+													
+													if((selectedAttendingCourseTeacherId == currentTeacherId) &&
+														!((currentAttendingCourseTeacherFormPosition != null) &&
+														   (currentAttendingCourseTeacherFormPosition.intValue() == teacherPosition))) {
+													%>
+														<tr>
+															<td class="evaltype">
+																<bean:write name="evaluatedClassTypesRowName" />
+																<logic:iterate id="classType" name="selectedAttendingCourseTeacher" property="classTypes" indexId="index">
+																	<c:if test="${index != 0}">
+																		,&nbsp;
+																	</c:if>
+																	<strong>
+																		<bean:write name="classType" property="fullNameTipoAula" />
+																	</strong>
+																</logic:iterate>
+															</td>
+										
+															<td>
+																<html:submit styleClass="inquirybutton" value='<%= editButtonValue %>' title='<%= editButtonTitle %>' 
+																	onclick='<%="this.form.method.value='editTeacher';this.form.selectedAttendingCourseTeacherFormPosition.value='" + selectedTeacherFormPosition + "';" %>' />
+																	
+																<html:submit styleClass="inquirybutton" value='<%= removeButtonValue %>' title='<%= removeButtonTitle %>' 
+																	onclick='<%="this.form.method.value='removeTeacher';this.form.selectedAttendingCourseTeacherFormPosition.value='" + selectedTeacherFormPosition + "';" %>'/>
+															</td>
+														</tr>
+														<html:hidden property="selectedAttendingCourseTeachersId" value='<%= "" + selectedAttendingCourseTeacherId %>'/>
+														<html:hidden property="selectedAttendingCourseTeachersClassTypeT" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(TipoAula.TEORICA) %>' />
+														<html:hidden property="selectedAttendingCourseTeachersClassTypeP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(TipoAula.PRATICA) %>' />
+														<html:hidden property="selectedAttendingCourseTeachersClassTypeL" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(TipoAula.LABORATORIAL) %>' />
+														<html:hidden property="selectedAttendingCourseTeachersClassTypeTP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(TipoAula.TEORICO_PRATICA) %>' />
+														<html:hidden property="selectedAttendingCourseTeachersQuestion33" value='<%= "" + selectedAttendingCourseTeacher.getStudentAssiduity() %>' />
+														<html:hidden property="selectedAttendingCourseTeachersQuestion34" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAssiduity() %>' />
+														<html:hidden property="selectedAttendingCourseTeachersQuestion35" value='<%= "" + selectedAttendingCourseTeacher.getTeacherPunctuality() %>' />
+														<html:hidden property="selectedAttendingCourseTeachersQuestion36" value='<%= "" + selectedAttendingCourseTeacher.getTeacherClarity() %>' />
+														<html:hidden property="selectedAttendingCourseTeachersQuestion37" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAssurance() %>' />
+														<html:hidden property="selectedAttendingCourseTeachersQuestion38" value='<%= "" + selectedAttendingCourseTeacher.getTeacherInterestStimulation() %>' />
+														<html:hidden property="selectedAttendingCourseTeachersQuestion39" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAvailability() %>' />
+														<html:hidden property="selectedAttendingCourseTeachersQuestion310" value='<%= "" + selectedAttendingCourseTeacher.getTeacherReasoningStimulation() %>' />
+														<html:hidden property="selectedAttendingCourseTeachersQuestion311" value='<%= "" + selectedAttendingCourseTeacher.getGlobalAppreciation() %>' />
+														<html:hidden property="selectedAttendingCourseTeacherIsAffiliated" value="false"/>
+			
+								
+													<%
+													selectedTeacherFormPosition++;
+													} else if((selectedAttendingCourseTeacherId == currentTeacherId) &&
+																((currentAttendingCourseTeacherFormPosition != null) &&
+																	(currentAttendingCourseTeacherFormPosition.intValue() == teacherPosition))) {
+													%>
+														<logic:notEmpty name="selectedAttendingCourseTeacher" property="classTypes">
+															<tr>
+																<td class="evaltypeedit">
+																	<bean:write name="evaluatedClassTypesRowName" />
+																	<logic:iterate id="classType" name="selectedAttendingCourseTeacher" property="classTypes" indexId="index">
+																		<c:if test="${index != 0}">
+																			,&nbsp;
+																		</c:if>
+																		<strong>
+																			<bean:write name="classType" property="fullNameTipoAula" />
+																		</strong>
+																	</logic:iterate>
+																</td>
+											
+																<td>
+																	<input type="submit" class="inquirybutton" disabled="disabled"
+																		value='<%= editButtonValue %>' >
+																		
+																	<input type="submit" class="inquirybutton" disabled="disabled"
+																		value='<%= removeButtonValue %>' >
+																</td>
+															</tr>
+														</logic:notEmpty>
+													<%   	
+													}
+													%>
+												</logic:iterate>
+											</logic:present>
+										</table>
+									</c:if>
 								</li>
+
 							</logic:present>
 						</logic:iterate>
 					</ul>
@@ -531,33 +751,11 @@
 			</logic:present>
 
 			<logic:present name='<%= InquiriesUtil.SELECTED_ATTENDING_COURSE_TEACHERS %>'>
-				<html:hidden property="selectedAttendingCourseTeacherFormPosition" />
 
 				<logic:iterate id="selectedAttendingCourseTeacher" name='<%= InquiriesUtil.SELECTED_ATTENDING_COURSE_TEACHERS %>' indexId="teacherPosition" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher">
 					<bean:define id="selectedAttendingCourseTeacherId" name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.idInternal" />
 
 								
-					<html:hidden property="selectedAttendingCourseTeachersId" value='<%= "" + selectedAttendingCourseTeacherId %>'/>
-		            <html:hidden property="selectedAttendingCourseTeachersClassTypeT" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(TipoAula.TEORICA) %>' />
-            		<html:hidden property="selectedAttendingCourseTeachersClassTypeP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(TipoAula.PRATICA) %>' />
-					<html:hidden property="selectedAttendingCourseTeachersClassTypeL" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(TipoAula.LABORATORIAL) %>' />
-					<html:hidden property="selectedAttendingCourseTeachersClassTypeTP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(TipoAula.TEORICO_PRATICA) %>' />
-					<html:hidden property="selectedAttendingCourseTeachersQuestion33" value='<%= "" + selectedAttendingCourseTeacher.getStudentAssiduity() %>' />
-					<html:hidden property="selectedAttendingCourseTeachersQuestion34" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAssiduity() %>' />
-					<html:hidden property="selectedAttendingCourseTeachersQuestion35" value='<%= "" + selectedAttendingCourseTeacher.getTeacherPunctuality() %>' />
-					<html:hidden property="selectedAttendingCourseTeachersQuestion36" value='<%= "" + selectedAttendingCourseTeacher.getTeacherClarity() %>' />
-					<html:hidden property="selectedAttendingCourseTeachersQuestion37" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAssurance() %>' />
-					<html:hidden property="selectedAttendingCourseTeachersQuestion38" value='<%= "" + selectedAttendingCourseTeacher.getTeacherInterestStimulation() %>' />
-					<html:hidden property="selectedAttendingCourseTeachersQuestion39" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAvailability() %>' />
-					<html:hidden property="selectedAttendingCourseTeachersQuestion310" value='<%= "" + selectedAttendingCourseTeacher.getTeacherReasoningStimulation() %>' />
-					<html:hidden property="selectedAttendingCourseTeachersQuestion311" value='<%= "" + selectedAttendingCourseTeacher.getGlobalAppreciation() %>' />
-					
-					<logic:present name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.teacher">
-						<html:hidden property="selectedAttendingCourseTeacherIsAffiliated" value="true"/>
-					</logic:present>
-					<logic:present name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.nonAffiliatedTeacher">
-						<html:hidden property="selectedAttendingCourseTeacherIsAffiliated" value="false"/>
-					</logic:present>
 		
 					<%
 										
@@ -568,7 +766,28 @@
 					   (currentAttendingCourseTeacherFormPosition.intValue() == teacherPosition)) {
 					%>
 						
-						<html:hidden property="currentAttendingCourseTeacherFormPosition" value='<%= "" + teacherPosition %>' />
+						<html:hidden property="currentAttendingCourseTeacherFormPosition" value='<%= "" + selectedTeacherFormPosition %>' />
+						<html:hidden property="selectedAttendingCourseTeachersId" value='<%= "" + selectedAttendingCourseTeacherId %>'/>
+						<html:hidden property="selectedAttendingCourseTeachersClassTypeT" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(TipoAula.TEORICA) %>' />
+						<html:hidden property="selectedAttendingCourseTeachersClassTypeP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(TipoAula.PRATICA) %>' />
+						<html:hidden property="selectedAttendingCourseTeachersClassTypeL" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(TipoAula.LABORATORIAL) %>' />
+						<html:hidden property="selectedAttendingCourseTeachersClassTypeTP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(TipoAula.TEORICO_PRATICA) %>' />
+						<html:hidden property="selectedAttendingCourseTeachersQuestion33" value='<%= "" + selectedAttendingCourseTeacher.getStudentAssiduity() %>' />
+						<html:hidden property="selectedAttendingCourseTeachersQuestion34" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAssiduity() %>' />
+						<html:hidden property="selectedAttendingCourseTeachersQuestion35" value='<%= "" + selectedAttendingCourseTeacher.getTeacherPunctuality() %>' />
+						<html:hidden property="selectedAttendingCourseTeachersQuestion36" value='<%= "" + selectedAttendingCourseTeacher.getTeacherClarity() %>' />
+						<html:hidden property="selectedAttendingCourseTeachersQuestion37" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAssurance() %>' />
+						<html:hidden property="selectedAttendingCourseTeachersQuestion38" value='<%= "" + selectedAttendingCourseTeacher.getTeacherInterestStimulation() %>' />
+						<html:hidden property="selectedAttendingCourseTeachersQuestion39" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAvailability() %>' />
+						<html:hidden property="selectedAttendingCourseTeachersQuestion310" value='<%= "" + selectedAttendingCourseTeacher.getTeacherReasoningStimulation() %>' />
+						<html:hidden property="selectedAttendingCourseTeachersQuestion311" value='<%= "" + selectedAttendingCourseTeacher.getGlobalAppreciation() %>' />
+						
+						<logic:present name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.teacher">
+							<html:hidden property="selectedAttendingCourseTeacherIsAffiliated" value="true"/>
+						</logic:present>
+						<logic:present name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.nonAffiliatedTeacher">
+							<html:hidden property="selectedAttendingCourseTeacherIsAffiliated" value="false"/>
+						</logic:present>
 						
 						<table id='<%= InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER_FORM_ANCHOR  %>'>
 							<tr>
@@ -648,7 +867,7 @@
 									3.3 <bean:message key="table.rowname.inquiries.teacher.form.student.assiduity" bundle="INQUIRIES_RESOURCES"/>
 								</td>
 								<td class="right">
-									<table class="radio">
+									<table class="radio2">
 										<tr>
 											<c:forTokens items="<50%,50%-75%,75%-85%,85%-95%,95%-100%" delims="," var="int">
 												<td>
@@ -675,7 +894,7 @@
 									3.4 <bean:message key="table.rowname.inquiries.teacher.form.teacher.assiduity" bundle="INQUIRIES_RESOURCES"/>
 								</td>
 								<td class="right">
-									<table class="radio">
+									<table class="radio2">
 										<tr>
 											<c:forTokens items="<50%,50%-75%,75%-85%,85%-95%,95%-100%" delims="," var="int">
 											<td>
@@ -891,7 +1110,7 @@
 									<html:submit styleClass="inquirybutton" onclick='<%="this.form.method.value='closeTeacher';" %>'>
 										<bean:message key="button.inquiries.confirm.evaluation" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
-									<html:submit styleClass="inquirybutton" onclick='<%="this.form.method.value='removeTeacher';this.form.selectedAttendingCourseTeacherFormPosition.value='" + teacherPosition + "';" %>'>
+									<html:submit styleClass="inquirybutton" onclick='<%="this.form.method.value='removeTeacher';this.form.selectedAttendingCourseTeacherFormPosition.value='" + selectedTeacherFormPosition + "';" %>'>
 										<bean:message key="button.inquiries.remove.evaluation" bundle="INQUIRIES_RESOURCES"/>
 									</html:submit>
 								</td>
@@ -901,6 +1120,7 @@
 					<%
 					} else {
 					%>
+						<%--
 						<table>
 							<tr>
 								<td class="top" colspan="2">
@@ -940,7 +1160,7 @@
 								</td>
 							</tr>
 						</table>
-
+						--%>
 					<%
 					}
 					%>
@@ -991,34 +1211,36 @@
 				</bean:define>
 
 				<div class="block2">
+					<bean:define id="buttonValue">
+						<bean:message key="button.inquiries.evaluate" bundle="INQUIRIES_RESOURCES"/>
+					</bean:define>
+					<bean:define id="buttonTitle">
+						<bean:message key="button.title.inquiries.new.room.evaluation" bundle="INQUIRIES_RESOURCES"/>
+					</bean:define>
+					
 					<p><bean:message key="title.inquiries.choose.room" bundle="INQUIRIES_RESOURCES"/></p>
 					<ul>
-						<logic:iterate id="attendingCourseRoom" name='<%= InquiriesUtil.ATTENDING_COURSE_ROOMS %>' type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoRoomWithInquiryRoomFlag">
+						<logic:iterate id="attendingCourseRoom" name='<%= InquiriesUtil.ATTENDING_COURSE_ROOMS %>' type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoRoomWithInfoInquiriesRoom">
 							<bean:define id="currentRoomId" name="attendingCourseRoom" property="idInternal"/>
-								<li>
-									<c:if test="${!attendingCourseRoom.alreadyEvaluatedFlag}">
-										<html:submit styleClass="inquirybutton"
-											onclick='<%="this.form.method.value='prepareNewRoom';this.form.newAttendingCourseRoomId.value='" + currentRoomId + "';" %>'
-											>
-											<bean:message key="button.inquiries.evaluate" bundle="INQUIRIES_RESOURCES"/>
-										</html:submit>
-										&gt;
-									</c:if>
-									<c:if test="${attendingCourseRoom.alreadyEvaluatedFlag}">
-										<bean:define id="buttonValue">
-											<bean:message key="button.inquiries.evaluate" bundle="INQUIRIES_RESOURCES"/>
-										</bean:define>
-										<input type="submit" class="inquirybutton" disabled="disabled" value='<%= buttonValue %>' />
-										&gt;
-									</c:if>
-									<bean:message key="label.inquiries.room" bundle="INQUIRIES_RESOURCES"/>
-									<bean:write name="attendingCourseRoom" property="nome" />
+							<li>
+								<logic:notPresent name="attendingCourseRoom" property="inquiriesRoom">
+									<html:submit styleClass="inquirybutton"
+										onclick='<%="this.form.method.value='prepareNewRoom';this.form.newAttendingCourseRoomId.value='" + currentRoomId + "';" %>'
+										value='<%= buttonValue %>' title='<%= buttonTitle %>'/>
+									&gt;
+								</logic:notPresent>
+								<logic:present name="attendingCourseRoom" property="inquiriesRoom">
+									<input type="submit" class="inquirybutton" disabled="disabled" value='<%= buttonValue %>' />
+									&gt;
+								</logic:present>
+								<bean:message key="label.inquiries.room" bundle="INQUIRIES_RESOURCES"/>
+								<bean:write name="attendingCourseRoom" property="nome" />
 
-									<%--c:if test="${attendingCourseRoom.alreadyEvaluatedFlag}">
-										<bean:write name="attendingCourseRoom" property="nome" />
-									</c:if--%>
-								</li>
-						</logic:iterate>
+								<%--c:if test="${attendingCourseRoom.alreadyEvaluatedFlag}">
+									<bean:write name="attendingCourseRoom" property="nome" />
+								</c:if--%>
+							</li>
+					</logic:iterate>
 					</ul>
 				</div>
 			</logic:present>

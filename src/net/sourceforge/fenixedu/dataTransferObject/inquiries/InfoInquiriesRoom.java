@@ -36,7 +36,7 @@ public class InfoInquiriesRoom extends InfoObject implements Comparable {
 	private InfoExecutionDegree executionDegreeStudent;
     
 	private Integer keyRoom;
-	private InfoRoomWithInquiryRoomFlag room;
+	private InfoRoomWithInfoInquiriesRoom room;
     
 	private Integer spaceAdequation;
 	private Integer environmentalConditions;
@@ -203,13 +203,13 @@ public class InfoInquiriesRoom extends InfoObject implements Comparable {
     /**
      * @return Returns the room.
      */
-    public InfoRoomWithInquiryRoomFlag getRoom() {
+    public InfoRoomWithInfoInquiriesRoom getRoom() {
         return room;
     }
     /**
      * @param room The room to set.
      */
-    public void setRoom(InfoRoomWithInquiryRoomFlag room) {
+    public void setRoom(InfoRoomWithInfoInquiriesRoom room) {
         this.room = room;
     }
     /**
@@ -252,7 +252,7 @@ public class InfoInquiriesRoom extends InfoObject implements Comparable {
         this.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain(inquiriesRoom.getExecutionCourse()));
         this.setExecutionDegreeCourse(InfoExecutionDegree.newInfoFromDomain(inquiriesRoom.getExecutionDegreeCourse()));
         this.setExecutionDegreeStudent(InfoExecutionDegree.newInfoFromDomain(inquiriesRoom.getExecutionDegreeStudent()));
-        this.setRoom(InfoRoomWithInquiryRoomFlag.newInfoFromDomain(inquiriesRoom.getRoom()));        
+        this.setRoom(InfoRoomWithInfoInquiriesRoom.newInfoFromDomain(inquiriesRoom.getRoom()));        
     }
         
 	public String toString() {
