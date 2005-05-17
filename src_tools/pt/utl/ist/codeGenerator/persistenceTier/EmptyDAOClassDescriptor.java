@@ -1,11 +1,8 @@
 package pt.utl.ist.codeGenerator.persistenceTier;
 
-import java.io.IOException;
 import java.lang.reflect.Method;
 
-import pt.utl.ist.codeGenerator.ClassDescriptor;
 import pt.utl.ist.codeGenerator.MethodBodyClosure;
-import pt.utl.ist.util.CollectionConstructors;
 
 public class EmptyDAOClassDescriptor extends DAOClassDescriptor {
 

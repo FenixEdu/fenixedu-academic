@@ -40,7 +40,7 @@ public class ReadNonAffiliatedTeachersByName implements IService {
             nonAffiliatedTeacherName.append("%");
         }
         
-        List nonAffiliatedTeachers = (List) persistentNonAffiliatedTeacher.readByName(nonAffiliatedTeacherName.toString());
+        List nonAffiliatedTeachers = persistentNonAffiliatedTeacher.readByName(nonAffiliatedTeacherName.toString());
         
         List infoNonAffiliatedTeachers = new ArrayList(nonAffiliatedTeachers.size());
 

@@ -324,7 +324,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 					selectedAttendingCourseRooms, inquiryForm);
 			
 			request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER_FORM_POSITION,
-					(Integer) inquiryForm.get("currentAttendingCourseTeacherFormPosition"));
+					inquiryForm.get("currentAttendingCourseTeacherFormPosition"));
 			request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER, currentAttendingCourseTeacher);
 			request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_ROOM, currentAttendingCourseRoom);
 	
@@ -357,7 +357,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 						selectedAttendingCourseRooms, inquiryForm);
 				
 				request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER_FORM_POSITION,
-						(Integer) inquiryForm.get("currentAttendingCourseTeacherFormPosition"));
+						inquiryForm.get("currentAttendingCourseTeacherFormPosition"));
 				request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER, currentAttendingCourseTeacher);
 				request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_ROOM, currentAttendingCourseRoom);
 	
@@ -479,7 +479,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 					selectedAttendingCourseRooms, inquiryForm);
 			
 			request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER_FORM_POSITION,
-					(Integer) inquiryForm.get("currentAttendingCourseTeacherFormPosition"));
+					inquiryForm.get("currentAttendingCourseTeacherFormPosition"));
 			request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER, currentAttendingCourseTeacher);
 			request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_ROOM, currentAttendingCourseRoom);
 	
@@ -615,7 +615,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 		InfoInquiriesTeacher currentAttendingCourseTeacher = getCurrentAttendingCourseTeacherFromSelectedTeachers(
 				selectedAttendingCourseTeachers, inquiryForm);
 		request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER_FORM_POSITION,
-				(Integer) inquiryForm.get("currentAttendingCourseTeacherFormPosition"));
+				inquiryForm.get("currentAttendingCourseTeacherFormPosition"));
 		request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER, currentAttendingCourseTeacher);
 
 		
@@ -706,7 +706,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 					selectedAttendingCourseRooms, inquiryForm);
 			
 			request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER_FORM_POSITION,
-					(Integer) inquiryForm.get("currentAttendingCourseTeacherFormPosition"));
+					inquiryForm.get("currentAttendingCourseTeacherFormPosition"));
 			request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER, currentAttendingCourseTeacher);
 			request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_ROOM, currentAttendingCourseRoom);
 	
@@ -755,7 +755,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 					selectedAttendingCourseRooms, inquiryForm);
 
 			request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER_FORM_POSITION,
-					(Integer) inquiryForm.get("currentAttendingCourseTeacherFormPosition"));
+					inquiryForm.get("currentAttendingCourseTeacherFormPosition"));
 			request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER, currentAttendingCourseTeacher);
 			request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_ROOM, currentAttendingCourseRoom);
 
@@ -769,7 +769,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 					selectedAttendingCourseRooms, inquiryForm);
 
 			request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER_FORM_POSITION,
-					(Integer) inquiryForm.get("currentAttendingCourseTeacherFormPosition"));
+					inquiryForm.get("currentAttendingCourseTeacherFormPosition"));
 			request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER, currentAttendingCourseTeacher);
 			request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_ROOM, currentAttendingCourseRoom);
 
