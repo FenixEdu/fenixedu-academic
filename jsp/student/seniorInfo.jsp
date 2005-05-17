@@ -55,27 +55,27 @@
           </tr>
 		  <tr>
             <td valign="top"><bean:message key="label.senior.specialtyField"/></td>
-            <td><bean:write name="seniorInfoForm" property="specialtyField"/></td>
+            <td><bean:write name="seniorInfoForm" property="specialtyField" filter="false"/></td>
           </tr>
 		  <tr>
             <td valign="top"><bean:message key="label.senior.professionalInterests"/></td>
-            <td><bean:write name="seniorInfoForm" property="professionalInterests"/></td>
+            <td><bean:write name="seniorInfoForm" property="professionalInterests" filter="false"/></td>
           </tr>
 		  <tr>
             <td valign="top"><bean:message key="label.senior.languageSkills"/></td>
-            <td><bean:write name="seniorInfoForm" property="languageSkills"/></td>
+            <td><bean:write name="seniorInfoForm" property="languageSkills" filter="false"/></td>
           </tr>
 		  <tr>
             <td valign="top"><bean:message key="label.senior.informaticsSkills"/></td>
-            <td><bean:write name="seniorInfoForm" property="informaticsSkills"/></td>
+            <td><bean:write name="seniorInfoForm" property="informaticsSkills" filter="false"/></td>
           </tr>
 		  <tr>
             <td valign="top"><bean:message key="label.senior.extracurricularActivities"/></td>
-            <td><bean:write name="seniorInfoForm" property="extracurricularActivities"/></td>
+            <td><bean:write name="seniorInfoForm" property="extracurricularActivities" filter="false"/></td>
           </tr>
   		  <tr>
             <td valign="top"><bean:message key="label.senior.professionalExperience"/></td>
-            <td><bean:write name="seniorInfoForm" property="professionalExperience"/></td>
+            <td><bean:write name="seniorInfoForm" property="professionalExperience" filter="false"/></td>
           </tr>		  		  
 		  <tr>
 			<td>&nbsp;</td>

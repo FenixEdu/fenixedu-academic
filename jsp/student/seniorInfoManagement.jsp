@@ -11,6 +11,7 @@
 </logic:equal>
 <logic:notEqual name="seniorInfoForm" property="name" value="">
   <html:form action="/seniorInformation?method=change">
+	
 	<html:hidden property="seniorIDInternal"/>
 	<html:hidden property="name" name="seniorInfoForm"/>
 	<html:hidden property="address" name="seniorInfoForm"/>	
@@ -22,13 +23,22 @@
 	<html:hidden property="availablePhoto" name="seniorInfoForm"/>	
 	<html:hidden property="personID" name="seniorInfoForm"/>		
 	<html:hidden property="page" value="1"/>
-        <table width="100%" cellspacing="0">
+	
+	<html:hidden property="specialtyField"/>
+	<html:hidden property="professionalInterests"/>
+	<html:hidden property="languageSkills"/>
+	<html:hidden property="informaticsSkills"/>
+	<html:hidden property="extracurricularActivities"/>
+	<html:hidden property="professionalExperience"/>
+
+	
+    <table width="100%" cellspacing="0">
+		<tr>
 			<tr>
-				<tr>
-					<td class="infoop"><span class="emphasis-box">info</span>
-         			<td class="infoop"><bean:message key="label.senior.personalInfoWarning"/></td>
-         	</tr>
-        </table>
+				<td class="infoop"><span class="emphasis-box">info</span>
+     			<td class="infoop"><bean:message key="label.senior.personalInfoWarning"/></td>
+     	</tr>
+    </table>
 	<br/>
 	<table border="0" width="100%" cellspacing="9">
           <tr><td colspan="2">
@@ -84,28 +94,133 @@
           </tr>
 		  <tr>
             <td valign="top"><bean:message key="label.senior.specialtyField"/></td>
-            <td><html:textarea rows="5" cols="65" property="specialtyField"/></td>
+            <!--<td><html:textarea rows="5" cols="65" property="specialtyField"/></td>-->
+            <td>	
+				<script language="JavaScript" type="text/javascript"> 
+					<!--
+					initEditor();		
+					//-->
+					</script>
+					
+					<noscript>JavaScript must be enable to use this form <br> </noscript>
+					
+					<script language="JavaScript" type="text/javascript"> 
+					<!--
+					writeMultipleTextEditor('rte1' ,100, 120, document.forms[0].specialtyField.value);		
+					//-->
+				</script>		
+			</td>
             <td valign="middle" align="center"><bean:message key="label.senior.specialtyFieldFinalWork"/></td>
           </tr>
+          <tr>
+			<td colspan='2'>&nbsp;</td>
+		  </tr>
 		  <tr>
             <td valign="top"><bean:message key="label.senior.professionalInterests"/></td>
-            <td><html:textarea rows="5" cols="65" property="professionalInterests"/></td>
+            <!--<td><html:textarea rows="5" cols="65" property="professionalInterests"/></td>-->
+            <td>	
+				<script language="JavaScript" type="text/javascript"> 
+					<!--
+					initEditor();		
+					//-->
+					</script>
+					
+					<noscript>JavaScript must be enable to use this form <br> </noscript>
+					
+					<script language="JavaScript" type="text/javascript"> 
+					<!--
+					writeMultipleTextEditor('rte2', 100, 120, document.forms[0].professionalInterests.value);		
+					//-->
+				</script>		
+			</td>
           </tr>
+          <tr>
+			<td colspan='2'>&nbsp;</td>
+		  </tr>
 		  <tr>
             <td valign="top"><bean:message key="label.senior.languageSkills"/></td>
-            <td><html:textarea rows="5" cols="65" property="languageSkills"/></td>
+            <!--<td><html:textarea rows="5" cols="65" property="languageSkills"/></td>-->
+            <td>	
+				<script language="JavaScript" type="text/javascript"> 
+					<!--
+					initEditor();		
+					//-->
+					</script>
+					
+					<noscript>JavaScript must be enable to use this form <br> </noscript>
+					
+					<script language="JavaScript" type="text/javascript"> 
+					<!--
+					writeMultipleTextEditor('rte3', 100, 120, document.forms[0].languageSkills.value);		
+					//-->
+				</script>		
+			</td>
           </tr>
+          <tr>
+			<td colspan='2'>&nbsp;</td>
+		  </tr>
 		  <tr>
             <td valign="top"><bean:message key="label.senior.informaticsSkills"/></td>
-            <td><html:textarea rows="5" cols="65" property="informaticsSkills"/></td>
+            <!--<td><html:textarea rows="5" cols="65" property="informaticsSkills"/></td>-->
+            <td>	
+				<script language="JavaScript" type="text/javascript"> 
+					<!--
+					initEditor();		
+					//-->
+					</script>
+					
+					<noscript>JavaScript must be enable to use this form <br> </noscript>
+					
+					<script language="JavaScript" type="text/javascript"> 
+					<!--
+					writeMultipleTextEditor('rte4' ,100, 120, document.forms[0].informaticsSkills.value);		
+					//-->
+				</script>		
+			</td>
           </tr>
+          <tr>
+			<td colspan='2'>&nbsp;</td>
+		  </tr>
 		  <tr>
             <td valign="top"><bean:message key="label.senior.extracurricularActivities"/></td>
-            <td><html:textarea rows="5" cols="65" property="extracurricularActivities"/></td>
+            <!--<td><html:textarea rows="5" cols="65" property="extracurricularActivities"/></td>-->
+            <td>	
+				<script language="JavaScript" type="text/javascript"> 
+					<!--
+					initEditor();		
+					//-->
+					</script>
+					
+					<noscript>JavaScript must be enable to use this form <br> </noscript>
+					
+					<script language="JavaScript" type="text/javascript"> 
+					<!--
+					writeMultipleTextEditor('rte5', 100, 120, document.forms[0].extracurricularActivities.value);		
+					//-->
+				</script>		
+			</td>
           </tr>
+          <tr>
+			<td colspan='2'>&nbsp;</td>
+		  </tr>
   		  <tr>
             <td valign="top"><bean:message key="label.senior.professionalExperience"/></td>
-            <td><html:textarea rows="5" cols="65" property="professionalExperience"/></td>
+            <!--<td><html:textarea rows="5" cols="65" property="professionalExperience"/></td>-->
+          	<td>	
+				<script language="JavaScript" type="text/javascript"> 
+					<!--
+					initEditor();		
+					//-->
+					</script>
+					
+					<noscript>JavaScript must be enable to use this form <br> </noscript>
+					
+					<script language="JavaScript" type="text/javascript"> 
+					<!--
+					writeMultipleTextEditor('rte6', 100, 120, document.forms[0].professionalExperience.value);		
+					//-->
+				</script>		
+			</td>
           </tr>		  		  
 		  <tr>
 			<td>&nbsp;</td>
@@ -123,8 +238,8 @@
           </tr>
    	</table>
 <br /><br />
-<html:submit property="Alterar" styleClass="inputbutton"><bean:message key="button.change"/></html:submit>
+<html:submit styleClass="inputbutton" property="Alterar" onclick="this.form.specialtyField.value=update1();this.form.professionalInterests.value=update2();this.form.languageSkills.value=update3();this.form.informaticsSkills.value=update4();this.form.extracurricularActivities.value=update5(); this.form.professionalExperience.value=update6()"><bean:message key="button.change"/></html:submit>
 <html:reset property="Reset" styleClass="inputbutton"><bean:message key="button.reset"/></html:reset>
-      </html:form>
+</html:form>
 
 </logic:notEqual>
