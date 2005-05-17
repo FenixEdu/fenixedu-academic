@@ -22,7 +22,7 @@
 		<tr>
 			<td align="left">
 				<html:link page="<%= pageContext.findAttribute("showStudentCurricularCoursePlanLink").toString() %>">
-					<bean:write name="infoStudentCurricularPlan" property="currentState"/>
+					<bean:message name="infoStudentCurricularPlan" property="currentState.name" bundle="ENUMERATION_RESOURCES"/>
 				</html:link>
 			</td>
 			<td align="left">

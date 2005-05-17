@@ -2,18 +2,37 @@
  * StudentCurricularState.java Created on 20 de Dezembro de 2002, 14:12
  */
 
-package net.sourceforge.fenixedu.util;
+package net.sourceforge.fenixedu.domain.studentCurricularPlan;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import net.sourceforge.fenixedu.util.FenixUtil;
 
 import org.apache.struts.util.LabelValueBean;
 
 /**
  * @author Nuno Nunes & Joana Mota
  */
-public class StudentCurricularPlanState extends FenixUtil {
+public enum StudentCurricularPlanState {
 
+    ACTIVE,
+    
+    CONCLUDED,
+    
+    INCOMPLETE,
+    
+    SCHOOLPARTCONCLUDED,
+    
+    INACTIVE,
+    
+    PAST;
+    
+    public String getName() {
+        return name();
+    }
+    
+    /*
     public static final int ACTIVE = 1;
 
     public static final int CONCLUDED = 2;
@@ -195,5 +214,5 @@ public class StudentCurricularPlanState extends FenixUtil {
         result.add(new LabelValueBean(StudentCurricularPlanState.PAST_STRING,
                 StudentCurricularPlanState.PAST_STRING));
         return result;
-    }
+    }*/
 }

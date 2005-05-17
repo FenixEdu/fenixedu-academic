@@ -30,7 +30,7 @@
 	<field-descriptor
 		name="currentState"
 		column="CURRENT_STATE"
-		jdbc-type="INTEGER"
+		jdbc-type="VARCHAR"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaStudentCurricularPlanState2SqlStudentCurricularPlanStateFieldConversion"
 	/>
 	<field-descriptor
@@ -167,7 +167,7 @@
 	<field-descriptor
 		name="currentState"
 		column="CURRENT_STATE"
-		jdbc-type="INTEGER"
+		jdbc-type="VARCHAR"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaStudentCurricularPlanState2SqlStudentCurricularPlanStateFieldConversion"
 	/>
 	<field-descriptor
@@ -315,7 +315,7 @@
 	<field-descriptor
 		name="currentState"
 		column="CURRENT_STATE"
-		jdbc-type="INTEGER"
+		jdbc-type="VARCHAR"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaStudentCurricularPlanState2SqlStudentCurricularPlanStateFieldConversion"
 	/>
 	<field-descriptor

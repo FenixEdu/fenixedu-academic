@@ -5,7 +5,7 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="net.sourceforge.fenixedu.util.Data" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment" %>
-<%@ page import="net.sourceforge.fenixedu.util.StudentCurricularPlanState" %>
+<%@ page import="net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState" %>
 <h2><bean:message key="label.students.listMarks"/></h2>
 <logic:present name="studentList">
 	<table width="100%">
@@ -42,7 +42,7 @@
     			<td class="listClasses-header"><bean:message key="label.observation"  /></td>
     		</tr>
      		<logic:iterate id="enrolment" name="studentList" type="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment">
-     		   <% if (((InfoEnrolment) enrolment).getInfoStudentCurricularPlan().getCurrentState().equals(new StudentCurricularPlanState(StudentCurricularPlanState.ACTIVE))) { %>
+     		   <% if (((InfoEnrolment) enrolment).getInfoStudentCurricularPlan().getCurrentState().equals(StudentCurricularPlanState.ACTIVE)) { %>
 	        		<tr>
 			        	<td class="listClasses">
 				      		<html:link page="<%="/changeMarkDispatchAction.do?method=chooseStudentMarks&amp;page=0&amp;degreeId=" + pageContext.findAttribute("degreeId") + "&amp;courseId=" + pageContext.findAttribute("courseId") + "&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;showMarks=" + pageContext.findAttribute("showMarks") + "&amp;studentNumber="+ enrolment.getInfoStudentCurricularPlan().getInfoStudent().getNumber()%>">	

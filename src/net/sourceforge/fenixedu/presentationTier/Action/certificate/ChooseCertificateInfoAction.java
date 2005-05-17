@@ -34,9 +34,9 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstan
 import net.sourceforge.fenixedu.util.CertificateList;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.masterDegree.DocumentReason;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.util.Specialization;
-import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -140,8 +140,8 @@ public class ChooseCertificateInfoAction extends DispatchAction {
                         || certificateString.equals("Duração do Degree")
                         || certificateString.equals("Inscrição")) {
                     ArrayList states = new ArrayList();
-                    states.add(StudentCurricularPlanState.ACTIVE_OBJ);
-                    states.add(StudentCurricularPlanState.SCHOOLPARTCONCLUDED_OBJ);
+                    states.add(StudentCurricularPlanState.ACTIVE);
+                    states.add(StudentCurricularPlanState.SCHOOLPARTCONCLUDED);
                     Object args[] = { infoStudent, new Specialization(graduationType), states };
                     infoStudentCurricularPlanList = (List) ServiceManagerServiceFactory.executeService(
                             userView, "CreateDeclaration", args);

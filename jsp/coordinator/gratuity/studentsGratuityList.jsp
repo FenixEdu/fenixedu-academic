@@ -116,7 +116,7 @@
 								<bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
 
 						</td>
-						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.currentState.stringPt"/></center></td>
+						<td bgcolor='#C0C0C0'><center><bean:message name="infoGratuitySituation" property="infoStudentCurricularPlan.currentState.name" bundle="ENUMERATION_RESOURCES"/></center></td>
 						<td bgcolor='#C0C0C0'><center><bean:message key="<%= "label.gratuitySituationType." + situationType.toString()%>"/></center></td>
 						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="remainingValue"/></center></td>	
 						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="payedValue"/></center></td>	
@@ -132,7 +132,7 @@
 							<bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
 						
 						</td>
-						<td><center><bean:write name="infoGratuitySituation" property="infoStudentCurricularPlan.currentState.stringPt"/></center></td>
+						<td><center><bean:message name="infoGratuitySituation" property="infoStudentCurricularPlan.currentState.name" bundle="ENUMERATION_RESOURCES"/></center></td>
 						<td><center><bean:message key="<%= "label.gratuitySituationType." + situationType.toString()%>"/></center></td>
 						<td><center><bean:write name="infoGratuitySituation" property="remainingValue"/></center></td>
 						<td><center><bean:write name="infoGratuitySituation" property="payedValue"/></center></td>

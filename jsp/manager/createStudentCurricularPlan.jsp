@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
 <h2><bean:message key="link.manager.studentsManagement"/> - <bean:message key="link.manager.studentsManagement.subtitle.createStudentCurricularPlan"/></h2>
 <br />
@@ -30,8 +31,9 @@
 
 		<tr>
 			<td>
+				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState" bundle="ENUMERATION_RESOURCES"/>
 				<html:select property="studentCurricularPlanState" size="1">
-					<html:options collection="studentCurricularPlanStates" property="value" labelProperty="label"/>
+					<html:options collection="values" property="value" labelProperty="label"/>
 				</html:select>
 			</td>
 		</tr>

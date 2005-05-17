@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.domain;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.util.AgreementType;
 import net.sourceforge.fenixedu.util.EntryPhase;
-import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.util.StudentState;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -161,7 +161,7 @@ public class Student extends Student_Base{
 
                     public boolean evaluate(Object arg0) {
                         IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) arg0;
-                        return studentCurricularPlan.getCurrentState().getState().intValue() == StudentCurricularPlanState.ACTIVE;
+                        return studentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.ACTIVE);
                     }
                 });
 

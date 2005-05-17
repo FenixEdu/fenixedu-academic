@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentInExtraCurricularCourse" %>
@@ -54,10 +55,9 @@
 	<tr>
 		<td>
 			<strong><bean:message key="label.student.state" /></strong>
-			<logic:present name="<%= SessionConstants.STATE %>">   
-				<html:select property="currentState" >					 
-				
-	          	 <html:options collection="<%= SessionConstants.STATE %>" property="value" labelProperty="label"/>
+				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState" bundle="ENUMERATION_RESOURCES"/>
+				<html:select property="currentState" >
+	          	 	<html:options collection="values" property="value" labelProperty="label"/>
 	    	 	</html:select>   
 			</logic:present>
 		</td>						
@@ -72,9 +72,7 @@
 	<tr>
 		<td>
 			<strong><bean:message key="label.student.credits" /></strong>
-			<logic:present name="<%= SessionConstants.STATE %>">
-				<html:text name="studentCurricularPlanForm" property="credits" size="4"/>
-			</logic:present>
+			<html:text name="studentCurricularPlanForm" property="credits" size="4"/>
 		</td>
 	</tr>	
 	<tr>

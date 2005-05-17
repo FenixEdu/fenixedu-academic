@@ -13,8 +13,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.util.Specialization;
-import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
 
 /**
  * 
@@ -277,16 +277,7 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
      */
     public int compareTo(Object arg0) {
         InfoStudentCurricularPlan obj0 = (InfoStudentCurricularPlan) arg0;
-        if (obj0.currentState.getState().intValue() == getCurrentState().getState().intValue()) {
-            return 0;
-        }
-        if (obj0.currentState.getState().intValue() < getCurrentState().getState().intValue()) {
-            return -1;
-        }
-        if (obj0.currentState.getState().intValue() > getCurrentState().getState().intValue()) {
-            return 1;
-        }
-        return 0;
+        return obj0.getCurrentState().compareTo(this.getCurrentState());
     }
 
     /**

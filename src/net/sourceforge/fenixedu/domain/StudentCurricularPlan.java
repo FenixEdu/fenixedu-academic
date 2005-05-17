@@ -16,10 +16,10 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll
 import net.sourceforge.fenixedu.domain.degree.enrollment.INotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.IEnrollmentRule;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.util.Specialization;
-import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -114,7 +114,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 								return studentCurricularPlan
 										.getCurrentState()
 										.equals(
-												StudentCurricularPlanState.PAST_OBJ);
+												StudentCurricularPlanState.PAST);
 							}
 						});
 

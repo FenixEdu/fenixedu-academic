@@ -12,11 +12,11 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Specialization;
-import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -60,8 +60,9 @@ public class EditStudentCurricularCoursePlan extends DispatchAction {
         //put request
         request.setAttribute(SessionConstants.SPECIALIZATION, Specialization.toIntValueArrayList());
         request.setAttribute(SessionConstants.BRANCH, branchList);
-        request.setAttribute(SessionConstants.STATE, StudentCurricularPlanState
-                .toOrderedArrayList(infoStudentCurricularPlan.getCurrentState()));
+        request.setAttribute("currentState", infoStudentCurricularPlan.getCurrentState());
+        /*request.setAttribute(SessionConstants.STATE, StudentCurricularPlanState
+                .toOrderedArrayList(infoStudentCurricularPlan.getCurrentState()));*/
         request.setAttribute("student", infoStudentCurricularPlan.getInfoStudent());
         request.setAttribute("studentCurricularPlan", infoStudentCurricularPlan);
 

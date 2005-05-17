@@ -13,11 +13,11 @@ import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**

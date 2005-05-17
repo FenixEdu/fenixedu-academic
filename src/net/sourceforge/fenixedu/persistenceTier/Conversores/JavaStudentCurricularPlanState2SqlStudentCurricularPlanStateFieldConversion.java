@@ -6,7 +6,7 @@
 
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
@@ -19,7 +19,7 @@ public class JavaStudentCurricularPlanState2SqlStudentCurricularPlanStateFieldCo
     public Object javaToSql(Object source) {
         if (source instanceof StudentCurricularPlanState) {
             StudentCurricularPlanState s = (StudentCurricularPlanState) source;
-            return s.getState();
+            return s.toString();
         }
 
         return source;
@@ -30,9 +30,9 @@ public class JavaStudentCurricularPlanState2SqlStudentCurricularPlanStateFieldCo
      * @see FieldConversion#sqlToJava(Object)
      */
     public Object sqlToJava(Object source) {
-        if (source instanceof Integer) {
-            Integer src = (Integer) source;
-            return new StudentCurricularPlanState(src);
+        if (source instanceof String) {
+            String src = (String) source;
+            return StudentCurricularPlanState.valueOf(src);
         }
 
         return source;

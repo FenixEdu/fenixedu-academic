@@ -53,7 +53,7 @@
     	        <bean:write name="studentCP" property="infoStudent.infoPerson.nome"/>
     	    </td>    	    
             <td class="listClasses">
-    	        <bean:write name="studentCP" property="currentState.stringPt"/>
+    	        <bean:message name="studentCP" property="currentState.name" bundle="ENUMERATION_RESOURCES"/>
     	    </td>
         </logic:iterate>
       	</table>    	

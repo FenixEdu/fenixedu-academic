@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
-import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 
 /**
  * @author dcs-rjao 24/Mar/2003

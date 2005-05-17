@@ -43,6 +43,7 @@ import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
@@ -50,7 +51,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.AttendacyStateSelectionType;
-import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.util.TipoAula;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -83,7 +83,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         
         while (i.hasNext()){
             IStudentCurricularPlan cp = (IStudentCurricularPlan)i.next(); 
-            if(cp.getCurrentState().equals(StudentCurricularPlanState.ACTIVE_OBJ))
+            if(cp.getCurrentState().equals(StudentCurricularPlanState.ACTIVE))
                 return cp;
         }
         return GetLastCurricularPlan(cps);

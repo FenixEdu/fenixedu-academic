@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
-import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -242,7 +242,7 @@ public class EnrollmentOJB extends PersistentObjectOJB implements IPersistentEnr
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("studentCurricularPlan.student.idInternal", student.getIdInternal());
-        criteria.addEqualTo("studentCurricularPlan.currentState", StudentCurricularPlanState.ACTIVE_OBJ);
+        criteria.addEqualTo("studentCurricularPlan.currentState", StudentCurricularPlanState.ACTIVE);
         criteria.addEqualTo("studentCurricularPlan.degreeCurricularPlan.degree.tipoCurso",
                 DegreeType.DEGREE);
         criteria.addEqualTo("enrollmentState", EnrollmentState.APROVED);
@@ -256,7 +256,7 @@ public class EnrollmentOJB extends PersistentObjectOJB implements IPersistentEnr
             criteria = new Criteria();
             criteria.addEqualTo("studentCurricularPlan.student.idInternal", student.getIdInternal());
             criteria.addNotEqualTo("studentCurricularPlan.currentState",
-                    StudentCurricularPlanState.ACTIVE_OBJ);
+                    StudentCurricularPlanState.ACTIVE);
             criteria.addEqualTo("studentCurricularPlan.degreeCurricularPlan.degree.tipoCurso",
                     DegreeType.DEGREE);
             criteria.addEqualTo("enrollmentState", EnrollmentState.APROVED);
@@ -283,7 +283,7 @@ public class EnrollmentOJB extends PersistentObjectOJB implements IPersistentEnr
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("student.idInternal", student.getIdInternal());
-        criteria.addEqualTo("currentState", StudentCurricularPlanState.ACTIVE_OBJ);
+        criteria.addEqualTo("currentState", StudentCurricularPlanState.ACTIVE);
         criteria.addEqualTo("degreeCurricularPlan.degree.tipoCurso", DegreeType.DEGREE);
         return (IStudentCurricularPlan) queryObject(StudentCurricularPlan.class, criteria);
     }

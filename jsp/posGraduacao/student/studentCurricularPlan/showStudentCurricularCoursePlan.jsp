@@ -44,7 +44,7 @@
 	<tr>
 		<td>
 			<b><bean:message key="label.student.state" /></b>
-			<bean:write name="studentCurricularPlan" property="currentState.stringPt" />
+			<bean:message name="studentCurricularPlan" property="currentState.name" bundle="ENUMERATION_RESOURCES"/>
 		</td>						
 	</tr>	
 	<tr>

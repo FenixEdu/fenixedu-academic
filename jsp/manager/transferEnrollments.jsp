@@ -41,10 +41,10 @@
 						<bean:message key="label.studentCurricularPlan"/>
 					</td>
 					<td colspan="4" class="listClasses">
-						<bean:define id="studentCurricularPlanStateString" type="java.lang.String" name="infoStudentCurricularPlan" property="currentState.stringPt"/>
+						<bean:define id="studentCurricularPlanStateString" type="java.lang.String" name="infoStudentCurricularPlan" property="currentState.name"/>
 						<bean:define id="onChangeString" type="java.lang.String">this.form.method.value='changeStudentCurricularPlanState';this.form.selectedStudentCurricularPlanId.value=<%= studentCurricularPlanId.toString() %>;this.form.submit();</bean:define>
 
-						<bean:write name="infoStudentCurricularPlan" property="currentState.stringPt"/>
+						<bean:write name="infoStudentCurricularPlan" property="currentState.name"/>
 						<logic:present name="infoStudentCurricularPlan" property="startDate">
 							:
 							<dt:format pattern="yyyy-MM-dd">
@@ -161,10 +161,10 @@
 						<bean:message key="label.studentCurricularPlan"/>
 					</td>
 					<td class="listClasses">
-						<bean:define id="studentCurricularPlanStateString" type="java.lang.String" name="infoStudentCurricularPlan" property="currentState.stringPt"/>
+						<bean:define id="studentCurricularPlanStateString" type="java.lang.String" name="infoStudentCurricularPlan" property="currentState.name"/>
 						<bean:define id="onChangeString" type="java.lang.String">this.form.method.value='changeStudentCurricularPlanState';this.form.selectedStudentCurricularPlanId.value=<%= studentCurricularPlanId.toString() %>;this.form.submit();</bean:define>
 
-						<bean:write name="infoStudentCurricularPlan" property="currentState.stringPt"/>
+						<bean:write name="infoStudentCurricularPlan" property="currentState.name"/>
 						<logic:present name="infoStudentCurricularPlan" property="startDate">
 							:
 							<dt:format pattern="yyyy-MM-dd">

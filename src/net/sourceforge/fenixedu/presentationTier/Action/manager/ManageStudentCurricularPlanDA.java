@@ -19,10 +19,10 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -48,7 +48,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
         final String degreeTypeString = (String) dynaActionForm.get("degreeType");
 
         if (isPresent(studentNumberString) && isPresent(degreeTypeString)) {
-            putStudentCurricularPlanStateLabelListInRequest(request);
+            //putStudentCurricularPlanStateLabelListInRequest(request);
 
             final Integer studentNumber = new Integer(studentNumberString);
             final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
@@ -82,8 +82,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
 
         final Integer selectedStudentCurricularPlanId = new Integer(
                 selectedStudentCurricularPlanIdString);
-        final StudentCurricularPlanState studentCurricularPlanState = new StudentCurricularPlanState(
-                studentCurricularPlanStateString);
+        final StudentCurricularPlanState studentCurricularPlanState = StudentCurricularPlanState.valueOf(studentCurricularPlanStateString);
 
         final IUserView userView = SessionUtils.getUserView(request);
         final Object[] args = new Object[] { selectedStudentCurricularPlanId, studentCurricularPlanState };
@@ -112,7 +111,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
         final String degreeTypeString = (String) dynaActionForm.get("degreeType");
 
         if (isPresent(degreeTypeString)) {
-            putStudentCurricularPlanStateLabelListInRequest(request);
+            //putStudentCurricularPlanStateLabelListInRequest(request);
 
             final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
 
@@ -125,7 +124,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
             putDegreeCurricularPlansInRequest(request, infoDegreeCurricularPlans);
 
             putDegreeTypeLabelListInRequest(request);
-            putStudentCurricularPlanStateLabelListInRequest(request);
+            //putStudentCurricularPlanStateLabelListInRequest(request);
         }
 
         return mapping.findForward("createStudentCurricularPlan");
@@ -149,8 +148,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
 
             final Integer studentNumber = new Integer(studentNumberString);
             final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
-            final StudentCurricularPlanState studentCurricularPlanState = new StudentCurricularPlanState(
-                    studentCurricularPlanStateString);
+            final StudentCurricularPlanState studentCurricularPlanState = StudentCurricularPlanState.valueOf(studentCurricularPlanStateString);
             final Integer degreeCurricularPlanId = new Integer(degreeCurricularPlanIdString);
             final Date startDate = simpleDateFormat.parse(startDateString);
 
@@ -229,9 +227,9 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
         //request.setAttribute("degreeTypes", DegreeType.toLabelValueBeanList());
     }
 
-    protected void putStudentCurricularPlanStateLabelListInRequest(final HttpServletRequest request) {
+    /*protected void putStudentCurricularPlanStateLabelListInRequest(final HttpServletRequest request) {
         request.setAttribute("studentCurricularPlanStates", StudentCurricularPlanState.toArrayList());
-    }
+    }*/
 
     protected boolean isPresent(final String string) {
         return string != null && string.length() > 0;

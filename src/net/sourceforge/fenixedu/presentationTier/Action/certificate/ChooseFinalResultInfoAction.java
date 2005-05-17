@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FinalResulUnreachedActionException;
@@ -31,7 +32,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.util.Specialization;
-import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -94,8 +94,8 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
             //get informations
             try {
                 ArrayList states = new ArrayList();
-                states.add(StudentCurricularPlanState.ACTIVE_OBJ);
-                states.add(StudentCurricularPlanState.SCHOOLPARTCONCLUDED_OBJ);
+                states.add(StudentCurricularPlanState.ACTIVE);
+                states.add(StudentCurricularPlanState.SCHOOLPARTCONCLUDED);
                 Object args[] = { infoStudent, new Specialization(graduationType), states };
                 infoStudentCurricularPlanList = (List) ServiceManagerServiceFactory.executeService(
                         userView, "CreateDeclaration", args);

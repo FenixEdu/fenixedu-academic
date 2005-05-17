@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
@@ -26,7 +27,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.Specialization;
-import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -51,7 +51,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
                 throw new InvalidArgumentsServiceException();
             }
 
-            StudentCurricularPlanState newState = new StudentCurricularPlanState(currentState);
+            StudentCurricularPlanState newState = StudentCurricularPlanState.valueOf(currentState);
 
             IEmployee employee = null;
             IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
@@ -84,7 +84,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
 
             List enrollments = studentCurricularPlan.getEnrolments();
             Iterator iterator = enrollments.iterator();
-            if (newState.getState().intValue() == StudentCurricularPlanState.INACTIVE) {
+            if (newState.equals(StudentCurricularPlanState.INACTIVE)) {
                 while (iterator.hasNext()) {
                     IEnrolment enrolment = (IEnrolment) iterator.next();
                     if (enrolment.getEnrollmentState() == EnrollmentState.ENROLLED
@@ -173,7 +173,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
     private void changeAnnulled2ActiveIfActivePlan(StudentCurricularPlanState newState,
             IPersistentEnrollment persistentEnrolment, IEnrolment enrolment)
             throws ExcepcaoPersistencia {
-        if (newState.getState().intValue() == StudentCurricularPlanState.ACTIVE) {
+        if (newState.equals(StudentCurricularPlanState.ACTIVE)) {
             if (enrolment.getEnrollmentState() == EnrollmentState.ANNULED) {
                 persistentEnrolment.simpleLockWrite(enrolment);
                 enrolment.setEnrollmentState(EnrollmentState.ENROLLED);

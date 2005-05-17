@@ -409,7 +409,7 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
         public boolean getCanChangeSpecializationArea();
         public Integer getCreditsInSecundaryArea();
         public Integer getCreditsInSpecializationArea();
-        public net.sourceforge.fenixedu.util.StudentCurricularPlanState getCurrentState();
+        public net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState getCurrentState();
         public Integer getCurricularCourseAcumulatedEnrollments(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
         public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType getCurricularCourseEnrollmentType(
                 net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse, net.sourceforge.fenixedu.domain.IExecutionPeriod currentExecutionPeriod);
@@ -430,7 +430,7 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
         
         public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea);
         public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea);
-        public void setCurrentState(net.sourceforge.fenixedu.util.StudentCurricularPlanState currentState);
+        public void setCurrentState(net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState currentState);
         public void setEnrollmentReports(java.util.List enrollmentReports);
         public void setSecundaryBranch(net.sourceforge.fenixedu.domain.IBranch secundaryBranch);
         public void setSpecialization(net.sourceforge.fenixedu.util.Specialization specialization);

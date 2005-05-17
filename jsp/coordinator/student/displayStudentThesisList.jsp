@@ -25,7 +25,7 @@
 					<h:outputText value="#{bundle['label.coordinator.planState']}" styleClass="boldFontClass" />
 					<h:outputText value="#{masterDegreeThesisDataVersion.infoMasterDegreeThesis.infoStudentCurricularPlan.infoStudent.number}" />
 					<h:outputText value="#{masterDegreeThesisDataVersion.infoMasterDegreeThesis.infoStudentCurricularPlan.infoStudent.infoPerson.nome}" />
-					<h:outputText value="#{masterDegreeThesisDataVersion.infoMasterDegreeThesis.infoStudentCurricularPlan.currentState.stringPt}" />				
+					<h:outputText value="#{masterDegreeThesisDataVersion.infoMasterDegreeThesis.infoStudentCurricularPlan.currentState.name}" />				
 				</h:panelGrid>
 				<h:outputText value=" " />
 				<h:panelGrid columns="1" >

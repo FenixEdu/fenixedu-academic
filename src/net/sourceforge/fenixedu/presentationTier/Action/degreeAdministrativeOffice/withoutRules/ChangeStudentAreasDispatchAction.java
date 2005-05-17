@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoAreas2Choose;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -27,7 +28,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -261,7 +261,7 @@ public class ChangeStudentAreasDispatchAction extends DispatchAction {
             public boolean evaluate(Object obj) {
                 InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) obj;
                 return infoStudentCurricularPlan.getCurrentState().equals(
-                        StudentCurricularPlanState.ACTIVE_OBJ);
+                        StudentCurricularPlanState.ACTIVE);
             }
         });
 

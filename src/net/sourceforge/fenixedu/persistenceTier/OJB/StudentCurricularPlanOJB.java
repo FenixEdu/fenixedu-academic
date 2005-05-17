@@ -19,10 +19,10 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.util.Specialization;
-import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -38,7 +38,7 @@ public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
         Criteria crit = new Criteria();
         crit.addEqualTo("student.person.username", username);
         crit.addEqualTo("student.degreeType", degreeType);
-        crit.addEqualTo("currentState", new Integer(StudentCurricularPlanState.ACTIVE));
+        crit.addEqualTo("currentState", StudentCurricularPlanState.ACTIVE);
         return (IStudentCurricularPlan) queryObject(StudentCurricularPlan.class, crit);
     }
 
@@ -48,7 +48,7 @@ public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
         Criteria crit = new Criteria();
         crit.addEqualTo("student.number", studentNumber);
         crit.addEqualTo("student.degreeType", degreeType);
-        crit.addEqualTo("currentState", new Integer(StudentCurricularPlanState.ACTIVE));
+        crit.addEqualTo("currentState", StudentCurricularPlanState.ACTIVE);
         return (IStudentCurricularPlan) queryObject(StudentCurricularPlan.class, crit);
 
     }
@@ -56,7 +56,7 @@ public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
     public List readAllActiveStudentCurricularPlan(Integer studentNumber) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("student.number", studentNumber);
-        crit.addEqualTo("currentState", new Integer(StudentCurricularPlanState.ACTIVE));
+        crit.addEqualTo("currentState", StudentCurricularPlanState.ACTIVE);
         return queryList(StudentCurricularPlan.class, crit);
 
     }
@@ -65,7 +65,7 @@ public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
             IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("enrolments.executionPeriod.idInternal", executionPeriod.getIdInternal());
-        crit.addEqualTo("currentState", new Integer(StudentCurricularPlanState.ACTIVE));
+        crit.addEqualTo("currentState", StudentCurricularPlanState.ACTIVE);
         return queryList(StudentCurricularPlan.class, crit, true);
     }
 
@@ -73,7 +73,7 @@ public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
             IExecutionPeriod executionPeriod, IDegree degree) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("enrolments.executionPeriod.idInternal", executionPeriod.getIdInternal());
-        crit.addEqualTo("currentState", new Integer(StudentCurricularPlanState.ACTIVE));
+        crit.addEqualTo("currentState", StudentCurricularPlanState.ACTIVE);
         crit.addEqualTo("degreeCurricularPlan.degree.idInternal", degree.getIdInternal());
         return queryList(StudentCurricularPlan.class, crit, true);
     }
@@ -225,8 +225,8 @@ public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
             DegreeType degreeType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         List studentPlanState = new ArrayList();
-        studentPlanState.add(StudentCurricularPlanState.ACTIVE_OBJ);
-        studentPlanState.add(StudentCurricularPlanState.SCHOOLPARTCONCLUDED_OBJ);
+        studentPlanState.add(StudentCurricularPlanState.ACTIVE);
+        studentPlanState.add(StudentCurricularPlanState.SCHOOLPARTCONCLUDED);
 
         criteria.addIn("currentState", studentPlanState);
         //   criteria.addEqualTo("currentState",
