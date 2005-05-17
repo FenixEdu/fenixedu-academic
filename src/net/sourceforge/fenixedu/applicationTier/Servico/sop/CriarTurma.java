@@ -63,7 +63,7 @@ public class CriarTurma implements IService {
                         .getDegreeCurricularPlan(), turma.getExecutionDegree().getExecutionYear()));
 
         turma.setExecutionPeriod(executionPeriodDAO.readByNameAndExecutionYear(turma
-                .getExecutionPeriod().getName(), turma.getExecutionPeriod().getExecutionYear()));
+                .getExecutionPeriod().getName(), turma.getExecutionPeriod().getExecutionYear().getYear()));
 
         return InfoClass.newInfoFromDomain(turma);
     }

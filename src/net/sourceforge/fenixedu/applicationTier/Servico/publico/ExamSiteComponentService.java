@@ -48,7 +48,7 @@ public class ExamSiteComponentService implements IService {
                     .readExecutionYearByName(executionYearName);
 
             IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(
-                    executionPeriodName, executionYear);
+                    executionPeriodName, executionYear.getYear());
 
             IExecutionDegree executionDegree = executionDegreeDAO
                     .readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(degreeInitials,

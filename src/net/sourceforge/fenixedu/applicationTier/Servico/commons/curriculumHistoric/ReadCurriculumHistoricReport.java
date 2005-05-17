@@ -59,7 +59,7 @@ public class ReadCurriculumHistoricReport implements IService {
             IPersistentExecutionPeriod persistentExecutionPeriod = suportePersistente
                     .getIPersistentExecutionPeriod();
             IExecutionPeriod executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(
-                    semester, executionYear);
+                    semester, executionYear.getYear());
 
             //read CurricularCourse
             IPersistentCurricularCourse persistentCurricularCourse = suportePersistente

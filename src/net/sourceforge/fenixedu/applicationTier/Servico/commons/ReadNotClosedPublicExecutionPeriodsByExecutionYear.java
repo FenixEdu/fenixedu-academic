@@ -36,14 +36,15 @@ public class ReadNotClosedPublicExecutionPeriodsByExecutionYear implements IServ
             IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
             IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
             IExecutionYear executionYear;
+            List executionPeriods;
 
             if (infoExecutionYear == null) {
                 executionYear = executionYearDAO.readCurrentExecutionYear();
+                executionPeriods = executionPeriodDAO.readNotClosedPublicExecutionPeriodsByExecutionYears(executionYear.getIdInternal());
             } else {
-                executionYear = InfoExecutionYear.newDomainFromInfo(infoExecutionYear);
+                executionPeriods = executionPeriodDAO.readNotClosedPublicExecutionPeriodsByExecutionYears(infoExecutionYear.getIdInternal());
             }
 
-            List executionPeriods = executionPeriodDAO.readNotClosedPublicExecutionPeriodsByExecutionYears(executionYear);
             result = (List) CollectionUtils.collect(executionPeriods, new Transformer() {
 
                 public Object transform(Object input) {

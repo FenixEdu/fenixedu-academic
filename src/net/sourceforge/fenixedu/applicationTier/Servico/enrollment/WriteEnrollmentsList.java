@@ -108,7 +108,7 @@ public class WriteEnrollmentsList implements IService {
         Integer semester = findBestSemester(persistentExecutionPeriod, curricularCourseScopes);
         if (semester != null) {
             executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(semester,
-                    executionYear);
+                    executionYear.getYear());
         }
 
         return executionPeriod;

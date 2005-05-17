@@ -22,12 +22,6 @@ public interface IPersistentExecutionPeriod extends IPersistentObject {
      */
     public List readAllExecutionPeriod() throws ExcepcaoPersistencia;
 
-    /**
-     * @param executionPeriod
-     * @return boolean
-     */
-    public boolean delete(IExecutionPeriod executionPeriod);
-
     public IExecutionPeriod readActualExecutionPeriod() throws ExcepcaoPersistencia;
 
     /**
@@ -38,14 +32,14 @@ public interface IPersistentExecutionPeriod extends IPersistentObject {
      * @return IExecutionPeriod
      */
     public IExecutionPeriod readByNameAndExecutionYear(String executionPeriodName,
-            IExecutionYear executionYear) throws ExcepcaoPersistencia;
+            String year) throws ExcepcaoPersistencia;
 
     /**
      * @param string
      * @param year
      * @return
      */
-    public IExecutionPeriod readBySemesterAndExecutionYear(Integer semester, IExecutionYear year)
+    public IExecutionPeriod readBySemesterAndExecutionYear(Integer semester, String year)
             throws ExcepcaoPersistencia;
 
     /**
@@ -64,7 +58,7 @@ public interface IPersistentExecutionPeriod extends IPersistentObject {
      * @return @throws
      *         ExcepcaoPersistencia
      */
-    public List readByExecutionYear(IExecutionYear executionYear) throws ExcepcaoPersistencia;
+    public List readByExecutionYear(Integer executionYear) throws ExcepcaoPersistencia;
 
     /**
      * @return
@@ -73,5 +67,5 @@ public interface IPersistentExecutionPeriod extends IPersistentObject {
 
     public List readExecutionPeriodsInTimePeriod(Date start, Date end) throws ExcepcaoPersistencia;
 	
-	public List readNotClosedPublicExecutionPeriodsByExecutionYears(IExecutionYear executionYear) throws ExcepcaoPersistencia; 
+	public List readNotClosedPublicExecutionPeriodsByExecutionYears(Integer executionYear) throws ExcepcaoPersistencia; 
 }

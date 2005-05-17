@@ -34,14 +34,16 @@ public class ReadExecutionPeriodsByExecutionYear implements IService {
             IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
             IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
             IExecutionYear executionYear;
+            List executionPeriods;
 
             if (infoExecutionYear == null) {
                 executionYear = executionYearDAO.readCurrentExecutionYear();
-            } else {
-                executionYear = InfoExecutionYear.newDomainFromInfo(infoExecutionYear);
+                executionPeriods = executionPeriodDAO.readByExecutionYear(executionYear.getIdInternal());
+            } 
+            else{
+                executionPeriods = executionPeriodDAO.readByExecutionYear(infoExecutionYear.getIdInternal());
             }
-
-            List executionPeriods = executionPeriodDAO.readByExecutionYear(executionYear);
+            
             result = (List) CollectionUtils.collect(executionPeriods, new Transformer() {
 
                 public Object transform(Object input) {

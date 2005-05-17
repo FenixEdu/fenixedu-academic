@@ -51,7 +51,7 @@ public class ReadBibliographicReference implements IService {
                     .readExecutionYearByName(infoExecutionCourse.getInfoExecutionPeriod()
                             .getInfoExecutionYear().getYear());
             IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(
-                    infoExecutionCourse.getInfoExecutionPeriod().getName(), executionYear);
+                    infoExecutionCourse.getInfoExecutionPeriod().getName(), executionYear.getYear());
             IExecutionCourse executionCourse = persistentExecutionCourse
                     .readByExecutionCourseInitialsAndExecutionPeriod(infoExecutionCourse.getSigla(),
                             executionPeriod);

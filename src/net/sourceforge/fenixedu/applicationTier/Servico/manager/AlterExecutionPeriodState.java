@@ -40,7 +40,7 @@ public class AlterExecutionPeriodState implements IService {
             IExecutionPeriod executionPeriod = executionPeriodDAO.readBySemesterAndExecutionYear(
                     infoExecutionPeriod.getSemester(), executionYearDAO
                             .readExecutionYearByName(infoExecutionPeriod.getInfoExecutionYear()
-                                    .getYear()));
+                                    .getYear()).getYear());
 
             if (executionPeriod == null) {
                 throw new InvalidExecutionPeriod();

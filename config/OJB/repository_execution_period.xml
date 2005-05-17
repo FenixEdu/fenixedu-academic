@@ -20,10 +20,11 @@
           name="keyExecutionYear"
           column="KEY_EXECUTION_YEAR"
           jdbc-type="INTEGER"/>
-          <field-descriptor
+        <field-descriptor
           name="keyPreviousExecutionPeriod"
           column="KEY_PREVIOUS_EXECUTION_PERIOD"
           jdbc-type="INTEGER"/>
+		
         <field-descriptor
           name="state"
           column="STATE"
@@ -56,7 +57,7 @@
           class-ref="net.sourceforge.fenixedu.domain.ExecutionYear">
           <foreignkey field-ref="keyExecutionYear"/>
        </reference-descriptor>
-       
+      
        <reference-descriptor
          name="previousExecutionPeriod"
          class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
@@ -69,5 +70,41 @@
 			element-class-ref="net.sourceforge.fenixedu.domain.SchoolClass"
 			proxy="true">
 		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
-	</collection-descriptor>  
-    </class-descriptor> 
+	</collection-descriptor>
+    <collection-descriptor
+			name="associatedOtherTypeCreditLines"
+			element-class-ref="net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="associatedTeacherDegreeFinalProjectStudents"
+			element-class-ref="net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="enrolments"
+			element-class-ref="net.sourceforge.fenixedu.domain.Enrolment"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="associatedTeacherInstitutionWorkTime"
+			element-class-ref="net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="enrolmentPeriod"
+			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriod"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="oldInquiriesTeachersRes"
+			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
+	</collection-descriptor>
+</class-descriptor> 

@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -30,10 +29,9 @@ public class ReadExecutionPeriod implements IService {
         InfoExecutionPeriod result = null;
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
-            IExecutionYear executionYear = InfoExecutionYear.newDomainFromInfo(infoExecutionYear);
+            IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();      
             IExecutionPeriod executionPeriod = executionPeriodDAO.readByNameAndExecutionYear(name,
-                    executionYear);
+                    infoExecutionYear.getYear());
             if (executionPeriod != null) {
                 result = (InfoExecutionPeriod) Cloner.get(executionPeriod);
             }

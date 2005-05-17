@@ -75,7 +75,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName imp
         if (curriculumExecutionYear != null) {
             List allCurricularCourseScopes = new ArrayList();
             List allExecutionCourses = new ArrayList();
-            List executionPeriods = persistentExecutionPeriod.readByExecutionYear(executionYear);
+            List executionPeriods = persistentExecutionPeriod.readByExecutionYear(executionYear.getIdInternal());
             Iterator iterExecutionPeriods = executionPeriods.iterator();
             while (iterExecutionPeriods.hasNext()) {
                 IExecutionPeriod executionPeriod = (IExecutionPeriod) iterExecutionPeriods.next();
