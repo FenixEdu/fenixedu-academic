@@ -51,8 +51,8 @@ public class AddCoordinator implements IService {
                 throw new InvalidArgumentsServiceException();
             }
             IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
-            ICoordinator coordinator = persistentCoordinator.readCoordinatorByTeacherAndExecutionDegree(
-                    teacher, executionDegree);
+            ICoordinator coordinator = persistentCoordinator.readCoordinatorByTeacherIdAndExecutionDegreeId(
+                    teacher.getIdInternal(), executionDegree.getIdInternal());
             if (coordinator == null) {
                 coordinator = new Coordinator();
                 persistentCoordinator.simpleLockWrite(coordinator);
@@ -61,7 +61,7 @@ public class AddCoordinator implements IService {
                 coordinator.setResponsible(new Boolean(false));
                 //verify if the teacher already was coordinator
                 List executionDegreesTeacherList = persistentCoordinator
-                        .readExecutionDegreesByTeacher(teacher);
+                        .readExecutionDegreesByTeacher(teacher.getIdInternal());
                 if (executionDegreesTeacherList == null || executionDegreesTeacherList.size() <= 0) {
                     //Role Coordinator
                     IPersistentRole persistentRole = sp.getIPersistentRole();

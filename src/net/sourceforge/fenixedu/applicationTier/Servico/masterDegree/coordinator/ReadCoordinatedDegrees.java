@@ -48,7 +48,7 @@ public class ReadCoordinatedDegrees implements IService {
             if (teacher == null) {
                 throw new ExcepcaoInexistente("No Teachers Found !!");
             }
-            plans = sp.getIPersistentCoordinator().readCurricularPlansByTeacher(teacher);
+            plans = sp.getIPersistentCoordinator().readCurricularPlansByTeacher(teacher.getIdInternal());
 
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);

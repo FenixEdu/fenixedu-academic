@@ -40,7 +40,7 @@ public class ReadCoordinationTeam implements IService {
             if (executionDegree == null) {
                 throw new InvalidArgumentsServiceException("execution Degree unexisting");
             }
-            List coordinators = persistentCoordinator.readCoordinatorsByExecutionDegree(executionDegree);
+            List coordinators = persistentCoordinator.readCoordinatorsByExecutionDegree(executionDegree.getIdInternal());
             Iterator iterator = coordinators.iterator();
             List infoCoordinators = new ArrayList();
             while (iterator.hasNext()) {

@@ -123,7 +123,7 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro {
                 // ALWAYS the same
                 //modified by Tânia Pousão
                 List coodinatorsList = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentCoordinator()
-                        .readCoordinatorsByExecutionDegree(((IExecutionDegree) executionDegrees.get(0)));
+                        .readCoordinatorsByExecutionDegree(((IExecutionDegree) executionDegrees.get(0)).getIdInternal());
                 if (coodinatorsList == null) {
                     return false;
                 }

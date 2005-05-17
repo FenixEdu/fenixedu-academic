@@ -210,7 +210,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
                     }
                     IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
                     List coordinatorsList = persistentCoordinator
-                            .readCoordinatorsByExecutionDegree(executionDegree);
+                            .readCoordinatorsByExecutionDegree(executionDegree.getIdInternal());
                     if (coordinatorsList == null) {
                         return "noAuthorization";
                     }

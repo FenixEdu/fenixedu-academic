@@ -96,7 +96,7 @@ public class ExecutionCourseCoordinatorAuthorizationFilter extends Authorization
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
             if (teacher != null && executionCourse != null) {
-                List executionDegrees = persistentCoordinator.readExecutionDegreesByTeacher(teacher);
+                List executionDegrees = persistentCoordinator.readExecutionDegreesByTeacher(teacher.getIdInternal());
                 if (executionDegrees != null && !executionDegrees.isEmpty()) {
                     Iterator iter = executionDegrees.iterator();
                     while (iter.hasNext() && !result) {

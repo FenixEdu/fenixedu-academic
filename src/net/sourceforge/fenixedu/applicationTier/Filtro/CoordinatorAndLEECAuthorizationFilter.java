@@ -81,7 +81,7 @@ public class CoordinatorAndLEECAuthorizationFilter extends AuthorizationByRoleFi
             
            	IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
             ICoordinator coordinator = persistentCoordinator
-                    .readCoordinatorByTeacherAndExecutionDegreeId(teacher, (Integer) argumentos[0]);
+                    .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(), (Integer) argumentos[0]);
             if (coordinator != null && coordinator.getExecutionDegree() != null
                     && coordinator.getExecutionDegree().getDegreeCurricularPlan() != null
                     && coordinator.getExecutionDegree().getDegreeCurricularPlan().getDegree() != null) {

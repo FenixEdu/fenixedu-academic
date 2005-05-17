@@ -197,7 +197,7 @@ public class EquivalenceAuthorizationFilter extends Filtro {
         IPersistentCoordinator coordinatorDAO = persistenceDAO.getIPersistentCoordinator();
 
         ITeacher teacher = teacherDAO.readTeacherByUsername(username);
-        return coordinatorDAO.readExecutionDegreesByTeacher(teacher);
+        return coordinatorDAO.readExecutionDegreesByTeacher(teacher.getIdInternal());
     }
 
     /**

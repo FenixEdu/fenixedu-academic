@@ -147,7 +147,7 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
 	                for(Iterator executionDegreeIterator = executionDegrees.iterator(); executionDegreeIterator.hasNext();)
 	                {
 	                    IExecutionDegree executionDegree = (IExecutionDegree)executionDegreeIterator.next();
-		                List coordinatorsList = persistentCoordinator.readCoordinatorsByExecutionDegree(executionDegree);
+		                List coordinatorsList = persistentCoordinator.readCoordinatorsByExecutionDegree(executionDegree.getIdInternal());
 		                
 		                if (coordinatorsList == null || coordinatorsList.isEmpty())
 		                {

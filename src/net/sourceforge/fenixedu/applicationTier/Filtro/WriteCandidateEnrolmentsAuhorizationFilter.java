@@ -107,8 +107,8 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
 
                 //modified by Tânia Pousão
                 ICoordinator coordinator = sp.getIPersistentCoordinator()
-                        .readCoordinatorByTeacherAndExecutionDegree(teacher,
-                                masterDegreeCandidate.getExecutionDegree());
+                        .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(),
+                                masterDegreeCandidate.getExecutionDegree().getIdInternal());
                 if (coordinator == null) {
                     return false;
                 }

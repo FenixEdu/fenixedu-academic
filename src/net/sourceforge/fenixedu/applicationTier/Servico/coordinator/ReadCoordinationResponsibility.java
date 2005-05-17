@@ -33,7 +33,7 @@ public class ReadCoordinationResponsibility implements IService {
                 throw new InvalidArgumentsServiceException("invalid teacher!");
             }
             ICoordinator coordinator = persistentCoordinator
-                    .readCoordinatorByTeacherAndExecutionDegreeId(teacher, executionDegreeId);
+                    .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(), executionDegreeId);
             if (coordinator == null || !coordinator.getResponsible().booleanValue()) {
                 return new Boolean(false);
             }

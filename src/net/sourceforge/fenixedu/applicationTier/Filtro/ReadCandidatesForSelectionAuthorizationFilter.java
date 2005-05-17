@@ -121,7 +121,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
 
                 //modified by Tânia Pousão
                 List coodinatorsList = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentCoordinator()
-                        .readCoordinatorsByExecutionDegree(executionDegree);
+                        .readCoordinatorsByExecutionDegree(executionDegree.getIdInternal());
                 if (coodinatorsList == null) {
                     return false;
                 }

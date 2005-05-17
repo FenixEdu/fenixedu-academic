@@ -79,7 +79,7 @@ public class DegreeCoordinatorAuthorizationFilter extends AuthorizationByRoleFil
             IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
 
             ICoordinator coordinator = persistentCoordinator
-                    .readCoordinatorByTeacherAndExecutionDegreeId(teacher, (Integer) argumentos[0]);
+                    .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(), (Integer) argumentos[0]);
 
             result = coordinator != null;
 

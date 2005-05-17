@@ -285,8 +285,8 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
             throws ExcepcaoPersistencia {
 
         IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
-        ICoordinator coordinator = persistentCoordinator.readCoordinatorByTeacherAndExecutionDegreeId(
-                teacher, (Integer) arguments[0]);
+        ICoordinator coordinator = persistentCoordinator.readCoordinatorByTeacherIdAndExecutionDegreeId(
+                teacher.getIdInternal(), (Integer) arguments[0]);
         if (coordinator == null) {
             return false;
         }

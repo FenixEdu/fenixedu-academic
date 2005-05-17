@@ -105,7 +105,7 @@ public class SearchExecutionCoursesAuthorizationFilter extends Filtro {
 
                 //modified by Tânia Pousão
                 ICoordinator coordinator = sp.getIPersistentCoordinator()
-                        .readCoordinatorByTeacherAndExecutionDegree(teacher, executionDegree);
+                        .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(), executionDegree.getIdInternal());
                 if (coordinator != null) {
                     return true;
                 }

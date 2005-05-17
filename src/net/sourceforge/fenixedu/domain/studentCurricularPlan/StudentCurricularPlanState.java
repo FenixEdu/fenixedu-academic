@@ -4,12 +4,6 @@
 
 package net.sourceforge.fenixedu.domain.studentCurricularPlan;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.sourceforge.fenixedu.util.FenixUtil;
-
-import org.apache.struts.util.LabelValueBean;
 
 /**
  * @author Nuno Nunes & Joana Mota

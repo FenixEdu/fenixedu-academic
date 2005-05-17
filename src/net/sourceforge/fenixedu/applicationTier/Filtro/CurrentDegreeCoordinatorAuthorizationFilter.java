@@ -83,8 +83,8 @@ public class CurrentDegreeCoordinatorAuthorizationFilter extends AuthorizationBy
                     ExecutionDegree.class, (Integer) argumentos[0]);
             IExecutionYear executionYear = executionDegree.getExecutionYear();
 
-            ICoordinator coordinator = persistentCoordinator.readCoordinatorByTeacherAndExecutionDegree(
-                    teacher, executionDegree);
+            ICoordinator coordinator = persistentCoordinator.readCoordinatorByTeacherIdAndExecutionDegreeId(
+                    teacher.getIdInternal(), executionDegree.getIdInternal());
 
             result = (coordinator != null) && executionYear.getState().equals(PeriodState.CURRENT);
 

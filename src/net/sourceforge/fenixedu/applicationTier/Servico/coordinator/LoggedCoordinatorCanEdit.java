@@ -25,51 +25,49 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class LoggedCoordinatorCanEdit implements IService {
 
     public Boolean run(Integer executionDegreeCode, Integer curricularCourseCode, String username)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
         Boolean result = new Boolean(false);
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
-            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 
-            if (executionDegreeCode == null) {
-                throw new FenixServiceException("nullExecutionDegreeCode");
-            }
-            if (curricularCourseCode == null) {
-                throw new FenixServiceException("nullCurricularCourseCode");
-            }
-            if (username == null) {
-                throw new FenixServiceException("nullUsername");
-            }
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
+        IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
+        IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(username);
-
-            IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
-                    ExecutionDegree.class, executionDegreeCode);
-
-            IExecutionYear executionYear = executionDegree.getExecutionYear();
-
-            ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
-                    .readByOID(CurricularCourse.class, curricularCourseCode);
-
-            if (curricularCourse == null) {
-                throw new NonExistingServiceException();
-            }
-
-            ICoordinator coordinator = persistentCoordinator.readCoordinatorByTeacherAndExecutionDegree(
-                    teacher, executionDegree);
-
-            // if user is coordinator and is the current coordinator and
-            // curricular course is not basic
-            // coordinator can edit
-            result = new Boolean((coordinator != null)
-                    && executionYear.getState().equals(PeriodState.CURRENT)
-                    && curricularCourse.getBasic().equals(Boolean.FALSE));
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+        if (executionDegreeCode == null) {
+            throw new FenixServiceException("nullExecutionDegreeCode");
         }
+        if (curricularCourseCode == null) {
+            throw new FenixServiceException("nullCurricularCourseCode");
+        }
+        if (username == null) {
+            throw new FenixServiceException("nullUsername");
+        }
+
+        ITeacher teacher = persistentTeacher.readTeacherByUsername(username);
+
+        IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                ExecutionDegree.class, executionDegreeCode);
+
+        IExecutionYear executionYear = executionDegree.getExecutionYear();
+
+        ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+                CurricularCourse.class, curricularCourseCode);
+
+        if (curricularCourse == null) {
+            throw new NonExistingServiceException();
+        }
+
+        ICoordinator coordinator = persistentCoordinator.readCoordinatorByTeacherIdAndExecutionDegreeId(
+                teacher.getIdInternal(), executionDegree.getIdInternal());
+
+        // if user is coordinator and is the current coordinator and
+        // curricular course is not basic
+        // coordinator can edit
+        result = new Boolean((coordinator != null)
+                && executionYear.getState().equals(PeriodState.CURRENT)
+                && curricularCourse.getBasic().equals(Boolean.FALSE));
+
         return result;
     }
 }

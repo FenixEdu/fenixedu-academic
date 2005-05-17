@@ -54,7 +54,7 @@ public class RemoveCoordinators implements IService {
                     //verify if the teacher already was coordinator
                     //it he was that don't delete role COORDINATOR
                     List executionDegreesTeacherList = persistentCoordinator
-                            .readExecutionDegreesByTeacher(teacher);
+                            .readExecutionDegreesByTeacher(teacher.getIdInternal());
                     if (executionDegreesTeacherList == null || executionDegreesTeacherList.size() <= 0) {
                         IPerson person = coordinator.getTeacher().getPerson();
                         IPersonRole personRole = persistentPersonRole.readByPersonAndRole(person, sp
