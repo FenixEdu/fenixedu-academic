@@ -20,14 +20,10 @@ public class EvaluationMethodVO extends VersionedObjectsBase implements IPersist
     public IEvaluationMethod readByIdExecutionCourse(Integer executionCourseOID)
             throws ExcepcaoPersistencia {
 
-        IEvaluationMethod evaluationMethod = null;
         final IExecutionCourse executionCourse = (IExecutionCourse) readByOID(ExecutionCourse.class,
                 executionCourseOID);
 
-        if (executionCourse != null)
-            evaluationMethod = executionCourse.getEvaluationMethod();
-
-        return evaluationMethod;
+        return (executionCourse != null) ? executionCourse.getEvaluationMethod() : null;
     }
 
 }
