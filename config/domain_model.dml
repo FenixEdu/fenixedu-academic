@@ -749,6 +749,7 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 	Double labHours;
 	Integer keyExecutionPeriod;
 	Integer keyCourseReport;
+	Integer keyEvaluationMethod;
 	Double praticalHours;
 	String comment;
 	Double theoPratHours;
@@ -3242,9 +3243,7 @@ relation ExecutionCourseBibliographicReference {
 
 
 relation ExecutionCourseEvaluationMethod {
-	net.sourceforge.fenixedu.domain.EvaluationMethod playsRole associatedEvaluationMethods {
-		multiplicity *;
-	}
+	net.sourceforge.fenixedu.domain.EvaluationMethod playsRole evaluationMethod;
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 }
 

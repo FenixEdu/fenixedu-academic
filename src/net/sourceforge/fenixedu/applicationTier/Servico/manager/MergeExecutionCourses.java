@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.IAttends;
@@ -150,9 +151,10 @@ public class MergeExecutionCourses implements IService {
     private void copyEvaluationMethod(IExecutionCourse destination, IExecutionCourse source,
             ISuportePersistente ps) throws ExcepcaoPersistencia {
         IPersistentEvaluationMethod persistentEvaluationMethod = ps.getIPersistentEvaluationMethod();
-        IEvaluationMethod evaluationMethod = persistentEvaluationMethod.readByExecutionCourse(source);
+        IEvaluationMethod evaluationMethod = persistentEvaluationMethod.readByIdExecutionCourse(source.getIdInternal());
         if (evaluationMethod != null) {
-            persistentEvaluationMethod.delete(evaluationMethod);
+            evaluationMethod.getExecutionCourse().setEvaluationMethod(null);
+            persistentEvaluationMethod.deleteByOID(EvaluationMethod.class, evaluationMethod.getIdInternal());
         }
 
     }

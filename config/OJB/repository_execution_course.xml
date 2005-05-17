@@ -49,6 +49,11 @@
 		column="KEY_COURSE_REPORT"
 		jdbc-type="INTEGER"
 	/>
+	<field-descriptor
+		name="keyEvaluationMethod"
+		column="KEY_EVALUATION_METHOD"
+		jdbc-type="INTEGER"
+	/>
     <field-descriptor
     	name="ackOptLock"
       	column="ACK_OPT_LOCK"
@@ -71,6 +76,12 @@
 			class-ref="net.sourceforge.fenixedu.domain.gesdis.CourseReport" 
 			proxy="false">
 		<foreignkey field-ref="keyCourseReport"/>
+	</reference-descriptor>
+	<reference-descriptor
+			name="evaluationMethod"
+			class-ref="net.sourceforge.fenixedu.domain.EvaluationMethod" 
+			proxy="false">
+		<foreignkey field-ref="keyEvaluationMethod"/>
 	</reference-descriptor>
 	<collection-descriptor
 			name="associatedCurricularCourses"

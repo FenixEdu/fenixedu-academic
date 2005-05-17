@@ -115,7 +115,7 @@ public class SeperateExecutionCourse implements IService {
             throws ExcepcaoPersistencia {
         IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();
         IEvaluationMethod evaluationMethod = persistentEvaluationMethod
-                .readByExecutionCourse(originExecutionCourse);
+                .readByIdExecutionCourse(originExecutionCourse.getIdInternal());
         if (evaluationMethod != null) {
             IEvaluationMethod newEvaluationMethod = new EvaluationMethod();
             persistentObject.simpleLockWrite(newEvaluationMethod);

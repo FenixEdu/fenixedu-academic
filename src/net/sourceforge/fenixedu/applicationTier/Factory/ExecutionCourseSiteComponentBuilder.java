@@ -732,7 +732,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
             IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();
             IEvaluationMethod evaluationMethod = persistentEvaluationMethod
-                    .readByIdExecutionCourse(executionCourse);
+                    .readByIdExecutionCourse(executionCourse.getIdInternal());
             if (evaluationMethod != null) {
                 component = copyFromDomain(evaluationMethod);
             }

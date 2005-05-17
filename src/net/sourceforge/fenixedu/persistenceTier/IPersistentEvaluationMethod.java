@@ -5,10 +5,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.domain.IEvaluationMethod;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
 
 /**
  * @author João Mota
@@ -17,14 +14,7 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
  */
 public interface IPersistentEvaluationMethod extends IPersistentObject {
 
-    public IEvaluationMethod readByExecutionCourse(IExecutionCourse executionCourse)
+    public IEvaluationMethod readByIdExecutionCourse(Integer executionCourseOID)
             throws ExcepcaoPersistencia;
-
-    public IEvaluationMethod readByIdExecutionCourse(IExecutionCourse executionCourse)
-            throws ExcepcaoPersistencia;
-
-    public List readAll() throws ExcepcaoPersistencia;
-
-    public void delete(IEvaluationMethod evaluation) throws ExcepcaoPersistencia;
 
 }

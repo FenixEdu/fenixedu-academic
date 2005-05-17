@@ -175,10 +175,10 @@ public class CopySiteExecutionCourse implements IService {
         //Copy Evaluation Method
         IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();
         IEvaluationMethod evaluationMethod = persistentEvaluationMethod
-                .readByExecutionCourse(executionCourseFrom);
+                .readByIdExecutionCourse(executionCourseFrom.getIdInternal());
         if (evaluationMethod != null) {
             IEvaluationMethod evaluationMethodTo = persistentEvaluationMethod
-                    .readByExecutionCourse(executionCourseTo);
+                    .readByIdExecutionCourse(executionCourseTo.getIdInternal());
             if (evaluationMethodTo == null) {
                 evaluationMethodTo = new EvaluationMethod();
             }

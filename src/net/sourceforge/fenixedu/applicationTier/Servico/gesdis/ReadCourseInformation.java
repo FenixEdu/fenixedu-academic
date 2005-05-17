@@ -106,7 +106,7 @@ public class ReadCourseInformation implements IService {
 
         IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();
         IEvaluationMethod evaluationMethod = persistentEvaluationMethod
-                .readByExecutionCourse(executionCourse);
+                .readByIdExecutionCourse(executionCourse.getIdInternal());
         if (evaluationMethod == null) {
             InfoEvaluationMethod infoEvaluationMethod = new InfoEvaluationMethod();
             infoEvaluationMethod.setInfoExecutionCourse(infoExecutionCourse);

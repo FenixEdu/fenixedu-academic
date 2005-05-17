@@ -27,7 +27,7 @@ class net.sourceforge.fenixedu.domain.Announcement extends net.sourceforge.fenix
 	String title;
 }
 
-/**** TODO ****/
+/* DONE */
 class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keySuperiorSection;
 	Integer sectionOrder;
@@ -36,7 +36,7 @@ class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.d
 	Date lastModifiedDate;
 }
 
-/**** TODO ****/
+/* DONE */
 class net.sourceforge.fenixedu.domain.Item extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keySection;
 	Boolean urgent;
@@ -45,7 +45,7 @@ class net.sourceforge.fenixedu.domain.Item extends net.sourceforge.fenixedu.doma
 	String name;
 }
 
-/* DONE */
+/* DONE: DML and VO */
 class net.sourceforge.fenixedu.domain.BibliographicReference extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionCourse;
 	Boolean optional;
@@ -62,7 +62,7 @@ class net.sourceforge.fenixedu.domain.gesdis.CourseReport extends net.sourceforg
 	Integer keyExecutionCourse;
 }
 
-/* DONE */
+/* DONE: DML and VO */
 class net.sourceforge.fenixedu.domain.Summary extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer studentsNumber;
 	Integer keyProfessorship;
@@ -102,7 +102,7 @@ class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.f
 	Integer minimumValueForAcumulatedEnrollments;
 }
 
-/* DONE */
+/* DONE: DML and VO */
 class net.sourceforge.fenixedu.domain.Curriculum extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPersonWhoAltered;
 	Integer keyCurricularCourse;

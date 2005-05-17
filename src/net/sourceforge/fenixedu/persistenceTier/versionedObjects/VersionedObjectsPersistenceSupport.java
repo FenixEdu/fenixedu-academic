@@ -88,6 +88,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurriculumV
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CursoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DegreeInfoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationExecutionCourseVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationMethodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamExecutionCourseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamVO;
@@ -158,7 +159,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentEvaluationMethod getIPersistentEvaluationMethod() {
-        return null;
+        return new EvaluationMethodVO();
     }
 
     public IPersistentResponsibleFor getIPersistentResponsibleFor() {

@@ -22,38 +22,32 @@ public class EditEvaluation implements IService {
     }
 
     public boolean run(Integer infoExecutionCourseCode, Integer infoEvaluationMethodCode,
-            InfoEvaluationMethod infoEvaluationMethod) throws FenixServiceException {
+            InfoEvaluationMethod infoEvaluationMethod) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IExecutionCourse executionCourse = new ExecutionCourse();
-            executionCourse.setIdInternal(infoExecutionCourseCode);
+        IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();
+        IEvaluationMethod evaluationMethod = persistentEvaluationMethod
+                .readByIdExecutionCourse(infoExecutionCourseCode);
 
-            IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();
-            IEvaluationMethod evaluationMethod = persistentEvaluationMethod
-                    .readByIdExecutionCourse(executionCourse);
+        if (evaluationMethod == null) {
+            evaluationMethod = new EvaluationMethod();
+            persistentEvaluationMethod.simpleLockWrite(evaluationMethod);
+            evaluationMethod.setKeyExecutionCourse(infoExecutionCourseCode);
 
-            if (evaluationMethod == null) {
-                evaluationMethod = new EvaluationMethod();
-                persistentEvaluationMethod.simpleLockWrite(evaluationMethod);
-                evaluationMethod.setKeyExecutionCourse(infoExecutionCourseCode);
-
-                IPersistentExecutionCourse persistenteExecutionCourse = sp
-                        .getIPersistentExecutionCourse();
-                evaluationMethod.setExecutionCourse((IExecutionCourse) persistenteExecutionCourse
-                        .readByOID(ExecutionCourse.class, infoExecutionCourseCode));
-            } else {
-
-                persistentEvaluationMethod.simpleLockWrite(evaluationMethod);
-            }
-
-            evaluationMethod.setEvaluationElements(infoEvaluationMethod.getEvaluationElements());
-            evaluationMethod.setEvaluationElementsEn(infoEvaluationMethod.getEvaluationElementsEn());
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+            IPersistentExecutionCourse persistenteExecutionCourse = sp.getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse = (IExecutionCourse) persistenteExecutionCourse.readByOID(
+                    ExecutionCourse.class, infoExecutionCourseCode);
+            evaluationMethod.setExecutionCourse(executionCourse);
+            
+        } else {
+            persistentEvaluationMethod.simpleLockWrite(evaluationMethod);
         }
+
+        evaluationMethod.setEvaluationElements(infoEvaluationMethod.getEvaluationElements());
+        evaluationMethod.setEvaluationElementsEn(infoEvaluationMethod.getEvaluationElementsEn());
+
         return true;
     }
 

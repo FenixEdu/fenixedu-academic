@@ -524,7 +524,7 @@ public class TeacherAdministrationSiteComponentBuilder {
             IPersistentEvaluationMethod persistentEvaluationMethod = sp
                     .getIPersistentEvaluationMethod();
             IEvaluationMethod evaluationMethod = persistentEvaluationMethod
-                    .readByIdExecutionCourse(executionCourse);
+                    .readByIdExecutionCourse(executionCourse.getIdInternal());
 
             if (evaluationMethod != null) {
                 component = InfoEvaluationMethod.newInfoFromDomain(evaluationMethod);
