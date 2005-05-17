@@ -9,7 +9,7 @@ package net.sourceforge.fenixedu.domain;
  *
  */
 
-public class Institution extends DomainObject_Base implements IInstitution{
+public class Institution extends DomainObject implements IInstitution{
 
     protected String name;
 

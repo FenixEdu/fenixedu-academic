@@ -11,7 +11,7 @@ import java.util.List;
  *
  */
 
-public class NonAffiliatedTeacher extends DomainObject_Base implements INonAffiliatedTeacher{
+public class NonAffiliatedTeacher extends DomainObject implements INonAffiliatedTeacher{
 
     protected String name;
     protected Integer keyInstitution;
