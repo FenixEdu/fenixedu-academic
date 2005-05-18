@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects;
 
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.*;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
@@ -26,7 +25,6 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientatio
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPart;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantProject;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantType;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFile;
@@ -333,10 +331,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentCourseHistoric getIPersistentCourseHistoric() {
-        return null;
-    }
-
-    public IPersistentGrantProject getIPersistentGrantProject() {
         return null;
     }
 

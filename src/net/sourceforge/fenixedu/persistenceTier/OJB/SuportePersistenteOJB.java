@@ -38,7 +38,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantInsuranc
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantOrientationTeacherOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantPartOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantPaymentEntityOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantProjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantSubsidyOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract.GrantTypeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.grant.owner.GrantOwnerOJB;
@@ -115,7 +114,6 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientatio
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPart;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantProject;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantType;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFile;
@@ -1024,15 +1022,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
      */
     public IPersistentGrantPaymentEntity getIPersistentGrantPaymentEntity() {
         return new GrantPaymentEntityOJB();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentGrantProject()
-     */
-    public IPersistentGrantProject getIPersistentGrantProject() {
-        return new GrantProjectOJB();
     }
 
     /*
