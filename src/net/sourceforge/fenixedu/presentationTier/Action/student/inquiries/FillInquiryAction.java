@@ -814,11 +814,54 @@ public class FillInquiryAction extends FenixDispatchAction {
 		List<InfoRoomWithInfoInquiriesRoom> attendingCourseRooms = (List<InfoRoomWithInfoInquiriesRoom>) request
 				.getAttribute(InquiriesUtil.ATTENDING_COURSE_ROOMS);
 
+		// saving the answers of the previous current form
+		saveCurrentFormToSelectedForm(inquiryForm);
+
 		// obtaining the selected teachers and rooms
 		List<InfoInquiriesTeacher> selectedAttendingCourseTeachers = getSelectedAttendingCourseTeachers(
 				inquiryForm, attendingCourseTeachers);
 		List<InfoInquiriesRoom> selectedAttendingCourseRooms = getSelectedAttendingCourseRooms(
 				inquiryForm, attendingCourseRooms);
+
+		if (!validateForm(request, inquiryForm)) {
+			InfoInquiriesTeacher currentAttendingCourseTeacher =
+				getCurrentAttendingCourseTeacherFromSelectedTeachers(selectedAttendingCourseTeachers, inquiryForm);
+
+			InfoInquiriesRoom currentAttendingCourseRoom = getCurrentAttendingCourseRoomFromSelectedRooms(
+					selectedAttendingCourseRooms, inquiryForm);
+
+			request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER_FORM_POSITION,
+					inquiryForm.get("currentAttendingCourseTeacherFormPosition"));
+			request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER, currentAttendingCourseTeacher);
+			request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_ROOM, currentAttendingCourseRoom);
+
+			request.setAttribute(InquiriesUtil.SELECTED_ATTENDING_COURSE_ROOMS, selectedAttendingCourseRooms);
+			request.setAttribute(InquiriesUtil.SELECTED_ATTENDING_COURSE_TEACHERS, selectedAttendingCourseTeachers);
+
+			return actionMapping.findForward("fillInquiry");
+
+		} else if(selectedAttendingCourseTeachers.size() == 0){
+			InfoInquiriesTeacher currentAttendingCourseTeacher =
+				getCurrentAttendingCourseTeacherFromSelectedTeachers(selectedAttendingCourseTeachers, inquiryForm);
+
+			InfoInquiriesRoom currentAttendingCourseRoom = getCurrentAttendingCourseRoomFromSelectedRooms(
+					selectedAttendingCourseRooms, inquiryForm);
+
+			request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER_FORM_POSITION,
+					inquiryForm.get("currentAttendingCourseTeacherFormPosition"));
+			request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER, currentAttendingCourseTeacher);
+			request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_ROOM, currentAttendingCourseRoom);
+
+			request.setAttribute(InquiriesUtil.NO_ATTENDING_COURSE_TEACHER_FORM_ERROR, true);
+			request.setAttribute(InquiriesUtil.ANCHOR, InquiriesUtil.ATTENDING_COURSE_TEACHER_FORM_ANCHOR);
+			
+			request.setAttribute(InquiriesUtil.SELECTED_ATTENDING_COURSE_ROOMS, selectedAttendingCourseRooms);
+			request.setAttribute(InquiriesUtil.SELECTED_ATTENDING_COURSE_TEACHERS, selectedAttendingCourseTeachers);
+
+			return actionMapping.findForward("fillInquiry");
+		}
+
+		
 		List<InfoClass> attendingCourseSchoolClasses =
 			(List<InfoClass>) request.getAttribute(InquiriesUtil.ATTENDING_COURSE_SCHOOL_CLASSES);
 		List<InfoExecutionDegree> attendingCourseExecutionDegrees =
