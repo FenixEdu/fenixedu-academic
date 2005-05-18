@@ -1115,9 +1115,10 @@ public abstract class Cloner {
         List infoRoomOccupation = new ArrayList();
         List infoExecutionCourse = new ArrayList();
 
-        if (exam != null && exam.getAssociatedRooms() != null && exam.getAssociatedRooms().size() > 0) {
-            for (int i = 0; i < exam.getAssociatedRooms().size(); i++) {
-                infoRooms.add(copyRoom2InfoRoom((IRoom) exam.getAssociatedRooms().get(i)));
+        List associatedRooms = exam.getAssociatedRooms();
+        if (exam != null && associatedRooms != null && associatedRooms.size() > 0) {
+            for (int i = 0; i < associatedRooms.size(); i++) {
+                infoRooms.add(copyRoom2InfoRoom((IRoom) associatedRooms.get(i)));
             }
         }
 
