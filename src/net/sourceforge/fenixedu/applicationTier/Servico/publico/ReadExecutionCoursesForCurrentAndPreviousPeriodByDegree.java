@@ -88,7 +88,7 @@ public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree implements 
     }
 
     private String generateExecutionCourseKey(IExecutionCourse executionCourse, ICurricularCourseScope curricularCourseScope) {
-        StringBuffer key = new StringBuffer();
+        StringBuilder key = new StringBuilder();
 
         key.append(curricularCourseScope.getCurricularSemester().getCurricularYear().getYear());
         key.append('-');

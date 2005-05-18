@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
@@ -18,45 +19,24 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
- * @author lmac1
+ * 
+ * @author Luis Cruz
  */
-
 public class ReadCurricularCoursesByDegreeCurricularPlan implements IService {
 
-    /**
-     * Executes the service. Returns the current collection of
-     * infoCurricularCourses.
-     */
-    public List run(Integer idDegreeCurricularPlan) throws FenixServiceException {
-        ISuportePersistente sp;
-        List allCurricularCourses = null;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp
-                    .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
-                            idDegreeCurricularPlan);
-			
-			String name = degreeCurricularPlan.getName();
-			String degreeName = degreeCurricularPlan.getDegree().getNome();
-			String degreeSigla = degreeCurricularPlan.getDegree().getSigla();
-			
-            allCurricularCourses = sp.getIPersistentCurricularCourse()
-                    .readCurricularCoursesByDegreeCurricularPlan(name, degreeName, degreeSigla);
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
+    public List run(final Integer idDegreeCurricularPlan) throws FenixServiceException, ExcepcaoPersistencia {
+        final ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+
+        final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistenceSupport
+                .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
+                        idDegreeCurricularPlan);
+
+        final List<ICurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
+        final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>(curricularCourses.size());
+        for (final ICurricularCourse curricularCourse : curricularCourses) {
+            infoCurricularCourses.add(InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse));
         }
-
-        if (allCurricularCourses == null || allCurricularCourses.isEmpty())
-            return allCurricularCourses;
-
-        // build the result of this service
-        Iterator iterator = allCurricularCourses.iterator();
-        List result = new ArrayList(allCurricularCourses.size());
-
-        while (iterator.hasNext())
-            result.add(InfoCurricularCourseWithInfoDegree.newInfoFromDomain((ICurricularCourse) iterator
-                    .next()));
-
-        return result;
+        return infoCurricularCourses;
     }
+
 }

@@ -27,22 +27,15 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ExecutionCourseSiteComponentService implements IService {
 
-    public ExecutionCourseSiteComponentService() {
-
-    }
-
     public Object run(ISiteComponent commonComponent, ISiteComponent bodyComponent,
             Integer infoSiteCode, Integer infoExecutionCourseCode, Integer sectionIndex,
             Integer curricularCourseId) throws FenixServiceException,
             NonExistingAssociatedCurricularCoursesServiceException, ExcepcaoPersistencia {
-
-        ISite site = null;
-        ExecutionCourseSiteView siteView = null;
-
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
         IPersistentSite persistentSite = sp.getIPersistentSite();
 
+        final ISite site;
         if (infoSiteCode != null)
             site = (ISite) persistentSite.readByOID(Site.class, infoSiteCode);
         else
@@ -57,8 +50,6 @@ public class ExecutionCourseSiteComponentService implements IService {
         commonComponent = componentBuilder.getComponent(commonComponent, site, null, null, null);
         bodyComponent = componentBuilder.getComponent(bodyComponent, site, commonComponent,
                 sectionIndex, curricularCourseId);
-        siteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
-        
-        return siteView;
+        return new ExecutionCourseSiteView(commonComponent, bodyComponent);
     }
 }
