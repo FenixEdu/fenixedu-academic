@@ -94,7 +94,7 @@ public class ShowGrantOwner implements IService {
             IPersistentGrantOrientationTeacher persistentGrantOrientationTeacher = sp
                     .getIPersistentGrantOrientationTeacher();
             IGrantOrientationTeacher grantOrientationTeacher = persistentGrantOrientationTeacher
-                    .readActualGrantOrientationTeacherByContract(grantContract, new Integer(0));
+                    .readActualGrantOrientationTeacherByContract(grantContract.getIdInternal(), new Integer(0));
             newInfoListGrantContract.getInfoGrantContract().setGrantOrientationTeacherInfo(
                     InfoGrantOrientationTeacherWithTeacherAndGrantContract
                             .newInfoFromDomain(grantOrientationTeacher));

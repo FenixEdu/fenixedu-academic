@@ -65,7 +65,7 @@ public class ReadAllContractsByGrantOwner implements IService {
 
                 //get the GrantOrientationTeacher for each contract
                 IGrantOrientationTeacher orientationTeacher = pgot
-                        .readActualGrantOrientationTeacherByContract(grantContract, new Integer(0));
+                        .readActualGrantOrientationTeacherByContract(grantContract.getIdInternal(), new Integer(0));
                 InfoGrantOrientationTeacher infoOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract
                         .newInfoFromDomain(orientationTeacher);
                 infoGrantContract.setGrantOrientationTeacherInfo(infoOrientationTeacher);

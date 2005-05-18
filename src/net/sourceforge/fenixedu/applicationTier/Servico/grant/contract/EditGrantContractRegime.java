@@ -90,7 +90,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
                 grantContractRegime.setGrantCostCenter(grantCostCenter);
 
                 IGrantOrientationTeacher grantOrientationTeacher = persistentGrantOrientationTeacher
-                        .readActualGrantOrientationTeacherByContract(grantContract, new Integer(0));
+                        .readActualGrantOrientationTeacherByContract(grantContract.getIdInternal(), new Integer(0));
                 persistentGrantOrientationTeacher.simpleLockWrite(grantOrientationTeacher);
                 //If grantOrientationTeacher is filled in grantContractRegime
                 if (infoGrantContractRegime.getInfoTeacher() != null) {

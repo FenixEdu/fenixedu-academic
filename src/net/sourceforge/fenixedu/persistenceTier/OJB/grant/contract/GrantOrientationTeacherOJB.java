@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
@@ -19,15 +18,12 @@ import org.apache.ojb.broker.query.Criteria;
 public class GrantOrientationTeacherOJB extends PersistentObjectOJB implements
         IPersistentGrantOrientationTeacher {
 
-    public GrantOrientationTeacherOJB() {
-    }
-
-    public IGrantOrientationTeacher readActualGrantOrientationTeacherByContract(IGrantContract contract,
+    public IGrantOrientationTeacher readActualGrantOrientationTeacherByContract(Integer contractId,
             Integer idInternal) throws ExcepcaoPersistencia {
         List grantOrientationTeacher = null;
 
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyContract", contract.getIdInternal());
+        criteria.addEqualTo("keyContract", contractId);
         criteria.addNotEqualTo("idInternal", idInternal);
         grantOrientationTeacher = queryList(GrantOrientationTeacher.class, criteria, "beginDate", false);
 

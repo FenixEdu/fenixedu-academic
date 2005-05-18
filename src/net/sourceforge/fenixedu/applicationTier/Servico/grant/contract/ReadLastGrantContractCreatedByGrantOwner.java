@@ -49,7 +49,7 @@ public class ReadLastGrantContractCreatedByGrantOwner implements IService {
             }
 
             grantOrientationTeacher = persistentGrantOrientationTeacher
-                    .readActualGrantOrientationTeacherByContract(grantContract, new Integer(0));
+                    .readActualGrantOrientationTeacherByContract(grantContract.getIdInternal(), new Integer(0));
             if (grantOrientationTeacher == null) {
                 throw new FenixServiceException();
             }

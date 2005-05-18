@@ -99,7 +99,7 @@ public class DeleteGrantContract extends DeleteDomainObjectService {
             throws ExcepcaoPersistencia {
         IPersistentGrantOrientationTeacher pgot = sp.getIPersistentGrantOrientationTeacher();
         IGrantOrientationTeacher grantOrientationTeacher = pgot
-                .readActualGrantOrientationTeacherByContract(grantContract, new Integer(0));
+                .readActualGrantOrientationTeacherByContract(grantContract.getIdInternal(), new Integer(0));
         if (grantOrientationTeacher != null)
             pgot.deleteByOID(GrantOrientationTeacher.class, grantOrientationTeacher.getIdInternal());
     }
