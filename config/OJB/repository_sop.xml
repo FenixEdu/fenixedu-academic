@@ -1049,10 +1049,6 @@
 			collection-class="org.apache.ojb.broker.util.collections.RemovalAwareCollection"
 			element-class-ref="net.sourceforge.fenixedu.domain.RoomOccupation"
 			indirection-table="WRITTEN_EVALUATION_ROOM_OCCUPATION"
-			proxy="true"
-			auto-retrieve="true"
-			auto-update="false"
-			auto-delete="false"
 			refresh="true"
 			>
 		<fk-pointing-to-this-class column="KEY_WRITTEN_EVALUATION"/>
