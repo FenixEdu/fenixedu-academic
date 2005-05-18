@@ -35,7 +35,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
- * @author João Mota
+ * @author Joï¿½o Mota
  * 
  * 23/Jul/2003 fenix-head ServidorAplicacao.Factory
  *  
@@ -179,7 +179,7 @@ public class ScientificCouncilComponentBuilder {
             }
             IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
                     .getIPersistentDegreeCurricularPlan();
-            List degreeCurricularPlans = persistentDegreeCurricularPlan.readByDegreeAndState(degree,
+            List degreeCurricularPlans = persistentDegreeCurricularPlan.readByDegreeAndState(degree.getIdInternal(),
                     DegreeCurricularPlanState.ACTIVE);
             Iterator iter = degreeCurricularPlans.iterator();
             List infoDegreeCurricularPlans = new ArrayList();

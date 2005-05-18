@@ -103,6 +103,7 @@
 	<reference-descriptor
 			name="degree"
 			class-ref="net.sourceforge.fenixedu.domain.Degree"
+			refresh="true"
 			proxy="true">
 		<foreignkey field-ref="degreeKey"/>
 	</reference-descriptor>
@@ -134,6 +135,15 @@
             refresh="true">
 		<inverse-foreignkey field-ref="keyCurricularPlan"/>
 	</collection-descriptor>
+	
+	<collection-descriptor
+			name="enrolmentPeriods"
+			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriod"
+			proxy="true"
+            refresh="true">
+		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
+	</collection-descriptor>
+	
 </class-descriptor>
 
 <!-- *************************************************************************************************************** -->
@@ -261,6 +271,15 @@
             refresh="true">
 		<inverse-foreignkey field-ref="keyCurricularPlan"/>
 	</collection-descriptor>
+	
+	<collection-descriptor
+			name="enrolmentPeriods"
+			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriod"
+			proxy="true"
+            refresh="true">
+		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
+	</collection-descriptor>
+	
 </class-descriptor>
 
 <!-- *************************************************************************************************************** -->
@@ -389,6 +408,15 @@
             refresh="true">
 		<inverse-foreignkey field-ref="keyCurricularPlan"/>
 	</collection-descriptor>
+	
+	<collection-descriptor
+			name="enrolmentPeriods"
+			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriod"
+			proxy="true"
+            refresh="true">
+		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
+	</collection-descriptor>
+	
 </class-descriptor>
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEICTAGUS --> 
@@ -516,6 +544,16 @@
             refresh="true">
 		<inverse-foreignkey field-ref="keyCurricularPlan"/>
 	</collection-descriptor>
+	
+	<collection-descriptor
+			name="enrolmentPeriods"
+			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriod"
+			proxy="true"
+            refresh="true">
+		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
+	</collection-descriptor>	
+
+	
 </class-descriptor>
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEC --> 
@@ -643,6 +681,16 @@
             refresh="true">
 		<inverse-foreignkey field-ref="keyCurricularPlan"/>
 	</collection-descriptor>
+	
+	<collection-descriptor
+			name="enrolmentPeriods"
+			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriod"
+			proxy="true"
+            refresh="true">
+		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
+	</collection-descriptor>
+	
+	
 </class-descriptor>
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEM --> 
@@ -770,4 +818,13 @@
             refresh="true">
 		<inverse-foreignkey field-ref="keyCurricularPlan"/>
 	</collection-descriptor>
+	
+	<collection-descriptor
+			name="enrolmentPeriods"
+			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriod"
+			proxy="true"
+            refresh="true">
+		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
+	</collection-descriptor>
+	
 </class-descriptor>

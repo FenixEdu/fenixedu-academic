@@ -9,6 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
@@ -71,9 +72,18 @@ public class DeleteDegreeCurricularPlans implements IService {
                                 if (!studentCurricularPlans.isEmpty())
                                     undeletedDegreeCurricularPlansNames.add(degreeCurricularPlan
                                             .getName());
-                                else
-                                    persistentDegreeCurricularPlan
-                                            .deleteDegreeCurricularPlan(degreeCurricularPlan);
+                                else {
+                                    
+                                    if (degreeCurricularPlan.getCurricularCourseEquivalences().isEmpty() &&
+                                            degreeCurricularPlan.getEnrolmentPeriods().isEmpty())
+                                    {
+                                        dereferenceDegreeCurricularPlan(degreeCurricularPlan,sp);
+                                        persistentDegreeCurricularPlan.deleteByOID(DegreeCurricularPlan.class,degreeCurricularPlan.getIdInternal());
+                                    }
+                                    else
+                                        undeletedDegreeCurricularPlansNames.add(degreeCurricularPlan.getName());                                        
+                                }
+                                    
                             }
                         }
                     }
@@ -88,4 +98,9 @@ public class DeleteDegreeCurricularPlans implements IService {
 
     }
 
+    private void dereferenceDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente sp) throws ExcepcaoPersistencia
+    {
+        IDegree degree = degreeCurricularPlan.getDegree();
+        degree.getDegreeCurricularPlans().remove(degreeCurricularPlan);        
+    }
 }

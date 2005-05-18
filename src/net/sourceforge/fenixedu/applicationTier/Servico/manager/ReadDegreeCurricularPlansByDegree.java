@@ -33,7 +33,7 @@ public class ReadDegreeCurricularPlansByDegree implements IService {
         try {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IDegree degree = (IDegree)sp.getICursoPersistente().readByOID(Degree.class,idDegree);
-            allDegreeCurricularPlans = sp.getIPersistentDegreeCurricularPlan().readByDegree(degree);
+            allDegreeCurricularPlans = degree.getDegreeCurricularPlans();
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
         }

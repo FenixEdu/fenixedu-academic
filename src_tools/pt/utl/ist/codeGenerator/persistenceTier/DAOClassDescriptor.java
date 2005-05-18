@@ -28,8 +28,10 @@ public class DAOClassDescriptor extends ClassDescriptor {
 
             if (!method.getReturnType().getName().equals("void")) {
                 generateMethodCall(stringBuilder, MAIN_DAO_RESULT, MAIN_DAO, method);
+                generateMethodCall(stringBuilder, SECONDARY_DAO_RESULT, SECONDARY_DAO, method);
+            } else {
+                generateMethodCall(stringBuilder, MAIN_DAO_RESULT, MAIN_DAO, method);
             }
-            generateMethodCall(stringBuilder, SECONDARY_DAO_RESULT, SECONDARY_DAO, method);
 
             if (!method.getReturnType().getName().equals("void")) {
                 compareDAOResults(stringBuilder);
@@ -125,26 +127,26 @@ public class DAOClassDescriptor extends ClassDescriptor {
 
                 stringBuilder.append(";\n\t\t}");
             }
-            if (method.getReturnType().getName().equals("void")) {
-                stringBuilder.append(" else if (");
-                stringBuilder.append(MAIN_DAO);
-                stringBuilder.append(" != null) {\n");
-                stringBuilder.append("\t\t\t");
-
-                stringBuilder.append(MAIN_DAO);
-                stringBuilder.append(".");
-                stringBuilder.append(getSimpleClassName(method.getName()));
-                stringBuilder.append("(");
-                int j = 0;
-                for (final Class parameterType : method.getParameterTypes()) {
-                    if (j++ > 0) {
-                        stringBuilder.append(", ");
-                    }
-                    stringBuilder.append("arg");
-                    stringBuilder.append(j);
-                }
-                stringBuilder.append(");\n\t\t}");
-            }
+//            if (method.getReturnType().getName().equals("void")) {
+//                stringBuilder.append(" else if (");
+//                stringBuilder.append(MAIN_DAO);
+//                stringBuilder.append(" != null) {\n");
+//                stringBuilder.append("\t\t\t");
+//
+//                stringBuilder.append(MAIN_DAO);
+//                stringBuilder.append(".");
+//                stringBuilder.append(getSimpleClassName(method.getName()));
+//                stringBuilder.append("(");
+//                int j = 0;
+//                for (final Class parameterType : method.getParameterTypes()) {
+//                    if (j++ > 0) {
+//                        stringBuilder.append(", ");
+//                    }
+//                    stringBuilder.append("arg");
+//                    stringBuilder.append(j);
+//                }
+//                stringBuilder.append(");\n\t\t}");
+//            }
             stringBuilder.append("\n");
         }
 

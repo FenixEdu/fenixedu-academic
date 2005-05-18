@@ -45,7 +45,7 @@ public class DeleteDegrees implements IService {
                 
                 if (degree != null) {
                 
-                    degreeCurricularPlans = persistentDegreeCurricularPlan.readByDegree(degree);
+                    degreeCurricularPlans = degree.getDegreeCurricularPlans();
                     
                     if (degreeCurricularPlans.isEmpty() &&
                             degree.getDelegate().isEmpty() &&
