@@ -1,6 +1,3 @@
-/*
- * Created on Jan 21, 2004
- */
 package net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract;
 
 import java.util.List;
@@ -17,9 +14,6 @@ import org.apache.ojb.broker.query.Criteria;
  * @author barbosa
  */
 public class GrantSubsidyOJB extends PersistentObjectOJB implements IPersistentGrantSubsidy {
-
-    public GrantSubsidyOJB() {
-    }
 
     public List readAllSubsidiesByGrantContract(Integer idContract) throws ExcepcaoPersistencia {
         List subsidyList = null;
@@ -38,4 +32,5 @@ public class GrantSubsidyOJB extends PersistentObjectOJB implements IPersistentG
         subsidyList = queryList(GrantSubsidy.class, criteria, "dateBeginSubsidy", false);
         return subsidyList;
     }
+
 }
