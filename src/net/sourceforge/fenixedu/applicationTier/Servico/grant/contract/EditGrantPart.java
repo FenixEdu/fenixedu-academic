@@ -49,7 +49,7 @@ public class EditGrantPart extends EditDomainObjectService {
             throws ExcepcaoPersistencia {
         IPersistentGrantPart pgs = sp.getIPersistentGrantPart();
         IGrantPart grantPart = (IGrantPart) domainObject;
-        return pgs.readGrantPartByUnique(grantPart.getGrantSubsidy(), grantPart.getGrantPaymentEntity());
+        return pgs.readGrantPartByUnique(grantPart.getGrantSubsidy().getIdInternal(), grantPart.getGrantPaymentEntity().getIdInternal());
     }
 
     /*
