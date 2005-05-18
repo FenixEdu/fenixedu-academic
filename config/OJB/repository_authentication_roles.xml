@@ -228,6 +228,13 @@
 		proxy="true"
 		refresh="true">
 		<inverse-foreignkey field-ref="keyTeacher"/>
-	</collection-descriptor>	
+	</collection-descriptor>
+    <collection-descriptor 
+		name="coordinators" 
+		element-class-ref="net.sourceforge.fenixedu.domain.Coordinator"
+		proxy="true"
+		refresh="true">
+		<inverse-foreignkey field-ref="keyTeacher"/>
+	</collection-descriptor>
 
    </class-descriptor>
