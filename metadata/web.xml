@@ -116,6 +116,10 @@
 		</init-param>
 	</filter>
 	<filter-mapping>
+		<filter-name>I18NFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
 	    <filter-name>indexFilter</filter-name>
 	    <url-pattern>/*</url-pattern>
 	</filter-mapping>
@@ -130,10 +134,6 @@
 	<filter-mapping>
 		<filter-name>CacheFilter</filter-name>
 		<url-pattern>/publico/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>I18NFilter</filter-name>
-		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>ExecutionCourseForwardFilter</filter-name>
