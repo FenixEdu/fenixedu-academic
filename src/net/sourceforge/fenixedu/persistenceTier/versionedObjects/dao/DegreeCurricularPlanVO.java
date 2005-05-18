@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
@@ -29,6 +30,31 @@ public class DegreeCurricularPlanVO extends VersionedObjectsBase implements
         return (List)CollectionUtils.select(degree.getDegreeCurricularPlans(),new Predicate () {
                 public boolean evaluate(Object o) {
                     return ((IDegreeCurricularPlan)o).getState().equals(state);
+                }
+            });
+    }
+
+    public IDegreeCurricularPlan readByNameAndDegree(final String name, Integer degreeId)
+        throws ExcepcaoPersistencia {
+
+        IDegree degree = (IDegree)readByOID(Degree.class,degreeId);
+        List result = (List)CollectionUtils.select(degree.getDegreeCurricularPlans(),new Predicate () {
+                public boolean evaluate(Object o) {
+                    return ((IDegreeCurricularPlan)o).getName().equals(name);
+                }
+            });
+        
+        return (IDegreeCurricularPlan) result.get(0);
+    }
+
+    public List readByDegreeTypeAndState(final DegreeType degreeType, final DegreeCurricularPlanState state) throws ExcepcaoPersistencia
+    {
+        List degreeCurricularPlans = (List)readAll(DegreeCurricularPlan.class);
+        return (List)CollectionUtils.select(degreeCurricularPlans,new Predicate () {
+                public boolean evaluate(Object o) {
+                    IDegreeCurricularPlan dcp = (IDegreeCurricularPlan)o; 
+                    return (dcp.getState().equals(state)) &&
+                            (dcp.getDegree().getTipoCurso().equals(degreeType));
                 }
             });
     }
