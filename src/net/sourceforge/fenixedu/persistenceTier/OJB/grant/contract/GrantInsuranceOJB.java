@@ -1,6 +1,3 @@
-/*
- * Created on Jun 26, 2004
- */
 package net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract;
 
 import net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance;
