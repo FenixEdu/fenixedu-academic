@@ -6,11 +6,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.SituationName;
-import net.sourceforge.fenixedu.util.Specialization;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -47,7 +47,7 @@ public class ReadAdmitedCandidates implements IService {
                             .getIPersistentMasterDegreeCandidate().readByOID(
                                     MasterDegreeCandidate.class, new Integer(ids[i]));
                     if (!masterDegreeCandidate.getSpecialization().equals(
-                            new Specialization(Specialization.ESPECIALIZACAO_STRING))) {
+                            Specialization.SPECIALIZATION)) {
                         result.add(candidateList[i]);
                     }
                 }

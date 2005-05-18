@@ -1246,9 +1246,9 @@ class net.sourceforge.fenixedu.domain.MasterDegreeCandidate extends net.sourcefo
 	interface "
 		public net.sourceforge.fenixedu.domain.ICandidateSituation getActiveCandidateSituation();
 		
-		public net.sourceforge.fenixedu.util.Specialization getSpecialization();
+		public net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization getSpecialization();
 		
-		public void setSpecialization(net.sourceforge.fenixedu.util.Specialization specialization);
+		public void setSpecialization(net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization specialization);
 	"
 }
 
@@ -2168,7 +2168,7 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
         public int getNumberOfApprovedCurricularCourses();
         public int getNumberOfEnrolledCurricularCourses();
         public net.sourceforge.fenixedu.domain.IBranch getSecundaryBranch();
-        public net.sourceforge.fenixedu.util.Specialization getSpecialization();
+        public net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization getSpecialization();
 
         public boolean isCurricularCourseApproved(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
         public boolean isCurricularCourseEnrolled(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
@@ -2181,7 +2181,7 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
         public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea);
         public void setCurrentState(net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState currentState);
         public void setSecundaryBranch(net.sourceforge.fenixedu.domain.IBranch secundaryBranch);
-        public void setSpecialization(net.sourceforge.fenixedu.util.Specialization specialization);
+        public void setSpecialization(net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization specialization);
     "
 }
 

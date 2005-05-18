@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
-import net.sourceforge.fenixedu.util.Specialization;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -59,9 +59,8 @@ public class GratuitySituationOJB extends PersistentObjectOJB implements IPersis
             }
         }
 
-        if (specialization != null && specialization.getSpecialization() != null) {
-            criteria.addEqualTo("studentCurricularPlan.specialization", specialization
-                    .getSpecialization());
+        if (specialization != null) {
+            criteria.addEqualTo("studentCurricularPlan.specialization", specialization);
         } else //all specialization required, but not records with
                // specialization null
         {
@@ -100,9 +99,8 @@ public class GratuitySituationOJB extends PersistentObjectOJB implements IPersis
             }
         }
 
-        if (specialization != null && specialization.getSpecialization() != null) {
-            criteria.addEqualTo("studentCurricularPlan.specialization", specialization
-                    .getSpecialization());
+        if (specialization != null) {
+            criteria.addEqualTo("studentCurricularPlan.specialization", specialization);
         } else //all specialization required, but not records with
                // specialization null
         {

@@ -459,7 +459,7 @@
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
             <form-property name="page" type="java.lang.Integer" initial="0" />
-   	        <form-property name="specialization" type="java.lang.Integer"/>
+   	        <form-property name="specialization" type="java.lang.String"/>
 			<form-property name="branch" type="java.lang.Integer"/>
 			<form-property name="currentState" type="java.lang.String"/>
    	        <form-property name="credits" type="java.lang.String"/>

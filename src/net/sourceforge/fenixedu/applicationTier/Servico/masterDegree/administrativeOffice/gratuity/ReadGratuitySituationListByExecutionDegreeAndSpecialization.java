@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
-import net.sourceforge.fenixedu.util.Specialization;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -102,7 +102,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
             }
 
             //SPECIALIZATION
-            Specialization specialization = new Specialization(specializationName);
+            Specialization specialization = Specialization.valueOf(specializationName);
 
             //GRATUITY SITUATION
             GratuitySituationType gratuitySituationType = null;

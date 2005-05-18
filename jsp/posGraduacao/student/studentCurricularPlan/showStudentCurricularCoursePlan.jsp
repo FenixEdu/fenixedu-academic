@@ -38,7 +38,7 @@
 	<tr>
 		<td>
 			<b><bean:message key="label.student.specialization" /></b>
-			<bean:write name="studentCurricularPlan" property="specialization" />
+			<bean:write name="studentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES" />
 		</td>
 	</tr>		
 	<tr>

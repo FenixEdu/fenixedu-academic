@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.IGratuityValues;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.IGratuityTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -22,7 +23,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuityValues;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -115,7 +115,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
 
         Double totalValue = null;
 
-        if (studentCurricularPlan.getSpecialization().equals(Specialization.ESPECIALIZACAO_TYPE)) {
+        if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)) {
 
             totalValue = calculateTotalValueForSpecialization(executionYear, gratuityValues,
                     studentCurricularPlan);
@@ -246,7 +246,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
         gratuitySituation.setWhen(Calendar.getInstance().getTime());
         Double totalValue = null;
 
-        if (studentCurricularPlan.getSpecialization().equals(Specialization.MESTRADO_TYPE)) {
+        if (studentCurricularPlan.getSpecialization().equals(Specialization.MASTER_DEGREE)) {
             totalValue = calculateTotalValueForMasterDegree(gratuityValues);
         }
         // else if

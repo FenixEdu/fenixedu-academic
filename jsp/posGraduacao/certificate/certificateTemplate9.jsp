@@ -8,7 +8,7 @@
 	<logic:present name="<%= SessionConstants.DISCRIMINATED_WITH_AVERAGE%>">
 		<bean:define id="infoFinalResult" name="<%= SessionConstants.INFO_FINAL_RESULT%>" />
 	</logic:present>
-	do curso de <bean:write name="infoStudentCurricularPlan" property="specialization"/> em 
+	do curso de <bean:message name="infoStudentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/> em 
     	<bean:write name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome"/> ministrado neste Instituto, 
     	obteve aproveitamento nas disciplinas abaixo discriminadas, com as quais concluíu o curso especializado conducente à obtenção do grau de mestre,  
     	em <bean:write name="conclusiondate" />

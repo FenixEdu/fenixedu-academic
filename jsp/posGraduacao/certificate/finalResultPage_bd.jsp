@@ -11,7 +11,7 @@
 	<tr> 
     	<td align="center" ><h2>Folha de Apuramento Final</h2><b>Ano lectivo <bean:write name="infoExecutionYear" /></b><br /><br /><br /><br /></td>
     <tr>
- 		<td>Curso de <bean:write name="infoStudentCurricularPlan" property="specialization"/> em 
+ 		<td>Curso de <bean:message name="infoStudentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/> em 
  			<b><bean:write name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome"/></b>
 		</td>
 	<tr>
@@ -23,7 +23,7 @@
 	</logic:present>
  		<td><p>O Aluno nº <bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/> - <b><bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nome"/></b><p/></td>
     <tr>
- 		<td>concluiu a parte escolar do curso de <bean:write name="infoStudentCurricularPlan" property="specialization"/> acima indicado, constituída pelas seguintes disciplinas e classificações:<br /><br /></td>
+ 		<td>concluiu a parte escolar do curso de <bean:message name="infoStudentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/> acima indicado, constituída pelas seguintes disciplinas e classificações:<br /><br /></td>
  	</tr> 
  </table>	
  <table width="90%" cellspacing="0">

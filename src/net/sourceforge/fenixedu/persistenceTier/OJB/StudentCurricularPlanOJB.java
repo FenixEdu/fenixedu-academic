@@ -19,10 +19,10 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.util.Specialization;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -128,7 +128,7 @@ public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
         Criteria crit = new Criteria();
         crit.addEqualTo("student.number", studentNumber);
         crit.addEqualTo("student.degreeType", degreeType);
-        crit.addEqualTo("specialization", specialization.getSpecialization());
+        crit.addEqualTo("specialization", specialization);
         return (IStudentCurricularPlan) queryObject(StudentCurricularPlan.class, crit);
 
     }
@@ -138,7 +138,7 @@ public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
         Criteria crit = new Criteria();
         crit.addEqualTo("student.number", studentNumber);
         crit.addEqualTo("student.degreeType", degreeType);
-        crit.addEqualTo("specialization", specialization.getSpecialization());
+        crit.addEqualTo("specialization", specialization);
         return queryList(StudentCurricularPlan.class, crit);
 
     }
@@ -150,7 +150,7 @@ public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
         crit.addEqualTo("student.number", studentNumber);
         crit.addEqualTo("student.degreeType", degreeType);
         crit.addEqualTo("currentState", state);
-        crit.addEqualTo("specialization", specialization.getSpecialization());
+        crit.addEqualTo("specialization", specialization);
 
         return queryList(StudentCurricularPlan.class, crit);
 
@@ -280,8 +280,8 @@ public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
 
         criteria.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlan.getIdInternal());
 
-        if (specialization != null && specialization.getSpecialization() != null) {
-            criteria.addEqualTo("specialization", specialization.getSpecialization());
+        if (specialization != null) {
+            criteria.addEqualTo("specialization", specialization);
         } else //all specialization required, but not records with
         // specialization null
         {

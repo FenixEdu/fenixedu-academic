@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingAc
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
-import net.sourceforge.fenixedu.util.Specialization;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
@@ -117,8 +117,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                             .setAttribute(SessionConstants.MATRICULA_ENROLMENT, certificate
                                     .toUpperCase());
                 if (certificate.equals("Duração do Degree")) {
-                    if (infoStudentCurricularPlan.getSpecialization().equals(
-                            new Specialization(Specialization.MESTRADO))) {
+                    if (infoStudentCurricularPlan.getSpecialization().equals(Specialization.MASTER_DEGREE)) {
                         certificate = new String("Matrícula");
                         session
                                 .setAttribute(SessionConstants.DURATION_DEGREE, certificate
@@ -263,8 +262,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                                     certificate.toUpperCase());
                         }
                     } else {
-                        if (infoStudentCurricularPlan.getSpecialization().equals(
-                                new Specialization(Specialization.MESTRADO))) {
+                        if (infoStudentCurricularPlan.getSpecialization().equals(Specialization.MASTER_DEGREE)) {
                             if ((certificate.equals("Fim parte escolar simples"))
                                     || (certificate.equals("Fim parte escolar discriminada sem média"))
                                     || (certificate.equals("Fim parte escolar discriminada com média"))

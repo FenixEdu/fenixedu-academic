@@ -36,7 +36,7 @@
 	  <field-descriptor id="5"
 	     name="specialization"
 	     column="SPECIALIZATION"
-	     jdbc-type="INTEGER"
+	     jdbc-type="VARCHAR"
 	     conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaSpecialization2SqlSpecializationFieldConversion"
 	  />
 	  <field-descriptor id="6"

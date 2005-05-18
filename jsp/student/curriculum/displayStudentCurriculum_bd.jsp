@@ -76,7 +76,7 @@
 									<bean:define id="degreeType" name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.tipoCurso.name"/>
 									( <bean:message name="degreeType" bundle="ENUMERATION_RESOURCES"/> )
 									<logic:present name="infoStudentCurricularPlan" property="specialization" >
-										<bean:write name="infoStudentCurricularPlan" property="specialization" />
+										<bean:message name="infoStudentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
 									</logic:present>
 									<br/>
 									<bean:message key="label.number" />:

@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
-import net.sourceforge.fenixedu.util.Specialization;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 
 /*
  * InfoMasterDegreeCandidate.java

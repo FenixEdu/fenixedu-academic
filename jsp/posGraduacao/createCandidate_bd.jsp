@@ -8,8 +8,6 @@
 <br />
 <span class="error"><html:errors/></span>  
    <table>
-    <bean:define id="specializations" name="<%= SessionConstants.SPECIALIZATIONS %>" scope="request"/>
- 
     <logic:present name="<%= SessionConstants.EXECUTION_DEGREE %>">
     	<bean:define id="executionDegree" name="<%= SessionConstants.EXECUTION_DEGREE %>" scope="request"/>
     </logic:present>
@@ -32,8 +30,11 @@
        </tr>
        <tr>
          <td><bean:message key="label.candidate.specialization"/>:</td>
-         <td><html:select property="specialization">
-                <html:options collection="specializations" property="value" labelProperty="label"/>
+         <td>
+         	<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization" excludedFields="INTEGRATED_MASTER_DEGREE" bundle="ENUMERATION_RESOURCES"/>
+         	<html:select property="specialization">
+         		<html:option key="dropDown.Default" value=""/>
+                <html:options collection="values" property="value" labelProperty="label"/>
              </html:select>
          </td>
        </tr>

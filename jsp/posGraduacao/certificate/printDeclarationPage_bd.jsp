@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization" %>
 <bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN %>" scope="session" />
 <div id="vert-spacer">
 <table width="100%">
@@ -16,7 +17,7 @@
 			<br />
 			<%-- The Original Declaration --%>
 				<jsp:include page="./declarationTemplate1.jsp" flush="true" />
-   					<logic:equal name="infoStudentCurricularPlan" property="specialization" value="Mestrado">
+   					<logic:equal name="infoStudentCurricularPlan" property="specialization.name" value='<%= Specialization.MASTER_DEGREE.toString()%>'>
     		<%-- Candidate Information if necessary --%>
    				<jsp:include page="./declarationTemplate2.jsp" flush="true" />
 					</logic:equal >	

@@ -67,6 +67,7 @@
 					<bean:message key="label.masterDegree.gratuity.specializationArea"/>
 				</td>
 				<td>
+					<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization" excludedFields="INTEGRATED_MASTER_DEGREE" bundle="ENUMERATION_RESOURCES"/>
 					<html:select property="specialization">
 						<html:option value="" key="label.manager.executionCourseManagement.select">
 							<bean:message key="label.choose.one"/>
@@ -74,7 +75,7 @@
 						<html:option value="all" key="label.masterDegree.gratuity.all">
 							<bean:message key="label.gratuitySituationType.all"/>
 						</html:option>
-						<html:optionsCollection name="specializations"/>
+						<html:options collection="values" property="value" labelProperty="label"/>
 					</html:select>
 				</td>
 			</tr>

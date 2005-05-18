@@ -70,7 +70,7 @@
 										<strong><bean:message key="label.masterDegree.administrativeOffice.specialization" /></strong>
 								    </td>
 									<td>      
-										<bean:write name="infoCandidateRegistration" property="infoMasterDegreeCandidate.specialization" />
+										<bean:message name="infoCandidateRegistration" property="infoMasterDegreeCandidate.specialization.name" />
 								    </td>
 							    </tr>
 						    </table>

@@ -34,9 +34,9 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstan
 import net.sourceforge.fenixedu.util.CertificateList;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.masterDegree.DocumentReason;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.GraduationType;
-import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -58,8 +58,6 @@ public class ChooseCertificateInfoAction extends DispatchAction {
             session.removeAttribute(SessionConstants.CERTIFICATE_LIST);
 
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
-            List specializations = Specialization.toArrayList();
             
             List types = new ArrayList();
             types.add(DocumentType.CERTIFICATE);
@@ -85,7 +83,6 @@ public class ChooseCertificateInfoAction extends DispatchAction {
                 result.add(price.getDescription());
             }
             session.setAttribute(SessionConstants.DOCUMENT_REASON, DocumentReason.values());
-            session.setAttribute(SessionConstants.SPECIALIZATIONS, specializations);
             session.setAttribute(SessionConstants.CERTIFICATE_LIST, new CertificateList().toArrayList());
 
             return mapping.findForward("PrepareReady");
@@ -142,11 +139,11 @@ public class ChooseCertificateInfoAction extends DispatchAction {
                     ArrayList states = new ArrayList();
                     states.add(StudentCurricularPlanState.ACTIVE);
                     states.add(StudentCurricularPlanState.SCHOOLPARTCONCLUDED);
-                    Object args[] = { infoStudent, new Specialization(graduationType), states };
+                    Object args[] = { infoStudent, Specialization.valueOf(graduationType), states };
                     infoStudentCurricularPlanList = (List) ServiceManagerServiceFactory.executeService(
                             userView, "CreateDeclaration", args);
                 } else {
-                    Object args[] = { infoStudent, new Specialization(graduationType) };
+                    Object args[] = { infoStudent, Specialization.valueOf(graduationType) };
                     infoStudentCurricularPlanList = (List) ServiceManagerServiceFactory.executeService(
                             userView, "CreateDeclaration", args);
                 }

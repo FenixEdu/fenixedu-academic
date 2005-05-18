@@ -36,7 +36,7 @@
 	  <!-- Specialization -->
 	  <tr>
 	    <td><bean:message key="label.candidate.specialization" /></td>
-	    <td><span class="greytxt"><bean:write name="candidate" property="specialization"/></span></td>
+	    <td><span class="greytxt"><bean:message name="candidate" property="specialization.name" bundle="ENUMERATION_RESOURCES"/></span></td>
 	  </tr>
 	
 	  <!-- Specialization Area -->

@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
+<%@ page import="net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization" %>
 <bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN%>"/>
 <div id="vert-spacer">
 <table width="100%">
@@ -19,11 +20,11 @@
 			<jsp:include page="./certificateTemplate2.jsp" flush="true" />
 				</logic:present>	
 				<logic:present name="<%= SessionConstants.DURATION_DEGREE%>">
-    	  			<logic:equal name="infoStudentCurricularPlan" property="specialization" value="Mestrado">
+    	  			<logic:equal name="infoStudentCurricularPlan" property="specialization.name" value='<%= Specialization.MASTER_DEGREE.toString()%>'>
     	 	<jsp:include page="./certificateTemplate2.jsp" flush="true" />
     	 	<jsp:include page="./certificateTemplate3.jsp" flush="true" />
     	  			</logic:equal >	
-    	  			<logic:notEqual name="infoStudentCurricularPlan" property="specialization" value="Mestrado">
+    	  			<logic:notEqual name="infoStudentCurricularPlan" property="specialization.name" value='<%= Specialization.MASTER_DEGREE.toString()%>'>
     	  	<jsp:include page="./certificateTemplate2.jsp" flush="true" />	  
     	  			</logic:notEqual >	
 				</logic:present>
@@ -82,7 +83,7 @@
 	</tr>	
 </table>
 
-	<%--<logic:equal name="infoStudentCurricularPlan" property="specialization" value="Mestrado">
+	<%--<logic:equal name="infoStudentCurricularPlan" property="specialization.name" value='<%= Specialization.MASTER_DEGREE.toString()%>'>
     	<%-- Candidate Information if necessary --%>
    		<%--<jsp:include page="./declarationTemplate2.jsp" flush="true" />
 	</logic:equal >	

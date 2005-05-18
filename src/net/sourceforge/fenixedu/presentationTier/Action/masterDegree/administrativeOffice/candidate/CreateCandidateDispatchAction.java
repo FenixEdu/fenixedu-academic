@@ -20,12 +20,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.Specialization;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -172,8 +172,7 @@ public class CreateCandidateDispatchAction extends DispatchAction {
         if (session != null) {
 
             // Create the Degree Type List
-            List specializations = Specialization.toArrayList();
-            request.setAttribute(SessionConstants.SPECIALIZATIONS, specializations);
+
             Integer curricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
 
             String executionDegreeId = (String) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
@@ -253,7 +252,7 @@ public class CreateCandidateDispatchAction extends DispatchAction {
         infoPerson.setNome(name);
         infoPerson.setNumeroDocumentoIdentificacao(identificationDocumentNumber);
         infoPerson.setTipoDocumentoIdentificacao(IDDocumentType.valueOf(identificationDocumentType));
-        newMasterDegreeCandidate.setSpecialization(new Specialization(degreeType));
+        newMasterDegreeCandidate.setSpecialization(Specialization.valueOf(degreeType));
         newMasterDegreeCandidate.setInfoPerson(infoPerson);
 
         Object args[] = { newMasterDegreeCandidate };

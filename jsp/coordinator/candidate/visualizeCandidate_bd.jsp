@@ -26,7 +26,7 @@
           <!-- Specialization -->
           <tr>
 	            <td><bean:message key="label.candidate.specialization" />:</td>
-	            <td><span class="greytxt"><bean:write name="masterDegreeCandidate" property="specialization"/></span></td>
+	            <td><span class="greytxt"><bean:message name="masterDegreeCandidate" property="specialization.name" bundle="ENUMERATION_RESOURCES"/></span></td>
           </tr>
           <!-- Specialization Area -->
           <tr>

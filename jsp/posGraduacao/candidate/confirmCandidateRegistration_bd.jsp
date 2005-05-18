@@ -43,7 +43,7 @@
 					<strong><bean:message key="label.specialization" /></strong>
 				</td>
 				<td>
-					<bean:write name="infoMasterDegreeCandidate" property="specialization"/>
+					<bean:message name="infoMasterDegreeCandidate" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
 				</td>
 			</tr>			
 			<tr>

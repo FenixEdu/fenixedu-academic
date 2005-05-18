@@ -11,16 +11,29 @@
  *  
  */
 
-package net.sourceforge.fenixedu.util;
+package net.sourceforge.fenixedu.domain.studentCurricularPlan;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.util.FenixUtil;
+
 import org.apache.struts.util.LabelValueBean;
 
-public class Specialization extends FenixUtil {
+public enum Specialization {
 
-    public static final int MESTRADO = 1;
+    MASTER_DEGREE,
+    
+    INTEGRATED_MASTER_DEGREE,
+    
+    SPECIALIZATION;
+    
+    public String getName() {
+        return name();
+    }
+    
+    
+/*    public static final int MESTRADO = 1;
 
     //    public static final int INTEGRADO = 2;
 
@@ -43,7 +56,7 @@ public class Specialization extends FenixUtil {
 
     private Integer specialization;
 
-    /** Creates a new instance of Especializacao */
+    *//** Creates a new instance of Especializacao *//*
     public Specialization() {
     }
 
@@ -117,21 +130,21 @@ public class Specialization extends FenixUtil {
         return "ERRO!"; // Nunca e atingido
     }
 
-    /**
+    *//**
      * Returns the especializacao.
      * 
      * @return Integer
-     */
+     *//*
     public Integer getSpecialization() {
         return specialization;
     }
 
-    /**
+    *//**
      * Sets the especializacao.
      * 
      * @param especializacao
      *            The especializacao to set
-     */
+     *//*
     public void setSpecialization(Integer especializacao) {
         this.specialization = especializacao;
     }
@@ -142,7 +155,7 @@ public class Specialization extends FenixUtil {
         if (specialization.intValue() == Specialization.ESPECIALIZACAO)
             return "ESPECIALIZACAO";
         return "ERRO!"; // Nunca e atingido
-    }
+    }*/
     
 
 }

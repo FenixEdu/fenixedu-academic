@@ -7,5 +7,5 @@
 <bean:define id="infoExecutionYear" name="<%= SessionConstants.INFO_EXECUTION_YEAR %>" />
 <bean:define id="certificateType" name="<%= SessionConstants.CERTIFICATE_TYPE%>" />
 tem <b><bean:write name="certificateType"/></b> no ano lectivo de <bean:write name="anoLectivo"/>, no curso de 
-<bean:write name="infoStudentCurricularPlan" property="specialization"/> em 
+<bean:message name="infoStudentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/> em 
 <bean:write name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome"/> iniciado no ano lectivo de <bean:write name="initialExecutionYear"/>. 

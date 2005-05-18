@@ -63,7 +63,7 @@
 		    			</html:link>
 					</td>
 					<td class="listClasses">
-						<bean:write name="candidate" property="specialization"/>
+						<bean:message name="candidate" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
 					</td>
     			</tr>
     		</logic:iterate>

@@ -26,13 +26,13 @@ import net.sourceforge.fenixedu.domain.IPaymentPhase;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
-import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsOutgoingPaymentFileConstants;
 
@@ -257,7 +257,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
 
         Double scholarShipPartValue = null;
         if (gratuitySituation.getStudentCurricularPlan().getSpecialization().equals(
-                Specialization.ESPECIALIZACAO_TYPE)) {
+                Specialization.SPECIALIZATION)) {
 
             scholarShipPartValue = gratuitySituation.getRemainingValue();
 
@@ -468,7 +468,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
         int sibsPaymentCode = 0;
         Specialization specialization = studentCurricularPlan.getSpecialization();
 
-        if (specialization.equals(Specialization.MESTRADO_TYPE)) {
+        if (specialization.equals(Specialization.MASTER_DEGREE)) {
 
             sibsPaymentCode = SibsPaymentCodeFactory.getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_TOTAL);
 
@@ -495,7 +495,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
         int sibsPaymentCode = 0;
 
         if (paymentPhaseNumber == 1) {
-            if (studentCurricularPlan.getSpecialization().equals(Specialization.ESPECIALIZACAO_TYPE)) {
+            if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)) {
 
                 sibsPaymentCode = SibsPaymentCodeFactory.getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_FIRST_PHASE);
 
@@ -508,7 +508,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
 
         } else if (paymentPhaseNumber == 2) {
 
-            if (studentCurricularPlan.getSpecialization().equals(Specialization.ESPECIALIZACAO_TYPE)) {
+            if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)) {
 
                 sibsPaymentCode = SibsPaymentCodeFactory.getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_SECOND_PHASE);
 

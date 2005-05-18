@@ -72,7 +72,7 @@
 						(<bean:write name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.tipoCurso"/>)&nbsp;
 						<bean:write name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome"/>
 						<logic:present name="infoStudentCurricularPlan" property="specialization" >
-							&nbsp;-&nbsp;<bean:write name="infoStudentCurricularPlan" property="specialization" />
+							&nbsp;-&nbsp;<bean:message name="infoStudentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
 						</logic:present>
 						<br><b><bean:message key="message.enrollment.equivalence.student.plan.start.date"/>&nbsp;</b><bean:write name="infoStudentCurricularPlan" property="startDate"/>
 					</td>

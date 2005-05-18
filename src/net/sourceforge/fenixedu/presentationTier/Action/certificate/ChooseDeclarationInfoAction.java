@@ -22,12 +22,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.masterDegree.DocumentReason;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -45,11 +45,7 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
 
             session.removeAttribute(SessionConstants.SPECIALIZATIONS);
             session.removeAttribute(SessionConstants.DOCUMENT_REASON);
-
-            List specializations = Specialization.toArrayList();
-            
             session.setAttribute(SessionConstants.DOCUMENT_REASON, DocumentReason.values());
-            session.setAttribute(SessionConstants.SPECIALIZATIONS, specializations);
 
             return mapping.findForward("PrepareReady");
         }
@@ -93,7 +89,7 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
                 ArrayList states = new ArrayList();
                 states.add(StudentCurricularPlanState.ACTIVE);
                 states.add(StudentCurricularPlanState.SCHOOLPARTCONCLUDED);
-                Object args[] = { infoStudent, new Specialization(graduationType), states };
+                Object args[] = { infoStudent, Specialization.valueOf(graduationType), states };
                 infoStudentCurricularPlanList = (List) ServiceManagerServiceFactory.executeService(
                         userView, "CreateDeclaration", args);
 

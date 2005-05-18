@@ -102,7 +102,7 @@
 	   <html:link page='<%= pageContext.findAttribute("candidateLink").toString() %>'>
 	 	  <bean:write name="candidate" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.nome"/> - 
 	 	  <bean:write name="candidate" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.sigla"/> ( 
-	 	  <bean:write name="candidate" property="specialization"/> )
+	 	  <bean:message name="candidate" property="specialization.name" bundle="ENUMERATION_RESOURCES"/> )
 	   </html:link>
 
 

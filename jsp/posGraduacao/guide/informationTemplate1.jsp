@@ -68,7 +68,7 @@
           </tr>
           <tr>
             <td> <bean:message key="label.masterDegree.administrativeOffice.graduationType"/> </td>
-            <td> <bean:write name="candidate" property="specialization"/> </td>
+            <td> <bean:message name="candidate" property="specialization.name" bundle="ENUMERATION_RESOURCES"/> </td>
           </tr>
           <tr>
             <td> <bean:message key="label.masterDegree.administrativeOffice.executionYear"/> </td>

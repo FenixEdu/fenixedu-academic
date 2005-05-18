@@ -8,8 +8,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
-import net.sourceforge.fenixedu.util.Specialization;
 
 /**
  * @author Tânia Pousão
@@ -125,11 +125,11 @@ public class GratuityFile {
         //code
         if (infoGratuitySituation.getInfoStudentCurricularPlan().getSpecialization() != null
                 && (infoGratuitySituation.getInfoStudentCurricularPlan().getSpecialization()
-                        .equals(Specialization.MESTRADO_TYPE))) {
+                        .equals(Specialization.MASTER_DEGREE))) {
             reference.append(CODE_MASTERDEGREE);
         } else if (infoGratuitySituation.getInfoStudentCurricularPlan().getSpecialization() != null
                 && (infoGratuitySituation.getInfoStudentCurricularPlan().getSpecialization()
-                        .equals(Specialization.ESPECIALIZACAO_TYPE))) {
+                        .equals(Specialization.SPECIALIZATION))) {
 
             reference.append(CODE_SPECIALIZATION);
         }

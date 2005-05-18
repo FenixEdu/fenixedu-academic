@@ -2,12 +2,12 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 <%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <span class="error"><html:errors/></span>
 <bean:define id="executionDegree" name="<%= SessionConstants.EXECUTION_DEGREE %>" scope="request"/>
      <bean:define id="executionYearName" name="<%= SessionConstants.EXECUTION_YEAR %>"/>
-    <bean:define id="specializationList" name="<%= SessionConstants.SPECIALIZATIONS %>" scope="session" />
     <bean:define id="degreeList" name="<%= SessionConstants.DEGREE_LIST %>" scope="session" />
     <bean:define id="situationList" name="<%= SessionConstants.CANDIDATE_SITUATION_LIST %>" scope="session" />
     <bean:define id="title" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION %>" scope="session" />
@@ -32,8 +32,11 @@
        <!-- Degree Type -->
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.specialization"/></td>
-         <td><html:select property="specialization">
-                <html:options collection="specializationList" property="value" labelProperty="label"/>
+         <td>
+         	<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization" excludedFields="INTEGRATED_MASTER_DEGREE" bundle="ENUMERATION_RESOURCES"/>
+         	<html:select property="specialization">
+                <html:option key="dropDown.Default" value=""/>
+                <html:options collection="values" property="value" labelProperty="label"/>
              </html:select>
          </td>
        </tr>

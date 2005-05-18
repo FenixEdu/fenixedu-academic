@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
@@ -26,7 +27,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.Specialization;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -37,7 +37,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
 
     public void run(IUserView userView, Integer studentCurricularPlanId, String currentState,
             Double credits, String startDate, List extraCurricularCourses, String observations,
-            Integer branchId, Integer specializationInt) throws FenixServiceException {
+            Integer branchId, String specialization) throws FenixServiceException {
 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -80,7 +80,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
             studentCurricularPlan.setGivenCredits(credits);
             studentCurricularPlan.setObservations(observations);
             studentCurricularPlan.setBranch(branch);
-            studentCurricularPlan.setSpecialization(new Specialization(specializationInt));
+            studentCurricularPlan.setSpecialization(Specialization.valueOf(specialization));
 
             List enrollments = studentCurricularPlan.getEnrolments();
             Iterator iterator = enrollments.iterator();

@@ -14,7 +14,7 @@
 		<bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nome"/>
 	</p>
 	<h3 class='diploma_posGrad'>concluiu a parte curricular do Curso de </h3>
-	<h3 class="diplomado"><bean:write name="infoStudentCurricularPlan" property="specialization"/> em 
+	<h3 class="diplomado"><bean:message name="infoStudentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/> em 
 	<bean:write name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome"/></h3>
     	<h3 class='diploma_posGrad'>com a média de <bean:write name="infoFinalResult" property="finalAverage"/> valores.</h3>
 <div class="dipl_signature">    	

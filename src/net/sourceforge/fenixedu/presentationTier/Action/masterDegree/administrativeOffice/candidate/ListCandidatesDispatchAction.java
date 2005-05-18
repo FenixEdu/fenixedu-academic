@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameF
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -35,7 +36,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstan
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.util.RandomStringGenerator;
 import net.sourceforge.fenixedu.util.SituationName;
-import net.sourceforge.fenixedu.util.Specialization;
 
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
@@ -80,10 +80,6 @@ public class ListCandidatesDispatchAction extends DispatchAction {
             listCandidatesForm.set("executionYear", executionYear);
 
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
-            // Create the Degree Type List
-
-            session.setAttribute(SessionConstants.SPECIALIZATIONS, Specialization.toArrayList());
 
             // Get the Degree List
 
@@ -146,7 +142,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
             if (candidateNumberTemp.length() != 0)
                 candidateNumber = Integer.valueOf(candidateNumberTemp);
             if (degreeTypeTemp != null && degreeTypeTemp.length() != 0)
-                specialization = new Specialization(degreeTypeTemp);
+                specialization = Specialization.valueOf(degreeTypeTemp);
             if (candidateSituationTemp != null && candidateSituationTemp.length() != 0)
                 situationName = new SituationName(candidateSituationTemp);
 

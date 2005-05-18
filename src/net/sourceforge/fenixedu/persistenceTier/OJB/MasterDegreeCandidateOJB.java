@@ -22,11 +22,11 @@ import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 import net.sourceforge.fenixedu.util.SituationName;
-import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.ojb.broker.query.Criteria;
@@ -52,7 +52,7 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
         crit.addEqualTo("candidateNumber", candidateNumber);
         crit.addEqualTo("executionDegree.executionYear.year", applicationYear);
         crit.addEqualTo("executionDegree.degreeCurricularPlan.degree.sigla", degreeCode);
-        crit.addEqualTo("specialization", specialization.getSpecialization());
+        crit.addEqualTo("specialization", specialization);
         return (IMasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
 
     }
@@ -119,7 +119,7 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
         Criteria crit = new Criteria();
         crit.addEqualTo("executionDegree.executionYear.year", executionYear);
         crit.addEqualTo("executionDegree.degreeCurricularPlan.degree.sigla", degreeCode);
-        crit.addEqualTo("specialization", specialization.getSpecialization());
+        crit.addEqualTo("specialization", specialization);
 
         List list = queryList(MasterDegreeCandidate.class, crit, "candidateNumber", false);
         if (list != null && list.size() > 0) {

@@ -15,7 +15,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Iterator;
 
-import net.sourceforge.fenixedu.util.Specialization;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.State;
 
 public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {

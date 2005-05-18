@@ -13,7 +13,7 @@
 
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.util.Specialization;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
@@ -25,7 +25,7 @@ public class JavaSpecialization2SqlSpecializationFieldConversion implements Fiel
     public Object javaToSql(Object source) {
         if (source instanceof Specialization) {
             Specialization s = (Specialization) source;
-            return s.getSpecialization();
+            return s.toString();
         }
 
         return source;
@@ -36,9 +36,9 @@ public class JavaSpecialization2SqlSpecializationFieldConversion implements Fiel
      * @see FieldConversion#sqlToJava(Object)
      */
     public Object sqlToJava(Object source) {
-        if (source instanceof Integer) {
-            Integer src = (Integer) source;
-            return new Specialization(src);
+        if (source instanceof String) {
+            String src = (String) source;
+            return Specialization.valueOf(src);
         }
 
         return source;

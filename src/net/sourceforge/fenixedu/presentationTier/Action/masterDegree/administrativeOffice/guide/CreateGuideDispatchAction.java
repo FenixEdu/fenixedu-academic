@@ -42,9 +42,9 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstan
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.RandomStringGenerator;
 import net.sourceforge.fenixedu.domain.GuideState;
-import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -66,10 +66,6 @@ public class CreateGuideDispatchAction extends DispatchAction {
 
         if (session != null) {
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-
-            // Create the Degree Type List
-            List specializations = Specialization.toArrayList();
-            request.setAttribute(SessionConstants.SPECIALIZATIONS, specializations);
 
             // Transport chosen Execution Degree
             String executionDegreeIDParam = getFromRequest(SessionConstants.EXECUTION_DEGREE_OID,

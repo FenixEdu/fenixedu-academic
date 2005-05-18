@@ -45,6 +45,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
@@ -54,7 +55,6 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.SituationName;
-import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.util.State;
 import net.sourceforge.fenixedu.util.StudentState;
 import net.sourceforge.fenixedu.util.StudentType;
@@ -319,10 +319,10 @@ public class RegisterCandidate implements IService {
             gratuitySituation.setWhen(Calendar.getInstance().getTime());
             Double totalValue = null;
 
-            if (studentCurricularPlan.getSpecialization().equals(Specialization.MESTRADO_TYPE)) {
+            if (studentCurricularPlan.getSpecialization().equals(Specialization.MASTER_DEGREE)) {
                 totalValue = calculateTotalValueForMasterDegree(gratuityValues);
             } else if (studentCurricularPlan.getSpecialization().equals(
-                    Specialization.ESPECIALIZACAO_TYPE)) {
+                    Specialization.SPECIALIZATION)) {
                 totalValue = new Double(0);
             }
 

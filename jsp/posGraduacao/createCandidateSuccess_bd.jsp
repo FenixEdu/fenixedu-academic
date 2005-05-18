@@ -27,7 +27,7 @@
           <!-- Specialization -->
           <tr>
             <td><bean:message key="label.candidate.specialization" /></td>
-            <td><bean:write name="newCandidate" property="specialization"/></td>
+            <td><bean:message name="newCandidate" property="specialization.name" bundle="ENUMERATION_RESOURCES"/></td>
           </tr>
 
           <!-- Degree  -->

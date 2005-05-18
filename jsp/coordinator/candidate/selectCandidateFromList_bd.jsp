@@ -36,7 +36,7 @@
     						<bean:write name="candidate" property="infoPerson.nome" />
     					</html:link>
     				</td>
-    				<td class="listClasses"><bean:write name="candidate" property="specialization" /></td>
+    				<td class="listClasses"><bean:message name="candidate" property="specialization.name" bundle="ENUMERATION_RESOURCES" /></td>
     				<td class="listClasses"><bean:write name="candidate" property="infoCandidateSituation.situation" /></td>
 		            <logic:present name="candidate" property="infoCandidateSituation.date" >
 	    	            <bean:define id="date" name="candidate" property="infoCandidateSituation.date" />

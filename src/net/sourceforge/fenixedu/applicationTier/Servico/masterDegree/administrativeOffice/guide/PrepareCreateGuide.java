@@ -31,7 +31,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
-import net.sourceforge.fenixedu.util.Specialization;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -95,7 +95,7 @@ public class PrepareCreateGuide implements IService {
             try {
                 masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
                         .readByNumberAndExecutionDegreeAndSpecialization(number, executionDegree,
-                                new Specialization(graduationType));
+                                Specialization.valueOf(graduationType));
             } catch (ExcepcaoPersistencia ex) {
                 FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
                 throw newEx;

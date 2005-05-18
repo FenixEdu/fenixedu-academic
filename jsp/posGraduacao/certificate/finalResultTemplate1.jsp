@@ -31,7 +31,7 @@
 		<td style="color: #333; background: #ccc; padding: 5px; border-bottom: 1px solid #333;">Informação</td>
 	</tr>
     <tr>
-    	<td style="padding: 5px;"><p class="apura-pt9">Concluiu a parte escolar do curso de <bean:write name="infoStudentCurricularPlan" property="specialization"/> em <bean:write name="conclusionDate"/> com a média final de 
+    	<td style="padding: 5px;"><p class="apura-pt9">Concluiu a parte escolar do curso de <bean:message name="infoStudentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/> em <bean:write name="conclusionDate"/> com a média final de 
     		<bean:write name="infoFinalResult" property="finalAverage" /> valores.</p>
     		<p class="apura-pt9">Secretaria dos Serviços Académicos, em <bean:write name="date"/></p><br /><br />
     	</td>

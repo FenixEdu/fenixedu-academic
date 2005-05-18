@@ -12,10 +12,11 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.util.Specialization;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -57,16 +58,14 @@ public class EditStudentCurricularCoursePlan extends DispatchAction {
         }
 
         //put request
-        request.setAttribute(SessionConstants.SPECIALIZATION, Specialization.toIntValueArrayList());
         request.setAttribute(SessionConstants.BRANCH, branchList);
         request.setAttribute("currentState", infoStudentCurricularPlan.getCurrentState());
-        /*request.setAttribute(SessionConstants.STATE, StudentCurricularPlanState
-                .toOrderedArrayList(infoStudentCurricularPlan.getCurrentState()));*/
+
         request.setAttribute("student", infoStudentCurricularPlan.getInfoStudent());
         request.setAttribute("studentCurricularPlan", infoStudentCurricularPlan);
 
         editStudentCurricularPlanForm.set("specialization", infoStudentCurricularPlan
-                .getSpecialization().getSpecialization());
+                .getSpecialization().toString());
 
         if (infoStudentCurricularPlan.getInfoBranch() != null) {
             editStudentCurricularPlanForm.set("branch", infoStudentCurricularPlan.getInfoBranch()
@@ -106,7 +105,7 @@ public class EditStudentCurricularCoursePlan extends DispatchAction {
                 .get("extraCurricularCourses");
 
         String currentState = (String) editStudentCurricularPlanForm.get("currentState");
-        Integer specialization = (Integer) editStudentCurricularPlanForm.get("specialization");
+        String specialization = (String) editStudentCurricularPlanForm.get("specialization");
         Integer branch = (Integer) editStudentCurricularPlanForm.get("branch");
         Double credits = Double.valueOf((String) editStudentCurricularPlanForm.get("credits"));
         String startDate = (String) editStudentCurricularPlanForm.get("startDate");
