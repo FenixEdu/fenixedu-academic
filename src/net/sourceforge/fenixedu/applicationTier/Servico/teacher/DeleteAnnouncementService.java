@@ -15,13 +15,9 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class DeleteAnnouncementService implements IService {
 
-    public DeleteAnnouncementService() {
-    }
-
     public boolean run(Integer infoExecutionCourseCode, Integer announcementCode)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-        try {
             ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentAnnouncement persistentAnnouncement = persistentSupport
                     .getIPersistentAnnouncement();
@@ -32,9 +28,7 @@ public class DeleteAnnouncementService implements IService {
             if (iAnnouncement != null) {
                 persistentAnnouncement.deleteByOID(Announcement.class, iAnnouncement.getIdInternal());
             }
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
+
         return true;
     }
 }

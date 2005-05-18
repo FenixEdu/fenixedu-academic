@@ -43,190 +43,179 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author joaosa & rmalo
- * 
+ *  
  */
 public class NewProjectProposal implements IService {
 
     public Boolean run(Integer objectCode, Integer goalExecutionCourseId, Integer groupPropertiesId,
-            String senderPersonUsername) throws FenixServiceException {
+            String senderPersonUsername) throws FenixServiceException, ExcepcaoPersistencia {
 
         Boolean result = Boolean.FALSE;
 
         if (groupPropertiesId == null) {
             return result;
         }
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentGroupProperties persistentGroupProperties = sp.getIPersistentGroupProperties();
+        IPersistentGroupPropertiesExecutionCourse persistentGroupPropertiesExecutionCourse = sp
+                .getIPersistentGroupPropertiesExecutionCourse();
+        IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+        IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
+        IPersistentAttendInAttendsSet persistentAttendInAttendsSet = sp
+                .getIPersistentAttendInAttendsSet();
 
-        try {
+        IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties.readByOID(
+                GroupProperties.class, groupPropertiesId);
+        IExecutionCourse goalExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                ExecutionCourse.class, goalExecutionCourseId);
+        IExecutionCourse startExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                ExecutionCourse.class, objectCode);
+        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        IPerson senderPerson = persistentTeacher.readTeacherByUsername(senderPersonUsername).getPerson();
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentGroupProperties persistentGroupProperties = sp.getIPersistentGroupProperties();
-            IPersistentGroupPropertiesExecutionCourse persistentGroupPropertiesExecutionCourse = sp
-                    .getIPersistentGroupPropertiesExecutionCourse();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
-            IPersistentAttendInAttendsSet persistentAttendInAttendsSet = sp
-                    .getIPersistentAttendInAttendsSet();
+        if (groupProperties == null) {
+            throw new InvalidArgumentsServiceException("error.noGroupProperties");
+        }
+        if (goalExecutionCourse == null) {
+            throw new InvalidArgumentsServiceException("error.noGoalExecutionCourse");
+        }
+        if (startExecutionCourse == null) {
+            throw new InvalidArgumentsServiceException("error.noSenderExecutionCourse");
+        }
+        if (senderPerson == null) {
+            throw new InvalidArgumentsServiceException("error.noPerson");
+        }
 
-            IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties.readByOID(
-                    GroupProperties.class, groupPropertiesId);
-            IExecutionCourse goalExecutionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, goalExecutionCourseId);
-            IExecutionCourse startExecutionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, objectCode);
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            IPerson senderPerson = persistentTeacher.readTeacherByUsername(senderPersonUsername)
-                    .getPerson();
-
-            if (groupProperties == null) {
-                throw new InvalidArgumentsServiceException("error.noGroupProperties");
+        List listaRelation = groupProperties.getGroupPropertiesExecutionCourse();
+        Iterator iterRelation = listaRelation.iterator();
+        while (iterRelation.hasNext()) {
+            IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse) iterRelation
+                    .next();
+            if (groupPropertiesExecutionCourse.getExecutionCourse().equals(goalExecutionCourse)
+                    && groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 1) {
+                throw new InvalidSituationServiceException("error.GroupPropertiesCreator");
             }
-            if (goalExecutionCourse == null) {
-                throw new InvalidArgumentsServiceException("error.noGoalExecutionCourse");
+            if (groupPropertiesExecutionCourse.getExecutionCourse().equals(goalExecutionCourse)
+                    && groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 2) {
+                throw new InvalidSituationServiceException("error.AlreadyAcceptedProposal");
             }
-            if (startExecutionCourse == null) {
-                throw new InvalidArgumentsServiceException("error.noSenderExecutionCourse");
+            if (groupPropertiesExecutionCourse.getExecutionCourse().equals(goalExecutionCourse)
+                    && groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 3) {
+                throw new InvalidSituationServiceException("error.WaitingProposal");
             }
-            if (senderPerson == null) {
-                throw new InvalidArgumentsServiceException("error.noPerson");
-            }
+        }
 
-            List listaRelation = groupProperties.getGroupPropertiesExecutionCourse();
-            Iterator iterRelation = listaRelation.iterator();
-            while (iterRelation.hasNext()) {
-                IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse) iterRelation
-                        .next();
-                if (groupPropertiesExecutionCourse.getExecutionCourse().equals(goalExecutionCourse)
-                        && groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 1) {
-                    throw new InvalidSituationServiceException("error.GroupPropertiesCreator");
-                }
-                if (groupPropertiesExecutionCourse.getExecutionCourse().equals(goalExecutionCourse)
-                        && groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 2) {
-                    throw new InvalidSituationServiceException("error.AlreadyAcceptedProposal");
-                }
-                if (groupPropertiesExecutionCourse.getExecutionCourse().equals(goalExecutionCourse)
-                        && groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 3) {
-                    throw new InvalidSituationServiceException("error.WaitingProposal");
-                }
-            }
+        boolean acceptProposal = false;
 
-            boolean acceptProposal = false;
+        IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = new GroupPropertiesExecutionCourse(
+                groupProperties, goalExecutionCourse);
 
-            IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = new GroupPropertiesExecutionCourse(
-                    groupProperties, goalExecutionCourse);
+        persistentGroupPropertiesExecutionCourse.simpleLockWrite(groupPropertiesExecutionCourse);
+        groupPropertiesExecutionCourse.setProposalState(new ProposalState(new Integer(3)));
+        groupPropertiesExecutionCourse.setSenderPerson(senderPerson);
+        groupPropertiesExecutionCourse.setSenderExecutionCourse(startExecutionCourse);
+        groupProperties.addGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);
+        goalExecutionCourse.addGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);
 
-            persistentGroupPropertiesExecutionCourse.simpleLockWrite(groupPropertiesExecutionCourse);
-            groupPropertiesExecutionCourse.setProposalState(new ProposalState(new Integer(3)));
-            groupPropertiesExecutionCourse.setSenderPerson(senderPerson);
-            groupPropertiesExecutionCourse.setSenderExecutionCourse(startExecutionCourse);
-            groupProperties.addGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);
-            goalExecutionCourse.addGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);
+        List group = new ArrayList();
+        List allOtherProfessors = new ArrayList();
 
-            List group = new ArrayList();
-            List allOtherProfessors = new ArrayList();
+        List professorships = persistentExecutionCourse.readExecutionCourseTeachers(goalExecutionCourse
+                .getIdInternal());
+        Iterator iterProfessorship = professorships.iterator();
+        while (iterProfessorship.hasNext()) {
+            IProfessorship professorship = (IProfessorship) iterProfessorship.next();
+            ITeacher teacher = professorship.getTeacher();
+            if (!(teacher.getPerson()).equals(senderPerson)) {
 
-            List professorships = persistentExecutionCourse
-                    .readExecutionCourseTeachers(goalExecutionCourse.getIdInternal());
-            Iterator iterProfessorship = professorships.iterator();
-            while (iterProfessorship.hasNext()) {
-                IProfessorship professorship = (IProfessorship) iterProfessorship.next();
-                ITeacher teacher = professorship.getTeacher();
-                if (!(teacher.getPerson()).equals(senderPerson)) {
-
-                    group.add(teacher.getPerson());
-                } else {
-                    acceptProposal = true;
-                }
-            }
-
-            allOtherProfessors.addAll(group);
-
-            // Create Advisory
-            if (acceptProposal == false) {
-                IAdvisory advisory = createNewProjectProposalAdvisory(goalExecutionCourse,
-                        startExecutionCourse, groupProperties, senderPerson);
-                sp.getIPersistentAdvisory().simpleLockWrite(advisory);
-                for (final Iterator iterator = group.iterator(); iterator.hasNext();) {
-                    final IPerson person = (IPerson) iterator.next();
-                    sp.getIPessoaPersistente().simpleLockWrite(person);
-
-                    person.getAdvisories().add(advisory);
-                    advisory.getPeople().add(person);
-                }
-            }
-
-            List groupAux = new ArrayList();
-
-            List professorshipsAux = persistentExecutionCourse
-                    .readExecutionCourseTeachers(startExecutionCourse.getIdInternal());
-            Iterator iterProfessorshipAux = professorshipsAux.iterator();
-            while (iterProfessorshipAux.hasNext()) {
-                IProfessorship professorshipAux = (IProfessorship) iterProfessorshipAux.next();
-                ITeacher teacherAux = professorshipAux.getTeacher();
-                IPerson pessoa = teacherAux.getPerson();
-                if (!(pessoa.equals(senderPerson))) {
-                    groupAux.add(pessoa);
-                    if (!allOtherProfessors.contains(pessoa)) {
-
-                        allOtherProfessors.add(pessoa);
-                    }
-                }
-            }
-
-            // Create Advisory
-            if (acceptProposal == true) {
-                result = Boolean.TRUE;
-                groupPropertiesExecutionCourse.setProposalState(new ProposalState(new Integer(2)));
-                List attendsSetStudentNumbers = new ArrayList();
-                IAttendsSet attendsSet = groupPropertiesExecutionCourse.getGroupProperties()
-                        .getAttendsSet();
-                List attendsInAttendsSet = attendsSet.getAttendInAttendsSet();
-                Iterator iterAttendsInAttendsSet = attendsInAttendsSet.iterator();
-                while (iterAttendsInAttendsSet.hasNext()) {
-                    IAttendInAttendsSet attendInAttendsSet = (IAttendInAttendsSet) iterAttendsInAttendsSet
-                            .next();
-                    attendsSetStudentNumbers.add(attendInAttendsSet.getAttend().getAluno().getNumber());
-                }
-
-                List attends = persistentAttend.readByExecutionCourse(goalExecutionCourse);
-                Iterator iterAttends = attends.iterator();
-                while (iterAttends.hasNext()) {
-                    IAttends attend = (IAttends) iterAttends.next();
-                    if (!attendsSetStudentNumbers.contains(attend.getAluno().getNumber())) {
-                        IAttendInAttendsSet attendInAttendsSet = new AttendInAttendsSet(attend,
-                                attendsSet);
-                        persistentAttendInAttendsSet.simpleLockWrite(attendInAttendsSet);
-                        attendsSet.addAttendInAttendsSet(attendInAttendsSet);
-                        attend.addAttendInAttendsSet(attendInAttendsSet);
-                    }
-                }
-
-                IAdvisory advisoryAux = createNewProjectProposalAcceptedAdvisory(goalExecutionCourse,
-                        startExecutionCourse, groupProperties, senderPerson);
-                sp.getIPersistentAdvisory().simpleLockWrite(advisoryAux);
-                for (final Iterator iterator = allOtherProfessors.iterator(); iterator.hasNext();) {
-                    final IPerson person = (IPerson) iterator.next();
-                    sp.getIPessoaPersistente().simpleLockWrite(person);
-
-                    person.getAdvisories().add(advisoryAux);
-                    advisoryAux.getPeople().add(person);
-                }
-
+                group.add(teacher.getPerson());
             } else {
-                IAdvisory advisoryAux = createNewProjectProposalAdvisoryAux(goalExecutionCourse,
-                        startExecutionCourse, groupProperties, senderPerson);
-                sp.getIPersistentAdvisory().simpleLockWrite(advisoryAux);
-                for (final Iterator iterator = groupAux.iterator(); iterator.hasNext();) {
-                    final IPerson person = (IPerson) iterator.next();
-                    sp.getIPessoaPersistente().simpleLockWrite(person);
+                acceptProposal = true;
+            }
+        }
 
-                    person.getAdvisories().add(advisoryAux);
-                    advisoryAux.getPeople().add(person);
+        allOtherProfessors.addAll(group);
+
+        // Create Advisory
+        if (acceptProposal == false) {
+            IAdvisory advisory = createNewProjectProposalAdvisory(goalExecutionCourse,
+                    startExecutionCourse, groupProperties, senderPerson);
+            sp.getIPersistentAdvisory().simpleLockWrite(advisory);
+            for (final Iterator iterator = group.iterator(); iterator.hasNext();) {
+                final IPerson person = (IPerson) iterator.next();
+                sp.getIPessoaPersistente().simpleLockWrite(person);
+
+                person.getAdvisories().add(advisory);
+                advisory.getPeople().add(person);
+            }
+        }
+
+        List groupAux = new ArrayList();
+
+        List professorshipsAux = persistentExecutionCourse
+                .readExecutionCourseTeachers(startExecutionCourse.getIdInternal());
+        Iterator iterProfessorshipAux = professorshipsAux.iterator();
+        while (iterProfessorshipAux.hasNext()) {
+            IProfessorship professorshipAux = (IProfessorship) iterProfessorshipAux.next();
+            ITeacher teacherAux = professorshipAux.getTeacher();
+            IPerson pessoa = teacherAux.getPerson();
+            if (!(pessoa.equals(senderPerson))) {
+                groupAux.add(pessoa);
+                if (!allOtherProfessors.contains(pessoa)) {
+
+                    allOtherProfessors.add(pessoa);
+                }
+            }
+        }
+
+        // Create Advisory
+        if (acceptProposal == true) {
+            result = Boolean.TRUE;
+            groupPropertiesExecutionCourse.setProposalState(new ProposalState(new Integer(2)));
+            List attendsSetStudentNumbers = new ArrayList();
+            IAttendsSet attendsSet = groupPropertiesExecutionCourse.getGroupProperties().getAttendsSet();
+            List attendsInAttendsSet = attendsSet.getAttendInAttendsSet();
+            Iterator iterAttendsInAttendsSet = attendsInAttendsSet.iterator();
+            while (iterAttendsInAttendsSet.hasNext()) {
+                IAttendInAttendsSet attendInAttendsSet = (IAttendInAttendsSet) iterAttendsInAttendsSet
+                        .next();
+                attendsSetStudentNumbers.add(attendInAttendsSet.getAttend().getAluno().getNumber());
+            }
+
+            List attends = persistentAttend.readByExecutionCourse(goalExecutionCourse.getIdInternal());
+            Iterator iterAttends = attends.iterator();
+            while (iterAttends.hasNext()) {
+                IAttends attend = (IAttends) iterAttends.next();
+                if (!attendsSetStudentNumbers.contains(attend.getAluno().getNumber())) {
+                    IAttendInAttendsSet attendInAttendsSet = new AttendInAttendsSet(attend, attendsSet);
+                    persistentAttendInAttendsSet.simpleLockWrite(attendInAttendsSet);
+                    attendsSet.addAttendInAttendsSet(attendInAttendsSet);
+                    attend.addAttendInAttendsSet(attendInAttendsSet);
                 }
             }
 
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw new FenixServiceException("error.newProjectProposal");
+            IAdvisory advisoryAux = createNewProjectProposalAcceptedAdvisory(goalExecutionCourse,
+                    startExecutionCourse, groupProperties, senderPerson);
+            sp.getIPersistentAdvisory().simpleLockWrite(advisoryAux);
+            for (final Iterator iterator = allOtherProfessors.iterator(); iterator.hasNext();) {
+                final IPerson person = (IPerson) iterator.next();
+                sp.getIPessoaPersistente().simpleLockWrite(person);
+
+                person.getAdvisories().add(advisoryAux);
+                advisoryAux.getPeople().add(person);
+            }
+
+        } else {
+            IAdvisory advisoryAux = createNewProjectProposalAdvisoryAux(goalExecutionCourse,
+                    startExecutionCourse, groupProperties, senderPerson);
+            sp.getIPersistentAdvisory().simpleLockWrite(advisoryAux);
+            for (final Iterator iterator = groupAux.iterator(); iterator.hasNext();) {
+                final IPerson person = (IPerson) iterator.next();
+                sp.getIPessoaPersistente().simpleLockWrite(person);
+
+                person.getAdvisories().add(advisoryAux);
+                advisoryAux.getPeople().add(person);
+            }
         }
 
         return result;

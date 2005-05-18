@@ -44,27 +44,22 @@ public class CopySiteExecutionCourse implements IService {
         IPersistentSite persistentSite = sp.getIPersistentSite();
 
         //Course From
-        IExecutionCourse executionCourseFrom = new ExecutionCourse();
-        executionCourseFrom.setIdInternal(executionCourseIDFrom);
-        ISite siteFrom = persistentSite.readByExecutionCourse(executionCourseFrom);
-        if (siteFrom == null) {
+        ISite siteFrom = persistentSite.readByExecutionCourse(executionCourseIDFrom);
+        if (siteFrom == null)
             return;
-        }
-        executionCourseFrom = siteFrom.getExecutionCourse();
+        
+        IExecutionCourse executionCourseFrom = siteFrom.getExecutionCourse();
 
         //Course To
-        IExecutionCourse executionCourseTo = new ExecutionCourse();
-        executionCourseTo.setIdInternal(executionCourseIDTo);
-        ISite siteTo = persistentSite.readByExecutionCourse(executionCourseTo);
-        if (siteTo == null) {
+        ISite siteTo = persistentSite.readByExecutionCourse(executionCourseIDTo);
+        if (siteTo == null)
             siteTo = new Site();
-        }
-
+   
         //begin copy
         persistentSite.simpleLockWrite(siteTo);
 
         //copy course if it isn't
-        executionCourseTo = siteTo.getExecutionCourse();
+        IExecutionCourse executionCourseTo = siteTo.getExecutionCourse();
         if (executionCourseTo == null) {
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             executionCourseTo = (IExecutionCourse) persistentExecutionCourse.readByOID(

@@ -32,31 +32,27 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadTeacherExecutionCoursesSitesService implements IService {
 
-    public List run(InfoTeacher infoTeacher) throws FenixServiceException {
+    public List run(InfoTeacher infoTeacher) throws FenixServiceException, ExcepcaoPersistencia {
 
-        List infoSites = new ArrayList();
+        List<InfoSite> infoSites = new ArrayList<InfoSite>();
 
-        try {
-            ISuportePersistente persistentSuport;
-            persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
-            IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
-            IPersistentProfessorship persistentProfessorship = persistentSuport
-                    .getIPersistentProfessorship();
-            ITeacher teacher = persistentTeacher.readByNumber(infoTeacher.getTeacherNumber());
-            List professorships = persistentProfessorship.readByTeacher(teacher);
-            Iterator iter = professorships.iterator();
-            while (iter.hasNext()) {
-                IProfessorship professorship = (IProfessorship) iter.next();
-                IExecutionCourse executionCourse = professorship.getExecutionCourse();
-                ISite site = persistentSite.readByExecutionCourse(executionCourse);
-                InfoSite infoSite = Cloner.copyISite2InfoSite(site);
-                infoSites.add(infoSite);
-            }
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            return infoSites;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+        IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
+        IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
+        IPersistentProfessorship persistentProfessorship = persistentSuport.getIPersistentProfessorship();
+        
+        ITeacher teacher = persistentTeacher.readByNumber(infoTeacher.getTeacherNumber());
+        List professorships = persistentProfessorship.readByTeacher(teacher);
+        Iterator iter = professorships.iterator();
+        while (iter.hasNext()) {
+            IProfessorship professorship = (IProfessorship) iter.next();
+            IExecutionCourse executionCourse = professorship.getExecutionCourse();
+            ISite site = persistentSite.readByExecutionCourse(executionCourse.getIdInternal());
+            InfoSite infoSite = Cloner.copyISite2InfoSite(site);
+            infoSites.add(infoSite);
         }
+
+        return infoSites;
     }
 }

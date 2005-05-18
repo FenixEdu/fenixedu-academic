@@ -132,7 +132,7 @@ class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.feni
 	String year;
 }
 
-/* DONE */
+/* DONE: DML (VO is Pessoa) */
 class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.DomainObject {
 	String localidade;
 	String codigoFiscal;
@@ -197,7 +197,7 @@ class net.sourceforge.fenixedu.domain.SupportLesson extends net.sourceforge.feni
 	Date endTime;
 }
 
-/* DONE */
+/* DONE: DML and VO */
 class net.sourceforge.fenixedu.domain.EvaluationMethod extends net.sourceforge.fenixedu.domain.DomainObject {
 	String evaluationElements;
 	String evaluationElementsEn;
@@ -229,7 +229,7 @@ class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.dom
 	Integer lotacao;
 }
 
-/* DONE */
+/* DONE: DML (VO doesn't exist */
 class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.domain.DomainObject {
 	String concreteClassForDegreeCurricularPlans;
 	String nome;

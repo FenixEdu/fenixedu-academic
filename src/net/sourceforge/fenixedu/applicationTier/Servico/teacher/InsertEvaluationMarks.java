@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -21,7 +20,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IEvaluation;
@@ -34,137 +32,92 @@ import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluation;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Fernanda Quitério
  *  
  */
-public class InsertEvaluationMarks implements IServico {
-    private static InsertEvaluationMarks _servico = new InsertEvaluationMarks();
-
-    /**
-     * The actor of this class.
-     */
-    private InsertEvaluationMarks() {
-
-    }
-
-    /**
-     * Returns Service Name
-     */
-    public String getNome() {
-        return "InsertEvaluationMarks";
-    }
-
-    /**
-     * Returns the _servico.
-     * 
-     * @return ReadExecutionCourse
-     */
-    public static InsertEvaluationMarks getService() {
-        return _servico;
-    }
+public class InsertEvaluationMarks implements IService {
 
     public Object run(Integer executionCourseCode, Integer evaluationCode, HashMap hashMarks)
-            throws ExcepcaoInexistente, FenixServiceException {
+            throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
 
         ISite site = null;
-        IExecutionCourse executionCourse = null;
         IEvaluation evaluation = null;
         List marksErrorsInvalidMark = null;
         List attendList = null;
         HashMap newHashMarks = new HashMap();
-        try {
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
-            IPersistentSite persistentSite = sp.getIPersistentSite();
-            IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
-            IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
-            IPersistentMark persistentMark = sp.getIPersistentMark();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentSite persistentSite = sp.getIPersistentSite();
+        IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
+        IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
+        IPersistentMark persistentMark = sp.getIPersistentMark();
 
-            //Execution Course
+        //Site
+        site = persistentSite.readByExecutionCourse(executionCourseCode);
 
-            executionCourse = (IExecutionCourse) executionCourseDAO.readByOID(ExecutionCourse.class,
-                    executionCourseCode);
+        //Evaluation
+        evaluation = (IEvaluation) persistentEvaluation.readByOID(Evaluation.class, evaluationCode);
 
-            //Site
-            site = persistentSite.readByExecutionCourse(executionCourse);
+        //Attend List
+        attendList = persistentAttend.readByExecutionCourse(executionCourseCode);
 
-            //Evaluation
+        marksErrorsInvalidMark = new ArrayList();
+        ListIterator iterAttends = attendList.listIterator();
 
-            evaluation = (IEvaluation) persistentEvaluation.readByOID(Evaluation.class, evaluationCode);
+        while (iterAttends.hasNext()) {
+            IAttends attend = (IAttends) iterAttends.next();
 
-            //Attend List
-            attendList = persistentAttend.readByExecutionCourse(executionCourse);
+            String mark = (String) hashMarks.get(attend.getAluno().getNumber().toString());
+            hashMarks.remove(attend.getAluno().getNumber().toString());
 
-            marksErrorsInvalidMark = new ArrayList();
-            ListIterator iterAttends = attendList.listIterator();
+            if (mark != null && mark.length() > 0) {
+                if (!isValidMark(evaluation, mark, attend.getAluno())) {
+                    InfoMark infoMark = new InfoMark();
+                    infoMark.setMark(mark);
 
-            while (iterAttends.hasNext()) {
-                IAttends attend = (IAttends) iterAttends.next();
-
-                String mark = (String) hashMarks.get(attend.getAluno().getNumber().toString());
-                hashMarks.remove(attend.getAluno().getNumber().toString());
-
-                if (mark != null && mark.length() > 0) {
-                    if (!isValidMark(evaluation, mark, attend.getAluno())) {
-                        InfoMark infoMark = new InfoMark();
-                        infoMark.setMark(mark);
-
-                        infoMark.setInfoFrequenta(InfoFrequentaWithInfoStudentAndPerson
-                                .newInfoFromDomain(attend));
-                        marksErrorsInvalidMark.add(infoMark);
-                    } else {
-                        newHashMarks.put(attend.getAluno().getNumber().toString(), mark);
-                        IMark domainMark = persistentMark.readBy(evaluation, attend);
-                        //verify if the student has already a mark
-                        if (domainMark == null) {
-                            domainMark = new Mark();
-
-                            persistentMark.simpleLockWrite(domainMark);
-
-                            domainMark.setAttend(attend);
-                            domainMark.setEvaluation(evaluation);
-                            domainMark.setMark(mark.toUpperCase());
-
-                        } else {
-                            if (!domainMark.getMark().equals(mark)) {
-                                persistentMark.simpleLockWrite(domainMark);
-                                domainMark.setMark(mark.toUpperCase());
-                            }
-                        }
-
-                    }
+                    infoMark.setInfoFrequenta(InfoFrequentaWithInfoStudentAndPerson
+                            .newInfoFromDomain(attend));
+                    marksErrorsInvalidMark.add(infoMark);
                 } else {
+                    newHashMarks.put(attend.getAluno().getNumber().toString(), mark);
                     IMark domainMark = persistentMark.readBy(evaluation, attend);
-                    if (domainMark != null) {
-                        persistentMark.delete(domainMark);
+                    //verify if the student has already a mark
+                    if (domainMark == null) {
+                        domainMark = new Mark();
+
+                        persistentMark.simpleLockWrite(domainMark);
+
+                        domainMark.setAttend(attend);
+                        domainMark.setEvaluation(evaluation);
+                        domainMark.setMark(mark.toUpperCase());
+
+                    } else {
+                        if (!domainMark.getMark().equals(mark)) {
+                            persistentMark.simpleLockWrite(domainMark);
+                            domainMark.setMark(mark.toUpperCase());
+                        }
                     }
+
+                }
+            } else {
+                IMark domainMark = persistentMark.readBy(evaluation, attend);
+                if (domainMark != null) {
+                    persistentMark.delete(domainMark);
                 }
             }
-
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
-            FenixServiceException newEx = new FenixServiceException("");
-            newEx.fillInStackTrace();
-            throw newEx;
         }
 
         return createSiteView(site, evaluation, newHashMarks, marksErrorsInvalidMark, attendList,
                 hashMarks);
     }
-
-    /**
-     * @param infoMark
-     * @return
-     */
 
     private Object createSiteView(ISite site, IEvaluation evaluation, HashMap hashMarks,
             List marksErrorsInvalidMark, List attendList, HashMap nonExistingStudents)

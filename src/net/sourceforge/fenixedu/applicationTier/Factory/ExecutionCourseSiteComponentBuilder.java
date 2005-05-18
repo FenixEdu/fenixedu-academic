@@ -148,11 +148,6 @@ public class ExecutionCourseSiteComponentBuilder {
         return null;
     }
 
-    /**
-     * @param summaries
-     * @param site
-     * @return
-     */
     private ISiteComponent getInfoSiteSummaries(InfoSiteSummaries component, ISite site)
             throws FenixServiceException {
         try {
@@ -423,11 +418,6 @@ public class ExecutionCourseSiteComponentBuilder {
         return allSummaries;
     }
 
-    /**
-     * @param evaluation
-     * @param site
-     * @return
-     */
     private ISiteComponent getInfoSiteEvaluation(InfoSiteEvaluation component, ISite site) {
         IExecutionCourse executionCourse = site.getExecutionCourse();
         List evaluations = executionCourse.getAssociatedEvaluations();
@@ -442,11 +432,6 @@ public class ExecutionCourseSiteComponentBuilder {
         return component;
     }
 
-    /**
-     * @param common
-     * @param site
-     * @return
-     */
     private ISiteComponent getInfoSiteCommon(InfoSiteCommon component, ISite site)
             throws FenixServiceException {
 
@@ -459,7 +444,6 @@ public class ExecutionCourseSiteComponentBuilder {
            
         try {
             // read sections
-
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             allSections = sp.getIPersistentSection().readBySite(site);
 
@@ -473,7 +457,6 @@ public class ExecutionCourseSiteComponentBuilder {
             Collections.sort(infoSectionsList);
 
             // read degrees
-
             IExecutionCourse executionCourse = site.getExecutionCourse();
 
             infoCurricularCourseList = readCurricularCourses(executionCourse);
@@ -494,11 +477,6 @@ public class ExecutionCourseSiteComponentBuilder {
         return component;
     }
 
-    /**
-     * @param section
-     * @param site
-     * @return
-     */
     private ISiteComponent getInfoSiteSection(InfoSiteSection component, ISite site,
             InfoSiteCommon commonComponent, Integer sectionIndex) throws FenixServiceException {
         List sections = commonComponent.getSections();
@@ -533,11 +511,6 @@ public class ExecutionCourseSiteComponentBuilder {
         return component;
     }
 
-    /**
-     * @param shifts
-     * @param site
-     * @return
-     */
     private ISiteComponent getInfoSiteShifts(InfoSiteShifts component, ISite site)
             throws FenixServiceException {
         List shiftsWithAssociatedClassesAndLessons = new ArrayList();
@@ -557,8 +530,6 @@ public class ExecutionCourseSiteComponentBuilder {
                             InfoShiftWithInfoExecutionCourseAndCollections.newInfoFromDomain(shift),
                             null, null);
 
-                    //List lessons =
-                    // sp.getITurnoAulaPersistente().readByShift(shift);
                     List lessons = shift.getAssociatedLessons();
                     List infoLessons = new ArrayList();
                     List classesShifts = sp.getITurmaTurnoPersistente().readClassesWithShift(shift);
@@ -590,11 +561,6 @@ public class ExecutionCourseSiteComponentBuilder {
         return component;
     }
 
-    /**
-     * @param timetable
-     * @param site
-     * @return
-     */
     private ISiteComponent getInfoSiteTimetable(InfoSiteTimetable component, ISite site)
             throws FenixServiceException {
         List infoLessonList = null;
@@ -664,11 +630,6 @@ public class ExecutionCourseSiteComponentBuilder {
         return infoLesson;
     }
 
-    /**
-     * @param courses
-     * @param site
-     * @return
-     */
     private ISiteComponent getInfoSiteAssociatedCurricularCourses(
             InfoSiteAssociatedCurricularCourses component, ISite site) {
         List infoCurricularCourseList = new ArrayList();
@@ -681,11 +642,6 @@ public class ExecutionCourseSiteComponentBuilder {
         return component;
     }
 
-    /**
-     * @param bibliography
-     * @param site
-     * @return
-     */
     private ISiteComponent getInfoSiteBibliography(InfoSiteBibliography component, ISite site)
             throws FenixServiceException {
         List references = null;
@@ -718,11 +674,6 @@ public class ExecutionCourseSiteComponentBuilder {
         return component;
     }
 
-    /**
-     * @param evaluation
-     * @param site
-     * @return
-     */
     private ISiteComponent getInfoEvaluationMethod(InfoEvaluationMethod component, ISite site)
             throws FenixServiceException {
         try {
@@ -742,11 +693,6 @@ public class ExecutionCourseSiteComponentBuilder {
         return component;
     }
 
-    /**
-     * @param page
-     * @param site
-     * @return
-     */
     private ISiteComponent getInfoSiteFirstPage(InfoSiteFirstPage component, ISite site)
             throws FenixServiceException {
         try {
@@ -764,7 +710,6 @@ public class ExecutionCourseSiteComponentBuilder {
             List lecturingInfoTeachersList = readLecturingTeachers(persistentSupport, executionCourse);
 
             //set all the required information to the component
-
             if (!infoAnnouncements.isEmpty()) {
                 infoAnnouncements.remove(0);
             }
@@ -792,15 +737,10 @@ public class ExecutionCourseSiteComponentBuilder {
         return component;
     }
 
-    /**
-     * @param persistentSupport
-     * @param executionCourse
-     * @return
-     */
     private List readLastFiveAnnouncements(ISuportePersistente persistentSupport,
             IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
 
-        ISite site = persistentSupport.getIPersistentSite().readByExecutionCourse(executionCourse);
+        ISite site = persistentSupport.getIPersistentSite().readByExecutionCourse(executionCourse.getIdInternal());
         List announcementsList = persistentSupport.getIPersistentAnnouncement().readAnnouncementsBySite(
                 site.getIdInternal());
 
@@ -900,7 +840,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
     private InfoAnnouncement readLastAnnouncement(ISuportePersistente persistentSupport,
             IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
-        ISite site = persistentSupport.getIPersistentSite().readByExecutionCourse(executionCourse);
+        ISite site = persistentSupport.getIPersistentSite().readByExecutionCourse(executionCourse.getIdInternal());
         IAnnouncement announcement = persistentSupport.getIPersistentAnnouncement()
                 .readLastAnnouncementForSite(site.getIdInternal());
         InfoAnnouncement infoAnnouncement = null;

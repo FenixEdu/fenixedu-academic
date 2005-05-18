@@ -59,12 +59,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadSummary implements IService {
 
-    /**
-     *  
-     */
-    public ReadSummary() {
-    }
-
     public SiteView run(Integer executionCourseId, Integer summaryId, String userLogged)
             throws FenixServiceException {
         SiteView siteView;
@@ -73,7 +67,6 @@ public class ReadSummary implements IService {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-
             IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
                     ExecutionCourse.class, executionCourseId);
             if (executionCourse == null) {
@@ -81,7 +74,7 @@ public class ReadSummary implements IService {
             }
 
             IPersistentSite persistentSite = sp.getIPersistentSite();
-            ISite site = persistentSite.readByExecutionCourse(executionCourse);
+            ISite site = persistentSite.readByExecutionCourse(executionCourseId);
             if (site == null) {
                 throw new FenixServiceException("no.site");
             }

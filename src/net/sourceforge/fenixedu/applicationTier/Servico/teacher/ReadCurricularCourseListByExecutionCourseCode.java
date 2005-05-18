@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -29,88 +28,59 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
+
 /**
  * @author Tânia Pousão
  * @author Ângela
  *  
  */
-public class ReadCurricularCourseListByExecutionCourseCode implements IServico {
-    private static ReadCurricularCourseListByExecutionCourseCode _servico = new ReadCurricularCourseListByExecutionCourseCode();
+public class ReadCurricularCourseListByExecutionCourseCode implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    private ReadCurricularCourseListByExecutionCourseCode() {
-
-    }
-
-    /**
-     * Returns Service Name
-     */
-    public String getNome() {
-        return "ReadCurricularCourseListByExecutionCourseCode";
-    }
-
-    /**
-     * Returns the _servico.
-     * 
-     * @return ReadExecutionCourse
-     */
-    public static ReadCurricularCourseListByExecutionCourseCode getService() {
-        return _servico;
-    }
-
-    public Object run(Integer executionCourseCode) throws ExcepcaoInexistente, FenixServiceException {
+    public Object run(Integer executionCourseCode) throws ExcepcaoInexistente, FenixServiceException,
+            ExcepcaoPersistencia {
 
         List infoCurricularCourseList = new ArrayList();
         ISite site = null;
-        try {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
+        IExecutionCourse executionCourse = (IExecutionCourse) executionCourseDAO.readByOID(
+                ExecutionCourse.class, executionCourseCode);
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = (IExecutionCourse) executionCourseDAO.readByOID(
-                    ExecutionCourse.class, executionCourseCode);
+        if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null) {
+            for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {
+                ICurricularCourse curricularCourse = (ICurricularCourse) executionCourse
+                        .getAssociatedCurricularCourses().get(i);
 
-            if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null) {
-                for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {
-                    ICurricularCourse curricularCourse = (ICurricularCourse) executionCourse
-                            .getAssociatedCurricularCourses().get(i);
+                InfoCurricularCourse infoCurricularCourse = Cloner
+                        .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                infoCurricularCourse.setInfoScopes((List) CollectionUtils.collect(curricularCourse
+                        .getScopes(), new Transformer() {
 
-                    InfoCurricularCourse infoCurricularCourse = Cloner
-                            .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-                    infoCurricularCourse.setInfoScopes((List) CollectionUtils.collect(curricularCourse
-                            .getScopes(), new Transformer() {
+                    public Object transform(Object arg0) {
+                        ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
+                        return Cloner
+                                .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+                    }
+                }));
 
-                        public Object transform(Object arg0) {
-                            ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
-                            return Cloner
-                                    .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
-                        }
-                    }));
+                Iterator iterador = infoCurricularCourse.getInfoScopes().listIterator();
+                while (iterador.hasNext()) {
+                    InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) iterador
+                            .next();
 
-                    Iterator iterador = infoCurricularCourse.getInfoScopes().listIterator();
-                    while (iterador.hasNext()) {
-                        InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) iterador
-                                .next();
-
-                        if (infoCurricularCourseScope.getInfoCurricularSemester().getSemester().equals(
-                                executionCourse.getExecutionPeriod().getSemester())) {
-                            if (!infoCurricularCourseList.contains(infoCurricularCourse)) {
-                                infoCurricularCourseList.add(infoCurricularCourse);
-                            }
+                    if (infoCurricularCourseScope.getInfoCurricularSemester().getSemester().equals(
+                            executionCourse.getExecutionPeriod().getSemester())) {
+                        if (!infoCurricularCourseList.contains(infoCurricularCourse)) {
+                            infoCurricularCourseList.add(infoCurricularCourse);
                         }
                     }
                 }
             }
-
-            IPersistentSite persistentSite = sp.getIPersistentSite();
-            site = persistentSite.readByExecutionCourse(executionCourse);
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
-            FenixServiceException newEx = new FenixServiceException("");
-            newEx.fillInStackTrace();
-            throw newEx;
         }
+
+        IPersistentSite persistentSite = sp.getIPersistentSite();
+        site = persistentSite.readByExecutionCourse(executionCourse.getIdInternal());
 
         InfoSiteAssociatedCurricularCourses infoSiteAssociatedCurricularCourses = new InfoSiteAssociatedCurricularCourses();
         infoSiteAssociatedCurricularCourses.setAssociatedCurricularCourses(infoCurricularCourseList);

@@ -53,7 +53,7 @@ public class ValidateSubmitMarks implements IService {
 
         //attend list
         IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
-        List attendList = persistentAttend.readByExecutionCourse(executionCourse);
+        List attendList = persistentAttend.readByExecutionCourse(executionCourse.getIdInternal());
 
         //verifySubmitMarks(attendList);
 
@@ -95,10 +95,8 @@ public class ValidateSubmitMarks implements IService {
         }
 
         InfoSiteSubmitMarks infoSiteSubmitMarks = new InfoSiteSubmitMarks();
-
         infoSiteSubmitMarks.setInfoEvaluation(InfoEvaluation.newInfoFromDomain(evaluation));
 
         return infoSiteSubmitMarks;
-
     }
 }

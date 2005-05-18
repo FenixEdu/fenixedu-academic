@@ -4,6 +4,11 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <br />
+<span class="error"><html:errors/>
+	<logic:present name="errors">
+		<bean:write name="errors" filter="true" />
+	</logic:present	>
+</span>
 <table width="100%">
 <tr>
 <td class="infoop"><bean:message key="label.announcement.explanation" /></td>

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Factory.ExecutionCourseSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -35,38 +34,16 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
+
 /**
  * @author Fernanda Quitério
  *  
  */
-public class ReadPublishedMarksByExam implements IServico {
-    private static ReadPublishedMarksByExam _servico = new ReadPublishedMarksByExam();
-
-    /**
-     * The actor of this class.
-     */
-    private ReadPublishedMarksByExam() {
-
-    }
-
-    /**
-     * Returns Service Name
-     */
-    public String getNome() {
-        return "ReadPublishedMarksByExam";
-    }
-
-    /**
-     * Returns the _servico.
-     * 
-     * @return ReadPublishedMarksByExam
-     */
-    public static ReadPublishedMarksByExam getService() {
-        return _servico;
-    }
+public class ReadPublishedMarksByExam implements IService {
 
     public Object run(Integer siteCode, Integer evaluationCode) throws ExcepcaoInexistente,
-            FenixServiceException {
+            FenixServiceException, ExcepcaoPersistencia {
         List marksList = null;
         List infoMarksList = null;
 
@@ -74,77 +51,70 @@ public class ReadPublishedMarksByExam implements IServico {
         IEvaluation evaluation = null;
         InfoEvaluation infoEvaluation = null;
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            //Site
+        //Site
 
-            IPersistentSite siteDAO = sp.getIPersistentSite();
-            site = (ISite) siteDAO.readByOID(Site.class, siteCode);
+        IPersistentSite siteDAO = sp.getIPersistentSite();
+        site = (ISite) siteDAO.readByOID(Site.class, siteCode);
 
-            //Execution Course
-            IExecutionCourse executionCourse = site.getExecutionCourse();
+        //Execution Course
+        IExecutionCourse executionCourse = site.getExecutionCourse();
 
-            // Evaluation
+        // Evaluation
 
-            IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
-            evaluation = (IEvaluation) persistentEvaluation.readByOID(Evaluation.class, evaluationCode);
+        IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
+        evaluation = (IEvaluation) persistentEvaluation.readByOID(Evaluation.class, evaluationCode);
 
-            infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
+        infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 
-            //Attends
-            IFrequentaPersistente attendDAO = sp.getIFrequentaPersistente();
-            List attendList = attendDAO.readByExecutionCourse(executionCourse);
+        //Attends
+        IFrequentaPersistente attendDAO = sp.getIFrequentaPersistente();
+        List attendList = attendDAO.readByExecutionCourse(executionCourse.getIdInternal());
 
-            //Marks
-            IPersistentMark markDAO = sp.getIPersistentMark();
-            marksList = markDAO.readBy(evaluation);
+        //Marks
+        IPersistentMark markDAO = sp.getIPersistentMark();
+        marksList = markDAO.readBy(evaluation);
 
-            List infoAttendList = (List) CollectionUtils.collect(attendList, new Transformer() {
-                public Object transform(Object input) {
-                    IAttends attend = (IAttends) input;
+        List infoAttendList = (List) CollectionUtils.collect(attendList, new Transformer() {
+            public Object transform(Object input) {
+                IAttends attend = (IAttends) input;
 
-                    InfoFrequenta infoAttend = InfoFrequentaWithInfoStudentAndPerson
-                            .newInfoFromDomain(attend);
-                    return infoAttend;
-                }
-            });
-
-            List infoMarkList = (List) CollectionUtils.collect(marksList, new Transformer() {
-                public Object transform(Object input) {
-                    IMark mark = (IMark) input;
-
-                    InfoMark infoMark = InfoMarkWithInfoAttendAndInfoStudent.newInfoFromDomain(mark);
-                    return infoMark;
-                }
-            });
-
-            HashMap hashMarks = new HashMap();
-            Iterator iter = infoMarkList.iterator();
-            while (iter.hasNext()) {
-                InfoMark infoMark = (InfoMark) iter.next();
-                hashMarks.put(infoMark.getInfoFrequenta().getAluno().getNumber().toString(), infoMark
-                        .getMark());
+                InfoFrequenta infoAttend = InfoFrequentaWithInfoStudentAndPerson
+                        .newInfoFromDomain(attend);
+                return infoAttend;
             }
+        });
 
-            InfoSiteMarks infoSiteMarks = new InfoSiteMarks();
-            infoSiteMarks.setMarksList(infoMarksList);
-            infoSiteMarks.setInfoEvaluation(infoEvaluation);
-            infoSiteMarks.setHashMarks(hashMarks);
-            infoSiteMarks.setInfoAttends(infoAttendList);
+        List infoMarkList = (List) CollectionUtils.collect(marksList, new Transformer() {
+            public Object transform(Object input) {
+                IMark mark = (IMark) input;
 
-            ExecutionCourseSiteComponentBuilder componentBuilder = new ExecutionCourseSiteComponentBuilder();
-            ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site,
-                    null, null, null);
+                InfoMark infoMark = InfoMarkWithInfoAttendAndInfoStudent.newInfoFromDomain(mark);
+                return infoMark;
+            }
+        });
 
-            ExecutionCourseSiteView siteView = new ExecutionCourseSiteView(commonComponent,
-                    infoSiteMarks);
-
-            return siteView;
-
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw new FenixServiceException("error.impossibleReadMarksList");
+        HashMap hashMarks = new HashMap();
+        Iterator iter = infoMarkList.iterator();
+        while (iter.hasNext()) {
+            InfoMark infoMark = (InfoMark) iter.next();
+            hashMarks.put(infoMark.getInfoFrequenta().getAluno().getNumber().toString(), infoMark
+                    .getMark());
         }
+
+        InfoSiteMarks infoSiteMarks = new InfoSiteMarks();
+        infoSiteMarks.setMarksList(infoMarksList);
+        infoSiteMarks.setInfoEvaluation(infoEvaluation);
+        infoSiteMarks.setHashMarks(hashMarks);
+        infoSiteMarks.setInfoAttends(infoAttendList);
+
+        ExecutionCourseSiteComponentBuilder componentBuilder = new ExecutionCourseSiteComponentBuilder();
+        ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null,
+                null, null);
+
+        ExecutionCourseSiteView siteView = new ExecutionCourseSiteView(commonComponent, infoSiteMarks);
+
+        return siteView;
     }
 }

@@ -83,9 +83,9 @@ public class FrequentaOJB extends PersistentObjectOJB implements IFrequentaPersi
         return queryList(Attends.class, crit);
     }
 
-    public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
+    public List readByExecutionCourse(Integer executionCourseID) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("disciplinaExecucao.idInternal", executionCourse.getIdInternal());
+        crit.addEqualTo("disciplinaExecucao.idInternal", executionCourseID);
         return queryList(Attends.class, crit);
     }
 

@@ -8,6 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
  */
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -22,16 +24,13 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadSites implements IService {
 
-    /**
-     * Executes the service. Returns the current collection of infosites .
-     */
     public List run() throws FenixServiceException {
         ISuportePersistente sp;
-        List allSites = null;
+        Collection allSites = null;
 
         try {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            allSites = sp.getIPersistentSite().readAll();
+            allSites = sp.getIPersistentSite().readAll(Site.class);
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
         }

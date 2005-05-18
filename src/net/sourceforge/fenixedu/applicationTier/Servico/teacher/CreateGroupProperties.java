@@ -41,96 +41,65 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class CreateGroupProperties implements IService {
 
-    /**
-     * The constructor of this class.
-     */
-    public CreateGroupProperties() {
-    }
+    public boolean run(Integer executionCourseCode, InfoGroupProperties infoGroupProperties)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-     
-    /**
-     * Executes the service.
-     */
-    public boolean run(Integer executionCourseCode,
-            InfoGroupProperties infoGroupProperties)
-            throws FenixServiceException {
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
+                .getIPersistentExecutionCourse();
+        IPersistentGroupProperties persistentGroupProperties = persistentSupport
+                .getIPersistentGroupProperties();
+        IPersistentGroupPropertiesExecutionCourse persistentGroupPropertiesExecutionCourse = persistentSupport
+                .getIPersistentGroupPropertiesExecutionCourse();
+        IPersistentAttendsSet persistentAttendsSet = persistentSupport.getIPersistentAttendsSet();
+        IPersistentAttendInAttendsSet persistentAttendInAttendsSet = persistentSupport
+                .getIPersistentAttendInAttendsSet();
+        IFrequentaPersistente persistentFrequenta = persistentSupport.getIFrequentaPersistente();
 
-        IExecutionCourse executionCourse = null;
-        try {
-        	
-            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
-                    .getIPersistentExecutionCourse();
-            IPersistentGroupProperties persistentGroupProperties = persistentSupport
-					.getIPersistentGroupProperties();        
-            IPersistentGroupPropertiesExecutionCourse persistentGroupPropertiesExecutionCourse = 
-            		persistentSupport.getIPersistentGroupPropertiesExecutionCourse();
-            IPersistentAttendsSet persistentAttendsSet = persistentSupport
-            		.getIPersistentAttendsSet();
-            IPersistentAttendInAttendsSet persistentAttendInAttendsSet = persistentSupport
-					.getIPersistentAttendInAttendsSet();
-            IFrequentaPersistente persistentFrequenta = persistentSupport.getIFrequentaPersistente();
-    		
-            
-            executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOID(ExecutionCourse.class, executionCourseCode);
-            
-            
-            
-            // Checks if already exists a groupProperties with the same name, related with the executionCourse
-            
-            if(executionCourse.getGroupPropertiesByName(infoGroupProperties.getName())!=null){
-            	throw new ExistingServiceException();
-            }
-            //
+        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                ExecutionCourse.class, executionCourseCode);
 
-            
-            List attends = new ArrayList();
-            List attendInAttendsSetList = new ArrayList();
-            attends=persistentFrequenta.readByExecutionCourse(executionCourse);
-            
-            
-
-
-            IGroupProperties newGroupProperties = Cloner
-                    .copyInfoGroupProperties2IGroupProperties(infoGroupProperties);
-            persistentGroupProperties.simpleLockWrite(newGroupProperties);
-            
-            
-            
-            
-            IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse;
-            groupPropertiesExecutionCourse = new GroupPropertiesExecutionCourse(newGroupProperties,executionCourse);
-            persistentGroupPropertiesExecutionCourse.simpleLockWrite(groupPropertiesExecutionCourse);
-            groupPropertiesExecutionCourse.setProposalState(new ProposalState(new Integer(1)));
-            
-            IAttendsSet attendsSet;
-            attendsSet = new AttendsSet(executionCourse.getNome());
-            persistentAttendsSet.simpleLockWrite(attendsSet);
-            
-            IAttendInAttendsSet attendInAttendsSet;
-            Iterator iterAttends = attends.iterator();
-            while(iterAttends.hasNext()){
-            	IAttends frequenta = (IAttends)iterAttends.next();
-            	
-            	attendInAttendsSet = new AttendInAttendsSet(frequenta,attendsSet);
-            	persistentAttendInAttendsSet.simpleLockWrite(attendInAttendsSet);
-            	attendInAttendsSetList.add(attendInAttendsSet);
-            	frequenta.addAttendInAttendsSet(attendInAttendsSet);
-            }
-            attendsSet.setGroupProperties(newGroupProperties);
-            attendsSet.setAttendInAttendsSet(attendInAttendsSetList);
-            attendsSet.setStudentGroups(new ArrayList());
-            
-            
-            newGroupProperties.setAttendsSet(attendsSet);
-            newGroupProperties.addGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);
-            executionCourse.addGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);
-
-            
-        }  catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia.getMessage());
+        // Checks if already exists a groupProperties with the same name,
+        // related with the executionCourse
+        if (executionCourse.getGroupPropertiesByName(infoGroupProperties.getName()) != null) {
+            throw new ExistingServiceException();
         }
+        List attends = new ArrayList();
+        List attendInAttendsSetList = new ArrayList();
+        attends = persistentFrequenta.readByExecutionCourse(executionCourseCode);
+
+        IGroupProperties newGroupProperties = Cloner
+                .copyInfoGroupProperties2IGroupProperties(infoGroupProperties);
+        persistentGroupProperties.simpleLockWrite(newGroupProperties);
+
+        IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse;
+        groupPropertiesExecutionCourse = new GroupPropertiesExecutionCourse(newGroupProperties,
+                executionCourse);
+        persistentGroupPropertiesExecutionCourse.simpleLockWrite(groupPropertiesExecutionCourse);
+        groupPropertiesExecutionCourse.setProposalState(new ProposalState(new Integer(1)));
+
+        IAttendsSet attendsSet;
+        attendsSet = new AttendsSet(executionCourse.getNome());
+        persistentAttendsSet.simpleLockWrite(attendsSet);
+
+        IAttendInAttendsSet attendInAttendsSet;
+        Iterator iterAttends = attends.iterator();
+        while (iterAttends.hasNext()) {
+            IAttends frequenta = (IAttends) iterAttends.next();
+
+            attendInAttendsSet = new AttendInAttendsSet(frequenta, attendsSet);
+            persistentAttendInAttendsSet.simpleLockWrite(attendInAttendsSet);
+            attendInAttendsSetList.add(attendInAttendsSet);
+            frequenta.addAttendInAttendsSet(attendInAttendsSet);
+        }
+        attendsSet.setGroupProperties(newGroupProperties);
+        attendsSet.setAttendInAttendsSet(attendInAttendsSetList);
+        attendsSet.setStudentGroups(new ArrayList());
+
+        newGroupProperties.setAttendsSet(attendsSet);
+        newGroupProperties.addGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);
+        executionCourse.addGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);
+
         return true;
     }
 }

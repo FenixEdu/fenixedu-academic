@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
+import net.sourceforge.fenixedu.domain.IAnnouncement;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IBibliographicReference;
 import net.sourceforge.fenixedu.domain.IEvaluation;
@@ -25,15 +26,18 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IResponsibleFor;
+import net.sourceforge.fenixedu.domain.ISection;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IShiftProfessorship;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.ISummary;
 import net.sourceforge.fenixedu.domain.ISupportLesson;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentAnnouncement;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
@@ -43,6 +47,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentMetadata;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
@@ -81,9 +86,6 @@ public class MergeExecutionCourses implements IService {
             return (student.getIdInternal().equals(studentFromList.getIdInternal()));
         }
 
-    }
-
-    public MergeExecutionCourses() {
     }
 
     public void run(Integer executionCourseDestinationId, Integer executionCourseSourceId)
@@ -143,27 +145,20 @@ public class MergeExecutionCourses implements IService {
                 && source != destination && distributedTestAuthorization;
     }
 
-    /**
-     * @param destination
-     * @param source
-     * @param ps
-     */
     private void copyEvaluationMethod(IExecutionCourse destination, IExecutionCourse source,
             ISuportePersistente ps) throws ExcepcaoPersistencia {
         IPersistentEvaluationMethod persistentEvaluationMethod = ps.getIPersistentEvaluationMethod();
-        IEvaluationMethod evaluationMethod = persistentEvaluationMethod.readByIdExecutionCourse(source.getIdInternal());
+        IEvaluationMethod evaluationMethod = persistentEvaluationMethod.readByIdExecutionCourse(source
+                .getIdInternal());
         if (evaluationMethod != null) {
             evaluationMethod.getExecutionCourse().setEvaluationMethod(null);
-            persistentEvaluationMethod.deleteByOID(EvaluationMethod.class, evaluationMethod.getIdInternal());
+            evaluationMethod.setExecutionCourse(null);
+            persistentEvaluationMethod.deleteByOID(EvaluationMethod.class, evaluationMethod
+                    .getIdInternal());
         }
 
     }
 
-    /**
-     * @param destination
-     * @param source
-     * @param ps
-     */
     private void copySummaries(IExecutionCourse destination, IExecutionCourse source,
             ISuportePersistente ps) throws ExcepcaoPersistencia {
         IPersistentSummary persistentSummary = ps.getIPersistentSummary();
@@ -177,27 +172,19 @@ public class MergeExecutionCourses implements IService {
 
     }
 
-    /**
-     * @param destination
-     * @param source
-     * @param ps
-     */
     private void copyCourseReport(IExecutionCourse destination, IExecutionCourse source,
             ISuportePersistente ps) throws ExcepcaoPersistencia {
         IPersistentCourseReport persistentCourseReport = ps.getIPersistentCourseReport();
-        ICourseReport courseReport = persistentCourseReport.readCourseReportByExecutionCourse(source.getIdInternal());
+        ICourseReport courseReport = persistentCourseReport.readCourseReportByExecutionCourse(source
+                .getIdInternal());
         if (courseReport != null) {
             courseReport.getExecutionCourse().setCourseReport(null);
+            courseReport.setExecutionCourse(null);
             persistentCourseReport.deleteByOID(CourseReport.class, courseReport.getIdInternal());
         }
 
     }
 
-    /**
-     * @param destination
-     * @param source
-     * @param ps
-     */
     private void copyGroups(IExecutionCourse destination, IExecutionCourse source, ISuportePersistente ps)
             throws ExcepcaoPersistencia {
         IPersistentGroupPropertiesExecutionCourse persistentGroupPropertiesExecutionCourse = ps
@@ -233,7 +220,6 @@ public class MergeExecutionCourses implements IService {
                 }
             }
         }
-
     }
 
     private void copyBibliography(IExecutionCourse destination, IExecutionCourse source,
@@ -270,6 +256,7 @@ public class MergeExecutionCourses implements IService {
                 } else {
                     bibliographicReference.getExecutionCourse().getAssociatedBibliographicReferences()
                             .remove(bibliographicReference);
+                    bibliographicReference.setExecutionCourse(null);
                     persistentBibliographicReference.deleteByOID(BibliographicReference.class,
                             bibliographicReference.getIdInternal());
                 }
@@ -307,20 +294,52 @@ public class MergeExecutionCourses implements IService {
             if (!alreadyAttendingDestination.containsKey(attend.getAluno().getNumber().toString())) {
                 ps.getIFrequentaPersistente().simpleLockWrite(attend);
                 attend.setDisciplinaExecucao(destination);
-                ps.getIFrequentaPersistente().simpleLockWrite(attend);
             }
         }
     }
 
-    private void copySites(IExecutionCourse destination, IExecutionCourse source, ISuportePersistente ps)
-            throws ExcepcaoPersistencia {
-        IPersistentSite persistentSite = ps.getIPersistentSite();
-        ISite site = persistentSite.readByExecutionCourse(source);
-        if (site != null) {
+    private void copySites(IExecutionCourse destination, IExecutionCourse source,
+            ISuportePersistente suportePersistente) throws ExcepcaoPersistencia {
 
-            persistentSite.delete(site);
+        final ISite sourceSite = source.getSite();
+        if (sourceSite != null) {
+            IPersistentSite persistentSite = suportePersistente.getIPersistentSite();
+
+            copySiteAnnouncements(suportePersistente, sourceSite.getAssociatedAnnouncements(),
+                    destination.getSite());
+            copySiteSections(suportePersistente, sourceSite.getAssociatedSections(), destination
+                    .getSite());
+
+            sourceSite.getExecutionCourse().setSite(null);
+            sourceSite.setExecutionCourse(null);
+            persistentSite.deleteByOID(Site.class, sourceSite.getIdInternal());
         }
+    }
 
+    private void copySiteSections(final ISuportePersistente suportePersistente,
+            final List<ISection> associatedSections, final ISite destinationSite)
+            throws ExcepcaoPersistencia {
+        if (destinationSite != null) {
+            IPersistentSection persistentSection = suportePersistente.getIPersistentSection();
+            for (final ISection section : associatedSections) {
+                persistentSection.simpleLockWrite(section);
+                section.setSite(destinationSite);
+            }
+        }
+    }
+
+    private void copySiteAnnouncements(final ISuportePersistente suportePersistente,
+            final List<IAnnouncement> associatedAnnouncements, final ISite destinationSite)
+            throws ExcepcaoPersistencia {
+
+        if (destinationSite != null) {
+            IPersistentAnnouncement persistentAnnouncement = suportePersistente
+                    .getIPersistentAnnouncement();
+            for (final IAnnouncement announcement : associatedAnnouncements) {
+                persistentAnnouncement.simpleLockWrite(announcement);
+                announcement.setSite(destinationSite);
+            }
+        }
     }
 
     private void copyProfessorshipsAndResponsibleFors(IExecutionCourse destination,
@@ -373,7 +392,8 @@ public class MergeExecutionCourses implements IService {
 
                     IPersistentSummary persistentSummary = ps.getIPersistentSummary();
                     List summaryList = persistentSummary.readByTeacher(professorship
-                            .getExecutionCourse().getIdInternal(), professorship.getTeacher().getTeacherNumber());
+                            .getExecutionCourse().getIdInternal(), professorship.getTeacher()
+                            .getTeacherNumber());
                     if (summaryList != null && !summaryList.isEmpty()) {
                         for (Iterator iteratorSummaries = summaryList.iterator(); iteratorSummaries
                                 .hasNext();) {

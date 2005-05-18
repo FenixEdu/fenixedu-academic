@@ -69,7 +69,7 @@ public class PrepareInsertSummary implements IService {
             }
 
             IPersistentSite persistentSite = sp.getIPersistentSite();
-            ISite site = persistentSite.readByExecutionCourse(executionCourse);
+            ISite site = persistentSite.readByExecutionCourse(executionCourse.getIdInternal());
             if (site == null) {
                 throw new FenixServiceException("no.site");
             }

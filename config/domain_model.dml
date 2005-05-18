@@ -1,5 +1,4 @@
-/*
- * DOMAIN_MODEL.DML
+/* DOMAIN_MODEL.DML
  *
  * The Fenix Project Domain Model
  * 
@@ -752,6 +751,7 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 	Integer keyExecutionPeriod;
 	Integer keyCourseReport;
 	Integer keyEvaluationMethod;
+	Integer keySite;
 	Double praticalHours;
 	String comment;
 	Double theoPratHours;

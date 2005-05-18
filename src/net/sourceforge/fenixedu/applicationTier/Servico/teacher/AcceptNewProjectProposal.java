@@ -103,7 +103,7 @@ public class AcceptNewProjectProposal implements IService {
             }
 
             IExecutionCourse executionCourse = groupPropertiesExecutionCourse.getExecutionCourse();
-            List attends = persistentAttend.readByExecutionCourse(executionCourse);
+            List attends = persistentAttend.readByExecutionCourse(executionCourse.getIdInternal());
             Iterator iterAttends = attends.iterator();
             while (iterAttends.hasNext()) {
                 IAttends attend = (IAttends) iterAttends.next();

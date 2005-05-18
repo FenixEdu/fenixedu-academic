@@ -2,11 +2,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -17,33 +14,20 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class EditCustomizationOptions implements IService {
 
-    public EditCustomizationOptions() {
-    }
-
     public boolean run(Integer infoExecutionCourseCode, InfoSite infoSiteNew)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            IPersistentSite persistentSite = sp.getIPersistentSite();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentSite persistentSite = sp.getIPersistentSite();
 
-            ISite siteOld = null;
+        ISite siteOld = persistentSite.readByExecutionCourse(infoExecutionCourseCode);
+        persistentSite.simpleLockWrite(siteOld);
 
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
-                    ExecutionCourse.class, infoExecutionCourseCode);
-            siteOld = persistentSite.readByExecutionCourse(executionCourse);
+        siteOld.setAlternativeSite(infoSiteNew.getAlternativeSite());
+        siteOld.setMail(infoSiteNew.getMail());
+        siteOld.setInitialStatement(infoSiteNew.getInitialStatement());
+        siteOld.setIntroduction(infoSiteNew.getIntroduction());
 
-            persistentSite.simpleLockWrite(siteOld);
-
-            siteOld.setAlternativeSite(infoSiteNew.getAlternativeSite());
-            siteOld.setMail(infoSiteNew.getMail());
-            siteOld.setInitialStatement(infoSiteNew.getInitialStatement());
-            siteOld.setIntroduction(infoSiteNew.getIntroduction());
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
         return true;
     }
 }

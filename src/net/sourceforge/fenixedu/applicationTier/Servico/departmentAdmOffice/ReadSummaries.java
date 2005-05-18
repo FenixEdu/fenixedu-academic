@@ -88,7 +88,7 @@ public class ReadSummaries implements IService {
         List lessonTypes = findLessonTypesExecutionCourse(executionCourse);
 
         IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
-        ISite site = persistentSite.readByExecutionCourse(executionCourse);
+        ISite site = persistentSite.readByExecutionCourse(executionCourse.getIdInternal());
 
         if (site == null) {
             throw new FenixServiceException("no.site");

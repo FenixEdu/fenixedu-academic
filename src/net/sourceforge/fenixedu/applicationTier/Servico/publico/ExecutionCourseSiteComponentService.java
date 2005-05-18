@@ -11,8 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingAs
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -36,46 +34,31 @@ public class ExecutionCourseSiteComponentService implements IService {
     public Object run(ISiteComponent commonComponent, ISiteComponent bodyComponent,
             Integer infoSiteCode, Integer infoExecutionCourseCode, Integer sectionIndex,
             Integer curricularCourseId) throws FenixServiceException,
-            NonExistingAssociatedCurricularCoursesServiceException {
+            NonExistingAssociatedCurricularCoursesServiceException, ExcepcaoPersistencia {
+
+        ISite site = null;
         ExecutionCourseSiteView siteView = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            IPersistentSite persistentSite = sp.getIPersistentSite();
 
-            ISite site = null;
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+        IPersistentSite persistentSite = sp.getIPersistentSite();
 
-            if (infoSiteCode != null) {
+        if (infoSiteCode != null)
+            site = (ISite) persistentSite.readByOID(Site.class, infoSiteCode);
+        else
+            site = persistentSite.readByExecutionCourse(infoExecutionCourseCode);
 
-                site = (ISite) persistentSite.readByOID(Site.class, infoSiteCode);
-                if (site == null) {
-                    throw new NonExistingServiceException();
-                }
-            } else {
-                IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
-                        .readByOID(ExecutionCourse.class, infoExecutionCourseCode);
-                if (executionCourse == null) {
-                    throw new FenixServiceException();
-                }
-                site = persistentSite.readByExecutionCourse(executionCourse);
-            }
-
-            if (site != null) {
-                ExecutionCourseSiteComponentBuilder componentBuilder = ExecutionCourseSiteComponentBuilder
-                        .getInstance();
-                commonComponent = componentBuilder.getComponent(commonComponent, site, null, null, null);
-                bodyComponent = componentBuilder.getComponent(bodyComponent, site, commonComponent,
-                        sectionIndex, curricularCourseId);
-                siteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
-            }
-        } catch (ExcepcaoPersistencia e) {
-
-            throw new FenixServiceException(e);
-        } catch (Exception e) {
-
-            throw new FenixServiceException(e);
+        if (site == null) {
+            throw new NonExistingServiceException();
         }
 
+        ExecutionCourseSiteComponentBuilder componentBuilder = ExecutionCourseSiteComponentBuilder
+                .getInstance();
+        commonComponent = componentBuilder.getComponent(commonComponent, site, null, null, null);
+        bodyComponent = componentBuilder.getComponent(bodyComponent, site, commonComponent,
+                sectionIndex, curricularCourseId);
+        siteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
+        
         return siteView;
     }
 }

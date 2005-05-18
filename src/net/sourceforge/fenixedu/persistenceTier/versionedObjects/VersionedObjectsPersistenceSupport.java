@@ -95,6 +95,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamExecuti
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionPeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SiteVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SummaryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantCostCenterVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantInsuranceVO;
@@ -540,7 +541,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentSite getIPersistentSite() {
-        return null;
+        return new SiteVO();
     }
 
     public IPersistentFAQSection getIPersistentFAQSection() {

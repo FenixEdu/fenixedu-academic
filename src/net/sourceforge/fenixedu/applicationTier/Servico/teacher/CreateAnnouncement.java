@@ -7,9 +7,7 @@ import java.util.Date;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Announcement;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAnnouncement;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentAnnouncement;
@@ -50,38 +48,29 @@ public class CreateAnnouncement implements IService {
 
     /**
      * Executes the service.
+     * 
+     * @throws ExcepcaoPersistencia
      */
     public boolean run(Integer infoExecutionCourseCode, String newAnnouncementTitle,
-            String newAnnouncementInformation) throws FenixServiceException {
+            String newAnnouncementInformation) throws FenixServiceException, ExcepcaoPersistencia {
         ISite site = null;
 
         Calendar calendar = Calendar.getInstance();
 
-        try {
-            persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
-                    .getIPersistentExecutionCourse();
-            IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
+        persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
+                .getIPersistentExecutionCourse();
+        IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
 
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
-                    ExecutionCourse.class, infoExecutionCourseCode);
-            site = persistentSite.readByExecutionCourse(executionCourse);
-
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia.getMessage());
-        }
+        site = persistentSite.readByExecutionCourse(infoExecutionCourseCode);
 
         checkIfAnnouncementExists(newAnnouncementTitle, site,
                 new Timestamp(calendar.getTime().getTime()));
 
-        try {
-            IAnnouncement newAnnouncement = new Announcement(newAnnouncementTitle, calendar.getTime(), calendar.getTime(),
-                    newAnnouncementInformation, site);
-            persistentAnnouncement.simpleLockWrite(newAnnouncement);
+        IAnnouncement newAnnouncement = new Announcement(newAnnouncementTitle, calendar.getTime(),
+                calendar.getTime(), newAnnouncementInformation, site);
+        persistentAnnouncement.simpleLockWrite(newAnnouncement);
 
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia.getMessage());
-        }
         return true;
     }
 }

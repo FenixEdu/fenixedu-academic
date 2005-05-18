@@ -35,7 +35,7 @@ public interface IFrequentaPersistente extends IPersistentObject {
 
     public List readByStudentNumber(Integer id, DegreeType tipoCurso) throws ExcepcaoPersistencia;
 
-    public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
+    public List readByExecutionCourse(Integer executionCourseID) throws ExcepcaoPersistencia;
 
     public IAttends readByEnrolment(IEnrolment enrolment) throws ExcepcaoPersistencia;
 

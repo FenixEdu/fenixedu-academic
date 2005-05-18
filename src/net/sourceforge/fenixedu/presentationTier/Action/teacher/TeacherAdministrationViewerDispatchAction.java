@@ -311,7 +311,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, announcementCode };
         try {
+            System.out.println("PREPARAR PARA APAGAR ANUNCIO: " + announcementCode);
             ServiceManagerServiceFactory.executeService(userView, "DeleteAnnouncementService", args);
+            System.out.println("ANUNCIO APAGADO.");
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

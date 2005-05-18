@@ -44,131 +44,120 @@ public class ExamRoomDistribution implements IService {
 
     public final static int OUT_OF_ENROLLMENT_PERIOD = 1;
 
-    /**
-     * The actor of this class.
-     */
-    public ExamRoomDistribution() {
-    }
-
     public Boolean run(Integer executionCourseCode, Integer examCode, List roomsIds, Boolean sms,
-            Boolean enrolledStudents) throws FenixServiceException {
+            Boolean enrolledStudents) throws FenixServiceException, ExcepcaoPersistencia {
+
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExam persistentExam = sp.getIPersistentExam();
+        ISalaPersistente persistentRoom = sp.getISalaPersistente();
+
+        IFrequentaPersistente persistentAttends = sp.getIFrequentaPersistente();
+        IPersistentExamStudentRoom persistentExamStudentRoom = sp.getIPersistentExamStudentRoom();
+        IExam exam = (IExam) persistentExam.readByOID(Exam.class, examCode);
+        if (exam == null) {
+            throw new InvalidArgumentsServiceException("exam");
+        }
+
         Boolean result = new Boolean(false);
         List students = new ArrayList();
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExam persistentExam = sp.getIPersistentExam();
-            ISalaPersistente persistentRoom = sp.getISalaPersistente();
 
-            IFrequentaPersistente persistentAttends = sp.getIFrequentaPersistente();
-            IPersistentExamStudentRoom persistentExamStudentRoom = sp.getIPersistentExamStudentRoom();
-            IExam exam = (IExam) persistentExam.readByOID(Exam.class, examCode);
-            if (exam == null) {
-                throw new InvalidArgumentsServiceException("exam");
+        if (!enrolledStudents.booleanValue() || exam.getEnrollmentEndDay() == null) {
+            Calendar examDay = exam.getDay();
+            Calendar examTime = exam.getBeginning();
+
+            Calendar examStartInstant = constructCalendarInstance(examDay, examTime);
+            Calendar today = Calendar.getInstance();
+
+            if (today.after(examStartInstant)) {
+                throw new FenixServiceException(ExamRoomDistribution.OUT_OF_ENROLLMENT_PERIOD);
             }
 
-            if (!enrolledStudents.booleanValue() || exam.getEnrollmentEndDay() == null) {
-                Calendar examDay = exam.getDay();
-                Calendar examTime = exam.getBeginning();
+            List executionCourses = exam.getAssociatedExecutionCourses();
+            Iterator iterCourse = executionCourses.iterator();
+            while (iterCourse.hasNext()) {
+                IExecutionCourse executionCourse = (IExecutionCourse) iterCourse.next();
+                List attends = persistentAttends.readByExecutionCourse(executionCourse.getIdInternal());
+                students.addAll(CollectionUtils.collect(attends, new Transformer() {
 
-                Calendar examStartInstant = constructCalendarInstance(examDay, examTime); 
-                Calendar today = Calendar.getInstance();
-                //                Calendar twoWeeksBeforeExam = (Calendar) examDay.clone();
-                //                twoWeeksBeforeExam.add(Calendar.DATE, -14);
-
-                if (today.after(examStartInstant)) {
-                    throw new FenixServiceException(ExamRoomDistribution.OUT_OF_ENROLLMENT_PERIOD);
-                }
-
-                List executionCourses = exam.getAssociatedExecutionCourses();
-                Iterator iterCourse = executionCourses.iterator();
-                while (iterCourse.hasNext()) {
-                    List attends = persistentAttends.readByExecutionCourse((IExecutionCourse) iterCourse
-                            .next());
-                    students.addAll(CollectionUtils.collect(attends, new Transformer() {
-
-                        public Object transform(Object arg0) {
-                            IAttends frequenta = (IAttends) arg0;
-                            return frequenta.getAluno();
-                        }
-                    }));
-                }
-
-            } else {
-                Calendar endEnrollmentDay = exam.getEnrollmentEndDay();
-                Calendar endHourDay = exam.getEnrollmentEndTime();
-
-                endEnrollmentDay.set(Calendar.HOUR_OF_DAY, 0);
-                endEnrollmentDay.set(Calendar.MINUTE, 0);
-                endEnrollmentDay.roll(Calendar.HOUR_OF_DAY, endHourDay.get(Calendar.HOUR_OF_DAY));
-                endEnrollmentDay.roll(Calendar.MINUTE, endHourDay.get(Calendar.MINUTE));
-
-                Calendar examDay = exam.getDay();
-                Calendar examTime = exam.getBeginning();
-                Calendar examStartInstant = constructCalendarInstance(examDay, examTime); 
-                Calendar today = Calendar.getInstance();
-
-                if (today.after(examStartInstant) || today.before(endEnrollmentDay)) {
-                    throw new FenixServiceException(ExamRoomDistribution.OUT_OF_ENROLLMENT_PERIOD);
-                }
-
-                List examStudentRoomList = persistentExamStudentRoom.readBy(exam);
-                Iterator iterExamStudentRoomList = examStudentRoomList.iterator();
-                while (iterExamStudentRoomList.hasNext()) {
-                    students.add(((IExamStudentRoom) iterExamStudentRoomList.next()).getStudent());
-                }
-
-            }
-
-            List uniqueRooms = removeRepeatedElements(roomsIds);
-            Iterator iterRoom = uniqueRooms.iterator();
-            List rooms = new ArrayList();
-            while (iterRoom.hasNext()) {
-                IRoom room = (IRoom) persistentRoom.readByOID(Room.class, (Integer) iterRoom.next());
-                if (room == null) {
-                    throw new InvalidArgumentsServiceException("room");
-                }
-                rooms.add(room);
-            }
-            if (!exam.getAssociatedRooms().containsAll(rooms)) {
-                throw new InvalidArgumentsServiceException("rooms");
-            }
-
-            Iterator iter = rooms.iterator();
-            while (iter.hasNext()) {
-                IRoom room = (IRoom) iter.next();
-                int i = 1;
-                while (i <= room.getCapacidadeExame().intValue()) {
-                    if (students.size() > 0) {
-                        IStudent student = (IStudent) getRandomObjectFromList(students);
-                        IExamStudentRoom examStudentRoom = persistentExamStudentRoom.readBy(exam,
-                                student);
-                        if (examStudentRoom == null) {
-                            examStudentRoom = new ExamStudentRoom();
-                            persistentExamStudentRoom.simpleLockWrite(examStudentRoom);
-                            examStudentRoom.setExam(exam);
-                            examStudentRoom.setRoom(room);
-                            examStudentRoom.setStudent(student);
-                        } else {
-                            persistentExamStudentRoom.simpleLockWrite(examStudentRoom);
-                            examStudentRoom.setRoom(room);
-                        }
-
-                        if (sms.booleanValue()) {
-                            sendSMSToStudent(examStudentRoom);
-                        }
-                    } else {
-                        break;
+                    public Object transform(Object arg0) {
+                        IAttends frequenta = (IAttends) arg0;
+                        return frequenta.getAluno();
                     }
-                    i++;
-                }
+                }));
             }
-            if (students.size() > 0) {
-                throw new InvalidArgumentsServiceException("students");
+
+        } else {
+            Calendar endEnrollmentDay = exam.getEnrollmentEndDay();
+            Calendar endHourDay = exam.getEnrollmentEndTime();
+
+            endEnrollmentDay.set(Calendar.HOUR_OF_DAY, 0);
+            endEnrollmentDay.set(Calendar.MINUTE, 0);
+            endEnrollmentDay.roll(Calendar.HOUR_OF_DAY, endHourDay.get(Calendar.HOUR_OF_DAY));
+            endEnrollmentDay.roll(Calendar.MINUTE, endHourDay.get(Calendar.MINUTE));
+
+            Calendar examDay = exam.getDay();
+            Calendar examTime = exam.getBeginning();
+            Calendar examStartInstant = constructCalendarInstance(examDay, examTime);
+            Calendar today = Calendar.getInstance();
+
+            if (today.after(examStartInstant) || today.before(endEnrollmentDay)) {
+                throw new FenixServiceException(ExamRoomDistribution.OUT_OF_ENROLLMENT_PERIOD);
             }
-            result = new Boolean(true);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+
+            List examStudentRoomList = persistentExamStudentRoom.readBy(exam);
+            Iterator iterExamStudentRoomList = examStudentRoomList.iterator();
+            while (iterExamStudentRoomList.hasNext()) {
+                students.add(((IExamStudentRoom) iterExamStudentRoomList.next()).getStudent());
+            }
+
         }
+
+        List uniqueRooms = removeRepeatedElements(roomsIds);
+        Iterator iterRoom = uniqueRooms.iterator();
+        List rooms = new ArrayList();
+        while (iterRoom.hasNext()) {
+            IRoom room = (IRoom) persistentRoom.readByOID(Room.class, (Integer) iterRoom.next());
+            if (room == null) {
+                throw new InvalidArgumentsServiceException("room");
+            }
+            rooms.add(room);
+        }
+        if (!exam.getAssociatedRooms().containsAll(rooms)) {
+            throw new InvalidArgumentsServiceException("rooms");
+        }
+
+        Iterator iter = rooms.iterator();
+        while (iter.hasNext()) {
+            IRoom room = (IRoom) iter.next();
+            int i = 1;
+            while (i <= room.getCapacidadeExame().intValue()) {
+                if (students.size() > 0) {
+                    IStudent student = (IStudent) getRandomObjectFromList(students);
+                    IExamStudentRoom examStudentRoom = persistentExamStudentRoom.readBy(exam, student);
+                    if (examStudentRoom == null) {
+                        examStudentRoom = new ExamStudentRoom();
+                        persistentExamStudentRoom.simpleLockWrite(examStudentRoom);
+                        examStudentRoom.setExam(exam);
+                        examStudentRoom.setRoom(room);
+                        examStudentRoom.setStudent(student);
+                    } else {
+                        persistentExamStudentRoom.simpleLockWrite(examStudentRoom);
+                        examStudentRoom.setRoom(room);
+                    }
+
+                    if (sms.booleanValue()) {
+                        sendSMSToStudent(examStudentRoom);
+                    }
+                } else {
+                    break;
+                }
+                i++;
+            }
+        }
+        if (students.size() > 0) {
+            throw new InvalidArgumentsServiceException("students");
+        }
+        result = new Boolean(true);
 
         return result;
     }
@@ -184,9 +173,6 @@ public class ExamRoomDistribution implements IService {
         return calendar;
     }
 
-    /**
-     * @param examStudentRoom
-     */
     private void sendSMSToStudent(IExamStudentRoom examStudentRoom) {
         // TODO: Send SMS method: fill this method when we have sms
 

@@ -168,7 +168,7 @@ public class ReadCourseInformation implements IService {
         infoSiteCourseInformation.setInfoSiteEvaluationInformations(infoSiteEvaluationInformations);
 
         IPersistentSite persistentSite = sp.getIPersistentSite();
-        ISite site = persistentSite.readByExecutionCourse(executionCourse);
+        ISite site = persistentSite.readByExecutionCourse(executionCourse.getIdInternal());
 
         siteView.setComponent(infoSiteCourseInformation);
         ISiteComponent commonComponent = new InfoSiteCommon();

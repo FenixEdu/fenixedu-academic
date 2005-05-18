@@ -12,10 +12,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.DistributedTest;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IDistributedTest;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -26,40 +24,30 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadStudentsWithoutDistributedTest implements IService {
 
-    public ReadStudentsWithoutDistributedTest() {
-    }
-
-    public List run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
+    public List run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
         ISuportePersistente persistentSuport;
         List infoStudentList = new ArrayList();
-        try {
-            persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
-                    .getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, executionCourseId);
-            if (executionCourse == null)
-                throw new FenixServiceException();
+        persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IDistributedTest distributedTest = (IDistributedTest) persistentSuport
-                    .getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
-            if (distributedTest == null)
-                throw new FenixServiceException();
-            //Todos os alunos
-            List attendList = persistentSuport.getIFrequentaPersistente().readByExecutionCourse(
-                    executionCourse);
-            //alunos que tem test
-            List studentList = persistentSuport.getIPersistentStudentTestQuestion()
-                    .readStudentsByDistributedTest(distributedTest);
-            Iterator it = attendList.iterator();
-            while (it.hasNext()) {
-                IAttends attend = (Attends) it.next();
+        IDistributedTest distributedTest = (IDistributedTest) persistentSuport
+                .getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
+        if (distributedTest == null)
+            throw new FenixServiceException();
+        //Todos os alunos
+        List attendList = persistentSuport.getIFrequentaPersistente().readByExecutionCourse(
+                executionCourseId);
+        //alunos que tem test
+        List studentList = persistentSuport.getIPersistentStudentTestQuestion()
+                .readStudentsByDistributedTest(distributedTest);
+        Iterator it = attendList.iterator();
+        while (it.hasNext()) {
+            IAttends attend = (Attends) it.next();
 
-                if (!studentList.contains(attend.getAluno()))
-                    infoStudentList.add(InfoStudentWithInfoPerson.newInfoFromDomain(attend.getAluno()));
-            }
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+            if (!studentList.contains(attend.getAluno()))
+                infoStudentList.add(InfoStudentWithInfoPerson.newInfoFromDomain(attend.getAluno()));
         }
         return infoStudentList;
     }

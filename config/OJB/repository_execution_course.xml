@@ -54,6 +54,11 @@
 		column="KEY_EVALUATION_METHOD"
 		jdbc-type="INTEGER"
 	/>
+	<field-descriptor
+		name="keySite"
+		column="KEY_SITE"
+		jdbc-type="INTEGER"
+	/>
     <field-descriptor
     	name="ackOptLock"
       	column="ACK_OPT_LOCK"
@@ -82,6 +87,12 @@
 			class-ref="net.sourceforge.fenixedu.domain.EvaluationMethod" 
 			proxy="false">
 		<foreignkey field-ref="keyEvaluationMethod"/>
+	</reference-descriptor>
+	<reference-descriptor
+			name="site"
+			class-ref="net.sourceforge.fenixedu.domain.Site" 
+			proxy="false">
+		<foreignkey field-ref="keySite"/>
 	</reference-descriptor>
 	<collection-descriptor
 			name="associatedCurricularCourses"

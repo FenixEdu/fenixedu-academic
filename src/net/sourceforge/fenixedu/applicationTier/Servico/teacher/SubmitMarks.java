@@ -10,7 +10,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -60,30 +59,19 @@ import org.apache.commons.collections.MultiHashMap;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
+
 /**
  * @author Tânia Pousão
  *  
  */
-public class SubmitMarks implements IServico {
+public class SubmitMarks implements IService {
     
     private MultiHashMap enrolmentEvaluationTableByDegree;
     private MultiHashMap improvmentEnrolmentEvaluationTableByDegree;
     private List notEnrolled;
     private List postGraduate;
     private Integer nSubmited;
-    /**
-     * The actor of this class.
-     */
-    public SubmitMarks() {
-
-    }
-
-    /**
-     * Returns Service Name
-     */
-    public String getNome() {
-        return "SubmitMarks";
-    }
 
     public Object run(Integer executionCourseCode, Integer evaluationCode, Date evaluationDate,
             IUserView userView) throws FenixServiceException {
@@ -96,13 +84,13 @@ public class SubmitMarks implements IServico {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             
             //execution course and execution course's site
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+           IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
             IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
                     ExecutionCourse.class, executionCourseCode);
 
             IPersistentSite persistentSite = sp.getIPersistentSite();
-            ISite site = persistentSite.readByExecutionCourse(executionCourse);
+            ISite site = persistentSite.readByExecutionCourse(executionCourseCode);
 
             //evaluation
             IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
@@ -111,7 +99,7 @@ public class SubmitMarks implements IServico {
 
             //attend list
             IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
-            List attendList = persistentAttend.readByExecutionCourse(executionCourse);
+            List attendList = persistentAttend.readByExecutionCourse(executionCourseCode);
 
             IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
             List professors = persistentResponsibleFor.readByExecutionCourse(executionCourse);
@@ -221,11 +209,7 @@ public class SubmitMarks implements IServico {
         
         return newEnrolmentEvaluation;
     }
-    /**
-     * @param enrolment
-     * @param executionCourse
-     * @return
-     */
+
     private boolean isImprovment(IEnrolment enrolment, IExecutionCourse executionCourse) {
         if(enrolment.getExecutionPeriod().equals(executionCourse.getExecutionPeriod()))
             return false;
