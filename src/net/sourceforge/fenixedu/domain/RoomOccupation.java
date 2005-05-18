@@ -49,30 +49,30 @@ public class RoomOccupation extends RoomOccupation_Base {
         this.setFrequency(new Integer(frequency));
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IRoomOccupation) {
-            IRoomOccupation roomOccupationObj = (IRoomOccupation) obj;
-
-            Calendar startTime = roomOccupationObj.getStartTime();
-            Calendar endTime = roomOccupationObj.getEndTime();
-            IRoom room = roomOccupationObj.getRoom();
-            DiaSemana dayOfWeek = roomOccupationObj.getDayOfWeek();
-            IPeriod period = roomOccupationObj.getPeriod();
-
-            if ((startTime.get(Calendar.HOUR_OF_DAY) == startTime.get(Calendar.HOUR_OF_DAY))
-                    && (startTime.get(Calendar.MINUTE) == startTime.get(Calendar.MINUTE))
-                    && (endTime.get(Calendar.HOUR_OF_DAY) == endTime.get(Calendar.HOUR_OF_DAY))
-                    && (endTime.get(Calendar.MINUTE) == endTime.get(Calendar.MINUTE))
-                    && getRoom().equals(room)
-                    && getDayOfWeek().equals(dayOfWeek)
-                    && getPeriod().equals(period)) {
-                return true;
-            }
-            return false;
-
-        }
-        return false;
-    }
+//    public boolean equals(Object obj) {
+//        if (obj instanceof IRoomOccupation) {
+//            IRoomOccupation roomOccupationObj = (IRoomOccupation) obj;
+//
+//            Calendar startTime = roomOccupationObj.getStartTime();
+//            Calendar endTime = roomOccupationObj.getEndTime();
+//            IRoom room = roomOccupationObj.getRoom();
+//            DiaSemana dayOfWeek = roomOccupationObj.getDayOfWeek();
+//            IPeriod period = roomOccupationObj.getPeriod();
+//
+//            if ((startTime.get(Calendar.HOUR_OF_DAY) == startTime.get(Calendar.HOUR_OF_DAY))
+//                    && (startTime.get(Calendar.MINUTE) == startTime.get(Calendar.MINUTE))
+//                    && (endTime.get(Calendar.HOUR_OF_DAY) == endTime.get(Calendar.HOUR_OF_DAY))
+//                    && (endTime.get(Calendar.MINUTE) == endTime.get(Calendar.MINUTE))
+//                    && getRoom().equals(room)
+//                    && getDayOfWeek().equals(dayOfWeek)
+//                    && getPeriod().equals(period)) {
+//                return true;
+//            }
+//            return false;
+//
+//        }
+//        return false;
+//    }
 
     public String toString() {
         String result = "[ROOM OCCUPATION";
