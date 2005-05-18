@@ -73,17 +73,6 @@
 		
 		<hr/>
 		
-		<tr>
-			<td>
-  				<html:radio property="isDidatic" value="1" />
-				Did&aacute;tica
-			</td>
-			<td>
-  				<html:radio property="isDidatic" value="0" />
-				Cient&iacute;fica
-  			</td>
-		</tr>
-	
 	    <%-- MAJOR ABSTRACTION BREACH under Prof. Rito's permission
 	    		these values are idInternal's from the PublicationType table
 	    		will be redone on the new architecture --%>

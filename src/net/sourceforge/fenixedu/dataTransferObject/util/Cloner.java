@@ -97,7 +97,6 @@ import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.Info
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAttribute;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthorPerson;
-import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationFormat;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationSubtype;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationType;
@@ -142,7 +141,6 @@ import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
 import net.sourceforge.fenixedu.domain.publication.Author;
 import net.sourceforge.fenixedu.domain.publication.IAttribute;
 import net.sourceforge.fenixedu.domain.publication.IAuthor;
-import net.sourceforge.fenixedu.domain.publication.IPublication;
 import net.sourceforge.fenixedu.domain.publication.IPublicationFormat;
 import net.sourceforge.fenixedu.domain.publication.IPublicationSubtype;
 import net.sourceforge.fenixedu.domain.publication.IPublicationType;
@@ -3196,49 +3194,6 @@ public abstract class Cloner {
         infoReimbursementGuideEntry.setInfoGuideEntry(infoGuideEntry);
 
         return infoReimbursementGuideEntry;
-    }
-
-    // TJBF& PFON
-
-    public static InfoPublication copyIPublication2InfoPublication(IPublication publication) {
-        InfoPublication infoPublication = new InfoPublication();
-        InfoPublicationType infoPublicationType = Cloner
-                .copyIPublicationType2InfoPublicationType(publication.getType());
-        List publicationAuthors = publication.getPublicationAuthors();
-        List publicationTeachers = publication.getPublicationTeachers();
-
-        copyObjectProperties(infoPublication, publication);
-
-        List infoPublicationAuthors = new ArrayList();
-        List infoPublicationTeachers = new ArrayList();
-
-        if ((publicationAuthors != null)
-                || (publicationAuthors.size() != PublicationConstants.ZERO_VALUE)) {
-            infoPublicationAuthors = (List) CollectionUtils.collect(publicationAuthors,
-                    new Transformer() {
-                        public Object transform(Object o) {
-                            IAuthor author = (IAuthor) o;
-                            return Cloner.copyIAuthor2InfoAuthor(author);
-                        }
-                    });
-
-        }
-
-        if ((publicationTeachers != null)
-                || (publicationTeachers.size() != PublicationConstants.ZERO_VALUE)) {
-            infoPublicationTeachers = (List) CollectionUtils.collect(publicationTeachers,
-                    new Transformer() {
-                        public Object transform(Object o) {
-                            ITeacher teacher = (ITeacher) o;
-                            return Cloner.copyITeacher2InfoTeacher(teacher);
-                        }
-                    });
-
-        }
-        infoPublication.setInfoPublicationTeachers(infoPublicationTeachers);
-        infoPublication.setInfoPublicationAuthors(infoPublicationAuthors);
-        infoPublication.setInfoPublicationType(infoPublicationType);
-        return infoPublication;
     }
 
     public static InfoPublicationType copyIPublicationType2InfoPublicationType(

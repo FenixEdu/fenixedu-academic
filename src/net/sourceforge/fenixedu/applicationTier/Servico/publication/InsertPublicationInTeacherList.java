@@ -113,7 +113,14 @@ public class InsertPublicationInTeacherList implements IServico {
     public List getInfoPublications(ITeacher teacher, IPublication publication,
             IPersistentTeacher persistentTeacher, IPersistentPublication persistentPublication)
             throws FenixServiceException {
-        List publications = teacher.getTeacherPublications();
+        List publicationTeachers = teacher.getTeacherPublications();
+        List publications = (List) CollectionUtils.collect(publicationTeachers,
+                new Transformer() {
+                    public Object transform(Object input) {
+                        IPublicationTeacher publicationTeacher = (IPublicationTeacher) input;
+                        return publicationTeacher.getPublication();
+                    }
+        });
         List infoPublications = new ArrayList();
 
         Iterator iterator = publications.iterator();
@@ -128,17 +135,30 @@ public class InsertPublicationInTeacherList implements IServico {
             persistentTeacher.simpleLockWrite(teacher);
             persistentPublication.simpleLockWrite(publication);
 
-            publication.getPublicationTeachers().add(teacher);
-            teacher.getTeacherPublications().add(publication);
+            PublicationTeacher publicationTeacher = new PublicationTeacher();
+            publicationTeacher.setPublication(publication);
+            publicationTeacher.setTeacher(teacher);
+            //DOME do we need to fill in the keys?
+            
+            publication.getPublicationTeachers().add(publicationTeacher);
+            teacher.getTeacherPublications().add(publicationTeacher);
             List newPublications = teacher.getTeacherPublications();
             infoPublications = (List) CollectionUtils.collect(newPublications, new Transformer() {
                 public Object transform(Object object) {
-                    IPublication publication = (IPublication) object;
+                    IPublicationTeacher publicationTeacher = (IPublicationTeacher)object;
+                    IPublication publication = publicationTeacher.getPublication();
                     IPublication publication2 = publication;
                     publication2.setPublicationString(publication.toString());
-                    return Cloner.copyIPublication2InfoPublication(publication2);
+                    InfoPublication infoPublication = new InfoPublication();
+                    infoPublication.copyFromDomain(publication2);
+                    return infoPublication;
                 }
             });
+            
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            IPersistentPublicationTeacher persistentPublicationTeacher = sp.getIPersistentPublicationTeacher();
+            persistentPublicationTeacher.simpleLockWrite(publicationTeacher);
+            
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }

@@ -13,12 +13,12 @@
 </logic:messagesPresent>
 <p class="infoop"><span class="emphasis-box">1</span>
 <bean:message key="message.publications.management" /></p>
-<logic:notEmpty name="infoSitePublications" property="infoCientificPublications">
+<logic:notEmpty name="infoSitePublications" property="infoPublications">
 	<bean:message key="message.publications.explanationTeacherCientific"/>
 	<bean:message key="message.publications.insertInTeacher"/>
 	<bean:message key="message.publications.cientificContinue"/>
 </logic:notEmpty>
-<logic:empty  name="infoSitePublications" property="infoCientificPublications">
+<logic:empty  name="infoSitePublications" property="infoPublications">
 	<bean:message key="message.publications.noAuthorpublicationsCientific"/>
 	<bean:message key="message.publications.explanationInsertPublication"/>
 	<bean:message key="message.publications.cientificContinue"/>

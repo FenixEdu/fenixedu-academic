@@ -11,8 +11,6 @@
 	<html:hidden property="selectedAuthor" />
 
 	<html:hidden property="creatorId" />
-	<html:hidden property="isDidatic" />
-	<html:hidden property="isScientific" />
 	<html:hidden property="title" />
 	<html:hidden property="description" />
 	<html:hidden property="infoPublicationTypeId" />

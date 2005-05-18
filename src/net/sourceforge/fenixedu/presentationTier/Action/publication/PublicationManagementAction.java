@@ -28,12 +28,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
-/**
- * @author TJBF & PFON
- * 
- * To change the template for this generated type comment go to Window -
- * Preferences - Java - Code Generation - Code and Comments
- */
 public class PublicationManagementAction extends FenixAction {
 
 	public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
@@ -52,6 +46,7 @@ public class PublicationManagementAction extends FenixAction {
 		List listaPub = infoSitePublications.getInfoPublications();
 
 		/** this class is a mere comparator to sort publications */
+        //AIAIAI tirar isto provavelmente! n faz sentido esta ordenação
 		class PublicationComparator implements Comparator {
 			public int compare(Object o1, Object o2) {
 				InfoPublication infoPublication1 = (InfoPublication) o1;

@@ -9,13 +9,16 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.publication.IPublication;
 import net.sourceforge.fenixedu.domain.publication.IPublicationAuthor;
+import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.PublicationAuthor;
+import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPublicationAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
+import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationTeacher;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -28,6 +31,7 @@ public class DeletePublication implements IService {
 		final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentPublication persistentPublication = sp.getIPersistentPublication();
         final IPersistentPublicationAuthor persistentPublicationAuthor = sp.getIPersistentPublicationAuthor();
+        final IPersistentPublicationTeacher persistentPublicationTeacher = sp.getIPersistentPublicationTeacher();
 
         final IPublication publication = (IPublication) persistentPublication.readByOID(Publication.class, publicationId);
 
@@ -39,8 +43,13 @@ public class DeletePublication implements IService {
             persistentPublicationAuthor.deleteByOID(PublicationAuthor.class, publicationAuthor.getIdInternal());
         }
 
-        final List teachers = publication.getPublicationTeachers();
-        //TODO DOME XXX FIXME Mostrar ao Ricardo
+        final List publicationTeachers = publication.getPublicationTeachers();
+        for (final Iterator iterator = publicationTeachers.iterator(); iterator.hasNext(); ) {
+            final IPublicationTeacher publicationTeacher = (IPublicationTeacher) iterator.next();
+            publicationTeacher.setPublication(null);
+            publicationTeacher.setTeacher(null);
+            persistentPublicationAuthor.deleteByOID(PublicationTeacher.class, publicationTeacher.getIdInternal());
+        }
         
 
 		persistentPublication.deleteByOID(Publication.class, publicationId);		

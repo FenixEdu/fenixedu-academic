@@ -7,13 +7,20 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
+import net.sourceforge.fenixedu.domain.publication.IPublicationAuthor;
 import net.sourceforge.fenixedu.domain.publication.Publication;
+import net.sourceforge.fenixedu.domain.publication.PublicationAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -60,7 +67,16 @@ public class ReadAuthorsByPublicationId implements IServico {
             IPublication publication = (IPublication) persitentPublication.readByOID(Publication.class,
                     publicationId);
 
-            authors = publication.getAuthors();
+            List publicationAuthors = new ArrayList(publication.getPublicationAuthors());
+            //Será que o ordenamento dos autores deve ser feito a este nível ou a nível da apresentação
+            Collections.sort(publicationAuthors, new BeanComparator("order"));
+    
+            authors = (List) CollectionUtils.collect(publicationAuthors, new Transformer() {
+                public Object transform(Object obj){
+                    IPublicationAuthor pa = (PublicationAuthor) obj;
+                    return pa.getAuthor();
+                }
+            });
 
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);

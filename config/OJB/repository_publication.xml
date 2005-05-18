@@ -114,7 +114,6 @@
 	<field-descriptor name="criticizedAuthor" column="CRITICIZED_AUTHOR" jdbc-type="VARCHAR"/>
 	<field-descriptor name="publicationType" column="PUBLICATION_TYPE" jdbc-type="VARCHAR"/>
 	<field-descriptor name="number" column="NUMBER" jdbc-type="INTEGER"/>
-	<field-descriptor name="didatic" column="DIDATIC" jdbc-type="INTEGER"/>	
 	
 	<reference-descriptor name="type" class-ref="net.sourceforge.fenixedu.domain.publication.PublicationType" proxy="true">
 	    <foreignkey field-ref="keyPublicationType"/>
@@ -122,13 +121,10 @@
     
     <collection-descriptor
 			name="publicationTeachers"
-			element-class-ref="net.sourceforge.fenixedu.domain.Teacher"
-			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			indirection-table="PUBLICATION_TEACHER"
+			element-class-ref="net.sourceforge.fenixedu.domain.publication.PublicationTeacher"
 			proxy="true"
 	        refresh="true">
-		<fk-pointing-to-this-class column="KEY_PUBLICATION"/>
-		<fk-pointing-to-element-class column="KEY_TEACHER"/>
+		<inverse-foreignkey field-ref="keyPublication"/>
 	</collection-descriptor>
 	<collection-descriptor
 			name="publicationAuthors"
@@ -201,7 +197,7 @@
 </class-descriptor>		
   		
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for net.sourceforge.fenixedu.domain.PublicationTeacher -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.publication.PublicationTeacher -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.publication.PublicationTeacher" table="PUBLICATION_TEACHER">
 	<field-descriptor

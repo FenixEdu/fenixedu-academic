@@ -3277,13 +3277,12 @@
         </filterChains>
     </service>
 	<service>
-        <name>EditarPublication</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.EditarPublication</implementationClass>
+        <name>EditPublication</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.EditPublication</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-	        <!-- <chain name="PublicationAuthorAuthorization"/> -->
-            <chain name="TeacherAuthorization"/>
+	        <chain name="PublicationAuthorAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -3325,15 +3324,6 @@
             <chain name="TeacherAuthorization"/>
         </filterChains>
     </service>-->
-    <service>
-        <name>ReadPublication</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadPublication</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="TeacherAuthorization"/>
-        </filterChains>
-    </service>
 	<service>
         <name>ReadPublicationTypes</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadPublicationTypes</implementationClass>

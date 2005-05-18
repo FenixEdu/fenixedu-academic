@@ -221,8 +221,6 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
         // publication.setPublicationType((String)dynaForm.get("publicationType"));
         if (attributes.get("university") != null)
             publication.setUniversity((String) dynaForm.get("university"));
-        
-        publication.setDidatic((Integer) dynaForm.get("isDidatic"));
 
         Object[] argInsertPublication = { publication };
         ServiceUtils.executeService(userView, "InsertPublication", argInsertPublication);

@@ -7,15 +7,22 @@
 package net.sourceforge.fenixedu.dataTransferObject.publication;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.publication.Author;
 import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
+import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
+import net.sourceforge.fenixedu.domain.publication.PublicationAuthor;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.Transformer;
 
 /**
  * @author TJBF & PFON
@@ -91,7 +98,6 @@ public class InfoPublication extends InfoObject {
             setConference(publication.getConference());
             setCountry(publication.getCountry());
             setCriticizedAuthor(publication.getCriticizedAuthor());
-            setDidatic(publication.getDidatic());
             setEdition(publication.getEdition());
             setEditor(publication.getEditor());
             setEditorCity(publication.getEditorCity());
@@ -99,8 +105,17 @@ public class InfoPublication extends InfoObject {
             setFirstPage(publication.getFirstPage());
             setFormat(publication.getFormat());
             setIdInternal(publication.getIdInternal());
+            
+            List unsortedAuthorsList = new ArrayList(publication.getPublicationAuthors());
+            Collections.sort(unsortedAuthorsList, new BeanComparator("order"));
+            List authorsList = (List)CollectionUtils.collect(unsortedAuthorsList,
+                    new Transformer() {
+                        public Object transform(Object object) {
+                            PublicationAuthor publicationAuthor = (PublicationAuthor) object;
+                            return publicationAuthor.getAuthor();
+            }});
             //tranform the authors list into an infoAuthors list
-            Iterator it1 = publication.getAuthors().iterator();
+            Iterator it1 = authorsList.iterator();
             List infoAuthorsList = new ArrayList();        
             while (it1.hasNext()){
                 IAuthor author = (IAuthor) it1.next();
@@ -111,8 +126,16 @@ public class InfoPublication extends InfoObject {
 
             setInfoPublicationAuthors(infoAuthorsList);
 
+            List teachers = (List) CollectionUtils.collect(publication.getPublicationTeachers(), new Transformer() {
+                public Object transform(Object object) {
+                    IPublicationTeacher publicationTeacher = (IPublicationTeacher) object;
+                    return publicationTeacher.getTeacher();
+                }
+            });
+                    
+            
             //tranform the teachers list into an infoTeachers list
-            Iterator it2 = publication.getPublicationTeachers().iterator();
+            Iterator it2 = teachers.iterator();
             List infoTeachersList = new ArrayList();        
             while (it2.hasNext()){
                 Teacher teacher = (Teacher) it2.next();
@@ -120,8 +143,10 @@ public class InfoPublication extends InfoObject {
                 infoTeacher.copyFromDomain(teacher);
                 infoTeachersList.add(infoTeacher);
             }
-            setInfoPublicationTeachers(infoTeachersList);           
-
+            setInfoPublicationTeachers(infoTeachersList);
+            //DOME this is unwell
+            
+            
             //tranform the publicationType into an infoPublicationType
             InfoPublicationType infoPublicationType = new InfoPublicationType();
             infoPublicationType.setPublicationType(publication.getPublicationType());
@@ -164,7 +189,6 @@ public class InfoPublication extends InfoObject {
             publication.setConference(infoPublication.getConference());
             publication.setCountry(infoPublication.getCountry());
             publication.setCriticizedAuthor(infoPublication.getCriticizedAuthor());
-            publication.setDidatic(infoPublication.getDidatic());
             publication.setEdition(infoPublication.getEdition());
             publication.setEditor(infoPublication.getEditor());
             publication.setEditorCity(infoPublication.getEditorCity());

@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.publication.Author;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
+import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -60,15 +61,7 @@ public class ReadAuthorPublicationsToInsert implements IService {
             
             List infoPublications = getInfoPublications(sp, teacher);
 
-            List infoPublicationsDidactic = getInfoPublicationsType(infoPublications,
-                    PublicationConstants.DIDATIC);
-
-            List infoPublicationsCientific = getInfoPublicationsType(infoPublications,
-                    PublicationConstants.CIENTIFIC);
-
-            infoSitePublications.setInfoDidaticPublications(infoPublicationsDidactic);
-
-            infoSitePublications.setInfoCientificPublications(infoPublicationsCientific);
+            infoSitePublications.setInfoPublications(infoPublications);
 
             return new SiteView(infoSitePublications);
         } catch (ExcepcaoPersistencia e) {
@@ -98,7 +91,16 @@ public class ReadAuthorPublicationsToInsert implements IService {
             authorPublications = author.getPublications();
         }
 
-        List publicationsInTeacherSList = teacher.getTeacherPublications();
+        List publicationTeachersInTeachersList = teacher.getTeacherPublications();
+        
+        List publicationsInTeacherSList = 
+            (List) CollectionUtils.collect(publicationTeachersInTeachersList,
+                    new Transformer() {
+                        public Object transform(Object input) {
+                            IPublicationTeacher publicationTeacher = (IPublicationTeacher) input;
+                            return publicationTeacher.getPublication();
+                        }
+                    });
 
         if (authorPublications != null || authorPublications.size() != PublicationConstants.ZERO_VALUE) {
             if ((publicationsInTeacherSList != null) || (publicationsInTeacherSList.size() != 0)) {
@@ -119,22 +121,6 @@ public class ReadAuthorPublicationsToInsert implements IService {
         }
 
         return infoAuthorPublications;
-    }
-
-    List getInfoPublicationsType(List infoPublications, Integer typePublication) {
-
-        List newInfoPublications = new ArrayList();
-
-        if (infoPublications != null || infoPublications.size() != PublicationConstants.ZERO_VALUE) {
-            Iterator iterator = infoPublications.iterator();
-            while (iterator.hasNext()) {
-                InfoPublication infoPublication = (InfoPublication) iterator.next();
-                if (infoPublication.getDidatic().intValue() == typePublication.intValue()) {
-                    newInfoPublications.add(infoPublication);
-                }
-            }
-        }
-        return newInfoPublications;
     }
 
     public List deletePublicationsTeacherInAuthorPublications(List publicationsAuthor,

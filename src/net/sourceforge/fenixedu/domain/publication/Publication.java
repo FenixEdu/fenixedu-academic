@@ -58,7 +58,17 @@ public class Publication extends Publication_Base implements IPublication {
 
         publication += " - ";
 
-        Iterator iteratorAuthors = this.getAuthors().iterator();
+        List publicationAuthors = new ArrayList(this.getPublicationAuthors());
+        Collections.sort(publicationAuthors, new BeanComparator("order"));
+        
+        List authors = (List) CollectionUtils.collect(publicationAuthors, new Transformer() {
+            public Object transform(Object obj){
+                IPublicationAuthor pa = (PublicationAuthor) obj;
+                return pa.getAuthor();
+            }
+        });
+        
+        Iterator iteratorAuthors = authors.iterator();
         while (iteratorAuthors.hasNext()) {
             IAuthor author = (IAuthor) iteratorAuthors.next();
 
@@ -217,7 +227,7 @@ public class Publication extends Publication_Base implements IPublication {
 
     /**
      * @return a list of IAuthors
-     */
+     *
     public List getAuthors(){
         List result = new ArrayList(getPublicationAuthors());
         Collections.sort(result, new BeanComparator("order"));
@@ -229,31 +239,7 @@ public class Publication extends Publication_Base implements IPublication {
             }
         });
         return authors;
-    }
-    
-    /**
-     * Sets the PublicationAuthors List 
-     * @param a list of IAuthors
-     */
-    public void setAuthors(List authors){
-       
-        //List pubAuthors = new ArrayList();
-    	getPublicationAuthors().removeAll(getPublicationAuthors());
-        Iterator it = authors.iterator();
-        int i = 0;
-        while (it.hasNext()){
-            i++;
-            IAuthor author = (IAuthor) it.next();
-            IPublicationAuthor pa = new PublicationAuthor();
-            pa.setAuthor(author);
-            pa.setPublication(this);
-            pa.setOrder(new Integer(i));
-            //pubAuthors.add(pa);
-            getPublicationAuthors().add(pa);
-        }
-        //publicationAuthors = pubAuthors;
-    }
-    
+    }*/
     
     public Integer getOrderForAuthor(IAuthor author) throws ExcepcaoInexistente{
         List publicationAuthors = getPublicationAuthors();

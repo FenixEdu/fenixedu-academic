@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IServico;
@@ -60,16 +59,9 @@ public class ReadAuthorPublications implements IServico {
 
             List infoPublications = getInfoPublications(sp, teacher);
 
-            List infoPublicationsDidactic = getInfoPublicationsType(infoPublications,
-                    PublicationConstants.DIDATIC);
-
-            List infoPublicationsCientific = getInfoPublicationsType(infoPublications,
-                    PublicationConstants.CIENTIFIC);
-
             InfoSitePublications infoSitePublications = new InfoSitePublications();
             infoSitePublications.setInfoTeacher(infoTeacher);
-            infoSitePublications.setInfoDidaticPublications(infoPublicationsDidactic);
-            infoSitePublications.setInfoCientificPublications(infoPublicationsCientific);
+            infoSitePublications.setInfoPublications(infoPublications);
 
             return new SiteView(infoSitePublications);
         } catch (ExcepcaoPersistencia e) {
@@ -113,22 +105,6 @@ public class ReadAuthorPublications implements IServico {
         }
 
         return infoPublications;
-    }
-
-    List getInfoPublicationsType(List infoPublications, Integer typePublication) {
-
-        List newInfoPublications = new ArrayList();
-
-        if (infoPublications != null || infoPublications.size() != PublicationConstants.ZERO_VALUE) {
-            Iterator iterator = infoPublications.iterator();
-            while (iterator.hasNext()) {
-                InfoPublication infoPublication = (InfoPublication) iterator.next();
-                if (infoPublication.getDidatic().intValue() == typePublication.intValue()) {
-                    newInfoPublications.add(infoPublication);
-                }
-            }
-        }
-        return newInfoPublications;
     }
 
 }

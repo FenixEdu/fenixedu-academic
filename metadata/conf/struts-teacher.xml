@@ -543,7 +543,6 @@
         <!--
         <form-bean name="publicationManagementForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
-            <form-property name="isDidatic" type="java.lang.Boolean" />
             <form-property name="isScientific" type="java.lang.Boolean" />
             <form-property name="subtype" type="java.lang.String" />
 			<form-property name="journalName" type="java.lang.String" />
@@ -630,7 +629,6 @@
 			<form-property name="searchAuthorString" type="java.lang.String" />
 
 			<form-property name="creatorId" type="java.lang.Integer" />
-			<form-property name="isDidatic" type="java.lang.Integer" initial="1" />
 			<form-property name="isScientific" type="java.lang.Boolean" />
 			<form-property name="title" type="java.lang.String" />
 			<form-property name="description" type="java.lang.String" />

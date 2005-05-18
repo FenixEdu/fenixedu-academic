@@ -66,18 +66,6 @@
 	<p><html:submit styleClass="inputbutton" onclick='<%= "this.form.method.value='prepareSearchAuthor';" %>' >Inserir autor</html:submit></p>
 
 	<table>
-	
-		<tr>
-			<td>
-  				<html:radio property="isDidatic" value="1" />
-				Did&aacute;tica
-			</td>
-			<td>
-  				<html:radio property="isDidatic" value="0" />
-				Cient&iacute;fica
-  			</td>
-		</tr>
-
 		<tr>
 			<td>
 				<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.type" />

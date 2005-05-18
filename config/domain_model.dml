@@ -2340,10 +2340,6 @@ class net.sourceforge.fenixedu.domain.publication.Author extends net.sourceforge
 	Integer keyPerson;
 	String organization;
 	String author;
-			
-	interface "
-	public java.util.List getPublications();
-	"
 }
 
 class net.sourceforge.fenixedu.domain.publication.PublicationType extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2399,15 +2395,10 @@ class net.sourceforge.fenixedu.domain.publication.Publication extends net.source
 	String editor;
 	String country;
 	Integer year;
-	Integer didatic;
 	String format;
 	Integer keyPublicationType;
 	String publicationString;
-		
-	interface "
-	
-	public java.util.List getAuthors();
-	"
+
 }
 
 class net.sourceforge.fenixedu.domain.teacher.PublicationsNumber extends net.sourceforge.fenixedu.domain.DomainObject {

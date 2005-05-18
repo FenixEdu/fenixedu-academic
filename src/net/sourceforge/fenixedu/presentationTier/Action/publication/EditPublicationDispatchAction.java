@@ -216,15 +216,13 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
             publication.setTranslatedAuthor((String) dynaForm.get("translatedAuthor"));
         if (attributes.get("criticizedAuthor") != null)
             publication.setCriticizedAuthor((String) dynaForm.get("criticizedAuthor"));
-        // publication.setPublicationType((String)dynaForm.get("publicationType"));
         if (attributes.get("university") != null)
             publication.setUniversity((String) dynaForm.get("university"));
         
         publication.setIdInternal((Integer) dynaForm.get("idInternal"));
-        publication.setDidatic((Integer) dynaForm.get("isDidatic"));
         
-        Object[] argEditarPublication = { publication };
-        ServiceUtils.executeService(userView, "EditarPublication", argEditarPublication);
+        Object[] argEditPublication = { publication };
+        ServiceUtils.executeService(userView, "EditPublication", argEditPublication);
 		
 		return mapping.findForward("done");
 	}
@@ -317,7 +315,6 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
 		if (publication.getCriticizedAuthor() != null) actionForm.set("criticizedAuthor",publication.getCriticizedAuthor());
 		if (publication.getPublicationType() != null) actionForm.set("publicationType",publication.getPublicationType());
 		if (publication.getUniversity() != null) actionForm.set("university",publication.getUniversity());
-		if (publication.getDidatic() != null) actionForm.set("isDidatic",publication.getDidatic());
 		actionForm.set("idInternal",idInternal);
 		
 		
@@ -756,5 +753,9 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
         return infoAuthorpersons;
     }
     
-    
+    public ActionForward cancel(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+
+        return mapping.findForward("done");
+    }
 }

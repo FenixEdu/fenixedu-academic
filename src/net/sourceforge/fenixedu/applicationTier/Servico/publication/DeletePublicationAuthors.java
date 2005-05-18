@@ -6,6 +6,9 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 
+import java.util.List;
+
+import net.sourceforge.fenixedu.domain.publication.IPublicationAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPublicationAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -36,6 +39,15 @@ public class DeletePublicationAuthors implements IService {
 	    
 	    sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         persistentPublicationAuthor = sp.getIPersistentPublicationAuthor();
+        
+        List<IPublicationAuthor> publicationAuthors = (List<IPublicationAuthor>) persistentPublicationAuthor.readByPublicationId(publicationId);
+        
+        for (IPublicationAuthor publicationAuthor : publicationAuthors) {
+            publicationAuthor.getAuthor().getAuthorPublications().remove(publicationAuthor);
+            publicationAuthor.getPublication().getPublicationAuthors().remove(publicationAuthor);
+            publicationAuthor.setAuthor(null);
+            publicationAuthor.setPublication(null);
+        }
         
         persistentPublicationAuthor.deleteAllByPublicationID(publicationId);
 	}

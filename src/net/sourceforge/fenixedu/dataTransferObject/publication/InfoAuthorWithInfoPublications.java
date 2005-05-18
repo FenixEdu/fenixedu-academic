@@ -8,15 +8,20 @@ package net.sourceforge.fenixedu.dataTransferObject.publication;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.Transformer;
+
+import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.publication.Author;
 import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
+import net.sourceforge.fenixedu.domain.publication.PublicationAuthor;
 
 /**
  * @author <a href="mailto:cgmp@mega.ist.utl.pt">Carlos Pereira </a> & <a href="mailto:fmmp@mega.ist.utl.pt">Francisco Passos </a>
@@ -35,8 +40,17 @@ public class InfoAuthorWithInfoPublications extends InfoAuthor {
 	        setKeyPerson(author.getKeyPerson());
 	        setOrganization(author.getOrganization());
 	        
+            List publicationAuthors = new ArrayList(author.getAuthorPublications());
+            Collections.sort(publicationAuthors, new BeanComparator("order"));
+            List publicationList = (List)CollectionUtils.collect(publicationAuthors,
+                    new Transformer() {
+                        public Object transform(Object object) {
+                            PublicationAuthor publicationAuthor = (PublicationAuthor) object;
+                            return publicationAuthor.getPublication();
+            }});
+            
 	        List infoPublicationsList = new ArrayList();
-	        Iterator it = author.getPublications().iterator();
+            Iterator it = publicationList.iterator();
 	        while (it.hasNext()){
 	            IPublication publication = (IPublication)it.next();
 	            InfoPublication infoPublication = new InfoPublication();
@@ -65,15 +79,6 @@ public class InfoAuthorWithInfoPublications extends InfoAuthor {
         }
     }
     
-    public static IAuthor newDomainFromInfo(InfoAuthorWithInfoPublications infoAuthor){
-        IAuthor author = null;
-        if(infoAuthor != null){
-            author = new Author();
-            infoAuthor.copyToDomain(infoAuthor, author);
-        }
-        return author;
-    }
-
 	public InfoAuthorWithInfoPublications(){
 		super();
 	}

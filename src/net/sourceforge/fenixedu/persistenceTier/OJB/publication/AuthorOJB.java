@@ -5,9 +5,11 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB.publication;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.publication.Author;
 import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
@@ -18,6 +20,8 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentPublicationAuthor;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthor;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.Transformer;
 import org.apache.ojb.broker.query.Criteria;
 
 /**
@@ -72,7 +76,16 @@ public class AuthorOJB extends PersistentObjectOJB implements IPersistentAuthor 
         IPersistentPublicationAuthor ppa = new PublicationAuthorOJB();
         
         IAuthor author = (IAuthor) obj;
-        Iterator it = author.getPublications().iterator();
+        List publicationAuthors = new ArrayList(author.getAuthorPublications());
+        Collections.sort(publicationAuthors, new BeanComparator("order"));
+        List publicationList = (List)CollectionUtils.collect(publicationAuthors,
+                new Transformer() {
+                    public Object transform(Object object) {
+                        PublicationAuthor publicationAuthor = (PublicationAuthor) object;
+                        return publicationAuthor.getPublication();
+        }});
+        
+        Iterator it = publicationList.iterator();
         while (it.hasNext()){
             IPublication publication = (IPublication)it.next();
             IPublicationAuthor pa = new PublicationAuthor();
