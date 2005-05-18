@@ -1,6 +1,3 @@
-/*
- * Created on Jan 21, 2004
- */
 package net.sourceforge.fenixedu.persistenceTier.grant;
 
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantCostCenter;

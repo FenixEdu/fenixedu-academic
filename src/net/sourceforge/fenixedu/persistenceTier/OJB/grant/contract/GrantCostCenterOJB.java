@@ -1,6 +1,3 @@
-/*
- * Created on Jan 21, 2004
- */
 package net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract;
 
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
@@ -26,4 +23,5 @@ public class GrantCostCenterOJB extends PersistentObjectOJB implements IPersiste
         grantCostCenter = (IGrantCostCenter) queryObject(GrantCostCenter.class, criteria);
         return grantCostCenter;
     }
+
 }
