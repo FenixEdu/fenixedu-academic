@@ -98,6 +98,8 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionPeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SummaryVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantTypeVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.owner.GrantOwnerVO;
 
 public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
@@ -458,7 +460,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentGrantOwner getIPersistentGrantOwner() {
-        return null;
+        return new GrantOwnerVO();
     }
 
     public IPersistentServiceProviderRegime getIPersistentServiceProviderRegime() {
@@ -614,7 +616,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentGrantType getIPersistentGrantType() {
-        return null;
+        return new GrantTypeVO();
     }
 
     public IPersistentGroupPropertiesExecutionCourse getIPersistentGroupPropertiesExecutionCourse() {

@@ -19,8 +19,6 @@ public interface IPersistentGrantOwner extends IPersistentObject {
 
     public IGrantOwner readGrantOwnerByPerson(Integer personIdInternal) throws ExcepcaoPersistencia;
 
-    public List readGrantOwnerByPersonName(String personName) throws ExcepcaoPersistencia;
-
     public List readGrantOwnerByPersonName(String personName, Integer startIndex,
             Integer numberOfElementsInSpan) throws ExcepcaoPersistencia;
 

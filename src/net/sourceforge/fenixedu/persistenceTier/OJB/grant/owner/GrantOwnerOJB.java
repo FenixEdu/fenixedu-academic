@@ -22,9 +22,6 @@ import org.apache.ojb.broker.query.Criteria;
 
 public class GrantOwnerOJB extends PersistentObjectOJB implements IPersistentGrantOwner {
 
-    public GrantOwnerOJB() {
-    }
-
     public IGrantOwner readGrantOwnerByNumber(Integer grantOwnerNumber) throws ExcepcaoPersistencia {
         IGrantOwner grantOwner = null;
 
@@ -40,14 +37,6 @@ public class GrantOwnerOJB extends PersistentObjectOJB implements IPersistentGra
         criteria.addEqualTo("keyPerson", personIdInternal);
         grantOwner = (IGrantOwner) queryObject(GrantOwner.class, criteria);
         return grantOwner;
-    }
-
-    public List readGrantOwnerByPersonName(String personName) throws ExcepcaoPersistencia {
-        List grantOwnerList = null;
-        Criteria criteria = new Criteria();
-        criteria.addLike("person.nome", personName);
-        grantOwnerList = queryList(GrantOwner.class, criteria);
-        return grantOwnerList;
     }
 
     public List readGrantOwnerByPersonName(String personName, Integer startIndex,
