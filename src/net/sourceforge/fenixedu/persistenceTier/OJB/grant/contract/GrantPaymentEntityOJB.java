@@ -1,6 +1,3 @@
-/*
- * Created on Jan 21, 2004
- */
 package net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract;
 
 import java.util.List;
