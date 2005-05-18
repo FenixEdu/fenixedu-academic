@@ -25,7 +25,7 @@ import org.apache.commons.collections.Transformer;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
- * @author Fernanda Quitério 10/Nov/2003
+ * @author Fernanda Quitï¿½rio 10/Nov/2003
  *  
  */
 public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode implements IService {
@@ -49,8 +49,13 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode implements ISe
             }
             IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
             if (degreeCurricularPlan != null) {
+				
+				String name = degreeCurricularPlan.getName();
+				String degreeName = degreeCurricularPlan.getDegree().getNome();
+				String degreeSigla = degreeCurricularPlan.getDegree().getSigla();
+				
                 List allCurricularCourses = sp.getIPersistentCurricularCourse()
-                        .readCurricularCoursesByDegreeCurricularPlan(degreeCurricularPlan);
+                        .readCurricularCoursesByDegreeCurricularPlan(name, degreeName, degreeSigla);
 
                 if (allCurricularCourses != null && !allCurricularCourses.isEmpty()) {
 

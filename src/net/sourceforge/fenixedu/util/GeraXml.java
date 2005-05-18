@@ -204,11 +204,8 @@ public class GeraXml extends FenixUtil {
 
             suportePersistente.iniciarTransaccao();
 
-            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
-                    .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
-
             List curricularCourses = persistentCurricularCourse.readbyCourseNameAndDegreeCurricularPlan(
-                    curricularCourseName, degreeCurricularPlan);
+                    curricularCourseName, degreeCurricularPlanID);
 
             ICurricularCourse curricularCourse = null;
             try {
@@ -229,7 +226,7 @@ public class GeraXml extends FenixUtil {
                 enrolment.setEnrolmentEvaluationType(enrolmentEvaluationType);
                 enrolment.setCondition(EnrollmentCondition.FINAL);
             } catch (RuntimeException e1) {
-                System.out.println("Disciplina não encontrada no planos curricular: "
+                System.out.println("Disciplina nï¿½o encontrada no planos curricular: "
                         + curricularCourseName);
             }
             suportePersistente.confirmarTransaccao();
@@ -424,7 +421,7 @@ public class GeraXml extends FenixUtil {
             FlatXmlDataSet.write(partialDataSet, fileWriter, "ISO-8859-1");
             fileWriter.close();
         } catch (SQLException sqle) {
-            System.out.println("ERRO: No acesso à Base de Dados");
+            System.out.println("ERRO: No acesso ï¿½ Base de Dados");
             sqle.printStackTrace();
         } catch (IOException ioe) {
             System.out.println("ERRO: A Escrever o ficheiro: " + backupDataSetFilePath);
@@ -457,7 +454,7 @@ public class GeraXml extends FenixUtil {
         } catch (DatabaseUnitException due) {
             due.printStackTrace();
         } catch (SQLException sqle) {
-            System.out.println("ERRO: No acesso à Base de Dados");
+            System.out.println("ERRO: No acesso ï¿½ Base de Dados");
             sqle.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();

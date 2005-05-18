@@ -57,9 +57,9 @@ public class VerifyLEECCurricularPlan {
                     System.out.println("BASES: [" + branch.getName() + "]");
                     printItForThisAreaWithScopes(branch, AreaType.BASE);
                 } else {
-                    System.out.println("ÁREA DE ESPECIALIZAÇÃO: [" + branch.getName() + "]");
+                    System.out.println("ï¿½REA DE ESPECIALIZAï¿½ï¿½O: [" + branch.getName() + "]");
                     printItForThisAreaWithScopes(branch, AreaType.SPECIALIZATION);
-                    System.out.println("ÁREA SECUNDÁRIA: [" + branch.getName() + "]");
+                    System.out.println("ï¿½REA SECUNDï¿½RIA: [" + branch.getName() + "]");
                     printItForThisAreaWithScopes(branch, AreaType.SECONDARY);
                 }
             }
@@ -93,9 +93,9 @@ public class VerifyLEECCurricularPlan {
             System.out.println("");
             System.out.print("\t");
             System.out.println("GRUPO: [" + curricularCourseGroup.getIdInternal()
-                    + "] Nº MÍNIMO DE CRÉDITOS: ["
+                    + "] Nï¿½ Mï¿½NIMO DE CRï¿½DITOS: ["
                     + curricularCourseGroup.getMinimumCredits().toString()
-                    + "] Nº MÁXIMO DE CRÉDITOS: ["
+                    + "] Nï¿½ Mï¿½XIMO DE CRï¿½DITOS: ["
                     + curricularCourseGroup.getMaximumCredits().toString() + "]");
 
             while (iterator2.hasNext()) {
@@ -103,7 +103,7 @@ public class VerifyLEECCurricularPlan {
 
                 System.out.println("");
                 System.out.print("\t\t");
-                System.out.println("ÁREA CIENTÍFICA: [" + scientificArea.getName() + "]");
+                System.out.println("ï¿½REA CIENTï¿½FICA: [" + scientificArea.getName() + "]");
 
                 List curricularCourses = getCurricularCourseScopesByScientificAreaInGroup(
                         curricularCourseGroup, scientificArea);
@@ -183,10 +183,14 @@ public class VerifyLEECCurricularPlan {
         IPersistentCurricularCourse curricularCourseDAO = persistentSuport
                 .getIPersistentCurricularCourse();
 
-        System.out.println("PRECEDÊNCIAS:");
+        System.out.println("PRECEDï¿½NCIAS:");
 
+		String name = degreeCurricularPlan.getName();
+		String degreeName = degreeCurricularPlan.getDegree().getNome();
+		String degreeSigla = degreeCurricularPlan.getDegree().getSigla();
+		
         List curricularCourses = curricularCourseDAO
-                .readCurricularCoursesByDegreeCurricularPlan(degreeCurricularPlan);
+                .readCurricularCoursesByDegreeCurricularPlan(name, degreeName, degreeSigla);
         sortCurricularCourses(curricularCourses);
         Iterator iterator1 = curricularCourses.iterator();
         while (iterator1.hasNext()) {
@@ -195,7 +199,7 @@ public class VerifyLEECCurricularPlan {
             if (precedences != null && !precedences.isEmpty()) {
                 System.out.print("\t");
                 System.out.println("DISCIPLINA: [" + curricularCourse.getName()
-                        + "] TEM PRECEDÊNCIA DE:");
+                        + "] TEM PRECEDï¿½NCIA DE:");
                 Iterator iterator2 = precedences.iterator();
                 while (iterator2.hasNext()) {
                     IPrecedence precedence = (IPrecedence) iterator2.next();
@@ -220,9 +224,9 @@ public class VerifyLEECCurricularPlan {
                             System.out.print("\t\t");
                             System.out.println("no "
                                     + actualRestriction.getPeriodToApplyRestriction().getValue()
-                                    + "º semestre");
+                                    + "ï¿½ semestre");
                         } else {
-                            throw new RuntimeException("RESTRIÇÃO DESCONHECIDA!");
+                            throw new RuntimeException("RESTRIï¿½ï¿½O DESCONHECIDA!");
                         }
                         if (iterator3.hasNext()) {
                             System.out.print("\t\t\t");

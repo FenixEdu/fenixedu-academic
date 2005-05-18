@@ -73,7 +73,7 @@
     &internal;
 
     <!-- include user defined mappings here -->
-&fenix-department;
+	&fenix-department;
     &secretaria;
     &enrolment;
     &enrolment-precedences;

@@ -40,8 +40,13 @@ public class ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID implements 
                             degreeCurricularPlanID);
 
             if (degreeCurricularPlan != null) {
+				
+				String name = degreeCurricularPlan.getName();
+				String degreeName = degreeCurricularPlan.getDegree().getNome();
+				String degreeSigla = degreeCurricularPlan.getDegree().getSigla();
+				
                 List allCurricularCourses = sp.getIPersistentCurricularCourse()
-                        .readCurricularCoursesByDegreeCurricularPlan(degreeCurricularPlan);
+                        .readCurricularCoursesByDegreeCurricularPlan(name, degreeName, degreeSigla);
 
                 if (allCurricularCourses != null && !allCurricularCourses.isEmpty()) {
 

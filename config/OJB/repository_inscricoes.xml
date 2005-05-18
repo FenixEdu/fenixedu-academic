@@ -144,6 +144,16 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
+		name="keyStudentCourseReport"
+		column="KEY_STUDENT_COURSE_REPORT"
+		jdbc-type="INTEGER"
+	/>	
+	<field-descriptor
+		name="keyCourseHistoric"
+		column="KEY_COURSE_HISTORIC"
+		jdbc-type="INTEGER"
+	/>	
+	<field-descriptor
 		name="degreeCurricularPlanKey"
 		column="KEY_DEGREE_CURRICULAR_PLAN"
 		jdbc-type="INTEGER"
@@ -290,6 +300,19 @@
 			proxy="true">
 		<foreignkey field-ref="keyScientificArea"/>
 	 </reference-descriptor>
+	<reference-descriptor
+         name="studentCourseReport"
+         class-ref="net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport"
+         proxy="false">
+	  <foreignkey field-ref="keyStudentCourseReport"/>
+    </reference-descriptor>	 
+	<reference-descriptor
+         name="courseHistoric"
+         class-ref="net.sourceforge.fenixedu.domain.gesdis.CourseHistoric"
+         proxy="false">
+        <foreignkey field-ref="keyCourseHistoric"/>
+    </reference-descriptor> 
+    
 	<collection-descriptor
 			name="associatedExecutionCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
@@ -313,7 +336,90 @@
 			proxy="true"
 			refresh="true">
 		<inverse-foreignkey field-ref="keyCurricularCourse"/>
-	</collection-descriptor> 
+	</collection-descriptor>
+	<collection-descriptor
+			name="oldCurricularCourseEquivalences"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseEquivalence"
+			proxy="true"
+			refresh="true">
+		<inverse-foreignkey field-ref="oldCurricularCourseKey"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="curricularCourseEquivalences"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseEquivalence"
+			proxy="true"
+			refresh="true">
+		<inverse-foreignkey field-ref="equivalentCurricularCourseKey"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="curricularCourseGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseGroup"
+			indirection-table="CURRICULAR_COURSE_CURRICULAR_COURSE_GROUP"
+			proxy="true">
+		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE"/>
+		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE_GROUP"/>
+	</collection-descriptor>
+
+	<collection-descriptor
+			name="enrolments"
+			element-class-ref="net.sourceforge.fenixedu.domain.Enrolment"
+			proxy="true"
+			refresh="true">
+		<inverse-foreignkey field-ref="curricularCourseKey"/>
+	</collection-descriptor>	
+
+	<collection-descriptor
+			name="enrolmentLogs"
+			element-class-ref="net.sourceforge.fenixedu.domain.log.EnrolmentLog"
+			proxy="true"
+			refresh="true">
+		<inverse-foreignkey field-ref="keyCurricularCourse"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="notNeedToEnrollInCurricularCourses"
+			element-class-ref="net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse"
+			proxy="true"
+			refresh="true">
+		<inverse-foreignkey field-ref="curricularCourseKey"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="candidateEnrolments"
+			element-class-ref="net.sourceforge.fenixedu.domain.CandidateEnrolment"
+			proxy="true"
+			refresh="true">
+		<inverse-foreignkey field-ref="curricularCourseKey"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="precedences"
+			element-class-ref="net.sourceforge.fenixedu.domain.precedences.Precedence"
+			proxy="true"
+			refresh="true">
+		<inverse-foreignkey field-ref="keyCurricularCourse"/>
+	</collection-descriptor>
+	
+	<collection-descriptor
+			name="restrictionsByCurricularCourse"
+			element-class-ref="net.sourceforge.fenixedu.domain.precedences.RestrictionByCurricularCourse"
+			proxy="true"
+			refresh="true">
+		<inverse-foreignkey field-ref="keyPrecedentCurricularCourse"/>
+	</collection-descriptor>
+
+	<collection-descriptor
+			name="courseEquivalencies"
+			element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency"
+			proxy="true"
+			refresh="true">
+		<inverse-foreignkey field-ref="curricularCourseIdInternal"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="associatedCandidancies"
+			element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.Candidacy"
+			proxy="true"
+			refresh="true">
+		<inverse-foreignkey field-ref="curricularCourseIdInternal"/>
+	</collection-descriptor>
+	 
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->

@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
- * @author João Mota
+ * @author Joï¿½o Mota
  * 
  * 23/Jul/2003 fenix-head ServidorAplicacao.Servico.scientificCouncil
  *  
@@ -68,7 +68,7 @@ public class SetBasicCurricularCoursesService implements IServico {
                     .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
 
             List basicCurricularCourses = persistentCurricularCourse
-                    .readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(degreeCurricularPlan,
+                    .readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(degreeCurricularPlan.getIdInternal(),
                             new Boolean(true));
 
             Iterator itBCCourses = basicCurricularCourses.iterator();

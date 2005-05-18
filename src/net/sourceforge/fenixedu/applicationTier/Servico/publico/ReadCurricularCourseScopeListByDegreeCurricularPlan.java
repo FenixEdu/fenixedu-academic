@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
- * @author Tânia Pousão Created on 10/Out/2003
+ * @author Tï¿½nia Pousï¿½o Created on 10/Out/2003
  */
 public class ReadCurricularCourseScopeListByDegreeCurricularPlan implements IServico {
 
@@ -56,8 +56,13 @@ public class ReadCurricularCourseScopeListByDegreeCurricularPlan implements ISer
             IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp
                     .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                             idDegreeCurricularPlan);
+			
+			String name = degreeCurricularPlan.getName();
+			String degreeName = degreeCurricularPlan.getDegree().getNome();
+			String degreeSigla = degreeCurricularPlan.getDegree().getSigla();
+			
             allCurricularCourses = sp.getIPersistentCurricularCourse()
-                    .readCurricularCoursesByDegreeCurricularPlan(degreeCurricularPlan);
+                    .readCurricularCoursesByDegreeCurricularPlan(name, degreeName, degreeSigla);
 
             if (allCurricularCourses == null || allCurricularCourses.isEmpty())
                 return allCurricularCourses;

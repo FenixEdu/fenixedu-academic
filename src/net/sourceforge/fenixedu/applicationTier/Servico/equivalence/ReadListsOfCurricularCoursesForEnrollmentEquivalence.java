@@ -119,7 +119,7 @@ public class ReadListsOfCurricularCoursesForEnrollmentEquivalence extends
                         public boolean evaluate(Object obj) {
                             IEnrolment enrollment = (IEnrolment) obj;
                             return (isAnAprovedEnrollment(enrollment) && isAnEnrollmentWithNoEquivalences(
-                                    enrollment, toStudentCurricularPlan.getDegreeCurricularPlan(),
+                                    enrollment, toStudentCurricularPlan.getDegreeCurricularPlan().getIdInternal(),
                                     fromStudentCurricularPlan));
                         }
                     });

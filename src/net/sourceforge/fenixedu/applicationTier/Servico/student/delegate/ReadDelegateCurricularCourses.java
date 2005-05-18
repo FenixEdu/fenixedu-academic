@@ -82,13 +82,13 @@ public class ReadDelegateCurricularCourses extends SearchService {
         // report
         if (delegate.getType().booleanValue()) {
             curricularCourses = persistentCurricularCourse
-                    .readExecutedCurricularCoursesByDegreeAndExecutionYear(delegate.getDegree(),
-                            delegate.getExecutionYear());
+                    .readExecutedCurricularCoursesByDegreeAndExecutionYear(delegate.getDegree().getIdInternal(),
+                            delegate.getExecutionYear().getIdInternal());
         } else {
             Integer year = new Integer(delegate.getYearType().getValue());
             curricularCourses = persistentCurricularCourse
-                    .readExecutedCurricularCoursesByDegreeAndYearAndExecutionYear(delegate.getDegree(),
-                            year, delegate.getExecutionYear());
+                    .readExecutedCurricularCoursesByDegreeAndYearAndExecutionYear(delegate.getDegree().getIdInternal(),
+                            year, delegate.getExecutionYear().getIdInternal());
         }
         return curricularCourses;
     }

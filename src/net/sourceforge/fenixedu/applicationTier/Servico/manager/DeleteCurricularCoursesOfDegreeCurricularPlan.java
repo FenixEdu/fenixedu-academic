@@ -11,8 +11,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.ICurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ICurriculum;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
@@ -27,7 +29,7 @@ import org.apache.commons.collections.Transformer;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
- * @author lmac1 modified by Fernanda Quitério
+ * @author lmac1 modified by Fernanda Quitï¿½rio
  */
 public class DeleteCurricularCoursesOfDegreeCurricularPlan implements IService {
 
@@ -86,11 +88,13 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan implements IService {
                             undeletedCurricularCourses.add(curricularCourse.getCode());
                             continue;
                         }
+						
+                       // persistentCurricularCourse.delete(curricularCourse);
+						
+                    } else {
+                        undeletedCurricularCourses.add(curricularCourse.getName());
+                        undeletedCurricularCourses.add(curricularCourse.getCode());
                     }
-                    persistentCurricularCourse.delete(curricularCourse);
-                } else {
-                    undeletedCurricularCourses.add(curricularCourse.getName());
-                    undeletedCurricularCourses.add(curricularCourse.getCode());
                 }
             }
         }

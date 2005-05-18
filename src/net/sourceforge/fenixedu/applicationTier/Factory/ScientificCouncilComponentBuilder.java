@@ -91,11 +91,11 @@ public class ScientificCouncilComponentBuilder {
             IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 
             List nonBasicCurricularCourses = persistentCurricularCourse
-                    .readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(degreeCurricularPlan,
+                    .readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(degreeCurricularPlan.getIdInternal(),
                             new Boolean(false));
 
             List basicCurricularCourses = persistentCurricularCourse
-                    .readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(degreeCurricularPlan,
+                    .readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(degreeCurricularPlan.getIdInternal(),
                             new Boolean(true));
             Iterator iter = nonBasicCurricularCourses.iterator();
             Iterator iter1 = basicCurricularCourses.iterator();
@@ -143,8 +143,13 @@ public class ScientificCouncilComponentBuilder {
                 throw new InvalidArgumentsServiceException();
             }
             IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+			
+			String name = degreeCurricularPlan.getName();
+			String degreeName = degreeCurricularPlan.getDegree().getNome();
+			String degreeSigla = degreeCurricularPlan.getDegree().getSigla();
+			
             List curricularCourses = persistentCurricularCourse
-                    .readCurricularCoursesByDegreeCurricularPlan(degreeCurricularPlan);
+                    .readCurricularCoursesByDegreeCurricularPlan(name, degreeName, degreeSigla);
             Iterator iter = curricularCourses.iterator();
             List infoCurricularCourses = new ArrayList();
             while (iter.hasNext()) {

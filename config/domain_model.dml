@@ -311,6 +311,8 @@ class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.f
 	Boolean enrollmentAllowed;
 	Double theoreticalHours;
 	Integer departmentCourseKey;
+	Integer keyStudentCourseReport;
+	Integer keyCourseHistoric;
 	Double labHours;
 	Double credits;
 	Integer enrollmentWeigth;

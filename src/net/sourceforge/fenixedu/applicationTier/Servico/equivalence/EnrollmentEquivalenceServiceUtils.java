@@ -53,7 +53,7 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service {
      * @return true/false
      */
     protected boolean isAnEnrollmentWithNoEquivalences(IEnrolment enrollment,
-            IDegreeCurricularPlan degreeCurricularPlan, IStudentCurricularPlan studentCurricularPlan) {
+            Integer degreeCurricularPlanKey, IStudentCurricularPlan studentCurricularPlan) {
         List result1 = null;
         List result2 = null;
         List result3 = null;
@@ -78,7 +78,7 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service {
                     .readByEquivalentEnrolment(enrollment);
 
             result2 = persistentCurricularCourse.readbyCourseNameAndDegreeCurricularPlan(enrollment
-                    .getCurricularCourse().getName(), degreeCurricularPlan);
+                    .getCurricularCourse().getName(), degreeCurricularPlanKey);
 
             result3 = creditsInSpecificScientificAreaDAO
                     .readAllByStudentCurricularPlan(studentCurricularPlan);

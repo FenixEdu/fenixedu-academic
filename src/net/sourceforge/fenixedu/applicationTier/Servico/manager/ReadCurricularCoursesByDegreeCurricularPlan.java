@@ -35,8 +35,13 @@ public class ReadCurricularCoursesByDegreeCurricularPlan implements IService {
             IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp
                     .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                             idDegreeCurricularPlan);
+			
+			String name = degreeCurricularPlan.getName();
+			String degreeName = degreeCurricularPlan.getDegree().getNome();
+			String degreeSigla = degreeCurricularPlan.getDegree().getSigla();
+			
             allCurricularCourses = sp.getIPersistentCurricularCourse()
-                    .readCurricularCoursesByDegreeCurricularPlan(degreeCurricularPlan);
+                    .readCurricularCoursesByDegreeCurricularPlan(name, degreeName, degreeSigla);
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
         }
