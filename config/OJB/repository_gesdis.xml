@@ -503,13 +503,13 @@
          name="teacher"
          class-ref="net.sourceforge.fenixedu.domain.Teacher"
          >
-	<foreignkey field-ref="keyTeacher"/>
+		<foreignkey field-ref="keyTeacher"/>
     </reference-descriptor>
 	<reference-descriptor
          name="executionCourse"
          class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
          >
-	<foreignkey field-ref="keyExecutionCourse"/>
+		<foreignkey field-ref="keyExecutionCourse"/>
     </reference-descriptor>
 </class-descriptor>	
 

@@ -3,16 +3,18 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.teacher.ExistingShiftProfessorship;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.teacher.ExistingSupportLesson;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.ISummary;
 import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ResponsibleFor;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -24,50 +26,17 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Fernanda Quitério
  *  
  */
-public class DeleteTeacher implements IServico {
-    /**
-     * @author jpvl
-     */
-    public class ExistingSupportLesson extends FenixServiceException {
+public class DeleteTeacher implements IService {
 
-    }
-
-    /**
-     * @author jpvl
-     */
-    public class ExistingShiftProfessorship extends FenixServiceException {
-        /**
-         *  
-         */
-        public ExistingShiftProfessorship() {
-            super();
-        }
-    }
-
-    /**
-     * The Actor of this class.
-     */
-    public DeleteTeacher() {
-    }
-
-    /**
-     * Returns service name
-     */
-    public final String getNome() {
-        return "DeleteTeacher";
-    }
-
-    /**
-     * Executes the service.
-     */
     public Boolean run(Integer infoExecutionCourseCode, Integer teacherCode)
-            throws FenixServiceException {
-        try {
+            throws FenixServiceException, ExcepcaoPersistencia {
+
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
@@ -89,15 +58,18 @@ public class DeleteTeacher implements IServico {
             // from himself the professorship
             //(it was a feature that didnt make sense)
             IResponsibleFor responsibleFor = persistentResponsibleFor.readByTeacherAndExecutionCourse(
-                    iTeacher, iExecutionCourse);
+                    iTeacher.getIdInternal(), iExecutionCourse.getIdInternal());
             IPersistentResponsibleFor responsibleForDAO = sp.getIPersistentResponsibleFor();
 
             if (responsibleFor != null) {
                 if (!canDeleteResponsibleFor()) {
                     throw new notAuthorizedServiceDeleteException();
                 }
-                responsibleForDAO.delete(responsibleFor);
-
+                responsibleFor.getExecutionCourse().getResponsibleTeachers().remove(responsibleFor);
+                responsibleFor.setExecutionCourse(null);
+                responsibleFor.getTeacher().getAssociatedResponsibles().remove(responsibleFor);
+                responsibleFor.setTeacher(null);
+                responsibleForDAO.deleteByOID(ResponsibleFor.class, responsibleFor.getIdInternal());
             }
 
             IProfessorship professorshipToDelete = persistentProfessorship
@@ -125,20 +97,11 @@ public class DeleteTeacher implements IServico {
                     throw new ExistingShiftProfessorship();
                 }
                 throw new ExistingSupportLesson();
-
             }
-
             return Boolean.TRUE;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
     }
 
-    /**
-     * @return
-     */
     protected boolean canDeleteResponsibleFor() {
-
         return false;
     }
 }

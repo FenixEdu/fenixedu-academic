@@ -79,142 +79,128 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  *  
  */
 public class ReadTeacherInformation implements IService {
-    public ReadTeacherInformation() {
-    }
 
-    /**
-     * Executes the service.
-     */
-    public SiteView run(String user, String argExecutionYear) throws FenixServiceException {
-        try {
-            InfoSiteTeacherInformation infoSiteTeacherInformation = new InfoSiteTeacherInformation();
+    public SiteView run(String user, String argExecutionYear) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        InfoSiteTeacherInformation infoSiteTeacherInformation = new InfoSiteTeacherInformation();
 
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            // if no execution year is specified, the info shown should refer to
-            // the previous execution year
-            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-            IExecutionYear executionYear = null;
-            if (argExecutionYear == null || argExecutionYear.equals("")) {
-                IPersistentExecutionPeriod persistentExecutionPeriod = sp
-                        .getIPersistentExecutionPeriod();
-                IExecutionPeriod actualExecutionPeriod = persistentExecutionPeriod
-                        .readActualExecutionPeriod();
-                IExecutionPeriod previousExecutionPeriod = actualExecutionPeriod
-                        .getPreviousExecutionPeriod();
-                while (previousExecutionPeriod.getExecutionYear().equals(actualExecutionPeriod.getExecutionYear())) {
-                    previousExecutionPeriod = previousExecutionPeriod.getPreviousExecutionPeriod();
-                }
-                
-                executionYear = previousExecutionPeriod.getExecutionYear();
-            } else
-                executionYear = persistentExecutionYear.readExecutionYearByName(argExecutionYear);
+        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
 
-            InfoTeacher infoTeacher = InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher);
-            infoSiteTeacherInformation.setInfoTeacher(infoTeacher);
-
-            infoSiteTeacherInformation.setInfoQualifications(getInfoQualifications(sp, teacher));
-
-            infoSiteTeacherInformation.setInfoProfessionalCareers(getInfoCareers(sp, teacher,
-                    CareerType.PROFESSIONAL));
-            infoSiteTeacherInformation.setInfoTeachingCareers(getInfoCareers(sp, teacher,
-                    CareerType.TEACHING));
-
-            IPersistentServiceProviderRegime persistentServiceProviderRegime = sp
-                    .getIPersistentServiceProviderRegime();
-            IServiceProviderRegime serviceProviderRegime = persistentServiceProviderRegime
-                    .readByTeacher(teacher);
-            if (serviceProviderRegime == null) {
-                InfoServiceProviderRegime infoServiceProviderRegime = new InfoServiceProviderRegime();
-                infoServiceProviderRegime.setInfoTeacher(infoTeacher);
-                infoSiteTeacherInformation.setInfoServiceProviderRegime(infoServiceProviderRegime);
-            } else {
-
-                InfoServiceProviderRegime infoServiceProviderRegime = InfoServiceProviderRegime
-                        .newInfoFromDomain(serviceProviderRegime);
-                infoSiteTeacherInformation.setInfoServiceProviderRegime(infoServiceProviderRegime);
+        // if no execution year is specified, the info shown should refer to
+        // the previous execution year
+        IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+        IExecutionYear executionYear = null;
+        if (argExecutionYear == null || argExecutionYear.equals("")) {
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+            IExecutionPeriod actualExecutionPeriod = persistentExecutionPeriod
+                    .readActualExecutionPeriod();
+            IExecutionPeriod previousExecutionPeriod = actualExecutionPeriod
+                    .getPreviousExecutionPeriod();
+            while (previousExecutionPeriod.getExecutionYear().equals(
+                    actualExecutionPeriod.getExecutionYear())) {
+                previousExecutionPeriod = previousExecutionPeriod.getPreviousExecutionPeriod();
             }
 
-            infoSiteTeacherInformation.setInfoExternalActivities(getInfoExternalActivities(sp, teacher));
+            executionYear = previousExecutionPeriod.getExecutionYear();
+        } else
+            executionYear = persistentExecutionYear.readExecutionYearByName(argExecutionYear);
 
-            infoSiteTeacherInformation
-                    .setInfoLecturingExecutionCourses(getInfoLecturingExecutionCourses(sp, teacher,
-                            executionYear));
-            infoSiteTeacherInformation
-                    .setInfoResponsibleExecutionCourses(getInfoResponsibleExecutionCourses(sp, teacher,
-                            executionYear));
+        InfoTeacher infoTeacher = InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher);
+        infoSiteTeacherInformation.setInfoTeacher(infoTeacher);
 
-            IPersistentWeeklyOcupation persistentWeeklyOcupation = sp.getIPersistentWeeklyOcupation();
-            IWeeklyOcupation weeklyOcupation = persistentWeeklyOcupation.readByTeacher(teacher);
-            if (weeklyOcupation == null) {
-                InfoWeeklyOcupation infoWeeklyOcupation = new InfoWeeklyOcupation();
-                infoWeeklyOcupation.setInfoTeacher(infoTeacher);
-                infoWeeklyOcupation.setResearch(new Integer(0));
-                infoWeeklyOcupation.setManagement(new Integer(0));
-                infoWeeklyOcupation.setLecture(new Integer(0));
-                infoWeeklyOcupation.setSupport(new Integer(0));
-                infoWeeklyOcupation.setOther(new Integer(0));
-                infoSiteTeacherInformation.setInfoWeeklyOcupation(infoWeeklyOcupation);
-            } else {
-                InfoWeeklyOcupation infoWeeklyOcupation = InfoWeeklyOcupation
-                        .newInfoFromDomain(weeklyOcupation);
-                infoWeeklyOcupation.setInfoTeacher(infoTeacher);
-                infoSiteTeacherInformation.setInfoWeeklyOcupation(infoWeeklyOcupation);
-            }
+        infoSiteTeacherInformation.setInfoQualifications(getInfoQualifications(sp, teacher));
 
-            infoSiteTeacherInformation.setInfoDegreeOrientation(getInfoOrientation(sp, teacher,
-                    OrientationType.DEGREE));
-            infoSiteTeacherInformation.setInfoMasterOrientation(getInfoOrientation(sp, teacher,
-                    OrientationType.MASTER));
-            infoSiteTeacherInformation.setInfoPhdOrientation(getInfoOrientation(sp, teacher,
-                    OrientationType.PHD));
+        infoSiteTeacherInformation.setInfoProfessionalCareers(getInfoCareers(sp, teacher,
+                CareerType.PROFESSIONAL));
+        infoSiteTeacherInformation.setInfoTeachingCareers(getInfoCareers(sp, teacher,
+                CareerType.TEACHING));
 
-            infoSiteTeacherInformation
-                    .setInfoArticleChapterPublicationsNumber(getInfoPublicationsNumber(sp, teacher,
-                            PublicationType.ARTICLES_CHAPTERS));
-            infoSiteTeacherInformation.setInfoEditBookPublicationsNumber(getInfoPublicationsNumber(sp,
-                    teacher, PublicationType.EDITOR_BOOK));
-            infoSiteTeacherInformation.setInfoAuthorBookPublicationsNumber(getInfoPublicationsNumber(sp,
-                    teacher, PublicationType.AUTHOR_BOOK));
-            infoSiteTeacherInformation.setInfoMagArticlePublicationsNumber(getInfoPublicationsNumber(sp,
-                    teacher, PublicationType.MAG_ARTICLE));
-            infoSiteTeacherInformation.setInfoComunicationPublicationsNumber(getInfoPublicationsNumber(
-                    sp, teacher, PublicationType.COMUNICATION));
+        IPersistentServiceProviderRegime persistentServiceProviderRegime = sp
+                .getIPersistentServiceProviderRegime();
+        IServiceProviderRegime serviceProviderRegime = persistentServiceProviderRegime
+                .readByTeacher(teacher);
+        if (serviceProviderRegime == null) {
+            InfoServiceProviderRegime infoServiceProviderRegime = new InfoServiceProviderRegime();
+            infoServiceProviderRegime.setInfoTeacher(infoTeacher);
+            infoSiteTeacherInformation.setInfoServiceProviderRegime(infoServiceProviderRegime);
+        } else {
 
-            infoSiteTeacherInformation.setInfoOldCientificPublications(getInfoOldPublications(sp,
-                    teacher, OldPublicationType.CIENTIFIC));
-            infoSiteTeacherInformation.setInfoOldDidacticPublications(getInfoOldPublications(sp,
-                    teacher, OldPublicationType.DIDACTIC));
-
-            infoSiteTeacherInformation.setInfoDidaticPublications(getInfoPublications(sp, teacher,
-                    PublicationConstants.DIDATIC));
-
-            infoSiteTeacherInformation.setInfoCientificPublications(getInfoPublications(sp, teacher,
-                    PublicationConstants.CIENTIFIC));
-
-            // FIXME possible cause of error: this execution period is used for
-            // what?
-            infoSiteTeacherInformation.setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
-                    .newInfoFromDomain((IExecutionPeriod) executionYear.getExecutionPeriods().get(0)));
-
-            return new SiteView(infoSiteTeacherInformation);
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+            InfoServiceProviderRegime infoServiceProviderRegime = InfoServiceProviderRegime
+                    .newInfoFromDomain(serviceProviderRegime);
+            infoSiteTeacherInformation.setInfoServiceProviderRegime(infoServiceProviderRegime);
         }
+
+        infoSiteTeacherInformation.setInfoExternalActivities(getInfoExternalActivities(sp, teacher));
+
+        infoSiteTeacherInformation.setInfoLecturingExecutionCourses(getInfoLecturingExecutionCourses(sp,
+                teacher, executionYear));
+        infoSiteTeacherInformation
+                .setInfoResponsibleExecutionCourses(getInfoResponsibleExecutionCourses(sp, teacher,
+                        executionYear));
+
+        IPersistentWeeklyOcupation persistentWeeklyOcupation = sp.getIPersistentWeeklyOcupation();
+        IWeeklyOcupation weeklyOcupation = persistentWeeklyOcupation.readByTeacher(teacher);
+        if (weeklyOcupation == null) {
+            InfoWeeklyOcupation infoWeeklyOcupation = new InfoWeeklyOcupation();
+            infoWeeklyOcupation.setInfoTeacher(infoTeacher);
+            infoWeeklyOcupation.setResearch(new Integer(0));
+            infoWeeklyOcupation.setManagement(new Integer(0));
+            infoWeeklyOcupation.setLecture(new Integer(0));
+            infoWeeklyOcupation.setSupport(new Integer(0));
+            infoWeeklyOcupation.setOther(new Integer(0));
+            infoSiteTeacherInformation.setInfoWeeklyOcupation(infoWeeklyOcupation);
+        } else {
+            InfoWeeklyOcupation infoWeeklyOcupation = InfoWeeklyOcupation
+                    .newInfoFromDomain(weeklyOcupation);
+            infoWeeklyOcupation.setInfoTeacher(infoTeacher);
+            infoSiteTeacherInformation.setInfoWeeklyOcupation(infoWeeklyOcupation);
+        }
+
+        infoSiteTeacherInformation.setInfoDegreeOrientation(getInfoOrientation(sp, teacher,
+                OrientationType.DEGREE));
+        infoSiteTeacherInformation.setInfoMasterOrientation(getInfoOrientation(sp, teacher,
+                OrientationType.MASTER));
+        infoSiteTeacherInformation.setInfoPhdOrientation(getInfoOrientation(sp, teacher,
+                OrientationType.PHD));
+
+        infoSiteTeacherInformation.setInfoArticleChapterPublicationsNumber(getInfoPublicationsNumber(sp,
+                teacher, PublicationType.ARTICLES_CHAPTERS));
+        infoSiteTeacherInformation.setInfoEditBookPublicationsNumber(getInfoPublicationsNumber(sp,
+                teacher, PublicationType.EDITOR_BOOK));
+        infoSiteTeacherInformation.setInfoAuthorBookPublicationsNumber(getInfoPublicationsNumber(sp,
+                teacher, PublicationType.AUTHOR_BOOK));
+        infoSiteTeacherInformation.setInfoMagArticlePublicationsNumber(getInfoPublicationsNumber(sp,
+                teacher, PublicationType.MAG_ARTICLE));
+        infoSiteTeacherInformation.setInfoComunicationPublicationsNumber(getInfoPublicationsNumber(sp,
+                teacher, PublicationType.COMUNICATION));
+
+        infoSiteTeacherInformation.setInfoOldCientificPublications(getInfoOldPublications(sp, teacher,
+                OldPublicationType.CIENTIFIC));
+        infoSiteTeacherInformation.setInfoOldDidacticPublications(getInfoOldPublications(sp, teacher,
+                OldPublicationType.DIDACTIC));
+
+        infoSiteTeacherInformation.setInfoDidaticPublications(getInfoPublications(sp, teacher,
+                PublicationConstants.DIDATIC));
+
+        infoSiteTeacherInformation.setInfoCientificPublications(getInfoPublications(sp, teacher,
+                PublicationConstants.CIENTIFIC));
+
+        // FIXME possible cause of error: this execution period is used for
+        // what?
+        infoSiteTeacherInformation.setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
+                .newInfoFromDomain((IExecutionPeriod) executionYear.getExecutionPeriods().get(0)));
+
+        return new SiteView(infoSiteTeacherInformation);
     }
 
-    /**
-     * @param sp
-     * @param teacher
-     * @return
-     */
     private List getInfoResponsibleExecutionCourses(ISuportePersistente sp, ITeacher teacher,
             final IExecutionYear wantedExecutionYear) throws ExcepcaoPersistencia {
         IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-        List responsiblesFor = persistentResponsibleFor.readByTeacher(teacher);
+        List responsiblesFor = persistentResponsibleFor.readByTeacher(teacher.getIdInternal());
 
         // filter only the execution courses of the wanted execution year
         responsiblesFor = (List) CollectionUtils.select(responsiblesFor, new Predicate() {
@@ -401,8 +387,8 @@ public class ReadTeacherInformation implements IService {
 
         List infoPublications = new ArrayList();
         Iterator iter = publicationsTeacher.iterator();
-        while(iter.hasNext()){
-            IPublicationTeacher publicationTeacher = (IPublicationTeacher)iter.next();
+        while (iter.hasNext()) {
+            IPublicationTeacher publicationTeacher = (IPublicationTeacher) iter.next();
             IPublication publication = publicationTeacher.getPublication();
             publication.setPublicationString(publicationTeacher.getPublication().toString());
             infoPublications.add(InfoPublication.newInfoFromDomain(publication));

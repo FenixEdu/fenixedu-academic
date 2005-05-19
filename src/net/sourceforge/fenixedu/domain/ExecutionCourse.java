@@ -11,10 +11,10 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 public class ExecutionCourse extends ExecutionCourse_Base {
-    
+
     private List nonAffiliatedTeachers;
-    
-	public ExecutionCourse() {
+
+    public ExecutionCourse() {
     }
 
     public ExecutionCourse(Integer idInternal) {
@@ -47,7 +47,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         result += "]";
         return result;
     }
-    
+
     public String getSlideName() {
         String result = getParentNode().getSlideName() + "/EC" + getIdInternal();
         return result;
@@ -60,14 +60,16 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public List getGroupProperties() {
         List groupProperties = new ArrayList();
-        Iterator iterGroupPropertiesExecutionCourse = getGroupPropertiesExecutionCourse().iterator();
-        IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = null;
-        while (iterGroupPropertiesExecutionCourse.hasNext()) {
-            groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse) iterGroupPropertiesExecutionCourse
-                    .next();
-            if (groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 1
-                    || groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 2) {
-                groupProperties.add(groupPropertiesExecutionCourse.getGroupProperties());
+        if (getGroupPropertiesExecutionCourse() != null) {
+            Iterator iterGroupPropertiesExecutionCourse = getGroupPropertiesExecutionCourse().iterator();
+            IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = null;
+            while (iterGroupPropertiesExecutionCourse.hasNext()) {
+                groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse) iterGroupPropertiesExecutionCourse
+                        .next();
+                if (groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 1
+                        || groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 2) {
+                    groupProperties.add(groupPropertiesExecutionCourse.getGroupProperties());
+                }
             }
         }
         return groupProperties;
@@ -140,10 +142,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public List getNonAffiliatedTeachers() {
         return nonAffiliatedTeachers;
     }
-    
 
     public void setNonAffiliatedTeachers(List nonAffiliatedTeachers) {
         this.nonAffiliatedTeachers = nonAffiliatedTeachers;
     }
-    
+
 }

@@ -10,7 +10,7 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 	Double theoPratHours;
 }
 
-/* DONE */
+/* DONE: DML and VO */
 class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.domain.DomainObject {
 	String style;
 	String initialStatement;
@@ -20,7 +20,7 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 	String alternativeSite;
 }
 
-/* DONE */
+/* DONE: DML and VO */
 class net.sourceforge.fenixedu.domain.Announcement extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keySite;
 	String information;
@@ -229,7 +229,7 @@ class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.dom
 	Integer lotacao;
 }
 
-/* DONE: DML (VO doesn't exist */
+/* DONE: DML (VO doesn't exist) */
 class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.domain.DomainObject {
 	String concreteClassForDegreeCurricularPlans;
 	String nome;

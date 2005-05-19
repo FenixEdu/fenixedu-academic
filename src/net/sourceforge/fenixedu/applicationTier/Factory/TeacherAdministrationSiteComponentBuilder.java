@@ -676,7 +676,7 @@ public class TeacherAdministrationSiteComponentBuilder {
                 IPersistentResponsibleFor persistentResponsibleFor = sp
                         .getIPersistentResponsibleFor();
                 List responsibleTeachers = persistentResponsibleFor
-                        .readByExecutionCourse(executionCourse);
+                        .readByExecutionCourse(executionCourse.getIdInternal());
 
                 List infoResponsibleTeachers = new ArrayList();
                 boolean isResponsible = false;
@@ -694,8 +694,8 @@ public class TeacherAdministrationSiteComponentBuilder {
                     ITeacher teacher = persistentTeacher
                             .readTeacherByUsername(username);
                     IResponsibleFor responsibleFor = persistentResponsibleFor
-                            .readByTeacherAndExecutionCourse(teacher,
-                                    executionCourse);
+                            .readByTeacherAndExecutionCourse(teacher.getIdInternal(),
+                                    executionCourse.getIdInternal());
                     if (teacher != null) {
                         if (responsibleTeachers != null
                                 && !responsibleTeachers.isEmpty()

@@ -822,7 +822,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
         IPersistentResponsibleFor persistentResponsibleFor = persistentSupport
                 .getIPersistentResponsibleFor();
-        responsibleDomainTeachersList = persistentResponsibleFor.readByExecutionCourse(executionCourse);
+        responsibleDomainTeachersList = persistentResponsibleFor.readByExecutionCourse(executionCourse.getIdInternal());
 
         List responsibleInfoTeachersList = new ArrayList();
         if (responsibleDomainTeachersList != null) {

@@ -29,60 +29,50 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadTeachersByExecutionCourseResponsibility implements IService {
 
-    public List run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
-        try {
-            List result = null;
-            ISuportePersistente sp;
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IExecutionCourse executionCourse = Cloner
-                    .copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
-            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-            result = persistentResponsibleFor.readByExecutionCourse(executionCourse);
+    public List run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
-            List infoResult = new ArrayList();
-            if (result != null) {
-                Iterator iter = result.iterator();
-                while (iter.hasNext()) {
-                    IResponsibleFor responsibleFor = (IResponsibleFor) iter.next();
-                    ITeacher teacher = responsibleFor.getTeacher();
-                    InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
-                    infoResult.add(infoTeacher);
-                }
-                return infoResult;
+        ISuportePersistente suportePersistente = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+        IPersistentResponsibleFor persistentResponsibleFor = suportePersistente
+                .getIPersistentResponsibleFor();
+        List result = persistentResponsibleFor
+                .readByExecutionCourse(infoExecutionCourse.getIdInternal());
+
+        List infoResult = new ArrayList();
+        if (result != null) {
+            Iterator iter = result.iterator();
+            while (iter.hasNext()) {
+                IResponsibleFor responsibleFor = (IResponsibleFor) iter.next();
+                ITeacher teacher = responsibleFor.getTeacher();
+                InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+                infoResult.add(infoTeacher);
             }
-
-            return result;
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+            return infoResult;
         }
 
+        return result;
     }
 
-    public List run(Integer executionCourseID) throws FenixServiceException {
-        try {
-            List result = null;
-            ISuportePersistente sp;
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-            result = persistentResponsibleFor.readByExecutionCourseID(executionCourseID);
+    public List run(Integer executionCourseID) throws FenixServiceException, ExcepcaoPersistencia {
 
-            List infoResult = new ArrayList();
-            if (result != null) {
-                Iterator iter = result.iterator();
-                while (iter.hasNext()) {
-                    IResponsibleFor responsibleFor = (IResponsibleFor) iter.next();
-                    ITeacher teacher = responsibleFor.getTeacher();
-                    InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
-                    infoResult.add(infoTeacher);
-                }
-                return infoResult;
+        ISuportePersistente suportePersistente = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+        IPersistentResponsibleFor persistentResponsibleFor = suportePersistente
+                .getIPersistentResponsibleFor();
+        List result = persistentResponsibleFor.readByExecutionCourse(executionCourseID);
+
+        List infoResult = new ArrayList();
+        if (result != null) {
+            Iterator iter = result.iterator();
+            while (iter.hasNext()) {
+                IResponsibleFor responsibleFor = (IResponsibleFor) iter.next();
+                ITeacher teacher = responsibleFor.getTeacher();
+                InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+                infoResult.add(infoTeacher);
             }
-
-            return result;
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+            return infoResult;
         }
+        return result;
     }
 }

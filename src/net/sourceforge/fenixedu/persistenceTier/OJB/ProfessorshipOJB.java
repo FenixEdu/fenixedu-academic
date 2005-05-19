@@ -11,7 +11,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -131,12 +130,11 @@ public class ProfessorshipOJB extends PersistentObjectOJB implements IPersistent
      * @see ServidorPersistente.IPersistentProfessorship#readByTeacherAndExecutionPeriod(Dominio.ITeacher,
      *      Dominio.IExecutionPeriod)
      */
-    public List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod)
+    public List readByTeacherAndExecutionPeriod(Integer teacherID, Integer executionPeriodID)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
-        criteria.addEqualTo("executionCourse.executionPeriod.idInternal", executionPeriod
-                .getIdInternal());
+        criteria.addEqualTo("teacher.idInternal", teacherID);
+        criteria.addEqualTo("executionCourse.executionPeriod.idInternal", executionPeriodID);
         return queryList(Professorship.class, criteria);
     }
 
@@ -223,12 +221,11 @@ public class ProfessorshipOJB extends PersistentObjectOJB implements IPersistent
      * @see ServidorPersistente.IPersistentProfessorship#readByTeacherAndExecutionYear(Dominio.ITeacher,
      *      Dominio.IExecutionYear)
      */
-    public List readByTeacherAndExecutionYear(ITeacher teacher, IExecutionYear executionYear)
+    public List readByTeacherAndExecutionYear(Integer teacherID, Integer executionYearID)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
-        criteria.addEqualTo("executionCourse.executionPeriod.executionYear.idInternal", executionYear
-                .getIdInternal());
+        criteria.addEqualTo("teacher.idInternal", teacherID);
+        criteria.addEqualTo("executionCourse.executionPeriod.executionYear.idInternal", executionYearID);
         return queryList(Professorship.class, criteria);
     }
 

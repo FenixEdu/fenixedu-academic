@@ -325,7 +325,7 @@ public class ReadCoursesInformation implements IService {
     private List getInfoResponsibleTeachers(IExecutionCourse executionCourse, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-        List responsiblesFor = persistentResponsibleFor.readByExecutionCourse(executionCourse);
+        List responsiblesFor = persistentResponsibleFor.readByExecutionCourse(executionCourse.getIdInternal());
         List infoResponsibleTeachers = new ArrayList();
         Iterator iter = responsiblesFor.iterator();
         while (iter.hasNext()) {

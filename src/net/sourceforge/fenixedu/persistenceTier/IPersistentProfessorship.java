@@ -8,7 +8,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -57,7 +56,7 @@ public interface IPersistentProfessorship extends IPersistentObject {
      * @param executionPeriod
      * @return
      */
-    public List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod)
+    public List readByTeacherAndExecutionPeriod(Integer teacherID, Integer executionPeriodID)
             throws ExcepcaoPersistencia;
 
     /**
@@ -65,7 +64,7 @@ public interface IPersistentProfessorship extends IPersistentObject {
      * @param executionYear
      * @return
      */
-    public List readByTeacherAndExecutionYear(ITeacher teacher, IExecutionYear executionYear)
+    public List readByTeacherAndExecutionYear(Integer teacherID, Integer executionYearID)
             throws ExcepcaoPersistencia;
 
     /**

@@ -128,8 +128,11 @@ public class DissociateProfessorShipsAndResponsibleFor implements IService {
                 iterResponsibleFor = newResponsibleFor.iterator();
                 while (iterResponsibleFor.hasNext()) {
                     IResponsibleFor responsibleFor = (IResponsibleFor) iterResponsibleFor.next();
-
-                    persistentResponsibleFor.delete(responsibleFor);
+                    responsibleFor.getExecutionCourse().getResponsibleTeachers().remove(responsibleFor);
+                    responsibleFor.setExecutionCourse(null);
+                    responsibleFor.getTeacher().getAssociatedResponsibles().remove(responsibleFor);
+                    responsibleFor.setTeacher(null);
+                    persistentResponsibleFor.deleteByOID(ResponsibleFor.class, responsibleFor.getIdInternal());
                 }
             }
         } catch (ExcepcaoPersistencia ex) {

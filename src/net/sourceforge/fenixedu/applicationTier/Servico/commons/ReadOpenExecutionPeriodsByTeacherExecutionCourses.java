@@ -28,53 +28,46 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadOpenExecutionPeriodsByTeacherExecutionCourses implements IService {
 
-    public List run(IUserView userView) throws FenixServiceException {
+    public List run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
 
         List result = new ArrayList();
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-            IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
+        IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(userView.getUtilizador());
+        ITeacher teacher = persistentTeacher.readTeacherByUsername(userView.getUtilizador());
 
-            List executionPeriods = new ArrayList();
-            
-            List professorships = persistentProfessorship.readByTeacher(teacher);
-            Iterator iterProfessorships = professorships.iterator();
-            while(iterProfessorships.hasNext()){
-                IProfessorship professorship = (IProfessorship)iterProfessorships.next();
-                IExecutionPeriod executionPeriod = professorship.getExecutionCourse().getExecutionPeriod();
-                PeriodState periodState = executionPeriod.getState();
-                if(!executionPeriods.contains(executionPeriod) && 
-                        (periodState.getStateCode().equals("C") || periodState.getStateCode().equals("O"))){
-                    executionPeriods.add(executionPeriod);
-                }
+        List executionPeriods = new ArrayList();
+
+        List professorships = persistentProfessorship.readByTeacher(teacher);
+        Iterator iterProfessorships = professorships.iterator();
+        while (iterProfessorships.hasNext()) {
+            IProfessorship professorship = (IProfessorship) iterProfessorships.next();
+            IExecutionPeriod executionPeriod = professorship.getExecutionCourse().getExecutionPeriod();
+            PeriodState periodState = executionPeriod.getState();
+            if (!executionPeriods.contains(executionPeriod)
+                    && (periodState.getStateCode().equals("C") || periodState.getStateCode().equals("O"))) {
+                executionPeriods.add(executionPeriod);
             }
-            
-            
-            List responsibleFors = persistentResponsibleFor.readByTeacher(teacher);
-            Iterator iterResponsibleFors = responsibleFors.iterator(); 
-            while(iterResponsibleFors.hasNext()){
-                IResponsibleFor responsibleFor = (IResponsibleFor)iterResponsibleFors.next();
-                IExecutionPeriod executionPeriod = responsibleFor.getExecutionCourse().getExecutionPeriod();
-                PeriodState periodState = executionPeriod.getState();
-                if(!executionPeriods.contains(executionPeriod) && 
-                        (periodState.getStateCode().equals("C") || periodState.getStateCode().equals("O"))){
-                    executionPeriods.add(executionPeriod);
-                }
+        }
 
+        List responsibleFors = persistentResponsibleFor.readByTeacher(teacher.getIdInternal());
+        Iterator iterResponsibleFors = responsibleFors.iterator();
+        while (iterResponsibleFors.hasNext()) {
+            IResponsibleFor responsibleFor = (IResponsibleFor) iterResponsibleFors.next();
+            IExecutionPeriod executionPeriod = responsibleFor.getExecutionCourse().getExecutionPeriod();
+            PeriodState periodState = executionPeriod.getState();
+            if (!executionPeriods.contains(executionPeriod)
+                    && (periodState.getStateCode().equals("C") || periodState.getStateCode().equals("O"))) {
+                executionPeriods.add(executionPeriod);
             }
-            
+        }
 
-            if (executionPeriods != null) {
-                for (int i = 0; i < executionPeriods.size(); i++) {
-                    result.add(Cloner.get((IExecutionPeriod) executionPeriods.get(i)));
-                }
+        if (executionPeriods != null) {
+            for (int i = 0; i < executionPeriods.size(); i++) {
+                result.add(Cloner.get((IExecutionPeriod) executionPeriods.get(i)));
             }
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
         }
 
         return result;

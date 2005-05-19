@@ -77,81 +77,70 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  *  
  */
 public class ReadTeachersInformation implements IService {
-    /**
-     *  
-     */
-    public ReadTeachersInformation() {
-    }
 
     public List run(Integer executionDegreeId, Boolean basic, String executionYearString)
-            throws FenixServiceException {
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-            IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-            List professorships = null;
-            IExecutionYear executionYear = null;
-            if (executionYearString != null && !executionYearString.equals("")) {
-                executionYear = persistentExecutionYear.readExecutionYearByName(executionYearString);
-            } else {
-                executionYear = persistentExecutionYear.readCurrentExecutionYear();
-            }
-            if (executionDegreeId == null) {
-                List executionDegrees = persistentExecutionDegree.readByExecutionYear(executionYear
-                        .getYear());
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
+        IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+        IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
 
-                if (basic == null) {
-                    professorships = persistentProfessorship.readByExecutionDegrees(executionDegrees);
-                } else {
-                    professorships = persistentProfessorship.readByExecutionDegreesAndBasic(
-                            executionDegrees, basic);
-                }
-            } else {
-                IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
-                        ExecutionDegree.class, executionDegreeId);
-
-                if (basic == null) {
-                    professorships = persistentProfessorship.readByExecutionDegree(executionDegree);
-                } else {
-                    professorships = persistentProfessorship.readByExecutionDegreeAndBasic(
-                            executionDegree, basic);
-                }
-            }
-
-            List teachers = (List) CollectionUtils.collect(professorships, new Transformer() {
-                public Object transform(Object o) {
-                    IProfessorship professorship = (IProfessorship) o;
-                    return professorship.getTeacher();
-                }
-            });
-            teachers = removeDuplicates(teachers);
-            List infoSiteTeachersInformation = new ArrayList();
-            Iterator iter = teachers.iterator();
-            while (iter.hasNext()) {
-                ITeacher teacher = (ITeacher) iter.next();
-                infoSiteTeachersInformation.add(getTeacherInformation(teacher.getPerson().getUsername(),
-                        executionYear));
-            }
-            Collections.sort(infoSiteTeachersInformation, new Comparator() {
-                public int compare(Object o1, Object o2) {
-                    InfoSiteTeacherInformation information1 = (InfoSiteTeacherInformation) o1;
-                    InfoSiteTeacherInformation information2 = (InfoSiteTeacherInformation) o2;
-                    return information1.getInfoTeacher().getInfoPerson().getNome().compareTo(
-                            information2.getInfoTeacher().getInfoPerson().getNome());
-                }
-            });
-            return infoSiteTeachersInformation;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e.getMessage());
+        List professorships = null;
+        IExecutionYear executionYear = null;
+        if (executionYearString != null && !executionYearString.equals("")) {
+            executionYear = persistentExecutionYear.readExecutionYearByName(executionYearString);
+        } else {
+            executionYear = persistentExecutionYear.readCurrentExecutionYear();
         }
+        if (executionDegreeId == null) {
+            List executionDegrees = persistentExecutionDegree.readByExecutionYear(executionYear
+                    .getYear());
+
+            if (basic == null) {
+                professorships = persistentProfessorship.readByExecutionDegrees(executionDegrees);
+            } else {
+                professorships = persistentProfessorship.readByExecutionDegreesAndBasic(
+                        executionDegrees, basic);
+            }
+        } else {
+            IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                    ExecutionDegree.class, executionDegreeId);
+
+            if (basic == null) {
+                professorships = persistentProfessorship.readByExecutionDegree(executionDegree);
+            } else {
+                professorships = persistentProfessorship.readByExecutionDegreeAndBasic(executionDegree,
+                        basic);
+            }
+        }
+
+        List teachers = (List) CollectionUtils.collect(professorships, new Transformer() {
+            public Object transform(Object o) {
+                IProfessorship professorship = (IProfessorship) o;
+                return professorship.getTeacher();
+            }
+        });
+        teachers = removeDuplicates(teachers);
+        List infoSiteTeachersInformation = new ArrayList();
+        Iterator iter = teachers.iterator();
+        while (iter.hasNext()) {
+            ITeacher teacher = (ITeacher) iter.next();
+            infoSiteTeachersInformation.add(getTeacherInformation(teacher.getPerson().getUsername(),
+                    executionYear));
+        }
+        Collections.sort(infoSiteTeachersInformation, new Comparator() {
+            public int compare(Object o1, Object o2) {
+                InfoSiteTeacherInformation information1 = (InfoSiteTeacherInformation) o1;
+                InfoSiteTeacherInformation information2 = (InfoSiteTeacherInformation) o2;
+                return information1.getInfoTeacher().getInfoPerson().getNome().compareTo(
+                        information2.getInfoTeacher().getInfoPerson().getNome());
+            }
+        });
+        return infoSiteTeachersInformation;
+
     }
 
-    /**
-     * @param teachers
-     * @return
-     */
     private List removeDuplicates(List teachers) {
         List result = new ArrayList();
         Iterator iter = teachers.iterator();
@@ -254,16 +243,10 @@ public class ReadTeachersInformation implements IService {
         return infoSiteTeacherInformation;
     }
 
-    /**
-     * @param sp
-     * @param teacher
-     * @param executionYear
-     * @return
-     */
     private List getInfoResponsibleExecutionCourses(ITeacher teacher, ISuportePersistente sp,
             final IExecutionYear executionYear) throws ExcepcaoPersistencia {
         IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-        List responsiblesFor = persistentResponsibleFor.readByTeacher(teacher);
+        List responsiblesFor = persistentResponsibleFor.readByTeacher(teacher.getIdInternal());
 
         // filter only the execution courses of the chosen execution year or the
         // current in case none was chosen

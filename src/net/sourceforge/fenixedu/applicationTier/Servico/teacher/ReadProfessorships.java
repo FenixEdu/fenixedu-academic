@@ -60,7 +60,7 @@ public class ReadProfessorships extends ReadDetailedTeacherProfessorshipsAbstrac
             }
         }
         
-        final List responsibleFors = responsibleForDAO.readByTeacher(teacher);
+        final List responsibleFors = responsibleForDAO.readByTeacher(teacher.getIdInternal());
         List responsibleForsList = new ArrayList();
         responsibleForsList.addAll(responsibleFors);
         

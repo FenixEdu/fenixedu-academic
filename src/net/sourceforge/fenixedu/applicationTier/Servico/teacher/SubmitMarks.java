@@ -102,7 +102,7 @@ public class SubmitMarks implements IService {
             List attendList = persistentAttend.readByExecutionCourse(executionCourseCode);
 
             IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-            List professors = persistentResponsibleFor.readByExecutionCourse(executionCourse);
+            List professors = persistentResponsibleFor.readByExecutionCourse(executionCourse.getIdInternal());
 
             //employee logged
             IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();

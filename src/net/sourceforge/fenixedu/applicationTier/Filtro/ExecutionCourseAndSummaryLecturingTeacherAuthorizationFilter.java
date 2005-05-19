@@ -164,12 +164,12 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
      * @return
      * @throws NotAuthorizedFilterException
      */
-    private List getResponsibleTeachers(Integer executionCourse) throws NotAuthorizedFilterException {
+    private List getResponsibleTeachers(Integer executionCourseId) throws NotAuthorizedFilterException {
         try {
             List result = null;
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-            result = persistentResponsibleFor.readByExecutionCourseID(executionCourse);
+            result = persistentResponsibleFor.readByExecutionCourse(executionCourseId);
             
             List infoResult = new ArrayList();
             if (result != null) {

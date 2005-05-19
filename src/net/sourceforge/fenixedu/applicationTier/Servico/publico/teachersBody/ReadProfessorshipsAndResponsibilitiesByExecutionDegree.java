@@ -41,76 +41,67 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree implements IService {
 
-    /**
-     *  
-     */
-    public ReadProfessorshipsAndResponsibilitiesByExecutionDegree() {
-    }
+    public List run(Integer executionDegreeId) throws FenixServiceException, ExcepcaoPersistencia {
 
-    public List run(Integer executionDegreeId) throws FenixServiceException {
-        try {
-            ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionDegree persistentExecutionDegree = ps.getIPersistentExecutionDegree();
-            IPersistentProfessorship persistentProfessorship = ps.getIPersistentProfessorship();
-            IPersistentResponsibleFor persistentResponsibleFor = ps.getIPersistentResponsibleFor();
-            IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
-                    ExecutionDegree.class, executionDegreeId);
+        ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionDegree persistentExecutionDegree = ps.getIPersistentExecutionDegree();
+        IPersistentProfessorship persistentProfessorship = ps.getIPersistentProfessorship();
+        IPersistentResponsibleFor persistentResponsibleFor = ps.getIPersistentResponsibleFor();
+        IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                ExecutionDegree.class, executionDegreeId);
 
-            List professorships = persistentProfessorship.readByExecutionDegree(executionDegree);
-            List responsibleFors = persistentResponsibleFor.readByExecutionDegree(executionDegree);
-            List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors, ps);
+        List professorships = persistentProfessorship.readByExecutionDegree(executionDegree);
+        List responsibleFors = persistentResponsibleFor.readByExecutionDegree(executionDegree
+                .getDegreeCurricularPlan().getIdInternal(), executionDegree.getExecutionYear()
+                .getIdInternal());
+        List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors, ps);
 
-            Collections.sort(detailedProfessorships, new Comparator() {
+        Collections.sort(detailedProfessorships, new Comparator() {
 
-                public int compare(Object o1, Object o2) {
-                    DetailedProfessorship detailedProfessorship1 = (DetailedProfessorship) o1;
-                    DetailedProfessorship detailedProfessorship2 = (DetailedProfessorship) o2;
-                    int result = detailedProfessorship1.getInfoProfessorship().getInfoExecutionCourse()
-                            .getIdInternal().intValue()
-                            - detailedProfessorship2.getInfoProfessorship().getInfoExecutionCourse()
-                                    .getIdInternal().intValue();
-                    if (result == 0
-                            && (detailedProfessorship1.getResponsibleFor().booleanValue() || detailedProfessorship2
-                                    .getResponsibleFor().booleanValue())) {
-                        if (detailedProfessorship1.getResponsibleFor().booleanValue()) {
-                            return -1;
-                        }
-                        if (detailedProfessorship2.getResponsibleFor().booleanValue()) {
-                            return 1;
-                        }
+            public int compare(Object o1, Object o2) {
+                DetailedProfessorship detailedProfessorship1 = (DetailedProfessorship) o1;
+                DetailedProfessorship detailedProfessorship2 = (DetailedProfessorship) o2;
+                int result = detailedProfessorship1.getInfoProfessorship().getInfoExecutionCourse()
+                        .getIdInternal().intValue()
+                        - detailedProfessorship2.getInfoProfessorship().getInfoExecutionCourse()
+                                .getIdInternal().intValue();
+                if (result == 0
+                        && (detailedProfessorship1.getResponsibleFor().booleanValue() || detailedProfessorship2
+                                .getResponsibleFor().booleanValue())) {
+                    if (detailedProfessorship1.getResponsibleFor().booleanValue()) {
+                        return -1;
                     }
-
-                    return result;
+                    if (detailedProfessorship2.getResponsibleFor().booleanValue()) {
+                        return 1;
+                    }
                 }
 
-            });
-
-            List result = new ArrayList();
-            Iterator iter = detailedProfessorships.iterator();
-            List temp = new ArrayList();
-            while (iter.hasNext()) {
-                DetailedProfessorship detailedProfessorship = (DetailedProfessorship) iter.next();
-                if (temp.isEmpty()
-                        || ((DetailedProfessorship) temp.get(temp.size() - 1)).getInfoProfessorship()
-                                .getInfoExecutionCourse().equals(
-                                        detailedProfessorship.getInfoProfessorship()
-                                                .getInfoExecutionCourse())) {
-                    temp.add(detailedProfessorship);
-                } else {
-                    result.add(temp);
-                    temp = new ArrayList();
-                    temp.add(detailedProfessorship);
-                }
+                return result;
             }
-            if (!temp.isEmpty()) {
+
+        });
+
+        List result = new ArrayList();
+        Iterator iter = detailedProfessorships.iterator();
+        List temp = new ArrayList();
+        while (iter.hasNext()) {
+            DetailedProfessorship detailedProfessorship = (DetailedProfessorship) iter.next();
+            if (temp.isEmpty()
+                    || ((DetailedProfessorship) temp.get(temp.size() - 1)).getInfoProfessorship()
+                            .getInfoExecutionCourse().equals(
+                                    detailedProfessorship.getInfoProfessorship()
+                                            .getInfoExecutionCourse())) {
+                temp.add(detailedProfessorship);
+            } else {
                 result.add(temp);
+                temp = new ArrayList();
+                temp.add(detailedProfessorship);
             }
-            return result;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-
         }
-
+        if (!temp.isEmpty()) {
+            result.add(temp);
+        }
+        return result;
     }
 
     protected List getDetailedProfessorships(List professorships, final List responsibleFors,

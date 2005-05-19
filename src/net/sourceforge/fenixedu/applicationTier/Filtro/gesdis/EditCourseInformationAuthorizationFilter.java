@@ -82,7 +82,7 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
                     ExecutionCourse.class, infoExecutionCourse.getIdInternal());
 
             IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-            List responsiblesFor = persistentResponsibleFor.readByExecutionCourse(executionCourse);
+            List responsiblesFor = persistentResponsibleFor.readByExecutionCourse(executionCourse.getIdInternal());
             IResponsibleFor responsibleFor = new ResponsibleFor(teacher, executionCourse);
 
             if (!responsiblesFor.contains(responsibleFor)) {

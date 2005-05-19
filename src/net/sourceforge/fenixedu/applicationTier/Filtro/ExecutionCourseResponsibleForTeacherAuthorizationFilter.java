@@ -89,8 +89,8 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends Aut
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
             IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-            responsibleFor = persistentResponsibleFor.readByTeacherAndExecutionCoursePB(teacher,
-                    executionCourse);
+            responsibleFor = persistentResponsibleFor.readByTeacherAndExecutionCourse(teacher
+                    .getIdInternal(), executionCourse.getIdInternal());
 
         } catch (Exception e) {
             return false;

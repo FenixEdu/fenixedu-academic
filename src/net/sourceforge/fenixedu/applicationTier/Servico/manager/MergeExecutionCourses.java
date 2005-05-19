@@ -33,6 +33,7 @@ import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.ISummary;
 import net.sourceforge.fenixedu.domain.ISupportLesson;
+import net.sourceforge.fenixedu.domain.ResponsibleFor;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
@@ -409,11 +410,11 @@ public class MergeExecutionCourses implements IService {
             }
         }
         IPersistentResponsibleFor persistentResponsibleFor = ps.getIPersistentResponsibleFor();
-        List destinationResponsibleFor = persistentResponsibleFor.readByExecutionCourse(destination);
+        List destinationResponsibleFor = persistentResponsibleFor.readByExecutionCourse(destination.getIdInternal());
         if (destinationResponsibleFor == null) {
             destinationResponsibleFor = new ArrayList();
         }
-        List sourceResponsibleFor = persistentResponsibleFor.readByExecutionCourse(source);
+        List sourceResponsibleFor = persistentResponsibleFor.readByExecutionCourse(source.getIdInternal());
         if (sourceResponsibleFor != null) {
             Iterator iter = sourceResponsibleFor.iterator();
             while (iter.hasNext()) {
@@ -434,7 +435,11 @@ public class MergeExecutionCourses implements IService {
                     responsibleFor.setExecutionCourse(destination);
 
                 } else {
-                    persistentResponsibleFor.delete(responsibleFor);
+                    responsibleFor.getExecutionCourse().getResponsibleTeachers().remove(responsibleFor);
+                    responsibleFor.setExecutionCourse(null);
+                    responsibleFor.getTeacher().getAssociatedResponsibles().remove(responsibleFor);
+                    responsibleFor.setTeacher(null);
+                    persistentResponsibleFor.deleteByOID(ResponsibleFor.class, responsibleFor.getIdInternal());
                 }
             }
         }

@@ -75,7 +75,7 @@ public class ResponsibleForValidator {
         if (!teacher.getCategory().getCanBeExecutionCourseResponsible().booleanValue()) {
             throw new InvalidCategory();
         }
-        List responsibleFors = responsibleForDAO.readByExecutionCourse(executionCourse);
+        List responsibleFors = responsibleForDAO.readByExecutionCourse(executionCourse.getIdInternal());
 
         if ((!responsibleFors.contains(responsibleForAdded))
                 && (responsibleFors.size() >= MAX_RESPONSIBLEFOR_BY_EXECUTION_COURSE)) {

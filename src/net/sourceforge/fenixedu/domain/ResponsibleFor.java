@@ -6,13 +6,7 @@ package net.sourceforge.fenixedu.domain;
  *  
  */
 public class ResponsibleFor extends ResponsibleFor_Base {
-    protected ITeacher teacher;
 
-    protected IExecutionCourse executionCourse;
-
-    /**
-     *  
-     */
     public ResponsibleFor() {
     }
 
@@ -21,45 +15,6 @@ public class ResponsibleFor extends ResponsibleFor_Base {
         setExecutionCourse(executionCourse);
     }
 
-    /**
-     * @return IDisciplinaExecucao
-     */
-    public IExecutionCourse getExecutionCourse() {
-        return executionCourse;
-    }
-
-    /**
-     * @return ITeacher
-     */
-    public ITeacher getTeacher() {
-        return teacher;
-    }
-
-    /**
-     * Sets the executionCourse.
-     * 
-     * @param executionCourse
-     *            The executionCourse to set
-     */
-    public void setExecutionCourse(IExecutionCourse executionCourse) {
-        this.executionCourse = executionCourse;
-    }
-
-    /**
-     * Sets the teacher.
-     * 
-     * @param teacher
-     *            The teacher to set
-     */
-    public void setTeacher(ITeacher teacher) {
-        this.teacher = teacher;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     public boolean equals(Object obj) {
         boolean result = false;
         if (obj instanceof IResponsibleFor) {

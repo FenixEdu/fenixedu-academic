@@ -47,139 +47,128 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod implements IService {
 
-    /**
-     *  
-     */
-    public ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod() {
+    public List run(Integer departmentId, Integer executionYearId, Integer semester, Integer teacherType)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-    }
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentObject persistentObject = sp.getIPersistentObject();
 
-    public List run(Integer departmentId, Integer executionYearId, Integer semester, Integer teacherType) throws FenixServiceException {
+        //Execution Year
+        IExecutionYear executionYear = null;
+        if (executionYearId != null) {
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentObject persistentObject = sp.getIPersistentObject();
-
-            //Execution Year
-            IExecutionYear executionYear = null;
-            if (executionYearId != null) {
-
-                executionYear = (IExecutionYear) persistentObject.readByOID(ExecutionYear.class,
-                        executionYearId);
-            }
-            
-            //Execution period
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(
-            		semester, executionYear.getYear());
-
-            //Departement
-
-            IDepartment department = (IDepartment) persistentObject.readByOID(Department.class,
-                    departmentId);
-
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            List teachers = persistentTeacher.readByDepartment(department);
-
-            Iterator iter = teachers.iterator();
-            IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-            List professorships = new ArrayList();
-            List responsibleFors = new ArrayList();
-            while (iter.hasNext()) {
-                ITeacher teacher = (ITeacher) iter.next();
-                List teacherProfessorships = null;
-                if (executionYear == null) {
-                    teacherProfessorships = persistentProfessorship.readByTeacher(teacher);
-                } else {
-                	if(semester.intValue() == 0) {
-
-	                    teacherProfessorships = persistentProfessorship.readByTeacherAndExecutionYear(
-	                            teacher, executionYear);
-                	} else {
-                		teacherProfessorships = persistentProfessorship.readByTeacherAndExecutionPeriod(
-                				teacher, executionPeriod);
-                	}
-                }
-                if (teacherProfessorships != null) {
-                    professorships.addAll(teacherProfessorships);
-                }
-
-                List teacherResponsibleFors = null;
-                if (executionYear == null) {
-                    teacherResponsibleFors = persistentResponsibleFor.readByTeacher(teacher);
-                } else {
-                    teacherResponsibleFors = persistentResponsibleFor.readByTeacherAndExecutionYear(
-                            teacher, executionYear);
-                }
-                if (teacherResponsibleFors != null) {
-                    responsibleFors.addAll(teacherResponsibleFors);
-                }
-            }
-
-            List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors, sp, teacherType);
-
-            //Cleaning out possible null elements inside the list
-            Iterator itera = detailedProfessorships.iterator();
-            while(itera.hasNext()) {
-            	Object dp = itera.next();
-            	if(dp == null) {
-            		itera.remove();
-            	}
-            }
-            
-            Collections.sort(detailedProfessorships, new Comparator() {
-
-                public int compare(Object o1, Object o2) {
-
-                    DetailedProfessorship detailedProfessorship1 = (DetailedProfessorship) o1;
-                    DetailedProfessorship detailedProfessorship2 = (DetailedProfessorship) o2;
-                    int result = detailedProfessorship1.getInfoProfessorship().getInfoExecutionCourse()
-                            .getIdInternal().intValue()
-                            - detailedProfessorship2.getInfoProfessorship().getInfoExecutionCourse()
-                                    .getIdInternal().intValue();
-                    if (result == 0
-                            && (detailedProfessorship1.getResponsibleFor().booleanValue() || detailedProfessorship2
-                                    .getResponsibleFor().booleanValue())) {
-                        if (detailedProfessorship1.getResponsibleFor().booleanValue()) {
-                            return -1;
-                        }
-                        if (detailedProfessorship2.getResponsibleFor().booleanValue()) {
-                            return 1;
-                        }
-                    }
-
-                    return result;
-                }
-
-            });
-
-            List result = new ArrayList();
-            iter = detailedProfessorships.iterator();
-            List temp = new ArrayList();
-            while (iter.hasNext()) {
-                DetailedProfessorship detailedProfessorship = (DetailedProfessorship) iter.next();
-                if (temp.isEmpty()
-                        || ((DetailedProfessorship) temp.get(temp.size() - 1)).getInfoProfessorship()
-                                .getInfoExecutionCourse().equals(
-                                        detailedProfessorship.getInfoProfessorship()
-                                                .getInfoExecutionCourse())) {
-                    temp.add(detailedProfessorship);
-                } else {
-                    result.add(temp);
-                    temp = new ArrayList();
-                    temp.add(detailedProfessorship);
-                }
-            }
-            if (!temp.isEmpty()) {
-                result.add(temp);
-            }
-            return result;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-
+            executionYear = (IExecutionYear) persistentObject.readByOID(ExecutionYear.class,
+                    executionYearId);
         }
 
+        //Execution period
+        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        IExecutionPeriod executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(
+                semester, executionYear.getYear());
+
+        //Departement
+
+        IDepartment department = (IDepartment) persistentObject
+                .readByOID(Department.class, departmentId);
+
+        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        List teachers = persistentTeacher.readByDepartment(department);
+
+        Iterator iter = teachers.iterator();
+        IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+        IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
+        List professorships = new ArrayList();
+        List responsibleFors = new ArrayList();
+        while (iter.hasNext()) {
+            ITeacher teacher = (ITeacher) iter.next();
+            List teacherProfessorships = null;
+            if (executionYear == null) {
+                teacherProfessorships = persistentProfessorship.readByTeacher(teacher);
+            } else {
+                if (semester.intValue() == 0) {
+
+                    teacherProfessorships = persistentProfessorship.readByTeacherAndExecutionYear(
+                            teacher.getIdInternal(), executionYear.getIdInternal());
+                } else {
+                    teacherProfessorships = persistentProfessorship.readByTeacherAndExecutionPeriod(
+                            teacher.getIdInternal(), executionPeriod.getIdInternal());
+                }
+            }
+            if (teacherProfessorships != null) {
+                professorships.addAll(teacherProfessorships);
+            }
+
+            List teacherResponsibleFors = null;
+            if (executionYear == null) {
+                teacherResponsibleFors = persistentResponsibleFor.readByTeacher(teacher.getIdInternal());
+            } else {
+                teacherResponsibleFors = persistentResponsibleFor.readByTeacherAndExecutionYear(teacher
+                        .getIdInternal(), executionYear.getIdInternal());
+            }
+            if (teacherResponsibleFors != null) {
+                responsibleFors.addAll(teacherResponsibleFors);
+            }
+        }
+
+        List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors, sp,
+                teacherType);
+
+        //Cleaning out possible null elements inside the list
+        Iterator itera = detailedProfessorships.iterator();
+        while (itera.hasNext()) {
+            Object dp = itera.next();
+            if (dp == null) {
+                itera.remove();
+            }
+        }
+
+        Collections.sort(detailedProfessorships, new Comparator() {
+
+            public int compare(Object o1, Object o2) {
+
+                DetailedProfessorship detailedProfessorship1 = (DetailedProfessorship) o1;
+                DetailedProfessorship detailedProfessorship2 = (DetailedProfessorship) o2;
+                int result = detailedProfessorship1.getInfoProfessorship().getInfoExecutionCourse()
+                        .getIdInternal().intValue()
+                        - detailedProfessorship2.getInfoProfessorship().getInfoExecutionCourse()
+                                .getIdInternal().intValue();
+                if (result == 0
+                        && (detailedProfessorship1.getResponsibleFor().booleanValue() || detailedProfessorship2
+                                .getResponsibleFor().booleanValue())) {
+                    if (detailedProfessorship1.getResponsibleFor().booleanValue()) {
+                        return -1;
+                    }
+                    if (detailedProfessorship2.getResponsibleFor().booleanValue()) {
+                        return 1;
+                    }
+                }
+
+                return result;
+            }
+
+        });
+
+        List result = new ArrayList();
+        iter = detailedProfessorships.iterator();
+        List temp = new ArrayList();
+        while (iter.hasNext()) {
+            DetailedProfessorship detailedProfessorship = (DetailedProfessorship) iter.next();
+            if (temp.isEmpty()
+                    || ((DetailedProfessorship) temp.get(temp.size() - 1)).getInfoProfessorship()
+                            .getInfoExecutionCourse().equals(
+                                    detailedProfessorship.getInfoProfessorship()
+                                            .getInfoExecutionCourse())) {
+                temp.add(detailedProfessorship);
+            } else {
+                result.add(temp);
+                temp = new ArrayList();
+                temp.add(detailedProfessorship);
+            }
+        }
+        if (!temp.isEmpty()) {
+            result.add(temp);
+        }
+        return result;
     }
 
     protected List getDetailedProfessorships(List professorships, final List responsibleFors,
@@ -203,14 +192,14 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
                         IResponsibleFor responsibleFor = new ResponsibleFor();
                         responsibleFor.setExecutionCourse(professorship.getExecutionCourse());
                         responsibleFor.setTeacher(professorship.getTeacher());
-                        
-                        Boolean isResponsible = Boolean.valueOf(responsibleFors
-                                .contains(responsibleFor));
-                        
-                        if((teacherType.intValue() == 1) && (!isResponsible.booleanValue())) {
-                        	return null;
+
+                        Boolean isResponsible = Boolean
+                                .valueOf(responsibleFors.contains(responsibleFor));
+
+                        if ((teacherType.intValue() == 1) && (!isResponsible.booleanValue())) {
+                            return null;
                         }
-                        
+
                         detailedProfessorship.setResponsibleFor(isResponsible);
 
                         detailedProfessorship.setInfoProfessorship(infoProfessorShip);

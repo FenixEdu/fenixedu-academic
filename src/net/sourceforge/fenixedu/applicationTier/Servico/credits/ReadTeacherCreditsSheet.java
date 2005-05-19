@@ -61,9 +61,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadTeacherCreditsSheet implements IService {
 
-    public ReadTeacherCreditsSheet() {
-    }
-
     private IExecutionPeriod readExecutionPeriod(Integer executionPeriodId,
             IPersistentExecutionPeriod executionPeriodDAO) throws FenixServiceException {
         IExecutionPeriod executionPeriod;
@@ -81,13 +78,6 @@ public class ReadTeacherCreditsSheet implements IService {
         return executionPeriod;
     }
 
-    /**
-     * @param sp
-     * @param infoCredits
-     * @param infoTeacher
-     * @param infoExecutionPeriod
-     * @return
-     */
     private List readInfoMasterDegreeProfessorships(ITeacher teacher, IExecutionPeriod executionPeriod) {
         List professorships = teacher.getProfessorships();
 
@@ -224,82 +214,70 @@ public class ReadTeacherCreditsSheet implements IService {
     }
 
     public TeacherCreditsSheetDTO run(InfoTeacher infoTeacherParam, Integer executionPeriodId)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
 
         TeacherCreditsSheetDTO teacherCreditsSheetDTO = new TeacherCreditsSheetDTO();
 
-        ISuportePersistente sp;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-            IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
-            IExecutionPeriod executionPeriod = readExecutionPeriod(executionPeriodId, executionPeriodDAO);
-            ITeacher teacher = readTeacher(infoTeacherParam.getTeacherNumber(), teacherDAO);
+        IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
+        IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+        IExecutionPeriod executionPeriod = readExecutionPeriod(executionPeriodId, executionPeriodDAO);
+        ITeacher teacher = readTeacher(infoTeacherParam.getTeacherNumber(), teacherDAO);
 
-            List infoMasterDegreeProfessorships = readInfoMasterDegreeProfessorships(teacher,
-                    executionPeriod);
+        List infoMasterDegreeProfessorships = readInfoMasterDegreeProfessorships(teacher,
+                executionPeriod);
 
-            List infoShiftProfessorships = readInfoShiftProfessorships(teacher, executionPeriod);
+        List infoShiftProfessorships = readInfoShiftProfessorships(teacher, executionPeriod);
 
-            List infoTimeInstitutionWorkingTimeList = readInfoTeacherInstitutionWorkingTime(teacher,
-                    executionPeriod);
+        List infoTimeInstitutionWorkingTimeList = readInfoTeacherInstitutionWorkingTime(teacher,
+                executionPeriod);
 
-            List infoSupportLessonList = readInfoSupportLessonList(teacher, executionPeriod);
+        List infoSupportLessonList = readInfoSupportLessonList(teacher, executionPeriod);
 
-            List infoTeacherDegreeFinalProjectStudentList = readTeacherDegreeFinalProjectStudentList(
-                    teacher, executionPeriod);
+        List infoTeacherDegreeFinalProjectStudentList = readTeacherDegreeFinalProjectStudentList(
+                teacher, executionPeriod);
 
-            List detailedProfessorshipList = readDetailedProfessorships(teacher, executionPeriod, sp);
+        List detailedProfessorshipList = readDetailedProfessorships(teacher, executionPeriod, sp);
 
-            List otherTypeCreditLineList = readOtherTypeCreditLine(teacher, executionPeriod);
+        List otherTypeCreditLineList = readOtherTypeCreditLine(teacher, executionPeriod);
 
-            List infoManagementPositions = readManagementPositions(teacher, executionPeriod, sp);
+        List infoManagementPositions = readManagementPositions(teacher, executionPeriod, sp);
 
-            List infoServiceExemptions = readServiceExcemptions(teacher, executionPeriod, sp);
+        List infoServiceExemptions = readServiceExcemptions(teacher, executionPeriod, sp);
 
-            InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
-            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
+        InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
 
-            teacherCreditsSheetDTO.setInfoTeacher(infoTeacher);
-            teacherCreditsSheetDTO.setInfoExecutionPeriod(infoExecutionPeriod);
+        teacherCreditsSheetDTO.setInfoTeacher(infoTeacher);
+        teacherCreditsSheetDTO.setInfoExecutionPeriod(infoExecutionPeriod);
 
-            InfoCredits infoCredits = teacher.getExecutionPeriodCredits(executionPeriod);
+        InfoCredits infoCredits = teacher.getExecutionPeriodCredits(executionPeriod);
 
-            teacherCreditsSheetDTO.setInfoCredits(infoCredits);
+        teacherCreditsSheetDTO.setInfoCredits(infoCredits);
 
-            teacherCreditsSheetDTO.setInfoMasterDegreeProfessorships(infoMasterDegreeProfessorships);
+        teacherCreditsSheetDTO.setInfoMasterDegreeProfessorships(infoMasterDegreeProfessorships);
 
-            teacherCreditsSheetDTO
-                    .setInfoTeacherInstitutionWorkingTimeList(infoTimeInstitutionWorkingTimeList);
+        teacherCreditsSheetDTO
+                .setInfoTeacherInstitutionWorkingTimeList(infoTimeInstitutionWorkingTimeList);
 
-            teacherCreditsSheetDTO.setInfoShiftProfessorshipList(infoShiftProfessorships);
+        teacherCreditsSheetDTO.setInfoShiftProfessorshipList(infoShiftProfessorships);
 
-            teacherCreditsSheetDTO.setInfoSupportLessonList(infoSupportLessonList);
+        teacherCreditsSheetDTO.setInfoSupportLessonList(infoSupportLessonList);
 
-            teacherCreditsSheetDTO
-                    .setInfoTeacherDegreeFinalProjectStudentList(infoTeacherDegreeFinalProjectStudentList);
+        teacherCreditsSheetDTO
+                .setInfoTeacherDegreeFinalProjectStudentList(infoTeacherDegreeFinalProjectStudentList);
 
-            teacherCreditsSheetDTO.setDetailedProfessorshipList(detailedProfessorshipList);
+        teacherCreditsSheetDTO.setDetailedProfessorshipList(detailedProfessorshipList);
 
-            teacherCreditsSheetDTO.setInfoTeacherOtherTypeCreditLineList(otherTypeCreditLineList);
+        teacherCreditsSheetDTO.setInfoTeacherOtherTypeCreditLineList(otherTypeCreditLineList);
 
-            teacherCreditsSheetDTO.setInfoManagementPositions(infoManagementPositions);
-            teacherCreditsSheetDTO.setInfoServiceExemptions(infoServiceExemptions);
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException("Problems with database!", e);
-        }
+        teacherCreditsSheetDTO.setInfoManagementPositions(infoManagementPositions);
+        teacherCreditsSheetDTO.setInfoServiceExemptions(infoServiceExemptions);
 
         return teacherCreditsSheetDTO;
     }
 
-    /**
-     * @param teacher
-     * @param executionPeriod
-     * @param sp
-     * @return
-     */
     private List readServiceExcemptions(ITeacher teacher, IExecutionPeriod executionPeriod,
             ISuportePersistente sp) throws ExcepcaoPersistencia {
         IPersistentServiceExemptionCreditLine serviceExemptionCreditLineDAO = sp
@@ -322,12 +300,6 @@ public class ReadTeacherCreditsSheet implements IService {
         return infoServiceExemptions;
     }
 
-    /**
-     * @param teacher
-     * @param executionPeriod
-     * @param sp
-     * @return
-     */
     private List readManagementPositions(ITeacher teacher, IExecutionPeriod executionPeriod,
             ISuportePersistente sp) throws ExcepcaoPersistencia {
         IPersistentManagementPositionCreditLine managementPosistionCreditLineDAO = sp
@@ -350,13 +322,6 @@ public class ReadTeacherCreditsSheet implements IService {
         return infoManagementPositions;
     }
 
-    /**
-     * @param teacher
-     * @param executionPeriod
-     * @param infoCredits
-     * @param sp
-     * @return
-     */
     private List readOtherTypeCreditLine(ITeacher teacher, IExecutionPeriod executionPeriod) {
 
         List otherCreditLines = teacher.getOtherTypeCreditLines();
@@ -372,20 +337,14 @@ public class ReadTeacherCreditsSheet implements IService {
         return infoOtherCreditLines;
     }
 
-    /**
-     * @param teacher
-     * @param executionPeriod
-     * @param sp
-     * @return
-     */
     private List readDetailedProfessorships(ITeacher teacher, IExecutionPeriod executionPeriod,
             ISuportePersistente sp) throws ExcepcaoPersistencia {
         IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
         IPersistentResponsibleFor responsibleForDAO = sp.getIPersistentResponsibleFor();
 
-        List professorshipList = professorshipDAO.readByTeacherAndExecutionPeriod(teacher,
-                executionPeriod);
-        final List responsibleFors = responsibleForDAO.readByTeacher(teacher);
+        List professorshipList = professorshipDAO.readByTeacherAndExecutionPeriod(teacher
+                .getIdInternal(), executionPeriod.getIdInternal());
+        final List responsibleFors = responsibleForDAO.readByTeacher(teacher.getIdInternal());
 
         List detailedProfessorshipList = (List) CollectionUtils.collect(professorshipList,
                 new Transformer() {

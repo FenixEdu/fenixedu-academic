@@ -161,16 +161,14 @@
          class-ref="net.sourceforge.fenixedu.domain.teacher.Category"
          proxy="false">
          <foreignkey field-ref="keyCategory"/>
-      </reference-descriptor>
-      
-     <collection-descriptor
+      </reference-descriptor>     
+    <collection-descriptor
 			name="teacherPublications"
 			element-class-ref="net.sourceforge.fenixedu.domain.publication.PublicationTeacher"
 			proxy="true"
 			refresh="true">
 		<inverse-foreignkey field-ref="keyTeacher"/>
 	</collection-descriptor>
-
 	<collection-descriptor
          name="professorships"
          element-class-ref="net.sourceforge.fenixedu.domain.Professorship"
@@ -233,5 +231,11 @@
 		refresh="true">
 		<inverse-foreignkey field-ref="keyTeacher"/>
 	</collection-descriptor>
-
+	<collection-descriptor 
+		name="associatedResponsibles" 
+		element-class-ref="net.sourceforge.fenixedu.domain.ResponsibleFor"
+		proxy="true"
+		refresh="true">
+		<inverse-foreignkey field-ref="keyTeacher"/>
+	</collection-descriptor>
    </class-descriptor>

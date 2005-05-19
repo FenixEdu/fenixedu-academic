@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -32,57 +31,51 @@ public class InsertProfessorShip implements IService {
     }
 
     public void run(InfoProfessorship infoProfessorShip, Boolean responsibleFor)
-            throws FenixServiceException {
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-            Integer executionCourseId = infoProfessorShip.getInfoExecutionCourse().getIdInternal();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
-                    ExecutionCourse.class, executionCourseId);
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            if (executionCourse == null) {
-                throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
+        Integer executionCourseId = infoProfessorShip.getInfoExecutionCourse().getIdInternal();
+        IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                ExecutionCourse.class, executionCourseId);
+
+        if (executionCourse == null) {
+            throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
+        }
+
+        Integer teacherNumber = infoProfessorShip.getInfoTeacher().getTeacherNumber();
+        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
+
+        if (teacher == null) {
+            throw new NonExistingServiceException("message.non.existing.teacher", null);
+        }
+
+        IPersistentProfessorship persistentProfessorShip = sp.getIPersistentProfessorship();
+
+        IProfessorship professorShip = new Professorship();
+        persistentProfessorShip.simpleLockWrite(professorShip);
+        professorShip.setExecutionCourse(executionCourse);
+        professorShip.setTeacher(teacher);
+        professorShip.setHours(infoProfessorShip.getHours());
+        if (professorShip.getHours() == null) {
+            professorShip.setHours(new Double(0.0));
+        }
+
+        if (responsibleFor.booleanValue()) {
+            IPersistentResponsibleFor responsibleForDAO = sp.getIPersistentResponsibleFor();
+
+            IResponsibleFor responsibleForTeacher = responsibleForDAO.readByTeacherAndExecutionCourse(
+                    teacher.getIdInternal(), executionCourse.getIdInternal());
+            if (responsibleForTeacher == null) {
+                responsibleForTeacher = new ResponsibleFor();
+                responsibleForDAO.simpleLockWrite(responsibleForTeacher);
+                responsibleForTeacher.setExecutionCourse(executionCourse);
+                responsibleForTeacher.setTeacher(teacher);
+                ResponsibleForValidator.getInstance().validateResponsibleForList(teacher,
+                        executionCourse, responsibleForTeacher, responsibleForDAO);
             }
-
-            Integer teacherNumber = infoProfessorShip.getInfoTeacher().getTeacherNumber();
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
-
-            if (teacher == null) {
-                throw new NonExistingServiceException("message.non.existing.teacher", null);
-            }
-
-            IPersistentProfessorship persistentProfessorShip = sp.getIPersistentProfessorship();
-
-            IProfessorship professorShip = new Professorship();
-            persistentProfessorShip.simpleLockWrite(professorShip);
-            professorShip.setExecutionCourse(executionCourse);
-            professorShip.setTeacher(teacher);
-            professorShip.setHours(infoProfessorShip.getHours());
-            if (professorShip.getHours() == null) {
-                professorShip.setHours(new Double(0.0));
-            }
-
-            if (responsibleFor.booleanValue()) {
-                IPersistentResponsibleFor responsibleForDAO = sp.getIPersistentResponsibleFor();
-
-                IResponsibleFor responsibleForTeacher = responsibleForDAO
-                        .readByTeacherAndExecutionCoursePB(teacher, executionCourse);
-                if (responsibleForTeacher == null) {
-                    responsibleForTeacher = new ResponsibleFor();
-                    responsibleForDAO.simpleLockWrite(responsibleForTeacher);
-                    responsibleForTeacher.setExecutionCourse(executionCourse);
-                    responsibleForTeacher.setTeacher(teacher);
-                    ResponsibleForValidator.getInstance().validateResponsibleForList(teacher,
-                            executionCourse, responsibleForTeacher, responsibleForDAO);
-                }
-            }
-
-        } catch (ExistingPersistentException e) {
-            return;
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
         }
     }
 }

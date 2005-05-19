@@ -27,36 +27,28 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
  *  
  */
 public class ReadCourseInformationAuthorizationFilter extends DomainObjectAuthorizationFilter {
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-     */
+
     protected RoleType getRoleType() {
         return RoleType.TEACHER;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.framework.DomainObjectAuthorizationFilter#verifyCondition(ServidorAplicacao.IUserView,
-     *      java.lang.Integer)
-     */
-    protected boolean verifyCondition(IUserView id, Integer objectId) {
+    protected boolean verifyCondition(IUserView id, Integer executionCourseID) {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
-                    ExecutionCourse.class, objectId);
-
             IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-            List responsiblesFor = persistentResponsibleFor.readByExecutionCourse(executionCourse);
-            IResponsibleFor responsibleFor = new ResponsibleFor(teacher, executionCourse);
+            List<IResponsibleFor> responsiblesFor = persistentResponsibleFor
+                    .readByExecutionCourse(executionCourseID);
 
-            return responsiblesFor.contains(responsibleFor);
+            for (IResponsibleFor responsibleFor : responsiblesFor) {
+                if (responsibleFor.getTeacher().equals(teacher))
+                    return true;
+            }
+
+            return false;
+
         } catch (ExcepcaoPersistencia e) {
             return false;
         } catch (Exception e) {

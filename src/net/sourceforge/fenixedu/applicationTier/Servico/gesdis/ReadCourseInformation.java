@@ -119,7 +119,7 @@ public class ReadCourseInformation implements IService {
         }
 
         IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-        List responsiblesFor = persistentResponsibleFor.readByExecutionCourse(executionCourse);
+        List responsiblesFor = persistentResponsibleFor.readByExecutionCourse(executionCourse.getIdInternal());
 
         List infoResponsibleTeachers = getInfoResponsibleTeachers(responsiblesFor, sp);
         infoSiteCourseInformation.setInfoResponsibleTeachers(infoResponsibleTeachers);
