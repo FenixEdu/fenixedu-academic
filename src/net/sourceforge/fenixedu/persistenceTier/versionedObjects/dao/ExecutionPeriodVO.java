@@ -25,8 +25,8 @@ public class ExecutionPeriodVO extends VersionedObjectsBase implements IPersiste
         List executionPeriods = (List) readAll(ExecutionPeriod.class); 
         if(executionPeriods != null)
             return executionPeriods;
-        else
-            return new ArrayList();
+        
+        return new ArrayList();
     }
     
     public IExecutionPeriod readActualExecutionPeriod() throws ExcepcaoPersistencia {
