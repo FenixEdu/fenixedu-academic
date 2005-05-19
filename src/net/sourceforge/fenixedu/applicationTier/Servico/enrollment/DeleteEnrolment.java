@@ -65,7 +65,7 @@ public class DeleteEnrolment implements IService {
 
             if (enrollment1 != null) {
                 List restrictions = persistentRestriction.readByCurricularCourseAndRestrictionClass(
-                        enrollment1.getCurricularCourse(),
+                        enrollment1.getCurricularCourse().getIdInternal(),
 
                         RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class);
                 if (restrictions != null) {

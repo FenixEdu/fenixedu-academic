@@ -95,6 +95,8 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamExecuti
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionPeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.RestrictionVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ScientificAreaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SiteVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SummaryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantContractMovementVO;
@@ -159,7 +161,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentScientificArea getIPersistentScientificArea() {
-        return null;
+        return new ScientificAreaVO();
     }
 
     public IPersistentStudentTestLog getIPersistentStudentTestLog() {
@@ -591,7 +593,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentRestriction getIPersistentRestriction() {
-        return null;
+        return new RestrictionVO();
     }
 
     public IPersistentQuestion getIPersistentQuestion() {

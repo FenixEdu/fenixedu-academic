@@ -4,9 +4,6 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
-import java.util.List;
-
-import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.IScientificArea;
 import net.sourceforge.fenixedu.domain.ScientificArea;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -26,11 +23,5 @@ public class ScientificAreaOJB extends PersistentObjectOJB implements IPersisten
         Criteria criteria = new Criteria();
         criteria.addEqualTo("name", name);
         return (IScientificArea) queryObject(ScientificArea.class, criteria);
-    }
-
-    public List readAllByBranch(IBranch branch) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("areaCurricularCourseGroups.branch.idInternal", branch.getIdInternal());
-        return queryList(ScientificArea.class, criteria);
     }
 }

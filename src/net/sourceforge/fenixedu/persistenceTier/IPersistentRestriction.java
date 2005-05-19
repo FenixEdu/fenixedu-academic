@@ -15,9 +15,7 @@ import net.sourceforge.fenixedu.domain.ICurricularCourse;
 
 public interface IPersistentRestriction extends IPersistentObject {
 
-    public List readByCurricularCourseAndRestrictionClass(ICurricularCourse curricularCourse, Class clazz)
+    public List readByCurricularCourseAndRestrictionClass(Integer curricularCourseKey, Class clazz)
             throws ExcepcaoPersistencia;
-
-    public List readByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia;
 
 }

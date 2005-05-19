@@ -20,17 +20,12 @@ import org.apache.ojb.broker.query.Criteria;
 
 public class RestrictionOJB extends PersistentObjectOJB implements IPersistentRestriction {
 
-    public List readByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
-        return readByCurricularCourseAndRestrictionClass(curricularCourse,
-                RestrictionByCurricularCourse.class);
-    }
-
-    public List readByCurricularCourseAndRestrictionClass(ICurricularCourse curricularCourse, Class clazz)
+    public List readByCurricularCourseAndRestrictionClass(Integer curricularCourseKey, Class clazz)
             throws ExcepcaoPersistencia {
 
         Criteria crit = new Criteria();
 
-        crit.addEqualTo("precedentCurricularCourse.idInternal", curricularCourse.getIdInternal());
+        crit.addEqualTo("precedentCurricularCourse.idInternal", curricularCourseKey);
         crit.addEqualTo("ojbConcreteClass", clazz.getName());
 
         return queryList(RestrictionByCurricularCourse.class, crit);
