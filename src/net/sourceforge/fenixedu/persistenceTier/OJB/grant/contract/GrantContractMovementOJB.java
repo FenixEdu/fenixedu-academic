@@ -17,13 +17,10 @@ import org.apache.ojb.broker.query.Criteria;
 public class GrantContractMovementOJB extends PersistentObjectOJB implements
         IPersistentGrantContractMovement {
 
-    public GrantContractMovementOJB() {
-
-    }
-
     public List readAllMovementsByContract(Integer contractId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyGrantContract", contractId);
         return queryList(GrantContractMovement.class, criteria);
     }
+
 }
