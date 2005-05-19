@@ -34,17 +34,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         setComment(new String());
     }
 
-    public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof IExecutionCourse) {
-            IExecutionCourse de = (IExecutionCourse) obj;
-
-            resultado = (getSigla().equals(de.getSigla()))
-                    && (getExecutionPeriod().equals(de.getExecutionPeriod()));
-        }
-        return resultado;
-    }
-
     public String toString() {
         String result = "[EXECUTION_COURSE";
         result += ", codInt=" + getIdInternal();
