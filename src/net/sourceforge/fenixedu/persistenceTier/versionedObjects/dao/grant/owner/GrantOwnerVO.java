@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.owne
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IPerson;
@@ -69,15 +70,15 @@ public class GrantOwnerVO extends VersionedObjectsBase implements IPersistentGra
     }
 
     public Integer countAll() {
-        return ((List<IGrantOwner>) readAll(GrantOwner.class)).size();
+        return readAll(GrantOwner.class).size();
     }
 
     public Integer countAllGrantOwnerByName(String personName) {
-        List<IPerson> persons = (List<IPerson>) readAll(Person.class);
-        Integer result = 0;
+        List<IGrantOwner> grantOwners = (List<IGrantOwner>) readAll(GrantOwner.class);
+        int result = 0;
 
-        for (IPerson person : persons) {
-            if (person.getNome().equals(personName)) {
+        for (IGrantOwner grantOwner : grantOwners) {
+            if (grantOwner.getPerson().getNome().equals(personName)) {
                 result++;
             }
         }
@@ -155,36 +156,50 @@ public class GrantOwnerVO extends VersionedObjectsBase implements IPersistentGra
     public List readGrantOwnerByPersonName(String personName, Integer startIndex,
             Integer numberOfElementsInSpan) throws ExcepcaoPersistencia {
 
-        List<IPerson> persons = (List<IPerson>) readAll(Person.class);
-        List<IGrantOwner> grantOwners = new ArrayList(numberOfElementsInSpan);
+        List<IGrantOwner> grantOwners = (List<IGrantOwner>) readAll(GrantOwner.class);
+        List<IGrantOwner> result = new ArrayList(numberOfElementsInSpan);
 
-        // FIXME ACABAR!
-        for (IPerson person : persons) {
-            if (person.getNome().equals(personName) && grantOwners.size() < numberOfElementsInSpan) {
-                grantOwners.add(person.getGrantOwner());
+        IGrantOwner grantOwner = null;
+        for (Iterator iter = grantOwners.listIterator(startIndex); iter.hasNext()
+                && result.size() <= numberOfElementsInSpan;) {
+
+            grantOwner = (IGrantOwner) iter.next();
+
+            if (grantOwner.getPerson().getNome().equals(personName)) {
+                result.add(grantOwner);
             }
         }
 
-        return grantOwners;
+        return result;
     }
 
     public List readAllBySpan(Integer spanNumber, Integer numberOfElementsInSpan)
             throws ExcepcaoPersistencia {
 
-        // TODO
-        return new ArrayList();
+        List<IGrantOwner> grantOwners = (List<IGrantOwner>) readAll(GrantOwner.class);
+        List<IGrantOwner> result = new ArrayList(numberOfElementsInSpan);
 
-        // Criteria criteria = new Criteria();
-        // return readSpan(GrantOwner.class, criteria, numberOfElementsInSpan,
-        // spanNumber);
+        IGrantOwner grantOwner = null;
+        for (Iterator iter = grantOwners.listIterator(spanNumber); iter.hasNext()
+                && result.size() <= numberOfElementsInSpan;) {
+
+            grantOwner = (IGrantOwner) iter.next();
+            result.add(grantOwner);
+        }
+
+        return result;
     }
 
     public List readAllGrantOwnersBySpan(Integer spanNumber, Integer numberOfElementsInSpan,
-            String orderBy) {
+            String orderBy) throws ExcepcaoPersistencia {
+
+        List<IGrantOwner> result = readAllBySpan(spanNumber, numberOfElementsInSpan);
 
         // TODO
-        return new ArrayList();
-
+        // order list by "orderBy"
+        
+        return result;
+        
         // Criteria criteria = new Criteria();
         // return readBySpanAndCriteria(spanNumber, numberOfElementsInSpan,
         // criteria, orderBy, true);
@@ -194,7 +209,7 @@ public class GrantOwnerVO extends VersionedObjectsBase implements IPersistentGra
             Criteria criteria, String orderBy, boolean reverseOrder) {
 
         // TODO
-        return new ArrayList();
+        return null;
 
         // List result = new ArrayList();
         //
