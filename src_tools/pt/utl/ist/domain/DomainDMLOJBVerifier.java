@@ -117,7 +117,7 @@ public class DomainDMLOJBVerifier {
         Method getter;
         Method setter;
         try {
-             getter = baseClass.getDeclaredMethod(getMethodName, null);
+             getter = baseClass.getDeclaredMethod(getMethodName, (Class[]) null);
         } catch (Exception ex) {
             getter = null;
         }
