@@ -208,7 +208,7 @@ public class GrantOwnerVO extends VersionedObjectsBase implements IPersistentGra
     private List readBySpanAndCriteria(Integer spanNumber, Integer numberOfElementsInSpan,
             Criteria criteria, String orderBy, boolean reverseOrder) {
 
-        // TODO
+        // TODO necessary?
         return null;
 
         // List result = new ArrayList();
