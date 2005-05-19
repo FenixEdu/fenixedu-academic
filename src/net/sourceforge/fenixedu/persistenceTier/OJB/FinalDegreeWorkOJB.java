@@ -7,8 +7,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import java.util.List;
 
-import org.apache.ojb.broker.query.Criteria;
-
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
@@ -18,6 +16,9 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
+import net.sourceforge.fenixedu.util.PeriodState;
+
+import org.apache.ojb.broker.query.Criteria;
 
 /**
  * @author Luis Cruz
@@ -67,6 +68,7 @@ public class FinalDegreeWorkOJB extends PersistentObjectOJB implements IPersiste
     public IGroup readFinalDegreeWorkGroupByUsername(String username) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("groupStudents.student.person.username", username);
+        criteria.addEqualTo("executionDegree.executionYear.state", PeriodState.CURRENT);
         return (IGroup) queryObject(Group.class, criteria);
     }
 
