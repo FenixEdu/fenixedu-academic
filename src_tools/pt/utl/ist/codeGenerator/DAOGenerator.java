@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsPersistenceSupport;
 import pt.utl.ist.codeGenerator.persistenceTier.PersistenceSupportClassDescriptor;
-import pt.utl.ist.codeGenerator.persistenceTier.VersionedObjectsPersistenceSupportClassDescriptor;
 
 public class DAOGenerator {
 
