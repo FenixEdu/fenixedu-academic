@@ -32,8 +32,6 @@ import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -54,8 +52,6 @@ public class PrepareInsertSummary implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
         final ISalaPersistente persistentRoom = sp.getISalaPersistente();
-        final IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-        final IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
         final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseId);
