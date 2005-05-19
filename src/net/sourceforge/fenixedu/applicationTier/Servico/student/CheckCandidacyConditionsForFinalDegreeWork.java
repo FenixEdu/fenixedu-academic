@@ -24,19 +24,12 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class CheckCandidacyConditionsForFinalDegreeWork implements IService {
 
-    public CheckCandidacyConditionsForFinalDegreeWork() {
-        super();
-    }
-
     public boolean run(IUserView userView, Integer executionDegreeOID) throws ExcepcaoPersistencia,
             FenixServiceException {
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
         IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-        //IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
-        // persistentSupport
-        //.getIStudentCurricularPlanPersistente();
         IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
         IScheduleing scheduleing = persistentFinalDegreeWork
