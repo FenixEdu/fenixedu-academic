@@ -9,6 +9,7 @@ body {
 	color: #fff;
 	text-align: left;
 	margin: 0;
+	margin-left: 25px;
 	}
 	
 table {
@@ -54,7 +55,7 @@ a:visited {
     display: none;
 	}
 
-.bodycontent {
+#bodycontent {
 	width: 100%;
 	font: 11pt/0.5em Arial, Helvetica, sans-serif;
 	color: #000;
