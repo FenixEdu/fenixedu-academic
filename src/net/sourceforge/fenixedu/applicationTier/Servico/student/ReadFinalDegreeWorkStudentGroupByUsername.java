@@ -31,10 +31,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadFinalDegreeWorkStudentGroupByUsername implements IService {
 
-    public ReadFinalDegreeWorkStudentGroupByUsername() {
-        super();
-    }
-
     public InfoGroup run(String username) throws ExcepcaoPersistencia {
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
