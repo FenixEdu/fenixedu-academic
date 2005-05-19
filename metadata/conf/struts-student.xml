@@ -782,6 +782,9 @@
 			<exception	type="net.sourceforge.fenixedu.applicationTier.Servico.student.AddStudentToFinalDegreeWorkStudentGroup$MinimumNumberOfCompletedCoursesNotReachedException"
 						key="error.message.InsufficientCompletedCoursesException"
 						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<exception	type="net.sourceforge.fenixedu.presentationTier.Action.student.finalDegreeWork.FinalDegreeWorkCandidacyDA$NoDegreeStudentCurricularPlanFoundException"
+						key="error.message.NoDegreeStudentCurricularPlanFoundException"
+						handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="showCandidacyForm" path="df.page.finalDegreeWork.candidacy"/>
 			<forward name="showSelectProposalsForm" path="df.page.finalDegreeWork.selectProposals"/>
 		</action>

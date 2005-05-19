@@ -36,6 +36,9 @@ import org.apache.struts.action.DynaActionForm;
  */
 public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 
+    public class NoDegreeStudentCurricularPlanFoundException extends Exception {
+    }
+
     public ActionForward prepareCandidacy(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         InfoGroup infoGroup = fillOutFinalDegreeWorkCandidacyForm(form, request);
@@ -267,9 +270,12 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
                 && infoExecutionDegrees != null && !infoExecutionDegrees.isEmpty()) {
             IUserView userView = SessionUtils.getUserView(request);
 
-            Object[] args = { userView, DegreeType.DEGREE};
+            Object[] args = { userView, DegreeType.DEGREE };
             InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) ServiceUtils
                     .executeService(userView, "ReadActiveStudentCurricularPlanByDegreeType", args);
+            if (infoStudentCurricularPlan == null) {
+                throw new NoDegreeStudentCurricularPlanFoundException();
+            }
 
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) CollectionUtils.find(
                     infoExecutionDegrees, new PREDICATE_FIND_EXECUTION_DEGREE_BY_DEGREE_CURRICULAR_PLAB(
