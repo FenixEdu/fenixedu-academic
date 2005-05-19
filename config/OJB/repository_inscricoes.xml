@@ -655,6 +655,17 @@
 			proxy="true">
 		<foreignkey field-ref="branchKey"/>
 	</reference-descriptor>
+	<collection-descriptor
+			name="associatedWrittenEvaluations"
+			element-class-ref="net.sourceforge.fenixedu.domain.WrittenEvaluation"
+			indirection-table="WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE"
+			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			proxy="true"
+			refresh="true"
+			>
+		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE_SCOPE"/>
+		<fk-pointing-to-element-class column="KEY_WRITTEN_EVALUATION"/>
+	</collection-descriptor>
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->

@@ -13,17 +13,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  */
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.ExamExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExamStudentRoom;
+import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.IExamExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExamStudentRoom;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
-import net.sourceforge.fenixedu.domain.IWrittenEvaluationCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
-import net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -31,36 +27,28 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class DeleteExam implements IService {
 
-    public Object run(Integer examId) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public Object run(Integer examId) throws ExcepcaoPersistencia {
 
-        boolean result = false;
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IExam examToDelete = (IExam) sp.getIPersistentExam().readByOID(Exam.class,examId);
 
-        IExam examToDelete = (IExam) sp.getIPersistentExam().readByOID(Exam.class,examId);
+        if (examToDelete == null) {
+            return new Boolean(false);
+        }
 
-        List<IExamStudentRoom> examStudentRooms = examToDelete.getExamStudentRooms();
-        for (IExamStudentRoom examStudentRoom : examStudentRooms) {
+        final List<IExamStudentRoom> examStudentRooms = examToDelete.getExamStudentRooms();
+        for (final IExamStudentRoom examStudentRoom : examStudentRooms) {
             examStudentRoom.setStudent(null);
             examStudentRoom.setRoom(null);
             examStudentRoom.setExam(null);
             sp.getIPersistentExamStudentRoom().deleteByOID(ExamStudentRoom.class,
                     examStudentRoom.getIdInternal());
         }
-
         examToDelete.getExamStudentRooms().clear();
-        for (IExamExecutionCourse examExecutionCourse : (List<IExamExecutionCourse>) examToDelete
-                .getExamExecutionCourses()) {
-            examExecutionCourse.setExecutionCourse(null);
-            examExecutionCourse.setExam(null);
-            sp.getIPersistentExamExecutionCourse().deleteByOID(ExamExecutionCourse.class,
-                    examExecutionCourse.getIdInternal());
-        }
-        examToDelete.getExamExecutionCourses().clear();
 
         examToDelete.getAssociatedExecutionCourses().clear();
-        for (IRoomOccupation roomOccupation : (List<IRoomOccupation>) examToDelete
+        for (final IRoomOccupation roomOccupation : (List<IRoomOccupation>) examToDelete
                 .getAssociatedRoomOccupation()) {
             roomOccupation.setPeriod(null);
             roomOccupation.setRoom(null);
@@ -69,20 +57,15 @@ public class DeleteExam implements IService {
                     roomOccupation.getIdInternal());
         }
         examToDelete.getAssociatedRoomOccupation().clear();
-        for (IWrittenEvaluationCurricularCourseScope writtenEvaluationCurricularCourseScope : (List<IWrittenEvaluationCurricularCourseScope>) examToDelete
-                .getWrittenEvaluationCurricularCourseScopes()) {
-            writtenEvaluationCurricularCourseScope.setCurricularCourseScope(null);
-            writtenEvaluationCurricularCourseScope.setWrittenEvaluation(null);
-            sp.getIPersistentWrittenEvaluationCurricularCourseScope().deleteByOID(
-                    WrittenEvaluationCurricularCourseScope.class,
-                    writtenEvaluationCurricularCourseScope.getIdInternal());
+
+        for (final ICurricularCourseScope curricularCourseScope : (List<ICurricularCourseScope>) examToDelete
+                .getAssociatedCurricularCourseScope()) {
+            curricularCourseScope.getAssociatedWrittenEvaluations().remove(examToDelete);
         }
-        examToDelete.getWrittenEvaluationCurricularCourseScopes().clear();
+        examToDelete.getAssociatedCurricularCourseScope().clear();
         sp.getIPersistentExam().deleteByOID(Exam.class, examToDelete.getIdInternal());
-        result = true;
 
-        return new Boolean(result);
-
+        return new Boolean(true);
     }
 
 }

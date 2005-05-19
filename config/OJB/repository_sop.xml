@@ -1036,9 +1036,6 @@
 			indirection-table="EXAM_EXECUTION_COURSE"
 			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			proxy="true"
-			auto-retrieve="true"
-			auto-update="false"
-			auto-delete="false"
 			refresh="true"
 			>
 		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
@@ -1067,6 +1064,15 @@
 			>
 		<fk-pointing-to-this-class column="KEY_WRITTEN_EVALUATION"/>
 		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE_SCOPE"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="examStudentRooms"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExamStudentRoom"
+			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			proxy="true"
+			refresh="true"
+			>
+		<inverse-foreignkey field-ref="keyExam"/>
 	</collection-descriptor>
 </class-descriptor>
 
