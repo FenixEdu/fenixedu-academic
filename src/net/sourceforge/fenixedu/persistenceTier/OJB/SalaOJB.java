@@ -60,7 +60,7 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
     }
 
     public List readAll() throws ExcepcaoPersistencia {
-        return queryList(Room.class, new Criteria());
+        return queryList(Room.class, null);
     }
 
     /**
