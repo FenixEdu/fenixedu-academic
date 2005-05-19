@@ -16,9 +16,6 @@ import org.apache.ojb.broker.query.Criteria;
 public class GrantContractRegimeOJB extends PersistentObjectOJB implements
         IPersistentGrantContractRegime {
 
-    public GrantContractRegimeOJB() {
-    }
-
     public List readGrantContractRegimeByGrantContract(Integer grantContractId)
             throws ExcepcaoPersistencia {
         List grantContractRegimes = null;
@@ -37,4 +34,5 @@ public class GrantContractRegimeOJB extends PersistentObjectOJB implements
         grantContractRegime = queryList(GrantContractRegime.class, criteria, "dateBeginContract", false);
         return grantContractRegime;
     }
+
 }
