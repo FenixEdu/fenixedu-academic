@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.owner;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -16,7 +17,8 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
 
-import org.apache.ojb.broker.query.Criteria;
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class GrantOwnerVO extends VersionedObjectsBase implements IPersistentGrantOwner {
 
@@ -177,60 +179,24 @@ public class GrantOwnerVO extends VersionedObjectsBase implements IPersistentGra
             throws ExcepcaoPersistencia {
 
         List<IGrantOwner> grantOwners = (List<IGrantOwner>) readAll(GrantOwner.class);
-        List<IGrantOwner> result = new ArrayList(numberOfElementsInSpan);
+        
+        int begin = (spanNumber - 1) * numberOfElementsInSpan;
+        int end = begin + numberOfElementsInSpan;
 
-        IGrantOwner grantOwner = null;
-        for (Iterator iter = grantOwners.listIterator(spanNumber); iter.hasNext()
-                && result.size() <= numberOfElementsInSpan;) {
-
-            grantOwner = (IGrantOwner) iter.next();
-            result.add(grantOwner);
-        }
-
-        return result;
+        return grantOwners.subList(begin, end);
     }
 
     public List readAllGrantOwnersBySpan(Integer spanNumber, Integer numberOfElementsInSpan,
             String orderBy) throws ExcepcaoPersistencia {
 
-        List<IGrantOwner> result = readAllBySpan(spanNumber, numberOfElementsInSpan);
-
-        // TODO
-        // order list by "orderBy"
+        List<IGrantOwner> grantOwners = (List<IGrantOwner>) readAll(GrantOwner.class);
+        ComparatorChain comparatorChain = new ComparatorChain(new BeanComparator(orderBy), true);
+        Collections.sort(grantOwners, comparatorChain);
         
-        return result;
-        
-        // Criteria criteria = new Criteria();
-        // return readBySpanAndCriteria(spanNumber, numberOfElementsInSpan,
-        // criteria, orderBy, true);
-    }
+        int begin = (spanNumber - 1) * numberOfElementsInSpan;
+        int end = begin + numberOfElementsInSpan;
 
-    private List readBySpanAndCriteria(Integer spanNumber, Integer numberOfElementsInSpan,
-            Criteria criteria, String orderBy, boolean reverseOrder) {
-
-        // TODO necessary?
-        return null;
-
-        // List result = new ArrayList();
-        //
-        // Iterator iter = readIteratorByCriteria(GrantOwner.class, criteria,
-        // orderBy, reverseOrder);
-        //
-        // int begin = (spanNumber.intValue() - 1) *
-        // numberOfElementsInSpan.intValue();
-        // int end = begin + numberOfElementsInSpan.intValue();
-        //
-        // if (begin != 0) {
-        // for (int j = 0; j < (begin - 1) && iter.hasNext(); j++) {
-        // iter.next();
-        // }
-        // }
-        //
-        // for (int i = begin; i < end && iter.hasNext(); i++) {
-        //            IGrantOwner grantOwner = (IGrantOwner) iter.next();
-        //            result.add(grantOwner);
-        //        }
-        //        return result;
+        return grantOwners.subList(begin, end);
     }
 
 }
