@@ -39,7 +39,7 @@ public class ListMasterDegreeStudents implements IService {
         final Collection<InfoStudentCurricularPlanWithFirstTimeEnrolment> infoStudentCurricularPlans = new ArrayList();
         final Collection<IStudentCurricularPlan> studentCurricularPlans = new ArrayList();
         final Collection<IDegreeCurricularPlan> masterDegreeCurricularPlans = sp
-                .getIPersistentDegreeCurricularPlan().readAllByDegreeTypeAndState(
+                .getIPersistentDegreeCurricularPlan().readByDegreeTypeAndState(
                         DegreeType.MASTER_DEGREE, DegreeCurricularPlanState.ACTIVE);
 
         CollectionUtils.filter(masterDegreeCurricularPlans, new Predicate() {
