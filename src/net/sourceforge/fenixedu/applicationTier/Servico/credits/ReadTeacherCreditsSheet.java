@@ -283,8 +283,8 @@ public class ReadTeacherCreditsSheet implements IService {
         IPersistentServiceExemptionCreditLine serviceExemptionCreditLineDAO = sp
                 .getIPersistentServiceExemptionCreditLine();
 
-        List serviceExemptions = serviceExemptionCreditLineDAO.readByTeacherAndExecutionPeriod(teacher,
-                executionPeriod);
+        List serviceExemptions = serviceExemptionCreditLineDAO.readByTeacherAndExecutionPeriod(teacher.getIdInternal(),
+                executionPeriod.getBeginDate(), executionPeriod.getEndDate());
 
         List infoServiceExemptions = (List) CollectionUtils.collect(serviceExemptions,
                 new Transformer() {
