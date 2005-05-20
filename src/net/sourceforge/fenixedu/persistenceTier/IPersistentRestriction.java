@@ -6,8 +6,6 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-
 /**
  * @author jpvl
  * @author David Santos in Aug 2, 2004
