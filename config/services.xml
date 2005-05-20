@@ -3324,7 +3324,7 @@
             <chain name="TeacherAuthorization"/>
         </filterChains>
     </service>-->
-	<service>
+    <service>
         <name>ReadPublicationTypes</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadPublicationTypes</implementationClass>
         <description/>
@@ -8784,4 +8784,10 @@
             <chain name="TimeTableManagerAuthorization"/>
         </filterChains>
     </service>
+    <service>
+        <name>ListMasterDegreeStudents</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gep.ListMasterDegreeStudents</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>s>
+    </service>    
 </serviceDefinitions>
