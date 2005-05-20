@@ -54,8 +54,9 @@ public class ReadTeacherDFPStudentsService implements IService {
             IPersistentTeacherDegreeFinalProjectStudent teacherDfpStudentDAO = sp
                     .getIPersistentTeacherDegreeFinalProjectStudent();
 
-            List teacherDFPStudentList = teacherDfpStudentDAO.readByTeacherAndExecutionPeriod(teacher,
-                    executionPeriod);
+            List teacherDFPStudentList = teacherDfpStudentDAO.readByTeacherAndExecutionPeriod(
+                    teacher.getIdInternal(),
+                    executionPeriod.getIdInternal());
 
             List infoteacherDFPStudentList = (List) CollectionUtils.collect(teacherDFPStudentList,
                     new Transformer() {

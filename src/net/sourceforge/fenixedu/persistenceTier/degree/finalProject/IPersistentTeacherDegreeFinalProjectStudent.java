@@ -1,14 +1,7 @@
-/*
- * Created on Nov 24, 2003 by jpvl
- *  
- */
 package net.sourceforge.fenixedu.persistenceTier.degree.finalProject;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
@@ -18,25 +11,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  */
 public interface IPersistentTeacherDegreeFinalProjectStudent extends IPersistentObject {
 
-    List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod)
+    List readByTeacherAndExecutionPeriod(Integer teacherId, Integer executionPeriodId)
             throws ExcepcaoPersistencia;
 
-    ITeacherDegreeFinalProjectStudent readByUnique(
-            ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent)
-            throws ExcepcaoPersistencia;
+    ITeacherDegreeFinalProjectStudent readByUnique(Integer teacherId, Integer executionPeriodId,
+            Integer studentId) throws ExcepcaoPersistencia;
 
-    /**
-     * @param student
-     * @param executionPeriod
-     * @return
-     */
-    List readByStudentAndExecutionPeriod(IStudent student, IExecutionPeriod executionPeriod)
+    List readByStudentAndExecutionPeriod(Integer studentId, Integer executionPeriodId)
             throws ExcepcaoPersistencia;
-
-    /**
-     * @param executionPeriod
-     * @return
-     */
-    List readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 
 }

@@ -130,7 +130,7 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
             IPersistentTeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudentDAO = sp
                     .getIPersistentTeacherDegreeFinalProjectStudent();
             List teacherDegreeFinalProjectStudentList = teacherDegreeFinalProjectStudentDAO
-                    .readByStudentAndExecutionPeriod(student, executionPeriod);
+                    .readByStudentAndExecutionPeriod(student.getIdInternal(), executionPeriod.getIdInternal());
 
             double requestedPercentage = ((InfoTeacherDegreeFinalProjectStudent) infoObject)
                     .getPercentage().doubleValue();
@@ -204,7 +204,10 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
                 .getIPersistentTeacherDegreeFinalProjectStudent();
 
         teacherDegreeFinalProjectStudent = teacherDFPStudentDAO
-                .readByUnique(teacherDegreeFinalProjectStudent);
+                .readByUnique(
+                        teacherDegreeFinalProjectStudent.getTeacher().getIdInternal(),
+                        teacherDegreeFinalProjectStudent.getExecutionPeriod().getIdInternal(),
+                        teacherDegreeFinalProjectStudent.getStudent().getIdInternal());
 
         return teacherDegreeFinalProjectStudent;
     }
