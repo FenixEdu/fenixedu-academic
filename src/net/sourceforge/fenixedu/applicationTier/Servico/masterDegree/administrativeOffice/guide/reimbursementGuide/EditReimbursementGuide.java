@@ -137,7 +137,7 @@ public class EditReimbursementGuide implements IService {
 
                 IPersistentPersonAccount persistentPersonAccount = ps.getIPersistentPersonAccount();
                 IPersonAccount personAccount = persistentPersonAccount.readByPerson(reimbursementGuide
-                        .getGuide().getPerson());
+                        .getGuide().getPerson().getIdInternal());
 
                 IPersistentReimbursementTransaction persistentReimbursementTransaction = ps
                         .getIPersistentReimbursementTransaction();

@@ -194,7 +194,7 @@ public class ProcessSibsPaymentFile implements IService {
                     userView.getUtilizador());
 
             IPersonAccount personAccount = sp.getIPersistentPersonAccount().readByPerson(
-                    student.getPerson());
+                    student.getPerson().getIdInternal());
 
             if (sibsPaymentFileEntry.getPaymentType().equals(SibsPaymentType.INSURANCE)) {
 

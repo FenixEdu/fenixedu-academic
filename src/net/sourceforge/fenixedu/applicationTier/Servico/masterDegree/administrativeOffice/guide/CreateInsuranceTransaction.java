@@ -57,7 +57,7 @@ public class CreateInsuranceTransaction implements IService {
                     "error.message.transaction.insuranceTransactionAlreadyExists");
         }
 
-        IPersonAccount personAccount = sp.getIPersistentPersonAccount().readByPerson(guide.getPerson());
+        IPersonAccount personAccount = sp.getIPersistentPersonAccount().readByPerson(guide.getPerson().getIdInternal());
 
         IInsuranceTransaction insuranceTransaction = new InsuranceTransaction(guideEntry.getPrice(),
                 new Timestamp(Calendar.getInstance().getTimeInMillis()), guideEntry.getDescription(),

@@ -138,7 +138,7 @@ public class ChangeGuideSituation implements IService {
                     IGratuitySituation gratuitySituation = null;
                     IPersistentPersonAccount persistentPersonAccount = sp.getIPersistentPersonAccount();
                     IPersonAccount personAccount = persistentPersonAccount.readByPerson(guide
-                            .getPerson());
+                            .getPerson().getIdInternal());
                     IPersistentGratuitySituation persistentGratuitySituation = sp
                             .getIPersistentGratuitySituation();
 
