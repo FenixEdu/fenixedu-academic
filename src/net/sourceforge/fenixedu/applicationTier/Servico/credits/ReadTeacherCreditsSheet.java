@@ -306,7 +306,7 @@ public class ReadTeacherCreditsSheet implements IService {
                 .getIPersistentManagementPositionCreditLine();
 
         List managementPositions = managementPosistionCreditLineDAO.readByTeacherAndExecutionPeriod(
-                teacher, executionPeriod);
+                teacher.getIdInternal(), executionPeriod.getBeginDate(), executionPeriod.getEndDate());
 
         List infoManagementPositions = (List) CollectionUtils.collect(managementPositions,
                 new Transformer() {
