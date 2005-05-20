@@ -4,23 +4,19 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Guide;
+import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGuide;
-import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.ojb.broker.query.Criteria;
-import org.apache.ojb.broker.query.QueryByCriteria;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class GuideOJB extends PersistentObjectOJB implements IPersistentGuide {
-
-    public GuideOJB() {
-    }
 
     public Integer generateGuideNumber(Integer year) {
 
@@ -74,23 +70,6 @@ public class GuideOJB extends PersistentObjectOJB implements IPersistentGuide {
         return result;
     }
 
-    public IGuide readLatestVersion(Integer year, Integer number) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        QueryByCriteria query = new QueryByCriteria(Guide.class, criteria);
-        query.addOrderByDescending("version");
-
-        criteria.addEqualTo("year", year);
-        criteria.addEqualTo("number", number);
-
-        List result = queryList(Guide.class, criteria);
-
-        if (result.size() != 0) {
-            return (IGuide) result.get(0);
-        }
-
-        return null;
-    }
-
     public List readByPerson(String identificationDocumentNumber,
             IDDocumentType identificationDocumentType) throws ExcepcaoPersistencia {
 
@@ -134,36 +113,4 @@ public class GuideOJB extends PersistentObjectOJB implements IPersistentGuide {
         return result;
     }
 
-    public List readNotAnnulledAndPayedByPersonAndExecutionDegree(Integer person, Integer executionDegree)
-            throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-
-        if (person != null) {
-            criteria.addEqualTo("keyPerson", person);
-        }
-
-        if (executionDegree != null) {
-            criteria.addEqualTo("keyExecutionDegree", executionDegree);
-        }
-
-        criteria.addEqualTo("guideSituations.state", new State(State.ACTIVE));
-        criteria.addEqualTo("guideSituations.situation", GuideState.PAYED);
-        criteria.addNotEqualTo("guideSituations.situation", GuideState.ANNULLED);
-
-        return queryList(Guide.class, criteria);
-    }
-
-    public List readNotAnnulledAndPayedByPerson(Integer person) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-
-        if (person != null) {
-            criteria.addEqualTo("keyPerson", person);
-        }
-
-        criteria.addEqualTo("guideSituations.state", new State(State.ACTIVE));
-        criteria.addEqualTo("guideSituations.situation", GuideState.PAYED);
-        criteria.addNotEqualTo("guideSituations.situation", GuideState.ANNULLED);
-
-        return queryList(Guide.class, criteria);
-    }
 }

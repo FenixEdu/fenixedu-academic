@@ -53,30 +53,11 @@ public interface IPersistentGuide extends IPersistentObject {
             IDDocumentType identificationDocumentType) throws ExcepcaoPersistencia;
 
     /**
-     * @param year
-     * @param number
-     * @return The Latest version for this Guide
-     * @throws ExcepcaoPersistencia
-     */
-    public IGuide readLatestVersion(Integer year, Integer number) throws ExcepcaoPersistencia;
-
-    /**
      * @param guideYear
      * @param situationOfGuide
      * @return
      */
     public List readByYearAndState(Integer guideYear, GuideState situationOfGuide)
             throws ExcepcaoPersistencia;
-
-    /**
-     * @param personID
-     * @param guideYear
-     * @param situationOfGuide
-     * @return
-     */
-    public List readNotAnnulledAndPayedByPersonAndExecutionDegree(Integer person, Integer executionDegree)
-            throws ExcepcaoPersistencia;
-
-    public List readNotAnnulledAndPayedByPerson(Integer person) throws ExcepcaoPersistencia;
 
 }
