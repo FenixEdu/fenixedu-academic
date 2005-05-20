@@ -21,9 +21,6 @@ import org.apache.ojb.broker.query.Criteria;
 
 public class GrantContractOJB extends PersistentObjectOJB implements IPersistentGrantContract {
 
-    public GrantContractOJB() {
-    }
-
     public IGrantContract readGrantContractByNumberAndGrantOwner(Integer grantContractNumber,
             Integer grantOwnerId) throws ExcepcaoPersistencia {
         IGrantContract grantContract = null;
@@ -58,14 +55,6 @@ public class GrantContractOJB extends PersistentObjectOJB implements IPersistent
 
     public List readAll() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        return queryList(GrantContract.class, criteria);
-    }
-
-    public List readAllActiveContractsByGrantOwner(Integer grantOwnerId) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("key_grant_owner", grantOwnerId);
-        criteria.addEqualTo("contractRegimes.state", new Integer(1));
-        criteria.addLessOrEqualThan("contractRegimes.dateEndContract", Calendar.getInstance().getTime());
         return queryList(GrantContract.class, criteria);
     }
 
