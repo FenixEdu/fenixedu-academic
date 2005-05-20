@@ -5,10 +5,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.credits.IOtherTypeCreditLine;
 import net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentOtherTypeCreditLine;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
 
-public class OtherTypeCreditLineVO extends PersistentObjectOJB implements IPersistentOtherTypeCreditLine {
+public class OtherTypeCreditLineVO extends VersionedObjectsBase implements IPersistentOtherTypeCreditLine {
 
     public List readByTeacherAndExecutionPeriod(Integer teacherId, Integer executionPeriodId)
             throws ExcepcaoPersistencia {

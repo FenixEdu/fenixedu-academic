@@ -15,7 +15,7 @@ public class GrantContractMovementVO extends VersionedObjectsBase implements
         List<IGrantContractMovement> grantContractMovements = (List<IGrantContractMovement>) readAll(GrantContractMovement.class);
         List<IGrantContractMovement> result = null;
 
-        for (IGrantContractMovement movement : result) {
+        for (IGrantContractMovement movement : grantContractMovements) {
             if (movement.getKeyGrantContract().equals(contractId)) {
                 result.add(movement);
             }
