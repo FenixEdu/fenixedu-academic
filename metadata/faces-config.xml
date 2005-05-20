@@ -24,7 +24,7 @@
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.example.ExecutionPeriods</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
-
+	
 	<managed-bean>
 		<managed-bean-name>listStudentThesis</managed-bean-name>
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.coordinator.ListStudentThesis</managed-bean-class>
@@ -35,6 +35,14 @@
 		</managed-property>
 	</managed-bean>
 	
+	<managed-bean>
+		<managed-bean-name>listFirstTimeEnrolmentMasterDegreeStudents</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.gep.ListFirstTimeEnrolmentMasterDegreeStudents</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>	
+
+	
+	
 	<!-- NAVIGATION RULES -->
 	
 	<navigation-rule>
@@ -44,5 +52,5 @@
 			<to-view-id>/manager/somePageListExecutionPeriods.jsp</to-view-id>
 		</navigation-case>			
 	</navigation-rule>
-	
+
 </faces-config>
