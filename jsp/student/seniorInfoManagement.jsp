@@ -92,10 +92,17 @@
             <td><bean:message key="label.senior.expectedDegreeAverageGrade"/>:</td>
             <td><html:text maxlength="2" size="2" property="expectedDegreeAverageGrade"/></td>
           </tr>
+    </table>
+   	<table border="0" width="100%" cellspacing="9">
+          <tr>
+			<td colspan='2'>&nbsp;</td>
+		  </tr>		  
+          <tr>
+	          <td valign="top"><bean:message key="label.senior.specialtyField_"/></td>	          
+          </tr>		  
 		  <tr>
-            <td valign="top"><bean:message key="label.senior.specialtyField"/></td>
-            <!--<td><html:textarea rows="5" cols="65" property="specialtyField"/></td>-->
-            <td>	
+            <!--<td><html:textarea rows="5" cols="65" property="specialtyField"/></td>-->           
+            <td>		        
 				<script language="JavaScript" type="text/javascript"> 
 					<!--
 					initEditor();		
@@ -106,7 +113,7 @@
 					
 					<script language="JavaScript" type="text/javascript"> 
 					<!--
-					writeMultipleTextEditor('rte1' ,100, 120, document.forms[0].specialtyField.value);		
+					writeMultipleTextEditor('rte1' ,100, 130, document.forms[0].specialtyField.value);		
 					//-->
 				</script>		
 			</td>
@@ -114,9 +121,15 @@
           </tr>
           <tr>
 			<td colspan='2'>&nbsp;</td>
-		  </tr>
+		  </tr>	
+          <tr>
+			<td colspan='2'>&nbsp;</td>
+		  </tr>		  
+		  <tr>		  	 
+		  	<td valign="top" ><bean:message key="label.senior.professionalInterests_"/></td>		 
+		  </tr>		  
 		  <tr>
-            <td valign="top"><bean:message key="label.senior.professionalInterests"/></td>
+			<!--<td valign="top"><bean:message key="label.senior.professionalInterests"/></td>-->
             <!--<td><html:textarea rows="5" cols="65" property="professionalInterests"/></td>-->
             <td>	
 				<script language="JavaScript" type="text/javascript"> 
@@ -129,16 +142,22 @@
 					
 					<script language="JavaScript" type="text/javascript"> 
 					<!--
-					writeMultipleTextEditor('rte2', 100, 120, document.forms[0].professionalInterests.value);		
+					writeMultipleTextEditor('rte2', 100, 130, document.forms[0].professionalInterests.value);		
 					//-->
 				</script>		
 			</td>
           </tr>
           <tr>
 			<td colspan='2'>&nbsp;</td>
-		  </tr>
+		  </tr>	
 		  <tr>
-            <td valign="top"><bean:message key="label.senior.languageSkills"/></td>
+			<td colspan='2'>&nbsp;</td>
+		  </tr>		  
+		   <tr>		 
+	          <td valign="top"><bean:message key="label.senior.languageSkills_"/></td>	          
+          </tr>		  
+		  <tr>
+            <!--<td valign="top"><bean:message key="label.senior.languageSkills"/></td>-->
             <!--<td><html:textarea rows="5" cols="65" property="languageSkills"/></td>-->
             <td>	
 				<script language="JavaScript" type="text/javascript"> 
@@ -151,7 +170,7 @@
 					
 					<script language="JavaScript" type="text/javascript"> 
 					<!--
-					writeMultipleTextEditor('rte3', 100, 120, document.forms[0].languageSkills.value);		
+					writeMultipleTextEditor('rte3', 100, 130, document.forms[0].languageSkills.value);		
 					//-->
 				</script>		
 			</td>
@@ -160,7 +179,13 @@
 			<td colspan='2'>&nbsp;</td>
 		  </tr>
 		  <tr>
-            <td valign="top"><bean:message key="label.senior.informaticsSkills"/></td>
+			<td colspan='2'>&nbsp;</td>
+		  </tr>	
+		  <tr>		   	
+	          <td valign="top" ><bean:message key="label.senior.informaticsSkills_"/></td>
+          </tr>		  
+		  <tr>
+            <!--<td valign="top"><bean:message key="label.senior.informaticsSkills"/></td>-->
             <!--<td><html:textarea rows="5" cols="65" property="informaticsSkills"/></td>-->
             <td>	
 				<script language="JavaScript" type="text/javascript"> 
@@ -173,17 +198,23 @@
 					
 					<script language="JavaScript" type="text/javascript"> 
 					<!--
-					writeMultipleTextEditor('rte4' ,100, 120, document.forms[0].informaticsSkills.value);		
+					writeMultipleTextEditor('rte4' ,100, 130, document.forms[0].informaticsSkills.value);		
 					//-->
 				</script>		
 			</td>
           </tr>
           <tr>
 			<td colspan='2'>&nbsp;</td>
-		  </tr>
+		  </tr>	
 		  <tr>
-            <td valign="top"><bean:message key="label.senior.extracurricularActivities"/></td>
-            <!--<td><html:textarea rows="5" cols="65" property="extracurricularActivities"/></td>-->
+			<td colspan='2'>&nbsp;</td>
+		  </tr>		  
+		  <tr>
+	          <td valign="top" ><bean:message key="label.senior.extracurricularActivities_"/></td>
+          </tr>		  
+		  <tr>
+            <!--<td valign="top"><bean:message key="label.senior.extracurricularActivities"/></td>-->
+            <!--<td><html:textarea rows="5" cols="65" property="extracurricularActivities"/></td>-->            
             <td>	
 				<script language="JavaScript" type="text/javascript"> 
 					<!--
@@ -195,17 +226,23 @@
 					
 					<script language="JavaScript" type="text/javascript"> 
 					<!--
-					writeMultipleTextEditor('rte5', 100, 120, document.forms[0].extracurricularActivities.value);		
+					writeMultipleTextEditor('rte5', 100, 130, document.forms[0].extracurricularActivities.value);		
 					//-->
 				</script>		
 			</td>
           </tr>
           <tr>
 			<td colspan='2'>&nbsp;</td>
-		  </tr>
+		  </tr>		 
+		  <tr>
+			<td colspan='2'>&nbsp;</td>
+		  </tr>	 
+		  <tr>		  
+	          <td valign="top" ><bean:message key="label.senior.professionalExperience_"/></td>
+          </tr>		  
   		  <tr>
-            <td valign="top"><bean:message key="label.senior.professionalExperience"/></td>
-            <!--<td><html:textarea rows="5" cols="65" property="professionalExperience"/></td>-->
+            <!--<td valign="top"><bean:message key="label.senior.professionalExperience"/></td>-->
+            <!--<td><html:textarea rows="5" cols="65" property="professionalExperience"/></td>-->            
           	<td>	
 				<script language="JavaScript" type="text/javascript"> 
 					<!--
@@ -217,7 +254,7 @@
 					
 					<script language="JavaScript" type="text/javascript"> 
 					<!--
-					writeMultipleTextEditor('rte6', 100, 120, document.forms[0].professionalExperience.value);		
+					writeMultipleTextEditor('rte6', 100, 130, document.forms[0].professionalExperience.value);		
 					//-->
 				</script>		
 			</td>
