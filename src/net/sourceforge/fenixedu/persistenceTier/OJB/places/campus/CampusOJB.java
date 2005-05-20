@@ -1,7 +1,3 @@
-/*
- * Created on Dec 5, 2003 by jpvl
- *
- */
 package net.sourceforge.fenixedu.persistenceTier.OJB.places.campus;
 
 import java.util.List;
@@ -18,11 +14,6 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class CampusOJB extends PersistentObjectOJB implements IPersistentCampus {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.places.campus.IPersistentCampus#readAll()
-     */
     public List readAll() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         return queryList(Campus.class, criteria);

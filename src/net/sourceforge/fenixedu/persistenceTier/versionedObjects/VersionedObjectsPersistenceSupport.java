@@ -114,6 +114,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contr
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantSubsidyVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantTypeVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.owner.GrantOwnerVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.places.campus.CampusVO;
 
 public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
@@ -518,7 +519,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentCampus getIPersistentCampus() {
-        return null;
+        return new CampusVO();
     }
 
     public IPersistentCurricularCourse getIPersistentCurricularCourse() {
