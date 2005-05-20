@@ -25,6 +25,13 @@
 	  	</html:link>
 	  	<br/>
 		<br/>  
+	</li>
+	<li>
+	  	<html:link page="/students/firstTimeEnrolmentStudentsList.faces">
+	  		<bean:message key="link.gep.majorDegreeStudentsInformation" bundle="GEP_RESOURCES" />
+	  	</html:link>
+	  	<br/>
+		<br/>  
   </li>
 </ul>
 <%--
