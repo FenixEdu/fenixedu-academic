@@ -79,8 +79,8 @@ public class ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService implement
                 throw new ExecutionPeriodNotFound();
             }
 
-            List otherTypesList = otherTypeCreditLineDAO.readByTeacherAndExecutionPeriod(teacher,
-                    executionPeriod);
+            List otherTypesList = otherTypeCreditLineDAO.readByTeacherAndExecutionPeriod(teacher.getIdInternal(),
+                    executionPeriod.getIdInternal());
 
             List infoOtherTypesList = (List) CollectionUtils.collect(otherTypesList, new Transformer() {
 
