@@ -253,7 +253,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
                     .getIPersistentInsuranceTransaction();
 
             IInsuranceValue insuranceValue = sp.getIPersistentInsuranceValue().readByExecutionYear(
-                    executionYear);
+                    executionYear.getIdInternal());
 
             IPersistentGratuityValues gratuityValuesDAO = sp.getIPersistentGratuityValues();
 

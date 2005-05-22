@@ -78,7 +78,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
                     .getIPersistentInsuranceTransaction();
 
             IInsuranceValue insuranceValue = sp.getIPersistentInsuranceValue().readByExecutionYear(
-                    executionYear);
+                    executionYear.getIdInternal());
 
             if (insuranceValue == null) {
                 throw new InsuranceNotDefinedServiceException("error.insurance.notDefinedForThisYear");

@@ -37,7 +37,7 @@ public class EditInsuranceValueByExecutionYearID implements IService {
 
             IPersistentInsuranceValue insuranceValueDAO = sp.getIPersistentInsuranceValue();
 
-            IInsuranceValue insuranceValue = insuranceValueDAO.readByExecutionYear(executionYear);
+            IInsuranceValue insuranceValue = insuranceValueDAO.readByExecutionYear(executionYear.getIdInternal());
 
             if (insuranceValue != null) {
                 insuranceValueDAO.simpleLockWrite(insuranceValue);

@@ -198,7 +198,7 @@ public class ProcessSibsPaymentFile implements IService {
 
             if (sibsPaymentFileEntry.getPaymentType().equals(SibsPaymentType.INSURANCE)) {
 
-                IInsuranceValue insuranceValue = insuranceValueDAO.readByExecutionYear(executionYear);
+                IInsuranceValue insuranceValue = insuranceValueDAO.readByExecutionYear(executionYear.getIdInternal());
 
                 List insuranceTransactionList = insuranceTransactionDAO
                         .readAllNonReimbursedByExecutionYearAndStudent(executionYear, student);

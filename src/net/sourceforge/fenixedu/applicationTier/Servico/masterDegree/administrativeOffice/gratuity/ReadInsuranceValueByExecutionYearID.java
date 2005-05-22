@@ -35,7 +35,7 @@ public class ReadInsuranceValueByExecutionYearID implements IService {
                     ExecutionYear.class, executionYearID);
 
             IInsuranceValue insuranceValue = sp.getIPersistentInsuranceValue().readByExecutionYear(
-                    executionYear);
+                    executionYear.getIdInternal());
 
             if (insuranceValue != null) {
                 infoInsuranceValue = InfoInsuranceValue.newInfoFromDomain(insuranceValue);
