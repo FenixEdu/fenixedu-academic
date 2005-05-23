@@ -22,7 +22,10 @@
           name="keyPreviousExecutionPeriod"
           column="KEY_PREVIOUS_EXECUTION_PERIOD"
           jdbc-type="INTEGER"/>
-		
+		<field-descriptor
+          name="keyNextExecutionPeriod"
+          column="KEY_NEXT_EXECUTION_PERIOD"
+          jdbc-type="INTEGER"/>
         <field-descriptor
           name="state"
           column="STATE"
