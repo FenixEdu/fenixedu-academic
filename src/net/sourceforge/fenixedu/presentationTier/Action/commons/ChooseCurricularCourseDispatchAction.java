@@ -18,6 +18,7 @@ import org.apache.struts.actions.DispatchAction;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -133,7 +134,7 @@ public class ChooseCurricularCourseDispatchAction extends DispatchAction {
             Object args[] = { userView, courseID, executionYear };
             studentList = (List) ServiceManagerServiceFactory.executeService(userView,
                     "ReadStudentListByCurricularCourse", args);
-        } catch (NotAuthorizedException e) {
+        } catch (NotAuthorizedFilterException e) {
             return mapping.findForward("NotAuthorized");
         } catch (NonExistingServiceException e) {
             ActionErrors errors = new ActionErrors();
