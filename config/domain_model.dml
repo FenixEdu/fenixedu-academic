@@ -816,6 +816,7 @@ class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.feni
 	Date beginDate;
 	Date endDate;
 	String year;
+	Integer keyInsuranceValue;
 	
 	interface "
 	void setState(net.sourceforge.fenixedu.util.PeriodState newState);

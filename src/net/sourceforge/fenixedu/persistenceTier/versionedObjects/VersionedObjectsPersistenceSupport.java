@@ -95,6 +95,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationV
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamExecutionCourseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionPeriodVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionYearVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideSituationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InsuranceValueVO;
@@ -761,7 +762,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentExecutionYear getIPersistentExecutionYear() {
-        return null;
+        return new ExecutionYearVO();
     }
 
     public IPersistentOldInquiriesTeachersRes getIPersistentOldInquiriesTeachersRes() {

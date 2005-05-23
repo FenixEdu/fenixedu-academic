@@ -11,7 +11,12 @@
           jdbc-type="INTEGER"
           primarykey="true"
           autoincrement="true"
-       />
+       />	  
+	   <field-descriptor
+          name="keyInsuranceValue"
+          column="KEY_INSURANCE_VALUE"
+          jdbc-type="INTEGER"
+	   />
        <field-descriptor 
           name="year"
           column="YEAR"
@@ -45,5 +50,29 @@
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
 			proxy="true">
 		<inverse-foreignkey field-ref="keyExecutionYear"/>
-	</collection-descriptor>  
+	  </collection-descriptor>  
+	  <collection-descriptor
+			name="delegate"
+			element-class-ref="net.sourceforge.fenixedu.domain.student.Delegate"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyExecutionYear"/>
+	  </collection-descriptor>  
+	  <collection-descriptor
+			name="insuranceTransactions"
+			element-class-ref="net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyExecutionYear"/>
+	  </collection-descriptor>  
+	  <collection-descriptor
+			name="executionDegrees"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
+			proxy="true">
+		<inverse-foreignkey field-ref="academicYear"/>
+	  </collection-descriptor>  
+	  <collection-descriptor
+			name="students"
+			element-class-ref="net.sourceforge.fenixedu.domain.Student"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyRegistrationYear"/>
+	  </collection-descriptor>  
     </class-descriptor> 

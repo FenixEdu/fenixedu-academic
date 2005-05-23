@@ -12,31 +12,12 @@ import net.sourceforge.fenixedu.domain.IExecutionYear;
  *  
  */
 public interface IPersistentExecutionYear extends IPersistentObject {
-    /**
-     * 
-     * @param year
-     * @return IExecutionYear
-     */
+
     public IExecutionYear readExecutionYearByName(String year) throws ExcepcaoPersistencia;
 
-    /**
-     * 
-     * @return ArrayList
-     */
     public List readAllExecutionYear() throws ExcepcaoPersistencia;
 
-    /**
-     * 
-     * @return ArrayList
-     */
     public List readNotClosedExecutionYears() throws ExcepcaoPersistencia;
-
-    /**
-     * 
-     * @param executionYear
-     * @return boolean
-     */
-    public boolean delete(IExecutionYear executionYear);
 
     public IExecutionYear readCurrentExecutionYear() throws ExcepcaoPersistencia;
 
