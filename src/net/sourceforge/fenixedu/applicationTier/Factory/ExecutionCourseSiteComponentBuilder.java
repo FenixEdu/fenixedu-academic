@@ -486,8 +486,11 @@ public class ExecutionCourseSiteComponentBuilder {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentItem persistentItem = sp.getIPersistentItem();
-            ISection section = Cloner.copyInfoSection2ISection(infoSection);
-            itemsList = persistentItem.readAllItemsBySection(section);
+            //ISection section = Cloner.copyInfoSection2ISection(infoSection);
+            itemsList = persistentItem.readAllItemsBySection(infoSection.getIdInternal(), 
+                    infoSection.getInfoSite().getInfoExecutionCourse().getSigla(), 
+                    infoSection.getInfoSite().getInfoExecutionCourse().getInfoExecutionPeriod().getInfoExecutionYear().getYear(),
+                    infoSection.getInfoSite().getInfoExecutionCourse().getInfoExecutionPeriod().getName());
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }

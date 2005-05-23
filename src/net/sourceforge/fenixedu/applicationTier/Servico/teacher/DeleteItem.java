@@ -6,11 +6,14 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IItem;
 import net.sourceforge.fenixedu.domain.Item;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.fileSuport.FileSuport;
 import net.sourceforge.fenixedu.fileSuport.IFileSuport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -51,12 +54,21 @@ public class DeleteItem implements IServico {
                 throw new notAuthorizedServiceDeleteException();
             }
             Integer orderOfDeletedItem = deletedItem.getItemOrder();
-            persistentItem.delete(deletedItem);
+            
+            if((deletedItem.getSection() != null) && (deletedItem.getSection().getAssociatedItems() != null))
+                deletedItem.getSection().getAssociatedItems().remove(deletedItem);
+            
+            deletedItem.setSection(null);
+           
+            persistentItem.deleteByOID(Item.class, deletedItem.getIdInternal());
 
             persistentSuport.confirmarTransaccao();
             persistentSuport.iniciarTransaccao();
             List itemsList = null;
-            itemsList = persistentItem.readAllItemsBySection(deletedItem.getSection());
+            itemsList = persistentItem.readAllItemsBySection(deletedItem.getSection().getIdInternal(),
+                    deletedItem.getSection().getSite().getExecutionCourse().getSigla(),
+                    deletedItem.getSection().getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear(),
+                    deletedItem.getSection().getSite().getExecutionCourse().getExecutionPeriod().getName());
             Iterator iterItems = itemsList.iterator();
             while (iterItems.hasNext()) {
                 IItem item = (IItem) iterItems.next();

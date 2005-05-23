@@ -13,45 +13,33 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import java.util.List;
 
-import org.apache.ojb.broker.query.Criteria;
-
 import net.sourceforge.fenixedu.domain.IItem;
-import net.sourceforge.fenixedu.domain.ISection;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
 
+import org.apache.ojb.broker.query.Criteria;
+
 public class ItemOJB extends PersistentObjectOJB implements IPersistentItem {
 
-    public IItem readBySectionAndName(ISection section, String name) throws ExcepcaoPersistencia {
+    public IItem readBySectionAndName(Integer sectionID, String executionCourseSigla, String executionPeriodYear, String executionPeriodName, String itemName) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("section.idInternal", section.getIdInternal());
-        crit.addEqualTo("name", name);
-        crit.addEqualTo("section.site.executionCourse.code", section.getSite().getExecutionCourse()
-                .getSigla());
-        crit.addEqualTo("section.site.executionCourse.executionPeriod.name", section.getSite()
-                .getExecutionCourse().getExecutionPeriod().getName());
-        crit.addEqualTo("section.site.executionCourse.executionPeriod.executionYear.year", section
-                .getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
+        crit.addEqualTo("section.idInternal", sectionID);
+        crit.addEqualTo("name", itemName);
+        crit.addEqualTo("section.site.executionCourse.code", executionCourseSigla);
+        crit.addEqualTo("section.site.executionCourse.executionPeriod.name", executionPeriodName);
+        crit.addEqualTo("section.site.executionCourse.executionPeriod.executionYear.year", executionPeriodYear);
         return (IItem) queryObject(Item.class, crit);
 
     }
 
-    public List readAllItemsBySection(ISection section) throws ExcepcaoPersistencia {
+    public List readAllItemsBySection(Integer sectionID, String executionCourseSigla, String executionPeriodYear, String executionPeriodName) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("section.idInternal", section.getIdInternal());
-        crit.addEqualTo("section.site.executionCourse.code", section.getSite().getExecutionCourse()
-                .getSigla());
-        crit.addEqualTo("section.site.executionCourse.executionPeriod.name", section.getSite()
-                .getExecutionCourse().getExecutionPeriod().getName());
-        crit.addEqualTo("section.site.executionCourse.executionPeriod.executionYear.year", section
-                .getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
+        crit.addEqualTo("section.idInternal", sectionID);
+        crit.addEqualTo("section.site.executionCourse.code", executionCourseSigla);
+        crit.addEqualTo("section.site.executionCourse.executionPeriod.name", executionPeriodName);
+        crit.addEqualTo("section.site.executionCourse.executionPeriod.executionYear.year", executionPeriodYear);
         return queryList(Item.class, crit);
 
     }
-
-    public void delete(IItem item) throws ExcepcaoPersistencia {
-        super.delete(item);
-    }
-
 }

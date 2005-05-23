@@ -13,13 +13,10 @@ package net.sourceforge.fenixedu.persistenceTier;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IItem;
-import net.sourceforge.fenixedu.domain.ISection;
 
 public interface IPersistentItem extends IPersistentObject {
-    public IItem readBySectionAndName(ISection section, String name) throws ExcepcaoPersistencia;
 
-    public List readAllItemsBySection(ISection section) throws ExcepcaoPersistencia;
+    public IItem readBySectionAndName(Integer sectionID, String executionCourseSigla, String executionCourseYear, String executionPeriodName, String itemName) throws ExcepcaoPersistencia;
 
-    public void delete(IItem item) throws ExcepcaoPersistencia;
-
+    public List readAllItemsBySection(Integer sectionID, String executionCourseSigla, String executionPeriodYear, String executionPeriodName) throws ExcepcaoPersistencia;
 }

@@ -53,7 +53,10 @@ public class EditItem implements IServico {
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentItem = persistentSuport.getIPersistentItem();
 
-            List itemsList = persistentItem.readAllItemsBySection(section);
+            List itemsList = persistentItem.readAllItemsBySection(section.getIdInternal(),
+                    section.getSite().getExecutionCourse().getSigla(),
+                    section.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear(),
+                    section.getSite().getExecutionCourse().getExecutionPeriod().getName());
 
             if (newOrder.intValue() == -2) {
                 newOrder = new Integer(itemsList.size() - 1);

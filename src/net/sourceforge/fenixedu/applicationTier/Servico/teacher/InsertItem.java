@@ -33,7 +33,10 @@ public class InsertItem implements IService {
 
             persistentItem = persistentSuport.getIPersistentItem();
 
-            List itemsList = persistentItem.readAllItemsBySection(section);
+            List itemsList = persistentItem.readAllItemsBySection(section.getIdInternal(),
+                    section.getSite().getExecutionCourse().getSigla(),
+                    section.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear(),
+                    section.getSite().getExecutionCourse().getExecutionPeriod().getName());
 
             if (itemsList != null) {
 
@@ -71,7 +74,11 @@ public class InsertItem implements IService {
         final ISection section = (ISection) persistentSection.readByOID(Section.class, sectionCode);
         infoItem.setInfoSection(Cloner.copyISection2InfoSection(section));
 
-        if (persistentItem.readBySectionAndName(section, infoItem.getName()) != null) {
+        if (persistentItem.readBySectionAndName(section.getIdInternal(),
+                section.getSite().getExecutionCourse().getSigla(),
+                section.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear(),
+                section.getSite().getExecutionCourse().getExecutionPeriod().getName(),
+                infoItem.getName()) != null) {
             throw new ExistingServiceException();
         }
 

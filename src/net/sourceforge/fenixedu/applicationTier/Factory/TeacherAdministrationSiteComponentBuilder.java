@@ -923,8 +923,11 @@ public class TeacherAdministrationSiteComponentBuilder {
 
             iSection = (ISection) persistentSection.readByOID(Section.class,
                     sectionCode);
-
-            itemsList = persistentItem.readAllItemsBySection(iSection);
+ 
+            itemsList = persistentItem.readAllItemsBySection(iSection.getIdInternal(), 
+                    iSection.getSite().getExecutionCourse().getSigla(),
+                    iSection.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear(),
+                    iSection.getSite().getExecutionCourse().getExecutionPeriod().getName());
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
@@ -1079,7 +1082,10 @@ public class TeacherAdministrationSiteComponentBuilder {
             ISection iSection = (ISection) persistentSection.readByOID(
                     Section.class, iItem.getSection().getIdInternal());
             infoItem.setInfoSection(InfoSectionWithInfoSiteAndInfoExecutionCourse.newInfoFromDomain(iSection));
-            List allItems = persistentItem.readAllItemsBySection(iSection);
+            List allItems = persistentItem.readAllItemsBySection(iSection.getIdInternal(), 
+                    iSection.getSite().getExecutionCourse().getSigla(),
+                    iSection.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear(),
+                    iSection.getSite().getExecutionCourse().getExecutionPeriod().getName());
 
             // build the result of this service
             Iterator iterator = allItems.iterator();

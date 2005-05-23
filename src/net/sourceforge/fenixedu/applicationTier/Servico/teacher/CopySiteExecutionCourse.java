@@ -84,8 +84,10 @@ public class CopySiteExecutionCourse implements IService {
                 ListIterator iteratorSection = sectionsTo.listIterator();
                 while (iteratorSection.hasNext()) {
                     ISection section = (ISection) iteratorSection.next();
-
-                    List itens = persistentItem.readAllItemsBySection(section);
+                    List itens = persistentItem.readAllItemsBySection(section.getIdInternal(),
+                            section.getSite().getExecutionCourse().getSigla(),
+                            section.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear(),
+                            section.getSite().getExecutionCourse().getExecutionPeriod().getName());
                     if (itens != null && itens.size() > 0) {
                         ListIterator iteratorItens = itens.listIterator();
                         while (iteratorItens.hasNext()) {
@@ -126,7 +128,10 @@ public class CopySiteExecutionCourse implements IService {
                 sectionNew.setLastModifiedDate(Calendar.getInstance().getTime());
 
                 //section's itens
-                List itens = persistentItem.readAllItemsBySection(sectionFrom);
+                List itens = persistentItem.readAllItemsBySection(sectionFrom.getIdInternal(),
+                        sectionFrom.getSite().getExecutionCourse().getSigla(),
+                        sectionFrom.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear(),
+                        sectionFrom.getSite().getExecutionCourse().getExecutionPeriod().getName());
                 if (itens != null && itens.size() > 0) {
                     ListIterator iteratorItens = itens.listIterator();
                     while (iteratorItens.hasNext()) {

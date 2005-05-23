@@ -99,6 +99,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionYe
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideSituationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InsuranceValueVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ItemVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PersonAccountVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ResponsibleForVO;
@@ -602,7 +603,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentItem getIPersistentItem() {
-        return null;
+        return new ItemVO();
     }
 
     public IPersistentRestriction getIPersistentRestriction() {
