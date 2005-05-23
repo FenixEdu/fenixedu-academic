@@ -3,15 +3,13 @@
 <!-- ******************************************************************************************************************************* -->
  <class-descriptor
          class="net.sourceforge.fenixedu.domain.ExecutionPeriod"
-         table="EXECUTION_PERIOD"
-    >
+         table="EXECUTION_PERIOD">
        <field-descriptor
           name="idInternal"
           column="ID_INTERNAL"
           jdbc-type="INTEGER"
           primarykey="true"
-          autoincrement="true"
-       />
+          autoincrement="true"/>
        <field-descriptor
           name="name"
           column="NAME"
@@ -46,26 +44,31 @@
           jdbc-type="DATE"
           conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
           />
-      <field-descriptor
+       <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
-      	locking="true"
-      />
-        <reference-descriptor
+      	locking="true"/>
+       
+	   <reference-descriptor
           name="executionYear"
           class-ref="net.sourceforge.fenixedu.domain.ExecutionYear">
           <foreignkey field-ref="keyExecutionYear"/>
-       </reference-descriptor>
-      
+       </reference-descriptor>      
        <reference-descriptor
          name="previousExecutionPeriod"
          class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
-         proxy="true"
-      >
+         proxy="true">
          <foreignkey field-ref="keyPreviousExecutionPeriod"/>
-      </reference-descriptor> 
-      <collection-descriptor
+       </reference-descriptor> 
+	   <reference-descriptor
+         name="nextExecutionPeriod"
+         class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
+         proxy="true">
+         <foreignkey field-ref="keyNextExecutionPeriod"/>
+       </reference-descriptor> 
+      
+    <collection-descriptor
 			name="schoolClasses"
 			element-class-ref="net.sourceforge.fenixedu.domain.SchoolClass"
 			proxy="true">
@@ -104,6 +107,30 @@
 	<collection-descriptor
 			name="oldInquiriesTeachersRes"
 			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="associatedExecutionCourses"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="lessons"
+			element-class-ref="net.sourceforge.fenixedu.domain.Lesson"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="oldInquiriesSummary"
+			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="oldInquiriesCoursesRes"
+			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes"
 			proxy="true">
 		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
 	</collection-descriptor>

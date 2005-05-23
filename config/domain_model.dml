@@ -800,6 +800,7 @@ class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fe
 	Integer keyExecutionYear;
 	Date beginDate;
 	Integer keyPreviousExecutionPeriod;
+	Integer keyNextExecutionPeriod;
 	Date endDate;
 	String name;
 	Integer semester;
