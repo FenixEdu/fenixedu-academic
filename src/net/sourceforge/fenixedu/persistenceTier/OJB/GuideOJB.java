@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentGuide;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.QueryByCriteria;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -68,6 +69,23 @@ public class GuideOJB extends PersistentObjectOJB implements IPersistentGuide {
 
         lockRead(result);
         return result;
+    }
+
+    public IGuide readLatestVersion(Integer year, Integer number) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        QueryByCriteria query = new QueryByCriteria(Guide.class, criteria);
+        query.addOrderByDescending("version");
+
+        criteria.addEqualTo("year", year);
+        criteria.addEqualTo("number", number);
+
+        List result = queryList(Guide.class, criteria);
+
+        if (result.size() != 0) {
+            return (IGuide) result.get(0);
+        }
+
+        return null;
     }
 
     public List readByPerson(String identificationDocumentNumber,
