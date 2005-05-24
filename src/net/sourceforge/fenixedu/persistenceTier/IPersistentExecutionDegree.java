@@ -51,4 +51,7 @@ public interface IPersistentExecutionDegree extends IPersistentObject {
             Integer degreeCurricularPlanID, Integer executionYearID) throws ExcepcaoPersistencia;
 
     public List readByExecutionYearOID(Integer executionYearOID) throws ExcepcaoPersistencia;
+
+    public List readListByDegreeNameAndExecutionYearAndDegreeType(String name, Integer executionYearOID,
+            DegreeType degreeType) throws ExcepcaoPersistencia;
 }
