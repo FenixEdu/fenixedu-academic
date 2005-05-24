@@ -108,9 +108,12 @@ public class PrepareCreateGuide implements IService {
             // Get the price for the Candidate Application
             IPrice price = null;
             try {
+                //FIXME to be removed when the descriptions in the DB are changed to keys to resource bundles 
+                String description = getDescription(graduationType);
+                
                 price = sp.getIPersistentPrice().readByGraduationTypeAndDocumentTypeAndDescription(
                         GraduationType.MASTER_DEGREE, DocumentType.APPLICATION_EMOLUMENT,
-                        graduationType);
+                        description);
             } catch (ExcepcaoPersistencia ex) {
                 FenixServiceException newEx = new FenixServiceException("Persistence layer error");
                 newEx.fillInStackTrace();
@@ -193,6 +196,21 @@ public class PrepareCreateGuide implements IService {
         }
 
         return infoGuide;
+    }
+
+    private String getDescription(String graduationType) {
+        
+        switch (Specialization.valueOf(graduationType)) {
+        case MASTER_DEGREE:
+            return "Mestrado";
+        case INTEGRATED_MASTER_DEGREE:
+            return "Integrado";
+        case SPECIALIZATION:
+            return "Especialização";
+        }
+        
+        return null;
+        
     }
 
 }
