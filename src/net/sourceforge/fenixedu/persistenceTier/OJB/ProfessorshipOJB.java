@@ -29,19 +29,6 @@ public class ProfessorshipOJB extends PersistentObjectOJB implements IPersistent
         return (IProfessorship) queryObject(Professorship.class, criteria);
     }
 
-    /*
-     * public IProfessorship readByTeacherAndExecutionCourse(ITeacher teacher,
-     * IExecutionCourse executionCourse) throws ExcepcaoPersistencia { Criteria
-     * criteria = new Criteria(); criteria.addEqualTo("teacher.teacherNumber",
-     * teacher.getTeacherNumber()); criteria.addEqualTo("executionCourse.sigla",
-     * executionCourse.getSigla());
-     * criteria.addEqualTo("executionCourse.executionPeriod.name",
-     * executionCourse.getExecutionPeriod() .getName());
-     * criteria.addEqualTo("executionCourse.executionPeriod.executionYear.year",
-     * executionCourse .getExecutionPeriod().getExecutionYear().getYear());
-     * return (IProfessorship) queryObject(Professorship.class, criteria); }
-     */
-
     public List readByTeacherNumber(Integer teacherNumber) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("teacher.teacherNumber", teacherNumber);
@@ -71,20 +58,8 @@ public class ProfessorshipOJB extends PersistentObjectOJB implements IPersistent
     public List readByDegreeCurricularPlansAndExecutionYearAndBasic(List degreeCurricularPlanIDs,
             Integer executionYearID, Boolean basic) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        /*
-         * List executionDegreesIds = (List)
-         * CollectionUtils.collect(executionDegrees, new Transformer() { public
-         * Object transform(Object o) { return ((IExecutionDegree)
-         * o).getDegreeCurricularPlan().getIdInternal(); } });
-         */
         criteria.addIn("executionCourse.associatedCurricularCourses.degreeCurricularPlan.idInternal",
                 degreeCurricularPlanIDs);
-        /*
-         * if (executionDegrees != null && !executionDegrees.isEmpty()) {
-         * criteria.addEqualTo("executionCourse.executionPeriod.executionYear.idInternal",
-         * ((IExecutionDegree)
-         * executionDegrees.get(0)).getExecutionYear().getIdInternal()); }
-         */
         if (executionYearID != null) {
             criteria.addEqualTo("executionCourse.executionPeriod.executionYear.idInternal",
                     executionYearID);
@@ -137,21 +112,8 @@ public class ProfessorshipOJB extends PersistentObjectOJB implements IPersistent
     public List readByDegreeCurricularPlansAndExecutionYear(List degreeCurricularPlanIDs,
             Integer executionYearID) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        //List executionDegreesIds = (List)
-        // CollectionUtils.collect(executionDegrees, new Transformer() {
-        //    public Object transform(Object o) {
-        //        return ((IExecutionDegree)
-        // o).getDegreeCurricularPlan().getIdInternal();
-        //    }
-        //});
         criteria.addIn("executionCourse.associatedCurricularCourses.degreeCurricularPlan.idInternal",
                 degreeCurricularPlanIDs);
-        //if (degreeCurricularPlanIDs != null &&
-        // !degreeCurricularPlanIDs.isEmpty()) {
-        //    criteria.addEqualTo("executionCourse.executionPeriod.executionYear.idInternal",
-        //            ((IExecutionDegree)
-        // degreeCurricularPlanIDs.get(0)).getExecutionYear().getIdInternal());
-        //}
         if (executionYearID != null) {
             criteria.addEqualTo("executionCourse.executionPeriod.executionYear.idInternal",
                     executionYearID);
