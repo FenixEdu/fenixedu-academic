@@ -84,7 +84,7 @@
           <logic:present name="graduationType">
           <tr>
             <td> <bean:message key="label.masterDegree.administrativeOffice.graduationType"/> </td>
-            <td> <bean:write name="graduationType"/> </td>
+            <td> <bean:message  name="graduationType" bundle="ENUMERATION_RESOURCES"/> </td>
           </tr>
           <tr>
           </logic:present>
