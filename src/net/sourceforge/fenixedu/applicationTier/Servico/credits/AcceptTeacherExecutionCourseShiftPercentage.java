@@ -16,21 +16,15 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProfessorship;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IShiftProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -63,12 +57,6 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
         return shift;
     }
 
-    /**
-     * @param infoTeacherShiftPercentageList
-     *            list of shifts and percentages that teacher needs...
-     * @return @throws
-     *         FenixServiceException
-     */
     public List run(InfoTeacher infoTeacher, InfoExecutionCourse infoExecutionCourse,
             List infoShiftProfessorshipList) throws FenixServiceException {
         List shiftWithErrors = new ArrayList();
@@ -76,25 +64,14 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
-            IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
-
+            ITurnoPersistente shiftDAO = sp.getITurnoPersistente();            
             IPersistentShiftProfessorship shiftProfessorshipDAO = sp
                     .getIPersistentTeacherShiftPercentage();
             IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
-
-            //read execution course
-            IExecutionCourse executionCourse = (IExecutionCourse) executionCourseDAO.readByOID(
-                    ExecutionCourse.class, infoExecutionCourse.getIdInternal());
-
-            //read teacher
-            ITeacher teacher = new Teacher(infoTeacher.getIdInternal());
-            teacher = (ITeacher) teacherDAO.readByOID(Teacher.class, infoTeacher.getIdInternal());
-
+            
             //read professorship
-            IProfessorship professorship = professorshipDAO.readByTeacherIDAndExecutionCourseID(teacher,
-                    executionCourse);
+            IProfessorship professorship = professorshipDAO.readByTeacherAndExecutionCourse(infoTeacher.getIdInternal(),
+                    infoExecutionCourse.getIdInternal());
 
             if (professorship != null) {
                 Iterator iterator = infoShiftProfessorshipList.iterator();
@@ -105,26 +82,6 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
                         professorship, iterator, shiftProfessorshipDeleted);
 
                 validateShiftProfessorshipAdded(shiftProfessorshipAdded);
-
-                //                CreditsCalculator creditsCalculator = CreditsCalculator
-                //                        .getInstance();
-                //                IExecutionPeriod executionPeriod = professorship
-                //                        .getExecutionCourse().getExecutionPeriod();
-                //                Double lessonsCredits = creditsCalculator.calculateLessons(
-                //                        professorship, shiftProfessorshipAdded,
-                //                        shiftProfessorshipDeleted, sp);
-                //
-                //                IPersistentCredits creditsDAO = sp.getIPersistentCredits();
-                //                ICredits credits =
-                // creditsDAO.readByTeacherAndExecutionPeriod(
-                //                        teacher, executionPeriod);
-                //                if (credits == null) {
-                //                    credits = new Credits();
-                //                }
-                //                creditsDAO.simpleLockWrite(credits);
-                //                credits.setExecutionPeriod(executionPeriod);
-                //                credits.setTeacher(teacher);
-                //                credits.setLessons(lessonsCredits);
             }
 
         } catch (ExcepcaoPersistencia e) {

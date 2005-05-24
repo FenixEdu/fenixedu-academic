@@ -15,7 +15,9 @@ import net.sourceforge.fenixedu.domain.IResponsibleFor;
  */
 public interface IPersistentResponsibleFor extends IPersistentObject {
 
-    public List readByTeacher(Integer teacherNumber) throws ExcepcaoPersistencia;
+    public List readByTeacherNumber(Integer teacherNumber) throws ExcepcaoPersistencia;
+    
+    public List readByTeacher(Integer teacherID) throws ExcepcaoPersistencia;
 
     public IResponsibleFor readByTeacherAndExecutionCourse(Integer teacherID, Integer executionCourseID)
             throws ExcepcaoPersistencia;

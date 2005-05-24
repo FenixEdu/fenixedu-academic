@@ -6,14 +6,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -27,33 +25,24 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadTeachersByExecutionCourseProfessorship implements IService {
 
-    public List run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
-        try {
-            List result = null;
-            ISuportePersistente sp;
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-            result = persistentProfessorship.readByExecutionCourseId(infoExecutionCourse.getIdInternal());
+    public List run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
-            List infoResult = new ArrayList();
-            if (result != null) {
+        final ISuportePersistente suportePersistente = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
 
-                Iterator iter = result.iterator();
-                while (iter.hasNext()) {
-                    IProfessorship professorship = (IProfessorship) iter.next();
-                    ITeacher teacher = professorship.getTeacher();
-                    //InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
-					InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
-                    infoResult.add(infoTeacher);
-                }
-                return infoResult;
+        final IPersistentProfessorship persistentProfessorship = suportePersistente
+                .getIPersistentProfessorship();
+        final List<IProfessorship> result = persistentProfessorship
+                .readByExecutionCourse(infoExecutionCourse.getIdInternal());
+
+        final List<InfoTeacher> infoResult = new ArrayList<InfoTeacher>();
+        if (result != null) {
+            for (final IProfessorship professorship : result) {
+                infoResult.add(InfoTeacher.newInfoFromDomain(professorship.getTeacher()));
             }
-
-            return result;
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+            return infoResult;
         }
-
+        return result;
     }
 }

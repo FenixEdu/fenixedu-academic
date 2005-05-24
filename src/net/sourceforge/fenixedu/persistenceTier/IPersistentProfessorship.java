@@ -5,104 +5,41 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 /**
  * @author João Mota
  */
 public interface IPersistentProfessorship extends IPersistentObject {
 
-    public List readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia;
+    public List readByTeacherNumber(Integer teacherNumber) throws ExcepcaoPersistencia;
+    
+    public List readByTeacher(Integer teacherID) throws ExcepcaoPersistencia;
 
-    public IProfessorship readByTeacherAndExecutionCourse(ITeacher teacher,
-            IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
-
-    public IProfessorship readByTeacherIDAndExecutionCourseID(ITeacher teacher,
-            IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
-
-    public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
-	
-    public List readByExecutionCourseId(Integer executionCourseId) throws ExcepcaoPersistencia;
-
-    public void delete(IProfessorship professorship) throws ExcepcaoPersistencia;
-
-    public void deleteAll() throws ExcepcaoPersistencia;
-
-    public List readAll() throws ExcepcaoPersistencia;
-
-    public IProfessorship readByTeacherAndExecutionCoursePB(ITeacher teacher,
-            IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
-
-    /**
-     * Read ProfessorShips from a teacher, given a type of degree.
-     * 
-     * @param teacher
-     * @param curso
-     * @return List of Dominio.IProfessorship
-     */
-    public List readByTeacherAndTypeOfDegree(ITeacher teacher, DegreeType degreeType)
+    public IProfessorship readByTeacherAndExecutionCourse(Integer teacherID, Integer executionCourseID)
             throws ExcepcaoPersistencia;
 
-    public IProfessorship readByTeacherIDandExecutionCourseID(Integer teacherID,
-            Integer executionCourseID) throws ExcepcaoPersistencia;
+    public List readByExecutionCourse(Integer executionCourseID) throws ExcepcaoPersistencia;
 
-    /**
-     * @param teacher
-     * @param executionPeriod
-     * @return
-     */
     public List readByTeacherAndExecutionPeriod(Integer teacherID, Integer executionPeriodID)
             throws ExcepcaoPersistencia;
 
-    /**
-     * @param teacher
-     * @param executionYear
-     * @return
-     */
     public List readByTeacherAndExecutionYear(Integer teacherID, Integer executionYearID)
             throws ExcepcaoPersistencia;
 
-    /**
-     * @param executionDegrees
-     * @return
-     */
-    public List readByExecutionDegreesAndBasic(List executionDegrees, Boolean basic)
-            throws ExcepcaoPersistencia;
+    public List readByDegreeCurricularPlansAndExecutionYearAndBasic(List degreeCurricularPlanIDs,
+            Integer executionYearID, Boolean basic) throws ExcepcaoPersistencia;
 
-    /**
-     * @param executionDegree
-     * @return @throws
-     *         ExcepcaoPersistencia
-     */
-    public List readByExecutionDegree(IExecutionDegree executionDegree) throws ExcepcaoPersistencia;
+    public List readByDegreeCurricularPlanAndExecutionYear(Integer degreeCurricularPlanID,
+            Integer executionYearID) throws ExcepcaoPersistencia;
 
-    /**
-     * @param executionDegree
-     * @param basic
-     * @return @throws
-     *         ExcepcaoPersistencia
-     */
-    public List readByExecutionDegreeAndBasic(IExecutionDegree executionDegree, Boolean basic)
-            throws ExcepcaoPersistencia;
+    public List readByDegreeCurricularPlanAndBasic(Integer degreeCurricularPlanID,
+            Integer executionYearID, Boolean basic) throws ExcepcaoPersistencia;
 
-    /**
-     * @param executionsDegrees
-     * @return
-     */
-    public List readByExecutionDegrees(List executionDegrees) throws ExcepcaoPersistencia;
-    
-    /**
-     * @author João e Rita
-     * @param executionDegree
-     * @param executionPeriod
-     * @return List
-     * @throws ExcepcaoPersistencia
-     */
-    public List readByExecutionDegreeAndExecutionPeriod(IExecutionDegree executionDegree, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
-    
+    public List readByDegreeCurricularPlansAndExecutionYear(List degreeCurricularPlanIDs,
+            Integer executionYearID) throws ExcepcaoPersistencia;
+
+    public List readByDegreeCurricularPlanAndExecutionPeriod(Integer degreeCurricularPlanID,
+            Integer executionPeriodID) throws ExcepcaoPersistencia;
+
 }

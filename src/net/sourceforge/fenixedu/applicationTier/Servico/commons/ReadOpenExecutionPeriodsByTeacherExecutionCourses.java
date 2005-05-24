@@ -40,7 +40,7 @@ public class ReadOpenExecutionPeriodsByTeacherExecutionCourses implements IServi
 
         List executionPeriods = new ArrayList();
 
-        List professorships = persistentProfessorship.readByTeacher(teacher);
+        List professorships = persistentProfessorship.readByTeacher(teacher.getIdInternal());
         Iterator iterProfessorships = professorships.iterator();
         while (iterProfessorships.hasNext()) {
             IProfessorship professorship = (IProfessorship) iterProfessorships.next();

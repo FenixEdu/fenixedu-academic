@@ -79,7 +79,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartment implements IServi
             ITeacher teacher = (ITeacher) iter.next();
             List teacherProfessorships = null;
             if (executionYear == null) {
-                teacherProfessorships = persistentProfessorship.readByTeacher(teacher);
+                teacherProfessorships = persistentProfessorship.readByTeacher(teacher.getIdInternal());
             } else {
                 teacherProfessorships = persistentProfessorship.readByTeacherAndExecutionYear(teacher
                         .getIdInternal(), executionYear.getIdInternal());

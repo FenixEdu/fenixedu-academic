@@ -111,7 +111,7 @@ public class ReadSummary implements IService {
             ITeacher teacher = persistentTeacher.readTeacherByUsername(userLogged);
             if (teacher != null) {
                 IProfessorship professorship = persistentProfessorship.readByTeacherAndExecutionCourse(
-                        teacher, executionCourse);
+                        teacher.getIdInternal(), executionCourseId);
                 if (professorship != null) {
                     infoProfessorships.add(InfoProfessorshipWithAll.newInfoFromDomain(professorship));
                 }

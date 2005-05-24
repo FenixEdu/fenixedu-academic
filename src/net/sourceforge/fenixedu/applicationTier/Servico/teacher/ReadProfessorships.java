@@ -36,46 +36,47 @@ public class ReadProfessorships extends ReadDetailedTeacherProfessorshipsAbstrac
         IPersistentProfessorship persistentProfessorship = persistentSuport
                 .getIPersistentProfessorship();
         IPersistentTeacher teacherDAO = persistentSuport.getIPersistentTeacher();
-        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSuport.getIPersistentExecutionPeriod();
+        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSuport
+                .getIPersistentExecutionPeriod();
 
         IExecutionPeriod executionPeriod = null;
-        if(executionPeriodCode != null){
-        executionPeriod = (IExecutionPeriod)persistentExecutionPeriod.readByOID(ExecutionPeriod.class, executionPeriodCode);
+        if (executionPeriodCode != null) {
+            executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+                    ExecutionPeriod.class, executionPeriodCode);
         }
-        
-        ITeacher teacher = teacherDAO.readTeacherByUsername(userView.getUtilizador());
-        
 
-        List professorships = persistentProfessorship.readByTeacher(teacher);
+        ITeacher teacher = teacherDAO.readTeacherByUsername(userView.getUtilizador());
+
+        List professorships = persistentProfessorship.readByTeacher(teacher.getIdInternal());
         List professorshipsList = new ArrayList();
         professorshipsList.addAll(professorships);
-        
-        if(executionPeriod !=  null){
+
+        if (executionPeriod != null) {
             Iterator iterProfessorships = professorships.iterator();
-            while(iterProfessorships.hasNext()){
-                IProfessorship professorship = (IProfessorship)iterProfessorships.next();
-                if(!professorship.getExecutionCourse().getExecutionPeriod().equals(executionPeriod)){
+            while (iterProfessorships.hasNext()) {
+                IProfessorship professorship = (IProfessorship) iterProfessorships.next();
+                if (!professorship.getExecutionCourse().getExecutionPeriod().equals(executionPeriod)) {
                     professorshipsList.remove(professorship);
                 }
             }
         }
-        
+
         final List responsibleFors = responsibleForDAO.readByTeacher(teacher.getIdInternal());
         List responsibleForsList = new ArrayList();
         responsibleForsList.addAll(responsibleFors);
-        
-        if(executionPeriod !=  null){
+
+        if (executionPeriod != null) {
             Iterator iterResponsibleFors = responsibleFors.iterator();
-            while(iterResponsibleFors.hasNext()){
-                IResponsibleFor responsibleFor = (IResponsibleFor)iterResponsibleFors.next();
-                if(!responsibleFor.getExecutionCourse().getExecutionPeriod().equals(executionPeriod)){
+            while (iterResponsibleFors.hasNext()) {
+                IResponsibleFor responsibleFor = (IResponsibleFor) iterResponsibleFors.next();
+                if (!responsibleFor.getExecutionCourse().getExecutionPeriod().equals(executionPeriod)) {
                     responsibleForsList.remove(responsibleFor);
                 }
             }
         }
-        
-        List detailedProfessorshipList = getDetailedProfessorships(professorshipsList, responsibleForsList,
-                persistentSuport);
+
+        List detailedProfessorshipList = getDetailedProfessorships(professorshipsList,
+                responsibleForsList, persistentSuport);
         return detailedProfessorshipList;
     }
 }

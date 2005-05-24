@@ -50,7 +50,9 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree implements I
         IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
                 ExecutionDegree.class, executionDegreeId);
 
-        List professorships = persistentProfessorship.readByExecutionDegree(executionDegree);
+        List professorships = persistentProfessorship.readByDegreeCurricularPlanAndExecutionYear(
+                executionDegree.getDegreeCurricularPlan().getIdInternal(), executionDegree
+                        .getExecutionYear().getIdInternal());
         List responsibleFors = persistentResponsibleFor.readByExecutionDegree(executionDegree
                 .getDegreeCurricularPlan().getIdInternal(), executionDegree.getExecutionYear()
                 .getIdInternal());

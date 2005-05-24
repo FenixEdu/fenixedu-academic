@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
  */
 public class ResponsibleForVO extends VersionedObjectsBase implements IPersistentResponsibleFor {
 
-    public List readByTeacher(Integer teacherNumber) throws ExcepcaoPersistencia {
+    public List readByTeacherNumber(final Integer teacherNumber) throws ExcepcaoPersistencia {
         final Collection<ITeacher> teachers = readAll(Teacher.class);
         for (final ITeacher teacher : teachers) {
             if (teacher.getTeacherNumber().equals(teacherNumber))
@@ -37,26 +37,31 @@ public class ResponsibleForVO extends VersionedObjectsBase implements IPersisten
         return new ArrayList();
     }
 
-    public IResponsibleFor readByTeacherAndExecutionCourse(Integer teacherID, Integer executionCourseID)
-            throws ExcepcaoPersistencia {
+    public List readByTeacher(final Integer teacherID) throws ExcepcaoPersistencia {
+        final ITeacher teacher = (ITeacher) readByOID(Teacher.class, teacherID);
+        return (teacher != null) ? teacher.getAssociatedResponsibles() : new ArrayList();
+    }
+
+    public IResponsibleFor readByTeacherAndExecutionCourse(final Integer teacherID,
+            final Integer executionCourseID) throws ExcepcaoPersistencia {
 
         final IExecutionCourse executionCourse = (IExecutionCourse) readByOID(ExecutionCourse.class,
                 executionCourseID);
         final List<IResponsibleFor> responsibleTeachers = executionCourse.getResponsibleTeachers();
-        for (IResponsibleFor responsibleFor : responsibleTeachers) {
+        for (final IResponsibleFor responsibleFor : responsibleTeachers) {
             if (responsibleFor.getTeacher().getIdInternal().equals(teacherID))
                 return responsibleFor;
         }
         return null;
     }
 
-    public List readByExecutionCourse(Integer executionCourseID) throws ExcepcaoPersistencia {
+    public List readByExecutionCourse(final Integer executionCourseID) throws ExcepcaoPersistencia {
         final IExecutionCourse executionCourse = (IExecutionCourse) readByOID(ExecutionCourse.class,
                 executionCourseID);
         return (executionCourse != null) ? executionCourse.getResponsibleTeachers() : new ArrayList();
     }
 
-    public List readByTeacherAndExecutionPeriod(Integer teacherID, Integer executionPeriodID)
+    public List readByTeacherAndExecutionPeriod(final Integer teacherID, final Integer executionPeriodID)
             throws ExcepcaoPersistencia {
 
         final List<IResponsibleFor> responsibleTeachers = new ArrayList<IResponsibleFor>();
@@ -74,7 +79,7 @@ public class ResponsibleForVO extends VersionedObjectsBase implements IPersisten
         return responsibleTeachers;
     }
 
-    public List readByTeacherAndExecutionYear(Integer teacherID, Integer executionYearID)
+    public List readByTeacherAndExecutionYear(final Integer teacherID, final Integer executionYearID)
             throws ExcepcaoPersistencia {
 
         final List<IResponsibleFor> responsibleTeachers = new ArrayList<IResponsibleFor>();
@@ -92,7 +97,7 @@ public class ResponsibleForVO extends VersionedObjectsBase implements IPersisten
         return responsibleTeachers;
     }
 
-    public List readByTeacherAndExecutionCourseIds(Integer teacherID, List executionCourseIds)
+    public List readByTeacherAndExecutionCourseIds(final Integer teacherID, final List executionCourseIds)
             throws ExcepcaoPersistencia {
 
         final List<IResponsibleFor> responsibleTeachers = new ArrayList<IResponsibleFor>();
@@ -108,7 +113,7 @@ public class ResponsibleForVO extends VersionedObjectsBase implements IPersisten
         return responsibleTeachers;
     }
 
-    public List readByExecutionDegree(Integer degreeCurricularPlanID, Integer executionYearID)
+    public List readByExecutionDegree(final Integer degreeCurricularPlanID, final Integer executionYearID)
             throws ExcepcaoPersistencia {
 
         final List<IResponsibleFor> result = new ArrayList<IResponsibleFor>();

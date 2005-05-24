@@ -69,55 +69,63 @@ public class ReadCoursesInformation implements IService {
 
     public List run(Integer executionDegreeId, Boolean basic, String executionYearString)
             throws FenixServiceException, ExcepcaoPersistencia {
-        
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-            IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
 
-            List professorships = null;
-            IExecutionYear executionYear = null;
-            if (executionYearString != null) {
-                executionYear = persistentExecutionYear.readExecutionYearByName(executionYearString);
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
+        IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+        IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+
+        List professorships = null;
+        IExecutionYear executionYear = null;
+        if (executionYearString != null) {
+            executionYear = persistentExecutionYear.readExecutionYearByName(executionYearString);
+        } else {
+            executionYear = persistentExecutionYear.readCurrentExecutionYear();
+        }
+        if (executionDegreeId == null) {
+            List<IExecutionDegree> executionDegrees = persistentExecutionDegree
+                    .readByExecutionYearAndDegreeType(executionYear.getIdInternal(), DegreeType.DEGREE);
+            List<Integer> degreeCurricularPlanIDs = getDegreeCurricularPlanIDs(executionDegrees);
+            Integer executionYearID = (!degreeCurricularPlanIDs.isEmpty()) ? ((IExecutionDegree) executionDegrees
+                    .get(0)).getExecutionYear().getIdInternal()
+                    : null;
+            if (basic == null) {
+                professorships = persistentProfessorship.readByDegreeCurricularPlansAndExecutionYear(
+                        degreeCurricularPlanIDs, executionYearID);
             } else {
-                executionYear = persistentExecutionYear.readCurrentExecutionYear();
+                professorships = persistentProfessorship
+                        .readByDegreeCurricularPlansAndExecutionYearAndBasic(degreeCurricularPlanIDs,
+                                executionYearID, basic);
             }
-            if (executionDegreeId == null) {
-                List executionDegrees = null;
-                executionDegrees = persistentExecutionDegree.readByExecutionYearAndDegreeType(
-                        executionYear.getIdInternal(), DegreeType.DEGREE);
-                if (basic == null) {
-                    professorships = persistentProfessorship.readByExecutionDegrees(executionDegrees);
-                } else {
-                    professorships = persistentProfessorship.readByExecutionDegreesAndBasic(
-                            executionDegrees, basic);
-                }
+        } else {
+            IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                    ExecutionDegree.class, executionDegreeId);
+            if (basic == null) {
+                professorships = persistentProfessorship.readByDegreeCurricularPlanAndExecutionYear(
+                        executionDegree.getIdInternal(), executionDegree.getExecutionYear()
+                                .getIdInternal());
             } else {
-                IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
-                        ExecutionDegree.class, executionDegreeId);
-                if (basic == null) {
-                    professorships = persistentProfessorship.readByExecutionDegree(executionDegree);
-                } else {
-                    professorships = persistentProfessorship.readByExecutionDegreeAndBasic(
-                            executionDegree, basic);
-                }
+                professorships = persistentProfessorship.readByDegreeCurricularPlanAndBasic(
+                        executionDegree.getIdInternal(), executionDegree.getExecutionYear()
+                                .getIdInternal(), basic);
             }
-            List executionCourses = (List) CollectionUtils.collect(professorships, new Transformer() {
+        }
+        List executionCourses = (List) CollectionUtils.collect(professorships, new Transformer() {
 
-                public Object transform(Object o) {
-                    IProfessorship professorship = (IProfessorship) o;
-                    return professorship.getExecutionCourse();
-                }
-            });
-            executionCourses = removeDuplicates(executionCourses);
-            List infoSiteCoursesInformation = new ArrayList();
-            Iterator iter = executionCourses.iterator();
-            while (iter.hasNext()) {
-                IExecutionCourse executionCourse = (IExecutionCourse) iter.next();
-                infoSiteCoursesInformation.add(getCourseInformation(executionCourse, sp, executionYear));
+            public Object transform(Object o) {
+                IProfessorship professorship = (IProfessorship) o;
+                return professorship.getExecutionCourse();
             }
+        });
+        executionCourses = removeDuplicates(executionCourses);
+        List infoSiteCoursesInformation = new ArrayList();
+        Iterator iter = executionCourses.iterator();
+        while (iter.hasNext()) {
+            IExecutionCourse executionCourse = (IExecutionCourse) iter.next();
+            infoSiteCoursesInformation.add(getCourseInformation(executionCourse, sp, executionYear));
+        }
 
-            return infoSiteCoursesInformation;
+        return infoSiteCoursesInformation;
     }
 
     private List removeDuplicates(List executionCourses) {
@@ -212,8 +220,8 @@ public class ReadCoursesInformation implements IService {
             while (iter.hasNext()) {
                 List shifts;
                 InfoLesson infoLesson = (InfoLesson) iter.next();
-                ILesson lesson = (ILesson) persistentLesson
-                        .readByOID(Lesson.class, infoLesson.getIdInternal());
+                ILesson lesson = (ILesson) persistentLesson.readByOID(Lesson.class, infoLesson
+                        .getIdInternal());
                 shifts = persistentShift.readByLesson(lesson);
                 if (shifts != null && !shifts.isEmpty()) {
                     IShift aux = (IShift) shifts.get(0);
@@ -234,7 +242,7 @@ public class ReadCoursesInformation implements IService {
     /**
      * Filter all the lessons to remove duplicates entries of lessons with the
      * same type
-     * 
+     *  
      */
     private List getFilteredInfoLessons(List infoLessons) {
         List filteredInfoLessons = new ArrayList();
@@ -285,7 +293,7 @@ public class ReadCoursesInformation implements IService {
     private List getInfoLecturingTeachers(IExecutionCourse executionCourse, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-        List professorShips = persistentProfessorship.readByExecutionCourse(executionCourse);
+        List professorShips = persistentProfessorship.readByExecutionCourse(executionCourse.getIdInternal());
         List infoLecturingTeachers = new ArrayList();
         Iterator iter = professorShips.iterator();
         while (iter.hasNext()) {
@@ -309,7 +317,8 @@ public class ReadCoursesInformation implements IService {
             List infoScopes = getInfoScopes(curricularCourse.getScopes(), sp);
             infoCurricularCourse.setInfoScopes(infoScopes);
             ICurriculum curriculum = persistentCurriculum
-                    .readCurriculumByCurricularCourseAndExecutionYear(curricularCourse.getIdInternal(), executionYear.getEndDate());
+                    .readCurriculumByCurricularCourseAndExecutionYear(curricularCourse.getIdInternal(),
+                            executionYear.getEndDate());
             InfoCurriculum infoCurriculum = null;
             if (curriculum == null) {
                 infoCurriculum = new InfoCurriculum();
@@ -325,7 +334,8 @@ public class ReadCoursesInformation implements IService {
     private List getInfoResponsibleTeachers(IExecutionCourse executionCourse, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-        List responsiblesFor = persistentResponsibleFor.readByExecutionCourse(executionCourse.getIdInternal());
+        List responsiblesFor = persistentResponsibleFor.readByExecutionCourse(executionCourse
+                .getIdInternal());
         List infoResponsibleTeachers = new ArrayList();
         Iterator iter = responsiblesFor.iterator();
         while (iter.hasNext()) {
@@ -389,5 +399,13 @@ public class ReadCoursesInformation implements IService {
             infoLessons.add(InfoLesson.newInfoFromDomain(lesson));
         }
         return infoLessons;
+    }
+
+    private List<Integer> getDegreeCurricularPlanIDs(final List<IExecutionDegree> executionDegrees) {
+        final List<Integer> result = new ArrayList<Integer>();
+        for (final IExecutionDegree executionDegree : executionDegrees) {
+            result.add(executionDegree.getDegreeCurricularPlan().getIdInternal());
+        }
+        return result;
     }
 }

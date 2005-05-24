@@ -46,7 +46,7 @@ public class ReadInfoTeacherByTeacherNumber implements IService {
             throw new NonExistingServiceException("noTeacher");
         }
 
-        List professorShips = persistentProfessorship.readByTeacher(teacher);
+        List professorShips = persistentProfessorship.readByTeacher(teacher.getIdInternal());
 
         List responsibleFors = persistentResponsibleFor.readByTeacher(teacher.getIdInternal());
         if ((professorShips == null || professorShips.size() == 0)

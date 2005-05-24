@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ICoordinator;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
@@ -19,7 +18,6 @@ import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -162,42 +160,36 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
         return result;
     }
 
-    /**
-     * @param id
-     * @param argumentos
-     * @return
-     */
     private boolean lecturesExecutionCourse(IUserView id, Object[] argumentos) {
-        InfoExecutionCourse infoExecutionCourse = null;
-        IExecutionCourse executionCourse = null;
-        ISuportePersistente sp;
-        IProfessorship professorship = null;
+
+        Integer executionCourseID = null;
+
         if (argumentos == null) {
             return false;
         }
         try {
 
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+
             if (argumentos[0] instanceof InfoExecutionCourse) {
-                infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+                InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
+                executionCourseID = infoExecutionCourse.getIdInternal();
             } else {
-                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
-                        ExecutionCourse.class, (Integer) argumentos[0]);
+                executionCourseID = (Integer) argumentos[0];
             }
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            if (teacher != null && executionCourse != null) {
+            IProfessorship professorship = null;
+            if (teacher != null) {
                 IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-                professorship = persistentProfessorship.readByTeacherAndExecutionCoursePB(teacher,
-                        executionCourse);
+                professorship = persistentProfessorship.readByTeacherAndExecutionCourse(teacher
+                        .getIdInternal(), executionCourseID);
             }
+            return professorship != null;
+
         } catch (Exception e) {
             return false;
         }
-        return professorship != null;
     }
-
 }

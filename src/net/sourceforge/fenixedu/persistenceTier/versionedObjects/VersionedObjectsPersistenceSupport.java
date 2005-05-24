@@ -104,6 +104,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InsuranceVa
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ItemVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PersonAccountVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ProfessorshipVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ResponsibleForVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.RestrictionVO;
@@ -782,7 +783,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentProfessorship getIPersistentProfessorship() {
-        return null;
+        return new ProfessorshipVO();
     }
 
     public IPersistentSenior getIPersistentSenior() {

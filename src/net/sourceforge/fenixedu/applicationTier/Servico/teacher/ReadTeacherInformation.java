@@ -254,7 +254,7 @@ public class ReadTeacherInformation implements IService {
     private List getInfoLecturingExecutionCourses(ISuportePersistente sp, ITeacher teacher,
             final IExecutionYear wantedExecutionYear) throws ExcepcaoPersistencia {
         IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-        List professorships = persistentProfessorship.readByTeacher(teacher);
+        List professorships = persistentProfessorship.readByTeacher(teacher.getIdInternal());
 
         // filter only the execution courses of the wanted execution year
         professorships = (List) CollectionUtils.select(professorships, new Predicate() {

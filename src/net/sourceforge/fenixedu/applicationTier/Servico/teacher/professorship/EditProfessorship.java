@@ -22,55 +22,34 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
  */
 public class EditProfessorship extends EditDomainObjectService {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#canCreate(Dominio.IDomainObject)
-     */
-    protected boolean canCreate(IDomainObject domainObject) throws FenixServiceException {
+    protected boolean canCreate(IDomainObject domainObject) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
         IProfessorship professorship = (IProfessorship) domainObject;
         ISuportePersistente sp;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
-            IProfessorship professorshipFromDB = professorshipDAO.readByTeacherIDAndExecutionCourseID(
-                    professorship.getTeacher(), professorship.getExecutionCourse());
 
-            boolean isNewProfessorship = professorship.getIdInternal() == null
-                    || professorship.getIdInternal().intValue() == 0;
-            Integer wantedId = professorship.getIdInternal();
-            return ((!isNewProfessorship && (professorshipFromDB != null) && (professorshipFromDB
-                    .getIdInternal().equals(wantedId))) || (isNewProfessorship && (professorshipFromDB == null)));
+        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
+        IProfessorship professorshipFromDB = professorshipDAO.readByTeacherAndExecutionCourse(
+                professorship.getTeacher().getIdInternal(), professorship.getExecutionCourse()
+                        .getIdInternal());
 
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
+        boolean isNewProfessorship = professorship.getIdInternal() == null
+                || professorship.getIdInternal().intValue() == 0;
+        Integer wantedId = professorship.getIdInternal();
+        return ((!isNewProfessorship && (professorshipFromDB != null) && (professorshipFromDB
+                .getIdInternal().equals(wantedId))) || (isNewProfessorship && (professorshipFromDB == null)));
+
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(net.sourceforge.fenixedu.dataTransferObject.InfoObject)
-     */
     protected IDomainObject clone2DomainObject(InfoObject infoObject) {
         return Cloner.copyInfoProfessorship2IProfessorship((InfoProfessorship) infoObject);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-     */
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentProfessorship();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServico#getNome()
-     */
     public String getNome() {
         return "EditProfessorShip";
     }

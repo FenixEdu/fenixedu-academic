@@ -20,46 +20,25 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
  */
 public class EditShiftProfessorshipByOID extends EditDomainObjectService {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-     */
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentShiftProfessorship();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(net.sourceforge.fenixedu.dataTransferObject.InfoObject)
-     */
     protected IDomainObject clone2DomainObject(InfoObject infoObject) {
         return Cloner
                 .copyInfoShiftProfessorship2IShiftProfessorship((InfoShiftProfessorship) infoObject);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServico#getNome()
-     */
     public String getNome() {
         return "EditShiftProfessorshipByOID";
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#readObjectByUnique(Dominio.IDomainObject,
-     *      ServidorPersistente.ISuportePersistente)
-     */
     protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         IProfessorship professorship = (IProfessorship) domainObject;
         IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
-        professorship = professorshipDAO.readByTeacherAndExecutionCourse(professorship.getTeacher(),
-                professorship.getExecutionCourse());
+        professorship = professorshipDAO.readByTeacherAndExecutionCourse(professorship.getTeacher()
+                .getIdInternal(), professorship.getExecutionCourse().getIdInternal());
         return professorship;
     }
 

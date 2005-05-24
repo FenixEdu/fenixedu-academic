@@ -108,42 +108,36 @@ public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter extends A
         return item.getSection().getSite().getExecutionCourse().equals(executionCourse);
     }
 
-    /**
-     * @param id
-     * @param argumentos
-     * @return
-     */
     private boolean lecturesExecutionCourse(IUserView id, Object[] argumentos) {
-        InfoExecutionCourse infoExecutionCourse = null;
-        IExecutionCourse executionCourse = null;
-        ISuportePersistente sp;
-        IProfessorship professorship = null;
+
+        Integer executionCourseID = null;
+
         if (argumentos == null) {
             return false;
         }
         try {
 
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+
             if (argumentos[0] instanceof InfoExecutionCourse) {
-                infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+                InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
+                executionCourseID = infoExecutionCourse.getIdInternal();
             } else {
-                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
-                        ExecutionCourse.class, (Integer) argumentos[0]);
+                executionCourseID = (Integer) argumentos[0];
             }
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            if (teacher != null && executionCourse != null) {
+            IProfessorship professorship = null;
+            if (teacher != null) {
                 IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-                professorship = persistentProfessorship.readByTeacherAndExecutionCoursePB(teacher,
-                        executionCourse);
+                professorship = persistentProfessorship.readByTeacherAndExecutionCourse(teacher
+                        .getIdInternal(), executionCourseID);
             }
+            return professorship != null;
+
         } catch (Exception e) {
             return false;
         }
-        return professorship != null;
     }
-
 }

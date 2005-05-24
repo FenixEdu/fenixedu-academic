@@ -94,24 +94,33 @@ public class ReadTeachersInformation implements IService {
             executionYear = persistentExecutionYear.readCurrentExecutionYear();
         }
         if (executionDegreeId == null) {
-            List executionDegrees = persistentExecutionDegree.readByExecutionYear(executionYear
-                    .getYear());
+            List<IExecutionDegree> executionDegrees = persistentExecutionDegree
+                    .readByExecutionYear(executionYear.getYear());
+            List<Integer> degreeCurricularPlanIDs = getDegreeCurricularPlanIDs(executionDegrees);
+            Integer executionYearID = (!degreeCurricularPlanIDs.isEmpty()) ? ((IExecutionDegree) executionDegrees
+                    .get(0)).getExecutionYear().getIdInternal()
+                    : null;
 
             if (basic == null) {
-                professorships = persistentProfessorship.readByExecutionDegrees(executionDegrees);
+                professorships = persistentProfessorship.readByDegreeCurricularPlansAndExecutionYear(
+                        degreeCurricularPlanIDs, executionYearID);
             } else {
-                professorships = persistentProfessorship.readByExecutionDegreesAndBasic(
-                        executionDegrees, basic);
+                professorships = persistentProfessorship
+                        .readByDegreeCurricularPlansAndExecutionYearAndBasic(degreeCurricularPlanIDs,
+                                executionYearID, basic);
             }
         } else {
             IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
                     ExecutionDegree.class, executionDegreeId);
 
             if (basic == null) {
-                professorships = persistentProfessorship.readByExecutionDegree(executionDegree);
+                professorships = persistentProfessorship.readByDegreeCurricularPlanAndExecutionYear(
+                        executionDegree.getIdInternal(), executionDegree.getExecutionYear()
+                                .getIdInternal());
             } else {
-                professorships = persistentProfessorship.readByExecutionDegreeAndBasic(executionDegree,
-                        basic);
+                professorships = persistentProfessorship.readByDegreeCurricularPlanAndBasic(
+                        executionDegree.getIdInternal(), executionDegree.getExecutionYear()
+                                .getIdInternal(), basic);
             }
         }
 
@@ -303,7 +312,7 @@ public class ReadTeachersInformation implements IService {
     private List getInfoLecturingExecutionCourses(ITeacher teacher, ISuportePersistente sp,
             final IExecutionYear executionYear) throws ExcepcaoPersistencia {
         IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-        List professorships = persistentProfessorship.readByTeacher(teacher);
+        List professorships = persistentProfessorship.readByTeacher(teacher.getIdInternal());
 
         // filter only the execution courses of the chosen execution year or the
         // current in case none was chosen
@@ -417,5 +426,13 @@ public class ReadTeachersInformation implements IService {
             infoPublicationsNumber.setPublicationType(publicationType);
         }
         return infoPublicationsNumber;
+    }
+
+    private List getDegreeCurricularPlanIDs(final List<IExecutionDegree> executionDegrees) {
+        final List<Integer> result = new ArrayList<Integer>();
+        for (final IExecutionDegree executionDegree : executionDegrees) {
+            result.add(executionDegree.getDegreeCurricularPlan().getIdInternal());
+        }
+        return result;
     }
 }

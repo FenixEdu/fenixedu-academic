@@ -31,9 +31,15 @@ public class ResponsibleForOJB extends PersistentObjectOJB implements IPersisten
         return queryList(ResponsibleFor.class, criteria);
     }
 
-    public List readByTeacher(Integer teacherNumber) throws ExcepcaoPersistencia {
+    public List readByTeacherNumber(Integer teacherNumber) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("teacher.teacherNumber", teacherNumber);
+        return queryList(ResponsibleFor.class, criteria);
+    }
+    
+    public List readByTeacher(Integer teacherID) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("teacher.idInternal", teacherID);
         return queryList(ResponsibleFor.class, criteria);
     }
 

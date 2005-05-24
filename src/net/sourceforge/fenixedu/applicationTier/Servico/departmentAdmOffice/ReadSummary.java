@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.ISummary;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Summary;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
@@ -56,118 +57,105 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadSummary implements IService {
 
-    /**
-     *  
-     */
-    public ReadSummary() {
-    }
-
     public SiteView run(Integer teacherNumber, Integer executionCourseId, Integer summaryId)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
         SiteView siteView;
-        try {
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+        IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
-                    ExecutionCourse.class, executionCourseId);
-            if (executionCourse == null) {
-                throw new FenixServiceException("no.executioncourse");
-            }
-
-            IPersistentSite persistentSite = sp.getIPersistentSite();
-            ISite site = persistentSite.readByExecutionCourse(executionCourse.getIdInternal());
-            if (site == null) {
-                throw new FenixServiceException("no.site");
-            }
-
-            ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-            List shifts = persistentShift.readByExecutionCourse(executionCourse);
-            List infoShifts = new ArrayList();
-            if (shifts != null && shifts.size() > 0) {
-                infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
-
-                    public Object transform(Object arg0) {
-                        final IShift turno = (IShift) arg0;
-                        final InfoShift infoShift = InfoShift.newInfoFromDomain(turno);
-                        infoShift.setInfoLessons(new ArrayList(turno.getAssociatedLessons().size()));
-                        for (final Iterator iterator = turno.getAssociatedLessons().iterator(); iterator.hasNext(); ) {
-                            final ILesson lesson = (ILesson) iterator.next();
-                            final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
-                            final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(lesson.getSala());
-                            infoLesson.setInfoSala(infoRoom);
-                            infoShift.getInfoLessons().add(infoLesson);
-                        }
-                        return infoShift;
-                    }
-                });
-            }
-
-            IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-            List infoProfessorships = new ArrayList();
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
-            
-            if (teacher != null) {
-                IProfessorship professorship = persistentProfessorship.readByTeacherAndExecutionCourse(
-                        teacher, executionCourse);
-                if (professorship != null) {
-                    infoProfessorships.add(InfoProfessorshipWithAll.newInfoFromDomain(professorship));
-                }
-            }
-
-            ISalaPersistente persistentRoom = sp.getISalaPersistente();
-            List rooms = persistentRoom.readAll();
-            List infoRooms = new ArrayList();
-            if (rooms != null && rooms.size() > 0) {
-                infoRooms = (List) CollectionUtils.collect(rooms, new Transformer() {
-
-                    public Object transform(Object arg0) {
-                        IRoom room = (IRoom) arg0;
-                        return Cloner.copyRoom2InfoRoom(room);
-                    }
-                });
-            }
-            Collections.sort(infoRooms, new BeanComparator("nome"));
-
-            IPersistentSummary persistentSummary = sp.getIPersistentSummary();
-            ISummary summary = (ISummary) persistentSummary.readByOID(Summary.class, summaryId);
-            if (summary == null) {
-                throw new FenixServiceException("no.summary");
-            }
-            if (summary.getShift() == null) {
-                findBestShiftForSummary(summary, shifts);
-                if (summary.getShift() == null) {
-                    throw new FenixServiceException();
-                }
-            }
-
-            InfoSiteSummary bodyComponent = new InfoSiteSummary();
-            bodyComponent.setInfoSummary(InfoSummaryWithAll.newInfoFromDomain(summary));
-            bodyComponent.setExecutionCourse((InfoExecutionCourse) Cloner.get(executionCourse));
-            bodyComponent.setInfoShifts(infoShifts);
-            bodyComponent.setInfoProfessorships(infoProfessorships);
-            bodyComponent.setInfoRooms(infoRooms);
-
-            TeacherAdministrationSiteComponentBuilder componentBuilder = TeacherAdministrationSiteComponentBuilder
-                    .getInstance();
-            ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site,
-                    null, null, null);
-
-            siteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new FenixServiceException(e);
+        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                ExecutionCourse.class, executionCourseId);
+        if (executionCourse == null) {
+            throw new FenixServiceException("no.executioncourse");
         }
+
+        IPersistentSite persistentSite = sp.getIPersistentSite();
+        ISite site = persistentSite.readByExecutionCourse(executionCourse.getIdInternal());
+        if (site == null) {
+            throw new FenixServiceException("no.site");
+        }
+
+        ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+        List shifts = persistentShift.readByExecutionCourse(executionCourse);
+        List infoShifts = new ArrayList();
+        if (shifts != null && shifts.size() > 0) {
+            infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
+
+                public Object transform(Object arg0) {
+                    final IShift turno = (IShift) arg0;
+                    final InfoShift infoShift = InfoShift.newInfoFromDomain(turno);
+                    infoShift.setInfoLessons(new ArrayList(turno.getAssociatedLessons().size()));
+                    for (final Iterator iterator = turno.getAssociatedLessons().iterator(); iterator
+                            .hasNext();) {
+                        final ILesson lesson = (ILesson) iterator.next();
+                        final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
+                        final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(lesson.getSala());
+                        infoLesson.setInfoSala(infoRoom);
+                        infoShift.getInfoLessons().add(infoLesson);
+                    }
+                    return infoShift;
+                }
+            });
+        }
+
+        IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+        List infoProfessorships = new ArrayList();
+        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
+
+        if (teacher != null) {
+            IProfessorship professorship = persistentProfessorship.readByTeacherAndExecutionCourse(
+                    teacher.getIdInternal(), executionCourse.getIdInternal());
+            if (professorship != null) {
+                infoProfessorships.add(InfoProfessorshipWithAll.newInfoFromDomain(professorship));
+            }
+        }
+
+        ISalaPersistente persistentRoom = sp.getISalaPersistente();
+        List rooms = persistentRoom.readAll();
+        List infoRooms = new ArrayList();
+        if (rooms != null && rooms.size() > 0) {
+            infoRooms = (List) CollectionUtils.collect(rooms, new Transformer() {
+
+                public Object transform(Object arg0) {
+                    IRoom room = (IRoom) arg0;
+                    return Cloner.copyRoom2InfoRoom(room);
+                }
+            });
+        }
+        Collections.sort(infoRooms, new BeanComparator("nome"));
+
+        IPersistentSummary persistentSummary = sp.getIPersistentSummary();
+        ISummary summary = (ISummary) persistentSummary.readByOID(Summary.class, summaryId);
+        if (summary == null) {
+            throw new FenixServiceException("no.summary");
+        }
+        if (summary.getShift() == null) {
+            findBestShiftForSummary(summary, shifts);
+            if (summary.getShift() == null) {
+                throw new FenixServiceException();
+            }
+        }
+
+        InfoSiteSummary bodyComponent = new InfoSiteSummary();
+        bodyComponent.setInfoSummary(InfoSummaryWithAll.newInfoFromDomain(summary));
+        bodyComponent.setExecutionCourse((InfoExecutionCourse) Cloner.get(executionCourse));
+        bodyComponent.setInfoShifts(infoShifts);
+        bodyComponent.setInfoProfessorships(infoProfessorships);
+        bodyComponent.setInfoRooms(infoRooms);
+
+        TeacherAdministrationSiteComponentBuilder componentBuilder = TeacherAdministrationSiteComponentBuilder
+                .getInstance();
+        ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null,
+                null, null);
+
+        siteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
 
         return siteView;
     }
 
-    /**
-     * @param summary
-     */
     private void findBestShiftForSummary(ISummary summary, List shifts) {
         //choose the shift with:
         // 1. the same summary type / lesson type
@@ -176,13 +164,13 @@ public class ReadSummary implements IService {
         if (summary.getSummaryDate() != null && summary.getSummaryHour() != null && shifts != null
                 && shifts.size() >= 0) {
             Calendar dateAndHourSummary = Calendar.getInstance();
-            
+
             Calendar summaryDate = Calendar.getInstance();
             summaryDate.setTime(summary.getSummaryDate());
-            
+
             Calendar summaryHour = Calendar.getInstance();
             summaryHour.setTime(summary.getSummaryHour());
-            
+
             dateAndHourSummary.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
             dateAndHourSummary.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
             dateAndHourSummary.set(Calendar.YEAR, summaryDate.get(Calendar.YEAR));

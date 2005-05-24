@@ -25,20 +25,17 @@ public class ReadProfessorshipByTeacherIDandExecutionCourseID extends
     }
 
     public InfoProfessorship run(Integer teacherID, Integer executionCourseID)
-            throws FenixServiceException {
-        try {
+            throws FenixServiceException, ExcepcaoPersistencia {
+
             ISuportePersistente persistentSuport;
             persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentProfessorship persistentProfessorship = persistentSuport
                     .getIPersistentProfessorship();
 
-            IProfessorship professorship = persistentProfessorship.readByTeacherIDandExecutionCourseID(
+            IProfessorship professorship = persistentProfessorship.readByTeacherAndExecutionCourse(
                     teacherID, executionCourseID);
             InfoProfessorship infoProfessorship = InfoProfessorship.newInfoFromDomain(professorship);
 
             return infoProfessorship;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException("Problems on database!", e);
-        }
     }
 }

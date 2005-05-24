@@ -103,7 +103,7 @@ public class ReadSummaries implements IService {
         //execution courses's professorships for display to filter summary
         IPersistentProfessorship persistentProfessorship = persistentSuport
                 .getIPersistentProfessorship();
-        List professorships = persistentProfessorship.readByExecutionCourse(executionCourse);
+        List professorships = persistentProfessorship.readByExecutionCourse(executionCourseId);
         List infoProfessorships = new ArrayList();
         if (professorships != null && professorships.size() > 0) {
             infoProfessorships = (List) CollectionUtils.collect(professorships, new Transformer() {

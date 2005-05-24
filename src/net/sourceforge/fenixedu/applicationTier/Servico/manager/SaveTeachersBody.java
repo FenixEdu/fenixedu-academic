@@ -100,7 +100,7 @@ public class SaveTeachersBody implements IService {
 
         // get the ids of the teachers that used to teach the course
         IPersistentProfessorship persistentProfessorShip = sp.getIPersistentProfessorship();
-        List oldProfessorShips = persistentProfessorShip.readByExecutionCourse(executionCourse);
+        List oldProfessorShips = persistentProfessorShip.readByExecutionCourse(executionCourse.getIdInternal());
         List oldProfessorShipTeachersIds = new ArrayList();
         if (oldProfessorShips != null && !oldProfessorShips.isEmpty()) {
 
@@ -121,7 +121,7 @@ public class SaveTeachersBody implements IService {
 
                     IPersistentSummary persistentSummary = sp.getIPersistentSummary();
                     IProfessorship professorship2 = persistentProfessorShip
-                            .readByTeacherIDandExecutionCourseID(id, executionCourseId);
+                            .readByTeacherAndExecutionCourse(id, executionCourseId);
                     List summaryList = persistentSummary.readByTeacher(professorship2
                             .getExecutionCourse().getIdInternal(), professorship2.getTeacher()
                             .getTeacherNumber());

@@ -67,12 +67,14 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionP
 
         List professorships;
         if (semester.intValue() == 0)
-            professorships = persistentProfessorship.readByExecutionDegree(executionDegree);
+            professorships = persistentProfessorship.readByDegreeCurricularPlanAndExecutionYear(
+                    executionDegree.getDegreeCurricularPlan().getIdInternal(), executionDegree
+                    .getExecutionYear().getIdInternal());
         else {
             IExecutionPeriod executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(
                     semester, executionDegree.getExecutionYear().getYear());
-            professorships = persistentProfessorship.readByExecutionDegreeAndExecutionPeriod(
-                    executionDegree, executionPeriod);
+            professorships = persistentProfessorship.readByDegreeCurricularPlanAndExecutionPeriod(
+                    executionDegree.getDegreeCurricularPlan().getIdInternal(), executionPeriod.getIdInternal());
         }
 
         List responsibleFors = persistentResponsibleFor.readByExecutionDegree(executionDegree

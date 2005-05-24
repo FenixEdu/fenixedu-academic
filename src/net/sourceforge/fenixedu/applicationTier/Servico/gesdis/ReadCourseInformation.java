@@ -469,16 +469,10 @@ public class ReadCourseInformation implements IService {
         return infoBibliographicReferences;
     }
 
-    /**
-     * @param executionCourse
-     * @param sp
-     * @return
-     * @throws ExcepcaoPersistencia
-     */
     private List getInfoLecturingTeachers(IExecutionCourse executionCourse, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-        List professorShips = persistentProfessorship.readByExecutionCourse(executionCourse);
+        List professorShips = persistentProfessorship.readByExecutionCourse(executionCourse.getIdInternal());
 
         List infoLecturingTeachers = new ArrayList();
         Iterator iter = professorShips.iterator();
@@ -491,12 +485,6 @@ public class ReadCourseInformation implements IService {
         return infoLecturingTeachers;
     }
 
-    /**
-     * @param curricularCourses
-     * @param sp
-     * @return
-     * @throws ExcepcaoPersistencia
-     */
     private List getInfoCurriculums(List curricularCourses, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();

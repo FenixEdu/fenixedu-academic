@@ -101,7 +101,6 @@ public class DissociateProfessorShipsAndResponsibleFor implements IService {
 
                     if ((shiftProfessorships == null || shiftProfessorships.size() == 0)
                             && (supportLessons == null || supportLessons.size() == 0)) {
-                        persistentProfessorship.delete(professorship);
 
                         IPersistentSummary persistentSummary = sp.getIPersistentSummary();
                         List summaryList = persistentSummary.readByTeacher(professorship.getExecutionCourse().getIdInternal(), professorship.getTeacher().getTeacherNumber());
@@ -113,6 +112,7 @@ public class DissociateProfessorShipsAndResponsibleFor implements IService {
                                 summary.setKeyProfessorship(null);
                             }
                         }
+                        deleteProfessorship(persistentProfessorship, professorship);
 
                     } else {
                         if (supportLessons.size() > 0) {
@@ -144,5 +144,27 @@ public class DissociateProfessorShipsAndResponsibleFor implements IService {
         }
 
         return professorshipsNotRemoved;
+    }
+    
+    private void deleteProfessorship(final IPersistentProfessorship persistentProfessorship,
+            final IProfessorship professorshipToDelete) throws ExcepcaoPersistencia {
+        
+        if (professorshipToDelete.getAssociatedSummaries() != null)
+            professorshipToDelete.getAssociatedSummaries().clear();
+        if (professorshipToDelete.getSupportLessons() != null)
+            professorshipToDelete.getSupportLessons().clear();
+        
+        if (professorshipToDelete.getAssociatedShiftProfessorship() != null)
+            professorshipToDelete.getAssociatedShiftProfessorship().clear();
+
+        if (professorshipToDelete.getExecutionCourse().getProfessorships() != null) {
+            professorshipToDelete.getExecutionCourse().getProfessorships().remove(professorshipToDelete);
+        }
+        professorshipToDelete.setExecutionCourse(null);
+        if (professorshipToDelete.getTeacher().getProfessorships() != null) {
+            professorshipToDelete.getTeacher().getProfessorships().remove(professorshipToDelete);
+        }
+        professorshipToDelete.setTeacher(null);
+        persistentProfessorship.deleteByOID(Professorship.class, professorshipToDelete.getIdInternal());
     }
 }

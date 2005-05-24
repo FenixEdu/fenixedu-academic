@@ -657,7 +657,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
             IExecutionCourse executionCourse = site.getExecutionCourse();
             List teachers = persistentProfessorship
-                    .readByExecutionCourse(executionCourse);
+                    .readByExecutionCourse(executionCourse.getIdInternal());
             List infoTeachers = new ArrayList();
             if (teachers != null) {
 

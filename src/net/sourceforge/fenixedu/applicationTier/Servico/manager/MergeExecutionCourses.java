@@ -33,6 +33,7 @@ import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.ISummary;
 import net.sourceforge.fenixedu.domain.ISupportLesson;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ResponsibleFor;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
@@ -349,11 +350,11 @@ public class MergeExecutionCourses implements IService {
         IPersistentShiftProfessorship persistentShiftProfessorship = ps
                 .getIPersistentShiftProfessorship();
         IPersistentSupportLesson persistentSupportLesson = ps.getIPersistentSupportLesson();
-        List destinationProfessorships = persistentProfessorship.readByExecutionCourse(destination);
+        List destinationProfessorships = persistentProfessorship.readByExecutionCourse(destination.getIdInternal());
         if (destinationProfessorships == null) {
             destinationProfessorships = new ArrayList();
         }
-        List sourceProfessorships = persistentProfessorship.readByExecutionCourse(source);
+        List sourceProfessorships = persistentProfessorship.readByExecutionCourse(source.getIdInternal());
         if (sourceProfessorships != null) {
 
             Iterator iter = sourceProfessorships.iterator();
@@ -404,8 +405,7 @@ public class MergeExecutionCourses implements IService {
                             summary.setKeyProfessorship(null);
                         }
                     }
-
-                    persistentProfessorship.delete(professorship);
+                    deleteProfessorship(persistentProfessorship, professorship);
                 }
             }
         }
@@ -444,4 +444,27 @@ public class MergeExecutionCourses implements IService {
             }
         }
     }
+    
+    private void deleteProfessorship(final IPersistentProfessorship persistentProfessorship,
+            final IProfessorship professorshipToDelete) throws ExcepcaoPersistencia {
+        
+        if (professorshipToDelete.getAssociatedSummaries() != null)
+            professorshipToDelete.getAssociatedSummaries().clear();
+        if (professorshipToDelete.getSupportLessons() != null)
+            professorshipToDelete.getSupportLessons().clear();
+        
+        if (professorshipToDelete.getAssociatedShiftProfessorship() != null)
+            professorshipToDelete.getAssociatedShiftProfessorship().clear();
+
+        if (professorshipToDelete.getExecutionCourse().getProfessorships() != null) {
+            professorshipToDelete.getExecutionCourse().getProfessorships().remove(professorshipToDelete);
+        }
+        professorshipToDelete.setExecutionCourse(null);
+        if (professorshipToDelete.getTeacher().getProfessorships() != null) {
+            professorshipToDelete.getTeacher().getProfessorships().remove(professorshipToDelete);
+        }
+        professorshipToDelete.setTeacher(null);
+        persistentProfessorship.deleteByOID(Professorship.class, professorshipToDelete.getIdInternal());
+    }
+
 }

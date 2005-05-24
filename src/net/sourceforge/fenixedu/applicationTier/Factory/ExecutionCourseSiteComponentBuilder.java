@@ -175,7 +175,7 @@ public class ExecutionCourseSiteComponentBuilder {
             //execution courses's professorships for display to filter summary
             IPersistentProfessorship persistentProfessorship = persistentSuport
                     .getIPersistentProfessorship();
-            List professorships = persistentProfessorship.readByExecutionCourse(executionCourse);
+            List professorships = persistentProfessorship.readByExecutionCourse(executionCourse.getIdInternal());
             List infoProfessorships = new ArrayList();
             if (professorships != null && professorships.size() > 0) {
                 infoProfessorships = (List) CollectionUtils.collect(professorships, new Transformer() {
@@ -803,7 +803,7 @@ public class ExecutionCourseSiteComponentBuilder {
         List domainLecturingTeachersList = null;
         IPersistentProfessorship persistentProfessorship = persistentSupport
                 .getIPersistentProfessorship();
-        domainLecturingTeachersList = persistentProfessorship.readByExecutionCourse(executionCourse);
+        domainLecturingTeachersList = persistentProfessorship.readByExecutionCourse(executionCourse.getIdInternal());
 
         List lecturingInfoTeachersList = new ArrayList();
         if (domainLecturingTeachersList != null) {
