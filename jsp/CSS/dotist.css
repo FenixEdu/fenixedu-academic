@@ -90,7 +90,7 @@ a:hover {
 #header {
 	display: block;
 	height: 70px;
-	background: url("fenix/images/header_bck.gif") repeat-x top;
+	background: url("../images/header_bck.gif") repeat-x top;
 	padding: 0 0 0 20px;
 	margin: 0;
 	}
