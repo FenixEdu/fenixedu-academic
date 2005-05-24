@@ -152,19 +152,22 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
             //Verify the cost center
             if (infoGrantContractRegime.getGrantCostCenterInfo() != null) {          	
             	if (infoGrantContractRegime.getGrantCostCenterInfo().getNumber().length() != 0){
-                InfoGrantCostCenter infoGrantCostCenter = null;
-                Object[] argsCostCenter = { infoGrantContractRegime.getGrantCostCenterInfo().getNumber() };
-                
-                infoGrantCostCenter = (InfoGrantCostCenter) ServiceUtils.executeService(userView, "ReadCostCenterByNumber",
-                		argsCostCenter);
-                if (infoGrantCostCenter == null) {
-                    return setError(request, mapping, "errors.grant.contract.regime.unknownTeacher",
-                            null, infoGrantContractRegime.getInfoTeacher().getTeacherNumber());
-                }
-             
-                infoGrantContractRegime.setGrantCostCenterInfo(infoGrantCostCenter);
+                    InfoGrantCostCenter infoGrantCostCenter = null;
+                    Object[] argsCostCenter = { infoGrantContractRegime.getGrantCostCenterInfo().getNumber() };
+                    
+                    infoGrantCostCenter = (InfoGrantCostCenter) ServiceUtils.executeService(userView, "ReadCostCenterByNumber",
+                    		argsCostCenter);
+                    if (infoGrantCostCenter == null) {
+                        return setError(request, mapping, "errors.grant.contract.regime.unknownTeacher",
+                                null, infoGrantContractRegime.getInfoTeacher().getTeacherNumber());
+                    }
+                 
+                    infoGrantContractRegime.setGrantCostCenterInfo(infoGrantCostCenter);
             	}
+            }else{
+                infoGrantContractRegime.setGrantCostCenterInfo(null); 
             }
+                
 
             if (infoGrantContractRegime.getState().equals(new Integer(-1))) {
                 //If is a new Regime

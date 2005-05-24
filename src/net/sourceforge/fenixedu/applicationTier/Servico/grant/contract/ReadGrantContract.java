@@ -77,7 +77,7 @@ public class ReadGrantContract extends ReadDomainObjectService implements IServi
             //get the GrantOrientationTeacher for the contract
             IGrantOrientationTeacher orientationTeacher = pgot
                     .readActualGrantOrientationTeacherByContract(contract.getIdInternal(), new Integer(0));
-          
+//System.out.println("WWWWWWWWWWWWWWWWWW"+orientationTeacher.getIdInternal());         
             InfoGrantOrientationTeacher infoOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract
                     .newInfoFromDomain(orientationTeacher);
             infoGrantContract.setGrantOrientationTeacherInfo(infoOrientationTeacher);

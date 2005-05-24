@@ -18,7 +18,8 @@ public class InfoGrantContractRegimeWithTeacherAndContract extends InfoGrantCont
         if (grantContractRegime != null) {
         	
             setInfoTeacher(InfoTeacherWithPerson.newInfoFromDomain(grantContractRegime.getTeacher()));
-            setGrantCostCenterInfo(InfoGrantCostCenter.newInfoFromDomain(grantContractRegime.getGrantContract().getGrantCostCenter()));
+            if (grantContractRegime.getGrantContract().getGrantCostCenter()!=null)
+                setGrantCostCenterInfo(InfoGrantCostCenter.newInfoFromDomain(grantContractRegime.getGrantContract().getGrantCostCenter()));
            
             if (grantContractRegime.getGrantContract() != null) {
                 setInfoGrantContract(InfoGrantContractWithGrantOwnerAndGrantType

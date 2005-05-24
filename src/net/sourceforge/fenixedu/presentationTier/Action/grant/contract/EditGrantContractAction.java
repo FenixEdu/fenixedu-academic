@@ -133,32 +133,37 @@ public class EditGrantContractAction extends FenixDispatchAction {
             
             //Edit Grant Contract
             Object[] args = { infoGrantContract };
-            ServiceUtils.executeService(userView, "EditGrantContract", args);
-  
+            ServiceUtils.executeService(userView, "CreateOrEditGrantContract", args);
+
             if (infoGrantContract.getIdInternal() == null
                     || infoGrantContract.getIdInternal().equals(new Integer(0))) //In
             // case of a new contract
             {
-            	 
                 Object[] argcontract = { infoGrantContract.getGrantOwnerInfo().getIdInternal() };
                 infoGrantContract = null;
                 infoGrantContract = (InfoGrantContract) ServiceUtils.executeService(userView,
                         "ReadLastGrantContractCreatedByGrantOwner", argcontract);
+                
+                
                infoGrantContractRegime.setInfoTeacher(infoGrantContract
                         .getGrantOrientationTeacherInfo().getOrientationTeacherInfo());         
-               if (infoGrantContract.getGrantCostCenterInfo()!=null){
-                infoGrantContractRegime.setGrantCostCenterInfo(infoGrantContract.getGrantCostCenterInfo());             
-                infoGrantContractRegime.setCostCenterKey(infoGrantContract.getGrantCostCenterInfo().getIdInternal());
-               }
-               infoGrantContractRegime.setInfoGrantContract(infoGrantContract);
+                 if (infoGrantContract.getGrantCostCenterInfo()!=null){
+                    infoGrantContractRegime.setGrantCostCenterInfo(infoGrantContract.getGrantCostCenterInfo());             
+                    infoGrantContractRegime.setCostCenterKey(infoGrantContract.getGrantCostCenterInfo().getIdInternal());
+                   }
+                   infoGrantContractRegime.setInfoGrantContract(infoGrantContract);
                
-            } else {
-                infoGrantContractRegime.setGrantCostCenterInfo(infoGrantContract.getGrantCostCenterInfo());
-                infoGrantContractRegime.setCostCenterKey(infoGrantContract.getGrantCostCenterInfo().getIdInternal());
+            } else {               
+                if (infoGrantContract.getGrantCostCenterInfo()!=null && ((infoGrantContractRegime.getGrantCostCenterInfo().getNumber()).trim()).length()>0){
+                    infoGrantContractRegime.setGrantCostCenterInfo(infoGrantContract.getGrantCostCenterInfo());
+                    infoGrantContractRegime.setCostCenterKey(infoGrantContract.getGrantCostCenterInfo().getIdInternal());
+                }
+
+                infoGrantContractRegime.setInfoTeacher(infoGrantContract
+                        .getGrantOrientationTeacherInfo().getOrientationTeacherInfo());  
              	infoGrantContractRegime.setInfoGrantContract(infoGrantContract);
             	
             }
-            
             //Edit Grant Contract Regime
             Object[] argregime = { infoGrantContractRegime };
             ServiceUtils.executeService(userView, "EditGrantContractRegime", argregime);
@@ -251,8 +256,14 @@ public class EditGrantContractAction extends FenixDispatchAction {
         infoGrantContract.setGrantTypeInfo(infoGrantType);
         
 //      Setting Grant Cost Center
-        infoGrantCostCenter.setIdInternal((Integer) editGrantContractForm.get("grantCostCenterId"));
-        infoGrantCostCenter.setNumber((String) editGrantContractForm.get("keyCostCenterNumber"));
+
+        if (verifyStringParameterInForm(editGrantContractForm, "grantCostCenterId")){
+            if ((Integer)editGrantContractForm.get("grantCostCenterId")!=0)
+                infoGrantCostCenter.setIdInternal((Integer) editGrantContractForm.get("grantCostCenterId"));
+        }
+   
+        if (verifyStringParameterInForm(editGrantContractForm, "keyCostCenterNumber"))
+            infoGrantCostCenter.setNumber((String) editGrantContractForm.get("keyCostCenterNumber"));
         infoGrantContract.setGrantCostCenterInfo(infoGrantCostCenter);
      	
         //Setting Grant Orientation Teacher
@@ -267,8 +278,8 @@ public class EditGrantContractAction extends FenixDispatchAction {
         infoTeacher.setTeacherNumber(new Integer((String) editGrantContractForm
                 .get("grantContractOrientationTeacherNumber")));
         orientationTeacher.setOrientationTeacherInfo(infoTeacher);
-        orientationTeacher.setIdInternal((Integer) editGrantContractForm
-                .get("grantContractOrientationTeacherId"));
+//        orientationTeacher.setIdInternal((Integer) editGrantContractForm
+//                .get("grantContractOrientationTeacherId"));
         infoGrantContract.setGrantOrientationTeacherInfo(orientationTeacher);
 
         return infoGrantContract;
@@ -281,6 +292,8 @@ public class EditGrantContractAction extends FenixDispatchAction {
             DynaValidatorForm editGrantContractForm) throws Exception {
         InfoGrantContractRegime infoGrantContractRegime = new InfoGrantContractRegime();
         InfoGrantCostCenter infoGrantCostCenter = new InfoGrantCostCenter();
+        InfoGrantOrientationTeacher orientationTeacher = new InfoGrantOrientationTeacher();
+        InfoTeacher infoTeacher = new InfoTeacher();
 
         if (verifyStringParameterInForm(editGrantContractForm, "grantContractRegimeId"))
             infoGrantContractRegime.setIdInternal((Integer) editGrantContractForm
@@ -310,6 +323,15 @@ public class EditGrantContractAction extends FenixDispatchAction {
         infoGrantCostCenter.setNumber((String) editGrantContractForm.get("keyCostCenterNumber"));
         infoGrantCostCenter.setIdInternal((Integer) editGrantContractForm.get("grantCostCenterId"));
         infoGrantContractRegime.setGrantCostCenterInfo(infoGrantCostCenter);
+        
+        
+        
+        infoTeacher.setTeacherNumber(new Integer((String) editGrantContractForm
+                .get("grantContractOrientationTeacherNumber")));
+        orientationTeacher.setOrientationTeacherInfo(infoTeacher);
+        orientationTeacher.setIdInternal((Integer) editGrantContractForm
+                .get("grantContractOrientationTeacherId"));
+        infoGrantContractRegime.setInfoTeacher(infoTeacher);
   
         return infoGrantContractRegime;
     }

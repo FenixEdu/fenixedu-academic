@@ -164,10 +164,10 @@ public class InfoGrantContract extends InfoObject {
         if (grantContract != null) {
             setContractNumber(grantContract.getContractNumber());
             setEndContractMotive(grantContract.getEndContractMotive());
-            if (grantContract.getGrantCostCenter()!=null) {    
-            	setCostCenterKey(grantContract.getGrantCostCenter().getIdInternal());
-            	setGrantCostCenterInfo(InfoGrantCostCenter.newInfoFromDomain(grantContract.getGrantCostCenter()));
-            }
+//            if (grantContract.getGrantCostCenter()!= null || grantContract.getGrantCostCenter().getIdInternal()!= new Integer(0)) {    
+//            	setCostCenterKey(grantContract.getGrantCostCenter().getIdInternal());
+//            	setGrantCostCenterInfo(InfoGrantCostCenter.newInfoFromDomain(grantContract.getGrantCostCenter()));
+//            }
             setDateAcceptTerm(grantContract.getDateAcceptTerm());      
     
         }
