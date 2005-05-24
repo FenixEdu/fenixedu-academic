@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantInsurance;
@@ -96,7 +95,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
                         .getIdInternal());
                 IGrantCostCenter grantCostCenter = new GrantCostCenter();
                 if (infoGrantContractRegime.getGrantCostCenterInfo()!= null && ((infoGrantContractRegime.getGrantCostCenterInfo().getNumber()).trim()).length()>0) {   //||        
-                        grantCostCenter = (IGrantCostCenter) pGrantCostCenter
+                        grantCostCenter = pGrantCostCenter
                                 .readGrantCostCenterByNumber(infoGrantContractRegime
                                         .getGrantCostCenterInfo().getNumber());
                         if (grantCostCenter == null)
@@ -118,10 +117,10 @@ public class EditGrantContractRegime extends EditDomainObjectService {
                 if (infoGrantContractRegime.getInfoTeacher() != null) {
                     if (infoGrantContractRegime.getInfoTeacher().getTeacherNumber().equals(grantOrientationTeacher.getOrientationTeacher().getTeacherNumber())){
                     //Update grant orientation teacher of contract
-                       infoTeacher = (InfoTeacher)InfoTeacherWithPerson.newInfoFromDomain(grantOrientationTeacher.getOrientationTeacher()); //
+                       infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(grantOrientationTeacher.getOrientationTeacher()); //
                     }else{
-                        final ITeacher teacher = (ITeacher) pTeacher.readByNumber(infoGrantContractRegime.getInfoTeacher().getTeacherNumber());
-                        infoTeacher = (InfoTeacher)InfoTeacherWithPerson.newInfoFromDomain(teacher);                    
+                        final ITeacher teacher = pTeacher.readByNumber(infoGrantContractRegime.getInfoTeacher().getTeacherNumber());
+                        infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);                    
                     }
                     
                     
