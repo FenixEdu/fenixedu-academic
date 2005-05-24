@@ -6,4 +6,8 @@ public enum GraduationType {
     
     MASTER_DEGREE;
     
+    public String getName() {
+        return name();
+    }
+    
 }
