@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.Period;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExamStudentRoom;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -43,7 +44,8 @@ public class DeleteExamNew implements IService {
             }
 
             IPersistentExamStudentRoom persistentExamStudentRoom = sp.getIPersistentExamStudentRoom();
-            List examStudentRoomList = persistentExamStudentRoom.readByExamOID(examToDelete.getIdInternal());
+            List examStudentRoomList = persistentExamStudentRoom.readByExamOID(examToDelete
+                    .getIdInternal());
             if (examStudentRoomList != null && examStudentRoomList.size() > 0) {
                 throw new notAuthorizedServiceDeleteException(
                         "error.notAuthorizedExamDelete.withStudent");
@@ -67,8 +69,13 @@ public class DeleteExamNew implements IService {
                     sp.getIPersistentRoomOccupation().delete(roomOccupation);
                 }
                 if (period != null) {
-                    if (isEmpty) {
-                        sp.getIPersistentPeriod().delete(period);
+                    if (isEmpty && period.getExecutionDegreesForExamsFirstSemester().isEmpty()
+                            && period.getExecutionDegreesForExamsSecondSemester().isEmpty()
+                            && period.getExecutionDegreesForLessonsFirstSemester().isEmpty()
+                            && period.getExecutionDegreesForLessonsSecondSemester().isEmpty()) {
+                        //sp.getIPersistentPeriod().delete(period);
+                        sp.getIPersistentPeriod().deleteByOID(Period.class, period.getIdInternal());
+
                     }
                 }
             }

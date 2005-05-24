@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.domain.Period;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
@@ -15,15 +14,9 @@ import org.apache.ojb.broker.query.Criteria;
 
 /**
  * @author Ana e Ricardo
- *  
+ * 
  */
 public class PeriodOJB extends ObjectFenixOJB implements IPersistentPeriod {
-
-    public void delete(IPeriod period) throws ExcepcaoPersistencia {
-        // TO DO falta apagar as ligações a outras tabelas
-        super.delete(period);
-
-    }
 
     public Object readByCalendarAndNextPeriod(Calendar startDate, Calendar endDate, Integer keyNextPeriod)
             throws ExcepcaoPersistencia {
