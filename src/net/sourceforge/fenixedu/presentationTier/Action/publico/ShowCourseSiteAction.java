@@ -113,15 +113,13 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
             Collections.sort(infoCurriculum.getInfoCurricularCourse().getInfoScopes(), comparatorChain);
         }
         infoCurriculum.getInfoCurricularCourse().getInfoDegreeCurricularPlan().getInfoDegree().prepareEnglishPresentation(language);
-       
+        infoCurriculum.getInfoCurricularCourse().prepareEnglishPresentation(language);
         infoCurriculum.prepareEnglishPresentation(language);
         request.setAttribute("infoCurriculum", infoCurriculum);
 
-        if (inEnglish == null || inEnglish.booleanValue() == false) {
-            return mapping.findForward("showCurricularCourseSite");
-        }
-
-        return mapping.findForward("showCurricularCourseSiteEnglish");
+        
+        return mapping.findForward("showCurricularCourseSite");
+       
 
     }
 
