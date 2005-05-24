@@ -40,7 +40,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 public class CreateGuideFromTransactions implements IService {
 
@@ -83,12 +83,12 @@ public class CreateGuideFromTransactions implements IService {
         infoGuideSituation.setInfoGuide(infoGuide);
 
         Calendar calendar = Calendar.getInstance();
-        //infoGuideSituation.setDate(calendar.getTime());
+        // infoGuideSituation.setDate(calendar.getTime());
         infoGuideSituation.setSituation(situationOfGuide);
 
         guide = InfoGuide.newDomainFromInfo(infoGuide);
-        
-        //      FIXME: Remove the : guide.setGuideEntries(null); WHY????
+
+        // FIXME: Remove the : guide.setGuideEntries(null); WHY????
         guide.setGuideEntries(null);
         try {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -99,13 +99,14 @@ public class CreateGuideFromTransactions implements IService {
             }
 
             // Get the Execution Degree
-            IExecutionDegree executionDegree = sp.getIPersistentExecutionDegree()
-                    .readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
+            IExecutionDegree executionDegree = sp
+                    .getIPersistentExecutionDegree()
+                    .readByDegreeCurricularPlanAndExecutionYear(
+                            infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName(),
                             infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan()
                                     .getInfoDegree().getSigla(),
-                            infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName(),
-                            InfoExecutionYear.newDomainFromInfo(infoGuide
-                                    .getInfoExecutionDegree().getInfoExecutionYear()));
+                            InfoExecutionYear.newDomainFromInfo(
+                                    infoGuide.getInfoExecutionDegree().getInfoExecutionYear()).getYear());
 
             contributor = sp.getIPersistentContributor().readByContributorNumber(
                     infoGuide.getInfoContributor().getContributorNumber());
@@ -155,11 +156,11 @@ public class CreateGuideFromTransactions implements IService {
                 guideEntry.setGuide(guide);
 
                 transaction.setGuideEntry(guideEntry);
-                
+
                 guide.setCreationDate(transaction.getTransactionDate());
                 guide.setPaymentDate(transaction.getTransactionDate());
                 infoGuideSituation.setDate(transaction.getTransactionDate());
-                
+
             }
 
             // Guide Total Price
@@ -168,7 +169,8 @@ public class CreateGuideFromTransactions implements IService {
             guide.setGuideEntries(guideEntries);
 
             // Write the New Guide Situation
-            guideSituation = new GuideSituation(infoGuideSituation.getSituation(),infoGuideSituation.getRemarks(),infoGuideSituation.getDate(),guide,infoGuideSituation.getState());
+            guideSituation = new GuideSituation(infoGuideSituation.getSituation(), infoGuideSituation
+                    .getRemarks(), infoGuideSituation.getDate(), guide, infoGuideSituation.getState());
             sp.getIPersistentGuideSituation().simpleLockWrite(guideSituation);
 
             guide.setGuideSituations(new ArrayList());

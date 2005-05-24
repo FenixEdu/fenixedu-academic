@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.SchoolClass;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
 
@@ -100,14 +99,6 @@ public class TurmaOJB extends PersistentObjectOJB implements ITurmaPersistente {
 
     }
 
-    public List readByDegreeNameAndDegreeCode(String name, String code) throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();
-        crit.addEqualTo("executionDegree.degreeCurricularPlan.degree.nome", name);
-        crit.addEqualTo("executionDegree.degreeCurricularPlan.degree.sigla", code);
-        return queryList(SchoolClass.class, crit);
-
-    }
-
     /*
      * (non-Javadoc)
      * 
@@ -132,18 +123,6 @@ public class TurmaOJB extends PersistentObjectOJB implements ITurmaPersistente {
                 .getDegreeCurricularPlan().getDegree().getSigla());
         return queryList(SchoolClass.class, crit);
 
-    }
-
-    public List readByExecutionPeriodAndDegreeType(IExecutionPeriod executionPeriod, DegreeType tipoCurso)
-            throws ExcepcaoPersistencia {
-
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("executionPeriod.executionYear.year", executionPeriod.getExecutionYear()
-                .getYear());
-        criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
-        criteria.addEqualTo("executionDegree.degreeCurricularPlan.degree.tipoCurso", tipoCurso);
-        //Query queryPB = new QueryByCriteria(SchoolClass.class, criteria);
-        return queryList(SchoolClass.class, criteria);
     }
 
     public List readByExecutionDegreeAndExecutionPeriod(IExecutionDegree execucao,

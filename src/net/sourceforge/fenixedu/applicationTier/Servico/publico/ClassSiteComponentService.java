@@ -31,7 +31,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author João Mota
  * 
- *  
+ * 
  */
 public class ClassSiteComponentService implements IService {
 
@@ -59,8 +59,8 @@ public class ClassSiteComponentService implements IService {
                     executionPeriodName, executionYear.getYear());
 
             IExecutionDegree executionDegree = executionDegreeDAO
-                    .readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(degreeInitials,
-                            nameDegreeCurricularPlan, executionYear);
+                    .readByDegreeCurricularPlanAndExecutionYear(nameDegreeCurricularPlan,
+                            degreeInitials, executionYear.getYear());
             PublicSiteComponentBuilder componentBuilder = PublicSiteComponentBuilder.getInstance();
             ISchoolClass domainClass;
             if (classId == null) {

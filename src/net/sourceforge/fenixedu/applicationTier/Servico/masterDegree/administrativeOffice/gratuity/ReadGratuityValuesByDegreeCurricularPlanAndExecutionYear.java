@@ -32,7 +32,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear implements IService {
 
@@ -61,15 +61,17 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear implements
                 throw new FenixServiceException("error.impossible.noGratuityValues");
             }
 
-            //read execution degree
+            // read execution degree
             IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
             IExecutionDegree executionDegree = persistentExecutionDegree
-                    .readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+                    .readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan.getName(),
+                            degreeCurricularPlan.getDegree().getSigla(), executionYear.getYear());
+
             if (executionDegree == null) {
                 throw new FenixServiceException("error.impossible.noGratuityValues");
             }
 
-            //read execution degree's gratuity values
+            // read execution degree's gratuity values
             IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGratuityValues();
             gratuityValues = persistentGratuityValues
                     .readGratuityValuesByExecutionDegree(executionDegree);
@@ -81,7 +83,8 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear implements
 
         InfoGratuityValues infoGratuityValues = null;
         if (gratuityValues != null) {
-            infoGratuityValues = InfoGratuityValuesWithInfoExecutionDegree.newInfoFromDomain(gratuityValues);
+            infoGratuityValues = InfoGratuityValuesWithInfoExecutionDegree
+                    .newInfoFromDomain(gratuityValues);
 
             infoPaymentPhases = new ArrayList();
             CollectionUtils.collect(gratuityValues.getPaymentPhaseList(), new Transformer() {

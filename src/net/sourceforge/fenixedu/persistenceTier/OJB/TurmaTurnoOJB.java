@@ -82,27 +82,6 @@ public class TurmaTurnoOJB extends PersistentObjectOJB implements ITurmaTurnoPer
 
     }
 
-    /**
-     * Returns a class list
-     * 
-     * @see ServidorPersistente.ITurmaTurnoPersistente#readByClass(ISchoolClass)
-     */
-    public List readByShift(IShift group) throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();
-        crit.addEqualTo("turno.idInternal", group.getIdInternal());
-
-        List result = queryList(SchoolClassShift.class, crit);
-
-        List classList = new ArrayList();
-        Iterator resultIterator = result.iterator();
-        while (resultIterator.hasNext()) {
-            ISchoolClassShift classShift = (ISchoolClassShift) resultIterator.next();
-            classList.add(classShift.getTurma());
-        }
-        return classList;
-
-    }
-
     public List readClassesWithShift(IShift turno) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("turno.nome", turno.getNome());
@@ -114,14 +93,4 @@ public class TurmaTurnoOJB extends PersistentObjectOJB implements ITurmaTurnoPer
         return queryList(SchoolClassShift.class, crit);
 
     }
-
-    public List readByShiftAndExecutionDegree(IShift turno, IExecutionDegree execucao)
-            throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("turno.nome", turno.getNome());
-        criteria.addEqualTo("turma.executionDegree.degreeCurricularPlan.degree.sigla", execucao
-                .getDegreeCurricularPlan().getDegree().getSigla());
-        return queryList(SchoolClassShift.class, criteria);
-    }
-
 }

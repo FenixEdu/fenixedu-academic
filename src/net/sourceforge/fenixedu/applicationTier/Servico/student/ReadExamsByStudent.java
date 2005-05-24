@@ -50,7 +50,7 @@ public class ReadExamsByStudent implements IService {
             IStudent student = sp.getIPersistentStudent().readByUsername(username);
 
             if (student != null) {
-                List examsStudentRooms = examStudentRoomDAO.readBy(student);
+                List examsStudentRooms = examStudentRoomDAO.readByStudentOID(student.getIdInternal());
                 Iterator iter = examsStudentRooms.iterator();
                 List examsEnrolled = new ArrayList();
 

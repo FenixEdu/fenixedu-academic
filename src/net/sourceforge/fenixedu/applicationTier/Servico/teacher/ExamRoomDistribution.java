@@ -104,7 +104,7 @@ public class ExamRoomDistribution implements IService {
                 throw new FenixServiceException(ExamRoomDistribution.OUT_OF_ENROLLMENT_PERIOD);
             }
 
-            List examStudentRoomList = persistentExamStudentRoom.readBy(exam);
+            List examStudentRoomList = persistentExamStudentRoom.readByExamOID(exam.getIdInternal());
             Iterator iterExamStudentRoomList = examStudentRoomList.iterator();
             while (iterExamStudentRoomList.hasNext()) {
                 students.add(((IExamStudentRoom) iterExamStudentRoomList.next()).getStudent());
@@ -133,7 +133,8 @@ public class ExamRoomDistribution implements IService {
             while (i <= room.getCapacidadeExame().intValue()) {
                 if (students.size() > 0) {
                     IStudent student = (IStudent) getRandomObjectFromList(students);
-                    IExamStudentRoom examStudentRoom = persistentExamStudentRoom.readBy(exam, student);
+                    IExamStudentRoom examStudentRoom = persistentExamStudentRoom.readBy(exam
+                            .getIdInternal(), student.getIdInternal());
                     if (examStudentRoom == null) {
                         examStudentRoom = new ExamStudentRoom();
                         persistentExamStudentRoom.simpleLockWrite(examStudentRoom);

@@ -54,7 +54,7 @@ public class ReadActiveExecutionDegreebyDegreeCurricularPlanID implements IServi
 
         // and correspondent execution degrees
         final List executionDegrees = persistentExecutionDegree
-                .readByDegreeCurricularPlan(degreeCurricularPlan);
+                .readByDegreeCurricularPlan(degreeCurricularPlan.getIdInternal());
         if (executionDegrees == null) {
             throw new FenixServiceException("error.impossibleEditDegreeInfo");
         }

@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 public interface ITurmaPersistente extends IPersistentObject {
 
@@ -53,12 +52,7 @@ public interface ITurmaPersistente extends IPersistentObject {
             IExecutionDegree executionDegree, IExecutionPeriod executionPeriod)
             throws ExcepcaoPersistencia;
 
-    public List readByDegreeNameAndDegreeCode(String name, String code) throws ExcepcaoPersistencia;
-
     public List readByExecutionDegree(IExecutionDegree executionDegree) throws ExcepcaoPersistencia;
-
-    public List readByExecutionPeriodAndDegreeType(IExecutionPeriod executionPeriod, DegreeType curso)
-            throws ExcepcaoPersistencia;
 
     public List readByExecutionDegreeAndExecutionPeriod(IExecutionDegree execucao,
             IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;

@@ -13,7 +13,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
@@ -65,19 +64,6 @@ public class TurnoAlunoOJB extends PersistentObjectOJB implements ITurnoAlunoPer
     }
 
     /**
-     * FIXME: wrong link from executionCourse to ExecutionDegree
-     */
-    public IShift readByStudentIdAndShiftType(Integer id, TipoAula shiftType, String nameExecutionCourse)
-            throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();
-        crit.addEqualTo("shift.tipo", shiftType);
-        crit.addEqualTo("shift.disciplinaExecucao.licenciaturaExecucao.nome", nameExecutionCourse);
-        crit.addEqualTo("student.number", id);
-        return (IShift) queryObject(ShiftStudent.class, crit);
-
-    }
-
-    /**
      * @see ServidorPersistente.ITurnoAlunoPersistente#readByTurno(Dominio.IShift)
      */
     public List readStudentShiftByShift(IShift shift) throws ExcepcaoPersistencia {
@@ -126,24 +112,6 @@ public class TurnoAlunoOJB extends PersistentObjectOJB implements ITurnoAlunoPer
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyStudent", student.getIdInternal());
         return queryList(ShiftStudent.class, criteria);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ITurnoAlunoPersistente#readByStudentAndExecutionCourseAndLessonTypeAndGroup(Dominio.IStudent,
-     *      Dominio.IDisciplinaExecucao, Util.TipoAula, Dominio.ISchoolClass)
-     */
-    public IShiftStudent readByStudentAndExecutionCourseAndLessonTypeAndGroup(IStudent student,
-            IExecutionCourse executionCourse, TipoAula lessonType, ISchoolClass group)
-            throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-
-        criteria.addEqualTo("keyStudent", student.getIdInternal());
-        criteria.addEqualTo("shift.tipo", lessonType);
-        criteria.addEqualTo("shift.chaveDisciplinaExecucao", executionCourse.getIdInternal());
-        criteria.addEqualTo("shift.associatedClasses.idInternal", group.getIdInternal());
-        return (IShiftStudent) queryObject(ShiftStudent.class, criteria);
     }
 
     public IShiftStudent readByStudentAndExecutionCourseAndLessonType(IStudent student,

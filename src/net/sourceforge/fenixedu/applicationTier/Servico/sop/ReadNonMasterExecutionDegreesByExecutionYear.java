@@ -68,7 +68,7 @@ public class ReadNonMasterExecutionDegreesByExecutionYear implements IServico {
             }
 
             IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
-            List executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear,
+            List executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear.getIdInternal(),
                     DegreeType.DEGREE);
 
             Iterator iterator = executionDegrees.iterator();

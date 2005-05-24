@@ -34,7 +34,7 @@ public class ReadPublicExecutionDegreeByDCPID implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         executionDegrees = sp.getIPersistentExecutionDegree()
-                .readExecutionDegreesbyDegreeCurricularPlanID(degreeCurricularPlanID);
+                .readByDegreeCurricularPlan(degreeCurricularPlanID);
 
         result = (List) CollectionUtils.collect(executionDegrees, new Transformer() {
 

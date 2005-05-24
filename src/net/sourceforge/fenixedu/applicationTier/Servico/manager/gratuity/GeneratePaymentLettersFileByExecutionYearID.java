@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.IInsuranceValue;
 import net.sourceforge.fenixedu.domain.IPaymentPhase;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -38,7 +39,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsOutgoingPaymentFileConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -265,7 +265,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 
             // read master degree and specialization execution degrees
             List executionDegreeList = sp.getIPersistentExecutionDegree()
-                    .readByExecutionYearAndDegreeType(executionYear, DegreeType.MASTER_DEGREE);
+                    .readByExecutionYearAndDegreeType(executionYear.getIdInternal(), DegreeType.MASTER_DEGREE);
 
             List gratuityLetterFileEntries = new ArrayList();
 

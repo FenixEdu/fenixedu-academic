@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -41,17 +40,4 @@ public class RoomOccupationOJB extends ObjectFenixOJB implements IPersistentRoom
         super.delete(roomOccupation);
 
     }
-
-    public List readByPeriod(IPeriod period) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyPeriod", period.getIdInternal());
-        return queryList(RoomOccupation.class, criteria);
-
-    }
-
-    /*
-     * public void deleteAll() throws ExcepcaoPersistencia { String oqlQuery =
-     * "select all from " + RoomOccupation.class.getName();
-     * super.deleteAll(oqlQuery); }
-     */
 }

@@ -38,7 +38,7 @@ public class ExecutionDegreeCoordinatorAuthorizationFilter extends DomainObjectA
                 ExecutionDegree.class, objectId);
 
         ITeacher coordinator = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-        List executionDegrees = persistentExecutionDegree.readByTeacher(coordinator);
+        List executionDegrees = persistentExecutionDegree.readByTeacher(coordinator.getIdInternal());
 
         return executionDegrees.contains(executionDegree);
     }

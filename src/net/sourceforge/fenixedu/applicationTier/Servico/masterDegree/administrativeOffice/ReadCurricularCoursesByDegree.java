@@ -41,7 +41,7 @@ public class ReadCurricularCoursesByDegree implements IService {
 			// Read degree
 			IExecutionDegree cursoExecucao = sp.getIPersistentExecutionDegree()
 					.readByDegreeCurricularPlanNameAndExecutionYear(degreeName,
-							executionYear);
+							executionYear.getIdInternal());
 
 			if (cursoExecucao == null
 					|| cursoExecucao.getDegreeCurricularPlan() == null

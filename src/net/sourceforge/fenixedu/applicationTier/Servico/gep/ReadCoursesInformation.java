@@ -85,7 +85,7 @@ public class ReadCoursesInformation implements IService {
             if (executionDegreeId == null) {
                 List executionDegrees = null;
                 executionDegrees = persistentExecutionDegree.readByExecutionYearAndDegreeType(
-                        executionYear, DegreeType.DEGREE);
+                        executionYear.getIdInternal(), DegreeType.DEGREE);
                 if (basic == null) {
                     professorships = persistentProfessorship.readByExecutionDegrees(executionDegrees);
                 } else {

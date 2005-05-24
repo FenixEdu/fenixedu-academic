@@ -62,7 +62,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
 
             // read master degree and specialization execution degrees
             List executionDegreeList = sp.getIPersistentExecutionDegree()
-                    .readByExecutionYearAndDegreeType(executionYear, DegreeType.MASTER_DEGREE);
+                    .readByExecutionYearAndDegreeType(executionYear.getIdInternal(), DegreeType.MASTER_DEGREE);
 
             for (Iterator iter = executionDegreeList.iterator(); iter.hasNext();) {
 

@@ -219,7 +219,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
             throws ExcepcaoPersistencia, FenixServiceException {
         IPersistentExecutionDegree presistentExecutionDegree = sp.getIPersistentExecutionDegree();
         List executionDegrees = presistentExecutionDegree.readByExecutionYearAndDegreeType(
-                executionYear, DegreeType.DEGREE);
+                executionYear.getIdInternal(), DegreeType.DEGREE);
         if (executionDegrees == null || executionDegrees.size() <= 0) {
             throw new FenixServiceException("errors.impossible.operation");
         }

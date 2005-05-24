@@ -42,7 +42,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID implements IService {
                         degreeCurricularPlanID);
 
         executionDegrees = sp.getIPersistentExecutionDegree().readByDegreeCurricularPlan(
-                degreeCurricularPlan);
+                degreeCurricularPlan.getIdInternal());
 
         infoExecutionDegreeList = new ArrayList();
 

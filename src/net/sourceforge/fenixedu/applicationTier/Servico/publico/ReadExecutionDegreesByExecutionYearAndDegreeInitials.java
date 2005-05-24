@@ -19,31 +19,31 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class ReadExecutionDegreesByExecutionYearAndDegreeInitials implements
-		IService {
+public class ReadExecutionDegreesByExecutionYearAndDegreeInitials implements IService {
 
-	public InfoExecutionDegree run(final InfoExecutionYear infoExecutionYear,
-			final String degreeInitials, final String nameDegreeCurricularPlan)
-			throws ExcepcaoPersistencia {
+    public InfoExecutionDegree run(final InfoExecutionYear infoExecutionYear,
+            final String degreeInitials, final String nameDegreeCurricularPlan)
+            throws ExcepcaoPersistencia {
 
-		final ISuportePersistente sp = PersistenceSupportFactory
-				.getDefaultPersistenceSupport();
-		final IPersistentExecutionDegree executionDegreeDAO = sp
-				.getIPersistentExecutionDegree();
-		final IExecutionYear executionYear = InfoExecutionYear.newDomainFromInfo(infoExecutionYear);
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
+        final IExecutionYear executionYear = InfoExecutionYear.newDomainFromInfo(infoExecutionYear);
 
-		final IExecutionDegree executionDegree = executionDegreeDAO
-				.readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
-						degreeInitials, nameDegreeCurricularPlan, executionYear);
-		final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+        final IExecutionDegree executionDegree = executionDegreeDAO
+                .readByDegreeCurricularPlanAndExecutionYear(nameDegreeCurricularPlan, degreeInitials,
+                        executionYear.getYear());
+        final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
+                .newInfoFromDomain(executionDegree);
         if (executionDegree != null) {
-            final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
+            final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
+                    .newInfoFromDomain(executionDegree.getDegreeCurricularPlan());
             infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-            final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(executionDegree.getDegreeCurricularPlan().getDegree());
+            final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(executionDegree
+                    .getDegreeCurricularPlan().getDegree());
             infoDegreeCurricularPlan.setInfoDegree(infoDegree);
         }
 
-		return infoExecutionDegree;
-	}
+        return infoExecutionDegree;
+    }
 
 }

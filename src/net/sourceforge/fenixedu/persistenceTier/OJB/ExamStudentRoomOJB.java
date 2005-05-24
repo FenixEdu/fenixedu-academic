@@ -5,14 +5,10 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExamStudentRoom;
-import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExamStudentRoom;
-import net.sourceforge.fenixedu.domain.IRoom;
-import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExamStudentRoom;
 
@@ -24,74 +20,23 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class ExamStudentRoomOJB extends PersistentObjectOJB implements IPersistentExamStudentRoom {
 
-    public List readBy(IExam exam) throws ExcepcaoPersistencia {
+    public List readByExamOID(Integer examOID) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyExam", exam.getIdInternal());
+        criteria.addEqualTo("keyExam", examOID);
         return queryList(ExamStudentRoom.class, criteria);
 
     }
 
-    public List readBy(IStudent student) throws ExcepcaoPersistencia {
+    public List readByStudentOID(Integer studentOID) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyStudent", student.getIdInternal());
+        criteria.addEqualTo("keyStudent", studentOID);
         return queryList(ExamStudentRoom.class, criteria);
     }
 
-    public List readBy(IRoom room) throws ExcepcaoPersistencia {
+    public IExamStudentRoom readBy(Integer examOID, Integer studentOID) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyRoom", room.getIdInternal());
-        return queryList(ExamStudentRoom.class, criteria);
-    }
-
-    public List readBy(IExam exam, IRoom room) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyExam", exam.getIdInternal());
-        criteria.addEqualTo("keyRoom", room.getIdInternal());
-        return queryList(ExamStudentRoom.class, criteria);
-    }
-
-    public IExamStudentRoom readBy(IExam exam, IStudent student) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyExam", exam.getIdInternal());
-        criteria.addEqualTo("keyStudent", student.getIdInternal());
+        criteria.addEqualTo("keyExam", examOID);
+        criteria.addEqualTo("keyStudent", studentOID);
         return (IExamStudentRoom) queryObject(ExamStudentRoom.class, criteria);
     }
-
-    public List readBy(IStudent student, IRoom room) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyRoom", room.getIdInternal());
-        criteria.addEqualTo("keyStudent", student.getIdInternal());
-        return queryList(ExamStudentRoom.class, criteria);
-    }
-
-    public IExamStudentRoom readBy(IExam exam, IStudent student, IRoom room) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyExam", exam.getIdInternal());
-        criteria.addEqualTo("keyRoom", room.getIdInternal());
-        criteria.addEqualTo("keyStudent", student.getIdInternal());
-        return (IExamStudentRoom) queryObject(ExamStudentRoom.class, criteria);
-    }
-
-    public void delete(IExamStudentRoom examStudentRoom) throws ExcepcaoPersistencia {
-        super.delete(examStudentRoom);
-    }
-
-    public void deleteByCriteria(IExamStudentRoom examStudentRoom) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        if (examStudentRoom.getExam() != null) {
-            criteria.addEqualTo("keyExam", examStudentRoom.getExam().getIdInternal());
-        }
-        if (examStudentRoom.getRoom() != null) {
-            criteria.addEqualTo("keyRoom", examStudentRoom.getRoom().getIdInternal());
-        }
-        if (examStudentRoom.getStudent() != null) {
-            criteria.addEqualTo("keyStudent", examStudentRoom.getStudent().getIdInternal());
-        }
-        List toDeleteList = queryList(ExamStudentRoom.class, criteria);
-        Iterator iter = toDeleteList.iterator();
-        while (iter.hasNext()) {
-            super.delete(iter.next());
-        }
-    }
-
 }

@@ -31,7 +31,7 @@ import pt.utl.ist.berserk.ServiceResponse;
 public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
 
     /**
-     *  
+     * 
      */
     public StudentListByCurricularCourseAuthorizationFilter() {
         super();
@@ -46,8 +46,9 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = (IUserView) request.getRequester();
         if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
-                || (id != null && id.getRoles() != null && !hasPrivilege(id, request.getServiceParameters().parametersArray()))
-                || (id == null) || (id.getRoles() == null)) {
+                || (id != null && id.getRoles() != null && !hasPrivilege(id, request
+                        .getServiceParameters().parametersArray())) || (id == null)
+                || (id.getRoles() == null)) {
             throw new NotAuthorizedFilterException();
         }
     }
@@ -95,8 +96,8 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
 
         // Read The DegreeCurricularPlan
         try {
-            IPersistentCurricularCourse persistentCurricularCourse = PersistenceSupportFactory.getDefaultPersistenceSupport()
-                    .getIPersistentCurricularCourse();
+            IPersistentCurricularCourse persistentCurricularCourse = PersistenceSupportFactory
+                    .getDefaultPersistenceSupport().getIPersistentCurricularCourse();
 
             curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
                     CurricularCourse.class, curricularCourseID);
@@ -125,18 +126,21 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
 
             // Read The ExecutionDegree
             try {
-                IPersistentExecutionDegree persistentExecutionDegree = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentExecutionDegree();
+                IPersistentExecutionDegree persistentExecutionDegree = PersistenceSupportFactory
+                        .getDefaultPersistenceSupport().getIPersistentExecutionDegree();
 
                 List executionDegrees = persistentExecutionDegree
-                        .readByDegreeCurricularPlan(curricularCourse.getDegreeCurricularPlan());
+                        .readByDegreeCurricularPlan(curricularCourse.getDegreeCurricularPlan()
+                                .getIdInternal());
                 if (executionDegrees == null) {
                     return false;
                 }
                 // IMPORTANT: It's assumed that the coordinator for a Degree is
                 // ALWAYS the same
-                //modified by Tânia Pousão
-                List coodinatorsList = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentCoordinator()
-                        .readCoordinatorsByExecutionDegree(((IExecutionDegree) executionDegrees.get(0)).getIdInternal());
+                // modified by Tânia Pousão
+                List coodinatorsList = PersistenceSupportFactory.getDefaultPersistenceSupport()
+                        .getIPersistentCoordinator().readCoordinatorsByExecutionDegree(
+                                ((IExecutionDegree) executionDegrees.get(0)).getIdInternal());
                 if (coodinatorsList == null) {
                     return false;
                 }
@@ -149,23 +153,23 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
                     }
                 }
 
-                //                teacher = ((IExecutionDegree)
+                // teacher = ((IExecutionDegree)
                 // executionDegrees.get(0)).getCoordinator();
                 //
-                //                if (teacher == null)
-                //                {
-                //                    return false;
-                //                }
+                // if (teacher == null)
+                // {
+                // return false;
+                // }
                 //
-                //                if
+                // if
                 // (id.getUtilizador().equals(teacher.getPerson().getUsername()))
-                //                {
-                //                    return true;
-                //                }
-                //                else
-                //                {
-                //                    return false;
-                //                }
+                // {
+                // return true;
+                // }
+                // else
+                // {
+                // return false;
+                // }
             } catch (Exception e) {
                 return false;
             }

@@ -68,7 +68,7 @@ public class StudentListDispatchAction extends DispatchAction {
             try {
                 Object args[] = { degreeCurricularPlanID };
                 infoExecutionDegreeForRequest = (InfoExecutionDegree) ServiceManagerServiceFactory
-                        .executeService(userView, "ReadExecutionDegreeByDCPID", args);
+                        .executeService(userView, "ReadActiveExecutionDegreebyDegreeCurricularPlanID", args);
             } catch (NonExistingServiceException e) {
 
             } catch (FenixServiceException e) {
@@ -122,7 +122,7 @@ public class StudentListDispatchAction extends DispatchAction {
         InfoExecutionDegree infoExecutionDegree = null;
         try {
             infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory
-                    .executeService(userView, "ReadExecutionDegreeByDCPID", args);
+                    .executeService(userView, "ReadActiveExecutionDegreebyDegreeCurricularPlanID", args);
         } catch (NonExistingServiceException e) {
 
         } catch (FenixServiceException e) {

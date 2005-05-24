@@ -79,8 +79,8 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IServico 
 
             //Execution degrees
             IPersistentExecutionDegree persistentExecutionDegre = sp.getIPersistentExecutionDegree();
-            List executionDegreeList = persistentExecutionDegre.readByDegreeAndExecutionYear(degree,
-                    executionYear);
+            List executionDegreeList = persistentExecutionDegre.readByDegreeAndExecutionYear(degree.getIdInternal(),
+                    executionYear.getYear());
             if (executionDegreeList == null || executionDegreeList.size() <= 0) {
                 throw new FenixServiceException("error.impossibleDegreeSite");
             }

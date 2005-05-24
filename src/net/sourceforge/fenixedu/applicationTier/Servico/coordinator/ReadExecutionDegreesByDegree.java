@@ -35,7 +35,8 @@ public class ReadExecutionDegreesByDegree implements IService {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionDegree cursoExecucaoPersistente = sp.getIPersistentExecutionDegree();
 
-            allExecutionDegrees = cursoExecucaoPersistente.readExecutionsDegreesByDegree(degree);
+            allExecutionDegrees = cursoExecucaoPersistente.readExecutionsDegreesByDegree(degree
+                    .getIdInternal());
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
         }
@@ -50,7 +51,8 @@ public class ReadExecutionDegreesByDegree implements IService {
 
         while (iterator.hasNext()) {
             IExecutionDegree executionDegree = (IExecutionDegree) iterator.next();
-            InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+            InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
+                    .newInfoFromDomain(executionDegree);
 
             allInfoExecutionDegrees.add(infoExecutionDegree);
         }

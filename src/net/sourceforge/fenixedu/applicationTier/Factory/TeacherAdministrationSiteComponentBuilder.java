@@ -798,7 +798,7 @@ public class TeacherAdministrationSiteComponentBuilder {
                 IExam exam = (Exam) evaluation;
                 IPersistentExamStudentRoom persistentExamStudentRoom = sp
                         .getIPersistentExamStudentRoom();
-                List enrolledStudents = persistentExamStudentRoom.readBy(exam);
+                List enrolledStudents = persistentExamStudentRoom.readByExamOID(exam.getIdInternal());
 
                 InfoExam infoExam = InfoExamWithRoomOccupations.newInfoFromDomain(exam);
                 infoExam.setEnrolledStudents(new Integer(enrolledStudents

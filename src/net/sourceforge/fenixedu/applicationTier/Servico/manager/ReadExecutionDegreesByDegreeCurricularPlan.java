@@ -47,7 +47,7 @@ public class ReadExecutionDegreesByDegreeCurricularPlan implements IService {
                     .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                             idDegreeCurricularPlan);
             allExecutionDegrees = sp.getIPersistentExecutionDegree().readByDegreeCurricularPlan(
-                    degreeCurricularPlan);
+                    degreeCurricularPlan.getIdInternal());
 
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);

@@ -14,7 +14,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
@@ -36,15 +35,7 @@ public interface ITurnoAlunoPersistente extends IPersistentObject {
     public List readByStudentAndExecutionCourse(IStudent student, IExecutionCourse executionCourse)
             throws ExcepcaoPersistencia;
 
-    // FIXME : Method is all messed up !! Query, name and parameters
-    public IShift readByStudentIdAndShiftType(Integer id, TipoAula shiftType, String nameExecutionCourse)
-            throws ExcepcaoPersistencia;
-
     public List readByStudent(IStudent student) throws ExcepcaoPersistencia;
-
-    public IShiftStudent readByStudentAndExecutionCourseAndLessonTypeAndGroup(IStudent student,
-            IExecutionCourse executionCourse, TipoAula lessonType, ISchoolClass group)
-            throws ExcepcaoPersistencia;
 
     /**
      * @param shift

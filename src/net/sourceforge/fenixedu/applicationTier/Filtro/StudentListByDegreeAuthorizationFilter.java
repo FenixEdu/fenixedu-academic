@@ -115,7 +115,7 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro {
                 IPersistentExecutionDegree persistentExecutionDegree = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentExecutionDegree();
 
                 List executionDegrees = persistentExecutionDegree
-                        .readByDegreeCurricularPlan(degreeCurricularPlan);
+                        .readByDegreeCurricularPlan(degreeCurricularPlan.getIdInternal());
                 if (executionDegrees == null) {
                     return false;
                 }

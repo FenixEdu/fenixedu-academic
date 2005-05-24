@@ -72,7 +72,7 @@ public class ReadTeacherInformationCoordinatorAuthorizationFilter extends Author
 
             ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
             ITeacher coordinator = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            List executionDegrees = persistentExecutionDegree.readByTeacher(coordinator);
+            List executionDegrees = persistentExecutionDegree.readByTeacher(coordinator.getIdInternal());
 
             List professorships = persistentProfessorship.readByExecutionDegrees(executionDegrees);
             Iterator iter = professorships.iterator();

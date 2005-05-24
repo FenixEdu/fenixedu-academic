@@ -18,7 +18,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author João Mota
- *  
+ * 
  */
 
 public class EnrollStudentInExam implements IService {
@@ -40,7 +40,8 @@ public class EnrollStudentInExam implements IService {
                 throw new InvalidArgumentsServiceException();
             }
 
-            IExamStudentRoom examStudentRoom = persistentExamStudentRoom.readBy(exam, student);
+            IExamStudentRoom examStudentRoom = persistentExamStudentRoom.readBy(exam.getIdInternal(),
+                    student.getIdInternal());
             if (examStudentRoom != null) {
                 throw new ExistingServiceException();
             }

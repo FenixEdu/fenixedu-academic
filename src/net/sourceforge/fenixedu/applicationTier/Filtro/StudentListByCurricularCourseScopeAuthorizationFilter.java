@@ -115,7 +115,7 @@ public class StudentListByCurricularCourseScopeAuthorizationFilter extends Filtr
 
                 List executionDegrees = persistentExecutionDegree
                         .readByDegreeCurricularPlan(curricularCourseScope.getCurricularCourse()
-                                .getDegreeCurricularPlan());
+                                .getDegreeCurricularPlan().getIdInternal());
                 if (executionDegrees == null) {
                     return false;
                 }

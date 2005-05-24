@@ -43,7 +43,7 @@ public class DeleteExamNew implements IService {
             }
 
             IPersistentExamStudentRoom persistentExamStudentRoom = sp.getIPersistentExamStudentRoom();
-            List examStudentRoomList = persistentExamStudentRoom.readBy(examToDelete);
+            List examStudentRoomList = persistentExamStudentRoom.readByExamOID(examToDelete.getIdInternal());
             if (examStudentRoomList != null && examStudentRoomList.size() > 0) {
                 throw new notAuthorizedServiceDeleteException(
                         "error.notAuthorizedExamDelete.withStudent");

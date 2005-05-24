@@ -24,7 +24,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author João Mota
  * 
- *  
+ * 
  */
 public class ExamSiteComponentService implements IService {
 
@@ -51,9 +51,9 @@ public class ExamSiteComponentService implements IService {
                     executionPeriodName, executionYear.getYear());
 
             IExecutionDegree executionDegree = executionDegreeDAO
-                    .readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(degreeInitials,
-                            nameDegreeCurricularPlan, executionYear);
-
+                    .readByDegreeCurricularPlanAndExecutionYear(nameDegreeCurricularPlan,
+                            degreeInitials, executionYearName);
+            
             ExamSiteComponentBuilder componentBuilder = ExamSiteComponentBuilder.getInstance();
 
             bodyComponent = componentBuilder.getComponent(bodyComponent, executionPeriod,

@@ -52,7 +52,7 @@ public class EditDegreeInfoByDegreeCurricularPlanID implements IService {
 
             // and correspondent execution degrees
             executionDegrees = suportePersistente.getIPersistentExecutionDegree()
-                    .readByDegreeCurricularPlan(degreeCurricularPlan);
+                    .readByDegreeCurricularPlan(degreeCurricularPlan.getIdInternal());
 
             // sort them by begin date
 

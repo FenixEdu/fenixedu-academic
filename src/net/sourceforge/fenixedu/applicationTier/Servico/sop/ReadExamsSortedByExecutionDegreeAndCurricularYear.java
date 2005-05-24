@@ -71,7 +71,7 @@ public class ReadExamsSortedByExecutionDegreeAndCurricularYear implements IServi
 
             IExecutionYear executionYear = executionPeriod.getExecutionYear();
 
-            List executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear,
+            List executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear.getIdInternal(),
                     DegreeType.DEGREE);
 
             for (int k = 0; k < executionDegrees.size(); k++) {

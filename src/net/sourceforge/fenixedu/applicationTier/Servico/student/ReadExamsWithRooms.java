@@ -70,7 +70,7 @@ public class ReadExamsWithRooms implements IServico {
             if (student == null) {
                 throw new InvalidArgumentsServiceException();
             }
-            List examsRoomDistribution = persistentExamStudentRoom.readBy(student);
+            List examsRoomDistribution = persistentExamStudentRoom.readByStudentOID(student.getIdInternal());
             Iterator iter = examsRoomDistribution.iterator();
             List validDistributions = new ArrayList();
             while (iter.hasNext()) {

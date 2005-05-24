@@ -20,7 +20,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class ReadExecutionDegreesByExecutionYearAndDegree implements IService {
     private static ReadExecutionDegreesByExecutionYearAndDegree service = new ReadExecutionDegreesByExecutionYearAndDegree();
@@ -44,11 +44,13 @@ public class ReadExecutionDegreesByExecutionYearAndDegree implements IService {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
 
-            List executionDegrees = executionDegreeDAO.readByDegreeAndExecutionYear(curso, year);
+            List executionDegrees = executionDegreeDAO.readByDegreeAndExecutionYear(curso
+                    .getIdInternal(), year.getYear());
             if (executionDegrees != null && !executionDegrees.isEmpty()) {
                 for (int i = 0; i < executionDegrees.size(); i++) {
                     IExecutionDegree executionDegree = (IExecutionDegree) executionDegrees.get(i);
-                    InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+                    InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
+                            .newInfoFromDomain(executionDegree);
                     infoExecutionDegrees.add(infoExecutionDegree);
                 }
             }

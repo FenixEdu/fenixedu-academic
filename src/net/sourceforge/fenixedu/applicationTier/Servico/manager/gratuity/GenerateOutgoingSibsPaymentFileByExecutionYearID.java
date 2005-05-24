@@ -88,7 +88,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
 
             // read master degree and specialization execution degrees
             List executionDegreeList = sp.getIPersistentExecutionDegree()
-                    .readByExecutionYearAndDegreeType(executionYear, DegreeType.MASTER_DEGREE);
+                    .readByExecutionYearAndDegreeType(executionYear.getIdInternal(), DegreeType.MASTER_DEGREE);
 
             int totalLines = 0;
 

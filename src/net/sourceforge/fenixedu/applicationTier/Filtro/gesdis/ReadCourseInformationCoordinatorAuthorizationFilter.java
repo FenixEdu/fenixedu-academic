@@ -42,7 +42,7 @@ public class ReadCourseInformationCoordinatorAuthorizationFilter extends DomainO
             IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
                     ExecutionCourse.class, objectId);
             List executionDegrees = persistentExecutionDegree.readByExecutionCourseAndByTeacher(
-                    executionCourse, teacher);
+                    executionCourse.getIdInternal(), teacher.getIdInternal());
 
             return !executionDegrees.isEmpty();
         } catch (ExcepcaoPersistencia e) {

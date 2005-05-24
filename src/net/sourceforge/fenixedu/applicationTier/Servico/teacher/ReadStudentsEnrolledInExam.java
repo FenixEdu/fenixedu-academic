@@ -47,7 +47,7 @@ public class ReadStudentsEnrolledInExam implements IService {
 
         ISite site = persistentSite.readByExecutionCourse(executionCourseCode);
         IExam exam = (IExam) persistentExam.readByOID(Exam.class, examCode);
-        List examStudentRoomList = examStudentRoomDAO.readBy(exam);
+        List examStudentRoomList = examStudentRoomDAO.readByExamOID(exam.getIdInternal());
         List infoExamStudentRoomList = (List) CollectionUtils.collect(examStudentRoomList,
                 new Transformer() {
 
@@ -60,7 +60,7 @@ public class ReadStudentsEnrolledInExam implements IService {
                     }
                 });
 
-        List infoStudents = new ArrayList();
+                   List infoStudents = new ArrayList();
         Iterator iter = examStudentRoomList.iterator();
         while (iter.hasNext()) {
             IStudent student = ((IExamStudentRoom) iter.next()).getStudent();

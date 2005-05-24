@@ -41,14 +41,15 @@ public class CriarTurma implements IService {
         final List listClasses = classDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(turma
                 .getExecutionPeriod(), turma.getAnoCurricular(), turma.getExecutionDegree());
 
-        final ISchoolClass existingClass = (ISchoolClass) CollectionUtils.find(listClasses, new Predicate() {
+        final ISchoolClass existingClass = (ISchoolClass) CollectionUtils.find(listClasses,
+                new Predicate() {
 
-            public boolean evaluate(Object arg0) {
-                final ISchoolClass schoolClass = (ISchoolClass) arg0;
-                return infoTurma.getNome().equalsIgnoreCase(schoolClass.getNome());
-            }
+                    public boolean evaluate(Object arg0) {
+                        final ISchoolClass schoolClass = (ISchoolClass) arg0;
+                        return infoTurma.getNome().equalsIgnoreCase(schoolClass.getNome());
+                    }
 
-        });
+                });
 
         if (existingClass != null) {
             throw new ExistingServiceException("Duplicate Entry: " + infoTurma.getNome());
@@ -58,12 +59,14 @@ public class CriarTurma implements IService {
         final IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
 
         sp.getITurmaPersistente().simpleLockWrite(turma);
-        turma.setExecutionDegree(executionDegreeDAO
-                .readByDegreeCurricularPlanAndExecutionYear(turma.getExecutionDegree()
-                        .getDegreeCurricularPlan(), turma.getExecutionDegree().getExecutionYear()));
+        turma.setExecutionDegree(executionDegreeDAO.readByDegreeCurricularPlanAndExecutionYear(turma
+                .getExecutionDegree().getDegreeCurricularPlan().getName(), turma.getExecutionDegree()
+                .getDegreeCurricularPlan().getDegree().getSigla(), turma.getExecutionDegree()
+                .getExecutionYear().getYear()));
 
-        turma.setExecutionPeriod(executionPeriodDAO.readByNameAndExecutionYear(turma
-                .getExecutionPeriod().getName(), turma.getExecutionPeriod().getExecutionYear().getYear()));
+        turma.setExecutionPeriod(executionPeriodDAO
+                .readByNameAndExecutionYear(turma.getExecutionPeriod().getName(), turma
+                        .getExecutionPeriod().getExecutionYear().getYear()));
 
         return InfoClass.newInfoFromDomain(turma);
     }

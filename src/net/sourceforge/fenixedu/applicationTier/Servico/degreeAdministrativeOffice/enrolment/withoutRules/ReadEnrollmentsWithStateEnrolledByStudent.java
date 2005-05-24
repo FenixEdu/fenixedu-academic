@@ -40,7 +40,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class ReadEnrollmentsWithStateEnrolledByStudent implements IService {
 
@@ -55,7 +55,8 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService {
             IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
                     .getIStudentCurricularPlanPersistente();
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-            IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(ExecutionPeriod.class, executionPeriodID);
+            IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+                    ExecutionPeriod.class, executionPeriodID);
 
             IStudentCurricularPlan studentCurricularPlan = null;
             if (infoStudent != null && infoStudent.getNumber() != null) {
@@ -66,11 +67,14 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService {
                 throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
             }
 
-            if (isStudentCurricularPlanFromChosenExecutionYear(studentCurricularPlan, executionPeriod.getExecutionYear().getYear())) {
+            if (isStudentCurricularPlanFromChosenExecutionYear(studentCurricularPlan, executionPeriod
+                    .getExecutionYear().getYear())) {
                 IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
-                List enrolmentsInExecutionPeriod = studentCurricularPlan.getAllStudentEnrolledEnrollmentsInExecutionPeriod(executionPeriod);
-                
-                infoStudentEnrolmentContext = buildResult(studentCurricularPlan, enrolmentsInExecutionPeriod, executionPeriod);
+                List enrolmentsInExecutionPeriod = studentCurricularPlan
+                        .getAllStudentEnrolledEnrollmentsInExecutionPeriod(executionPeriod);
+
+                infoStudentEnrolmentContext = buildResult(studentCurricularPlan,
+                        enrolmentsInExecutionPeriod, executionPeriod);
 
                 if (infoStudentEnrolmentContext == null) {
                     throw new FenixServiceException();
@@ -97,8 +101,9 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService {
             List enrollments, IExecutionPeriod executionPeriod) {
         InfoStudentCurricularPlan infoStudentCurricularPlan = InfoStudentCurricularPlanWithInfoStudentAndDegree
                 .newInfoFromDomain(studentCurricularPlan);
-        
-        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod);
+
+        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear
+                .newInfoFromDomain(executionPeriod);
 
         List infoEnrollments = new ArrayList();
         if (enrollments != null && enrollments.size() > 0) {
@@ -136,7 +141,8 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService {
         if (executionYear != null) {
             IExecutionDegree executionDegree = executionDegreeDAO
                     .readByDegreeCurricularPlanAndExecutionYear(studentCurricularPlan
-                            .getDegreeCurricularPlan(), executionYear);
+                            .getDegreeCurricularPlan().getName(), studentCurricularPlan
+                            .getDegreeCurricularPlan().getDegree().getSigla(), executionYear.getYear());
 
             return executionDegree != null;
         }

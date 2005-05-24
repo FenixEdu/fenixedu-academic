@@ -30,8 +30,8 @@ public class ReadExecutionDegreesByExecutionYearAndType implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
 
-        final List executionDegrees = executionDegreeDAO.readByExecutionYearOIDAndDegreeType(executionYearOID,
-                typeOfCourse);
+        final List executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(
+                executionYearOID, typeOfCourse);
         return getInfoExecutionDegrees(executionDegrees);
     }
 
@@ -40,7 +40,8 @@ public class ReadExecutionDegreesByExecutionYearAndType implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
 
-        final List executionDegrees = executionDegreeDAO.readByDegreeAndExecutionYear(degree, executionYear);
+        final List executionDegrees = executionDegreeDAO.readByDegreeAndExecutionYear(degree
+                .getIdInternal(), executionYear.getYear());
         return getInfoExecutionDegrees(executionDegrees);
     }
 

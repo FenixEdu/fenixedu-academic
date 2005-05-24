@@ -35,7 +35,7 @@ import pt.utl.ist.berserk.ServiceResponse;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *  
+ * 
  */
 public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
 
@@ -120,7 +120,8 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
                     // Plan
 
                     List executionDegrees = sp.getIPersistentExecutionDegree()
-                            .readByDegreeCurricularPlan(curricularCourse.getDegreeCurricularPlan());
+                            .readByDegreeCurricularPlan(
+                                    curricularCourse.getDegreeCurricularPlan().getIdInternal());
 
                     // Check if the Coordinator is the logged one
                     Iterator executionDegreesIterator = executionDegrees.iterator();
@@ -128,19 +129,20 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
                         IExecutionDegree executionDegree = (IExecutionDegree) executionDegreesIterator
                                 .next();
 
-                        //modified by Tânia Pousão
+                        // modified by Tânia Pousão
                         ICoordinator coordinator = sp.getIPersistentCoordinator()
-                                .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(), executionDegree.getIdInternal());
+                                .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(),
+                                        executionDegree.getIdInternal());
                         if (coordinator != null) {
                             return true;
                         }
 
-                        //						if ((executionDegree.getCoordinator() != null)
-                        //							&&
+                        // if ((executionDegree.getCoordinator() != null)
+                        // &&
                         // (executionDegree.getCoordinator().equals(teacher)))
-                        //						{
-                        //							return true;
-                        //						}
+                        // {
+                        // return true;
+                        // }
                     }
                 }
             } catch (Exception e) {

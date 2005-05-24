@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
 import net.sourceforge.fenixedu.domain.Exam;
@@ -15,66 +14,49 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExamStudentRoom;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author João Mota
- *  
+ * 
  */
 
-public class UnEnrollStudentInExam implements IServico {
+public class UnEnrollStudentInExam implements IService {
 
-    private static UnEnrollStudentInExam _servico = new UnEnrollStudentInExam();
+    public Boolean run(String username, Integer examId) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static UnEnrollStudentInExam getService() {
-        return _servico;
-    }
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-    /**
-     * The actor of this class.
-     */
-    private UnEnrollStudentInExam() {
-    }
+        IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+        IStudent student = persistentStudent.readByUsername(username);
+        IPersistentExam persistentExam = sp.getIPersistentExam();
 
-    /**
-     * Devolve o nome do servico
-     */
-    public final String getNome() {
-        return "UnEnrollStudentInExam";
-    }
+        IExam exam = (IExam) persistentExam.readByOID(Exam.class, examId, true);
 
-    public Boolean run(String username, Integer examId) throws FenixServiceException {
-
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-            IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-            IStudent student = persistentStudent.readByUsername(username);
-            IPersistentExam persistentExam = sp.getIPersistentExam();
-
-            IExam exam = (IExam) persistentExam.readByOID(Exam.class, examId, true);
-
-            if (student != null && exam != null) {
-                if (!validUnEnrollment(exam)) {
-                    throw new notAuthorizedServiceDeleteException();
-                }
-
-                IPersistentExamStudentRoom persistentExamStudentRoom = sp
-                        .getIPersistentExamStudentRoom();
-                ExamStudentRoom examStudentRoom = (ExamStudentRoom) persistentExamStudentRoom.readBy(
-                        exam, student);
-                if (examStudentRoom != null) {
-                    if (examStudentRoom.getRoom() != null) {
-                        throw new notAuthorizedServiceDeleteException();
-                    }
-                    persistentExamStudentRoom.delete(examStudentRoom);
-                }
+        if (student != null && exam != null) {
+            if (!validUnEnrollment(exam)) {
+                throw new notAuthorizedServiceDeleteException();
             }
 
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+            IPersistentExamStudentRoom persistentExamStudentRoom = sp.getIPersistentExamStudentRoom();
+            ExamStudentRoom examStudentRoom = (ExamStudentRoom) persistentExamStudentRoom.readBy(exam
+                    .getIdInternal(), student.getIdInternal());
+            if (examStudentRoom != null) {
+                if (examStudentRoom.getRoom() != null) {
+                    throw new notAuthorizedServiceDeleteException();
+                }
+                examStudentRoom.getExam().getExamStudentRooms().remove(examStudentRoom);
+                examStudentRoom.getRoom().getExamStudentRooms().remove(examStudentRoom);
+                examStudentRoom.getStudent().getExamStudentRooms().remove(examStudentRoom);
+                
+                examStudentRoom.setExam(null);
+                examStudentRoom.setRoom(null);
+                examStudentRoom.setStudent(null);
+                
+                sp.getIPersistentExamStudentRoom().deleteByOID(ExamStudentRoom.class,
+                        examStudentRoom.getIdInternal());
+            }
         }
 
         return new Boolean(true);

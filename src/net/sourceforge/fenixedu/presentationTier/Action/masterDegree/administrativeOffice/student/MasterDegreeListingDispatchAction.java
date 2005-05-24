@@ -150,7 +150,7 @@ public class MasterDegreeListingDispatchAction extends DispatchAction {
         try {
             Object args[] = { degreeCurricularPlanID };
             infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
-                    userView, "ReadExecutionDegreeByDCPID", args);
+                    userView, "ReadActiveExecutionDegreebyDegreeCurricularPlanID", args);
         } catch (NonExistingServiceException e) {
 
         } catch (FenixServiceException e) {

@@ -50,7 +50,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author Nadir Tarmahomed (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 public class ProcessSibsPaymentFile implements IService {
 
@@ -126,9 +126,9 @@ public class ProcessSibsPaymentFile implements IService {
                 // e.g. SMS credit payments (i.e. cases where duplicate entry
                 // checking is not required)
                 // assuming the form:
-                //if (isSmsPayment())) {
+                // if (isSmsPayment())) {
                 // do specific code if any
-                //}
+                // }
                 // else { do specific code to insurance and gratuities }
 
                 markDuplicateGratuityAndInsurancePayments(sp, sibsPaymentFileEntry,
@@ -167,12 +167,12 @@ public class ProcessSibsPaymentFile implements IService {
             // e.g. SMS credit payments (i.e. cases where duplicate entry
             // checking is not required)
             // assuming the form:
-            //if (isSmsPayment())) {
+            // if (isSmsPayment())) {
             // do specific code if any
-            //}
+            // }
             // else { do specific code to insurance and gratuities }
 
-            //DegreeType should be changed in future to support Degree Student
+            // DegreeType should be changed in future to support Degree Student
             // gratuity
             IStudent student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(
                     sibsPaymentFileEntry.getStudentNumber(), DegreeType.MASTER_DEGREE);
@@ -184,7 +184,7 @@ public class ProcessSibsPaymentFile implements IService {
 
             if (executionYear == null) {
 
-                //Change status to be solved manually because we could not find
+                // Change status to be solved manually because we could not find
                 // execution year
                 sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.INVALID_EXECUTION_YEAR);
                 continue;
@@ -213,7 +213,7 @@ public class ProcessSibsPaymentFile implements IService {
                         sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.INVALID_INSURANCE_VALUE);
 
                     } else {
-                        //create the insurance transaction payment for the
+                        // create the insurance transaction payment for the
                         // execution year
                         IInsuranceTransaction insuranceTransaction = new InsuranceTransaction(
                                 sibsPaymentFileEntry.getPayedValue(),
@@ -229,7 +229,7 @@ public class ProcessSibsPaymentFile implements IService {
 
             Specialization specialization = determineSpecialization(sibsPaymentFileEntry);
 
-            //DegreeType should be changed in future to meet Degree gratuity
+            // DegreeType should be changed in future to meet Degree gratuity
             // requirements
             List studentCurricularPlanList = sp.getIStudentCurricularPlanPersistente()
                     .readByStudentNumberAndDegreeType(student.getNumber(), DegreeType.MASTER_DEGREE);
@@ -247,7 +247,9 @@ public class ProcessSibsPaymentFile implements IService {
 
                 IExecutionDegree candidateExecutionDegree = sp.getIPersistentExecutionDegree()
                         .readByDegreeCurricularPlanAndExecutionYear(
-                                studentCurricularPlan.getDegreeCurricularPlan(), executionYear);
+                                studentCurricularPlan.getDegreeCurricularPlan().getName(),
+                                studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla(),
+                                executionYear.getYear());
 
                 if (candidateExecutionDegree != null) {
                     executionDegrees.add(candidateExecutionDegree);
@@ -257,14 +259,14 @@ public class ProcessSibsPaymentFile implements IService {
 
             if ((executionDegrees.size() == 0) || (studentCurricularPlans.size() == 0)) {
 
-                //Change status to be solved manually because we could not
+                // Change status to be solved manually because we could not
                 // decide the student curricular plan
                 sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.INVALID_EXECUTION_DEGREE);
                 continue;
             }
 
             if ((executionDegrees.size() > 1) || (studentCurricularPlans.size() > 1)) {
-                //Change status to be solved manually because we could not
+                // Change status to be solved manually because we could not
                 // decide the student curricular plan
                 sibsPaymentFileEntry
                         .setPaymentStatus(SibsPaymentStatus.UNABLE_TO_DETERMINE_STUDENT_CURRICULAR_PLAN);
@@ -283,7 +285,7 @@ public class ProcessSibsPaymentFile implements IService {
                             studentCurricularPlan, gratuityValues);
 
             if (gratuitySituation == null) {
-                //Change status to be solved manually because the student does
+                // Change status to be solved manually because the student does
                 // not have a gratuity situation
                 sibsPaymentFileEntry
                         .setPaymentStatus(SibsPaymentStatus.UNABLE_TO_DETERMINE_STUDENT_CURRICULAR_PLAN);
@@ -385,7 +387,7 @@ public class ProcessSibsPaymentFile implements IService {
                 .equals(SibsPaymentStatus.DUPLICATE_INSURANCE_PAYMENT)
                 || sibsPaymentFileEntry.getPaymentStatus().equals(
                         SibsPaymentStatus.DUPLICATE_GRATUITY_PAYMENT)) {
-            //the entry is already marked
+            // the entry is already marked
             return;
         }
 
@@ -412,8 +414,8 @@ public class ProcessSibsPaymentFile implements IService {
 
     private Specialization determineSpecialization(ISibsPaymentFileEntry sibsPaymentFileEntry) {
 
-        //if sibs payment codes change to much in future
-        //this logic should be moved to a config file
+        // if sibs payment codes change to much in future
+        // this logic should be moved to a config file
 
         SibsPaymentType sibsPaymentType = sibsPaymentFileEntry.getPaymentType();
         if (sibsPaymentType.equals(SibsPaymentType.SPECIALIZATION_GRATUTITY_TOTAL)
@@ -423,7 +425,7 @@ public class ProcessSibsPaymentFile implements IService {
         }
         return Specialization.MASTER_DEGREE;
 
-        //degree code goes here
+        // degree code goes here
 
     }
 

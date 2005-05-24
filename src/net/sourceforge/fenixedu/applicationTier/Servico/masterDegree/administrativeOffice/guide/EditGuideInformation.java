@@ -229,12 +229,12 @@ public class EditGuideInformation implements IService {
 
                     // Write the new Guide Version
 
-                    //					// Make sure that everything is written before reading
+                    // // Make sure that everything is written before reading
                     // ...
-                    //					sp.confirmarTransaccao();
-                    //					sp.iniciarTransaccao();
+                    // sp.confirmarTransaccao();
+                    // sp.iniciarTransaccao();
 
-                    //For Transactions Creation
+                    // For Transactions Creation
                     IPersistentTransaction persistentTransaction = sp.getIPersistentTransaction();
                     IPaymentTransaction paymentTransaction = null;
                     IGratuitySituation gratuitySituation = null;
@@ -248,8 +248,8 @@ public class EditGuideInformation implements IService {
                     Iterator guideEntryIterator = newInfoGuideEntries.iterator();
                     while (guideEntryIterator.hasNext()) {
 
-                        IGuideEntry guideEntry = InfoGuideEntry.newDomainFromInfo((InfoGuideEntry) guideEntryIterator
-                                        .next());
+                        IGuideEntry guideEntry = InfoGuideEntry
+                                .newDomainFromInfo((InfoGuideEntry) guideEntryIterator.next());
 
                         // Reset id internal to allow persistence to write a new
                         // version
@@ -262,7 +262,7 @@ public class EditGuideInformation implements IService {
                                 studentPerson.getUsername());
                         IExecutionDegree executionDegree = guide.getExecutionDegree();
 
-                        //Write Gratuity Transaction
+                        // Write Gratuity Transaction
                         if (guideEntry.getDocumentType().equals(DocumentType.GRATUITY)) {
 
                             executionDegree = guide.getExecutionDegree();
@@ -278,7 +278,7 @@ public class EditGuideInformation implements IService {
 
                             persistentTransaction.lockWrite(paymentTransaction);
 
-                            //Update GratuitySituation
+                            // Update GratuitySituation
                             persistentGratuitySituation.lockWrite(gratuitySituation);
 
                             Double remainingValue = gratuitySituation.getRemainingValue();
@@ -288,7 +288,7 @@ public class EditGuideInformation implements IService {
 
                         }
 
-                        //Write Insurance Transaction
+                        // Write Insurance Transaction
                         if (guideEntry.getDocumentType().equals(DocumentType.INSURANCE)) {
                             paymentTransaction = new InsuranceTransaction(guideEntry.getPrice(),
                                     new Timestamp(Calendar.getInstance().getTimeInMillis()), guideEntry
@@ -308,7 +308,7 @@ public class EditGuideInformation implements IService {
                     // CREATE TRANSACTIONS!!!!!!!!!!!!!!!!!!!!!(Gratuity or
                     // Insurance)
 
-                    //UPDATE remainigValue ou GRATUITY_SITUATION!!!!!
+                    // UPDATE remainigValue ou GRATUITY_SITUATION!!!!!
 
                 } catch (ExcepcaoPersistencia ex) {
                     FenixServiceException newEx = new FenixServiceException("Persistence layer error");
@@ -399,11 +399,10 @@ public class EditGuideInformation implements IService {
                     infoGuide.getInfoExecutionDegree().getInfoExecutionYear().getYear());
 
             executionDegree = sp.getIPersistentExecutionDegree()
-                    .readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
-                            infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan()
-                                    .getInfoDegree().getSigla(),
+                    .readByDegreeCurricularPlanAndExecutionYear(
                             infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName(),
-                            executionYear);
+                            infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan()
+                                    .getInfoDegree().getSigla(), executionYear.getYear());
 
         } catch (ExcepcaoPersistencia e) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
@@ -432,4 +431,3 @@ public class EditGuideInformation implements IService {
     }
 
 }
-
