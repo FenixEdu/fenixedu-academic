@@ -86,6 +86,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.Coordinator
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CountryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CourseReportVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurriculumVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CursoExecucaoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CursoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DegreeCurricularPlanVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DegreeInfoVO;
@@ -101,6 +102,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideSituat
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InsuranceValueVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ItemVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PersonAccountVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ResponsibleForVO;
@@ -404,7 +406,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentPeriod getIPersistentPeriod() {
-        return null;
+        return new PeriodVO();
     }
 
     public IPersistentCreditsInSpecificScientificArea getIPersistentCreditsInSpecificScientificArea() {
@@ -832,7 +834,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentExecutionDegree getIPersistentExecutionDegree() {
-        return null;
+        return new CursoExecucaoVO();
     }
 
     public IPersistentPrecedence getIPersistentPrecedence() {
