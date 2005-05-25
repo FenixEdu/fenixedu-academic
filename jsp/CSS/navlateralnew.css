@@ -1,0 +1,82 @@
+/**********************************************
+	 navlateral list & links
+***********************************************/	
+
+#navlateral {
+font-size: 94%;
+}
+
+#navlateral * {
+margin: 0;
+padding: 0;
+}
+
+#navlateral ul {
+list-style: none;
+width: auto;
+}
+
+#navlateral li.navheader {
+font-weight: bold;
+padding: 1.5em 0 0.2em 0;
+}
+
+#navlateral li {
+background: none;
+list-style: none;
+border-bottom: 1px solid #eee; /* added */
+margin: 0;
+padding: 0;
+}
+#navlateral li acronym {
+border: none;	
+}
+
+#navlateral li a, #navlateral li a, #navlateral li span, #navlateral li acronym{
+/*margin: -1px 0 -1px 0; /*  mozilla */
+display: block;
+height: 1.5em;
+padding: 0.4em 0 0 0.4em;
+}
+
+#navlateral a:link, #navlateral a:visited {
+color: #00427b;
+text-decoration: none;
+}
+
+#navlateral a:hover {
+background-color: #eee;
+text-decoration: none;
+}
+
+
+#navlateral ul li.sub {
+border: none;
+}
+
+#navlateral ul li.sub ul {
+height: 0; /* IE Hack */
+}
+
+html>body #navlateral ul li.sub ul {
+height: auto;	/* Hidden from IE */
+}
+
+#navlateral ul li.sub ul li {
+margin-left: 16px;
+}
+
+
+#navlateral ul li.plus a {
+background: url(../images/navlateral/plus01.gif) 0.4em 55% no-repeat;
+padding-left: 16px;
+}
+#navlateral ul li.plus a:hover, #navlateral ul li.minus a:active {
+background: #eee url(../images/navlateral/plus01.gif) 0.4em 55% no-repeat;
+}
+#navlateral ul li.minus a {
+background: url(../images/navlateral/minus01.gif) 0.4em 55% no-repeat; padding-left: 16px;
+}
+#navlateral ul li.minus a:hover, #navlateral ul li.minus a:active {
+background: #eee url(../images/navlateral/minus01.gif) 0.4em 55% no-repeat;
+}

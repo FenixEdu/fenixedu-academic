@@ -238,47 +238,28 @@ a:hover {
 	 navlateral list & links
 ***********************************************/	
 
-#navlateral {
-font-size: 110%;
-}
-
-#navlateral * {
-margin: 0;
-padding: 0;
-}
-
 #navlateral ul {
-	font-size: 86%;
 	list-style: none;
-	width: auto;
+	margin: 0;
 	}
-
-#navlateral li.navheader {
-	font-weight: bold;
-	padding: 1.5em 0 0.2em 0;
-}
 
 #navlateral li {
 	list-style: none;
-	border-bottom: 1px solid #eee; /* added */	
+	background: url("../images/red-list-bullet.gif") no-repeat 0 2px;
+	font: 10px Verdana, Arial, Helvetica, sans-serif;
+	padding: 0 0 0 10px;
+	margin: 5px 0 5px 0;
 	}
-#navlateral li a {
-	/*margin: -1px 0 -1px 0; /*  mozilla */
-	display: block;
-	height: 1.5em;
-	padding: 0.4em 0 0 0.4em;
-
-}
-
+	
 #navlateral a:link, #navlateral a:visited {
+	color:#666;
 	text-decoration: none;
 	}
 
 #navlateral a:hover {
-	background-color: #eee;
-	text-decoration: none;
-}
-
+	color:#666;
+	text-decoration: underline;
+	}
 
 	
 /**********************************************
@@ -646,4 +627,4 @@ margin-left:auto;
 margin-top:30px;
 padding:0px;
 text-align: left;
-}	
+}		
