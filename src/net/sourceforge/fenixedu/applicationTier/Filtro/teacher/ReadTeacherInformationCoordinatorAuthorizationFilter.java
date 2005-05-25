@@ -73,8 +73,8 @@ public class ReadTeacherInformationCoordinatorAuthorizationFilter extends Author
             List<IExecutionDegree> executionDegrees = persistentExecutionDegree
                     .readByTeacher(coordinator.getIdInternal());
             List<Integer> degreeCurricularPlanIDs = getDegreeCurricularPlanIDs(executionDegrees);
-            Integer executionYearID = (!degreeCurricularPlanIDs.isEmpty()) ? ((IExecutionDegree) executionDegrees
-                    .get(0)).getExecutionYear().getIdInternal()
+            Integer executionYearID = (!degreeCurricularPlanIDs.isEmpty()) ? executionDegrees
+                    .get(0).getExecutionYear().getIdInternal()
                     : null;
 
             List professorships = persistentProfessorship.readByDegreeCurricularPlansAndExecutionYear(
