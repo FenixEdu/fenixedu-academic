@@ -223,10 +223,10 @@
 		</div>
 		<logic:notEmpty name="infoSiteTeacherInformation" property="infoCientificPublications">
 			<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
-				<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoCientificPublications">
+				<logic:iterate id="infoPublicationCientific" name="infoSiteTeacherInformation" property="infoCientificPublications">
 					<tr>
 						<td class="listClasses" style="text-align:left">
-							<bean:write name="infoOldPublication" property="publication" />
+							<bean:write name="infoPublicationCientific" property="publicationString" />
 						</td>
 					</tr>
 				</logic:iterate>
