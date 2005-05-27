@@ -1558,6 +1558,7 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 	String concelhoMorada;
 	Date nascimento;
 	String freguesiaMorada;
+	Integer keyAuthor;
 
 	interface "
     public net.sourceforge.fenixedu.domain.person.MaritalStatus getMaritalStatus();

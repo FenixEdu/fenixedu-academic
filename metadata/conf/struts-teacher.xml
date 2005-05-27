@@ -620,6 +620,7 @@
 		<!-- publication form -->
 		<form-bean name="insertPublicationForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
+            <form-property name="page" type="java.lang.Integer" initial="0"/>
 			<!-- main form -->
 			<form-property name="authorsId" type="java.lang.Integer[]" />
 			<form-property name="authorsName" type="java.lang.String[]" />
@@ -2019,6 +2020,7 @@
 			parameter="method"
             input="/insertNewPublication.do?method=prepare" 
 			validate="false">
+			<forward name="input" path="/insertNewPublication.do?method=prepare"/>
             <forward name="insert" path="insert-new-publication"/>
             <forward name="searchAuthors" path="search-authors-for-new-publication"/>
 			<forward name="done" path="/publicationManagement.do"/>

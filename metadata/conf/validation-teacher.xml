@@ -1088,6 +1088,15 @@
 		<field property="searchedAuthorName" depends="required">
 			<arg0 key="message.publication.stringNomeSearch" resource="true"/>
 		</field>
+		<field property="edition" depends="integer" page="1">
+			<arg0 key="message.publicationAttribute.notValidate.value.edition" resource="true"/>
+		</field>
+		<field property="fascicle" depends="integer" page="1">
+			<arg0 key="message.publicationAttribute.notValidate.value.fascicle" resource="true"/>
+		</field>
+		<field property="serie" depends="integer" page="1">
+			<arg0 key="message.publicationAttribute.notValidate.value.serie" resource="true"/>
+		</field>
 	</form>
 	
 	<!-- ==================== View Curricular Course Historic ================== -->

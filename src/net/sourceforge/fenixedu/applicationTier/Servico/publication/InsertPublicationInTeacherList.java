@@ -138,7 +138,6 @@ public class InsertPublicationInTeacherList implements IServico {
             PublicationTeacher publicationTeacher = new PublicationTeacher();
             publicationTeacher.setPublication(publication);
             publicationTeacher.setTeacher(teacher);
-            //DOME do we need to fill in the keys?
             
             publication.getPublicationTeachers().add(publicationTeacher);
             teacher.getTeacherPublications().add(publicationTeacher);

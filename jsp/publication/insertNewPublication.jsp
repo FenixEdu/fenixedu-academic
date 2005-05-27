@@ -6,6 +6,7 @@
 <h2><bean:message key="title.publications.Management"/></h2>
 
 <html:form action="/insertNewPublication.do" >
+	<html:hidden property="page" value="1"/>
 	<html:hidden property="method"/>
 	<html:hidden property="index" />
 

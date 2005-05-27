@@ -11,8 +11,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -224,37 +222,4 @@ public class Publication extends Publication_Base implements IPublication {
 
         return publication;
     }
-
-    /**
-     * @return a list of IAuthors
-     *
-    public List getAuthors(){
-        List result = new ArrayList(getPublicationAuthors());
-        Collections.sort(result, new BeanComparator("order"));
-
-        List authors = (List) CollectionUtils.collect(result, new Transformer() {
-            public Object transform(Object obj){
-                IPublicationAuthor pa = (PublicationAuthor) obj;
-                return pa.getAuthor();
-            }
-        });
-        return authors;
-    }*/
-    
-    public Integer getOrderForAuthor(IAuthor author) throws ExcepcaoInexistente{
-        List publicationAuthors = getPublicationAuthors();
-        if (publicationAuthors == null || publicationAuthors.isEmpty())
-            throw new ExcepcaoInexistente ("The author is not an author of this publication");
-        Iterator it = publicationAuthors.iterator();
-        int i = 0;
-        while(it.hasNext()){
-            i++;
-            IPublicationAuthor pa = (IPublicationAuthor) it.next();
-            if(pa.getAuthor().equals(author))
-                return new Integer(i);
-        }
-        throw new ExcepcaoInexistente ("The author is not an author of this publication");
-    }
-    
-
 }

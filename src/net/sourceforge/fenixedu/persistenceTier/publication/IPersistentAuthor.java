@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.persistenceTier.publication;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.publication.Author;
+import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  */
 public interface IPersistentAuthor extends IPersistentObject {
 
-    Author readAuthorByKeyPerson(Integer keyPerson) throws ExcepcaoPersistencia;
+    IAuthor readAuthorByKeyPerson(Integer keyPerson) throws ExcepcaoPersistencia;
 
-    List readAuthorsBySubName(String stringSubName) throws ExcepcaoPersistencia;
+    List readAuthorsBySubName(final String stringSubName) throws ExcepcaoPersistencia;
 }

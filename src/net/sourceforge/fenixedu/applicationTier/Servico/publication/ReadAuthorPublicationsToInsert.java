@@ -17,8 +17,10 @@ import net.sourceforge.fenixedu.dataTransferObject.publication.InfoSitePublicati
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.publication.Author;
+import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
 import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
+import net.sourceforge.fenixedu.domain.publication.PublicationAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -76,7 +78,7 @@ public class ReadAuthorPublicationsToInsert implements IService {
         Integer keyPerson = pessoa.getIdInternal();
 
         IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
-        Author author = persistentAuthor.readAuthorByKeyPerson(keyPerson);
+        IAuthor author = persistentAuthor.readAuthorByKeyPerson(keyPerson);
 
         List authorPublications = new ArrayList();
         List infoAuthorPublications = new ArrayList();
@@ -88,7 +90,13 @@ public class ReadAuthorPublicationsToInsert implements IService {
             persistentAuthor.lockWrite(newAuthor);
 
         } else {
-            authorPublications = author.getPublications();
+            List<PublicationAuthor> publicationAuthors = (List<PublicationAuthor>) author.getAuthorPublications();
+            authorPublications = (List<IPublication>)CollectionUtils.collect(publicationAuthors,new Transformer() {
+                public Object transform(Object object) {
+                    PublicationAuthor publicationAuthor = (PublicationAuthor) object;
+                    return publicationAuthor.getPublication();
+                }
+            });
         }
 
         List publicationTeachersInTeachersList = teacher.getTeacherPublications();

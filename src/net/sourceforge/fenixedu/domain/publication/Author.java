@@ -8,10 +8,6 @@ package net.sourceforge.fenixedu.domain.publication;
 
 
 import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
 /**
  * @author TJBF & PFON
  * 
@@ -23,16 +19,6 @@ public class Author extends Author_Base implements IAuthor{
 	public Author(){	
 	    super();
 	    setAuthorPublications(new ArrayList());
-	}
-	
-	public List getPublications(){
-	    List publications = (List) CollectionUtils.collect(getAuthorPublications(), new Transformer() {
-	       public Object transform(Object obj){
-	           IPublicationAuthor pa = (PublicationAuthor) obj;
-	           return pa.getPublication();
-	       }
-	    });
-	    return publications;
 	}
 	
 	public String toString() {

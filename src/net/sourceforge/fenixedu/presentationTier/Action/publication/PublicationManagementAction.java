@@ -46,7 +46,7 @@ public class PublicationManagementAction extends FenixAction {
 		List listaPub = infoSitePublications.getInfoPublications();
 
 		/** this class is a mere comparator to sort publications */
-        //AIAIAI tirar isto provavelmente! n faz sentido esta ordenação
+        //DOME see if this comparator is still needed
 		class PublicationComparator implements Comparator {
 			public int compare(Object o1, Object o2) {
 				InfoPublication infoPublication1 = (InfoPublication) o1;

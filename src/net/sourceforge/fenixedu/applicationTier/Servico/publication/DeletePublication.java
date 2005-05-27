@@ -40,6 +40,7 @@ public class DeletePublication implements IService {
             final IPublicationAuthor publicationAuthor = (IPublicationAuthor) iterator.next();
             publicationAuthor.setPublication(null);
             publicationAuthor.setAuthor(null);
+            publication.getPublicationAuthors().remove(publicationAuthor);
             persistentPublicationAuthor.deleteByOID(PublicationAuthor.class, publicationAuthor.getIdInternal());
         }
 
@@ -48,6 +49,7 @@ public class DeletePublication implements IService {
             final IPublicationTeacher publicationTeacher = (IPublicationTeacher) iterator.next();
             publicationTeacher.setPublication(null);
             publicationTeacher.setTeacher(null);
+            publication.getPublicationTeachers().remove(publicationTeacher);
             persistentPublicationAuthor.deleteByOID(PublicationTeacher.class, publicationTeacher.getIdInternal());
         }
         

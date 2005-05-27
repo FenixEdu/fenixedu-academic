@@ -77,6 +77,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.Announcemen
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AttendInAttendsSetVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AttendsSetVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AulaVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AuthorVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.BibliographicReferenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.BuildingVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CandidateEnrolmentVO;
@@ -847,7 +848,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentAuthor getIPersistentAuthor() {
-        return null;
+        return new AuthorVO();
     }
 
     public IPersistentShiftProfessorship getIPersistentTeacherShiftPercentage() {

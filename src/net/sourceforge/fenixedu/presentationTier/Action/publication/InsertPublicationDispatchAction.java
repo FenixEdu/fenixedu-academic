@@ -179,29 +179,44 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
             publication.setNumberPages((Integer) dynaForm.get("numberPages"));
         if (attributes.get("edition") != null) {
             String edition = (String) dynaForm.get("edition");
-            Integer ed;
+            Integer ed = 0;
             if (edition.equals(""))
                 ed = new Integer(0);
             else
-                ed = Integer.valueOf(edition);
+                try {
+                    ed = Integer.valueOf(edition);
+                } catch (NumberFormatException nfe) {
+                    errors.add("Edição",new ActionError("message.publicationAttribute.notValidate.value.edition"));
+                    dynaForm.set("edition","");
+                }
             publication.setEdition(ed);
         }
         if (attributes.get("fascicle") != null) {
             String fascicle = (String) dynaForm.get("fascicle");
-            Integer fas;
+            Integer fas = 0;
             if (fascicle.equals(""))
                 fas = new Integer(0);
             else
-                fas = Integer.valueOf(fascicle);
+                try {
+                    fas = Integer.valueOf(fascicle);
+                } catch (NumberFormatException nfe) {
+                    errors.add("Fascículo",new ActionError("message.publicationAttribute.notValidate.value.fascicle"));
+                    dynaForm.set("fascicle","");
+                }
             publication.setFascicle(fas);
         }
         if (attributes.get("serie") != null) {
             String serie = (String) dynaForm.get("serie");
-            Integer ser;
+            Integer ser = 0;
             if (serie.equals(""))
                 ser = new Integer(0);
             else
-                ser = Integer.valueOf(serie);
+                try {
+                    ser = Integer.valueOf(serie);
+                } catch (NumberFormatException nfe) {
+                    errors.add("Série",new ActionError("message.publicationAttribute.notValidate.value.serie"));
+                    dynaForm.set("serie","");
+                }
             publication.setSerie(ser);
         }
         if (attributes.get("isbn") != null)
@@ -222,6 +237,11 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
         if (attributes.get("university") != null)
             publication.setUniversity((String) dynaForm.get("university"));
 
+        if (!errors.isEmpty()) {
+            saveErrors(request, errors);
+            return mapping.findForward("input");
+        }
+        
         Object[] argInsertPublication = { publication };
         ServiceUtils.executeService(userView, "InsertPublication", argInsertPublication);
 
