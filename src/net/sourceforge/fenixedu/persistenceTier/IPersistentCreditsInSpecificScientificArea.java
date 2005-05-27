@@ -12,10 +12,8 @@ import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
  */
 
 public interface IPersistentCreditsInSpecificScientificArea extends IPersistentObject {
-    public List readAllByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan)
-            throws ExcepcaoPersistencia;
 
     public ICreditsInScientificArea readByStudentCurricularPlanAndEnrollmentAndScientificArea(
-            IStudentCurricularPlan studentCurricularPlan, IEnrolment enrolment,
-            IScientificArea scientificArea) throws ExcepcaoPersistencia;
+            Integer studentCurricularPlanKey, Integer enrolmentKey,
+            Integer scientificAreaKey) throws ExcepcaoPersistencia;
 }

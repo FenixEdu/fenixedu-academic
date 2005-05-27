@@ -8,5 +8,5 @@ import net.sourceforge.fenixedu.domain.IUniversity;
 
 public interface IPersistentUniversity extends IPersistentObject {
 
-    public IUniversity readByNameAndCode(String name, String code) throws ExcepcaoPersistencia;
+	public IUniversity readByNameAndCode(String name, String code) throws ExcepcaoPersistencia;
 }

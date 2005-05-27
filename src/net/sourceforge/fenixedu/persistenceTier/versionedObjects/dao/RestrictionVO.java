@@ -28,11 +28,5 @@ public class RestrictionVO extends VersionedObjectsBase implements IPersistentRe
 			}
 		});
 
-//Criteria crit = new Criteria();
-//
-//crit.addEqualTo("precedentCurricularCourse.idInternal", curricularCourse.getIdInternal());
-//crit.addEqualTo("ojbConcreteClass", clazz.getName());
-//
-//return queryList(RestrictionByCurricularCourse.class, crit);
 	}
 }

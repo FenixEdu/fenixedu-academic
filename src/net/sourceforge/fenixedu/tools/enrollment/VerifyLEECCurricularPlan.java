@@ -179,7 +179,6 @@ public class VerifyLEECCurricularPlan {
     private static void printItForPrecedences(IDegreeCurricularPlan degreeCurricularPlan)
             throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentPrecedence precedenceDAO = persistentSuport.getIPersistentPrecedence();
         IPersistentCurricularCourse curricularCourseDAO = persistentSuport
                 .getIPersistentCurricularCourse();
 
@@ -195,7 +194,7 @@ public class VerifyLEECCurricularPlan {
         Iterator iterator1 = curricularCourses.iterator();
         while (iterator1.hasNext()) {
             ICurricularCourse curricularCourse = (ICurricularCourse) iterator1.next();
-            List precedences = precedenceDAO.readByCurricularCourse(curricularCourse);
+            List precedences = curricularCourse.getPrecedences();
             if (precedences != null && !precedences.isEmpty()) {
                 System.out.print("\t");
                 System.out.println("DISCIPLINA: [" + curricularCourse.getName()

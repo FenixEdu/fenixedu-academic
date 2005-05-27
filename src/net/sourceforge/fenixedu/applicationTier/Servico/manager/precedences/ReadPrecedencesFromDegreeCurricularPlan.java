@@ -40,15 +40,11 @@ public class ReadPrecedencesFromDegreeCurricularPlan implements IService {
 
             List curricularCourses = degreeCurricularPlan.getCurricularCourses();
 
-            //			ComparatorChain comparatorChain = new ComparatorChain();
-            //			comparatorChain.addComparator(new BeanComparator("name"));
-            //			Collections.sort(curricularCourses, comparatorChain);
-
             int size = curricularCourses.size();
 
             for (int i = 0; i < size; i++) {
                 ICurricularCourse curricularCourse = (ICurricularCourse) curricularCourses.get(i);
-                List precedences = precedenceDAO.readByCurricularCourse(curricularCourse);
+                List precedences = curricularCourse.getPrecedences();
                 putInMap(finalListOfInfoPrecedences, curricularCourse, precedences);
             }
 

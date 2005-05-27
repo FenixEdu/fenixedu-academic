@@ -79,12 +79,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
     private void getGivenCreditsInScientificAreas(IStudentCurricularPlan studentCurricularPlan,
             HashMap creditsInScientificAreas) throws ExcepcaoPersistencia {
 
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCreditsInSpecificScientificArea creditsInScientificAreaDAO = persistentSuport
-                .getIPersistentCreditsInSpecificScientificArea();
-
-        List givenCreditsInScientificAreas = creditsInScientificAreaDAO
-                .readAllByStudentCurricularPlan(studentCurricularPlan);
+        List givenCreditsInScientificAreas = studentCurricularPlan.getCreditsInScientificAreas();
 
         if (givenCreditsInScientificAreas != null && !givenCreditsInScientificAreas.isEmpty()) {
             int size = givenCreditsInScientificAreas.size();

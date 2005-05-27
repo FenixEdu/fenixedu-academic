@@ -17,20 +17,13 @@ public class CreditsInSpecificScientificAreaOJB extends PersistentObjectOJB impl
     public CreditsInSpecificScientificAreaOJB() {
     }
 
-    public List readAllByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan)
-            throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("studentCurricularPlan.idInternal", studentCurricularPlan.getIdInternal());
-        return queryList(CreditsInScientificArea.class, criteria);
-    }
-
     public ICreditsInScientificArea readByStudentCurricularPlanAndEnrollmentAndScientificArea(
-            IStudentCurricularPlan studentCurricularPlan, IEnrolment enrolment,
-            IScientificArea scientificArea) throws ExcepcaoPersistencia {
+            Integer studentCurricularPlanKey, Integer enrolmentKey,
+            Integer scientificAreaKey) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("studentCurricularPlan.idInternal", studentCurricularPlan.getIdInternal());
-        criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
-        criteria.addEqualTo("scientificArea.idInternal", scientificArea.getIdInternal());
+        criteria.addEqualTo("studentCurricularPlan.idInternal", studentCurricularPlanKey);
+        criteria.addEqualTo("enrolment.idInternal", enrolmentKey);
+        criteria.addEqualTo("scientificArea.idInternal", scientificAreaKey);
         return (ICreditsInScientificArea) queryObject(CreditsInScientificArea.class, criteria);
     }
 }

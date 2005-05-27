@@ -104,13 +104,16 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InsuranceVa
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ItemVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PersonAccountVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PrecedenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ProfessorshipVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ResponsibleForVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.RestrictionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ScientificAreaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SiteVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentKindVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SummaryVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.UniversityVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.credits.ManagementPositionCreditLineVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.credits.OtherTypeCreditLineVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.credits.ServiceExemptionCreditLineVO;
@@ -355,7 +358,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentUniversity getIPersistentUniversity() {
-        return null;
+        return new UniversityVO();
     }
 
     public IPersistentCourseHistoric getIPersistentCourseHistoric() {
@@ -631,7 +634,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentStudentKind getIPersistentStudentKind() {
-        return null;
+        return new StudentKindVO();
     }
 
     public IPersistentSeminary getIPersistentSeminary() {
@@ -839,7 +842,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentPrecedence getIPersistentPrecedence() {
-        return null;
+        return new PrecedenceVO();
     }
 
     public IPersistentAuthor getIPersistentAuthor() {
@@ -895,22 +898,18 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentInquiriesCourse getIPersistentInquiriesCourse() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public IPersistentInquiriesRegistry getIPersistentInquiriesRegistry() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public IPersistentInquiriesRoom getIPersistentInquiriesRoom() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public IPersistentInquiriesTeacher getIPersistentInquiriesTeacher() {
-        // TODO Auto-generated method stub
         return null;
     }
 

@@ -129,6 +129,13 @@
 			proxy="true">
 		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
 	</collection-descriptor>
+	<collection-descriptor
+			name="creditsInScientificAreas"
+			element-class-ref="net.sourceforge.fenixedu.domain.CreditsInScientificArea"
+			refresh="true"
+			proxy="true">
+		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
+	</collection-descriptor>
     <!--<collection-descriptor
 			name="enrollmentReports"
 			element-class-ref="net.sourceforge.fenixedu.domain.enrollmentReport.EnrollmentReport"

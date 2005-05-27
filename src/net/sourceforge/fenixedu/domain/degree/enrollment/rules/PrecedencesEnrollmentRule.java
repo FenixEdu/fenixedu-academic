@@ -42,15 +42,8 @@ public class PrecedencesEnrollmentRule implements IEnrollmentRule {
 
             List precedenceList = null;
 
-            try {
-                ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-                IPersistentPrecedence precedenceDAO = persistentSuport.getIPersistentPrecedence();
-                precedenceList = precedenceDAO.readByCurricularCourse(curricularCourse2Enroll
-                        .getCurricularCourse());
-            } catch (ExcepcaoPersistencia e) {
-                throw new RuntimeException(e);
-            }
-
+            precedenceList = curricularCourse2Enroll.getCurricularCourse().getPrecedences();
+            
             if (precedenceList == null || precedenceList.isEmpty()) {
                 if (!curricularCourses2Enroll.contains(curricularCourse2Enroll)) {
                     curricularCourses2Enroll.add(curricularCourse2Enroll);

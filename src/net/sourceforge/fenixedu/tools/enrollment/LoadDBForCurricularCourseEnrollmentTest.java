@@ -141,9 +141,7 @@ public class LoadDBForCurricularCourseEnrollmentTest {
                 }
 
                 // ---------------------------------------------------------------------------------------------------
-                List creditsInScientificAreaList = persistenceDAO
-                        .getIPersistentCreditsInSpecificScientificArea().readAllByStudentCurricularPlan(
-                                studentCurricularPlan);
+                List creditsInScientificAreaList = studentCurricularPlan.getCreditsInScientificAreas();
 
                 size = creditsInScientificAreaList.size();
                 for (int i = 0; i < size; i++) {
