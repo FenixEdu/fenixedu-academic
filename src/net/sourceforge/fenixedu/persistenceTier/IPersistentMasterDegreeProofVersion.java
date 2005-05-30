@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.persistenceTier;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IMasterDegreeProofVersion;
-import net.sourceforge.fenixedu.domain.IMasterDegreeThesis;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 
 /**
@@ -16,8 +15,6 @@ import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
  *  
  */
 public interface IPersistentMasterDegreeProofVersion extends IPersistentObject {
-    public IMasterDegreeProofVersion readActiveByMasterDegreeThesis(
-            IMasterDegreeThesis masterDegreeThesis) throws ExcepcaoPersistencia;
 
     public IMasterDegreeProofVersion readActiveByStudentCurricularPlan(
             IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia;
