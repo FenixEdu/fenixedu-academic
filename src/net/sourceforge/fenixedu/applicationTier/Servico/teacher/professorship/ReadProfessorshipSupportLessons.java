@@ -32,6 +32,7 @@ public class ReadProfessorshipSupportLessons implements IService {
 
     public ProfessorshipSupportLessonsDTO run(Integer teacherId, Integer executionCourseId)
             throws FenixServiceException, ExcepcaoPersistencia {
+        
         ProfessorshipSupportLessonsDTO professorshipSupportLessonsDTO = new ProfessorshipSupportLessonsDTO();
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -43,7 +44,7 @@ public class ReadProfessorshipSupportLessons implements IService {
         professorshipSupportLessonsDTO.setInfoProfessorship(infoProfessorship);
         IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();
 
-        List supportLessons = supportLessonDAO.readByProfessorship(professorship);
+        List supportLessons = supportLessonDAO.readByProfessorship(professorship.getIdInternal());
         List infoSupportLessons = (List) CollectionUtils.collect(supportLessons, new Transformer() {
 
             public Object transform(Object input) {

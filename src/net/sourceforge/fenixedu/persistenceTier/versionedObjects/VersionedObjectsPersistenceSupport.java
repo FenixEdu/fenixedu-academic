@@ -120,6 +120,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SecretaryEn
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SiteVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentKindVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SummaryVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SupportLessonVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurmaTurnoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurmaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.UniversityVO;
@@ -756,7 +757,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentSupportLesson getIPersistentSupportLesson() {
-        return null;
+        return new SupportLessonVO();
     }
 
     public IPersistentTransaction getIPersistentTransaction() {

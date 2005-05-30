@@ -72,18 +72,12 @@ public abstract class CreditsValidator {
         }
     }
 
-    /**
-     * @param teacher
-     * @param weekDay
-     * @param startTime
-     * @param endTime
-     */
     private static void verifyOverlappingSupportLesson(ITeacher teacher,
             IExecutionPeriod executionPeriod, DiaSemana weekDay, Date startTime, Date endTime,
             ISuportePersistente sp) throws ExcepcaoPersistencia, OverlappingSupportLessonPeriod {
         IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();
 
-        List list = supportLessonDAO.readOverlappingPeriod(teacher, executionPeriod, weekDay, startTime,
+        List list = supportLessonDAO.readOverlappingPeriod(teacher.getIdInternal(), executionPeriod.getIdInternal(), weekDay, startTime,
                 endTime);
         if (!list.isEmpty()) {
             throw new OverlappingSupportLessonPeriod();

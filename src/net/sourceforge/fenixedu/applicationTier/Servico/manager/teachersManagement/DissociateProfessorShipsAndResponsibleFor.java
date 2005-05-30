@@ -95,7 +95,7 @@ public class DissociateProfessorShipsAndResponsibleFor implements IService {
                 while (iterProfessorships.hasNext()) {
                     IProfessorship professorship = (IProfessorship) iterProfessorships.next();
 
-                    List supportLessons = persistentSupportLesson.readByProfessorship(professorship);
+                    List supportLessons = persistentSupportLesson.readByProfessorship(professorship.getIdInternal());
                     List shiftProfessorships = persistentShiftProfessorship
                             .readByProfessorship(professorship);
 

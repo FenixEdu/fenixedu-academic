@@ -36,7 +36,7 @@ class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.d
 	Date lastModifiedDate;
 }
 
-/* DONE */
+/* DONE: DML and VO */
 class net.sourceforge.fenixedu.domain.Item extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keySection;
 	Boolean urgent;

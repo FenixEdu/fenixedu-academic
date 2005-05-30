@@ -76,25 +76,17 @@ public class EditSupportLessonByOID extends EditDomainObjectService {
         return "EditSupportLessonByOID";
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#readObjectByUnique(Dominio.IDomainObject,
-     *      ServidorPersistente.ISuportePersistente)
-     */
     protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
+
+        ISupportLesson supportLessonDomainObject = (ISupportLesson) domainObject;
         IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();
-        ISupportLesson supportLesson = supportLessonDAO.readByUnique((ISupportLesson) domainObject);
+        ISupportLesson supportLesson = supportLessonDAO.readByUnique(supportLessonDomainObject
+                .getProfessorship().getIdInternal(), supportLessonDomainObject.getWeekDay(),
+                supportLessonDomainObject.getStartTime(), supportLessonDomainObject.getEndTime());
         return supportLesson;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#doBeforeLock(Dominio.IDomainObject,
-     *      net.sourceforge.fenixedu.dataTransferObject.InfoObject, ServidorPersistente.ISuportePersistente)
-     */
     protected void doBeforeLock(IDomainObject domainObjectToLock, InfoObject infoObject,
             ISuportePersistente sp) throws Exception {
         InfoSupportLesson infoSupportLesson = (InfoSupportLesson) infoObject;
@@ -128,7 +120,7 @@ public class EditSupportLessonByOID extends EditDomainObjectService {
         IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();
 
         try {
-            List supportLessonList = supportLessonDAO.readOverlappingPeriod(teacher, executionPeriod,
+            List supportLessonList = supportLessonDAO.readOverlappingPeriod(teacher.getIdInternal(), executionPeriod.getIdInternal(),
                     weekDay, startTime, endTime);
             boolean ok = true;
             if (!supportLessonList.isEmpty()) {

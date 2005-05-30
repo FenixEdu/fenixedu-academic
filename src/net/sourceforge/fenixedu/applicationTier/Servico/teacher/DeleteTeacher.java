@@ -56,7 +56,7 @@ public class DeleteTeacher implements IService {
                 teacherCode, infoExecutionCourseCode);
 
         List shiftProfessorshipList = shiftProfessorshipDAO.readByProfessorship(professorshipToDelete);
-        List supportLessonList = supportLessonDAO.readByProfessorship(professorshipToDelete);
+        List supportLessonList = supportLessonDAO.readByProfessorship(professorshipToDelete.getIdInternal());
 
         if (shiftProfessorshipList.isEmpty() && supportLessonList.isEmpty()) {
             IPersistentSummary persistentSummary = sp.getIPersistentSummary();

@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.domain.ISupportLesson;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ResponsibleFor;
 import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -385,11 +386,15 @@ public class MergeExecutionCourses implements IService {
                         persistentShiftProfessorship.delete(shiftProfessorship);
                     }
 
-                    List supportLessons = persistentSupportLesson.readByProfessorship(professorship);
+                    List supportLessons = persistentSupportLesson.readByProfessorship(professorship.getIdInternal());
                     iterator = supportLessons.iterator();
                     while (iterator.hasNext()) {
                         ISupportLesson supportLesson = (ISupportLesson) iterator.next();
-                        persistentSupportLesson.delete(supportLesson);
+                        if (supportLesson.getProfessorship().getSupportLessons() != null) {
+                            supportLesson.getProfessorship().getSupportLessons().remove(supportLesson);
+                        }
+                        supportLesson.setProfessorship(null);
+                        persistentSupportLesson.deleteByOID(SupportLesson.class, supportLesson.getIdInternal());
                     }
 
                     IPersistentSummary persistentSummary = ps.getIPersistentSummary();

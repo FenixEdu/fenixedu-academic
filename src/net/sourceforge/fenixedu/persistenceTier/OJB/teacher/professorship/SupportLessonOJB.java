@@ -7,10 +7,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.teacher.professorship;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ISupportLesson;
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
@@ -24,44 +21,26 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class SupportLessonOJB extends PersistentObjectOJB implements IPersistentSupportLesson {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.teacher.professorship.IPersistentSupportLesson#readByProfessorship(Dominio.IProfessorship)
-     */
-    public List readByProfessorship(IProfessorship professorship) throws ExcepcaoPersistencia {
+    public List readByProfessorship(Integer professorshipID) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyProfessorship", professorship.getIdInternal());
+        criteria.addEqualTo("keyProfessorship", professorshipID);
         return queryList(SupportLesson.class, criteria);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.teacher.professorship.IPersistentSupportLesson#readByUnique(Dominio.ISupportLesson)
-     */
-    public ISupportLesson readByUnique(ISupportLesson supportLesson) throws ExcepcaoPersistencia {
+    public ISupportLesson readByUnique(Integer professorshipID, DiaSemana weekDay, Date startTime, Date endTime) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyProfessorship", supportLesson.getProfessorship().getIdInternal());
-        criteria.addEqualTo("weekDay", supportLesson.getWeekDay());
-        criteria.addEqualTo("startTime", supportLesson.getStartTime());
-        criteria.addEqualTo("endTime", supportLesson.getEndTime());
+        criteria.addEqualTo("keyProfessorship", professorshipID);
+        criteria.addEqualTo("weekDay", weekDay);
+        criteria.addEqualTo("startTime", startTime);
+        criteria.addEqualTo("endTime", endTime);
         return (ISupportLesson) queryObject(SupportLesson.class, criteria);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.teacher.professorship.IPersistentSupportLesson#readOverlappingPeriod(Dominio.ITeacher,
-     *      Dominio.IExecutionPeriod, Util.DiaSemana, java.util.Date,
-     *      java.util.Date)
-     */
-    public List readOverlappingPeriod(ITeacher teacher, IExecutionPeriod executionPeriod,
+    public List readOverlappingPeriod(Integer teacherID, Integer executionPeriodID,
             DiaSemana weekDay, Date startTime, Date endTime) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("professorship.executionCourse.keyExecutionPeriod", executionPeriod
-                .getIdInternal());
-        criteria.addEqualTo("professorship.keyTeacher", teacher.getIdInternal());
+        criteria.addEqualTo("professorship.executionCourse.keyExecutionPeriod", executionPeriodID);
+        criteria.addEqualTo("professorship.keyTeacher", teacherID);
         criteria.addEqualTo("weekDay", weekDay);
 
         Criteria startCriteria = new Criteria();
@@ -83,37 +62,6 @@ public class SupportLessonOJB extends PersistentObjectOJB implements IPersistent
 
         criteria.addAndCriteria(timeCriteria);
 
-        return queryList(SupportLesson.class, criteria);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.teacher.professorship.IPersistentSupportLesson#readByTeacherAndExecutionPeriod(Dominio.ITeacher,
-     *      Dominio.IExecutionPeriod)
-     */
-    public List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod)
-            throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("professorship.keyTeacher", teacher.getIdInternal());
-        criteria.addEqualTo("professorship.executionCourse.keyExecutionPeriod", executionPeriod
-                .getIdInternal());
-        return queryList(SupportLesson.class, criteria);
-    }
-
-    public void delete(ISupportLesson supportLesson) throws ExcepcaoPersistencia {
-        super.delete(supportLesson);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.teacher.professorship.IPersistentSupportLesson#readByExecutionPeriod(Dominio.IExecutionPeriod)
-     */
-    public List readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("professorship.executionCourse.executionPeriod.idInternal", executionPeriod
-                .getIdInternal());
         return queryList(SupportLesson.class, criteria);
     }
 }
