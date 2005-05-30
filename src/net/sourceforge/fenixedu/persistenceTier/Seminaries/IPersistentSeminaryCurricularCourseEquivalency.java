@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.persistenceTier.Seminaries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Seminaries.ICourseEquivalency;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -19,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  *  
  */
 public interface IPersistentSeminaryCurricularCourseEquivalency extends IPersistentObject {
+
     public List readAll() throws ExcepcaoPersistencia;
 
-    public void delete(ICourseEquivalency courseEquivalency) throws ExcepcaoPersistencia;
 }

@@ -136,6 +136,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.places.camp
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.CandidacyVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.CaseStudyChoiceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.CaseStudyVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.EquivalencyVO;
 
 public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
@@ -736,7 +737,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentSeminaryCurricularCourseEquivalency getIPersistentSeminaryCurricularCourseEquivalency() {
-        return null;
+        return new EquivalencyVO();
     }
 
     public IPersistentStudentCourseReport getIPersistentStudentCourseReport() {

@@ -3,14 +3,13 @@
  *
  *By Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  */
-package net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries;
+package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries;
 
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -19,11 +18,11 @@ import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCu
  * Created at 4/Ago/2003, 13:08:05
  *  
  */
-public class EquivalencyOJB extends PersistentObjectOJB implements
+public class EquivalencyVO extends VersionedObjectsBase implements
         IPersistentSeminaryCurricularCourseEquivalency {
 
-    public List readAll() throws ExcepcaoPersistencia {
-        return super.queryList(CourseEquivalency.class, null);
+    public List readAll() {
+        return (List) readAll(CourseEquivalency.class);
     }
 
 }
