@@ -11,15 +11,15 @@ import net.sourceforge.fenixedu.domain.IMasterDegreeThesis;
 /**
  * Authors : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  * (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 public interface IPersistentMasterDegreeThesis extends IPersistentObject {
-	/**
-	 * 
-	 * @param studentCurricularPlan
-	 * @return
-	 * @throws ExcepcaoPersistencia
-	 */
-	public abstract IMasterDegreeThesis readByStudentCurricularPlan(
-			Integer studentCurricularPlanID) throws ExcepcaoPersistencia;
+    /**
+     * 
+     * @param studentCurricularPlan
+     * @return
+     * @throws ExcepcaoPersistencia
+     */
+    public IMasterDegreeThesis readByStudentCurricularPlan(Integer studentCurricularPlanID)
+            throws ExcepcaoPersistencia;
 }
