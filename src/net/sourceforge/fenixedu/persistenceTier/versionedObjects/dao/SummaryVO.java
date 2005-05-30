@@ -52,7 +52,7 @@ public class SummaryVO extends VersionedObjectsBase implements IPersistentSummar
         while(iter.hasNext()){
             Summary summary = (Summary) iter.next();
             if(summary.getSummaryType() != null){
-	            if(summary.getSummaryType().equals(summaryType))
+	            if(summary.getSummaryType().getTipo().equals(summaryType.getTipo()))
 	                summariesAux.add(summary);
             }
         }
@@ -68,10 +68,8 @@ public class SummaryVO extends VersionedObjectsBase implements IPersistentSummar
         
         while(iter.hasNext()){
             Summary summary = (Summary) iter.next();
-            if(summary.getSummaryType() != null){
-	            if(summary.getSummaryType().equals(summaryType))
-	                summariesAux.add(summary);
-            }
+            if(summary.getShift().getTipo().equals(summaryType.getTipo()))
+                summariesAux.add(summary);
         }       
         
         return summariesAux;
