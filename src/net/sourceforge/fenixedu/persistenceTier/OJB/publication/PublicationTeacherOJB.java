@@ -23,18 +23,6 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class PublicationTeacherOJB extends ObjectFenixOJB implements IPersistentPublicationTeacher{
 
-	public List readByPublicationId(Integer publicationId) throws ExcepcaoPersistencia{
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyPublication",publicationId);
-        return queryList(PublicationTeacher.class,criteria);
-    }
-
-    public List readByTeacherId(Integer teacherId) throws ExcepcaoPersistencia{
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyTeacher",teacherId);
-        return queryList(PublicationTeacher.class,criteria);
-    }
-    
     public IPublicationTeacher readByTeacherAndPublication(ITeacher teacher,
 			IPublication publication) throws ExcepcaoPersistencia{
     	Criteria criteria = new Criteria();

@@ -19,10 +19,6 @@ import net.sourceforge.fenixedu.util.PublicationArea;
  */
 public interface IPersistentPublicationTeacher extends IPersistentObject {
 
-    public List readByPublicationId(Integer publicationId) throws ExcepcaoPersistencia;
-
-    public List readByTeacherId(Integer teacherId) throws ExcepcaoPersistencia;
-
     public IPublicationTeacher readByTeacherAndPublication(ITeacher teacher, IPublication publication)
             throws ExcepcaoPersistencia;
 

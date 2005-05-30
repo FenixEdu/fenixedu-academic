@@ -9,6 +9,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.publication.IPublicationAuthor;
+import net.sourceforge.fenixedu.domain.publication.PublicationAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPublicationAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -47,9 +48,7 @@ public class DeletePublicationAuthors implements IService {
             publicationAuthor.getPublication().getPublicationAuthors().remove(publicationAuthor);
             publicationAuthor.setAuthor(null);
             publicationAuthor.setPublication(null);
+            persistentPublicationAuthor.deleteByOID(PublicationAuthor.class,publicationAuthor.getIdInternal());
         }
-        
-        persistentPublicationAuthor.deleteAllByPublicationID(publicationId);
 	}
-
 }

@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.publication.IPublicationType;
+import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -54,7 +55,7 @@ public class ReadPublicationTypes implements IServico {
 
             IPersistentPublicationType persistentPublicationType = persistentSuport
                     .getIPersistentPublicationType();
-            List publicationTypeList = persistentPublicationType.readAll();
+            List publicationTypeList = (List)persistentPublicationType.readAll(PublicationType.class);
 
             List result = (List) CollectionUtils.collect(publicationTypeList, new Transformer() {
                 public Object transform(Object o) {

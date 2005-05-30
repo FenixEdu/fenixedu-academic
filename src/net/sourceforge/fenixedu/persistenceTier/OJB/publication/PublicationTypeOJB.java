@@ -37,9 +37,4 @@ public class PublicationTypeOJB extends PersistentObjectOJB implements IPersiste
         return queryList(PublicationType.class, criteria);
     }
 
-    public List readByPublicationsTypeId(String publicationType) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("publicationType", publicationType);
-        return queryList(PublicationType.class, criteria);
-    }
 }

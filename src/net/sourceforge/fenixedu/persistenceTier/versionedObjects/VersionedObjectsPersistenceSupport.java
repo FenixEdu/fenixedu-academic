@@ -107,7 +107,11 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PersonAccountVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PrecedenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ProfessorshipVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationAuthorVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationTeacherVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationTypeVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationsNumberVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ResponsibleForVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.RestrictionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ScientificAreaVO;
@@ -197,7 +201,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentPublicationsNumber getIPersistentPublicationsNumber() {
-        return null;
+        return new PublicationsNumberVO();
     }
 
     public IPersistentEvaluationMethod getIPersistentEvaluationMethod() {
@@ -213,7 +217,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentPublicationAuthor getIPersistentPublicationAuthor() {
-        return null;
+        return new PublicationAuthorVO();
     }
 
     public IPersistentExam getIPersistentExam() {
@@ -281,7 +285,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentPublicationType getIPersistentPublicationType() {
-        return null;
+        return new PublicationTypeVO();
     }
 
     public IPersistentSeminaryCaseStudyChoice getIPersistentSeminaryCaseStudyChoice() {
@@ -537,7 +541,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentPublicationTeacher getIPersistentPublicationTeacher() {
-        return null;
+        return new PublicationTeacherVO();
     }
 
     public IPersistentCampus getIPersistentCampus() {

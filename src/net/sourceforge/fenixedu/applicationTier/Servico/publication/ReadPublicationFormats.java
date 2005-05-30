@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.publication.IPublicationFormat;
+import net.sourceforge.fenixedu.domain.publication.PublicationFormat;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -54,7 +55,7 @@ public class ReadPublicationFormats implements IServico {
             IPersistentPublicationFormat persistentPublicationFormat = persistentSuport
                     .getIPersistentPublicationFormat();
 
-            List publicationFormatList = persistentPublicationFormat.readAll();
+            List publicationFormatList = (List)persistentPublicationFormat.readAll(PublicationFormat.class);
 
             List result = (List) CollectionUtils.collect(publicationFormatList, new Transformer() {
                 public Object transform(Object o) {
