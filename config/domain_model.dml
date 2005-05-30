@@ -2141,6 +2141,7 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
     Integer completedCourses;
     Integer degreeCurricularPlanKey;
     Integer employeeKey;
+    Integer masterDegreeThesisKey;
     Integer enrolledCourses;
     Double givenCredits;
     String observations;
@@ -2403,7 +2404,7 @@ class net.sourceforge.fenixedu.domain.publication.Publication extends net.source
 	String format;
 	Integer keyPublicationType;
 	String publicationString;
-
+		
 }
 
 class net.sourceforge.fenixedu.domain.teacher.PublicationsNumber extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3803,9 +3804,7 @@ relation MasterDegreeProofVersionMasterDegreeThesis {
 }
 
 relation MasterDegreeThesisStudentCurricularPlan {
-	net.sourceforge.fenixedu.domain.MasterDegreeThesis playsRole masterDegreeThesis {
-		multiplicity *;
-	}
+	net.sourceforge.fenixedu.domain.MasterDegreeThesis playsRole masterDegreeThesis;
 	net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlan;
 }
 

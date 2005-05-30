@@ -79,6 +79,11 @@
 		column="KEY_EMPLOYEE"
 		jdbc-type="INTEGER"	
 	/>
+    <field-descriptor
+		name="masterDegreeThesisKey"
+		column="KEY_MASTER_DEGREE_THESIS"
+		jdbc-type="INTEGER"	
+	/>	
 	<field-descriptor
 		name="when"
 		column="WHEN_ALTER"
@@ -115,6 +120,12 @@
 			proxy="true">
 		<foreignkey field-ref="employeeKey"/>
 	</reference-descriptor>
+	<reference-descriptor
+			name="masterDegreeThesis"
+			class-ref="net.sourceforge.fenixedu.domain.MasterDegreeThesis"
+			proxy="true">
+		<foreignkey field-ref="masterDegreeThesisKey"/>
+	</reference-descriptor>	
 	<collection-descriptor
 			name="enrolments"
 			element-class-ref="net.sourceforge.fenixedu.domain.Enrolment"
