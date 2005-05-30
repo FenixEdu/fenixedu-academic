@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.persistenceTier.Seminaries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Seminaries.ICaseStudy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -19,11 +18,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  *  
  */
 public interface IPersistentSeminaryCaseStudy extends IPersistentObject {
-    ICaseStudy readByName(String name) throws ExcepcaoPersistencia;
 
     List readAll() throws ExcepcaoPersistencia;
 
     List readByThemeID(Integer themeID) throws ExcepcaoPersistencia;
 
-    void delete(ICaseStudy caseStudy) throws ExcepcaoPersistencia;
 }

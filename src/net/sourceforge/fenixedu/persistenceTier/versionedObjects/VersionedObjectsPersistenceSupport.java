@@ -135,6 +135,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.owner
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.places.campus.CampusVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.CandidacyVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.CaseStudyChoiceVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.CaseStudyVO;
 
 public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
@@ -295,7 +296,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentSeminaryCaseStudy getIPersistentSeminaryCaseStudy() {
-        return null;
+        return new CaseStudyVO();
     }
 
     public IPersistentEvaluation getIPersistentEvaluation() {
