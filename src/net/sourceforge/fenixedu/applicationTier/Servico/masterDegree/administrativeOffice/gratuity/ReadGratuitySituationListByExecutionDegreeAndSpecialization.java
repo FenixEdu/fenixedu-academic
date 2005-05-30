@@ -91,7 +91,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
                     executionYear = persistentExecutionYear.readExecutionYearByName(executionYearName);
                     if (executionYear != null) {
                         executionDegreeList = executionDegreeDAO.readByExecutionYearAndDegreeType(
-                                executionYear.getIdInternal(), DegreeType.MASTER_DEGREE);
+                                executionYear.getYear(), DegreeType.MASTER_DEGREE);
                     }
                 }
             }

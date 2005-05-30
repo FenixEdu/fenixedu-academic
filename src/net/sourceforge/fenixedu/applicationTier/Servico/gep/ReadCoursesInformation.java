@@ -84,7 +84,7 @@ public class ReadCoursesInformation implements IService {
         }
         if (executionDegreeId == null) {
             List<IExecutionDegree> executionDegrees = persistentExecutionDegree
-                    .readByExecutionYearAndDegreeType(executionYear.getIdInternal(), DegreeType.DEGREE);
+                    .readByExecutionYearAndDegreeType(executionYear.getYear(), DegreeType.DEGREE);
             List<Integer> degreeCurricularPlanIDs = getDegreeCurricularPlanIDs(executionDegrees);
             Integer executionYearID = (!degreeCurricularPlanIDs.isEmpty()) ? executionDegrees
                     .get(0).getExecutionYear().getIdInternal()

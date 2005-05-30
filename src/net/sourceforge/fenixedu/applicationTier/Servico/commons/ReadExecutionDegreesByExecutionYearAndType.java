@@ -10,6 +10,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
@@ -30,8 +31,11 @@ public class ReadExecutionDegreesByExecutionYearAndType implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
 
-        final List executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(
-                executionYearOID, typeOfCourse);
+        final IExecutionYear executionYear = (IExecutionYear) sp.getIPersistentExecutionYear()
+                .readByOID(ExecutionYear.class, executionYearOID);
+
+        final List executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear
+                .getYear(), typeOfCourse);
         return getInfoExecutionDegrees(executionDegrees);
     }
 

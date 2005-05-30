@@ -51,7 +51,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeType implements IServic
         if (degreeType == null) {
             executionDegrees = executionDegreeDAO.readByExecutionYear(executionYear.getYear());
         } else {
-            executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear.getIdInternal(),
+            executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear.getYear(),
                     degreeType);
         }
 

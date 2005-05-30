@@ -32,7 +32,7 @@ public interface IPersistentExecutionDegree extends IPersistentObject {
 
     public List readByTeacher(Integer teacherOID) throws ExcepcaoPersistencia;
 
-    public List readByExecutionYearAndDegreeType(Integer executionYearOID, DegreeType degreeType)
+    public List readByExecutionYearAndDegreeType(String year, DegreeType degreeType)
             throws ExcepcaoPersistencia;
 
     public List readByDegreeCurricularPlan(Integer degreeCurricularPlanOID) throws ExcepcaoPersistencia;

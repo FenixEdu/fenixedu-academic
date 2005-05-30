@@ -133,17 +133,24 @@ public class CursoExecucaoVO extends VersionedObjectsBase implements IPersistent
 
     }
 
-    public List readByExecutionYearAndDegreeType(Integer executionYearOID, DegreeType degreeType)
+    public List readByExecutionYearAndDegreeType(String year, DegreeType degreeType)
             throws ExcepcaoPersistencia {
 
-        IExecutionYear executionYear = (IExecutionYear) readByOID(ExecutionYear.class, executionYearOID);
-
-        List<IExecutionDegree> executionDegrees = executionYear.getExecutionDegrees();
+        List<IExecutionYear> executionYears = (List<IExecutionYear>) readAll(ExecutionYear.class);
         List<IExecutionDegree> result = new ArrayList();
 
-        for (IExecutionDegree executionDegree : executionDegrees) {
-            if (executionDegree.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(degreeType)) {
-                result.add(executionDegree);
+        for (IExecutionYear executionYear : executionYears) {
+            if (executionYear.getYear().equals(year)) {
+
+                List<IExecutionDegree> executionDegrees = executionYear.getExecutionDegrees();
+
+                for (IExecutionDegree executionDegree : executionDegrees) {
+                    if (executionDegree.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(
+                            degreeType)) {
+                        result.add(executionDegree);
+                    }
+                }
+
             }
         }
         return result;

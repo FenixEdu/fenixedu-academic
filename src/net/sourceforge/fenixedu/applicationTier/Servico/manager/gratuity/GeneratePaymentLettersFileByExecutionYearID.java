@@ -265,7 +265,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 
             // read master degree and specialization execution degrees
             List executionDegreeList = sp.getIPersistentExecutionDegree()
-                    .readByExecutionYearAndDegreeType(executionYear.getIdInternal(), DegreeType.MASTER_DEGREE);
+                    .readByExecutionYearAndDegreeType(executionYear.getYear(), DegreeType.MASTER_DEGREE);
 
             List gratuityLetterFileEntries = new ArrayList();
 
