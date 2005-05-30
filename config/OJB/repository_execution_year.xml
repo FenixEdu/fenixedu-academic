@@ -48,7 +48,7 @@
       <collection-descriptor
 			name="executionPeriods"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
-			proxy="true">
+			refresh="true">
 		<inverse-foreignkey field-ref="keyExecutionYear"/>
 	  </collection-descriptor>  
 	  <collection-descriptor

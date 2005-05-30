@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.persistenceTier.Seminaries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Seminaries.ISeminary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -19,9 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  *  
  */
 public interface IPersistentSeminary extends IPersistentObject {
-    ISeminary readByName(String name) throws ExcepcaoPersistencia;
 
     List readAll() throws ExcepcaoPersistencia;
 
-    void delete(ISeminary seminary) throws ExcepcaoPersistencia;
 }

@@ -72,8 +72,7 @@
 	/>	
 	<reference-descriptor
 			name="executionPeriod"
-			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod" 
-			proxy="false">
+			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod" >
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
 	<reference-descriptor
