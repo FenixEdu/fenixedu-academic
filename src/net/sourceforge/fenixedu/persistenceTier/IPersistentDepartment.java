@@ -14,13 +14,9 @@ import net.sourceforge.fenixedu.domain.ITeacher;
 
 public interface IPersistentDepartment extends IPersistentObject {
 
-    public IDepartment lerDepartamentoPorNome(String nome) throws ExcepcaoPersistencia;
+    public List readAll() throws ExcepcaoPersistencia;
 
-    public IDepartment lerDepartamentoPorSigla(String sigla) throws ExcepcaoPersistencia;
-
-    public List readAllDepartments() throws ExcepcaoPersistencia;
-
-    public IDepartment readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia;
+    public IDepartment readByTeacher(Integer teacherId) throws ExcepcaoPersistencia;
     
-    public IDepartment readByEmployee(IEmployee employee) throws ExcepcaoPersistencia;
+    public IDepartment readByEmployee(Integer employeeId) throws ExcepcaoPersistencia;
 }

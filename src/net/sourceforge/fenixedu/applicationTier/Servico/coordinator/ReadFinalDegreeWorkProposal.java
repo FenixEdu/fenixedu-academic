@@ -67,7 +67,7 @@ public class ReadFinalDegreeWorkProposal implements IService {
                         infoProposal.getOrientator().getInfoPerson().setNome(
                                 proposal.getOrientator().getPerson().getNome());
                         IDepartment department = persistentDepartment.readByTeacher(proposal
-                                .getOrientator());
+                                .getOrientator().getIdInternal());
                         if (department != null) {
                             infoProposal.setOrientatorsDepartment(new InfoDepartment());
                             infoProposal.getOrientatorsDepartment().setIdInternal(
@@ -90,7 +90,7 @@ public class ReadFinalDegreeWorkProposal implements IService {
                         infoProposal.getCoorientator().getInfoPerson().setNome(
                                 proposal.getCoorientator().getPerson().getNome());
                         IDepartment department = persistentDepartment.readByTeacher(proposal
-                                .getCoorientator());
+                                .getCoorientator().getIdInternal());
                         if (department != null) {
                             infoProposal.setCoorientatorsDepartment(new InfoDepartment());
                             infoProposal.getCoorientatorsDepartment().setIdInternal(

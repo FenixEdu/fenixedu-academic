@@ -21,16 +21,10 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadDepartmentByTeacher implements IService {
 
     public InfoDepartment run(InfoTeacher infoTeacher) throws ExcepcaoPersistencia {
-        InfoDepartment infoDepartment = null;
-
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
 
-        ITeacher teacher = Cloner.copyInfoTeacher2Teacher(infoTeacher);
-
-        IDepartment department = departmentDAO.readByTeacher(teacher);
-        infoDepartment = Cloner.copyIDepartment2InfoDepartment(department);
-
-        return infoDepartment;
+        IDepartment department = departmentDAO.readByTeacher(infoTeacher.getIdInternal());
+        return Cloner.copyIDepartment2InfoDepartment(department);
     }
 }

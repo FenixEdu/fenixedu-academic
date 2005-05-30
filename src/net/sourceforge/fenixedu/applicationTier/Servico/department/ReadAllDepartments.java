@@ -30,7 +30,7 @@ public class ReadAllDepartments implements IService {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
-            List departments = departmentDAO.readAllDepartments();
+            List departments = departmentDAO.readAll();
             Iterator iter = departments.iterator();
             List infoDepartments = new ArrayList();
             while (iter.hasNext()) {

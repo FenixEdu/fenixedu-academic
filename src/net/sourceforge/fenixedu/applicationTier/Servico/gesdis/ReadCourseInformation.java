@@ -341,7 +341,7 @@ public class ReadCourseInformation implements IService {
         while (iter.hasNext()) {
             ResponsibleFor responsibleFor = (ResponsibleFor) iter.next();
             ITeacher teacher = responsibleFor.getTeacher();
-            IDepartment department = persistentDepartment.readByTeacher(teacher);
+            IDepartment department = persistentDepartment.readByTeacher(teacher.getIdInternal());
 
             infoDepartments.add(InfoDepartment.newInfoFromDomain(department));
         }

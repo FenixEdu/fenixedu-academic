@@ -65,7 +65,7 @@ public class TeacherDegreeFinalProjectFilter extends AuthorizationByRoleFilter {
             List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
             IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
 
-            IDepartment department = departmentDAO.readByTeacher(teacher);
+            IDepartment department = departmentDAO.readByTeacher(teacher.getIdInternal());
 
             if (department == null) {
                 throw new NotAuthorizedException("Teacher number " + teacher.getTeacherNumber()

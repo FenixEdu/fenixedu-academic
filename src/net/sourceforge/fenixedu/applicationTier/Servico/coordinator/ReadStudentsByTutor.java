@@ -57,7 +57,7 @@ public class ReadStudentsByTutor implements IService {
             teacher.setTeacherNumber(tutorNumber);
 
             IPersistentDepartment persistentDepartment = sp.getIDepartamentoPersistente();
-            IDepartment department = persistentDepartment.readByTeacher(teacher);
+            IDepartment department = persistentDepartment.readByTeacher(tutorNumber);
 
             //Now only LEEC's teachers can be tutor
             if (!department.getCode().equals(new String("21"))) {
