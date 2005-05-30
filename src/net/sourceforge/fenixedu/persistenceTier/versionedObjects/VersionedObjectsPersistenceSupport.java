@@ -120,6 +120,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SecretaryEn
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SiteVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentKindVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SummaryVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurmaTurnoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurmaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.UniversityVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.credits.ManagementPositionCreditLineVO;
@@ -363,7 +364,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public ITurmaTurnoPersistente getITurmaTurnoPersistente() {
-        return null;
+        return new TurmaTurnoVO();
     }
 
     public IPersistentWorkLocation getIPersistentWorkLocation() {
