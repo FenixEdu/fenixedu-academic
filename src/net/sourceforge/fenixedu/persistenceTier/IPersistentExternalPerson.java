@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IExternalPerson;
@@ -24,4 +25,6 @@ public interface IPersistentExternalPerson extends IPersistentObject {
     public List readByWorkLocation(Integer workLocationID) throws ExcepcaoPersistencia;
 
     public String readLastDocumentIdNumber() throws ExcepcaoPersistencia;
+    
+    public Collection<IExternalPerson> readByIDs(Collection<Integer> externalPersonsIDs) throws ExcepcaoPersistencia;
 }

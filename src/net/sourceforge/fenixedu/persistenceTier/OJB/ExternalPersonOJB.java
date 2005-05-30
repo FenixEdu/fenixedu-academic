@@ -7,6 +7,7 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExternalPerson;
@@ -92,6 +93,16 @@ public class ExternalPersonOJB extends PersistentObjectOJB implements IPersisten
         }
 
         return lastIdStr;
+    }
+
+    public Collection<IExternalPerson> readByIDs(Collection<Integer> externalPersonsIDs) throws ExcepcaoPersistencia {
+        if(externalPersonsIDs.isEmpty()){
+            return new ArrayList<IExternalPerson>();
+        }
+        
+        Criteria criteria = new Criteria();
+        criteria.addIn("idInternal",externalPersonsIDs);
+        return queryList(ExternalPerson.class, criteria);
     }
 
 }
