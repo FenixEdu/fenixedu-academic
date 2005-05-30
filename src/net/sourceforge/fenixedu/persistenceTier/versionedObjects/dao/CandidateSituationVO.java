@@ -47,10 +47,10 @@ public class CandidateSituationVO extends VersionedObjectsBase implements
 		final IExecutionDegree executionDegree = (IExecutionDegree) readByOID(
 				ExecutionDegree.class, executionDegreeID);
 
-		if (executionDegree != null) {
+		if (executionDegree != null && executionDegree.getMasterDegreeCandidates() != null) {
 
 			final List result = new ArrayList();
-
+			
 			for (final Iterator iterator = executionDegree
 					.getMasterDegreeCandidates().iterator(); iterator.hasNext();) {
 				final IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) iterator
