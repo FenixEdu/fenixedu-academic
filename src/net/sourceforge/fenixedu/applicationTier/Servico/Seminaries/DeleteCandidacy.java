@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
+import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
 import net.sourceforge.fenixedu.domain.Seminaries.ICandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.ICaseStudyChoice;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -28,9 +29,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class DeleteCandidacy implements IService {
 
-    public DeleteCandidacy() {
-    }
-
     public void run(Integer id) throws BDException {
         try {
             ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -42,8 +40,15 @@ public class DeleteCandidacy implements IService {
             List choices = candidacy.getCaseStudyChoices();
             for (Iterator iterator = choices.iterator(); iterator.hasNext();) {
                 ICaseStudyChoice choice = (ICaseStudyChoice) iterator.next();
-                persistentChoice.delete(choice);
+                choice.setCaseStudy(null);
+                persistentChoice.deleteByOID(CaseStudyChoice.class, choice.getIdInternal());
             }
+            candidacy.setCurricularCourse(null);
+            candidacy.setModality(null);
+            candidacy.setSeminary(null);
+            candidacy.setStudent(null);
+            candidacy.setTheme(null);
+            candidacy.getCaseStudyChoices().clear();
             persistentCandidacy.deleteByOID(Candidacy.class, id);
         } catch (ExcepcaoPersistencia ex) {
             throw new BDException("Got an error while trying to delete a candidacy from the database",

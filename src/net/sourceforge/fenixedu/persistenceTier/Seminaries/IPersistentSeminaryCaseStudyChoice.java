@@ -5,10 +5,6 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.Seminaries;
 
-import java.util.List;
-
-import net.sourceforge.fenixedu.domain.Seminaries.ICaseStudyChoice;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
 /**
@@ -19,14 +15,5 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  *  
  */
 public interface IPersistentSeminaryCaseStudyChoice extends IPersistentObject {
-    List readByCandidacyIdInternal(Integer id) throws ExcepcaoPersistencia;
 
-    List readByCaseStudyIdInternal(Integer id) throws ExcepcaoPersistencia;
-
-    ICaseStudyChoice readByCaseStudyIdInternalAndCandidacyIdInternal(Integer idCaseStudy,
-            Integer idCandidacy) throws ExcepcaoPersistencia;
-
-    List readAll() throws ExcepcaoPersistencia;
-
-    void delete(ICaseStudyChoice choice) throws ExcepcaoPersistencia;
 }
