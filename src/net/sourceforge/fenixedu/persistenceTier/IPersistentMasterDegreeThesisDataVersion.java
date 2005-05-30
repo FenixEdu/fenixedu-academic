@@ -15,9 +15,6 @@ import net.sourceforge.fenixedu.domain.IMasterDegreeThesisDataVersion;
  */
 public interface IPersistentMasterDegreeThesisDataVersion extends
 		IPersistentObject {
-	/* to delete - not used anywhere */
-	public IMasterDegreeThesisDataVersion readActiveByMasterDegreeThesis(
-			Integer masterDegreeThesisID) throws ExcepcaoPersistencia;
 
 	public IMasterDegreeThesisDataVersion readActiveByStudentCurricularPlan(
 			Integer studentCurricularPlanId) throws ExcepcaoPersistencia;
