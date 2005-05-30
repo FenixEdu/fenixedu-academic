@@ -142,6 +142,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.CaseStudyChoiceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.CaseStudyVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.EquivalencyVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.ModalityVO;
 
 public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
@@ -326,7 +327,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentSeminaryModality getIPersistentSeminaryModality() {
-        return null;
+        return new ModalityVO();
     }
 
     public IPersistentAttendsSet getIPersistentAttendsSet() {
