@@ -172,7 +172,7 @@
 		<li>
 			<html:link page="<%= "/viewCoordinationTeam.do?method=viewTeam&degreeCurricularPlanID="+ 
 			degreeCurricularPlanID.toString()  %>" >
-				Equipa de Coordenação
+				<bean:message key="link.coordinator.degreeCurricularPlan.coordinationTeam"/>
 			</html:link> 
 			<br/>
 			<br/>
