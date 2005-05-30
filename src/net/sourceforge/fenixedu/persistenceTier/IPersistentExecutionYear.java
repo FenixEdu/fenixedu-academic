@@ -15,8 +15,6 @@ public interface IPersistentExecutionYear extends IPersistentObject {
 
     public IExecutionYear readExecutionYearByName(String year) throws ExcepcaoPersistencia;
 
-    public List readAllExecutionYear() throws ExcepcaoPersistencia;
-
     public List readNotClosedExecutionYears() throws ExcepcaoPersistencia;
 
     public IExecutionYear readCurrentExecutionYear() throws ExcepcaoPersistencia;

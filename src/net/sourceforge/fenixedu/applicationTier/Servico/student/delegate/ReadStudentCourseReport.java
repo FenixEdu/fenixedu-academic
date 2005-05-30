@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.student.InfoSiteStudentCourse
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoStudentCourseReport;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IEnrolment;
@@ -88,7 +89,7 @@ public class ReadStudentCourseReport implements IService {
             }
 
             InfoSiteStudentCourseReport infoSiteStudentCourseReport = new InfoSiteStudentCourseReport();
-            List executionPeriods = persistentExecutionPeriod.readAllExecutionPeriod();
+            List executionPeriods = (List)persistentExecutionPeriod.readAll(ExecutionPeriod.class);
 
             Collections.sort(executionPeriods, new Comparator() {
 

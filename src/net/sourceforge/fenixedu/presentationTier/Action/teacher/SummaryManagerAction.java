@@ -232,7 +232,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         }
         
         DynaActionForm actionForm = (DynaActionForm) form;
-                 
+        
         if(actionForm.get("summaryDateInputOption").equals("on"))
             request.setAttribute("checked", "");
         
@@ -368,17 +368,17 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             
             InfoSummary infoSummaryToInsert = buildSummaryToInsert(request);
             
-//          HtmlValidator htmlValidator = new HtmlValidator();     
-//          htmlValidator.validateHTMLString(infoSummaryToInsert.getSummaryText());
-//          String errors = htmlValidator.getErrors();           
-//          
-//          if((errors != null) && (!errors.equals(""))){
-//          ActionErrors actionErrors = new ActionErrors();
-//          request.setAttribute("errors", errors);
-//          actionErrors.add("htmlErrors", new ActionError("html.validate.error"));
-//          saveErrors(request, actionErrors);
-//          return mapping.getInputForward();
-//          }
+            /*HtmlValidator htmlValidator = new HtmlValidator();     
+            htmlValidator.validateHTMLString(infoSummaryToInsert.getSummaryText());
+            String errors = htmlValidator.getErrors();           
+            
+            if((errors != null) && (!errors.equals(""))){
+                ActionErrors actionErrors = new ActionErrors();
+                request.setAttribute("errors", errors);
+                actionErrors.add("htmlErrors", new ActionError("html.validate.error"));
+                saveErrors(request, actionErrors);
+                return mapping.getInputForward();
+            }*/
             
             Object[] args = { executionCourseId, infoSummaryToInsert };
             ServiceUtils.executeService(userView, "InsertSummary", args);
@@ -589,7 +589,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             
             return showSummaries(mapping, form, request, response);
         }
-                            
+        
         if(summaryForm.get("editor").equals("") || (summaryForm.get("editor").equals("true"))){
             request.setAttribute("verEditor", "true");            
         }   

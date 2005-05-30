@@ -4,11 +4,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -36,7 +38,7 @@ public class ReadAllExecutionYears implements IService {
 
         try {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            allExecutionYears = sp.getIPersistentExecutionYear().readAllExecutionYear();
+            allExecutionYears = (List)sp.getIPersistentExecutionYear().readAll(ExecutionYear.class);
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
         }

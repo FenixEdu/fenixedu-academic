@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class ReadNextExecutionPeriod implements IService {
         IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
         IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, oid);
-        List executionPeriods = persistentExecutionPeriod.readAllExecutionPeriod();
+        Collection executionPeriods = persistentExecutionPeriod.readAll(ExecutionPeriod.class);
 
         for (Iterator iterator = executionPeriods.iterator(); iterator.hasNext(); ) {
             IExecutionPeriod otherExecutionPeriod = (IExecutionPeriod) iterator.next();

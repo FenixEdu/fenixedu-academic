@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -19,18 +20,9 @@ import net.sourceforge.fenixedu.util.PeriodState;
  * @author mrsp and jdnf
  */
 public class ExecutionPeriodVO extends VersionedObjectsBase implements IPersistentExecutionPeriod {
-
-        
-    public List readAllExecutionPeriod() throws ExcepcaoPersistencia {
-        List executionPeriods = (List) readAll(ExecutionPeriod.class); 
-        if(executionPeriods != null)
-            return executionPeriods;
-        
-        return new ArrayList();
-    }
-    
+   
     public IExecutionPeriod readActualExecutionPeriod() throws ExcepcaoPersistencia {
-        List executionPeriods = readAllExecutionPeriod();   
+        Collection executionPeriods = readAll(ExecutionPeriod.class);   
         for (Iterator iter = executionPeriods.iterator(); iter.hasNext();) {
             ExecutionPeriod element = (ExecutionPeriod) iter.next();
             if(element.getState().equals(PeriodState.CURRENT))
@@ -41,7 +33,7 @@ public class ExecutionPeriodVO extends VersionedObjectsBase implements IPersiste
 
    
     public IExecutionPeriod readByNameAndExecutionYear(String executionPeriodName, String year) throws ExcepcaoPersistencia {
-        List executionPeriods = readAllExecutionPeriod();   
+        Collection executionPeriods = readAll(ExecutionPeriod.class);     
         for (Iterator iter = executionPeriods.iterator(); iter.hasNext();) {
             ExecutionPeriod element = (ExecutionPeriod) iter.next();
             if((element.getExecutionYear().getYear().equals(year)) && (element.getName().equals(executionPeriodName)))
@@ -53,7 +45,7 @@ public class ExecutionPeriodVO extends VersionedObjectsBase implements IPersiste
     public IExecutionPeriod readBySemesterAndExecutionYear(Integer semester, String year) throws ExcepcaoPersistencia {        
         if(year == null)
             return null;      
-        List executionPeriods = readAllExecutionPeriod();   
+        Collection executionPeriods = readAll(ExecutionPeriod.class);     
         for (Iterator iter = executionPeriods.iterator(); iter.hasNext();) {
             ExecutionPeriod element = (ExecutionPeriod) iter.next();
             if((element.getExecutionYear().getYear().equals(year)) && (element.getSemester() == semester))
@@ -64,7 +56,7 @@ public class ExecutionPeriodVO extends VersionedObjectsBase implements IPersiste
 
     
     public List readPublic() throws ExcepcaoPersistencia {   
-        List executionPeriods = readAllExecutionPeriod(); 
+        Collection executionPeriods = readAll(ExecutionPeriod.class);   
         List executionPeriodsAux = new ArrayList();     
         for (Iterator iter = executionPeriods.iterator(); iter.hasNext();) {
             ExecutionPeriod element = (ExecutionPeriod) iter.next();
@@ -77,7 +69,7 @@ public class ExecutionPeriodVO extends VersionedObjectsBase implements IPersiste
 
    
     public List readByExecutionYear(Integer executionYearID) throws ExcepcaoPersistencia {
-        List executionPeriods = readAllExecutionPeriod(); 
+        Collection executionPeriods = readAll(ExecutionPeriod.class);   
         List executionPeriodsAux = new ArrayList();
         
         for (Iterator iter = executionPeriods.iterator(); iter.hasNext();) {
@@ -90,7 +82,7 @@ public class ExecutionPeriodVO extends VersionedObjectsBase implements IPersiste
 
     
     public List readNotClosedExecutionPeriods() throws ExcepcaoPersistencia {
-        List executionPeriods = readAllExecutionPeriod(); 
+        Collection executionPeriods = readAll(ExecutionPeriod.class);   
         List executionPeriodsAux = new ArrayList();
         
         for (Iterator iter = executionPeriods.iterator(); iter.hasNext();) {
@@ -102,7 +94,7 @@ public class ExecutionPeriodVO extends VersionedObjectsBase implements IPersiste
     }
     
     public List readNotClosedPublicExecutionPeriods() throws ExcepcaoPersistencia {
-        List executionPeriods = readAllExecutionPeriod(); 
+        Collection executionPeriods = readAll(ExecutionPeriod.class);   
         List executionPeriodsAux = new ArrayList();
         
         for (Iterator iter = executionPeriods.iterator(); iter.hasNext();) {
@@ -116,12 +108,12 @@ public class ExecutionPeriodVO extends VersionedObjectsBase implements IPersiste
     }
 
     public List readExecutionPeriodsInTimePeriod(Date start, Date end) throws ExcepcaoPersistencia {
-        List executionPeriods = readAllExecutionPeriod(); 
+        Collection executionPeriods = readAll(ExecutionPeriod.class);   
         List executionPeriodsAux = new ArrayList();
         
         for (Iterator iter = executionPeriods.iterator(); iter.hasNext();) {
             ExecutionPeriod element = (ExecutionPeriod) iter.next();
-            if(element.getBeginDate().after(start) && element.getEndDate().before(end))
+            if(element.getBeginDate().before(end) && element.getEndDate().after(start))
                 executionPeriodsAux.add(element);
         }     
         return executionPeriodsAux;
@@ -129,7 +121,7 @@ public class ExecutionPeriodVO extends VersionedObjectsBase implements IPersiste
 
     
     public List readNotClosedPublicExecutionPeriodsByExecutionYears(Integer executionYearID) throws ExcepcaoPersistencia {
-        List executionPeriods = readAllExecutionPeriod(); 
+        Collection executionPeriods = readAll(ExecutionPeriod.class);   
         List executionPeriodsAux = new ArrayList();
         
         for (Iterator iter = executionPeriods.iterator(); iter.hasNext();) {

@@ -4,9 +4,11 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -31,7 +33,7 @@ public class ReadExecutionYearsService implements IService {
 		final IPersistentExecutionYear executionYearDAO = sp
 				.getIPersistentExecutionYear();
 
-		final List executionYears = executionYearDAO.readAllExecutionYear();
+		final Collection executionYears = executionYearDAO.readAll(ExecutionYear.class);
 		return (List) CollectionUtils.collect(executionYears,
 				new Transformer() {
 					public Object transform(Object arg0) {

@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class ReadAvailableExecutionPeriods implements IService {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-            List executionPeriods = persistentExecutionPeriod.readAllExecutionPeriod();
+            Collection executionPeriods = persistentExecutionPeriod.readAll(ExecutionPeriod.class);
 
             Iterator iter = unavailableExecutionPeriodsIds.iterator();
             while (iter.hasNext()) {

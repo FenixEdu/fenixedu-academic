@@ -22,10 +22,6 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         super();
     }
 
-    public List readAllExecutionPeriod() throws ExcepcaoPersistencia {
-        return queryList(ExecutionPeriod.class, new Criteria());
-    }
-
     public IExecutionPeriod readActualExecutionPeriod() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("state", PeriodState.CURRENT);

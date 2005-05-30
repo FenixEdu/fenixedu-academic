@@ -4,11 +4,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -52,7 +54,7 @@ public class ReadAllExecutionPeriods implements IServico {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
-            List executionPeriods = persistentExecutionPeriod.readAllExecutionPeriod();
+            Collection executionPeriods = persistentExecutionPeriod.readAll(ExecutionPeriod.class);
 
             infoExecutionPeriods = (List) CollectionUtils.collect(executionPeriods,
                     TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD);

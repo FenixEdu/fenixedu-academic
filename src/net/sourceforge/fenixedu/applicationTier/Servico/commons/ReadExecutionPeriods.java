@@ -5,10 +5,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -30,7 +32,7 @@ public class ReadExecutionPeriods implements IService {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
 
-            List executionPeriods = executionPeriodDAO.readAllExecutionPeriod();
+            List executionPeriods = (List)executionPeriodDAO.readAll(ExecutionPeriod.class);
 
             if (executionPeriods != null) {
                 for (int i = 0; i < executionPeriods.size(); i++) {

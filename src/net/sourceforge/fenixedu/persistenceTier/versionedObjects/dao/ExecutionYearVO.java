@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -19,16 +20,8 @@ import net.sourceforge.fenixedu.util.PeriodState;
  */
 public class ExecutionYearVO  extends VersionedObjectsBase implements IPersistentExecutionYear {
 
-    public List readAllExecutionYear() throws ExcepcaoPersistencia {
-        List executionYears = (List) readAll(ExecutionYear.class);
-        if(executionYears != null)
-            return executionYears;
-        return new ArrayList();
-    }
-
     public IExecutionYear readExecutionYearByName(String year) throws ExcepcaoPersistencia {
-        List<IExecutionYear> executionYears = readAllExecutionYear();
-        
+        Collection<IExecutionYear> executionYears = readAll(ExecutionYear.class);
         for(IExecutionYear executionYear : executionYears){
             if(executionYear.getYear().equals(year))
                 return executionYear;
@@ -38,7 +31,7 @@ public class ExecutionYearVO  extends VersionedObjectsBase implements IPersisten
     }
     
     public List readNotClosedExecutionYears() throws ExcepcaoPersistencia {
-        List<IExecutionYear> executionYears = readAllExecutionYear();
+        Collection<IExecutionYear> executionYears = readAll(ExecutionYear.class);
         List executionYearsAux = new ArrayList();
         
         for(IExecutionYear executionYear : executionYears){
@@ -49,7 +42,7 @@ public class ExecutionYearVO  extends VersionedObjectsBase implements IPersisten
     }
     
     public IExecutionYear readCurrentExecutionYear() throws ExcepcaoPersistencia {
-        List<IExecutionYear> executionYears = readAllExecutionYear();
+        Collection<IExecutionYear> executionYears = readAll(ExecutionYear.class);
         
         for(IExecutionYear executionYear : executionYears){
             if(executionYear.getState().equals(PeriodState.CURRENT))
@@ -59,7 +52,7 @@ public class ExecutionYearVO  extends VersionedObjectsBase implements IPersisten
     }
 
     public List readOpenExecutionYears() throws ExcepcaoPersistencia {
-        List<IExecutionYear> executionYears = readAllExecutionYear();
+        Collection<IExecutionYear> executionYears = readAll(ExecutionYear.class);
         List executionYearsAux = new ArrayList();
         
         for(IExecutionYear executionYear : executionYears){
@@ -70,11 +63,11 @@ public class ExecutionYearVO  extends VersionedObjectsBase implements IPersisten
     }
 
     public List readExecutionYearsInPeriod(Date start, Date end) throws ExcepcaoPersistencia {
-        List<IExecutionYear> executionYears = readAllExecutionYear();
+        Collection<IExecutionYear> executionYears = readAll(ExecutionYear.class);
         List executionYearsAux = new ArrayList();
         
         for(IExecutionYear executionYear : executionYears){
-            if(executionYear.getBeginDate().after(start) && executionYear.getEndDate().before(end))
+            if(executionYear.getBeginDate().before(end) && executionYear.getEndDate().after(start))
                 executionYearsAux.add(executionYear);
         }        
         return executionYearsAux;

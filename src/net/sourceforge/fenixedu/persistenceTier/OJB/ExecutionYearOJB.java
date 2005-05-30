@@ -18,53 +18,15 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class ExecutionYearOJB extends PersistentObjectOJB implements IPersistentExecutionYear {
 
-    /**
-     * Constructor for ExecutionYearOJB.
-     */
     public ExecutionYearOJB() {
         super();
     }
 
-    /**
-     * @see ServidorPersistente.IPersistentExecutionYear#readExecutionYearByName(java.lang.String)
-     */
     public IExecutionYear readExecutionYearByName(String year) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("year", year);
         return (IExecutionYear) queryObject(ExecutionYear.class, criteria);
     }
-
-    /**
-     * @see ServidorPersistente.IPersistentExecutionYear#readAllExecutionYear()
-     */
-    public List readAllExecutionYear() throws ExcepcaoPersistencia {
-        return queryList(ExecutionYear.class, null, "year", false);
-    }
-
-//    public boolean delete(IExecutionYear executionYear) {
-//        try {
-//            Criteria crit1 = new Criteria();
-//            crit1.addEqualTo("executionYear.year", executionYear.getYear());
-//
-//            List executionPeriods = queryList(ExecutionPeriod.class, crit1);
-//            Criteria crit2 = new Criteria();
-//            crit2.addEqualTo("executionYear.year", executionYear.getYear());
-//
-//            List executionDegrees = queryList(ExecutionDegree.class, crit2);
-//
-//            if ((executionPeriods == null || executionPeriods.isEmpty())
-//                    && (executionDegrees == null || executionDegrees.isEmpty())) {
-//
-//                super.delete(executionYear);
-//            } else {
-//
-//                return false;
-//            }
-//            return true;
-//        } catch (Exception e) {
-//            return false;
-//        }
-//    }
 
     public List readExecutionYearsInPeriod(Date start, Date end) throws ExcepcaoPersistencia{
         Criteria criteria = new Criteria();
@@ -80,11 +42,7 @@ public class ExecutionYearOJB extends PersistentObjectOJB implements IPersistent
         return (IExecutionYear) queryObject(ExecutionYear.class, criteria);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.IPersistentExecutionYear#readNotClosedExecutionYears()
-     */
+
     public List readNotClosedExecutionYears() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addNotEqualTo("state", PeriodState.CLOSED);

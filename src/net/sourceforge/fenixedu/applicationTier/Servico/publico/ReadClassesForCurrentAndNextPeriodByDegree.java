@@ -1,11 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.ClassView;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
@@ -43,7 +45,7 @@ public class ReadClassesForCurrentAndNextPeriodByDegree implements IService {
 
     private IExecutionPeriod getNextExecutionPeriod(ISuportePersistente persistentSupport, IExecutionPeriod currentExecutionPeriod) throws ExcepcaoPersistencia {
         IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-        List executionPeriods = persistentExecutionPeriod.readAllExecutionPeriod();
+        Collection executionPeriods = persistentExecutionPeriod.readAll(ExecutionPeriod.class);
 
         for (Iterator iterator = executionPeriods.iterator(); iterator.hasNext(); ) {
             IExecutionPeriod otherExecutionPeriod = (IExecutionPeriod) iterator.next();

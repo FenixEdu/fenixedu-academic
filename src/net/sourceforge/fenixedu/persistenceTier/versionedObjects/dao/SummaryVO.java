@@ -51,8 +51,10 @@ public class SummaryVO extends VersionedObjectsBase implements IPersistentSummar
                
         while(iter.hasNext()){
             Summary summary = (Summary) iter.next();
-            if(summary.getSummaryType().equals(summaryType.getTipo()))
-                summariesAux.add(summary);
+            if(summary.getSummaryType() != null){
+	            if(summary.getSummaryType().equals(summaryType))
+	                summariesAux.add(summary);
+            }
         }
         
         return summariesAux;
@@ -66,8 +68,10 @@ public class SummaryVO extends VersionedObjectsBase implements IPersistentSummar
         
         while(iter.hasNext()){
             Summary summary = (Summary) iter.next();
-            if(summary.getSummaryType().equals(summaryType.getTipo()))
-                summariesAux.add(summary);
+            if(summary.getSummaryType() != null){
+	            if(summary.getSummaryType().equals(summaryType))
+	                summariesAux.add(summary);
+            }
         }       
         
         return summariesAux;
@@ -124,15 +128,17 @@ public class SummaryVO extends VersionedObjectsBase implements IPersistentSummar
     throws ExcepcaoPersistencia {
                 
         final IShift shift = (IShift) readByOID(Shift.class, shiftID);
-        List summaries = shift.getAssociatedSummaries();
-        Iterator iter = summaries.iterator();
         ISummary summary = null;
-        
-        while(iter.hasNext()){
-            Summary summary2 = (Summary) iter.next();
-            if((summary2.getSummaryDate().equals(summaryDate)) && (summary2.getSummaryHour().equals(summaryHour)))
-                summary = summary2;            
-        }        
+       
+        if(shift != null){
+	        List summaries = shift.getAssociatedSummaries();
+	        Iterator iter = summaries.iterator();	        	       
+	        while(iter.hasNext()){
+	            Summary summary2 = (Summary) iter.next();
+	            if((summary2.getSummaryDate().equals(summaryDate)) && (summary2.getSummaryHour().equals(summaryHour)))
+	                summary = summary2;            
+	        }        
+        }
         return summary;
     }
 }

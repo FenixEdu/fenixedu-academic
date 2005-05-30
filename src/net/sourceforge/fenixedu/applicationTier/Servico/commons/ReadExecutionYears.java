@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -28,7 +29,7 @@ public class ReadExecutionYears implements IService {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
 
-            List executionYears = executionYearDAO.readAllExecutionYear();
+            List executionYears = (List)executionYearDAO.readAll(ExecutionYear.class);
 
             Iterator iterator = executionYears.iterator();
             while (iterator.hasNext()) {
