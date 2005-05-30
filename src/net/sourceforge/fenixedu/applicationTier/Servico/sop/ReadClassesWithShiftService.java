@@ -28,7 +28,7 @@ public class ReadClassesWithShiftService implements IService {
 
         IShift shift = Cloner.copyInfoShift2Shift(infoShift);
 
-        List shiftClasses = classShiftDAO.readClassesWithShift(shift);
+        List shiftClasses = classShiftDAO.readClassesWithShift(shift.getIdInternal());
 
         Iterator iterator = shiftClasses.iterator();
 

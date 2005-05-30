@@ -17,7 +17,9 @@ import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.ISchoolClassShift;
 import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.SchoolClassShift;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ITurmaTurnoPersistente;
 
@@ -25,7 +27,11 @@ import org.apache.ojb.broker.query.Criteria;
 
 public class TurmaTurnoOJB extends PersistentObjectOJB implements ITurmaTurnoPersistente {
 
-    public ISchoolClassShift readByTurmaAndTurno(ISchoolClass turma, IShift turno) throws ExcepcaoPersistencia {
+    public ISchoolClassShift readByTurmaAndTurno(Integer turmaOID, Integer turnoOID) throws ExcepcaoPersistencia {
+        
+        ISchoolClass turma = (ISchoolClass) readByOID(SchoolClass.class, turmaOID);
+        IShift turno = (IShift) readByOID(Shift.class, turnoOID); 
+        
         Criteria crit = new Criteria();
         crit.addEqualTo("turma.nome", turma.getNome());
         crit.addEqualTo("turma.executionPeriod.name", turma.getExecutionPeriod().getName());
@@ -47,16 +53,16 @@ public class TurmaTurnoOJB extends PersistentObjectOJB implements ITurmaTurnoPer
 
     }
 
-    public void delete(ISchoolClassShift turmaTurno) throws ExcepcaoPersistencia {
-        super.delete(turmaTurno);
-    }
-
-    /**
+     /**
      * Returns a shift list
      * 
      * @see ServidorPersistente.ITurmaTurnoPersistente#readByClass(ISchoolClass)
      */
-    public List readByClass(ISchoolClass group) throws ExcepcaoPersistencia {
+    public List readByClass(Integer schoolClassOID) throws ExcepcaoPersistencia {
+        
+        ISchoolClass group = (ISchoolClass) readByOID(SchoolClass.class, schoolClassOID);
+        
+        
         Criteria crit = new Criteria();
         crit.addEqualTo("turma.nome", group.getNome());
         crit.addEqualTo("turma.executionPeriod.name", group.getExecutionPeriod().getName());
@@ -82,7 +88,11 @@ public class TurmaTurnoOJB extends PersistentObjectOJB implements ITurmaTurnoPer
 
     }
 
-    public List readClassesWithShift(IShift turno) throws ExcepcaoPersistencia {
+    public List readClassesWithShift(Integer turnoOID) throws ExcepcaoPersistencia {
+        
+        IShift turno = (IShift) readByOID(Shift.class, turnoOID); 
+        
+        
         Criteria crit = new Criteria();
         crit.addEqualTo("turno.nome", turno.getNome());
         crit.addEqualTo("turno.disciplinaExecucao.sigla", turno.getDisciplinaExecucao().getSigla());

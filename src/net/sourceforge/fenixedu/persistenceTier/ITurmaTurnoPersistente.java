@@ -12,16 +12,13 @@ package net.sourceforge.fenixedu.persistenceTier;
  */
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.ISchoolClassShift;
-import net.sourceforge.fenixedu.domain.IShift;
 
 public interface ITurmaTurnoPersistente extends IPersistentObject {
-    public ISchoolClassShift readByTurmaAndTurno(ISchoolClass turma, IShift turno) throws ExcepcaoPersistencia;
+    public ISchoolClassShift readByTurmaAndTurno(Integer turmaOID, Integer turnoOID)
+            throws ExcepcaoPersistencia;
 
-    public void delete(ISchoolClassShift turmaTurno) throws ExcepcaoPersistencia;
+    public List readByClass(Integer schoolClassOID) throws ExcepcaoPersistencia;
 
-    public List readByClass(ISchoolClass group) throws ExcepcaoPersistencia;
-
-    public List readClassesWithShift(IShift turno) throws ExcepcaoPersistencia;
+    public List readClassesWithShift(Integer turnoOID) throws ExcepcaoPersistencia;
 }

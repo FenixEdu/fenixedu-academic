@@ -63,7 +63,7 @@ public class LerTurnosDeTurma implements IService {
         group.setExecutionPeriod(executionPeriod);
         group.setNome(className);
 
-        List shiftList = classShiftDAO.readByClass(group);
+        List shiftList = classShiftDAO.readByClass(group.getIdInternal());
 
         Iterator iterator = shiftList.iterator();
         // infoTurnos = new ArrayList();

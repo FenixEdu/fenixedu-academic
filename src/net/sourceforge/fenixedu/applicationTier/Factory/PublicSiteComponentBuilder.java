@@ -112,7 +112,7 @@ public class PublicSiteComponentBuilder {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             // ITurnoAulaPersistente shiftLessonDAO =
             // sp.getITurnoAulaPersistente();
-            List shiftList = sp.getITurmaTurnoPersistente().readByClass(domainClass);
+            List shiftList = sp.getITurmaTurnoPersistente().readByClass(domainClass.getIdInternal());
             infoLessonList = new ArrayList();
 
             IExecutionPeriod executionPeriod = domainClass.getExecutionPeriod();

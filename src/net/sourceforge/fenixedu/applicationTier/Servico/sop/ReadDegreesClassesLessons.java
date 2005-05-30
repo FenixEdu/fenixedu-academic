@@ -82,7 +82,7 @@ public class ReadDegreesClassesLessons implements IService {
                 ISchoolClass turma = (ISchoolClass) classes.get(i);
 
                 // read class lessons
-                List shiftList = sp.getITurmaTurnoPersistente().readByClass(turma);
+                List shiftList = sp.getITurmaTurnoPersistente().readByClass(turma.getIdInternal());
                 Iterator iterator = shiftList.iterator();
                 List infoLessonList = new ArrayList();
                 while (iterator.hasNext()) {

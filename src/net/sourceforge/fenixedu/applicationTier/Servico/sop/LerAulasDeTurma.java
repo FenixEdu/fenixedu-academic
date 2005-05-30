@@ -57,7 +57,7 @@ public class LerAulasDeTurma implements IService {
             group = Cloner.copyInfoClass2Class(infoClass);
         }
 
-        List shiftList = sp.getITurmaTurnoPersistente().readByClass(group);
+        List shiftList = sp.getITurmaTurnoPersistente().readByClass(group.getIdInternal());
 
         Iterator iterator = shiftList.iterator();
 

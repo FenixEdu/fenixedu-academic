@@ -154,7 +154,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
 
         List shifts = queryList(Shift.class, criteria, true);
 
-        List classShifts = new TurmaTurnoOJB().readByClass(schoolClass);
+        List classShifts = new TurmaTurnoOJB().readByClass(schoolClass.getIdInternal());
 
         shifts.removeAll(classShifts);
 

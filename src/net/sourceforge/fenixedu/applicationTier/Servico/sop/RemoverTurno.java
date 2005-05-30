@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.ISchoolClassShift;
 import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.SchoolClassShift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -40,14 +41,26 @@ public class RemoverTurno implements IService {
                         classTemp.getExecutionPeriod().getIdInternal());
         ISchoolClassShift turmaTurnoToDelete = null;
         if ((shiftToDelete != null) && (classToDelete != null)) {
-            turmaTurnoToDelete = sp.getITurmaTurnoPersistente().readByTurmaAndTurno(classToDelete,
-                    shiftToDelete);
+            turmaTurnoToDelete = sp.getITurmaTurnoPersistente().readByTurmaAndTurno(
+                    classToDelete.getIdInternal(), shiftToDelete.getIdInternal());
         } else
             return Boolean.FALSE;
 
         // Check if exists
-        if (turmaTurnoToDelete != null)
-            sp.getITurmaTurnoPersistente().delete(turmaTurnoToDelete);
+        if (turmaTurnoToDelete != null) {
+
+            turmaTurnoToDelete.getTurma().getSchoolClassShifts().remove(turmaTurnoToDelete);
+            turmaTurnoToDelete.setTurma(null);
+
+            turmaTurnoToDelete.getTurno().getSchoolClassShifts().remove(turmaTurnoToDelete);
+            turmaTurnoToDelete.setTurno(null);
+
+            sp.getITurmaTurnoPersistente().deleteByOID(SchoolClassShift.class,
+                    turmaTurnoToDelete.getIdInternal());
+           
+            // sp.getITurmaTurnoPersistente().delete(turmaTurnoToDelete);
+        }
+
         else
             return Boolean.FALSE;
 

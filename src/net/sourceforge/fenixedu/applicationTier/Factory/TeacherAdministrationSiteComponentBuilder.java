@@ -2093,7 +2093,7 @@ public class TeacherAdministrationSiteComponentBuilder {
                         List lessons = shift.getAssociatedLessons();
                         List infoLessons = new ArrayList();
                         List classesShifts = sp.getITurmaTurnoPersistente()
-                                .readClassesWithShift(shift);
+                                .readClassesWithShift(shift.getIdInternal());
                         List infoClasses = new ArrayList();
 
                         for (int j = 0; j < lessons.size(); j++)
