@@ -104,6 +104,8 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideSituat
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InsuranceValueVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ItemVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegreeThesisDataVersionVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegreeThesisVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PersonAccountVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PrecedenceVO;
@@ -262,7 +264,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentMasterDegreeThesis getIPersistentMasterDegreeThesis() {
-        return null;
+        return new MasterDegreeThesisVO();
     }
 
     public IPersistentStudentCurricularPlan getIStudentCurricularPlanPersistente() {
@@ -710,7 +712,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentMasterDegreeThesisDataVersion getIPersistentMasterDegreeThesisDataVersion() {
-        return null;
+        return new MasterDegreeThesisDataVersionVO();
     }
 
     public IPersistentEnrollment getIPersistentEnrolment() {
