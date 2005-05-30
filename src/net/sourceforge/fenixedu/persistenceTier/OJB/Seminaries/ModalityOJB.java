@@ -23,6 +23,7 @@ import org.apache.ojb.broker.query.Criteria;
  *  
  */
 public class ModalityOJB extends PersistentObjectOJB implements IPersistentSeminaryModality {
+
     public IModality readByName(String name) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("name", name);
@@ -34,7 +35,4 @@ public class ModalityOJB extends PersistentObjectOJB implements IPersistentSemin
         return super.queryList(Modality.class, criteria);
     }
 
-    public void delete(IModality modality) throws ExcepcaoPersistencia {
-        super.deleteByOID(Modality.class, modality.getIdInternal());
-    }
 }

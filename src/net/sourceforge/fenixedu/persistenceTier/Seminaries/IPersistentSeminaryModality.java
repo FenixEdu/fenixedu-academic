@@ -19,9 +19,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  *  
  */
 public interface IPersistentSeminaryModality extends IPersistentObject {
+
     IModality readByName(String name) throws ExcepcaoPersistencia;
 
     List readAll() throws ExcepcaoPersistencia;
 
-    void delete(IModality modality) throws ExcepcaoPersistencia;
 }
