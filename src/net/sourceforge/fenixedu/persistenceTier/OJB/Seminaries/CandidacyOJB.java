@@ -29,11 +29,6 @@ import org.apache.ojb.broker.query.QueryByCriteria;
  *  
  */
 public class CandidacyOJB extends PersistentObjectOJB implements IPersistentSeminaryCandidacy {
-    public ICandidacy readByName(String name) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("name", name);
-        return (ICandidacy) super.queryObject(Candidacy.class, criteria);
-    }
 
     public List readByStudentID(Integer id) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
@@ -47,15 +42,6 @@ public class CandidacyOJB extends PersistentObjectOJB implements IPersistentSemi
         criteria.addEqualTo("student_id_internal", studentID);
         criteria.addEqualTo("seminary_id_internal", seminaryID);
         return super.queryList(Candidacy.class, criteria);
-    }
-
-    public List readAll() throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        return super.queryList(Candidacy.class, criteria);
-    }
-
-    public void delete(ICandidacy candidacy) throws ExcepcaoPersistencia {
-        super.deleteByOID(Candidacy.class, candidacy.getIdInternal());
     }
 
     public List readByUserInput(Integer modalityID, Integer seminaryID, Integer themeID,

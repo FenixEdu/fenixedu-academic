@@ -114,4 +114,11 @@
 			proxy="true">
 		<inverse-foreignkey field-ref="studentKey"/>
 	</collection-descriptor>
+	<collection-descriptor
+			name="associatedCandidancies"
+			element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.Candidacy"
+			refresh="true"
+			proxy="true">
+		<inverse-foreignkey field-ref="studentIdInternal"/>
+	</collection-descriptor>
 </class-descriptor>
