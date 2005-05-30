@@ -11,6 +11,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinator;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinatorWithInfoPerson;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ICoordinator;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
@@ -45,7 +46,7 @@ public class ReadCoordinationTeam implements IService {
             List infoCoordinators = new ArrayList();
             while (iterator.hasNext()) {
                 ICoordinator coordinator = (ICoordinator) iterator.next();
-                InfoCoordinator infoCoordinator = InfoCoordinator.newInfoFromDomain(coordinator);
+                InfoCoordinator infoCoordinator = InfoCoordinatorWithInfoPerson.newInfoFromDomain(coordinator);
                 infoCoordinators.add(infoCoordinator);
             }
 

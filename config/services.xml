@@ -3308,7 +3308,7 @@
             <chain name="TeacherAuthorization"/>
         </filterChains>
     </service>-->
-	<service>
+    <service>
         <name>ReadPublicationTypes</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadPublicationTypes</implementationClass>
         <description/>
@@ -7827,7 +7827,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="CoordinatorOrStudentAuthorization"/>
+            <chain name="CoordinatorOrStudentOrMasterDegreeAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -8773,5 +8773,5 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gep.ListMasterDegreeStudents</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>s>
-    </service>    
+    </service>           
 </serviceDefinitions>
