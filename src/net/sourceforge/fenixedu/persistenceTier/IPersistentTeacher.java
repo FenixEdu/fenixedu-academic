@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.persistenceTier;
  * @author EP 15
  * @author Ivo Brandão
  */
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IDepartment;
@@ -54,4 +55,13 @@ public interface IPersistentTeacher extends IPersistentObject {
      * @author jpvl
      */
     public ITeacher readByNumber(Integer teacherNumber) throws ExcepcaoPersistencia;
+       
+    /**
+     * Reads a collection of teachers, wich numbers are in the passed param teacherNumbers
+     * 
+     * @param teacherNumbers
+     * @return
+     * @throws ExcepcaoPersistencia
+     */
+    public Collection<ITeacher> readByNumbers(Collection<Integer> teacherNumbers) throws ExcepcaoPersistencia;
 }

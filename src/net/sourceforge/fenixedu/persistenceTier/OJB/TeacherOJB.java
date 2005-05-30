@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -124,4 +125,15 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher {
         criteria.addEqualTo("teacherNumber", teacherNumber);
         return (ITeacher) queryObject(Teacher.class, criteria);
     }
+    
+    public Collection<ITeacher> readByNumbers(Collection<Integer> teacherNumbers) throws ExcepcaoPersistencia {
+        if(teacherNumbers.isEmpty()){
+            return new ArrayList<ITeacher>();
+        }
+        
+        Criteria criteria = new Criteria();
+        criteria.addIn("teacherNumber",teacherNumbers);
+        return queryList(Teacher.class, criteria);
+    }
+    
 }
