@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico;
 
-import java.util.Random;
-
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.fileSuport.FileSuport;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
@@ -14,29 +12,8 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class CheckIsAliveService implements IService {
 
-    
-    private static final String filename;
-    private static final String filepath;
-
-    private static final FileSuportObject fileSuportObject = new FileSuportObject();
-
-    static {
-        final Random random = new Random(System.currentTimeMillis());
-        final int someInt = random.nextInt();
-
-        filename = "checkIsAlive" + System.getenv().get("HOSTNAME") + someInt;
-        filepath = "/" + filename;
-
-        byte[] fileContents = CheckIsAliveService.class.getName().getBytes();
-
-        fileSuportObject.setFileName(filename);
-        fileSuportObject.setLinkName(filename);
-        fileSuportObject.setContent(fileContents);
-        fileSuportObject.setContentType("txt");
-
-        fileSuportObject.setUri("/");
-        fileSuportObject.setRootUri("/");
-    }
+    private static final String filename = "checkIsAlive";
+    private static final String filepath = "/" + filename;
 
     public Boolean run() throws ExcepcaoPersistencia {
         checkFenixDatabaseOps();
@@ -60,39 +37,22 @@ public class CheckIsAliveService implements IService {
     synchronized private void checkSlideDatabaseOps() {
         final IFileSuport fileSuport = FileSuport.getInstance();
 
-        boolean resultWrite = false;
         boolean resultRead = false;
         try {
             fileSuport.beginTransaction();
-            fileSuport.storeFile(fileSuportObject);
+            final FileSuportObject fileSuportObject = fileSuport.retrieveFile(filepath);
+            resultRead = fileSuportObject != null;
             fileSuport.commitTransaction();
-
-            fileSuport.beginTransaction();
-            fileSuport.retrieveFile(filepath);
-            fileSuport.commitTransaction();
-
-            resultWrite = true;
-            resultRead = true;
         } catch (Exception ex) {
-            resultWrite = false;
             resultRead = false;
-
             try {
                 fileSuport.abortTransaction();
             } catch (Exception ex2) {
                 // nothing else to do.
             }
-        } finally {
-            try {
-                fileSuport.beginTransaction();
-                fileSuport.deleteFile(filepath);
-                fileSuport.commitTransaction();
-            } catch (Exception ex2) {
-                // nothing else can de done.
-            }            
         }
 
-        if (!(resultWrite && resultRead)) {
+        if (!resultRead) {
             throw new RuntimeException("Problems accesing slide database!");
         }
 
