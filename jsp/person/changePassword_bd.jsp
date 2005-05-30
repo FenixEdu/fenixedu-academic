@@ -25,5 +25,4 @@
 	</table>
 <br />
 <html:submit value="Alterar" styleClass="inputbutton" property="ok" />
-<html:reset value="Limpar" styleClass="inputbutton"/>
 </html:form>

@@ -235,11 +235,7 @@
 				<tr>
 					<td class="infoop" ><span class="emphasis-box">info</span>
          			<td class="infoop">
- 						<strong>A informação que vai alterar terá efeito apenas nesta aplicação</strong> e tem como objectivo, 
-         				serem enviadas mensagens de correio electrónico e sms e ainda .
-         				<br/>
-         				As alterações dos seus dados pessoais com efeitos administrativos devem ser feitas directamente na secção de pessoal, secretaria de graduação
-         				ou secretaria de pós-graduação, consoante o seu caso. 
+         				<bean:message key="message.person.changeContacts.info" /> 
          			</td>
          		</tr>
          	</table>
@@ -283,8 +279,8 @@
           </tr>
    	</table>
 <br /><br />
-<html:submit property="Alterar" styleClass="inputbutton">Alterar Dados</html:submit>
-<html:reset property="Reset" styleClass="inputbutton">Dados Originais</html:reset>
+<html:submit property="Alterar" styleClass="inputbutton">Alterar</html:submit>
+<html:reset property="Reset" styleClass="inputbutton">Repôr</html:reset>
       </html:form>  
   </body>
 </html>
