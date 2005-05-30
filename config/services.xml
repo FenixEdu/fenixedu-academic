@@ -8773,5 +8773,19 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gep.ListMasterDegreeStudents</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>s>
-    </service>           
+    </service>        
+    <service>
+        <name>ReadTeachersByNumbers</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadTeachersByNumbers</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+    </service>    
+    <service>
+        <name>ReadExternalPersonsByIDs</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.ReadExternalPersonsByIDs</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+    </service>    
 </serviceDefinitions>
