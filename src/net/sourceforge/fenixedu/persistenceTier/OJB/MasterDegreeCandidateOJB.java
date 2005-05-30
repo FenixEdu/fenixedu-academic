@@ -13,276 +13,163 @@
 
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeCandidate;
-import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.ojb.broker.query.Criteria;
 
 public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
-        IPersistentMasterDegreeCandidate {
+		IPersistentMasterDegreeCandidate {
 
-    /** Creates a new instance of MasterDegreeCandidateOJB */
-    public MasterDegreeCandidateOJB() {
-    }
+	public List readMasterDegreeCandidatesByUsername(String username) throws ExcepcaoPersistencia {
+		Criteria crit = new Criteria();
+		crit.addEqualTo("person.username", username);
+		return queryList(MasterDegreeCandidate.class, crit);
+	}
 
-    public List readMasterDegreeCandidatesByUsername(String username) throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();
-        crit.addEqualTo("person.username", username);
-        return queryList(MasterDegreeCandidate.class, crit);
+	public Integer generateCandidateNumber(String executionYear, String degreeName,
+			Specialization specialization) throws ExcepcaoPersistencia {
+		int number = 0;
 
-    }
+		Criteria crit = new Criteria();
+		crit.addEqualTo("executionDegree.executionYear.year", executionYear);
+		crit.addEqualTo("executionDegree.degreeCurricularPlan.degree.sigla", degreeName);
+		crit.addEqualTo("specialization", specialization);
 
-    public IMasterDegreeCandidate readCandidateByNumberAndApplicationYearAndDegreeCodeAndSpecialization(
-            Integer candidateNumber, String applicationYear, String degreeCode,
-            Specialization specialization) throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();
-        crit.addEqualTo("candidateNumber", candidateNumber);
-        crit.addEqualTo("executionDegree.executionYear.year", applicationYear);
-        crit.addEqualTo("executionDegree.degreeCurricularPlan.degree.sigla", degreeCode);
-        crit.addEqualTo("specialization", specialization);
-        return (IMasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
+		List list = queryList(MasterDegreeCandidate.class, crit, "candidateNumber", false);
+		if (list != null && list.size() > 0) {
+			Object result = queryList(MasterDegreeCandidate.class, crit, "candidateNumber", false)
+					.get(0);
+			if (result != null)
+				number = ((IMasterDegreeCandidate) result).getCandidateNumber().intValue();
+		}
 
-    }
+		return ++number;
+	}
 
-    public void writeMasterDegreeCandidate(IMasterDegreeCandidate masterDegreeCandidateToWrite)
-            throws ExcepcaoPersistencia {
-        if (masterDegreeCandidateToWrite == null)
-            return;
+	public IMasterDegreeCandidate readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
+			String idDocumentNumber, IDDocumentType idDocumentType, Integer executionDegreeID,
+			Specialization specialization) throws ExcepcaoPersistencia {
 
-        // Write the Person first to see if there's no clash
+		Criteria crit = new Criteria();
+		crit.addEqualTo("specialization", specialization);
+		crit.addEqualTo("executionDegree.idInternal", executionDegreeID);
+		crit.addEqualTo("person.numeroDocumentoIdentificacao", idDocumentNumber);
+		crit.addEqualTo("person.idDocumentType", idDocumentType);
+		return (IMasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
 
-        try {
-            new PessoaOJB().escreverPessoa(masterDegreeCandidateToWrite.getPerson());
-        } catch (ExistingPersistentException e) {
-            throw new ExistingPersistentException("Existing Person !");
-        } catch (ExcepcaoPersistencia e) {
-            throw e;
-        } catch (IllegalAccessException e) {
-            throw new ExcepcaoPersistencia();
-        } catch (InvocationTargetException e) {
-            throw new ExcepcaoPersistencia();
-        }
+	}
 
-        IMasterDegreeCandidate masterDegreeCandidateBD1 = this
-                .readCandidateByNumberAndApplicationYearAndDegreeCodeAndSpecialization(
-                        masterDegreeCandidateToWrite.getCandidateNumber(), masterDegreeCandidateToWrite
-                                .getExecutionDegree().getExecutionYear().getYear(),
-                        masterDegreeCandidateToWrite.getExecutionDegree().getDegreeCurricularPlan()
-                                .getDegree().getSigla(), masterDegreeCandidateToWrite
-                                .getSpecialization());
+	/**
+	 * Reads all candidates that with certains properties. The properties are
+	 * specified by the arguments of this method. If an argument is null, then
+	 * the candidate can have any value concerning that argument.
+	 * 
+	 * @return a list with all candidates that satisfy the conditions specified
+	 *         by the non-null arguments.
+	 */
+	public List readCandidateList(Integer executionDegreeID, Specialization degreeType,
+			SituationName candidateSituation, Integer candidateNumber, Integer executionYearID)
+			throws ExcepcaoPersistencia {
 
-        IMasterDegreeCandidate masterDegreeCandidateBD2 = this
-                .readByUsernameAndExecutionDegreeAndSpecialization(masterDegreeCandidateToWrite
-                        .getPerson().getUsername(), masterDegreeCandidateToWrite.getExecutionDegree(),
-                        masterDegreeCandidateToWrite.getSpecialization());
+		Criteria criteria = new Criteria();
 
-        if (masterDegreeCandidateBD1 == null && masterDegreeCandidateBD2 == null) {
-            super.lockWrite(masterDegreeCandidateToWrite);
-            return;
-        }
+		if (executionDegreeID == null && degreeType == null && candidateSituation == null
+				&& candidateNumber == null) {
+			criteria.addEqualTo("executionDegree.academicYear", executionYearID);
+			return queryList(MasterDegreeCandidate.class, criteria);
+		}
 
-        if (masterDegreeCandidateBD1 != null
-                && (masterDegreeCandidateToWrite instanceof MasterDegreeCandidate)
-                && ((MasterDegreeCandidate) masterDegreeCandidateBD1).getIdInternal().equals(
-                        ((MasterDegreeCandidate) masterDegreeCandidateToWrite).getIdInternal())) {
-            super.lockWrite(masterDegreeCandidateToWrite);
-            return;
-        }
-        if (masterDegreeCandidateBD2 != null
-                && (masterDegreeCandidateToWrite instanceof MasterDegreeCandidate)
-                && ((MasterDegreeCandidate) masterDegreeCandidateBD2).getIdInternal().equals(
-                        ((MasterDegreeCandidate) masterDegreeCandidateToWrite).getIdInternal())) {
-            super.lockWrite(masterDegreeCandidateToWrite);
-            return;
-        }
+		if (executionDegreeID != null) {
 
-        throw new ExistingPersistentException();
-    }
+			criteria.addEqualTo("executionDegree.idInternal", executionDegreeID);
+		}
 
-    public Integer generateCandidateNumber(String executionYear, String degreeCode,
-            Specialization specialization) throws ExcepcaoPersistencia {
-        int number = 0;
+		if (degreeType != null) {
+			criteria.addEqualTo("specialization", degreeType);
+		}
 
-        Criteria crit = new Criteria();
-        crit.addEqualTo("executionDegree.executionYear.year", executionYear);
-        crit.addEqualTo("executionDegree.degreeCurricularPlan.degree.sigla", degreeCode);
-        crit.addEqualTo("specialization", specialization);
+		if (candidateNumber != null) {
+			criteria.addEqualTo("candidateNumber", candidateNumber);
+		}
 
-        List list = queryList(MasterDegreeCandidate.class, crit, "candidateNumber", false);
-        if (list != null && list.size() > 0) {
-            Object result = queryList(MasterDegreeCandidate.class, crit, "candidateNumber", false)
-                    .get(0);
-            if (result != null)
-                number = ((IMasterDegreeCandidate) result).getCandidateNumber().intValue();
-        }
+		if (candidateSituation != null) {
+			criteria.addEqualTo("situations.situation", candidateSituation.getSituationName());
+			criteria.addEqualTo("situations.validation", new Integer(State.ACTIVE));
+		}
+		return queryList(MasterDegreeCandidate.class, criteria);
+	}
 
-        return new Integer(number + 1);
+	public IMasterDegreeCandidate readByNumberAndExecutionDegreeAndSpecialization(Integer number,
+			Integer executionDegreeID, Specialization specialization) throws ExcepcaoPersistencia {
 
-    }
+		IExecutionDegree executionDegree = (IExecutionDegree) readByOID(ExecutionDegree.class,
+				executionDegreeID);
 
-    public void delete(IMasterDegreeCandidate masterDegreeCandidate) throws ExcepcaoPersistencia {
-        super.delete(masterDegreeCandidate);
-    }
+		Criteria crit = new Criteria();
+		crit.addEqualTo("specialization", specialization);
+		crit.addEqualTo("executionDegree.idInternal", executionDegreeID);
+		crit.addEqualTo("candidateNumber", number);
+		return (IMasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
 
-    public IMasterDegreeCandidate readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
-            String idDocumentNumber, IDDocumentType idDocumentType, IExecutionDegree executionDegree,
-            Specialization specialization) throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();
-        crit.addEqualTo("specialization", specialization);
-        crit.addEqualTo("executionDegree.executionYear.year", executionDegree.getExecutionYear()
-                .getYear());
-        crit.addEqualTo("executionDegree..degreeCurricularPlan.name", executionDegree.getDegreeCurricularPlan()
-                .getName());
-        crit.addEqualTo("executionDegree.degreeCurricularPlan.degree.nome", executionDegree
-                .getDegreeCurricularPlan().getDegree().getNome());
-        crit.addEqualTo("person.numeroDocumentoIdentificacao", idDocumentNumber);
-        crit.addEqualTo("person.idDocumentType", idDocumentType);
-        return (IMasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
+	}
 
-    }
+	public IMasterDegreeCandidate readByExecutionDegreeAndPerson(Integer executionDegreeID,
+			Integer personID) throws ExcepcaoPersistencia {
 
-    public IMasterDegreeCandidate readByUsernameAndExecutionDegreeAndSpecialization(String username,
-            IExecutionDegree executionDegree, Specialization specialization) throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();
-        crit.addEqualTo("specialization", specialization);
-        crit.addEqualTo("executionDegree.executionYear.year", executionDegree.getExecutionYear()
-                .getYear());
-        crit.addEqualTo("executionDegree.degreeCurricularPlan.name", executionDegree.getDegreeCurricularPlan()
-                .getName());
-        crit.addEqualTo("executionDegree.degreeCurricularPlan.degree.nome", executionDegree
-                .getDegreeCurricularPlan().getDegree().getNome());
-        crit.addEqualTo("person.username", username);
-        return (IMasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
+		Criteria crit = new Criteria();
+		crit.addEqualTo("person.idInternal", personID);
+		crit.addEqualTo("executionDegree.idInternal", executionDegreeID);
 
-    }
+		return (IMasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
 
-    /**
-     * Reads all candidates that with certains properties. The properties are
-     * specified by the arguments of this method. If an argument is null, then
-     * the candidate can have any value concerning that argument.
-     * 
-     * @return a list with all candidates that satisfy the conditions specified
-     *         by the non-null arguments.
-     */
-    public List readCandidateList(String degreeName, Specialization specialization,
-            SituationName candidateSituation, Integer candidateNumber, IExecutionYear executionYear)
-            throws ExcepcaoPersistencia {
+	}
 
-        if (degreeName == null && specialization == null && candidateSituation == null
-                && candidateNumber == null)
-            return readByExecutionYear(executionYear);
+	public IMasterDegreeCandidate readByExecutionDegreeAndPersonAndNumber(Integer executionDegreeID,
+			Integer personID, Integer number) throws ExcepcaoPersistencia {
 
-        Criteria criteria = new Criteria();
+		IExecutionDegree executionDegree = (IExecutionDegree) readByOID(ExecutionDegree.class,
+				executionDegreeID);
+		IPerson person = (IPerson) readByOID(Person.class, personID);
 
-        if (degreeName != null) {
+		Criteria crit = new Criteria();
+		crit.addEqualTo("person.username", person.getUsername());
+		crit.addEqualTo("executionDegree.idInternal", executionDegreeID);
+		crit.addEqualTo("candidateNumber", number);
+		return (IMasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
 
-            criteria.addEqualTo("executionDegree.idInternal", degreeName);
-        }
+	}
 
-        if (specialization != null) {
-            criteria.addEqualTo("specialization", specialization);
-        }
+	public List readByExecutionDegree(Integer executionDegreeID) throws ExcepcaoPersistencia {
+		Criteria crit = new Criteria();
+		crit.addEqualTo("executionDegree.idInternal", executionDegreeID);
+		return queryList(MasterDegreeCandidate.class, crit);
 
-        if (candidateNumber != null) {
-            criteria.addEqualTo("candidateNumber", candidateNumber);
-        }
+	}
 
-        if (candidateSituation != null) {
-            criteria.addEqualTo("situations.situation", candidateSituation.getSituationName());
-            criteria.addEqualTo("situations.validation", new Integer(State.ACTIVE));
-        }
-        return queryList(MasterDegreeCandidate.class, criteria);
-    }
+	public List readByDegreeCurricularPlanId(Integer degreeCurricularPlanId) throws ExcepcaoPersistencia {
+		Criteria crit = new Criteria();
+		crit.addEqualTo("executionDegree.degreeCurricularPlan.idInternal", degreeCurricularPlanId);
 
-    public List readByExecutionYear(IExecutionYear executionYear) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("executionDegree.academicYear", executionYear.getIdInternal());
-        return queryList(MasterDegreeCandidate.class, criteria);
-    }
+		return queryList(MasterDegreeCandidate.class, crit);
+	}
 
-    public IMasterDegreeCandidate readByNumberAndExecutionDegreeAndSpecialization(Integer number,
-            IExecutionDegree executionDegree, Specialization specialization) throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();
-        crit.addEqualTo("specialization", specialization);
-        crit.addEqualTo("executionDegree.executionYear.year", executionDegree.getExecutionYear()
-                .getYear());
-        crit.addEqualTo("executionDegree.degreeCurricularPlan.name", executionDegree.getDegreeCurricularPlan()
-                .getName());
-        crit.addEqualTo("executionDegree.degreeCurricularPlan.degree.nome", executionDegree
-                .getDegreeCurricularPlan().getDegree().getNome());
-        crit.addEqualTo("candidateNumber", number);
-        return (IMasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
+	public List readByPersonID(Integer personID) throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("person.idInternal", personID);
+		return queryList(MasterDegreeCandidate.class, criteria);
+	}
 
-    }
-
-    public IMasterDegreeCandidate readByExecutionDegreeAndPerson(IExecutionDegree executionDegree,
-            IPerson person) throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();
-        crit.addEqualTo("person.username", person.getUsername());
-        crit.addEqualTo("executionDegree.executionYear.year", executionDegree.getExecutionYear()
-                .getYear());
-        crit.addEqualTo("executionDegree.degreeCurricularPlan.name", executionDegree.getDegreeCurricularPlan()
-                .getName());
-        crit.addEqualTo("executionDegree.degreeCurricularPlan.degree.nome", executionDegree
-                .getDegreeCurricularPlan().getDegree().getNome());
-
-        return (IMasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
-
-    }
-
-    public IMasterDegreeCandidate readByExecutionDegreeAndPersonAndNumber(
-            IExecutionDegree executionDegree, IPerson person, Integer number) throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();
-        crit.addEqualTo("person.username", person.getUsername());
-        crit.addEqualTo("executionDegree.executionYear.year", executionDegree.getExecutionYear()
-                .getYear());
-        crit.addEqualTo("executionDegree.degreeCurricularPlan.name", executionDegree.getDegreeCurricularPlan()
-                .getName());
-        crit.addEqualTo("executionDegree.degreeCurricularPlan.degree.nome", executionDegree
-                .getDegreeCurricularPlan().getDegree().getNome());
-        crit.addEqualTo("candidateNumber", number);
-        return (IMasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
-
-    }
-
-    public List readByExecutionDegree(IExecutionDegree executionDegree) throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();
-        /*
-         * crit.addEqualTo( "executionDegree.executionYear.year",
-         * executionDegree.getExecutionYear().getYear());
-         */
-        crit.addEqualTo("executionDegree.degreeCurricularPlan.name", executionDegree.getDegreeCurricularPlan()
-                .getName());
-        crit.addEqualTo("executionDegree.degreeCurricularPlan.degree.nome", executionDegree
-                .getDegreeCurricularPlan().getDegree().getNome());
-        return queryList(MasterDegreeCandidate.class, crit);
-
-    }
-    
-    public List readByDegreeCurricularPlanId(Integer degreeCurricularPlanId) throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();
-        crit.addEqualTo("executionDegree.degreeCurricularPlan.idInternal", degreeCurricularPlanId);
-
-        return queryList(MasterDegreeCandidate.class, crit);
-    }
-
-    public List readByPersonID(Integer personID) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("person.idInternal", personID);
-        return queryList(MasterDegreeCandidate.class, criteria);
-    }
-    
 } // End of class definition

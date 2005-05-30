@@ -55,7 +55,7 @@ public class ChangeApplicationInfo implements IService {
             existingMasterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
                     .readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
                             newMasterDegreeCandidate.getInfoPerson().getNumeroDocumentoIdentificacao(),
-                            newMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao(), executionDegree,
+                            newMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao(), executionDegree.getIdInternal(),
                             newMasterDegreeCandidate.getSpecialization());
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");

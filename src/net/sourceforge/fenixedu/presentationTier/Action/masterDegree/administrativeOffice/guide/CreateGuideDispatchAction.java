@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoActiveStude
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.RandomStringGenerator;
+import net.sourceforge.fenixedu.util.SituationName;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -348,8 +349,8 @@ public class CreateGuideDispatchAction extends DispatchAction {
                 // The Candidate will now have a new Situation
 
                 try {
-                    Object args[] = { newInfoGuide.getInfoExecutionDegree(),
-                            newInfoGuide.getInfoPerson() };
+                    Object args[] = { newInfoGuide.getInfoExecutionDegree().getIdInternal(),
+                            newInfoGuide.getInfoPerson().getIdInternal(), new SituationName(SituationName.PENDENTE_STRING) };
                     ServiceManagerServiceFactory.executeService(userView, "CreateCandidateSituation",
                             args);
                 } catch (FenixServiceException e) {

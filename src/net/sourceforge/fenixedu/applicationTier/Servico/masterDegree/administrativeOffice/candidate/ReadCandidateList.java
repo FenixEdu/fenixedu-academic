@@ -41,8 +41,8 @@ public class ReadCandidateList implements IService {
         final IExecutionYear executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(executionYearString);
 
         // Read the candidates
-        final List result = sp.getIPersistentMasterDegreeCandidate().readCandidateList(degreeName, degreeType,
-                candidateSituation, candidateNumber, executionYear);
+        final List result = sp.getIPersistentMasterDegreeCandidate().readCandidateList(Integer.parseInt(degreeName), degreeType,
+                candidateSituation, candidateNumber, executionYear.getIdInternal());
 
         final List candidateList = new ArrayList();
         final Iterator iterator = result.iterator();

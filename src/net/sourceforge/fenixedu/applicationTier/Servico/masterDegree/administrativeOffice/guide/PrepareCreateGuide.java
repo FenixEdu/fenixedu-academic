@@ -94,7 +94,7 @@ public class PrepareCreateGuide implements IService {
 
             try {
                 masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
-                        .readByNumberAndExecutionDegreeAndSpecialization(number, executionDegree,
+                        .readByNumberAndExecutionDegreeAndSpecialization(number, executionDegree.getIdInternal(),
                                 Specialization.valueOf(graduationType));
             } catch (ExcepcaoPersistencia ex) {
                 FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);

@@ -109,7 +109,7 @@ public class GuideVO extends VersionedObjectsBase implements IPersistentGuide {
 		final List<IGuide> result = new ArrayList(0);
 
 		if (guides == null || guides.size() == 0) {
-			return null;
+			return result;
 		}
 
 		for (final IGuide guide : guides) {

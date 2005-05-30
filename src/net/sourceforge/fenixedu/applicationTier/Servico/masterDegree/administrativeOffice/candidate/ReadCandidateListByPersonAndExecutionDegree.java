@@ -46,7 +46,7 @@ public class ReadCandidateListByPersonAndExecutionDegree implements IService {
             IPerson person = Cloner.copyInfoPerson2IPerson(infoPerson);
 
             result = sp.getIPersistentMasterDegreeCandidate().readByExecutionDegreeAndPersonAndNumber(
-                    executionDegree, person, number);
+                    executionDegree.getIdInternal(), person.getIdInternal(), number);
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();

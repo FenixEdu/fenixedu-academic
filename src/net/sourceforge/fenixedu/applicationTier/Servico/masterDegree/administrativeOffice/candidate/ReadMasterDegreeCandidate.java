@@ -45,7 +45,7 @@ public class ReadMasterDegreeCandidate implements IService {
             // Read the candidates
 
             masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
-                    .readByNumberAndExecutionDegreeAndSpecialization(candidateNumber, executionDegree,
+                    .readByNumberAndExecutionDegreeAndSpecialization(candidateNumber, executionDegree.getIdInternal(),
                             degreeType);
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
@@ -89,7 +89,7 @@ public class ReadMasterDegreeCandidate implements IService {
             // Read the candidates
 
             masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
-                    .readByExecutionDegreeAndPerson(executionDegree, person);
+                    .readByExecutionDegreeAndPerson(executionDegree.getIdInternal(), person.getIdInternal());
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();

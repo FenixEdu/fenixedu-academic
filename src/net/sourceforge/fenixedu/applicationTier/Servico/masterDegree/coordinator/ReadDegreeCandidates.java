@@ -53,7 +53,7 @@ public class ReadDegreeCandidates implements IService {
             IExecutionDegree executionDegree = Cloner
                     .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
 
-            candidates = sp.getIPersistentMasterDegreeCandidate().readByExecutionDegree(executionDegree);
+            candidates = sp.getIPersistentMasterDegreeCandidate().readByExecutionDegree(executionDegree.getIdInternal());
 
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
