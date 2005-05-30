@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -79,12 +80,16 @@ public class ReadStudentExternalInformation implements IService
                 .hasNext();)
         {
             IEnrolment enrollment = (IEnrolment) iter.next();
-            InfoExternalEnrollmentInfo info = InfoExternalEnrollmentInfo.newFromEnrollment(enrollment);
+            if (enrollment.getEnrollmentState().equals(EnrollmentState.APROVED))
+            {
+                InfoExternalEnrollmentInfo info = InfoExternalEnrollmentInfo
+                        .newFromEnrollment(enrollment);
 
-            GetEnrolmentGrade getEnrollmentGrade = new GetEnrolmentGrade();
-            InfoEnrolmentEvaluation infoEnrollmentEvaluation = getEnrollmentGrade.run(enrollment);
-            info.setFinalGrade(infoEnrollmentEvaluation.getGrade());
-            enrollments.add(info);
+                GetEnrolmentGrade getEnrollmentGrade = new GetEnrolmentGrade();
+                InfoEnrolmentEvaluation infoEnrollmentEvaluation = getEnrollmentGrade.run(enrollment);
+                info.setFinalGrade(infoEnrollmentEvaluation.getGrade());
+                enrollments.add(info);
+            }
         }
 
 
