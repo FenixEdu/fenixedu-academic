@@ -67,7 +67,7 @@ public class ReadDegreesClassesLessons implements IService {
                         .get(i);
                 IExecutionDegree executionDegree = (IExecutionDegree) classDAO.readByOID(
                         ExecutionDegree.class, infoExecutionDegree.getIdInternal());
-                List degreeClasses = classDAO.readByExecutionDegree(executionDegree);
+                List degreeClasses = classDAO.readByExecutionDegree(executionDegree.getIdInternal());
                 for (Iterator iterator = degreeClasses.iterator(); iterator.hasNext(); ) {
                     ISchoolClass klass = (ISchoolClass) iterator.next();
                     if (klass.getExecutionPeriod().getIdInternal().equals(infoExecutionPeriod.getIdInternal())) {

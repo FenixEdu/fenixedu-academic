@@ -33,8 +33,8 @@ public class SelectClasses implements IService {
         IExecutionDegree executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoClass
                 .getInfoExecutionDegree());
 
-        classes = classDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(executionPeriod,
-                infoClass.getAnoCurricular(), executionDegree);
+        classes = classDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(executionPeriod
+                .getIdInternal(), infoClass.getAnoCurricular(), executionDegree.getIdInternal());
 
         for (int i = 0; i < classes.size(); i++) {
             ISchoolClass taux = (ISchoolClass) classes.get(i);

@@ -23,37 +23,34 @@ public class RemoverTurno implements IService {
     public RemoverTurno() {
     }
 
-    public Object run(InfoShift infoShift, InfoClass infoClass) {
+    public Object run(InfoShift infoShift, InfoClass infoClass) throws ExcepcaoPersistencia {
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IShift shift = Cloner.copyInfoShift2IShift(infoShift);
-            ISchoolClass classTemp = Cloner.copyInfoClass2Class(infoClass);
+        IShift shift = Cloner.copyInfoShift2IShift(infoShift);
+        ISchoolClass classTemp = Cloner.copyInfoClass2Class(infoClass);
 
-            // Read From Database
+        // Read From Database
 
-            IShift shiftToDelete = sp.getITurnoPersistente().readByNameAndExecutionCourse(
-                    shift.getNome(), shift.getDisciplinaExecucao());
-            ISchoolClass classToDelete = sp.getITurmaPersistente()
-                    .readByNameAndExecutionDegreeAndExecutionPeriod(classTemp.getNome(),
-                            classTemp.getExecutionDegree(), classTemp.getExecutionPeriod());
-            ISchoolClassShift turmaTurnoToDelete = null;
-            if ((shiftToDelete != null) && (classToDelete != null)) {
-                turmaTurnoToDelete = sp.getITurmaTurnoPersistente().readByTurmaAndTurno(classToDelete,
-                        shiftToDelete);
-            } else
-                return Boolean.FALSE;
+        IShift shiftToDelete = sp.getITurnoPersistente().readByNameAndExecutionCourse(shift.getNome(),
+                shift.getDisciplinaExecucao());
+        ISchoolClass classToDelete = sp.getITurmaPersistente()
+                .readByNameAndExecutionDegreeAndExecutionPeriod(classTemp.getNome(),
+                        classTemp.getExecutionDegree().getIdInternal(),
+                        classTemp.getExecutionPeriod().getIdInternal());
+        ISchoolClassShift turmaTurnoToDelete = null;
+        if ((shiftToDelete != null) && (classToDelete != null)) {
+            turmaTurnoToDelete = sp.getITurmaTurnoPersistente().readByTurmaAndTurno(classToDelete,
+                    shiftToDelete);
+        } else
+            return Boolean.FALSE;
 
-            // Check if exists
-            if (turmaTurnoToDelete != null)
-                sp.getITurmaTurnoPersistente().delete(turmaTurnoToDelete);
-            else
-                return Boolean.FALSE;
+        // Check if exists
+        if (turmaTurnoToDelete != null)
+            sp.getITurmaTurnoPersistente().delete(turmaTurnoToDelete);
+        else
+            return Boolean.FALSE;
 
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
-        }
         return Boolean.TRUE;
     }
 

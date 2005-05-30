@@ -2,24 +2,23 @@
  * Created on 21/Out/2003
  *
  */
-package net.sourceforge.fenixedu.persistenceTier.OJB;
+package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRoomOccupation;
-
-import org.apache.ojb.broker.query.Criteria;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
 
 /**
  * @author Ana e Ricardo
- *  
+ * 
  */
-public class RoomOccupationOJB extends ObjectFenixOJB implements IPersistentRoomOccupation {
-    
+public class RoomOccupationVO extends VersionedObjectsBase implements IPersistentRoomOccupation {
+
     public List readAll() throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        return queryList(RoomOccupation.class, criteria);
+        return (List) readAll(RoomOccupation.class);
     }
+
 }

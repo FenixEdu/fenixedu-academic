@@ -24,23 +24,24 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class EditarTurma implements IService {
 
-    public Object run(final InfoClass oldClassView, final InfoClass newClassView) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public Object run(final InfoClass oldClassView, final InfoClass newClassView)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(oldClassView
-                .getInfoExecutionPeriod());
+        final IExecutionPeriod executionPeriod = Cloner
+                .copyInfoExecutionPeriod2IExecutionPeriod(oldClassView.getInfoExecutionPeriod());
 
-        final IExecutionDegree executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(oldClassView
-                .getInfoExecutionDegree());
+        final IExecutionDegree executionDegree = Cloner
+                .copyInfoExecutionDegree2ExecutionDegree(oldClassView.getInfoExecutionDegree());
 
-        final ISchoolClass classToEdit = sp.getITurmaPersistente().readByNameAndExecutionDegreeAndExecutionPeriod(
-                oldClassView.getNome(), executionDegree, executionPeriod);
+        final ISchoolClass classToEdit = sp.getITurmaPersistente()
+                .readByNameAndExecutionDegreeAndExecutionPeriod(oldClassView.getNome(),
+                        executionDegree.getIdInternal(), executionPeriod.getIdInternal());
 
         final ISchoolClass otherClassWithSameNewName = sp.getITurmaPersistente()
-                .readByNameAndExecutionDegreeAndExecutionPeriod(newClassView.getNome(), executionDegree,
-                        executionPeriod);
+                .readByNameAndExecutionDegreeAndExecutionPeriod(newClassView.getNome(),
+                        executionDegree.getIdInternal(), executionPeriod.getIdInternal());
 
         if (otherClassWithSameNewName != null) {
             throw new ExistingServiceException("Duplicate Entry: " + otherClassWithSameNewName.getNome());

@@ -44,10 +44,10 @@ public class LerTurmas implements IService {
 
         if (curricularYear != null) {
             classesList = classDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(
-                    executionPeriod, curricularYear, executionDegree);
+                    executionPeriod.getIdInternal(), curricularYear, executionDegree.getIdInternal());
         } else {
-            classesList = classDAO.readByExecutionDegreeAndExecutionPeriod(executionDegree,
-                    executionPeriod);
+            classesList = classDAO.readByExecutionDegreeAndExecutionPeriod(executionDegree
+                    .getIdInternal(), executionPeriod.getIdInternal());
         }
 
         Iterator iterator = classesList.iterator();

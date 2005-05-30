@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.Period;
+import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExamStudentRoom;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -66,14 +67,29 @@ public class DeleteExamNew implements IService {
                 isEmpty = otherRoomOccupations.isEmpty();
                 while (iter.hasNext()) {
                     IRoomOccupation roomOccupation = (IRoomOccupation) iter.next();
-                    sp.getIPersistentRoomOccupation().delete(roomOccupation);
+
+                    roomOccupation.getPeriod().getRoomOccupations().remove(roomOccupation);
+                    roomOccupation.getWrittenEvaluation().getAssociatedRoomOccupation().remove(
+                            roomOccupation);
+                    // roomOccupation.getLesson().setRoomOccupation(null);
+                    roomOccupation.getRoom().getRoomOccupations().remove(roomOccupation);
+
+                    roomOccupation.setPeriod(null);
+                    roomOccupation.setWrittenEvaluation(null);
+                    // roomOccupation.setLesson(null);
+                    roomOccupation.setRoom(null);
+
+                    sp.getIPersistentRoomOccupation().deleteByOID(RoomOccupation.class,
+                            roomOccupation.getIdInternal());
+                    // sp.getIPersistentRoomOccupation().delete(roomOccupation);
+
                 }
                 if (period != null) {
                     if (isEmpty && period.getExecutionDegreesForExamsFirstSemester().isEmpty()
                             && period.getExecutionDegreesForExamsSecondSemester().isEmpty()
                             && period.getExecutionDegreesForLessonsFirstSemester().isEmpty()
                             && period.getExecutionDegreesForLessonsSecondSemester().isEmpty()) {
-                        //sp.getIPersistentPeriod().delete(period);
+                        // sp.getIPersistentPeriod().delete(period);
                         sp.getIPersistentPeriod().deleteByOID(Period.class, period.getIdInternal());
 
                     }

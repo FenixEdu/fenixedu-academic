@@ -39,7 +39,8 @@ public class CriarTurma implements IService {
 
         final ITurmaPersistente classDAO = sp.getITurmaPersistente();
         final List listClasses = classDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(turma
-                .getExecutionPeriod(), turma.getAnoCurricular(), turma.getExecutionDegree());
+                .getExecutionPeriod().getIdInternal(), turma.getAnoCurricular(), turma
+                .getExecutionDegree().getIdInternal());
 
         final ISchoolClass existingClass = (ISchoolClass) CollectionUtils.find(listClasses,
                 new Predicate() {

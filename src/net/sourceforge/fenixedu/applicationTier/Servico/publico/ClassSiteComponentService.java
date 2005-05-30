@@ -91,14 +91,14 @@ public class ClassSiteComponentService implements IService {
         List domainList = new ArrayList();
         if (curricularYear == null) {
             domainClass = persistentClass.readByNameAndExecutionDegreeAndExecutionPeriod(className,
-                    executionDegree, executionPeriod);
+                    executionDegree.getIdInternal(), executionPeriod.getIdInternal());
 
         } else {
             if (className == null && curricularYear == null) {
 
                 domainList = persistentClass.readByExecutionDegreeAndDegreeAndExecutionPeriod(
-                        executionDegree, executionDegree.getDegreeCurricularPlan().getDegree(),
-                        executionPeriod);
+                        executionDegree.getIdInternal(), executionDegree.getDegreeCurricularPlan()
+                                .getDegree().getIdInternal(), executionPeriod.getIdInternal());
 
                 if (domainList.size() != 0) {
                     domainClass = (ISchoolClass) domainList.get(0);

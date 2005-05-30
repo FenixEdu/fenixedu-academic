@@ -57,7 +57,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan implements IService {
                 executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
                         ExecutionDegree.class, executionDegreeId);
                 if (executionDegree != null) {
-                    classes = persistentClass.readByExecutionDegree(executionDegree);
+                    classes = persistentClass.readByExecutionDegree(executionDegree.getIdInternal());
 
                     masterDegreeCandidates = executionDegree.getMasterDegreeCandidates();
                     guides = executionDegree.getGuides();

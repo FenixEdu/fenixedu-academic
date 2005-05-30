@@ -115,6 +115,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SecretaryEn
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SiteVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentKindVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SummaryVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurmaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.UniversityVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.credits.ManagementPositionCreditLineVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.credits.OtherTypeCreditLineVO;
@@ -560,7 +561,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public ITurmaPersistente getITurmaPersistente() {
-        return null;
+        return new TurmaVO();
     }
 
     public IPersistentSummary getIPersistentSummary() {

@@ -56,7 +56,8 @@ public class ReadAvailableClassesForShift implements IService {
         IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
 
         ITurmaPersistente classDAO = sp.getITurmaPersistente();
-        List classes = classDAO.readByExecutionPeriod(executionCourse.getExecutionPeriod());
+        List classes = classDAO.readByExecutionPeriod(executionCourse.getExecutionPeriod()
+                .getIdInternal());
 
         infoClasses = new ArrayList();
         Iterator iter = classes.iterator();
@@ -66,11 +67,14 @@ public class ReadAvailableClassesForShift implements IService {
                 final InfoClass infoClass = InfoClass.newInfoFromDomain(classImpl);
 
                 final IExecutionDegree executionDegree = classImpl.getExecutionDegree();
-                final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
+                final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
+                        .newInfoFromDomain(executionDegree);
                 infoClass.setInfoExecutionDegree(infoExecutionDegree);
 
-                final IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-                final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
+                final IDegreeCurricularPlan degreeCurricularPlan = executionDegree
+                        .getDegreeCurricularPlan();
+                final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
+                        .newInfoFromDomain(degreeCurricularPlan);
                 infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
                 final IDegree degree = degreeCurricularPlan.getDegree();

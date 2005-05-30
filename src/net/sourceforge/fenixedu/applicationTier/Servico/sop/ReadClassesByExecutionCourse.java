@@ -33,7 +33,8 @@ public class ReadClassesByExecutionCourse implements IService {
         final IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
                 .readByOID(ExecutionCourse.class, infoExecutionCourse.getIdInternal());
 
-        final List classes = sp.getITurmaPersistente().readByExecutionCourse(executionCourse);
+        final List classes = sp.getITurmaPersistente().readByExecutionCourse(
+                executionCourse.getIdInternal());
         final List infoClasses = new ArrayList(classes.size());
 
         final Map infoExecutionDegrees = new HashMap();

@@ -13,10 +13,12 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ILesson;
+import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IShiftProfessorship;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
@@ -104,7 +106,23 @@ public class DeleteShifts implements IServico {
 
                     for (int i = 0; i < shift.getAssociatedLessons().size(); i++) {
                         ILesson lesson = (ILesson) shift.getAssociatedLessons().get(i);
-                        sp.getIPersistentRoomOccupation().delete(lesson.getRoomOccupation());
+                        
+                        IRoomOccupation roomOccupation = lesson.getRoomOccupation();
+                        
+                        roomOccupation.getPeriod().getRoomOccupations().remove(roomOccupation);
+                        //roomOccupation.getWrittenEvaluation().getAssociatedRoomOccupation().remove(roomOccupation);
+                        roomOccupation.getLesson().setRoomOccupation(null);
+                        roomOccupation.getRoom().getRoomOccupations().remove(roomOccupation);
+
+                        roomOccupation.setPeriod(null);
+                        //roomOccupation.setWrittenEvaluation(null);
+                        roomOccupation.setLesson(null);
+                        roomOccupation.setRoom(null);
+
+                        sp.getIPersistentRoomOccupation().deleteByOID(RoomOccupation.class,
+                                roomOccupation.getIdInternal());
+                        
+                        //sp.getIPersistentRoomOccupation().delete(lesson.getRoomOccupation());
                         DeleteLessons.deleteLesson(sp, lesson.getIdInternal());
                     }
 

@@ -35,38 +35,35 @@ public class AdicionarTurno implements IService {
     public AdicionarTurno() {
     }
 
-    public Boolean run(InfoClass infoClass, InfoShift infoShift) throws FenixServiceException {
+    public Boolean run(InfoClass infoClass, InfoShift infoShift) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
         ISchoolClassShift turmaTurno = null;
         boolean result = false;
 
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+
+        IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoClass
+                .getInfoExecutionPeriod());
+        IExecutionDegree executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoClass
+                .getInfoExecutionDegree());
+        IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoShift
+                .getInfoDisciplinaExecucao());
+
+        ISchoolClass group = sp.getITurmaPersistente().readByNameAndExecutionDegreeAndExecutionPeriod(
+                infoClass.getNome(), executionDegree.getIdInternal(), executionPeriod.getIdInternal());
+        IShift shift = sp.getITurnoPersistente().readByNameAndExecutionCourse(infoShift.getNome(),
+                executionCourse);
+
+        turmaTurno = new SchoolClassShift(group, shift);
+
         try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-            IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoClass
-                    .getInfoExecutionPeriod());
-            IExecutionDegree executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoClass
-                    .getInfoExecutionDegree());
-            IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoShift
-                    .getInfoDisciplinaExecucao());
-
-            ISchoolClass group = sp.getITurmaPersistente().readByNameAndExecutionDegreeAndExecutionPeriod(
-                    infoClass.getNome(), executionDegree, executionPeriod);
-            IShift shift = sp.getITurnoPersistente().readByNameAndExecutionCourse(infoShift.getNome(),
-                    executionCourse);
-
-            turmaTurno = new SchoolClassShift(group, shift);
-
-            try {
-                sp.getITurmaTurnoPersistente().simpleLockWrite(turmaTurno);
-            } catch (ExistingPersistentException e) {
-                throw new ExistingServiceException(e);
-            }
-
-            result = true;
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex.getMessage());
+            sp.getITurmaTurnoPersistente().simpleLockWrite(turmaTurno);
+        } catch (ExistingPersistentException e) {
+            throw new ExistingServiceException(e);
         }
+
+        result = true;
 
         return new Boolean(result);
     }
