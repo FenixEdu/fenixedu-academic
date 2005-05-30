@@ -11,44 +11,40 @@ package net.sourceforge.fenixedu.domain;
  */
 public class MasterDegreeThesis extends MasterDegreeThesis_Base {
 
-	// fields
+    // fields
 
-	public MasterDegreeThesis() {
+    public MasterDegreeThesis() {
 
-	}
+    }
 
-	/**
-	 * @param studentCurricularPlan
-	 */
-	public MasterDegreeThesis(IStudentCurricularPlan studentCurricularPlan) {
-		super();
-		setStudentCurricularPlan(studentCurricularPlan);
-	}
+    /**
+     * @param studentCurricularPlan
+     */
+    public MasterDegreeThesis(IStudentCurricularPlan studentCurricularPlan) {
+        super();
+        setStudentCurricularPlan(studentCurricularPlan);
+    }
 
-	public String toString() {
-		String result = "[" + this.getClass().getName() + ": \n";
-		result += "idInternal = " + getIdInternal() + "; \n";
-		result += "studentCurricularPlan = "
-				+ getStudentCurricularPlan().getIdInternal() + "; \n";
-		result += "masterDegreeProofVersions = "
-				+ getMasterDegreeProofVersions().toString() + "; \n";
-		result += "masterDegreeThesisDataVersions = "
-				+ getMasterDegreeThesisDataVersions().toString() + "; \n";
-		result += "] \n";
+    public String toString() {
+        String result = "[" + this.getClass().getName() + ": \n";
+        result += "idInternal = " + getIdInternal() + "; \n";
+        result += "studentCurricularPlan = " + getStudentCurricularPlan().getIdInternal() + "; \n";
+        result += "masterDegreeProofVersions = " + getMasterDegreeProofVersions().toString() + "; \n";
+        result += "masterDegreeThesisDataVersions = " + getMasterDegreeThesisDataVersions().toString()
+                + "; \n";
+        result += "] \n";
 
-		return result;
-	}
+        return result;
+    }
 
-	public boolean equals(Object obj) {
-		boolean result = false;
+    public boolean equals(Object obj) {
 
-		if (obj instanceof IMasterDegreeThesis) {
-			IMasterDegreeThesis masterDegreeThesis = (IMasterDegreeThesis) obj;
-			result = getStudentCurricularPlan().equals(
-					masterDegreeThesis.getStudentCurricularPlan());
-		}
+        if (obj instanceof IMasterDegreeThesis) {
+            IMasterDegreeThesis masterDegreeThesis = (IMasterDegreeThesis) obj;
+            return masterDegreeThesis.getIdInternal().equals(getIdInternal());
+        }
 
-		return result;
-	}
+        return false;
+    }
 
 }
