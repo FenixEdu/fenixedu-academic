@@ -104,6 +104,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideSituat
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InsuranceValueVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ItemVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegreeProofVersionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegreeThesisDataVersionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegreeThesisVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PeriodVO;
@@ -696,7 +697,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentMasterDegreeProofVersion getIPersistentMasterDegreeProofVersion() {
-        return null;
+        return new MasterDegreeProofVersionVO();
     }
 
     public IPersistentCurriculum getIPersistentCurriculum() {
