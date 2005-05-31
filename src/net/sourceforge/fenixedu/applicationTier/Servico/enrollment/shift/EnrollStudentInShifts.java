@@ -73,8 +73,8 @@ public class EnrollStudentInShifts implements IService {
                 }
 
                 IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-                List shiftEnrollments = persistentShiftStudent.readByStudentAndExecutionPeriod(student,
-                        executionPeriod);
+                List shiftEnrollments = persistentShiftStudent.readByStudentAndExecutionPeriod(student.getIdInternal(),
+                        executionPeriod.getIdInternal());
 
                 List shiftsToUnEnroll = new ArrayList();
                 List filteredShiftsIdsToEnroll = new ArrayList();
@@ -108,7 +108,12 @@ public class EnrollStudentInShifts implements IService {
         Iterator iter = shiftsToUnEnroll.iterator();
         while (iter.hasNext()) {
             IShiftStudent shiftStudent = (IShiftStudent) iter.next();
-            persistentShiftStudent.delete(shiftStudent);
+            //persistentShiftStudent.delete(shiftStudent);
+            shiftStudent.getStudent().getShiftStudents().remove(shiftStudent);
+            shiftStudent.getShift().getStudentShifts().remove(shiftStudent);
+            shiftStudent.setShift(null);
+            shiftStudent.setStudent(null);
+            persistentShiftStudent.deleteByOID(ShiftStudent.class, shiftStudent.getIdInternal());
         }
 
     }
@@ -134,11 +139,11 @@ public class EnrollStudentInShifts implements IService {
                 errorReport.getUnExistingShifts().add(shiftId);
             } else {
                 IShiftStudent shiftStudentToDelete = persistentShiftStudent
-                        .readByStudentAndExecutionCourseAndLessonType(student, shift
-                                .getDisciplinaExecucao(), shift.getTipo());
+                        .readByStudentAndExecutionCourseAndLessonType(student.getIdInternal(), shift
+                                .getDisciplinaExecucao().getIdInternal(), shift.getTipo());
 
                 if (shift.getLotacao().intValue() > persistentShiftStudent
-                        .readNumberOfStudentsByShift(shift)) {
+                        .readNumberOfStudentsByShift(shift.getIdInternal())) {
                     if (shiftStudentToDelete != null) {
                         shiftsToUnEnroll.add(shiftStudentToDelete);
                     }

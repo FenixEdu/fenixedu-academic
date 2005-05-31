@@ -107,7 +107,7 @@ public class DeleteStudentAttendingCourse implements IService {
                 }
 
                 List shiftAttendsToDelete = persistentShiftStudent.readByStudentAndExecutionCourse(
-                        student, executionCourse);
+                        student.getIdInternal(), executionCourse.getIdInternal());
 
                 if (shiftAttendsToDelete != null && shiftAttendsToDelete.size() > 0) {
                     throw new AlreadyEnrolledInShiftServiceException();

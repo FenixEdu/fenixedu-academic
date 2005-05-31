@@ -106,8 +106,8 @@ public class GetAttendaciesByStudentList implements IService {
                     enrollmentDistribution.put(enrollments, new Integer(1));
                 }
                 Map infoShifts = new HashMap();
-                List shifts = persistentShiftStudent.readByStudentAndExecutionCourse(student,
-                        executionCourse);
+                List shifts = persistentShiftStudent.readByStudentAndExecutionCourse(student.getIdInternal(),
+                        executionCourse.getIdInternal());
                 if (shifts != null) {
                     Iterator iter = shifts.iterator();
                     while (iter.hasNext()) {

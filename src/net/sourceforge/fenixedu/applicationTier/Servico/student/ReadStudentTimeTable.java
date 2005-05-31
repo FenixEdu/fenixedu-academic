@@ -40,8 +40,8 @@ public class ReadStudentTimeTable implements IService {
         ITurnoAlunoPersistente persistentShiftStudent = sp.getITurnoAlunoPersistente();
         IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
         IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-        List studentShifts = persistentShiftStudent.readByStudentAndExecutionPeriod(student,
-                executionPeriod);
+        List studentShifts = persistentShiftStudent.readByStudentAndExecutionPeriod(student.getIdInternal(),
+                executionPeriod.getIdInternal());
 
         List lessons = new ArrayList();
         Iterator shiftIter = studentShifts.iterator();

@@ -193,8 +193,8 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
                     IStudent student = attendance.getAluno();
 
                     try {
-                        IShiftStudent ta = sp.getITurnoAlunoPersistente().readByTurnoAndAluno(turno,
-                                student);
+                        IShiftStudent ta = sp.getITurnoAlunoPersistente().readByTurnoAndAluno(turno.getIdInternal(),
+                                student.getIdInternal());
 
                         if (ta != null)
                             collectedAttends.add(attendance);
@@ -343,8 +343,8 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         while (it.hasNext()) {
             IShift sh = (IShift) it.next();
             try {
-                IShiftStudent ta = sp.getITurnoAlunoPersistente().readByTurnoAndAluno(sh,
-                        attend.getAluno());
+                IShiftStudent ta = sp.getITurnoAlunoPersistente().readByTurnoAndAluno(sh.getIdInternal(),
+                        attend.getAluno().getIdInternal());
 
                 if (ta != null)
                     result.put(sh.getTipo().getSiglaTipoAula(), InfoShift.newInfoFromDomain(sh));//result.get(sh.getTipo())

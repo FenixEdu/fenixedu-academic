@@ -74,7 +74,7 @@ public class ReadStudentsByIdArray implements IService {
                 continue;
             }
             IShift shift = (IShift) persistentShift.readByOID(Shift.class, new Integer(shifts[i]));
-            Iterator studentIt = persistentSuport.getITurnoAlunoPersistente().readByShift(shift)
+            Iterator studentIt = persistentSuport.getITurnoAlunoPersistente().readByShift(shift.getIdInternal())
                     .iterator();
             while (studentIt.hasNext()) {
                 InfoStudent infoStudent = InfoStudent.newInfoFromDomain((IStudent) studentIt.next());

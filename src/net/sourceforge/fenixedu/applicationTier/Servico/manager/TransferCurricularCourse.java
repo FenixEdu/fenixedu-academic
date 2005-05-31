@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.ShiftStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -88,7 +89,12 @@ public class TransferCurricularCourse implements IService {
                 IStudent student = shiftStudent.getStudent();
                 
                 if (transferedStudents.contains(student.getIdInternal())) {
-                    persistentShiftStudent.delete(shiftStudent);
+                    //persistentShiftStudent.delete(shiftStudent);
+                    shiftStudent.getStudent().getShiftStudents().remove(shiftStudent);
+                    shiftStudent.getShift().getStudentShifts().remove(shiftStudent);
+                    shiftStudent.setShift(null);
+                    shiftStudent.setStudent(null);
+                    persistentShiftStudent.deleteByOID(ShiftStudent.class, shiftStudent.getIdInternal());
                 }
             }
         }

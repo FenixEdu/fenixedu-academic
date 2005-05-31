@@ -68,7 +68,7 @@ public class DeleteShifts implements IServico {
                 if (shift != null) {
                     //if the shift has students associated it can't be deleted
                     ITurnoAlunoPersistente persistentShiftStudent = sp.getITurnoAlunoPersistente();
-                    List studentShifts = persistentShiftStudent.readByShift(shift);
+                    List studentShifts = persistentShiftStudent.readByShift(shift.getIdInternal());
                     if (studentShifts != null && studentShifts.size() > 0) {
                         throw new FenixServiceException("error.deleteShift.with.students");
                     }

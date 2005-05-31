@@ -11,12 +11,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoAlunoPersistente;
 import net.sourceforge.fenixedu.util.TipoAula;
@@ -25,25 +25,28 @@ import org.apache.ojb.broker.query.Criteria;
 
 public class TurnoAlunoOJB extends PersistentObjectOJB implements ITurnoAlunoPersistente {
 
-    public List readByStudentAndExecutionPeriod(IStudent student, IExecutionPeriod executionPeriod)
+    public List readByStudentAndExecutionPeriod(Integer studentOID, Integer executionPeriodOID)
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("keyStudent", student.getIdInternal());
-        crit.addEqualTo("shift.disciplinaExecucao.keyExecutionPeriod", executionPeriod.getIdInternal());
+        crit.addEqualTo("keyStudent", studentOID);
+        crit.addEqualTo("shift.disciplinaExecucao.keyExecutionPeriod", executionPeriodOID);
 
         return queryList(ShiftStudent.class, crit);
     }
 
-    public List readByStudentAndExecutionCourse(IStudent student, IExecutionCourse executionCourse)
+    public List readByStudentAndExecutionCourse(Integer studentOID, Integer executionCourseOID)
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("keyStudent", student.getIdInternal());
-        crit.addEqualTo("shift.chaveDisciplinaExecucao", executionCourse.getIdInternal());
+        crit.addEqualTo("keyStudent", studentOID);
+        crit.addEqualTo("shift.chaveDisciplinaExecucao", executionCourseOID);
 
         return queryList(ShiftStudent.class, crit);
     }
 
-    public IShiftStudent readByTurnoAndAluno(IShift turno, IStudent aluno) throws ExcepcaoPersistencia {
+    public IShiftStudent readByTurnoAndAluno(Integer turnoOID, Integer alunoOID) throws ExcepcaoPersistencia {
+        IShift turno = (IShift) readByOID(Shift.class, turnoOID);
+        IStudent aluno = (IStudent) readByOID(Student.class, alunoOID);
+        
         Criteria criteria = new Criteria();
 
         criteria.addEqualTo("student.number", aluno.getNumber());
@@ -59,14 +62,11 @@ public class TurnoAlunoOJB extends PersistentObjectOJB implements ITurnoAlunoPer
 
     }
 
-    public void delete(IShiftStudent turnoAluno) throws ExcepcaoPersistencia {
-        super.delete(turnoAluno);
-    }
-
     /**
      * @see ServidorPersistente.ITurnoAlunoPersistente#readByTurno(Dominio.IShift)
      */
-    public List readStudentShiftByShift(IShift shift) throws ExcepcaoPersistencia {
+    public List readStudentShiftByShift(Integer shiftOID) throws ExcepcaoPersistencia {
+        IShift shift = (IShift) readByOID(Shift.class, shiftOID);
         Criteria criteria = new Criteria();
         criteria.addEqualTo("shift.nome", shift.getNome());
         criteria.addEqualTo("shift.disciplinaExecucao.sigla", shift.getDisciplinaExecucao().getSigla());
@@ -81,8 +81,8 @@ public class TurnoAlunoOJB extends PersistentObjectOJB implements ITurnoAlunoPer
     /**
      * @see ServidorPersistente.ITurnoAlunoPersistente#readByTurno(Dominio.IShift)
      */
-    public List readByShift(IShift shift) throws ExcepcaoPersistencia {
-        List result = readStudentShiftByShift(shift);
+    public List readByShift(Integer shiftOID) throws ExcepcaoPersistencia {
+        List result = readStudentShiftByShift(shiftOID);
 
         List studentList = new ArrayList();
 
@@ -103,36 +103,26 @@ public class TurnoAlunoOJB extends PersistentObjectOJB implements ITurnoAlunoPer
         return queryList(ShiftStudent.class, criteria);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ITurnoAlunoPersistente#readByStudent(Dominio.IStudent)
-     */
-    public List readByStudent(IStudent student) throws ExcepcaoPersistencia {
+    public List readByStudent(Integer studentOID) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyStudent", student.getIdInternal());
+        criteria.addEqualTo("keyStudent", studentOID);
         return queryList(ShiftStudent.class, criteria);
     }
 
-    public IShiftStudent readByStudentAndExecutionCourseAndLessonType(IStudent student,
-            IExecutionCourse executionCourse, TipoAula lessonType) throws ExcepcaoPersistencia {
+    public IShiftStudent readByStudentAndExecutionCourseAndLessonType(Integer studentOID,
+            Integer executionCourseOID, TipoAula lessonType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
 
-        criteria.addEqualTo("student.idInternal", student.getIdInternal());
+        criteria.addEqualTo("student.idInternal", studentOID);
         criteria.addEqualTo("shift.tipo", lessonType);
-        criteria.addEqualTo("shift.disciplinaExecucao.idInternal", executionCourse.getIdInternal());
+        criteria.addEqualTo("shift.disciplinaExecucao.idInternal", executionCourseOID);
 
         return (IShiftStudent) queryObject(ShiftStudent.class, criteria);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ITurnoAlunoPersistente#readNumberOfStudentsByShift(Dominio.IShift)
-     */
-    public int readNumberOfStudentsByShift(IShift shift) {
+    public int readNumberOfStudentsByShift(Integer shiftOID) {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("shift.idInternal", shift.getIdInternal());
+        criteria.addEqualTo("shift.idInternal", shiftOID);
         return count(ShiftStudent.class, criteria);
     }
 }

@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftStudent;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -55,12 +56,17 @@ public class UnEnrollStudentFromShift implements IService {
             }
 
             IShiftStudent studentShift = persistentSupport.getITurnoAlunoPersistente()
-                    .readByTurnoAndAluno(shift, student);
+                    .readByTurnoAndAluno(shift.getIdInternal(), student.getIdInternal());
             if (studentShift == null) {
                 throw new ShiftEnrolmentNotFoundServiceException();
             }
 
-            persistentSupport.getITurnoAlunoPersistente().delete(studentShift);
+            //persistentSupport.getITurnoAlunoPersistente().delete(studentShift);
+            studentShift.getStudent().getShiftStudents().remove(studentShift);
+            studentShift.getShift().getStudentShifts().remove(studentShift);
+            studentShift.setShift(null);
+            studentShift.setStudent(null);
+            persistentSupport.getITurnoAlunoPersistente().deleteByOID(ShiftStudent.class, studentShift.getIdInternal());
             return new Boolean(true);
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);

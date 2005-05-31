@@ -150,7 +150,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
     private Collection findShifts(IStudent aluno, IExecutionCourse disciplinaExecucao) throws ExcepcaoPersistencia
     {
         ITurnoAlunoPersistente persistentStudentShift = PersistenceSupportFactory.getDefaultPersistenceSupport().getITurnoAlunoPersistente();
-        return persistentStudentShift.readByStudentAndExecutionCourse(aluno, disciplinaExecucao);
+        return persistentStudentShift.readByStudentAndExecutionCourse(aluno.getIdInternal(), disciplinaExecucao.getIdInternal());
     }
 
     /**

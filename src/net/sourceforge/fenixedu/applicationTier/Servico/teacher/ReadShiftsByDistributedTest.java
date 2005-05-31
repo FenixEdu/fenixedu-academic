@@ -56,7 +56,7 @@ public class ReadShiftsByDistributedTest implements IService {
             ITurnoAlunoPersistente turnoAlunoPersistente = persistentSuport.getITurnoAlunoPersistente();
             while (itShiftList.hasNext()) {
                 IShift shift = (IShift) itShiftList.next();
-                List shiftStudents = turnoAlunoPersistente.readByShift(shift);
+                List shiftStudents = turnoAlunoPersistente.readByShift(shift.getIdInternal());
                 if (!studentsList.containsAll(shiftStudents)) {
                     final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
                     result.add(infoShift);

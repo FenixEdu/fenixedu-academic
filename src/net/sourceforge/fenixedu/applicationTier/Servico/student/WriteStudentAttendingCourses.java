@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
+import net.sourceforge.fenixedu.domain.ShiftStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -171,11 +172,17 @@ public class WriteStudentAttendingCourses implements IService {
                     //NOTE: attends that are linked to enrollments are not
                     // deleted
                     List shiftAttendsToDelete = persistentShiftStudent.readByStudentAndExecutionCourse(
-                            student, executionCourse);
+                            student.getIdInternal(), executionCourse.getIdInternal());
                     if (shiftAttendsToDelete != null) {
                         Iterator iter = shiftAttendsToDelete.iterator();
                         while (iter.hasNext()) {
-                            persistentShiftStudent.delete((IShiftStudent) iter.next());
+                            //persistentShiftStudent.delete((IShiftStudent) iter.next());
+                            IShiftStudent shiftStudent = (IShiftStudent) iter.next();
+                            shiftStudent.getStudent().getShiftStudents().remove(shiftStudent);
+                            shiftStudent.getShift().getStudentShifts().remove(shiftStudent);
+                            shiftStudent.setShift(null);
+                            shiftStudent.setStudent(null);
+                            persistentShiftStudent.deleteByOID(ShiftStudent.class, shiftStudent.getIdInternal());
                         }
                     }
                     persistentAttends.delete(attend);

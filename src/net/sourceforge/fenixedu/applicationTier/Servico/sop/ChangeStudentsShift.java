@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -51,13 +52,13 @@ public class ChangeStudentsShift implements IService {
                 && oldShift.getTipo().equals(newShift.getTipo())) {
             Set studentsInNewShiftSet = new HashSet();
 
-            List newShiftStudents = persistentShiftStudent.readStudentShiftByShift(newShift);
+            List newShiftStudents = persistentShiftStudent.readStudentShiftByShift(newShift.getIdInternal());
             for (int i = 0; i < newShiftStudents.size(); i++) {
                 IShiftStudent shiftStudent = (IShiftStudent) newShiftStudents.get(i);
                 studentsInNewShiftSet.add(shiftStudent.getStudent().getIdInternal());
             }
 
-            List shiftStudents = persistentShiftStudent.readStudentShiftByShift(oldShift);
+            List shiftStudents = persistentShiftStudent.readStudentShiftByShift(oldShift.getIdInternal());
             for (int i = 0; i < shiftStudents.size(); i++) {
                 IShiftStudent shiftStudent = (IShiftStudent) shiftStudents.get(i);
                 IStudent student = shiftStudent.getStudent();
@@ -70,7 +71,12 @@ public class ChangeStudentsShift implements IService {
                         toMails.add(person.getEmail());
                     }
                 } else {
-                    persistentShiftStudent.delete(shiftStudent);
+                    //persistentShiftStudent.delete(shiftStudent);
+                    shiftStudent.getStudent().getShiftStudents().remove(shiftStudent);
+                    shiftStudent.getShift().getStudentShifts().remove(shiftStudent);
+                    shiftStudent.setShift(null);
+                    shiftStudent.setStudent(null);
+                    persistentShiftStudent.deleteByOID(ShiftStudent.class, shiftStudent.getIdInternal());
                 }
             }
 

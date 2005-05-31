@@ -12,51 +12,29 @@ package net.sourceforge.fenixedu.persistenceTier;
  */
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IShiftStudent;
-import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.util.TipoAula;
 
 public interface ITurnoAlunoPersistente extends IPersistentObject {
 
     public List readByShiftID(Integer id) throws ExcepcaoPersistencia;
 
-    public List readByStudentAndExecutionPeriod(IStudent student, IExecutionPeriod executionPeriod)
+    public List readByStudentAndExecutionPeriod(Integer studentOID, Integer executionPeriodOID)
             throws ExcepcaoPersistencia;
 
-    public IShiftStudent readByTurnoAndAluno(IShift turno, IStudent aluno) throws ExcepcaoPersistencia;
+    public IShiftStudent readByTurnoAndAluno(Integer turnoOID, Integer alunoOID) throws ExcepcaoPersistencia;
 
-    public void delete(IShiftStudent turnoAluno) throws ExcepcaoPersistencia;
+    public List readByShift(Integer shiftOID) throws ExcepcaoPersistencia;
 
-    public List readByShift(IShift shift) throws ExcepcaoPersistencia;
-
-    public List readByStudentAndExecutionCourse(IStudent student, IExecutionCourse executionCourse)
+    public List readByStudentAndExecutionCourse(Integer studentOID, Integer executionCourseOID)
             throws ExcepcaoPersistencia;
 
-    public List readByStudent(IStudent student) throws ExcepcaoPersistencia;
+    public List readByStudent(Integer studentOID) throws ExcepcaoPersistencia;
 
-    /**
-     * @param shift
-     * @return
-     */
-    public int readNumberOfStudentsByShift(IShift shift);
+    public int readNumberOfStudentsByShift(Integer shiftOID) throws ExcepcaoPersistencia;
 
-    /**
-     * 
-     * @param student
-     * @param executionCourse
-     * @param lessonType
-     * @return @throws
-     *         ExcepcaoPersistencia
-     */
-    public IShiftStudent readByStudentAndExecutionCourseAndLessonType(IStudent student,
-            IExecutionCourse executionCourse, TipoAula lessonType) throws ExcepcaoPersistencia;
+    public IShiftStudent readByStudentAndExecutionCourseAndLessonType(Integer studentOID,
+            Integer executionCourseOID, TipoAula lessonType) throws ExcepcaoPersistencia;
 
-    /**
-     * @param oldShift
-     * @return
-     */
-    public List readStudentShiftByShift(IShift oldShift) throws ExcepcaoPersistencia;
+    public List readStudentShiftByShift(Integer oldShiftOID) throws ExcepcaoPersistencia;
 }

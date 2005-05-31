@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ResponsibleFor;
+import net.sourceforge.fenixedu.domain.ShiftStudent;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
@@ -166,7 +167,12 @@ public class SeperateExecutionCourse implements IService {
                     .hasNext();) {
                 IShiftStudent studentShift = (IShiftStudent) studentShiftIterator.next();
                 if (!transferedStudents.contains(studentShift.getStudent().getIdInternal())) {
-                    persistentStudentShift.delete(studentShift);
+                    //persistentStudentShift.delete(studentShift);
+                    studentShift.getStudent().getShiftStudents().remove(studentShift);
+                    studentShift.getShift().getStudentShifts().remove(studentShift);
+                    studentShift.setShift(null);
+                    studentShift.setStudent(null);
+                    persistentStudentShift.deleteByOID(ShiftStudent.class, studentShift.getIdInternal());
                 }
             }
         }

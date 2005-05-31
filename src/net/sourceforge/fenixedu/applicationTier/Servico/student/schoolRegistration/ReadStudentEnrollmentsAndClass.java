@@ -58,8 +58,8 @@ public class ReadStudentEnrollmentsAndClass implements IService {
                 DegreeType.DEGREE);
         List studentEnrollments = scp.getEnrolments();
         IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-        List studentShifts = persistentShiftStudent.readByStudentAndExecutionPeriod(scp.getStudent(),
-                executionPeriod);
+        List studentShifts = persistentShiftStudent.readByStudentAndExecutionPeriod(scp.getStudent().getIdInternal(),
+                executionPeriod.getIdInternal());
         List filteredStudentShifts = filterStudentShifts(studentShifts);
 
         InfoClass infoClass = getClass(filteredStudentShifts, scp.getDegreeCurricularPlan().getDegree()

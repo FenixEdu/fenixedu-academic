@@ -94,8 +94,8 @@ public class ReadClassShiftEnrollmentDetails implements IService {
                     student, executionPeriod);
 
             // Shifts enrolment
-            List studentShifts = shiftStudentDAO.readByStudentAndExecutionPeriod(student,
-                    executionPeriod);
+            List studentShifts = shiftStudentDAO.readByStudentAndExecutionPeriod(student.getIdInternal(),
+                    executionPeriod.getIdInternal());
             List shifts = collectShifts(studentShifts);
             List infoShifts = collectInfoShifts(shifts);
 
@@ -156,9 +156,10 @@ public class ReadClassShiftEnrollmentDetails implements IService {
      * @param shifts
      * @param infoClassList
      * @return
+     * @throws ExcepcaoPersistencia 
      */
     private Map createMapAndPopulateInfoClassList(ITurnoAlunoPersistente shiftStudentDAO,
-            List classList, List shiftsAttendList, List infoClassList, ISchoolClass klassToTreat) {
+            List classList, List shiftsAttendList, List infoClassList, ISchoolClass klassToTreat) throws ExcepcaoPersistencia {
         Map classExecutionCourseShiftEnrollmentDetailsMap = new HashMap();
 
         /* shift id -> ShiftEnrollmentDetails */
@@ -246,16 +247,17 @@ public class ReadClassShiftEnrollmentDetails implements IService {
      * @param shiftsTreated
      * @param shift
      * @return
+     * @throws ExcepcaoPersistencia 
      */
     private ShiftEnrollmentDetails createShiftEnrollmentDetails(ITurnoAlunoPersistente shiftStudentDAO,
-            Map shiftsTreated, IShift shift) {
+            Map shiftsTreated, IShift shift) throws ExcepcaoPersistencia {
         ShiftEnrollmentDetails shiftEnrollmentDetails = (ShiftEnrollmentDetails) shiftsTreated.get(shift
                 .getIdInternal());
         if (shiftEnrollmentDetails == null) {
             shiftEnrollmentDetails = new ShiftEnrollmentDetails();
 
             InfoShift infoShift = InfoShiftWithInfoLessons.newInfoFromDomain(shift);
-            int occupation = shiftStudentDAO.readNumberOfStudentsByShift(shift);
+            int occupation = shiftStudentDAO.readNumberOfStudentsByShift(shift.getIdInternal());
             shiftEnrollmentDetails.setInfoShift(infoShift);
             shiftEnrollmentDetails.setVacancies(new Integer(shift.getLotacao().intValue() - occupation));
 

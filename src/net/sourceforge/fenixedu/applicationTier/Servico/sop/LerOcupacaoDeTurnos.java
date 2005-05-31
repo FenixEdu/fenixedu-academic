@@ -64,7 +64,7 @@ public class LerOcupacaoDeTurnos implements IServico {
                 IShift shift = new Shift();
                 shift = Cloner.copyInfoShift2IShift(infoShift);
 
-                alunos = sp.getITurnoAlunoPersistente().readByShift(shift);
+                alunos = sp.getITurnoAlunoPersistente().readByShift(shift.getIdInternal());
 
                 Integer ocupation = new Integer(alunos.size());
                 Double percentage = new Double(alunos.size() * 100 / shift.getLotacao().intValue());

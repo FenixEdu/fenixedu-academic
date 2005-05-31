@@ -171,8 +171,8 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
                     .getInfoExecutionPeriod().getIdInternal());
 
             ITurnoAlunoPersistente persistentShiftStudent = sp.getITurnoAlunoPersistente();
-            List studentShifts = persistentShiftStudent.readByStudentAndExecutionPeriod(student,
-                    executionPeriod);
+            List studentShifts = persistentShiftStudent.readByStudentAndExecutionPeriod(student.getIdInternal(),
+                    executionPeriod.getIdInternal());
 
             infoShiftEnrollment = (List) CollectionUtils.collect(studentShifts, new Transformer() {
 

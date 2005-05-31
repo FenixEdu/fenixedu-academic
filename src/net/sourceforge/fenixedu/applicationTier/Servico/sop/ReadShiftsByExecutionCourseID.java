@@ -65,7 +65,7 @@ public class ReadShiftsByExecutionCourseID implements IServico {
             while (iterator.hasNext()) {
                 IShift shift = (IShift) iterator.next();
 
-                List studentsInShift = sp.getITurnoAlunoPersistente().readByShift(shift);
+                List studentsInShift = sp.getITurnoAlunoPersistente().readByShift(shift.getIdInternal());
 
                 shift.setOcupation(new Integer(studentsInShift.size()));
                 Integer capacity = new Integer(1);
