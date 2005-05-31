@@ -37,7 +37,7 @@ public class DeleteCurricularCourseScope implements IService {
             if (scope != null) {
                 // added by Fernanda Quitério
                 List writtenEvaluations = persistentWrittenEvaluationCurricularCourseScope
-                        .readByCurricularCourseScope(scope);
+                        .readByCurricularCourseScope(scope.getIdInternal());
                 if (writtenEvaluations == null || writtenEvaluations.size() == 0) {
 
                     persistentCurricularCourseScope.delete(scope);
