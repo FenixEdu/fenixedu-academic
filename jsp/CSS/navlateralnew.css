@@ -36,7 +36,7 @@ border: none;
 /*margin: -1px 0 -1px 0; /*  mozilla */
 display: block;
 height: 1.5em;
-padding: 0.4em 0 0 0.2em;
+padding: 0.4em 0.2em 0 0.2em;
 }
 
 #navlateral a:link, #navlateral a:visited {
