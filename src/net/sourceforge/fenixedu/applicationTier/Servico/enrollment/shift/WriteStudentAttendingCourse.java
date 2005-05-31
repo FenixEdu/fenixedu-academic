@@ -104,8 +104,8 @@ public class WriteStudentAttendingCourse implements IService {
 
             IEnrolment enrollment = persistentEnrolment
                     .readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
-                            studentCurricularPlan, curricularCourseElem, executionCourse
-                                    .getExecutionPeriod());
+                            studentCurricularPlan.getIdInternal(), curricularCourseElem.getIdInternal(), executionCourse
+                                    .getExecutionPeriod().getIdInternal());
             if (enrollment != null) {
                 attendsEntry.setEnrolment(enrollment);
                 break;

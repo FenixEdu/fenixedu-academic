@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -67,9 +66,8 @@ public class ReadStudentsByCurricularCourse implements IService {
     private List getCurricularCourseStudents(ICurricularCourse curricularCourse, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         List infoStudentList;
-        IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
 
-        List enrolments = persistentEnrolment.readByCurricularCourse(curricularCourse);
+        List enrolments = curricularCourse.getEnrolments();
 
         infoStudentList = (List) CollectionUtils.collect(enrolments, new Transformer() {
             public Object transform(Object input) {

@@ -43,8 +43,7 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 
         IDegreeCurricularPlan degreeCurricularPlan = super.getDegreeCurricularPlan();
 
-        List enrolments = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentEnrolment()
-                .readAllByStudentCurricularPlan(studentCurricularPlan);
+        List enrolments = studentCurricularPlan.getEnrolments();
 
         Iterator iterator = enrolments.iterator();
 
@@ -75,8 +74,7 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
         //		IDegreeCurricularPlan degreeCurricularPlan =
         // super.getDegreeCurricularPlan();
 
-        List enrolments = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentEnrolment()
-                .readAllByStudentCurricularPlan(studentCurricularPlan);
+        List enrolments = studentCurricularPlan.getEnrolments();
 
         Iterator iterator = enrolments.iterator();
 

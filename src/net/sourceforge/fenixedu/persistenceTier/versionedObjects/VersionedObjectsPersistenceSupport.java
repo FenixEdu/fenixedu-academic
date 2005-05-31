@@ -92,6 +92,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CursoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DegreeCurricularPlanVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DegreeInfoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DepartmentVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrollmentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationExecutionCourseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationMethodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationVO;
@@ -717,7 +718,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentEnrollment getIPersistentEnrolment() {
-        return null;
+        return new EnrollmentVO();
     }
 
     public IPersistentSection getIPersistentSection() {

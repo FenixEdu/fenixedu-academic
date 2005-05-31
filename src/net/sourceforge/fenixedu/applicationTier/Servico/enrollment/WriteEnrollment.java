@@ -82,8 +82,8 @@ public class WriteEnrollment implements IService {
         }
 
         IEnrolment enrollment = enrollmentDAO
-                .readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(studentCurricularPlan,
-                        curricularCourse, executionPeriod);
+                .readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(studentCurricularPlan.getIdInternal(),
+                        curricularCourse.getIdInternal(), executionPeriod.getIdInternal());
 
         if (enrollment == null) {
 

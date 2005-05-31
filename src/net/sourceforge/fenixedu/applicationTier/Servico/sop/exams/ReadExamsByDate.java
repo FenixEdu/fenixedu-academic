@@ -104,8 +104,8 @@ public class ReadExamsByDate implements IServico {
                     if (!curricularCourseIDs.contains(scope.getCurricularCourse().getIdInternal())) {
                         curricularCourseIDs.add(scope.getCurricularCourse().getIdInternal());
                         List enroledStudents = persistentEnrolment
-                                .readByCurricularCourseAndExecutionPeriod(scope.getCurricularCourse(),
-                                        executionPeriod);
+                                .readByCurricularCourseAndExecutionPeriod(scope.getCurricularCourse().getIdInternal(),
+                                        executionPeriod.getIdInternal());
                         numberOfStudentsForExam += enroledStudents.size();
 
                         tempDegree = scope.getCurricularCourse().getDegreeCurricularPlan().getDegree();

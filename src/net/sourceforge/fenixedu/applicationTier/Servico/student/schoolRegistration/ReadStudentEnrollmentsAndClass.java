@@ -48,7 +48,6 @@ public class ReadStudentEnrollmentsAndClass implements IService {
 
         IPersistentStudentCurricularPlan pSCP = suportePersistente
                 .getIStudentCurricularPlanPersistente();
-        IPersistentEnrollment pEnrollment = suportePersistente.getIPersistentEnrolment();
         ITurnoAlunoPersistente persistentShiftStudent = suportePersistente.getITurnoAlunoPersistente();
         IPersistentExecutionPeriod persistentExecutionPeriod = suportePersistente
                 .getIPersistentExecutionPeriod();
@@ -58,7 +57,7 @@ public class ReadStudentEnrollmentsAndClass implements IService {
 
         IStudentCurricularPlan scp = pSCP.readActiveStudentCurricularPlan(studentNumber,
                 DegreeType.DEGREE);
-        List studentEnrollments = pEnrollment.readAllByStudentCurricularPlan(scp);
+        List studentEnrollments = scp.getEnrolments();
         IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
         List studentShifts = persistentShiftStudent.readByStudentAndExecutionPeriod(scp.getStudent(),
                 executionPeriod);

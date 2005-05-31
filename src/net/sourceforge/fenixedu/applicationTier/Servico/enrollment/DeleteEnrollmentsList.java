@@ -46,11 +46,7 @@ public class DeleteEnrollmentsList implements IService {
                     final IEnrolment enrollment = (IEnrolment) enrolmentDAO.readByOID(Enrolment.class,
                             enrolmentID);
                     
-                    DeleteEnrolmentUtils.deleteEnrollment(enrolmentDAO, enrolmentEvaluationDAO, enrollment);
-
-                    /*DeleteEnrolment deleteEnrolmentService = new DeleteEnrolment();
-                    deleteEnrolmentService.run(null, null, enrolmentID);*/                   
-                    
+                    DeleteEnrolmentUtils.deleteEnrollment(persistentSuport, enrollment);
                 }
             }
         } catch (ExcepcaoPersistencia e) {

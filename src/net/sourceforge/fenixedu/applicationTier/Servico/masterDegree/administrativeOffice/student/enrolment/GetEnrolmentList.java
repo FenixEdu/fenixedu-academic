@@ -15,6 +15,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanA
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.domain.IEnrolment;
+import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -76,8 +78,8 @@ public class GetEnrolmentList implements IService {
 
             // Read the list
 
-            enrolmentList = sp.getIPersistentEnrolment().readAllByStudentCurricularPlan(
-                    studentCurricularPlanID);
+            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) sp.getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class, studentCurricularPlanID); 
+            enrolmentList = studentCurricularPlan.getEnrolments();
 
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");

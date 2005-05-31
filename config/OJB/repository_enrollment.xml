@@ -85,7 +85,48 @@
 			refresh="true"
 			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentEvaluation">
 		<inverse-foreignkey field-ref="enrolmentKey"/>
-	</collection-descriptor>    
+	</collection-descriptor>
+	
+	<collection-descriptor
+			name="equivalentEnrolmentForEnrolmentEquivalences"
+			proxy="true"
+			refresh="true"
+			element-class-ref="net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence">
+		<inverse-foreignkey field-ref="equivalentEnrolmentKey"/>
+	</collection-descriptor>
+	
+	<collection-descriptor
+			name="enrolmentEquivalences"
+			proxy="true"
+			refresh="true"
+			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentEquivalence">
+		<inverse-foreignkey field-ref="enrolmentKey"/>
+	</collection-descriptor>
+	
+	<collection-descriptor
+			name="attends"
+			proxy="true"
+			refresh="true"
+			element-class-ref="net.sourceforge.fenixedu.domain.Attends">
+		<inverse-foreignkey field-ref="keyEnrolment"/>
+	</collection-descriptor>
+	
+	<collection-descriptor
+			name="creditsInAnySecundaryAreas"
+			proxy="true"
+			refresh="true"
+			element-class-ref="net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea">
+		<inverse-foreignkey field-ref="enrolmentKey"/>
+	</collection-descriptor>
+	
+	<collection-descriptor
+			name="creditsInScientificAreas"
+			proxy="true"
+			refresh="true"
+			element-class-ref="net.sourceforge.fenixedu.domain.CreditsInScientificArea">
+		<inverse-foreignkey field-ref="enrolmentKey"/>
+	</collection-descriptor>
+	
 	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse"/>
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse"/>
@@ -178,6 +219,46 @@
 		<inverse-foreignkey field-ref="enrolmentKey"/>
 	</collection-descriptor>    
 	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
+	
+<collection-descriptor
+			name="equivalentEnrolmentForEnrolmentEquivalences"
+			proxy="true"
+			refresh="true"
+			element-class-ref="net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence">
+		<inverse-foreignkey field-ref="equivalentEnrolmentKey"/>
+	</collection-descriptor>
+	
+	<collection-descriptor
+			name="enrolmentEquivalences"
+			proxy="true"
+			refresh="true"
+			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentEquivalence">
+		<inverse-foreignkey field-ref="enrolmentKey"/>
+	</collection-descriptor>
+	
+	<collection-descriptor
+			name="attends"
+			proxy="true"
+			refresh="true"
+			element-class-ref="net.sourceforge.fenixedu.domain.Attends">
+		<inverse-foreignkey field-ref="keyEnrolment"/>
+	</collection-descriptor>
+	
+	<collection-descriptor
+			name="creditsInAnySecundaryAreas"
+			proxy="true"
+			refresh="true"
+			element-class-ref="net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea">
+		<inverse-foreignkey field-ref="enrolmentKey"/>
+	</collection-descriptor>
+	
+	<collection-descriptor
+			name="creditsInScientificAreas"
+			proxy="true"
+			refresh="true"
+			element-class-ref="net.sourceforge.fenixedu.domain.CreditsInScientificArea">
+		<inverse-foreignkey field-ref="enrolmentKey"/>
+	</collection-descriptor>	
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
@@ -267,6 +348,47 @@
 		<inverse-foreignkey field-ref="enrolmentKey"/>
 	</collection-descriptor>    
 	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
+	
+	<collection-descriptor
+			name="equivalentEnrolmentForEnrolmentEquivalences"
+			proxy="true"
+			refresh="true"
+			element-class-ref="net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence">
+		<inverse-foreignkey field-ref="equivalentEnrolmentKey"/>
+	</collection-descriptor>
+	
+	<collection-descriptor
+			name="enrolmentEquivalences"
+			proxy="true"
+			refresh="true"
+			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentEquivalence">
+		<inverse-foreignkey field-ref="enrolmentKey"/>
+	</collection-descriptor>
+	
+	<collection-descriptor
+			name="attends"
+			proxy="true"
+			refresh="true"
+			element-class-ref="net.sourceforge.fenixedu.domain.Attends">
+		<inverse-foreignkey field-ref="keyEnrolment"/>
+	</collection-descriptor>
+	
+	<collection-descriptor
+			name="creditsInAnySecundaryAreas"
+			proxy="true"
+			refresh="true"
+			element-class-ref="net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea">
+		<inverse-foreignkey field-ref="enrolmentKey"/>
+	</collection-descriptor>
+	
+	<collection-descriptor
+			name="creditsInScientificAreas"
+			proxy="true"
+			refresh="true"
+			element-class-ref="net.sourceforge.fenixedu.domain.CreditsInScientificArea">
+		<inverse-foreignkey field-ref="enrolmentKey"/>
+	</collection-descriptor>
+	
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->

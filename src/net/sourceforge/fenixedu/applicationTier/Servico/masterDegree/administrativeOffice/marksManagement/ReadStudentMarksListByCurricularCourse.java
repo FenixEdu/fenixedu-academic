@@ -48,9 +48,9 @@ public class ReadStudentMarksListByCurricularCourse implements IService {
 
             if (executionYear != null) {
                 enrolmentList = sp.getIPersistentEnrolment().readByCurricularCourseAndYear(
-                        curricularCourse, executionYear);
+                        curricularCourseID, executionYear);
             } else {
-                enrolmentList = sp.getIPersistentEnrolment().readByCurricularCourse(curricularCourse);
+                enrolmentList = curricularCourse.getEnrolments();
             }
             if ((enrolmentList == null) || (enrolmentList.size() == 0)) {
                 throw new NonExistingServiceException();

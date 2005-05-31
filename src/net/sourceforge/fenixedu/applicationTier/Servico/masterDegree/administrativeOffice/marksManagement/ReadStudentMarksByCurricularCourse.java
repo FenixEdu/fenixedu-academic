@@ -122,13 +122,13 @@ public class ReadStudentMarksByCurricularCourse implements IService {
             // }
             if (executionYear != null) {
                 enrolment = sp.getIPersistentEnrolment()
-                        .readEnrolmentByStudentCurricularPlanAndCurricularCourse(studentCurricularPlan,
-                                curricularCourse, executionYear);
+                        .readEnrolmentByStudentNumberAndCurricularCourse(studentCurricularPlan.getStudent().getNumber(),
+                                curricularCourse.getIdInternal(), executionYear);
             } else {
                 // TODO: Não se sabe se este comportamento está correcto!
                 List enrollments = sp.getIPersistentEnrolment()
-                        .readByStudentCurricularPlanAndCurricularCourse(studentCurricularPlan,
-                                curricularCourse);
+                        .readByStudentCurricularPlanAndCurricularCourse(studentCurricularPlan.getIdInternal(),
+                                curricularCourse.getIdInternal());
 
                 if (enrollments.isEmpty()) {
                     throw new ExistingServiceException();

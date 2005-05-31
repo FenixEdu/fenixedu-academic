@@ -47,7 +47,7 @@ public class ReadEnrolledCurricularCoursesByStudentAndExecutionPeriod implements
 		IPersistentEnrollment pe = sp.getIPersistentEnrolment();
 		
 		List<IEnrolment> enrollments =
-			pe.readAllEnrolmentsByStudentCurricularPlanIdAndExecutionPeriodId(studentCurricularPlanId, executionPeriodId);
+			pe.readAllEnrolmentsByStudentCurricularPlanAndExecutionPeriod(studentCurricularPlanId, executionPeriodId);
 		
 		List<InfoCurricularCourse> enrolledCurricularCourses = new ArrayList<InfoCurricularCourse>();
 		

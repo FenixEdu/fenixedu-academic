@@ -96,7 +96,7 @@ public class DeleteEnrolment implements IService {
             finalEnrollments2Delete.addAll(enrollments2Delete);
             Iterator iter = finalEnrollments2Delete.iterator();
             while (iter.hasNext()) {
-                DeleteEnrolmentUtils.deleteEnrollment(enrolmentDAO, enrolmentEvaluationDAO, (IEnrolment) iter.next());
+                DeleteEnrolmentUtils.deleteEnrollment(persistentSuport, (IEnrolment) iter.next());
             }
 
         } catch (ExcepcaoPersistencia e) {

@@ -257,9 +257,9 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
 
             if (enrollment != null) {
                 List studentEnrollments = persistentEnrollment
-                        .readEnrollmentsByStudentAndCurricularCourseNameAndDegree(student, enrollment
-                                .getCurricularCourse(), studentCurricularPlan.getDegreeCurricularPlan()
-                                .getDegree());
+                        .readEnrollmentsByStudentAndCurricularCourseNameAndDegree(student.getIdInternal(),
+                                enrollment.getCurricularCourse().getName(),
+                                studentCurricularPlan.getDegreeCurricularPlan().getDegree().getIdInternal());
                 numberOfEnrollments = new Integer(studentEnrollments.size());
             } else {
                 numberOfEnrollments = new Integer(0);

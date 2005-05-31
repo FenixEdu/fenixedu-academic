@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.studentCurricularPlan;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteEnrollment;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse;
@@ -100,7 +102,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
 
                     if (extraCurricularCourses.contains(enrolment.getIdInternal())) {
                         if (!(enrolment instanceof EnrolmentInExtraCurricularCourse)) {
-                            persistentEnrolment.delete(enrolment);
+
 
                             IEnrolment auxEnrolment = new EnrolmentInExtraCurricularCourse();
                             persistentEnrolment.simpleLockWrite(auxEnrolment);
@@ -110,14 +112,16 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
                             
                             changeAnnulled2ActiveIfActivePlan(newState, persistentEnrolment,
                                     auxEnrolment);
+							
+							DeleteEnrollment deleteEnrolmentService = new DeleteEnrollment();
+							deleteEnrolmentService.run(enrolment.getIdInternal());
                         } else {
                             changeAnnulled2ActiveIfActivePlan(newState, persistentEnrolment, enrolment);
                         }
                     } else {
                         if (enrolment instanceof EnrolmentInExtraCurricularCourse) {
-                            persistentEnrolment.delete(enrolment);
-
-                            IEnrolment auxEnrolment = new Enrolment();
+                            
+							IEnrolment auxEnrolment = new Enrolment();
                             persistentEnrolment.simpleLockWrite(auxEnrolment);
 
                             copyEnrollment(enrolment, auxEnrolment);
@@ -125,6 +129,9 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
                             
                             changeAnnulled2ActiveIfActivePlan(newState, persistentEnrolment,
                                     auxEnrolment);
+							
+							DeleteEnrollment deleteEnrolmentService = new DeleteEnrollment();
+							deleteEnrolmentService.run(enrolment.getIdInternal());
                         } else {
                             changeAnnulled2ActiveIfActivePlan(newState, persistentEnrolment, enrolment);
                         }
@@ -149,19 +156,40 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
      */
     private void copyEnrollment(IEnrolment enrolment, IEnrolment auxEnrolment)
             throws FenixServiceException {
-        auxEnrolment.setIdInternal(enrolment.getIdInternal());
 
+		auxEnrolment.setCreatedBy(enrolment.getCreatedBy());
+		auxEnrolment.setCreationDate(enrolment.getCreationDate());
+		auxEnrolment.setAccumulatedWeight(enrolment.getAccumulatedWeight());
         auxEnrolment.setCurricularCourse(enrolment.getCurricularCourse());
         auxEnrolment.setExecutionPeriod(enrolment.getExecutionPeriod());
         auxEnrolment.setStudentCurricularPlan(enrolment.getStudentCurricularPlan());     
-        try {
-            auxEnrolment.setCondition(enrolment.getCondition());
-            auxEnrolment.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
-            auxEnrolment.setEnrollmentState(enrolment.getEnrollmentState());
-            auxEnrolment.setEvaluations(enrolment.getEvaluations());            
-        } catch (Exception e1) {
-            throw new FenixServiceException(e1);
-        }
+        auxEnrolment.setCondition(enrolment.getCondition());
+        auxEnrolment.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
+        auxEnrolment.setEnrollmentState(enrolment.getEnrollmentState());
+		
+		List evaluations = new ArrayList();
+		evaluations.addAll(enrolment.getEvaluations());
+		auxEnrolment.setEvaluations(evaluations);
+		
+		List enrolmentEquivalences = new ArrayList();
+		enrolmentEquivalences.addAll(enrolment.getEnrolmentEquivalences());
+		auxEnrolment.setEnrolmentEquivalences(enrolmentEquivalences);
+		
+		List attends = new ArrayList();
+		attends.addAll(enrolment.getAttends());
+		auxEnrolment.setAttends(attends);
+		
+		List equivalentEnrolmentsForEnrolmentEquivalence = new ArrayList();
+		equivalentEnrolmentsForEnrolmentEquivalence.addAll(enrolment.getEquivalentEnrolmentForEnrolmentEquivalences());
+		auxEnrolment.setEquivalentEnrolmentForEnrolmentEquivalences(equivalentEnrolmentsForEnrolmentEquivalence);
+
+		List creditsInAnySecundaryAreas = new ArrayList();
+		creditsInAnySecundaryAreas.addAll(enrolment.getCreditsInAnySecundaryAreas());
+		auxEnrolment.setCreditsInAnySecundaryAreas(creditsInAnySecundaryAreas);
+
+		List creditsInScientificAreas = new ArrayList();
+		creditsInScientificAreas.addAll(enrolment.getCreditsInScientificAreas());
+		auxEnrolment.setCreditsInScientificAreas(creditsInScientificAreas);
     }
 
     /**

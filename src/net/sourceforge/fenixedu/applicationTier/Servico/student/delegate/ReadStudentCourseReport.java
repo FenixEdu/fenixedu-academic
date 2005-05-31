@@ -239,8 +239,8 @@ public class ReadStudentCourseReport implements IService {
     private List getEnrolled(IExecutionPeriod executionPeriod, ICurricularCourse curricularCourse,
             ISuportePersistente sp) throws ExcepcaoPersistencia {
         IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
-        List enrolments = persistentEnrolment.readByCurricularCourseAndExecutionPeriod(curricularCourse,
-                executionPeriod);
+        List enrolments = persistentEnrolment.readByCurricularCourseAndExecutionPeriod(curricularCourse.getIdInternal(),
+                executionPeriod.getIdInternal());
         return enrolments;
     }
 

@@ -54,7 +54,7 @@ public class CheckCandidacyConditionsForFinalDegreeWork implements IService {
         IStudent student = persistentStudent.readByUsername(userView.getUtilizador());
 
         int numberOfCompletedCourses = persistentEnrolment
-                .countCompletedCoursesForStudentForActiveUndergraduateCurricularPlan(student);
+                .countCompletedCoursesForStudentForActiveUndergraduateCurricularPlan(student.getIdInternal());
 
         Integer numberOfNecessaryCompletedCourses = scheduleing.getMinimumNumberOfCompletedCourses();
         if (numberOfCompletedCourses < numberOfNecessaryCompletedCourses.intValue()) {

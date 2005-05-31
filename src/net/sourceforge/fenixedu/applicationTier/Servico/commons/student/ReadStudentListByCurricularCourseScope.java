@@ -54,10 +54,7 @@ public class ReadStudentListByCurricularCourseScope implements IService {
             curricularCourseScope = (ICurricularCourseScope) sp.getIPersistentCurricularCourseScope()
                     .readByOID(CurricularCourseScope.class, curricularCourseScopeID);
 
-            //enrolmentList =
-            // sp.getIPersistentEnrolment().readByCurricularCourseScope(curricularCourseScope);
-            enrolmentList = sp.getIPersistentEnrolment().readByCurricularCourse(
-                    curricularCourseScope.getCurricularCourse());
+            enrolmentList = curricularCourseScope.getCurricularCourse().getEnrolments();
 
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");

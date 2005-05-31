@@ -53,10 +53,10 @@ public class ConfirmStudentsFinalEvaluation implements IService {
 
             List enrolments = null;
             if (yearString != null) {
-                enrolments = persistentEnrolment.readByCurricularCourseAndYear(curricularCourse,
+                enrolments = persistentEnrolment.readByCurricularCourseAndYear(curricularCourseCode,
                         yearString);
             } else {
-                enrolments = persistentEnrolment.readByCurricularCourse(curricularCourse);
+                enrolments = curricularCourse.getEnrolments();
             }
             List enrolmentEvaluations = new ArrayList();
             Iterator iterEnrolment = enrolments.listIterator();

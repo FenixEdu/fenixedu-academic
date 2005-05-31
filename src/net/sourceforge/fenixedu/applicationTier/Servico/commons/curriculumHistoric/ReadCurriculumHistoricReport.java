@@ -69,7 +69,7 @@ public class ReadCurriculumHistoricReport implements IService {
             //read all enrollments
             IPersistentEnrollment persistentEnrollment = suportePersistente.getIPersistentEnrolment();
             List enrollments = persistentEnrollment.readByCurricularCourseAndExecutionPeriod(
-                    curricularCourse, executionPeriod);
+                    curricularCourse.getIdInternal(), executionPeriod.getIdInternal());
 
             InfoCurriculumHistoricReport infoCurriculumHistoricReport = createInfoCurriculumHistoricReport(enrollments);
 

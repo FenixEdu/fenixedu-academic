@@ -7,6 +7,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteEnrollment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.equivalence.InfoCurricularCourseGrade;
 import net.sourceforge.fenixedu.dataTransferObject.equivalence.InfoEnrollmentGrade;
@@ -181,7 +182,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
 
         IEnrolment enrollmentToWrite = enrollmentDAO
                 .readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
-                        toStudentCurricularPlan, curricularCourse, executionPeriod);
+                        toStudentCurricularPlan.getIdInternal(), curricularCourse.getIdInternal(), executionPeriod.getIdInternal());
 
         if (enrollmentToWrite == null) {
             enrollmentToWrite = new Enrolment();
@@ -313,11 +314,13 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
 
         IEnrolment enrollment = enrollmentDAO
                 .readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
-                        toStudentCurricularPlan, oldEnrollment.getCurricularCourse(), oldEnrollment
-                                .getExecutionPeriod());
+                        toStudentCurricularPlan.getIdInternal(), oldEnrollment.getCurricularCourse().getIdInternal(), oldEnrollment
+                                .getExecutionPeriod().getIdInternal());
 
         if ((enrollment != null) && (enrollment instanceof EnrolmentInExtraCurricularCourse)) {
-            enrollmentDAO.deleteByOID(Enrolment.class, enrollment.getIdInternal());
+			DeleteEnrollment deleteEnrolmentService = new DeleteEnrollment();
+			deleteEnrolmentService.run(enrollment.getIdInternal());
+            //enrollmentDAO.deleteByOID(Enrolment.class, enrollment.getIdInternal());
         }
     }
 

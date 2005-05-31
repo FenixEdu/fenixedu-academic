@@ -79,8 +79,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
             throws ExcepcaoPersistencia {
         float marks = 0;
         int numberOfCourses = 0;
-        List enrolments = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentEnrolment()
-                .readAllByStudentCurricularPlan(studentCurricularPlan);
+        List enrolments = studentCurricularPlan.getEnrolments();
 
         Iterator iterator = enrolments.iterator();
         while (iterator.hasNext()) {
@@ -126,8 +125,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
             throws ExcepcaoPersistencia {
         float marks = 0;
         int numberOfWeigths = 0;
-        List enrolments = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentEnrolment()
-                .readAllByStudentCurricularPlan(studentCurricularPlan);
+        List enrolments = studentCurricularPlan.getEnrolments();
 
         Iterator iterator = enrolments.iterator();
         while (iterator.hasNext()) {

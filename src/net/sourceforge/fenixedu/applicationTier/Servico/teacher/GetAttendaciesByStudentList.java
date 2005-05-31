@@ -90,9 +90,9 @@ public class GetAttendaciesByStudentList implements IService {
 
                     List enrollmentList = persistentEnrolment
                             .readEnrollmentsByStudentAndCurricularCourseNameAndDegree(
-                                    student,
-                                    curricularCourse,
-                                    degree);
+                                    student.getIdInternal(),
+                                    curricularCourse.getName(),
+                                    degree.getIdInternal());
                     enrollments = new Integer(enrollmentList.size());
                     if (enrollments.intValue() == 0) {
                         enrollments = new Integer(1);

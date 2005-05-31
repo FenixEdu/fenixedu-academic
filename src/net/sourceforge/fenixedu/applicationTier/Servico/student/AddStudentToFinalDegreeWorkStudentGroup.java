@@ -64,7 +64,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService {
                     .toString());
         } else {
             int numberOfCompletedCourses = persistentEnrolment
-                    .countCompletedCoursesForStudentForActiveUndergraduateCurricularPlan(student);
+                    .countCompletedCoursesForStudentForActiveUndergraduateCurricularPlan(student.getIdInternal());
 
             if (numberOfCompletedCourses < scheduleing.getMinimumNumberOfCompletedCourses().intValue()) {
                 throw new MinimumNumberOfCompletedCoursesNotReachedException(scheduleing

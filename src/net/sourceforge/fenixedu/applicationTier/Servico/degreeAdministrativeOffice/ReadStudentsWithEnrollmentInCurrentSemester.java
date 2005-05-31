@@ -75,7 +75,7 @@ public class ReadStudentsWithEnrollmentInCurrentSemester implements IService {
         IExecutionPeriod executionPeriod = pExecutionPeriod.readActualExecutionPeriod();
 
         List enrollments = pEnrollment.readAllEnrolmentsByStudentCurricularPlanAndExecutionPeriod(
-                student.getActiveStudentCurricularPlan(), executionPeriod);
+                student.getActiveStudentCurricularPlan().getIdInternal(), executionPeriod.getIdInternal());
 
         for (int iter = 0; iter < enrollments.size(); iter++) {
             IEnrolment enrollment = (IEnrolment) enrollments.get(iter);

@@ -27,8 +27,6 @@ public class ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan impl
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IStudentCurricularPlan studentCurricularPlan = InfoStudentCurricularPlan
-                    .newDomainFromInfo(infoStudentCurricularPlan);
             IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion = sp
                     .getIPersistentMasterDegreeThesisDataVersion().readActiveByStudentCurricularPlan(
                     		infoStudentCurricularPlan.getIdInternal());

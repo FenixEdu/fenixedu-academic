@@ -178,7 +178,7 @@ public class SearchExecutionCourses implements IService {
                         throws ExcepcaoPersistencia {
                     IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
                     List enrolments = persistentEnrolment.readByCurricularCourseAndExecutionPeriod(
-                            curricularCourse, executionPeriod);
+                            curricularCourse.getIdInternal(), executionPeriod.getIdInternal());
                     return enrolments;
                 }
 

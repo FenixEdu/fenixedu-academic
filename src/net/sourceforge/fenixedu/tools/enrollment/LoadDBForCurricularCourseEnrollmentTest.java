@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteEnrollment;
 import net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea;
 import net.sourceforge.fenixedu.domain.CreditsInScientificArea;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -111,20 +112,25 @@ public class LoadDBForCurricularCourseEnrollmentTest {
             if (studentCurricularPlan != null) {
 
                 // ---------------------------------------------------------------------------------------------------
-                int size = studentCurricularPlan.getEnrolments().size();
-                for (int i = 0; i < size; i++) {
-                    IEnrolment enrollment = (IEnrolment) studentCurricularPlan.getEnrolments().get(i);
-
-                    int size2 = enrollment.getEvaluations().size();
-                    for (int j = 0; j < size2; j++) {
-                        IEnrolmentEvaluation enrollmentEvaluation = (IEnrolmentEvaluation) enrollment
-                                .getEvaluations().get(j);
-                        persistenceDAO.getIPersistentEnrolmentEvaluation().deleteByOID(
-                                EnrolmentEvaluation.class, enrollmentEvaluation.getIdInternal());
-                    }
-
-                    persistenceDAO.getIPersistentEnrolment().deleteByOID(Enrolment.class,
-                            enrollment.getIdInternal());
+//                int size = studentCurricularPlan.getEnrolments().size();
+//                for (int i = 0; i < size; i++) {
+//                    IEnrolment enrollment = (IEnrolment) studentCurricularPlan.getEnrolments().get(i);
+//
+//                    int size2 = enrollment.getEvaluations().size();
+//                    for (int j = 0; j < size2; j++) {
+//                        IEnrolmentEvaluation enrollmentEvaluation = (IEnrolmentEvaluation) enrollment
+//                                .getEvaluations().get(j);
+//                        persistenceDAO.getIPersistentEnrolmentEvaluation().deleteByOID(
+//                                EnrolmentEvaluation.class, enrollmentEvaluation.getIdInternal());
+//                    }
+//
+//                    persistenceDAO.getIPersistentEnrolment().deleteByOID(Enrolment.class,
+//                            enrollment.getIdInternal());
+				List<IEnrolment> enrolments = studentCurricularPlan.getEnrolments();
+				
+				for (IEnrolment enrollment : enrolments) {
+					DeleteEnrollment deleteEnrolmentService = new DeleteEnrollment();
+					deleteEnrolmentService.run(enrollment.getIdInternal());
                 }
 
                 // ---------------------------------------------------------------------------------------------------
@@ -132,7 +138,7 @@ public class LoadDBForCurricularCourseEnrollmentTest {
                         .getIPersistentCreditsInAnySecundaryArea().readAllByStudentCurricularPlan(
                                 studentCurricularPlan);
 
-                size = creditsInAnySecundaryAreaList.size();
+                int size = creditsInAnySecundaryAreaList.size();
                 for (int i = 0; i < size; i++) {
                     ICreditsInAnySecundaryArea creditsInAnySecundaryArea = (ICreditsInAnySecundaryArea) creditsInAnySecundaryAreaList
                             .get(i);

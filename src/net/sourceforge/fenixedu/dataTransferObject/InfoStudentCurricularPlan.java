@@ -372,14 +372,4 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
         studentCurricularPlan.setStartDate(infoStudentCurricularPlan.getStartDate());
         studentCurricularPlan.setCurrentState(infoStudentCurricularPlan.currentState);
     }
-
-    public static IStudentCurricularPlan newDomainFromInfo(
-            InfoStudentCurricularPlan infoStudentCurricularPlan) {
-        IStudentCurricularPlan studentCurricularPlan = null;
-        if (infoStudentCurricularPlan != null) {
-            studentCurricularPlan = new StudentCurricularPlan();
-            infoStudentCurricularPlan.copyToDomain(infoStudentCurricularPlan, studentCurricularPlan);
-        }
-        return studentCurricularPlan;
-    }
 }
