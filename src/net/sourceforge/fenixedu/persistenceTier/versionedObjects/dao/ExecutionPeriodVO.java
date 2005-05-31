@@ -24,7 +24,7 @@ public class ExecutionPeriodVO extends VersionedObjectsBase implements IPersiste
     public IExecutionPeriod readActualExecutionPeriod() throws ExcepcaoPersistencia {
         Collection executionPeriods = readAll(ExecutionPeriod.class);   
         for (Iterator iter = executionPeriods.iterator(); iter.hasNext();) {
-            ExecutionPeriod element = (ExecutionPeriod) iter.next();
+            IExecutionPeriod element = (IExecutionPeriod) iter.next();
             if(element.getState().equals(PeriodState.CURRENT))
                 return element;
         }                              
@@ -35,7 +35,7 @@ public class ExecutionPeriodVO extends VersionedObjectsBase implements IPersiste
     public IExecutionPeriod readByNameAndExecutionYear(String executionPeriodName, String year) throws ExcepcaoPersistencia {
         Collection executionPeriods = readAll(ExecutionPeriod.class);     
         for (Iterator iter = executionPeriods.iterator(); iter.hasNext();) {
-            ExecutionPeriod element = (ExecutionPeriod) iter.next();
+            IExecutionPeriod element = (IExecutionPeriod) iter.next();
             if((element.getExecutionYear().getYear().equals(year)) && (element.getName().equals(executionPeriodName)))
                 return element;
         }        
@@ -47,7 +47,7 @@ public class ExecutionPeriodVO extends VersionedObjectsBase implements IPersiste
             return null;      
         Collection executionPeriods = readAll(ExecutionPeriod.class);     
         for (Iterator iter = executionPeriods.iterator(); iter.hasNext();) {
-            ExecutionPeriod element = (ExecutionPeriod) iter.next();
+            IExecutionPeriod element = (IExecutionPeriod) iter.next();
             if((element.getExecutionYear().getYear().equals(year)) && (element.getSemester() == semester))
                 return element;
         }        
@@ -59,7 +59,7 @@ public class ExecutionPeriodVO extends VersionedObjectsBase implements IPersiste
         Collection executionPeriods = readAll(ExecutionPeriod.class);   
         List executionPeriodsAux = new ArrayList();     
         for (Iterator iter = executionPeriods.iterator(); iter.hasNext();) {
-            ExecutionPeriod element = (ExecutionPeriod) iter.next();
+            IExecutionPeriod element = (IExecutionPeriod) iter.next();
             if((!element.getState().equals(PeriodState.NOT_OPEN)) && 
                     (element.getSemester().compareTo(new Integer(0)) > 0))
                 executionPeriodsAux.add(element);
@@ -73,7 +73,7 @@ public class ExecutionPeriodVO extends VersionedObjectsBase implements IPersiste
         List executionPeriodsAux = new ArrayList();
         
         for (Iterator iter = executionPeriods.iterator(); iter.hasNext();) {
-            ExecutionPeriod element = (ExecutionPeriod) iter.next();
+            IExecutionPeriod element = (IExecutionPeriod) iter.next();
             if(element.getExecutionYear().getIdInternal() == executionYearID)
                 executionPeriodsAux.add(element);
         }     
@@ -86,7 +86,7 @@ public class ExecutionPeriodVO extends VersionedObjectsBase implements IPersiste
         List executionPeriodsAux = new ArrayList();
         
         for (Iterator iter = executionPeriods.iterator(); iter.hasNext();) {
-            ExecutionPeriod element = (ExecutionPeriod) iter.next();
+            IExecutionPeriod element = (IExecutionPeriod) iter.next();
             if(!element.getState().equals(PeriodState.CLOSED))
                 executionPeriodsAux.add(element);
         }     
@@ -98,7 +98,7 @@ public class ExecutionPeriodVO extends VersionedObjectsBase implements IPersiste
         List executionPeriodsAux = new ArrayList();
         
         for (Iterator iter = executionPeriods.iterator(); iter.hasNext();) {
-            ExecutionPeriod element = (ExecutionPeriod) iter.next();
+            IExecutionPeriod element = (IExecutionPeriod) iter.next();
             if((element.getSemester().compareTo(new Integer(0)) > 0) && 
                     (!element.getState().equals(PeriodState.CLOSED)) &&
                     (!element.getState().equals(PeriodState.NOT_OPEN)))
@@ -112,7 +112,7 @@ public class ExecutionPeriodVO extends VersionedObjectsBase implements IPersiste
         List executionPeriodsAux = new ArrayList();
         
         for (Iterator iter = executionPeriods.iterator(); iter.hasNext();) {
-            ExecutionPeriod element = (ExecutionPeriod) iter.next();
+            IExecutionPeriod element = (IExecutionPeriod) iter.next();
             if(element.getBeginDate().before(end) && element.getEndDate().after(start))
                 executionPeriodsAux.add(element);
         }     
@@ -125,7 +125,7 @@ public class ExecutionPeriodVO extends VersionedObjectsBase implements IPersiste
         List executionPeriodsAux = new ArrayList();
         
         for (Iterator iter = executionPeriods.iterator(); iter.hasNext();) {
-            ExecutionPeriod element = (ExecutionPeriod) iter.next();
+            IExecutionPeriod element = (IExecutionPeriod) iter.next();
             if((element.getExecutionYear().getIdInternal() == executionYearID) && 
                     (!element.getState().equals(PeriodState.CLOSED)) &&
                     (!element.getState().equals(PeriodState.NOT_OPEN)) &&
