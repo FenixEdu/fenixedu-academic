@@ -102,7 +102,10 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
             }
 
             //SPECIALIZATION
-            Specialization specialization = Specialization.valueOf(specializationName);
+            Specialization specialization = null;
+            if(!specializationName.equals("all")){
+                specialization = Specialization.valueOf(specializationName);
+            }               
 
             //GRATUITY SITUATION
             GratuitySituationType gratuitySituationType = null;

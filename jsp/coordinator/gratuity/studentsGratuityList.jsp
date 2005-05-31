@@ -117,7 +117,7 @@
 
 						</td>
 						<td bgcolor='#C0C0C0'><center><bean:message name="infoGratuitySituation" property="infoStudentCurricularPlan.currentState.name" bundle="ENUMERATION_RESOURCES"/></center></td>
-						<td bgcolor='#C0C0C0'><center><bean:message key="<%= "label.gratuitySituationType." + situationType.toString()%>"/></center></td>
+						<td bgcolor='#C0C0C0'><center><bean:message name="situationType" bundle="ENUMERATION_RESOURCES"/></center></td>
 						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="remainingValue"/></center></td>	
 						<td bgcolor='#C0C0C0'><center><bean:write name="infoGratuitySituation" property="payedValue"/></center></td>	
 						<td bgcolor='#C0C0C0'><center><bean:message key="<%= insurancePayedKey.toString() %>"/></center></td>										
@@ -133,7 +133,7 @@
 						
 						</td>
 						<td><center><bean:message name="infoGratuitySituation" property="infoStudentCurricularPlan.currentState.name" bundle="ENUMERATION_RESOURCES"/></center></td>
-						<td><center><bean:message key="<%= "label.gratuitySituationType." + situationType.toString()%>"/></center></td>
+						<td><center><bean:message name="situationType" bundle="ENUMERATION_RESOURCES"/></center></td>
 						<td><center><bean:write name="infoGratuitySituation" property="remainingValue"/></center></td>
 						<td><center><bean:write name="infoGratuitySituation" property="payedValue"/></center></td>
 						<td><center><bean:message key="<%= insurancePayedKey.toString() %>"/></center></td>										
