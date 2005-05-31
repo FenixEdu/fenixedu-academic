@@ -72,7 +72,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
                 .readByOID(Department.class, departmentId);
 
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-        List teachers = persistentTeacher.readByDepartment(department);
+        List teachers = persistentTeacher.readByDepartment(department.getCode());
 
         Iterator iter = teachers.iterator();
         IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();

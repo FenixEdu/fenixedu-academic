@@ -45,13 +45,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadProfessorshipsAndResponsibilitiesByDepartment implements IService {
 
-    /**
-     *  
-     */
-    public ReadProfessorshipsAndResponsibilitiesByDepartment() {
-
-    }
-
     public List run(Integer departmentId, Integer executionYearId) throws FenixServiceException,
             ExcepcaoPersistencia {
 
@@ -68,7 +61,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartment implements IServi
         IDepartment department = (IDepartment) persistentObject
                 .readByOID(Department.class, departmentId);
         IPersistentTeacher persistentTeacher = ps.getIPersistentTeacher();
-        List teachers = persistentTeacher.readByDepartment(department);
+        List teachers = persistentTeacher.readByDepartment(department.getCode());
 
         Iterator iter = teachers.iterator();
         IPersistentProfessorship persistentProfessorship = ps.getIPersistentProfessorship();

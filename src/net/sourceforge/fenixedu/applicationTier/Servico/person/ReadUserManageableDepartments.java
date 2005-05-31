@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.DepartmentTeachersDTO;
@@ -37,56 +36,24 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-public class ReadUserManageableDepartments implements IServico {
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-    private static ReadUserManageableDepartments servico = new ReadUserManageableDepartments();
+public class ReadUserManageableDepartments implements IService {
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadUserManageableDepartments getService() {
-        return servico;
-    }
+    public List run(String username) throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
 
-    /**
-     * The actor of this class.
-     */
-    private ReadUserManageableDepartments() {
-    }
+        final ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPerson person = suportePersistente.getIPessoaPersistente().lerPessoaPorUsername(username);
 
-    public final String getNome() {
-        return "ReadUserManageableDepartments";
-    }
+        final List departmentTeacherDTOList = new ArrayList();
+        final IPersistentTeacher teacherDAO = suportePersistente.getIPersistentTeacher();
 
-    public List run(String username) throws ExcepcaoInexistente, FenixServiceException {
-
-        ISuportePersistente sp = null;
-        IPerson person = null;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
-
-        List departmentTeacherDTOList = new ArrayList();
-
-        IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-
-        List manageableDepartmentsList = person.getManageableDepartmentCredits();
+        final List manageableDepartmentsList = person.getManageableDepartmentCredits();
         Iterator departmentIterator = manageableDepartmentsList.iterator();
         while (departmentIterator.hasNext()) {
             IDepartment department = (IDepartment) departmentIterator.next();
             InfoDepartment infoDeparment = Cloner.copyIDepartment2InfoDepartment(department);
-            List deparmentTeacherList;
-            try {
-                deparmentTeacherList = teacherDAO.readByDepartment(department);
-            } catch (ExcepcaoPersistencia e) {
-                e.printStackTrace();
-                throw new FenixServiceException(e);
-            }
+            List deparmentTeacherList = teacherDAO.readByDepartment(department.getCode());
 
             List infoTeacherList = (List) CollectionUtils.collect(deparmentTeacherList,
                     new Transformer() {

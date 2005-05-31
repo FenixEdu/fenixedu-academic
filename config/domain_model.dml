@@ -2281,6 +2281,9 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	Integer teacherNumber;
 	Integer keyPerson;
 	Integer keyCategory;
+	Integer keyServiceProviderRegime;
+	Integer keyPublicationsNumber;
+	
 	interface "
 	public net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits getExecutionPeriodCredits(IExecutionPeriod executionPeriod);
 	

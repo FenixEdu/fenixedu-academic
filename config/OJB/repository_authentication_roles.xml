@@ -162,6 +162,31 @@
          proxy="false">
          <foreignkey field-ref="keyCategory"/>
       </reference-descriptor>     
+
+	 <field-descriptor
+         name="keyServiceProviderRegime"
+         column="KEY_SERVICE_PROVIDER_REGIME"
+         jdbc-type="INTEGER"/>
+
+	<reference-descriptor
+         name="serviceProviderRegime"
+         class-ref="net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime"
+         proxy="false">
+         <foreignkey field-ref="keyServiceProviderRegime"/>
+      </reference-descriptor>
+
+	<field-descriptor
+         name="keyPublicationsNumber"
+         column="KEY_PUBLICATIONS_NUMBER"
+         jdbc-type="INTEGER"/>
+
+	<reference-descriptor
+         name="publicationsNumber"
+         class-ref="net.sourceforge.fenixedu.domain.teacher.PublicationsNumber"
+         proxy="false">
+         <foreignkey field-ref="keyPublicationsNumber"/>
+      </reference-descriptor>
+
     <collection-descriptor
 			name="teacherPublications"
 			element-class-ref="net.sourceforge.fenixedu.domain.publication.PublicationTeacher"
@@ -238,4 +263,141 @@
 		refresh="true">
 		<inverse-foreignkey field-ref="keyTeacher"/>
 	</collection-descriptor>
+	<collection-descriptor 
+		name="associatedGrantContractRegimes" 
+		element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime"
+		proxy="true"
+		refresh="true">
+		<inverse-foreignkey field-ref="keyTeacher"/>
+	</collection-descriptor>
+	<collection-descriptor 
+		name="associatedGrantParts" 
+		element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantPart"
+		proxy="true"
+		refresh="true">
+		<inverse-foreignkey field-ref="keyResponsibleTeacher"/>
+	</collection-descriptor>
+	<collection-descriptor 
+		name="externalActivities" 
+		element-class-ref="net.sourceforge.fenixedu.domain.teacher.ExternalActivity"
+		proxy="true"
+		refresh="true">
+		<inverse-foreignkey field-ref="keyTeacher"/>
+	</collection-descriptor>
+	<collection-descriptor 
+		name="associatedProposalsByOrientator" 
+		element-class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal"
+		proxy="true"
+		refresh="true">
+		<inverse-foreignkey field-ref="keyOrientator"/>
+	</collection-descriptor>	
+	<collection-descriptor 
+		name="associatedOrientations" 
+		element-class-ref="net.sourceforge.fenixedu.domain.teacher.Orientation"
+		proxy="true"
+		refresh="true">
+		<inverse-foreignkey field-ref="keyTeacher"/>
+	</collection-descriptor>
+	<collection-descriptor 
+		name="associatedCareers" 
+		element-class-ref="net.sourceforge.fenixedu.domain.teacher.Career"
+		proxy="true"
+		refresh="true">
+		<inverse-foreignkey field-ref="keyTeacher"/>
+	</collection-descriptor>
+	<collection-descriptor 
+		name="associatedCreditLines" 
+		element-class-ref="net.sourceforge.fenixedu.domain.credits.CreditLine"
+		proxy="true"
+		refresh="true">
+		<inverse-foreignkey field-ref="keyTeacher"/>
+	</collection-descriptor>
+	<collection-descriptor 
+		name="associatedGrantPaymentEntities" 
+		element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity"
+		proxy="true"
+		refresh="true">
+		<inverse-foreignkey field-ref="keyResponsibleTeacher"/>
+	</collection-descriptor>
+	<collection-descriptor 
+		name="weeklyOcupations" 
+		element-class-ref="net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation"
+		proxy="true"
+		refresh="true">
+		<inverse-foreignkey field-ref="keyTeacher"/>
+	</collection-descriptor>
+	<collection-descriptor 
+		name="oldPublication" 
+		element-class-ref="net.sourceforge.fenixedu.domain.teacher.OldPublication"
+		proxy="true"
+		refresh="true">
+		<inverse-foreignkey field-ref="keyTeacher"/>
+	</collection-descriptor>
+	<collection-descriptor 
+		name="associatedGrantOrientationTeachers" 
+		element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher"
+		proxy="true"
+		refresh="true">
+		<inverse-foreignkey field-ref="keyTeacher"/>
+	</collection-descriptor>
+	<collection-descriptor 
+		name="associatedProposalsByCoorientator" 
+		element-class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal"
+		proxy="true"
+		refresh="true">
+		<inverse-foreignkey field-ref="keyCoorientator"/>
+	</collection-descriptor>
+	<collection-descriptor 
+		name="oldInquiriesTeacherRes" 
+		element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes"
+		proxy="true"
+		refresh="true">
+		<inverse-foreignkey field-ref="keyTeacher"/>
+	</collection-descriptor>
+	<collection-descriptor 
+		name="associatedTutors" 
+		element-class-ref="net.sourceforge.fenixedu.domain.Tutor"
+		proxy="true"
+		refresh="true">
+		<inverse-foreignkey field-ref="teacherKey"/>
+	</collection-descriptor>
+	<collection-descriptor
+        	name="masterDegreeThesisGuider"
+	        element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion"
+    	    auto-retrieve="true"
+        	proxy="true"
+	        refresh="true"
+         	auto-update="false"
+         	auto-delete="false"
+	        indirection-table="MASTER_DEGREE_THESIS_DATA_VERSION_GUIDER">
+
+    	    <fk-pointing-to-this-class column="KEY_TEACHER"/>
+        	<fk-pointing-to-element-class column="KEY_MASTER_DEGREE_THESIS_DATA_VERSION"/>
+   	</collection-descriptor>
+	<collection-descriptor
+        	name="masterDegreeThesisAssistentGuider"
+	        element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion"
+    	    auto-retrieve="true"
+        	proxy="true"
+	        refresh="true"
+         	auto-update="false"
+         	auto-delete="false"
+	        indirection-table="MASTER_DEGREE_THESIS_DATA_VERSION_GUIDER">
+
+    	    <fk-pointing-to-this-class column="KEY_TEACHER"/>
+        	<fk-pointing-to-element-class column="KEY_MASTER_DEGREE_THESIS_DATA_VERSION"/>
+   	</collection-descriptor>
+	<collection-descriptor
+        	name="masterDegreeProofsJury"
+	        element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeProofVersion"
+    	    auto-retrieve="true"
+        	proxy="true"
+	        refresh="true"
+         	auto-update="false"
+         	auto-delete="false"
+	        indirection-table="MASTER_DEGREE_PROOF_VERSION_JURY">
+
+    	    <fk-pointing-to-this-class column="KEY_TEACHER"/>
+        	<fk-pointing-to-element-class column="KEY_MASTER_DEGREE_PROOF_VERSION"/>
+   </collection-descriptor> 
    </class-descriptor>

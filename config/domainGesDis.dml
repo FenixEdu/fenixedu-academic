@@ -27,7 +27,7 @@ class net.sourceforge.fenixedu.domain.Announcement extends net.sourceforge.fenix
 	String title;
 }
 
-/* DONE */
+/* DONE: DML and VO */
 class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keySuperiorSection;
 	Integer sectionOrder;
@@ -132,7 +132,7 @@ class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.feni
 	String year;
 }
 
-/* DONE: DML (VO is Pessoa) */
+/* DONE: DML and VO (Pessoa) */
 class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.DomainObject {
 	String localidade;
 	String codigoFiscal;
@@ -169,7 +169,7 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 	String freguesiaMorada;
 }
 
-/* OTHER GROUP */
+/* DONE: DML and VO */
 class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer teacherNumber;
 	Integer keyPerson;
@@ -189,7 +189,7 @@ class net.sourceforge.fenixedu.domain.Professorship extends net.sourceforge.feni
 	Double hours;
 }
 
-/* OTHER GROUP */
+/* DONE: DML and VO */
 class net.sourceforge.fenixedu.domain.SupportLesson extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyProfessorship;
 	Date startTime;
@@ -204,7 +204,7 @@ class net.sourceforge.fenixedu.domain.EvaluationMethod extends net.sourceforge.f
 	Integer keyExecutionCourse;
 }
 
-/* DONE */
+/* DONE: DMl */
 class net.sourceforge.fenixedu.domain.Room extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyBuilding;
 	String nome;
@@ -213,7 +213,7 @@ class net.sourceforge.fenixedu.domain.Room extends net.sourceforge.fenixedu.doma
 	Integer piso;
 }
 
-/* OTHER GROUP */
+/* DONE: DMl and VO */
 class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionPeriod;
 	Integer keyShift;
@@ -221,7 +221,7 @@ class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.do
 	Integer chaveSala;
 }
 
-/* DONE */
+/* DONE: DML */
 class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer availabilityFinal;
 	Integer chaveDisciplinaExecucao;
@@ -229,7 +229,7 @@ class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.dom
 	Integer lotacao;
 }
 
-/* DONE: DML (VO doesn't exist) */
+/* DONE: DML (VO doesn't exist?!?!?!?) */
 class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.domain.DomainObject {
 	String concreteClassForDegreeCurricularPlans;
 	String nome;

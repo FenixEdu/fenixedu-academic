@@ -31,61 +31,43 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author jpvl
  */
 public class ReadDepartmentTeachersCreditsDetailsService implements IService {
-    public ReadDepartmentTeachersCreditsDetailsService() {
-    }
 
-    /**
-     * @param searchParameters
-     *            idInternal (java.lang.String); executionPeriodId
-     *            (java.lang.String)
-     * @return @throws
-     *         FenixServiceException
-     */
-    public List run(HashMap searchParameters) throws FenixServiceException {
+    public List run(HashMap searchParameters) throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp;
         List teachers;
-        try {
-            Profiler.getInstance();
-            Profiler.resetInstance();
 
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        Profiler.getInstance();
+        Profiler.resetInstance();
 
-            teachers = doSearch(searchParameters, sp);
+        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
-            final IExecutionPeriod executionPeriod = readExecutionPeriod(searchParameters,
-                    executionPeriodDAO);
+        teachers = doSearch(searchParameters, sp);
 
-            InfoExecutionPeriodWithInfoExecutionYear infoExecutionPeriod = (InfoExecutionPeriodWithInfoExecutionYear) InfoExecutionPeriodWithInfoExecutionYear
-                    .newInfoFromDomain(executionPeriod);
+        IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+        final IExecutionPeriod executionPeriod = readExecutionPeriod(searchParameters,
+                executionPeriodDAO);
 
-            List list = new ArrayList();
-            for (int i = 0; i < teachers.size(); i++) {
-                ITeacher teacher = (ITeacher) teachers.get(i);
-                TeacherCreditsDetailsDTO details = new TeacherCreditsDetailsDTO();
-                InfoCredits infoCredits = teacher.getExecutionPeriodCredits(executionPeriod);
-                if (teacher.getCategory() != null) {
-                    details.setCategory(InfoCategory.newInfoFromDomain(teacher.getCategory()));
-                }
-                details.setTeacherId(teacher.getIdInternal());
-                details.setTeacherName(teacher.getPerson().getNome());
-                details.setTeacherNumber(teacher.getTeacherNumber());
-                details.setInfoCredits(infoCredits);
-                details.setInfoExecution(infoExecutionPeriod);
-                list.add(details);
+        InfoExecutionPeriodWithInfoExecutionYear infoExecutionPeriod = (InfoExecutionPeriodWithInfoExecutionYear) InfoExecutionPeriodWithInfoExecutionYear
+                .newInfoFromDomain(executionPeriod);
+
+        List list = new ArrayList();
+        for (int i = 0; i < teachers.size(); i++) {
+            ITeacher teacher = (ITeacher) teachers.get(i);
+            TeacherCreditsDetailsDTO details = new TeacherCreditsDetailsDTO();
+            InfoCredits infoCredits = teacher.getExecutionPeriodCredits(executionPeriod);
+            if (teacher.getCategory() != null) {
+                details.setCategory(InfoCategory.newInfoFromDomain(teacher.getCategory()));
             }
-            return list;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException("Problems with database!", e);
+            details.setTeacherId(teacher.getIdInternal());
+            details.setTeacherName(teacher.getPerson().getNome());
+            details.setTeacherNumber(teacher.getTeacherNumber());
+            details.setInfoCredits(infoCredits);
+            details.setInfoExecution(infoExecutionPeriod);
+            list.add(details);
         }
+        return list;
     }
 
-    /**
-     * @param searchParameters
-     * @param executionPeriodDAO
-     * @return @throws
-     *         ExcepcaoPersistencia
-     */
     private IExecutionPeriod readExecutionPeriod(HashMap searchParameters,
             IPersistentExecutionPeriod executionPeriodDAO) throws ExcepcaoPersistencia {
         final IExecutionPeriod executionPeriod;
@@ -110,7 +92,7 @@ public class ReadDepartmentTeachersCreditsDetailsService implements IService {
         IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
         IDepartment department = (IDepartment) departmentDAO.readByOID(Department.class, departmentId);
         IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-        List teachers = teacherDAO.readByDepartment(department);
+        List teachers = teacherDAO.readByDepartment(department.getCode());
         return teachers;
     }
 }

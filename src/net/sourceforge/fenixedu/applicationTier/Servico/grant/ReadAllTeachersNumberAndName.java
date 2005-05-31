@@ -5,13 +5,14 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.grant;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -25,43 +26,28 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadAllTeachersNumberAndName implements IService {
 
-    /**
-     * The constructor of this class.
-     */
-    public ReadAllTeachersNumberAndName() {
-    }
+    public List run() throws FenixServiceException, ExcepcaoPersistencia {
 
-    public List run() throws FenixServiceException {
-        List teachers = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            teachers = persistentTeacher.readAll();
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e.getMessage());
+        final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
+
+        final ISuportePersistente suportePersistente = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+        final IPersistentTeacher persistentTeacher = suportePersistente.getIPersistentTeacher();
+        final Collection<ITeacher> teachers = persistentTeacher.readAll(Teacher.class);
+
+        if (teachers != null) {
+            for (final ITeacher teacher : teachers) {
+                InfoTeacher infoTeacher = new InfoTeacher();
+                InfoPerson infoPerson = new InfoPerson();
+
+                infoTeacher.setTeacherNumber(teacher.getTeacherNumber());
+                infoTeacher.setInfoPerson(infoPerson);
+                infoPerson.setNome(teacher.getPerson().getNome());
+
+                result.add(infoTeacher);
+            }
         }
-
-        if (teachers == null) {
-            return new ArrayList();
-        }
-
-        Iterator teachersIterator = teachers.iterator();
-
-        /*
-         * Set the InfoObject only with the needed fields to be presented.
-         */
-        List teachersList = new ArrayList();
-        while (teachersIterator.hasNext()) {
-            InfoTeacher infoTeacher = new InfoTeacher();
-            InfoPerson infoPerson = new InfoPerson();
-            ITeacher teacher = (ITeacher) teachersIterator.next();
-            infoTeacher.setTeacherNumber(teacher.getTeacherNumber());
-            infoPerson.setNome(teacher.getPerson().getNome());
-            infoTeacher.setInfoPerson(infoPerson);
-            teachersList.add(infoTeacher);
-        }
-
-        return teachersList;
+        return result;
     }
 
 }
