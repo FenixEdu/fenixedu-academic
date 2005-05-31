@@ -1,9 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseEquivalence;
@@ -20,41 +17,15 @@ public class CurricularCourseEquivalenceOJB extends PersistentObjectOJB implemen
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.IPersistentCurricularCourseEquivalence#readByOldCurricularCourse(Dominio.ICurricularCourse)
-     */
-    public List readByOldCurricularCourse(ICurricularCourse curricularCourse)
-            throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();
-        crit.addEqualTo("oldCurricularCourse.idInternal", curricularCourse.getIdInternal());
-        return queryList(CurricularCourseEquivalence.class, crit);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.IPersistentCurricularCourseEquivalence#readByEquivalentCurricularCourse(Dominio.ICurricularCourse)
-     */
-    public List readByEquivalentCurricularCourse(ICurricularCourse curricularCourse)
-            throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();
-        crit.addEqualTo("equivalentCurricularCourse.idInternal", curricularCourse.getIdInternal());
-        return queryList(CurricularCourseEquivalence.class, crit);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
      * @see ServidorPersistente.IPersistentCurricularCourseEquivalence#readByEquivalence(Dominio.ICurricularCourse,
      *      Dominio.ICurricularCourse)
      */
-    public ICurricularCourseEquivalence readByEquivalence(ICurricularCourse oldCurricularCourse,
-            ICurricularCourse equivalentCurricularCourse) throws ExcepcaoPersistencia {
+    public ICurricularCourseEquivalence readByEquivalence(Integer oldCurricularCourseId,
+            Integer equivalentCurricularCourseId, Integer degreeCurricularPlanId) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("equivalentCurricularCourse.idInternal", equivalentCurricularCourse
-                .getIdInternal());
-        crit.addEqualTo("oldCurricularCourse.idInternal", oldCurricularCourse.getIdInternal());
-        crit.addEqualTo("degreeCurricularPlan.idInternal", equivalentCurricularCourse
-                .getDegreeCurricularPlan().getIdInternal());
+        crit.addEqualTo("equivalentCurricularCourse.idInternal", equivalentCurricularCourseId);
+        crit.addEqualTo("oldCurricularCourse.idInternal", oldCurricularCourseId);
+        crit.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlanId);
         return (ICurricularCourseEquivalence) queryObject(CurricularCourseEquivalence.class, crit);
     }
 }

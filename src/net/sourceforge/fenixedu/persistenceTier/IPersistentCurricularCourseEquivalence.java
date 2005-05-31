@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.persistenceTier;
 
-import java.util.List;
-
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseEquivalence;
 
 /**
@@ -11,12 +8,7 @@ import net.sourceforge.fenixedu.domain.ICurricularCourseEquivalence;
 
 public interface IPersistentCurricularCourseEquivalence extends IPersistentObject {
 
-    public List readByOldCurricularCourse(ICurricularCourse curricularCourse)
-            throws ExcepcaoPersistencia;
+    public ICurricularCourseEquivalence readByEquivalence(Integer oldCurricularCourseId,
+            Integer equivalentCurricularCourseId, Integer degreeCurricularPlanId) throws ExcepcaoPersistencia;
 
-    public List readByEquivalentCurricularCourse(ICurricularCourse curricularCourse)
-            throws ExcepcaoPersistencia;
-
-    public ICurricularCourseEquivalence readByEquivalence(ICurricularCourse oldCurricularCourse,
-            ICurricularCourse equivalentCurricularCourse) throws ExcepcaoPersistencia;
 }
