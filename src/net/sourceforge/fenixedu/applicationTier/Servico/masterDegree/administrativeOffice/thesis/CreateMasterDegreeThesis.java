@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -92,9 +93,10 @@ public class CreateMasterDegreeThesis implements IService {
                     person.getIdInternal().intValue());
             IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) sp
                     .getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,
-                            infoStudentCurricularPlan.getIdInternal());
+                            infoStudentCurricularPlan.getIdInternal(),true);
 
-            IMasterDegreeThesis masterDegreeThesis = new MasterDegreeThesis(studentCurricularPlan);
+            IMasterDegreeThesis masterDegreeThesis = new MasterDegreeThesis(studentCurricularPlan);            
+            studentCurricularPlan.setMasterDegreeThesis(masterDegreeThesis);
             sp.getIPersistentMasterDegreeThesis().simpleLockWrite(masterDegreeThesis);
 
             // write data version
@@ -113,6 +115,9 @@ public class CreateMasterDegreeThesis implements IService {
             masterDegreeThesisDataVersion.setExternalAssistentGuiders(externalAssistentGuiders);
             sp.getIPersistentMasterDegreeThesisDataVersion().simpleLockWrite(
                     masterDegreeThesisDataVersion);
+            
+            masterDegreeThesis.setMasterDegreeThesisDataVersions(new ArrayList());
+            masterDegreeThesis.getMasterDegreeThesisDataVersions().add(masterDegreeThesisDataVersion);
 
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");

@@ -20,10 +20,6 @@ import org.apache.ojb.broker.query.Criteria;
 public class MasterDegreeThesisOJB extends PersistentObjectOJB implements
 		IPersistentMasterDegreeThesis {
 
-	/** Creates a new instance of MasterDegreeCandidateOJB */
-	public MasterDegreeThesisOJB() {
-	}
-
 	public IMasterDegreeThesis readByStudentCurricularPlan(
 			Integer studentCurricularPlanId) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();

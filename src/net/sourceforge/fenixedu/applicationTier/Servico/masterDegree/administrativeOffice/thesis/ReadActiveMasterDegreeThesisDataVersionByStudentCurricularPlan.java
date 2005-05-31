@@ -15,33 +15,26 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 public class ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan implements IService {
 
     public InfoMasterDegreeThesisDataVersion run(InfoStudentCurricularPlan infoStudentCurricularPlan)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
         InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion = sp
-                    .getIPersistentMasterDegreeThesisDataVersion().readActiveByStudentCurricularPlan(
-                    		infoStudentCurricularPlan.getIdInternal());
+        IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion = sp
+                .getIPersistentMasterDegreeThesisDataVersion().readActiveByStudentCurricularPlan(
+                        infoStudentCurricularPlan.getIdInternal());
 
-            if (masterDegreeThesisDataVersion == null)
-                throw new NonExistingServiceException(
-                        "error.exception.masterDegree.nonExistingMasterDegreeThesis");
+        if (masterDegreeThesisDataVersion == null)
+            throw new NonExistingServiceException(
+                    "error.exception.masterDegree.nonExistingMasterDegreeThesis");
 
-            infoMasterDegreeThesisDataVersion = InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis
-                    .newInfoFromDomain(masterDegreeThesisDataVersion);
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+        infoMasterDegreeThesisDataVersion = InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis
+                .newInfoFromDomain(masterDegreeThesisDataVersion);
 
         return infoMasterDegreeThesisDataVersion;
     }

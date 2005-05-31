@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersionWithGuidersAndResp;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.IMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -15,27 +15,21 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 public class ReadNonActivesMasterDegreeThesisDataVersionsByStudentCurricularPlan implements IService {
 
-    public List run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws FenixServiceException {
-        List infoMasterDegreeThesisDataVersions = new ArrayList();
+    public List run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws ExcepcaoPersistencia {
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            List masterDegreeThesisDataVersions = sp.getIPersistentMasterDegreeThesisDataVersion()
-                    .readNotActivesVersionsByStudentCurricularPlan(infoStudentCurricularPlan.getIdInternal());
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        List masterDegreeThesisDataVersions = sp
+                .getIPersistentMasterDegreeThesisDataVersion()
+                .readNotActivesVersionsByStudentCurricularPlan(infoStudentCurricularPlan.getIdInternal());
 
-            if (masterDegreeThesisDataVersions.isEmpty() == false) {
-                infoMasterDegreeThesisDataVersions = Cloner
-                        .copyListIMasterDegreeThesisDataVersion2ListInfoMasterDegreeThesisDataVersion(masterDegreeThesisDataVersions);
-            }
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
+        List infoMasterDegreeThesisDataVersions = new ArrayList(masterDegreeThesisDataVersions.size());
+        for (IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion : (List<IMasterDegreeThesisDataVersion>) masterDegreeThesisDataVersions) {
+            infoMasterDegreeThesisDataVersions.add(InfoMasterDegreeThesisDataVersionWithGuidersAndResp
+                    .newInfoFromDomain(masterDegreeThesisDataVersion));
         }
 
         return infoMasterDegreeThesisDataVersions;

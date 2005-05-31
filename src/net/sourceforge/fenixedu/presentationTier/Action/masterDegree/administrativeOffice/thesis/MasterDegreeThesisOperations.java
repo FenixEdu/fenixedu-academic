@@ -5,30 +5,30 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.commons.CollectionUtils;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-
 /**
  * 
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 
 public class MasterDegreeThesisOperations extends DispatchAction {
@@ -60,7 +60,7 @@ public class MasterDegreeThesisOperations extends DispatchAction {
 
         InfoStudent infoStudent = null;
 
-        Object args[] = { studentNumber, DegreeType.valueOf(degreeType)};
+        Object args[] = { studentNumber, DegreeType.valueOf(degreeType) };
         try {
             infoStudent = (InfoStudent) ServiceUtils.executeService(userView,
                     "ReadStudentByNumberAndDegreeType", args);
@@ -80,50 +80,41 @@ public class MasterDegreeThesisOperations extends DispatchAction {
         return result;
     }
 
-    public List getTeachersByNumbers(ActionForm form, HttpServletRequest request,
+    public List<InfoTeacher> getTeachersByNumbers(ActionForm form, HttpServletRequest request,
             String teachersNumbersListField, String sessionConstant, ActionErrors actionErrors)
             throws FenixActionException, FenixFilterException {
 
-        DynaActionForm masterDegreeThesisForm = (DynaActionForm) form;
         IUserView userView = SessionUtils.getUserView(request);
+        List<Integer> teachersNumbersList = getTeachersNumbers(form, teachersNumbersListField);
 
-        Integer[] teachersNumbersList = (Integer[]) masterDegreeThesisForm.get(teachersNumbersListField);
-
-        List infoTeachersList = new ArrayList();
-
-        InfoTeacher infoTeacher = null;
-        Object args[] = new Object[1];
-        Integer teacherNumber = null;
-
-        for (int i = 0; i < teachersNumbersList.length; i++) {
-
-            teacherNumber = teachersNumbersList[i];
-
-            if (teacherNumber.intValue() == 0)
-                continue;
-
-            args[0] = teacherNumber;
-
-            try {
-                infoTeacher = (InfoTeacher) ServiceUtils.executeService(userView, "ReadTeacherByNumber",
-                        args);
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
-            }
-
-            if (infoTeacher == null)
-                actionErrors.add("error.no.teacher.in.database", new ActionError(
-                        "error.no.teacher.in.database", teacherNumber.toString()));
-            else if (infoTeachersList.contains(infoTeacher) == false) {
-                infoTeachersList.add(infoTeacher);
-            }
-
+        List<InfoTeacher> infoTeachers = null;
+        Object args[] = { teachersNumbersList };
+        try {
+            infoTeachers = (List<InfoTeacher>) ServiceUtils.executeService(userView,
+                    "ReadTeachersByNumbers", args);
+        } catch (FenixServiceException e) {
+            // actionErrors.add("error.no.teacher.in.database", new ActionError(
+            // "error.no.teacher.in.database", teacherNumber.toString()));
+            throw new FenixActionException(e);
         }
 
-        if (infoTeachersList.isEmpty() == false)
-            request.setAttribute(sessionConstant, infoTeachersList);
+        if (!infoTeachers.isEmpty()) {
+            request.setAttribute(sessionConstant, infoTeachers);
+        }
 
-        return infoTeachersList;
+        return (List<InfoTeacher>) infoTeachers;
+
+    }
+
+    public List<Integer> getTeachersNumbers(ActionForm form, String teachersNumbersListField) {
+
+        DynaActionForm masterDegreeThesisForm = (DynaActionForm) form;
+
+        Integer[] teachersNumbersArray = (Integer[]) masterDegreeThesisForm
+                .get(teachersNumbersListField);
+        List<Integer> teachersNumbersList = CollectionUtils.toList(teachersNumbersArray);
+        teachersNumbersList.remove(new Integer(0));
+        return teachersNumbersList;
 
     }
 
@@ -158,46 +149,42 @@ public class MasterDegreeThesisOperations extends DispatchAction {
 
     }
 
-    public List getExternalPersonsByIDs(ActionForm form, HttpServletRequest request,
+    public List<Integer> getExternalPersonsIDs(ActionForm form, String externalPersonNameField) {
+
+        DynaActionForm masterDegreeThesisForm = (DynaActionForm) form;
+
+        Integer[] externalPersonsIDsArray = (Integer[]) masterDegreeThesisForm
+                .get(externalPersonNameField);
+        List<Integer> externalPersonsIDsList = CollectionUtils.toList(externalPersonsIDsArray);
+        externalPersonsIDsList.remove(new Integer(0));
+        return externalPersonsIDsList;
+
+    }
+
+    public List<InfoExternalPerson> getExternalPersonsByIDs(ActionForm form, HttpServletRequest request,
             String externalPersonsIDsListField, String sessionConstant, ActionErrors actionErrors)
             throws FenixActionException, FenixFilterException {
 
-        DynaActionForm masterDegreeThesisForm = (DynaActionForm) form;
         IUserView userView = SessionUtils.getUserView(request);
 
-        Integer[] externalPersonsIDsList = (Integer[]) masterDegreeThesisForm
-                .get(externalPersonsIDsListField);
+        List<Integer> externalPersonsIDsList = getExternalPersonsIDs(form, externalPersonsIDsListField);
 
-        List infoExternalPersonsList = new ArrayList();
+        Object args[] = { externalPersonsIDsList };
+        List<InfoExternalPerson> infoExternalPersonsList = null;
 
-        InfoExternalPerson infoExternalPerson = null;
-        Object args[] = new Object[1];
-        Integer externalPersonID = null;
-
-        for (int i = 0; i < externalPersonsIDsList.length; i++) {
-
-            externalPersonID = externalPersonsIDsList[i];
-            args[0] = externalPersonID;
-
-            try {
-                infoExternalPerson = (InfoExternalPerson) ServiceUtils.executeService(userView,
-                        "ReadExternalPersonByID", args);
-            } catch (NonExistingServiceException e) {
-                actionErrors.add(e.getMessage(), new ActionError(e.getMessage(), externalPersonID
-                        .toString()));
-                continue;
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
-            }
-
-            if (infoExternalPersonsList.contains(infoExternalPerson) == false) {
-                infoExternalPersonsList.add(infoExternalPerson);
-            }
-
+        try {
+            infoExternalPersonsList = (List<InfoExternalPerson>) ServiceUtils.executeService(userView,
+                    "ReadExternalPersonsByIDs", args);
+        } catch (FenixServiceException e) {
+            // actionErrors.add(e.getMessage(), new ActionError(e.getMessage(),
+            // externalPersonID
+            // .toString()));
+            throw new FenixActionException(e);
         }
 
-        if (infoExternalPersonsList.isEmpty() == false)
+        if (!infoExternalPersonsList.isEmpty()) {
             request.setAttribute(sessionConstant, infoExternalPersonsList);
+        }
 
         return infoExternalPersonsList;
 

@@ -22,24 +22,6 @@ import org.apache.ojb.broker.query.Criteria;
 public class MasterDegreeThesisDataVersionOJB extends PersistentObjectOJB
 		implements IPersistentMasterDegreeThesisDataVersion {
 
-	/** Creates a new instance of MasterDegreeProofVersionOJB */
-	public MasterDegreeThesisDataVersionOJB() {
-	}
-
-	/* to delete - not used anywhere */
-	public IMasterDegreeThesisDataVersion readActiveByMasterDegreeThesis(
-			Integer masterDegreeThesisId) throws ExcepcaoPersistencia {
-		Criteria criteria = new Criteria();
-
-		criteria.addEqualTo("masterDegreeThesis.idInternal",
-				masterDegreeThesisId);
-		criteria.addEqualTo("currentState", new Integer(State.ACTIVE));
-		IMasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = (IMasterDegreeThesisDataVersion) queryObject(
-				MasterDegreeThesisDataVersion.class, criteria);
-
-		return storedMasterDegreeThesisDataVersion;
-	}
-
 	public IMasterDegreeThesisDataVersion readActiveByStudentCurricularPlan(
 			Integer studentCurricularPlanId) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();

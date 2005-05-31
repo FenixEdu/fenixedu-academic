@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
@@ -10,112 +10,104 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.GuiderAlreadyChosenServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IEmployee;
+import net.sourceforge.fenixedu.domain.IExternalPerson;
 import net.sourceforge.fenixedu.domain.IMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.State;
+
+import org.apache.commons.collections.CollectionUtils;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * 
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 public class ChangeMasterDegreeThesisData implements IService {
 
-    public void run(IUserView userView, InfoStudentCurricularPlan infoStudentCurricularPlan,
-            String dissertationTitle, List infoTeacherGuiders, List infoTeacherAssistentGuiders,
-            List infoExternalPersonExternalGuiders, List infoExternalPersonExternalAssistentGuiders)
-            throws FenixServiceException {
+    public void run(IUserView userView, Integer studentCurricularPlanID, String dissertationTitle,
+            List<Integer> guidersNumbers, List<Integer> assistentGuidersNumbers,
+            List<Integer> externalGuidersIDs, List<Integer> externalAssistentGuidersIDs)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-        try {
-
-            //	check duplicate guiders and assistent guiders
-            for (Iterator iter = infoTeacherGuiders.iterator(); iter.hasNext();) {
-                InfoTeacher guider = (InfoTeacher) iter.next();
-
-                for (Iterator iterator = infoTeacherAssistentGuiders.iterator(); iterator.hasNext();) {
-                    InfoTeacher assistentGuider = (InfoTeacher) iterator.next();
-                    if (assistentGuider.getIdInternal().equals(guider.getIdInternal())) {
-                        throw new GuiderAlreadyChosenServiceException(
-                                "error.exception.masterDegree.guiderAlreadyChosen");
-                    }
-                }
-            }
-
-            // check duplicate external guiders and external assistent guiders
-            for (Iterator iter = infoExternalPersonExternalGuiders.iterator(); iter.hasNext();) {
-                InfoExternalPerson externalGuider = (InfoExternalPerson) iter.next();
-
-                for (Iterator iterator = infoExternalPersonExternalAssistentGuiders.iterator(); iterator
-                        .hasNext();) {
-                    InfoExternalPerson externalAssistentGuider = (InfoExternalPerson) iterator.next();
-                    if (externalAssistentGuider.getIdInternal().equals(externalGuider.getIdInternal())) {
-                        throw new GuiderAlreadyChosenServiceException(
-                                "error.exception.masterDegree.externalGuiderAlreadyChosen");
-                    }
-                }
-            }
-
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IStudentCurricularPlan studentCurricularPlan = Cloner
-                    .copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
-
-            IMasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = sp
-                    .getIPersistentMasterDegreeThesisDataVersion().readActiveByStudentCurricularPlan(
-                    		infoStudentCurricularPlan.getIdInternal());
-            if (storedMasterDegreeThesisDataVersion == null)
-                throw new NonExistingServiceException(
-                        "error.exception.masterDegree.nonExistentMasterDegreeThesis");
-
-            storedMasterDegreeThesisDataVersion.setCurrentState(new State(State.INACTIVE));
-            sp.getIPersistentMasterDegreeThesisDataVersion().simpleLockWrite(
-                    storedMasterDegreeThesisDataVersion);
-
-            IMasterDegreeThesisDataVersion masterDegreeThesisDataVersionWithChosenDissertationTitle = sp
-                    .getIPersistentMasterDegreeThesisDataVersion().readActiveByDissertationTitle(
-                            dissertationTitle);
-            if (masterDegreeThesisDataVersionWithChosenDissertationTitle != null)
-                if (!masterDegreeThesisDataVersionWithChosenDissertationTitle.getMasterDegreeThesis()
-                        .getStudentCurricularPlan().equals(studentCurricularPlan))
-                    throw new ExistingServiceException(
-                            "error.exception.masterDegree.dissertationTitleAlreadyChosen");
-
-            IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
-            IEmployee employee = sp.getIPersistentEmployee().readByPerson(
-                    person.getIdInternal().intValue());
-
-            IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion = new MasterDegreeThesisDataVersion(
-                    storedMasterDegreeThesisDataVersion.getMasterDegreeThesis(), employee,
-                    dissertationTitle, new Timestamp(new Date().getTime()), new State(State.ACTIVE));
-            List guiders = Cloner.copyListInfoTeacher2ListITeacher(infoTeacherGuiders);
-            List assistentGuiders = Cloner.copyListInfoTeacher2ListITeacher(infoTeacherAssistentGuiders);
-            List externalGuiders = Cloner
-                    .copyListInfoExternalPerson2ListIExternalPerson(infoExternalPersonExternalGuiders);
-            List externalAssistentGuiders = Cloner
-                    .copyListInfoExternalPerson2ListIExternalPerson(infoExternalPersonExternalAssistentGuiders);
-            masterDegreeThesisDataVersion.setGuiders(guiders);
-            masterDegreeThesisDataVersion.setAssistentGuiders(assistentGuiders);
-            masterDegreeThesisDataVersion.setExternalGuiders(externalGuiders);
-            masterDegreeThesisDataVersion.setExternalAssistentGuiders(externalAssistentGuiders);
-            sp.getIPersistentMasterDegreeThesisDataVersion().simpleLockWrite(
-                    masterDegreeThesisDataVersion);
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
+        // check duplicate guiders and assistent guiders
+        if (CollectionUtils.intersection(guidersNumbers, assistentGuidersNumbers).size() > 0) {
+            throw new GuiderAlreadyChosenServiceException(
+                    "error.exception.masterDegree.guiderAlreadyChosen");
         }
+
+        // check duplicate external guiders and external assistent guiders
+        if (CollectionUtils.intersection(externalGuidersIDs, externalAssistentGuidersIDs).size() > 0) {
+            throw new GuiderAlreadyChosenServiceException(
+                    "error.exception.masterDegree.externalGuiderAlreadyChosen");
+        }
+
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        
+        IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) sp
+                .getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,
+                        studentCurricularPlanID, true);
+
+        IMasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = sp
+                .getIPersistentMasterDegreeThesisDataVersion().readActiveByStudentCurricularPlan(
+                        studentCurricularPlanID);
+        if (storedMasterDegreeThesisDataVersion == null) {
+            throw new NonExistingServiceException(
+                    "error.exception.masterDegree.nonExistentMasterDegreeThesis");
+        }
+
+        storedMasterDegreeThesisDataVersion.setCurrentState(new State(State.INACTIVE));
+        sp.getIPersistentMasterDegreeThesisDataVersion().simpleLockWrite(
+                storedMasterDegreeThesisDataVersion);
+
+        IMasterDegreeThesisDataVersion masterDegreeThesisDataVersionWithChosenDissertationTitle = sp
+                .getIPersistentMasterDegreeThesisDataVersion().readActiveByDissertationTitle(
+                        dissertationTitle);
+
+        if (masterDegreeThesisDataVersionWithChosenDissertationTitle != null) {
+            if (!masterDegreeThesisDataVersionWithChosenDissertationTitle.getMasterDegreeThesis()
+                    .getStudentCurricularPlan().getIdInternal().equals(studentCurricularPlanID)) {
+                throw new ExistingServiceException(
+                        "error.exception.masterDegree.dissertationTitleAlreadyChosen");
+            }
+        }
+
+        IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+        IEmployee employee = sp.getIPersistentEmployee().readByPerson(person.getIdInternal().intValue());
+
+        IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion = new MasterDegreeThesisDataVersion(
+                storedMasterDegreeThesisDataVersion.getMasterDegreeThesis(), employee,
+                dissertationTitle, new Timestamp(new Date().getTime()), new State(State.ACTIVE));
+
+        Collection<ITeacher> guiders = sp.getIPersistentTeacher().readByNumbers(guidersNumbers);
+        Collection<ITeacher> assistentGuiders = sp.getIPersistentTeacher().readByNumbers(
+                assistentGuidersNumbers);
+        Collection<IExternalPerson> externalGuiders = sp.getIPersistentExternalPerson().readByIDs(
+                externalGuidersIDs);
+        Collection<IExternalPerson> externalAssistentGuiders = sp.getIPersistentExternalPerson()
+                .readByIDs(externalAssistentGuidersIDs);
+
+        masterDegreeThesisDataVersion.setGuiders((List) guiders);
+        masterDegreeThesisDataVersion.setAssistentGuiders((List) assistentGuiders);
+        masterDegreeThesisDataVersion.setExternalGuiders((List) externalGuiders);
+        masterDegreeThesisDataVersion.setExternalAssistentGuiders((List) externalAssistentGuiders);
+
+        sp.getIPersistentMasterDegreeThesisDataVersion().simpleLockWrite(masterDegreeThesisDataVersion);
+
+        studentCurricularPlan.getMasterDegreeThesis().getMasterDegreeThesisDataVersions().add(
+                masterDegreeThesisDataVersion);
+        sp.getIPersistentMasterDegreeThesis().simpleLockWrite(
+                studentCurricularPlan.getMasterDegreeThesis());
 
     }
 }
