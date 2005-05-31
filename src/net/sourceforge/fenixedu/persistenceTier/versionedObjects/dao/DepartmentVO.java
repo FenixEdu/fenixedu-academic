@@ -65,7 +65,7 @@ public class DepartmentVO extends VersionedObjectsBase implements IPersistentDep
 						}		
 					}
 	            } else {
-	                department = (IDepartment) departmentList.get(0);
+	                department = departmentList.get(0);
 	            }
 	        }
 	        return department;

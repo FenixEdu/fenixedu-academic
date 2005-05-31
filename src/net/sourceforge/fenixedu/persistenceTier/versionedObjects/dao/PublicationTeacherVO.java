@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
 import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
@@ -12,6 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicati
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
 import net.sourceforge.fenixedu.util.PublicationArea;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 public class PublicationTeacherVO extends VersionedObjectsBase implements IPersistentPublicationTeacher{

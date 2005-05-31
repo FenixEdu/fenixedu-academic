@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;

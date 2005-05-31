@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IMasterDegreeThesisDataVersion;
@@ -20,6 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesisDat
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
 import net.sourceforge.fenixedu.util.State;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 /**
