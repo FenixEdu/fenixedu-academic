@@ -304,14 +304,7 @@
 		proxy="true"
 		refresh="true">
 		<inverse-foreignkey field-ref="keyTeacher"/>
-	</collection-descriptor>
-	<collection-descriptor 
-		name="associatedCreditLines" 
-		element-class-ref="net.sourceforge.fenixedu.domain.credits.CreditLine"
-		proxy="true"
-		refresh="true">
-		<inverse-foreignkey field-ref="keyTeacher"/>
-	</collection-descriptor>
+	</collection-descriptor>	
 	<collection-descriptor 
 		name="associatedGrantPaymentEntities" 
 		element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity"
