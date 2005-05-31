@@ -33,7 +33,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
  * 
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 
 public class ChangeMasterDegreeThesisLookupDispatchAction extends LookupDispatchAction {
@@ -127,7 +127,7 @@ public class ChangeMasterDegreeThesisLookupDispatchAction extends LookupDispatch
     public ActionForward externalAssitentGuider(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-        //	to display the external persons search form
+        // to display the external persons search form
         request.setAttribute(SessionConstants.SEARCH_EXTERNAL_ASSISTENT_GUIDERS, new Boolean(true));
 
         MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
@@ -156,7 +156,7 @@ public class ChangeMasterDegreeThesisLookupDispatchAction extends LookupDispatch
     public ActionForward externalGuider(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-        //	to display the external persons search form
+        // to display the external persons search form
         request.setAttribute(SessionConstants.SEARCH_EXTERNAL_GUIDERS, new Boolean(true));
 
         MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
@@ -402,7 +402,8 @@ public class ChangeMasterDegreeThesisLookupDispatchAction extends LookupDispatch
     }
 
     public ActionForward changeMasterDegreeThesis(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException {
 
         DynaActionForm createMasterDegreeForm = (DynaActionForm) form;
         IUserView userView = SessionUtils.getUserView(request);
@@ -429,10 +430,10 @@ public class ChangeMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 
         try {
             operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
-            infoTeacherGuiders = operations.getTeachersByNumbers(form, request, "guidersNumbers",
+            operations.getTeachersByNumbers(form, request, "guidersNumbers",
                     SessionConstants.GUIDERS_LIST, actionErrors);
-            infoTeacherAssistentGuiders = operations.getTeachersByNumbers(form, request,
-                    "assistentGuidersNumbers", SessionConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
+            operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers",
+                    SessionConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
             infoExternalPersonExternalAssistentGuiders = operations.getExternalPersonsByIDs(form,
                     request, "externalAssistentGuidersIDs",
                     SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST, actionErrors);
@@ -448,9 +449,11 @@ public class ChangeMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 
         }
 
-        Object args2[] = { userView, infoStudentCurricularPlan, dissertationTitle, infoTeacherGuiders,
-                infoTeacherAssistentGuiders, infoExternalPersonExternalGuiders,
-                infoExternalPersonExternalAssistentGuiders };
+        Object args2[] = { userView, infoStudentCurricularPlan.getIdInternal(), dissertationTitle,
+                operations.getTeachersNumbers(form, "guidersNumbers"),
+                operations.getTeachersNumbers(form, "assistentGuidersNumbers"),
+                operations.getExternalPersonsIDs(form, "externalGuidersIDs"),
+                operations.getExternalPersonsIDs(form, "externalAssistentGuidersIDs") };
 
         try {
             ServiceUtils.executeService(userView, "ChangeMasterDegreeThesisData", args2);
