@@ -445,7 +445,9 @@ public class ExecutionCourseSiteComponentBuilder {
         try {
             // read sections
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            allSections = sp.getIPersistentSection().readBySite(site);
+            allSections = sp.getIPersistentSection().readBySite(site.getExecutionCourse().getSigla(),
+                    site.getExecutionCourse().getExecutionPeriod().getName(),
+                    site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
 
             // build the result of this service
             Iterator iterator = allSections.iterator();

@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ISection;
 import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -25,16 +26,18 @@ public class ReadSections implements IService {
     /**
      * Executes the service. Returns the current collection of all infosections
      * that belong to a site.
+     * @throws ExcepcaoPersistencia
      */
-    public List run(InfoSite infoSite) throws FenixServiceException {
+    public List run(InfoSite infoSite) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISite site = Cloner.copyInfoSite2ISite(infoSite);
-        ISuportePersistente sp;
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISite site = (ISite) sp.getIPersistentSite().readByOID(Site.class, infoSite.getIdInternal());
         List allSections = null;
 
         try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            allSections = sp.getIPersistentSection().readBySite(site);
+            allSections = sp.getIPersistentSection().readBySite(site.getExecutionCourse().getSigla(),
+                    site.getExecutionCourse().getExecutionPeriod().getName(),
+                    site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
 
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);

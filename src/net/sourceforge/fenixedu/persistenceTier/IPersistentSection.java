@@ -8,23 +8,14 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ISection;
-import net.sourceforge.fenixedu.domain.ISite;
-
 /**
  * 
  * @author ars
  * @author lmac1
  */
 public interface IPersistentSection extends IPersistentObject {
-    ISection readBySiteAndSectionAndName(ISite site, ISection superiorSection, String name)
-            throws ExcepcaoPersistencia;
+   
+    List readBySiteAndSection(String executionCourseSigla, String executionPeriodName, String year, Integer superiorSectionID) throws ExcepcaoPersistencia;
 
-    List readBySiteAndSection(ISite site, ISection superiorSection) throws ExcepcaoPersistencia;
-
-    void delete(ISection section) throws ExcepcaoPersistencia;
-
-    List readBySite(ISite site) throws ExcepcaoPersistencia;
-
-    List readAll() throws ExcepcaoPersistencia;
+    List readBySite(String executionCourseSigla, String executionPeriodName, String year) throws ExcepcaoPersistencia;
 }

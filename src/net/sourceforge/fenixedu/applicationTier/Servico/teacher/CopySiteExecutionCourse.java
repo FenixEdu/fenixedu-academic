@@ -75,10 +75,14 @@ public class CopySiteExecutionCourse implements IService {
 
         //copy section and them itens, but before delete them if exists
         IPersistentSection persistentSection = sp.getIPersistentSection();
-        List sectionsFrom = persistentSection.readBySite(siteFrom);
+        List sectionsFrom = persistentSection.readBySite(siteFrom.getExecutionCourse().getSigla(),
+                siteFrom.getExecutionCourse().getExecutionPeriod().getName(),
+                siteFrom.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
         if (sectionsFrom != null || sectionsFrom.size() > 0) {
             //Delete sections and itens
-            List sectionsTo = persistentSection.readBySite(siteTo);
+            List sectionsTo = persistentSection.readBySite(siteTo.getExecutionCourse().getSigla(),
+                    siteTo.getExecutionCourse().getExecutionPeriod().getName(),
+                    siteTo.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
             IPersistentItem persistentItem = sp.getIPersistentItem();
             if (sectionsTo != null && sectionsTo.size() > 0) {
                 ListIterator iteratorSection = sectionsTo.listIterator();

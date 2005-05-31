@@ -28,8 +28,19 @@ public class EditSection implements IService {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
 
-        List sectionsList = null;
-        sectionsList = persistentSection.readBySiteAndSection(site, superiorSection);
+        List sectionsList = null;                
+        if(superiorSection != null){
+	        sectionsList = persistentSection.readBySiteAndSection(site.getExecutionCourse().getSigla(),                
+	                site.getExecutionCourse().getExecutionPeriod().getName(),
+	                site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear(),
+	                superiorSection.getIdInternal());
+        }
+        else{
+            sectionsList = persistentSection.readBySiteAndSection(site.getExecutionCourse().getSigla(),                
+	                site.getExecutionCourse().getExecutionPeriod().getName(),
+	                site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear(),
+	                null);
+        }
 
         Iterator iterSections = sectionsList.iterator();
 

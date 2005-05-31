@@ -269,7 +269,9 @@ public class TeacherAdministrationSiteComponentBuilder {
             // read sections
 
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            allSections = sp.getIPersistentSection().readBySite(site);
+            allSections = sp.getIPersistentSection().readBySite(site.getExecutionCourse().getSigla(),
+                    site.getExecutionCourse().getExecutionPeriod().getName(),
+                    site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
 
             // build the result of this service
             Iterator iterator = allSections.iterator();
@@ -885,7 +887,9 @@ public class TeacherAdministrationSiteComponentBuilder {
 
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            List allSections = sp.getIPersistentSection().readBySite(site);
+            List allSections = sp.getIPersistentSection().readBySite(site.getExecutionCourse().getSigla(),
+                    site.getExecutionCourse().getExecutionPeriod().getName(),
+                    site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
 
             // build the result of this service
             Iterator iterator = allSections.iterator();
@@ -982,7 +986,9 @@ public class TeacherAdministrationSiteComponentBuilder {
 
             ISection iSuperiorSection = (ISection) persistentSection.readByOID(
                     Section.class, sectionCode);
-            List allSections = persistentSection.readBySite(site);
+            List allSections = persistentSection.readBySite(site.getExecutionCourse().getSigla(),
+                    site.getExecutionCourse().getExecutionPeriod().getName(),
+                    site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
 
             // build the result of this service
             Iterator iterator = allSections.iterator();
@@ -1023,7 +1029,9 @@ public class TeacherAdministrationSiteComponentBuilder {
                     Section.class, sectionCode);
 
             InfoSection infoSection = InfoSection.newInfoFromDomain(iSection);
-            List allSections = persistentSection.readBySite(site);
+            List allSections = persistentSection.readBySite(site.getExecutionCourse().getSigla(),
+                    site.getExecutionCourse().getExecutionPeriod().getName(),
+                    site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
 
             // build the result of this service
             Iterator iterator = allSections.iterator();

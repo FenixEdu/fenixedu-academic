@@ -27,8 +27,20 @@ public class InsertSection implements IService {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         persistentSection = persistentSuport.getIPersistentSection();
 
-        List sectionsList = persistentSection.readBySiteAndSection(site, superiorSection);
-
+        List sectionsList = null;
+        if(superiorSection != null){	       
+            sectionsList = persistentSection.readBySiteAndSection(site.getExecutionCourse().getSigla(),
+	                site.getExecutionCourse().getExecutionPeriod().getName(),
+	                site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear(),
+	                superiorSection.getIdInternal());
+        }
+        else{
+            sectionsList = persistentSection.readBySiteAndSection(site.getExecutionCourse().getSigla(),
+	                site.getExecutionCourse().getExecutionPeriod().getName(),
+	                site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear(),
+	                null);
+        }
+               
         if (sectionsList != null) {
             if (insertSectionOrder == -1) {
                 insertSectionOrder = sectionsList.size();

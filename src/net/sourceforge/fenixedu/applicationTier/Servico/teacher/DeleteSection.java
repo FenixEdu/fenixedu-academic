@@ -9,8 +9,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
+import net.sourceforge.fenixedu.domain.IItem;
 import net.sourceforge.fenixedu.domain.ISection;
 import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.fileSuport.FileSuport;
 import net.sourceforge.fenixedu.fileSuport.IFileSuport;
@@ -46,12 +48,42 @@ public class DeleteSection implements IService {
             ISection superiorSection = sectionToDelete.getSuperiorSection();
             Integer sectionToDeleteOrder = sectionToDelete.getSectionOrder();
 
-            persistentSection.delete(sectionToDelete);
+            if(sectionToDelete.getAssociatedItems() != null){
+                List<IItem> items = sectionToDelete.getAssociatedItems();   
+                for(IItem item : items){
+                    item.setSection(null);
+                    sp.getIPersistentItem().deleteByOID(Item.class, item.getIdInternal());
+                }
+                sectionToDelete.getAssociatedItems().clear();
+            }
+            if(sectionToDelete.getAssociatedSections() != null){
+                List<ISection> sections = sectionToDelete.getAssociatedSections();
+                for(ISection section : sections){
+                    section.setSuperiorSection(null);
+                    run(infoExecutionCourseCode, section.getIdInternal());
+                }
+            }
+                                
+            persistentSection.deleteByOID(Section.class, sectionToDelete.getIdInternal());
 
             sp.confirmarTransaccao();
 
             sp.iniciarTransaccao();
-            List sectionsReordered = persistentSection.readBySiteAndSection(site, superiorSection);
+            
+            List sectionsReordered = null;
+            if(superiorSection != null){
+	            sectionsReordered = persistentSection.readBySiteAndSection(site.getExecutionCourse().getSigla(),
+	                    site.getExecutionCourse().getExecutionPeriod().getName(),
+	                    site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear(),
+	                    superiorSection.getIdInternal());
+            }
+            else{
+                sectionsReordered = persistentSection.readBySiteAndSection(site.getExecutionCourse().getSigla(),
+	                    site.getExecutionCourse().getExecutionPeriod().getName(),
+	                    site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear(),
+	                    null);
+            }
+                
             Iterator iterSections = sectionsReordered.iterator();
             while (iterSections.hasNext()) {
                 ISection section = (ISection) iterSections.next();

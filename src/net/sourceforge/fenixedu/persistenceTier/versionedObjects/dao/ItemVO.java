@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IItem;
-import net.sourceforge.fenixedu.domain.Item;
+import net.sourceforge.fenixedu.domain.ISection;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
@@ -21,15 +21,15 @@ public class ItemVO extends VersionedObjectsBase implements IPersistentItem {
 
 
     public IItem readBySectionAndName(Integer sectionID, String executionCourseSigla, String executionPeriodYear, String executionPeriodName, String itemName) throws ExcepcaoPersistencia {
-        Collection<Section> sections = readAll(Section.class);        
-        for(Section section : sections){
+        Collection<ISection> sections = readAll(Section.class);        
+        for(ISection section : sections){
             if((section.getIdInternal().equals(sectionID)) && (section.getSite().getExecutionCourse().getSigla().equals(executionCourseSigla))
                     && (section.getSite().getExecutionCourse().getExecutionPeriod().getName().equals(executionPeriodName))
                     && (section.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear().equals(executionPeriodYear))){
                 
-                List<Item> items = section.getAssociatedItems();
+                List<IItem> items = section.getAssociatedItems();
                 
-                for(Item item : items){
+                for(IItem item : items){
                     if(item.getName().equals(itemName))
                         return item;
                 }            
@@ -39,8 +39,8 @@ public class ItemVO extends VersionedObjectsBase implements IPersistentItem {
     }
 
     public List readAllItemsBySection(Integer sectionID, String executionCourseSigla, String executionPeriodYear, String executionPeriodName) throws ExcepcaoPersistencia {
-        Collection<Section> sections = readAll(Section.class);
-        for(Section section : sections){
+        Collection<ISection> sections = readAll(Section.class);
+        for(ISection section : sections){
             if((section.getIdInternal().equals(sectionID)) && (section.getSite().getExecutionCourse().getSigla().equals(executionCourseSigla))
                     && (section.getSite().getExecutionCourse().getExecutionPeriod().getName().equals(executionPeriodName))
                     && (section.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear().equals(executionPeriodYear))){

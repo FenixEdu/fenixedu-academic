@@ -166,8 +166,6 @@
          column="KEY_SUPERIOR_SECTION"
          jdbc-type="INTEGER"
       />
-    
-    
       <field-descriptor id="6"
          name="lastModifiedDate"
          column="LAST_MODIFIED_DATE"
@@ -182,18 +180,31 @@
       <reference-descriptor
          name="site"
          class-ref="net.sourceforge.fenixedu.domain.Site"
-         proxy="false"
-      >
+         proxy="false">
          <foreignkey field-ref="keySite"/>
       </reference-descriptor>
       <reference-descriptor
          name="superiorSection"
          class-ref="net.sourceforge.fenixedu.domain.Section"
-         proxy="false"
-      >   
+         proxy="false">   
          <foreignkey field-ref="keySuperiorSection"/>
       </reference-descriptor>
-      
+      <collection-descriptor
+         name="associatedItems"
+         element-class-ref="net.sourceforge.fenixedu.domain.Item"
+         auto-retrieve="true"
+         refresh="true"
+         proxy="true">
+		<inverse-foreignkey field-ref="keySection"/>
+      </collection-descriptor>	
+	  <collection-descriptor
+         name="associatedSections"
+         element-class-ref="net.sourceforge.fenixedu.domain.Section"
+         auto-retrieve="true"
+         refresh="true"
+         proxy="true">
+		<inverse-foreignkey field-ref="keySuperiorSection"/>
+      </collection-descriptor>	
     </class-descriptor>
 
 
