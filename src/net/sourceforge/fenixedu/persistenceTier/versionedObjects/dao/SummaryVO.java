@@ -30,7 +30,7 @@ public class SummaryVO extends VersionedObjectsBase implements IPersistentSummar
     
     public List readByExecutionCourseShifts(final Integer executionCourseID) throws ExcepcaoPersistencia {
         final IExecutionCourse executionCourse = (IExecutionCourse) readByOID(ExecutionCourse.class, executionCourseID);      
-        ArrayList summaries = new ArrayList();        
+        List summaries = new ArrayList();        
         List shifts = executionCourse.getAssociatedShifts();
         Iterator iter = shifts.iterator();        
         while(iter.hasNext()){
@@ -45,7 +45,7 @@ public class SummaryVO extends VersionedObjectsBase implements IPersistentSummar
        
         List summaries = readByExecutionCourse(executionCourseID);
         Iterator iter = summaries.iterator();
-        ArrayList summariesAux = new ArrayList();
+        List summariesAux = new ArrayList();
                
         while(iter.hasNext()){
             ISummary summary = (ISummary) iter.next();
@@ -62,7 +62,7 @@ public class SummaryVO extends VersionedObjectsBase implements IPersistentSummar
         
         List summaries = readByExecutionCourseShifts(executionCourseID);
         Iterator iter = summaries.iterator();
-        ArrayList summariesAux = new ArrayList();
+        List summariesAux = new ArrayList();
         
         while(iter.hasNext()){
             ISummary summary = (ISummary) iter.next();
@@ -77,7 +77,7 @@ public class SummaryVO extends VersionedObjectsBase implements IPersistentSummar
         
         List summaries = readByExecutionCourseShifts(executionCourseID);        
         Iterator iter = summaries.iterator();
-        ArrayList summariesAux = new ArrayList();
+        List summariesAux = new ArrayList();
         
         while(iter.hasNext()){
             ISummary summary = (ISummary) iter.next();
@@ -93,7 +93,7 @@ public class SummaryVO extends VersionedObjectsBase implements IPersistentSummar
         
         List summaries = readByExecutionCourseShifts(executionCourseID);
         Iterator iter = summaries.iterator();
-        ArrayList summariesAux = new ArrayList();
+        List summariesAux = new ArrayList();
         
         while(iter.hasNext()){
             ISummary summary = (ISummary) iter.next();
@@ -109,14 +109,14 @@ public class SummaryVO extends VersionedObjectsBase implements IPersistentSummar
         
         List summaries = readByExecutionCourse(executionCourseID);
         Iterator iter = summaries.iterator();
-        ArrayList summariesAux = new ArrayList();
+        List summariesAux = new ArrayList();
 
         while(iter.hasNext()){
             ISummary summary = (ISummary) iter.next();
-            if(summary.getKeyProfessorship() == null)
-                summariesAux.add(summary);            
-        }
-        
+            if(summary.getProfessorship() == null)
+                if((summary.getTeacher() != null) || (summary.getTeacherName() != null))
+                    summariesAux.add(summary);            
+        }        
         return summariesAux;
     }
     
