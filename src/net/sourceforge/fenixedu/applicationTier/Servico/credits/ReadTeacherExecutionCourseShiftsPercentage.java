@@ -63,7 +63,7 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IService {
             List executionCourseShiftsList = null;
 
             executionCourseShiftsList = shiftDAO
-                    .readByExecutionCourseID(executionCourse.getIdInternal());
+                    .readByExecutionCourse(executionCourse.getIdInternal());
 
             Iterator iterator = executionCourseShiftsList.iterator();
             while (iterator.hasNext()) {

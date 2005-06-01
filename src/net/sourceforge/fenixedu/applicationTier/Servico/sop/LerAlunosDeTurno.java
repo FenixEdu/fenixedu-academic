@@ -44,7 +44,7 @@ public class LerAlunosDeTurno implements IService {
                 .getInfoExecutionCourse());
 
         ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-        shift = persistentShift.readByNameAndExecutionCourse(keyTurno.getShiftName(), executionCourse);
+        shift = persistentShift.readByNameAndExecutionCourse(keyTurno.getShiftName(), executionCourse.getIdInternal());
 
         alunos = sp.getITurnoAlunoPersistente().readByShift(shift.getIdInternal());
 

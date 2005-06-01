@@ -52,7 +52,7 @@ public class SelectShifts implements IServico {
 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            shifts = sp.getITurnoPersistente().readByExecutionCourse(shift.getDisciplinaExecucao());
+            shifts = sp.getITurnoPersistente().readByExecutionCourse(shift.getDisciplinaExecucao().getIdInternal());
 
             for (int i = 0; i < shifts.size(); i++) {
                 IShift taux = (IShift) shifts.get(i);

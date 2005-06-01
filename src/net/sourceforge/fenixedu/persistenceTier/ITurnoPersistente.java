@@ -9,60 +9,25 @@ package net.sourceforge.fenixedu.persistenceTier;
  */
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICurricularYear;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudent;
 
 public interface ITurnoPersistente extends IPersistentObject {
 
-    public IShift readByNameAndExecutionCourse(String nome, IExecutionCourse IDE)
+    public IShift readByNameAndExecutionCourse(String nome, Integer IDE) throws ExcepcaoPersistencia;
+
+    public List readByExecutionCourseAndType(Integer executionCourseOID, Integer type)
             throws ExcepcaoPersistencia;
 
-    public void delete(IShift turno) throws ExcepcaoPersistencia;
+    public List readByExecutionCourse(Integer executionCourseOID) throws ExcepcaoPersistencia;
 
-    public Integer countAllShiftsOfAllClassesAssociatedWithShift(IShift shift)
-            throws ExcepcaoPersistencia;
+    public List readByExecutionPeriodAndExecutionDegreeAndCurricularYear(Integer executionPeriodOID,
+            Integer executionDegreeOID, Integer curricularYearOID) throws ExcepcaoPersistencia;
 
-    // FIXME : O metodo nao seleciona bem as turmas ... mas nao da erro na query
-    // e usa o associatedCurricularCourses
-    public List readByDisciplinaExecucao(String sigla, String anoLectivo, String siglaLicenciatura)
-            throws ExcepcaoPersistencia;
+    public List readAvailableShiftsForClass(Integer schoolClassOID) throws ExcepcaoPersistencia;
 
-    public List readByExecutionCourseAndType(IExecutionCourse executionCourse, Integer type)
-            throws ExcepcaoPersistencia;
+    public IShift readByLesson(Integer lessonOID) throws ExcepcaoPersistencia;
 
-    public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
-
-    /**
-     * @param executionDegree
-     * @param curricularYear
-     * @return
-     */
-    public List readByExecutionPeriodAndExecutionDegreeAndCurricularYear(
-            IExecutionPeriod executionPeriod, IExecutionDegree executionDegree,
-            ICurricularYear curricularYear) throws ExcepcaoPersistencia;
-
-    /**
-     * @param shcoolClass
-     * @return
-     */
-    public List readAvailableShiftsForClass(ISchoolClass schoolClass) throws ExcepcaoPersistencia;
-
-    public List readByExecutionCourseID(Integer id) throws ExcepcaoPersistencia;
-
-    /**
-     * @return
-     */
-    public List readByLesson(ILesson lesson) throws ExcepcaoPersistencia;
-
-    public IShift readShiftByLesson(ILesson lesson) throws ExcepcaoPersistencia;
-
-    public List readShiftsThatContainsStudentAttendsOnExecutionPeriod(IStudent student,
-            IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+    public List readShiftsThatContainsStudentAttendsOnExecutionPeriod(Integer studentOID,
+            Integer executionPeriodOID) throws ExcepcaoPersistencia;
 
 }

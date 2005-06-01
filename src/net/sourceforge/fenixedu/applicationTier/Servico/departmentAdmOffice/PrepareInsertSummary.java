@@ -72,7 +72,7 @@ public class PrepareInsertSummary implements IService {
         }
 
         ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-        List shifts = persistentShift.readByExecutionCourse(executionCourse);
+        List shifts = persistentShift.readByExecutionCourse(executionCourse.getIdInternal());
         List infoShifts = new ArrayList();
         if (shifts != null && shifts.size() > 0) {
             infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {

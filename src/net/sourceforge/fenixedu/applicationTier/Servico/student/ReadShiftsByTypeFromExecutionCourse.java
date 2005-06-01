@@ -31,7 +31,7 @@ public class ReadShiftsByTypeFromExecutionCourse implements IService {
         final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 
         final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, infoExecutionCourse.getIdInternal());
-        final List shifts = persistentShift.readByExecutionCourseAndType(executionCourse, tipoAula.getTipo());
+        final List shifts = persistentShift.readByExecutionCourseAndType(executionCourse.getIdInternal(), tipoAula.getTipo());
 
         return (List) CollectionUtils.collect(shifts, new Transformer() {
             public Object transform(Object arg0) {

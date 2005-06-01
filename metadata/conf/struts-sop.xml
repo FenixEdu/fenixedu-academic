@@ -898,13 +898,7 @@
         <forward name="Voltar" path="/gestaoHorarios.do"/>
       </action>
       
-      <action path="/apagarTurno"
-              input="/manipularTurnos.jsp"
-              type="net.sourceforge.fenixedu.presentationTier.Action.sop.ApagarTurnoFormAction">
-          <forward name="Sucesso" path="/manipularTurnos.jsp"/>
-      </action>
-
-     <action path="/prepararVerTurno"
+      <action path="/prepararVerTurno"
              input="/manipularTurnos.jsp"
              type="net.sourceforge.fenixedu.presentationTier.Action.sop.PrepararVerTurnoFormAction">
          <forward name="Sucesso" path="/verTurno.jsp"/>

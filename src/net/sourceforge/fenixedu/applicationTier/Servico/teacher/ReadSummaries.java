@@ -78,7 +78,7 @@ public class ReadSummaries implements IService {
 
         //execution courses's shifts for display to filter summary
         ITurnoPersistente persistentShift = persistentSuport.getITurnoPersistente();
-        List shifts = persistentShift.readByExecutionCourse(executionCourse);
+        List shifts = persistentShift.readByExecutionCourse(executionCourse.getIdInternal());
         List infoShifts = new ArrayList();
         if (shifts != null && shifts.size() > 0) {
             infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {

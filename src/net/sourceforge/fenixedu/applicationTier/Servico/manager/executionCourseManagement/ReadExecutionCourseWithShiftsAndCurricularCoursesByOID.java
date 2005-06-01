@@ -69,7 +69,7 @@ public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID implements I
             }
 
             infoExecutionCourse.setAssociatedInfoShifts(new ArrayList());
-            List shifts = persistentShift.readByExecutionCourse(executionCourse);
+            List shifts = persistentShift.readByExecutionCourse(executionCourse.getIdInternal());
             for (Iterator iterator = shifts.iterator(); iterator.hasNext();) {
                 IShift shift = (IShift) iterator.next();
                 InfoShift infoShift = InfoShift.newInfoFromDomain(shift);

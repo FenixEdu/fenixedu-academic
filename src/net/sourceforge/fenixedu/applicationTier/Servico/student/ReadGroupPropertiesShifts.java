@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author asnr and scpo
- *  
+ * 
  */
 public class ReadGroupPropertiesShifts implements IServico {
 
@@ -61,19 +61,18 @@ public class ReadGroupPropertiesShifts implements IServico {
      */
     public InfoSiteShifts run(Integer groupPropertiesCode, Integer studentGroupCode)
             throws FenixServiceException {
-    	
-    	InfoSiteShifts infoSiteShifts = new InfoSiteShifts();
+
+        InfoSiteShifts infoSiteShifts = new InfoSiteShifts();
         List infoShifts = new ArrayList();
         IGroupProperties groupProperties = null;
         boolean result = false;
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IStudentGroup studentGroup = null;
-            groupProperties = (IGroupProperties) sp
-			.getIPersistentGroupProperties().readByOID(
-					GroupProperties.class, groupPropertiesCode);
-            if(groupProperties == null){
-            	throw new ExistingServiceException();
+            groupProperties = (IGroupProperties) sp.getIPersistentGroupProperties().readByOID(
+                    GroupProperties.class, groupPropertiesCode);
+            if (groupProperties == null) {
+                throw new ExistingServiceException();
             }
             if (studentGroupCode != null) {
 
@@ -81,57 +80,56 @@ public class ReadGroupPropertiesShifts implements IServico {
                         StudentGroup.class, studentGroupCode);
 
                 if (studentGroup == null) {
-                	throw new InvalidSituationServiceException();
+                    throw new InvalidSituationServiceException();
                 }
-                
+
                 infoSiteShifts.setOldShift(InfoShift.newInfoFromDomain(studentGroup.getShift()));
             }
-            
+
             IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-			.getInstance();
+                    .getInstance();
             IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-			.getGroupEnrolmentStrategyInstance(groupProperties);
-        	
-        	if(strategy.checkHasShift(groupProperties)){
-            ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-            
-            List executionCourses = new ArrayList();
-            executionCourses = groupProperties.getExecutionCourses();
-            
-            Iterator iterExecutionCourses = executionCourses.iterator();
-            List executionCourseShifts = new ArrayList();
-            while(iterExecutionCourses.hasNext()){
-            
-               List someShifts = persistentShift.readByExecutionCourse(
-               		(IExecutionCourse)iterExecutionCourses.next());
+                    .getGroupEnrolmentStrategyInstance(groupProperties);
 
-               executionCourseShifts.addAll(someShifts);
-            }
-            
-            List shifts = strategy.checkShiftsType(groupProperties,
-                    executionCourseShifts);
-            if (shifts == null || shifts.isEmpty()) {
+            if (strategy.checkHasShift(groupProperties)) {
+                ITurnoPersistente persistentShift = sp.getITurnoPersistente();
 
-            } else {
+                List executionCourses = new ArrayList();
+                executionCourses = groupProperties.getExecutionCourses();
 
-                for (int i = 0; i < shifts.size(); i++) {
-                    IShift shift = (IShift) shifts.get(i);
-                    result = strategy.checkNumberOfGroups(groupProperties,
-                            shift);
-                    
-                    if (result) {
-                    	infoShifts.add(InfoShift.newInfoFromDomain(shift));
+                Iterator iterExecutionCourses = executionCourses.iterator();
+                List executionCourseShifts = new ArrayList();
+                while (iterExecutionCourses.hasNext()) {
+                    IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();
+
+                    List someShifts = persistentShift.readByExecutionCourse(executionCourse
+                            .getIdInternal());
+
+                    executionCourseShifts.addAll(someShifts);
+                }
+
+                List shifts = strategy.checkShiftsType(groupProperties, executionCourseShifts);
+                if (shifts == null || shifts.isEmpty()) {
+
+                } else {
+
+                    for (int i = 0; i < shifts.size(); i++) {
+                        IShift shift = (IShift) shifts.get(i);
+                        result = strategy.checkNumberOfGroups(groupProperties, shift);
+
+                        if (result) {
+                            infoShifts.add(InfoShift.newInfoFromDomain(shift));
+                        }
                     }
                 }
             }
-        	}
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
-        
+
         infoSiteShifts.setShifts(infoShifts);
         return infoSiteShifts;
-        
+
     }
 
 }

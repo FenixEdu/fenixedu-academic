@@ -35,7 +35,7 @@ public class CriarTurno implements IService {
         final ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
 
         final IShift existingShift = shiftDAO.readByNameAndExecutionCourse(newShift.getNome(), newShift
-                .getDisciplinaExecucao());
+                .getDisciplinaExecucao().getIdInternal());
 
         if (existingShift != null) {
             throw new ExistingServiceException("Duplicate Entry: " + infoTurno.getNome());

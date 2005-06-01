@@ -49,7 +49,7 @@ public class AdicionarAula implements IService {
                     .getInfoDisciplinaExecucao());
 
             IShift turno1 = sp.getITurnoPersistente().readByNameAndExecutionCourse(infoShift.getNome(),
-                    executionCourse);
+                    executionCourse.getIdInternal());
 
             int i = 0;
             while (i < classesList.length) {

@@ -49,7 +49,7 @@ public class ReadShiftsByDistributedTest implements IService {
             }
 
             List infoShiftList = persistentSuport.getITurnoPersistente().readByExecutionCourse(
-                    executionCourse);
+                    executionCourse.getIdInternal());
             Iterator itShiftList = infoShiftList.iterator();
 
             List result = new ArrayList();

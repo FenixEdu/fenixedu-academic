@@ -160,7 +160,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
             //execution courses's shifts for display to filter summary
             ITurnoPersistente persistentShift = persistentSuport.getITurnoPersistente();
-            List shifts = persistentShift.readByExecutionCourse(executionCourse);
+            List shifts = persistentShift.readByExecutionCourse(executionCourse.getIdInternal());
             List infoShifts = new ArrayList();
             if (shifts != null && shifts.size() > 0) {
                 infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
@@ -523,7 +523,7 @@ public class ExecutionCourseSiteComponentBuilder {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IExecutionCourse disciplinaExecucao = site.getExecutionCourse();
-            List shifts = sp.getITurnoPersistente().readByExecutionCourse(disciplinaExecucao);
+            List shifts = sp.getITurnoPersistente().readByExecutionCourse(disciplinaExecucao.getIdInternal());
 
             if (shifts == null || shifts.isEmpty()) {
 
@@ -577,7 +577,7 @@ public class ExecutionCourseSiteComponentBuilder {
 
             List aulas = new ArrayList();
 
-            List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
+            List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse.getIdInternal());
             for (int i = 0; i < shifts.size(); i++) {
                 IShift shift = (IShift) shifts.get(i);
                 List aulasTemp = shift.getAssociatedLessons();

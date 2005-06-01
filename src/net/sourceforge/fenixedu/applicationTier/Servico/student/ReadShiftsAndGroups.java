@@ -102,8 +102,9 @@ public class ReadShiftsAndGroups implements IServico {
             List allShifts = new ArrayList();
             List allShiftsAux = new ArrayList();
             while (iterExecutionCourses.hasNext()){
+                IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();
                 allShiftsAux = persistentShift.readByExecutionCourseAndType(
-                (IExecutionCourse)iterExecutionCourses.next(), groupProperties.getShiftType().getTipo());
+                executionCourse.getIdInternal(), groupProperties.getShiftType().getTipo());
                 allShifts.addAll(allShiftsAux);
             }
             List allStudentsGroup = groupProperties.getAttendsSet().getStudentGroupsWithShift();

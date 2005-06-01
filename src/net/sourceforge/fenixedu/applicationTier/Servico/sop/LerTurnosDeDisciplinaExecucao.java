@@ -44,7 +44,7 @@ public class LerTurnosDeDisciplinaExecucao implements IService {
         final InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
         infoExecutionCourse2.setInfoExecutionPeriod(infoExecutionPeriod);
 
-        infoShiftList = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
+        infoShiftList = sp.getITurnoPersistente().readByExecutionCourse(executionCourse.getIdInternal());
         Iterator itShiftList = infoShiftList.iterator();
 
         while (itShiftList.hasNext()) {

@@ -58,7 +58,7 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClasses implements ISe
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IExecutionCourse disciplinaExecucao = Cloner
                     .copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
-            List shifts = sp.getITurnoPersistente().readByExecutionCourse(disciplinaExecucao);
+            List shifts = sp.getITurnoPersistente().readByExecutionCourse(disciplinaExecucao.getIdInternal());
 
             if (shifts == null || shifts.isEmpty()) {
 

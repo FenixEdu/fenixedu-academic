@@ -49,7 +49,7 @@ public class ReadAvailableShiftsForClass implements IService {
         ISchoolClass schoolClass = (ISchoolClass) sp.getITurmaPersistente().readByOID(SchoolClass.class,
                 infoClass.getIdInternal());
 
-        List shifts = sp.getITurnoPersistente().readAvailableShiftsForClass(schoolClass);
+        List shifts = sp.getITurnoPersistente().readAvailableShiftsForClass(schoolClass.getIdInternal());
 
         infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
             public Object transform(Object arg0) {

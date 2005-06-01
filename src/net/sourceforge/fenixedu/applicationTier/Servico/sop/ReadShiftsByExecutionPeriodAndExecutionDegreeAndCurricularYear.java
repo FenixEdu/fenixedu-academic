@@ -66,8 +66,8 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear impl
 
             //			queryStartTime = Calendar.getInstance();
             List shifts = sp.getITurnoPersistente()
-                    .readByExecutionPeriodAndExecutionDegreeAndCurricularYear(executionPeriod,
-                            executionDegree, curricularYear);
+                    .readByExecutionPeriodAndExecutionDegreeAndCurricularYear(executionPeriod.getIdInternal(),
+                            executionDegree.getIdInternal(), curricularYear.getIdInternal());
             //			queryEndTime = Calendar.getInstance();
 
             //			transformerStartTime = Calendar.getInstance();

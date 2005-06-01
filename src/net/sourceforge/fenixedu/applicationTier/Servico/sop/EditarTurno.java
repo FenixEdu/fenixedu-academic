@@ -66,7 +66,7 @@ public class EditarTurno implements IService {
                 .copyInfoExecutionCourse2ExecutionCourse(infoShiftNew.getInfoDisciplinaExecucao());
 
         IShift otherShiftWithSameNewName = sp.getITurnoPersistente().readByNameAndExecutionCourse(
-                infoShiftNew.getNome(), executionCourse);
+                infoShiftNew.getNome(), executionCourse.getIdInternal());
 
         if ((otherShiftWithSameNewName != null)
                 && !(otherShiftWithSameNewName.getIdInternal().equals(shiftToEdit.getIdInternal()))) {

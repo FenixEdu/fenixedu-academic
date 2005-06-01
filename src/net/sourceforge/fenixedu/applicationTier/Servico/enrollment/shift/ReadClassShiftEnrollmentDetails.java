@@ -91,7 +91,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
 
             // Shifts correspond to student attends
             List shiftAttendList = shiftDAO.readShiftsThatContainsStudentAttendsOnExecutionPeriod(
-                    student, executionPeriod);
+                    student.getIdInternal(), executionPeriod.getIdInternal());
 
             // Shifts enrolment
             List studentShifts = shiftStudentDAO.readByStudentAndExecutionPeriod(student.getIdInternal(),

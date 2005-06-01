@@ -76,15 +76,6 @@
         </filterChains>
     </service>
     <service>
-        <name>ApagarTurno</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ApagarTurno</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="TimeTableManagerAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
         <name>AssociateExecutionCourseToExam</name>
         <implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.sop.AssociateExecutionCourseToExam</implementationClass>

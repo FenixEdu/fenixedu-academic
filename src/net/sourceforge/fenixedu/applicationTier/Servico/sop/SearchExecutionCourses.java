@@ -221,7 +221,7 @@ public class SearchExecutionCourses implements IService {
                     Integer doubtsCapacity = new Integer(0);
                     Integer reserveCapacity = new Integer(0);
 
-                    List shifts = spTemp.getITurnoPersistente().readByExecutionCourse(executionCourse);
+                    List shifts = spTemp.getITurnoPersistente().readByExecutionCourse(executionCourse.getIdInternal());
                     Iterator iterator = shifts.iterator();
                     while (iterator.hasNext()) {
                         IShift shift = (IShift) iterator.next();

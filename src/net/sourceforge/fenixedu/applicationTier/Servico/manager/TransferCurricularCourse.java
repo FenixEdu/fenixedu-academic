@@ -80,7 +80,7 @@ public class TransferCurricularCourse implements IService {
      */
     private void deleteShiftStudents(ITurnoPersistente persistentShift, ITurnoAlunoPersistente persistentShiftStudent, IExecutionCourse sourceExecutionCourse, Set transferedStudents) throws ExcepcaoPersistencia
     {
-        List shifts = persistentShift.readByExecutionCourseID(sourceExecutionCourse.getIdInternal());
+        List shifts = persistentShift.readByExecutionCourse(sourceExecutionCourse.getIdInternal());
         for (Iterator iterator = shifts.iterator(); iterator.hasNext();) {
             IShift shift = (IShift) iterator.next();
             List shiftStudents = persistentShiftStudent.readByShiftID(shift.getIdInternal());

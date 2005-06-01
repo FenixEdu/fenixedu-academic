@@ -272,7 +272,7 @@ public class MergeExecutionCourses implements IService {
     private void copyShiftsAndLessons(IExecutionCourse destination, IExecutionCourse source,
             ISuportePersistente ps) throws ExcepcaoPersistencia {
         ITurnoPersistente persistentShift = ps.getITurnoPersistente();
-        List sourceShifts = persistentShift.readByExecutionCourse(source);
+        List sourceShifts = persistentShift.readByExecutionCourse(source.getIdInternal());
         Iterator iter = sourceShifts.iterator();
         while (iter.hasNext()) {
             IShift shift = (IShift) iter.next();

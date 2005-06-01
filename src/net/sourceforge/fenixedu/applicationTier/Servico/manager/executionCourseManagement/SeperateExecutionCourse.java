@@ -136,7 +136,7 @@ public class SeperateExecutionCourse implements IService {
     private List getShifts(final ISuportePersistente sp, final IExecutionCourse originExecutionCourse)
             throws ExcepcaoPersistencia {
         final ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-        return persistentShift.readByExecutionCourseID(originExecutionCourse.getIdInternal());
+        return persistentShift.readByExecutionCourse(originExecutionCourse.getIdInternal());
     }
 
     private void transferShifts(final IPersistentObject persistentObject, final ISuportePersistente sp,

@@ -105,7 +105,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         List attends = executionCourse.getAttends();
 
         List allDegreeCurricularPlans = getDegreeCurricularPlansFromAttends(attends);
-        List allShifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
+        List allShifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse.getIdInternal());
         List groupProperties = executionCourse.getGroupProperties();
 
         Map studentGroupsMap = getStudentGroupsMapFromGroupPropertiesList(groupProperties, sp);
@@ -213,7 +213,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
 
         // building the info
         InfoForReadStudentsWithAttendsByExecutionCourse infoDTO = new InfoForReadStudentsWithAttendsByExecutionCourse();
-        List shifts = sp.getITurnoPersistente().readByExecutionCourseID(executionCourse.getIdInternal());
+        List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse.getIdInternal());
 
         List infoCompositions = new ArrayList();
         Iterator it = attends.iterator();

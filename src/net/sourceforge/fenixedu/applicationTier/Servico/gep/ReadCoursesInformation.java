@@ -218,20 +218,29 @@ public class ReadCoursesInformation implements IService {
             IShift shift = null;
             List temp = new ArrayList();
             while (iter.hasNext()) {
-                List shifts;
+                // List shifts;
+                // IShift shift2;
+
                 InfoLesson infoLesson = (InfoLesson) iter.next();
                 ILesson lesson = (ILesson) persistentLesson.readByOID(Lesson.class, infoLesson
                         .getIdInternal());
-                shifts = persistentShift.readByLesson(lesson);
-                if (shifts != null && !shifts.isEmpty()) {
-                    IShift aux = (IShift) shifts.get(0);
-                    if (shift == null) {
-                        shift = aux;
-                    }
-                    if (shift == aux) {
-                        temp.add(infoLesson);
-                    }
+
+                // shifts = persistentShift.readByLesson(lesson);
+                shift = persistentShift.readByLesson(lesson.getIdInternal());
+
+                // if (shifts != null && !shifts.isEmpty()) {
+                if (shift != null) {
+
+                    // IShift aux = (IShift) shifts.get(0);
+                    // IShift aux = (IShift) shift2;
+                    /*
+                     * if (shift == null) { //shift = aux; shift = shift2; } if
+                     * (shift == aux) {
+                     */
+                    temp.add(infoLesson);
+                    // }
                 }
+
             }
             return new Integer(temp.size());
         }
@@ -382,7 +391,7 @@ public class ReadCoursesInformation implements IService {
 
         ITurnoPersistente persistentShift = sp.getITurnoPersistente();
 
-        List shifts = persistentShift.readByExecutionCourse(executionCourse);
+        List shifts = persistentShift.readByExecutionCourse(executionCourse.getIdInternal());
 
         List lessons = new ArrayList();
 

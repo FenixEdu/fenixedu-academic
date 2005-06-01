@@ -81,7 +81,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class ReadCourseInformation implements IService {
 
@@ -119,7 +119,8 @@ public class ReadCourseInformation implements IService {
         }
 
         IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-        List responsiblesFor = persistentResponsibleFor.readByExecutionCourse(executionCourse.getIdInternal());
+        List responsiblesFor = persistentResponsibleFor.readByExecutionCourse(executionCourse
+                .getIdInternal());
 
         List infoResponsibleTeachers = getInfoResponsibleTeachers(responsiblesFor, sp);
         infoSiteCourseInformation.setInfoResponsibleTeachers(infoResponsibleTeachers);
@@ -322,8 +323,8 @@ public class ReadCourseInformation implements IService {
     private List getEnrolled(IExecutionPeriod executionPeriod, ICurricularCourse curricularCourse,
             ISuportePersistente sp) throws ExcepcaoPersistencia {
         IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
-        List enrolments = persistentEnrolment.readByCurricularCourseAndExecutionPeriod(curricularCourse.getIdInternal(),
-                executionPeriod.getIdInternal());
+        List enrolments = persistentEnrolment.readByCurricularCourseAndExecutionPeriod(curricularCourse
+                .getIdInternal(), executionPeriod.getIdInternal());
         return enrolments;
     }
 
@@ -375,23 +376,27 @@ public class ReadCourseInformation implements IService {
 
             List temp = new ArrayList();
             while (iter.hasNext()) {
-                List shifts;
+                // List shifts;
+                // IShift shift2;
 
                 InfoLesson infoLesson = (InfoLesson) iter.next();
                 ILesson lesson = (ILesson) persistentLesson.readByOID(Lesson.class, infoLesson
                         .getIdInternal());
 
-                shifts = persistentShift.readByLesson(lesson);
+                // shifts = persistentShift.readByLesson(lesson);
+                shift = persistentShift.readByLesson(lesson.getIdInternal());
 
-                if (shifts != null && !shifts.isEmpty()) {
+                // if (shifts != null && !shifts.isEmpty()) {
+                if (shift != null) {
 
-                    IShift aux = (IShift) shifts.get(0);
-                    if (shift == null) {
-                        shift = aux;
-                    }
-                    if (shift == aux) {
-                        temp.add(infoLesson);
-                    }
+                    // IShift aux = (IShift) shifts.get(0);
+                    // IShift aux = (IShift) shift2;
+                    /*
+                     * if (shift == null) { //shift = aux; shift = shift2; } if
+                     * (shift == aux) {
+                     */
+                    temp.add(infoLesson);
+                    // }
                 }
 
             }
@@ -472,7 +477,8 @@ public class ReadCourseInformation implements IService {
     private List getInfoLecturingTeachers(IExecutionCourse executionCourse, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-        List professorShips = persistentProfessorship.readByExecutionCourse(executionCourse.getIdInternal());
+        List professorShips = persistentProfessorship.readByExecutionCourse(executionCourse
+                .getIdInternal());
 
         List infoLecturingTeachers = new ArrayList();
         Iterator iter = professorShips.iterator();
@@ -580,7 +586,7 @@ public class ReadCourseInformation implements IService {
             throws ExcepcaoPersistencia {
         List lessons = new ArrayList();
 
-        List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
+        List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse.getIdInternal());
         for (int i = 0; i < shifts.size(); i++) {
             IShift shift = (IShift) shifts.get(i);
             List aulasTemp = shift.getAssociatedLessons();
