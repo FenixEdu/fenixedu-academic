@@ -3,17 +3,25 @@ package net.sourceforge.fenixedu.applicationTier.Servico.equivalence;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.utils.enrolment.DeleteEnrolmentUtils;
 import net.sourceforge.fenixedu.dataTransferObject.equivalence.InfoEquivalenceContext;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEquivalence;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence;
+import net.sourceforge.fenixedu.domain.ICreditsInAnySecundaryArea;
+import net.sourceforge.fenixedu.domain.ICreditsInScientificArea;
+import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEquivalence;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IEquivalentEnrolmentForEnrolmentEquivalence;
+import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentCreditsInAnySecundaryArea;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentCreditsInSpecificScientificArea;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
@@ -85,10 +93,9 @@ public class DeleteChosenEnrollmentEquivalences extends EnrollmentEquivalenceSer
 
                 if (enrollment != null) {
                     IEnrolmentEquivalence enrollmentEquivalence = enrollmentEquivalenceDAO
-                            .readByEnrolment(enrollment);
+                            .readByEnrolment(enrollment.getIdInternal());
                     if (enrollmentEquivalence != null) {
-                        List equivalentEnrollmentsForEnrollmentEquivalence = equivalentEnrollmentForEnrollmentEquivalenceDAO
-                                .readByEnrolmentEquivalence(enrollmentEquivalence);
+                        List equivalentEnrollmentsForEnrollmentEquivalence = enrollmentEquivalence.getEquivalenceRestrictions();
 
                         if ((equivalentEnrollmentsForEnrollmentEquivalence != null)
                                 && (!equivalentEnrollmentsForEnrollmentEquivalence.isEmpty())) {
@@ -113,6 +120,8 @@ public class DeleteChosenEnrollmentEquivalences extends EnrollmentEquivalenceSer
                                 enrollmentEvaluation.getIdInternal());
                     }
 
+					deleteEnrollmentRelations(persistenceDAO,enrollment);
+					
                     enrollmentDAO.deleteByOID(Enrolment.class, enrollment.getIdInternal());
                 }
             }
@@ -124,4 +133,31 @@ public class DeleteChosenEnrollmentEquivalences extends EnrollmentEquivalenceSer
         return null;
     }
 
+	
+	protected static void deleteEnrollmentRelations(ISuportePersistente persistentSupport, IEnrolment enrollment) throws ExcepcaoPersistencia {
+
+		IPersistentCreditsInAnySecundaryArea persistentCreditsInAnySecundaryArea = persistentSupport.getIPersistentCreditsInAnySecundaryArea();
+		IPersistentCreditsInSpecificScientificArea persistentCreditsInSpecificScientificArea = persistentSupport.getIPersistentCreditsInSpecificScientificArea();
+		
+		IStudentCurricularPlan scp = enrollment.getStudentCurricularPlan();
+		scp.getEnrolments().remove(enrollment);
+		
+		ICurricularCourse curricularCourse = enrollment.getCurricularCourse();
+		curricularCourse.getEnrolments().remove(enrollment);
+		
+		IExecutionPeriod executionPeriod = enrollment.getExecutionPeriod();
+		executionPeriod.getEnrolments().remove(enrollment);
+		
+		List<ICreditsInAnySecundaryArea> creditsInAnySecondaryArea = enrollment.getCreditsInAnySecundaryAreas();
+		for (ICreditsInAnySecundaryArea credits : creditsInAnySecondaryArea) {
+			persistentCreditsInAnySecundaryArea.simpleLockWrite(credits);
+			credits.setEnrolment(null);
+		}
+		
+		List<ICreditsInScientificArea> creditsInScientificArea = enrollment.getCreditsInScientificAreas();
+		for (ICreditsInScientificArea credits : creditsInScientificArea) {
+			persistentCreditsInSpecificScientificArea.simpleLockWrite(credits);
+			credits.setEnrolment(null);
+		}
+	}
 }

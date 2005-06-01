@@ -98,10 +98,9 @@ public class GetEnrollmentEvaluationWithEquivalence extends EnrollmentEquivalenc
 
             if (enrollment != null) {
                 IEnrolmentEquivalence enrollmentEquivalence = enrollmentEquivalenceDAO
-                        .readByEnrolment(enrollment);
+                        .readByEnrolment(enrollment.getIdInternal());
                 if (enrollmentEquivalence != null) {
-                    List equivalentEnrollmentsForEnrollmentEquivalence = equivalentEnrollmentForEnrollmentEquivalenceDAO
-                            .readByEnrolmentEquivalence(enrollmentEquivalence);
+                    List equivalentEnrollmentsForEnrollmentEquivalence = enrollmentEquivalence.getEquivalenceRestrictions();
 
                     if ((equivalentEnrollmentsForEnrollmentEquivalence != null)
                             && (!equivalentEnrollmentsForEnrollmentEquivalence.isEmpty())) {

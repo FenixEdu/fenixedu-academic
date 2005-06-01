@@ -53,26 +53,17 @@ public abstract class DeleteEnrolmentUtils {
 
         deleteAttend(persistenceSupport, enrolment);
 		
+		deleteEquivalences(persistenceSupport , enrolment);
+		
 		deleteEnrollmentRelations(persistenceSupport,enrolment);
-
-        persistenceSupport.getIPersistentEnrolment().deleteByOID(Enrolment.class, enrolment.getIdInternal());
+		
+		persistenceSupport.getIPersistentEnrolment().deleteByOID(Enrolment.class, enrolment.getIdInternal());
     }
 	
-	protected static void deleteEnrollmentRelations(ISuportePersistente persistentSupport, IEnrolment enrollment) throws ExcepcaoPersistencia {
+	protected static void deleteEquivalences(ISuportePersistente persistentSupport, IEnrolment enrollment) throws ExcepcaoPersistencia {
 
 		IPersistentEnrolmentEquivalence persistentEnrolmentEquivalence = persistentSupport.getIPersistentEnrolmentEquivalence();
 		IPersistentEquivalentEnrolmentForEnrolmentEquivalence persistentEquivalentEnrolmentForEnrolmentEquivalence = persistentSupport.getIPersistentEquivalentEnrolmentForEnrolmentEquivalence();
-		IPersistentCreditsInAnySecundaryArea persistentCreditsInAnySecundaryArea = persistentSupport.getIPersistentCreditsInAnySecundaryArea();
-		IPersistentCreditsInSpecificScientificArea persistentCreditsInSpecificScientificArea = persistentSupport.getIPersistentCreditsInSpecificScientificArea();
-		
-		IStudentCurricularPlan scp = enrollment.getStudentCurricularPlan();
-		scp.getEnrolments().remove(enrollment);
-		
-		ICurricularCourse curricularCourse = enrollment.getCurricularCourse();
-		curricularCourse.getEnrolments().remove(enrollment);
-		
-		IExecutionPeriod executionPeriod = enrollment.getExecutionPeriod();
-		executionPeriod.getEnrolments().remove(enrollment);
 		
 		List<IEnrolmentEquivalence> enrolmentEquivalences = enrollment.getEnrolmentEquivalences();
 		for (IEnrolmentEquivalence enrolmentEquivalence : enrolmentEquivalences) {
@@ -85,6 +76,21 @@ public abstract class DeleteEnrolmentUtils {
 			persistentEquivalentEnrolmentForEnrolmentEquivalence.simpleLockWrite(eq);
 			eq.setEquivalentEnrolment(null);
 		}
+	}
+	
+	protected static void deleteEnrollmentRelations(ISuportePersistente persistentSupport, IEnrolment enrollment) throws ExcepcaoPersistencia {
+
+		IPersistentCreditsInAnySecundaryArea persistentCreditsInAnySecundaryArea = persistentSupport.getIPersistentCreditsInAnySecundaryArea();
+		IPersistentCreditsInSpecificScientificArea persistentCreditsInSpecificScientificArea = persistentSupport.getIPersistentCreditsInSpecificScientificArea();
+		
+		IStudentCurricularPlan scp = enrollment.getStudentCurricularPlan();
+		scp.getEnrolments().remove(enrollment);
+		
+		ICurricularCourse curricularCourse = enrollment.getCurricularCourse();
+		curricularCourse.getEnrolments().remove(enrollment);
+		
+		IExecutionPeriod executionPeriod = enrollment.getExecutionPeriod();
+		executionPeriod.getEnrolments().remove(enrollment);
 		
 		List<ICreditsInAnySecundaryArea> creditsInAnySecondaryArea = enrollment.getCreditsInAnySecundaryAreas();
 		for (ICreditsInAnySecundaryArea credits : creditsInAnySecondaryArea) {

@@ -68,9 +68,8 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service {
 
             IPersistentCreditsInAnySecundaryArea creditsInAnySecundaryAreaDAO = persistentSupport
                     .getIPersistentCreditsInAnySecundaryArea();
-
-            result1 = equivalentEnrolmentForEnrolmentEquivalenceDAO
-                    .readByEquivalentEnrolment(enrollment);
+			
+			result1 = enrollment.getEquivalentEnrolmentForEnrolmentEquivalences();
 
             result2 = persistentCurricularCourse.readbyCourseNameAndDegreeCurricularPlan(enrollment
                     .getCurricularCourse().getName(), degreeCurricularPlanKey);

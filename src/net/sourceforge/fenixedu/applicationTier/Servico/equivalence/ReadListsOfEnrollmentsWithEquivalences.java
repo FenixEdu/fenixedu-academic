@@ -108,7 +108,7 @@ public class ReadListsOfEnrollmentsWithEquivalences extends EnrollmentEquivalenc
                 IEnrolment enrollment = (IEnrolment) studentEnrollments.get(i);
 
                 IEnrolmentEquivalence enrollmentEquivalence = enrollmentEquivalenceDAO
-                        .readByEnrolment(enrollment);
+                        .readByEnrolment(enrollment.getIdInternal());
                 if (enrollmentEquivalence != null) {
                     enrollmentsFromEquivalences.add(enrollment);
                 }

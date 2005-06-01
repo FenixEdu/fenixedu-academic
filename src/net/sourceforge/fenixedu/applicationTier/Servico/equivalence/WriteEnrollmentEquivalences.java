@@ -248,7 +248,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
                 .getIPersistentEquivalentEnrolmentForEnrolmentEquivalence();
 
         IEnrolmentEquivalence enrollmentEquivalence = enrollmentEquivalenceDAO
-                .readByEnrolment(newEnrollment);
+                .readByEnrolment(newEnrollment.getIdInternal());
         if (enrollmentEquivalence == null) {
             enrollmentEquivalence = (IEnrolmentEquivalence) enrolmentEquivalencesCreated
                     .get(newEnrollment.getCurricularCourse().getIdInternal());
@@ -264,7 +264,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
         }
 
         IEquivalentEnrolmentForEnrolmentEquivalence equivalentEnrollmentForEnrollmentEquivalence = equivalentEnrollmentForEnrollmentEquivalenceDAO
-                .readByEnrolmentEquivalenceAndEquivalentEnrolment(enrollmentEquivalence, oldEnrollment);
+                .readByEnrolmentEquivalenceAndEquivalentEnrolment(enrollmentEquivalence.getIdInternal(), oldEnrollment.getIdInternal());
 
         if (equivalentEnrollmentForEnrollmentEquivalence == null) {
             equivalentEnrollmentForEnrollmentEquivalence = new EquivalentEnrolmentForEnrolmentEquivalence();

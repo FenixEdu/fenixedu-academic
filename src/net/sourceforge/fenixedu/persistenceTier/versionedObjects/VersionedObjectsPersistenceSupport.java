@@ -94,6 +94,8 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DegreeCurri
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DegreeInfoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DepartmentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrollmentVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentEquivalenceVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EquivalentEnrolmentForEnrolmentEquivalenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationExecutionCourseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationMethodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationVO;
@@ -581,7 +583,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentEnrolmentEquivalence getIPersistentEnrolmentEquivalence() {
-        return null;
+        return new EnrolmentEquivalenceVO();
     }
 
     public ITurmaPersistente getITurmaPersistente() {
@@ -697,7 +699,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentEquivalentEnrolmentForEnrolmentEquivalence getIPersistentEquivalentEnrolmentForEnrolmentEquivalence() {
-        return null;
+        return new EquivalentEnrolmentForEnrolmentEquivalenceVO();
     }
 
     public IPersistentGroupProperties getIPersistentGroupProperties() {

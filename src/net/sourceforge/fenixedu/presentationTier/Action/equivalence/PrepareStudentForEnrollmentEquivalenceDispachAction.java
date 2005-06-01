@@ -66,12 +66,12 @@ public class PrepareStudentForEnrollmentEquivalenceDispachAction extends Dispatc
             HttpServletResponse response) throws Exception {
         DynaActionForm studentNumberForm = (DynaActionForm) form;
 
-        Integer degreeType = (Integer) studentNumberForm.get("degreeType");
+        String degreeType = (String) studentNumberForm.get("degreeType");
         String studentNumber = (String) studentNumberForm.get("studentNumber");
         String backLink = (String) studentNumberForm.get("backLink");
 
         if (degreeType == null) {
-            degreeType = (Integer) request.getAttribute("degreeType");
+            degreeType = (String) request.getAttribute("degreeType");
         }
 
         if (studentNumber == null) {
