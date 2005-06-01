@@ -41,7 +41,7 @@ public class ExecutionPeriod extends ExecutionPeriod_Base {
 
     public boolean equals(Object obj) {
         if (obj instanceof IExecutionPeriod) {
-            IExecutionPeriod executionPeriod = (IExecutionPeriod) obj;
+            final IExecutionPeriod executionPeriod = (IExecutionPeriod) obj;
             return getIdInternal().equals(executionPeriod.getIdInternal());
         }
         return super.equals(obj);

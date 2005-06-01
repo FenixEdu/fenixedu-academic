@@ -30,10 +30,10 @@ public class ExecutionYear extends ExecutionYear_Base {
      */
     public boolean equals(Object obj) {
         if (obj instanceof IExecutionYear) {
-            IExecutionYear executionYear = (IExecutionYear) obj;
+            final IExecutionYear executionYear = (IExecutionYear) obj;
             return getYear().equals(executionYear.getYear());
         }
-        return false;
+        return super.equals(obj);
     }
 
     public String toString() {
