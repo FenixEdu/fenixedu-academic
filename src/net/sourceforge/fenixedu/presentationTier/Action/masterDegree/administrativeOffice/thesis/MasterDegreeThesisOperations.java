@@ -102,7 +102,7 @@ public class MasterDegreeThesisOperations extends DispatchAction {
             request.setAttribute(sessionConstant, infoTeachers);
         }
 
-        return (List<InfoTeacher>) infoTeachers;
+        return infoTeachers;
 
     }
 
