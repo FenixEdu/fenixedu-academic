@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IProfessorship;
+import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.ISummary;
@@ -36,6 +37,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -103,7 +105,7 @@ public class ReadSummaries implements IService {
         //execution courses's professorships for display to filter summary
         IPersistentProfessorship persistentProfessorship = persistentSuport
                 .getIPersistentProfessorship();
-        List professorships = persistentProfessorship.readByExecutionCourse(executionCourseId);
+        List<IProfessorship> professorships = persistentProfessorship.readByExecutionCourse(executionCourseId);
         List infoProfessorships = new ArrayList();
         if (professorships != null && professorships.size() > 0) {
             infoProfessorships = (List) CollectionUtils.collect(professorships, new Transformer() {
@@ -149,33 +151,11 @@ public class ReadSummaries implements IService {
             }
         }
 
-        if (professorShiftId != null && professorShiftId.intValue() > 0) {
-            IProfessorship professorshipSelected = (IProfessorship) persistentProfessorship.readByOID(
-                    Professorship.class, professorShiftId);
-
-            if (professorshipSelected == null || professorshipSelected.getTeacher() == null) {
-                throw new FenixServiceException("no.shift");
-            }
-
-            List summariesByProfessorship = persistentSummary.readByTeacher(executionCourseId,
-                    professorshipSelected.getTeacher().getTeacherNumber());
-
-            if (summaries != null) {
-                summaries = (List) CollectionUtils.intersection(summaries, summariesByProfessorship);
-            } else {
-                summaries = summariesByProfessorship;
-            }
-        }
-
-        if (professorShiftId != null && professorShiftId.equals(new Integer(-1))) {
-            List summariesByTeacher = persistentSummary.readByOtherTeachers(executionCourseId);
-
-            if (summaries != null) {
-                summaries = (List) CollectionUtils.intersection(summaries, summariesByTeacher);
-            } else {
-                summaries = summariesByTeacher;
-            }
-        }
+        summaries = readTeacherSummaries(executionCourseId, professorShiftId, persistentProfessorship, persistentSummary, summaries);
+        
+        summaries = readSummariesOfOtherTeachers(executionCourseId, professorShiftId, persistentSummary, summaries);        
+        
+        summaries = readSummariesOfOtherTeachersIfResponsible(executionCourseId, professorShiftId, persistentSuport, persistentSummary, summaries, professorships);
 
         if ((summaryType == null || summaryType.intValue() == 0)
                 && (shiftId == null || shiftId.intValue() == 0)
@@ -210,6 +190,70 @@ public class ReadSummaries implements IService {
         SiteView siteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
 
         return siteView;
+    }
+
+    protected List readTeacherSummaries(Integer executionCourseId, Integer professorShiftId, IPersistentProfessorship persistentProfessorship, IPersistentSummary persistentSummary, List summaries) throws ExcepcaoPersistencia, FenixServiceException {
+        if (professorShiftId != null && professorShiftId.intValue() > 0) {
+            IProfessorship professorshipSelected = (IProfessorship) persistentProfessorship.readByOID(
+                    Professorship.class, professorShiftId);
+
+            if (professorshipSelected == null || professorshipSelected.getTeacher() == null) {
+                throw new FenixServiceException("no.shift");
+            }
+
+            List summariesByProfessorship = persistentSummary.readByTeacher(executionCourseId,
+                    professorshipSelected.getTeacher().getTeacherNumber());
+
+            if (summaries != null) {
+                summaries = (List) CollectionUtils.intersection(summaries, summariesByProfessorship);
+            } else {
+                summaries = summariesByProfessorship;
+            }
+        }
+        return summaries;
+    }
+
+    protected List readSummariesOfOtherTeachersIfResponsible(Integer executionCourseId, Integer professorShiftId, ISuportePersistente persistentSuport, IPersistentSummary persistentSummary, List summaries, List<IProfessorship> professorships) throws ExcepcaoPersistencia {
+        IProfessorship professorship = getProfessorship(professorShiftId, professorships);
+        if(professorship != null){
+            IPersistentResponsibleFor persistentResponsibleFor = persistentSuport.getIPersistentResponsibleFor();
+            IResponsibleFor responsibleFor = persistentResponsibleFor.readByTeacherAndExecutionCourse(professorship.getTeacher().getIdInternal(), executionCourseId);
+                    
+            if ((professorShiftId != null) && (responsibleFor != null)) {            
+                List summariesByTeacher = persistentSummary.readByOtherTeachers(executionCourseId);
+    
+                if (summaries != null) {
+                    summaries = (List) CollectionUtils.union(summaries, summariesByTeacher);
+                } else {
+                    summaries = summariesByTeacher;
+                }
+            }
+        }
+        return summaries;
+    }
+
+    protected List readSummariesOfOtherTeachers(Integer executionCourseId, Integer professorShiftId, IPersistentSummary persistentSummary, List summaries) throws ExcepcaoPersistencia {
+        if (professorShiftId != null && professorShiftId.equals(new Integer(-1))) {
+            List summariesByTeacher = persistentSummary.readByOtherTeachers(executionCourseId);
+
+            if (summaries != null) {
+                summaries = (List) CollectionUtils.intersection(summaries, summariesByTeacher);
+            } else {
+                summaries = summariesByTeacher;
+            }
+        }
+        return summaries;
+    }
+
+    protected IProfessorship getProfessorship(Integer professorShiftId, List<IProfessorship> professorships) {
+        IProfessorship professorship = null;
+        for(IProfessorship professorship2 : professorships){
+            if(professorship2.getIdInternal().equals(professorShiftId)){
+                professorship = professorship2;
+                break;
+            }
+        }
+        return professorship;
     }
 
     private List findLesson(IPersistentSummary persistentSummary, IExecutionCourse executionCourse,
