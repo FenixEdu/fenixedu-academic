@@ -15,8 +15,6 @@ import net.sourceforge.fenixedu.domain.ITeacher;
 public interface IPersistentTeacher extends IPersistentObject {
 
     public ITeacher readTeacherByUsername(String userName) throws ExcepcaoPersistencia;
-
-    public List readAll() throws ExcepcaoPersistencia;
     
     public List readByDepartment(String departmentCode) throws ExcepcaoPersistencia;
 

@@ -120,6 +120,7 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.Teacher -->
    <class-descriptor
    	  class="net.sourceforge.fenixedu.domain.Teacher"
+	  proxy="dynamic"
    	  table="TEACHER">
    	  
       <field-descriptor

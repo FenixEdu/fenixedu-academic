@@ -33,11 +33,7 @@ public class TeacherVO extends VersionedObjectsBase implements IPersistentTeache
         }
         return null;
     }
-
-    public List readAll() throws ExcepcaoPersistencia {
-        return (List) readAll(Teacher.class);
-    }
-    
+   
     public List readByDepartment(String departmentCode) throws ExcepcaoPersistencia {
 
         final List<ITeacher> result = new ArrayList<ITeacher>();
