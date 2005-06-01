@@ -27,6 +27,10 @@
 valueType net.sourceforge.fenixedu.domain.branch.BranchType as BranchType;
 valueType net.sourceforge.fenixedu.util.State as State;
 valueType net.sourceforge.fenixedu.util.SituationName as SituationName;
+valueType net.sourceforge.fenixedu.domain.credits.ServiceExemptionType as ServiceExemptionType;
+valueType net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType as CurricularCourseType;
+valueType net.sourceforge.fenixedu.util.CurricularCourseExecutionScope as CurricularCourseExecutionScope;
+
 
 /*
 *
@@ -285,11 +289,7 @@ class net.sourceforge.fenixedu.domain.credits.CreditLine extends net.sourceforge
     
         
         class net.sourceforge.fenixedu.domain.credits.ServiceExemptionCreditLine extends net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine {
-            interface "
-            public net.sourceforge.fenixedu.domain.credits.ServiceExemptionType getType();
-            
-            public void setType(net.sourceforge.fenixedu.domain.credits.ServiceExemptionType type);
-            "
+            ServiceExemptionType type;
         }
 
         
@@ -340,12 +340,10 @@ class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.f
 	String nameEn;
 	String acronym;
 	Integer minimumValueForAcumulatedEnrollments;
-	
+    CurricularCourseType type;
+    CurricularCourseExecutionScope curricularCourseExecutionScope;
+    
 	interface "
-	public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType getType();
-    public void setType(net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType type);
-	public net.sourceforge.fenixedu.util.CurricularCourseExecutionScope getCurricularCourseExecutionScope();
-    public void setCurricularCourseExecutionScope(net.sourceforge.fenixedu.util.CurricularCourseExecutionScope curricularCourseExecutionScope);
     public net.sourceforge.fenixedu.domain.ICurricularYear getCurricularYearByBranchAndSemester(final net.sourceforge.fenixedu.domain.IBranch branch,final Integer semester);
     public String getCurricularCourseUniqueKeyForEnrollment();
     public boolean hasActiveScopeInGivenSemester(final Integer semester);

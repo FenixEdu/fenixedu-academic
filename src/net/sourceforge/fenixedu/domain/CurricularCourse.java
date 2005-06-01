@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
-import net.sourceforge.fenixedu.util.CurricularCourseExecutionScope;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -18,14 +16,7 @@ import org.apache.commons.lang.StringUtils;
  */
 
 public class CurricularCourse extends CurricularCourse_Base {
-    private CurricularCourseType type;
-    private CurricularCourseExecutionScope curricularCourseExecutionScope;
-
-    // For enrollment purposes
-    private String uniqueKeyForEnrollment;
-
-    public CurricularCourse() {
-    }
+    private String uniqueKeyForEnrollment;  // For enrollment purposes
 
     public boolean equals(Object obj) {
         if (obj instanceof ICurricularCourse) {
@@ -52,15 +43,6 @@ public class CurricularCourse extends CurricularCourse_Base {
                 tipoCurso);
     }
 
-    public CurricularCourseExecutionScope getCurricularCourseExecutionScope() {
-        return curricularCourseExecutionScope;
-    }
-
-    public void setCurricularCourseExecutionScope(
-            CurricularCourseExecutionScope curricularCourseExecutionScope) {
-        this.curricularCourseExecutionScope = curricularCourseExecutionScope;
-    }
-
     public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
         super.setDegreeCurricularPlan(degreeCurricularPlan);
         DegreeType tipoCurso = (this.getDegreeCurricularPlan() != null && this.getDegreeCurricularPlan()
@@ -75,14 +57,6 @@ public class CurricularCourse extends CurricularCourse_Base {
                 .getDegree() != null) ? this.getDegreeCurricularPlan().getDegree().getTipoCurso() : null;
         this.uniqueKeyForEnrollment = constructUniqueEnrollmentKey(this.getCode(), this.getName(),
                 tipoCurso);
-    }
-
-    public CurricularCourseType getType() {
-        return type;
-    }
-
-    public void setType(CurricularCourseType type) {
-        this.type = type;
     }
 
     public boolean curricularCourseIsMandatory() {
