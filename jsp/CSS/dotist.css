@@ -13,6 +13,9 @@ body {
 	padding: 0;
 	}
 
+.center { text-align: center; }
+.left { text-align: left; }
+
 table {
 	font: 11px Verdana, Arial, Helvetica, sans-serif;
 	color: #333;

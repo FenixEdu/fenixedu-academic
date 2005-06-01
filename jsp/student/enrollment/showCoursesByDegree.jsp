@@ -6,56 +6,65 @@
 	<span class="error"><bean:message key="error.notAuthorized.ShiftEnrollment" /></span>
 </logic:notPresent>
 <logic:present name="infoShiftEnrollment" >
-<div align="center" >
-	<h2 style="text-align:center">
-		<bean:message key="title.student.shift.enrollment" />
-	</h2>
+
+<div class="center" >
+	<h2><bean:message key="title.student.shift.enrollment" /></h2>
 	<span class="error"><html:errors/></span>
-	<br />
-	<p align="center">
-		<span class="error">
-			<bean:message key="message.warning.student.enrolmentClasses" />
-			&nbsp;<html:link page="<%= "/warningFirst.do" %>"><bean:message key="message.warning.student.enrolmentClasses.Fenix" />
-			</html:link>
-		</span>
-	</p>
-	<p align="left">
-		<h2 class="redtxt" style="text-align:center">
-			<bean:message key="label.useInformation" />:
-		</h2>
-		<bean:message key="message.student.shiftEnrollment" />
-	</p>
 
-	<logic:present name="infoShiftEnrollment" property="infoStudent">
-	<bean:define id="studentIdToEnrollment" name="infoShiftEnrollment" property="infoStudent.idInternal" />
-
-	<logic:present name="infoShiftEnrollment" property="infoExecutionDegree">
-	<bean:define id="degreeSelected" name="infoShiftEnrollment" property="infoExecutionDegree.idInternal" />
+	<p class="left">Aqui pode, <strong>a título condicional</strong>, escolher disciplinas em que não se encontra inscrito curricularmente  mas nas quais pretende efectuar reserva de turma/turnos. Por exemplo, sobre as seguintes condições:</p>
 	
-	<logic:present name="infoShiftEnrollment" property="infoExecutionDegreesLabelsList">	
-	<div class="infotable" style="width:95%;">		
+	<ul class="left" style="margin-left: 4em">
+	<li>Alunos Externos</li>
+	<li>Melhorias de Nota</li>
+	<li>Alunos inscritos em Época Especial 2003/2004</li>
+	<li>Alunos cuja inscrição é efectuada pelo Coordenador de Licenciatura/Tutor</li>
+	<li>Alunos com processos de Equivalência em curso</li>
+	</ul>
+
+<div class="infoselected left">
+<p><bean:message key="message.warning.student.enrolmentClasses" /> <html:link page="<%= "/warningFirst.do" %>"><bean:message key="message.warning.student.enrolmentClasses.Fenix" /></html:link></p>
+</div>
+
+	<ul class="left">
+		<li><bean:message key="message.student.shiftEnrollment" /></li>
+	</ul>
+
+
+<style>
+table { width: 100%; }
+table td { width: 50%; vertical-align: bottom; }
+</style>
+
+		<logic:present name="infoShiftEnrollment" property="infoStudent">
+		<bean:define id="studentIdToEnrollment" name="infoShiftEnrollment" property="infoStudent.idInternal" />
+		<logic:present name="infoShiftEnrollment" property="infoExecutionDegree">
+		<bean:define id="degreeSelected" name="infoShiftEnrollment" property="infoExecutionDegree.idInternal" />
+		<logic:present name="infoShiftEnrollment" property="infoExecutionDegreesLabelsList">	
+
+<table>
+<tr>
+<td class="infotable">
+<div style="overflow: hidden;">		
 	<html:form action="/studentShiftEnrollmentManager" >
 		<html:hidden property="method" value="start" />
 		<html:hidden property="studentId" value="<%= studentIdToEnrollment.toString() %>" />
 		<logic:present name="selectCourses">
-			<html:hidden property="selectCourses" value="<%= pageContext.findAttribute("selectCourses").toString() %>" />
+		<html:hidden property="selectCourses" value="<%= pageContext.findAttribute("selectCourses").toString() %>" />
 		</logic:present>
-		<p style="text-align:left;margin-bottom:0px">
-			<b><bean:message key="label.chooseCourses" />:</b>
-		</p>			
+		<p style="text-align:left;margin-bottom:0px"><b><bean:message key="label.chooseCourses" />:</b></p>			
 		<html:select property="degree" styleClass="degrees" size="1" onchange="this.form.method.value='start'; this.form.submit();" >
-			<html:optionsCollection name="infoShiftEnrollment" property="infoExecutionDegreesLabelsList"/>				
+		<html:optionsCollection name="infoShiftEnrollment" property="infoExecutionDegreesLabelsList"/>				
 		</html:select>
 	</html:form>
+	
 	<html:form action="/studentShiftEnrollmentManagerLoockup" >
 		<html:hidden property="studentId" value="<%= studentIdToEnrollment.toString() %>" />
 		<html:hidden property="degree" value="<%= degreeSelected.toString() %>" />
 		<logic:present name="selectCourses">
-			<html:hidden property="selectCourses" value="<%= pageContext.findAttribute("selectCourses").toString() %>" />
+		<html:hidden property="selectCourses" value="<%= pageContext.findAttribute("selectCourses").toString() %>" />
 		</logic:present>
-		<p style="text-align:left;margin-bottom:0px">
-			<b><bean:message key="label.degreeSelected.courses" />:</b>
-		</p>
+
+		<p style="text-align:left;margin-bottom:0px"><b><bean:message key="label.degreeSelected.courses" />:</b></p>
 		
 		<logic:notPresent name="infoShiftEnrollment" property="infoAttendingCourses">
 			<bean:define id="wantedCoursesSize" value="0"/>
@@ -67,12 +76,12 @@
 		
 		<logic:present name="infoShiftEnrollment" property="infoExecutionCoursesList">
 		<bean:define id="executionCourses" name="infoShiftEnrollment" property="infoExecutionCoursesList" />
-		<html:select property="wantedCourse" size="8" styleClass="courseEnroll">
+		<html:select property="wantedCourse" size="10" styleClass="courseEnroll">
 			<html:options collection="executionCourses" labelProperty="nome" property="idInternal"/>
 		</html:select>
 		<p style="text-align:center;margin-top:5px">
 			<logic:lessThan name="wantedCoursesSize" value="8">			
-				<html:submit property="method" styleClass="inputbutton" style="width:15%">
+				<html:submit property="method" styleClass="inputbutton" style="width:13em">
 					<bean:message key="button.addCourse"/>
 				</html:submit>
 			</logic:lessThan>
@@ -81,34 +90,29 @@
 				<span class="error"><bean:message key="message.maximum.number.curricular.courses.to.enroll" arg0="8"/></span>
 			</logic:greaterEqual>		
 		</p>
-	</div>
-	<br/>
-	<br/>
+</div>
+</td>
 
-	<div class="infotable" style="width:95%;">
-		<p style="text-align:left; margin-bottom:0px">
-			<b>
-				<bean:message key="label.attendCourses" />:
-			</b>
-		</p>
+<td class="infotable">
+	<div style="overflow: hidden;">
+		<p style="text-align:left; margin-bottom:0px"><b><bean:message key="label.attendCourses" />:</b></p>
 		<logic:present name="attendingCourses">
-			<html:select property="removedCourse" size="8" styleClass="courseEnroll">
+			<html:select property="removedCourse" size="10" styleClass="courseEnroll">
 				<html:options collection="attendingCourses" labelProperty="nome"  property="idInternal"/>
 			</html:select>
 			<logic:notEqual name="wantedCoursesSize" value="0">
-				<p style="text-align:center;margin-top:5px">
-					<html:submit property="method" styleClass="inputbutton" style="width:15%">
-						<bean:message key="button.removeCourse"/>
-					</html:submit>
-				</p>
+				<p style="text-align:center;margin-top:5px"><html:submit property="method" styleClass="inputbutton" style="width:13em" ><bean:message key="button.removeCourse"/></html:submit></p>
 			</logic:notEqual>
 		</logic:present>
 		<logic:notPresent name="attendingCourses">
 			<br />
 			<span class="error"><bean:message key="message.noStudentExecutionCourses" /></span>
-		</logic:notPresent>		
-
+		</logic:notPresent>
 	</div>
+</td>
+</tr>
+</table>
+
 	<br/>
 	<br/>
 				
@@ -117,12 +121,15 @@
 			<bean:message key="button.continue.enrolment"/>
 		</html:submit>
 	</logic:notEqual>	
-	<html:submit property="method" styleClass="inputbutton" style="width:35%">
+	<html:submit property="method" styleClass="inputbutton">
 		<bean:message key="button.exit.shift.enrollment"/>
 	</html:submit>		
 	
 	</logic:present>
 	</html:form>
+
+
+
 	</logic:present>
 	</logic:present>
 	</logic:present>	
