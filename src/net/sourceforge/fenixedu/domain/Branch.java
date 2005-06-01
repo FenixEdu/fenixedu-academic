@@ -17,10 +17,6 @@ public class Branch extends Branch_Base {
     /**
      * @author Nuno Correia & Ricardo Rodrigues
      */
-    private net.sourceforge.fenixedu.domain.branch.BranchType branchType;
-
-    public Branch() {
-    }
 
     public boolean equals(Object obj) {
         boolean result = false;
@@ -52,26 +48,6 @@ public class Branch extends Branch_Base {
         return Boolean.FALSE;
     }
 
-    /**
-     * @return Returns the branchType.
-     */
-    public net.sourceforge.fenixedu.domain.branch.BranchType  getBranchType() {
-        return branchType;
-    }
-
-    /**
-     * @param branchType
-     *            The branchType to set.
-     */
-    public void setBranchType(net.sourceforge.fenixedu.domain.branch.BranchType branchType) {
-        this.branchType = branchType;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.IBranch#getCurricularCourseGroups(Util.AreaType)
-     */
     public List getAreaCurricularCourseGroups(final AreaType areaType) {
 
         return (List) CollectionUtils.select(getAreaCurricularCourseGroups(), new Predicate() {
@@ -82,4 +58,5 @@ public class Branch extends Branch_Base {
             }
         });
     }
+
 }

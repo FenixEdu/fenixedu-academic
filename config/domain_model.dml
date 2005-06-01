@@ -4,6 +4,36 @@
  * 
  */
 
+
+/*
+*
+* External classes declarations
+*
+* The following declarations allow the DmlCompiler to recognize the classes in
+* the relations definitions. Remove each declaration once the corresponding 
+* class definition is included.
+* 
+*/
+
+// NONE
+
+
+
+/*
+ * ValueTypes declarations
+ * 
+ */
+
+valueType net.sourceforge.fenixedu.domain.branch.BranchType as BranchType;
+
+
+
+/*
+*
+* Class definitions
+*
+*/
+
 class net.sourceforge.fenixedu.domain.DomainObject implements java.io.Serializable {
 	Integer ackOptLock;
 	Integer idInternal;
@@ -54,35 +84,34 @@ class net.sourceforge.fenixedu.domain.Attends extends net.sourceforge.fenixedu.d
 
 
 class net.sourceforge.fenixedu.domain.AttendsSet extends net.sourceforge.fenixedu.domain.DomainObject {
-        String name;
-        Integer keyGroupProperties;
-        
-        interface "
-        
-       	public java.util.List getAttends();
-        
-        public void addAttendInAttendsSet (net.sourceforge.fenixedu.domain.IAttendInAttendsSet attendInAttendsSet);
+    String name;
+    Integer keyGroupProperties;
+    
+    interface "
+   	public java.util.List getAttends();
+    
+    public void addAttendInAttendsSet (net.sourceforge.fenixedu.domain.IAttendInAttendsSet attendInAttendsSet);
 
-		public void removeAttendInAttendsSet (net.sourceforge.fenixedu.domain.IAttendInAttendsSet attendInAttendsSet);
+	public void removeAttendInAttendsSet (net.sourceforge.fenixedu.domain.IAttendInAttendsSet attendInAttendsSet);
 
-		public boolean existsAttendInAttendsSet (net.sourceforge.fenixedu.domain.IAttendInAttendsSet attendInAttendsSet);
-	
-		public void addStudentGroup (net.sourceforge.fenixedu.domain.IStudentGroup studentGroup);
+	public boolean existsAttendInAttendsSet (net.sourceforge.fenixedu.domain.IAttendInAttendsSet attendInAttendsSet);
 
-		public void removeStudentGroup (net.sourceforge.fenixedu.domain.IStudentGroup studentGroup);
+	public void addStudentGroup (net.sourceforge.fenixedu.domain.IStudentGroup studentGroup);
 
-		public boolean existsStudentGroup (net.sourceforge.fenixedu.domain.IStudentGroup studentGroup);
-	
-		public net.sourceforge.fenixedu.domain.IAttends getStudentAttend(net.sourceforge.fenixedu.domain.IStudent student);
+	public void removeStudentGroup (net.sourceforge.fenixedu.domain.IStudentGroup studentGroup);
 
-		public java.util.List getStudentGroupsWithoutShift();
+	public boolean existsStudentGroup (net.sourceforge.fenixedu.domain.IStudentGroup studentGroup);
 
-		public java.util.List getStudentGroupsWithShift();
+	public net.sourceforge.fenixedu.domain.IAttends getStudentAttend(net.sourceforge.fenixedu.domain.IStudent student);
 
-		public Integer getNumberOfStudentsInAttendsSet();
+	public java.util.List getStudentGroupsWithoutShift();
 
-		public Integer getNumberOfStudentsNotInAttendsSet();
-		"
+	public java.util.List getStudentGroupsWithShift();
+
+	public Integer getNumberOfStudentsInAttendsSet();
+
+	public Integer getNumberOfStudentsNotInAttendsSet();
+	"
 }
 
 
@@ -104,11 +133,9 @@ class net.sourceforge.fenixedu.domain.Branch extends net.sourceforge.fenixedu.do
     String name;
     String nameEn;
     String acronym;
+    BranchType branchType;
     
     interface "
-
-	public net.sourceforge.fenixedu.domain.branch.BranchType getBranchType();
-    public void setBranchType(net.sourceforge.fenixedu.domain.branch.BranchType branchType);
     public java.util.List getAreaCurricularCourseGroups(net.sourceforge.fenixedu.tools.enrollment.AreaType areaType);
     "
 }
@@ -2571,17 +2598,6 @@ class net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction extends 
 class net.sourceforge.fenixedu.domain.WorkLocation extends net.sourceforge.fenixedu.domain.DomainObject {
 	String name;
 }
-
-/*
- *
- * External classes declarations
- *
- * The following declarations allow the DmlCompiler to recognize the classes in
- * the relations definitions. Remove each declaration once the corresponding 
- * class definition is included.
- * 
- */
-
 
 
 /*
