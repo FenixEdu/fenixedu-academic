@@ -40,21 +40,21 @@ public class ReadOpeningProjectFileReport implements IService {
 
             IOpeningProjectFileReport openingProjectFileReport = persistentOpeningProjectFile.getCompleteReport(ReportType.OPENING_PROJECT_FILE,
                     projectCode);
+            if (openingProjectFileReport != null) {
+                openingProjectFileReport.setProjectFinancialEntities(persistentOpeningProjectFile.getReportRubricList(
+                        ReportType.PROJECT_FINANCIAL_ENTITIES, projectCode, true));
 
-            openingProjectFileReport.setProjectFinancialEntities(persistentOpeningProjectFile.getReportRubricList(
-                    ReportType.PROJECT_FINANCIAL_ENTITIES, projectCode, true));
+                openingProjectFileReport.setProjectRubricBudget(persistentOpeningProjectFile.getReportRubricList(ReportType.PROJECT_RUBRIC_BUDGET,
+                        projectCode, true));
 
-            openingProjectFileReport.setProjectRubricBudget(persistentOpeningProjectFile.getReportRubricList(ReportType.PROJECT_RUBRIC_BUDGET,
-                    projectCode, true));
+                openingProjectFileReport.setProjectInvestigationTeam(persistentOpeningProjectFile.getReportRubricList(
+                        ReportType.PROJECT_INVESTIGATION_TEAM, projectCode, false));
 
-            openingProjectFileReport.setProjectInvestigationTeam(persistentOpeningProjectFile.getReportRubricList(
-                    ReportType.PROJECT_INVESTIGATION_TEAM, projectCode, false));
+                openingProjectFileReport.setProjectMembersBudget(p.getIPersistentProjectMemberBudget().getCompleteReport(ReportType.PROJECT_MEMBERS,
+                        projectCode));
 
-            openingProjectFileReport.setProjectMembersBudget(p.getIPersistentProjectMemberBudget().getCompleteReport(ReportType.PROJECT_MEMBERS,
-                    projectCode));
-
-            infoOpeningProjectFileReport = InfoOpeningProjectFileReport.newInfoFromDomain(openingProjectFileReport);
-
+                infoOpeningProjectFileReport = InfoOpeningProjectFileReport.newInfoFromDomain(openingProjectFileReport);
+            }
         }
         return infoOpeningProjectFileReport;
     }

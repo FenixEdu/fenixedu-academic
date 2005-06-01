@@ -9,12 +9,14 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoMovementReport;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
+import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProjectBudgetaryBalanceReportLine;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProjectReport;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoRevenueReportLine;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.projectsManagement.IMovementReport;
+import net.sourceforge.fenixedu.domain.projectsManagement.IProjectBudgetaryBalanceReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.IRevenueReportLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -57,6 +59,15 @@ public class ReadReport implements IService {
                     List lines = p.getIPersistentMovementReport().getCompleteReport(reportType, projectCode);
                     for (int i = 0; i < lines.size(); i++)
                         infoLines.add(InfoMovementReport.newInfoFromDomain((IMovementReport) lines.get(i)));
+                }
+            } else if (reportType.equals(ReportType.PROJECT_BUDGETARY_BALANCE)) {
+                if (projectCode != null
+                        && (p.getIPersistentProject().isUserProject(userNumber, projectCode) || persistentSuport.getIPersistentProjectAccess()
+                                .hasPersonProjectAccess(userView, projectCode))) {
+                    infoReport.setInfoProject(InfoProject.newInfoFromDomain(p.getIPersistentProject().readProject(projectCode)));
+                    List lines = p.getIPersistentProjectBudgetaryBalanceReport().getCompleteReport(reportType, projectCode);
+                    for (int i = 0; i < lines.size(); i++)
+                        infoLines.add(InfoProjectBudgetaryBalanceReportLine.newInfoFromDomain((IProjectBudgetaryBalanceReportLine) lines.get(i)));
                 }
             }
             infoReport.setLines(infoLines);
