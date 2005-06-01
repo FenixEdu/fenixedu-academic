@@ -1,10 +1,7 @@
-<!-- ******************************************************************************************************************************* -->
-<!-- Definitions for net.sourceforge.fenixedu.domain.ExecutionPeriod -->
-<!-- ******************************************************************************************************************************* -->
- <class-descriptor
+<class-descriptor
          class="net.sourceforge.fenixedu.domain.ExecutionPeriod"
-		 proxy="dynamic"
-         table="EXECUTION_PERIOD">
+         table="EXECUTION_PERIOD"
+		 proxy="dynamic">
        <field-descriptor
           name="idInternal"
           column="ID_INTERNAL"
@@ -40,14 +37,12 @@
           name="beginDate"
           column="BEGIN_DATE"
           jdbc-type="DATE"
-          conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
-          />
+          conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"/>
         <field-descriptor
           name="endDate"
           column="END_DATE"
           jdbc-type="DATE"
-          conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
-          />
+          conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"/>
        <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
