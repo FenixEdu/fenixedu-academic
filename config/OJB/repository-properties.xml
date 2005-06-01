@@ -9,7 +9,7 @@
 	<field-descriptor name="value" column="VALUE" jdbc-type="VARCHAR" nullable="false" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.classProperties.GeneralClassPropertyValueJava2SqlConversion"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR" nullable="false"/>      
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
-    <reference-descriptor name="executionCourse" class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse" proxy="true">
+    <reference-descriptor name="executionCourse" class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse">
 	    <foreignkey field-ref="keyExecutionCourse"/>
     </reference-descriptor>
 </class-descriptor>

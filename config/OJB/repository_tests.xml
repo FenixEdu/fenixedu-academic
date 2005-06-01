@@ -85,7 +85,6 @@
 	<reference-descriptor
          name="executionCourse"
          class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-         proxy="true"
     >
     <foreignkey field-ref="keyExecutionCourse"/>
 	</reference-descriptor>
@@ -539,10 +538,6 @@
 			name="associatedExecutionCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 			indirection-table="EXAM_EXECUTION_COURSE"
-			proxy="true"
-			auto-retrieve="true"
-			auto-update="false"
-			auto-delete="false"
 			refresh="true"
 			>
 		<fk-pointing-to-this-class column="KEY_EVALUATION"/>

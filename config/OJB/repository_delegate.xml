@@ -51,8 +51,7 @@
 	</reference-descriptor>
 	<reference-descriptor
 			name="executionYear"
-			class-ref="net.sourceforge.fenixedu.domain.ExecutionYear"
-			proxy="false">
+			class-ref="net.sourceforge.fenixedu.domain.ExecutionYear">
 		<foreignkey field-ref="keyExecutionYear"/>
 	</reference-descriptor>    
 	 <reference-descriptor

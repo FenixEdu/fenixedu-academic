@@ -205,7 +205,6 @@
          name="disciplinaExecucao"
          class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 		 refresh="true"
-		 auto-retrieve="true"
 		 >
          <foreignkey field-ref="chaveDisciplinaExecucao"/>
       </reference-descriptor>
@@ -476,7 +475,6 @@
       <reference-descriptor
          name="disciplinaExecucao"
          class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-         proxy="true"
       >
          <foreignkey field-ref="chaveDisciplinaExecucao"/>
       </reference-descriptor> 
@@ -553,10 +551,6 @@
 			name="associatedExecutionCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 			indirection-table="EXAM_EXECUTION_COURSE"
-			proxy="true"
-			auto-retrieve="true"
-			auto-update="false"
-			auto-delete="false"
 			>
 		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
 		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
@@ -927,10 +921,6 @@
 			name="associatedExecutionCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 			indirection-table="EXAM_EXECUTION_COURSE"
-			proxy="true"
-			auto-retrieve="true"
-			auto-update="false"
-			auto-delete="false"
 			refresh="true"
 			>
 		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
@@ -1035,7 +1025,6 @@
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 			indirection-table="EXAM_EXECUTION_COURSE"
 			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			proxy="true"
 			refresh="true"
 			>
 		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
@@ -1151,10 +1140,6 @@
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 			indirection-table="EXAM_EXECUTION_COURSE"
 			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			proxy="true"
-			auto-retrieve="true"
-			auto-update="false"
-			auto-delete="false"
 			refresh="true"
 			>
 		<fk-pointing-to-this-class column="KEY_EVALUATION"/>

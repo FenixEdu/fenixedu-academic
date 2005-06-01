@@ -56,7 +56,6 @@
     <reference-descriptor
          name="executionCourse"
          class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-         proxy="true"
     >
 	<foreignkey field-ref="keyExecutionCourse"/>
 	
@@ -328,7 +327,6 @@
     <reference-descriptor
          name="executionCourse"
          class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-         proxy="true"
     >
 	<foreignkey field-ref="keyExecutionCourse"/>
     </reference-descriptor>
@@ -407,7 +405,6 @@
     <reference-descriptor
          name="executionCourse"
          class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-         proxy="true"
     >
 		<foreignkey field-ref="keyExecutionCourse"/>	
 	</reference-descriptor>
@@ -618,7 +615,6 @@
     <reference-descriptor
          name="executionCourse"
          class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-         proxy="true"
     >
     	<foreignkey field-ref="keyExecutionCourse"/>
     </reference-descriptor>
@@ -904,7 +900,6 @@
 	<reference-descriptor
          name="executionCourse"
          class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-         proxy="false"
     >
 	  <foreignkey field-ref="keyExecutionCourse"/>
     </reference-descriptor> 
@@ -1162,7 +1157,6 @@
 	<reference-descriptor
          name="executionCourse"
          class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-         proxy="true"
     >
 	<foreignkey field-ref="keyExecutionCourse"/>
 	</reference-descriptor>
@@ -1185,7 +1179,6 @@
 	<reference-descriptor
          name="senderExecutionCourse"
          class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-         proxy="true"
     >
 	<foreignkey field-ref="keySenderExecutionCourse"/>
 	</reference-descriptor>

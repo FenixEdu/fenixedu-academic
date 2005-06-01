@@ -1,78 +1,78 @@
-<!-- ******************************************************************************************************************************* -->
-<!-- Definitions for net.sourceforge.fenixedu.domain.ExecutionYear -->
-<!-- ******************************************************************************************************************************* -->
- <class-descriptor
-         class="net.sourceforge.fenixedu.domain.ExecutionYear"
+<class-descriptor class="net.sourceforge.fenixedu.domain.ExecutionYear"
          table="EXECUTION_YEAR"
-    >
-       <field-descriptor 
-          name="idInternal"
-          column="ID_INTERNAL"
-          jdbc-type="INTEGER"
-          primarykey="true"
-          autoincrement="true"
-       />	  
-	   <field-descriptor
-          name="keyInsuranceValue"
-          column="KEY_INSURANCE_VALUE"
-          jdbc-type="INTEGER"
-	   />
-       <field-descriptor 
-          name="year"
-          column="YEAR"
-          jdbc-type="VARCHAR"
-       />       
-       <field-descriptor
-          name="state"
-          column="STATE"
-	      conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaPeriodState2SqlPeriodState"
-          jdbc-type="VARCHAR"/>       
-       <field-descriptor
-          name="beginDate"
-          column="BEGIN_DATE"
-          jdbc-type="DATE"
-          conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
-       />
-       <field-descriptor
-          name="endDate"
-          column="END_DATE"
-          jdbc-type="DATE"
-          conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
-        />          
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
-      <collection-descriptor
-			name="executionPeriods"
-			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
-			refresh="true">
-		<inverse-foreignkey field-ref="keyExecutionYear"/>
-	  </collection-descriptor>  
-	  <collection-descriptor
-			name="delegate"
-			element-class-ref="net.sourceforge.fenixedu.domain.student.Delegate"
-			proxy="true">
-		<inverse-foreignkey field-ref="keyExecutionYear"/>
-	  </collection-descriptor>  
-	  <collection-descriptor
-			name="insuranceTransactions"
-			element-class-ref="net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction"
-			proxy="true">
-		<inverse-foreignkey field-ref="keyExecutionYear"/>
-	  </collection-descriptor>  
-	  <collection-descriptor
-			name="executionDegrees"
-			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
-			proxy="true">
-		<inverse-foreignkey field-ref="academicYear"/>
-	  </collection-descriptor>  
-	  <collection-descriptor
-			name="students"
-			element-class-ref="net.sourceforge.fenixedu.domain.Student"
-			proxy="true">
-		<inverse-foreignkey field-ref="keyRegistrationYear"/>
-	  </collection-descriptor>  
-    </class-descriptor> 
+		 proxy="dynamic">
+   <field-descriptor 
+      name="idInternal"
+      column="ID_INTERNAL"
+      jdbc-type="INTEGER"
+      primarykey="true"
+      autoincrement="true"
+   />
+  <field-descriptor
+  	name="ackOptLock"
+  	column="ACK_OPT_LOCK"
+  	jdbc-type="INTEGER"
+  	locking="true"
+  />
+   <field-descriptor
+      name="keyInsuranceValue"
+      column="KEY_INSURANCE_VALUE"
+      jdbc-type="INTEGER"
+   />
+   <field-descriptor 
+      name="year"
+      column="YEAR"
+      jdbc-type="VARCHAR"
+   />       
+   <field-descriptor
+      name="state"
+      column="STATE"
+      conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaPeriodState2SqlPeriodState"
+      jdbc-type="VARCHAR"/>       
+   <field-descriptor
+      name="beginDate"
+      column="BEGIN_DATE"
+      jdbc-type="DATE"
+      conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
+   />
+   <field-descriptor
+      name="endDate"
+      column="END_DATE"
+      jdbc-type="DATE"
+      conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
+    />
+  <collection-descriptor
+		name="executionPeriods"
+		element-class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
+		refresh="true">
+	<inverse-foreignkey field-ref="keyExecutionYear"/>
+  </collection-descriptor>  
+  <collection-descriptor
+		name="delegate"
+		element-class-ref="net.sourceforge.fenixedu.domain.student.Delegate"
+		proxy="true"
+		refresh="true">
+	<inverse-foreignkey field-ref="keyExecutionYear"/>
+  </collection-descriptor>  
+  <collection-descriptor
+		name="insuranceTransactions"
+		element-class-ref="net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction"
+		proxy="true"
+		refresh="true">
+	<inverse-foreignkey field-ref="keyExecutionYear"/>
+  </collection-descriptor>  
+  <collection-descriptor
+		name="executionDegrees"
+		element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
+		proxy="true"
+		refresh="true">
+	<inverse-foreignkey field-ref="academicYear"/>
+  </collection-descriptor>  
+  <collection-descriptor
+		name="students"
+		element-class-ref="net.sourceforge.fenixedu.domain.Student"
+		proxy="true"
+		refresh="true">
+	<inverse-foreignkey field-ref="keyRegistrationYear"/>
+  </collection-descriptor>  
+</class-descriptor> 

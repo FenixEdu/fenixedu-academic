@@ -115,8 +115,7 @@
 	<collection-descriptor
 			name="associatedExecutionCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-			refresh="true"
-			proxy="true">
+			refresh="true">
 		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
 	</collection-descriptor>
 	<collection-descriptor
