@@ -34,6 +34,11 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher {
         return (ITeacher) queryObject(Teacher.class, criteria);
     }
     
+    public List readAll() throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        return queryList(Teacher.class, criteria);
+    }
+    
     public List readByDepartment(String departmentCode) throws ExcepcaoPersistencia {
         List employees = getEmployees(departmentCode);
         Collection teacherNumberList = CollectionUtils.collect(employees, new Transformer() {

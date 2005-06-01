@@ -16,6 +16,8 @@ public interface IPersistentTeacher extends IPersistentObject {
 
     public ITeacher readTeacherByUsername(String userName) throws ExcepcaoPersistencia;
 
+    public List readAll() throws ExcepcaoPersistencia;
+    
     public List readByDepartment(String departmentCode) throws ExcepcaoPersistencia;
 
     public ITeacher readByNumber(Integer teacherNumber) throws ExcepcaoPersistencia;
