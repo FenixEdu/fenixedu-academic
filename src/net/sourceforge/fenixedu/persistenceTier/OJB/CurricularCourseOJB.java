@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
@@ -50,11 +49,11 @@ public class CurricularCourseOJB extends PersistentObjectOJB implements IPersist
 
 
     public List readbyCourseCodeAndDegreeCurricularPlan(String curricularCourseCode,
-            IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
+            Integer degreeCurricularPlanID) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("code", curricularCourseCode);
-        criteria.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlan.getIdInternal());
+        criteria.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlanID);
 
         return queryList(CurricularCourse.class, criteria);
     }

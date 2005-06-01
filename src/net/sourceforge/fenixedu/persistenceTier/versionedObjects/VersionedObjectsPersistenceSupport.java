@@ -87,6 +87,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.Coordinator
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CountryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CourseReportVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularCourseEquivalenceVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularCourseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurriculumVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CursoExecucaoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CursoVO;
@@ -570,7 +571,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentCurricularCourse getIPersistentCurricularCourse() {
-        return null;
+        return new CurricularCourseVO();
     }
 
     public IPersistentGuideEntry getIPersistentGuideEntry() {

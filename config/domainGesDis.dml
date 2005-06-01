@@ -204,7 +204,7 @@ class net.sourceforge.fenixedu.domain.EvaluationMethod extends net.sourceforge.f
 	Integer keyExecutionCourse;
 }
 
-/* DONE: DMl */
+/* DONE: DML */
 class net.sourceforge.fenixedu.domain.Room extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyBuilding;
 	String nome;

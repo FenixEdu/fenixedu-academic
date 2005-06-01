@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.persistenceTier;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 
 /**
  * @author dcs-rjao 25/Mar/2003
@@ -21,7 +20,7 @@ public interface IPersistentCurricularCourse extends IPersistentObject {
 			Integer degreeCurricularPlanKey, Boolean basic) throws ExcepcaoPersistencia;
 
     public List readbyCourseCodeAndDegreeCurricularPlan(String curricularCourseCode,
-            IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;
+            Integer degreeCurricularPlanID) throws ExcepcaoPersistencia;
 	
     public List readbyCourseNameAndDegreeCurricularPlan(String curricularCourseName,
 			Integer degreeCurricularPlanKey) throws ExcepcaoPersistencia;
