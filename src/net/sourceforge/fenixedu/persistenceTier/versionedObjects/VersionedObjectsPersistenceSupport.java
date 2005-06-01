@@ -126,6 +126,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.Responsible
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.RestrictionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ScientificAreaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SecretaryEnrolmentStudentVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SectionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPaymentFileEntryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPaymentFileVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SiteVO;

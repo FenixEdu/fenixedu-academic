@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.equivalence;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.utils.enrolment.DeleteEnrolmentUtils;
 import net.sourceforge.fenixedu.dataTransferObject.equivalence.InfoEquivalenceContext;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEquivalence;
