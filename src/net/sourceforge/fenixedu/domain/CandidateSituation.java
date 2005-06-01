@@ -19,8 +19,6 @@ import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
 public class CandidateSituation extends CandidateSituation_Base {
-	private State validation = null; // Candidate Situation Validation
-	private SituationName situation = null; // Candidate Situation
 
 	public CandidateSituation() {
 	    setMasterDegreeCandidate(null);
@@ -60,43 +58,4 @@ public class CandidateSituation extends CandidateSituation_Base {
 		return false;
 	}
 	
-	/**
-	 * Returns the situation.
-	 * 
-	 * @return SituationName
-	 */
-	public SituationName getSituation() {
-		return situation;
-	}
-
-	/**
-	 * Returns the validation.
-	 * 
-	 * @return State
-	 */
-	public State getValidation() {
-		return validation;
-	}
-
-
-	/**
-	 * Sets the situation.
-	 * 
-	 * @param situation
-	 *            The situation to set
-	 */
-	public void setSituation(SituationName situation) {
-		this.situation = situation;
-	}
-
-	/**
-	 * Sets the validation.
-	 * 
-	 * @param validation
-	 *            The validation to set
-	 */
-	public void setValidation(State validation) {
-		this.validation = validation;
-	}
-
-} // End of class definition
+}

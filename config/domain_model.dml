@@ -25,8 +25,8 @@
  */
 
 valueType net.sourceforge.fenixedu.domain.branch.BranchType as BranchType;
-
-
+valueType net.sourceforge.fenixedu.util.State as State;
+valueType net.sourceforge.fenixedu.util.SituationName as SituationName;
 
 /*
 *
@@ -180,16 +180,8 @@ class net.sourceforge.fenixedu.domain.CandidateSituation extends net.sourceforge
 	Integer candidateKey;
 	Integer situationKey;
 	Date date;
-	
-	interface "
-		public net.sourceforge.fenixedu.util.SituationName getSituation();
-		
-		public void setSituation(net.sourceforge.fenixedu.util.SituationName situation);
-		
-		public net.sourceforge.fenixedu.util.State getValidation();
-		
-		public void setValidation(net.sourceforge.fenixedu.util.State validation);
-	"
+    State validation;
+    SituationName situation;
 }
 
 
