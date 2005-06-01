@@ -38,11 +38,8 @@ import org.apache.ojb.odmg.HasBroker;
 
 public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersistentExecutionCourse {
 
-    public ExecutionCourseOJB() {
-    }
-
     public List readAll() throws ExcepcaoPersistencia {
-        return queryList(ExecutionCourse.class, new Criteria());
+        return queryList(ExecutionCourse.class, null);
     }
 
     /**
