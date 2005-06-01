@@ -282,7 +282,7 @@ public class ProcessSibsPaymentFile implements IService {
                     .readGratuityValuesByExecutionDegree(executionDegree);
             IGratuitySituation gratuitySituation = gratuitySituationDAO
                     .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
-                            studentCurricularPlan, gratuityValues);
+                            studentCurricularPlan.getIdInternal(), gratuityValues.getIdInternal());
 
             if (gratuitySituation == null) {
                 // Change status to be solved manually because the student does

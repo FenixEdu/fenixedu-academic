@@ -54,7 +54,7 @@ public class ReadGratuitySituationsByStudentNumber implements IService {
                 studentCurricularPlan = (IStudentCurricularPlan) it.next();
 
                 gratuitySituationsList = persistentGratuitySituation
-                        .readGratuitySituatuionListByStudentCurricularPlan(studentCurricularPlan);
+                        .readGratuitySituatuionListByStudentCurricularPlan(studentCurricularPlan.getIdInternal());
 
                 Iterator itGratuitySituations = gratuitySituationsList.iterator();
                 while (itGratuitySituations.hasNext()) {

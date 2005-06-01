@@ -141,7 +141,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
                 }
 
                 List gratuitySituationList = gratuitySituationDAO
-                        .readGratuitySituationsByDegreeCurricularPlan(degreeCurricularPlan);
+                        .readGratuitySituationsByDegreeCurricularPlan(degreeCurricularPlan.getIdInternal());
 
                 for (Iterator iterator = gratuitySituationList.iterator(); iterator.hasNext();) {
 

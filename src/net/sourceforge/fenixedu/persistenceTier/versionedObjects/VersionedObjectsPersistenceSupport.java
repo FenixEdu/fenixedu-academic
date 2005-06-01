@@ -104,6 +104,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamStudent
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionPeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionYearVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuitySituationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideSituationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InsuranceValueVO;
@@ -125,7 +126,8 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.Responsible
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.RestrictionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ScientificAreaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SecretaryEnrolmentStudentVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SectionVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPaymentFileEntryVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPaymentFileVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SiteVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentKindVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SummaryVO;
@@ -471,7 +473,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentSibsPaymentFile getIPersistentSibsPaymentFile() {
-        return null;
+        return new SibsPaymentFileVO();
     }
 
     public IPersistentGrantSubsidy getIPersistentGrantSubsidy() {
@@ -611,7 +613,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentGratuitySituation getIPersistentGratuitySituation() {
-        return null;
+        return new GratuitySituationVO();
     }
 
     public IPersistentOnlineTest getIPersistentOnlineTest() {
@@ -687,7 +689,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentSibsPaymentFileEntry getIPersistentSibsPaymentFileEntry() {
-        return null;
+        return new SibsPaymentFileEntryVO();
     }
 
     public IPersistentFinalDegreeWork getIPersistentFinalDegreeWork() {

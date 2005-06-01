@@ -178,8 +178,8 @@ public class EditReimbursementGuide implements IService {
                                 .getExecutionDegree();
 
                         IGratuitySituation gratuitySituation = persistentGratuitySituation
-                                .readGratuitySituationByExecutionDegreeAndStudent(executionDegree,
-                                        student);
+                                .readGratuitySituationByExecutionDegreeAndStudent(executionDegree.getIdInternal(),
+                                        student.getIdInternal());
 
                         if (gratuitySituation == null) {
                             throw new FenixServiceException(

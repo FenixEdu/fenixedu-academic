@@ -267,8 +267,8 @@ public class EditGuideInformation implements IService {
 
                             executionDegree = guide.getExecutionDegree();
                             gratuitySituation = persistentGratuitySituation
-                                    .readGratuitySituationByExecutionDegreeAndStudent(executionDegree,
-                                            student);
+                                    .readGratuitySituationByExecutionDegreeAndStudent(executionDegree.getIdInternal(),
+                                            student.getIdInternal());
 
                             paymentTransaction = new GratuityTransaction(guideEntry.getPrice(),
                                     new Timestamp(Calendar.getInstance().getTimeInMillis()), guideEntry

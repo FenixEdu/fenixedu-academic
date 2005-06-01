@@ -42,7 +42,7 @@ public class ReadGratuitySituationByStudentCurricularPlanByGratuityValues implem
 
             gratuitySituation = persistentGratuitySituation
                     .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
-                            studentCurricularPlan, gratuityValues);
+                            studentCurricularPlan.getIdInternal(), gratuityValues.getIdInternal());
         } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();
             throw new FenixServiceException("error.impossible.insertExemptionGratuity");

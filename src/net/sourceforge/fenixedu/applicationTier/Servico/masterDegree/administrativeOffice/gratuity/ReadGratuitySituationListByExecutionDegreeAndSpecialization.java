@@ -136,7 +136,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 
                     IGratuitySituation gratuitySituation = gratuitySituationDAO
                             .readByStudentCurricularPlanAndGratuityValuesAndGratuitySituationType(
-                                    studentCurricularPlan, gratuityValues, gratuitySituationType);
+                                    studentCurricularPlan.getIdInternal(), gratuityValues.getIdInternal(), gratuitySituationType);
 
                     if (gratuitySituation == null) {
                         //ignore them, because they will be created in the next

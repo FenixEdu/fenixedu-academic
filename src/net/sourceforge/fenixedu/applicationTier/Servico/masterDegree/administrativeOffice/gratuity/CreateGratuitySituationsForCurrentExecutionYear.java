@@ -84,7 +84,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
 
                     IGratuitySituation gratuitySituation = gratuitySituationDAO
                             .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
-                                    studentCurricularPlan, gratuityValues);
+                                    studentCurricularPlan.getIdInternal(), gratuityValues.getIdInternal());
 
                     if (gratuitySituation == null) {
                         createGratuitySituation(executionYear, gratuityValues, studentCurricularPlan,

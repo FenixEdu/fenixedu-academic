@@ -41,7 +41,7 @@ public class CreateGratuityTransaction implements IService {
         IStudent student = sp.getIPersistentStudent().readByPersonAndDegreeType(guide.getPerson(),
                 DegreeType.MASTER_DEGREE);
         IGratuitySituation gratuitySituation = sp.getIPersistentGratuitySituation()
-                .readGratuitySituationByExecutionDegreeAndStudent(guide.getExecutionDegree(), student);
+                .readGratuitySituationByExecutionDegreeAndStudent(guide.getExecutionDegree().getIdInternal(), student.getIdInternal());
         IPersonAccount personAccount = sp.getIPersistentPersonAccount().readByPerson(guide.getPerson().getIdInternal());
         IPerson responsible = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
 

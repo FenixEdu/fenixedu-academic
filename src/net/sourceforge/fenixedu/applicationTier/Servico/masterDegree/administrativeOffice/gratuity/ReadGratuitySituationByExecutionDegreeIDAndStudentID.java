@@ -34,16 +34,16 @@ public class ReadGratuitySituationByExecutionDegreeIDAndStudentID implements ISe
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IExecutionDegree cursoExecucao = (IExecutionDegree) sp.getIPersistentExecutionDegree()
+            IExecutionDegree executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree()
                     .readByOID(ExecutionDegree.class, executionDegreeID);
             IStudent student = (IStudent) sp.getIPersistentStudent().readByOID(Student.class, studentID);
 
-            if ((cursoExecucao == null) || (student == null)) {
+            if ((executionDegree == null) || (student == null)) {
                 return null;
             }
 
             IGratuitySituation gratuitySituation = sp.getIPersistentGratuitySituation()
-                    .readGratuitySituationByExecutionDegreeAndStudent(cursoExecucao, student);
+                    .readGratuitySituationByExecutionDegreeAndStudent(executionDegree.getIdInternal(), student.getIdInternal());
 
             infoGratuitySituation = InfoGratuitySituation.newInfoFromDomain(gratuitySituation);
 
