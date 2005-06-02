@@ -32,12 +32,9 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     public boolean equals(Object obj) {
         if (obj instanceof IProfessorship) {
             IProfessorship professorship = (IProfessorship) obj;
-
-            return this.getTeacher().equals(professorship.getTeacher())
-                    && this.getExecutionCourse().equals(professorship.getExecutionCourse());
-
+            return getIdInternal().equals(professorship.getIdInternal());
         }
-        return false;
+        return super.equals(obj);
     }
 
     public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod) {
