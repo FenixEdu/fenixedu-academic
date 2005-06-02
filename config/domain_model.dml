@@ -29,6 +29,7 @@ valueType net.sourceforge.fenixedu.util.CurricularCourseExecutionScope as Curric
 valueType net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType as CurricularCourseType;
 valueType net.sourceforge.fenixedu.domain.GuideState as GuideState;
 valueType net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification as MasterDegreeClassification;
+valueType net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState as ReimbursementGuideState;
 valueType net.sourceforge.fenixedu.util.SituationName as SituationName;
 valueType net.sourceforge.fenixedu.domain.credits.ServiceExemptionType as ServiceExemptionType;
 valueType net.sourceforge.fenixedu.util.State as State;
@@ -1745,23 +1746,17 @@ class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSitua
 	Integer keyReimbursementGuide;
 	String remarks;
 	Integer keyEmployee;
-	
+    State state;
+    ReimbursementGuideState reimbursementGuideState;
+    
 	interface "
-	    public java.util.Calendar getModificationDate();
-	    
-	    public void setModificationDate(java.util.Calendar modificationDate);
-	    
-	    public net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState getReimbursementGuideState();
-	    
-	    public void setReimbursementGuideState(net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState reimbursementGuideState);
-	    
-	    public net.sourceforge.fenixedu.util.State getState();
-	    
-	    public void setState(net.sourceforge.fenixedu.util.State state);
-	    
-	    public java.util.Calendar getOfficialDate();
-	    
-		public void setOfficialDate(java.util.Calendar officialDate);
+    public java.util.Calendar getModificationDate();
+    
+    public void setModificationDate(java.util.Calendar modificationDate);
+    
+    public java.util.Calendar getOfficialDate();
+    
+	public void setOfficialDate(java.util.Calendar officialDate);
 	"	
 }
 
