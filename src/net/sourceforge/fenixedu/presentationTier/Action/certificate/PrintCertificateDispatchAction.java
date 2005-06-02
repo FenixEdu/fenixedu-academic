@@ -307,7 +307,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                                 String conclusionDate = null;
                                 Date endOfScholarshipDate = null;
                                 try {
-                                    Object argsTemp[] = { infoStudentCurricularPlan };
+                                    Object argsTemp[] = { infoStudentCurricularPlan.getIdInternal() };
                                     endOfScholarshipDate = (Date) ServiceManagerServiceFactory
                                             .executeService(userView, "GetEndOfScholarshipDate",
                                                     argsTemp);
@@ -369,7 +369,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                                 // normalEnrolment.add(result);
                                 // }
                                 //							
-                                Object argsAux[] = { infoStudentCurricularPlan };
+                                Object argsAux[] = { infoStudentCurricularPlan.getIdInternal() };
                                 Date date = null;
                                 try {
                                     date = (Date) ServiceManagerServiceFactory.executeService(userView,

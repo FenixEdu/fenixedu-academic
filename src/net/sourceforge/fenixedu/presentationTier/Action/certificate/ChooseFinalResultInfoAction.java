@@ -201,7 +201,7 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 
             Date endOfScholarshipDate = null;
             try {
-                Object argsTemp[] = { infoStudentCurricularPlan };
+                Object argsTemp[] = { studentCurricularPlanID };
                 endOfScholarshipDate = (Date) ServiceManagerServiceFactory.executeService(userView,
                         "GetEndOfScholarshipDate", argsTemp);
 
