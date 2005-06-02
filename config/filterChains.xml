@@ -812,7 +812,7 @@
 	</filterChain>
 	<filterChain>
 		<name>ReadStudentCurricularPlansAccess</name>
-		<expression>StudentCurricularPlanOwnerAuthorization || StudentTutorAuthorization || StudentDegreeCoordinatorAuthorization || DegreeAdministrativeOfficeAuthorization || DegreeAdministrativeOfficeSuperUserAuthorization || CoordinatorAuthorization</expression>
+		<expression>StudentCurricularPlanOwnerAuthorization || StudentTutorAuthorization || StudentDegreeCoordinatorAuthorization || DegreeAdministrativeOfficeAuthorization || DegreeAdministrativeOfficeSuperUserAuthorization || CoordinatorAuthorization || FinalDegreeWorkOrientatorForCandidacy</expression>
 		<description />
 		<invocationTiming>1</invocationTiming>
 		<filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>

@@ -794,4 +794,10 @@
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
+    <filter>
+        <name>FinalDegreeWorkOrientatorForCandidacy</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.FinalDegreeWorkOrientatorForCandidacy</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
 </filterDefinitions>

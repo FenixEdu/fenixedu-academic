@@ -81,6 +81,7 @@ public class CurriculumDispatchAction extends DispatchAction {
         try {
             executeService(username, request);
         } catch (Exception e) {
+            e.printStackTrace();
             return mapping.findForward("NotAuthorized");
         }
 
@@ -141,7 +142,8 @@ public class CurriculumDispatchAction extends DispatchAction {
 		}
 		
 		// qualquer numero de aluno serve para identificar Person
-		String studentNumberTmp = String.valueOf(((InfoStudentCurricularPlan)allInfoSCPs.getInfoStudentCurricularPlans().get(0)).getInfoStudent().getNumber());
+		//String studentNumberTmp = String.valueOf(((InfoStudentCurricularPlan)allInfoSCPs.getInfoStudentCurricularPlans().get(0)).getInfoStudent().getNumber());
+        String studentNumberTmp = String.valueOf(((InfoStudentCurricularPlan) infoSCPs.getInfoStudentCurricularPlans().get(0)).getInfoStudent().getNumber());
 		request.setAttribute("studentNumber",studentNumberTmp);
 
 		request.setAttribute("studentCPs", infoSCPs);
