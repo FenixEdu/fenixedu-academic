@@ -66,6 +66,11 @@ public class GratuitySituationVO extends VersionedObjectsBase implements IPersis
 				studentID)).getStudentCurricularPlans();
 		for (final IStudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
 			List<IGratuitySituation> gratuitySituations = studentCurricularPlan.getGratuitySituations();
+            
+            if(gratuitySituations == null){
+                continue;
+            }
+            
 			for (final IGratuitySituation gratuitySituation : gratuitySituations) {
 				if (gratuitySituation.getGratuityValues().getExecutionDegree().getIdInternal().equals(
 						executionDegreeID)) {
