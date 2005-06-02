@@ -28,6 +28,7 @@ valueType net.sourceforge.fenixedu.tools.enrollment.AreaType as AreaType;
 valueType net.sourceforge.fenixedu.domain.branch.BranchType as BranchType;
 valueType net.sourceforge.fenixedu.util.CurricularCourseExecutionScope as CurricularCourseExecutionScope;
 valueType net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType as CurricularCourseType;
+valueType net.sourceforge.fenixedu.domain.degree.DegreeType as DegreeType;  
 valueType net.sourceforge.fenixedu.domain.GuideState as GuideState;
 valueType net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification as MasterDegreeClassification;
 valueType net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState as ReimbursementGuideState;
@@ -395,6 +396,7 @@ class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourcefo
     class net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup extends net.sourceforge.fenixedu.domain.CurricularCourseGroup {
     }
 
+    
 class net.sourceforge.fenixedu.domain.CurricularCourseScope extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer branchKey;
     Integer curricularCourseKey;
@@ -402,11 +404,14 @@ class net.sourceforge.fenixedu.domain.CurricularCourseScope extends net.sourcefo
     String anotation;
 
     interface "
-
     public java.util.Calendar getBeginDate();
+
     public java.util.Calendar getEndDate();
+
     public void setBeginDate(java.util.Calendar beginDate);
+
     public void setEndDate(java.util.Calendar endDate);
+
     public Boolean isActive();
     "
 }
@@ -438,11 +443,7 @@ class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.do
 	String nome;
 	String nameEn;
 	String sigla;
-	
-	interface "
-	public net.sourceforge.fenixedu.domain.degree.DegreeType getTipoCurso();
-    public void setTipoCurso(net.sourceforge.fenixedu.domain.degree.DegreeType tipoCurso);
-	"
+    DegreeType tipoCurso;
 }
 
 

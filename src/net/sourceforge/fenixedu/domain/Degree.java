@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
  */
 
 public class Degree extends Degree_Base {
-    protected DegreeType tipoCurso;
 
     /** Construtor sem argumentos público requerido pela moldura de objectos OJB */
     public Degree() {
@@ -28,6 +27,16 @@ public class Degree extends Degree_Base {
         setSigla(sigla);
         setNome(nome);
         setTipoCurso(tipoCurso);
+    }
+
+    public String toString() {
+        String result = "[CURSO";
+        result += ", codInt=" + getIdInternal();
+        result += ", sigla=" + getSigla();
+        result += ", nome=" + getNome();
+        result += ", tipoCurso=" + getTipoCurso();
+        result += "]";
+        return result;
     }
 
     public boolean equals(Object obj) {
@@ -53,21 +62,4 @@ public class Degree extends Degree_Base {
         return degreeCurricularPlan;
     }
 
-    public String toString() {
-        String result = "[CURSO";
-        result += ", codInt=" + getIdInternal();
-        result += ", sigla=" + getSigla();
-        result += ", nome=" + getNome();
-        result += ", tipoCurso=" + getTipoCurso();
-        result += "]";
-        return result;
-    }
-
-    public DegreeType getTipoCurso() {
-        return tipoCurso;
-    }
-
-    public void setTipoCurso(DegreeType tipoCurso) {
-        this.tipoCurso = tipoCurso;
-    }
 }
