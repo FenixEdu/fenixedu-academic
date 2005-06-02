@@ -100,7 +100,6 @@
          	name="executionDegree"
          	class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
          	proxy="true"
-			refresh="true"
       	  >
           <foreignkey field-ref="executionDegreeKey"/>
           </reference-descriptor>
