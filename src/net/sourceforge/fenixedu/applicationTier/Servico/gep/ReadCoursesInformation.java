@@ -102,11 +102,11 @@ public class ReadCoursesInformation implements IService {
                     ExecutionDegree.class, executionDegreeId);
             if (basic == null) {
                 professorships = persistentProfessorship.readByDegreeCurricularPlanAndExecutionYear(
-                        executionDegree.getIdInternal(), executionDegree.getExecutionYear()
+                        executionDegree.getDegreeCurricularPlan().getIdInternal(), executionDegree.getExecutionYear()
                                 .getIdInternal());
             } else {
                 professorships = persistentProfessorship.readByDegreeCurricularPlanAndBasic(
-                        executionDegree.getIdInternal(), executionDegree.getExecutionYear()
+                        executionDegree.getDegreeCurricularPlan().getIdInternal(), executionDegree.getExecutionYear()
                                 .getIdInternal(), basic);
             }
         }
