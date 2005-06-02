@@ -1289,15 +1289,12 @@ class net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion extends net.
 	Integer keyMasterDegreeThesis;
 	String dissertationTitle;
 	Integer keyEmployee;
-	
+	State currentState;
+    
 	interface "
-	    public void setLastModification(java.sql.Timestamp lastModification);
-	    
-	    public java.sql.Timestamp getLastModification();
-	    
-	    public void setCurrentState(net.sourceforge.fenixedu.util.State currentState);
-	    
-	    public net.sourceforge.fenixedu.util.State getCurrentState();
+    public void setLastModification(java.sql.Timestamp lastModification);
+    
+    public java.sql.Timestamp getLastModification();
 	"
 }
 

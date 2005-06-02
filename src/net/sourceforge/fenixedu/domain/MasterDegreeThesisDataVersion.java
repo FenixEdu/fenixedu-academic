@@ -15,13 +15,8 @@ import net.sourceforge.fenixedu.util.State;
  *         (naat@mega.ist.utl.pt)
  */
 public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion_Base {
-
-    // fields
     private List externalAssistentGuiders;
-
     private Timestamp lastModification;
-
-    private State currentState;
 
     public MasterDegreeThesisDataVersion() {
     }
@@ -29,11 +24,11 @@ public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion
     public MasterDegreeThesisDataVersion(IMasterDegreeThesis masterDegreeThesis,
             IEmployee responsibleEmployee, String dissertationTitle, Timestamp lastModification,
             State currentState) {
-        setMasterDegreeThesis(masterDegreeThesis);
-        setResponsibleEmployee(responsibleEmployee);
-        setDissertationTitle(dissertationTitle);
-        this.lastModification = lastModification;
-        this.currentState = currentState;
+        this.setMasterDegreeThesis(masterDegreeThesis);
+        this.setResponsibleEmployee(responsibleEmployee);
+        this.setDissertationTitle(dissertationTitle);
+        this.setLastModification(lastModification);
+        this.setCurrentState(currentState);
     }
 
     /**
@@ -50,14 +45,14 @@ public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion
             List externalAssistentGuiders, List assistentGuiders, List guiders,
             IEmployee responsibleEmployee, String dissertationTitle, Timestamp lastModification,
             State currentState) {
-        setMasterDegreeThesis(masterDegreeThesis);
-        this.externalAssistentGuiders = externalAssistentGuiders;
-        setAssistentGuiders(assistentGuiders);
-        setGuiders(guiders);
-        setResponsibleEmployee(responsibleEmployee);
-        setDissertationTitle(dissertationTitle);
-        this.lastModification = lastModification;
-        this.currentState = currentState;
+        this.setMasterDegreeThesis(masterDegreeThesis);
+        this.setExternalAssistentGuiders(externalAssistentGuiders);
+        this.setAssistentGuiders(assistentGuiders);
+        this.setGuiders(guiders);
+        this.setResponsibleEmployee(responsibleEmployee);
+        this.setDissertationTitle(dissertationTitle);
+        this.setLastModification(lastModification);
+        this.setCurrentState(currentState);
     }
 
     public void setExternalAssistentGuiders(List externalAssistentGuiders) {
@@ -76,25 +71,17 @@ public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion
         return lastModification;
     }
 
-    public void setCurrentState(State currentState) {
-        this.currentState = currentState;
-    }
-
-    public State getCurrentState() {
-        return currentState;
-    }
-
     public String toString() {
         String result = "[" + this.getClass().getName() + ": \n";
-        result += "idInternal = " + getIdInternal() + "; \n";
-        result += "masterDegreeThesis = " + getMasterDegreeThesis().getIdInternal() + "; \n";
-        result += "externalAssistentGuiders = " + this.externalAssistentGuiders.toString() + "; \n";
-        result += "assistentGuiders = " + getAssistentGuiders().toString() + "; \n";
-        result += "guiders = " + getGuiders().toString() + "; \n";
-        result += "responsibleEmployee = " + getResponsibleEmployee().getIdInternal() + "; \n";
-        result += "dissertationTitle = " + getDissertationTitle().toString() + "; \n";
-        result += "lastModification = " + this.lastModification.toString() + "; \n";
-        result += "currentState = " + this.currentState.toString() + "; \n";
+        result += "idInternal = " + this.getIdInternal() + "; \n";
+        result += "masterDegreeThesis = " + this.getMasterDegreeThesis().getIdInternal() + "; \n";
+        result += "externalAssistentGuiders = " + this.getExternalAssistentGuiders().toString() + "; \n";
+        result += "assistentGuiders = " + this.getAssistentGuiders().toString() + "; \n";
+        result += "guiders = " + this.getGuiders().toString() + "; \n";
+        result += "responsibleEmployee = " + this.getResponsibleEmployee().getIdInternal() + "; \n";
+        result += "dissertationTitle = " + this.getDissertationTitle().toString() + "; \n";
+        result += "lastModification = " + this.getLastModification().toString() + "; \n";
+        result += "currentState = " + this.getCurrentState().toString() + "; \n";
         result += "] \n";
 
         return result;
