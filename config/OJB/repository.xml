@@ -64,7 +64,7 @@
 ]>
 
 
-<descriptor-repository version="1.0" isolation-level="serializable">
+<descriptor-repository version="1.0" isolation-level="repeatable-read">
 
     <!-- include all used database connections -->
     &database;
