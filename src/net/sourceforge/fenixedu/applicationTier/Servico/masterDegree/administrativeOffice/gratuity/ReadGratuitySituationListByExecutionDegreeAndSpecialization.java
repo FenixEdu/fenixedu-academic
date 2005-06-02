@@ -33,7 +33,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 
 public class ReadGratuitySituationListByExecutionDegreeAndSpecialization implements IService {
@@ -54,7 +54,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
     public Object run(Integer executionDegreeId, String executionYearName, String specializationName,
             String gratuitySituationTypeName) throws FenixServiceException {
 
-        //at least one of the arguments it's obligator
+        // at least one of the arguments it's obligator
         if (executionDegreeId == null && executionYearName == null) {
             throw new FenixServiceException(
                     "error.masterDegree.gratuity.impossible.studentsGratuityList");
@@ -101,26 +101,25 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
                         "error.masterDegree.gratuity.impossible.studentsGratuityList");
             }
 
-            //SPECIALIZATION
+            // SPECIALIZATION
             Specialization specialization = null;
-            if(!specializationName.equals("all")){
+            if (!specializationName.equals("all")) {
                 specialization = Specialization.valueOf(specializationName);
-            }               
-
-            //GRATUITY SITUATION
-            GratuitySituationType gratuitySituationType = null;
-            if(!gratuitySituationTypeName.equals("all")){
-                gratuitySituationType = GratuitySituationType.valueOf(gratuitySituationTypeName);    
             }
-            
+
+            // GRATUITY SITUATION
+            GratuitySituationType gratuitySituationType = null;
+            if (!gratuitySituationTypeName.equals("all")) {
+                gratuitySituationType = GratuitySituationType.valueOf(gratuitySituationTypeName);
+            }
+
             List infoGratuitySituationList = new ArrayList();
             double totalPayedValue = 0;
             double totalRemaingValue = 0;
 
             for (Iterator iter = executionDegreeList.iterator(); iter.hasNext();) {
                 IExecutionDegree executionDegree = (IExecutionDegree) iter.next();
-                IGratuityValues gratuityValues = gratuityValuesDAO
-                        .readGratuityValuesByExecutionDegree(executionDegree.getIdInternal());
+                IGratuityValues gratuityValues = executionDegree.getGratuityValues();
 
                 if (gratuityValues == null) {
                     continue;
@@ -136,12 +135,13 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 
                     IGratuitySituation gratuitySituation = gratuitySituationDAO
                             .readByStudentCurricularPlanAndGratuityValuesAndGratuitySituationType(
-                                    studentCurricularPlan.getIdInternal(), gratuityValues.getIdInternal(), gratuitySituationType);
+                                    studentCurricularPlan.getIdInternal(), gratuityValues
+                                            .getIdInternal(), gratuitySituationType);
 
                     if (gratuitySituation == null) {
-                        //ignore them, because they will be created in the next
+                        // ignore them, because they will be created in the next
                         // day
-                        //when the gratuity situation creator scheduled task
+                        // when the gratuity situation creator scheduled task
                         // runs
                         continue;
                     }
@@ -177,7 +177,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
                             exemption = infoGratuitySituation.getTotalValue().doubleValue()
                                     * infoGratuitySituation.getExemptionPercentage().doubleValue() / 100;
                         }
-                        
+
                         if (infoGratuitySituation.getExemptionValue() != null) {
                             exemption += infoGratuitySituation.getExemptionValue().doubleValue();
                         }
@@ -199,7 +199,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 
             }
 
-            //build the result that is a hash map with a list, total payed and
+            // build the result that is a hash map with a list, total payed and
             // remaining value
             result = new HashMap();
             result.put(new Integer(0), infoGratuitySituationList);
@@ -218,7 +218,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
         return result;
     }
 
-    private void fillSituationType(InfoGratuitySituation infoGratuitySituation) throws Exception { //infoGratuitySituation.getRemainingValue()
+    private void fillSituationType(InfoGratuitySituation infoGratuitySituation) throws Exception { // infoGratuitySituation.getRemainingValue()
         // contains the total value that
         // a student has to
 

@@ -198,7 +198,8 @@ public class ProcessSibsPaymentFile implements IService {
 
             if (sibsPaymentFileEntry.getPaymentType().equals(SibsPaymentType.INSURANCE)) {
 
-                IInsuranceValue insuranceValue = insuranceValueDAO.readByExecutionYear(executionYear.getIdInternal());
+                IInsuranceValue insuranceValue = insuranceValueDAO.readByExecutionYear(executionYear
+                        .getIdInternal());
 
                 List insuranceTransactionList = insuranceTransactionDAO
                         .readAllNonReimbursedByExecutionYearAndStudent(executionYear, student);
@@ -278,8 +279,7 @@ public class ProcessSibsPaymentFile implements IService {
             IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) studentCurricularPlans
                     .get(0);
 
-            IGratuityValues gratuityValues = gratuityValuesDAO
-                    .readGratuityValuesByExecutionDegree(executionDegree.getIdInternal());
+            IGratuityValues gratuityValues = executionDegree.getGratuityValues();
             IGratuitySituation gratuitySituation = gratuitySituationDAO
                     .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
                             studentCurricularPlan.getIdInternal(), gratuityValues.getIdInternal());

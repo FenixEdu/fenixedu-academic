@@ -12,8 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValuesWithInfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IGratuityValues;
 import net.sourceforge.fenixedu.domain.IPaymentPhase;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -30,7 +28,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class ReadGratuityValuesByExecutionDegree implements IService {
 
@@ -46,11 +44,8 @@ public class ReadGratuityValuesByExecutionDegree implements IService {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGratuityValues();
 
-            IExecutionDegree executionDegree = new ExecutionDegree();
-            executionDegree.setIdInternal(executionDegreeID);
-
             gratuityValues = persistentGratuityValues
-                    .readGratuityValuesByExecutionDegree(executionDegree.getIdInternal());
+                    .readGratuityValuesByExecutionDegree(executionDegreeID);
         } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();
             throw new FenixServiceException("error.impossible.noGratuityValues");
@@ -58,7 +53,8 @@ public class ReadGratuityValuesByExecutionDegree implements IService {
 
         InfoGratuityValues infoGratuityValues = null;
         if (gratuityValues != null) {
-            infoGratuityValues = InfoGratuityValuesWithInfoExecutionDegree.newInfoFromDomain(gratuityValues);
+            infoGratuityValues = InfoGratuityValuesWithInfoExecutionDegree
+                    .newInfoFromDomain(gratuityValues);
 
             infoPaymentPhases = new ArrayList();
             CollectionUtils.collect(gratuityValues.getPaymentPhaseList(), new Transformer() {
