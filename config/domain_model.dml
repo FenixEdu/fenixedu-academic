@@ -24,6 +24,7 @@
  * 
  */
 
+valueType net.sourceforge.fenixedu.tools.enrollment.AreaType as AreaType;
 valueType net.sourceforge.fenixedu.domain.branch.BranchType as BranchType;
 valueType net.sourceforge.fenixedu.util.CurricularCourseExecutionScope as CurricularCourseExecutionScope;
 valueType net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType as CurricularCourseType;
@@ -369,7 +370,7 @@ class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourcefo
     String name;
     Integer minimumValue;
     Integer maximumValue;
-
+    
     interface "
 
     public Integer getMaximumCredits();
@@ -388,6 +389,7 @@ class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourcefo
 }
 
     class net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup extends net.sourceforge.fenixedu.domain.CurricularCourseGroup {
+        AreaType areaType;
     }
     
     class net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup extends net.sourceforge.fenixedu.domain.CurricularCourseGroup {

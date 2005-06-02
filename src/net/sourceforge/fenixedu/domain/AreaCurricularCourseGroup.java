@@ -1,16 +1,10 @@
 package net.sourceforge.fenixedu.domain;
 
-
 /**
  * @author David Santos on Jul 26, 2004
  */
 
 public class AreaCurricularCourseGroup extends AreaCurricularCourseGroup_Base {
-
-    private net.sourceforge.fenixedu.tools.enrollment.AreaType areaType;
-
-    public AreaCurricularCourseGroup() {
-    }
 
     public Integer getMaximumCredits() {
         return super.getMaximumValue();
@@ -26,14 +20,6 @@ public class AreaCurricularCourseGroup extends AreaCurricularCourseGroup_Base {
 
     public void setMinimumCredits(Integer minimumCredits) {
         super.setMinimumValue(minimumCredits);
-    }
-
-    public net.sourceforge.fenixedu.tools.enrollment.AreaType getAreaType() {
-        return areaType;
-    }
-
-    public void setAreaType(net.sourceforge.fenixedu.tools.enrollment.AreaType areaType) {
-        this.areaType = areaType;
     }
 
     public Integer getMinimumNumberOfOptionalCourses() {
@@ -54,4 +40,5 @@ public class AreaCurricularCourseGroup extends AreaCurricularCourseGroup_Base {
         return "minimumCredits[" + super.getMinimumValue() + "] maximumCredits["
                 + super.getMaximumValue() + "] branch[" + getBranch().getName() + "]";
     }
+
 }
