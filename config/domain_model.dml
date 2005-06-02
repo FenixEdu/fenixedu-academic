@@ -25,6 +25,7 @@
  */
 
 valueType net.sourceforge.fenixedu.domain.branch.BranchType as BranchType;
+valueType net.sourceforge.fenixedu.domain.GuideState as GuideState;
 valueType net.sourceforge.fenixedu.util.State as State;
 valueType net.sourceforge.fenixedu.util.SituationName as SituationName;
 valueType net.sourceforge.fenixedu.domain.credits.ServiceExemptionType as ServiceExemptionType;
@@ -1187,16 +1188,8 @@ class net.sourceforge.fenixedu.domain.GuideSituation extends net.sourceforge.fen
     Date date;
     Integer keyGuide;
 	String remarks;
-	
-	interface "
-    public net.sourceforge.fenixedu.domain.GuideState getSituation();
-   	
-   	public net.sourceforge.fenixedu.util.State getState();
-   	
-   	public void setSituation(net.sourceforge.fenixedu.domain.GuideState guide);
-   	
-   	public void setState(net.sourceforge.fenixedu.util.State state);
-	"
+    State state;
+    GuideState situation;
 }
 
 class net.sourceforge.fenixedu.domain.InsuranceValue extends net.sourceforge.fenixedu.domain.DomainObject {

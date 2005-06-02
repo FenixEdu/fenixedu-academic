@@ -9,9 +9,6 @@ import net.sourceforge.fenixedu.util.State;
  */
 
 public class GuideSituation extends GuideSituation_Base {
-    protected GuideState situation;
-
-    protected State state;
 
     public GuideSituation() {
     }
@@ -51,34 +48,6 @@ public class GuideSituation extends GuideSituation_Base {
         }
 
         return resultado;
-    }
-
-    /**
-     * @return
-     */
-    public GuideState getSituation() {
-        return situation;
-    }
-
-    /**
-     * @return
-     */
-    public State getState() {
-        return state;
-    }
-
-    /**
-     * @param guide
-     */
-    public void setSituation(GuideState guide) {
-        situation = guide;
-    }
-
-    /**
-     * @param state
-     */
-    public void setState(State state) {
-        this.state = state;
     }
 
 }
