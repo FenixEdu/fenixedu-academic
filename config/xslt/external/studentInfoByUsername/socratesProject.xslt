@@ -83,6 +83,9 @@
 					<nome>
 						<xsl:value-of select="./name"/>
 					</nome>
+					<numero>
+						<xsl:value-of select="./number"/>
+					</numero>					
 					<sexo>
 						<xsl:value-of select="./sex"/>
 					</sexo>
