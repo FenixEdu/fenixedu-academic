@@ -50,7 +50,7 @@ public class ReadGratuityValuesByExecutionDegree implements IService {
             executionDegree.setIdInternal(executionDegreeID);
 
             gratuityValues = persistentGratuityValues
-                    .readGratuityValuesByExecutionDegree(executionDegree);
+                    .readGratuityValuesByExecutionDegree(executionDegree.getIdInternal());
         } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();
             throw new FenixServiceException("error.impossible.noGratuityValues");

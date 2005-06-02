@@ -287,7 +287,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
                         .readByDegreeCurricularPlan(degreeCurricularPlan);
 
                 IGratuityValues gratuityValues = gratuityValuesDAO
-                        .readGratuityValuesByExecutionDegree(executionDegree);
+                        .readGratuityValuesByExecutionDegree(executionDegree.getIdInternal());
 
                 for (Iterator iterator = studentCurricularPlanList.iterator(); iterator.hasNext();) {
 

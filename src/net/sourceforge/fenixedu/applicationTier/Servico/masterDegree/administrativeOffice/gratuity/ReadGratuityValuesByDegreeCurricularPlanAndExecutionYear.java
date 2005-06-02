@@ -74,7 +74,7 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear implements
             // read execution degree's gratuity values
             IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGratuityValues();
             gratuityValues = persistentGratuityValues
-                    .readGratuityValuesByExecutionDegree(executionDegree);
+                    .readGratuityValuesByExecutionDegree(executionDegree.getIdInternal());
 
         } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();

@@ -120,7 +120,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
             for (Iterator iter = executionDegreeList.iterator(); iter.hasNext();) {
                 IExecutionDegree executionDegree = (IExecutionDegree) iter.next();
                 IGratuityValues gratuityValues = gratuityValuesDAO
-                        .readGratuityValuesByExecutionDegree(executionDegree);
+                        .readGratuityValuesByExecutionDegree(executionDegree.getIdInternal());
 
                 if (gratuityValues == null) {
                     continue;

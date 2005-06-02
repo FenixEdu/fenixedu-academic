@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.persistenceTier;
 
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IGratuityValues;
 
 /**
@@ -12,6 +11,6 @@ import net.sourceforge.fenixedu.domain.IGratuityValues;
  *  
  */
 public interface IPersistentGratuityValues extends IPersistentObject {
-    public IGratuityValues readGratuityValuesByExecutionDegree(IExecutionDegree executionDegree)
+    public IGratuityValues readGratuityValuesByExecutionDegree(Integer executionDegreeID)
             throws ExcepcaoPersistencia;
 }

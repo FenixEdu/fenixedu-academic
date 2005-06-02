@@ -279,7 +279,7 @@ public class ProcessSibsPaymentFile implements IService {
                     .get(0);
 
             IGratuityValues gratuityValues = gratuityValuesDAO
-                    .readGratuityValuesByExecutionDegree(executionDegree);
+                    .readGratuityValuesByExecutionDegree(executionDegree.getIdInternal());
             IGratuitySituation gratuitySituation = gratuitySituationDAO
                     .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
                             studentCurricularPlan.getIdInternal(), gratuityValues.getIdInternal());

@@ -305,7 +305,7 @@ public class RegisterCandidate implements IService {
             IPersistentGratuityValues gratuityValuesDAO = sp.getIPersistentGratuityValues();
             IPersistentGratuitySituation gratuitySituationDAO = sp.getIPersistentGratuitySituation();
             IGratuityValues gratuityValues = gratuityValuesDAO
-                    .readGratuityValuesByExecutionDegree(masterDegreeCandidate.getExecutionDegree());
+                    .readGratuityValuesByExecutionDegree(masterDegreeCandidate.getExecutionDegree().getIdInternal());
 
             if (gratuityValues == null) {
                 throw new GratuityValuesNotDefinedServiceException(

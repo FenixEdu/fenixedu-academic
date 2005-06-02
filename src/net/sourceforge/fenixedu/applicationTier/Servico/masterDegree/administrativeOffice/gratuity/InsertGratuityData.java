@@ -79,7 +79,7 @@ public class InsertGratuityData implements IService {
             gratuityValues.setExecutionDegree(executionDegree);
 
             gratuityValues = persistentGratuityValues
-                    .readGratuityValuesByExecutionDegree(executionDegree);
+                    .readGratuityValuesByExecutionDegree(executionDegree.getIdInternal());
             boolean isNew = false;
             if (gratuityValues == null) // it doesn't exist in database, then
             // write it
