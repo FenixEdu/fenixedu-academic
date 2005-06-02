@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.InvalidGuideSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.InvalidReimbursementValueServiceException;
-import net.sourceforge.fenixedu.domain.GuideEntry;
+import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
@@ -46,7 +46,6 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuideEntry;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
-import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.util.State;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -126,7 +125,7 @@ public class EditReimbursementGuide implements IService {
             newActiveSituation.setState(new State(State.ACTIVE));
             newActiveSituation.setRemarks(remarks);
 
-            //persistentObject.simpleLockWrite(newActiveSituation);
+            // persistentObject.simpleLockWrite(newActiveSituation);
 
             // REIMBURSEMENT TRANSACTIONS
             if (newState.equals(ReimbursementGuideState.PAYED)) {
@@ -156,12 +155,12 @@ public class EditReimbursementGuide implements IService {
                     if (reimbursementGuideEntry.getGuideEntry().getDocumentType().equals(
                             DocumentType.GRATUITY)) {
 
-                        //                        // because of an OJB with cache bug we have to read
+                        // // because of an OJB with cache bug we have to read
                         // the guide entry again
-                        //                        reimbursementGuideEntry = (IReimbursementGuideEntry)
+                        // reimbursementGuideEntry = (IReimbursementGuideEntry)
                         // reimbursementGuideEntryDAO
-                        //                                .readByOID(ReimbursementGuideEntry.class,
-                        //                                        reimbursementGuideEntry.getIdInternal());
+                        // .readByOID(ReimbursementGuideEntry.class,
+                        // reimbursementGuideEntry.getIdInternal());
 
                         reimbursementTransaction = new ReimbursementTransaction(reimbursementGuideEntry
                                 .getValue(), new Timestamp(Calendar.getInstance().getTimeInMillis()),
@@ -178,8 +177,8 @@ public class EditReimbursementGuide implements IService {
                                 .getExecutionDegree();
 
                         IGratuitySituation gratuitySituation = persistentGratuitySituation
-                                .readGratuitySituationByExecutionDegreeAndStudent(executionDegree.getIdInternal(),
-                                        student.getIdInternal());
+                                .readGratuitySituationByExecutionDegreeAndStudent(executionDegree
+                                        .getIdInternal(), student.getIdInternal());
 
                         if (gratuitySituation == null) {
                             throw new FenixServiceException(
@@ -281,21 +280,18 @@ public class EditReimbursementGuide implements IService {
         IPersistentReimbursementGuideEntry persistentReimbursementGuideEntry = suportePersistente
                 .getIPersistentReimbursementGuideEntry();
 
-        IGuideEntry guideEntry = null;
-        List reimbursementGuideEntries = null;
-
-        try {
-            guideEntry = (IGuideEntry) persistentGuideEntry.readByOID(GuideEntry.class,
-                    reimbursementGuideEntry.getGuideEntry().getIdInternal());
-
-            reimbursementGuideEntries = persistentReimbursementGuideEntry.readByGuideEntry(guideEntry);
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-        Iterator it = reimbursementGuideEntries.iterator();
+        IGuideEntry guideEntry = reimbursementGuideEntry.getGuideEntry();
+        Double guideEntryValue = new Double(guideEntry.getPrice().doubleValue()
+                * guideEntry.getQuantity().intValue());
         Double sum = reimbursementGuideEntry.getValue();
 
+        List reimbursementGuideEntries = guideEntry.getReimbursementGuideEntries();
+
+        if (reimbursementGuideEntries == null) {
+            return isGreaterThan(guideEntryValue, sum);
+        }
+
+        Iterator it = reimbursementGuideEntries.iterator();
         while (it.hasNext()) {
             IReimbursementGuideEntry reimbursementGuideEntryTmp = (IReimbursementGuideEntry) it.next();
 
@@ -317,14 +313,15 @@ public class EditReimbursementGuide implements IService {
 
         }
 
-        Double guideEntryValue = new Double(guideEntry.getPrice().doubleValue()
-                * guideEntry.getQuantity().intValue());
+        return isGreaterThan(guideEntryValue, sum);
 
+    }
+
+    private boolean isGreaterThan(Double guideEntryValue, Double sum) {
         if (sum.doubleValue() > guideEntryValue.doubleValue()) {
             return false;
         }
         return true;
-
     }
 
 }

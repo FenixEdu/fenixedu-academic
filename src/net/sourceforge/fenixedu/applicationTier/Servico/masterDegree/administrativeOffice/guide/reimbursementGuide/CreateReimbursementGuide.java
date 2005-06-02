@@ -59,9 +59,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class CreateReimbursementGuide implements IService {
 
-    public CreateReimbursementGuide() {
-    }
-
     /**
      * @throws FenixServiceException,
      *             InvalidReimbursementValueServiceException,
@@ -107,7 +104,7 @@ public class CreateReimbursementGuide implements IService {
                             "error.exception.masterDegree.invalidReimbursementValue");
             }
 
-            //reimbursement Guide
+            // reimbursement Guide
             Integer reimbursementGuideNumber = persistentReimbursementGuide
                     .generateReimbursementGuideNumber();
 
@@ -119,13 +116,13 @@ public class CreateReimbursementGuide implements IService {
             reimbursementGuide.setGuide(guide);
             guide.getReimbursementGuides().add(reimbursementGuide);
 
-            //read employee
+            // read employee
             IPersistentEmployee persistentEmployee = ps.getIPersistentEmployee();
             IPessoaPersistente persistentPerson = ps.getIPessoaPersistente();
             IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
             IEmployee employee = persistentEmployee.readByPerson(person);
 
-            //reimbursement Guide Situation
+            // reimbursement Guide Situation
             IReimbursementGuideSituation reimbursementGuideSituation = new ReimbursementGuideSituation();
             persistentObject.simpleLockWrite(reimbursementGuideSituation);
             reimbursementGuideSituation.setEmployee(employee);
@@ -140,7 +137,7 @@ public class CreateReimbursementGuide implements IService {
             reimbursementGuideSituations.add(reimbursementGuideSituation);
             reimbursementGuide.setReimbursementGuideSituations(reimbursementGuideSituations);
 
-            //reimbursement Guide Entries
+            // reimbursement Guide Entries
             it = reimbursementGuideEntries.iterator();
             List reimbursementGuideEntriesList = new ArrayList();
             while (it.hasNext()) {
@@ -188,42 +185,35 @@ public class CreateReimbursementGuide implements IService {
         IPersistentReimbursementGuideEntry persistentReimbursementGuideEntry = suportePersistente
                 .getIPersistentReimbursementGuideEntry();
 
-        IGuideEntry guideEntry = null;
-        List reimbursementGuideEntries = null;
+        IGuideEntry guideEntry = newReimbursementGuideEntry.getGuideEntry();
+        Double guideEntryValue = new Double(guideEntry.getPrice().doubleValue()
+                * guideEntry.getQuantity().intValue());
+        Double sum = new Double(newReimbursementGuideEntry.getValue().doubleValue());
 
-        try {
-            guideEntry = (IGuideEntry) persistentGuideEntry.readByOID(GuideEntry.class,
-                    newReimbursementGuideEntry.getGuideEntry().getIdInternal());
+        List reimbursementGuideEntries = guideEntry.getReimbursementGuideEntries();
 
-            reimbursementGuideEntries = persistentReimbursementGuideEntry.readByGuideEntry(guideEntry);
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+        if (reimbursementGuideEntries == null) {
+            return isGreaterThan(guideEntryValue, sum);
         }
 
         Iterator it = reimbursementGuideEntries.iterator();
-        Double sum = new Double(newReimbursementGuideEntry.getValue().doubleValue());
-
         while (it.hasNext()) {
-
             IReimbursementGuideEntry reimbursementGuideEntry = (IReimbursementGuideEntry) it.next();
-
             if (reimbursementGuideEntry.getReimbursementGuide().getActiveReimbursementGuideSituation()
                     .getReimbursementGuideState().equals(ReimbursementGuideState.PAYED)) {
-
                 sum = new Double(sum.doubleValue() + reimbursementGuideEntry.getValue().doubleValue());
             }
-
         }
 
-        Double guideEntryValue = new Double(guideEntry.getPrice().doubleValue()
-                * guideEntry.getQuantity().intValue());
+        return isGreaterThan(guideEntryValue, sum);
 
+    }
+
+    private boolean isGreaterThan(Double guideEntryValue, Double sum) {
         if (sum.doubleValue() > guideEntryValue.doubleValue()) {
             return false;
         }
         return true;
-
     }
 
 }
