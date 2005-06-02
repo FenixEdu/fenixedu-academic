@@ -28,7 +28,8 @@ valueType net.sourceforge.fenixedu.tools.enrollment.AreaType as AreaType;
 valueType net.sourceforge.fenixedu.domain.branch.BranchType as BranchType;
 valueType net.sourceforge.fenixedu.util.CurricularCourseExecutionScope as CurricularCourseExecutionScope;
 valueType net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType as CurricularCourseType;
-valueType net.sourceforge.fenixedu.domain.degree.DegreeType as DegreeType;  
+valueType net.sourceforge.fenixedu.domain.degree.DegreeType as DegreeType;
+valueType net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus as FinalDegreeWorkProposalStatus;  
 valueType net.sourceforge.fenixedu.domain.GuideState as GuideState;
 valueType net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification as MasterDegreeClassification;
 valueType net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState as ReimbursementGuideState;
@@ -1683,13 +1684,8 @@ class net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal extends net.sourc
 	String companyName;
 	String description;
 	String companionMail;
-	
-	interface "
-	public net.sourceforge.fenixedu.domain.degree.DegreeType getDegreeType();
-    public void setDegreeType(net.sourceforge.fenixedu.domain.degree.DegreeType degreeType);
-    public net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus getStatus();
-    public void setStatus(net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus status);
-	"
+	DegreeType degreeType;
+    FinalDegreeWorkProposalStatus status;
 }
 
 class net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2110,16 +2106,23 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
 	Integer number;
 	
 	interface "
+    public net.sourceforge.fenixedu.util.StudentState getState();
 
-	    public net.sourceforge.fenixedu.util.StudentState getState();
-	    public net.sourceforge.fenixedu.domain.degree.DegreeType getDegreeType();
-	    public net.sourceforge.fenixedu.util.AgreementType getAgreementType();
-	    public void setAgreementType(net.sourceforge.fenixedu.util.AgreementType agreementType);
-	    public void setState(net.sourceforge.fenixedu.util.StudentState state);
-	    public void setDegreeType(net.sourceforge.fenixedu.domain.degree.DegreeType degreeType);
-	    public net.sourceforge.fenixedu.util.EntryPhase getEntryPhase();
-	    public void setEntryPhase(net.sourceforge.fenixedu.util.EntryPhase entryPhase);
-	    public net.sourceforge.fenixedu.domain.IStudentCurricularPlan getActiveStudentCurricularPlan();
+    public net.sourceforge.fenixedu.domain.degree.DegreeType getDegreeType();
+    
+    public net.sourceforge.fenixedu.util.AgreementType getAgreementType();
+    
+    public void setAgreementType(net.sourceforge.fenixedu.util.AgreementType agreementType);
+    
+    public void setState(net.sourceforge.fenixedu.util.StudentState state);
+    
+    public void setDegreeType(net.sourceforge.fenixedu.domain.degree.DegreeType degreeType);
+    
+    public net.sourceforge.fenixedu.util.EntryPhase getEntryPhase();
+    
+    public void setEntryPhase(net.sourceforge.fenixedu.util.EntryPhase entryPhase);
+    
+    public net.sourceforge.fenixedu.domain.IStudentCurricularPlan getActiveStudentCurricularPlan();
 	"
 			
 }
