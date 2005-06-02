@@ -25,12 +25,13 @@
  */
 
 valueType net.sourceforge.fenixedu.domain.branch.BranchType as BranchType;
+valueType net.sourceforge.fenixedu.util.CurricularCourseExecutionScope as CurricularCourseExecutionScope;
+valueType net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType as CurricularCourseType;
 valueType net.sourceforge.fenixedu.domain.GuideState as GuideState;
-valueType net.sourceforge.fenixedu.util.State as State;
+valueType net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification as MasterDegreeClassification;
 valueType net.sourceforge.fenixedu.util.SituationName as SituationName;
 valueType net.sourceforge.fenixedu.domain.credits.ServiceExemptionType as ServiceExemptionType;
-valueType net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType as CurricularCourseType;
-valueType net.sourceforge.fenixedu.util.CurricularCourseExecutionScope as CurricularCourseExecutionScope;
+valueType net.sourceforge.fenixedu.util.State as State;
 
 
 /*
@@ -1270,21 +1271,14 @@ class net.sourceforge.fenixedu.domain.MasterDegreeProofVersion extends net.sourc
 	Integer keyEmployee;
     Date thesisDeliveryDate;
     Date proofDate;
+    State currentState;
+    MasterDegreeClassification finalResult;
 	
 	interface "
     public void setLastModification(java.sql.Timestamp lastModification);
    	
    	public java.sql.Timestamp getLastModification();
-    
-    public void setFinalResult(net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification finalResult);
-   
-    public net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification getFinalResult();
-    
-    public void setCurrentState(net.sourceforge.fenixedu.util.State state);
-    
-    public net.sourceforge.fenixedu.util.State getCurrentState();
 	"
-	
 }
 
 class net.sourceforge.fenixedu.domain.MasterDegreeThesis extends net.sourceforge.fenixedu.domain.DomainObject {

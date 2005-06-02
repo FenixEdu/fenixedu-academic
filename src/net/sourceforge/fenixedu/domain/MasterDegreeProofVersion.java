@@ -18,10 +18,6 @@ import net.sourceforge.fenixedu.util.State;
 public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
     private Timestamp lastModification;
 
-    private MasterDegreeClassification finalResult;
-
-    private State currentState;
-
     /**
      * Default Constructor
      */
@@ -63,22 +59,6 @@ public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
         return lastModification;
     }
 
-    public void setFinalResult(MasterDegreeClassification finalResult) {
-        this.finalResult = finalResult;
-    }
-
-    public MasterDegreeClassification getFinalResult() {
-        return finalResult;
-    }
-
-    public void setCurrentState(State state) {
-        this.currentState = state;
-    }
-
-    public State getCurrentState() {
-        return currentState;
-    }
-
     public String toString() {
         String result = "[" + this.getClass().getName() + ": \n";
         result += "idInternal = " + this.getIdInternal() + "; \n";
@@ -87,7 +67,7 @@ public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
         result += "lastModification = " + this.lastModification.toString() + "; \n";
         result += "proofDate = " + this.getProofDate().toString() + "; \n";
         result += "thesisDeliveryDate = " + this.getThesisDeliveryDate().toString() + "; \n";
-        result += "finalResult = " + this.finalResult.toString() + "; \n";
+        result += "finalResult = " + this.getFinalResult().toString() + "; \n";
         result += "attachedCopiesNumber = " + this.getAttachedCopiesNumber().toString() + "; \n";
         result += "currentState = " + this.getCurrentState().toString() + "; \n";
         result += "] \n";
