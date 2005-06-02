@@ -19,19 +19,11 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class WorkLocationOJB extends PersistentObjectOJB implements IPersistentWorkLocation {
 
-    /** Creates a new instance of WorkLocationOJB */
-    public WorkLocationOJB() {
-    }
-
     public IWorkLocation readByName(String name) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("name", name);
 
         return (IWorkLocation) queryObject(WorkLocation.class, criteria);
-    }
-
-    public IWorkLocation readByOID(Integer oid) throws ExcepcaoPersistencia {
-        return readByOID(oid);
     }
 
     public List readAll() throws ExcepcaoPersistencia {
