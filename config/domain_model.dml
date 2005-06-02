@@ -372,7 +372,7 @@ class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourcefo
     String name;
     Integer minimumValue;
     Integer maximumValue;
-    
+
     interface "
 
     public Integer getMaximumCredits();
@@ -397,7 +397,6 @@ class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourcefo
     class net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup extends net.sourceforge.fenixedu.domain.CurricularCourseGroup {
     }
 
-    
 class net.sourceforge.fenixedu.domain.CurricularCourseScope extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer branchKey;
     Integer curricularCourseKey;
@@ -408,11 +407,8 @@ class net.sourceforge.fenixedu.domain.CurricularCourseScope extends net.sourcefo
     public java.util.Calendar getBeginDate();
 
     public java.util.Calendar getEndDate();
-
     public void setBeginDate(java.util.Calendar beginDate);
-
     public void setEndDate(java.util.Calendar endDate);
-
     public Boolean isActive();
     "
 }
@@ -817,6 +813,7 @@ class net.sourceforge.fenixedu.domain.ExecutionDegree extends net.sourceforge.fe
 	Integer academicYear;
 	Integer keyCurricularPlan;
 	Integer keyCampus;
+	Integer keyGratuityValues;
 }
 
 
@@ -1284,6 +1281,7 @@ class net.sourceforge.fenixedu.domain.MasterDegreeProofVersion extends net.sourc
    	
    	public java.sql.Timestamp getLastModification();
 	"
+	
 }
 
 class net.sourceforge.fenixedu.domain.MasterDegreeThesis extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1295,11 +1293,11 @@ class net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion extends net.
 	String dissertationTitle;
 	Integer keyEmployee;
 	State currentState;
-    
+	
 	interface "
-    public void setLastModification(java.sql.Timestamp lastModification);
-    
-    public java.sql.Timestamp getLastModification();
+	    public void setLastModification(java.sql.Timestamp lastModification);
+	    
+	    public java.sql.Timestamp getLastModification();
 	"
 }
 
@@ -1747,15 +1745,15 @@ class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSitua
 	Integer keyEmployee;
     State state;
     ReimbursementGuideState reimbursementGuideState;
-    
+	
 	interface "
-    public java.util.Calendar getModificationDate();
-    
-    public void setModificationDate(java.util.Calendar modificationDate);
-    
-    public java.util.Calendar getOfficialDate();
-    
-	public void setOfficialDate(java.util.Calendar officialDate);
+	    public java.util.Calendar getModificationDate();
+	    
+	    public void setModificationDate(java.util.Calendar modificationDate);
+	    
+	    public java.util.Calendar getOfficialDate();
+	    
+		public void setOfficialDate(java.util.Calendar officialDate);
 	"	
 }
 
@@ -2108,21 +2106,14 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
 	interface "
     public net.sourceforge.fenixedu.util.StudentState getState();
 
-    public net.sourceforge.fenixedu.domain.degree.DegreeType getDegreeType();
-    
-    public net.sourceforge.fenixedu.util.AgreementType getAgreementType();
-    
-    public void setAgreementType(net.sourceforge.fenixedu.util.AgreementType agreementType);
-    
-    public void setState(net.sourceforge.fenixedu.util.StudentState state);
-    
-    public void setDegreeType(net.sourceforge.fenixedu.domain.degree.DegreeType degreeType);
-    
-    public net.sourceforge.fenixedu.util.EntryPhase getEntryPhase();
-    
-    public void setEntryPhase(net.sourceforge.fenixedu.util.EntryPhase entryPhase);
-    
-    public net.sourceforge.fenixedu.domain.IStudentCurricularPlan getActiveStudentCurricularPlan();
+	    public net.sourceforge.fenixedu.domain.degree.DegreeType getDegreeType();
+	    public net.sourceforge.fenixedu.util.AgreementType getAgreementType();
+	    public void setAgreementType(net.sourceforge.fenixedu.util.AgreementType agreementType);
+	    public void setState(net.sourceforge.fenixedu.util.StudentState state);
+	    public void setDegreeType(net.sourceforge.fenixedu.domain.degree.DegreeType degreeType);
+	    public net.sourceforge.fenixedu.util.EntryPhase getEntryPhase();
+	    public void setEntryPhase(net.sourceforge.fenixedu.util.EntryPhase entryPhase);
+	    public net.sourceforge.fenixedu.domain.IStudentCurricularPlan getActiveStudentCurricularPlan();
 	"
 			
 }
@@ -3581,9 +3572,7 @@ relation GratuityValuesEmployee {
 }
 
 relation GratuityValuesExecutionDegree {
-	net.sourceforge.fenixedu.domain.GratuityValues playsRole gratuityValues {
-		multiplicity *;
-	}
+	net.sourceforge.fenixedu.domain.GratuityValues playsRole gratuityValues;
 	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
 }
 
