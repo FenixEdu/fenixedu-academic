@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.ICoordinator;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IGratuityValues;
 import net.sourceforge.fenixedu.domain.Period;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IScheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -85,14 +84,11 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan implements IService {
                         // ExecutionYear
                         executionDegree.getExecutionYear().getExecutionDegrees().remove(executionDegree);
                         executionDegree.setExecutionYear(null);
+
                         // GratuityValues
-                        List<IGratuityValues> gratuityValues = executionDegree.getGratuityValues();
-                        for (IGratuityValues gratuityValue : gratuityValues) {
-                            gratuityValue.setExecutionDegree(null);
-                            sp.getIPersistentGratuityValues().deleteByOID(GratuityValues.class,
-                                    gratuityValue.getIdInternal());
-                        }
-                        executionDegree.getGratuityValues().clear();
+                        sp.getIPersistentGratuityValues().deleteByOID(GratuityValues.class,
+                                executionDegree.getGratuityValues().getIdInternal());
+
                         // PERIOD's
                         executionDegree.getPeriodLessonsFirstSemester()
                                 .getExecutionDegreesForLessonsFirstSemester().remove(executionDegree);
