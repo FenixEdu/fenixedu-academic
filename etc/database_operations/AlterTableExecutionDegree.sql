@@ -1,0 +1,1 @@
+alter table EXECUTION_DEGREE add column KEY_GRATUITY_VALUES int(11) unsigned default null;
