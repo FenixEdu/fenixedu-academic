@@ -106,6 +106,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionPeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionYearVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuitySituationVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuityValuesVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideSituationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InsuranceValueVO;
@@ -542,7 +543,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentGratuityValues getIPersistentGratuityValues() {
-        return null;
+        return new GratuityValuesVO();
     }
 
     public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory() {
