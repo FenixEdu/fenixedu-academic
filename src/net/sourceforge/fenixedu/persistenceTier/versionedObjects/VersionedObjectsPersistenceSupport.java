@@ -123,6 +123,8 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.Publication
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationTypeVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationsNumberVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ReimbursementGuideEntryVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ReimbursementGuideVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ResponsibleForVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.RestrictionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ScientificAreaVO;
@@ -263,7 +265,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentReimbursementGuide getIPersistentReimbursementGuide() {
-        return null;
+        return new ReimbursementGuideVO();
     }
 
     public IPersistentExamStudentRoom getIPersistentExamStudentRoom() {
@@ -751,7 +753,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentReimbursementGuideEntry getIPersistentReimbursementGuideEntry() {
-        return null;
+        return new ReimbursementGuideEntryVO();
     }
 
     public IPersistentGrantPart getIPersistentGrantPart() {
