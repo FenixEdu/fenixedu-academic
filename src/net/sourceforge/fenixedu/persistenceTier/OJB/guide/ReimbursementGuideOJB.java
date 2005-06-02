@@ -17,36 +17,18 @@ import org.apache.ojb.broker.query.Criteria;
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 17/Nov/2003
  */
-public class ReimbursementGuideOJB extends PersistentObjectOJB implements
-		IPersistentReimbursementGuide {
+public class ReimbursementGuideOJB extends PersistentObjectOJB implements IPersistentReimbursementGuide {
 
-	/**
-	 *  
-	 */
-	public ReimbursementGuideOJB() {
-		super();
-	}
+    public Integer generateReimbursementGuideNumber() throws ExcepcaoPersistencia {
+        Integer reimbursementGuideNumber = new Integer(1);
+        Criteria crit = new Criteria();
+        List reimbursementGuides = queryList(ReimbursementGuide.class, crit, "number", false);
 
-	public List readByGuide(Integer guideID) throws ExcepcaoPersistencia {
-		Criteria crit = new Criteria();
-		crit.addEqualTo("guide.idInternal", guideID);
-		return queryList(ReimbursementGuide.class, crit);
-	}
-
-	public Integer generateReimbursementGuideNumber()
-			throws ExcepcaoPersistencia {
-		Integer reimbursementGuideNumber = new Integer(1);
-		Criteria crit = new Criteria();
-		List reimbursementGuides = queryList(ReimbursementGuide.class, crit,
-				"number", false);
-
-		if (reimbursementGuides != null && !reimbursementGuides.isEmpty()) {
-			IReimbursementGuide reimbursementGuide = (IReimbursementGuide) reimbursementGuides
-					.get(0);
-			reimbursementGuideNumber = new Integer(reimbursementGuide
-					.getNumber().intValue() + 1);
-		}
-		return reimbursementGuideNumber;
-	}
+        if (reimbursementGuides != null && !reimbursementGuides.isEmpty()) {
+            IReimbursementGuide reimbursementGuide = (IReimbursementGuide) reimbursementGuides.get(0);
+            reimbursementGuideNumber = new Integer(reimbursementGuide.getNumber().intValue() + 1);
+        }
+        return reimbursementGuideNumber;
+    }
 
 }
