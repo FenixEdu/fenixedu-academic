@@ -52,7 +52,7 @@ public class ReadCurriculumHistoricReport implements IService {
             //read ExecutionYear
             IPersistentExecutionYear persistentExecutionYear = suportePersistente
                     .getIPersistentExecutionYear();
-            IExecutionYear executionYear = (ExecutionYear) persistentExecutionYear.readByOID(
+            IExecutionYear executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
                     ExecutionYear.class, executionYearID, false);
 
             //read ExecutionPeriod
