@@ -8,7 +8,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <logic:present name="<%= SessionConstants.ALL_INFO_EXAMS_KEY %>" scope="request">
 	<logic:iterate id="infoViewAllExams" name="<%= SessionConstants.ALL_INFO_EXAMS_KEY %>" scope="request">
-		<h2><bean:message key="title.exams.list"/></h2>
+		<h2 class="break-before"><bean:message key="title.exams.list"/></h2>
 	 	<table width="100%" cellspacing="0">
 			<tr>
         		<td class="infoselected"><p>O curso seleccionado &eacute;:</p>
@@ -118,7 +118,6 @@
 					</tr>
 				</logic:iterate>
 			</table>
-		</logic:present>		
-		<br style="page-break-after:always;" />
+		</logic:present>
 	</logic:iterate>
 </logic:present>

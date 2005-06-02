@@ -7,11 +7,9 @@
 
 <h2><bean:message key="title.exams.calendar"/></h2>
 
-<br style="page-break-after:always;" />
-
 <logic:iterate id="infoRoomExamsMap" name="<%= SessionConstants.INFO_EXAMS_MAP %>" scope="request">
 	<bean:define id="infoRoomExamsMap" name="infoRoomExamsMap" toScope="request"/>
-<h3> Sala <bean:write name="infoRoomExamsMap" property="infoRoom.nome"/> </h3>
+<h3 class="break-before"> Sala <bean:write name="infoRoomExamsMap" property="infoRoom.nome"/> </h3>
 
 <app:generateNewExamsMap name="infoRoomExamsMap" user="sop" mapType="null"/> 
 

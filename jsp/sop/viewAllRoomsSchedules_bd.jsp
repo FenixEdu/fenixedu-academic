@@ -8,6 +8,7 @@
 <br />
 <logic:present name="<%=SessionConstants.ALL_INFO_VIEW_ROOM_SCHEDULE %>" scope="request">
 	<logic:iterate id="viewRoomSchedule" name="<%=SessionConstants.ALL_INFO_VIEW_ROOM_SCHEDULE %>" scope="request">
+		<h2 class="break-before"> </h2>
 		<table width="100%" cellspacing="0">
 			<tr>
 				<td class="infoselected">
@@ -68,7 +69,6 @@
 		<br />	
 	   	<bean:define id="lessons" name="viewRoomSchedule" property="roomLessons"/>
 		<div align="center"><app:gerarHorario name="lessons" type="<%= TimeTableType.SOP_ROOM_TIMETABLE %>"/></div>
-		<br style="page-break-after:always;" />
 	</logic:iterate>
 </logic:present>
 <logic:notPresent name="<%=SessionConstants.ALL_INFO_VIEW_ROOM_SCHEDULE %>" scope="request">

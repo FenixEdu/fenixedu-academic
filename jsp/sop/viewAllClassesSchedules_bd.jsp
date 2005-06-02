@@ -25,11 +25,10 @@
 		    </tr>
 		</table>
 
-		<h2><bean:message key="title.class.timetable" /><bean:write name="viewClassSchedule" property="infoClass.nome" /></h2>
+		<h2 class="break-before"><bean:message key="title.class.timetable" /><bean:write name="viewClassSchedule" property="infoClass.nome" /></h2>
 	   	<br/>
 	   	<bean:define id="lessons" name="viewClassSchedule" property="classLessons"/>
 		<div align="center"><app:gerarHorario name="lessons" type="<%= TimeTableType.CLASS_TIMETABLE_WITHOUT_LINKS %>"/></div>
-		<br style="page-break-after:always;" />
 	</logic:iterate>
 </logic:present>
 <logic:notPresent name="<%=SessionConstants.ALL_INFO_VIEW_CLASS_SCHEDULE %>" scope="request">
