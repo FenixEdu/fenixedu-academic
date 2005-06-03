@@ -4,8 +4,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
-import net.sourceforge.fenixedu.util.AgreementType;
-import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.StudentState;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -17,15 +15,7 @@ import org.apache.commons.collections.Predicate;
  * 24/Mar/2003
  */
 
-public class Student extends Student_Base{
-
-    protected StudentState state;
-
-    protected DegreeType degreeType;
-
-    private AgreementType agreementType;
-
-    private EntryPhase entryPhase;
+public class Student extends Student_Base {
 
     public Student(Integer idInternal) {
         setIdInternal(idInternal);
@@ -36,7 +26,6 @@ public class Student extends Student_Base{
         setState(null);
         setPerson(null);
         setDegreeType(null);
-
         setPersonKey(null);
         setStudentKind(null);
         setStudentKindKey(null);
@@ -49,7 +38,6 @@ public class Student extends Student_Base{
         setState(state);
         setPerson(person);
         setDegreeType(degreeType);
-
         setPersonKey(null);
         setSpecialSeason(new Boolean(false));
     }
@@ -65,95 +53,18 @@ public class Student extends Student_Base{
                             student.getDegreeType()) && this.getPerson().equals(student.getPerson())));
         }
         return resultado;
-        //		return true;
     }
 
     public String toString() {
         String result = "[" + this.getClass().getName() + "; ";
-        result += "internalCode = " + getIdInternal() + "; ";
+        result += "internalCode = " + this.getIdInternal() + "; ";
         result += "number = " + this.getNumber() + "; ";
-        result += "state = " + this.state + "; ";
-        result += "degreeType = " + this.degreeType + "; ";
-        result += "studentKind = " + getStudentKind() + "; ";
+        result += "state = " + this.getState() + "; ";
+        result += "degreeType = " + this.getDegreeType() + "; ";
+        result += "studentKind = " + this.getStudentKind() + "; ";
         return result;
     }
 
-    /**
-     * Returns the degreeType.
-     * 
-     * @return DegreeType
-     */
-    public DegreeType getDegreeType() {
-        return degreeType;
-    }
-
-    /**
-     * Returns the state.
-     * 
-     * @return StudentState
-     */
-    public StudentState getState() {
-        return state;
-    }
-
-    /**
-     * Sets the degreeType.
-     * 
-     * @param degreeType
-     *            The degreeType to set
-     */
-    public void setDegreeType(DegreeType degreeType) {
-        this.degreeType = degreeType;
-    }
-
-    /**
-     * Sets the state.
-     * 
-     * @param state
-     *            The state to set
-     */
-    public void setState(StudentState state) {
-        this.state = state;
-    }
-
-
-
-
-    /**
-     * @return Returns the agreementType.
-     */
-    public AgreementType getAgreementType() {
-        return agreementType;
-    }
-
-    /**
-     * @param agreementType
-     *            The agreementType to set.
-     */
-    public void setAgreementType(AgreementType agreementType) {
-        this.agreementType = agreementType;
-    }
-
-    /**
-     * @return Returns the entryPhase.
-     */
-    public EntryPhase getEntryPhase() {
-        return entryPhase;
-    }
-
-    /**
-     * @param entryPhase
-     *            The entryPhase to set.
-     */
-    public void setEntryPhase(EntryPhase entryPhase) {
-        this.entryPhase = entryPhase;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.IStudent#getActiveStudentCurricularPlan()
-     */
     public IStudentCurricularPlan getActiveStudentCurricularPlan() {
         List curricularPlans = getStudentCurricularPlans();
         IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) CollectionUtils.find(
@@ -161,7 +72,8 @@ public class Student extends Student_Base{
 
                     public boolean evaluate(Object arg0) {
                         IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) arg0;
-                        return studentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.ACTIVE);
+                        return studentCurricularPlan.getCurrentState().equals(
+                                StudentCurricularPlanState.ACTIVE);
                     }
                 });
 
@@ -170,7 +82,5 @@ public class Student extends Student_Base{
         }
         return studentCurricularPlan;
     }
-
-
 
 }
