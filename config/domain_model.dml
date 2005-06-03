@@ -1488,7 +1488,9 @@ class net.sourceforge.fenixedu.domain.Period extends net.sourceforge.fenixedu.do
 
 	public java.util.Calendar getEndDateOfComposite();
 	
-	public boolean intersectPeriods(IPeriod period);
+	public boolean intersectPeriods(net.sourceforge.fenixedu.domain.IPeriod period);
+	
+	public boolean containsDay(java.util.Calendar day);
 	"
 }
 
@@ -1819,6 +1821,8 @@ class net.sourceforge.fenixedu.domain.RoomOccupation extends net.sourceforge.fen
 	public boolean roomOccupationForDateAndTime(net.sourceforge.fenixedu.domain.IPeriod period, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week, net.sourceforge.fenixedu.domain.IRoom room);
 	
 	public boolean roomOccupationForDateAndTime(net.sourceforge.fenixedu.domain.IPeriod period, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week);
+	
+	public boolean containedIn(java.util.Calendar day, java.util.Calendar beginning, java.util.Calendar end);
 	"
 }
 
