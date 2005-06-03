@@ -8,7 +8,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
-import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfAcumulatedEnrollmentsRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfCurricularCoursesEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PrecedencesEnrollmentRule;
@@ -19,7 +18,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
-import net.sourceforge.fenixedu.util.MarkType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -30,12 +28,23 @@ import org.apache.commons.collections.Predicate;
 
 public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
-    protected DegreeCurricularPlanState state;
-
-    protected MarkType markType;
-
     public DegreeCurricularPlan() {
         setOjbConcreteClass(getClass().getName());
+    }
+
+    public String toString() {
+        String result = "[" + this.getClass().getName() + ": ";
+        result += "idInternal = " + getIdInternal() + "; ";
+        result += "name = " + this.getName() + "; ";
+        result += "initialDate = " + this.getInitialDate() + "; ";
+        result += "endDate = " + this.getEndDate() + "; ";
+        result += "state = " + this.getState() + "; ";
+        result += "needed Credits = " + this.getNeededCredits() + "; ";
+        result += "Mark Type = " + this.getMarkType() + "; ";
+        result += "degree = " + this.getDegree() + "]\n";
+        result += "NumerusClausus = " + this.getNumerusClausus() + "]\n";
+
+        return result;
     }
 
     public IStudentCurricularPlan getNewStudentCurricularPlan() {
@@ -52,39 +61,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return studentCurricularPlan;
     }
 
-    public String toString() {
-        String result = "[" + this.getClass().getName() + ": ";
-        result += "idInternal = " + getIdInternal() + "; ";
-        result += "name = " + this.getName() + "; ";
-        result += "initialDate = " + this.getInitialDate() + "; ";
-        result += "endDate = " + this.getEndDate() + "; ";
-        result += "state = " + this.state + "; ";
-        result += "needed Credits = " + this.getNeededCredits() + "; ";
-        result += "Mark Type = " + this.markType + "; ";
-        result += "degree = " + this.getDegree() + "]\n";
-        result += "NumerusClausus = " + this.getNumerusClausus() + "]\n";
-
-        return result;
-    }
-
-
-
-    public MarkType getMarkType() {
-        return markType;
-    }
-
-    public DegreeCurricularPlanState getState() {
-        return state;
-    }
-
-    public void setMarkType(MarkType markType) {
-        this.markType = markType;
-    }
-
-    public void setState(DegreeCurricularPlanState state) {
-        this.state = state;
-    }
-    
     // -------------------------------------------------------------
     // BEGIN: Only for enrollment purposes
     // -------------------------------------------------------------
@@ -94,7 +70,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
         List result = new ArrayList();
 
-        //result.add(new SecretaryEnrollmentRule(studentCurricularPlan));
+        // result.add(new SecretaryEnrollmentRule(studentCurricularPlan));
         result.add(new MaximumNumberOfAcumulatedEnrollmentsRule(studentCurricularPlan, executionPeriod));
         result.add(new MaximumNumberOfCurricularCoursesEnrollmentRule(studentCurricularPlan,
                 executionPeriod));
@@ -110,7 +86,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         List curricularCourses = new ArrayList();
 
         try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory
+                    .getDefaultPersistenceSupport();
             IPersistentCurricularCourseScope curricularCourseScopeDAO = persistentSuport
                     .getIPersistentCurricularCourseScope();
 
@@ -260,7 +237,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         List groups = new ArrayList();
 
         try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory
+                    .getDefaultPersistenceSupport();
             IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
                     .getIPersistentCurricularCourseGroup();
 
@@ -278,7 +256,4 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     // END: Only for enrollment purposes
     // -------------------------------------------------------------
 
-    
-    
-    
 }
