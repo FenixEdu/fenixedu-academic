@@ -63,6 +63,11 @@
 <p><strong>&raquo;
 	<html:link page="/guideManagement.do?method=firstPage">
 		<bean:message key="label.guidesManagement"/>
+	</html:link>	
+</strong></p>
+<p><strong>&raquo;
+	<html:link page="/gratuity/updateGratuitySituations.faces">
+		Actualizar Situações de Propina
 	</html:link>
 </strong></p>
 
