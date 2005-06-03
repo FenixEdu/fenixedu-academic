@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.fileSuport.INode;
-import net.sourceforge.fenixedu.util.PeriodState;
 
 /**
  * Created on 11/Fev/2003
@@ -11,7 +10,6 @@ import net.sourceforge.fenixedu.util.PeriodState;
  *  
  */
 public class ExecutionPeriod extends ExecutionPeriod_Base {
-    private PeriodState state;
 
     /**
      * Constructor for ExecutionPeriod.
@@ -24,8 +22,8 @@ public class ExecutionPeriod extends ExecutionPeriod_Base {
     }
 
     public ExecutionPeriod(String name, IExecutionYear executionYear) {
-        setName(name);
-        setExecutionYear(executionYear);
+        this.setName(name);
+        this.setExecutionYear(executionYear);
     }
 
     public String toString() {
@@ -45,14 +43,6 @@ public class ExecutionPeriod extends ExecutionPeriod_Base {
             return getIdInternal().equals(executionPeriod.getIdInternal());
         }
         return super.equals(obj);
-    }
-
-    public void setState(PeriodState newState) {
-        this.state = newState;
-    }
-
-    public PeriodState getState() {
-        return this.state;
     }
 
     public String getSlideName() {

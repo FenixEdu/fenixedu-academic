@@ -44,6 +44,7 @@ valueType net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus as FinalDe
 valueType net.sourceforge.fenixedu.domain.GuideState as GuideState;
 valueType net.sourceforge.fenixedu.util.MarkType as MarkType;
 valueType net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification as MasterDegreeClassification;
+valueType net.sourceforge.fenixedu.util.PeriodState as PeriodState;
 valueType net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState as ReimbursementGuideState;
 valueType net.sourceforge.fenixedu.util.Season as Season;
 valueType net.sourceforge.fenixedu.domain.credits.ServiceExemptionType as ServiceExemptionType;
@@ -837,12 +838,7 @@ class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fe
 	Date endDate;
 	String name;
 	Integer semester;
-	
-	interface "
-	void setState(net.sourceforge.fenixedu.util.PeriodState newState);
-
-	net.sourceforge.fenixedu.util.PeriodState getState();
-	"
+    PeriodState state;
 }
 
 
@@ -851,12 +847,7 @@ class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.feni
 	Date endDate;
 	String year;
 	Integer keyInsuranceValue;
-	
-	interface "
-	void setState(net.sourceforge.fenixedu.util.PeriodState newState);
-
-	net.sourceforge.fenixedu.util.PeriodState getState();
-	"
+    PeriodState state;
 }
 
 
