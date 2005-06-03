@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.persistenceTier;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.domain.ICurricularYear;
 
 /**
@@ -12,9 +10,4 @@ import net.sourceforge.fenixedu.domain.ICurricularYear;
 public interface IPersistentCurricularYear extends IPersistentObject {
 
     public ICurricularYear readCurricularYearByYear(Integer year) throws ExcepcaoPersistencia;
-
-    public List readAll() throws ExcepcaoPersistencia;
-
-    public void delete(ICurricularYear CurricularYear) throws ExcepcaoPersistencia;
-
 }

@@ -426,7 +426,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentCurricularSemester getIPersistentCurricularSemester() {
-        return null;
+        return new CurricularSemesterVO();
     }
 
     public IFrequentaPersistente getIFrequentaPersistente() {
@@ -798,7 +798,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentCurricularYear getIPersistentCurricularYear() {
-        return null;
+        return new CurricularYearVO();
     }
 
     public IPersistentWebSiteSection getIPersistentWebSiteSection() {

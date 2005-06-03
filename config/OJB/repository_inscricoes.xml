@@ -440,6 +440,13 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
+	  
+	<collection-descriptor proxy="true"
+		name="curricularSemesters"
+		element-class-ref="net.sourceforge.fenixedu.domain.CurricularSemester">
+		<inverse-foreignkey field-ref="curricularYearKey"/>
+	</collection-descriptor>
+	  
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->

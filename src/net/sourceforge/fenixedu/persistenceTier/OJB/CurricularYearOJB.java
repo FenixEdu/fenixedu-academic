@@ -18,14 +18,6 @@ public class CurricularYearOJB extends PersistentObjectOJB implements IPersisten
     public CurricularYearOJB() {
     }
 
-    public void delete(ICurricularYear curricularYear) throws ExcepcaoPersistencia {
-        try {
-            super.delete(curricularYear);
-        } catch (ExcepcaoPersistencia ex) {
-            throw ex;
-        }
-    }
-
     public ICurricularYear readCurricularYearByYear(Integer year) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("year", year);
@@ -35,7 +27,5 @@ public class CurricularYearOJB extends PersistentObjectOJB implements IPersisten
 
     public List readAll() throws ExcepcaoPersistencia {
         return queryList(CurricularYear.class, new Criteria());
-
     }
-
 }
