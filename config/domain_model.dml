@@ -33,7 +33,10 @@ valueType net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurr
 valueType net.sourceforge.fenixedu.domain.degree.DegreeType as DegreeType;
 valueType net.sourceforge.fenixedu.util.DelegateYearType as DelegateYearType; 
 valueType net.sourceforge.fenixedu.util.DiaSemana as DiaSemana;
+valueType net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition as EnrollmentCondition;
+valueType net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType as EnrolmentEvaluationType;
 valueType net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType as EnrolmentGroupPolicyType;
+valueType net.sourceforge.fenixedu.domain.curriculum.EnrollmentState as EnrollmentState;
 valueType net.sourceforge.fenixedu.util.EntryPhase as EntryPhase;
 valueType net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus as FinalDegreeWorkProposalStatus;
 valueType net.sourceforge.fenixedu.domain.GuideState as GuideState;
@@ -619,24 +622,19 @@ class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu
     String ojbConcreteClass;
     Integer studentCurricularPlanKey;
     Integer accumulatedWeight;
-
-    interface "
-    
-    public net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition getCondition();
-    public net.sourceforge.fenixedu.domain.curriculum.EnrollmentState getEnrollmentState();
-    public net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType getEnrolmentEvaluationType();
-    public void setCondition(net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition condition);
-    public void setEnrollmentState(net.sourceforge.fenixedu.domain.curriculum.EnrollmentState state);
-    public void setEnrolmentEvaluationType(net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType type);
-    "
+    EnrollmentState enrollmentState;
+    EnrollmentCondition condition;
+    EnrolmentEvaluationType enrolmentEvaluationType;
 }
 
     class net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
     }
     
+    
     class net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
     }
 
+    
 class net.sourceforge.fenixedu.domain.EnrolmentEquivalence extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer enrolmentKey;
 }
