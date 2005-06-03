@@ -1,5 +1,5 @@
 <!-- Definitions for . -->
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="net.sourceforge.fenixedu.domain.Employee"
   table="ass_FUNCIONARIO"
 >
@@ -45,16 +45,16 @@
          class-ref="net.sourceforge.fenixedu.domain.Person">
          <foreignkey field-ref="keyPerson"/>
   </reference-descriptor>
-  <collection-descriptor
+  <collection-descriptor proxy="true"
 	name="historicList"
 	element-class-ref="net.sourceforge.fenixedu.domain.EmployeeHistoric"
 	auto_retrieve="true"
-	proxy="true">
+	>
 	<inverse-foreignkey field-ref="keyEmployee"/>
   </collection-descriptor> 
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="net.sourceforge.fenixedu.domain.EmployeeNotTeacher"
   table="ass_FUNC_NAO_DOCENTE"
 >
@@ -83,7 +83,7 @@
   </reference-descriptor>  
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="net.sourceforge.fenixedu.domain.EmployeeHistoric"
   table="ass_FUNCIONARIO_HISTORICO"
 >
@@ -171,14 +171,14 @@
   <reference-descriptor
          name="workingPlaceCostCenter"
          class-ref="net.sourceforge.fenixedu.domain.CostCenter"
-         proxy="true">
+         >
          <foreignkey field-ref="keyWorkingPlaceCostCenter"/>
   </reference-descriptor>
 
   <reference-descriptor
          name="mailingCostCenter"
          class-ref="net.sourceforge.fenixedu.domain.CostCenter"
-         proxy="true">
+         >
          <foreignkey field-ref="keyMailingCostCenter"/>
   </reference-descriptor>   
 
@@ -195,7 +195,7 @@
   </reference-descriptor>  
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
 	class="net.sourceforge.fenixedu.domain.CostCenter" 
 	table="ass_CENTRO_CUSTO">
   <field-descriptor id="0"
@@ -231,7 +231,7 @@
 
 <!-- Old classes -->
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="net.sourceforge.fenixedu.domain.NonTeacherEmployee"
   table="ass_FUNC_NAO_DOCENTE"
 >
@@ -260,7 +260,7 @@
   </reference-descriptor>  
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
 	class="net.sourceforge.fenixedu.domain.StatusAssiduidade" 
 	table="ass_STATUS">
   <field-descriptor 
@@ -302,7 +302,7 @@
   />  	
 </class-descriptor>
 
-<!--<class-descriptor 
+<!--<class-descriptor proxy="dynamic" 
   class="net.sourceforge.fenixedu.domain.Funcionario"
   table="ass_FUNCIONARIO"
 >
@@ -392,14 +392,14 @@
   <reference-descriptor
          name="workingPlaceCostCenter"
          class-ref="net.sourceforge.fenixedu.domain.CostCenter"
-         proxy="true">
+         >
          <foreignkey field-ref="chaveCCLocalTrabalho"/>
   </reference-descriptor>
 
   <reference-descriptor
          name="mailingCostCenter"
          class-ref="net.sourceforge.fenixedu.domain.CostCenter"
-         proxy="true">
+         >
          <foreignkey field-ref="chaveCCCorrespondencia"/>
   </reference-descriptor>   
 

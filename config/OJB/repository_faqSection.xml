@@ -1,4 +1,4 @@
-<class-descriptor
+<class-descriptor proxy="dynamic"
 		class="net.sourceforge.fenixedu.domain.support.FAQSection"
 		table="FAQ_SECTION"
 		>
@@ -28,7 +28,7 @@
 	<reference-descriptor
 			name="parentSection"
 			class-ref="net.sourceforge.fenixedu.domain.support.FAQSection"
-			proxy="true">
+			>
 		<foreignkey field-ref="keyParentSection"/>
 	</reference-descriptor>
 </class-descriptor>

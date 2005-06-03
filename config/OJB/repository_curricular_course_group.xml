@@ -1,7 +1,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.CurricularCourseGroup -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.CurricularCourseGroup">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.CurricularCourseGroup">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup"/>
 </class-descriptor>
@@ -9,7 +9,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup" table="CURRICULAR_COURSE_GROUP">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup" table="CURRICULAR_COURSE_GROUP">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -57,22 +57,22 @@
 	<reference-descriptor
 			name="branch"
 			class-ref="net.sourceforge.fenixedu.domain.Branch"
-			proxy="true">
+			>
 		<foreignkey field-ref="keyBranch"/>
 	</reference-descriptor>		
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="curricularCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			indirection-table="CURRICULAR_COURSE_CURRICULAR_COURSE_GROUP"
-			proxy="true">
+			>
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE_GROUP"/>
 		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="scientificAreas"
 			element-class-ref="net.sourceforge.fenixedu.domain.ScientificArea"
 			indirection-table="SCIENTIFIC_AREA_CURRICULAR_COURSE_GROUP"
-			proxy="true">
+			>
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE_GROUP"/>
 		<fk-pointing-to-element-class column="KEY_SCIENTIFIC_AREA"/>
 	</collection-descriptor>
@@ -81,7 +81,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup" table="CURRICULAR_COURSE_GROUP">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup" table="CURRICULAR_COURSE_GROUP">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -123,22 +123,22 @@
 	<reference-descriptor
 			name="branch"
 			class-ref="net.sourceforge.fenixedu.domain.Branch"
-			proxy="true">
+			>
 		<foreignkey field-ref="keyBranch"/>
 	</reference-descriptor>		
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="curricularCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			indirection-table="CURRICULAR_COURSE_CURRICULAR_COURSE_GROUP"
-			proxy="true">
+			>
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE_GROUP"/>
 		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="scientificAreas"
 			element-class-ref="net.sourceforge.fenixedu.domain.ScientificArea"
 			indirection-table="SCIENTIFIC_AREA_CURRICULAR_COURSE_GROUP"
-			proxy="true">
+			>
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE_GROUP"/>
 		<fk-pointing-to-element-class column="KEY_SCIENTIFIC_AREA"/>
 	</collection-descriptor>

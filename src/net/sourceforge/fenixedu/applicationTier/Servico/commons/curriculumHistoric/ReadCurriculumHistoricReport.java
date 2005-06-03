@@ -64,7 +64,7 @@ public class ReadCurriculumHistoricReport implements IService {
             //read CurricularCourse
             IPersistentCurricularCourse persistentCurricularCourse = suportePersistente
                     .getIPersistentCurricularCourse();
-            ICurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse
+            ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
                     .readByOID(CurricularCourse.class, curricularCourseID);
             //read all enrollments
             IPersistentEnrollment persistentEnrollment = suportePersistente.getIPersistentEnrolment();

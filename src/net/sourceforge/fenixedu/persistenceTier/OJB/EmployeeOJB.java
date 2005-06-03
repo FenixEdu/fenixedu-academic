@@ -24,25 +24,25 @@ public class EmployeeOJB extends PersistentObjectOJB implements IPersistentEmplo
     public IEmployee readByNumber(Integer number) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("employeeNumber", number);
-        return (Employee) queryObject(Employee.class, criteria);
+        return (IEmployee) queryObject(Employee.class, criteria);
     }
 
     public IEmployee readByIdInternal(int idInternal) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("idInternal", new Integer(String.valueOf(idInternal)));
-        return (Employee) queryObject(Employee.class, criteria);
+        return (IEmployee) queryObject(Employee.class, criteria);
     }
 
     public IEmployee readByPerson(int keyPerson) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("person.idInternal", new Integer(String.valueOf(keyPerson)));
-        return (Employee) queryObject(Employee.class, criteria);
+        return (IEmployee) queryObject(Employee.class, criteria);
     }
 
     public IEmployee readByPerson(IPerson person) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("person.idInternal", person.getIdInternal());
-        return (Employee) queryObject(Employee.class, criteria);
+        return (IEmployee) queryObject(Employee.class, criteria);
     }
 
     public List readHistoricByKeyEmployee(int keyEmployee) throws ExcepcaoPersistencia {

@@ -1,6 +1,6 @@
-<class-descriptor class="net.sourceforge.fenixedu.domain.ExecutionYear"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.ExecutionYear"
          table="EXECUTION_YEAR"
-		 proxy="dynamic">
+		 >
    <field-descriptor 
       name="idInternal"
       column="ID_INTERNAL"
@@ -41,38 +41,38 @@
       jdbc-type="DATE"
       conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
     />
-  <collection-descriptor
+  <collection-descriptor proxy="true"
 		name="executionPeriods"
 		element-class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
-		refresh="true">
+		>
 	<inverse-foreignkey field-ref="keyExecutionYear"/>
   </collection-descriptor>  
-  <collection-descriptor
+  <collection-descriptor proxy="true"
 		name="delegate"
 		element-class-ref="net.sourceforge.fenixedu.domain.student.Delegate"
-		proxy="true"
-		refresh="true">
+		
+		>
 	<inverse-foreignkey field-ref="keyExecutionYear"/>
   </collection-descriptor>  
-  <collection-descriptor
+  <collection-descriptor proxy="true"
 		name="insuranceTransactions"
 		element-class-ref="net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction"
-		proxy="true"
-		refresh="true">
+		
+		>
 	<inverse-foreignkey field-ref="keyExecutionYear"/>
   </collection-descriptor>  
-  <collection-descriptor
+  <collection-descriptor proxy="true"
 		name="executionDegrees"
 		element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
-		proxy="true"
-		refresh="true">
+		
+		>
 	<inverse-foreignkey field-ref="academicYear"/>
   </collection-descriptor>  
-  <collection-descriptor
+  <collection-descriptor proxy="true"
 		name="students"
 		element-class-ref="net.sourceforge.fenixedu.domain.Student"
-		proxy="true"
-		refresh="true">
+		
+		>
 	<inverse-foreignkey field-ref="keyRegistrationYear"/>
   </collection-descriptor>  
 </class-descriptor> 

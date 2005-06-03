@@ -1,7 +1,7 @@
-<class-descriptor
+<class-descriptor proxy="dynamic"
          class="net.sourceforge.fenixedu.domain.ExecutionPeriod"
          table="EXECUTION_PERIOD"
-		 proxy="dynamic">
+		 >
        <field-descriptor
           name="idInternal"
           column="ID_INTERNAL"
@@ -63,80 +63,80 @@
          class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
          <foreignkey field-ref="keyNextExecutionPeriod"/>
        </reference-descriptor>
-    <collection-descriptor
+    <collection-descriptor proxy="true"
 			name="schoolClasses"
 			element-class-ref="net.sourceforge.fenixedu.domain.SchoolClass"
-			refresh="true"
-			proxy="true">
+			
+			>
 		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
 	</collection-descriptor>
-    <collection-descriptor
+    <collection-descriptor proxy="true"
 			name="associatedOtherTypeCreditLines"
 			element-class-ref="net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine"
-			refresh="true"
-			proxy="true">
+			
+			>
 		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="associatedTeacherDegreeFinalProjectStudents"
 			element-class-ref="net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent"
-			refresh="true"
-			proxy="true">
+			
+			>
 		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="enrolments"
 			element-class-ref="net.sourceforge.fenixedu.domain.Enrolment"
-			refresh="true"
-			proxy="true">
+			
+			>
 		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="associatedTeacherInstitutionWorkTime"
 			element-class-ref="net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime"
-			refresh="true"
-			proxy="true">
+			
+			>
 		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="enrolmentPeriod"
 			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriod"
-			refresh="true"
-			proxy="true">
+			
+			>
 		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="oldInquiriesTeachersRes"
 			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes"
-			refresh="true"
-			proxy="true">
+			
+			>
 		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="associatedExecutionCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-			refresh="true">
+			>
 		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="lessons"
 			element-class-ref="net.sourceforge.fenixedu.domain.Lesson"
-			refresh="true"
-			proxy="true">
+			
+			>
 		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="oldInquiriesSummary"
 			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary"
-			refresh="true"
-			proxy="true">
+			
+			>
 		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="oldInquiriesCoursesRes"
 			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes"
-			refresh="true"
-			proxy="true">
+			
+			>
 		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
 	</collection-descriptor>
 </class-descriptor> 

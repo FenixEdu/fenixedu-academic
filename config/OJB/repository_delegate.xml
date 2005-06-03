@@ -2,7 +2,7 @@
      to avoid mixing user defined and system mappings. -->   
 <!-- Mapping of User defined classes starts here -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.student.Delegate -->
-   <class-descriptor
+   <class-descriptor proxy="dynamic"
    	  class="net.sourceforge.fenixedu.domain.student.Delegate"
    	  table="DELEGATE"
    >
@@ -46,7 +46,7 @@
     <reference-descriptor
 			name="degree"
 			class-ref="net.sourceforge.fenixedu.domain.Degree"
-			proxy="false">
+			>
 		<foreignkey field-ref="keyDegree"/>
 	</reference-descriptor>
 	<reference-descriptor
@@ -57,7 +57,7 @@
 	 <reference-descriptor
 			name="student"
 			class-ref="net.sourceforge.fenixedu.domain.Student"
-			proxy="false">
+			>
 		<foreignkey field-ref="keyStudent"/>
 	</reference-descriptor>   
    </class-descriptor>

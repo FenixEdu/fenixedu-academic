@@ -1,7 +1,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.ExecutionCourse -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.ExecutionCourse" proxy="dynamic" table="EXECUTION_COURSE">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.ExecutionCourse"  table="EXECUTION_COURSE">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -78,147 +78,147 @@
 	<reference-descriptor
 			name="courseReport"
 			class-ref="net.sourceforge.fenixedu.domain.gesdis.CourseReport" 
-			proxy="false">
+			>
 		<foreignkey field-ref="keyCourseReport"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="evaluationMethod"
 			class-ref="net.sourceforge.fenixedu.domain.EvaluationMethod" 
-			proxy="false">
+			>
 		<foreignkey field-ref="keyEvaluationMethod"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="site"
 			class-ref="net.sourceforge.fenixedu.domain.Site" 
-			proxy="false">
+			>
 		<foreignkey field-ref="keySite"/>
 	</reference-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="associatedCurricularCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
   		    collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			indirection-table="CURRICULAR_COURSE_EXECUTION_COURSE"
 			auto-retrieve="true"
-			refresh="true"
-			proxy="true">
+			
+			>
 		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE"/>
 		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="associatedExams"
 			element-class-ref="net.sourceforge.fenixedu.domain.Exam"
 			indirection-table="EXAM_EXECUTION_COURSE"
-			refresh="true"
+			
 			auto-retrieve="true"
 			auto-update="false"
 			auto-delete="false"
-			proxy="true"
+			
 			>
 		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE"/>
 		<fk-pointing-to-element-class column="KEY_EVALUATION"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="associatedEvaluations"
 			element-class-ref="net.sourceforge.fenixedu.domain.Evaluation"
 			indirection-table="EXAM_EXECUTION_COURSE"
-			refresh="true"
+			
 			auto-retrieve="true"
 			auto-update="false"
 			auto-delete="false"
-			proxy="true"
+			
 			>
 		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE"/>
 		<fk-pointing-to-element-class column="KEY_EVALUATION"/>
 	</collection-descriptor>
-    <collection-descriptor
+    <collection-descriptor proxy="true"
 			name="attendingStudents"
 			element-class-ref="net.sourceforge.fenixedu.domain.Student"
 			indirection-table="ATTEND"
-			refresh="true"
+			
 			auto-retrieve="true"
 			auto-update="false"
 			auto-delete="false"
-			proxy="true"
+			
 			>
 		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE"/>
 		<fk-pointing-to-element-class column="KEY_STUDENT"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 		name="attends"
 		element-class-ref="net.sourceforge.fenixedu.domain.Attends"
-		refresh="true"
+		
 		auto-retrieve="true"
 		auto-update="false"
 		auto-delete="false"
-		proxy="true">
+		>
 		<inverse-foreignkey field-ref="chaveDisciplinaExecucao"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 		name="executionCourseProperties"
 		element-class-ref="net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty"
-		refresh="true"
+		
 		auto-retrieve="true"
 		auto-update="false"
 		auto-delete="false"
-		proxy="true">
+		>
 		<inverse-foreignkey field-ref="keyExecutionCourse"/>
 	</collection-descriptor>     
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 		name="responsibleTeachers"
 		element-class-ref="net.sourceforge.fenixedu.domain.ResponsibleFor"
-		refresh="true"
+		
 		auto-retrieve="true"
 		auto-update="false"
 		auto-delete="false"
-		proxy="true">
+		>
 		<inverse-foreignkey field-ref="keyExecutionCourse"/>
 	</collection-descriptor>        
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 		name="professorships"
 		element-class-ref="net.sourceforge.fenixedu.domain.Professorship"
-		refresh="true"
+		
 		auto-retrieve="true"
 		auto-update="false"
 		auto-delete="false"
-		proxy="true">
+		>
 		<inverse-foreignkey field-ref="keyExecutionCourse"/>
 	</collection-descriptor>	
-	<collection-descriptor 
+	<collection-descriptor proxy="true" 
 			name="groupPropertiesExecutionCourse" 
 			element-class-ref="net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse"
-			proxy="true">
+			>
 		<inverse-foreignkey field-ref="keyExecutionCourse"/>
     </collection-descriptor>
-    <collection-descriptor
+    <collection-descriptor proxy="true"
 			name="nonAffiliatedTeachers"
 			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"			
 			element-class-ref="net.sourceforge.fenixedu.domain.NonAffiliatedTeacher"
-			proxy="true"
+			
 			indirection-table="NON_AFFILIATED_TEACHER_PROFESSORSHIPS"
-			refresh="true"
+			
 			>
 		<fk-pointing-to-element-class column="KEY_NON_AFFILIATED_TEACHER" />
 		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE" />
 	</collection-descriptor>
-	<collection-descriptor 
+	<collection-descriptor proxy="true" 
 		name="associatedBibliographicReferences" 
 		element-class-ref="net.sourceforge.fenixedu.domain.BibliographicReference"
-		proxy="true"
-		refresh="true">
+		
+		>
 		<inverse-foreignkey field-ref="keyExecutionCourse"/>
 	</collection-descriptor>
-	<collection-descriptor 
+	<collection-descriptor proxy="true" 
 		name="associatedSummaries" 
 		element-class-ref="net.sourceforge.fenixedu.domain.Summary"
-		proxy="true"
-		refresh="true">
+		
+		>
 		<inverse-foreignkey field-ref="keyExecutionCourse"/>
 	</collection-descriptor>
-	<collection-descriptor 
+	<collection-descriptor proxy="true" 
 		name="associatedShifts" 
 		element-class-ref="net.sourceforge.fenixedu.domain.Shift"
-		proxy="true"
-		refresh="true">
+		
+		>
 		<inverse-foreignkey field-ref="chaveDisciplinaExecucao"/>
 	</collection-descriptor>	
 </class-descriptor>

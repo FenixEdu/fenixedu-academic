@@ -46,7 +46,7 @@ public class ReadPublishedFinalDegreeWorkProposalHeaders implements IService {
             if (finalDegreeWorkProposals != null) {
                 finalDegreeWorkProposalHeaders = new ArrayList();
                 for (int i = 0; i < finalDegreeWorkProposals.size(); i++) {
-                    IProposal proposal = (Proposal) finalDegreeWorkProposals.get(i);
+                    IProposal proposal = (IProposal) finalDegreeWorkProposals.get(i);
 
                     if (proposal != null) {
                         FinalDegreeWorkProposalHeader finalDegreeWorkProposalHeader = new FinalDegreeWorkProposalHeader();

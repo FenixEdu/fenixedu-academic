@@ -5,7 +5,7 @@
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.Department -->
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.Department" table="DEPARTMENT">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Department" table="DEPARTMENT">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -29,10 +29,10 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-<!--	<collection-descriptor
+<!--	<collection-descriptor proxy="true"
 			name="disciplinasAssociadas"
 			element-class-ref="net.sourceforge.fenixedu.domain.DepartmentCourse"
-			proxy="true">
+			>
 		<inverse-foreignkey field-ref="chaveDepartamento"/>
 	</collection-descriptor>     -->
 </class-descriptor>   
@@ -40,7 +40,7 @@
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DepartmentCourse -->
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.DepartmentCourse" table="DEPARTMENT_COURSE">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.DepartmentCourse" table="DEPARTMENT_COURSE">
 	<field-descriptor
 		name="codigoInterno"
 		column="ID_INTERNAL"
@@ -72,7 +72,7 @@
 	<reference-descriptor
 			name="departamento"
 			class-ref="net.sourceforge.fenixedu.domain.Department"
-			proxy="true">
+			>
 		<foreignkey field-ref="chaveDepartamento"/>
 	</reference-descriptor>     
 </class-descriptor>

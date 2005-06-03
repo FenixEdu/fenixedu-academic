@@ -95,7 +95,7 @@ public class EditExamNew implements IService {
                             List scopes = examAux.getAssociatedCurricularCourseScope();
                             Iterator iterScopes = scopes.iterator();
                             while (iterScopes.hasNext()) {
-                                CurricularCourseScope scope = (CurricularCourseScope) iterScopes.next();
+                                ICurricularCourseScope scope = (ICurricularCourseScope) iterScopes.next();
                                 if (scopeIDs.contains(scope.getIdInternal().toString())
                                         && !examAux.getIdInternal().equals(exam.getIdInternal())) {
                                     throw new ExistingServiceException();
@@ -124,9 +124,8 @@ public class EditExamNew implements IService {
                     exam.getAssociatedCurricularCourseScope().add(curricularCourseScope);
                 }
             }
-            /*
-             * List scopeIDs = Arrays.asList(scopeIDArray);
-             */List indexesToRemove = new ArrayList();
+
+            List indexesToRemove = new ArrayList();
 
             for (int i = 0; i < exam.getAssociatedCurricularCourseScope().size(); i++) {
                 ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) exam
@@ -184,7 +183,7 @@ public class EditExamNew implements IService {
                     period.setStartDate(examDate);
                     period.setEndDate(examDate);
                 } else {
-                    period = (Period) sp.getIPersistentPeriod().readByCalendarAndNextPeriod(examDate,
+                    period = (IPeriod) sp.getIPersistentPeriod().readByCalendarAndNextPeriod(examDate,
                             examDate, null);
                     if (period == null) {
                         period = new Period();
@@ -197,7 +196,7 @@ public class EditExamNew implements IService {
 
             } else {
 
-                period = (Period) sp.getIPersistentPeriod().readByCalendarAndNextPeriod(examDate,
+                period = (IPeriod) sp.getIPersistentPeriod().readByCalendarAndNextPeriod(examDate,
                         examDate, null);
                 if (period == null) {
                     period = new Period();
@@ -226,7 +225,7 @@ public class EditExamNew implements IService {
                     roomsList.add(room);
                     DiaSemana weekday = new DiaSemana(examDate.get(Calendar.DAY_OF_WEEK));
 
-                    RoomOccupation roomOccupation = new RoomOccupation(room, examStartTime, examEndTime,
+                    IRoomOccupation roomOccupation = new RoomOccupation(room, examStartTime, examEndTime,
                             weekday, RoomOccupation.DIARIA);
                     roomOccupation.setPeriod(period);
 
@@ -255,7 +254,7 @@ public class EditExamNew implements IService {
                 Iterator iterator = exam.getAssociatedRoomOccupation().iterator();
                 List roomOcupationToRemove = new ArrayList();
                 while (iterator.hasNext()) {
-                    RoomOccupation oldRoomOccupation = (RoomOccupation) iterator.next();
+                    IRoomOccupation oldRoomOccupation = (IRoomOccupation) iterator.next();
                     if (!roomOccupationList.contains(oldRoomOccupation)) {
                         roomOcupationToRemove.add(oldRoomOccupation);
                     }

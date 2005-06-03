@@ -1,7 +1,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.Branch -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.Branch" table="BRANCH">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Branch" table="BRANCH">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -59,30 +59,30 @@
    <reference-descriptor
 		name="degreeCurricularPlan"
 		class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
-        refresh="true"
-		proxy="true">
+        
+		>
 	<foreignkey field-ref="keyDegreeCurricularPlan"/>
    </reference-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="scopes"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseScope"
-            refresh="true"
-			proxy="true">
+            
+			>
 		<inverse-foreignkey field-ref="branchKey"/>
 	</collection-descriptor>    
-	<collection-descriptor  
+	<collection-descriptor proxy="true"  
 			name="areaCurricularCourseGroups"
 			element-class-ref="net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup"
-            refresh="true"
-			proxy="true"
+            
+			
             >
 		<inverse-foreignkey field-ref="keyBranch"/>
 	</collection-descriptor>   
-    <collection-descriptor
+    <collection-descriptor proxy="true"
 			name="optionalCurricularCourseGroups"
 			element-class-ref="net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup"
-            refresh="true"
-			proxy="true">
+            
+			>
 		<inverse-foreignkey field-ref="keyBranch"/>
 	</collection-descriptor>    
 

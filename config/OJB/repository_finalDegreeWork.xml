@@ -1,4 +1,4 @@
-<class-descriptor
+<class-descriptor proxy="dynamic"
    	  class="net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal"
    	  table="FINAL_DEGREE_WORK_PROPOSAL"
    >
@@ -172,28 +172,28 @@
          class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.Group">
          <foreignkey field-ref="keyGroupAttributed"/>
       </reference-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="branches"
 			element-class-ref="net.sourceforge.fenixedu.domain.Branch"
 			indirection-table="FINAL_DEGREE_WORK_PROPOSAL_BRANCH"
 			auto-retrieve="true"
-			refresh="true"
-			proxy="true">
+			
+			>
 		<fk-pointing-to-this-class column="KEY_FINAL_DEGREE_WORK_PROPOSAL"/>
 		<fk-pointing-to-element-class column="KEY_BRANCH"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
          name="groupProposals"
          element-class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal"
          collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          auto-retrieve="true"
-         refresh="true"
-         proxy="true">
+         
+         >
 		<inverse-foreignkey field-ref="keyFinalDegreeWorkProposal"/>
     </collection-descriptor>
 </class-descriptor>
 
-<class-descriptor
+<class-descriptor proxy="dynamic"
    	  class="net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing"
    	  table="FINAL_DEGREE_WORK_SCHEDULEING"
    >
@@ -295,7 +295,7 @@
       </reference-descriptor>
 </class-descriptor>
 
-<class-descriptor
+<class-descriptor proxy="dynamic"
    	  class="net.sourceforge.fenixedu.domain.finalDegreeWork.Group"
    	  table="FINAL_DEGREE_WORK_GROUP"
    >
@@ -322,27 +322,27 @@
          class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree">
          <foreignkey field-ref="keyExecutionDegree"/>
       </reference-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="groupStudents"
 			element-class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent"
 			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			auto-retrieve="true"
-			refresh="true"
-			proxy="true">
+			
+			>
 		<inverse-foreignkey field-ref="keyFinalDegreeDegreeWorkGroup"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
          name="groupProposals"
          element-class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal"
          collection-class="org.apache.ojb.broker.util.collections.RemovalAwareCollection"
          auto-retrieve="true"
-         refresh="true"
-         proxy="true">
+         
+         >
 		<inverse-foreignkey field-ref="keyFinalDegreeDegreeWorkGroup"/>
     </collection-descriptor>
 </class-descriptor>
 
-<class-descriptor
+<class-descriptor proxy="dynamic"
    	  class="net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal"
    	  table="FINAL_DEGREE_WORK_GROUP_PROPOSAL"
    >
@@ -386,7 +386,7 @@
       </reference-descriptor>
 </class-descriptor>
 
-<class-descriptor
+<class-descriptor proxy="dynamic"
    	  class="net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent"
    	  table="FINAL_DEGREE_WORK_GROUP_STUDENT"
    >

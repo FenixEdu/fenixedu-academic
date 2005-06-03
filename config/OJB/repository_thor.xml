@@ -1,5 +1,5 @@
 <!-- Definitions for . -->
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.thor.Atribuicaodisciplinas"
   table="AtribuicaoDisciplinas"
 >
@@ -61,7 +61,7 @@
       />
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.thor.Aulas"
   table="Aulas"
 >
@@ -124,7 +124,7 @@
       />
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.thor.Disciplinas"
   table="Disciplinas"
 >
@@ -187,7 +187,7 @@
       />
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.thor.Turmas"
   table="Turmas"
 >

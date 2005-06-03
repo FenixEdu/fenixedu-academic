@@ -1,4 +1,4 @@
-	<class-descriptor class="net.sourceforge.fenixedu.domain.Seminaries.Seminary"
+	<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Seminaries.Seminary"
                   table="SEMINARY">
 
     <field-descriptor 
@@ -75,20 +75,20 @@
          conversion="org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion"
       />
 
-	<collection-descriptor
+	<collection-descriptor proxy="true"
          name="equivalencies"
          element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency"
-         proxy="true"
-         refresh="true"
+         
+         
       >
         <inverse-foreignkey field-ref="seminaryIdInternal"/>
      </collection-descriptor>
      
-     <collection-descriptor
+     <collection-descriptor proxy="true"
          name="candidacies"
          element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.Candidacy"
-         proxy="true"
-         refresh="true"
+         
+         
       >
         <inverse-foreignkey field-ref="seminaryIdInternal"/>
      </collection-descriptor>
@@ -96,7 +96,7 @@
 	  
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency"
                   table="SEMINARY_CURRICULARCOURSE">
 
     <field-descriptor 
@@ -134,8 +134,8 @@
      <reference-descriptor
          name="seminary"
          class-ref="net.sourceforge.fenixedu.domain.Seminaries.Seminary"
-         proxy="true"
-         refresh="true"
+         
+         
       >
 	      <foreignkey field-ref="seminaryIdInternal"/>
      </reference-descriptor>
@@ -143,8 +143,8 @@
 	 <reference-descriptor
          name="curricularCourse"
          class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
-         proxy="true"
-         refresh="true"
+         
+         
       >
 	    <foreignkey field-ref="curricularCourseIdInternal"/>
 	 </reference-descriptor>
@@ -152,19 +152,19 @@
       <reference-descriptor
          name="modality"
          class-ref="net.sourceforge.fenixedu.domain.Seminaries.Modality"
-         proxy="true"
-         refresh="true"
+         
+         
       >
 	      <foreignkey field-ref="modalityIdInternal"/>
      </reference-descriptor>
     
-     <collection-descriptor
+     <collection-descriptor proxy="true"
         name="themes"
         collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.Theme"
 	    indirection-table="EQUIVALENCY_THEME"
-        proxy="true"
-        refresh="true"
+        
+        
         orderby="name"
         sort="ASC"
      >
@@ -174,7 +174,7 @@
     	  
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.Seminaries.Modality"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Seminaries.Modality"
                   table="SEMINARY_MODALITY">
 
     <field-descriptor 
@@ -205,7 +205,7 @@
     	 
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.Seminaries.Theme"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Seminaries.Theme"
                   table="SEMINARY_THEME">
 
     <field-descriptor 
@@ -240,11 +240,11 @@
       	locking="true"
       />
 
-	  <collection-descriptor
+	  <collection-descriptor proxy="true"
         name="caseStudies"
         element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CaseStudy"
-		proxy="true"
-        refresh="true"
+		
+        
         orderby="code"
         sort="ASC"
      >
@@ -253,7 +253,7 @@
     	 
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.Seminaries.CaseStudy"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Seminaries.CaseStudy"
                   table="SEMINARY_CASESTUDY">
 
     <field-descriptor 
@@ -297,20 +297,20 @@
      <reference-descriptor
          name="seminaryTheme"
          class-ref="net.sourceforge.fenixedu.domain.Seminaries.Theme"
-         proxy="true"
-         refresh="true"
+         
+         
       >
 	      <foreignkey field-ref="seminaryThemeIdInternal"/>
      </reference-descriptor>
 
 	 	<!-- Choices made to this case study -->
-      <collection-descriptor
+      <collection-descriptor proxy="true"
          name="seminaryCandidacies"
          element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice"
 		 orderby="order"
          sort="ASC"
-         proxy="true"
-         refresh="true"
+         
+         
       >
        <inverse-foreignkey field-ref="caseStudyIdInternal"/>
       </collection-descriptor> 
@@ -318,7 +318,7 @@
 </class-descriptor>
 
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.Seminaries.Candidacy"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Seminaries.Candidacy"
                   table="SEMINARY_CANDIDACY">
 
     <field-descriptor 
@@ -379,57 +379,57 @@
 <reference-descriptor
          name="seminary"
          class-ref="net.sourceforge.fenixedu.domain.Seminaries.Seminary"
-         proxy="true"
-         refresh="true"
+         
+         
       >
 	      <foreignkey field-ref="seminaryIdInternal"/>
      </reference-descriptor>
 	 <reference-descriptor
          name="student"
          class-ref="net.sourceforge.fenixedu.domain.Student"
-         proxy="true"
-         refresh="true"
+         
+         
       >
 	      <foreignkey field-ref="studentIdInternal"/>
      </reference-descriptor>
       <reference-descriptor
          name="modality"
          class-ref="net.sourceforge.fenixedu.domain.Seminaries.Modality"
-         proxy="true"
-         refresh="true"
+         
+         
       >
 	      <foreignkey field-ref="modalityIdInternal"/>
      </reference-descriptor>
      <reference-descriptor
          name="curricularCourse"
          class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
-         proxy="true"
-         refresh="true"
+         
+         
       >
 	      <foreignkey field-ref="curricularCourseIdInternal"/>
      </reference-descriptor>
      <reference-descriptor
          name="theme"
          class-ref="net.sourceforge.fenixedu.domain.Seminaries.Theme"
-         proxy="true"
-         refresh="true"
+         
+         
       >
 	      <foreignkey field-ref="themeIdInternal"/>
      </reference-descriptor>
 	<!-- Choosen case studies -->
-      <collection-descriptor
+      <collection-descriptor proxy="true"
          name="caseStudyChoices"
          element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice"
 		 orderby="order"
          sort="ASC"
-         proxy="true"
-         refresh="true"
+         
+         
       >
        <inverse-foreignkey field-ref="candidacyIdInternal"/>
       </collection-descriptor>    	 
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice"
                   table="SEMINARYCANDIDACY_SEMINARYCASESTUDY">
   
    <field-descriptor 
@@ -460,16 +460,16 @@
        <reference-descriptor
          name="caseStudy"
          class-ref="net.sourceforge.fenixedu.domain.Seminaries.CaseStudy"
-         proxy="true"
-         refresh="true"
+         
+         
       >
 	      <foreignkey field-ref="caseStudyIdInternal"/>
      </reference-descriptor>
      <reference-descriptor
          name="candidacy"
          class-ref="net.sourceforge.fenixedu.domain.Seminaries.Candidacy"
-         proxy="true"
-         refresh="true"
+         
+         
       >
 	      <foreignkey field-ref="candidacyIdInternal"/>
      </reference-descriptor>

@@ -2,13 +2,13 @@
      to avoid mixing user defined and system mappings. -->   
 <!-- Mapping of User defined classes starts here -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.Career -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.Career">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.teacher.Career">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.teacher.TeachingCareer"/>
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer" table="CAREER">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer" table="CAREER">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
     <field-descriptor name="beginYear" column="BEGIN_YEAR" jdbc-type="INTEGER" nullable="true"/>
@@ -26,13 +26,13 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-	<reference-descriptor name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" proxy="false">
+	<reference-descriptor name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" >
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.TeachingCareer -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.TeachingCareer" table="CAREER">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.teacher.TeachingCareer" table="CAREER">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
     <field-descriptor name="beginYear" column="BEGIN_YEAR" jdbc-type="INTEGER" nullable="true"/>
@@ -43,7 +43,7 @@
     				  conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"/>
 	<field-descriptor name="courseOrPosition" column="COURSE_OR_POSITION" jdbc-type="VARCHAR" nullable="true"/>
     <field-descriptor name="keyCategory" column="KEY_CATEGORY" jdbc-type="INTEGER" nullable="true"/>
-    <reference-descriptor name="category" class-ref="net.sourceforge.fenixedu.domain.teacher.Category" proxy="false">
+    <reference-descriptor name="category" class-ref="net.sourceforge.fenixedu.domain.teacher.Category" >
 	    <foreignkey field-ref="keyCategory"/>
     </reference-descriptor>
     <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
@@ -53,13 +53,13 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-	<reference-descriptor name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" proxy="false">
+	<reference-descriptor name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" >
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation" table="WEEKLY_OCUPATION">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation" table="WEEKLY_OCUPATION">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="research" column="RESEARCH" jdbc-type="INTEGER"/>
     <field-descriptor name="management" column="MANAGEMENT" jdbc-type="INTEGER"/>
@@ -77,13 +77,13 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-	<reference-descriptor name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" proxy="false">
+	<reference-descriptor name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" >
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.ExternalActivity -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.ExternalActivity" table="EXTERNAL_ACTIVITY">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.teacher.ExternalActivity" table="EXTERNAL_ACTIVITY">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="activity" column="ACTIVITY" jdbc-type="LONGVARCHAR"/>
     <field-descriptor name="lastModificationDate" 
@@ -97,13 +97,13 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-	<reference-descriptor name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" proxy="false">
+	<reference-descriptor name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" >
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime" table="SERVICE_PROVIDER_REGIME">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime" table="SERVICE_PROVIDER_REGIME">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="providerRegimeType" 
     				  column="PROVIDER_REGIME_TYPE" 
@@ -120,13 +120,13 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-    <reference-descriptor name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" proxy="false">
+    <reference-descriptor name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" >
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.Orientation -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.Orientation" table="ORIENTATION">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.teacher.Orientation" table="ORIENTATION">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="orientationType" 
     				  column="ORIENTATION_TYPE" 
@@ -145,13 +145,13 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-    <reference-descriptor name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" proxy="false">
+    <reference-descriptor name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" >
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.PublicationsNumber -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.PublicationsNumber" table="PUBLICATIONS_NUMBER">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.teacher.PublicationsNumber" table="PUBLICATIONS_NUMBER">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="publicationType" 
     				  column="PUBLICATION_TYPE" 
@@ -170,13 +170,13 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-    <reference-descriptor name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" proxy="false">
+    <reference-descriptor name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" >
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.teacher.OldPublication -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.teacher.OldPublication" table="OLD_PUBLICATION">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.teacher.OldPublication" table="OLD_PUBLICATION">
 	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
 	<field-descriptor name="oldPublicationType"
 					  column="OLD_PUBLICATION_TYPE"
@@ -196,13 +196,13 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-    <reference-descriptor name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" proxy="false">
+    <reference-descriptor name="teacher" class-ref="net.sourceforge.fenixedu.domain.Teacher" >
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>
 </class-descriptor>  
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.NonAffiliatedTeacher -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.NonAffiliatedTeacher" table="NON_AFFILIATED_TEACHER">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.NonAffiliatedTeacher" table="NON_AFFILIATED_TEACHER">
 	<field-descriptor 
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -228,16 +228,16 @@
     />
     <reference-descriptor
     	name="institution"
-    	class-ref="net.sourceforge.fenixedu.domain.Institution" proxy="false">
+    	class-ref="net.sourceforge.fenixedu.domain.Institution" >
 		<foreignkey field-ref="keyInstitution"/>
 	</reference-descriptor>
 	
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="executionCourses"
 			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"			
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 			indirection-table="NON_AFFILIATED_TEACHER_PROFESSORSHIPS"
-			refresh="true"
+			
 			>
 		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE" />
 		<fk-pointing-to-this-class column="KEY_NON_AFFILIATED_TEACHER" />
@@ -245,7 +245,7 @@
 </class-descriptor>  
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.Institution -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.Institution" table="INSTITUTION">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Institution" table="INSTITUTION">
 	<field-descriptor 
 		name="idInternal"
 		column="ID_INTERNAL"

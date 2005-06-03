@@ -3,7 +3,7 @@
 <!-- Mapping of User defined classes starts here -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.Advisory -->
 
-<class-descriptor
+<class-descriptor proxy="dynamic"
 		class="net.sourceforge.fenixedu.domain.Advisory"
 		table="ADVISORY"
 		>
@@ -51,12 +51,12 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="people"
 			element-class-ref="net.sourceforge.fenixedu.domain.Person"
-			proxy="true"
+			
 			indirection-table="PERSON_ADVISORY"
-			refresh="true"
+			
 			>
 		<fk-pointing-to-element-class column="KEY_PERSON" />
 		<fk-pointing-to-this-class column="KEY_ADVISORY" />

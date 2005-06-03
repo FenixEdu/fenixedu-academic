@@ -1,7 +1,7 @@
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse"
                   table="INQUIRIES_COURSE">
 	<field-descriptor
 		name="idInternal"
@@ -132,7 +132,7 @@
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry"
                   table="INQUIRIES_REGISTRY">
 	<field-descriptor
 		name="idInternal"
@@ -209,7 +209,7 @@
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom"
                   table="INQUIRIES_ROOM">
 	<field-descriptor
 		name="idInternal"
@@ -317,7 +317,7 @@
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher"
                   table="INQUIRIES_TEACHER">
 	<field-descriptor
 		name="idInternal"

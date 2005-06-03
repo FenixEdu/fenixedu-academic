@@ -1,8 +1,8 @@
 <!-- ******************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.Metadata -->
 <!-- ******************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.Metadata"
-				  proxy="dynamic"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Metadata"
+				  
                   table="METADATA">
 	<field-descriptor id="1"
 		name="idInternal"
@@ -73,11 +73,11 @@
       	jdbc-type="INTEGER"
       	locking="true"
 	/>
-    <collection-descriptor
+    <collection-descriptor proxy="true"
 		name="visibleQuestions"
 		element-class-ref="net.sourceforge.fenixedu.domain.Question"
-		refresh="true"
-		proxy="true">
+		
+		>
 		<inverse-foreignkey field-ref="keyMetadata"/>
 		<query-customizer class="net.sourceforge.fenixedu.persistenceTier.customQueries.QuestionFilter">
 	    </query-customizer>
@@ -93,8 +93,8 @@
 <!-- ******************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.Question -->
 <!-- ******************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.Question"
-				  proxy="dynamic"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Question"
+				  
                   table="XML_DOCUMENTS">
     <field-descriptor id="1"
         name="idInternal"
@@ -132,7 +132,7 @@
 	<reference-descriptor
          name="metadata"
          class-ref="net.sourceforge.fenixedu.domain.Metadata"
-         proxy="true"
+         
     > 
 	<foreignkey field-ref="keyMetadata"/>
 	</reference-descriptor>
@@ -141,8 +141,8 @@
 <!-- **************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.Test -->
 <!-- **************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.Test"
-				  proxy="dynamic"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Test"
+				  
                   table="TESTS">
     <field-descriptor id="1"
         name="idInternal"
@@ -192,7 +192,7 @@
 	<reference-descriptor
          name="testScope"
          class-ref="net.sourceforge.fenixedu.domain.TestScope"
-         proxy="true"
+         
     > 
 	<foreignkey field-ref="keyTestScope"/>
 	</reference-descriptor>
@@ -201,8 +201,8 @@
 <!-- ************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.TestQuestion -->
 <!-- ************************************ -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.TestQuestion"
-				  proxy="dynamic"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.TestQuestion"
+				  
                   table="TEST_QUESTION">
     <field-descriptor id="1"
         name="idInternal"
@@ -246,14 +246,14 @@
 	<reference-descriptor
          name="question"
          class-ref="net.sourceforge.fenixedu.domain.Question"
-         proxy="true"
+         
     > 
 	<foreignkey field-ref="keyQuestion"/>
 	</reference-descriptor>
 	<reference-descriptor
          name="test"
          class-ref="net.sourceforge.fenixedu.domain.Test"
-         proxy="true"
+         
     > 
 	<foreignkey field-ref="keyTest"/>
 	</reference-descriptor>
@@ -262,8 +262,8 @@
 <!-- *************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DistributedTest -->
 <!-- *************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.DistributedTest"
-				  proxy="dynamic"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.DistributedTest"
+				  
                   table="DISTRIBUTED_TESTS">
     <field-descriptor id="1"
         name="idInternal"
@@ -334,18 +334,18 @@
         column="KEY_TEST_SCOPE"
         jdbc-type="INTEGER"
 	/>
-	 <collection-descriptor
+	 <collection-descriptor proxy="true"
 		name="studentLogs"
 		element-class-ref="net.sourceforge.fenixedu.domain.StudentTestLog"
 		auto-delete="true"
-		proxy="true">
+		>
 		<inverse-foreignkey field-ref="keyDistributedTest"/>
 	</collection-descriptor>
-	 <collection-descriptor
+	 <collection-descriptor proxy="true"
 		name="studentQuestions"
 		element-class-ref="net.sourceforge.fenixedu.domain.StudentTestQuestion"
 		auto-delete="true"
-		proxy="true">
+		>
 		<inverse-foreignkey field-ref="keyDistributedTest"/>
 	</collection-descriptor>
 	<field-descriptor
@@ -357,7 +357,7 @@
 	<reference-descriptor
          name="testScope"
          class-ref="net.sourceforge.fenixedu.domain.TestScope"
-         proxy="true"
+         
     > 
 	<foreignkey field-ref="keyTestScope"/>
 	</reference-descriptor>
@@ -366,8 +366,8 @@
 <!-- ******************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.StudentTestQuestion -->
 <!-- ******************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.StudentTestQuestion"
-				  proxy="dynamic"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.StudentTestQuestion"
+				  
                   table="STUDENT_TEST_QUESTION">
     <field-descriptor
         name="idInternal"
@@ -425,19 +425,19 @@
       />
      <reference-descriptor
         name="student"
-        proxy="true"
+        
         class-ref="net.sourceforge.fenixedu.domain.Student">
 	     <foreignkey field-ref="keyStudent"/>
      </reference-descriptor>
      <reference-descriptor
         name="distributedTest"
-        proxy="true"
+        
         class-ref="net.sourceforge.fenixedu.domain.DistributedTest">
      	<foreignkey field-ref="keyDistributedTest"/>
      </reference-descriptor>
      <reference-descriptor
         name="question"
-        proxy="true"
+        
         class-ref="net.sourceforge.fenixedu.domain.Question">
      	<foreignkey field-ref="keyQuestion"/>
      </reference-descriptor>
@@ -446,8 +446,8 @@
 <!-- ************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.StudentTestLog -->
 <!-- ************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.StudentTestLog"
-				  proxy="dynamic"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.StudentTestLog"
+				  
                   table="STUDENT_TEST_LOG">
     <field-descriptor id="1"
         name="idInternal"
@@ -486,14 +486,14 @@
     <reference-descriptor
          name="student"
          class-ref="net.sourceforge.fenixedu.domain.Student"
-         proxy="true"
+         
     >
 	<foreignkey field-ref="keyStudent"/>
 	</reference-descriptor>
 	<reference-descriptor
          name="distributedTest"
          class-ref="net.sourceforge.fenixedu.domain.DistributedTest"
-         proxy="true"
+         
     >
 	<foreignkey field-ref="keyDistributedTest"/>
 	</reference-descriptor>
@@ -502,7 +502,7 @@
 <!-- ********************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.OnLineTest -->
 <!-- ********************************** -->
-   <class-descriptor
+   <class-descriptor proxy="dynamic"
    	  class="net.sourceforge.fenixedu.domain.OnlineTest"
    	  table="EVALUATION"
    >
@@ -534,11 +534,11 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-	  <collection-descriptor
+	  <collection-descriptor proxy="true"
 			name="associatedExecutionCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 			indirection-table="EXAM_EXECUTION_COURSE"
-			refresh="true"
+			
 			>
 		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
 		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
@@ -546,7 +546,7 @@
 	<reference-descriptor
          name="distributedTest"
          class-ref="net.sourceforge.fenixedu.domain.DistributedTest"
-         proxy="true"
+         
     >
 		<foreignkey field-ref="keyDistributedTest"/>
 	</reference-descriptor>
@@ -556,9 +556,9 @@
 <!-- ********************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.TestScope -->
 <!-- ********************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.TestScope"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.TestScope"
                   table="TEST_SCOPE"
-                  proxy="dynamic"
+                  
                   row-reader="net.sourceforge.fenixedu.persistenceTier.rowReaders.TestScopeRowReader" 
                   >
     <field-descriptor id="1"
@@ -590,9 +590,9 @@
 <!-- *********************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DistributedTestAdvisory -->
 <!-- *********************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.DistributedTestAdvisory"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.DistributedTestAdvisory"
                   table="DISTRIBUTED_TEST_ADVISORY"
-                  proxy="dynamic">
+                  >
     <field-descriptor id="1"
         name="idInternal"
         column="ID_INTERNAL"
@@ -619,14 +619,14 @@
 	<reference-descriptor
          name="distributedTest"
          class-ref="net.sourceforge.fenixedu.domain.DistributedTest"
-         proxy="true"
+         
     >
     <foreignkey field-ref="keyDistributedTest"/>
     </reference-descriptor>
     <reference-descriptor
          name="advisory"
          class-ref="net.sourceforge.fenixedu.domain.Advisory"
-         proxy="true"
+         
     >
     <foreignkey field-ref="keyAdvisory"/>
     </reference-descriptor>

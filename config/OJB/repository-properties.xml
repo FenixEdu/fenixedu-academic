@@ -1,8 +1,8 @@
-<class-descriptor class="net.sourceforge.fenixedu.domain.classProperties.GeneralClassProperty" table="GENERAL_CLASS_PROPERTY">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.classProperties.GeneralClassProperty" table="GENERAL_CLASS_PROPERTY">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.ExecutionCourseProperty"/>
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty" table="GENERAL_CLASS_PROPERTY">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty" table="GENERAL_CLASS_PROPERTY">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="keyExecutionCourse" column="KEY_OWNER_OF_PROPERTY" jdbc-type="INTEGER" nullable="false"/>
 	<field-descriptor name="name" column="NAME" jdbc-type="VARCHAR" nullable="false" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.classProperties.GeneralClassPropertyNameJava2SqlConversion"/>

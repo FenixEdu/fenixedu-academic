@@ -1,7 +1,7 @@
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.Degree -->
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.Degree" table="DEGREE">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Degree" table="DEGREE">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -41,45 +41,45 @@
 		column="CLASS_NAME_FOR_DEGREE_CURRICULAR_PLANS"
 		jdbc-type="VARCHAR"
 	/>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="degreeCurricularPlans"
 			element-class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
-			refresh="true"
-			proxy="true">
+			
+			>
 		<inverse-foreignkey field-ref="degreeKey"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="degreeInfos"
 			element-class-ref="net.sourceforge.fenixedu.domain.DegreeInfo"
-			proxy="true">
+			>
 		<inverse-foreignkey field-ref="degreeKey"/>
 	</collection-descriptor>
 	
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="delegate"
 			element-class-ref="net.sourceforge.fenixedu.domain.student.Delegate"
-			proxy="true">
+			>
 		<inverse-foreignkey field-ref="keyDegree"/>
 	</collection-descriptor>
 	
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="oldInquiriesSummary"
 			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary"
-			proxy="true">
+			>
 		<inverse-foreignkey field-ref="keyDegree"/>
 	</collection-descriptor>
 	
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="oldInquiriesTeachersRes"
 			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes"
-			proxy="true">
+			>
 		<inverse-foreignkey field-ref="keyDegree"/>
 	</collection-descriptor>
 	
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="oldInquiriesCoursesRes"
 			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes"
-			proxy="true">
+			>
 		<inverse-foreignkey field-ref="keyDegree"/>
 	</collection-descriptor>
 </class-descriptor>

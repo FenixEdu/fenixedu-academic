@@ -1,5 +1,5 @@
 <!-- Definitions for . -->
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.almeida.Almeida_aluno"
   table="almeida_aluno"
 >
@@ -107,7 +107,7 @@
   />
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.almeida.Almeida_inscricoes"
   table="almeida_inscricoes"
 >
@@ -160,7 +160,7 @@
   />
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.almeida.Almeida_nacionalidade"
   table="almeida_nacionalidade"
 >

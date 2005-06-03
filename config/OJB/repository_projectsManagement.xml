@@ -1,8 +1,8 @@
 <!-- ************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.PersonProject -->
 <!-- ************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess"
-				  proxy="dynamic"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess"
+				  
                   table="PROJECT_ACCESS">
 	<field-descriptor
 		name="idInternal"
@@ -47,7 +47,7 @@
 	<reference-descriptor
          name="person"
          class-ref="net.sourceforge.fenixedu.domain.Person"
-         proxy="true"
+         
     >
     <foreignkey field-ref="keyPerson"/>
 	</reference-descriptor>

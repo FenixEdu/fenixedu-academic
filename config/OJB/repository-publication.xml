@@ -1,4 +1,4 @@
-<class-descriptor class="net.sourceforge.fenixedu.domain.Publication" table="PUBLICATION">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Publication" table="PUBLICATION">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.InternationalJournalArticle"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.InternationalConference"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.NacionalConference"/>
@@ -15,7 +15,7 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.Patents"/>
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.InternationalJournalArticle" table="PUBLICATION">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.InternationalJournalArticle" table="PUBLICATION">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
 	<field-descriptor name="conference" column="CONFERENCE" jdbc-type="VARCHAR" nullable="false"/>
@@ -37,11 +37,11 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-	<collection-descriptor name="restrictions" element-class-ref="net.sourceforge.fenixedu.domain.Restriction" proxy="true">
+	<collection-descriptor proxy="true" name="restrictions" element-class-ref="net.sourceforge.fenixedu.domain.Restriction" >
        <inverse-foreignkey field-ref="keyPrecedence"/>
     </collection-descriptor>
     
-	<reference-descriptor name="precedence" class-ref="net.sourceforge.fenixedu.domain.Precedence" proxy="true">
+	<reference-descriptor name="precedence" class-ref="net.sourceforge.fenixedu.domain.Precedence" >
 	    <foreignkey field-ref="keyPrecedence"/>
     </reference-descriptor>
 	<field-descriptor name="numberOfCurricularCourses" column="NUMBER_OF_CURRICULAR_COURSE_DONE" jdbc-type="INTEGER" nullable="false"/>

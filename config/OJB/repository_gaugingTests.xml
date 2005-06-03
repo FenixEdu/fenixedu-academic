@@ -2,7 +2,7 @@
      to avoid mixing user defined and system mappings. -->   
 <!-- Mapping of User defined classes starts here -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult -->
-    <class-descriptor class="net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult" table="GAUGING_TEST_RESULT" >
+    <class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult" table="GAUGING_TEST_RESULT" >
         <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" 
             autoincrement="true" />
         <field-descriptor name="keyStudent" column="KEY_STUDENT" jdbc-type="INTEGER" />
@@ -47,7 +47,7 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-        <reference-descriptor name="student" class-ref="net.sourceforge.fenixedu.domain.Student" proxy="true">
+        <reference-descriptor name="student" class-ref="net.sourceforge.fenixedu.domain.Student" >
             <foreignkey field-ref="keyStudent"/>
         </reference-descriptor>
     </class-descriptor>

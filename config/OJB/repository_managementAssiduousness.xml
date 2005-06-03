@@ -1,5 +1,5 @@
 <!-- Definitions for . -->
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter"
   table="MONEY_COST_CENTER"
 >
@@ -55,19 +55,19 @@
   	<reference-descriptor
          name="costCenter"
          class-ref="net.sourceforge.fenixedu.domain.CostCenter"
-         proxy="true">
+         >
          <foreignkey field-ref="costCenterKey"/>
   	</reference-descriptor>
     <reference-descriptor
       	name="whoEmployee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
-       	proxy="false"
-		refresh="true">
+       	
+		>
         <foreignkey field-ref="who"/>
     </reference-descriptor>  
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork"
   table="EXTRA_WORK"
 >
@@ -194,20 +194,20 @@
     <reference-descriptor
       	name="employee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
-       	proxy="false"
-		refresh="true">
+       	
+		>
         <foreignkey field-ref="employeeKey"/>
     </reference-descriptor> 
     <reference-descriptor
       	name="whoEmployee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
-       	proxy="false"
-		refresh="true">
+       	
+		>
         <foreignkey field-ref="who"/>
     </reference-descriptor> 
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests"
   table="EXTRA_WORK_REQUESTS"
 >
@@ -323,30 +323,30 @@
     <reference-descriptor
       	name="employee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
-       	proxy="true">
+       	>
         <foreignkey field-ref="employeeKey"/>
     </reference-descriptor> 
   	<reference-descriptor
          name="costCenterExtraWork"
 		 class-ref="net.sourceforge.fenixedu.domain.CostCenter"
-         proxy="true">
+         >
          <foreignkey field-ref="costCenterExtraWorkKey"/>
   	</reference-descriptor>
   	<reference-descriptor
          name="costCenterMoney"
          class-ref="net.sourceforge.fenixedu.domain.CostCenter"
-         proxy="true">
+         >
          <foreignkey field-ref="costCenterMoneyKey"/>
   	</reference-descriptor>
     <reference-descriptor
       	name="whoEmployee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
-       	proxy="true">
+       	>
         <foreignkey field-ref="who"/>
     </reference-descriptor> 
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkCompensation"
   table="EXTRA_WORK_COMPENSATION"
 >
@@ -407,21 +407,21 @@
     <reference-descriptor
       	name="employee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
-       	proxy="false"
-		refresh="true">
+       	
+		>
         <foreignkey field-ref="employeeKey"/>
     </reference-descriptor> 
     <reference-descriptor
       	name="whoEmployee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
-       	proxy="false"
-		refresh="true">
+       	
+		>
         <foreignkey field-ref="who"/>
     </reference-descriptor> 
 </class-descriptor>
 
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkHistoric"
   table="EXTRA_WORK_HISTORIC"
 >
@@ -484,15 +484,15 @@
     <reference-descriptor
       	name="employee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
-       	proxy="false"
-		refresh="true">
+       	
+		>
         <foreignkey field-ref="employeeKey"/>
     </reference-descriptor> 
     <reference-descriptor
       	name="whoEmployee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
-       	proxy="false"
-		refresh="true">
+       	
+		>
         <foreignkey field-ref="who"/>
     </reference-descriptor> 
 </class-descriptor>

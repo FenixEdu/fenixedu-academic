@@ -5,7 +5,7 @@
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.transactions.SmsTransaction -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.transactions.SmsTransaction" table="SMS_TRANSACTION">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.transactions.SmsTransaction" table="SMS_TRANSACTION">
 	
 	<field-descriptor
 		name="idInternal"
@@ -82,8 +82,8 @@
 	<reference-descriptor
        	name="personAccount"
        	class-ref="net.sourceforge.fenixedu.domain.PersonAccount"
-       	proxy="true"
-		refresh="true"
+       	
+		
     >
 		<foreignkey field-ref="keyPersonAccount"/>
 	</reference-descriptor>
@@ -91,8 +91,8 @@
 	<reference-descriptor
        	name="guideEntry"
        	class-ref="net.sourceforge.fenixedu.domain.GuideEntry"
-       	proxy="true"
-		refresh="true"
+       	
+		
     >
 		<foreignkey field-ref="keyGuideEntry"/>
 	</reference-descriptor>
@@ -100,8 +100,8 @@
 	<reference-descriptor
        	name="responsiblePerson"
        	class-ref="net.sourceforge.fenixedu.domain.Person"
-       	proxy="true"
-		refresh="true"
+       	
+		
     >
 		<foreignkey field-ref="keyResponsiblePerson"/>
 	</reference-descriptor>

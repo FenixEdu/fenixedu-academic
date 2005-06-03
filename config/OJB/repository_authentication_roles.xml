@@ -2,7 +2,7 @@
 <!-- ***********************************
      Definitions for net.sourceforge.fenixedu.domain.Role 
      *********************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.Role"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Role"
                   table="ROLE">
     <field-descriptor
         name="idInternal"
@@ -49,10 +49,10 @@
       	locking="true"
       />
 <!--
-    <collection-descriptor
+    <collection-descriptor proxy="true"
          name="rolePersons"
          element-class-ref="net.sourceforge.fenixedu.domain.Person"
-         proxy="true"
+         
          indirection-table = "PERSON_ROLE"
          auto-retrieve="true"
          auto-update="false"
@@ -69,7 +69,7 @@
 <!-- ***********************************
      Definitions for net.sourceforge.fenixedu.domain.PersonRole 
      *********************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.PersonRole"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.PersonRole"
                   table="PERSON_ROLE">
     <field-descriptor
         name="idInternal"
@@ -100,7 +100,7 @@
       <reference-descriptor
          name="role"
          class-ref="net.sourceforge.fenixedu.domain.Role"
-         proxy="false"
+         
 	  >
          <foreignkey field-ref="keyRole"/>
       </reference-descriptor>
@@ -108,7 +108,7 @@
      <reference-descriptor
          name="person"
          class-ref="net.sourceforge.fenixedu.domain.Person"
-         proxy="false"
+         
 	  >
          <foreignkey field-ref="keyPerson"/>
       </reference-descriptor>
@@ -118,9 +118,9 @@
 
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.Teacher -->
-   <class-descriptor
+   <class-descriptor proxy="dynamic"
    	  class="net.sourceforge.fenixedu.domain.Teacher"
-	  proxy="dynamic"
+	  
    	  table="TEACHER">
    	  
       <field-descriptor
@@ -148,7 +148,7 @@
       <reference-descriptor
          name="person"
          class-ref="net.sourceforge.fenixedu.domain.Person"
-         proxy="false">
+         >
          <foreignkey field-ref="keyPerson"/>
       </reference-descriptor>       
 
@@ -160,7 +160,7 @@
       <reference-descriptor
          name="category"
          class-ref="net.sourceforge.fenixedu.domain.teacher.Category"
-         proxy="false">
+         >
          <foreignkey field-ref="keyCategory"/>
       </reference-descriptor>     
 
@@ -172,7 +172,7 @@
 	<reference-descriptor
          name="serviceProviderRegime"
          class-ref="net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime"
-         proxy="false">
+         >
          <foreignkey field-ref="keyServiceProviderRegime"/>
       </reference-descriptor>
 
@@ -184,183 +184,183 @@
 	<reference-descriptor
          name="publicationsNumber"
          class-ref="net.sourceforge.fenixedu.domain.teacher.PublicationsNumber"
-         proxy="false">
+         >
          <foreignkey field-ref="keyPublicationsNumber"/>
       </reference-descriptor>
 
-    <collection-descriptor
+    <collection-descriptor proxy="true"
 			name="teacherPublications"
 			element-class-ref="net.sourceforge.fenixedu.domain.publication.PublicationTeacher"
-			proxy="true"
-			refresh="true">
+			
+			>
 		<inverse-foreignkey field-ref="keyTeacher"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
          name="professorships"
          element-class-ref="net.sourceforge.fenixedu.domain.Professorship"
          auto-retrieve="true"
-         refresh="true"
-         proxy="true">
+         
+         >
 		<inverse-foreignkey field-ref="keyTeacher"/>
     </collection-descriptor>    	
-	<collection-descriptor
+	<collection-descriptor proxy="true"
          name="institutionWorkTimePeriods"
          element-class-ref="net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime"
          auto-retrieve="true"
-         refresh="true"
-         proxy="true">
+         
+         >
 		<inverse-foreignkey field-ref="keyTeacher"/>
     </collection-descriptor>    	
-	<collection-descriptor
+	<collection-descriptor proxy="true"
          name="degreeFinalProjectStudents"
          element-class-ref="net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent"
          auto-retrieve="true"
-         refresh="true"
-         proxy="true">
+         
+         >
 		<inverse-foreignkey field-ref="keyTeacher"/>
     </collection-descriptor>   
-	<collection-descriptor
+	<collection-descriptor proxy="true"
          name="otherTypeCreditLines"
          element-class-ref="net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine"
          auto-retrieve="true"
-         refresh="true"
-         proxy="true">
+         
+         >
 		<inverse-foreignkey field-ref="keyTeacher"/>
     </collection-descriptor>  	 	
-	<collection-descriptor
+	<collection-descriptor proxy="true"
          name="managementPositions"
          element-class-ref="net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine"
          auto-retrieve="true"
-         refresh="true"
-         proxy="true">
+         
+         >
 		<inverse-foreignkey field-ref="keyTeacher"/>
     </collection-descriptor>  	 	
-	<collection-descriptor
+	<collection-descriptor proxy="true"
          name="serviceExemptionSituations"
          element-class-ref="net.sourceforge.fenixedu.domain.credits.ServiceExemptionCreditLine"
          auto-retrieve="true"
-         refresh="true"
-         proxy="true">
+         
+         >
 		<inverse-foreignkey field-ref="keyTeacher"/>
     </collection-descriptor>  	 
-    <collection-descriptor 
+    <collection-descriptor proxy="true" 
 		name="associatedSummaries" 
 		element-class-ref="net.sourceforge.fenixedu.domain.Summary"
-		proxy="true"
-		refresh="true">
+		
+		>
 		<inverse-foreignkey field-ref="keyTeacher"/>
 	</collection-descriptor>
-    <collection-descriptor 
+    <collection-descriptor proxy="true" 
 		name="coordinators" 
 		element-class-ref="net.sourceforge.fenixedu.domain.Coordinator"
-		proxy="true"
-		refresh="true">
+		
+		>
 		<inverse-foreignkey field-ref="keyTeacher"/>
 	</collection-descriptor>
-	<collection-descriptor 
+	<collection-descriptor proxy="true" 
 		name="associatedResponsibles" 
 		element-class-ref="net.sourceforge.fenixedu.domain.ResponsibleFor"
-		proxy="true"
-		refresh="true">
+		
+		>
 		<inverse-foreignkey field-ref="keyTeacher"/>
 	</collection-descriptor>
-	<collection-descriptor 
+	<collection-descriptor proxy="true" 
 		name="associatedGrantContractRegimes" 
 		element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime"
-		proxy="true"
-		refresh="true">
+		
+		>
 		<inverse-foreignkey field-ref="keyTeacher"/>
 	</collection-descriptor>
-	<collection-descriptor 
+	<collection-descriptor proxy="true" 
 		name="associatedGrantParts" 
 		element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantPart"
-		proxy="true"
-		refresh="true">
+		
+		>
 		<inverse-foreignkey field-ref="keyResponsibleTeacher"/>
 	</collection-descriptor>
-	<collection-descriptor 
+	<collection-descriptor proxy="true" 
 		name="externalActivities" 
 		element-class-ref="net.sourceforge.fenixedu.domain.teacher.ExternalActivity"
-		proxy="true"
-		refresh="true">
+		
+		>
 		<inverse-foreignkey field-ref="keyTeacher"/>
 	</collection-descriptor>
-	<collection-descriptor 
+	<collection-descriptor proxy="true" 
 		name="associatedProposalsByOrientator" 
 		element-class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal"
-		proxy="true"
-		refresh="true">
+		
+		>
 		<inverse-foreignkey field-ref="keyOrientator"/>
 	</collection-descriptor>	
-	<collection-descriptor 
+	<collection-descriptor proxy="true" 
 		name="associatedOrientations" 
 		element-class-ref="net.sourceforge.fenixedu.domain.teacher.Orientation"
-		proxy="true"
-		refresh="true">
+		
+		>
 		<inverse-foreignkey field-ref="keyTeacher"/>
 	</collection-descriptor>
-	<collection-descriptor 
+	<collection-descriptor proxy="true" 
 		name="associatedCareers" 
 		element-class-ref="net.sourceforge.fenixedu.domain.teacher.Career"
-		proxy="true"
-		refresh="true">
+		
+		>
 		<inverse-foreignkey field-ref="keyTeacher"/>
 	</collection-descriptor>	
-	<collection-descriptor 
+	<collection-descriptor proxy="true" 
 		name="associatedGrantPaymentEntities" 
 		element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity"
-		proxy="true"
-		refresh="true">
+		
+		>
 		<inverse-foreignkey field-ref="keyResponsibleTeacher"/>
 	</collection-descriptor>
-	<collection-descriptor 
+	<collection-descriptor proxy="true" 
 		name="weeklyOcupations" 
 		element-class-ref="net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation"
-		proxy="true"
-		refresh="true">
+		
+		>
 		<inverse-foreignkey field-ref="keyTeacher"/>
 	</collection-descriptor>
-	<collection-descriptor 
+	<collection-descriptor proxy="true" 
 		name="oldPublication" 
 		element-class-ref="net.sourceforge.fenixedu.domain.teacher.OldPublication"
-		proxy="true"
-		refresh="true">
+		
+		>
 		<inverse-foreignkey field-ref="keyTeacher"/>
 	</collection-descriptor>
-	<collection-descriptor 
+	<collection-descriptor proxy="true" 
 		name="associatedGrantOrientationTeachers" 
 		element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher"
-		proxy="true"
-		refresh="true">
+		
+		>
 		<inverse-foreignkey field-ref="keyTeacher"/>
 	</collection-descriptor>
-	<collection-descriptor 
+	<collection-descriptor proxy="true" 
 		name="associatedProposalsByCoorientator" 
 		element-class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal"
-		proxy="true"
-		refresh="true">
+		
+		>
 		<inverse-foreignkey field-ref="keyCoorientator"/>
 	</collection-descriptor>
-	<collection-descriptor 
+	<collection-descriptor proxy="true" 
 		name="oldInquiriesTeacherRes" 
 		element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes"
-		proxy="true"
-		refresh="true">
+		
+		>
 		<inverse-foreignkey field-ref="keyTeacher"/>
 	</collection-descriptor>
-	<collection-descriptor 
+	<collection-descriptor proxy="true" 
 		name="associatedTutors" 
 		element-class-ref="net.sourceforge.fenixedu.domain.Tutor"
-		proxy="true"
-		refresh="true">
+		
+		>
 		<inverse-foreignkey field-ref="teacherKey"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
         	name="masterDegreeThesisGuider"
 	        element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion"
     	    auto-retrieve="true"
-        	proxy="true"
-	        refresh="true"
+        	
+	        
          	auto-update="false"
          	auto-delete="false"
 	        indirection-table="MASTER_DEGREE_THESIS_DATA_VERSION_GUIDER">
@@ -368,12 +368,12 @@
     	    <fk-pointing-to-this-class column="KEY_TEACHER"/>
         	<fk-pointing-to-element-class column="KEY_MASTER_DEGREE_THESIS_DATA_VERSION"/>
    	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
         	name="masterDegreeThesisAssistentGuider"
 	        element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion"
     	    auto-retrieve="true"
-        	proxy="true"
-	        refresh="true"
+        	
+	        
          	auto-update="false"
          	auto-delete="false"
 	        indirection-table="MASTER_DEGREE_THESIS_DATA_VERSION_GUIDER">
@@ -381,12 +381,12 @@
     	    <fk-pointing-to-this-class column="KEY_TEACHER"/>
         	<fk-pointing-to-element-class column="KEY_MASTER_DEGREE_THESIS_DATA_VERSION"/>
    	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
         	name="masterDegreeProofsJury"
 	        element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeProofVersion"
     	    auto-retrieve="true"
-        	proxy="true"
-	        refresh="true"
+        	
+	        
          	auto-update="false"
          	auto-delete="false"
 	        indirection-table="MASTER_DEGREE_PROOF_VERSION_JURY">

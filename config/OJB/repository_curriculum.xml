@@ -1,7 +1,7 @@
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.Curriculum -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.Curriculum"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Curriculum"
                   table="CURRICULUM">
     <field-descriptor
         name="idInternal"
@@ -65,8 +65,8 @@
     <reference-descriptor    	
          name="curricularCourse"
          class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
-         refresh="true"
-         proxy="true"
+         
+         
     >
 	<foreignkey field-ref="keyCurricularCourse"/>
     </reference-descriptor>
@@ -74,8 +74,8 @@
     <reference-descriptor    	
          name="personWhoAltered"
          class-ref="net.sourceforge.fenixedu.domain.Person"
-         refresh="true"
-         proxy="true"
+         
+         
     >
 	<foreignkey field-ref="keyPersonWhoAltered"/>
     </reference-descriptor>

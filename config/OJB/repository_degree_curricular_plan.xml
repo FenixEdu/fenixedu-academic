@@ -1,7 +1,7 @@
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlan --> 
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" table="DEGREE_CURRICULAR_PLAN">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.DegreeCurricularPlan" table="DEGREE_CURRICULAR_PLAN">
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEEC"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEIC"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEICTAGUS"/>
@@ -103,44 +103,44 @@
 	<reference-descriptor
 			name="degree"
 			class-ref="net.sourceforge.fenixedu.domain.Degree"
-			refresh="true"
-			proxy="true">
+			
+			>
 		<foreignkey field-ref="degreeKey"/>
 	</reference-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="curricularCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
-			proxy="true"
-             refresh="true">
+			
+             >
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="areas"
 			element-class-ref="net.sourceforge.fenixedu.domain.Branch"
-			proxy="true"
-             refresh="true">
+			
+             >
 		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="curricularCourseEquivalences"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseEquivalence"
-			proxy="true"
-             refresh="true">
+			
+             >
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="executionDegrees"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
-			proxy="true"
-            refresh="true">
+			
+            >
 		<inverse-foreignkey field-ref="keyCurricularPlan"/>
 	</collection-descriptor>
 	
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="enrolmentPeriods"
 			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriod"
-			proxy="true"
-            refresh="true">
+			
+            >
 		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</collection-descriptor>
 	
@@ -149,7 +149,7 @@
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEEC --> 
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEEC" table="DEGREE_CURRICULAR_PLAN">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEEC" table="DEGREE_CURRICULAR_PLAN">
 	<field-descriptor
 		name="ojbConcreteClass"
 		column="CLASS_NAME"
@@ -240,43 +240,43 @@
 	<reference-descriptor
 			name="degree"
 			class-ref="net.sourceforge.fenixedu.domain.Degree"
-			proxy="true">
+			>
 		<foreignkey field-ref="degreeKey"/>
 	</reference-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="curricularCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
-            refresh="true"
-			proxy="true">
+            
+			>
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="areas"
 			element-class-ref="net.sourceforge.fenixedu.domain.Branch"
-            refresh="true"
-			proxy="true">
+            
+			>
 		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="curricularCourseEquivalences"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseEquivalence"
-            refresh="true"
-			proxy="true">
+            
+			>
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="executionDegrees"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
-			proxy="true"
-            refresh="true">
+			
+            >
 		<inverse-foreignkey field-ref="keyCurricularPlan"/>
 	</collection-descriptor>
 	
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="enrolmentPeriods"
 			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriod"
-			proxy="true"
-            refresh="true">
+			
+            >
 		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</collection-descriptor>
 	
@@ -285,7 +285,7 @@
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEIC --> 
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEIC" table="DEGREE_CURRICULAR_PLAN">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEIC" table="DEGREE_CURRICULAR_PLAN">
 	<field-descriptor
 		name="ojbConcreteClass"
 		column="CLASS_NAME"
@@ -376,44 +376,44 @@
 	<reference-descriptor
 			name="degree"
 			class-ref="net.sourceforge.fenixedu.domain.Degree"
-			proxy="true">
+			>
 		<foreignkey field-ref="degreeKey"/>
 	</reference-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="curricularCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
-			proxy="true"
-             refresh="true">
+			
+             >
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="areas"
 			element-class-ref="net.sourceforge.fenixedu.domain.Branch"
-			proxy="true"
-            refresh="true"
+			
+            
             >
 		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="curricularCourseEquivalences"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseEquivalence"
-			proxy="true"
-             refresh="true">
+			
+             >
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="executionDegrees"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
-			proxy="true"
-            refresh="true">
+			
+            >
 		<inverse-foreignkey field-ref="keyCurricularPlan"/>
 	</collection-descriptor>
 	
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="enrolmentPeriods"
 			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriod"
-			proxy="true"
-            refresh="true">
+			
+            >
 		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</collection-descriptor>
 	
@@ -421,7 +421,7 @@
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEICTAGUS --> 
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEICTAGUS" table="DEGREE_CURRICULAR_PLAN">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEICTAGUS" table="DEGREE_CURRICULAR_PLAN">
 	<field-descriptor
 		name="ojbConcreteClass"
 		column="CLASS_NAME"
@@ -512,44 +512,44 @@
 	<reference-descriptor
 			name="degree"
 			class-ref="net.sourceforge.fenixedu.domain.Degree"
-			proxy="true">
+			>
 		<foreignkey field-ref="degreeKey"/>
 	</reference-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="curricularCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
-			proxy="true"
-             refresh="true">
+			
+             >
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="areas"
 			element-class-ref="net.sourceforge.fenixedu.domain.Branch"
-			proxy="true"
-            refresh="true"
+			
+            
             >
 		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="curricularCourseEquivalences"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseEquivalence"
-			proxy="true"
-             refresh="true">
+			
+             >
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="executionDegrees"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
-			proxy="true"
-            refresh="true">
+			
+            >
 		<inverse-foreignkey field-ref="keyCurricularPlan"/>
 	</collection-descriptor>
 	
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="enrolmentPeriods"
 			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriod"
-			proxy="true"
-            refresh="true">
+			
+            >
 		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</collection-descriptor>	
 
@@ -558,7 +558,7 @@
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEC --> 
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEC" table="DEGREE_CURRICULAR_PLAN">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEC" table="DEGREE_CURRICULAR_PLAN">
 	<field-descriptor
 		name="ojbConcreteClass"
 		column="CLASS_NAME"
@@ -649,44 +649,44 @@
 	<reference-descriptor
 			name="degree"
 			class-ref="net.sourceforge.fenixedu.domain.Degree"
-			proxy="true">
+			>
 		<foreignkey field-ref="degreeKey"/>
 	</reference-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="curricularCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
-			proxy="true"
-             refresh="true">
+			
+             >
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="areas"
 			element-class-ref="net.sourceforge.fenixedu.domain.Branch"
-			proxy="true"
-            refresh="true"
+			
+            
             >
 		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="curricularCourseEquivalences"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseEquivalence"
-			proxy="true"
-             refresh="true">
+			
+             >
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="executionDegrees"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
-			proxy="true"
-            refresh="true">
+			
+            >
 		<inverse-foreignkey field-ref="keyCurricularPlan"/>
 	</collection-descriptor>
 	
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="enrolmentPeriods"
 			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriod"
-			proxy="true"
-            refresh="true">
+			
+            >
 		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</collection-descriptor>
 	
@@ -695,7 +695,7 @@
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEM --> 
 <!-- *************************************************************************************************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEM" table="DEGREE_CURRICULAR_PLAN">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEM" table="DEGREE_CURRICULAR_PLAN">
 	<field-descriptor
 		name="ojbConcreteClass"
 		column="CLASS_NAME"
@@ -786,44 +786,44 @@
 	<reference-descriptor
 			name="degree"
 			class-ref="net.sourceforge.fenixedu.domain.Degree"
-			proxy="true">
+			>
 		<foreignkey field-ref="degreeKey"/>
 	</reference-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="curricularCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
-			proxy="true"
-             refresh="true">
+			
+             >
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="areas"
 			element-class-ref="net.sourceforge.fenixedu.domain.Branch"
-			proxy="true"
-            refresh="true"
+			
+            
             >
 		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="curricularCourseEquivalences"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseEquivalence"
-			proxy="true"
-             refresh="true">
+			
+             >
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="executionDegrees"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
-			proxy="true"
-            refresh="true">
+			
+            >
 		<inverse-foreignkey field-ref="keyCurricularPlan"/>
 	</collection-descriptor>
 	
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 			name="enrolmentPeriods"
 			element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentPeriod"
-			proxy="true"
-            refresh="true">
+			
+            >
 		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</collection-descriptor>
 	

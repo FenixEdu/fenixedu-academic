@@ -1,5 +1,5 @@
 
-	<class-descriptor class="middleware.mathResponsibles.Math_RESPONSAVEIS" table="math_RESPONSAVEIS">
+	<class-descriptor proxy="dynamic" class="middleware.mathResponsibles.Math_RESPONSAVEIS" table="math_RESPONSAVEIS">
 		<field-descriptor name="idInternal" primarykey="true" default-fetch="true" column="ID_INTERNAL" jdbc-type="INTEGER"/>
 		<field-descriptor name="codigo_do_Curso" default-fetch="true" column="CODIGO_DO_CURSO" jdbc-type="VARCHAR"/>
 		<field-descriptor name="campus" default-fetch="true" column="CAMPUS" jdbc-type="VARCHAR"/>

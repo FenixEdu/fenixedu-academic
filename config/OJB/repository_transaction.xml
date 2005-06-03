@@ -5,7 +5,7 @@
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.transaction.Transaction -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.transactions.Transaction">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.transactions.Transaction">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.transactions.PaymentTransaction" />	
 </class-descriptor>

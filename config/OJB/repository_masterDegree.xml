@@ -4,7 +4,7 @@
 
 <!-- Definitions for class MASTER_DEGREE_CANDIDATE -->
 
-	<class-descriptor
+	<class-descriptor proxy="dynamic"
 		class="net.sourceforge.fenixedu.domain.MasterDegreeCandidate"
 		table="MASTER_DEGREE_CANDIDATE"
 	>
@@ -90,7 +90,7 @@
       	  <reference-descriptor
          	name="person"
          	class-ref="net.sourceforge.fenixedu.domain.Person"
-			refresh="true"
+			
       	  >
           <foreignkey field-ref="personKey"/>
           </reference-descriptor>
@@ -99,17 +99,17 @@
       	  <reference-descriptor
          	name="executionDegree"
          	class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
-         	proxy="true"
+         	
       	  >
           <foreignkey field-ref="executionDegreeKey"/>
           </reference-descriptor>
           
-         <collection-descriptor
+         <collection-descriptor proxy="true"
 	         name="situations"
 	         element-class-ref="net.sourceforge.fenixedu.domain.CandidateSituation"
     		 collection-class="org.apache.ojb.odmg.collections.DListImpl"
-	         refresh="true"
-			proxy="true">
+	         
+			>
            <inverse-foreignkey field-ref="candidateKey"/>
 	         <!--auto-retrieve="true"-->
          </collection-descriptor>
@@ -121,7 +121,7 @@
 
 <!-- Definitions for class CANDIDATE_SITUATION -->
 
-	<class-descriptor
+	<class-descriptor proxy="dynamic"
 		class="net.sourceforge.fenixedu.domain.CandidateSituation"
 		table="CANDIDATE_SITUATION">
 
@@ -174,8 +174,8 @@
 	  <reference-descriptor
          	name="masterDegreeCandidate"
          	class-ref="net.sourceforge.fenixedu.domain.MasterDegreeCandidate"
-         	proxy="true"
-			refresh="true">
+         	
+			>
           <foreignkey field-ref="candidateKey"/>
       </reference-descriptor>
 		
@@ -185,7 +185,7 @@
 
 <!-- Definitions for class PRICE -->
 
-	<class-descriptor
+	<class-descriptor proxy="dynamic"
 		class="net.sourceforge.fenixedu.domain.Price"
 		table="PRICE"
 	>
@@ -232,7 +232,7 @@
 
 <!-- Definitions for class GUIDE -->
 
-	<class-descriptor
+	<class-descriptor proxy="dynamic"
 		class="net.sourceforge.fenixedu.domain.Guide"
 		table="GUIDE"
 	>
@@ -295,7 +295,7 @@
 	 <field-descriptor 
 	     name="creationDate"
 	     column="CREATION_DATE"
-         refresh="true"
+         
          jdbc-type="DATE"
 	 />
 	
@@ -308,7 +308,7 @@
 	<field-descriptor 
 	     name="paymentDate"
 	     column="PAYMENT_DATE"
-         refresh="true"
+         
          jdbc-type="DATE"
 	 />
       <field-descriptor
@@ -321,8 +321,8 @@
  	  <reference-descriptor
          	name="contributor"
          	class-ref="net.sourceforge.fenixedu.domain.Contributor"
-         	proxy="true"
-			refresh="true"
+         	
+			
       	  >
           <foreignkey field-ref="keyContributor"/>
       </reference-descriptor>
@@ -330,8 +330,8 @@
       <reference-descriptor
          	name="person"
          	class-ref="net.sourceforge.fenixedu.domain.Person"
-         	proxy="true"
-			refresh="true"
+         	
+			
       	  >
           <foreignkey field-ref="keyPerson"/>
       </reference-descriptor>
@@ -339,34 +339,34 @@
      <reference-descriptor
      	name="executionDegree"
      	class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
-     	proxy="true"
-			refresh="true"
+     	
+			
       >
       <foreignkey field-ref="keyExecutionDegree"/>
       </reference-descriptor>
        
-    <collection-descriptor
+    <collection-descriptor proxy="true"
          name="guideEntries"
-         refresh="true"
-     	proxy="true"
+         
+     	
          element-class-ref="net.sourceforge.fenixedu.domain.GuideEntry"
        >
        <inverse-foreignkey field-ref="keyGuide"/>
      </collection-descriptor>
 
-    <collection-descriptor
+    <collection-descriptor proxy="true"
          name="guideSituations"
-         refresh="true"
-     	proxy="true"
+         
+     	
          element-class-ref="net.sourceforge.fenixedu.domain.GuideSituation"
        >
        <inverse-foreignkey field-ref="keyGuide"/>
      </collection-descriptor>
      
-     <collection-descriptor
+     <collection-descriptor proxy="true"
          name="reimbursementGuides"
-         refresh="true"
-		 proxy="true"
+         
+		 
 		 auto-update="false"
 		 auto-delete="false"
 		 auto-retrieve="true"
@@ -382,7 +382,7 @@
 
 <!-- Definitions for class GUIDE_ENTRY -->
 
-	<class-descriptor
+	<class-descriptor proxy="dynamic"
 		class="net.sourceforge.fenixedu.domain.GuideEntry"
 		table="GUIDE_ENTRY"
 	>
@@ -435,15 +435,15 @@
 	   <reference-descriptor
          	name="guide"
          	class-ref="net.sourceforge.fenixedu.domain.Guide"
-         	proxy="true"
-			refresh="true"
+         	
+			
       	  >
           <foreignkey field-ref="keyGuide"/>
       </reference-descriptor>
 	  
-	 <collection-descriptor
+	 <collection-descriptor proxy="true"
          name="reimbursementGuideEntries"
-         refresh="true"
+         
          auto-retrieve="true"
    		 auto-update="false"
 		 auto-delete="false"
@@ -460,7 +460,7 @@
 
 <!-- Definitions for class GUIDE_SITUATION -->
 
-	<class-descriptor
+	<class-descriptor proxy="dynamic"
 		class="net.sourceforge.fenixedu.domain.GuideSituation"
 		table="GUIDE_SITUATION"
 	>
@@ -509,8 +509,8 @@
 	   <reference-descriptor
          	name="guide"
          	class-ref="net.sourceforge.fenixedu.domain.Guide"
-         	proxy="true"
-			refresh="true"
+         	
+			
       	  >
           <foreignkey field-ref="keyGuide"/>
       </reference-descriptor>
@@ -522,7 +522,7 @@
 
 <!-- Definitions for class CONTRIBUTOR -->
 
-      <class-descriptor
+      <class-descriptor proxy="dynamic"
               class="net.sourceforge.fenixedu.domain.Contributor"
               table="CONTRIBUTOR"
       >
@@ -565,7 +565,7 @@
 
 <!-- Definitions for class QUALIFICATION -->
 
-      <class-descriptor
+      <class-descriptor proxy="dynamic"
               class="net.sourceforge.fenixedu.domain.Qualification"
               table="QUALIFICATION"
       >
@@ -650,16 +650,16 @@
 	   <reference-descriptor
          	name="person"
          	class-ref="net.sourceforge.fenixedu.domain.Person"
-         	proxy="true"
-			refresh="true"
+         	
+			
       	  >
           <foreignkey field-ref="personKey"/>
       </reference-descriptor>
 	   <reference-descriptor
          	name="country"
          	class-ref="net.sourceforge.fenixedu.domain.Country"
-         	proxy="true"
-			refresh="true"
+         	
+			
       	  >
           <foreignkey field-ref="countryKey"/>
       </reference-descriptor> 
@@ -670,7 +670,7 @@
 
 <!-- Definitions for class CANDIDATE_ENROLMENT -->
 
-      <class-descriptor
+      <class-descriptor proxy="dynamic"
               class="net.sourceforge.fenixedu.domain.CandidateEnrolment"
               table="CANDIDATE_ENROLMENT"
       >
@@ -739,7 +739,7 @@
  
  <!-- Definitions for class net.sourceforge.fenixedu.domain.MasterDegreeThesis -->
 	
- <class-descriptor
+ <class-descriptor proxy="dynamic"
               class="net.sourceforge.fenixedu.domain.MasterDegreeThesis"
               table="MASTER_DEGREE_THESIS"
       >
@@ -764,21 +764,21 @@
       	locking="true"
       />
         
-    <collection-descriptor
+    <collection-descriptor proxy="true"
          name="masterDegreeProofVersions"
          auto-retrieve="true"
-         refresh="true"
-         proxy="true"
+         
+         
          element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeProofVersion"
        >
        <inverse-foreignkey field-ref="keyMasterDegreeThesis"/>
      </collection-descriptor>
         
-     <collection-descriptor
+     <collection-descriptor proxy="true"
          name="masterDegreeThesisDataVersions"
          auto-retrieve="true"
-         refresh="true"
-         proxy="true"
+         
+         
          element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion"
        >
        <inverse-foreignkey field-ref="keyMasterDegreeThesis"/>
@@ -797,7 +797,7 @@
    
 <!-- Definitions for class net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion -->
 	
- <class-descriptor
+ <class-descriptor proxy="dynamic"
               class="net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion"
               table="MASTER_DEGREE_THESIS_DATA_VERSION"
       >
@@ -847,12 +847,12 @@
       	locking="true"
       />
                 
-        <collection-descriptor
+        <collection-descriptor proxy="true"
         	name="guiders"
 	        element-class-ref="net.sourceforge.fenixedu.domain.Teacher"
     	    auto-retrieve="true"
-        	proxy="true"
-	        refresh="true"
+        	
+	        
          	auto-update="false"
          	auto-delete="false"
 	        indirection-table="MASTER_DEGREE_THESIS_DATA_VERSION_GUIDER"
@@ -861,12 +861,12 @@
         	<fk-pointing-to-element-class column="KEY_TEACHER"/>
       	</collection-descriptor>
         
-        <collection-descriptor
+        <collection-descriptor proxy="true"
         	name="externalGuiders"
 	        element-class-ref="net.sourceforge.fenixedu.domain.ExternalPerson"
     	    auto-retrieve="true"
-        	proxy="true"
-	        refresh="true"
+        	
+	        
          	auto-update="false"
          	auto-delete="false"
 	        indirection-table="MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_GUIDER"
@@ -875,12 +875,12 @@
         	<fk-pointing-to-element-class column="KEY_EXTERNAL_PERSON"/>
       	</collection-descriptor>
         
-        <collection-descriptor
+        <collection-descriptor proxy="true"
 	        name="assistentGuiders"
     	    element-class-ref="net.sourceforge.fenixedu.domain.Teacher"
         	auto-retrieve="true"
-	        proxy="true"
-	        refresh="true"
+	        
+	        
          	auto-update="false"
          	auto-delete="false"
     	    indirection-table="MASTER_DEGREE_THESIS_DATA_VERSION_ASSISTENT_GUIDER"
@@ -889,12 +889,12 @@
 	        <fk-pointing-to-element-class column="KEY_TEACHER"/>
       	</collection-descriptor>
       	        
-        <collection-descriptor
+        <collection-descriptor proxy="true"
     	    name="externalAssistentGuiders"
         	element-class-ref="net.sourceforge.fenixedu.domain.ExternalPerson"
 	        auto-retrieve="true"
-    	    proxy="true"
-    	    refresh="true"
+    	    
+    	    
          	auto-update="false"
          	auto-delete="false"
         	indirection-table="MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_ASSISTENT_GUIDER"
@@ -923,7 +923,7 @@
    
 <!-- Definitions for class net.sourceforge.fenixedu.domain.MasterDegreeProofVersion -->
 	
- <class-descriptor
+ <class-descriptor proxy="dynamic"
               class="net.sourceforge.fenixedu.domain.MasterDegreeProofVersion"
               table="MASTER_DEGREE_PROOF_VERSION"
       >
@@ -1006,12 +1006,12 @@
 	        <foreignkey field-ref="keyEmployee"/>
 		</reference-descriptor>
 		
-		<collection-descriptor
+		<collection-descriptor proxy="true"
         	name="juries"
 	        element-class-ref="net.sourceforge.fenixedu.domain.Teacher"
     	    auto-retrieve="true"
-        	proxy="true"
-	        refresh="true"
+        	
+	        
          	auto-update="false"
          	auto-delete="false"
 	        indirection-table="MASTER_DEGREE_PROOF_VERSION_JURY"
@@ -1020,12 +1020,12 @@
         	<fk-pointing-to-element-class column="KEY_TEACHER"/>
       	</collection-descriptor> 
       	
-      	<collection-descriptor
+      	<collection-descriptor proxy="true"
         	name="externalJuries"
 	        element-class-ref="net.sourceforge.fenixedu.domain.ExternalPerson"
     	    auto-retrieve="true"
-        	proxy="true"
-	        refresh="true"
+        	
+	        
          	auto-update="false"
          	auto-delete="false"
 	        indirection-table="MASTER_DEGREE_PROOF_VERSION_EXTERNAL_JURY"
@@ -1041,7 +1041,7 @@
 
 <!-- Definitions for class net.sourceforge.fenixedu.domain.ExternalPerson -->
 	
- <class-descriptor
+ <class-descriptor proxy="dynamic"
               class="net.sourceforge.fenixedu.domain.ExternalPerson"
               table="EXTERNAL_PERSON"
       >
@@ -1091,7 +1091,7 @@
 <!-- End of definitions for class net.sourceforge.fenixedu.domain.ExternalPerson -->
 
 <!-- Start of definitions for class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide -->
-<class-descriptor
+<class-descriptor proxy="dynamic"
 		class="net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide"
 		table="REIMBURSEMENT_GUIDE"
 	>
@@ -1127,14 +1127,14 @@
  	 <reference-descriptor
          	name="guide"
          	class-ref="net.sourceforge.fenixedu.domain.Guide"
-         	proxy="true"
+         	
       	  >
           <foreignkey field-ref="keyGuide"/>
       </reference-descriptor>
       
-      <collection-descriptor
+      <collection-descriptor proxy="true"
          name="reimbursementGuideSituations"
-         refresh="true"
+         
          auto-retrieve="true"
    		 auto-update="false"
 		 auto-delete="false"
@@ -1143,9 +1143,9 @@
 		<inverse-foreignkey field-ref="keyReimbursementGuide"/>
 	  </collection-descriptor>
 	  
-	  <collection-descriptor
+	  <collection-descriptor proxy="true"
          name="reimbursementGuideEntries"
-         refresh="true"
+         
          auto-retrieve="true"
          auto-update="false"
 		 auto-delete="false"
@@ -1158,7 +1158,7 @@
 <!-- End of definitions for class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide -->
 
 <!-- Start of definitions for class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation -->
-<class-descriptor
+<class-descriptor proxy="dynamic"
 		class="net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation"
 		table="REIMBURSEMENT_GUIDE_SITUATION"
 	>
@@ -1217,15 +1217,15 @@
  	  <reference-descriptor
          	name="reimbursementGuide"
          	class-ref="net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide"
-         	proxy="true"
+         	
       	  >
           <foreignkey field-ref="keyReimbursementGuide"/>
       </reference-descriptor>
   	<reference-descriptor
          	name="employee"
          	class-ref="net.sourceforge.fenixedu.domain.Employee"
-         	proxy="true"
-			refresh="true"
+         	
+			
       	  >
           <foreignkey field-ref="keyEmployee"/>
       </reference-descriptor>
@@ -1235,7 +1235,7 @@
 
 <!-- Definitions for class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry -->
 
-	<class-descriptor
+	<class-descriptor proxy="dynamic"
 		class="net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry"
 		table="REIMBURSEMENT_GUIDE_ENTRY"
 	>
@@ -1276,7 +1276,7 @@
 	  <reference-descriptor
          	name="reimbursementGuide"
          	class-ref="net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide"
-         	proxy="true"
+         	
       	  >
           <foreignkey field-ref="keyReimbursementGuide"/>
       </reference-descriptor>
@@ -1284,7 +1284,7 @@
       <reference-descriptor
          	name="guideEntry"
          	class-ref="net.sourceforge.fenixedu.domain.GuideEntry"
-         	proxy="true"
+         	
       	  >
           <foreignkey field-ref="keyGuideEntry"/>
       </reference-descriptor>
@@ -1299,7 +1299,7 @@
 
 <!-- Definitions for class net.sourceforge.fenixedu.domain.WorkLocation -->
 	
- <class-descriptor
+ <class-descriptor proxy="dynamic"
               class="net.sourceforge.fenixedu.domain.WorkLocation"
               table="WORK_LOCATION"
       >
@@ -1329,7 +1329,7 @@
 <!-- End of definitions for class net.sourceforge.fenixedu.domain.WorkLocation -->
 
 <!-- Definitions for class GratuityValues -->
-<class-descriptor
+<class-descriptor proxy="dynamic"
 		class="net.sourceforge.fenixedu.domain.GratuityValues"
 		table="GRATUITY_VALUES"
 	>
@@ -1407,34 +1407,34 @@
     <reference-descriptor
       	name="executionDegree"
        	class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
-       	proxy="false"
-		refresh="true"
+       	
+		
     >
         <foreignkey field-ref="keyExecutionDegree"/>
     </reference-descriptor>
     <reference-descriptor
       	name="employee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
-       	proxy="false"
-		refresh="true"
+       	
+		
     >
         <foreignkey field-ref="keyEmployee"/>
     </reference-descriptor>    
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 		name="paymentPhaseList"
 		element-class-ref="net.sourceforge.fenixedu.domain.PaymentPhase"
-		refresh="true"
+		
 		auto-retrieve="true"
 		auto-update="false"
 		auto-delete="false"
-		proxy="true">
+		>
 		<inverse-foreignkey field-ref="keyGratuityValues"/>
 	 </collection-descriptor>   
 </class-descriptor>  
 <!-- End of definitions for class GratuityValues -->
 
 <!-- Definitions for class GratuitySituation -->
-	<class-descriptor
+	<class-descriptor proxy="dynamic"
 		class="net.sourceforge.fenixedu.domain.GratuitySituation"
 		table="GRATUITY_SITUATION"
 	>
@@ -1506,41 +1506,41 @@
     <reference-descriptor
       	name="gratuityValues"
        	class-ref="net.sourceforge.fenixedu.domain.GratuityValues"
-       	proxy="false"
-		refresh="true"
+       	
+		
     >
         <foreignkey field-ref="keyGratuityValues"/>
     </reference-descriptor>
     <reference-descriptor
       	name="employee"
        	class-ref="net.sourceforge.fenixedu.domain.Employee"
-       	proxy="false"
-		refresh="true"
+       	
+		
     >
         <foreignkey field-ref="keyEmployee"/>
     </reference-descriptor>    
     <reference-descriptor
       	name="studentCurricularPlan"
        	class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
-       	proxy="false"
-		refresh="true"
+       	
+		
     >
         <foreignkey field-ref="keyStudentCurricularPlan"/>
     </reference-descriptor>   
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 		name="transactionList"
 		element-class-ref="net.sourceforge.fenixedu.domain.transactions.GratuityTransaction"
-		refresh="true"
+		
 		auto-retrieve="true"
 		auto-update="false"
 		auto-delete="false"
-		proxy="true">
+		>
 		<inverse-foreignkey field-ref="keyGratuitySituation"/>
 	 </collection-descriptor>
 </class-descriptor>
 <!-- End of definitions for class GratuitySituation -->
 <!-- Definitions for class PaymentPhase -->
-<class-descriptor
+<class-descriptor proxy="dynamic"
 		class="net.sourceforge.fenixedu.domain.PaymentPhase"
 		table="PAYMENT_PHASE"
 	>
@@ -1587,15 +1587,15 @@
     <reference-descriptor
       	name="gratuityValues"
        	class-ref="net.sourceforge.fenixedu.domain.GratuityValues"
-       	proxy="false"
-		refresh="true"
+       	
+		
     >   	
         <foreignkey field-ref="keyGratuityValues"/>
     </reference-descriptor>
 </class-descriptor>
 <!-- End of definitions for class PaymentPhase -->
 <!-- Definitions for class SibsPaymentFile -->
-<class-descriptor
+<class-descriptor proxy="dynamic"
 		class="net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile"
 		table="SIBS_PAYMENT_FILE"
 	>
@@ -1617,11 +1617,11 @@
       	jdbc-type="INTEGER"
       	locking="true"
     />
-    <collection-descriptor
+    <collection-descriptor proxy="true"
     	name="sibsPaymentFileEntries"
 	 	auto-retrieve="true"
-        proxy="true"
-	    refresh="true"
+        
+	    
         auto-update="false"
         auto-delete="false"
         element-class-ref="net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry"
@@ -1634,7 +1634,7 @@
 
 <!-- Definitions for class SibsPaymentFileEntry -->
 
-<class-descriptor
+<class-descriptor proxy="dynamic"
 		class="net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry"
 		table="SIBS_PAYMENT_FILE_ENTRY"
 	>
@@ -1691,7 +1691,7 @@
     <reference-descriptor
       	name="sibsPaymentFile"
        	class-ref="net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile"
-       	proxy="false"
+       	
 
     >   	
         <foreignkey field-ref="keySibsPaymentFile"/>

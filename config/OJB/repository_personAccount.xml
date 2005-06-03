@@ -5,7 +5,7 @@
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.PersonAccount -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.PersonAccount" table="PERSON_ACCOUNT">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.PersonAccount" table="PERSON_ACCOUNT">
 	
 	<field-descriptor
 		name="idInternal"
@@ -37,20 +37,20 @@
 	<reference-descriptor
        	name="person"
        	class-ref="net.sourceforge.fenixedu.domain.Person"
-       	proxy="true"
-		refresh="true"
+       	
+		
     >
 		<foreignkey field-ref="keyPerson"/>
 	</reference-descriptor>
 	
-	<collection-descriptor
+	<collection-descriptor proxy="true"
 		name="transactions"
 		element-class-ref="net.sourceforge.fenixedu.domain.transactions.Transaction"
-		refresh="true"
+		
 		auto-retrieve="true"
 		auto-update="false"
 		auto-delete="false"
-		proxy="true">
+		>
 		<inverse-foreignkey field-ref="keyPersonAccount"/>
 	 </collection-descriptor>   
 		

@@ -1,4 +1,4 @@
-<class-descriptor
+<class-descriptor proxy="dynamic"
 		class="net.sourceforge.fenixedu.domain.support.GlossaryEntry"
 		table="GLOSSARY_ENTRY"
 		>

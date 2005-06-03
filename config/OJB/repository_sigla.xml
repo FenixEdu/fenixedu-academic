@@ -4,7 +4,7 @@
 
 <!-- Definitions for . -->
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.sigla.Plano_curricular_2003final"
   table="plano_curricular_2003final"
 >
@@ -148,7 +148,7 @@
       />
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.sigla.Curr_lic_ingles"
   table="curr_lic_ingles"
 >
@@ -233,7 +233,7 @@
       />
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.sigla.Curr_licenciatura"
   table="curr_licenciatura"
 >
@@ -348,7 +348,7 @@
  
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.sigla.Responsavel"
   table="responsavel"
 >

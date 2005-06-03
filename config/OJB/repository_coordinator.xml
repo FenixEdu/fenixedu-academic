@@ -2,7 +2,7 @@
      to avoid mixing user defined and system mappings. -->   
 <!-- Mapping of User defined classes starts here -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.Coordinator -->
-   <class-descriptor
+   <class-descriptor proxy="dynamic"
    	  class="net.sourceforge.fenixedu.domain.Coordinator"
    	  table="COORDINATOR"
    >
@@ -37,19 +37,19 @@
     <reference-descriptor
 			name="executionDegree"
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
-			proxy="true">
+			>
 		<foreignkey field-ref="keyExecutionDegree"/>
 	</reference-descriptor>   
 	 <reference-descriptor
 			name="teacher"
 			class-ref="net.sourceforge.fenixedu.domain.Teacher"
-			proxy="true">
+			>
 		<foreignkey field-ref="keyTeacher"/>
 	</reference-descriptor>   
    </class-descriptor>
    
 <!-- Definitions for net.sourceforge.fenixedu.domain.DegreeInfo -->   
-   <class-descriptor
+   <class-descriptor proxy="dynamic"
    	class="net.sourceforge.fenixedu.domain.DegreeInfo"
    	table="DEGREE_INFO"
    	>
@@ -189,13 +189,13 @@
 	    <reference-descriptor
 				name="degree"
 				class-ref="net.sourceforge.fenixedu.domain.Degree"
-				proxy="true">
+				>
 			<foreignkey field-ref="degreeKey"/>
 		</reference-descriptor>     	   	
    </class-descriptor>	
    
 <!-- Definitions for net.sourceforge.fenixedu.domain.Tutor -->    
-   <class-descriptor class="net.sourceforge.fenixedu.domain.Tutor"
+   <class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Tutor"
    	table="TUTOR_SHIP">
    		<field-descriptor id="1"
 	        name="idInternal"
@@ -223,13 +223,13 @@
 	    <reference-descriptor
 				name="teacher"
 				class-ref="net.sourceforge.fenixedu.domain.Teacher"
-				proxy="true">
+				>
 			<foreignkey field-ref="teacherKey"/>
 		</reference-descriptor> 
 	    <reference-descriptor
 				name="student"
 				class-ref="net.sourceforge.fenixedu.domain.Student"
-				proxy="true">
+				>
 			<foreignkey field-ref="studentKey"/>
 		</reference-descriptor> 
    </class-descriptor>

@@ -5,7 +5,7 @@
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.sms.SentSms -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.sms.SentSms" table="SENT_SMS">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.sms.SentSms" table="SENT_SMS">
 	
 	<field-descriptor
 		name="idInternal"
@@ -58,8 +58,8 @@
 	<reference-descriptor
        	name="person"
        	class-ref="net.sourceforge.fenixedu.domain.Person"
-       	proxy="true"
-		refresh="true"
+       	
+		
     >
 		<foreignkey field-ref="keyPerson"/>
 	</reference-descriptor>

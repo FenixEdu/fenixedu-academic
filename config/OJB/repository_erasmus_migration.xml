@@ -1,7 +1,7 @@
 <!-- Please keep user defined mappings in this file only
      to avoid mixing user defined and system mappings. -->   
 <!-- Mapping of User defined classes starts here -->
-<class-descriptor class="middleware.erasmus.Dbo_aluno" table="dbo_aluno">
+<class-descriptor proxy="dynamic" class="middleware.erasmus.Dbo_aluno" table="dbo_aluno">
 		<field-descriptor name="numero" default-fetch="true" column="NUMERO" jdbc-type="VARCHAR" primarykey="true"/>
 		<field-descriptor name="nome" default-fetch="true" column="NOME" jdbc-type="VARCHAR"/>
 		<field-descriptor name="apelido" default-fetch="true" column="APELIDO" jdbc-type="VARCHAR"/>
@@ -32,7 +32,7 @@
 		<field-descriptor name="morad_origem2" default-fetch="true" column="MORAD_ORIGEM2" jdbc-type="VARCHAR"/>
 		<field-descriptor name="morad_loca" default-fetch="true" column="MORAD_LOCA" jdbc-type="VARCHAR"/>
 	</class-descriptor>
-	<class-descriptor class="middleware.erasmus.Dbo_anulaCurricular" table="dbo_anulaCurricular">
+	<class-descriptor proxy="dynamic" class="middleware.erasmus.Dbo_anulaCurricular" table="dbo_anulaCurricular">
 		<field-descriptor name="numero" default-fetch="true" column="NUMERO" jdbc-type="VARCHAR" primarykey="true"/>
 		<field-descriptor name="cadeira" default-fetch="true" column="CADEIRA" jdbc-type="VARCHAR"/>
 		<field-descriptor name="coord" default-fetch="true" column="COORD" jdbc-type="VARCHAR"/>
@@ -53,7 +53,7 @@
 		<field-descriptor name="state" default-fetch="true" column="STATE" jdbc-type="VARCHAR"/>
 		<field-descriptor name="epoca" default-fetch="true" column="EPOCA" jdbc-type="VARCHAR"/>
 	</class-descriptor>
-	<class-descriptor class="middleware.erasmus.Dbo_anulaCurriculares" table="dbo_anulaCurriculares">
+	<class-descriptor proxy="dynamic" class="middleware.erasmus.Dbo_anulaCurriculares" table="dbo_anulaCurriculares">
 		<field-descriptor name="numero" default-fetch="true" column="NUMERO" jdbc-type="VARCHAR" primarykey="true"/>
 		<field-descriptor name="cadeira" default-fetch="true" column="CADEIRA" jdbc-type="VARCHAR"/>
 		<field-descriptor name="coord" default-fetch="true" column="COORD" jdbc-type="VARCHAR"/>
@@ -74,14 +74,14 @@
 		<field-descriptor name="state" default-fetch="true" column="STATE" jdbc-type="VARCHAR"/>
 		<field-descriptor name="epoca" default-fetch="true" column="EPOCA" jdbc-type="VARCHAR"/>
 	</class-descriptor>
-	<class-descriptor class="middleware.erasmus.Dbo_cadeira" table="dbo_cadeira">
+	<class-descriptor proxy="dynamic" class="middleware.erasmus.Dbo_cadeira" table="dbo_cadeira">
 		<field-descriptor name="codcurso" default-fetch="true" column="CODCURSO" jdbc-type="VARCHAR" primarykey="true"/>
 		<field-descriptor name="ano" default-fetch="true" column="ANO" jdbc-type="VARCHAR"/>
 		<field-descriptor name="semestre" default-fetch="true" column="SEMESTRE" jdbc-type="VARCHAR"/>
 		<field-descriptor name="codigocad" default-fetch="true" column="CODIGOCAD" jdbc-type="VARCHAR"/>
 		<field-descriptor name="nome" default-fetch="true" column="NOME" jdbc-type="VARCHAR"/>
 	</class-descriptor>
-	<class-descriptor class="middleware.erasmus.Dbo_curriculo" table="dbo_curriculo">
+	<class-descriptor proxy="dynamic" class="middleware.erasmus.Dbo_curriculo" table="dbo_curriculo">
 		<field-descriptor name="numero" default-fetch="true" column="NUMERO" jdbc-type="VARCHAR" primarykey="true"/>
 		<field-descriptor name="cadeira" default-fetch="true" column="CADEIRA" jdbc-type="VARCHAR"/>
 		<field-descriptor name="coord" default-fetch="true" column="COORD" jdbc-type="VARCHAR"/>
@@ -101,7 +101,7 @@
 		<field-descriptor name="state" default-fetch="true" column="STATE" jdbc-type="VARCHAR"/>
 		<field-descriptor name="epoca" default-fetch="true" column="EPOCA" jdbc-type="VARCHAR"/>
 	</class-descriptor>
-	<class-descriptor class="middleware.erasmus.Dbo_curriculos" table="dbo_curriculos">
+	<class-descriptor proxy="dynamic" class="middleware.erasmus.Dbo_curriculos" table="dbo_curriculos">
 		<field-descriptor name="numero" default-fetch="true" column="NUMERO" jdbc-type="VARCHAR" primarykey="true"/>
 		<field-descriptor name="cadeira" default-fetch="true" column="CADEIRA" jdbc-type="VARCHAR"/>
 		<field-descriptor name="coord" default-fetch="true" column="COORD" jdbc-type="VARCHAR"/>
@@ -121,11 +121,11 @@
 		<field-descriptor name="state" default-fetch="true" column="STATE" jdbc-type="VARCHAR"/>
 		<field-descriptor name="epoca" default-fetch="true" column="EPOCA" jdbc-type="VARCHAR"/>
 	</class-descriptor>
-	<class-descriptor class="middleware.erasmus.Dbo_curso" table="dbo_curso">
+	<class-descriptor proxy="dynamic" class="middleware.erasmus.Dbo_curso" table="dbo_curso">
 		<field-descriptor name="codigocurso" default-fetch="true" column="CODIGOCURSO" jdbc-type="VARCHAR" primarykey="true"/>
 		<field-descriptor name="nome" default-fetch="true" column="NOME" jdbc-type="VARCHAR"/>
 	</class-descriptor>
-	<class-descriptor class="middleware.erasmus.Dbo_nacionalidade" table="dbo_nacionalidade">
+	<class-descriptor proxy="dynamic" class="middleware.erasmus.Dbo_nacionalidade" table="dbo_nacionalidade">
 		<field-descriptor name="codigonac" default-fetch="true" column="CODIGONAC" jdbc-type="VARCHAR" primarykey="true"/>
 		<field-descriptor name="descricao" default-fetch="true" column="DESCRICAO" jdbc-type="VARCHAR"/>
 	</class-descriptor>

@@ -1,5 +1,5 @@
 <!-- Definitions for . -->
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.posgrad.Posgrad_aluno_mestrado"
   table="posgrad_aluno_mestrado"
 >
@@ -67,7 +67,7 @@
       />
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.posgrad.Posgrad_area_cientifica"
   table="posgrad_area_cientifica"
 >
@@ -106,7 +106,7 @@
       />
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.posgrad.Posgrad_candidato_mestrado"
   table="posgrad_candidato_mestrado"
 >
@@ -304,7 +304,7 @@
       />
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.posgrad.Posgrad_candidato_situacao"
   table="posgrad_candidato_situacao"
 >
@@ -347,7 +347,7 @@
       />
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.posgrad.Posgrad_cargo"
   table="posgrad_cargo"
 >
@@ -370,7 +370,7 @@
       />
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.posgrad.Posgrad_curso_mestrado"
   table="posgrad_curso_mestrado"
 >
@@ -398,7 +398,7 @@
       />
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.posgrad.Posgrad_disc_area"
   table="posgrad_disc_area"
 >
@@ -431,7 +431,7 @@
       />
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.posgrad.Posgrad_disc_area_aluno"
   table="posgrad_disc_area_aluno"
 >
@@ -484,7 +484,7 @@
       />
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.posgrad.Posgrad_disciplina"
   table="posgrad_disciplina"
 >
@@ -543,7 +543,7 @@
       />
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.posgrad.Posgrad_docente"
   table="posgrad_docente"
 >
@@ -586,7 +586,7 @@
       />
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.posgrad.Posgrad_guia"
   table="posgrad_guia"
 >
@@ -664,7 +664,7 @@
       />
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.posgrad.Posgrad_guia_tabela"
   table="posgrad_guia_tabela"
 >
@@ -692,7 +692,7 @@
       />
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.posgrad.Posgrad_pagamento_guia"
   table="posgrad_pagamento_guia"
 >
@@ -730,7 +730,7 @@
       />
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.posgrad.Posgrad_pessoa"
   table="posgrad_pessoa"
 >
@@ -888,7 +888,7 @@
       />
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.posgrad.Posgrad_pessoa_cargo"
   table="posgrad_pessoa_cargo"
 >
@@ -921,7 +921,7 @@
       />
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.posgrad.Posgrad_situacao"
   table="posgrad_situacao"
 >
@@ -944,7 +944,7 @@
       />
 </class-descriptor>
 
-<class-descriptor 
+<class-descriptor proxy="dynamic" 
   class="middleware.posgrad.Posgrad_tabela_precos"
   table="posgrad_tabela_precos"
 >

@@ -1,5 +1,5 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.student.Senior -->
-<class-descriptor
+<class-descriptor proxy="dynamic"
 	class="net.sourceforge.fenixedu.domain.student.Senior"
 	table="SENIOR"
 >
@@ -69,7 +69,7 @@
 	<reference-descriptor 
 			name="student" 
 			class-ref="net.sourceforge.fenixedu.domain.Student" 
-			proxy="false">
+			>
 		<foreignkey field-ref="keyStudent"/>
 	</reference-descriptor>
 </class-descriptor>

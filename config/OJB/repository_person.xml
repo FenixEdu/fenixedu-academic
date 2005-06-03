@@ -1,8 +1,8 @@
 <!-- ***********************************
      Definitions for net.sourceforge.fenixedu.domain.Person 
      *********************************** -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.Person"
-				  proxy="dynamic"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.Person"
+				  
                   table="PERSON">
     <field-descriptor
         name="idInternal"
@@ -208,48 +208,48 @@
     <reference-descriptor
          name="pais"
          class-ref="net.sourceforge.fenixedu.domain.Country"
-         proxy="false"
+         
     >
          <foreignkey field-ref="chavePais"/>
     </reference-descriptor>
         <reference-descriptor
          name="author"
          class-ref="net.sourceforge.fenixedu.domain.publication.Author"
-         proxy="false">
+         >
          <foreignkey field-ref="keyAuthor"/>
     </reference-descriptor>
-    <collection-descriptor
+    <collection-descriptor proxy="true"
          name="personRoles"
          element-class-ref="net.sourceforge.fenixedu.domain.Role"
-         proxy="true"
+         
          collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          indirection-table = "PERSON_ROLE"
          auto-retrieve="true"
-         refresh="true"     
+              
     >
     	<fk-pointing-to-this-class  column="KEY_PERSON" />
     	<fk-pointing-to-element-class column="KEY_ROLE" />
     </collection-descriptor>    
-    <collection-descriptor
+    <collection-descriptor proxy="true"
          name="manageableDepartmentCredits"
          element-class-ref="net.sourceforge.fenixedu.domain.Department"
-         proxy="true"
+         
          indirection-table = "crd_CREDITS_MANAGER_DEPARTMENT"
          auto-retrieve="true"
-         refresh="true"
+         
          auto-update="false"
          auto-delete="false"
     >
     	<fk-pointing-to-this-class  column="KEY_PERSON" />
     	<fk-pointing-to-element-class column="KEY_DEPARTMENT" />
     </collection-descriptor>    
-    <collection-descriptor
+    <collection-descriptor proxy="true"
          name="advisories"
          element-class-ref="net.sourceforge.fenixedu.domain.Advisory"
-         proxy="true"
+         
          indirection-table = "PERSON_ADVISORY"
          auto-retrieve="true"
-         refresh="true"
+         
          auto-update="false"
          auto-delete="false"
 	>
@@ -259,11 +259,18 @@
 	    	class="net.sourceforge.fenixedu.persistenceTier.customQueries.AdvisoryFilter">
 	    </query-customizer>
     </collection-descriptor>    
-	<collection-descriptor 
+	<collection-descriptor proxy="true" 
 		name="associatedAlteredCurriculums" 
 		element-class-ref="net.sourceforge.fenixedu.domain.Curriculum"
-		proxy="true"
-		refresh="true">
+		
+		>
 		<inverse-foreignkey field-ref="keyPersonWhoAltered"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" 
+		name="associatedTeachers" 
+		element-class-ref="net.sourceforge.fenixedu.domain.Teacher"
+		
+		>
+		<inverse-foreignkey field-ref="keyPerson"/>
 	</collection-descriptor>
 </class-descriptor>

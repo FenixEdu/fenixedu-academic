@@ -68,7 +68,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
 
                 IExecutionDegree executionDegree = (IExecutionDegree) iter.next();
                 IGratuityValues gratuityValues = gratuityValuesDAO
-                        .readGratuityValuesByExecutionDegree(executionDegree);
+                        .readGratuityValuesByExecutionDegree(executionDegree.getIdInternal());
 
                 if (gratuityValues == null) {
                     continue;

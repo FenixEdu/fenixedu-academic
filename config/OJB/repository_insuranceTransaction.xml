@@ -5,7 +5,7 @@
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction" table="INSURANCE_TRANSACTION">
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction" table="INSURANCE_TRANSACTION">
 	
 	<field-descriptor
 		name="idInternal"
@@ -94,8 +94,8 @@
 	<reference-descriptor
        	name="personAccount"
        	class-ref="net.sourceforge.fenixedu.domain.PersonAccount"
-       	proxy="true"
-		refresh="true"
+       	
+		
     >
 		<foreignkey field-ref="keyPersonAccount"/>
 	</reference-descriptor>
@@ -103,8 +103,8 @@
 	<reference-descriptor
        	name="responsiblePerson"
        	class-ref="net.sourceforge.fenixedu.domain.Person"
-       	proxy="true"
-		refresh="true"
+       	
+		
     >
 		<foreignkey field-ref="keyResponsiblePerson"/>
 	</reference-descriptor>
@@ -112,8 +112,8 @@
 	<reference-descriptor
        	name="guideEntry"
        	class-ref="net.sourceforge.fenixedu.domain.GuideEntry"
-       	proxy="true"
-		refresh="true"
+       	
+		
     >
 		<foreignkey field-ref="keyGuideEntry"/>
 	</reference-descriptor>
@@ -121,7 +121,7 @@
 	<reference-descriptor
        	name="executionYear"
        	class-ref="net.sourceforge.fenixedu.domain.ExecutionYear"
-		refresh="true"
+		
     >
 		<foreignkey field-ref="keyExecutionYear"/>
 	</reference-descriptor>
@@ -129,8 +129,8 @@
 	<reference-descriptor
        	name="student"
        	class-ref="net.sourceforge.fenixedu.domain.Student"
-       	proxy="true"
-		refresh="true"
+       	
+		
     >
 		<foreignkey field-ref="keyStudent"/>
 	</reference-descriptor>

@@ -1,7 +1,7 @@
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary"
                   table="OLD_INQUIRIES_SUMMARY">
 	<field-descriptor
 		name="idInternal"
@@ -277,7 +277,7 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes -->
 <!-- ******************************************************************************************************************************* -->
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes"
                   table="OLD_INQUIRIES_TEACHERS_RES">
 
 	<field-descriptor
@@ -646,7 +646,7 @@
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes"
+<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes"
                   table="OLD_INQUIRIES_COURSES_RES">
 	<field-descriptor
 		name="idInternal"
