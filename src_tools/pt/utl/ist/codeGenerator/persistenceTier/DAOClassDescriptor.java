@@ -36,6 +36,7 @@ public class DAOClassDescriptor extends ClassDescriptor {
             if (!method.getReturnType().getName().equals("void")) {
                 compareDAOResults(stringBuilder);
                 logResultComparison(stringBuilder, method);
+                logResultComparisonOK(stringBuilder, method);
                 stringBuilder.append("\n\t\treturn mainDAOResult;\n");
             }
 
@@ -75,6 +76,34 @@ public class DAOClassDescriptor extends ClassDescriptor {
             stringBuilder.append("\t\t\t");
             stringBuilder.append(getSimpleClassName(DAOResultLogger.class.getName()));
             stringBuilder.append(".log(");
+            stringBuilder.append(MAIN_DAO);
+            stringBuilder.append(", ");
+            stringBuilder.append(SECONDARY_DAO);
+            stringBuilder.append(", \"");
+            stringBuilder.append(method.getName());            
+            stringBuilder.append("\", parameters);\n\t\t}\n");
+        }
+
+        private void logResultComparisonOK(final StringBuilder stringBuilder, Method method) {
+            stringBuilder.append("\t\tif (");
+            stringBuilder.append(COMPARISON_RESULT);
+            stringBuilder.append(") {\n");
+            stringBuilder.append("\t\t\tfinal Object[] parameters = new Object[] {\n");
+
+            int i = 0;
+            for (final Class parameterType : method.getParameterTypes()) {
+                if (i++ > 0) {
+                    stringBuilder.append(",\n ");
+                }
+                stringBuilder.append("\t\t\t\targ");
+                stringBuilder.append(i);
+            }
+            stringBuilder.append("\n");
+
+            stringBuilder.append("\t\t\t};\n");
+            stringBuilder.append("\t\t\t");
+            stringBuilder.append(getSimpleClassName(DAOResultLogger.class.getName()));
+            stringBuilder.append(".logOK(");
             stringBuilder.append(MAIN_DAO);
             stringBuilder.append(", ");
             stringBuilder.append(SECONDARY_DAO);

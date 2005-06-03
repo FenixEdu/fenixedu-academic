@@ -11,6 +11,11 @@ public class DAOResultLogger {
         }
     }
 
+    public static void logOK(final Object mainDAO, final Object secondaryDAO, final String methodName,
+            final Object[] parameters) {
+        System.out.println("DAO results for: " + generateDAOCallWithoutParameters(mainDAO, methodName) + " == " + generateDAOCallWithoutParameters(secondaryDAO, methodName));
+    }
+
     private static String generateDAOCall(final Object dAO, String methodName, final Object[] parameters) {
         final StringBuilder stringBuilder = new StringBuilder();
 
@@ -24,6 +29,19 @@ public class DAOResultLogger {
             }
             stringBuilder.append(parameters[i]);
         }
+        stringBuilder.append(")");
+
+        return stringBuilder.toString();
+    }
+
+    private static String generateDAOCallWithoutParameters(final Object dAO, String methodName) {
+        final StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append(dAO.getClass().getName());
+        stringBuilder.append(".");
+        stringBuilder.append(methodName);
+        stringBuilder.append("(");
+        stringBuilder.append("...");
         stringBuilder.append(")");
 
         return stringBuilder.toString();
