@@ -45,8 +45,9 @@ valueType net.sourceforge.fenixedu.domain.GuideState as GuideState;
 valueType net.sourceforge.fenixedu.util.MarkType as MarkType;
 valueType net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification as MasterDegreeClassification;
 valueType net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState as ReimbursementGuideState;
-valueType net.sourceforge.fenixedu.util.SituationName as SituationName;
+valueType net.sourceforge.fenixedu.util.Season as Season;
 valueType net.sourceforge.fenixedu.domain.credits.ServiceExemptionType as ServiceExemptionType;
+valueType net.sourceforge.fenixedu.util.SituationName as SituationName;
 valueType net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization as Specialization;
 valueType net.sourceforge.fenixedu.util.State as State;
 valueType net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState as StudentCurricularPlanState;
@@ -679,12 +680,15 @@ class net.sourceforge.fenixedu.domain.EnrolmentPeriod extends net.sourceforge.fe
     Integer keyExecutionPeriod;
 }
 
+
     class net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses extends net.sourceforge.fenixedu.domain.EnrolmentPeriod {
     }
+
     
     class net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses extends net.sourceforge.fenixedu.domain.EnrolmentPeriod {
     }
 
+    
 class net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer enrolmentEquivalenceKey;
     Integer equivalentEnrolmentKey;
@@ -734,11 +738,9 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 	}
 
 		class net.sourceforge.fenixedu.domain.Exam extends net.sourceforge.fenixedu.domain.WrittenEvaluation {
-			interface"
-			public net.sourceforge.fenixedu.util.Season getSeason();
-			
-			public void setSeason(net.sourceforge.fenixedu.util.Season season);
-			
+            Season season;
+            
+            interface"
 			public java.util.List getAssociatedRooms();
 			"	
 		}
