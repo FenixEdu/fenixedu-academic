@@ -54,6 +54,7 @@ valueType net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassificatio
 valueType net.sourceforge.fenixedu.util.OldPublicationType                                      as OldPublicationType;
 valueType net.sourceforge.fenixedu.util.OrientationType                                         as OrientationType;
 valueType net.sourceforge.fenixedu.domain.transactions.PaymentType                              as PaymentType;
+valueType net.sourceforge.fenixedu.util.PeriodToApplyRestriction                                as PeriodToApplyRestriction;
 valueType net.sourceforge.fenixedu.util.PeriodState                                             as PeriodState;
 valueType net.sourceforge.fenixedu.util.ProposalState                                           as ProposalState;
 valueType net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState                      as ReimbursementGuideState;
@@ -1676,11 +1677,11 @@ class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide exte
 	Integer number;
 
 	interface "
-		public java.util.Calendar getCreationDate();
-		
-		public void setCreationDate(java.util.Calendar creationDate);
-		
-		public IReimbursementGuideSituation getActiveReimbursementGuideSituation();
+	public java.util.Calendar getCreationDate();
+	
+	public void setCreationDate(java.util.Calendar creationDate);
+	
+	public IReimbursementGuideSituation getActiveReimbursementGuideSituation();
 	"
 }
 
@@ -1728,7 +1729,7 @@ class net.sourceforge.fenixedu.domain.precedences.Restriction extends net.source
 	Integer keyPrecedence;	
 	
 	interface " 	
-		public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType evaluate(net.sourceforge.fenixedu.domain.precedences.PrecedenceContext precedenceContext);
+	public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType evaluate(net.sourceforge.fenixedu.domain.precedences.PrecedenceContext precedenceContext);
 	"
 }
 
@@ -1765,10 +1766,7 @@ class net.sourceforge.fenixedu.domain.precedences.RestrictionNotEnrolledInCurric
 }
 
 class net.sourceforge.fenixedu.domain.precedences.RestrictionPeriodToApply extends net.sourceforge.fenixedu.domain.precedences.Restriction {
-	interface "
-    	public net.sourceforge.fenixedu.util.PeriodToApplyRestriction getPeriodToApplyRestriction();
-    	public void setPeriodToApplyRestriction(net.sourceforge.fenixedu.util.PeriodToApplyRestriction periodToApplyRestriction);
-	"
+    PeriodToApplyRestriction periodToApplyRestriction;
 }
 
 

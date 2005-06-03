@@ -8,18 +8,14 @@ import net.sourceforge.fenixedu.util.PeriodToApplyRestriction;
  * @author David Santos in Jun 9, 2004
  */
 
-public class RestrictionPeriodToApply extends RestrictionPeriodToApply_Base implements IRestrictionPeriodToApply {
-    protected PeriodToApplyRestriction periodToApplyRestriction;
+public class RestrictionPeriodToApply extends RestrictionPeriodToApply_Base implements
+        IRestrictionPeriodToApply {
 
-    public RestrictionPeriodToApply() {
-    }
-
-    public PeriodToApplyRestriction getPeriodToApplyRestriction() {
-        return periodToApplyRestriction;
-    }
-
-    public void setPeriodToApplyRestriction(PeriodToApplyRestriction periodToApplyRestriction) {
-        this.periodToApplyRestriction = periodToApplyRestriction;
+    public String toString() {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("Restriction(").append(this.getClass()).append("):").append("\n\t");
+        stringBuffer.append(this.getPeriodToApplyRestriction()).append("\n");
+        return stringBuffer.toString();
     }
 
     public boolean equals(Object obj) {
@@ -33,13 +29,6 @@ public class RestrictionPeriodToApply extends RestrictionPeriodToApply_Base impl
             result = false;
         }
         return result;
-    }
-
-    public String toString() {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("Restriction(").append(this.getClass()).append("):").append("\n\t");
-        stringBuffer.append(this.getPeriodToApplyRestriction()).append("\n");
-        return stringBuffer.toString();
     }
 
     public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
@@ -60,4 +49,5 @@ public class RestrictionPeriodToApply extends RestrictionPeriodToApply_Base impl
 
         return CurricularCourseEnrollmentType.NOT_ALLOWED;
     }
+
 }
