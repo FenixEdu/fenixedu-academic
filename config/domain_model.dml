@@ -29,6 +29,7 @@ valueType net.sourceforge.fenixedu.tools.enrollment.AreaType as AreaType;
 valueType net.sourceforge.fenixedu.domain.branch.BranchType as BranchType;
 valueType net.sourceforge.fenixedu.util.CurricularCourseExecutionScope as CurricularCourseExecutionScope;
 valueType net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType as CurricularCourseType;
+valueType net.sourceforge.fenixedu.util.DiaSemana as DiaSemana;
 valueType net.sourceforge.fenixedu.domain.degree.DegreeType as DegreeType;
 valueType net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType as EnrolmentGroupPolicyType;
 valueType net.sourceforge.fenixedu.util.EntryPhase as EntryPhase;
@@ -1220,12 +1221,10 @@ class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.do
 	Integer keyShift;
 	Integer keyRoomOccupation;
 	Integer chaveSala;
+    TipoAula tipo;
+    DiaSemana diaSemana;
 
 	interface "
-	public net.sourceforge.fenixedu.util.DiaSemana getDiaSemana();
-	
-	public void setDiaSemana(net.sourceforge.fenixedu.util.DiaSemana diaSemana);
-
 	public java.util.Calendar getInicio();
 	
 	public void setInicio(java.util.Calendar inicio);
@@ -1233,10 +1232,6 @@ class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.do
 	public java.util.Calendar getFim();
 	
 	public void setFim(java.util.Calendar fim);
-
-	public net.sourceforge.fenixedu.util.TipoAula getTipo();
-	
-	public void setTipo(net.sourceforge.fenixedu.util.TipoAula tipo);
 
 	public double hours();
 	"

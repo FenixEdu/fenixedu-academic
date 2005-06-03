@@ -11,16 +11,12 @@ import net.sourceforge.fenixedu.util.TipoAula;
 import net.sourceforge.fenixedu.util.date.TimePeriod;
 
 public class Lesson extends Lesson_Base {
-    protected DiaSemana _diaSemana;
-
     protected Calendar _inicio;
 
     protected Calendar _fim;
 
-    protected TipoAula _tipo;
-
     /**
-     * Construtor sem argumentos pï¿½blico requerido pela moldura de objectos
+     * Construtor sem argumentos público requerido pela moldura de objectos
      * OJB
      */
     public Lesson() {
@@ -41,14 +37,6 @@ public class Lesson extends Lesson_Base {
         setShift(shift);
     }
 
-    public DiaSemana getDiaSemana() {
-        return _diaSemana;
-    }
-
-    public void setDiaSemana(DiaSemana diaSemana) {
-        _diaSemana = diaSemana;
-    }
-
     public Calendar getInicio() {
         return _inicio;
     }
@@ -63,14 +51,6 @@ public class Lesson extends Lesson_Base {
 
     public void setFim(Calendar fim) {
         _fim = fim;
-    }
-
-    public TipoAula getTipo() {
-        return _tipo;
-    }
-
-    public void setTipo(TipoAula tipo) {
-        _tipo = tipo;
     }
 
     public String toString() {
@@ -103,4 +83,5 @@ public class Lesson extends Lesson_Base {
         TimePeriod timePeriod = new TimePeriod(this.getInicio(), this.getFim());
         return timePeriod.hours().doubleValue();
     }
+
 }
