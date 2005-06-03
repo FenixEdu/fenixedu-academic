@@ -318,7 +318,7 @@ public class RoomOccupation extends RoomOccupation_Base {
 
     public boolean containedIn(Calendar day, Calendar beginning, Calendar end) {
         return startTime.equals(beginning) && endTime.equals(end)
-                && (dayOfWeek.getDiaSemana().intValue() == day.get(Calendar.DAY_OF_WEEK))
+                && (getDayOfWeek().getDiaSemana().intValue() == day.get(Calendar.DAY_OF_WEEK))
                 && getPeriod().containsDay(day);
     }
 }
