@@ -47,6 +47,7 @@ valueType net.sourceforge.fenixedu.domain.GuideState                            
 valueType net.sourceforge.fenixedu.util.MarkType                                                as MarkType;
 valueType net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification               as MasterDegreeClassification;
 valueType net.sourceforge.fenixedu.util.OldPublicationType                                      as OldPublicationType;
+valueType net.sourceforge.fenixedu.util.OrientationType                                         as OrientationType;
 valueType net.sourceforge.fenixedu.domain.transactions.PaymentType                              as PaymentType;
 valueType net.sourceforge.fenixedu.util.PeriodState                                             as PeriodState;
 valueType net.sourceforge.fenixedu.util.ProposalState                                           as ProposalState;
@@ -1456,12 +1457,7 @@ class net.sourceforge.fenixedu.domain.teacher.Orientation extends net.sourceforg
     String description;
     Integer numberOfStudents;
     Date lastModificationDate;
-    
-    interface "
-    public net.sourceforge.fenixedu.util.OrientationType getOrientationType();
-    
-    public void setOrientationType(net.sourceforge.fenixedu.util.OrientationType orientationType);
-    "
+    OrientationType orientationType;
 }
 
 
