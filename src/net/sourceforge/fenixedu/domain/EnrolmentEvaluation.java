@@ -5,7 +5,6 @@ import java.util.Date;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 /**
  * @author dcs-rjao 24/Mar/2003
@@ -13,15 +12,26 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
     
-	private String RECTIFICATION = "RECTIFICAï¿½ï¿½O";
-
-    private EnrolmentEvaluationType enrolmentEvaluationType;
-
-    private EnrolmentEvaluationState enrolmentEvaluationState;
+	private String RECTIFICATION = "RECTIFICAÇÃO";
 
     public EnrolmentEvaluation() {
     }
 
+    public String toString() {
+        String result = "[" + this.getClass().getName() + "; ";
+        result += "grade = " + this.getGrade() + "; ";
+        result += "enrolmentEvaluationType = " + this.getEnrolmentEvaluationType() + "; ";
+        result += "examDate = " + this.getExamDate() + "; ";
+        result += "personResponsibleForGrade = " + getPersonResponsibleForGrade() + "; ";
+        result += "enrolmentEvaluationState = " + this.getEnrolmentEvaluationState() + "; ";
+        result += "when = " + this.getWhen() + "; ";
+        result += "checkSum = " + this.getCheckSum() + "; ";
+        result += "enrolment = " + getEnrolment() + "; ";
+        result += "gradeAvailableDate = " + this.getGradeAvailableDate() + "]\n";
+        result += "employee = " + getEmployee() + "; ";
+        return result;
+    }
+    
     public boolean equals(Object obj) {
         boolean result = false;
         if (obj instanceof IEnrolmentEvaluation) {
@@ -31,38 +41,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         }
         return result;
     }
-
-    public String toString() {
-        String result = "[" + this.getClass().getName() + "; ";
-        result += "grade = " + this.getGrade() + "; ";
-        result += "enrolmentEvaluationType = " + this.enrolmentEvaluationType + "; ";
-        result += "examDate = " + this.getExamDate() + "; ";
-        result += "personResponsibleForGrade = " + getPersonResponsibleForGrade() + "; ";
-        result += "enrolmentEvaluationState = " + this.enrolmentEvaluationState + "; ";
-        result += "when = " + this.getWhen() + "; ";
-        result += "checkSum = " + this.getCheckSum() + "; ";
-        result += "enrolment = " + getEnrolment() + "; ";
-        result += "gradeAvailableDate = " + this.getGradeAvailableDate() + "]\n";
-        result += "employee = " + getEmployee() + "; ";
-        return result;
-    }
-
-    public EnrolmentEvaluationType getEnrolmentEvaluationType() {
-        return enrolmentEvaluationType;
-    }
-
-    public EnrolmentEvaluationState getEnrolmentEvaluationState() {
-        return enrolmentEvaluationState;
-    }
-
-    public void setEnrolmentEvaluationType(EnrolmentEvaluationType type) {
-        enrolmentEvaluationType = type;
-    }
-
-    public void setEnrolmentEvaluationState(EnrolmentEvaluationState state) {
-        this.enrolmentEvaluationState = state;
-    }
-
 
     /**
      * @see java.lang.Comparable#compareTo(java.lang.Object)
@@ -190,20 +168,14 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         return EnrollmentState.APROVED;
     }
 
-    /* (non-Javadoc)
-     * @see Dominio.IEnrolmentEvaluation#isNormal()
-     */
     public boolean isNormal() {
-        if(enrolmentEvaluationType.equals(EnrolmentEvaluationType.NORMAL))
+        if(getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL))
             return true;
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see Dominio.IEnrolmentEvaluation#isImprovment()
-     */
     public boolean isImprovment() {
-        if(enrolmentEvaluationType.equals(EnrolmentEvaluationType.IMPROVEMENT))
+        if(getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT))
             return true;
         return false;
     }

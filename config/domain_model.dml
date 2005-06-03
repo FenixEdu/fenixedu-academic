@@ -34,6 +34,7 @@ valueType net.sourceforge.fenixedu.domain.degree.DegreeType as DegreeType;
 valueType net.sourceforge.fenixedu.util.DelegateYearType as DelegateYearType; 
 valueType net.sourceforge.fenixedu.util.DiaSemana as DiaSemana;
 valueType net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition as EnrollmentCondition;
+valueType net.sourceforge.fenixedu.util.EnrolmentEvaluationState as EnrolmentEvaluationState;
 valueType net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType as EnrolmentEvaluationType;
 valueType net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType as EnrolmentGroupPolicyType;
 valueType net.sourceforge.fenixedu.domain.curriculum.EnrollmentState as EnrollmentState;
@@ -650,16 +651,13 @@ class net.sourceforge.fenixedu.domain.EnrolmentEvaluation extends net.sourceforg
     Date gradeAvailableDate;
     Date examDate;
     String grade;
+    EnrolmentEvaluationType enrolmentEvaluationType;
+    EnrolmentEvaluationState enrolmentEvaluationState;
     
     interface "
-
-    public abstract net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType getEnrolmentEvaluationType();
-    public abstract net.sourceforge.fenixedu.util.EnrolmentEvaluationState getEnrolmentEvaluationState();
-    public abstract void setEnrolmentEvaluationType(net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType type);
-    public abstract void setEnrolmentEvaluationState(net.sourceforge.fenixedu.util.EnrolmentEvaluationState state);
     public abstract boolean isNormal();
+    
     public abstract boolean isImprovment();
-
     "
 }
 
