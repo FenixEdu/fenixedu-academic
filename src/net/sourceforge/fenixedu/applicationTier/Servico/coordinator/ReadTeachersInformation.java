@@ -115,11 +115,11 @@ public class ReadTeachersInformation implements IService {
 
             if (basic == null) {
                 professorships = persistentProfessorship.readByDegreeCurricularPlanAndExecutionYear(
-                        executionDegree.getIdInternal(), executionDegree.getExecutionYear()
+                        executionDegree.getDegreeCurricularPlan().getIdInternal(), executionDegree.getExecutionYear()
                                 .getIdInternal());
             } else {
                 professorships = persistentProfessorship.readByDegreeCurricularPlanAndBasic(
-                        executionDegree.getIdInternal(), executionDegree.getExecutionYear()
+                        executionDegree.getDegreeCurricularPlan().getIdInternal(), executionDegree.getExecutionYear()
                                 .getIdInternal(), basic);
             }
         }
@@ -169,7 +169,7 @@ public class ReadTeachersInformation implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();        
         ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
 
         InfoTeacher infoTeacher = InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher);
