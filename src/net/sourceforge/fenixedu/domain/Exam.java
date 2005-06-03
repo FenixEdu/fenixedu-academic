@@ -15,9 +15,7 @@ import org.apache.commons.collections.Transformer;
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public class Exam extends Exam_Base{
-
-    protected Season season;
+public class Exam extends Exam_Base {
 
     public Exam() {
     }
@@ -25,12 +23,18 @@ public class Exam extends Exam_Base{
     public Exam(Integer idInternal) {
         setIdInternal(idInternal);
     }
-    
+
     public Exam(Calendar day, Calendar beginning, Calendar end, Season season) {
         this.setDay(day);
         this.setBeginning(beginning);
         this.setEnd(end);
         this.setSeason(season);
+    }
+
+    public String toString() {
+        return "[EXAM:" + " id= '" + this.getIdInternal() + "'\n" + " day= '" + this.getDay() + "'\n"
+                + " beginning= '" + this.getBeginning() + "'\n" + " end= '" + this.getEnd() + "'\n"
+                + " season= '" + this.getSeason() + "'\n" + "";
     }
 
     public boolean equals(Object obj) {
@@ -40,27 +44,6 @@ public class Exam extends Exam_Base{
         }
 
         return false;
-    }
-
-    public String toString() {
-        return "[EXAM:" + " id= '" + this.getIdInternal() + "'\n" + " day= '" + this.getDay() + "'\n"
-                + " beginning= '" + this.getBeginning() + "'\n" + " end= '" + this.getEnd() + "'\n"
-                + " season= '" + this.getSeason() + "'\n" + "";
-    }
-
-
-    /**
-     * @return
-     */
-    public Season getSeason() {
-        return season;
-    }
-
-    /**
-     * @param season
-     */
-    public void setSeason(Season season) {
-        this.season = season;
     }
 
     /**

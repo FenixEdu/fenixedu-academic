@@ -15,13 +15,9 @@ import net.sourceforge.fenixedu.util.EnrolmentAction;
  */
 public class EnrolmentLog extends EnrolmentLog_Base {
 
-    private EnrolmentAction action;
-    
-    
-	public EnrolmentLog() {
+    public EnrolmentLog() {
     }
-    
-    
+
     /**
      * @param date
      * @param action
@@ -30,26 +26,14 @@ public class EnrolmentLog extends EnrolmentLog_Base {
      * @param curricularCourse
      * @param keyCurricularCourse
      */
-    public EnrolmentLog(Date date, EnrolmentAction action, IStudent student,
-            Integer keyStudent, ICurricularCourse curricularCourse,
-            Integer keyCurricularCourse) {
+    public EnrolmentLog(Date date, EnrolmentAction action, IStudent student, Integer keyStudent,
+            ICurricularCourse curricularCourse, Integer keyCurricularCourse) {
         this.setDate(date);
-        this.action = action;
-        setStudent(student);
+        this.setAction(action);
+        this.setStudent(student);
         this.setKeyStudent(keyStudent);
-        setCurricularCourse(curricularCourse);
+        this.setCurricularCourse(curricularCourse);
         this.setKeyCurricularCourse(keyCurricularCourse);
     }
-    /**
-     * @return Returns the action.
-     */
-    public EnrolmentAction getAction() {
-        return action;
-    }
-    /**
-     * @param action The action to set.
-     */
-    public void setAction(EnrolmentAction action) {
-        this.action = action;
-    }
+
 }

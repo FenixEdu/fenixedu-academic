@@ -33,6 +33,7 @@ valueType net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurr
 valueType net.sourceforge.fenixedu.domain.degree.DegreeType as DegreeType;
 valueType net.sourceforge.fenixedu.util.DelegateYearType as DelegateYearType; 
 valueType net.sourceforge.fenixedu.util.DiaSemana as DiaSemana;
+valueType net.sourceforge.fenixedu.util.EnrolmentAction as EnrolmentAction;
 valueType net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition as EnrollmentCondition;
 valueType net.sourceforge.fenixedu.util.EnrolmentEvaluationState as EnrolmentEvaluationState;
 valueType net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType as EnrolmentEvaluationType;
@@ -661,17 +662,14 @@ class net.sourceforge.fenixedu.domain.EnrolmentEvaluation extends net.sourceforg
     "
 }
 
+
 class net.sourceforge.fenixedu.domain.log.EnrolmentLog extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyCurricularCourse;
     Date date;
     Integer keyStudent;
-    
-    interface "
-
-    public abstract net.sourceforge.fenixedu.util.EnrolmentAction getAction();
-    public abstract void setAction(net.sourceforge.fenixedu.util.EnrolmentAction action);
-    "
+    EnrolmentAction action;
 }
+
 
 class net.sourceforge.fenixedu.domain.EnrolmentPeriod extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
