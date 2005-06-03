@@ -46,6 +46,7 @@ valueType net.sourceforge.fenixedu.domain.masterDegree.GuideRequester           
 valueType net.sourceforge.fenixedu.domain.GuideState                                            as GuideState;
 valueType net.sourceforge.fenixedu.util.MarkType                                                as MarkType;
 valueType net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification               as MasterDegreeClassification;
+valueType net.sourceforge.fenixedu.util.OldPublicationType                                      as OldPublicationType;
 valueType net.sourceforge.fenixedu.domain.transactions.PaymentType                              as PaymentType;
 valueType net.sourceforge.fenixedu.util.PeriodState                                             as PeriodState;
 valueType net.sourceforge.fenixedu.util.ProposalState                                           as ProposalState;
@@ -712,7 +713,6 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 
 	class net.sourceforge.fenixedu.domain.WrittenEvaluation extends net.sourceforge.fenixedu.domain.Evaluation {
 		interface"
-		
 		public java.util.Calendar getDay();
 		
 		public void setDay(java.util.Calendar calendar);
@@ -771,8 +771,6 @@ class net.sourceforge.fenixedu.domain.EvaluationMethod extends net.sourceforge.f
 	Integer keyExecutionCourse;
 }
 
-
-	
 
 class net.sourceforge.fenixedu.domain.ExamStudentRoom extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyRoom;
@@ -1163,13 +1161,13 @@ class net.sourceforge.fenixedu.domain.GuideEntry extends net.sourceforge.fenixed
 	Integer quantity;
 	
 	interface "
-    	public net.sourceforge.fenixedu.domain.DocumentType getDocumentType();
-    	
-    	public net.sourceforge.fenixedu.domain.GraduationType getGraduationType();
-    	
-    	public void setDocumentType(net.sourceforge.fenixedu.domain.DocumentType type);
-    	
-    	public void setGraduationType(net.sourceforge.fenixedu.domain.GraduationType type);
+	public net.sourceforge.fenixedu.domain.DocumentType getDocumentType();
+	
+	public net.sourceforge.fenixedu.domain.GraduationType getGraduationType();
+	
+	public void setDocumentType(net.sourceforge.fenixedu.domain.DocumentType type);
+	
+	public void setGraduationType(net.sourceforge.fenixedu.domain.GraduationType type);
 	"
 }
 
@@ -1449,12 +1447,7 @@ class net.sourceforge.fenixedu.domain.teacher.OldPublication extends net.sourcef
 	Integer keyTeacher;
 	Date lastModificationDate;
 	String publication;
-	
-	interface "
-	public net.sourceforge.fenixedu.util.OldPublicationType getOldPublicationType();
-
-	public void setOldPublicationType(net.sourceforge.fenixedu.util.OldPublicationType oldPublicationType);
-	"
+    OldPublicationType oldPublicationType;
 }
 
 
