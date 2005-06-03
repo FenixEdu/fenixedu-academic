@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.credits.event.CreditsEvent;
 import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
-import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.date.TimePeriod;
 
 import org.apache.ojb.broker.PersistenceBroker;
@@ -16,41 +15,11 @@ import org.apache.ojb.broker.PersistenceBrokerException;
 public class SupportLesson extends SupportLesson_Base implements PersistenceBrokerAware,
         ICreditsEventOriginator {
 
-    private DiaSemana weekDay;
-
     public SupportLesson() {
     }
 
     public SupportLesson(Integer idInternal) {
-        setIdInternal(idInternal);
-    }
-
-    /**
-     * @return
-     */
-    public DiaSemana getWeekDay() {
-        return weekDay;
-    }
-
-    /**
-     * @param weekDay
-     */
-    public void setWeekDay(DiaSemana weekDay) {
-        this.weekDay = weekDay;
-    }
-
-    public double hours() {
-        TimePeriod timePeriod = new TimePeriod(this.getStartTime(), this.getEndTime());
-        return timePeriod.hours().doubleValue();
-    }
-    
-    private boolean elementsAreEqual(Object element1, Object element2) {
-        boolean result = false;
-        if ((element1 == null && element2 == null)
-                || (element1 != null && element2 != null && element1.equals(element2))) {
-            result = true;
-        }
-        return result;
+        this.setIdInternal(idInternal);
     }
 
     public boolean equals(Object arg0) {
@@ -68,15 +37,29 @@ public class SupportLesson extends SupportLesson_Base implements PersistenceBrok
         return result;
     }
 
+    public double hours() {
+        TimePeriod timePeriod = new TimePeriod(this.getStartTime(), this.getEndTime());
+        return timePeriod.hours().doubleValue();
+    }
+
+    private boolean elementsAreEqual(Object element1, Object element2) {
+        boolean result = false;
+        if ((element1 == null && element2 == null)
+                || (element1 != null && element2 != null && element1.equals(element2))) {
+            result = true;
+        }
+        return result;
+    }
+
     public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod) {
         return this.getProfessorship().getExecutionCourse().getExecutionPeriod().equals(executionPeriod);
     }
-    
+
     private void notifyTeacher() {
         ITeacher teacher = this.getProfessorship().getTeacher();
         teacher.notifyCreditsChange(CreditsEvent.SUPPORT_LESSONS, this);
     }
-    
+
     public void afterUpdate(PersistenceBroker broker) throws PersistenceBrokerException {
         notifyTeacher();
     }
@@ -88,7 +71,7 @@ public class SupportLesson extends SupportLesson_Base implements PersistenceBrok
     public void afterDelete(PersistenceBroker broker) throws PersistenceBrokerException {
         notifyTeacher();
     }
-    
+
     public void beforeUpdate(PersistenceBroker broker) throws PersistenceBrokerException {
     }
 

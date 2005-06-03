@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.credits.event.CreditsEvent;
 import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
-import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.date.TimePeriod;
 
 import org.apache.ojb.broker.PersistenceBroker;
@@ -20,23 +19,6 @@ import org.apache.ojb.broker.PersistenceBrokerException;
  */
 public class TeacherInstitutionWorkTime extends TeacherInstitutionWorkTime_Base implements
         ICreditsEventOriginator, PersistenceBrokerAware {
-
-    private DiaSemana weekDay;
-
-    /**
-     * @return Returns the weekDay.
-     */
-    public DiaSemana getWeekDay() {
-        return this.weekDay;
-    }
-
-    /**
-     * @param weekDay
-     *            The weekDay to set.
-     */
-    public void setWeekDay(DiaSemana weekDay) {
-        this.weekDay = weekDay;
-    }
 
     public boolean equals(Object obj) {
         if (obj instanceof TeacherInstitutionWorkTime) {

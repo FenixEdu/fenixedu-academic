@@ -1850,12 +1850,9 @@ class net.sourceforge.fenixedu.domain.RoomOccupation extends net.sourceforge.fen
 	Integer keyRoom;
 	Integer frequency;
 	Integer keyPeriod;
+    DiaSemana dayOfWeek;
 
 	interface"
-	public net.sourceforge.fenixedu.util.DiaSemana getDayOfWeek();
-	
-	public void setDayOfWeek(net.sourceforge.fenixedu.util.DiaSemana semana);
-
 	public java.util.Calendar getEndTime();
 	
 	public void setEndTime(java.util.Calendar calendar);
@@ -2228,11 +2225,9 @@ class net.sourceforge.fenixedu.domain.SupportLesson extends net.sourceforge.feni
 	Date startTime;
 	String place;
 	Date endTime;
-	interface "
-	public net.sourceforge.fenixedu.util.DiaSemana getWeekDay();
-
-	public void setWeekDay(net.sourceforge.fenixedu.util.DiaSemana weekDay);
-	
+	DiaSemana weekDay;
+    
+    interface "
 	public double hours();
 	
 	public void beforeUpdate(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
@@ -2282,12 +2277,9 @@ class net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTim
     Date startTime;
     Integer keyExecutionPeriod;
     Date endTime;
+    DiaSemana weekDay;
     
     interface "
-    public net.sourceforge.fenixedu.util.DiaSemana getWeekDay();
-    
-    public void setWeekDay(net.sourceforge.fenixedu.util.DiaSemana weekDay);
-    
     public double hours();
     "
 }
