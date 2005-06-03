@@ -30,6 +30,7 @@ valueType net.sourceforge.fenixedu.domain.branch.BranchType as BranchType;
 valueType net.sourceforge.fenixedu.util.CurricularCourseExecutionScope as CurricularCourseExecutionScope;
 valueType net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType as CurricularCourseType;
 valueType net.sourceforge.fenixedu.domain.degree.DegreeType as DegreeType;
+valueType net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType as EnrolmentGroupPolicyType;
 valueType net.sourceforge.fenixedu.util.EntryPhase as EntryPhase;
 valueType net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus as FinalDegreeWorkProposalStatus;
 valueType net.sourceforge.fenixedu.domain.GuideState as GuideState;
@@ -42,6 +43,7 @@ valueType net.sourceforge.fenixedu.util.State as State;
 valueType net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState as StudentCurricularPlanState;
 valueType net.sourceforge.fenixedu.util.StudentState as StudentState;
 valueType net.sourceforge.fenixedu.util.StudentType as StudentType;
+valueType net.sourceforge.fenixedu.util.TipoAula as TipoAula;
 
 
 /*
@@ -1107,51 +1109,45 @@ class net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent extends net.s
 
 
 class net.sourceforge.fenixedu.domain.GroupProperties extends net.sourceforge.fenixedu.domain.DomainObject {
-        String projectDescription;
-        Integer keyAttendsSet;
-        Integer maximumCapacity;
-        Integer groupMaximumNumber;
-        Integer idealCapacity;
-        Integer minimumCapacity;
-        String name;
-        
-        interface "
-        public net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType getEnrolmentPolicy();
-        
-        public void setEnrolmentPolicy(net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType enrolmentGroupPolicy);
+    String projectDescription;
+    Integer keyAttendsSet;
+    Integer maximumCapacity;
+    Integer groupMaximumNumber;
+    Integer idealCapacity;
+    Integer minimumCapacity;
+    String name;
+    TipoAula shiftType;
+    EnrolmentGroupPolicyType enrolmentPolicy;
+    
+    interface "
+    public java.util.Calendar getEnrolmentBeginDay();
+    
+	public void setEnrolmentBeginDay(java.util.Calendar enrolmentBeginDay);
+	
+	public java.util.Calendar getEnrolmentEndDay();
 
-        public net.sourceforge.fenixedu.util.TipoAula getShiftType();
-        
-        public void setShiftType(net.sourceforge.fenixedu.util.TipoAula shiftType);
-        
-        public java.util.Calendar getEnrolmentBeginDay();
-        
-		public void setEnrolmentBeginDay(java.util.Calendar enrolmentBeginDay);
-		
-		public java.util.Calendar getEnrolmentEndDay();
+	public void setEnrolmentEndDay(java.util.Calendar enrolmentEndDay);
+    
+	public void addGroupPropertiesExecutionCourse(net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
 
-		public void setEnrolmentEndDay(java.util.Calendar enrolmentEndDay);
-        
-		public void addGroupPropertiesExecutionCourse(net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
-
-		public void removeGroupPropertiesExecutionCourse(net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
-		
-	    public java.util.List getExecutionCourses();
-        "
+	public void removeGroupPropertiesExecutionCourse(net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
+	
+    public java.util.List getExecutionCourses();
+    "
 }
 
 class net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
-        Integer keySenderExecutionCourse;
-        Integer keySenderPerson;
-        Integer keyExecutionCourse;
-        Integer keyReceiverPerson;
-        Integer keyGroupProperties;
-        
-        interface "
-        public net.sourceforge.fenixedu.util.ProposalState getProposalState();
-        
-        public void setProposalState(net.sourceforge.fenixedu.util.ProposalState proposalState);
-        "
+    Integer keySenderExecutionCourse;
+    Integer keySenderPerson;
+    Integer keyExecutionCourse;
+    Integer keyReceiverPerson;
+    Integer keyGroupProperties;
+    
+    interface "
+    public net.sourceforge.fenixedu.util.ProposalState getProposalState();
+    
+    public void setProposalState(net.sourceforge.fenixedu.util.ProposalState proposalState);
+    "
 }
 
 class net.sourceforge.fenixedu.domain.Guide extends net.sourceforge.fenixedu.domain.DomainObject {
