@@ -43,9 +43,12 @@ valueType net.sourceforge.fenixedu.domain.curriculum.EnrollmentState            
 valueType net.sourceforge.fenixedu.util.EntryPhase                                              as EntryPhase;
 valueType net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType                        as ExemptionGratuityType;
 valueType net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus                           as FinalDegreeWorkProposalStatus;
+valueType net.sourceforge.fenixedu.domain.person.Gender                                         as Gender;
 valueType net.sourceforge.fenixedu.domain.GraduationType                                        as GraduationType;
 valueType net.sourceforge.fenixedu.domain.masterDegree.GuideRequester                           as GuideRequester;
 valueType net.sourceforge.fenixedu.domain.GuideState                                            as GuideState;
+valueType net.sourceforge.fenixedu.domain.person.IDDocumentType                                 as IDDocumentType;
+valueType net.sourceforge.fenixedu.domain.person.MaritalStatus                                  as MaritalStatus;
 valueType net.sourceforge.fenixedu.util.MarkType                                                as MarkType;
 valueType net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification               as MasterDegreeClassification;
 valueType net.sourceforge.fenixedu.util.OldPublicationType                                      as OldPublicationType;
@@ -1524,21 +1527,11 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 	Date nascimento;
 	String freguesiaMorada;
 	Integer keyAuthor;
-    
+    MaritalStatus maritalStatus;
+    Gender gender;
+    IDDocumentType idDocumentType; 
 
 	interface "
-    public net.sourceforge.fenixedu.domain.person.MaritalStatus getMaritalStatus();
-
-    public net.sourceforge.fenixedu.domain.person.Gender getGender();
-
-    public net.sourceforge.fenixedu.domain.person.IDDocumentType getIdDocumentType();
-
-    public void setMaritalStatus(net.sourceforge.fenixedu.domain.person.MaritalStatus maritalStatus);
-
-    public void setGender(net.sourceforge.fenixedu.domain.person.Gender gender);
-
-    public void setIdDocumentType(net.sourceforge.fenixedu.domain.person.IDDocumentType iDType);
-
     public String getSlideName();
     "
 }
@@ -1575,7 +1568,7 @@ class net.sourceforge.fenixedu.domain.precedences.Precedence extends net.sourcef
 	Integer keyCurricularCourse;
 	
 	interface " 
- 		public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType evaluate(net.sourceforge.fenixedu.domain.precedences.PrecedenceContext precedenceContext);
+	public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType evaluate(net.sourceforge.fenixedu.domain.precedences.PrecedenceContext precedenceContext);
 	"
 }
 

@@ -10,22 +10,22 @@ import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 public class Person extends Person_Base {
 	private Boolean availableEmail = Boolean.FALSE;
     private Boolean availableWebSite = Boolean.FALSE;
-    private MaritalStatus maritalStatus = MaritalStatus.UNKNOWN;
-    private Gender gender;
-    private IDDocumentType idDocumentType;
     private Boolean availablePhoto = Boolean.FALSE;
 
     public Person() {
 		super();
+        this.setMaritalStatus(MaritalStatus.UNKNOWN);
     }
 
     public Person(String username) {
-        setUsername(username);
+        this.setUsername(username);
+        this.setMaritalStatus(MaritalStatus.UNKNOWN);
     }
 
     public Person(IDDocumentType idDocumentType, String userName) {
-		setIdDocumentType(idDocumentType);
-		setUsername(userName);
+		this.setIdDocumentType(idDocumentType);
+		this.setUsername(userName);
+        this.setMaritalStatus(MaritalStatus.UNKNOWN);
     }
 
     /*
@@ -158,71 +158,27 @@ public class Person extends Person_Base {
         setCodigoFiscal(codigoFiscal);
     }
 
+    public String toString() {
+        final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("[Person idInternal= ");
+        stringBuilder.append(getIdInternal());
+        stringBuilder.append(" username= ");
+        stringBuilder.append(getUsername());
+        stringBuilder.append("]");
+        return stringBuilder.toString();
+    }
+    
     public boolean equals(final Object obj) {
         if (obj instanceof IPerson) {
             IPerson person = (IPerson) obj;
             return (((getNumeroDocumentoIdentificacao().equals(person
-                    .getNumeroDocumentoIdentificacao())) && (this.idDocumentType
+                    .getNumeroDocumentoIdentificacao())) && (this.getIdDocumentType()
                     .equals(person.getIdDocumentType()))) || (getUsername().equals(person
                     .getUsername())));
         }
         return false;
     }
 
-    /**
-     * Getter for property estadoCivil.
-     * 
-     * @return Value of property estadoCivil.
-     *  
-     */
-    public MaritalStatus getMaritalStatus() {
-        return maritalStatus;
-    }
-
-     /**
-     * Getter for property sexo.
-     * 
-     * @return Value of property sexo.
-     *  
-     */
-    public Gender getGender() {
-        return gender;
-    }
-
-
-    /**
-     * Setter for property estadoCivil.
-     * 
-     * @param estadoCivil
-     *            New value of property estadoCivil.
-     *  
-     */
-    public void setMaritalStatus(MaritalStatus maritalStatus) {
-        this.maritalStatus = maritalStatus;
-    }
-
-    /**
-     * Setter for property sexo.
-     * 
-     * @param sexo
-     *            New value of property sexo.
-     *  
-     */
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-
-    public String toString() {
-		final StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("[Person idInternal= ");
-		stringBuilder.append(getIdInternal());
-		stringBuilder.append(" username= ");
-		stringBuilder.append(getUsername());
-		stringBuilder.append("]");
-        return stringBuilder.toString();
-    }
-   
     /**
      * @return Returns the availableEmail.
      */
@@ -272,12 +228,4 @@ public class Person extends Person_Base {
         return "/photos/person/P" + getIdInternal();
     }
 
-    public IDDocumentType getIdDocumentType() {
-        return idDocumentType;
-    }
-
-    public void setIdDocumentType(IDDocumentType idDocumentType) {
-        this.idDocumentType = idDocumentType;
-        
-    }
 }
