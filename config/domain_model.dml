@@ -1266,13 +1266,10 @@ class net.sourceforge.fenixedu.domain.MasterDegreeCandidate extends net.sourcefo
 	String givenCreditsRemarks;
 	String majorDegree;
 	Integer candidateNumber;
+    Specialization specialization;
 	
 	interface "
-		public net.sourceforge.fenixedu.domain.ICandidateSituation getActiveCandidateSituation();
-		
-		public net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization getSpecialization();
-		
-		public void setSpecialization(net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization specialization);
+	public net.sourceforge.fenixedu.domain.ICandidateSituation getActiveCandidateSituation();
 	"
 }
 

@@ -20,104 +20,69 @@ import net.sourceforge.fenixedu.util.State;
 
 public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
 
-	private Specialization specialization = null;
+    public MasterDegreeCandidate() {
+        this.setMajorDegree(null);
+        this.setExecutionDegree(null);
+        this.setCandidateNumber(null);
+        this.setSpecialization(null);
+        this.setMajorDegreeSchool(null);
+        this.setMajorDegreeYear(null);
+        this.setAverage(null);
+        this.setSituations(null);
+        this.setPerson(null);
+    }
 
-	// Instance from class Country
+    public MasterDegreeCandidate(IPerson person, IExecutionDegree executionDegree,
+            Integer candidateNumber, Specialization specialization, String majorDegree,
+            String majorDegreeSchool, Integer majorDegreeYear, Double average) {
+        this.setPerson(person);
+        this.setExecutionDegree(executionDegree);
+        this.setCandidateNumber(candidateNumber);
+        this.setSpecialization(specialization);
+        this.setMajorDegree(majorDegree);
+        this.setMajorDegreeSchool(majorDegreeSchool);
+        this.setMajorDegreeYear(majorDegreeYear);
+        this.setAverage(average);
 
-	public MasterDegreeCandidate() {
-		setMajorDegree(null);
-		setExecutionDegree(null);
-		setCandidateNumber(null);
-		specialization = null;
-		setMajorDegreeSchool(null);
-		setMajorDegreeYear(null);
-		setAverage(null);
-		setSituations(null);
-		setPerson(null);
-	}
+    }
 
-	public MasterDegreeCandidate(IPerson person,
-			IExecutionDegree executionDegree, Integer candidateNumber,
-			Specialization specialization, String majorDegree,
-			String majorDegreeSchool, Integer majorDegreeYear, Double average) {
-		setPerson(person);
-		this.setExecutionDegree(executionDegree);
-		setCandidateNumber(candidateNumber);
-		this.specialization = specialization;
-		setMajorDegree(majorDegree);
-		setMajorDegreeSchool(majorDegreeSchool);
-		setMajorDegreeYear(majorDegreeYear);
-		setAverage(average);
+    public boolean equals(Object o) {
+        boolean result = false;
+        if (o instanceof IMasterDegreeCandidate) {
 
-	}
+            result = getIdInternal().equals(((IMasterDegreeCandidate) o).getIdInternal());
+        }
+        return result;
+    }
 
-	public boolean equals(Object o) {
+    public String toString() {
+        String result = "Master Degree Candidate :\n";
+        result += "\n  - Internal Code : " + getIdInternal();
+        result += "\n  - Person : " + getPerson();
+        result += "\n  - Major Degree : " + getMajorDegree();
+        result += "\n  - Candidate Number : " + getCandidateNumber();
+        result += "\n  - Specialization : " + getSpecialization();
+        result += "\n  - Major Degree School : " + getMajorDegreeSchool();
+        result += "\n  - Major Degree Year : " + getMajorDegreeYear();
+        result += "\n  - Major Degree Average : " + getAverage();
+        result += "\n  - Master Degree : " + getExecutionDegree();
+        result += "\n  - Specialization Area : " + getSpecializationArea();
+        result += "\n  - Substitute Order : " + getSubstituteOrder();
+        result += "\n  - Given Credits : " + getGivenCredits();
+        result += "\n  - Given Credits Remarks : " + getGivenCreditsRemarks();
 
-		boolean result = false;
-		if (o instanceof IMasterDegreeCandidate) {
+        return result;
+    }
 
-			result = getIdInternal().equals(
-					((IMasterDegreeCandidate) o).getIdInternal());
-			// result =
-			// ((this.person.equals(((MasterDegreeCandidate)o).getPerson())) &&
-			// (this.specialization.equals(((MasterDegreeCandidate)o).getSpecialization()))
-			// &&
-			// (this.executionDegree.equals(((MasterDegreeCandidate)o).executionDegree)))
-			// ||
-			//				 
-			// ((this.executionDegree.equals(((MasterDegreeCandidate)o).executionDegree))
-			// &&
-			// (this.candidateNumber.equals(((MasterDegreeCandidate)o).getCandidateNumber()))
-			// &&
-			// (this.specialization.equals(((MasterDegreeCandidate)o).getSpecialization())));
-		}
-		return result;
-	}
+    public ICandidateSituation getActiveCandidateSituation() {
+        Iterator iterator = this.getSituations().iterator();
+        while (iterator.hasNext()) {
+            ICandidateSituation candidateSituationTemp = (ICandidateSituation) iterator.next();
+            if (candidateSituationTemp.getValidation().equals(new State(State.ACTIVE))) {
+                return candidateSituationTemp;
+            }
+        }
+        return null;
+    }
 
-	public String toString() {
-		String result = "Master Degree Candidate :\n";
-		result += "\n  - Internal Code : " + getIdInternal();
-		result += "\n  - Person : " + getPerson();
-		result += "\n  - Major Degree : " + getMajorDegree();
-		result += "\n  - Candidate Number : " + getCandidateNumber();
-		result += "\n  - Specialization : " + specialization;
-		result += "\n  - Major Degree School : " + getMajorDegreeSchool();
-		result += "\n  - Major Degree Year : " + getMajorDegreeYear();
-		result += "\n  - Major Degree Average : " + getAverage();
-		result += "\n  - Master Degree : " + getExecutionDegree();
-		result += "\n  - Specialization Area : " + getSpecializationArea();
-		result += "\n  - Substitute Order : " + getSubstituteOrder();
-		result += "\n  - Given Credits : " + getGivenCredits();
-		result += "\n  - Given Credits Remarks : " + getGivenCreditsRemarks();
-
-		return result;
-	}
-
-	public ICandidateSituation getActiveCandidateSituation() {
-		Iterator iterator = this.getSituations().iterator();
-		while (iterator.hasNext()) {
-			ICandidateSituation candidateSituationTemp = (ICandidateSituation) iterator
-					.next();
-			if (candidateSituationTemp.getValidation().equals(
-					new State(State.ACTIVE))) {
-				return candidateSituationTemp;
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * @return
-	 */
-	public Specialization getSpecialization() {
-		return specialization;
-	}
-
-	/**
-	 * @param specialization
-	 */
-	public void setSpecialization(Specialization specialization) {
-		this.specialization = specialization;
-	}
-
-} // End of class definition
+}
