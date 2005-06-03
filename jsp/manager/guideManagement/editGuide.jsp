@@ -66,7 +66,7 @@
 				</bean:define>
 				<html:submit value="Apagar Versão" onclick="<%= behavior %>" />
 				
-				<html:submit value="Editar"
+				<html:submit value="Submeter"
 				onclick="this.form.method.value='editExecutionDegree'" />
 			</td>
 		</tr>
