@@ -2008,14 +2008,17 @@ class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.dom
 	Integer chaveDisciplinaExecucao;
 	String nome;
 	Integer lotacao;
+    TipoAula tipo;
 	
 	interface "
-	public net.sourceforge.fenixedu.util.TipoAula getTipo();
-    public void setTipo(net.sourceforge.fenixedu.util.TipoAula tipo);
     public Integer getOcupation();
+
     public void setOcupation(Integer integer);
+    
     public Double getPercentage();
+    
     public void setPercentage(Double percentage);
+    
     public double hours();
 	"
 }
@@ -2199,6 +2202,7 @@ class net.sourceforge.fenixedu.domain.StudentKind extends net.sourceforge.fenixe
     StudentType studentType;
 }
 
+
 class net.sourceforge.fenixedu.domain.Summary extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer studentsNumber;
 	Integer keyProfessorship;
@@ -2213,12 +2217,9 @@ class net.sourceforge.fenixedu.domain.Summary extends net.sourceforge.fenixedu.d
 	Boolean isExtraLesson;
     Date summaryDate;
     Date summaryHour;
-	
-	interface "
-    public net.sourceforge.fenixedu.util.TipoAula getSummaryType();
-    public void setSummaryType(net.sourceforge.fenixedu.util.TipoAula summaryType);
-	"
+    TipoAula summaryType;
 }
+
 
 class net.sourceforge.fenixedu.domain.SupportLesson extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyProfessorship;

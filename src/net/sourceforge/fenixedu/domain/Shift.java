@@ -16,10 +16,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.util.TipoAula;
 
 public class Shift extends Shift_Base {
-    protected TipoAula tipo;
     protected Integer ocupation;
+
     protected Double percentage;
- 
+
     public Shift() {
     }
 
@@ -28,30 +28,28 @@ public class Shift extends Shift_Base {
     }
 
     public Shift(String nome, TipoAula tipo, Integer lotacao, IExecutionCourse disciplinaExecucao) {
-        setNome(nome);
-        setTipo(tipo);
-        setLotacao(lotacao);
-        setDisciplinaExecucao(disciplinaExecucao);
-        setAssociatedLessons(new ArrayList());
-        setAssociatedClasses(new ArrayList());
+        this.setNome(nome);
+        this.setTipo(tipo);
+        this.setLotacao(lotacao);
+        this.setDisciplinaExecucao(disciplinaExecucao);
+        this.setAssociatedLessons(new ArrayList());
+        this.setAssociatedClasses(new ArrayList());
     }
 
-
-    public TipoAula getTipo() {
-        return tipo;
+    public Integer getOcupation() {
+        return ocupation;
     }
 
-    public void setTipo(TipoAula tipo) {
-        this.tipo = tipo;
+    public void setOcupation(Integer integer) {
+        ocupation = integer;
     }
 
-    public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof IShift) {
-            IShift turno = (IShift) obj;
-            resultado = getIdInternal().equals(turno.getIdInternal());
-        }
-        return resultado;
+    public Double getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(Double percentage) {
+        this.percentage = percentage;
     }
 
     public String toString() {
@@ -65,20 +63,13 @@ public class Shift extends Shift_Base {
         return result;
     }
 
-    public Integer getOcupation() {
-        return ocupation;
-    }
-    
-    public void setOcupation(Integer integer) {
-        ocupation = integer;
-    }
-
-    public Double getPercentage() {
-        return percentage;
-    }
-
-    public void setPercentage(Double percentage) {
-        this.percentage = percentage;
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof IShift) {
+            IShift turno = (IShift) obj;
+            resultado = getIdInternal().equals(turno.getIdInternal());
+        }
+        return resultado;
     }
 
     public double hours() {
@@ -90,4 +81,5 @@ public class Shift extends Shift_Base {
         }
         return hours;
     }
+
 }

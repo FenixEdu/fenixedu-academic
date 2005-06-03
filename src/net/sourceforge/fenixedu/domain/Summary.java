@@ -5,8 +5,6 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.util.TipoAula;
-
 /**
  * @author João Mota
  * @author Susana Fernandes
@@ -15,21 +13,12 @@ import net.sourceforge.fenixedu.util.TipoAula;
  *  
  */
 public class Summary extends Summary_Base {
-    private TipoAula summaryType;
 
     public Summary() {
     }
 
     public Summary(Integer summaryId) {
         setIdInternal(summaryId);
-    }
-
-    public TipoAula getSummaryType() {
-        return summaryType;
-    }
-
-    public void setSummaryType(TipoAula summaryType) {
-        this.summaryType = summaryType;
     }
 
     public boolean compareTo(Object obj) {
@@ -45,4 +34,5 @@ public class Summary extends Summary_Base {
         }
         return resultado;
     }
+
 }
