@@ -24,39 +24,42 @@
  * 
  */
 
-valueType net.sourceforge.fenixedu.util.AgreementType as AgreementType;
-valueType net.sourceforge.fenixedu.tools.enrollment.AreaType as AreaType;
-valueType net.sourceforge.fenixedu.domain.branch.BranchType as BranchType;
-valueType net.sourceforge.fenixedu.util.CurricularCourseExecutionScope as CurricularCourseExecutionScope;
-valueType net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType as CurricularCourseType;
+valueType net.sourceforge.fenixedu.util.AgreementType                                           as AgreementType;
+valueType net.sourceforge.fenixedu.tools.enrollment.AreaType                                    as AreaType;
+valueType net.sourceforge.fenixedu.domain.branch.BranchType                                     as BranchType;
+valueType net.sourceforge.fenixedu.util.CurricularCourseExecutionScope                          as CurricularCourseExecutionScope;
+valueType net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType                       as CurricularCourseType;
 valueType net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState as DegreeCurricularPlanState;
-valueType net.sourceforge.fenixedu.domain.degree.DegreeType as DegreeType;
-valueType net.sourceforge.fenixedu.util.DelegateYearType as DelegateYearType; 
-valueType net.sourceforge.fenixedu.util.DiaSemana as DiaSemana;
-valueType net.sourceforge.fenixedu.util.EnrolmentAction as EnrolmentAction;
-valueType net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition as EnrollmentCondition;
-valueType net.sourceforge.fenixedu.util.EnrolmentEvaluationState as EnrolmentEvaluationState;
-valueType net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType as EnrolmentEvaluationType;
-valueType net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType as EnrolmentGroupPolicyType;
-valueType net.sourceforge.fenixedu.domain.curriculum.EnrollmentState as EnrollmentState;
-valueType net.sourceforge.fenixedu.util.EntryPhase as EntryPhase;
-valueType net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType as ExemptionGratuityType;
-valueType net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus as FinalDegreeWorkProposalStatus;
-valueType net.sourceforge.fenixedu.domain.GuideState as GuideState;
-valueType net.sourceforge.fenixedu.util.MarkType as MarkType;
-valueType net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification as MasterDegreeClassification;
-valueType net.sourceforge.fenixedu.util.PeriodState as PeriodState;
-valueType net.sourceforge.fenixedu.util.ProposalState as ProposalState;
-valueType net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState as ReimbursementGuideState;
-valueType net.sourceforge.fenixedu.util.Season as Season;
-valueType net.sourceforge.fenixedu.domain.credits.ServiceExemptionType as ServiceExemptionType;
-valueType net.sourceforge.fenixedu.util.SituationName as SituationName;
-valueType net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization as Specialization;
-valueType net.sourceforge.fenixedu.util.State as State;
-valueType net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState as StudentCurricularPlanState;
-valueType net.sourceforge.fenixedu.util.StudentState as StudentState;
-valueType net.sourceforge.fenixedu.util.StudentType as StudentType;
-valueType net.sourceforge.fenixedu.util.TipoAula as TipoAula;
+valueType net.sourceforge.fenixedu.domain.degree.DegreeType                                     as DegreeType;
+valueType net.sourceforge.fenixedu.util.DelegateYearType                                        as DelegateYearType; 
+valueType net.sourceforge.fenixedu.util.DiaSemana                                               as DiaSemana;
+valueType net.sourceforge.fenixedu.util.EnrolmentAction                                         as EnrolmentAction;
+valueType net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition                        as EnrollmentCondition;
+valueType net.sourceforge.fenixedu.util.EnrolmentEvaluationState                                as EnrolmentEvaluationState;
+valueType net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType                    as EnrolmentEvaluationType;
+valueType net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType                                as EnrolmentGroupPolicyType;
+valueType net.sourceforge.fenixedu.domain.curriculum.EnrollmentState                            as EnrollmentState;
+valueType net.sourceforge.fenixedu.util.EntryPhase                                              as EntryPhase;
+valueType net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType                        as ExemptionGratuityType;
+valueType net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus                           as FinalDegreeWorkProposalStatus;
+valueType net.sourceforge.fenixedu.domain.masterDegree.GuideRequester                           as GuideRequester;
+valueType net.sourceforge.fenixedu.domain.GuideState                                            as GuideState;
+valueType net.sourceforge.fenixedu.util.MarkType                                                as MarkType;
+valueType net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification               as MasterDegreeClassification;
+valueType net.sourceforge.fenixedu.domain.transactions.PaymentType                              as PaymentType;
+valueType net.sourceforge.fenixedu.util.PeriodState                                             as PeriodState;
+valueType net.sourceforge.fenixedu.util.ProposalState                                           as ProposalState;
+valueType net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState                      as ReimbursementGuideState;
+valueType net.sourceforge.fenixedu.util.Season                                                  as Season;
+valueType net.sourceforge.fenixedu.domain.credits.ServiceExemptionType                          as ServiceExemptionType;
+valueType net.sourceforge.fenixedu.util.SituationName                                           as SituationName;
+valueType net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization                  as Specialization;
+valueType net.sourceforge.fenixedu.util.State                                                   as State;
+valueType net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState      as StudentCurricularPlanState;
+valueType net.sourceforge.fenixedu.util.StudentState                                            as StudentState;
+valueType net.sourceforge.fenixedu.util.StudentType                                             as StudentType;
+valueType net.sourceforge.fenixedu.util.TipoAula                                                as TipoAula;
+valueType net.sourceforge.fenixedu.domain.transactions.TransactionType                          as TransactionType;
 
 
 /*
@@ -1145,18 +1148,11 @@ class net.sourceforge.fenixedu.domain.Guide extends net.sourceforge.fenixedu.dom
 	Integer number;
     Date creationDate;
     Date paymentDate;
-	
+    PaymentType paymentType;
+    GuideRequester guideRequester;
 	
 	interface "
 	public net.sourceforge.fenixedu.domain.IGuideSituation getActiveSituation();
-		
-	public net.sourceforge.fenixedu.domain.masterDegree.GuideRequester getGuideRequester();
-		
-	public void setGuideRequester(net.sourceforge.fenixedu.domain.masterDegree.GuideRequester requester);
-		
-	public net.sourceforge.fenixedu.domain.transactions.PaymentType getPaymentType();
-		
-	public void setPaymentType(net.sourceforge.fenixedu.domain.transactions.PaymentType type);
 	"
 }
 
@@ -2458,30 +2454,22 @@ class net.sourceforge.fenixedu.domain.WebSiteSection extends net.sourceforge.fen
 }
 
 class net.sourceforge.fenixedu.domain.transactions.Transaction extends net.sourceforge.fenixedu.domain.DomainObject {
-	
 	Double value;
 	String remarks;
 	Boolean wasInternalBalance;
 	Integer keyResponsiblePerson;
 	Integer keyPersonAccount;
+    PaymentType paymentType;
+    TransactionType transactionType;
 	
 	interface "
-		public java.sql.Timestamp getTransactionDate();
-	
-		public void setTransactionDate(java.sql.Timestamp transactionDate);
-		
-		public net.sourceforge.fenixedu.domain.transactions.PaymentType getPaymentType();
-		
-		public void setPaymentType(net.sourceforge.fenixedu.domain.transactions.PaymentType paymentType);
-		
-		public net.sourceforge.fenixedu.domain.transactions.TransactionType getTransactionType();
-		
-		public void setTransactionType(net.sourceforge.fenixedu.domain.transactions.TransactionType transactionType);
+	public java.sql.Timestamp getTransactionDate();
+
+	public void setTransactionDate(java.sql.Timestamp transactionDate);
 	"	
 }
 
 class net.sourceforge.fenixedu.domain.transactions.PaymentTransaction extends net.sourceforge.fenixedu.domain.transactions.Transaction {
-
 	Integer keyGuideEntry;
 }
 

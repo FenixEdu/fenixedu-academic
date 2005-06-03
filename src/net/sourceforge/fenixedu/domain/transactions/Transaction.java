@@ -14,10 +14,6 @@ public abstract class Transaction extends Transaction_Base {
 
 	private Timestamp transactionDate;
 
-	private PaymentType paymentType;
-
-	private TransactionType transactionType;
-
 	public Transaction() {
 	}
 
@@ -35,14 +31,14 @@ public abstract class Transaction extends Transaction_Base {
 			String remarks, PaymentType paymentType,
 			TransactionType transactionType, Boolean wasInternalBalance,
 			IPerson responsiblePerson, IPersonAccount personAccount) {
-		setValue(value);
-		this.transactionDate = transactionDate;
-		setRemarks(remarks);
-		this.paymentType = paymentType;
-		this.transactionType = transactionType;
-		setWasInternalBalance(wasInternalBalance);
-		setResponsiblePerson(responsiblePerson);
-		setPersonAccount(personAccount);
+        this.setValue(value);
+		this.setTransactionDate(transactionDate);
+		this.setRemarks(remarks);
+		this.setPaymentType(paymentType);
+		this.setTransactionType(transactionType);
+        this.setWasInternalBalance(wasInternalBalance);
+        this.setResponsiblePerson(responsiblePerson);
+        this.setPersonAccount(personAccount);
 	}
 
 	/**
@@ -60,33 +56,4 @@ public abstract class Transaction extends Transaction_Base {
 		this.transactionDate = transactionDate;
 	}
 
-	/**
-	 * @return Returns the paymentType.
-	 */
-	public PaymentType getPaymentType() {
-		return paymentType;
-	}
-
-	/**
-	 * @param paymentType
-	 *            The paymentType to set.
-	 */
-	public void setPaymentType(PaymentType paymentType) {
-		this.paymentType = paymentType;
-	}
-
-	/**
-	 * @return Returns the transactionType.
-	 */
-	public TransactionType getTransactionType() {
-		return transactionType;
-	}
-
-	/**
-	 * @param transactionType
-	 *            The transactionType to set.
-	 */
-	public void setTransactionType(TransactionType transactionType) {
-		this.transactionType = transactionType;
-	}
 }

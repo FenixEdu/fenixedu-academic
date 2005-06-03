@@ -12,9 +12,6 @@ import net.sourceforge.fenixedu.util.State;
  */
 
 public class Guide extends Guide_Base {
-    protected PaymentType paymentType;
-
-    protected GuideRequester guideRequester;
 
     public Guide() {
     }
@@ -29,45 +26,17 @@ public class Guide extends Guide_Base {
     public Guide(Integer number, Integer year, Double total, String remarks, IPerson person,
             IContributor contributor, GuideRequester guideRequester, IExecutionDegree executionDegree,
             PaymentType paymentType, Date creationDate, Integer version) {
-        setContributor(contributor);
-        setNumber(number);
-        setPerson(person);
-        setRemarks(remarks);
-        setTotal(total);
-        setYear(year);
-        setGuideRequester(guideRequester);
-        setExecutionDegree(executionDegree);
-        setPaymentType(paymentType);
-        setCreationDate(creationDate);
-        setVersion(version);
-    }
-
-    /**
-     * @return
-     */
-    public GuideRequester getGuideRequester() {
-        return guideRequester;
-    }
-
-    /**
-     * @param requester
-     */
-    public void setGuideRequester(GuideRequester requester) {
-        guideRequester = requester;
-    }
-
-    /**
-     * @return
-     */
-    public PaymentType getPaymentType() {
-        return paymentType;
-    }
-
-    /**
-     * @param type
-     */
-    public void setPaymentType(PaymentType type) {
-        paymentType = type;
+        this.setContributor(contributor);
+        this.setNumber(number);
+        this.setPerson(person);
+        this.setRemarks(remarks);
+        this.setTotal(total);
+        this.setYear(year);
+        this.setGuideRequester(guideRequester);
+        this.setExecutionDegree(executionDegree);
+        this.setPaymentType(paymentType);
+        this.setCreationDate(creationDate);
+        this.setVersion(version);
     }
 
     public String toString() {
