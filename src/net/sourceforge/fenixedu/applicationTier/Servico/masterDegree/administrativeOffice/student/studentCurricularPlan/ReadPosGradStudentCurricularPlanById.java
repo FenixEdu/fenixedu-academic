@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
-import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.IEnrolment;
+import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
@@ -23,37 +23,33 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadPosGradStudentCurricularPlanById implements IService {
 
-    public Object run(Integer studentCurricularPlanId) throws FenixServiceException {
+    public Object run(Integer studentCurricularPlanId) throws ExcepcaoPersistencia {
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
-                    .getIStudentCurricularPlanPersistente();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
+                .getIStudentCurricularPlanPersistente();
 
-            StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentStudentCurricularPlan
-                    .readByOID(StudentCurricularPlan.class, studentCurricularPlanId);
+        IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan
+                .readByOID(StudentCurricularPlan.class, studentCurricularPlanId);
 
-            if (studentCurricularPlan != null) {
-                infoStudentCurricularPlan = Cloner
-                        .copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan);
+        if (studentCurricularPlan != null) {
+            infoStudentCurricularPlan = Cloner
+                    .copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan);
+        }
+
+        if (studentCurricularPlan.getEnrolments() != null) {
+            List infoEnrolments = new ArrayList();
+
+            ListIterator iterator = studentCurricularPlan.getEnrolments().listIterator();
+            while (iterator.hasNext()) {
+                IEnrolment enrolment = (IEnrolment) iterator.next();
+                InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
+                        .newInfoFromDomain(enrolment);
+                infoEnrolments.add(infoEnrolment);
             }
 
-            if (studentCurricularPlan.getEnrolments() != null) {
-                List infoEnrolments = new ArrayList();
-
-                ListIterator iterator = studentCurricularPlan.getEnrolments().listIterator();
-                while (iterator.hasNext()) {
-                    Enrolment enrolment = (Enrolment) iterator.next();
-                    InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
-                            .newInfoFromDomain(enrolment);
-                    infoEnrolments.add(infoEnrolment);
-                }
-
-                infoStudentCurricularPlan.setInfoEnrolments(infoEnrolments);
-            }
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+            infoStudentCurricularPlan.setInfoEnrolments(infoEnrolments);
         }
 
         return infoStudentCurricularPlan;
