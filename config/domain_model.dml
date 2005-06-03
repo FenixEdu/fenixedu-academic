@@ -46,6 +46,7 @@ valueType net.sourceforge.fenixedu.domain.GuideState as GuideState;
 valueType net.sourceforge.fenixedu.util.MarkType as MarkType;
 valueType net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification as MasterDegreeClassification;
 valueType net.sourceforge.fenixedu.util.PeriodState as PeriodState;
+valueType net.sourceforge.fenixedu.util.ProposalState as ProposalState;
 valueType net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState as ReimbursementGuideState;
 valueType net.sourceforge.fenixedu.util.Season as Season;
 valueType net.sourceforge.fenixedu.domain.credits.ServiceExemptionType as ServiceExemptionType;
@@ -1122,19 +1123,16 @@ class net.sourceforge.fenixedu.domain.GroupProperties extends net.sourceforge.fe
     "
 }
 
+
 class net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keySenderExecutionCourse;
     Integer keySenderPerson;
     Integer keyExecutionCourse;
     Integer keyReceiverPerson;
     Integer keyGroupProperties;
-    
-    interface "
-    public net.sourceforge.fenixedu.util.ProposalState getProposalState();
-    
-    public void setProposalState(net.sourceforge.fenixedu.util.ProposalState proposalState);
-    "
+    ProposalState proposalState;
 }
+
 
 class net.sourceforge.fenixedu.domain.Guide extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyContributor;
