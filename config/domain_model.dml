@@ -24,14 +24,14 @@
  * 
  */
 
-valueType net.sourceforge.fenixedu.util.AgreementType as AgreementType; 
+valueType net.sourceforge.fenixedu.util.AgreementType as AgreementType;
 valueType net.sourceforge.fenixedu.tools.enrollment.AreaType as AreaType;
 valueType net.sourceforge.fenixedu.domain.branch.BranchType as BranchType;
 valueType net.sourceforge.fenixedu.util.CurricularCourseExecutionScope as CurricularCourseExecutionScope;
 valueType net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType as CurricularCourseType;
 valueType net.sourceforge.fenixedu.domain.degree.DegreeType as DegreeType;
 valueType net.sourceforge.fenixedu.util.EntryPhase as EntryPhase;
-valueType net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus as FinalDegreeWorkProposalStatus;  
+valueType net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus as FinalDegreeWorkProposalStatus;
 valueType net.sourceforge.fenixedu.domain.GuideState as GuideState;
 valueType net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification as MasterDegreeClassification;
 valueType net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState as ReimbursementGuideState;
@@ -41,6 +41,7 @@ valueType net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization a
 valueType net.sourceforge.fenixedu.util.State as State;
 valueType net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState as StudentCurricularPlanState;
 valueType net.sourceforge.fenixedu.util.StudentState as StudentState;
+valueType net.sourceforge.fenixedu.util.StudentType as StudentType;
 
 
 /*
@@ -2177,9 +2178,7 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
     "
 }
 
-
     class net.sourceforge.fenixedu.domain.StudentCurricularPlanLEIC extends net.sourceforge.fenixedu.domain.StudentCurricularPlan {
-            
         Integer creditsInSecundaryArea;
         Integer creditsInSpecializationArea;
         Integer secundaryBranchKey;
@@ -2190,6 +2189,7 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
         Integer creditsInSpecializationArea;
         Integer secundaryBranchKey;
     }
+
     
 class net.sourceforge.fenixedu.domain.StudentGroup extends net.sourceforge.fenixedu.domain.DomainObject {
         Integer keyShift;
@@ -2197,20 +2197,18 @@ class net.sourceforge.fenixedu.domain.StudentGroup extends net.sourceforge.fenix
         Integer keyAttendsSet;
 }
 
+
 class net.sourceforge.fenixedu.domain.StudentGroupAttend extends net.sourceforge.fenixedu.domain.DomainObject {
         Integer keyStudentGroup;
         Integer keyAttend;        
 }
 
+
 class net.sourceforge.fenixedu.domain.StudentKind extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer minCoursesToEnrol;
     Integer maxNACToEnrol;
     Integer maxCoursesToEnrol;
-    
-    interface "
-    public abstract net.sourceforge.fenixedu.util.StudentType getStudentType();
-    public abstract void setStudentType(net.sourceforge.fenixedu.util.StudentType studentType);  
-    "
+    StudentType studentType;
 }
 
 class net.sourceforge.fenixedu.domain.Summary extends net.sourceforge.fenixedu.domain.DomainObject {
