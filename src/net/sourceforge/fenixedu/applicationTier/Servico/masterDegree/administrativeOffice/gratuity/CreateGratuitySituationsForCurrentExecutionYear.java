@@ -1,10 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
@@ -12,10 +13,10 @@ import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
 import net.sourceforge.fenixedu.domain.IGratuityValues;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
-import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.IGratuityTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
@@ -23,7 +24,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuityValues;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -34,75 +34,87 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class CreateGratuitySituationsForCurrentExecutionYear implements IService {
 
-    /**
-     * Constructor
-     */
-    public CreateGratuitySituationsForCurrentExecutionYear() {
+    private boolean firstYear;
+
+    public void run(String year) throws ExcepcaoPersistencia {
+
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+
+        IExecutionYear executionYear = null;
+
+        if (year == null || year.equals("")) {
+            executionYear = sp.getIPersistentExecutionYear().readCurrentExecutionYear();
+        } else {
+            executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(year);
+        }
+
+        IPersistentGratuityValues gratuityValuesDAO = sp.getIPersistentGratuityValues();
+
+        IPersistentStudentCurricularPlan studentCurricularPlanDAO = sp
+                .getIStudentCurricularPlanPersistente();
+
+        IPersistentGratuitySituation gratuitySituationDAO = sp.getIPersistentGratuitySituation();
+
+        // read master degree and specialization execution degrees
+        List executionDegreeList = sp.getIPersistentExecutionDegree().readByExecutionYearAndDegreeType(
+                executionYear.getYear(), DegreeType.MASTER_DEGREE);
+
+        for (Iterator iter = executionDegreeList.iterator(); iter.hasNext();) {
+
+            IExecutionDegree executionDegree = (IExecutionDegree) iter.next();
+            IGratuityValues gratuityValues = executionDegree.getGratuityValues();
+
+            if (gratuityValues == null) {
+                continue;
+            }
+
+            this.firstYear = isFirstYear(executionDegree);
+
+            List studentCurricularPlanList = studentCurricularPlanDAO
+                    .readByDegreeCurricularPlan(executionDegree.getDegreeCurricularPlan());
+
+            for (Iterator iterator = studentCurricularPlanList.iterator(); iterator.hasNext();) {
+
+                IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();
+
+                IGratuitySituation gratuitySituation = gratuitySituationDAO
+                        .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
+                                studentCurricularPlan.getIdInternal(), gratuityValues.getIdInternal());
+
+                if (gratuitySituation == null) {
+                    createGratuitySituation(executionYear, gratuityValues, studentCurricularPlan,
+                            gratuitySituationDAO);
+                } else {
+                    updateGratuitySituation(executionYear, gratuityValues, gratuitySituation,
+                            studentCurricularPlan, gratuitySituationDAO);
+                }
+
+            }
+
+        }
+
     }
 
-    public void run(String year) throws FenixServiceException {
-        try {
+    private boolean isFirstYear(IExecutionDegree executionDegree) {
+        List<IExecutionDegree> executionDegrees = executionDegree.getDegreeCurricularPlan()
+                .getExecutionDegrees();
+        Collections.sort(executionDegrees, new Comparator() {
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            public int compare(Object o1, Object o2) {
+                IExecutionDegree executionDegree1 = (IExecutionDegree) o1;
+                IExecutionDegree executionDegree2 = (IExecutionDegree) o2;
 
-            IExecutionYear executionYear = null;
-
-            if (year == null || year.equals("")) {
-                executionYear = sp.getIPersistentExecutionYear().readCurrentExecutionYear();
-            } else {
-                executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(year);
+                return executionDegree1.getExecutionYear().getYear().compareTo(
+                        executionDegree2.getExecutionYear().getYear());
             }
 
-            IPersistentGratuityValues gratuityValuesDAO = sp.getIPersistentGratuityValues();
+        });
 
-            IPersistentStudentCurricularPlan studentCurricularPlanDAO = sp
-                    .getIStudentCurricularPlanPersistente();
-
-            IPersistentGratuitySituation gratuitySituationDAO = sp.getIPersistentGratuitySituation();
-
-            // read master degree and specialization execution degrees
-            List executionDegreeList = sp.getIPersistentExecutionDegree()
-                    .readByExecutionYearAndDegreeType(executionYear.getYear(), DegreeType.MASTER_DEGREE);
-
-            for (Iterator iter = executionDegreeList.iterator(); iter.hasNext();) {
-
-                IExecutionDegree executionDegree = (IExecutionDegree) iter.next();
-                IGratuityValues gratuityValues = gratuityValuesDAO
-                        .readGratuityValuesByExecutionDegree(executionDegree.getIdInternal());
-
-                if (gratuityValues == null) {
-                    continue;
-                }
-
-                List studentCurricularPlanList = studentCurricularPlanDAO
-                        .readByDegreeCurricularPlan(executionDegree.getDegreeCurricularPlan());
-
-                for (Iterator iterator = studentCurricularPlanList.iterator(); iterator.hasNext();) {
-
-                    IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator
-                            .next();
-
-                    IGratuitySituation gratuitySituation = gratuitySituationDAO
-                            .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
-                                    studentCurricularPlan.getIdInternal(), gratuityValues.getIdInternal());
-
-                    if (gratuitySituation == null) {
-                        createGratuitySituation(executionYear, gratuityValues, studentCurricularPlan,
-                                gratuitySituationDAO);
-                    } else {
-                        updateGratuitySituation(executionYear, gratuityValues, gratuitySituation,
-                                studentCurricularPlan, gratuitySituationDAO);
-                    }
-
-                }
-
-            }
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
+        if (executionDegrees.get(0).getExecutionYear().equals(executionDegree.getExecutionYear())) {
+            return true;
         }
+
+        return false;
     }
 
     /**
@@ -182,7 +194,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
         double reimbursedValue = 0;
 
         while (it.hasNext()) {
-            gratuityTransaction = (GratuityTransaction) it.next();
+            gratuityTransaction = (IGratuityTransaction) it.next();
             payedValue += gratuityTransaction.getValue().doubleValue();
 
             if (gratuityTransaction.getGuideEntry() != null) {
@@ -221,23 +233,11 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
     private void createGratuitySituation(IExecutionYear executionYear, IGratuityValues gratuityValues,
             IStudentCurricularPlan studentCurricularPlan,
             IPersistentGratuitySituation gratuitySituationDAO) throws ExcepcaoPersistencia {
-            
-//        if (studentCurricularPlan.getSpecialization().equals(Specialization.ESPECIALIZACAO_TYPE)) {
-//            Calendar calendar = new GregorianCalendar();
-//            calendar.setTime(studentCurricularPlan.getDegreeCurricularPlan().getInitialDate());
-//            int initialYear = calendar.get(Calendar.YEAR);
-//
-//            calendar.setTime(executionYear.getBeginDate());
-//            int gratuityYear = calendar.get(Calendar.YEAR);
-//
-//            // if itsn't the first year for a specialization curricular plan,
-//            // its not necessary, because the specialization only occurs in the
-//            // first year of ta master degree
-//            if (initialYear != gratuityYear) {
-//                return;
-//            }
-//
-//        }
+
+        if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)
+                && !this.firstYear) {
+            return;
+        }
 
         IGratuitySituation gratuitySituation = new GratuitySituation();
 

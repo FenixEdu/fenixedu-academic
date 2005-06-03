@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
@@ -27,7 +28,7 @@ public class GratuitySituationVO extends VersionedObjectsBase implements IPersis
 			final Integer studentCurricularPlanID, final Integer gratuityValuesID)
 			throws ExcepcaoPersistencia {
 
-		final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) readByOID(
+		final IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) readByOID(
 				StudentCurricularPlan.class, studentCurricularPlanID);
 
 		final List<IGratuitySituation> gratuitySituationsFromCurricularPlan = studentCurricularPlan
@@ -45,7 +46,7 @@ public class GratuitySituationVO extends VersionedObjectsBase implements IPersis
 	public List readGratuitySituationsByDegreeCurricularPlan(final Integer degreeCurricularPlanID)
 			throws ExcepcaoPersistencia {
 
-		final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) readByOID(
+		final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) readByOID(
 				DegreeCurricularPlan.class, degreeCurricularPlanID);
 
 		final List<IStudentCurricularPlan> studentCurricularPlans = degreeCurricularPlan
@@ -85,7 +86,7 @@ public class GratuitySituationVO extends VersionedObjectsBase implements IPersis
 			final Integer studentCurricularPlanID, final Integer gratuityValuesID,
 			GratuitySituationType gratuitySituationType) throws ExcepcaoPersistencia {
 
-		final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) readByOID(
+		final IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) readByOID(
 				StudentCurricularPlan.class, studentCurricularPlanID);
 
 		final List<IGratuitySituation> gratuitySituationsFromCurricularPlan = studentCurricularPlan
@@ -130,7 +131,7 @@ public class GratuitySituationVO extends VersionedObjectsBase implements IPersis
 
 	public List readGratuitySituatuionListByStudentCurricularPlan(Integer studentCurricularPlanID)
 			throws ExcepcaoPersistencia {
-		return ((StudentCurricularPlan) readByOID(StudentCurricularPlan.class, studentCurricularPlanID))
+		return ((IStudentCurricularPlan) readByOID(StudentCurricularPlan.class, studentCurricularPlanID))
 				.getGratuitySituations();
 	}
 }
