@@ -40,6 +40,7 @@ valueType net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType as 
 valueType net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType as EnrolmentGroupPolicyType;
 valueType net.sourceforge.fenixedu.domain.curriculum.EnrollmentState as EnrollmentState;
 valueType net.sourceforge.fenixedu.util.EntryPhase as EntryPhase;
+valueType net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType as ExemptionGratuityType;
 valueType net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus as FinalDegreeWorkProposalStatus;
 valueType net.sourceforge.fenixedu.domain.GuideState as GuideState;
 valueType net.sourceforge.fenixedu.util.MarkType as MarkType;
@@ -1055,13 +1056,7 @@ class net.sourceforge.fenixedu.domain.GratuitySituation extends net.sourceforge.
 	Integer keyEmployee;
 	Integer keyGratuityValues;
 	Double remainingValue;
-	
-	interface "
-    public net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType getExemptionType(); 
-
-	public void setExemptionType(net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType exemptionType); 
-	"
-	
+    ExemptionGratuityType exemptionType;
 }
 
 
