@@ -11,31 +11,19 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
  */
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.domain.IRoom;
-import net.sourceforge.fenixedu.domain.ISchoolClassShift;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.Period;
 import net.sourceforge.fenixedu.domain.Room;
-import net.sourceforge.fenixedu.domain.RoomOccupation;
-import net.sourceforge.fenixedu.domain.SchoolClassShift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.exceptions.notAuthorizedPersistentDeleteException;
 import net.sourceforge.fenixedu.util.TipoSala;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.ojb.broker.query.Criteria;
-import org.apache.ojb.broker.query.Query;
-import org.apache.ojb.broker.query.QueryByCriteria;
 import org.odmg.QueryException;
 
 public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
@@ -44,19 +32,6 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
         Criteria crit = new Criteria();
         crit.addEqualTo("nome", nome);
         return (IRoom) queryObject(Room.class, crit);
-    }
-
-    public void delete(IRoom sala) throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();
-        crit.addEqualTo("sala.nome", sala.getNome());
-
-        List result = queryList(Lesson.class, crit);
-        if (result.size() != 0) {
-            throw new notAuthorizedPersistentDeleteException("Cannot delete rooms with classes");
-        }
-
-        super.delete(sala);
-
     }
 
     public List readAll() throws ExcepcaoPersistencia {
@@ -147,15 +122,15 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
         }
     }
 
-    public List readAvailableRooms(IExam exam) throws ExcepcaoPersistencia {
+    public List readAvailableRooms(Integer examOID) throws ExcepcaoPersistencia {
         List availableRooms = null;
 
-        IExam examFromDB = (IExam) readByOID(Exam.class, exam.getIdInternal());
+        IExam examFromDB = (IExam) readByOID(Exam.class, examOID);
         if (examFromDB != null) {
             Criteria crit = new Criteria();
             crit.addNotEqualTo("idInternal", examFromDB.getIdInternal());
-            crit.addEqualTo("day", exam.getDay());
-            crit.addEqualTo("beginning", exam.getBeginning());
+            crit.addEqualTo("day", examFromDB.getDay());
+            crit.addEqualTo("beginning", examFromDB.getBeginning());
             crit.addEqualTo("associatedExecutionCourses.executionPeriod.name",
                     ((IExecutionCourse) examFromDB.getAssociatedExecutionCourses().get(0))
                             .getExecutionPeriod().getName());
@@ -181,14 +156,8 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
     public List readForRoomReservation() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addNotEqualTo("tipo", new TipoSala(TipoSala.LABORATORIO));
-        //        criteria.addNotLike("building.name", "Tagus%");
-        //        criteria.addNotLike("building.name", "Local%");
-        return queryList(Room.class, criteria);
-    }
-
-    public List readByPavillion(String pavillion) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("building.name", pavillion);
+        // criteria.addNotLike("building.name", "Tagus%");
+        // criteria.addNotLike("building.name", "Local%");
         return queryList(Room.class, criteria);
     }
 
@@ -204,62 +173,4 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
         return queryList(Room.class, criteria);
     }
 
-    /**
-     * Returns a class list
-     * 
-     * @see ServidorPersistente.ITurmaTurnoPersistente#readByClass(ISchoolClass)
-     */
-    public List readByShift(IShift group) throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();
-        crit.addEqualTo("turno.idInternal", group.getIdInternal());
-
-        List result = queryList(SchoolClassShift.class, crit);
-
-        List classList = new ArrayList();
-        Iterator resultIterator = result.iterator();
-        while (resultIterator.hasNext()) {
-            ISchoolClassShift classShift = (ISchoolClassShift) resultIterator.next();
-            classList.add(classShift.getTurma());
-        }
-        return classList;
-
-    }
-
-    public List readAvailableRooms(IPeriod period, Calendar startTime, Calendar endTime)
-            throws ExcepcaoPersistencia {
-        Criteria criteriaPeriod = new Criteria();
-        criteriaPeriod.addLessThan("endDate", period.getStartDate());
-        criteriaPeriod.addGreaterThan("startDate", period.getEndDate());
-        Query queryPeriod = new QueryByCriteria(Period.class, criteriaPeriod, true);
-
-        Criteria criteriaRoomOccupation = new Criteria();
-        criteriaRoomOccupation.addLessThan("endTime", startTime);
-        criteriaRoomOccupation.addLessThan("startTime", endTime);
-        criteriaRoomOccupation.addIn("period", queryPeriod);
-        Query queryRoomOccupation = new QueryByCriteria(RoomOccupation.class, criteriaRoomOccupation,
-                true);
-
-        Criteria criteriaRoomUnoccupied = new Criteria();
-        criteriaRoomUnoccupied.addIsNull("roomOccupations.idInternal");
-
-        Criteria criteriaRoom = new Criteria();
-        criteriaRoom.addIn("roomOccupations", queryRoomOccupation);
-        criteriaRoom.addOrCriteria(criteriaRoomUnoccupied);
-        //Query queryRoom = new QueryByCriteria(Room.class, criteriaRoom,
-        // true);
-
-        return queryList(Room.class, criteriaRoom, true);
-    }
-
-    public List readAllBuildings() throws ExcepcaoPersistencia {
-        try {
-            String oqlQuery = "select distinct building from " + Room.class.getName();
-            query.create(oqlQuery);
-            List result = (List) query.execute();
-            lockRead(result);
-            return result;
-        } catch (QueryException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
-    }
 }

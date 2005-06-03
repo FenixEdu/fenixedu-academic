@@ -56,7 +56,7 @@ public class ReadEmptyRoomsForExam implements IServico {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             ISalaPersistente persistentRoom = sp.getISalaPersistente();
             IExam exam = Cloner.copyInfoExam2IExam(infoExam);
-            List availableRooms = persistentRoom.readAvailableRooms(exam);
+            List availableRooms = persistentRoom.readAvailableRooms(exam.getIdInternal());
             availableInfoRooms = (List) CollectionUtils.collect(availableRooms, TRANSFORM_TO_INFOROOM);
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);

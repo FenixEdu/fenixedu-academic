@@ -129,6 +129,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.Reimburseme
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ReimbursementGuideVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ResponsibleForVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.RestrictionVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SalaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ScientificAreaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SecretaryEnrolmentStudentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SectionVO;
@@ -142,6 +143,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TeacherVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurmaTurnoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurmaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurnoAlunoVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurnoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.UniversityVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.WorkLocationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.WrittenEvaluationCurricularCourseScopeVO;
@@ -372,7 +374,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public ITurnoPersistente getITurnoPersistente() {
-        return null;
+        return new TurnoVO();
     }
 
     public IPersistentDegreeCurricularPlan getIPersistentDegreeCurricularPlan() {
@@ -432,7 +434,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public ISalaPersistente getISalaPersistente() {
-        return null;
+        return new SalaVO();
     }
 
     public IPersistentEnrolmentEvaluation getIPersistentEnrolmentEvaluation() {

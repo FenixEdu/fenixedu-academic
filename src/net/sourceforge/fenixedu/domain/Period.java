@@ -94,5 +94,9 @@ public class Period extends Period_Base {
         }
         return false;
     }
+    
+    public boolean containsDay(Calendar day){
+        return !(startDate.after(day) || endDate.before(day));
+    }
 
 }
