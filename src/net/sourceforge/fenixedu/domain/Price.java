@@ -10,20 +10,28 @@ import net.sourceforge.fenixedu.domain.GraduationType;
 
 public class Price extends Price_Base {
 
-    protected GraduationType graduationType;
-
-    protected DocumentType documentType;
-
     public Price() {
     }
 
     public Price(GraduationType graduationType, DocumentType documentType, String description,
             Double price) {
-        setDescription(description);
-        this.documentType = documentType;
-        this.graduationType = graduationType;
-        setPrice(price);
+        this.setDescription(description);
+        this.setDocumentType(documentType);
+        this.setGraduationType(graduationType);
+        this.setPrice(price);
 
+    }
+
+    public String toString() {
+        String result = "[GUIDE ENTRY";
+        result += ", codInt=" + getInternalCode();
+        result += ", description=" + getDescription();
+        result += ", documentType=" + getDocumentType();
+        result += ", graduationType=" + getGraduationType();
+        result += ", price=" + getPrice();
+
+        result += "]";
+        return result;
     }
 
     public boolean equals(Object obj) {
@@ -40,45 +48,5 @@ public class Price extends Price_Base {
 
         return resultado;
     }
-
-    public String toString() {
-        String result = "[GUIDE ENTRY";
-        result += ", codInt=" + getInternalCode();
-        result += ", description=" + getDescription();
-        result += ", documentType=" + documentType;
-        result += ", graduationType=" + graduationType;
-        result += ", price=" + getPrice();
-
-        result += "]";
-        return result;
-    }
-
-    /**
-     * @return
-     */
-    public DocumentType getDocumentType() {
-		return documentType;
-	}
-
-	/**
-	 * @return
-	 */
-	public GraduationType getGraduationType() {
-		return graduationType;
-	}
-
-	/**
-	 * @param type
-	 */
-	public void setDocumentType(DocumentType type) {
-		documentType = type;
-	}
-
-	/**
-	 * @param type
-	 */
-	public void setGraduationType(GraduationType type) {
-		graduationType = type;
-	}
 
 }

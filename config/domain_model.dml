@@ -33,6 +33,7 @@ valueType net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurr
 valueType net.sourceforge.fenixedu.domain.degree.DegreeType                                     as DegreeType;
 valueType net.sourceforge.fenixedu.util.DelegateYearType                                        as DelegateYearType; 
 valueType net.sourceforge.fenixedu.util.DiaSemana                                               as DiaSemana;
+valueType net.sourceforge.fenixedu.domain.DocumentType                                          as DocumentType;
 valueType net.sourceforge.fenixedu.util.EnrolmentAction                                         as EnrolmentAction;
 valueType net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition                        as EnrollmentCondition;
 valueType net.sourceforge.fenixedu.util.EnrolmentEvaluationState                                as EnrolmentEvaluationState;
@@ -42,6 +43,7 @@ valueType net.sourceforge.fenixedu.domain.curriculum.EnrollmentState            
 valueType net.sourceforge.fenixedu.util.EntryPhase                                              as EntryPhase;
 valueType net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType                        as ExemptionGratuityType;
 valueType net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus                           as FinalDegreeWorkProposalStatus;
+valueType net.sourceforge.fenixedu.domain.GraduationType                                        as GraduationType;
 valueType net.sourceforge.fenixedu.domain.masterDegree.GuideRequester                           as GuideRequester;
 valueType net.sourceforge.fenixedu.domain.GuideState                                            as GuideState;
 valueType net.sourceforge.fenixedu.util.MarkType                                                as MarkType;
@@ -1155,22 +1157,16 @@ class net.sourceforge.fenixedu.domain.Guide extends net.sourceforge.fenixedu.dom
 	"
 }
 
+
 class net.sourceforge.fenixedu.domain.GuideEntry extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyGuide;
 	Double price;
 	String description;
 	Integer quantity;
-	
-	interface "
-	public net.sourceforge.fenixedu.domain.DocumentType getDocumentType();
-	
-	public net.sourceforge.fenixedu.domain.GraduationType getGraduationType();
-	
-	public void setDocumentType(net.sourceforge.fenixedu.domain.DocumentType type);
-	
-	public void setGraduationType(net.sourceforge.fenixedu.domain.GraduationType type);
-	"
+    DocumentType documentType;
+    GraduationType graduationType;
 }
+
 
 class net.sourceforge.fenixedu.domain.GuideSituation extends net.sourceforge.fenixedu.domain.DomainObject {
     Date date;
@@ -1528,6 +1524,7 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 	Date nascimento;
 	String freguesiaMorada;
 	Integer keyAuthor;
+    
 
 	interface "
     public net.sourceforge.fenixedu.domain.person.MaritalStatus getMaritalStatus();
@@ -1582,27 +1579,22 @@ class net.sourceforge.fenixedu.domain.precedences.Precedence extends net.sourcef
 	"
 }
 
+
 class net.sourceforge.fenixedu.domain.Price extends net.sourceforge.fenixedu.domain.DomainObject {
 	String description;
 	Double price;
 	Integer internalCode;
-	
-	interface "
-	    public net.sourceforge.fenixedu.domain.DocumentType getDocumentType();
-	    
-	    public net.sourceforge.fenixedu.domain.GraduationType getGraduationType();
-	    
-	    public void setDocumentType(net.sourceforge.fenixedu.domain.DocumentType type);
-	    
-	    public void setGraduationType(net.sourceforge.fenixedu.domain.GraduationType type);
-	"
+    GraduationType graduationType;
+    DocumentType documentType;
 }
+
 
 class net.sourceforge.fenixedu.domain.Professorship extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyTeacher;
 	Integer keyExecutionCourse;
 	Double hours;
-	interface "
+
+    interface "
 	public boolean belongsToExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
 	
 	public void beforeUpdate(org.apache.ojb.broker.PersistenceBroker broker) throws org.apache.ojb.broker.PersistenceBrokerException;
