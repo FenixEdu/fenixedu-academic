@@ -57,6 +57,7 @@ valueType net.sourceforge.fenixedu.domain.transactions.PaymentType              
 valueType net.sourceforge.fenixedu.util.PeriodToApplyRestriction                                as PeriodToApplyRestriction;
 valueType net.sourceforge.fenixedu.util.PeriodState                                             as PeriodState;
 valueType net.sourceforge.fenixedu.util.ProposalState                                           as ProposalState;
+valueType net.sourceforge.fenixedu.domain.person.RoleType                                       as RoleType;
 valueType net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState                      as ReimbursementGuideState;
 valueType net.sourceforge.fenixedu.util.Season                                                  as Season;
 valueType net.sourceforge.fenixedu.domain.credits.ServiceExemptionType                          as ServiceExemptionType;
@@ -1774,12 +1775,7 @@ class net.sourceforge.fenixedu.domain.Role extends net.sourceforge.fenixedu.doma
 	String portalSubApplication;
 	String pageNameProperty;
 	String page;
-
-	interface "
-    public net.sourceforge.fenixedu.domain.person.RoleType getRoleType();
-
-    public void setRoleType(net.sourceforge.fenixedu.domain.person.RoleType roleType);
-    "
+    RoleType roleType;
 }
 
 

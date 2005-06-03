@@ -5,14 +5,11 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 
 /**
  * @author jpvl
  */
 public class Role extends Role_Base implements Comparable {
-
-    private RoleType roleType;
 
     public boolean equals(Object obj) {
         return ((obj instanceof IRole) && (((IRole) obj).getRoleType().equals(getRoleType())));
@@ -20,23 +17,6 @@ public class Role extends Role_Base implements Comparable {
 
     public int hashCode() {
         return 0;
-    }
-
-    /**
-     * @return RoleType
-     */
-    public RoleType getRoleType() {
-        return roleType;
-    }
-
-    /**
-     * Sets the roleType.
-     * 
-     * @param roleType
-     *            The roleType to set
-     */
-    public void setRoleType(RoleType roleType) {
-        this.roleType = roleType;
     }
 
     public int compareTo(Object o) {
