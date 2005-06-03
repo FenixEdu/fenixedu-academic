@@ -8,23 +8,20 @@
 <link href="<%= request.getContextPath() %>/CSS/inquiries_style.css" rel="stylesheet" type="text/css" />
 
 <noscript>
-	<font class="error">
-		<bean:message key="error.message.inquiries.javascript.disabled" bundle="INQUIRIES_RESOURCES"/>
-	</font>
+	<span class="error"><bean:message key="error.message.inquiries.javascript.disabled" bundle="INQUIRIES_RESOURCES"/></span>
 </noscript>
 
 <bean:message key="message.inquiries.introduction" bundle="INQUIRIES_RESOURCES"/>
 
-
 <br/>
-<hr/>
+
 <logic:present name='<%= InquiriesUtil.STUDENT_ATTENDS %>'>
 	<br/>
 	<logic:notEmpty name='<%= InquiriesUtil.STUDENT_ATTENDS %>'>
 		<strong></p>
 			<bean:message key="title.inquiries.choose.course" bundle="INQUIRIES_RESOURCES"/>
 		</strong></p>
-		<ul style="list-style: none;">
+		<ul>
 			<logic:iterate id="attends" name='<%= InquiriesUtil.STUDENT_ATTENDS %>' type="net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta">
 				<li>
 					<html:link page='<%= StringAppender.append("/fillInquiries.do?method=prepare&amp;", InquiriesUtil.STUDENT_ATTENDS_ID, "=", attends.getIdInternal().toString()) %>'>
@@ -42,7 +39,7 @@
 		<p><strong>
 			<bean:message key="title.inquiries.evaluated.courses" bundle="INQUIRIES_RESOURCES"/>
 		</strong></p>
-		<ul style="list-style: none;">
+		<ul>
 			<logic:iterate id="evaluatedAttends" name='<%= InquiriesUtil.EVALUATED_STUDENT_ATTENDS %>' type="net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta">
 				<li>
 					<bean:write name="evaluatedAttends" property="disciplinaExecucao.nome" />
