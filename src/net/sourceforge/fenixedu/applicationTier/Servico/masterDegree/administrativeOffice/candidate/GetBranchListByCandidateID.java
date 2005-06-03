@@ -41,8 +41,8 @@ public class GetBranchListByCandidateID implements IService {
             IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
                     .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
                             candidateID);
-            result = sp.getIPersistentBranch().readByExecutionDegree(
-                    masterDegreeCandidate.getExecutionDegree());
+            //result = sp.getIPersistentBranch().readByExecutionDegree(masterDegreeCandidate.getExecutionDegree());
+			result = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan().getAreas();
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
             throw newEx;

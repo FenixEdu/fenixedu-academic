@@ -10,9 +10,14 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.IBranch;
+import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
+import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -37,7 +42,6 @@ public class DeleteBranches implements IService {
             Iterator iter = internalIds.iterator();
 
             List undeletedCodes = new ArrayList();
-            List studentCurricularPlans;
             Integer internalId;
             IBranch branch;
 
@@ -45,19 +49,14 @@ public class DeleteBranches implements IService {
                 internalId = (Integer) iter.next();
                 branch = (IBranch) persistentBranch.readByOID(Branch.class, internalId);
                 if (branch != null) {
-                    studentCurricularPlans = persistentStudentCurricularPlan.readByBranch(branch);
-                    if (studentCurricularPlans.isEmpty()) {
-                        persistentBranch.delete(branch);
+                    if (branch.getStudentCurricularPlans().isEmpty()) {
+						dereferenceBranch(sp,branch);
+                        persistentBranch.deleteByOID(Branch.class,branch.getIdInternal());
                     } else {
                         if (forceDelete.booleanValue() == true) {
-                            for (Iterator iterator = studentCurricularPlans.iterator(); iterator
-                                    .hasNext();) {
-                                IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator
-                                        .next();
-                                persistentStudentCurricularPlan.lockWrite(studentCurricularPlan);
-                                studentCurricularPlan.setBranch(null);
-                            }
-                            persistentBranch.delete(branch);
+                            dereferenceStudentCurricularPlansFromBranch(persistentStudentCurricularPlan, branch);
+							dereferenceBranch(sp,branch);
+                            persistentBranch.deleteByOID(Branch.class,branch.getIdInternal());
                         } else {
                             undeletedCodes.add(branch.getCode());
                         }
@@ -72,5 +71,50 @@ public class DeleteBranches implements IService {
         }
 
     }
+
+	private void dereferenceStudentCurricularPlansFromBranch(IPersistentStudentCurricularPlan persistentStudentCurricularPlan, IBranch branch) throws ExcepcaoPersistencia {
+		List<IStudentCurricularPlan> scps = branch.getStudentCurricularPlans();
+		for (IStudentCurricularPlan scp : scps) {
+			persistentStudentCurricularPlan.lockWrite(scp);
+		    scp.setBranch(null);
+		}
+	}
+
+	private void dereferenceBranch(ISuportePersistente sp, IBranch branch) throws ExcepcaoPersistencia {
+		
+		branch.getDegreeCurricularPlan().getAreas().remove(branch);
+		
+		IPersistentStudentCurricularPlan persistentSCP = sp.getIStudentCurricularPlanPersistente();
+		List<IStudentCurricularPlan> scpsLEIC = branch.getSecundaryStudentCurricularPlansLEIC();
+		for(IStudentCurricularPlan scp : scpsLEIC) {
+			persistentSCP.simpleLockWrite(scp);
+			scp.setSecundaryBranch(null);
+		}
+		
+		List<IStudentCurricularPlan> scpsLEEC = branch.getSecundaryStudentCurricularPlansLEEC();
+		for(IStudentCurricularPlan scp : scpsLEEC) {
+			persistentSCP.simpleLockWrite(scp);
+			scp.setSecundaryBranch(null);
+		}
+		
+		IPersistentCurricularCourseGroup persistentCurricularCourseGroup = sp.getIPersistentCurricularCourseGroup();
+		List<ICurricularCourseGroup> curricularCourseGroups = branch.getCurricularCourseGroups();
+		for (ICurricularCourseGroup curricularCourseGroup : curricularCourseGroups) {
+			persistentCurricularCourseGroup.simpleLockWrite(curricularCourseGroup);
+			curricularCourseGroup.setBranch(null);
+		}
+		
+		IPersistentCurricularCourseScope persistentCurricularCourseScope = sp.getIPersistentCurricularCourseScope();
+		List<ICurricularCourseScope> scopes = branch.getScopes();
+		for (ICurricularCourseScope scope : scopes) {
+			persistentCurricularCourseScope.simpleLockWrite(scope);
+			scope.setBranch(null);
+		}
+		
+		List<IProposal> proposals = branch.getAssociatedFinalDegreeWorkProposals();
+		for (IProposal proposal : proposals) {
+			proposal.getBranches().remove(branch);
+		}
+	}
 
 }

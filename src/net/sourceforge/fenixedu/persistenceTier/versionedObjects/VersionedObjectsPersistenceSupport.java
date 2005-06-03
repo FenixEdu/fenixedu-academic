@@ -79,6 +79,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AttendsSetV
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AulaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AuthorVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.BibliographicReferenceVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.BranchVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.BuildingVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CandidateEnrolmentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CandidateSituationVO;
@@ -291,7 +292,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentBranch getIPersistentBranch() {
-        return null;
+        return new BranchVO();
     }
 
     public IPersistentCountry getIPersistentCountry() {

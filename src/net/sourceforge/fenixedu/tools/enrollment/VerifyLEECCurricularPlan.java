@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.precedences.RestrictionByNumberOfDoneCurr
 import net.sourceforge.fenixedu.domain.precedences.RestrictionDoneCurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionPeriodToApply;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
@@ -37,7 +36,6 @@ public class VerifyLEECCurricularPlan {
     public static void main(String args[]) {
         try {
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentBranch branchDAO = persistentSuport.getIPersistentBranch();
             IPersistentDegreeCurricularPlan degreeCurricularPlanDAO = persistentSuport
                     .getIPersistentDegreeCurricularPlan();
 
@@ -46,7 +44,7 @@ public class VerifyLEECCurricularPlan {
             IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) degreeCurricularPlanDAO
                     .readByOID(DegreeCurricularPlan.class, new Integer("48"));
 
-            List branches = branchDAO.readByDegreeCurricularPlan(degreeCurricularPlan);
+            List branches = degreeCurricularPlan.getAreas();
 
             Iterator iterator = branches.iterator();
             while (iterator.hasNext()) {

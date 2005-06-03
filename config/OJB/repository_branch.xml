@@ -84,7 +84,42 @@
             
 			>
 		<inverse-foreignkey field-ref="keyBranch"/>
-	</collection-descriptor>    
+	</collection-descriptor>
+	
+	
+	
+	
+	<collection-descriptor
+			name="curricularCourseGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseGroup">
+		<inverse-foreignkey field-ref="keyBranch"/>
+	</collection-descriptor>
 
+    <collection-descriptor
+			name="studentCurricularPlans"
+			element-class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan">
+		<inverse-foreignkey field-ref="branchKey"/>
+	</collection-descriptor>
+	
+	<collection-descriptor
+			name="secundaryStudentCurricularPlansLEIC"
+			element-class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEIC">
+		<inverse-foreignkey field-ref="secundaryBranchKey"/>
+	</collection-descriptor>
+	
+	    <collection-descriptor
+			name="secundaryStudentCurricularPlansLEEC"
+			element-class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEEC">
+		<inverse-foreignkey field-ref="secundaryBranchKey"/>
+	</collection-descriptor>
+	
+	<collection-descriptor
+			name="associatedFinalDegreeWorkProposals"
+			element-class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal"
+			indirection-table="FINAL_DEGREE_WORK_PROPOSAL_BRANCH"
+			auto-retrieve="true">
+		<fk-pointing-to-this-class column="KEY_BRANCH"/>
+		<fk-pointing-to-element-class column="KEY_FINAL_DEGREE_WORK_PROPOSAL"/>
+	</collection-descriptor>
 
 </class-descriptor>
