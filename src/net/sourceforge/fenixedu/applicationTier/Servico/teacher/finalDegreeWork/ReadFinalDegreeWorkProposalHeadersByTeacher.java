@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IScheduleing;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -51,7 +50,7 @@ public class ReadFinalDegreeWorkProposalHeadersByTeacher implements IService {
             if (finalDegreeWorkProposals != null) {
                 finalDegreeWorkProposalHeaders = new ArrayList();
                 for (int i = 0; i < finalDegreeWorkProposals.size(); i++) {
-                    IProposal proposal = (Proposal) finalDegreeWorkProposals.get(i);
+                    IProposal proposal = (IProposal) finalDegreeWorkProposals.get(i);
 
                     if (proposal != null) {
                         FinalDegreeWorkProposalHeader finalDegreeWorkProposalHeader = new FinalDegreeWorkProposalHeader();

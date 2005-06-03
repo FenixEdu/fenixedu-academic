@@ -11,7 +11,7 @@ import java.util.ListIterator;
  * @author Tânia Pousão
  */
 public class Employee extends Employee_Base {
-    private EmployeeHistoric employeeHistoric = null;
+    private IEmployeeHistoric employeeHistoric = null;
 
     public Employee() {
     }
@@ -32,11 +32,11 @@ public class Employee extends Employee_Base {
         setAntiquity(antiquity);
     }
 
-    public EmployeeHistoric getEmployeeHistoric() {
+    public IEmployeeHistoric getEmployeeHistoric() {
         return employeeHistoric;
     }
 
-    public void setEmployeeHistoric(EmployeeHistoric employeeHistoric) {
+    public void setEmployeeHistoric(IEmployeeHistoric employeeHistoric) {
         this.employeeHistoric = employeeHistoric;
     }
 
@@ -59,11 +59,11 @@ public class Employee extends Employee_Base {
     public void fillEmployeeHistoric() {
         if (getHistoricList() != null) {
             ListIterator iterator = getHistoricList().listIterator();
-            EmployeeHistoric historic = null;
+            IEmployeeHistoric historic = null;
 
             setEmployeeHistoric(new EmployeeHistoric());
             while (iterator.hasNext()) {
-                historic = (EmployeeHistoric) iterator.next();
+                historic = (IEmployeeHistoric) iterator.next();
 
                 if (historic.getKeyResponsableEmployee() != null
                         && historic.getKeyResponsableEmployee().intValue() > 0) {

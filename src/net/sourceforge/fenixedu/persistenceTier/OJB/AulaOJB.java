@@ -13,8 +13,10 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.domain.ShiftStudent;
@@ -36,7 +38,7 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
             IRoomOccupation roomOccupation = (IRoomOccupation) roomsOccupation.get(i);
             crit.addEqualTo("keyRoomOccupation", roomOccupation.getIdInternal());
             crit.addEqualTo("keyExecutionPeriod", executionPeriodOID);
-            Lesson lesson = (Lesson) queryObject(Lesson.class, crit);
+            ILesson lesson = (ILesson) queryObject(Lesson.class, crit);
             if (lesson != null) {
                 lessonList.add(lesson);
             }
@@ -53,7 +55,7 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
         }
         List lessons = new ArrayList();
         for (int i = 0; i < studentShifts.size(); i++) {
-            IShift shift = ((ShiftStudent) studentShifts.get(i)).getShift();
+            IShift shift = ((IShiftStudent) studentShifts.get(i)).getShift();
             List auxLessons = shift.getAssociatedLessons();
             if (auxLessons != null) {
                 lessons.addAll(auxLessons);

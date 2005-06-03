@@ -8,7 +8,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.EmployeeHistoric;
 import net.sourceforge.fenixedu.domain.ICostCenter;
 import net.sourceforge.fenixedu.domain.IDepartment;
 import net.sourceforge.fenixedu.domain.IEmployee;
@@ -24,7 +23,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
 public class DepartmentVO extends VersionedObjectsBase implements IPersistentDepartment {
 
 	
-	   public List readAll() throws ExcepcaoPersistencia {
+	   public List readAll() {
 		   return (List)readAll(Department.class);
 	   }
 
@@ -32,7 +31,7 @@ public class DepartmentVO extends VersionedObjectsBase implements IPersistentDep
 		public IDepartment readByTeacher(Integer teacherId) throws ExcepcaoPersistencia {
 
 			ITeacher teacher = (ITeacher)readByOID(Teacher.class, teacherId);
-	        EmployeeHistoric employeeHistoric = getEmployee(teacher);
+	        IEmployeeHistoric employeeHistoric = getEmployee(teacher);
 
 	        ICostCenter workingCC = employeeHistoric.getWorkingPlaceCostCenter();
 
@@ -128,7 +127,7 @@ public class DepartmentVO extends VersionedObjectsBase implements IPersistentDep
 	     * @param teacher
 	     * @return
 	     */
-	    private EmployeeHistoric getEmployee(ITeacher teacher) throws ExcepcaoPersistencia {
+	    private IEmployeeHistoric getEmployee(ITeacher teacher) throws ExcepcaoPersistencia {
 	        IPersistentEmployee employeeDAO = new EmployeeOJB();
 
 	        IEmployee employee = employeeDAO.readByNumber(teacher.getTeacherNumber());

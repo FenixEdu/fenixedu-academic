@@ -11,6 +11,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.EmployeeHistoric;
+import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IEmployeeHistoric;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -38,7 +39,7 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher {
         List employees = getEmployees(departmentCode);
         Collection teacherNumberList = CollectionUtils.collect(employees, new Transformer() {
             public Object transform(Object input) {
-                Employee employee = (Employee) input;
+                IEmployee employee = (IEmployee) input;
                 return employee.getEmployeeNumber();
             }
         });

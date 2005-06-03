@@ -10,7 +10,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.EmployeeHistoric;
 import net.sourceforge.fenixedu.domain.ICostCenter;
 import net.sourceforge.fenixedu.domain.IDepartment;
 import net.sourceforge.fenixedu.domain.IEmployee;
@@ -25,9 +24,6 @@ import org.apache.ojb.broker.query.Criteria;
 
 public class DepartmentOJB extends PersistentObjectOJB implements IPersistentDepartment {
 
-    public DepartmentOJB() {
-    }
-
     public List readAll() throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         return queryList(Department.class, crit);
@@ -39,7 +35,7 @@ public class DepartmentOJB extends PersistentObjectOJB implements IPersistentDep
         // TODO: Remove this call after refactoring teacher...
         // teacher.getEmployee();
 		ITeacher teacher = (ITeacher)readByOID(Teacher.class, teacherId);
-        EmployeeHistoric employeeHistoric = getEmployee(teacher);
+        IEmployeeHistoric employeeHistoric = getEmployee(teacher);
 
         ICostCenter workingCC = employeeHistoric.getWorkingPlaceCostCenter();
 
@@ -109,7 +105,7 @@ public class DepartmentOJB extends PersistentObjectOJB implements IPersistentDep
      * @param teacher
      * @return
      */
-    private EmployeeHistoric getEmployee(ITeacher teacher) throws ExcepcaoPersistencia {
+    private IEmployeeHistoric getEmployee(ITeacher teacher) throws ExcepcaoPersistencia {
         IPersistentEmployee employeeDAO = new EmployeeOJB();
 
         IEmployee employee = employeeDAO.readByNumber(teacher.getTeacherNumber());

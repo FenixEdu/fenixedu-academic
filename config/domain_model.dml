@@ -569,9 +569,9 @@ class net.sourceforge.fenixedu.domain.Employee extends net.sourceforge.fenixedu.
 	Integer workingHours;
 
     interface "
-	public net.sourceforge.fenixedu.domain.EmployeeHistoric getEmployeeHistoric();
+	public net.sourceforge.fenixedu.domain.IEmployeeHistoric getEmployeeHistoric();
 	
-	public void setEmployeeHistoric(net.sourceforge.fenixedu.domain.EmployeeHistoric employeeHistoric);
+	public void setEmployeeHistoric(net.sourceforge.fenixedu.domain.IEmployeeHistoric employeeHistoric);
 	
 	public void fillEmployeeHistoric();
 	"
