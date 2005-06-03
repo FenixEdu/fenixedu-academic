@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
@@ -54,7 +55,7 @@ public class TurnoVO extends VersionedObjectsBase implements ITurnoPersistente {
          */
     }
 
-    public List readByExecutionCourseAndType(Integer executionCourseOID, Integer type)
+    public List readByExecutionCourseAndType(Integer executionCourseOID, ShiftType type)
             throws ExcepcaoPersistencia {
 
         IExecutionCourse executionCourse = (IExecutionCourse) readByOID(ExecutionCourse.class,

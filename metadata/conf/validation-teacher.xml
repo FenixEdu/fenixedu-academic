@@ -757,9 +757,7 @@
            <var-value>HH:mm</var-value>
         </var>
    	</field>
-   	<field property="shiftType" depends="integer" page="1">
-   		<arg0 key="message.groupPropertiesShiftType" resource="true"/>
-   	</field> 
+   
     </form>
     
     
@@ -834,9 +832,7 @@
         </var>
    	</field>
    	
-   		<field property="shiftType" depends="integer" page="1">
-   	<arg0 key="message.groupPropertiesShiftType" resource="true"/>
-   	</field> 
+   
     </form>
     
     

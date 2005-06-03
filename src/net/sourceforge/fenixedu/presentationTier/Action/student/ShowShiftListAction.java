@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
 import net.sourceforge.fenixedu.dataTransferObject.TypeLessonAndInfoShift;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionError;
@@ -46,7 +46,7 @@ public class ShowShiftListAction extends Action {
 
         InfoShiftEnrolment iSE = (InfoShiftEnrolment) session.getAttribute("infoShiftEnrolment");
         InfoExecutionCourse executionCourse = null;
-        TipoAula lessonType = null;
+        ShiftType lessonType = null;
 
         List infoEnrollmentWithShift = iSE.getInfoEnrolmentWithShift();
         executionCourse = ((InfoCourseExecutionAndListOfTypeLessonAndInfoShift) (infoEnrollmentWithShift

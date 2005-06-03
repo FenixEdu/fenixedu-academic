@@ -32,7 +32,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -50,7 +50,7 @@ public class ManageShiftDA extends
         DynaActionForm editShiftForm = (DynaActionForm) form;
         editShiftForm.set("courseInitials", infoShiftToEdit.getInfoDisciplinaExecucao().getSigla());
         editShiftForm.set("nome", infoShiftToEdit.getNome());
-        editShiftForm.set("tipoAula", infoShiftToEdit.getTipo().getTipo());
+        editShiftForm.set("tipoAula", infoShiftToEdit.getTipo().toString());
         editShiftForm.set("lotacao", infoShiftToEdit.getLotacao());
 
         /* Place list of execution courses in request */
@@ -80,7 +80,8 @@ public class ManageShiftDA extends
         infoShiftNew.setInfoLessons(infoShiftOld.getInfoLessons());
         infoShiftNew.setLotacao((Integer) editShiftForm.get("lotacao"));
         infoShiftNew.setNome((String) editShiftForm.get("nome"));
-        infoShiftNew.setTipo(new TipoAula((Integer) editShiftForm.get("tipoAula")));
+
+        infoShiftNew.setTipo(ShiftType.valueOf((String) editShiftForm.get("tipoAula")));
 
         Object argsCriarTurno[] = { infoShiftOld, infoShiftNew };
         try {

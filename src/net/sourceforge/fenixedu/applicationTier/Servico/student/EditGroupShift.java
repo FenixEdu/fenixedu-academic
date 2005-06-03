@@ -84,7 +84,7 @@ public class EditGroupShift implements IService {
                     newShiftCode);
             
             if(groupProperties.getShiftType() == null || 
-             	   (groupProperties.getShiftType().getTipo().intValue() != shift.getTipo().getTipo().intValue())){
+             	   (!groupProperties.getShiftType().equals(shift.getTipo()))) {
              	throw new InvalidStudentNumberServiceException();
              }
             

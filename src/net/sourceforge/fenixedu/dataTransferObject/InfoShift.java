@@ -14,14 +14,16 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 public class InfoShift extends InfoObject {
 
     protected String _nome;
 
-    protected TipoAula _tipo;
+    protected ShiftType _tipo;
 
     protected Integer _lotacao;
 
@@ -40,7 +42,7 @@ public class InfoShift extends InfoObject {
     public InfoShift() {
     }
 
-    public InfoShift(String nome, TipoAula tipo, Integer lotacao,
+    public InfoShift(String nome, ShiftType tipo, Integer lotacao,
             InfoExecutionCourse infoDisciplinaExecucao) {
         setNome(nome);
         setTipo(tipo);
@@ -79,11 +81,11 @@ public class InfoShift extends InfoObject {
         _infoDisciplinaExecucao = infoDisciplinaExecucao;
     }
 
-    public TipoAula getTipo() {
+    public ShiftType getTipo() {
         return _tipo;
     }
 
-    public void setTipo(TipoAula tipo) {
+    public void setTipo(ShiftType tipo) {
         _tipo = tipo;
     }
 
@@ -234,6 +236,7 @@ public class InfoShift extends InfoObject {
             setLotacao(shift.getLotacao());
             setOcupation(shift.getOcupation());
             setPercentage(shift.getPercentage());
+           
         }
     }
 

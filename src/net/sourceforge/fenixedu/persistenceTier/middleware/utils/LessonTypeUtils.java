@@ -4,22 +4,22 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.middleware.utils;
 
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 /**
  * @author jpvl
  */
 public abstract class LessonTypeUtils {
 
-    public static TipoAula convertLessonType(String type) {
+    public static ShiftType convertLessonType(String type) {
         if (type.equals("Teo"))
-            return new TipoAula(TipoAula.TEORICA);
+            return ShiftType.TEORICA;
         else if (type.equals("Pra"))
-            return new TipoAula(TipoAula.PRATICA);
+            return ShiftType.PRATICA;
         else if (type.equals("Lab"))
-            return new TipoAula(TipoAula.LABORATORIAL);
+            return ShiftType.LABORATORIAL;
         else if (type.equals("TP"))
-            return new TipoAula(TipoAula.TEORICO_PRATICA);
+            return ShiftType.TEORICO_PRATICA;
         else {
             throw new IllegalArgumentException("AULA SEM TIPO DEFINIDO (tipo=" + type + ")");
         }

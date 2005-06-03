@@ -10,19 +10,21 @@ package net.sourceforge.fenixedu.persistenceTier;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.ShiftType;
+
 
 public interface ITurnoPersistente extends IPersistentObject {
 
     public IShift readByNameAndExecutionCourse(String nome, Integer IDE) throws ExcepcaoPersistencia;
 
-    public List readByExecutionCourseAndType(Integer executionCourseOID, Integer type)
+    public List readByExecutionCourseAndType(Integer executionCourseOID, ShiftType type)
             throws ExcepcaoPersistencia;
 
     public List readByExecutionCourse(Integer executionCourseOID) throws ExcepcaoPersistencia;
 
     public List readByExecutionPeriodAndExecutionDegreeAndCurricularYear(Integer executionPeriodOID,
             Integer executionDegreeOID, Integer curricularYearOID) throws ExcepcaoPersistencia;
-
+   
     public List readAvailableShiftsForClass(Integer schoolClassOID) throws ExcepcaoPersistencia;
 
     public IShift readByLesson(Integer lessonOID) throws ExcepcaoPersistencia;

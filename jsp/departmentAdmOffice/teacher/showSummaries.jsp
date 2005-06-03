@@ -22,7 +22,7 @@
 </table>
 <br />
 
-<html:form action="/showSummaries">
+<html:form action="/showSummaries" >
 <html:hidden property="page" value="1"/>
 <html:hidden property="method" value="showSummaries"/>
 <html:hidden property="objectCode" value="<%= objectCode.toString() %>"/>
@@ -37,7 +37,7 @@
 		<td width="40%">
 			<html:select property="bySummaryType" onchange="this.form.method.value='showSummaries';this.form.page.value=0;this.form.submit();">
 				<html:option  value="0" key="label.showBy.all" />
-				<html:options collection="lessonTypes" property="tipo" labelProperty="fullNameTipoAula" />
+				<html:options collection="lessonTypes" property="name" labelProperty="fullNameTipoAula" />
 			</html:select>		
 		</td>	
 	</tr>

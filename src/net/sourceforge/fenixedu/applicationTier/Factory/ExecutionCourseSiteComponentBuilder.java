@@ -74,6 +74,7 @@ import net.sourceforge.fenixedu.domain.ISummary;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.fileSuport.FileSuport;
 import net.sourceforge.fenixedu.fileSuport.IFileSuport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -86,7 +87,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoAula;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -190,16 +190,14 @@ public class ExecutionCourseSiteComponentBuilder {
 
             IPersistentSummary persistentSummary = persistentSuport.getIPersistentSummary();
             List summaries = null;
-            if (component.getLessonType() != null && component.getLessonType().intValue() > 0) {
+            if (component.getShiftType() != null) {
                 List summariesBySummaryType = persistentSummary
-                        .readByExecutionCourseShiftsAndTypeLesson(executionCourse.getIdInternal(), new TipoAula(
-                                component.getLessonType()));
+                        .readByExecutionCourseShiftsAndTypeLesson(executionCourse.getIdInternal(), component.getShiftType());
 
                 //read summary also by execution course key
                 //and add to the last list
                 List summariesByExecutionCourseBySummaryType = persistentSummary
-                        .readByExecutionCourseAndType(executionCourse.getIdInternal(), new TipoAula(component
-                                .getLessonType()));
+                        .readByExecutionCourseAndType(executionCourse.getIdInternal(), component.getShiftType());
 
                 summaries = allSummaries(summariesBySummaryType, summariesByExecutionCourseBySummaryType);
             }
@@ -253,7 +251,7 @@ public class ExecutionCourseSiteComponentBuilder {
                 }
             }
 
-            if ((component.getLessonType() == null || component.getLessonType().intValue() == 0)
+            if ((component.getShiftType() == null)
                     && (component.getShiftId() == null || component.getShiftId().intValue() == 0)
                     && (component.getTeacherId() == null || component.getTeacherId().intValue() == 0)) {
                 summaries = persistentSummary.readByExecutionCourseShifts(executionCourse.getIdInternal());
@@ -278,12 +276,12 @@ public class ExecutionCourseSiteComponentBuilder {
 
             component.setLessonTypes(lessonTypes);
             List infoShiftsOnlyType = infoShifts;
-            if (component.getLessonType() != null && component.getLessonType().intValue() != 0) {
-                final TipoAula lessonTypeSelect = new TipoAula(component.getLessonType().intValue());
+            if (component.getShiftType() != null) {
+                final ShiftType shiftType = component.getShiftType();
                 infoShiftsOnlyType = (List) CollectionUtils.select(infoShifts, new Predicate() {
 
                     public boolean evaluate(Object arg0) {
-                        return ((InfoShift) arg0).getTipo().equals(lessonTypeSelect);
+                        return ((InfoShift) arg0).getTipo().equals(shiftType);
                     }
                 });
             }
@@ -302,18 +300,18 @@ public class ExecutionCourseSiteComponentBuilder {
 
         if (executionCourse.getTheoreticalHours() != null
                 && executionCourse.getTheoreticalHours().intValue() > 0) {
-            lessonTypes.add(new TipoAula(1));
+            lessonTypes.add(ShiftType.TEORICA);
         }
         if (executionCourse.getTheoPratHours() != null
                 && executionCourse.getTheoPratHours().intValue() > 0) {
-            lessonTypes.add(new TipoAula(3));
+            lessonTypes.add(ShiftType.TEORICO_PRATICA);
         }
         if (executionCourse.getPraticalHours() != null
                 && executionCourse.getPraticalHours().intValue() > 0) {
-            lessonTypes.add(new TipoAula(2));
+            lessonTypes.add(ShiftType.PRATICA);
         }
         if (executionCourse.getLabHours() != null && executionCourse.getLabHours().intValue() > 0) {
-            lessonTypes.add(new TipoAula(4));
+            lessonTypes.add(ShiftType.LABORATORIAL);
         }
 
         return lessonTypes;
@@ -444,6 +442,7 @@ public class ExecutionCourseSiteComponentBuilder {
            
         try {
             // read sections
+
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             allSections = sp.getIPersistentSection().readBySite(site.getExecutionCourse().getSigla(),
                     site.getExecutionCourse().getExecutionPeriod().getName(),
@@ -459,6 +458,7 @@ public class ExecutionCourseSiteComponentBuilder {
             Collections.sort(infoSectionsList);
 
             // read degrees
+
             IExecutionCourse executionCourse = site.getExecutionCourse();
 
             infoCurricularCourseList = readCurricularCourses(executionCourse);
@@ -715,6 +715,7 @@ public class ExecutionCourseSiteComponentBuilder {
             List lecturingInfoTeachersList = readLecturingTeachers(persistentSupport, executionCourse);
 
             //set all the required information to the component
+
             if (!infoAnnouncements.isEmpty()) {
                 infoAnnouncements.remove(0);
             }

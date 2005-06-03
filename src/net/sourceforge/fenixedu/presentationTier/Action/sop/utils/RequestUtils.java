@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import org.apache.struts.util.LabelValueBean;
@@ -47,7 +47,9 @@ public abstract class RequestUtils {
         InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 
         infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
+        
         infoExecutionCourse.setSigla(infoExecutionCourseInitials);
+        
         int indexOf = executionCourseList.indexOf(infoExecutionCourse);
 
         if (indexOf != -1) {
@@ -308,14 +310,13 @@ public abstract class RequestUtils {
 
     public static final void setLessonTypes(HttpServletRequest request) {
         List tiposAula = new ArrayList();
-        tiposAula.add(new LabelValueBean("Teorica", (new Integer(TipoAula.TEORICA)).toString()));
-        tiposAula.add(new LabelValueBean("Pratica", (new Integer(TipoAula.PRATICA)).toString()));
-        tiposAula.add(new LabelValueBean("Teorico-Pratica", (new Integer(TipoAula.TEORICO_PRATICA))
-                .toString()));
+        tiposAula.add(new LabelValueBean("Teorica", ShiftType.TEORICA.name()));
+        tiposAula.add(new LabelValueBean("Pratica", ShiftType.PRATICA.name()));
+        tiposAula.add(new LabelValueBean("Teorico-Pratica", ShiftType.TEORICO_PRATICA.name()));
         tiposAula
-                .add(new LabelValueBean("Laboratorial", (new Integer(TipoAula.LABORATORIAL)).toString()));
-        tiposAula.add(new LabelValueBean("Dúvidas", (new Integer(TipoAula.DUVIDAS)).toString()));
-        tiposAula.add(new LabelValueBean("Reserva", (new Integer(TipoAula.RESERVA)).toString()));
+                .add(new LabelValueBean("Laboratorial", ShiftType.LABORATORIAL.name()));
+        tiposAula.add(new LabelValueBean("Dúvidas", ShiftType.DUVIDAS.name()));
+        tiposAula.add(new LabelValueBean("Reserva", ShiftType.RESERVA.name()));
         request.setAttribute("tiposAula", tiposAula);
     }
 

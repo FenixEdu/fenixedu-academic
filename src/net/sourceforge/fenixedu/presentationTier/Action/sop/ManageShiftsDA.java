@@ -31,7 +31,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -97,8 +97,8 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
         infoShift.setInfoLessons(null);
         infoShift.setLotacao((Integer) createShiftForm.get("lotacao"));
         infoShift.setNome((String) createShiftForm.get("nome"));
-        infoShift.setTipo(new TipoAula((Integer) createShiftForm.get("tipoAula")));
-
+        infoShift.setTipo(ShiftType.valueOf((String) createShiftForm.get("tipoAula")));
+System.out.println("createShift antes do servico"+infoShift);
         Object argsCriarTurno[] = { infoShift };
         try {
             infoShift = (InfoShift) ServiceUtils.executeService(userView, "CriarTurno", argsCriarTurno);
@@ -107,7 +107,7 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
         } catch (ExistingServiceException ex) {
             throw new ExistingActionException("O Shift", ex);
         }
-
+        System.out.println("createShift depois do servico"+infoShift);
         request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourse);
 
         request.setAttribute(SessionConstants.SHIFT, infoShift);

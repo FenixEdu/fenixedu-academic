@@ -54,9 +54,8 @@ import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRe
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRoom;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesTeacher;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-
 /**
  * @author João Fialho & Rita Ferreira
  * 
@@ -154,7 +153,7 @@ public class WriteInquiry implements IService {
             final InfoInquiriesTeacher iit, final IInquiriesCourse inquiriesCourse,
             final ISuportePersistente sp) throws ExcepcaoPersistencia {
 
-        for (TipoAula classType : iit.getClassTypes()) {
+        for (ShiftType classType : iit.getClassTypes()) {
             final IInquiriesTeacher inquiriesTeacher = new InquiriesTeacher();
 
             inquiriesTeacher.setExecutionCourse(inquiriesCourse.getExecutionCourse());
@@ -177,7 +176,7 @@ public class WriteInquiry implements IService {
                         .readByOID(NonAffiliatedTeacher.class, teacher.getIdInternal()));
             }
 
-            inquiriesTeacher.setClassType(classType.getTipo());
+            inquiriesTeacher.setShiftType(classType);
             inquiriesTeacher.setStudentAssiduity(iit.getStudentAssiduity());
             inquiriesTeacher.setTeacherAssiduity(iit.getTeacherAssiduity());
             inquiriesTeacher.setTeacherPunctuality(iit.getTeacherPunctuality());

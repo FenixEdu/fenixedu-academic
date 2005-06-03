@@ -34,7 +34,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -55,14 +55,14 @@ public class SummaryManagerAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        
+ 
         Integer executionCourseId = getObjectCode(request);
         request.setAttribute("objectCode", executionCourseId);
         
-        Integer lessonType = null;
+        String lessonType = null;
         if (request.getParameter("bySummaryType") != null
                 && request.getParameter("bySummaryType").length() > 0) {
-            lessonType = new Integer(request.getParameter("bySummaryType"));
+            lessonType = (String)request.getParameter("bySummaryType");
         }
         
         Integer shiftId = null;
@@ -128,9 +128,10 @@ public class SummaryManagerAction extends FenixDispatchAction {
     }
     
     private void selectChoices(HttpServletRequest request, InfoSiteSummaries summaries,
-            Integer lessonType) {
-        if (lessonType != null && lessonType.intValue() != 0) {
-            final TipoAula lessonTypeSelect = new TipoAula(lessonType.intValue());
+            String lessonType) {
+        //&& lessonType != null
+        if (lessonType != null && !lessonType.equals("0")) {
+            final ShiftType lessonTypeSelect = ShiftType.valueOf(lessonType);
             List infoShiftsOnlyType = (List) CollectionUtils.select(summaries.getInfoShifts(),
                     new Predicate() {
                 

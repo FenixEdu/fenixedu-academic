@@ -10,7 +10,7 @@ package net.sourceforge.fenixedu.persistenceTier.Conversores;
  * 
  * @author tfc130
  */
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
@@ -21,9 +21,9 @@ public class TipoAula2EnumTipoAulaFieldConversion implements FieldConversion {
      */
     public Object javaToSql(Object source) {
 
-        if (source instanceof TipoAula) {
-            TipoAula s = (TipoAula) source;
-            return s.getTipo();
+        if (source instanceof ShiftType) {
+            ShiftType s = (ShiftType) source;
+            return s.toString();
         }
 
         return source;
@@ -34,9 +34,9 @@ public class TipoAula2EnumTipoAulaFieldConversion implements FieldConversion {
      * @see FieldConversion#sqlToJava(Object)
      */
     public Object sqlToJava(Object source) {
-        if (source instanceof Integer) {
-            Integer src = (Integer) source;
-            return new TipoAula(src);
+        if (source instanceof String) {
+            String src = (String) source;
+            return  ShiftType.valueOf(src);
         }
 
         return source;

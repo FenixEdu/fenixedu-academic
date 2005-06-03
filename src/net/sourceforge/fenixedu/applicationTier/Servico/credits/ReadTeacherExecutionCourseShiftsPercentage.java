@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -82,7 +82,7 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IService {
                      * if shift's type is LABORATORIAL the shift professorship
                      * percentage can exceed 100%
                      */
-                    if ((shift.getTipo().getTipo().intValue() != TipoAula.LABORATORIAL)
+                    if ((shift.getTipo() != net.sourceforge.fenixedu.domain.ShiftType.LABORATORIAL)
                             && (!shiftProfessorship.getProfessorship().getTeacher().equals(teacher))) {
                         availablePercentage -= shiftProfessorship.getPercentage().doubleValue();
                     }

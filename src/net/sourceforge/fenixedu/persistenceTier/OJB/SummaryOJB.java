@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.ISummary;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -38,11 +38,11 @@ public class SummaryOJB extends PersistentObjectOJB implements IPersistentSummar
 
     }
 
-    public List readByExecutionCourseAndType(Integer executionCourseID, TipoAula summaryType)
+    public List readByExecutionCourseAndType(Integer executionCourseID, ShiftType summaryType)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyExecutionCourse", executionCourseID);
-        criteria.addEqualTo("summaryType", summaryType.getTipo());
+        criteria.addEqualTo("summaryType", summaryType.name());
         return queryList(Summary.class, criteria);
 
     }
@@ -56,10 +56,10 @@ public class SummaryOJB extends PersistentObjectOJB implements IPersistentSummar
     }
 
     public List readByExecutionCourseShiftsAndTypeLesson(Integer executionCourseID,
-            TipoAula summaryType) throws ExcepcaoPersistencia {
+            ShiftType summaryType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("shift.disciplinaExecucao.idInternal", executionCourseID);
-        criteria.addEqualTo("shift.tipo", summaryType.getTipo());
+        criteria.addEqualTo("shift.tipo", summaryType.name());
 
         return queryList(Summary.class, criteria);
     }

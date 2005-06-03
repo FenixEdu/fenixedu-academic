@@ -19,8 +19,8 @@ public class ComparatorByLessonTypeForInfoShiftWithAssociatedInfoClassesAndInfoL
         InfoShiftWithAssociatedInfoClassesAndInfoLessons infoShift1 = (InfoShiftWithAssociatedInfoClassesAndInfoLessons) obj1;
         InfoShiftWithAssociatedInfoClassesAndInfoLessons infoShift2 = (InfoShiftWithAssociatedInfoClassesAndInfoLessons) obj2;
 
-        return (infoShift1.getInfoShift().getTipo().getTipo().intValue() - infoShift2.getInfoShift()
-                .getTipo().getTipo().intValue());
+        return infoShift1.getInfoShift().getTipo().compareTo(infoShift2.getInfoShift()
+                .getTipo());
     }
 
 }

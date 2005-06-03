@@ -15,7 +15,7 @@
 
 <bean:define id="shiftName" name="<%= SessionConstants.SHIFT %>" property="nome"/>
 <bean:define id="shiftId" name="<%= SessionConstants.SHIFT %>" property="idInternal"/>
-<bean:define id="shiftType" name="<%= SessionConstants.SHIFT %>" property="tipo.tipo"/>
+<bean:define id="shiftType" name="<%= SessionConstants.SHIFT %>" property="tipo"/>
 
 <h2>
 <logic:present name="<%= SessionConstants.EXECUTION_COURSE %>" scope="request">
@@ -90,7 +90,7 @@ Alunos Inscritos
 				<logic:notEqual name="otherShift" property="nome"
 						value="<%= pageContext.findAttribute("shiftName").toString() %>">
 					<bean:define id="otherShiftId" name="otherShift" property="idInternal"/>
-					<bean:define id="otherShiftType" name="otherShift" property="tipo.tipo"/>
+					<bean:define id="otherShiftType" name="otherShift" property="tipo"/>
 					<logic:equal name="shiftType"
 							value="<%= pageContext.findAttribute("otherShiftType").toString() %>">
 					

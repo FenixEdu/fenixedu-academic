@@ -13,13 +13,13 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 public class Shift extends Shift_Base {
+    protected ShiftType tipo;
     protected Integer ocupation;
-
     protected Double percentage;
-
+ 
     public Shift() {
     }
 
@@ -27,30 +27,30 @@ public class Shift extends Shift_Base {
         setIdInternal(idInternal);
     }
 
-    public Shift(String nome, TipoAula tipo, Integer lotacao, IExecutionCourse disciplinaExecucao) {
-        this.setNome(nome);
-        this.setTipo(tipo);
-        this.setLotacao(lotacao);
-        this.setDisciplinaExecucao(disciplinaExecucao);
-        this.setAssociatedLessons(new ArrayList());
-        this.setAssociatedClasses(new ArrayList());
+    public Shift(String nome, ShiftType tipo, Integer lotacao, IExecutionCourse disciplinaExecucao) {
+        setNome(nome);
+        setTipo(tipo);
+        setLotacao(lotacao);
+        setDisciplinaExecucao(disciplinaExecucao);
+        setAssociatedLessons(new ArrayList());
+        setAssociatedClasses(new ArrayList());
     }
 
     public Integer getOcupation() {
         return ocupation;
     }
 
-    public void setOcupation(Integer integer) {
-        ocupation = integer;
+    public ShiftType getTipo() {
+        return tipo;
     }
 
-    public Double getPercentage() {
-        return percentage;
+    public void setTipo(ShiftType tipo) {
+        this.tipo = tipo;
     }
 
     public void setPercentage(Double percentage) {
         this.percentage = percentage;
-    }
+        }
 
     public String toString() {
         String result = "[TURNO";
@@ -68,7 +68,7 @@ public class Shift extends Shift_Base {
         if (obj instanceof IShift) {
             IShift turno = (IShift) obj;
             resultado = getIdInternal().equals(turno.getIdInternal());
-        }
+    }
         return resultado;
     }
 
@@ -82,4 +82,13 @@ public class Shift extends Shift_Base {
         return hours;
     }
 
+    public Double getPercentage() {
+        return percentage;
+    }
+    
+
+    public void setOcupation(Integer ocupation) {
+        this.ocupation = ocupation;
+    }
+    
 }

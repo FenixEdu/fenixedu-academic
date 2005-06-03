@@ -7,6 +7,8 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.ShiftType;
+
 /**
  * @author João Mota modified by Tânia Pousão 21/Jul/2003 fenix-head DataBeans
  *  
@@ -20,7 +22,7 @@ public class InfoSiteSummaries extends DataTranferObject implements ISiteCompone
     private InfoSite infoSite;
 
     //usefull for show summaries use case in public site
-    private Integer lessonType;
+    private ShiftType shiftType;
 
     private Integer shiftId;
 
@@ -82,21 +84,6 @@ public class InfoSiteSummaries extends DataTranferObject implements ISiteCompone
      */
     public void setInfoSite(InfoSite infoSite) {
         this.infoSite = infoSite;
-    }
-
-    /**
-     * @return Returns the lessonType.
-     */
-    public Integer getLessonType() {
-        return lessonType;
-    }
-
-    /**
-     * @param lessonType
-     *            The lessonType to set.
-     */
-    public void setLessonType(Integer lessonType) {
-        this.lessonType = lessonType;
     }
 
     /**
@@ -200,4 +187,14 @@ public class InfoSiteSummaries extends DataTranferObject implements ISiteCompone
 
         return result;
     }
+
+    public ShiftType getShiftType() {
+        return shiftType;
+    }
+    
+
+    public void setShiftType(ShiftType shiftType) {
+        this.shiftType = shiftType;
+    }
+    
 }

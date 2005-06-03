@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActio
 import net.sourceforge.fenixedu.presentationTier.Action.sop.base.FenixExecutionDegreeAndCurricularYearContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.RequestUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -35,8 +35,8 @@ public class CriarTurnoFormAction extends FenixExecutionDegreeAndCurricularYearC
             InfoExecutionCourse courseView = RequestUtils.getExecutionCourseBySigla(request,
                     (String) criarTurnoForm.get("courseInitials"));
 
-            Object argsCriarTurno[] = { new InfoShift((String) criarTurnoForm.get("nome"), new TipoAula(
-                    (Integer) criarTurnoForm.get("tipoAula")), (Integer) criarTurnoForm.get("lotacao"),
+            Object argsCriarTurno[] = { new InfoShift((String) criarTurnoForm.get("nome"), ShiftType.valueOf(
+                    (String) criarTurnoForm.get("tipoAula")), (Integer) criarTurnoForm.get("lotacao"),
                     courseView) };
             try {
                 ServiceUtils.executeService(userView, "CriarTurno", argsCriarTurno);

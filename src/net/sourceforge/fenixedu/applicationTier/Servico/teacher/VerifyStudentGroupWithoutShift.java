@@ -80,9 +80,9 @@ public class VerifyStudentGroupWithoutShift implements IServico {
             	throw new InvalidSituationServiceException();
             }
             
-            
+
             Integer shiftCode = null;
-            if(shiftCodeString!=null){
+            if(shiftCodeString!=null && shiftCodeString.length()>0){
             	shiftCode = new Integer(shiftCodeString);
             }
             

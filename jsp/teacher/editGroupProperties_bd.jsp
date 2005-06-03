@@ -89,15 +89,19 @@
 			<html:options name="enrolmentPolicyValues" labelName="enrolmentPolicyNames"/>
 			</html:select></td>			
 		</tr>
+		<bean:define id="shiftTypeValue" type="java.lang.Object" value="SEM TURNO"/>
+	    <logic:present 	name="groupProperties" property="shiftType">
+		 	<bean:define id="shiftTypeValue" name="groupProperties" property="shiftType"/>
+		</logic:present>
 		
-		
-		<bean:define id="shiftTypeValue" name="shiftTypeValue"/>
 		<tr>
 			<td><bean:message key="message.groupPropertiesShiftType"/></td>
-			<td><html:select property="shiftType">
-			<html:option value="<%= shiftTypeValue.toString() %>"><bean:write name="shiftTypeName"/></html:option>
-			<html:options name="shiftTypeValues" labelName="shiftTypeNames"/>
-			</html:select></td>		
+			<td>
+			<html:select property="shiftType" >
+				<html:option value="<%= shiftTypeValue.toString() %>"><bean:write name="shiftTypeValue"/></html:option>
+			<html:options collection="shiftTypeValues" property="value" labelProperty="label"/>
+			</html:select>
+			</td>		
 		</tr>
 
 		<tr>

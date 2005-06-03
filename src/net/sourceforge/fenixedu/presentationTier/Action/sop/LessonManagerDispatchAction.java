@@ -32,8 +32,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.TipoAula;
-
+import net.sourceforge.fenixedu.domain.ShiftType;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -117,10 +116,10 @@ public class LessonManagerDispatchAction extends
             infoRoomOccupation.setInfoPeriod(infoPeriod);
             /** *** */
 
-            Object argsCriarAula[] = { new InfoLesson(diaSemana, inicio, fim, new TipoAula(new Integer(
-                    (String) criarAulaForm.get("tipoAula"))), infoSala, infoRoomOccupation,
+            Object argsCriarAula[] = { new InfoLesson(diaSemana, inicio, fim, ShiftType.valueOf(
+                    (String) criarAulaForm.get("tipoAula")), infoSala, infoRoomOccupation,
                     new InfoShift(null,
-                            new TipoAula(new Integer((String) criarAulaForm.get("tipoAula"))), null,
+                            ShiftType.valueOf((String) criarAulaForm.get("tipoAula")), null,
                             courseView)) };
 
             InfoLessonServiceResult result = null;
@@ -250,8 +249,8 @@ public class LessonManagerDispatchAction extends
 
             //            RoomKey kSalaAntiga = new
             // RoomKey(iAulaAntiga.getInfoSala().getNome());
-            InfoLesson iAula = new InfoLesson(diaSemana, inicio, fim, new TipoAula(new Integer(
-                    (String) editarAulaForm.get("tipoAula"))), infoSala, infoRoomOccupation, iAulaAntiga
+            InfoLesson iAula = new InfoLesson(diaSemana, inicio, fim, ShiftType.valueOf(
+                    (String) editarAulaForm.get("tipoAula")), infoSala, infoRoomOccupation, iAulaAntiga
                     .getInfoShift());
 
             //			InfoExecutionPeriod iExecutionPeriod =
@@ -376,7 +375,7 @@ public class LessonManagerDispatchAction extends
                     .valueOf(infoAula.getInicio().get(Calendar.MINUTE)));
             editarAulaForm.set("horaFim", String.valueOf(infoAula.getFim().get(Calendar.HOUR_OF_DAY)));
             editarAulaForm.set("minutosFim", String.valueOf(infoAula.getFim().get(Calendar.MINUTE)));
-            editarAulaForm.set("tipoAula", String.valueOf(infoAula.getTipo().getTipo().intValue()));
+            editarAulaForm.set("tipoAula", String.valueOf(infoAula.getTipo()));
             editarAulaForm.set("nomeSala", infoAula.getInfoRoomOccupation().getInfoRoom().getNome());
 
             RequestUtils.setLessonTypes(request);

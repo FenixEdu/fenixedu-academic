@@ -77,7 +77,7 @@ public class VerifyIfCanEnrollStudentGroupsInShift implements IServico {
             IShift shift = (IShift) persistentShift.readByOID(
             		Shift.class, shiftCode);
  
-            if(groupProperties.getShiftType().getTipo().intValue() != shift.getTipo().getTipo().intValue()){
+            if(!groupProperties.getShiftType().equals(shift.getTipo())){
             	return result = false;
             }
                 

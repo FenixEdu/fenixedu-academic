@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -25,13 +25,14 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadShiftsByTypeFromExecutionCourse implements IService {
 
-    public List run(InfoExecutionCourse infoExecutionCourse, TipoAula tipoAula) throws ExcepcaoPersistencia {
+    public List run(InfoExecutionCourse infoExecutionCourse, ShiftType tipoAula) throws ExcepcaoPersistencia {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
         final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 
         final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, infoExecutionCourse.getIdInternal());
-        final List shifts = persistentShift.readByExecutionCourseAndType(executionCourse.getIdInternal(), tipoAula.getTipo());
+        
+        final List shifts = persistentShift.readByExecutionCourseAndType(executionCourse.getIdInternal(), tipoAula);
 
         return (List) CollectionUtils.collect(shifts, new Transformer() {
             public Object transform(Object arg0) {

@@ -77,7 +77,7 @@ public class EnrollStudentGroupShift implements IService {
             }
 
             if(groupProperties.getShiftType() == null || studentGroup.getShift() != null ||
-            	   (groupProperties.getShiftType().getTipo().intValue() != shift.getTipo().getTipo().intValue())){
+            	   (!groupProperties.getShiftType().equals(shift.getTipo()))) {
             	throw new InvalidChangeServiceException();
             }
             

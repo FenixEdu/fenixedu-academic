@@ -182,7 +182,7 @@
       <field-descriptor id="4"
          name="tipo"
          column="TYPE"
-         jdbc-type="INTEGER"
+         jdbc-type="VARCHAR"
          conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TipoAula2EnumTipoAulaFieldConversion"
       />
       <field-descriptor id="5"
@@ -303,7 +303,7 @@
       <field-descriptor id="7"
          name="tipo"
          column="TYPE"
-         jdbc-type="INTEGER"
+         jdbc-type="VARCHAR"
          conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TipoAula2EnumTipoAulaFieldConversion"
       />
       <field-descriptor id="8"

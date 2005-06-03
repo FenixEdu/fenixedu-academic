@@ -13,7 +13,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IShiftStudent;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 public interface ITurnoAlunoPersistente extends IPersistentObject {
 
@@ -34,7 +34,7 @@ public interface ITurnoAlunoPersistente extends IPersistentObject {
     public int readNumberOfStudentsByShift(Integer shiftOID) throws ExcepcaoPersistencia;
 
     public IShiftStudent readByStudentAndExecutionCourseAndLessonType(Integer studentOID,
-            Integer executionCourseOID, TipoAula lessonType) throws ExcepcaoPersistencia;
+            Integer executionCourseOID, ShiftType lessonType) throws ExcepcaoPersistencia;
 
     public List readStudentShiftByShift(Integer oldShiftOID) throws ExcepcaoPersistencia;
 }

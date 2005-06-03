@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSummaries;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTimetable;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -198,11 +199,12 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         setFromRequest(request);
         ISiteComponent summariesComponent = new InfoSiteSummaries();
 
-        Integer lessonType = null;
+        ShiftType lessonType = null;
         if (request.getParameter("bySummaryType") != null
-                && request.getParameter("bySummaryType").length() > 0) {
-            lessonType = new Integer(request.getParameter("bySummaryType"));
-            ((InfoSiteSummaries) summariesComponent).setLessonType(lessonType);
+                && request.getParameter("bySummaryType").length() > 0 && !request.getParameter("bySummaryType").equals("0")) {
+ 
+            lessonType = ShiftType.valueOf(request.getParameter("bySummaryType"));
+            ((InfoSiteSummaries) summariesComponent).setShiftType(lessonType);
         }
 
         Integer shiftId = null;

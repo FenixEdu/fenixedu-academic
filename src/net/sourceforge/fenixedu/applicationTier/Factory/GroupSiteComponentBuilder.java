@@ -483,7 +483,8 @@ public class GroupSiteComponentBuilder {
             	while(iterExecutionCourses.hasNext()){
                     IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();
             		List someShifts = persistentShift.readByExecutionCourseAndType(
-            				executionCourse.getIdInternal(), groupProperties.getShiftType().getTipo());
+            				executionCourse.getIdInternal(), groupProperties
+							.getShiftType());
 
             		allShifts.addAll(someShifts);
             	}

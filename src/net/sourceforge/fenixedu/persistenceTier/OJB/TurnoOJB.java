@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
@@ -34,7 +35,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
         return (IShift) queryObject(Shift.class, crit);
     }
 
-    public List readByExecutionCourseAndType(Integer executionCourseOID, Integer type)
+    public List readByExecutionCourseAndType(Integer executionCourseOID, ShiftType type)
             throws ExcepcaoPersistencia {
 
         Criteria crit = new Criteria();
@@ -43,7 +44,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
         return queryList(Shift.class, crit);
 
     }
-
+    
     public List readByExecutionCourse(Integer executionCourseOID) throws ExcepcaoPersistencia {
 
         Criteria crit = new Criteria();
@@ -51,7 +52,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
         return queryList(Shift.class, crit);
 
     }
-
+ 
     public List readByExecutionPeriodAndExecutionDegreeAndCurricularYear(Integer executionPeriodOID,
             Integer executionDegreeOID, Integer curricularYearOID) throws ExcepcaoPersistencia {
 
@@ -106,10 +107,10 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
 
     public IShift readByLesson(Integer lessonOID) throws ExcepcaoPersistencia {
         if (lessonOID != null) {
-            Criteria criteria = new Criteria();
+        Criteria criteria = new Criteria();
             criteria.addEqualTo("associatedLessons.idInternal", lessonOID);
             return (IShift) queryObject(Shift.class, criteria);
-        }
+    }
 
         return null;
 
@@ -117,7 +118,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
 
     public List readShiftsThatContainsStudentAttendsOnExecutionPeriod(Integer studentOID,
             Integer executionPeriodOID) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
+            Criteria criteria = new Criteria();
 
         criteria.addEqualTo("disciplinaExecucao.attendingStudents.idInternal", studentOID);
         criteria.addEqualTo("disciplinaExecucao.executionPeriod.idInternal", executionPeriodOID);

@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
 <span class="error"><html:errors/></span>
 <br />
@@ -32,11 +33,12 @@
 		<td colspan="2"><strong><bean:message key="label.showSummaries" />&nbsp;<bean:message key="label.for" />:</strong></td>
 	</tr>
 	<tr>
+	<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.ShiftType" bundle="ENUMERATION_RESOURCES"/>
 		<td width="15%"><bean:message key="message.summaryType" /></td>
 		<td width="40%">
 			<html:select property="bySummaryType" onchange="this.form.method.value='showSummaries';this.form.page.value=0;this.form.submit();">
 				<html:option  value="0" key="label.showBy.all" />
-				<html:options collection="lessonTypes" property="tipo" labelProperty="fullNameTipoAula" />
+				<html:options collection="values" property="value" labelProperty="label"/>
 			</html:select>		
 		</td>	
 	</tr>

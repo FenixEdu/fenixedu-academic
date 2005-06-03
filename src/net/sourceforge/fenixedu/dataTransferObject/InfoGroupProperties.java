@@ -9,7 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IGroupProperties;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 /**
  * @author asnr and scpo
@@ -34,7 +34,7 @@ public class InfoGroupProperties extends InfoObject
 
 	private List infoGroupPropertiesExecutionCourse;
 
-	private TipoAula shiftType;
+	private ShiftType shiftType;
 
 	private Calendar enrolmentBeginDay;
 
@@ -64,7 +64,7 @@ public class InfoGroupProperties extends InfoObject
 	 */
 	public InfoGroupProperties(Integer maximumCapacity, Integer minimumCapacity, Integer idealCapacity,
 			EnrolmentGroupPolicyType enrolmentPolicy, Integer groupMaximumNumber,
-			List infoGroupPropertiesExecutionCourse, String name, TipoAula shiftType,
+			List infoGroupPropertiesExecutionCourse, String name, ShiftType shiftType,
 			Calendar enrolmentBeginDay, Calendar enrolmentEndDay, String projectDescription)
 	{
 
@@ -194,7 +194,7 @@ public class InfoGroupProperties extends InfoObject
 	/**
 	 * @return Tipo Lesson
 	 */
-	public TipoAula getShiftType()
+	public ShiftType getShiftType()
 	{
 
 		return shiftType;
@@ -319,7 +319,7 @@ public class InfoGroupProperties extends InfoObject
 	 * @param shiftType
 	 *            The shiftType to set
 	 */
-	public void setShiftType(TipoAula shiftType)
+	public void setShiftType(ShiftType shiftType)
 	{
 
 		this.shiftType = shiftType;
@@ -351,21 +351,7 @@ public class InfoGroupProperties extends InfoObject
 
 	public String getShiftTypeFormatted()
 	{
-
-		String result = "";
-		int value = getShiftType().getTipo().intValue();
-		switch (value)
-		{
-			case 1 :
-				return "Teórica";
-			case 2 :
-				return "Prática";
-			case 3 :
-				return "Teórico-Prática";
-			case 4 :
-				return "Laboratorial";
-		}
-		return result;
+        return shiftType.toString();
 	}
 
 	public String getEnrolmentBeginDayFormatted()

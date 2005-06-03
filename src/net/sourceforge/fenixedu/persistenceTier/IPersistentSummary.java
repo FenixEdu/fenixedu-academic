@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ISummary;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 /**
  * @author João Mota
@@ -25,11 +25,11 @@ public interface IPersistentSummary extends IPersistentObject {
     public List readByExecutionCourseShifts(Integer executionCourseID)
             throws ExcepcaoPersistencia;
 
-    public List readByExecutionCourseAndType(Integer executionCourseID, TipoAula summaryType)
+    public List readByExecutionCourseAndType(Integer executionCourseID, net.sourceforge.fenixedu.domain.ShiftType summaryType)
             throws ExcepcaoPersistencia;
 
     public List readByExecutionCourseShiftsAndTypeLesson(Integer executionCourseID,
-            TipoAula summaryType) throws ExcepcaoPersistencia;
+            net.sourceforge.fenixedu.domain.ShiftType summaryType) throws ExcepcaoPersistencia;
 
     public List readByShift(Integer executionCourseID, Integer shiftID) throws ExcepcaoPersistencia;
 

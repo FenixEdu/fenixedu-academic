@@ -1,7 +1,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-
+<%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
 <logic:present name="siteView"> 
 
@@ -69,8 +69,10 @@
     	<tr>
 			<td><bean:message key="message.groupPropertiesShiftType"/>
 			<br><br></td>
-			<td><html:select property="shiftType">
-				<html:options name="shiftTypeValues" labelName="shiftTypeNames"/>
+			<td>
+			<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.ShiftType" bundle="ENUMERATION_RESOURCES"/>
+			 <html:select property="shiftType" >
+				<html:options collection="values" property="value" labelProperty="label"/>
 				</html:select>
 			</td>
 			

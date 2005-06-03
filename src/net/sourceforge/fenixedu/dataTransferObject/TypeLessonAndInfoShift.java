@@ -10,26 +10,26 @@ package net.sourceforge.fenixedu.dataTransferObject;
  * 
  * @author tfc130
  */
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 public class TypeLessonAndInfoShift extends InfoObject {
-    protected TipoAula _typeLesson;
+    protected ShiftType _typeLesson;
 
     protected InfoShift _infoShift;
 
     public TypeLessonAndInfoShift() {
     }
 
-    public TypeLessonAndInfoShift(TipoAula typeLesson, InfoShift infoShift) {
+    public TypeLessonAndInfoShift(ShiftType typeLesson, InfoShift infoShift) {
         setTypeLesson(typeLesson);
         setInfoShift(infoShift);
     }
 
-    public TipoAula getTypeLesson() {
+    public ShiftType getTypeLesson() {
         return _typeLesson;
     }
 
-    public void setTypeLesson(TipoAula typeLesson) {
+    public void setTypeLesson(ShiftType typeLesson) {
         _typeLesson = typeLesson;
     }
 

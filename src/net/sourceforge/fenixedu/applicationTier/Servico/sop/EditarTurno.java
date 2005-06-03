@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class EditarTurno implements IService {
@@ -108,7 +108,7 @@ public class EditarTurno implements IService {
 
     }
 
-    private void newShiftIsValid(InfoShift infoShiftOld, TipoAula newShiftType,
+    private void newShiftIsValid(InfoShift infoShiftOld, ShiftType newShiftType,
             InfoExecutionCourse newShiftExecutionCourse, Integer newShiftCapacity)
             throws FenixServiceException {
 
@@ -162,24 +162,24 @@ public class EditarTurno implements IService {
 
     }
 
-    private boolean newShiftTypeIsValid(IShift shift, TipoAula newShiftType, double shiftDuration) {
+    private boolean newShiftTypeIsValid(IShift shift, ShiftType newShiftType, double shiftDuration) {
         // Verify if shift total duration exceeds new shift type duration
-        if (newShiftType.equals(new TipoAula(TipoAula.TEORICA))) {
+        if (newShiftType.equals(ShiftType.TEORICA)) {
             if (shiftDuration > shift.getDisciplinaExecucao().getTheoreticalHours().doubleValue()) {
                 return false;
             }
         }
-        if (newShiftType.equals(new TipoAula(TipoAula.PRATICA))) {
+        if (newShiftType.equals(ShiftType.PRATICA)) {
             if (shiftDuration > shift.getDisciplinaExecucao().getPraticalHours().doubleValue()) {
                 return false;
             }
         }
-        if (newShiftType.equals(new TipoAula(TipoAula.TEORICO_PRATICA))) {
+        if (newShiftType.equals(ShiftType.TEORICO_PRATICA)) {
             if (shiftDuration > shift.getDisciplinaExecucao().getTheoPratHours().doubleValue()) {
                 return false;
             }
         }
-        if (newShiftType.equals(new TipoAula(TipoAula.LABORATORIAL))) {
+        if (newShiftType.equals(ShiftType.LABORATORIAL)) {
             if (shiftDuration > shift.getDisciplinaExecucao().getLabHours().doubleValue()) {
                 return false;
             }
@@ -191,22 +191,22 @@ public class EditarTurno implements IService {
             InfoExecutionCourse newShiftExecutionCourse, double shiftDuration) {
 
         // Verify if shift total duration exceeds new executionCourse uration
-        if (shift.getTipo().equals(new TipoAula(TipoAula.TEORICA))) {
+        if (shift.getTipo().equals(ShiftType.TEORICA)) {
             if (shiftDuration > newShiftExecutionCourse.getTheoreticalHours().doubleValue()) {
                 return false;
             }
         }
-        if (shift.getTipo().equals(new TipoAula(TipoAula.PRATICA))) {
+        if (shift.getTipo().equals(ShiftType.PRATICA)) {
             if (shiftDuration > newShiftExecutionCourse.getPraticalHours().doubleValue()) {
                 return false;
             }
         }
-        if (shift.getTipo().equals(new TipoAula(TipoAula.TEORICO_PRATICA))) {
+        if (shift.getTipo().equals(ShiftType.TEORICO_PRATICA)) {
             if (shiftDuration > newShiftExecutionCourse.getTheoPratHours().doubleValue()) {
                 return false;
             }
         }
-        if (shift.getTipo().equals(new TipoAula(TipoAula.LABORATORIAL))) {
+        if (shift.getTipo().equals(ShiftType.LABORATORIAL)) {
             if (shiftDuration > newShiftExecutionCourse.getLabHours().doubleValue()) {
                 return false;
             }

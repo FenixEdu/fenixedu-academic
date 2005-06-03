@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.base.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -49,14 +49,12 @@ public class EscolherAulasFormAction extends
             request.setAttribute("diasSemana", diasSemana);
 
             List tiposAula = new ArrayList();
-            tiposAula.add(new LabelValueBean("Teórica", (new Integer(TipoAula.TEORICA)).toString()));
-            tiposAula.add(new LabelValueBean("Prática", (new Integer(TipoAula.PRATICA)).toString()));
-            tiposAula.add(new LabelValueBean("Teórico-Prática", (new Integer(TipoAula.TEORICO_PRATICA))
-                    .toString()));
-            tiposAula.add(new LabelValueBean("Laboratorial", (new Integer(TipoAula.LABORATORIAL))
-                    .toString()));
-            tiposAula.add(new LabelValueBean("Dúvidas", (new Integer(TipoAula.DUVIDAS)).toString()));
-            tiposAula.add(new LabelValueBean("Reserva", (new Integer(TipoAula.RESERVA)).toString()));
+            tiposAula.add(new LabelValueBean("Teórica", ShiftType.TEORICA.name()));
+            tiposAula.add(new LabelValueBean("Prática", ShiftType.PRATICA.name()));
+            tiposAula.add(new LabelValueBean("Teórico-Prática", ShiftType.TEORICO_PRATICA.name() ));
+            tiposAula.add(new LabelValueBean("Laboratorial", ShiftType.LABORATORIAL.name()));
+            tiposAula.add(new LabelValueBean("Dúvidas", ShiftType.DUVIDAS.name()));
+            tiposAula.add(new LabelValueBean("Reserva", ShiftType.RESERVA.name()));
             request.setAttribute("tiposAula", tiposAula);
 
             List horas = new ArrayList();

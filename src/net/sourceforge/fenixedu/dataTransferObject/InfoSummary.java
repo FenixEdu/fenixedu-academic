@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateCompa
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
 import net.sourceforge.fenixedu.domain.ISummary;
 import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 /**
  * @author João Mota
@@ -32,7 +32,7 @@ public class InfoSummary extends InfoObject implements Comparable {
 
     private InfoExecutionCourse infoExecutionCourse;
 
-    private TipoAula summaryType;
+    private ShiftType summaryType;
 
     private InfoShift infoShift;
 
@@ -84,7 +84,7 @@ public class InfoSummary extends InfoObject implements Comparable {
      *             readed by ExecutionCourse object and if necessary by Summary
      *             Type.
      */
-    public TipoAula getSummaryType() {
+    public ShiftType getSummaryType() {
         return summaryType;
     }
 
@@ -98,7 +98,7 @@ public class InfoSummary extends InfoObject implements Comparable {
      *             readed by ExecutionCourse object and if necessary by Summary
      *             Type.
      */
-    public void setSummaryType(TipoAula summaryType) {
+    public void setSummaryType(ShiftType summaryType) {
         this.summaryType = summaryType;
     }
 

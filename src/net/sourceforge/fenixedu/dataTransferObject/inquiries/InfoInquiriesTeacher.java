@@ -15,9 +15,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.util.CopyUtils;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.inquiries.IInquiriesTeacher;
 import net.sourceforge.fenixedu.util.InquiriesUtil;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -43,7 +44,7 @@ public class InfoInquiriesTeacher extends InfoObject implements Comparable {
 	private Integer keyTeacher;
 	private InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes teacherOrNonAffiliatedTeacher;
     
-	final private List<TipoAula> classTypes = new ArrayList<TipoAula>();
+	final private List<ShiftType> classTypes = new ArrayList<ShiftType>();
     
 	private Integer studentAssiduity;
 	private Integer teacherAssiduity;
@@ -59,7 +60,7 @@ public class InfoInquiriesTeacher extends InfoObject implements Comparable {
     /**
      * @return Returns the classTypes.
      */
-    public List<TipoAula> getClassTypes() {
+    public List<ShiftType> getClassTypes() {
         return classTypes;
     }
     /**
@@ -373,7 +374,7 @@ public class InfoInquiriesTeacher extends InfoObject implements Comparable {
 	        this.setExecutionCourse(InfoExecutionCourse.newInfoFromDomain(inquiriesTeacher.getExecutionCourse()));
 	        this.setExecutionDegreeCourse(InfoExecutionDegree.newInfoFromDomain(inquiriesTeacher.getExecutionDegreeCourse()));
 	        this.setExecutionDegreeStudent(InfoExecutionDegree.newInfoFromDomain(inquiriesTeacher.getExecutionDegreeStudent()));
-			this.getClassTypes().add(new TipoAula(inquiriesTeacher.getClassType()));
+			this.getClassTypes().add(inquiriesTeacher.getShiftType());
 			
 			InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes teacher =
 				new InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes();
@@ -415,7 +416,7 @@ public class InfoInquiriesTeacher extends InfoObject implements Comparable {
         return result;
 	}
 	
-	public boolean hasClassType(Integer classType) {
-		return classTypes.contains(new TipoAula(classType));
+	public boolean hasClassType(String classType) {
+		return classTypes.contains(ShiftType.valueOf(classType));
 	}
 }

@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="net.sourceforge.fenixedu.util.TipoAula" %>
+<%@ page import="net.sourceforge.fenixedu.domain.ShiftType" %>
 <%@ page import="net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType" %>
 <%@ page import="net.sourceforge.fenixedu.util.AttendacyStateSelectionType" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse" %>
@@ -314,20 +314,20 @@ function cleanSelect(checkboxes) {
 			</logic:notEmpty>
 		   </logic:present>
 		   
-			<logic:iterate id="classType" type="net.sourceforge.fenixedu.util.TipoAula" name="classTypes">
+			<logic:iterate id="classType" type="net.sourceforge.fenixedu.domain.ShiftType" name="classTypes">
 			  <td class="listClasses-header" >
-				<bean:define id="classTypeInt" name="classType" property="tipo"/>
+				<bean:define id="classTypeInt" name="classType" property="name"/>
 
-				<logic:equal name="classTypeInt" value='<%= String.valueOf(TipoAula.TEORICA) %>' >
+				<logic:equal name="classTypeInt" value='<%= ShiftType.TEORICA.toString()  %>' >
 					<bean:message key="label.attends.shifts.theoretical"/>
 				</logic:equal>
-				<logic:equal name="classTypeInt" value='<%= String.valueOf(TipoAula.PRATICA) %>' >
+				<logic:equal name="classTypeInt" value='<%= ShiftType.PRATICA.toString() %>' >
 					<bean:message key="label.attends.shifts.practical"/>
 				</logic:equal>
-				<logic:equal name="classTypeInt" value='<%= String.valueOf(TipoAula.TEORICO_PRATICA) %>' >
+				<logic:equal name="classTypeInt" value='<%= ShiftType.TEORICO_PRATICA.toString() %>' >
 					<bean:message key="label.attends.shifts.theo-practical"/>
 				</logic:equal>
-				<logic:equal name="classTypeInt" value='<%= String.valueOf(TipoAula.LABORATORIAL) %>' >
+				<logic:equal name="classTypeInt" value='<%= ShiftType.LABORATORIAL.toString() %>' >
 					<bean:message key="label.attends.shifts.laboratory"/>
 				</logic:equal>
         	  </td>
@@ -469,7 +469,7 @@ function cleanSelect(checkboxes) {
 					</logic:notPresent>
 				</td>
 				
-				<logic:iterate id="classType" name="classTypes" type="TipoAula">
+				<logic:iterate id="classType" name="classTypes" type="ShiftType">
 		          <td class="listClasses">
 		            <bean:define id="map" name="attend" property="infoShifts" type="java.util.Map"/>
 

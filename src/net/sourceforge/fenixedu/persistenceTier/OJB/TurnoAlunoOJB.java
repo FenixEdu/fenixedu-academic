@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.ShiftStudent;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoAlunoPersistente;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -110,7 +110,7 @@ public class TurnoAlunoOJB extends PersistentObjectOJB implements ITurnoAlunoPer
     }
 
     public IShiftStudent readByStudentAndExecutionCourseAndLessonType(Integer studentOID,
-            Integer executionCourseOID, TipoAula lessonType) throws ExcepcaoPersistencia {
+            Integer executionCourseOID, ShiftType lessonType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
 
         criteria.addEqualTo("student.idInternal", studentOID);

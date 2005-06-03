@@ -54,7 +54,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
             /* Sort the list of shifts */
             ComparatorChain chainComparator = new ComparatorChain();
             chainComparator.addComparator(new BeanComparator("infoDisciplinaExecucao.nome"));
-            chainComparator.addComparator(new BeanComparator("tipo.tipo"));
+            chainComparator.addComparator(new BeanComparator("tipo"));
             chainComparator.addComparator(new BeanComparator("nome"));
             Collections.sort(infoShifts, chainComparator);
 
@@ -134,7 +134,7 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
         /* Sort the list of shifts */
         ComparatorChain chainComparator = new ComparatorChain();
         chainComparator.addComparator(new BeanComparator("infoDisciplinaExecucao.nome"));
-        chainComparator.addComparator(new BeanComparator("tipo.tipo"));
+        chainComparator.addComparator(new BeanComparator("tipo"));
         chainComparator.addComparator(new BeanComparator("nome"));
         Collections.sort(infoShifts, chainComparator);
 

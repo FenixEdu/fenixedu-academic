@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class AdicionarAula implements IService {
@@ -90,25 +90,25 @@ public class AdicionarAula implements IService {
         double hours = getTotalHoursOfShiftType(shift);
         double lessonDuration = (getLessonDurationInMinutes(lesson).doubleValue()) / 60;
 
-        if (shift.getTipo().equals(new TipoAula(TipoAula.TEORICA))) {
+        if (shift.getTipo().equals(ShiftType.TEORICA)) {
             if (hours == shift.getDisciplinaExecucao().getTheoreticalHours().doubleValue())
                 result.setMessageType(InfoShiftServiceResult.THEORETICAL_HOURS_LIMIT_REACHED);
             else if ((hours + lessonDuration) > shift.getDisciplinaExecucao().getTheoreticalHours()
                     .doubleValue())
                 result.setMessageType(InfoShiftServiceResult.THEORETICAL_HOURS_LIMIT_EXCEEDED);
-        } else if (shift.getTipo().equals(new TipoAula(TipoAula.PRATICA))) {
+        } else if (shift.getTipo().equals(ShiftType.PRATICA)) {
             if (hours == shift.getDisciplinaExecucao().getPraticalHours().doubleValue())
                 result.setMessageType(InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_REACHED);
             else if ((hours + lessonDuration) > shift.getDisciplinaExecucao().getPraticalHours()
                     .doubleValue())
                 result.setMessageType(InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_EXCEEDED);
-        } else if (shift.getTipo().equals(new TipoAula(TipoAula.TEORICO_PRATICA))) {
+        } else if (shift.getTipo().equals(ShiftType.TEORICO_PRATICA)) {
             if (hours == shift.getDisciplinaExecucao().getTheoPratHours().doubleValue())
                 result.setMessageType(InfoShiftServiceResult.THEO_PRAT_HOURS_LIMIT_REACHED);
             else if ((hours + lessonDuration) > shift.getDisciplinaExecucao().getTheoPratHours()
                     .doubleValue())
                 result.setMessageType(InfoShiftServiceResult.THEO_PRAT_HOURS_LIMIT_EXCEEDED);
-        } else if (shift.getTipo().equals(new TipoAula(TipoAula.LABORATORIAL))) {
+        } else if (shift.getTipo().equals(ShiftType.LABORATORIAL)) {
             if (hours == shift.getDisciplinaExecucao().getLabHours().doubleValue())
                 result.setMessageType(InfoShiftServiceResult.LAB_HOURS_LIMIT_REACHED);
             else if ((hours + lessonDuration) > shift.getDisciplinaExecucao().getLabHours()

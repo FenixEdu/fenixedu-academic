@@ -37,7 +37,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseReport;
 import net.sourceforge.fenixedu.util.NumberUtils;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -226,22 +226,22 @@ public class SearchExecutionCourses implements IService {
                     while (iterator.hasNext()) {
                         IShift shift = (IShift) iterator.next();
 
-                        if (shift.getTipo().equals(new TipoAula(TipoAula.TEORICA))) {
+                        if (shift.getTipo().equals(ShiftType.TEORICA)) {
                             theoreticalCapacity = new Integer(theoreticalCapacity.intValue()
                                     + shift.getLotacao().intValue());
-                        } else if (shift.getTipo().equals(new TipoAula(TipoAula.TEORICO_PRATICA))) {
+                        } else if (shift.getTipo().equals(ShiftType.TEORICO_PRATICA)) {
                             theoPraticalCapacity = new Integer(theoPraticalCapacity.intValue()
                                     + shift.getLotacao().intValue());
-                        } else if (shift.getTipo().equals(new TipoAula(TipoAula.DUVIDAS))) {
+                        } else if (shift.getTipo().equals(ShiftType.DUVIDAS)) {
                             doubtsCapacity = new Integer(doubtsCapacity.intValue()
                                     + shift.getLotacao().intValue());
-                        } else if (shift.getTipo().equals(new TipoAula(TipoAula.LABORATORIAL))) {
+                        } else if (shift.getTipo().equals(ShiftType.LABORATORIAL)) {
                             labCapacity = new Integer(labCapacity.intValue()
                                     + shift.getLotacao().intValue());
-                        } else if (shift.getTipo().equals(new TipoAula(TipoAula.PRATICA))) {
+                        } else if (shift.getTipo().equals(ShiftType.PRATICA)) {
                             praticalCapacity = new Integer(praticalCapacity.intValue()
                                     + shift.getLotacao().intValue());
-                        } else if (shift.getTipo().equals(new TipoAula(TipoAula.RESERVA))) {
+                        } else if (shift.getTipo().equals(ShiftType.RESERVA)) {
                             reserveCapacity = new Integer(reserveCapacity.intValue()
                                     + shift.getLotacao().intValue());
                         }

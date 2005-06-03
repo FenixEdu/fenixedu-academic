@@ -72,7 +72,7 @@ public class EditStudentGroupShift implements IService {
             }
 
             if(groupProperties.getShiftType() == null || 
-            	   (groupProperties.getShiftType().getTipo().intValue() != shift.getTipo().getTipo().intValue())){
+            	   (!groupProperties.getShiftType().equals(shift.getTipo()))) {
             	throw new InvalidChangeServiceException();
             }
             

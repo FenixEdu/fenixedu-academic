@@ -79,7 +79,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -1580,7 +1581,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
         
         String shiftCodeString = request.getParameter("shiftCode");
-        
+       
         ISiteComponent viewStudentGroup = new InfoSiteStudentGroup();
         readSiteView(request, viewStudentGroup, null, studentGroupCode, null);
         
@@ -1628,6 +1629,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     {
         readSiteView(request, null, null, null, null);
         List shiftTypeValues = new ArrayList();
+     
         shiftTypeValues.add(new Integer(1));
         shiftTypeValues.add(new Integer(2));
         shiftTypeValues.add(new Integer(3));
@@ -1639,6 +1641,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         shiftTypeNames.add("Teórico-Prático");
         shiftTypeNames.add("Laboratorial");
         shiftTypeNames.add("Sem Turno");
+        
         request.setAttribute("shiftTypeValues", shiftTypeValues);
         request.setAttribute("shiftTypeNames", shiftTypeNames);
         return mapping.findForward("insertGroupProperties");
@@ -1666,8 +1669,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         InfoGroupProperties infoGroupProperties = new InfoGroupProperties();
         infoGroupProperties.setName(name);
         infoGroupProperties.setProjectDescription(projectDescription);
-        if(!shiftType.equals("5")){
-            infoGroupProperties.setShiftType(new TipoAula(new Integer(shiftType)));	
+        //if(!shiftType.equals("5")){
+
+        if(!shiftType.equals("Sem Turno") && !shiftType.equals("SEM TURNO")){     
+            infoGroupProperties.setShiftType(ShiftType.valueOf(shiftType));	
         }
         
         Integer maximumCapacity = null;
@@ -1818,20 +1823,13 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             saveErrors(request, actionErrors);
             return prepareViewExecutionCourseProjects(mapping, form, request, response);
         }
-        
         List shiftTypeValues = new ArrayList();
-        shiftTypeValues.add(new Integer(1));
-        shiftTypeValues.add(new Integer(2));
-        shiftTypeValues.add(new Integer(3));
-        shiftTypeValues.add(new Integer(4));
-        shiftTypeValues.add(new Integer(5));
-        
-        List shiftTypeNames = new ArrayList();
-        shiftTypeNames.add("Teórica");
-        shiftTypeNames.add("Prática");
-        shiftTypeNames.add("Teórico-Prática");
-        shiftTypeNames.add("Laboratorial");
-        shiftTypeNames.add("Sem Turno");
+        shiftTypeValues.add(new LabelValueBean("TEORICA", ShiftType.TEORICA.name()));
+        shiftTypeValues.add(new LabelValueBean("PRATICA", ShiftType.PRATICA.name()));
+        shiftTypeValues.add(new LabelValueBean("TEORICO_PRATICA", ShiftType.TEORICO_PRATICA.name()));
+        shiftTypeValues.add(new LabelValueBean("LABORATORIAL", ShiftType.LABORATORIAL.name()));
+        shiftTypeValues.add(new LabelValueBean("SEM TURNO", "SEM TURNO"));
+        request.setAttribute("shiftTypeValues", shiftTypeValues);
         
         List enrolmentPolicyValues = new ArrayList();
         enrolmentPolicyValues.add(new Integer(1));
@@ -1843,29 +1841,13 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         
         InfoGroupProperties infoGroupProperties = ((InfoSiteGroupProperties) siteView.getComponent())
         .getInfoGroupProperties();
-        
+
         Integer enrolmentPolicy = infoGroupProperties.getEnrolmentPolicy().getType();
         enrolmentPolicyValues.remove(enrolmentPolicy.intValue() - 1);
         String enrolmentPolicyName = enrolmentPolicyNames.remove(enrolmentPolicy.intValue() - 1)
         .toString();
-        
-        Integer shiftType = null;
-        String shiftTypeName = null;
-        TipoAula tipoAula = infoGroupProperties.getShiftType();
-        if(tipoAula!=null){
-            shiftType = tipoAula.getTipo();
-            shiftTypeValues.remove(shiftType.intValue() - 1);
-            shiftTypeName = shiftTypeNames.remove(shiftType.intValue() - 1).toString();
-        }else
-        {	shiftType = new Integer(5);
-        shiftTypeValues.remove(4);
-        shiftTypeName = shiftTypeNames.remove(4).toString();
-        }
-        
-        request.setAttribute("shiftTypeName", shiftTypeName);
-        request.setAttribute("shiftTypeValue", shiftType);
-        request.setAttribute("shiftTypeValues", shiftTypeValues);
-        request.setAttribute("shiftTypeNames", shiftTypeNames);
+
+        request.setAttribute("infoGroupProperties", infoGroupProperties);
         request.setAttribute("enrolmentPolicyName", enrolmentPolicyName);
         request.setAttribute("enrolmentPolicyValue", enrolmentPolicy);
         request.setAttribute("enrolmentPolicyValues", enrolmentPolicyValues);
@@ -2007,8 +1989,11 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         
         infoGroupProperties.setName(name);
         infoGroupProperties.setProjectDescription(projectDescription);
-        if(!shiftType.equals("5")){
-            infoGroupProperties.setShiftType(new TipoAula(new Integer(shiftType)));	
+       // if(!shiftType.equals("5")){
+
+        if(!shiftType.equals("Sem Turno") && !shiftType.equals("SEM TURNO")){
+            //new TipoAula(new Integer(shiftType))
+            infoGroupProperties.setShiftType(ShiftType.valueOf(shiftType));	
         }
         Integer objectCode = getObjectCode(request);
         Object args[] = {objectCode, infoGroupProperties};
@@ -2187,7 +2172,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String enrolmentPolicyName = ((InfoSiteGroupProperties)siteView.getComponent()).getInfoGroupProperties().getEnrolmentPolicy().getTypeFullName();
         request.setAttribute("enrolmentPolicyName", enrolmentPolicyName);
         
-        TipoAula shiftType = ((InfoSiteGroupProperties)siteView.getComponent()).getInfoGroupProperties().getShiftType();
+        ShiftType shiftType = ((InfoSiteGroupProperties)siteView.getComponent()).getInfoGroupProperties().getShiftType();
         String shiftTypeName = "Sem Turno";
         if(shiftType!=null){
             shiftTypeName = shiftType.getFullNameTipoAula();	 

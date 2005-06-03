@@ -10,22 +10,17 @@ import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.INonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 /**
  * @author João Fialho & Rita Ferreira
  * 
  */
 public interface IInquiriesTeacher extends IDomainObject {
-    /**
-     * @return Returns the classType.
-     */
-    public Integer getClassType();
-
-    /**
-     * @param classType The classType to set.
-     */
-    public void setClassType(Integer classType);
-
+    public ShiftType getShiftType();
+    
+    public void setShiftType(ShiftType shiftType);
+    
     /**
      * @return Returns the executionCourse.
      */

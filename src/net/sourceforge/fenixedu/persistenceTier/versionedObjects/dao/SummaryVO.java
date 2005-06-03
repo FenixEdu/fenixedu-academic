@@ -13,10 +13,11 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.ISummary;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
-import net.sourceforge.fenixedu.util.TipoAula;
 
 /**
  * @author mrsp and jdnf
@@ -29,7 +30,7 @@ public class SummaryVO extends VersionedObjectsBase implements IPersistentSummar
     }
     
     public List readByExecutionCourseShifts(final Integer executionCourseID) throws ExcepcaoPersistencia {
-        final IExecutionCourse executionCourse = (IExecutionCourse) readByOID(ExecutionCourse.class, executionCourseID);      
+        final IExecutionCourse executionCourse = (IExecutionCourse) readByOID(ExecutionCourse.class, executionCourseID);
         List summaries = new ArrayList();        
         List shifts = executionCourse.getAssociatedShifts();
         Iterator iter = shifts.iterator();        
@@ -40,7 +41,7 @@ public class SummaryVO extends VersionedObjectsBase implements IPersistentSummar
         return summaries;
     }
     
-    public List readByExecutionCourseAndType(final Integer executionCourseID, TipoAula summaryType)
+    public List readByExecutionCourseAndType(final Integer executionCourseID, ShiftType summaryType)
     throws ExcepcaoPersistencia {
        
         List summaries = readByExecutionCourse(executionCourseID);
@@ -49,24 +50,24 @@ public class SummaryVO extends VersionedObjectsBase implements IPersistentSummar
                
         while(iter.hasNext()){
             ISummary summary = (ISummary) iter.next();
-            if(summary.getSummaryType() != null){
-	            if(summary.getSummaryType().getTipo().equals(summaryType.getTipo()))
-	                summariesAux.add(summary);
-            }
+           if(summary.getSummaryType() != null){
+	            if(summary.getSummaryType().equals(summaryType))
+                summariesAux.add(summary);
+        }
         }
         
         return summariesAux;
     }
     
-    public List readByExecutionCourseShiftsAndTypeLesson(final Integer executionCourseID, TipoAula summaryType) throws ExcepcaoPersistencia {
+    public List readByExecutionCourseShiftsAndTypeLesson(final Integer executionCourseID, ShiftType summaryType) throws ExcepcaoPersistencia {
         
         List summaries = readByExecutionCourseShifts(executionCourseID);
         Iterator iter = summaries.iterator();
         List summariesAux = new ArrayList();
         
         while(iter.hasNext()){
-            ISummary summary = (ISummary) iter.next();
-            if(summary.getShift().getTipo().equals(summaryType.getTipo()))
+            Summary summary = (Summary) iter.next();
+               if(summary.getShift().getTipo().equals(summaryType))
                 summariesAux.add(summary);
         }       
         
@@ -115,8 +116,9 @@ public class SummaryVO extends VersionedObjectsBase implements IPersistentSummar
             ISummary summary = (ISummary) iter.next();
             if(summary.getProfessorship() == null)
                 if((summary.getTeacher() != null) || (summary.getTeacherName() != null))
-                    summariesAux.add(summary);            
-        }        
+                summariesAux.add(summary);            
+        }
+        
         return summariesAux;
     }
     
@@ -127,13 +129,13 @@ public class SummaryVO extends VersionedObjectsBase implements IPersistentSummar
         ISummary summary = null;
        
         if(shift != null){
-	        List summaries = shift.getAssociatedSummaries();
-	        Iterator iter = summaries.iterator();	        	       
-	        while(iter.hasNext()){
+        List summaries = shift.getAssociatedSummaries();
+        Iterator iter = summaries.iterator();
+        while(iter.hasNext()){
 	            ISummary summary2 = (ISummary) iter.next();
-	            if((summary2.getSummaryDate().equals(summaryDate)) && (summary2.getSummaryHour().equals(summaryHour)))
-	                summary = summary2;            
-	        }        
+            if((summary2.getSummaryDate().equals(summaryDate)) && (summary2.getSummaryHour().equals(summaryHour)))
+                summary = summary2;            
+        }        
         }
         return summary;
     }

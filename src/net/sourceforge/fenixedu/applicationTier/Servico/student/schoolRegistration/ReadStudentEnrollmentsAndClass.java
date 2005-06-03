@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoAlunoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -120,8 +120,8 @@ public class ReadStudentEnrollmentsAndClass implements IService {
      */
     private List filterStudentShifts(List studentShifts) {
         List filteredStudentShifts = (List) CollectionUtils.select(studentShifts, new Predicate() {
-            List validTypes = Arrays.asList(new TipoAula[] { new TipoAula(TipoAula.PRATICA),
-                    new TipoAula(TipoAula.TEORICO_PRATICA) });
+            List validTypes = Arrays.asList(new ShiftType[] { ShiftType.PRATICA,
+                    ShiftType.TEORICO_PRATICA });
 
             public boolean evaluate(Object input) {
                 ShiftStudent shiftStudent = (ShiftStudent) input;

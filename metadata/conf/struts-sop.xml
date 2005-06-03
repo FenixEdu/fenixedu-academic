@@ -80,7 +80,7 @@
         <form-property name="page" type="java.lang.Integer"/>
         <form-property name="nome" type="java.lang.String"/>
         <form-property name="courseInitials" type="java.lang.String"/>
-        <form-property name="tipoAula" type="java.lang.Integer"/>
+        <form-property name="tipoAula" type="java.lang.String"/>
         <form-property name="lotacao" type="java.lang.Integer"/>
       </form-bean>
 
@@ -207,7 +207,7 @@
                           dynamic="true">
         <form-property name="nome" type="java.lang.String"/>
         <form-property name="courseInitials" type="java.lang.String"/>
-        <form-property name="tipoAula" type="java.lang.Integer"/>
+        <form-property name="tipoAula" type="java.lang.String"/>
         <form-property name="lotacao" type="java.lang.Integer"/>
       </form-bean>
       
@@ -898,7 +898,7 @@
         <forward name="Voltar" path="/gestaoHorarios.do"/>
       </action>
       
-      <action path="/prepararVerTurno"
+     <action path="/prepararVerTurno"
              input="/manipularTurnos.jsp"
              type="net.sourceforge.fenixedu.presentationTier.Action.sop.PrepararVerTurnoFormAction">
          <forward name="Sucesso" path="/verTurno.jsp"/>

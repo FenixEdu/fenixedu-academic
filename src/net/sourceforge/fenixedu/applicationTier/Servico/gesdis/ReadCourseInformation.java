@@ -71,7 +71,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseReport;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -81,7 +81,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- * 
+ *  
  */
 public class ReadCourseInformation implements IService {
 
@@ -144,13 +144,13 @@ public class ReadCourseInformation implements IService {
         List infoLessons = getInfoLessons(executionCourse, sp);
         infoSiteCourseInformation.setInfoLessons(getFilteredInfoLessons(infoLessons));
         infoSiteCourseInformation.setNumberOfTheoLessons(getNumberOfLessons(infoLessons,
-                TipoAula.TEORICA, sp));
+                ShiftType.TEORICA.name(), sp));
         infoSiteCourseInformation.setNumberOfPratLessons(getNumberOfLessons(infoLessons,
-                TipoAula.PRATICA, sp));
+                ShiftType.PRATICA.name(), sp));
         infoSiteCourseInformation.setNumberOfTheoPratLessons(getNumberOfLessons(infoLessons,
-                TipoAula.TEORICO_PRATICA, sp));
+                ShiftType.TEORICO_PRATICA.name(), sp));
         infoSiteCourseInformation.setNumberOfLabLessons(getNumberOfLessons(infoLessons,
-                TipoAula.LABORATORIAL, sp));
+                ShiftType.LABORATORIAL.name(), sp));
         IPersistentCourseReport persistentCourseReport = sp.getIPersistentCourseReport();
         ICourseReport courseReport = persistentCourseReport
                 .readCourseReportByExecutionCourse(executionCourse.getIdInternal());
@@ -354,16 +354,16 @@ public class ReadCourseInformation implements IService {
      * @param i
      * @return
      */
-    private Integer getNumberOfLessons(List infoLessons, int lessonType, ISuportePersistente sp)
+    private Integer getNumberOfLessons(List infoLessons, String lessonType, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
 
-        final int lessonTypeForPredicate = lessonType;
+        final String lessonTypeForPredicate = lessonType;
         ITurnoPersistente persistentShift = sp.getITurnoPersistente();
         IAulaPersistente persistentLesson = sp.getIAulaPersistente();
         List lessonsOfType = (List) CollectionUtils.select(infoLessons, new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                if (((InfoLesson) arg0).getTipo().getTipo().intValue() == lessonTypeForPredicate) {
+                if (((InfoLesson) arg0).getTipo().name() == lessonTypeForPredicate) {
                     return true;
                 }
                 return false;
@@ -395,9 +395,9 @@ public class ReadCourseInformation implements IService {
                      * if (shift == null) { //shift = aux; shift = shift2; } if
                      * (shift == aux) {
                      */
-                    temp.add(infoLesson);
+                        temp.add(infoLesson);
                     // }
-                }
+                    }
 
             }
             return new Integer(temp.size());
@@ -416,19 +416,19 @@ public class ReadCourseInformation implements IService {
      */
     private List getFilteredInfoLessons(List infoLessons) {
         List filteredInfoLessons = new ArrayList();
-        InfoLesson infoLesson = getFilteredInfoLessonByType(infoLessons, new TipoAula(TipoAula.TEORICA));
+        InfoLesson infoLesson = getFilteredInfoLessonByType(infoLessons, ShiftType.TEORICA);
         if (infoLesson != null)
             filteredInfoLessons.add(infoLesson);
 
-        infoLesson = getFilteredInfoLessonByType(infoLessons, new TipoAula(TipoAula.PRATICA));
+        infoLesson = getFilteredInfoLessonByType(infoLessons, ShiftType.PRATICA);
         if (infoLesson != null)
             filteredInfoLessons.add(infoLesson);
 
-        infoLesson = getFilteredInfoLessonByType(infoLessons, new TipoAula(TipoAula.LABORATORIAL));
+        infoLesson = getFilteredInfoLessonByType(infoLessons, ShiftType.LABORATORIAL);
         if (infoLesson != null)
             filteredInfoLessons.add(infoLesson);
 
-        infoLesson = getFilteredInfoLessonByType(infoLessons, new TipoAula(TipoAula.TEORICO_PRATICA));
+        infoLesson = getFilteredInfoLessonByType(infoLessons, ShiftType.TEORICO_PRATICA);
         if (infoLesson != null)
             filteredInfoLessons.add(infoLesson);
         return filteredInfoLessons;
@@ -440,8 +440,8 @@ public class ReadCourseInformation implements IService {
      * @param infoLessons
      * @return
      */
-    private InfoLesson getFilteredInfoLessonByType(List infoLessons, TipoAula type) {
-        final TipoAula lessonType = type;
+    private InfoLesson getFilteredInfoLessonByType(List infoLessons, ShiftType type) {
+        final ShiftType lessonType = type;
         InfoLesson infoLesson = (InfoLesson) CollectionUtils.find(infoLessons, new Predicate() {
             public boolean evaluate(Object o) {
                 InfoLesson infoLesson = (InfoLesson) o;

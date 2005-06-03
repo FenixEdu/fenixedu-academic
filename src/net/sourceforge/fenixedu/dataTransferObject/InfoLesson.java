@@ -16,7 +16,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 public class InfoLesson extends InfoShowOccupation implements ISmsDTO {
     protected DiaSemana _diaSemana;
@@ -28,7 +28,7 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO {
 
     protected Calendar _inicio;
 
-    protected TipoAula _tipo;
+    protected ShiftType _tipo;
 
     protected InfoShift _infoShift;
 
@@ -47,7 +47,7 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO {
      * @param infoSala
      * @param infoDisciplinaExecucao
      */
-    public InfoLesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, TipoAula tipo,
+    public InfoLesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, ShiftType tipo,
             InfoRoom infoSala, InfoRoomOccupation infoRoomOccupation, InfoShift shift/*
                                                                                       * ,
                                                                                       * InfoExecutionCourse
@@ -108,7 +108,7 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO {
         return _inicio;
     }
 
-    public TipoAula getTipo() {
+    public ShiftType getTipo() {
         return _tipo;
     }
 
@@ -143,7 +143,7 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO {
         _inicio = inicio;
     }
 
-    public void setTipo(TipoAula tipo) {
+    public void setTipo(ShiftType tipo) {
         _tipo = tipo;
     }
 

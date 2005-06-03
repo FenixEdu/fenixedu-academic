@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 /**
  * @author Ana e Ricardo
@@ -15,7 +15,7 @@ public abstract class InfoShowOccupation extends InfoObject implements ISiteComp
 
     public abstract InfoShift getInfoShift();
 
-    public abstract TipoAula getTipo();
+    public abstract ShiftType getTipo();
 
     public abstract InfoRoomOccupation getInfoRoomOccupation();
 

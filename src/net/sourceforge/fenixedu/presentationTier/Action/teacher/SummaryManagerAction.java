@@ -33,7 +33,7 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -59,12 +59,13 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         Integer executionCourseId = getObjectCode(request);
         request.setAttribute("objectCode", executionCourseId);
         
-        Integer lessonType = getLessonType(request);
+        String lessonType = getLessonType(request);
+
         
         Integer shiftId = getShiftId(request);
         
         Integer professorShipId = getProfessorShipId(request, actionForm, userView, executionCourseId);
-        
+      
         SiteView siteView = getSiteView(userView, executionCourseId, lessonType, shiftId, professorShipId);
         
         selectChoices(request,
@@ -86,13 +87,16 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
      * @return
      * @throws FenixServiceException
      */
-    protected SiteView getSiteView(IUserView userView, Integer executionCourseId, Integer lessonType,
+    protected SiteView getSiteView(IUserView userView, Integer executionCourseId, String lessonType,
             Integer shiftId, Integer professorShipId) throws FenixServiceException, FenixFilterException {
+  
         Object[] args = { executionCourseId, lessonType, shiftId, professorShipId };
         SiteView siteView = null;
+       
         siteView = (SiteView) ServiceUtils.executeService(userView, "ReadSummaries", args);
+
         return siteView;
-    }
+    } 
     
     /**
      * @param request
@@ -136,19 +140,20 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
      * @param request
      * @return
      */
-    protected Integer getLessonType(HttpServletRequest request) {
-        Integer lessonType = null;
+    protected String getLessonType(HttpServletRequest request) {
+        String lessonType = null;
         if (request.getParameter("bySummaryType") != null
                 && request.getParameter("bySummaryType").length() > 0) {
-            lessonType = new Integer(request.getParameter("bySummaryType"));
+            lessonType = (String)request.getParameter("bySummaryType");
         }
         return lessonType;
     }
     
     private void selectChoices(HttpServletRequest request, InfoSiteSummaries summaries,
-            Integer lessonType) {
-        if (lessonType != null && lessonType.intValue() != 0) {
-            final TipoAula lessonTypeSelect = new TipoAula(lessonType.intValue());
+            String lessonType) {
+        //&& lessonType.intValue() != 0
+        if (lessonType != null && !lessonType.equals("0")) {
+            final ShiftType lessonTypeSelect = ShiftType.valueOf(lessonType);
             List infoShiftsOnlyType = (List) CollectionUtils.select(summaries.getInfoShifts(),
                     new Predicate() {
                 
@@ -232,7 +237,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         }
         
         DynaActionForm actionForm = (DynaActionForm) form;
-        
+                 
         if(actionForm.get("summaryDateInputOption").equals("on"))
             request.setAttribute("checked", "");
         
@@ -589,7 +594,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             
             return showSummaries(mapping, form, request, response);
         }
-        
+                            
         if(summaryForm.get("editor").equals("") || (summaryForm.get("editor").equals("true"))){
             request.setAttribute("verEditor", "true");            
         }   

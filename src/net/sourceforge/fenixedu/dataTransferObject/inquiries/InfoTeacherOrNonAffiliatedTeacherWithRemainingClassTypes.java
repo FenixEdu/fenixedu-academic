@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.IDomainObject;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -26,8 +26,9 @@ public class InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes extends
 	private InfoNonAffiliatedTeacher nonAffiliatedTeacher;
 	private String teacherName;
 
-	final private List<TipoAula> remainingClassTypes = new ArrayList<TipoAula>();
+	final private List<ShiftType> remainingClassTypes = new ArrayList<ShiftType>();
 	private Boolean hasEvaluations = false;
+
 	
 	public InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes(InfoObject infoTeacherOrNonAffiliatedTeacher, InfoExecutionCourse infoExecutionCourse) {
 
@@ -46,16 +47,16 @@ public class InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes extends
 		}
 		
 		if(infoExecutionCourse.getTheoreticalHours().doubleValue() > 0) {
-			this.remainingClassTypes.add(new TipoAula(TipoAula.TEORICA));
+			this.remainingClassTypes.add(ShiftType.TEORICA);
 		}
 		if(infoExecutionCourse.getPraticalHours().doubleValue() > 0) {
-			this.remainingClassTypes.add(new TipoAula(TipoAula.PRATICA));
+			this.remainingClassTypes.add(ShiftType.PRATICA);
 		}
 		if(infoExecutionCourse.getLabHours().doubleValue() > 0) {
-			this.remainingClassTypes.add(new TipoAula(TipoAula.LABORATORIAL));
+			this.remainingClassTypes.add(ShiftType.LABORATORIAL);
 		}
 		if(infoExecutionCourse.getTheoPratHours().doubleValue() > 0) {
-			this.remainingClassTypes.add(new TipoAula(TipoAula.TEORICO_PRATICA));			
+			this.remainingClassTypes.add(ShiftType.TEORICO_PRATICA);			
 		}
 		
 	}
@@ -68,7 +69,7 @@ public class InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes extends
 	/**
 	 * @return Returns the remainingClassTypes.
 	 */
-	public List<TipoAula> getRemainingClassTypes() {
+	public List<ShiftType> getRemainingClassTypes() {
 		return remainingClassTypes;
 	}
 
@@ -120,7 +121,7 @@ public class InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes extends
 		this.teacherName = teacherName;
 	}
 	
-	
+
 
 	/**
 	 * @return Returns the hasEvaluations.

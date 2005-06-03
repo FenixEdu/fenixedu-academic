@@ -12,12 +12,15 @@
 	<bean:define id="shifts" name="component" property="infoShifts" />
 	<bean:define id="professorships" name="component" property="infoProfessorships" />
 
+
 	<h2><bean:message key="label.summaries" /></h2>
 
 	<html:form action="/viewSiteSummaries">
 		<html:hidden property="page" value="1"/>
 		<html:hidden property="method" value="summaries"/>
 		<html:hidden property="objectCode" value="<%= objectCode.toString() %>"/>
+        
+
 
 		<table class="tab_simple" cellspacing="2" cellpadding="0">
 			<tr>
@@ -25,7 +28,7 @@
 				<td>
 					<html:select property="bySummaryType" onchange="this.form.method.value='summaries';this.form.page.value=0;this.form.submit();">
 						<html:option  value="0" key="label.showBy.all" />
-						<html:options collection="lessonTypes" property="tipo" labelProperty="fullNameTipoAula"/>
+						<html:options collection="lessonTypes" property="name" labelProperty="fullNameTipoAula"/>
 					</html:select>		
 				</td>	
 			</tr>

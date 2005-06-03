@@ -236,7 +236,7 @@
         </var>
       </field>
 
-      <field property="tipoAula" depends="required,integer,range">
+      <field property="tipoAula" depends="required">
         <arg0 key="property.aula.type"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -309,7 +309,7 @@
         </var>
       </field>
 
-      <field property="tipoAula" depends="required,integer,range">
+      <field property="tipoAula" depends="required">
         <arg0 key="property.aula.type"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -571,7 +571,7 @@
       <field property="courseInitials" depends="required">
         <arg0 key="property.course"/>
       </field>
-      <field property="tipoAula" depends="required,integer,range">
+      <field property="tipoAula" depends="required">
         <arg0 key="property.aula.type"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -696,7 +696,7 @@
       <field property="courseInitials" depends="required" page="1">
         <arg0 key="property.course"/>
       </field>
-      <field property="tipoAula" depends="required,integer,range" page="1">
+      <field property="tipoAula" depends="required" page="1">
         <arg0 key="property.aula.type"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        

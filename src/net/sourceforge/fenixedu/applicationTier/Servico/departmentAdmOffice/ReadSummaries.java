@@ -32,7 +32,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -44,7 +44,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadSummaries implements IService {
 
-    public SiteView run(Integer teacherNumber, Integer executionCourseId, Integer summaryType,
+    public SiteView run(Integer teacherNumber, Integer executionCourseId, String summaryType,
             Integer shiftId) throws FenixServiceException, ExcepcaoPersistencia {
 
         final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -71,7 +71,7 @@ public class ReadSummaries implements IService {
         for (final Iterator iterator = summaries.iterator(); iterator.hasNext(); ) {
             final ISummary summary = (ISummary) iterator.next();
 
-            if ((summaryType == null || (summary.getSummaryType() != null && summaryType.equals(summary.getSummaryType().getTipo())))
+            if ((summaryType == null || (summary.getSummaryType() != null && summaryType.equals(summary.getSummaryType())))
 
                     && (shiftId == null || (summary.getShift() != null && shiftId.equals(summary.getShift().getIdInternal())))
 
@@ -139,18 +139,18 @@ public class ReadSummaries implements IService {
 
         if (executionCourse.getTheoreticalHours() != null
                 && executionCourse.getTheoreticalHours().intValue() > 0) {
-            lessonTypes.add(new TipoAula(1));
+            lessonTypes.add(ShiftType.TEORICA);
         }
         if (executionCourse.getTheoPratHours() != null
                 && executionCourse.getTheoPratHours().intValue() > 0) {
-            lessonTypes.add(new TipoAula(3));
+            lessonTypes.add(ShiftType.TEORICO_PRATICA);
         }
         if (executionCourse.getPraticalHours() != null
                 && executionCourse.getPraticalHours().intValue() > 0) {
-            lessonTypes.add(new TipoAula(2));
+            lessonTypes.add(ShiftType.PRATICA);
         }
         if (executionCourse.getLabHours() != null && executionCourse.getLabHours().intValue() > 0) {
-            lessonTypes.add(new TipoAula(4));
+            lessonTypes.add(ShiftType.LABORATORIAL);
         }
 
         return lessonTypes;

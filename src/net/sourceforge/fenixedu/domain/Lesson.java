@@ -7,13 +7,15 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.util.date.TimePeriod;
 
 public class Lesson extends Lesson_Base {
     protected Calendar _inicio;
 
     protected Calendar _fim;
+
+    protected ShiftType _tipo;
 
     /**
      * Construtor sem argumentos público requerido pela moldura de objectos
@@ -26,7 +28,8 @@ public class Lesson extends Lesson_Base {
         setIdInternal(idInternal);
     }
 
-    public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, TipoAula tipo, IRoom sala,
+   
+    public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, ShiftType tipo, IRoom sala,
             IRoomOccupation roomOccupation, IShift shift) {
         setDiaSemana(diaSemana);
         setInicio(inicio);
@@ -51,6 +54,14 @@ public class Lesson extends Lesson_Base {
 
     public void setFim(Calendar fim) {
         _fim = fim;
+    }
+
+    public ShiftType getTipo() {
+        return _tipo;
+    }
+
+    public void setTipo(ShiftType tipo) {
+        _tipo = tipo;
     }
 
     public String toString() {
@@ -83,5 +94,4 @@ public class Lesson extends Lesson_Base {
         TimePeriod timePeriod = new TimePeriod(this.getInicio(), this.getFim());
         return timePeriod.hours().doubleValue();
     }
-
 }

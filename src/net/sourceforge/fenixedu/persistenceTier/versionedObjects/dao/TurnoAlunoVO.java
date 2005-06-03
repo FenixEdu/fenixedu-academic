@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoAlunoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 public class TurnoAlunoVO extends VersionedObjectsBase implements ITurnoAlunoPersistente {
 
@@ -192,7 +192,7 @@ public class TurnoAlunoVO extends VersionedObjectsBase implements ITurnoAlunoPer
     }
 
     public IShiftStudent readByStudentAndExecutionCourseAndLessonType(Integer studentOID,
-            Integer executionCourseOID, TipoAula lessonType) throws ExcepcaoPersistencia {
+            Integer executionCourseOID, ShiftType lessonType) throws ExcepcaoPersistencia {
         IStudent student = (IStudent) readByOID(Student.class, studentOID);
         List<IShiftStudent> shiftStudents = student.getShiftStudents();
         for (IShiftStudent shiftStudent : shiftStudents) {

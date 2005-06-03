@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.INonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -38,7 +39,7 @@ public class InquiriesTeacher extends DomainObject implements IInquiriesTeacher 
     private Integer keyNonAffiliatedTeacher;
     private INonAffiliatedTeacher nonAffiliatedTeacher;
     
-    private Integer classType;
+    private ShiftType shiftType;
     
     private Integer studentAssiduity;
     private Integer teacherAssiduity;
@@ -52,18 +53,6 @@ public class InquiriesTeacher extends DomainObject implements IInquiriesTeacher 
     
     
     
-    /**
-     * @return Returns the classType.
-     */
-    public Integer getClassType() {
-        return classType;
-    }
-    /**
-     * @param classType The classType to set.
-     */
-    public void setClassType(Integer classType) {
-        this.classType = classType;
-    }
     /**
      * @return Returns the executionCourse.
      */
@@ -344,6 +333,14 @@ public class InquiriesTeacher extends DomainObject implements IInquiriesTeacher 
 	public void setNonAffiliatedTeacher(INonAffiliatedTeacher nonAffiliatedTeacher) {
 		this.nonAffiliatedTeacher = nonAffiliatedTeacher;
 	}
+    public ShiftType getShiftType() {
+        return shiftType;
+    }
+    
+    public void setShiftType(ShiftType shiftType) {
+        this.shiftType = shiftType;
+    }
+    
 	
 	
 }

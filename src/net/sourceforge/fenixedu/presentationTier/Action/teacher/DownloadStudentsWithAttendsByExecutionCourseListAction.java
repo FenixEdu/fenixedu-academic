@@ -37,8 +37,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.AttendacyStateSelectionType;
-import net.sourceforge.fenixedu.util.TipoAula;
-
+import net.sourceforge.fenixedu.domain.ShiftType;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -177,16 +176,16 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
         if (classTypes != null && !classTypes.isEmpty()) {
             Iterator ctIterator = classTypes.iterator();
             while (ctIterator.hasNext()) {
-                TipoAula classType = (TipoAula) ctIterator.next();
+                ShiftType classType = (ShiftType) ctIterator.next();
 
                 String classTypeString = new String();
-                if (classType.equals(new TipoAula(TipoAula.TEORICA))) {
+                if (classType.equals(ShiftType.TEORICA)) {
                     classTypeString = THEORETICAL;
-                } else if (classType.equals(new TipoAula(TipoAula.PRATICA))) {
+                } else if (classType.equals(ShiftType.PRATICA)) {
                     classTypeString = PRACTICAL;
-                } else if (classType.equals(new TipoAula(TipoAula.LABORATORIAL))) {
+                } else if (classType.equals(ShiftType.LABORATORIAL)) {
                     classTypeString = LABORATORIAL;
-                } else if (classType.equals(new TipoAula(TipoAula.TEORICO_PRATICA))) {
+                } else if (classType.equals(ShiftType.TEORICO_PRATICA)) {
                     classTypeString = THEO_PRACTICAL;
                 }
 
@@ -275,7 +274,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
                 Iterator ctIterator = classTypes.iterator();
                 Map studentShifts = attendacy.getInfoShifts();
                 while (ctIterator.hasNext()) {
-                    TipoAula classType = (TipoAula) ctIterator.next();
+                    ShiftType classType = (ShiftType) ctIterator.next();
                     String shiftNameString = "";
                     InfoShift shift = (InfoShift) studentShifts.get(classType.getSiglaTipoAula());
 

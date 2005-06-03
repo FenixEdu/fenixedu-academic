@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShiftGroupStatistics;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -248,17 +248,17 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction {
         Iterator iterator = infoExecutionCourseOccupancy.getInfoShifts().iterator();
         while (iterator.hasNext()) {
             InfoShift infoShift = (InfoShift) iterator.next();
-            if (infoShift.getTipo().equals(new TipoAula(TipoAula.TEORICA))) {
+            if (infoShift.getTipo().equals(ShiftType.TEORICA)) {
                 theoreticalShifts.add(infoShift);
-            } else if (infoShift.getTipo().equals(new TipoAula(TipoAula.PRATICA))) {
+            } else if (infoShift.getTipo().equals(ShiftType.PRATICA)) {
                 praticalShifts.add(infoShift);
-            } else if (infoShift.getTipo().equals(new TipoAula(TipoAula.DUVIDAS))) {
+            } else if (infoShift.getTipo().equals(ShiftType.DUVIDAS)) {
                 doubtsShifts.add(infoShift);
-            } else if (infoShift.getTipo().equals(new TipoAula(TipoAula.LABORATORIAL))) {
+            } else if (infoShift.getTipo().equals(ShiftType.LABORATORIAL)) {
                 labShifts.add(infoShift);
-            } else if (infoShift.getTipo().equals(new TipoAula(TipoAula.RESERVA))) {
+            } else if (infoShift.getTipo().equals(ShiftType.RESERVA)) {
                 reserveShifts.add(infoShift);
-            } else if (infoShift.getTipo().equals(new TipoAula(TipoAula.TEORICO_PRATICA))) {
+            } else if (infoShift.getTipo().equals(ShiftType.TEORICO_PRATICA)) {
                 theoPraticalShifts.add(infoShift);
             }
         }

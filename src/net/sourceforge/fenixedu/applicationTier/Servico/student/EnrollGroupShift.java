@@ -84,7 +84,7 @@ public class EnrollGroupShift implements IService {
                     newShiftCode);
             
             if(groupProperties.getShiftType() == null || studentGroup.getShift()!=null ||
-             	   (groupProperties.getShiftType().getTipo().intValue() != shift.getTipo().getTipo().intValue())){
+             	   (!groupProperties.getShiftType().equals(shift.getTipo()))){
              	throw new InvalidStudentNumberServiceException();
              }
             

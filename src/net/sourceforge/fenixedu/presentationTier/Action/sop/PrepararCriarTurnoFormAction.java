@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.presentationTier.Action.sop.base.FenixExecutionDegreeAndCurricularYearContextAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -32,14 +32,12 @@ public class PrepararCriarTurnoFormAction extends FenixExecutionDegreeAndCurricu
             SessionUtils.getExecutionCourses(request);
             List tiposAula = new ArrayList();
             tiposAula.add(new LabelValueBean("escolher", ""));
-            tiposAula.add(new LabelValueBean("Teorica", (new Integer(TipoAula.TEORICA)).toString()));
-            tiposAula.add(new LabelValueBean("Pratica", (new Integer(TipoAula.PRATICA)).toString()));
-            tiposAula.add(new LabelValueBean("Teorico-Pratica", (new Integer(TipoAula.TEORICO_PRATICA))
-                    .toString()));
-            tiposAula.add(new LabelValueBean("Laboratorial", (new Integer(TipoAula.LABORATORIAL))
-                    .toString()));
-            tiposAula.add(new LabelValueBean("Duvidas", (new Integer(TipoAula.DUVIDAS)).toString()));
-            tiposAula.add(new LabelValueBean("Reserva", (new Integer(TipoAula.RESERVA)).toString()));
+            tiposAula.add(new LabelValueBean("Teorica", ShiftType.TEORICA.name()));
+            tiposAula.add(new LabelValueBean("Pratica", ShiftType.PRATICA.name()));
+            tiposAula.add(new LabelValueBean("Teorico-Pratica", ShiftType.TEORICO_PRATICA.name()));
+            tiposAula.add(new LabelValueBean("Laboratorial", ShiftType.LABORATORIAL.name()));
+            tiposAula.add(new LabelValueBean("Duvidas", ShiftType.DUVIDAS.name()));
+            tiposAula.add(new LabelValueBean("Reserva", ShiftType.RESERVA.name()));
             request.setAttribute("tiposAula", tiposAula);
 
             return mapping.findForward("Sucesso");

@@ -165,6 +165,8 @@
          column="KEY_SUPERIOR_SECTION"
          jdbc-type="INTEGER"
       />
+    
+    
       <field-descriptor id="6"
          name="lastModifiedDate"
          column="LAST_MODIFIED_DATE"
@@ -511,13 +513,13 @@
          name="teacher"
          class-ref="net.sourceforge.fenixedu.domain.Teacher"
          >
-		<foreignkey field-ref="keyTeacher"/>
+	<foreignkey field-ref="keyTeacher"/>
     </reference-descriptor>
 	<reference-descriptor
          name="executionCourse"
          class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
          >
-		<foreignkey field-ref="keyExecutionCourse"/>
+	<foreignkey field-ref="keyExecutionCourse"/>
     </reference-descriptor>
 </class-descriptor>	
 
@@ -568,7 +570,7 @@
 	<field-descriptor id="8"
         name="summaryType"
         column="SUMMARY_TYPE"
-        jdbc-type="INTEGER"
+        jdbc-type="VARCHAR"
          conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TipoAula2EnumTipoAulaFieldConversion"
 	/>	
 	
@@ -816,7 +818,7 @@
 	<field-descriptor id="8"
 		name="shiftType"
         column="SHIFT_TYPE"
-    	jdbc-type="INTEGER"
+    	jdbc-type="VARCHAR"
     	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TipoAula2EnumTipoAulaFieldConversion"
     />
     

@@ -12,4 +12,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 public interface IPersistentGrantOrientationTeacher extends IPersistentObject {
     public IGrantOrientationTeacher readActualGrantOrientationTeacherByContract(Integer contractId,
             Integer idInternal) throws ExcepcaoPersistencia;
+//    public IGrantOrientationTeacher readActualGrantOrientationTeacherByContractId(Integer contractId)
+//            throws ExcepcaoPersistencia ;
 }

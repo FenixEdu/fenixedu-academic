@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.IOnlineTest;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.EvaluationType;
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 /**
  * @author Ângela
@@ -82,7 +82,7 @@ public class InfoEvaluation extends InfoShowOccupation implements ISiteComponent
         return null;
     }
 
-    public TipoAula getTipo() {
+    public ShiftType getTipo() {
         return null;
     }
 

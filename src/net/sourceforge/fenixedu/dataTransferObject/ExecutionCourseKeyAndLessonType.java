@@ -10,10 +10,10 @@ package net.sourceforge.fenixedu.dataTransferObject;
  * 
  * @author tfc130
  */
-import net.sourceforge.fenixedu.util.TipoAula;
+import net.sourceforge.fenixedu.domain.ShiftType;
 
 public class ExecutionCourseKeyAndLessonType extends InfoObject {
-    protected TipoAula _tipoAula;
+    protected ShiftType _tipoAula;
 
     protected String _sigla;
 
@@ -23,16 +23,16 @@ public class ExecutionCourseKeyAndLessonType extends InfoObject {
     public ExecutionCourseKeyAndLessonType() {
     }
 
-    public ExecutionCourseKeyAndLessonType(TipoAula tipoAula, String sigla) {
+    public ExecutionCourseKeyAndLessonType(ShiftType tipoAula, String sigla) {
         setTipoAula(tipoAula);
         setSigla(sigla);
     }
 
-    public TipoAula getTipoAula() {
+    public ShiftType getTipoAula() {
         return _tipoAula;
     }
 
-    public void setTipoAula(TipoAula tipoAula) {
+    public void setTipoAula(ShiftType tipoAula) {
         _tipoAula = tipoAula;
     }
 
