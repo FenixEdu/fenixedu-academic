@@ -37,7 +37,9 @@ valueType net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassificatio
 valueType net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState as ReimbursementGuideState;
 valueType net.sourceforge.fenixedu.util.SituationName as SituationName;
 valueType net.sourceforge.fenixedu.domain.credits.ServiceExemptionType as ServiceExemptionType;
+valueType net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization as Specialization;
 valueType net.sourceforge.fenixedu.util.State as State;
+valueType net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState as StudentCurricularPlanState;
 valueType net.sourceforge.fenixedu.util.StudentState as StudentState;
 
 
@@ -2128,7 +2130,6 @@ class net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport extends net.sou
 }
 
 class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourceforge.fenixedu.domain.DomainObject {
-    
     Integer branchKey;
     Double  classification;
     Integer completedCourses;
@@ -2142,43 +2143,40 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
     Date startDate;
     Integer studentKey;
     Date when;
+    StudentCurricularPlanState currentState;
+    Specialization specialization;
     
     interface "
-    
-        public boolean areNewAreasCompatible(net.sourceforge.fenixedu.domain.IBranch specializationArea, net.sourceforge.fenixedu.domain.IBranch secundaryArea)
-            throws net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia, net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException, net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-    
-        public java.util.List getAllStudentEnrolledEnrollmentsInExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
-        public java.util.List getAllStudentEnrollmentsInExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
-        public java.util.List getAprovedEnrolmentsInExecutionPeriod(final net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
-        public boolean getCanChangeSpecializationArea();
-        public Integer getCreditsInSecundaryArea();
-        public Integer getCreditsInSpecializationArea();
-        public net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState getCurrentState();
-        public Integer getCurricularCourseAcumulatedEnrollments(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
-        public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType getCurricularCourseEnrollmentType(
-                net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse, net.sourceforge.fenixedu.domain.IExecutionPeriod currentExecutionPeriod);
-        public java.util.List getCurricularCoursesToEnroll(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod) throws net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
-        public Integer getMaximumNumberOfAcumulatedEnrollments();
-        public Integer getMaximumNumberOfCoursesToEnroll();
-        public Integer getMinimumNumberOfCoursesToEnroll();
-        public int getNumberOfApprovedCurricularCourses();
-        public int getNumberOfEnrolledCurricularCourses();
-        public net.sourceforge.fenixedu.domain.IBranch getSecundaryBranch();
-        public net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization getSpecialization();
+    public boolean areNewAreasCompatible(net.sourceforge.fenixedu.domain.IBranch specializationArea, net.sourceforge.fenixedu.domain.IBranch secundaryArea)
+        throws net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia, net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException, net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 
-        public boolean isCurricularCourseApproved(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
-        public boolean isCurricularCourseEnrolled(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
-        public boolean isCurricularCourseEnrolledInExecutionPeriod(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse,
-                net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
-        public boolean isCurricularCourseApprovedInCurrentOrPreviousPeriod(ICurricularCourse course, IExecutionPeriod executionPeriod);
-		public boolean isCurricularCourseApprovedWithoutEquivalencesInCurrentOrPreviousPeriod(ICurricularCourse course, IExecutionPeriod executionPeriod);
-        
-        public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea);
-        public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea);
-        public void setCurrentState(net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState currentState);
-        public void setSecundaryBranch(net.sourceforge.fenixedu.domain.IBranch secundaryBranch);
-        public void setSpecialization(net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization specialization);
+    public java.util.List getAllStudentEnrolledEnrollmentsInExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
+    public java.util.List getAllStudentEnrollmentsInExecutionPeriod(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
+    public java.util.List getAprovedEnrolmentsInExecutionPeriod(final net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
+    public boolean getCanChangeSpecializationArea();
+    public Integer getCreditsInSecundaryArea();
+    public Integer getCreditsInSpecializationArea();
+    public Integer getCurricularCourseAcumulatedEnrollments(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
+    public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType getCurricularCourseEnrollmentType(
+            net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse, net.sourceforge.fenixedu.domain.IExecutionPeriod currentExecutionPeriod);
+    public java.util.List getCurricularCoursesToEnroll(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod) throws net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
+    public Integer getMaximumNumberOfAcumulatedEnrollments();
+    public Integer getMaximumNumberOfCoursesToEnroll();
+    public Integer getMinimumNumberOfCoursesToEnroll();
+    public int getNumberOfApprovedCurricularCourses();
+    public int getNumberOfEnrolledCurricularCourses();
+    public net.sourceforge.fenixedu.domain.IBranch getSecundaryBranch();
+
+    public boolean isCurricularCourseApproved(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
+    public boolean isCurricularCourseEnrolled(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse);
+    public boolean isCurricularCourseEnrolledInExecutionPeriod(net.sourceforge.fenixedu.domain.ICurricularCourse curricularCourse,
+            net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
+    public boolean isCurricularCourseApprovedInCurrentOrPreviousPeriod(ICurricularCourse course, IExecutionPeriod executionPeriod);
+	public boolean isCurricularCourseApprovedWithoutEquivalencesInCurrentOrPreviousPeriod(ICurricularCourse course, IExecutionPeriod executionPeriod);
+    
+    public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea);
+    public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea);
+    public void setSecundaryBranch(net.sourceforge.fenixedu.domain.IBranch secundaryBranch);
     "
 }
 
