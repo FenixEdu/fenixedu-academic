@@ -48,7 +48,7 @@ public class ExecutionPeriodVO extends VersionedObjectsBase implements IPersiste
         Collection executionPeriods = readAll(ExecutionPeriod.class);     
         for (Iterator iter = executionPeriods.iterator(); iter.hasNext();) {
             IExecutionPeriod element = (IExecutionPeriod) iter.next();
-            if((element.getExecutionYear().getYear().equals(year)) && (element.getSemester() == semester))
+            if((element.getExecutionYear().getYear().equals(year)) && (element.getSemester().equals(semester)))
                 return element;
         }        
         return null;
