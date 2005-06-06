@@ -35,7 +35,7 @@
     		</tr>
      	<logic:iterate id="studentCP" name="studentList">
         	<bean:define id="studentLink">
-        		<bean:write name="link"/><bean:write name="studentCP" property="idInternal"/>&amp;executionDegreeId=<bean:write name="infoExecutionDegree" property="idInternal"/>&amp;degreeCurricularPlanID=<%= degreeCurricularPlanID%>
+        		<bean:write name="link"/><bean:write name="studentCP" property="idInternal"/>&amp;degreeCurricularPlanID=<%= degreeCurricularPlanID%>
         	</bean:define>
         <tr>
 	        <logic:equal name="viewPhoto" value="true">
