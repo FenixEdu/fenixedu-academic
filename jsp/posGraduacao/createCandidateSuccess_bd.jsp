@@ -58,7 +58,34 @@
             	<bean:message key='<%=idType.toString()%>'/>
             </td>
           </tr>
+          
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+          
+        <!-- Edit Candidate Link -->
+		<bean:define id="editCandidateLink">
+			/editCandidate.do?method=prepareEdit&candidateID=<bean:write name="newCandidate" property="idInternal"/>
+		</bean:define>		
+		<tr>
+		  	<td><html:link page='<%= editCandidateLink %>'><bean:message key="link.masterDegree.administrativeOffice.editCandidate" /></html:link></td>
+		</tr>
 
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+		
+		<tr>
+			<td class="infoop" colspan="2"><bean:message key="label.candidate.changePasswordInfo"/></td>
+		</tr>
+		<!-- Change Password Link -->
+		<bean:define id="changePasswordLink">
+			/editCandidate.do?method=changePassword&candidateID=<bean:write name="newCandidate" property="idInternal"/>
+		</bean:define>
+		<tr>
+		  	<td><html:link page='<%= changePasswordLink %>' target="_blank"><bean:message key="link.masterDegree.administrativeOffice.changePassword" /></html:link></td>
+		</tr>
+          
       </logic:present>
     </table>
 
