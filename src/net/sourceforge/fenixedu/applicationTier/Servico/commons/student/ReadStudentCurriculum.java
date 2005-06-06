@@ -25,12 +25,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadStudentCurriculum implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public ReadStudentCurriculum() {
-    }
-
     public List run(Integer executionDegreeCode, Integer studentCurricularPlanID)
             throws ExcepcaoInexistente, FenixServiceException {
         ISuportePersistente sp = null;
