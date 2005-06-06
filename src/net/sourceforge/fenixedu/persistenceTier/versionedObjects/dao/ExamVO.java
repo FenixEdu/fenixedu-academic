@@ -45,8 +45,6 @@ public class ExamVO extends VersionedObjectsBase implements IPersistentExam {
 
     public List readByRoomAndExecutionPeriod(String roomName, String executionPeriodName, String year)
             throws ExcepcaoPersistencia {
-
-        System.out.println("Entering vo dao");
         List<IExecutionYear> executionYears = (List<IExecutionYear>) readAll(ExecutionYear.class);
         IExecutionYear executionYearResult = null;
         IExecutionPeriod executionPeriodResult = null;
@@ -60,7 +58,7 @@ public class ExamVO extends VersionedObjectsBase implements IPersistentExam {
 
         List<IExecutionPeriod> executionPeriods = executionYearResult.getExecutionPeriods();
         for (IExecutionPeriod executionPeriod : executionPeriods) {
-            if (executionPeriod.getName().equals(executionPeriodName)) {
+            if (executionPeriod.getName().equalsIgnoreCase(executionPeriodName)) {
                 executionPeriodResult = executionPeriod;
                 break;
             }
@@ -76,7 +74,7 @@ public class ExamVO extends VersionedObjectsBase implements IPersistentExam {
             for (IExam exam : exams) {
                 List<IRoom> rooms = exam.getAssociatedRooms();
                 for (IRoom room : rooms) {
-                    if (room.getNome().equals(roomName)) {
+                    if (room.getNome().equalsIgnoreCase(roomName)) {
 
                         if (!hashSet.contains(exam.getIdInternal())) {
                             result.add(exam);
@@ -87,7 +85,6 @@ public class ExamVO extends VersionedObjectsBase implements IPersistentExam {
                 }
             }
         }
-        System.out.println("Exiting vo dao.");
         return result;
     }
 

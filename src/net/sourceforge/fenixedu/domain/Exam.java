@@ -38,8 +38,8 @@ public class Exam extends Exam_Base {
     }
 
     public boolean equals(Object obj) {
-        if (obj instanceof Exam) {
-            Exam examObj = (Exam) obj;
+        if (obj instanceof IExam) {
+            IExam examObj = (IExam) obj;
             return this.getIdInternal().equals(examObj.getIdInternal());
         }
 
