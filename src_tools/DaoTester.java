@@ -28,13 +28,10 @@ public class DaoTester extends ObjectFenixOJB {
         System.out.println("Hello world.");
         try {
             System.out.println("Hellooooooo");
-            PersistenceBroker persistenceBroker = PersistenceBrokerFactory.defaultPersistenceBroker();
-            persistenceBroker.beginTransaction();
-            //persistentSupport.iniciarTransaccao();
+            persistentSupport.iniciarTransaccao();
             System.out.println("Transaction started.");
             instance.doTest();
-            persistenceBroker.commitTransaction();
-            //persistentSupport.confirmarTransaccao();
+            persistentSupport.confirmarTransaccao();
         } catch (ExcepcaoPersistencia e) {
             throw new RuntimeException(e);
         }
