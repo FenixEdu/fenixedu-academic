@@ -49,7 +49,7 @@ public class InfoAttendWithEnrollment extends InfoObject implements Serializable
         boolean resultado = false;
         if (obj instanceof InfoFrequenta) {
             InfoFrequenta frequenta = (InfoFrequenta) obj;
-            resultado = //getCodigoInterno().equals(((Attends)obj).getCodigoInterno());
+            resultado =
             getAluno().equals(frequenta.getAluno())
                     && getDisciplinaExecucao().equals(getDisciplinaExecucao());
         }
