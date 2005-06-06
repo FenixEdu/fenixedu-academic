@@ -556,4 +556,29 @@
 		</javac>
 	</target>
 
+	<target name="run">
+		<javac destdir="${build.home.webinf.classes}"
+			   classpath="${build.home.webinf.classes}"
+               extdirs="${lib}"
+               debug="${compile.debug}"
+               optimize="${compile.optimize}"
+               deprecation="${compile.deprecation}"
+               encoding="${encoding}"
+			   nowarn="true">
+			<src path="src_tools"/>
+		</javac>
+
+		<java classname="DaoTester" fork="true">
+			<classpath>
+				<pathelement path="${build.home.webinf.classes}"/>
+            	<fileset dir="${env.JBOSS_HOME}/client">
+                    <include name="*.jar"/>
+                </fileset>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+			</classpath>
+		</java>
+	</target>
+
 </project>

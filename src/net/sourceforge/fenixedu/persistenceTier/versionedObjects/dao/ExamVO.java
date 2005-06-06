@@ -46,6 +46,7 @@ public class ExamVO extends VersionedObjectsBase implements IPersistentExam {
     public List readByRoomAndExecutionPeriod(String roomName, String executionPeriodName, String year)
             throws ExcepcaoPersistencia {
 
+        System.out.println("Entering vo dao");
         List<IExecutionYear> executionYears = (List<IExecutionYear>) readAll(ExecutionYear.class);
         IExecutionYear executionYearResult = null;
         IExecutionPeriod executionPeriodResult = null;
@@ -86,6 +87,7 @@ public class ExamVO extends VersionedObjectsBase implements IPersistentExam {
                 }
             }
         }
+        System.out.println("Exiting vo dao.");
         return result;
     }
 

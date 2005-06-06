@@ -33,6 +33,7 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 
     public List readByRoomAndExecutionPeriod(String roomName, String executionPeriodName, String year)
             throws ExcepcaoPersistencia {
+        System.out.println("Entering ojb dao");
         Criteria criteria = new Criteria();
         criteria.addEqualTo("associatedRoomOccupation.room.nome", roomName);
         criteria
@@ -46,6 +47,7 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
                 examsWithoutRepetition.add(exam);
             }
         }
+        System.out.println("Exiting ojb dao.");
         return examsWithoutRepetition;
     }
 
