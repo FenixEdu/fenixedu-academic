@@ -51,6 +51,9 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author Susana Fernandes
  */
 public class InsertExercise implements IService {
+
+    private static final long FILE_SIZE_LIMIT = 2^20;
+
     private String path = new String();
 
     public InsertExercise() {
@@ -62,7 +65,8 @@ public class InsertExercise implements IService {
         int xmlNumber = 0;
         this.path = path.replace('\\', '/');
         try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory
+                    .getDefaultPersistenceSupport();
             IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
                     .getIPersistentExecutionCourse();
             IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
@@ -163,12 +167,12 @@ public class InsertExercise implements IService {
                     + path.concat("WEB-INF/ims/imsmd2_rootv1p2.dtd"));
             String auxFile = new String();
 
-            //			<!DOCTYPE questestinterop SYSTEM "ims_qtiasiv1p2p1.dtd" [
-            //			<!ELEMENT ims_render_object (response_label+)>
-            //			<!ATTLIST ims_render_object
-            //					shuffle (Yes|No) 'No'
-            //					orientation (Row|Column) #REQUIRED>
-            //			]>
+            // <!DOCTYPE questestinterop SYSTEM "ims_qtiasiv1p2p1.dtd" [
+            // <!ELEMENT ims_render_object (response_label+)>
+            // <!ATTLIST ims_render_object
+            // shuffle (Yes|No) 'No'
+            // orientation (Row|Column) #REQUIRED>
+            // ]>
 
             int index = metadataFile.indexOf("<!DOCTYPE");
             if (index != -1) {
@@ -202,73 +206,73 @@ public class InsertExercise implements IService {
         return result.toString();
     }
 
-    //	private String changeDocumentType(String file, boolean metadata) throws
+    // private String changeDocumentType(String file, boolean metadata) throws
     // FenixServiceException
-    //	{
-    //		TransformerFactory tf = TransformerFactory.newInstance();
-    //		java.io.StringWriter result = new java.io.StringWriter();
-    //		try
-    //		{
-    //			URL xsl = new URL("file:///" +
+    // {
+    // TransformerFactory tf = TransformerFactory.newInstance();
+    // java.io.StringWriter result = new java.io.StringWriter();
+    // try
+    // {
+    // URL xsl = new URL("file:///" +
     // path.concat("WEB-INF/ims/changeDocumentType.xsl"));
-    //			String doctypePublic = null;
-    //			String doctypeSystem = null;
-    //			if (metadata)
-    //			{
-    //				doctypePublic = new String("-//Technical Superior Institute//DTD Test
+    // String doctypePublic = null;
+    // String doctypeSystem = null;
+    // if (metadata)
+    // {
+    // doctypePublic = new String("-//Technical Superior Institute//DTD Test
     // Metadata 1.1//EN");
-    //				doctypeSystem = new String("file:///" +
+    // doctypeSystem = new String("file:///" +
     // path.concat("WEB-INF/ims/imsmd2_rootv1p2.dtd"));
-    //			}
-    //			else
-    //			{
-    //				doctypePublic =
-    //					new String("-//Technical Superior Institute//DTD Test XmlDocument
+    // }
+    // else
+    // {
+    // doctypePublic =
+    // new String("-//Technical Superior Institute//DTD Test XmlDocument
     // 1.1//EN");
-    //				doctypeSystem = new String("file:///" +
+    // doctypeSystem = new String("file:///" +
     // path.concat("WEB-INF/ims/qtiasiv1p2.dtd"));
-    //			}
+    // }
     //
-    //			String auxFile = new String();
-    //			int index = file.indexOf("<!DOCTYPE");
-    //			if (index != -1)
-    //			{
-    //				auxFile = file.substring(0, index);
-    //				int index2 = file.indexOf(">", index) + 1;
-    //				auxFile = file.substring(index2, file.length());
-    //			}
-    //			file = auxFile;
-    //			Transformer transformer = tf.newTransformer(new
+    // String auxFile = new String();
+    // int index = file.indexOf("<!DOCTYPE");
+    // if (index != -1)
+    // {
+    // auxFile = file.substring(0, index);
+    // int index2 = file.indexOf(">", index) + 1;
+    // auxFile = file.substring(index2, file.length());
+    // }
+    // file = auxFile;
+    // Transformer transformer = tf.newTransformer(new
     // StreamSource(xsl.openStream()));
-    //			transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, doctypePublic);
-    //			transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, doctypeSystem);
-    //			transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-LATIN-1");
-    //			Source source = new StreamSource(new StringReader(file));
-    //			transformer.transform(source, new StreamResult(result));
-    //		}
-    //		catch (javax.xml.transform.TransformerConfigurationException e)
-    //		{
-    //			throw new FenixServiceException(e);
-    //		}
-    //		catch (javax.xml.transform.TransformerException e)
-    //		{
-    //			throw new FenixServiceException(e);
-    //		}
-    //		catch (FileNotFoundException e)
-    //		{
-    //			throw new FenixServiceException(e);
-    //		}
-    //		catch (IOException e)
-    //		{
-    //			throw new FenixServiceException(e);
-    //		}
-    //		catch (Exception e)
-    //		{
-    //			throw new FenixServiceException(e);
-    //		}
+    // transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, doctypePublic);
+    // transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, doctypeSystem);
+    // transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-LATIN-1");
+    // Source source = new StreamSource(new StringReader(file));
+    // transformer.transform(source, new StreamResult(result));
+    // }
+    // catch (javax.xml.transform.TransformerConfigurationException e)
+    // {
+    // throw new FenixServiceException(e);
+    // }
+    // catch (javax.xml.transform.TransformerException e)
+    // {
+    // throw new FenixServiceException(e);
+    // }
+    // catch (FileNotFoundException e)
+    // {
+    // throw new FenixServiceException(e);
+    // }
+    // catch (IOException e)
+    // {
+    // throw new FenixServiceException(e);
+    // }
+    // catch (Exception e)
+    // {
+    // throw new FenixServiceException(e);
+    // }
     //
-    //		return result.toString();
-    //	}
+    // return result.toString();
+    // }
 
     private List getXmlFilesList(FormFile xmlZipFile) {
         List xmlFilesList = new ArrayList();
@@ -276,23 +280,27 @@ public class InsertExercise implements IService {
 
         try {
             if (xmlZipFile.getContentType().equals("text/xml")) {
-                xmlFilesList.add(new LabelValueBean(xmlZipFile.getFileName(), new String(xmlZipFile
-                        .getFileData(), "ISO-8859-1")));
-                //						changeDocumentType(new String(xmlZipFile.getFileData(),
-                // "ISO-8859-1"), false)));
+                if (xmlZipFile.getFileSize() <= FILE_SIZE_LIMIT) {
+                    xmlFilesList.add(new LabelValueBean(xmlZipFile.getFileName(), new String(xmlZipFile
+                            .getFileData(), "ISO-8859-1")));
+                    // changeDocumentType(new String(xmlZipFile.getFileData(),
+                    // "ISO-8859-1"), false)));
+                }
             } else {
                 zipFile = new ZipInputStream(xmlZipFile.getInputStream());
                 while (true) {
 
                     ZipEntry entry = zipFile.getNextEntry();
-                    String xmlString = new String();
-                    if (entry == null)
-                        break;
-                    byte[] b = new byte[1000];
-                    int readed = 0;
-                    while ((readed = zipFile.read(b)) > -1)
-                        xmlString = xmlString.concat(new String(b, 0, readed, "ISO-8859-1"));
-                    xmlFilesList.add(new LabelValueBean(entry.getName(), xmlString));
+                    if (entry.getSize() <= FILE_SIZE_LIMIT) {
+                        String xmlString = new String();
+                        if (entry == null)
+                            break;
+                        byte[] b = new byte[1000];
+                        int readed = 0;
+                        while ((readed = zipFile.read(b)) > -1)
+                            xmlString = xmlString.concat(new String(b, 0, readed, "ISO-8859-1"));
+                        xmlFilesList.add(new LabelValueBean(entry.getName(), xmlString));
+                    }
                 }
                 zipFile.close();
             }
