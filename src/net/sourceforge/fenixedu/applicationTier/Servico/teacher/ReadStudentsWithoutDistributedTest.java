@@ -10,7 +10,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
-import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.DistributedTest;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IDistributedTest;
@@ -44,7 +43,7 @@ public class ReadStudentsWithoutDistributedTest implements IService {
                 .readStudentsByDistributedTest(distributedTest);
         Iterator it = attendList.iterator();
         while (it.hasNext()) {
-            IAttends attend = (Attends) it.next();
+            IAttends attend = (IAttends) it.next();
 
             if (!studentList.contains(attend.getAluno()))
                 infoStudentList.add(InfoStudentWithInfoPerson.newInfoFromDomain(attend.getAluno()));

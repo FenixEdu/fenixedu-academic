@@ -10,7 +10,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudent;
@@ -98,7 +97,7 @@ public class ReadStudentsByIdArray implements IService {
 
                 Iterator iterStudent = attendList.listIterator();
                 while (iterStudent.hasNext()) {
-                    IAttends attend = (Attends) iterStudent.next();
+                    IAttends attend = (IAttends) iterStudent.next();
                     InfoStudent infoStudent = InfoStudent.newInfoFromDomain(attend.getAluno());
                     studentsList.add(infoStudent);
                 }

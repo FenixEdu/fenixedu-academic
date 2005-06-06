@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithInfoExecutionCourseAndInfoLessons;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.InfoShiftEnrollment;
-import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IAttends;
@@ -145,7 +144,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
 
             Iterator iterator = attendList.iterator();
             while (iterator.hasNext()) {
-                IAttends attend = (Attends) iterator.next();
+                IAttends attend = (IAttends) iterator.next();
                 IExecutionCourse executionCourse = attend.getDisciplinaExecucao();
                 if (executionCourse != null
                         && executionCourse.getExecutionPeriod() != null
