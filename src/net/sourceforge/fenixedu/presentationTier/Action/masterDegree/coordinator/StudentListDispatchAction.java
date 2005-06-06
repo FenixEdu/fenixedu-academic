@@ -7,22 +7,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
-
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -41,15 +40,15 @@ public class StudentListDispatchAction extends DispatchAction {
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
             Integer degreeCurricularPlanID = null;
-            if(request.getParameter("degreeCurricularPlanID") != null){
+            if (request.getParameter("degreeCurricularPlanID") != null) {
                 degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
                 request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
             }
-            
+
             List result = null;
 
             try {
-                Object args[] = { degreeCurricularPlanID, DegreeType.MASTER_DEGREE};
+                Object args[] = { degreeCurricularPlanID, DegreeType.MASTER_DEGREE };
                 result = (List) ServiceManagerServiceFactory.executeService(userView,
                         "ReadStudentsFromDegreeCurricularPlan", args);
 
@@ -58,26 +57,10 @@ public class StudentListDispatchAction extends DispatchAction {
             } catch (NonExistingServiceException e) {
                 throw new NonExistingActionException("error.exception.noStudents", "");
             }
-
             BeanComparator numberComparator = new BeanComparator("infoStudent.number");
             Collections.sort(result, numberComparator);
 
             request.setAttribute(SessionConstants.STUDENT_LIST, result);
-
-            InfoExecutionDegree infoExecutionDegreeForRequest = null;
-            try {
-                Object args[] = { degreeCurricularPlanID };
-                infoExecutionDegreeForRequest = (InfoExecutionDegree) ServiceManagerServiceFactory
-                        .executeService(userView, "ReadActiveExecutionDegreebyDegreeCurricularPlanID", args);
-            } catch (NonExistingServiceException e) {
-
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
-            }
-
-            if (infoExecutionDegreeForRequest != null) {
-                request.setAttribute("infoExecutionDegree", infoExecutionDegreeForRequest);
-            }
 
             String value = request.getParameter("viewPhoto");
             if (value != null && value.equals("true")) {
@@ -98,7 +81,7 @@ public class StudentListDispatchAction extends DispatchAction {
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         Integer degreeCurricularPlanID = null;
-        if(request.getParameter("degreeCurricularPlanID") != null){
+        if (request.getParameter("degreeCurricularPlanID") != null) {
             degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
@@ -119,19 +102,6 @@ public class StudentListDispatchAction extends DispatchAction {
         BeanComparator nameComparator = new BeanComparator("name");
         Collections.sort(result, nameComparator);
 
-        InfoExecutionDegree infoExecutionDegree = null;
-        try {
-            infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory
-                    .executeService(userView, "ReadActiveExecutionDegreebyDegreeCurricularPlanID", args);
-        } catch (NonExistingServiceException e) {
-
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
-
-         request.setAttribute("executionYear", infoExecutionDegree.getInfoExecutionYear().getYear());
-         request.setAttribute("degree", infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
-         .getNome());
         request.setAttribute("curricularCourses", result);
 
         return mapping.findForward("ShowCourseList");

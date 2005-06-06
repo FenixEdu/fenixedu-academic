@@ -118,20 +118,12 @@ public class ChooseCurricularCourseDispatchAction extends DispatchAction {
         }
         request.setAttribute("courseID", getFromRequest("courseID", request));
 
-        //		parameters necessary to write in jsp
-        request.setAttribute("curricularCourse", getFromRequest("curricularCourse", request));
-        request.setAttribute("executionYear", getFromRequest("executionYear", request));
-        request.setAttribute("degree", getFromRequest("degree", request));
-        request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
-
-        String executionYear = getFromRequest("executionYear", request);
-
         Integer courseID = new Integer(getFromRequest("courseID", request));
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         List studentList = null;
         try {
-            Object args[] = { userView, courseID, executionYear };
+            Object args[] = { userView, courseID, null };
             studentList = (List) ServiceManagerServiceFactory.executeService(userView,
                     "ReadStudentListByCurricularCourse", args);
         } catch (NotAuthorizedFilterException e) {
