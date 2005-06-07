@@ -52,7 +52,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class InsertExercise implements IService {
 
-    private static final long FILE_SIZE_LIMIT = 2^20;
+    private static final double FILE_SIZE_LIMIT = Math.pow(2, 20);
 
     private String path = new String();
 
@@ -291,15 +291,15 @@ public class InsertExercise implements IService {
                 while (true) {
 
                     ZipEntry entry = zipFile.getNextEntry();
-                    if (entry.getSize() <= FILE_SIZE_LIMIT) {
-                        String xmlString = new String();
+                        StringBuilder stringBuilder = new StringBuilder();
                         if (entry == null)
                             break;
                         byte[] b = new byte[1000];
                         int readed = 0;
                         while ((readed = zipFile.read(b)) > -1)
-                            xmlString = xmlString.concat(new String(b, 0, readed, "ISO-8859-1"));
-                        xmlFilesList.add(new LabelValueBean(entry.getName(), xmlString));
+                            stringBuilder.append(new String(b, 0, readed, "ISO-8859-1"));
+                    if (stringBuilder.length() <= FILE_SIZE_LIMIT) {
+                        xmlFilesList.add(new LabelValueBean(entry.getName(), stringBuilder.toString()));
                     }
                 }
                 zipFile.close();
