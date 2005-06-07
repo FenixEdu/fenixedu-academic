@@ -18,9 +18,7 @@
 <logic:present name='<%= InquiriesUtil.STUDENT_ATTENDS %>'>
 	<br/>
 	<logic:notEmpty name='<%= InquiriesUtil.STUDENT_ATTENDS %>'>
-		<strong></p>
-			<bean:message key="title.inquiries.choose.course" bundle="INQUIRIES_RESOURCES"/>
-		</strong></p>
+		<strong><bean:message key="title.inquiries.choose.course" bundle="INQUIRIES_RESOURCES"/></strong>
 		<ul>
 			<logic:iterate id="attends" name='<%= InquiriesUtil.STUDENT_ATTENDS %>' type="net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta">
 				<li>
