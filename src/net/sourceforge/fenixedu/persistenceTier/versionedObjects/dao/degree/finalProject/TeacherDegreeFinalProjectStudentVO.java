@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.degree.finalProject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.degree.finalProject.ITeacherDegreeFinalProjectStudent;
@@ -9,7 +10,7 @@ import net.sourceforge.fenixedu.persistenceTier.degree.finalProject.IPersistentT
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
 
 /**
- * @author jpvl
+ * @author lmre
  */
 public class TeacherDegreeFinalProjectStudentVO extends VersionedObjectsBase implements
         IPersistentTeacherDegreeFinalProjectStudent {
@@ -18,7 +19,7 @@ public class TeacherDegreeFinalProjectStudentVO extends VersionedObjectsBase imp
             throws ExcepcaoPersistencia {
 
         List<ITeacherDegreeFinalProjectStudent> tdfpStudents = (List<ITeacherDegreeFinalProjectStudent>) readAll(TeacherDegreeFinalProjectStudent.class);
-        List<ITeacherDegreeFinalProjectStudent> result = null;
+        List<ITeacherDegreeFinalProjectStudent> result = new ArrayList();
 
         for (ITeacherDegreeFinalProjectStudent student : tdfpStudents) {
             if (student.getTeacher().getIdInternal().equals(teacherId)
@@ -50,7 +51,7 @@ public class TeacherDegreeFinalProjectStudentVO extends VersionedObjectsBase imp
             throws ExcepcaoPersistencia {
 
         List<ITeacherDegreeFinalProjectStudent> tdfpStudents = (List<ITeacherDegreeFinalProjectStudent>) readAll(TeacherDegreeFinalProjectStudent.class);
-        List<ITeacherDegreeFinalProjectStudent> result = null;
+        List<ITeacherDegreeFinalProjectStudent> result = new ArrayList();
 
         for (ITeacherDegreeFinalProjectStudent student : tdfpStudents) {
             if (student.getStudent().getIdInternal().equals(studentId)
