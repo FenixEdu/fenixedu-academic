@@ -122,15 +122,20 @@ public class InitializeExecutionPeriod {
             curricularCourseCodes.add(args[i]);
         }
 
+        ISuportePersistente persistentSupport = null;
         try {
-            final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                    .getDefaultPersistenceSupport();
+            persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentSupport.iniciarTransaccao();
             final InitializeExecutionPeriod instance = new InitializeExecutionPeriod(persistentSupport,
                     curricularCourseCodes);
             instance.initializeNextExecutionPeriod(semester, executionYear);
             persistentSupport.confirmarTransaccao();
         } catch (Exception e) {
+            try {
+                persistentSupport.cancelarTransaccao();
+            } catch (ExcepcaoPersistencia e1) {
+                throw new RuntimeException(e1.getMessage(), e);
+            }
             throw new RuntimeException(e);
         }
 
@@ -162,7 +167,7 @@ public class InitializeExecutionPeriod {
     }
 
     private void persist(final IDomainObject domainObject) throws ExcepcaoPersistencia {
-        // persistentObject.simpleLockWrite(domainObject);
+        persistentObject.simpleLockWrite(domainObject);
     }
 
     private void initializeNextExecutionPeriod(final Integer semester, String executionYear)
@@ -179,15 +184,18 @@ public class InitializeExecutionPeriod {
 
         createSchoolClasses(newExecutionPeriod, executionPeriod);
 
+        persistentSupport.confirmarTransaccao();
+        persistentSupport.iniciarTransaccao();
+
         createExecutionCourses(newExecutionPeriod, executionPeriod);
 
-        persistSchoolClasses();
+        //persistSchoolClasses();
 
         report();
     }
 
     private void createSchoolClasses(final IExecutionPeriod newExecutionPeriod,
-            final IExecutionPeriod executionPeriod) {
+            final IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
         final List<ISchoolClass> schoolClasses = executionPeriod.getSchoolClasses();
         Collections.sort(schoolClasses, new BeanComparator("nome"));
         for (final ISchoolClass schoolClass : schoolClasses) {
@@ -200,9 +208,11 @@ public class InitializeExecutionPeriod {
                         newExecutionPeriod.getExecutionYear());
 
                 if (newExecutionDegree != null) {
+                    schoolClassCounter++;
                     processedschoolClass++;
 
                     final ISchoolClass newSchoolClass = new SchoolClass();
+                    persist(newSchoolClass);
                     newSchoolClass.setAnoCurricular(schoolClass.getAnoCurricular());
                     newSchoolClass.setAssociatedShifts(new ArrayList());
                     newSchoolClass.setExecutionDegree(newExecutionDegree);
@@ -210,19 +220,11 @@ public class InitializeExecutionPeriod {
                     newSchoolClass.setExecutionPeriod(newExecutionPeriod);
                     newExecutionPeriod.getSchoolClasses().add(newSchoolClass);
                     newSchoolClass.setNome(schoolClass.getNome());
-                    newSchoolClass.setSchoolClassShifts(new ArrayList());
+                    //newSchoolClass.setSchoolClassShifts(new ArrayList());
+
 
                     schoolClassMap.put(newSchoolClass.getNome(), newSchoolClass);
                 }
-            }
-        }
-    }
-
-    private void persistSchoolClasses() throws ExcepcaoPersistencia {
-        for (final ISchoolClass schoolClass : schoolClassMap.values()) {
-            if (!schoolClass.getAssociatedShifts().isEmpty()) {
-                schoolClassCounter++;
-                persist(schoolClass);
             }
         }
     }
@@ -238,6 +240,13 @@ public class InitializeExecutionPeriod {
         logger.error(StringAppender.append("No execution degree found for: ", degreeCurricularPlan
                 .getName(), " ", executionYear.getYear()));
         return null;
+    }
+
+    private void persistSchoolClasses() throws ExcepcaoPersistencia {
+        for (final ISchoolClass schoolClass : schoolClassMap.values()) {
+            schoolClassCounter++;
+            persist(schoolClass);
+        }
     }
 
     private void createExecutionCourses(final IExecutionPeriod newExecutionPeriod,
@@ -310,7 +319,7 @@ public class InitializeExecutionPeriod {
         newExecutionCourse.setEvaluationMethod(null);
         newExecutionCourse.setExecutionCourseProperties(new ArrayList(0));
         newExecutionCourse.setExecutionPeriod(newExecutionPeriod);
-        newExecutionPeriod.getAssociatedExecutionCourses().add(newExecutionCourse);
+        //newExecutionPeriod.getAssociatedExecutionCourses().add(newExecutionCourse);
         newExecutionCourse.setGroupPropertiesExecutionCourse(new ArrayList(0));
         newExecutionCourse.setGroupPropertiesSenderExecutionCourse(new ArrayList(0));
         newExecutionCourse.setLabHours(executionCourse.getLabHours());
@@ -339,6 +348,11 @@ public class InitializeExecutionPeriod {
 
     private boolean hasOpenScope(final IExecutionPeriod executionPeriod,
             final ICurricularCourse curricularCourse) {
+
+        if (curricularCourse.getCode().equals("B41")) {
+            System.out.println("DAM");
+        }
+
         for (final ICurricularCourseScope curricularCourseScope : ((List<ICurricularCourseScope>) curricularCourse
                 .getScopes())) {
             if (curricularCourseScope.getCurricularSemester().getSemester().equals(
@@ -400,8 +414,8 @@ public class InitializeExecutionPeriod {
 
     private void addSchoolClass(final IShift shift, final ISchoolClass schoolClass) {
         if (schoolClass != null) {
-            shift.getAssociatedClasses().add(schoolClass);
             schoolClass.getAssociatedShifts().add(shift);
+            shift.getAssociatedClasses().add(schoolClass);
         }
     }
 
@@ -468,12 +482,6 @@ public class InitializeExecutionPeriod {
 
     private void report() {
         StringBuilder stringBuilder = new StringBuilder();
-
-        // int schoolClassCounter = 0;
-        // int executionCourseCounter = 0;
-        // int shiftCounter = 0;
-        // int lessonCounter = 0;
-        // int roomOccupationCounter = 0;
 
         stringBuilder.append("Processed:");
         stringBuilder.append("\n\tSchoolClasses: ");

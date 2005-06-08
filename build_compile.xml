@@ -557,18 +557,16 @@
 	</target>
 
 	<target name="run">
-		<javac destdir="${build.home.webinf.classes}"
-			   classpath="${build.home.webinf.classes}"
-               extdirs="${lib}"
-               debug="${compile.debug}"
-               optimize="${compile.optimize}"
-               deprecation="${compile.deprecation}"
-               encoding="${encoding}"
-			   nowarn="true">
-			<src path="src_tools"/>
-		</javac>
-
-		<java classname="DaoTester" fork="true">
+		<java classname="net.sourceforge.fenixedu.applicationTier.Servico.manager.semesterInitialization.InitializeExecutionPeriod"
+				fork="true"
+				failonerror="true"
+				maxmemory="1024m"
+				>
+			<arg value="1"/>
+			<arg value="2004/2005"/>
+			<arg value="QN"/>
+			<arg value="QZ"/>
+			<arg value="RH"/>
 			<classpath>
 				<pathelement path="${build.home.webinf.classes}"/>
             	<fileset dir="${env.JBOSS_HOME}/client">
