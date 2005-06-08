@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.framework;
 
 import java.beans.Beans;
+import java.lang.reflect.Proxy;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.beanUtils.FenixPropertyUtils;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.ojb.broker.core.proxy.ProxyHelper;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -94,15 +96,27 @@ public abstract class EditDomainObjectService implements IService {
             while (iterator.hasNext()) {
                 Map.Entry entry = (Map.Entry) iterator.next();
                 Object value = entry.getValue();
-
+                
                 if ((value != null) && (Beans.isInstanceOf(value, IDomainObject.class))) {
-                    IDomainObject o = po.readByOID(value.getClass(), ((IDomainObject) value)
+
+                    //TODO this generic service is to be deleted, it uses cloner, reflection, is complex and if
+                    // something is changed it afects more than 42 other services (that's why it wasn't deleted yet)
+                    // is prone for bugs and it had been the source of many
+                    final Class valueClass;
+                    if (value instanceof Proxy) {
+                        valueClass = ProxyHelper.getRealClass(value);
+                    } else {
+                        valueClass = value.getClass();
+                    }
+
+                    IDomainObject o = po.readByOID(valueClass, ((IDomainObject) value)
                             .getIdInternal(), false);
                     PropertyUtils.setProperty(newDomainObject, entry.getKey().toString(), o);
-                }
+
+                }                
             }
         } catch (Exception e) {
-            throw new FenixServiceException(e.getMessage());
+            throw new FenixServiceException(e);
         }
     }
 
@@ -144,8 +158,8 @@ public abstract class EditDomainObjectService implements IService {
      * 
      * @param objectId
      * @param infoObject
-     * @return @throws
-     *         FenixServiceException
+     * @return
+     * @throws FenixServiceException
      * 
      * TODO Remove objectId from method signature.
      */
@@ -164,10 +178,9 @@ public abstract class EditDomainObjectService implements IService {
             doBeforeLock(domainObject, infoObject, sp);
 
             persistentObject.simpleLockWrite(domainObject);
-       
-            
+
             FenixPropertyUtils.copyProperties(domainObject, objectToEdit);
-           
+
             fillAssociatedObjects(domainObject, persistentObject, objectToEdit);
 
             doAfterLock(domainObject, infoObject, sp);
