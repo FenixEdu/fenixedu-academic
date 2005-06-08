@@ -405,9 +405,9 @@
    </reference-descriptor>
    
    <field-descriptor
-        name="classType"
+        name="shiftType"
         column="CLASS_TYPE"
-        jdbc-type="INTEGER"
+        jdbc-type="VARCHAR"
 	/>
 
    <field-descriptor

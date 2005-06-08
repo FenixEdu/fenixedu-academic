@@ -205,7 +205,7 @@
 			<form-property type="java.lang.Double[]" name="selectedAttendingCourseTeachersQuestion311" />
 			
 			<form-property type="java.lang.Integer" name="currentAttendingCourseTeacherFormPosition" />
-            <form-property type="java.lang.Integer[]" name="currentAttendingCourseTeacherClassType"/>
+            <form-property type="java.lang.String[]" name="currentAttendingCourseTeacherClassType"/>
 			<form-property type="java.lang.Integer" name="currentAttendingCourseTeacherQuestion33" />
 			<form-property type="java.lang.Integer" name="currentAttendingCourseTeacherQuestion34" />
 			<form-property type="java.lang.Double" name="currentAttendingCourseTeacherQuestion35" />

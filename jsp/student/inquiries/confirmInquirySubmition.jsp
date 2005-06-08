@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiry" %>
 <%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
-<%@ page import="net.sourceforge.fenixedu.util.TipoAula" %>
+<%@ page import="net.sourceforge.fenixedu.domain.ShiftType" %>
 
 <link href="<%= request.getContextPath() %>/CSS/inquiries_style.css" rel="stylesheet" type="text/css" />
 
@@ -409,10 +409,10 @@
 					<bean:define id="selectedAttendingCourseTeacherId" name="selectedAttendingCourseTeacher" property="teacherOrNonAffiliatedTeacher.idInternal" />
 
 					<html:hidden property="selectedAttendingCourseTeachersId" value='<%= selectedAttendingCourseTeacherId.toString() %>'/>
-		            <html:hidden property="selectedAttendingCourseTeachersClassTypeT" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(TipoAula.TEORICA) %>' />
-            		<html:hidden property="selectedAttendingCourseTeachersClassTypeP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(TipoAula.PRATICA) %>' />
-					<html:hidden property="selectedAttendingCourseTeachersClassTypeL" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(TipoAula.LABORATORIAL) %>' />
-					<html:hidden property="selectedAttendingCourseTeachersClassTypeTP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(TipoAula.TEORICO_PRATICA) %>' />
+		            <html:hidden property="selectedAttendingCourseTeachersClassTypeT" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.TEORICA.name()) %>' />
+            		<html:hidden property="selectedAttendingCourseTeachersClassTypeP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.PRATICA.name()) %>' />
+					<html:hidden property="selectedAttendingCourseTeachersClassTypeL" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.LABORATORIAL.name()) %>' />
+					<html:hidden property="selectedAttendingCourseTeachersClassTypeTP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.TEORICO_PRATICA.name()) %>' />
 					<html:hidden property="selectedAttendingCourseTeachersQuestion33" value='<%= "" + selectedAttendingCourseTeacher.getStudentAssiduity() %>' />
 					<html:hidden property="selectedAttendingCourseTeachersQuestion34" value='<%= "" + selectedAttendingCourseTeacher.getTeacherAssiduity() %>' />
 					<html:hidden property="selectedAttendingCourseTeachersQuestion35" value='<%= "" + selectedAttendingCourseTeacher.getTeacherPunctuality() %>' />

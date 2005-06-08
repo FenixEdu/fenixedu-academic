@@ -1100,7 +1100,7 @@ public class FillInquiryAction extends FenixDispatchAction {
     }
 
     private boolean validateCurrentTeacherForm(DynaActionForm inquiryForm) {
-		Integer[] currentAttendingCourseTeacherClassType = (Integer[]) inquiryForm.get("currentAttendingCourseTeacherClassType");
+		String[] currentAttendingCourseTeacherClassType = (String[]) inquiryForm.get("currentAttendingCourseTeacherClassType");
         boolean validateClassType = currentAttendingCourseTeacherClassType.length > 0;
 
 		Integer currentAttendingCourseTeacherQuestion33 = (Integer) inquiryForm.get("currentAttendingCourseTeacherQuestion33");
@@ -1144,7 +1144,7 @@ public class FillInquiryAction extends FenixDispatchAction {
     private void clearCurrentTeacherForm(DynaActionForm inquiryForm) {
         inquiryForm.set("currentAttendingCourseTeacherFormPosition", null);
         // inquiryForm.set("currentAttendingCourseTeacherId", null);
-        inquiryForm.set("currentAttendingCourseTeacherClassType", ArrayUtils.EMPTY_INTEGER_OBJECT_ARRAY);
+        inquiryForm.set("currentAttendingCourseTeacherClassType", ArrayUtils.EMPTY_STRING_ARRAY);
         inquiryForm.set("currentAttendingCourseTeacherQuestion33", null);
         inquiryForm.set("currentAttendingCourseTeacherQuestion34", null);
         inquiryForm.set("currentAttendingCourseTeacherQuestion35", null);
@@ -1172,28 +1172,29 @@ public class FillInquiryAction extends FenixDispatchAction {
             return;
 
         // Attending course teacher class types
-		Integer[] currentAttendingCourseTeacherClassType =
-			(Integer[]) inquiryForm.get("currentAttendingCourseTeacherClassType");
+		String[] currentAttendingCourseTeacherClassType =
+			(String[]) inquiryForm.get("currentAttendingCourseTeacherClassType");
 
 		Boolean[] selectedAttendingCourseTeachersClassTypeT =
 			(Boolean[]) inquiryForm.get("selectedAttendingCourseTeachersClassTypeT");
+
 		selectedAttendingCourseTeachersClassTypeT[position] =
-			ArrayUtils.contains(currentAttendingCourseTeacherClassType, ShiftType.TEORICA);
-       
+			ArrayUtils.contains(currentAttendingCourseTeacherClassType, ShiftType.TEORICA.getName());
+              
 		Boolean[] selectedAttendingCourseTeachersClassTypeP =
 			(Boolean[]) inquiryForm.get("selectedAttendingCourseTeachersClassTypeP");
 		selectedAttendingCourseTeachersClassTypeP[position] =
-			ArrayUtils.contains(currentAttendingCourseTeacherClassType, ShiftType.PRATICA);
+			ArrayUtils.contains(currentAttendingCourseTeacherClassType, ShiftType.PRATICA.getName());
 			
 		Boolean[] selectedAttendingCourseTeachersClassTypeL =
 			(Boolean[]) inquiryForm.get("selectedAttendingCourseTeachersClassTypeL");
 		selectedAttendingCourseTeachersClassTypeL[position] =
-			ArrayUtils.contains(currentAttendingCourseTeacherClassType, ShiftType.LABORATORIAL);
+			ArrayUtils.contains(currentAttendingCourseTeacherClassType, ShiftType.LABORATORIAL.getName());
 
 		Boolean[] selectedAttendingCourseTeachersClassTypeTP =
 			(Boolean[]) inquiryForm.get("selectedAttendingCourseTeachersClassTypeTP");
 		selectedAttendingCourseTeachersClassTypeTP[position] =
-			ArrayUtils.contains(currentAttendingCourseTeacherClassType, ShiftType.TEORICO_PRATICA);
+			ArrayUtils.contains(currentAttendingCourseTeacherClassType, ShiftType.TEORICO_PRATICA.getName());
 		
 		
 			
@@ -1426,6 +1427,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 
         if (selectedAttendingCourseTeachersClassTypeT[position]) {
             ShiftType classTypeT = ShiftType.TEORICA;
+
             infoInquiriesTeacher.getClassTypes().add(classTypeT);
 			infoInquiriesTeacher.getTeacherOrNonAffiliatedTeacher().getRemainingClassTypes().remove(classTypeT);
         }
@@ -1556,8 +1558,8 @@ public class FillInquiryAction extends FenixDispatchAction {
 				removeFromArray(selectedAttendingCourseTeacherIsAffiliated, position));
 
         // Attending course teacher class types
-		Integer[] currentAttendingCourseTeacherClassType =
-			(Integer[]) inquiryForm.get("currentAttendingCourseTeacherClassType");
+		String[] currentAttendingCourseTeacherClassType =
+			(String[]) inquiryForm.get("currentAttendingCourseTeacherClassType");
 
 		Boolean[] selectedAttendingCourseTeachersClassTypeT =
 			(Boolean[]) inquiryForm.get("selectedAttendingCourseTeachersClassTypeT");
