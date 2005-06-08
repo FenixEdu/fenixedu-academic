@@ -90,6 +90,23 @@
 		>
 		<inverse-foreignkey field-ref="keyRoom"/>
 	  </collection-descriptor>
+
+      <collection-descriptor proxy="true" 
+		name="associatedLessons" 
+		element-class-ref="net.sourceforge.fenixedu.domain.Lesson"
+		
+		>
+		<inverse-foreignkey field-ref="chaveSala"/>
+	  </collection-descriptor>
+
+      <collection-descriptor proxy="true" 
+		name="roomOccupations" 
+		element-class-ref="net.sourceforge.fenixedu.domain.RoomOccupation"
+		
+		>
+		<inverse-foreignkey field-ref="keyRoom"/>
+	  </collection-descriptor>
+
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.SchoolClass -->
