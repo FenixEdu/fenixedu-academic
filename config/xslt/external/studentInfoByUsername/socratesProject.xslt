@@ -11,6 +11,9 @@
 </xsl:template>
 
 <xsl:template match="net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoStudentExternalInformation">
+		<numero>
+			<xsl:value-of select="./number"/>
+		</numero>					
 		<xsl:apply-templates select="degree"/>
 		<xsl:apply-templates select="person"/>
 		<xsl:apply-templates select="courses"/>
@@ -89,9 +92,6 @@
 					<nome>
 						<xsl:value-of select="./name"/>
 					</nome>
-					<numero>
-						<xsl:value-of select="./number"/>
-					</numero>					
 					<sexo>
 						<xsl:value-of select="./sex"/>
 					</sexo>
