@@ -141,7 +141,7 @@ import org.apache.slide.common.SlideException;
 
 /**
  * @author Fernanda Quitério
- *  
+ * 
  */
 public class TeacherAdministrationSiteComponentBuilder {
 
@@ -180,8 +180,8 @@ public class TeacherAdministrationSiteComponentBuilder {
             return getInfoEvaluationMethods((InfoSiteEvaluationMethods) component, site);
         } else if (component instanceof InfoEvaluationMethod) {
             return getInfoEvaluationMethod((InfoEvaluationMethod) component, site);
-            //} else if (component instanceof InfoCurriculum) {
-            //	return getInfoEvaluationMethod((InfoCurriculum) component, site,
+            // } else if (component instanceof InfoCurriculum) {
+            // return getInfoEvaluationMethod((InfoCurriculum) component, site,
             // (Integer) obj1);
         } else if (component instanceof InfoSiteBibliography) {
             return getInfoSiteBibliography((InfoSiteBibliography) component, site);
@@ -213,7 +213,7 @@ public class TeacherAdministrationSiteComponentBuilder {
             return getInfoSiteProjects((InfoSiteProjects) component, site);
         } else if (component instanceof InfoSiteNewProjectProposals) {
             return getInfoSiteNewProjectProposals((InfoSiteNewProjectProposals) component, site);
-        }  else if (component instanceof InfoSiteSentedProjectProposalsWaiting) {
+        } else if (component instanceof InfoSiteSentedProjectProposalsWaiting) {
             return getInfoSiteSentedProjectProposalsWaiting(
                     (InfoSiteSentedProjectProposalsWaiting) component, site);
         } else if (component instanceof InfoSiteShiftsAndGroups) {
@@ -226,7 +226,7 @@ public class TeacherAdministrationSiteComponentBuilder {
             return getInfoSiteShifts((InfoSiteShifts) component, (Integer) obj1, (Integer) obj2);
         } else if (component instanceof InfoSiteAttendsSet) {
             return getInfoSiteAttendsSet((InfoSiteAttendsSet) component, (Integer) obj1);
-        }else if (component instanceof InfoSiteStudentGroupAndStudents) {
+        } else if (component instanceof InfoSiteStudentGroupAndStudents) {
             return getInfoSiteStudentGroupAndStudents((InfoSiteStudentGroupAndStudents) component,
                     (Integer) obj1, (Integer) obj2);
         }
@@ -256,16 +256,15 @@ public class TeacherAdministrationSiteComponentBuilder {
             Iterator iterator = allSections.iterator();
             infoSectionsList = new ArrayList(allSections.size());
             while (iterator.hasNext()) {
-                
-                
-                infoSectionsList.add(InfoSectionWithAll.newInfoFromDomain((ISection) iterator.next()));                
+
+                infoSectionsList.add(InfoSectionWithAll.newInfoFromDomain((ISection) iterator.next()));
             }
             Collections.sort(infoSectionsList);
 
             component.setTitle(site.getExecutionCourse().getNome());
             component.setMail(site.getMail());
             component.setSections(infoSectionsList);
-            
+
             InfoExecutionCourse executionCourse = InfoExecutionCourseWithExecutionPeriod
                     .newInfoFromDomain(site.getExecutionCourse());
             component.setExecutionCourse(executionCourse);
@@ -279,7 +278,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
                     public Object transform(Object input) {
                         ICurricularCourse curricularCourse = (ICurricularCourse) input;
-                        
+
                         InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
                                 .newInfoFromDomain(curricularCourse);
                         return infoCurricularCourse;
@@ -310,7 +309,7 @@ public class TeacherAdministrationSiteComponentBuilder {
         component.setInitialStatement(site.getInitialStatement());
         component.setIntroduction(site.getIntroduction());
         component.setIdInternal(site.getIdInternal());
-        
+
         component.setInfoExecutionCourse(InfoExecutionCourse
                 .newInfoFromDomain(site.getExecutionCourse()));
         component.setStyle(site.getStyle());
@@ -332,8 +331,8 @@ public class TeacherAdministrationSiteComponentBuilder {
                 Iterator iterAnnouncements = announcementsList.iterator();
                 while (iterAnnouncements.hasNext()) {
                     IAnnouncement announcement = (IAnnouncement) iterAnnouncements.next();
-                    
-                    infoAnnouncementsList.add(InfoAnnouncement.newInfoFromDomain(announcement));                    
+
+                    infoAnnouncementsList.add(InfoAnnouncement.newInfoFromDomain(announcement));
                 }
             }
 
@@ -391,9 +390,9 @@ public class TeacherAdministrationSiteComponentBuilder {
                 ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
                 ICurriculum curriculum = persistentCurriculum
                         .readCurriculumByCurricularCourse(curricularCourse.getIdInternal());
-                
+
                 if (curriculum != null) {
-                    
+
                     infoCurriculums.add(InfoCurriculumWithInfoCurricularCourse
                             .newInfoFromDomain(curriculum));
                 }
@@ -558,7 +557,7 @@ public class TeacherAdministrationSiteComponentBuilder {
                 infoBibRefs = new ArrayList();
                 while (iterator.hasNext()) {
                     IBibliographicReference bibRef = (IBibliographicReference) iterator.next();
-                    
+
                     InfoBibliographicReference infoBibRef = InfoBibliographicReference
                             .newInfoFromDomain(bibRef);
                     infoBibRefs.add(infoBibRef);
@@ -590,7 +589,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
             InfoBibliographicReference infoBibliographicReference = InfoBibliographicReference
                     .newInfoFromDomain(iBibliographicReference);
-                
+
             component.setTitle(infoBibliographicReference.getTitle());
             component.setAuthors(infoBibliographicReference.getAuthors());
             component.setReference(infoBibliographicReference.getReference());
@@ -682,7 +681,7 @@ public class TeacherAdministrationSiteComponentBuilder {
         List evaluations = executionCourse.getAssociatedEvaluations();
         Iterator iter = evaluations.iterator();
 
-        //boolean hasFinalEvaluation = false;
+        // boolean hasFinalEvaluation = false;
         List infoEvaluations = new ArrayList();
         List infoFinalEvaluations = new ArrayList();
         List infoOnlineTests = new ArrayList();
@@ -704,7 +703,7 @@ public class TeacherAdministrationSiteComponentBuilder {
         comparatorChain.addComparator(new BeanComparator("beginning.time"));
 
         Collections.sort(infoEvaluations, comparatorChain);
-        //merge lists
+        // merge lists
         infoEvaluations.addAll(infoOnlineTests);
         infoEvaluations.addAll(infoFinalEvaluations);
 
@@ -761,7 +760,7 @@ public class TeacherAdministrationSiteComponentBuilder {
                 Iterator iter = executionCourses.iterator();
                 while (iter.hasNext()) {
                     IExecutionCourse element = (IExecutionCourse) iter.next();
-                    List attendingStudents = element.getAttendingStudents();                    
+                    List attendingStudents = element.getAttendingStudents();
 
                     InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
                             .newInfoFromDomain(element);
@@ -799,12 +798,12 @@ public class TeacherAdministrationSiteComponentBuilder {
                     evaluationCode);
 
             InfoEvaluation infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
-            
+
             if (infoEvaluation instanceof InfoExam) {
                 InfoExam infoExam = (InfoExam) infoEvaluation;
                 InfoExam examComponent = new InfoExam();
 
-                //examComponent.setAssociatedRooms(infoExam.getAssociatedRooms());
+                // examComponent.setAssociatedRooms(infoExam.getAssociatedRooms());
                 examComponent.setEvaluationType(infoExam.getEvaluationType());
                 examComponent.setInfoExecutionCourse(infoExam.getInfoExecutionCourse());
                 examComponent.setSeason(infoExam.getSeason());
@@ -891,13 +890,12 @@ public class TeacherAdministrationSiteComponentBuilder {
             fileSuport.beginTransaction();
             while (iter.hasNext()) {
                 IItem item = (IItem) iter.next();
-                
-                
+
                 InfoItem infoItem = InfoItem.newInfoFromDomain(item);
                 try {
                     infoItem.setLinks(CMSUtils.getItemLinks(fileSuport, item.getSlideName()));
                 } catch (SlideException e1) {
-                    //the item does not have a folder associated
+                    // the item does not have a folder associated
                 }
                 infoItemsList.add(infoItem);
             }
@@ -909,8 +907,7 @@ public class TeacherAdministrationSiteComponentBuilder {
                 throw new FenixServiceException(e2);
             }
         }
-        
-        
+
         component.setSection(InfoSectionWithAll.newInfoFromDomain(iSection));
         Collections.sort(infoItemsList);
         component.setItems(infoItemsList);
@@ -1024,9 +1021,9 @@ public class TeacherAdministrationSiteComponentBuilder {
             IPersistentSection persistentSection = sp.getIPersistentSection();
 
             IItem iItem = (IItem) persistentItem.readByOID(Item.class, itemCode);
-           
+
             InfoItem infoItem = InfoItem.newInfoFromDomain(iItem);
-            
+
             ISection iSection = (ISection) persistentSection.readByOID(Section.class, iItem.getSection()
                     .getIdInternal());
             infoItem.setInfoSection(InfoSectionWithInfoSiteAndInfoExecutionCourse
@@ -1035,7 +1032,7 @@ public class TeacherAdministrationSiteComponentBuilder {
                     .getSite().getExecutionCourse().getSigla(), iSection.getSite().getExecutionCourse()
                     .getExecutionPeriod().getExecutionYear().getYear(), iSection.getSite()
                     .getExecutionCourse().getExecutionPeriod().getName());
-            
+
             // build the result of this service
             Iterator iterator = allItems.iterator();
             List infoItemsList = new ArrayList(allItems.size());
@@ -1090,8 +1087,8 @@ public class TeacherAdministrationSiteComponentBuilder {
             FenixServiceException {
 
         List projects = null;
-        IGroupProperties groupProperties; 
-        
+        IGroupProperties groupProperties;
+
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
@@ -1101,26 +1098,26 @@ public class TeacherAdministrationSiteComponentBuilder {
             List groupPropertiesExecutionCourseList = executionCourse
                     .getGroupPropertiesExecutionCourse();
             Iterator iterGroupPropertiesExecutionCourse = groupPropertiesExecutionCourseList.iterator();
-            while(iterGroupPropertiesExecutionCourse.hasNext()){
+            while (iterGroupPropertiesExecutionCourse.hasNext()) {
                 IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse) iterGroupPropertiesExecutionCourse
                         .next();
-            	if((groupPropertiesExecutionCourse.getProposalState().getState().intValue()==1)
-            			||(groupPropertiesExecutionCourse.getProposalState().getState().intValue()==2)){
-            		executionCourseProjects.add(groupPropertiesExecutionCourse.getGroupProperties());
-            	}
+                if ((groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 1)
+                        || (groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 2)) {
+                    executionCourseProjects.add(groupPropertiesExecutionCourse.getGroupProperties());
+                }
             }
-            
+
             projects = new ArrayList();
             Iterator iterator = executionCourseProjects.iterator();
 
             while (iterator.hasNext()) {
-                //projects
-            	groupProperties = (IGroupProperties) iterator.next();
-            	
+                // projects
+                groupProperties = (IGroupProperties) iterator.next();
+
                 InfoGroupProperties infoGroupProperties = InfoGroupPropertiesWithInfoGroupPropertiesExecutionCourseAccepted
                         .newInfoFromDomain(groupProperties);
-            	
-            	projects.add(infoGroupProperties);
+
+                projects.add(infoGroupProperties);
             }
         } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();
@@ -1130,7 +1127,6 @@ public class TeacherAdministrationSiteComponentBuilder {
         return projects;
     }
 
-    
     /**
      * @param component
      * @param site
@@ -1150,8 +1146,8 @@ public class TeacherAdministrationSiteComponentBuilder {
             throws ExcepcaoInexistente, FenixServiceException {
 
         List projects = null;
-        IGroupProperties groupProperties; 
-        
+        IGroupProperties groupProperties;
+
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
@@ -1161,25 +1157,25 @@ public class TeacherAdministrationSiteComponentBuilder {
             List groupPropertiesExecutionCourseList = executionCourse
                     .getGroupPropertiesExecutionCourse();
             Iterator iterGroupPropertiesExecutionCourse = groupPropertiesExecutionCourseList.iterator();
-            while(iterGroupPropertiesExecutionCourse.hasNext()){
+            while (iterGroupPropertiesExecutionCourse.hasNext()) {
                 IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse) iterGroupPropertiesExecutionCourse
                         .next();
-            	if(groupPropertiesExecutionCourse.getProposalState().getState().intValue()==3){
-            		executionCourseProjects.add(groupPropertiesExecutionCourse.getGroupProperties());
-            	}
+                if (groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 3) {
+                    executionCourseProjects.add(groupPropertiesExecutionCourse.getGroupProperties());
+                }
             }
-            
+
             projects = new ArrayList();
             Iterator iterator = executionCourseProjects.iterator();
 
             while (iterator.hasNext()) {
 
-            	groupProperties = (IGroupProperties) iterator.next();
-            	
+                groupProperties = (IGroupProperties) iterator.next();
+
                 InfoGroupProperties infoGroupProperties = InfoGroupPropertiesWithInfoGroupPropertiesExecutionCourseAccepted
                         .newInfoFromDomain(groupProperties);
-            	
-            	projects.add(infoGroupProperties);
+
+                projects.add(infoGroupProperties);
             }
         } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();
@@ -1189,8 +1185,6 @@ public class TeacherAdministrationSiteComponentBuilder {
         return projects;
     }
 
-    
-    
     /**
      * @param component
      * @param site
@@ -1209,8 +1203,8 @@ public class TeacherAdministrationSiteComponentBuilder {
     private List readExecutionCourseSentedProjectProposalsWaiting(Integer executionCourseCode)
             throws ExcepcaoInexistente, FenixServiceException {
 
-        List projects = null; 
-        
+        List projects = null;
+
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
@@ -1219,36 +1213,35 @@ public class TeacherAdministrationSiteComponentBuilder {
             List executionCourseSentedProjects = new ArrayList();
             List groupPropertiesList = executionCourse.getGroupProperties();
             Iterator iterGroupPropertiesList = groupPropertiesList.iterator();
-            while(iterGroupPropertiesList.hasNext()){
-            	boolean found = false;
-            	IGroupProperties groupProperties = (IGroupProperties)iterGroupPropertiesList.next();
+            while (iterGroupPropertiesList.hasNext()) {
+                boolean found = false;
+                IGroupProperties groupProperties = (IGroupProperties) iterGroupPropertiesList.next();
                 List groupPropertiesExecutionCourseList = groupProperties
                         .getGroupPropertiesExecutionCourse();
                 Iterator iterGroupPropertiesExecutionCourseList = groupPropertiesExecutionCourseList
                         .iterator();
-            	while(iterGroupPropertiesExecutionCourseList.hasNext() && !found){
+                while (iterGroupPropertiesExecutionCourseList.hasNext() && !found) {
                     IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse) iterGroupPropertiesExecutionCourseList
                             .next();
-            		if(groupPropertiesExecutionCourse.getProposalState().getState().intValue()==3){
+                    if (groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 3) {
                         executionCourseSentedProjects.add(groupPropertiesExecutionCourse
                                 .getGroupProperties());
-            			found=true;
-            		}
-            	}
+                        found = true;
+                    }
+                }
             }
-            
-            
+
             projects = new ArrayList();
             Iterator iterator = executionCourseSentedProjects.iterator();
 
             while (iterator.hasNext()) {
 
-            	IGroupProperties groupProperties = (IGroupProperties) iterator.next();
-            	
+                IGroupProperties groupProperties = (IGroupProperties) iterator.next();
+
                 InfoGroupProperties infoGroupProperties = InfoGroupPropertiesWithInfoGroupPropertiesExecutionCourseWaiting
                         .newInfoFromDomain(groupProperties);
-            	
-            	projects.add(infoGroupProperties);
+
+                projects.add(infoGroupProperties);
             }
         } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();
@@ -1258,9 +1251,6 @@ public class TeacherAdministrationSiteComponentBuilder {
         return projects;
     }
 
-    
-    
-    
     /**
      * @param component
      * @param site
@@ -1270,408 +1260,401 @@ public class TeacherAdministrationSiteComponentBuilder {
 
     private ISiteComponent getInfoSiteShiftsAndGroups(InfoSiteShiftsAndGroups component,
             Integer groupPropertiesCode) throws FenixServiceException {
-    	
-        IGroupProperties groupProperties = null; 
-        
+
+        IGroupProperties groupProperties = null;
+
         try {
-    		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             groupProperties = (IGroupProperties) sp.getIPersistentGroupProperties().readByOID(
                     GroupProperties.class, groupPropertiesCode);
-    		
-        List infoSiteShiftsAndGroups = readShiftsAndGroups(groupProperties);
-        component.setInfoSiteGroupsByShiftList(infoSiteShiftsAndGroups);
-        Integer numberOfStudentsOutsideAttendsSet = readNumberOfStudentsOutsideAttendsSet(groupProperties);
-        component.setNumberOfStudentsOutsideAttendsSet(numberOfStudentsOutsideAttendsSet);
-        Integer numberOfStudentsInsideAttendsSet = readNumberOfStudentsInsideAttendsSet(groupProperties);
-        component.setNumberOfStudentsInsideAttendsSet(numberOfStudentsInsideAttendsSet);
-        InfoAttendsSet infoAttendsSet =  readAttendsSetCode(groupProperties);
-        component.setInfoAttendsSet(infoAttendsSet);
-        
+
+            List infoSiteShiftsAndGroups = readShiftsAndGroups(groupProperties);
+            component.setInfoSiteGroupsByShiftList(infoSiteShiftsAndGroups);
+            Integer numberOfStudentsOutsideAttendsSet = readNumberOfStudentsOutsideAttendsSet(groupProperties);
+            component.setNumberOfStudentsOutsideAttendsSet(numberOfStudentsOutsideAttendsSet);
+            Integer numberOfStudentsInsideAttendsSet = readNumberOfStudentsInsideAttendsSet(groupProperties);
+            component.setNumberOfStudentsInsideAttendsSet(numberOfStudentsInsideAttendsSet);
+            InfoAttendsSet infoAttendsSet = readAttendsSetCode(groupProperties);
+            component.setInfoAttendsSet(infoAttendsSet);
+
         } catch (ExcepcaoPersistencia e) {
-    		throw new FenixServiceException(e);
-    	}
+            throw new FenixServiceException(e);
+        }
         return component;
     }
-    
-    
-    private InfoAttendsSet readAttendsSetCode(IGroupProperties groupProperties){
 
-    	IAttendsSet attendsSet = null;
-    	
-        if (groupProperties == null)
-            return null;
-    		
-    	attendsSet = groupProperties.getAttendsSet(); 
+    private InfoAttendsSet readAttendsSetCode(IGroupProperties groupProperties) {
 
-    	return InfoAttendsSet.newInfoFromDomain(attendsSet);
-    }
-    
-    
-    private Integer readNumberOfStudentsOutsideAttendsSet(IGroupProperties groupProperties){
-        
+        IAttendsSet attendsSet = null;
+
         if (groupProperties == null)
             return null;
-    	
-    	return groupProperties.getAttendsSet().getNumberOfStudentsNotInAttendsSet();
-    	
+
+        attendsSet = groupProperties.getAttendsSet();
+
+        return InfoAttendsSet.newInfoFromDomain(attendsSet);
     }
-    
-    private Integer readNumberOfStudentsInsideAttendsSet(IGroupProperties groupProperties){
-        
+
+    private Integer readNumberOfStudentsOutsideAttendsSet(IGroupProperties groupProperties) {
+
         if (groupProperties == null)
             return null;
-    	
-    	return groupProperties.getAttendsSet().getNumberOfStudentsInAttendsSet();
-    	
+
+        return groupProperties.getAttendsSet().getNumberOfStudentsNotInAttendsSet();
+
     }
-    
+
+    private Integer readNumberOfStudentsInsideAttendsSet(IGroupProperties groupProperties) {
+
+        if (groupProperties == null)
+            return null;
+
+        return groupProperties.getAttendsSet().getNumberOfStudentsInAttendsSet();
+
+    }
+
     private List readShiftsAndGroups(IGroupProperties groupProperties) throws ExcepcaoInexistente,
             FenixServiceException {
 
-    	List infoSiteShiftsAndGroups = null;
+        List infoSiteShiftsAndGroups = null;
 
-    	try {
-    		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-    		ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+        try {
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            ITurnoPersistente persistentShift = sp.getITurnoPersistente();
             IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
-    
+
             if (groupProperties == null)
                 return null;
-    
-    		IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-			.getInstance();
-    		IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-			.getGroupEnrolmentStrategyInstance(groupProperties);
-    
-    		if(strategy.checkHasShift(groupProperties)){
-    			infoSiteShiftsAndGroups = new ArrayList();
-    	
-    			List executionCourseList= new ArrayList();
+
+            IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
+                    .getInstance();
+            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
+                    .getGroupEnrolmentStrategyInstance(groupProperties);
+
+            if (strategy.checkHasShift(groupProperties)) {
+                infoSiteShiftsAndGroups = new ArrayList();
+
+                List executionCourseList = new ArrayList();
                 Iterator iterGroupPropertiesExecutionCourse = groupProperties
                         .getGroupPropertiesExecutionCourse().iterator();
-    			while(iterGroupPropertiesExecutionCourse.hasNext()){
+                while (iterGroupPropertiesExecutionCourse.hasNext()) {
                     IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse) iterGroupPropertiesExecutionCourse
                             .next();
                     if (groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 1
                             || groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 2) {
-    					executionCourseList.add(groupPropertiesExecutionCourse.getExecutionCourse());
-    				}
-    			}
-    
-    			Iterator iterExecutionCourses = executionCourseList.iterator();
-    
-    			List allShifts=new ArrayList();
-    
-    			while(iterExecutionCourses.hasNext()){
-    				IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();
-    				List someShifts = persistentShift.readByExecutionCourseAndType(executionCourse
+                        executionCourseList.add(groupPropertiesExecutionCourse.getExecutionCourse());
+                    }
+                }
+
+                Iterator iterExecutionCourses = executionCourseList.iterator();
+
+                List allShifts = new ArrayList();
+
+                while (iterExecutionCourses.hasNext()) {
+                    IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();
+                    List someShifts = persistentShift.readByExecutionCourseAndType(executionCourse
                             .getIdInternal(), groupProperties.getShiftType());
 
-    				allShifts.addAll(someShifts);
-    			}
-    
-    
-    			List allStudentsGroup = groupProperties.getAttendsSet().getStudentGroupsWithShift();
-    
-    
-    			if (allStudentsGroup.size() != 0) {
+                    allShifts.addAll(someShifts);
+                }
 
-    				Iterator iterator = allStudentsGroup.iterator();
-    				while (iterator.hasNext()) {
-    					IShift shift = ((IStudentGroup) iterator.next()).getShift();
-    					if (!allShifts.contains(shift)) {
-    						allShifts.add(shift);
-    					}
-    				}
-    			}
+                List allStudentsGroup = groupProperties.getAttendsSet().getStudentGroupsWithShift();
 
-    			if (allShifts.size() != 0) {
-    				Iterator iter = allShifts.iterator();
-    				infoSiteShiftsAndGroups = new ArrayList();
-    				InfoSiteGroupsByShift infoSiteGroupsByShift = null;
-    				InfoSiteShift infoSiteShift = null;
+                if (allStudentsGroup.size() != 0) {
 
-    				while (iter.hasNext()) {
+                    Iterator iterator = allStudentsGroup.iterator();
+                    while (iterator.hasNext()) {
+                        IShift shift = ((IStudentGroup) iterator.next()).getShift();
+                        if (!allShifts.contains(shift)) {
+                            allShifts.add(shift);
+                        }
+                    }
+                }
 
-    					IShift shift = (IShift) iter.next();
-    					List allStudentGroups = persistentStudentGroup
-                                .readAllStudentGroupByAttendsSetAndShift(
-                                        groupProperties.getAttendsSet(), shift);
-    					infoSiteShift = new InfoSiteShift();
-    					infoSiteShift.setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
-    					List infoLessons = infoSiteShift.getInfoShift().getInfoLessons();
-    					
-    					ComparatorChain chainComparator = new ComparatorChain();
-    					chainComparator.addComparator(new BeanComparator("diaSemana.diaSemana"));
-    					chainComparator.addComparator(new BeanComparator("inicio"));
-    					chainComparator.addComparator(new BeanComparator("fim"));
-    					chainComparator.addComparator(new BeanComparator("infoSala.nome"));
-    					
-    					Collections.sort(infoLessons, chainComparator);
-    					
-    					Iterator iterLessons =  infoLessons.iterator();
-    				    StringBuffer weekDay = new StringBuffer();
-    				    StringBuffer beginDay = new StringBuffer();
-    				    StringBuffer endDay = new StringBuffer();
-    				    StringBuffer room = new StringBuffer();
-    				    while(iterLessons.hasNext()){
-    				    	InfoLesson infoLesson = (InfoLesson)iterLessons.next();
-    				    	weekDay.append(infoLesson.getDiaSemana().getDiaSemana());
-    				    	beginDay.append(infoLesson.getInicio().getTimeInMillis());
-    				    	endDay.append(infoLesson.getFim().getTimeInMillis());
-    				    	room.append(infoLesson.getInfoSala().getNome());
-    				    }
-    				    
-    				    infoSiteShift.setOrderByWeekDay(weekDay.toString());
-    				    infoSiteShift.setOrderByBeginHour(beginDay.toString());
-    				    infoSiteShift.setOrderByEndHour(endDay.toString());
-    				    infoSiteShift.setOrderByRoom(room.toString());
-    						
-    					if (groupProperties.getGroupMaximumNumber() != null) {
+                if (allShifts.size() != 0) {
+                    Iterator iter = allShifts.iterator();
+                    infoSiteShiftsAndGroups = new ArrayList();
+                    InfoSiteGroupsByShift infoSiteGroupsByShift = null;
+                    InfoSiteShift infoSiteShift = null;
+
+                    while (iter.hasNext()) {
+
+                        IShift shift = (IShift) iter.next();
+                        List allStudentGroups = persistentStudentGroup
+                                .readAllStudentGroupByAttendsSetAndShift(groupProperties.getAttendsSet()
+                                        .getIdInternal(), shift.getIdInternal());
+                        infoSiteShift = new InfoSiteShift();
+                        infoSiteShift.setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
+                        List infoLessons = infoSiteShift.getInfoShift().getInfoLessons();
+
+                        ComparatorChain chainComparator = new ComparatorChain();
+                        chainComparator.addComparator(new BeanComparator("diaSemana.diaSemana"));
+                        chainComparator.addComparator(new BeanComparator("inicio"));
+                        chainComparator.addComparator(new BeanComparator("fim"));
+                        chainComparator.addComparator(new BeanComparator("infoSala.nome"));
+
+                        Collections.sort(infoLessons, chainComparator);
+
+                        Iterator iterLessons = infoLessons.iterator();
+                        StringBuffer weekDay = new StringBuffer();
+                        StringBuffer beginDay = new StringBuffer();
+                        StringBuffer endDay = new StringBuffer();
+                        StringBuffer room = new StringBuffer();
+                        while (iterLessons.hasNext()) {
+                            InfoLesson infoLesson = (InfoLesson) iterLessons.next();
+                            weekDay.append(infoLesson.getDiaSemana().getDiaSemana());
+                            beginDay.append(infoLesson.getInicio().getTimeInMillis());
+                            endDay.append(infoLesson.getFim().getTimeInMillis());
+                            room.append(infoLesson.getInfoSala().getNome());
+                        }
+
+                        infoSiteShift.setOrderByWeekDay(weekDay.toString());
+                        infoSiteShift.setOrderByBeginHour(beginDay.toString());
+                        infoSiteShift.setOrderByEndHour(endDay.toString());
+                        infoSiteShift.setOrderByRoom(room.toString());
+
+                        if (groupProperties.getGroupMaximumNumber() != null) {
 
                             int vagas = groupProperties.getGroupMaximumNumber().intValue()
                                     - allStudentGroups.size();
-    						infoSiteShift.setNrOfGroups(new Integer(vagas));
+                            infoSiteShift.setNrOfGroups(new Integer(vagas));
 
-    					} else
-    						infoSiteShift.setNrOfGroups("Sem limite");
+                        } else
+                            infoSiteShift.setNrOfGroups("Sem limite");
 
-    					infoSiteGroupsByShift = new InfoSiteGroupsByShift();
-    					infoSiteGroupsByShift.setInfoSiteShift(infoSiteShift);
+                        infoSiteGroupsByShift = new InfoSiteGroupsByShift();
+                        infoSiteGroupsByShift.setInfoSiteShift(infoSiteShift);
 
-    					List infoSiteStudentGroupsList = null;
-    					if (allStudentGroups.size() != 0) {
-    						infoSiteStudentGroupsList = new ArrayList();
-    						Iterator iterGroups = allStudentGroups.iterator();
+                        List infoSiteStudentGroupsList = null;
+                        if (allStudentGroups.size() != 0) {
+                            infoSiteStudentGroupsList = new ArrayList();
+                            Iterator iterGroups = allStudentGroups.iterator();
 
-    						while (iterGroups.hasNext()) {
-    							InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
-    							InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
+                            while (iterGroups.hasNext()) {
+                                InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
+                                InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
                                 infoStudentGroup = InfoStudentGroup
                                         .newInfoFromDomain((IStudentGroup) iterGroups.next());
                                 infoSiteStudentGroup.setInfoStudentGroup(infoStudentGroup);
-    							infoSiteStudentGroupsList.add(infoSiteStudentGroup);
+                                infoSiteStudentGroupsList.add(infoSiteStudentGroup);
 
-    						}
+                            }
                             Collections.sort(infoSiteStudentGroupsList, new BeanComparator(
-    								"infoStudentGroup.groupNumber"));
+                                    "infoStudentGroup.groupNumber"));
 
-    					}
+                        }
 
                         infoSiteGroupsByShift.setInfoSiteStudentGroupsList(infoSiteStudentGroupsList);
 
-    					infoSiteShiftsAndGroups.add(infoSiteGroupsByShift);
-    				}
-    	
-    				/* Sort the list of shifts */
+                        infoSiteShiftsAndGroups.add(infoSiteGroupsByShift);
+                    }
 
-    				ComparatorChain chainComparator = new ComparatorChain();
+                    /* Sort the list of shifts */
+
+                    ComparatorChain chainComparator = new ComparatorChain();
                     chainComparator.addComparator(new BeanComparator("infoSiteShift.infoShift.tipo"));
                     chainComparator.addComparator(new BeanComparator("infoSiteShift.orderByWeekDay"));
                     chainComparator.addComparator(new BeanComparator("infoSiteShift.orderByBeginHour"));
                     chainComparator.addComparator(new BeanComparator("infoSiteShift.orderByEndHour"));
                     chainComparator.addComparator(new BeanComparator("infoSiteShift.orderByRoom"));
-    				
-    				Collections.sort(infoSiteShiftsAndGroups, chainComparator);
-    				
-    				}
-       
-    			if(!groupProperties.getAttendsSet().getStudentGroupsWithoutShift().isEmpty()){
-    				InfoSiteGroupsByShift infoSiteGroupsByShift = null;
-    				InfoSiteShift infoSiteShift = new InfoSiteShift();
 
-    				infoSiteGroupsByShift = new InfoSiteGroupsByShift();                   
+                    Collections.sort(infoSiteShiftsAndGroups, chainComparator);
+
+                }
+
+                if (!groupProperties.getAttendsSet().getStudentGroupsWithoutShift().isEmpty()) {
+                    InfoSiteGroupsByShift infoSiteGroupsByShift = null;
+                    InfoSiteShift infoSiteShift = new InfoSiteShift();
+
+                    infoSiteGroupsByShift = new InfoSiteGroupsByShift();
                     List allStudentGroups = groupProperties.getAttendsSet()
                             .getStudentGroupsWithoutShift();
 
-    				if (groupProperties.getGroupMaximumNumber() != null) {
+                    if (groupProperties.getGroupMaximumNumber() != null) {
 
                         int vagas = groupProperties.getGroupMaximumNumber().intValue()
                                 - allStudentGroups.size();
-    					infoSiteShift.setNrOfGroups(new Integer(vagas));
+                        infoSiteShift.setNrOfGroups(new Integer(vagas));
 
                     } else {
-    					infoSiteShift.setNrOfGroups("Sem limite");
-    				}                
-       
-    				infoSiteGroupsByShift.setInfoSiteShift(infoSiteShift);
-       
-       
-    				List infoSiteStudentGroupsList = null;
-    				if (allStudentGroups.size() != 0) {
-    					infoSiteStudentGroupsList = new ArrayList();
-    					Iterator iterGroups = allStudentGroups.iterator();
+                        infoSiteShift.setNrOfGroups("Sem limite");
+                    }
 
-    					while (iterGroups.hasNext()) {
-    						InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
-    						InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
+                    infoSiteGroupsByShift.setInfoSiteShift(infoSiteShift);
+
+                    List infoSiteStudentGroupsList = null;
+                    if (allStudentGroups.size() != 0) {
+                        infoSiteStudentGroupsList = new ArrayList();
+                        Iterator iterGroups = allStudentGroups.iterator();
+
+                        while (iterGroups.hasNext()) {
+                            InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
+                            InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
                             infoStudentGroup = InfoStudentGroup
                                     .newInfoFromDomain((IStudentGroup) iterGroups.next());
                             infoSiteStudentGroup.setInfoStudentGroup(infoStudentGroup);
-    						infoSiteStudentGroupsList.add(infoSiteStudentGroup);
-    					}
-    				}
-       
+                            infoSiteStudentGroupsList.add(infoSiteStudentGroup);
+                        }
+                    }
+
                     infoSiteGroupsByShift.setInfoSiteStudentGroupsList(infoSiteStudentGroupsList);
-           
-    				infoSiteShiftsAndGroups.add(infoSiteGroupsByShift);
-       
-    			}
+
+                    infoSiteShiftsAndGroups.add(infoSiteGroupsByShift);
+
+                }
             } else {
-    			
-    			infoSiteShiftsAndGroups = new ArrayList();
-    			
-    			if(!groupProperties.getAttendsSet().getStudentGroupsWithShift().isEmpty()){
-    				
-    				List allShifts=new ArrayList();
-    				List allStudentsGroup = groupProperties.getAttendsSet().getStudentGroupsWithShift();
-    				if (allStudentsGroup.size() != 0) {
-    					Iterator iterator = allStudentsGroup.iterator();
-    					while (iterator.hasNext()) {
-    						IShift shift = ((IStudentGroup) iterator.next()).getShift();
-    						if (!allShifts.contains(shift)) {
-    							allShifts.add(shift);
-    						}
-    					}
-    				}
 
-    				if (allShifts.size() != 0) {
-    					Iterator iter = allShifts.iterator();
-    					InfoSiteGroupsByShift infoSiteGroupsByShiftAux = null;
-    					InfoSiteShift infoSiteShiftAux = null;
+                infoSiteShiftsAndGroups = new ArrayList();
 
-    					while (iter.hasNext()) {
-    						IShift shift = (IShift) iter.next();
-    						List allStudentGroupsAux = persistentStudentGroup
+                if (!groupProperties.getAttendsSet().getStudentGroupsWithShift().isEmpty()) {
+
+                    List allShifts = new ArrayList();
+                    List allStudentsGroup = groupProperties.getAttendsSet().getStudentGroupsWithShift();
+                    if (allStudentsGroup.size() != 0) {
+                        Iterator iterator = allStudentsGroup.iterator();
+                        while (iterator.hasNext()) {
+                            IShift shift = ((IStudentGroup) iterator.next()).getShift();
+                            if (!allShifts.contains(shift)) {
+                                allShifts.add(shift);
+                            }
+                        }
+                    }
+
+                    if (allShifts.size() != 0) {
+                        Iterator iter = allShifts.iterator();
+                        InfoSiteGroupsByShift infoSiteGroupsByShiftAux = null;
+                        InfoSiteShift infoSiteShiftAux = null;
+
+                        while (iter.hasNext()) {
+                            IShift shift = (IShift) iter.next();
+                            List allStudentGroupsAux = persistentStudentGroup
                                     .readAllStudentGroupByAttendsSetAndShift(groupProperties
-                                            .getAttendsSet(), shift);
-    						infoSiteShiftAux = new InfoSiteShift();
+                                            .getAttendsSet().getIdInternal(), shift.getIdInternal());
+                            infoSiteShiftAux = new InfoSiteShift();
                             infoSiteShiftAux.setInfoShift(InfoShiftWithInfoLessons
                                     .newInfoFromDomain(shift));
-    						List infoLessons = infoSiteShiftAux.getInfoShift().getInfoLessons();
-    						
-    						ComparatorChain chainComparator = new ComparatorChain();
-    						chainComparator.addComparator(new BeanComparator("diaSemana.diaSemana"));
-    						chainComparator.addComparator(new BeanComparator("inicio"));
-    						chainComparator.addComparator(new BeanComparator("fim"));
-    						chainComparator.addComparator(new BeanComparator("infoSala.nome"));
-    						
-    						Collections.sort(infoLessons, chainComparator);
-    		          
-    						Iterator iterLessons =  infoLessons.iterator();
-        				    StringBuffer weekDay = new StringBuffer();
-        				    StringBuffer beginDay = new StringBuffer();
-        				    StringBuffer endDay = new StringBuffer();
-        				    StringBuffer room = new StringBuffer();
-        				    while(iterLessons.hasNext()){
-        				    	InfoLesson infoLesson = (InfoLesson)iterLessons.next();
-        				    	weekDay.append(infoLesson.getDiaSemana().getDiaSemana());
-        				    	beginDay.append(infoLesson.getInicio().getTimeInMillis());
-        				    	endDay.append(infoLesson.getFim().getTimeInMillis());
-        				    	room.append(infoLesson.getInfoSala().getNome());
-        				    }
-        				    
-        				    infoSiteShiftAux.setOrderByWeekDay(weekDay.toString());
-        				    infoSiteShiftAux.setOrderByBeginHour(beginDay.toString());
-        				    infoSiteShiftAux.setOrderByEndHour(endDay.toString());
-        				    infoSiteShiftAux.setOrderByRoom(room.toString());
-    						
-    						if (groupProperties.getGroupMaximumNumber() != null) {
+                            List infoLessons = infoSiteShiftAux.getInfoShift().getInfoLessons();
+
+                            ComparatorChain chainComparator = new ComparatorChain();
+                            chainComparator.addComparator(new BeanComparator("diaSemana.diaSemana"));
+                            chainComparator.addComparator(new BeanComparator("inicio"));
+                            chainComparator.addComparator(new BeanComparator("fim"));
+                            chainComparator.addComparator(new BeanComparator("infoSala.nome"));
+
+                            Collections.sort(infoLessons, chainComparator);
+
+                            Iterator iterLessons = infoLessons.iterator();
+                            StringBuffer weekDay = new StringBuffer();
+                            StringBuffer beginDay = new StringBuffer();
+                            StringBuffer endDay = new StringBuffer();
+                            StringBuffer room = new StringBuffer();
+                            while (iterLessons.hasNext()) {
+                                InfoLesson infoLesson = (InfoLesson) iterLessons.next();
+                                weekDay.append(infoLesson.getDiaSemana().getDiaSemana());
+                                beginDay.append(infoLesson.getInicio().getTimeInMillis());
+                                endDay.append(infoLesson.getFim().getTimeInMillis());
+                                room.append(infoLesson.getInfoSala().getNome());
+                            }
+
+                            infoSiteShiftAux.setOrderByWeekDay(weekDay.toString());
+                            infoSiteShiftAux.setOrderByBeginHour(beginDay.toString());
+                            infoSiteShiftAux.setOrderByEndHour(endDay.toString());
+                            infoSiteShiftAux.setOrderByRoom(room.toString());
+
+                            if (groupProperties.getGroupMaximumNumber() != null) {
 
                                 int vagas = groupProperties.getGroupMaximumNumber().intValue()
                                         - allStudentGroupsAux.size();
-    							infoSiteShiftAux.setNrOfGroups(new Integer(vagas));
-    						} else
-    							infoSiteShiftAux.setNrOfGroups("Sem limite");
-    						infoSiteGroupsByShiftAux = new InfoSiteGroupsByShift();
-    						infoSiteGroupsByShiftAux.setInfoSiteShift(infoSiteShiftAux);
-    						List infoSiteStudentGroupsListAux = null;
-    						if (allStudentGroupsAux.size() != 0) {
-    							infoSiteStudentGroupsListAux = new ArrayList();
-    							Iterator iterGroups = allStudentGroupsAux.iterator();
-    							while (iterGroups.hasNext()) {
-    								InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
-    								InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
+                                infoSiteShiftAux.setNrOfGroups(new Integer(vagas));
+                            } else
+                                infoSiteShiftAux.setNrOfGroups("Sem limite");
+                            infoSiteGroupsByShiftAux = new InfoSiteGroupsByShift();
+                            infoSiteGroupsByShiftAux.setInfoSiteShift(infoSiteShiftAux);
+                            List infoSiteStudentGroupsListAux = null;
+                            if (allStudentGroupsAux.size() != 0) {
+                                infoSiteStudentGroupsListAux = new ArrayList();
+                                Iterator iterGroups = allStudentGroupsAux.iterator();
+                                while (iterGroups.hasNext()) {
+                                    InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
+                                    InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
                                     infoStudentGroup = InfoStudentGroup
                                             .newInfoFromDomain((IStudentGroup) iterGroups.next());
                                     infoSiteStudentGroup.setInfoStudentGroup(infoStudentGroup);
-    								infoSiteStudentGroupsListAux.add(infoSiteStudentGroup);
-    							}
+                                    infoSiteStudentGroupsListAux.add(infoSiteStudentGroup);
+                                }
                                 Collections.sort(infoSiteStudentGroupsListAux, new BeanComparator(
-    									"infoStudentGroup.groupNumber"));
+                                        "infoStudentGroup.groupNumber"));
 
-    						}
-    						infoSiteGroupsByShiftAux
-							.setInfoSiteStudentGroupsList(infoSiteStudentGroupsListAux);
+                            }
+                            infoSiteGroupsByShiftAux
+                                    .setInfoSiteStudentGroupsList(infoSiteStudentGroupsListAux);
 
-    						infoSiteShiftsAndGroups.add(infoSiteGroupsByShiftAux);
-    					}
-    		    	
-    		        /* Sort the list of shifts */
+                            infoSiteShiftsAndGroups.add(infoSiteGroupsByShiftAux);
+                        }
 
-    					ComparatorChain chainComparator = new ComparatorChain();
+                        /* Sort the list of shifts */
+
+                        ComparatorChain chainComparator = new ComparatorChain();
                         chainComparator
                                 .addComparator(new BeanComparator("infoSiteShift.infoShift.tipo"));
                         chainComparator
                                 .addComparator(new BeanComparator("infoSiteShift.orderByWeekDay"));
-    					chainComparator.addComparator(new BeanComparator(
-        				"infoSiteShift.orderByBeginHour"));
+                        chainComparator.addComparator(new BeanComparator(
+                                "infoSiteShift.orderByBeginHour"));
                         chainComparator
                                 .addComparator(new BeanComparator("infoSiteShift.orderByEndHour"));
                         chainComparator.addComparator(new BeanComparator("infoSiteShift.orderByRoom"));
 
-    					Collections.sort(infoSiteShiftsAndGroups, chainComparator);
-    				}
-    			}
-    			
-    			
-    			InfoSiteGroupsByShift infoSiteGroupsByShift = null;
-    			InfoSiteShift infoSiteShift = new InfoSiteShift();
+                        Collections.sort(infoSiteShiftsAndGroups, chainComparator);
+                    }
+                }
 
-    			infoSiteGroupsByShift = new InfoSiteGroupsByShift();
-            
-    			List allStudentGroups = groupProperties.getAttendsSet().getStudentGroupsWithoutShift();
+                InfoSiteGroupsByShift infoSiteGroupsByShift = null;
+                InfoSiteShift infoSiteShift = new InfoSiteShift();
 
-    			if (groupProperties.getGroupMaximumNumber() != null) {
+                infoSiteGroupsByShift = new InfoSiteGroupsByShift();
+
+                List allStudentGroups = groupProperties.getAttendsSet().getStudentGroupsWithoutShift();
+
+                if (groupProperties.getGroupMaximumNumber() != null) {
 
                     int vagas = groupProperties.getGroupMaximumNumber().intValue()
                             - allStudentGroups.size();
-    				infoSiteShift.setNrOfGroups(new Integer(vagas));
+                    infoSiteShift.setNrOfGroups(new Integer(vagas));
 
                 } else {
-    				infoSiteShift.setNrOfGroups("Sem limite");
-    			}                
-        
-    			infoSiteGroupsByShift.setInfoSiteShift(infoSiteShift);
-        
-    			List infoSiteStudentGroupsList = null;
-    			if (allStudentGroups.size() != 0) {
-    				infoSiteStudentGroupsList = new ArrayList();
-    				Iterator iterGroups = allStudentGroups.iterator();
+                    infoSiteShift.setNrOfGroups("Sem limite");
+                }
 
-    				while (iterGroups.hasNext()) {
-    					InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
-    					InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
+                infoSiteGroupsByShift.setInfoSiteShift(infoSiteShift);
+
+                List infoSiteStudentGroupsList = null;
+                if (allStudentGroups.size() != 0) {
+                    infoSiteStudentGroupsList = new ArrayList();
+                    Iterator iterGroups = allStudentGroups.iterator();
+
+                    while (iterGroups.hasNext()) {
+                        InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
+                        InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
                         infoStudentGroup = InfoStudentGroup.newInfoFromDomain((IStudentGroup) iterGroups
                                 .next());
                         infoSiteStudentGroup.setInfoStudentGroup(infoStudentGroup);
-    					infoSiteStudentGroupsList.add(infoSiteStudentGroup);
+                        infoSiteStudentGroupsList.add(infoSiteStudentGroup);
 
-    				}
-    			}
-            
+                    }
+                }
+
                 infoSiteGroupsByShift.setInfoSiteStudentGroupsList(infoSiteStudentGroupsList);
 
-    			infoSiteShiftsAndGroups.add(infoSiteGroupsByShift);
-    			
-    		}
-    	} catch (ExcepcaoPersistencia e) {
-    		e.printStackTrace();
-    		throw new FenixServiceException("error.impossibleReadProjectShifts");
-    	}
-    	return infoSiteShiftsAndGroups;
-    }
+                infoSiteShiftsAndGroups.add(infoSiteGroupsByShift);
 
+            }
+        } catch (ExcepcaoPersistencia e) {
+            e.printStackTrace();
+            throw new FenixServiceException("error.impossibleReadProjectShifts");
+        }
+        return infoSiteShiftsAndGroups;
+    }
 
     /**
      * @param component
@@ -1688,7 +1671,7 @@ public class TeacherAdministrationSiteComponentBuilder {
         IStudentGroup studentGroup = null;
         IAttendsSet attendsSet = null;
         IGroupProperties groupProperties = null;
-        
+
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
@@ -1698,14 +1681,13 @@ public class TeacherAdministrationSiteComponentBuilder {
             if (studentGroup == null) {
                 return null;
             }
-            
-            studentGroupAttendList = sp.getIPersistentStudentGroupAttend().readAllByStudentGroup(
-                    studentGroup);
 
-        	attendsSet = studentGroup.getAttendsSet();
-        	
-        	groupProperties = attendsSet.getGroupProperties();
-        	
+            studentGroupAttendList = studentGroup.getStudentGroupAttends();
+
+            attendsSet = studentGroup.getAttendsSet();
+
+            groupProperties = attendsSet.getGroupProperties();
+
         } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();
 
@@ -1722,7 +1704,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
             infoStudentGroupAttend = InfoStudentGroupAttendWithAllUntilPersons
                     .newInfoFromDomain((IStudentGroupAttend) iter.next());
-                
+
             infoSiteStudentInformation.setNumber(infoStudentGroupAttend.getInfoAttend().getAluno()
                     .getNumber());
 
@@ -1741,30 +1723,27 @@ public class TeacherAdministrationSiteComponentBuilder {
 
         Collections.sort(studentGroupAttendInformationList, new BeanComparator("number"));
         component.setInfoSiteStudentInformationList(studentGroupAttendInformationList);
-        
-        if(studentGroup.getShift() != null){
+
+        if (studentGroup.getShift() != null) {
             component.setInfoStudentGroup(InfoStudentGroupWithAllUntilLessons
                     .newInfoFromDomain(studentGroup));
-        }else{
-        	component.setInfoStudentGroup(InfoStudentGroupWithoutShift.newInfoFromDomain(studentGroup));
+        } else {
+            component.setInfoStudentGroup(InfoStudentGroupWithoutShift.newInfoFromDomain(studentGroup));
         }
-        
-        
- 
+
         if (groupProperties.getMaximumCapacity() != null) {
 
             int vagas = groupProperties.getMaximumCapacity().intValue() - studentGroupAttendList.size();
-            //if (vagas >= 0)
+            // if (vagas >= 0)
             component.setNrOfElements(new Integer(vagas));
-            //else
-            //component.setNrOfElements(new Integer(0));
+            // else
+            // component.setNrOfElements(new Integer(0));
         } else
             component.setNrOfElements("Sem limite");
-        
+
         return component;
     }
 
-    
     /**
      * @param component
      * @param site
@@ -1778,157 +1757,153 @@ public class TeacherAdministrationSiteComponentBuilder {
                 groupPropertiesCode, shiftCode);
         component
                 .setInfoSiteStudentsAndShiftByStudentGroupList(infoSiteStudentsAndShiftByStudentGroupList);
-    	
+
         InfoSiteShiftsAndGroups infoSiteShiftsAndGroups = readShiftAndGroups(groupPropertiesCode,
                 shiftCode);
         component.setInfoSiteShiftsAndGroups(infoSiteShiftsAndGroups);
         return component;
     }
 
-    
     private InfoSiteShiftsAndGroups readShiftAndGroups(Integer groupPropertiesCode, Integer shiftCode)
-    throws ExcepcaoInexistente, FenixServiceException {
-    	
-    	InfoSiteShiftsAndGroups infoSiteShiftsAndGroups = new InfoSiteShiftsAndGroups();
-    	try {
-    		
-    		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            throws ExcepcaoInexistente, FenixServiceException {
+
+        InfoSiteShiftsAndGroups infoSiteShiftsAndGroups = new InfoSiteShiftsAndGroups();
+        try {
+
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
 
             IGroupProperties groupProperties = (IGroupProperties) sp.getIPersistentGroupProperties()
                     .readByOID(GroupProperties.class, groupPropertiesCode);
-    		
+
             if (groupProperties == null)
                 return null;
-    		
-            IShift shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class, shiftCode);
-    	
-    		List infoSiteGroupsByShiftList = new ArrayList();
-    		InfoSiteShift infoSiteShift = new InfoSiteShift();
-			infoSiteShift.setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
-			
-            List allStudentGroups = persistentStudentGroup.readAllStudentGroupByAttendsSetAndShift(
-                    groupProperties.getAttendsSet(), shift);
-			
-			if (groupProperties.getGroupMaximumNumber() != null) {
-                int vagas = groupProperties.getGroupMaximumNumber().intValue() - allStudentGroups.size();
-				infoSiteShift.setNrOfGroups(new Integer(vagas));
-			} else
-				infoSiteShift.setNrOfGroups("Sem limite");
-			InfoSiteGroupsByShift infoSiteGroupsByShift = new InfoSiteGroupsByShift();
-			infoSiteGroupsByShift.setInfoSiteShift(infoSiteShift);
 
-			List infoSiteStudentGroupsList = null;
-			if (allStudentGroups.size() != 0) {
-				infoSiteStudentGroupsList = new ArrayList();
-				Iterator iterGroups = allStudentGroups.iterator();
-				while (iterGroups.hasNext()) {
-					InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
-					InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
+            IShift shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class, shiftCode);
+
+            List infoSiteGroupsByShiftList = new ArrayList();
+            InfoSiteShift infoSiteShift = new InfoSiteShift();
+            infoSiteShift.setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
+
+            List allStudentGroups = persistentStudentGroup.readAllStudentGroupByAttendsSetAndShift(
+                    groupProperties.getAttendsSet().getIdInternal(), shift.getIdInternal());
+
+            if (groupProperties.getGroupMaximumNumber() != null) {
+                int vagas = groupProperties.getGroupMaximumNumber().intValue() - allStudentGroups.size();
+                infoSiteShift.setNrOfGroups(new Integer(vagas));
+            } else
+                infoSiteShift.setNrOfGroups("Sem limite");
+            InfoSiteGroupsByShift infoSiteGroupsByShift = new InfoSiteGroupsByShift();
+            infoSiteGroupsByShift.setInfoSiteShift(infoSiteShift);
+
+            List infoSiteStudentGroupsList = null;
+            if (allStudentGroups.size() != 0) {
+                infoSiteStudentGroupsList = new ArrayList();
+                Iterator iterGroups = allStudentGroups.iterator();
+                while (iterGroups.hasNext()) {
+                    InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
+                    InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
                     infoStudentGroup = InfoStudentGroup.newInfoFromDomain((IStudentGroup) iterGroups
                             .next());
                     infoSiteStudentGroup.setInfoStudentGroup(infoStudentGroup);
-					infoSiteStudentGroupsList.add(infoSiteStudentGroup);
-				}
+                    infoSiteStudentGroupsList.add(infoSiteStudentGroup);
+                }
                 Collections.sort(infoSiteStudentGroupsList, new BeanComparator(
-						"infoStudentGroup.groupNumber"));
-			}
+                        "infoStudentGroup.groupNumber"));
+            }
             infoSiteGroupsByShift.setInfoSiteStudentGroupsList(infoSiteStudentGroupsList);
 
-			infoSiteGroupsByShiftList.add(infoSiteGroupsByShift);
-			infoSiteShiftsAndGroups.setInfoSiteGroupsByShiftList(infoSiteGroupsByShiftList);
-		
-	} catch (ExcepcaoPersistencia e) {
-		e.printStackTrace();
-		throw new FenixServiceException();
-	}
-	return infoSiteShiftsAndGroups;
-	}
+            infoSiteGroupsByShiftList.add(infoSiteGroupsByShift);
+            infoSiteShiftsAndGroups.setInfoSiteGroupsByShiftList(infoSiteGroupsByShiftList);
 
-    
+        } catch (ExcepcaoPersistencia e) {
+            e.printStackTrace();
+            throw new FenixServiceException();
+        }
+        return infoSiteShiftsAndGroups;
+    }
+
     private List readStudentGroupAndStudents(Integer groupPropertiesCode, Integer shiftCode)
-    throws ExcepcaoInexistente, FenixServiceException {
-    	
-    	List infoSiteStudentsAndShiftByStudentGroupList = new ArrayList();
+            throws ExcepcaoInexistente, FenixServiceException {
 
-    	try {
-    		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        List infoSiteStudentsAndShiftByStudentGroupList = new ArrayList();
+
+        try {
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IGroupProperties groupProperties = (IGroupProperties) sp.getIPersistentGroupProperties()
                     .readByOID(GroupProperties.class, groupPropertiesCode);
             if (groupProperties == null)
                 return null;
-    		
+
             IShift shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class, shiftCode);
-    
-    		List aux = new ArrayList();
-    		List studentGroupsWithShift = groupProperties.getAttendsSet().getStudentGroupsWithShift();
-    		Iterator iterStudentGroupsWithShift = studentGroupsWithShift.iterator();
-    		while(iterStudentGroupsWithShift.hasNext()){
-    			IStudentGroup studentGroup = (IStudentGroup)iterStudentGroupsWithShift.next();
-    			if(studentGroup.getShift().equals(shift)){
-    				aux.add(studentGroup);
-    			}
-    		}
-    		List allStudentGroups = new ArrayList(); 
-    		allStudentGroups.addAll(groupProperties.getAttendsSet().getStudentGroups());
-    		
-    		Iterator iterAux = aux.iterator();
-    		while(iterAux.hasNext()){
-    			IStudentGroup studentGroup = (IStudentGroup)iterAux.next();
-    			allStudentGroups.remove(studentGroup);
-    		}
-    		
-    		Iterator iterAllStudentGroups = allStudentGroups.iterator();
-    		InfoSiteStudentsAndShiftByStudentGroup infoSiteStudentsAndShiftByStudentGroup = null;
-    		while(iterAllStudentGroups.hasNext()){
-    			infoSiteStudentsAndShiftByStudentGroup = new InfoSiteStudentsAndShiftByStudentGroup();
-				
-    			IStudentGroup studentGroup = (IStudentGroup)iterAllStudentGroups.next();
-    			IShift turno = studentGroup.getShift();
+
+            List aux = new ArrayList();
+            List studentGroupsWithShift = groupProperties.getAttendsSet().getStudentGroupsWithShift();
+            Iterator iterStudentGroupsWithShift = studentGroupsWithShift.iterator();
+            while (iterStudentGroupsWithShift.hasNext()) {
+                IStudentGroup studentGroup = (IStudentGroup) iterStudentGroupsWithShift.next();
+                if (studentGroup.getShift().equals(shift)) {
+                    aux.add(studentGroup);
+                }
+            }
+            List allStudentGroups = new ArrayList();
+            allStudentGroups.addAll(groupProperties.getAttendsSet().getStudentGroups());
+
+            Iterator iterAux = aux.iterator();
+            while (iterAux.hasNext()) {
+                IStudentGroup studentGroup = (IStudentGroup) iterAux.next();
+                allStudentGroups.remove(studentGroup);
+            }
+
+            Iterator iterAllStudentGroups = allStudentGroups.iterator();
+            InfoSiteStudentsAndShiftByStudentGroup infoSiteStudentsAndShiftByStudentGroup = null;
+            while (iterAllStudentGroups.hasNext()) {
+                infoSiteStudentsAndShiftByStudentGroup = new InfoSiteStudentsAndShiftByStudentGroup();
+
+                IStudentGroup studentGroup = (IStudentGroup) iterAllStudentGroups.next();
+                IShift turno = studentGroup.getShift();
                 infoSiteStudentsAndShiftByStudentGroup.setInfoStudentGroup(InfoStudentGroup
                         .newInfoFromDomain(studentGroup));
-    			infoSiteStudentsAndShiftByStudentGroup.setInfoShift(InfoShift.newInfoFromDomain(turno));
-    			
-    			List studentGroupAttendList = sp.getIPersistentStudentGroupAttend()
-                .readAllByStudentGroup(studentGroup);
-    			
-    			List studentGroupAttendInformationList = new ArrayList();
-    	        Iterator iterStudentGroupAttendList = studentGroupAttendList.iterator();
-    	        InfoSiteStudentInformation infoSiteStudentInformation = null;
-    	        InfoStudentGroupAttend infoStudentGroupAttend = null;
+                infoSiteStudentsAndShiftByStudentGroup.setInfoShift(InfoShift.newInfoFromDomain(turno));
 
-    	        while (iterStudentGroupAttendList.hasNext()) {
-    	            infoSiteStudentInformation = new InfoSiteStudentInformation();
+                List studentGroupAttendList = studentGroup.getStudentGroupAttends();
+
+                List studentGroupAttendInformationList = new ArrayList();
+                Iterator iterStudentGroupAttendList = studentGroupAttendList.iterator();
+                InfoSiteStudentInformation infoSiteStudentInformation = null;
+                InfoStudentGroupAttend infoStudentGroupAttend = null;
+
+                while (iterStudentGroupAttendList.hasNext()) {
+                    infoSiteStudentInformation = new InfoSiteStudentInformation();
 
                     infoStudentGroupAttend = InfoStudentGroupAttendWithAllUntilPersons
                             .newInfoFromDomain((IStudentGroupAttend) iterStudentGroupAttendList.next());
-    	                
+
                     infoSiteStudentInformation.setNumber(infoStudentGroupAttend.getInfoAttend()
                             .getAluno().getNumber());
-    	    
-    	            studentGroupAttendInformationList.add(infoSiteStudentInformation);
 
-    	        }
-    	        
-    	        Collections.sort(studentGroupAttendInformationList, new BeanComparator("number"));
-    	        
+                    studentGroupAttendInformationList.add(infoSiteStudentInformation);
+
+                }
+
+                Collections.sort(studentGroupAttendInformationList, new BeanComparator("number"));
+
                 infoSiteStudentsAndShiftByStudentGroup
                         .setInfoSiteStudentInformationList(studentGroupAttendInformationList);
-    	        infoSiteStudentsAndShiftByStudentGroupList.add(infoSiteStudentsAndShiftByStudentGroup);
-    	        
+                infoSiteStudentsAndShiftByStudentGroupList.add(infoSiteStudentsAndShiftByStudentGroup);
+
                 Collections.sort(infoSiteStudentsAndShiftByStudentGroupList, new BeanComparator(
                         "infoStudentGroup.groupNumber"));
-    	        
-    		}
-	} catch (ExcepcaoPersistencia e) {
-		e.printStackTrace();
-		throw new FenixServiceException();
-	}
-	return infoSiteStudentsAndShiftByStudentGroupList;
-	}
-    
-    
+
+            }
+        } catch (ExcepcaoPersistencia e) {
+            e.printStackTrace();
+            throw new FenixServiceException();
+        }
+        return infoSiteStudentsAndShiftByStudentGroupList;
+    }
+
     /**
      * @param component
      * @param site
@@ -1950,7 +1925,7 @@ public class TeacherAdministrationSiteComponentBuilder {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             groupProperties = (IGroupProperties) sp.getIPersistentGroupProperties().readByOID(
-                            GroupProperties.class, groupPropertiesCode);
+                    GroupProperties.class, groupPropertiesCode);
 
         } catch (ExcepcaoPersistencia e) {
 
@@ -1974,9 +1949,9 @@ public class TeacherAdministrationSiteComponentBuilder {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IStudentGroup studentGroup = null;
             groupProperties = (IGroupProperties) sp.getIPersistentGroupProperties().readByOID(
-					GroupProperties.class, groupPropertiesCode);
-            if(groupProperties == null){
-            	return null;
+                    GroupProperties.class, groupPropertiesCode);
+            if (groupProperties == null) {
+                return null;
             }
             if (studentGroupCode != null) {
 
@@ -1987,68 +1962,65 @@ public class TeacherAdministrationSiteComponentBuilder {
                     component.setShifts(null);
                     return component;
                 }
-                
+
                 component.setOldShift(InfoShift.newInfoFromDomain(studentGroup.getShift()));
             }
-         
+
             IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-			.getInstance();
+                    .getInstance();
             IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-			.getGroupEnrolmentStrategyInstance(groupProperties);
-        	
-            if(strategy.checkHasShift(groupProperties)){
-        		
-        	ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-            List executionCourses = new ArrayList();
-            executionCourses = groupProperties.getExecutionCourses();
-                        
-            
-            Iterator iterExecutionCourses = executionCourses.iterator();
-            List shifts= new ArrayList();
-            while(iterExecutionCourses.hasNext()){
+                    .getGroupEnrolmentStrategyInstance(groupProperties);
+
+            if (strategy.checkHasShift(groupProperties)) {
+
+                ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+                List executionCourses = new ArrayList();
+                executionCourses = groupProperties.getExecutionCourses();
+
+                Iterator iterExecutionCourses = executionCourses.iterator();
+                List shifts = new ArrayList();
+                while (iterExecutionCourses.hasNext()) {
                     IExecutionCourse executionCourse2 = (IExecutionCourse) iterExecutionCourses.next();
                     List someShifts = persistentShift.readByExecutionCourse(executionCourse2
                             .getIdInternal());
-            
-               shifts.addAll(someShifts);
-            }
-            
-           
-            
-            if (shifts == null || shifts.isEmpty()) {
 
-            } else {
-                for (int i = 0; i < shifts.size(); i++) {
-                    IShift shift = (IShift) shifts.get(i);
-                    if (strategy.checkShiftType(groupProperties, shift)) {
-                    	executionCourse = shift.getDisciplinaExecucao();
+                    shifts.addAll(someShifts);
+                }
+
+                if (shifts == null || shifts.isEmpty()) {
+
+                } else {
+                    for (int i = 0; i < shifts.size(); i++) {
+                        IShift shift = (IShift) shifts.get(i);
+                        if (strategy.checkShiftType(groupProperties, shift)) {
+                            executionCourse = shift.getDisciplinaExecucao();
                             InfoShift infoShift = new InfoShift(shift.getNome(), shift.getTipo(), shift
                                     .getLotacao(), InfoExecutionCourse
                                     .newInfoFromDomain(executionCourse));
 
-                        List lessons = shift.getAssociatedLessons();
-                        List infoLessons = new ArrayList();
+                            List lessons = shift.getAssociatedLessons();
+                            List infoLessons = new ArrayList();
                             List classesShifts = sp.getITurmaTurnoPersistente().readClassesWithShift(
                                     shift.getIdInternal());
-                        List infoClasses = new ArrayList();
+                            List infoClasses = new ArrayList();
 
-                        for (int j = 0; j < lessons.size(); j++)
+                            for (int j = 0; j < lessons.size(); j++)
                                 infoLessons.add(InfoLesson.newInfoFromDomain((ILesson) lessons.get(j)));
 
-                        infoShift.setInfoLessons(infoLessons);
+                            infoShift.setInfoLessons(infoLessons);
 
-                        for (int j = 0; j < classesShifts.size(); j++)
+                            for (int j = 0; j < classesShifts.size(); j++)
                                 infoClasses.add(InfoClass
                                         .newInfoFromDomain(((ISchoolClassShift) classesShifts.get(j))
                                                 .getTurma()));
-                        infoShift.setInfoClasses(infoClasses);
-                        infoShift.setIdInternal(shift.getIdInternal());
+                            infoShift.setInfoClasses(infoClasses);
+                            infoShift.setIdInternal(shift.getIdInternal());
 
-                        infoShifts.add(infoShift);
+                            infoShifts.add(infoShift);
+                        }
                     }
                 }
             }
-        	}
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
@@ -2057,7 +2029,6 @@ public class TeacherAdministrationSiteComponentBuilder {
         return component;
     }
 
-    
     /**
      * @param component
      * @param site
@@ -2066,35 +2037,34 @@ public class TeacherAdministrationSiteComponentBuilder {
 
     private ISiteComponent getInfoSiteAttendsSet(InfoSiteAttendsSet component, Integer attendsSetCode)
             throws FenixServiceException {
-    	
-    	InfoAttendsSet infoAttendsSet = readAttendsSet(attendsSetCode);
+
+        InfoAttendsSet infoAttendsSet = readAttendsSet(attendsSetCode);
         component.setInfoAttendsSet(infoAttendsSet);
-        
+
         return component;
     }
 
     private InfoAttendsSet readAttendsSet(Integer attendsSetCode) throws FenixServiceException {
 
-    	IAttendsSet attendsSet = null;
-    	try {
-    		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IAttendsSet attendsSet = null;
+        try {
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             attendsSet = (IAttendsSet) sp.getIPersistentAttendsSet().readByOID(AttendsSet.class,
                     attendsSetCode);
 
-    	} catch (ExcepcaoPersistencia e) {
+        } catch (ExcepcaoPersistencia e) {
 
-    		throw new FenixServiceException(e);
-    	}
+            throw new FenixServiceException(e);
+        }
 
         InfoAttendsSet infoAttendsSetWithInfoAttendsWithInfoGroupProperties = InfoAttendsSetWithInfoAttendsWithInfoGroupProperties
                 .newInfoFromDomain(attendsSet);
 
-    	if(infoAttendsSetWithInfoAttendsWithInfoGroupProperties!=null){
-    		List infoAttends = infoAttendsSetWithInfoAttendsWithInfoGroupProperties.getInfoAttends();
-    		Collections.sort(infoAttends, new BeanComparator("aluno.number"));
-    	}
-    	return infoAttendsSetWithInfoAttendsWithInfoGroupProperties;
+        if (infoAttendsSetWithInfoAttendsWithInfoGroupProperties != null) {
+            List infoAttends = infoAttendsSetWithInfoAttendsWithInfoGroupProperties.getInfoAttends();
+            Collections.sort(infoAttends, new BeanComparator("aluno.number"));
+        }
+        return infoAttendsSetWithInfoAttendsWithInfoGroupProperties;
     }
-
 
 }

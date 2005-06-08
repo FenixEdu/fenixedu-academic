@@ -708,6 +708,14 @@
 	
 	</reference-descriptor>
 
+	<collection-descriptor 
+			name="studentGroupAttends" 
+			element-class-ref="net.sourceforge.fenixedu.domain.StudentGroupAttend"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyStudentGroup"/>
+
+    </collection-descriptor>
+
 
 </class-descriptor>
 

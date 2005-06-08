@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
+import net.sourceforge.fenixedu.domain.StudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentAttendInAttendsSet;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentAttendsSet;
@@ -80,11 +81,17 @@ public class DeleteAttendsSetMembersByExecutionCourseID implements IService {
                 boolean found = false;
                 Iterator iterStudentsGroups = attendsSet.getStudentGroups().iterator();
                 while (iterStudentsGroups.hasNext() && !found) {
-
-                    IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend.readBy(
-                            (IStudentGroup) iterStudentsGroups.next(), frequenta);
+                    final IStudentGroup studentGroup = (IStudentGroup) iterStudentsGroups.next();
+                    IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend
+                            .readByStudentGroupAndAttend(studentGroup.getIdInternal(), frequenta
+                                    .getIdInternal());
                     if (oldStudentGroupAttend != null) {
-                        persistentStudentGroupAttend.delete(oldStudentGroupAttend);
+                        oldStudentGroupAttend.getStudentGroup().getStudentGroupAttends().remove(oldStudentGroupAttend);
+                        oldStudentGroupAttend.setStudentGroup(null);
+                        oldStudentGroupAttend.getAttend().getStudentGroupAttends().remove(oldStudentGroupAttend);
+                        oldStudentGroupAttend.setAttend(null);
+                        persistentStudentGroupAttend.deleteByOID(StudentGroupAttend.class,
+                                oldStudentGroupAttend.getIdInternal());
                         found = true;
                     }
                 }
@@ -94,7 +101,6 @@ public class DeleteAttendsSetMembersByExecutionCourseID implements IService {
                         .getIdInternal());
             }
         }
-
         return true;
     }
 }

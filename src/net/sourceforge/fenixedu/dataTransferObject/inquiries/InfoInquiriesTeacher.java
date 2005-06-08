@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.util.CopyUtils;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.inquiries.IInquiriesTeacher;
 import net.sourceforge.fenixedu.util.InquiriesUtil;
-import net.sourceforge.fenixedu.domain.ShiftType;
 
 /**
  * @author João Fialho & Rita Ferreira

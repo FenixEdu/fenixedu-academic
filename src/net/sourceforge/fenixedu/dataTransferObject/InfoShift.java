@@ -14,9 +14,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.ShiftType;
 
 public class InfoShift extends InfoObject {

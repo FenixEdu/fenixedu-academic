@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IAttendsSet;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
+import net.sourceforge.fenixedu.domain.StudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentAttendInAttendsSet;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentAttendsSet;
@@ -32,7 +33,8 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class DeleteAllAttendsSetMembers implements IService {
 
-    public boolean run(Integer objectCode, Integer attendsSetCode) throws FenixServiceException, ExcepcaoPersistencia {
+    public boolean run(Integer objectCode, Integer attendsSetCode) throws FenixServiceException,
+            ExcepcaoPersistencia {
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IPersistentAttendsSet persistentAttendsSet = persistentSupport.getIPersistentAttendsSet();
@@ -58,16 +60,27 @@ public class DeleteAllAttendsSetMembers implements IService {
             Iterator iterStudentsGroups = attendsSet.getStudentGroups().iterator();
             while (iterStudentsGroups.hasNext() && !found) {
 
-                IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend.readBy(
-                        (IStudentGroup) iterStudentsGroups.next(), frequenta);
+                IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend
+                        .readByStudentGroupAndAttend(((IStudentGroup) iterStudentsGroups.next())
+                                .getIdInternal(), frequenta.getIdInternal());
                 if (oldStudentGroupAttend != null) {
-                    persistentStudentGroupAttend.delete(oldStudentGroupAttend);
+
+                    oldStudentGroupAttend.getStudentGroup().getStudentGroupAttends().remove(
+                            oldStudentGroupAttend);
+                    oldStudentGroupAttend.setStudentGroup(null);
+                    oldStudentGroupAttend.getAttend().getStudentGroupAttends().remove(
+                            oldStudentGroupAttend);
+                    oldStudentGroupAttend.setAttend(null);
+
+                    persistentStudentGroupAttend.deleteByOID(StudentGroupAttend.class,
+                            oldStudentGroupAttend.getIdInternal());
                     found = true;
                 }
             }
             frequenta.removeAttendInAttendsSet(attendInAttendsSet);
             attendsSet.removeAttendInAttendsSet(attendInAttendsSet);
-            persistentAttendInAttendsSet.deleteByOID(AttendInAttendsSet.class, attendInAttendsSet.getIdInternal());
+            persistentAttendInAttendsSet.deleteByOID(AttendInAttendsSet.class, attendInAttendsSet
+                    .getIdInternal());
         }
 
         return true;

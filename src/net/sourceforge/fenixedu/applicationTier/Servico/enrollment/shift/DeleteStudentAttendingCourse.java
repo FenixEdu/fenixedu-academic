@@ -96,7 +96,9 @@ public class DeleteStudentAttendingCourse implements IService {
 
             IAttends attend = persistentAttends.readByAlunoAndDisciplinaExecucao(student,
                     executionCourse);
-            IStudentGroupAttend studentGroupAttend = studentGroupAttendDAO.readBy(attend);
+            List<IStudentGroupAttend> studentGroupAttends = attend.getStudentGroupAttends();
+            IStudentGroupAttend studentGroupAttend = (studentGroupAttends.isEmpty()) ? null
+                    : studentGroupAttends.get(0);
             if (studentGroupAttend != null) {
                 throw new AlreadyEnrolledInGroupServiceException();
             }

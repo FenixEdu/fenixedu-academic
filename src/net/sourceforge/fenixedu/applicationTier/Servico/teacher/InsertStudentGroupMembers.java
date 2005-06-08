@@ -35,107 +35,85 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author asnr and scpo
- *  
+ * 
  */
 
 public class InsertStudentGroupMembers implements IService {
 
-    /**
-     * The constructor of this class.
-     */
-    public InsertStudentGroupMembers() {
-    }
-
-    /**
-     * Executes the service.
-     */
-
-    public Boolean run(Integer executionCourseCode, Integer studentGroupCode,Integer groupPropertiesCode,
-            List studentCodes) throws FenixServiceException {
+    public Boolean run(Integer executionCourseCode, Integer studentGroupCode,
+            Integer groupPropertiesCode, List studentCodes) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
         IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
         IPersistentStudentGroup persistentStudentGroup = null;
         IPersistentStudent persistentStudent = null;
         IPersistentGroupProperties persistentGroupProperties = null;
-        
-        try {
 
-            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            persistentStudentGroup = persistentSupport
-                    .getIPersistentStudentGroup();
-            persistentStudent = persistentSupport.getIPersistentStudent();
-            persistentStudentGroupAttend = persistentSupport
-                    .getIPersistentStudentGroupAttend();
-            persistentGroupProperties = persistentSupport
-					.getIPersistentGroupProperties();
-        
-            IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties
-					.readByOID(GroupProperties.class, groupPropertiesCode);
+        persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
+        persistentStudent = persistentSupport.getIPersistentStudent();
+        persistentStudentGroupAttend = persistentSupport.getIPersistentStudentGroupAttend();
+        persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
 
-            if(groupProperties==null){
-            	throw new  InvalidChangeServiceException();
-            }
+        IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties.readByOID(
+                GroupProperties.class, groupPropertiesCode);
 
-            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup
-                    .readByOID(StudentGroup.class, studentGroupCode);
+        if (groupProperties == null) {
+            throw new InvalidChangeServiceException();
+        }
 
-            if (studentGroup == null) {
-                throw new ExistingServiceException();
-            }
-            
-            IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-			.getInstance();
-            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-			.getGroupEnrolmentStrategyInstance(groupProperties);
-            
-            if(!strategy.checkStudentsInAttendsSet(studentCodes,groupProperties)){
-            	throw new InvalidArgumentsServiceException();
-            }
-            
-            List allStudentGroup = groupProperties.getAttendsSet().getStudentGroups();
+        IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
+                StudentGroup.class, studentGroupCode);
 
-            Iterator iterGroups = allStudentGroup.iterator();
+        if (studentGroup == null) {
+            throw new ExistingServiceException();
+        }
 
-            while (iterGroups.hasNext()) {
-                IStudentGroup existingStudentGroup = (IStudentGroup) iterGroups
-                        .next();
-                IStudentGroupAttend newStudentGroupAttend = null;
-                Iterator iterator = studentCodes.iterator();
+        IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
+                .getInstance();
+        IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
+                .getGroupEnrolmentStrategyInstance(groupProperties);
 
-                while (iterator.hasNext()) {
-                    IStudent student = (IStudent) persistentStudent.readByOID(
-                            Student.class, (Integer) iterator.next());
-                    IAttends attend = groupProperties.getAttendsSet().getStudentAttend(student);
-                    
-                    newStudentGroupAttend = persistentStudentGroupAttend
-                            .readBy(existingStudentGroup, attend);
+        if (!strategy.checkStudentsInAttendsSet(studentCodes, groupProperties)) {
+            throw new InvalidArgumentsServiceException();
+        }
 
-                    if (newStudentGroupAttend != null)
-                        throw new InvalidSituationServiceException();
+        List allStudentGroup = groupProperties.getAttendsSet().getStudentGroups();
 
-                }
-            }
+        Iterator iterGroups = allStudentGroup.iterator();
 
-            Iterator iter = studentCodes.iterator();
+        while (iterGroups.hasNext()) {
+            IStudentGroup existingStudentGroup = (IStudentGroup) iterGroups.next();
+            IStudentGroupAttend newStudentGroupAttend = null;
+            Iterator iterator = studentCodes.iterator();
 
-            while (iter.hasNext()) {
-
-                IStudent student = (IStudent) persistentStudent.readByOID(
-                        Student.class, (Integer) iter.next());
-
+            while (iterator.hasNext()) {
+                IStudent student = (IStudent) persistentStudent.readByOID(Student.class,
+                        (Integer) iterator.next());
                 IAttends attend = groupProperties.getAttendsSet().getStudentAttend(student);
 
+                newStudentGroupAttend = persistentStudentGroupAttend.readByStudentGroupAndAttend(
+                        existingStudentGroup.getIdInternal(), attend.getIdInternal());
 
-                IStudentGroupAttend notExistingSGAttend = new StudentGroupAttend(
-                        studentGroup, attend);
+                if (newStudentGroupAttend != null)
+                    throw new InvalidSituationServiceException();
 
-                persistentStudentGroupAttend
-                        .simpleLockWrite(notExistingSGAttend);
             }
+        }
 
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia.getMessage());
+        Iterator iter = studentCodes.iterator();
+
+        while (iter.hasNext()) {
+
+            IStudent student = (IStudent) persistentStudent.readByOID(Student.class, (Integer) iter
+                    .next());
+
+            IAttends attend = groupProperties.getAttendsSet().getStudentAttend(student);
+
+            IStudentGroupAttend notExistingSGAttend = new StudentGroupAttend(studentGroup, attend);
+
+            persistentStudentGroupAttend.simpleLockWrite(notExistingSGAttend);
         }
 
         return new Boolean(true);

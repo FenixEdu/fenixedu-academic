@@ -80,12 +80,13 @@ public class WriteStudentAttendingCourses implements IService {
             IStudent student = persistentStudent.readStudentByNumberAndDegreeType(infoStudent
                     .getNumber(), infoStudent.getDegreeType());
 
-            //Read every course the student attends to:
-            List attends = persistentAttend.readByStudentNumber(student.getNumber(), student.getDegreeType());
+            // Read every course the student attends to:
+            List attends = persistentAttend.readByStudentNumber(student.getNumber(), student
+                    .getDegreeType());
 
             List attendingCourses = getExecutionCoursesFromAttends(attends);
 
-            //Gets the database objects for the wanted courses
+            // Gets the database objects for the wanted courses
             List wantedAttendingCourses = new ArrayList();
             Iterator i = infoExecutionCourseIds.iterator();
             while (i.hasNext()) {
@@ -101,9 +102,9 @@ public class WriteStudentAttendingCourses implements IService {
 
             }
 
-            //Delete all courses the student is currently attending to that
+            // Delete all courses the student is currently attending to that
             // he/she doesn't want to:
-            //attendings to remove :
+            // attendings to remove :
             List attendsToRemove = (List) CollectionUtils.subtract(attendingCourses,
                     wantedAttendingCourses);
             List attendingCoursesToAdd = (List) CollectionUtils.subtract(wantedAttendingCourses,
@@ -112,7 +113,7 @@ public class WriteStudentAttendingCourses implements IService {
                 deleteAttends(attendsToRemove, student, sp, persistentAttend);
             }
 
-            //Add new courses (without duplicates)
+            // Add new courses (without duplicates)
             i = attendingCoursesToAdd.iterator();
             while (i.hasNext()) {
                 IExecutionCourse executionCourse = (IExecutionCourse) i.next();
@@ -158,7 +159,9 @@ public class WriteStudentAttendingCourses implements IService {
                 IExecutionCourse executionCourse = (IExecutionCourse) iterator.next();
                 IAttends attend = persistentAttends.readByAlunoAndDisciplinaExecucao(student,
                         executionCourse);
-                IStudentGroupAttend studentGroupAttend = studentGroupAttendDAO.readBy(attend);
+                List<IStudentGroupAttend> studentGroupAttends = attend.getStudentGroupAttends();
+                IStudentGroupAttend studentGroupAttend = (studentGroupAttends.isEmpty()) ? null
+                        : studentGroupAttends.get(0);
 
                 if (studentGroupAttend != null) {
                     throw new AlreadyEnroledInGroupServiceException();
@@ -169,20 +172,22 @@ public class WriteStudentAttendingCourses implements IService {
                         throw new AlreadyEnroledServiceException();
                     }
 
-                    //NOTE: attends that are linked to enrollments are not
+                    // NOTE: attends that are linked to enrollments are not
                     // deleted
                     List shiftAttendsToDelete = persistentShiftStudent.readByStudentAndExecutionCourse(
                             student.getIdInternal(), executionCourse.getIdInternal());
                     if (shiftAttendsToDelete != null) {
                         Iterator iter = shiftAttendsToDelete.iterator();
                         while (iter.hasNext()) {
-                            //persistentShiftStudent.delete((IShiftStudent) iter.next());
+                            // persistentShiftStudent.delete((IShiftStudent)
+                            // iter.next());
                             IShiftStudent shiftStudent = (IShiftStudent) iter.next();
                             shiftStudent.getStudent().getShiftStudents().remove(shiftStudent);
                             shiftStudent.getShift().getStudentShifts().remove(shiftStudent);
                             shiftStudent.setShift(null);
                             shiftStudent.setStudent(null);
-                            persistentShiftStudent.deleteByOID(ShiftStudent.class, shiftStudent.getIdInternal());
+                            persistentShiftStudent.deleteByOID(ShiftStudent.class, shiftStudent
+                                    .getIdInternal());
                         }
                     }
                     persistentAttends.delete(attend);

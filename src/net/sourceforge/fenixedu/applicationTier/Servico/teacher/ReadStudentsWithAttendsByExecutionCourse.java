@@ -439,7 +439,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
 
         for (Iterator sgIterator = allStudentsGroups.iterator(); sgIterator.hasNext();) {
             IStudentGroup sg = (IStudentGroup) sgIterator.next();
-            List groupAttends = pga.readAllByStudentGroup(sg);
+            List groupAttends = sg.getStudentGroupAttends();
             List attendsList = (List) CollectionUtils.collect(groupAttends, new Transformer() {
 
                 public Object transform(Object input) {

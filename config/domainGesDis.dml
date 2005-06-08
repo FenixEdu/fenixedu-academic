@@ -77,7 +77,7 @@ class net.sourceforge.fenixedu.domain.Summary extends net.sourceforge.fenixedu.d
 	Boolean isExtraLesson;
 }
 
-/* DONE */
+/* DONE: DML and VO */
 class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.fenixedu.domain.DomainObject {
 	Double ectsCredits;
 	Boolean basic;

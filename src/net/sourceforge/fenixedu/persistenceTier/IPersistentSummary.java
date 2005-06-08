@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ISummary;
-import net.sourceforge.fenixedu.domain.ShiftType;
 
 /**
  * @author João Mota

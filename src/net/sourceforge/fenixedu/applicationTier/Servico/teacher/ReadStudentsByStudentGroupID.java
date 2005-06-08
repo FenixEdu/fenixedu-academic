@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IStudent;
@@ -20,67 +19,38 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
  * 
  * Created at 18/Set/2003, 18:17:51
- *  
+ * 
  */
-public class ReadStudentsByStudentGroupID implements IServico {
-    private static ReadStudentsByStudentGroupID _servico = new ReadStudentsByStudentGroupID();
+public class ReadStudentsByStudentGroupID implements IService {
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadStudentsByStudentGroupID getService() {
-        return _servico;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private ReadStudentsByStudentGroupID() {
-    }
-
-    /**
-     * Devolve o nome do servico
-     */
-    public final String getNome() {
-        return "teacher.ReadStudentsByStudentGroupID";
-    }
-
-    public List run(Integer executionCourseId, Integer groupId) throws FenixServiceException {
+    public List run(Integer executionCourseId, Integer groupId) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
         List infoStudents = new LinkedList();
+        
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
+        IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
-            IPersistentStudentGroupAttend persistentStudentGroupAttend = sp
-                    .getIPersistentStudentGroupAttend();
-            IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+        IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
+                StudentGroup.class, groupId);
+        List studentGroupAttendacies = studentGroup.getStudentGroupAttends();
 
-            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
-                    StudentGroup.class, groupId);
-            List studentGroupAttendacies = persistentStudentGroupAttend
-                    .readAllByStudentGroup(studentGroup);
-            for (Iterator iter = studentGroupAttendacies.iterator(); iter.hasNext();) {
-                IStudentGroupAttend studentGroupAttend = (IStudentGroupAttend) iter.next();
-                Integer studentID = studentGroupAttend.getAttend().getAluno().getIdInternal();
-                IStudent student = (IStudent) persistentStudent.readByOID(Student.class,
-                        studentID);
-                infoStudents.add(Cloner.copyIStudent2InfoStudent(student));
-            }
-
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException();
+        for (Iterator iter = studentGroupAttendacies.iterator(); iter.hasNext();) {
+            IStudentGroupAttend studentGroupAttend = (IStudentGroupAttend) iter.next();
+            Integer studentID = studentGroupAttend.getAttend().getAluno().getIdInternal();
+            IStudent student = (IStudent) persistentStudent.readByOID(Student.class, studentID);
+            infoStudents.add(Cloner.copyIStudent2InfoStudent(student));
         }
         return infoStudents;
     }
-
 }

@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.IAttendsSet;
 import net.sourceforge.fenixedu.domain.IGroupProperties;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
+import net.sourceforge.fenixedu.domain.StudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentAttendInAttendsSet;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentAttendsSet;
@@ -84,10 +85,18 @@ public class DeleteAttendsSetMembers implements IService {
             Iterator iterStudentsGroups = attendsSet.getStudentGroups().iterator();
             while (iterStudentsGroups.hasNext() && !found) {
 
-                IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend.readBy(
-                        (IStudentGroup) iterStudentsGroups.next(), attend);
+                IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend
+                        .readByStudentGroupAndAttend(((IStudentGroup) iterStudentsGroups.next())
+                                .getIdInternal(), attend.getIdInternal());
                 if (oldStudentGroupAttend != null) {
-                    persistentStudentGroupAttend.delete(oldStudentGroupAttend);
+                    oldStudentGroupAttend.getStudentGroup().getStudentGroupAttends().remove(
+                            oldStudentGroupAttend);
+                    oldStudentGroupAttend.setStudentGroup(null);
+                    oldStudentGroupAttend.getAttend().getStudentGroupAttends().remove(
+                            oldStudentGroupAttend);
+                    oldStudentGroupAttend.setAttend(null);
+                    persistentStudentGroupAttend.deleteByOID(StudentGroupAttend.class,
+                            oldStudentGroupAttend.getIdInternal());
                     found = true;
                 }
             }

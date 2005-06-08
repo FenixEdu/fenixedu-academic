@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.domain.StudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupProperties;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
@@ -60,15 +61,13 @@ public class DeleteStudentGroupMembers implements IServico {
     public final String getNome() {
         return "DeleteStudentGroupMembers";
     }
-    
 
     /**
      * Executes the service.
      */
 
-    public boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode,
-            List studentUsernames) throws FenixServiceException {
-
+    public boolean run(Integer executionCourseCode, Integer studentGroupCode,
+            Integer groupPropertiesCode, List studentUsernames) throws FenixServiceException {
 
         IPersistentStudentGroup persistentStudentGroup = null;
         IPersistentStudent persistentStudent = null;
@@ -77,56 +76,60 @@ public class DeleteStudentGroupMembers implements IServico {
 
         try {
 
-            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            ISuportePersistente persistentSupport = PersistenceSupportFactory
+                    .getDefaultPersistenceSupport();
 
             persistentStudent = persistentSupport.getIPersistentStudent();
-            persistentStudentGroup = persistentSupport
-                    .getIPersistentStudentGroup();
-            persistentStudentGroupAttend = persistentSupport
-                    .getIPersistentStudentGroupAttend();
-            persistentGroupProperties = persistentSupport
-				.getIPersistentGroupProperties();
-            
-            IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties
-                    .readByOID(GroupProperties.class, groupPropertiesCode);
+            persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
+            persistentStudentGroupAttend = persistentSupport.getIPersistentStudentGroupAttend();
+            persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
 
-           if(groupProperties==null){
-           	throw new  InvalidChangeServiceException();
-           }
-                       
-            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup
-                    .readByOID(StudentGroup.class, studentGroupCode);
+            IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties.readByOID(
+                    GroupProperties.class, groupPropertiesCode);
+
+            if (groupProperties == null) {
+                throw new InvalidChangeServiceException();
+            }
+
+            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
+                    StudentGroup.class, studentGroupCode);
 
             if (studentGroup == null) {
                 throw new ExistingServiceException();
             }
-            
-            
+
             IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-            .getInstance();
+                    .getInstance();
             IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-            .getGroupEnrolmentStrategyInstance(groupProperties);
-            
-            if(!strategy.checkStudentsUserNamesInAttendsSet(studentUsernames,groupProperties)){
+                    .getGroupEnrolmentStrategyInstance(groupProperties);
+
+            if (!strategy.checkStudentsUserNamesInAttendsSet(studentUsernames, groupProperties)) {
                 throw new InvalidArgumentsServiceException();
             }
-            
-           if(!checkStudentsInStudentGroup( studentUsernames, studentGroup)){
-            throw new InvalidSituationServiceException();
-           }
-            
+
+            if (!checkStudentsInStudentGroup(studentUsernames, studentGroup)) {
+                throw new InvalidSituationServiceException();
+            }
+
             Iterator iterator = studentUsernames.iterator();
 
             IAttendsSet attendsSet = studentGroup.getAttendsSet();
             while (iterator.hasNext()) {
 
-                IStudent student = persistentStudent.readByUsername(iterator
-                        .next().toString());
+                IStudent student = persistentStudent.readByUsername(iterator.next().toString());
                 IAttends attend = attendsSet.getStudentAttend(student);
-                
-                 IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend
-                        .readBy(studentGroup, attend);
-                 persistentStudentGroupAttend.delete(oldStudentGroupAttend);
+
+                IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend
+                        .readByStudentGroupAndAttend(studentGroup.getIdInternal(), attend
+                                .getIdInternal());
+
+                oldStudentGroupAttend.getStudentGroup().getStudentGroupAttends().remove(
+                        oldStudentGroupAttend);
+                oldStudentGroupAttend.setStudentGroup(null);
+                oldStudentGroupAttend.getAttend().getStudentGroupAttends().remove(oldStudentGroupAttend);
+                oldStudentGroupAttend.setAttend(null);
+                persistentStudentGroupAttend.deleteByOID(StudentGroupAttend.class, oldStudentGroupAttend
+                        .getIdInternal());
             }
 
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
@@ -134,31 +137,28 @@ public class DeleteStudentGroupMembers implements IServico {
         }
         return true;
     }
-    
-    
-    
-    private boolean checkStudentsInStudentGroup(List studentsUserNames, IStudentGroup studentGroup) throws ExcepcaoPersistencia{
-    	IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
-    	IPersistentStudent persistentStudent = null;
-    	ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-    	persistentStudent = persistentSupport.getIPersistentStudent();
-    	persistentStudentGroupAttend = persistentSupport
-                    .getIPersistentStudentGroupAttend();
-            
-    	Iterator iterator = studentsUserNames.iterator();
-    	IAttendsSet attendsSet = studentGroup.getAttendsSet();
-    	while (iterator.hasNext()) {
 
-    		IStudent student = persistentStudent.readByUsername(iterator
-    				.next().toString());
-    		IAttends attend = attendsSet.getStudentAttend(student);
-    		IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend
-                    .readBy(studentGroup, attend);
-    		if (oldStudentGroupAttend == null) {
-    			return false;
-    		}
-    	}
-    	return true;
-    	 
+    private boolean checkStudentsInStudentGroup(List studentsUserNames, IStudentGroup studentGroup)
+            throws ExcepcaoPersistencia {
+        IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
+        IPersistentStudent persistentStudent = null;
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        persistentStudent = persistentSupport.getIPersistentStudent();
+        persistentStudentGroupAttend = persistentSupport.getIPersistentStudentGroupAttend();
+
+        Iterator iterator = studentsUserNames.iterator();
+        IAttendsSet attendsSet = studentGroup.getAttendsSet();
+        while (iterator.hasNext()) {
+
+            IStudent student = persistentStudent.readByUsername(iterator.next().toString());
+            IAttends attend = attendsSet.getStudentAttend(student);
+            IStudentGroupAttend oldStudentGroupAttend = persistentStudentGroupAttend
+                    .readByStudentGroupAndAttend(studentGroup.getIdInternal(), attend.getIdInternal());
+            if (oldStudentGroupAttend == null) {
+                return false;
+            }
+        }
+        return true;
+
     }
 }

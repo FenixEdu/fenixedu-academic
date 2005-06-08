@@ -116,7 +116,7 @@ public class GroupEnrolment implements IService {
 
             IStudentGroup newStudentGroup = persistentStudentGroup
                     .readStudentGroupByAttendsSetAndGroupNumber(
-                            groupProperties.getAttendsSet(), groupNumber);
+                            groupProperties.getAttendsSet().getIdInternal(), groupNumber);
 
             if (newStudentGroup != null) {
                 throw new FenixServiceException();

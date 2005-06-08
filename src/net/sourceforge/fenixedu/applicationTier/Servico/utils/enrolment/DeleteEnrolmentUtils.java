@@ -149,7 +149,8 @@ public abstract class DeleteEnrolmentUtils {
                 if (attend != null) {
                     List marks = markDAO.readBy(attend);
                     if (marks == null || marks.isEmpty()) {
-                        IStudentGroupAttend studentGroupAttend = studentGroupAttendDAO.readBy(attend);
+                        final List<IStudentGroupAttend> studentGroupAttends = attend.getStudentGroupAttends();
+                        IStudentGroupAttend studentGroupAttend = (studentGroupAttends.isEmpty()) ? null : studentGroupAttends.get(0);
                         if (studentGroupAttend == null) {
                             List shiftsStudentIsIn = shiftStudentDAO.readByStudent(enrolment
                                     .getStudentCurricularPlan().getStudent().getIdInternal());

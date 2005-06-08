@@ -125,7 +125,7 @@ public class EnrollGroupShift implements IService {
     	ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
     	IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSupport
 		.getIPersistentStudentGroupAttend();
-    	List studentGroupAttends = persistentStudentGroupAttend.readAllByStudentGroup(studentGroup);
+    	List studentGroupAttends = studentGroup.getStudentGroupAttends();
     	IStudentGroupAttend studentGroupAttend = null;
     	Iterator iterStudentGroupAttends = studentGroupAttends.iterator();
     	while(iterStudentGroupAttends.hasNext() && !found){

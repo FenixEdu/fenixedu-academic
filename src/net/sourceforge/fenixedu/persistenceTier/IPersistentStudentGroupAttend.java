@@ -3,24 +3,15 @@
  *
  */
 package net.sourceforge.fenixedu.persistenceTier;
-import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
+
 /**
  * @author asnr and scpo
- *
+ * 
  */
-public interface IPersistentStudentGroupAttend extends IPersistentObject
-{
-	public List readByStudentGroupId(Integer ID) throws ExcepcaoPersistencia;
-	public void delete(IStudentGroupAttend studentGroupAttend) throws ExcepcaoPersistencia;
-	
-	
-	public IStudentGroupAttend readBy(IStudentGroup studentGroup, IAttends attend) throws ExcepcaoPersistencia;
-	public List readAll() throws ExcepcaoPersistencia;
-	public List readAllByStudentGroup(IStudentGroup studentGroup) throws ExcepcaoPersistencia;
-	public List readAllByAttend(IAttends attend) throws ExcepcaoPersistencia;
-    public IStudentGroupAttend readBy(IAttends attend) throws ExcepcaoPersistencia;
+public interface IPersistentStudentGroupAttend extends IPersistentObject {
+
+    public IStudentGroupAttend readByStudentGroupAndAttend(Integer studentGroupID, Integer attendID)
+            throws ExcepcaoPersistencia;
 }

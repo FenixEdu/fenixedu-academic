@@ -72,8 +72,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
         for (Iterator iter = studentGroups.iterator(); iter.hasNext();)
         {
             IStudentGroup studentGroup = (IStudentGroup) iter.next();
-            Collection studentGroupAttends = persistentStudentGroupAttend
-                    .readAllByStudentGroup(studentGroup);
+            Collection studentGroupAttends = studentGroup.getStudentGroupAttends();
             for (Iterator iterator = studentGroupAttends.iterator(); iterator.hasNext();)
             {
                 IStudentGroupAttend currentStudentGroupAttend = (IStudentGroupAttend) iterator.next();

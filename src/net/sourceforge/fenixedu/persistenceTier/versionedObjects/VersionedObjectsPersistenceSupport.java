@@ -110,6 +110,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionPe
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionYearVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuitySituationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuityValuesVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GroupPropertiesVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideSituationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InsuranceValueVO;
@@ -138,6 +139,8 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SectionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPaymentFileEntryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPaymentFileVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SiteVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentGroupAttendVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentGroupVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentKindVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SummaryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SupportLessonVO;
@@ -192,7 +195,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentStudentGroup getIPersistentStudentGroup() {
-        return null;
+        return new StudentGroupVO();
     }
 
     public IPersistentGratuityTransaction getIPersistentGratuityTransaction() {
@@ -212,7 +215,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentStudentGroupAttend getIPersistentStudentGroupAttend() {
-        return null;
+        return new StudentGroupAttendVO();
     }
 
     public IPersistentPrice getIPersistentPrice() {
@@ -716,7 +719,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentGroupProperties getIPersistentGroupProperties() {
-        return null;
+        return new GroupPropertiesVO();
     }
 
     public IPersistentMasterDegreeProofVersion getIPersistentMasterDegreeProofVersion() {

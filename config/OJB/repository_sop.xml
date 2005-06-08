@@ -510,6 +510,13 @@
 			<inverse-foreignkey field-ref="keyAttend"/>
       </collection-descriptor>
 
+	  <collection-descriptor 
+			name="studentGroupAttends" 
+			element-class-ref="net.sourceforge.fenixedu.domain.StudentGroupAttend"
+			proxy="true">
+			<inverse-foreignkey field-ref="keyAttend"/>
+      </collection-descriptor>
+
    </class-descriptor>   
 
 

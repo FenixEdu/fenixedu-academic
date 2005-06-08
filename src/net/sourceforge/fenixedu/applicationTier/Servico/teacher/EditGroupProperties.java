@@ -29,12 +29,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class EditGroupProperties implements IService {
 
-    /**
-     * The constructor of this class.
-     */
-    public EditGroupProperties() {
-    }
-
     private boolean checkIfAlreadyExists(InfoGroupProperties infoGroupProperties,
             IGroupProperties groupProperties) throws FenixServiceException {
 
@@ -91,8 +85,8 @@ public class EditGroupProperties implements IService {
                     shift = (IShift) iterator2.next();
                     if (shift != null) {
                         studentGroupsList = persistentStudentGroup
-                                .readAllStudentGroupByAttendsSetAndShift(
-                                        groupProperties.getAttendsSet(), shift);
+                                .readAllStudentGroupByAttendsSetAndShift(groupProperties.getAttendsSet()
+                                        .getIdInternal(), shift.getIdInternal());
                     } else {
                         studentGroupsList = groupProperties.getAttendsSet().getStudentGroups();
                     }
@@ -117,7 +111,7 @@ public class EditGroupProperties implements IService {
                 allStudents = new ArrayList();
 
                 IStudentGroup studentGroup = (IStudentGroup) iterGroups.next();
-                allStudents = persistentStudentGroupAttend.readAllByStudentGroup(studentGroup);
+                allStudents = studentGroup.getStudentGroupAttends();
                 size = new Integer(allStudents.size());
                 if (maximumCapacity != null) {
 

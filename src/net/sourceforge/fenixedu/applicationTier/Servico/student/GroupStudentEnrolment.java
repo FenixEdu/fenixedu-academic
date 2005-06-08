@@ -31,81 +31,67 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author asnr and scpo
- *  
+ * 
  */
 public class GroupStudentEnrolment implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public GroupStudentEnrolment() {
-    }
+    public Boolean run(Integer studentGroupCode, String username) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
-    public Boolean run(Integer studentGroupCode, String username)
-            throws FenixServiceException {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentStudentGroupAttend persistentStudentGroupAttend = sp
+                .getIPersistentStudentGroupAttend();
+        IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentStudentGroupAttend persistentStudentGroupAttend = sp
-                    .getIPersistentStudentGroupAttend();
-            IPersistentStudentGroup persistentStudentGroup = sp
-                    .getIPersistentStudentGroup();
-           
-            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup
-                    .readByOID(StudentGroup.class, studentGroupCode);
-            IStudent student = sp.getIPersistentStudent().readByUsername(
-                    username);
+        IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
+                StudentGroup.class, studentGroupCode);
+        IStudent student = sp.getIPersistentStudent().readByUsername(username);
 
-            if (studentGroup == null) {
-                throw new FenixServiceException();
-            }
-            
-            IGroupProperties groupProperties = studentGroup.getAttendsSet().getGroupProperties();
-            
-            IAttends attend = groupProperties.getAttendsSet().getStudentAttend(student);
- 
-            if(attend == null){
-            	throw new NotAuthorizedException();
-            }
-            
-            IStudentGroupAttend studentGroupAttend = persistentStudentGroupAttend
-                    .readBy(studentGroup, attend);
-
-            if (studentGroupAttend != null)
-                throw new InvalidSituationServiceException();
-
-            
-            IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-			.getInstance();
-            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-			.getGroupEnrolmentStrategyInstance(groupProperties);
-        	
-            boolean result = strategy.checkPossibleToEnrolInExistingGroup(
-                    groupProperties, studentGroup, studentGroup.getShift());
-            if (!result) {
-                throw new InvalidArgumentsServiceException();
-            }
-            IStudentGroupAttend newStudentGroupAttend = new StudentGroupAttend(
-                    studentGroup, attend);
-            
-            List allStudentGroup = groupProperties.getAttendsSet().getStudentGroups();
-            
-            Iterator iter = allStudentGroup.iterator();
-            IStudentGroup group = null;
-            IStudentGroupAttend existingStudentAttend = null;
-            while (iter.hasNext()) {
-                group = (IStudentGroup) iter.next();
-                existingStudentAttend = persistentStudentGroupAttend.readBy(
-                        group, attend);
-                if (existingStudentAttend != null) {
-                    throw new InvalidSituationServiceException();
-                }
-            }
-            persistentStudentGroupAttend.simpleLockWrite(newStudentGroupAttend);
-
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
+        if (studentGroup == null) {
+            throw new FenixServiceException();
         }
+
+        IGroupProperties groupProperties = studentGroup.getAttendsSet().getGroupProperties();
+
+        IAttends attend = groupProperties.getAttendsSet().getStudentAttend(student);
+
+        if (attend == null) {
+            throw new NotAuthorizedException();
+        }
+
+        IStudentGroupAttend studentGroupAttend = persistentStudentGroupAttend
+                .readByStudentGroupAndAttend(studentGroup.getIdInternal(), attend.getIdInternal());
+
+        if (studentGroupAttend != null)
+            throw new InvalidSituationServiceException();
+
+        IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
+                .getInstance();
+        IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
+                .getGroupEnrolmentStrategyInstance(groupProperties);
+
+        boolean result = strategy.checkPossibleToEnrolInExistingGroup(groupProperties, studentGroup,
+                studentGroup.getShift());
+        if (!result) {
+            throw new InvalidArgumentsServiceException();
+        }
+        IStudentGroupAttend newStudentGroupAttend = new StudentGroupAttend(studentGroup, attend);
+
+        List allStudentGroup = groupProperties.getAttendsSet().getStudentGroups();
+
+        Iterator iter = allStudentGroup.iterator();
+        IStudentGroup group = null;
+        IStudentGroupAttend existingStudentAttend = null;
+        while (iter.hasNext()) {
+            group = (IStudentGroup) iter.next();
+            existingStudentAttend = persistentStudentGroupAttend.readByStudentGroupAndAttend(group
+                    .getIdInternal(), attend.getIdInternal());
+            if (existingStudentAttend != null) {
+                throw new InvalidSituationServiceException();
+            }
+        }
+        persistentStudentGroupAttend.simpleLockWrite(newStudentGroupAttend);
+
         return new Boolean(true);
     }
 }

@@ -32,89 +32,76 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author joaosa & rmalo
- *  
+ * 
  */
-public class ReadStudentsAndGroupsWithoutShift implements IService
-{
+public class ReadStudentsAndGroupsWithoutShift implements IService {
 
-	public ReadStudentsAndGroupsWithoutShift()
-	{
+    public InfoSiteStudentsAndGroups run(Integer groupPropertiesId) throws FenixServiceException,
+            ExcepcaoPersistencia {
+        InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 
-	}
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentGroupProperties persistentGroupProperties = sp.getIPersistentGroupProperties();
 
-	public InfoSiteStudentsAndGroups run(Integer groupPropertiesId)
-			throws FenixServiceException
-	{
-		InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
-		try
-		{
-			ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-			IPersistentGroupProperties persistentGroupProperties = sp.getIPersistentGroupProperties();
+        IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties.readByOID(
+                GroupProperties.class, groupPropertiesId);
 
-			IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties
-            .readByOID(GroupProperties.class, groupPropertiesId);
-			
-			
-			if(groupProperties == null){
-				throw new ExistingServiceException();
-			}
-			
-			
-			List infoSiteStudentsAndGroupsList = new ArrayList();
-			List studentGroups = getStudentGroupsWithoutShiftByGroupProperties(groupProperties);
-			Iterator iterStudentGroups = studentGroups.iterator();
-			while(iterStudentGroups.hasNext()){
-				
-				List studentGroupAttendList = new ArrayList();
-				IStudentGroup studentGroup = (IStudentGroup)iterStudentGroups.next();
-				
-				
-				studentGroupAttendList = sp.getIPersistentStudentGroupAttend()
-                .readAllByStudentGroup(studentGroup);
+        if (groupProperties == null) {
+            throw new ExistingServiceException();
+        }
 
-				Iterator iterStudentGroupAttendList = studentGroupAttendList.iterator();
-				InfoSiteStudentInformation infoSiteStudentInformation = null;
-				InfoSiteStudentAndGroup infoSiteStudentAndGroup = null;
-				InfoStudentGroupAttend infoStudentGroupAttend = null;
-				
-				while(iterStudentGroupAttendList.hasNext()){
-					infoSiteStudentInformation = new InfoSiteStudentInformation();
-					infoSiteStudentAndGroup = new InfoSiteStudentAndGroup();
-					
-					IStudentGroupAttend studentGroupAttend = (IStudentGroupAttend)iterStudentGroupAttendList.next();
-					infoSiteStudentAndGroup.setInfoStudentGroup(InfoStudentGroup.newInfoFromDomain(studentGroup));	
-					infoStudentGroupAttend = InfoStudentGroupAttendWithAllUntilPersons.newInfoFromDomain(studentGroupAttend);
-					
-					infoSiteStudentInformation.setNumber(infoStudentGroupAttend
-							.getInfoAttend().getAluno().getNumber());
+        List infoSiteStudentsAndGroupsList = new ArrayList();
+        List studentGroups = getStudentGroupsWithoutShiftByGroupProperties(groupProperties);
+        Iterator iterStudentGroups = studentGroups.iterator();
+        while (iterStudentGroups.hasNext()) {
 
-					infoSiteStudentInformation.setName(infoStudentGroupAttend
-							.getInfoAttend().getAluno().getInfoPerson().getNome());
+            List studentGroupAttendList = new ArrayList();
+            IStudentGroup studentGroup = (IStudentGroup) iterStudentGroups.next();
 
-					infoSiteStudentInformation.setEmail(infoStudentGroupAttend
-							.getInfoAttend().getAluno().getInfoPerson().getEmail());
+            studentGroupAttendList = studentGroup.getStudentGroupAttends();
 
-					infoSiteStudentAndGroup.setInfoSiteStudentInformation(infoSiteStudentInformation);
-				
-					infoSiteStudentsAndGroupsList.add(infoSiteStudentAndGroup);
-				}
-			}
-			Collections.sort(infoSiteStudentsAndGroupsList, new BeanComparator(
-            "infoSiteStudentInformation.number"));
-			
-			infoSiteStudentsAndGroups.setInfoSiteStudentsAndGroupsList(infoSiteStudentsAndGroupsList);
-		}
-	 catch (ExcepcaoPersistencia e){
-	 	e.printStackTrace();
-		throw new FenixServiceException();
-	 }
-	return infoSiteStudentsAndGroups;
-	}
-	
-	private List getStudentGroupsWithoutShiftByGroupProperties(IGroupProperties groupProperties){
-		List result = new ArrayList();
-		List studentGroups = groupProperties.getAttendsSet().getStudentGroupsWithoutShift();
-		result.addAll(studentGroups);
-		return result;
-	}
+            Iterator iterStudentGroupAttendList = studentGroupAttendList.iterator();
+            InfoSiteStudentInformation infoSiteStudentInformation = null;
+            InfoSiteStudentAndGroup infoSiteStudentAndGroup = null;
+            InfoStudentGroupAttend infoStudentGroupAttend = null;
+
+            while (iterStudentGroupAttendList.hasNext()) {
+                infoSiteStudentInformation = new InfoSiteStudentInformation();
+                infoSiteStudentAndGroup = new InfoSiteStudentAndGroup();
+
+                IStudentGroupAttend studentGroupAttend = (IStudentGroupAttend) iterStudentGroupAttendList
+                        .next();
+                infoSiteStudentAndGroup.setInfoStudentGroup(InfoStudentGroup
+                        .newInfoFromDomain(studentGroup));
+                infoStudentGroupAttend = InfoStudentGroupAttendWithAllUntilPersons
+                        .newInfoFromDomain(studentGroupAttend);
+
+                infoSiteStudentInformation.setNumber(infoStudentGroupAttend.getInfoAttend().getAluno()
+                        .getNumber());
+
+                infoSiteStudentInformation.setName(infoStudentGroupAttend.getInfoAttend().getAluno()
+                        .getInfoPerson().getNome());
+
+                infoSiteStudentInformation.setEmail(infoStudentGroupAttend.getInfoAttend().getAluno()
+                        .getInfoPerson().getEmail());
+
+                infoSiteStudentAndGroup.setInfoSiteStudentInformation(infoSiteStudentInformation);
+
+                infoSiteStudentsAndGroupsList.add(infoSiteStudentAndGroup);
+            }
+        }
+        Collections.sort(infoSiteStudentsAndGroupsList, new BeanComparator(
+                "infoSiteStudentInformation.number"));
+
+        infoSiteStudentsAndGroups.setInfoSiteStudentsAndGroupsList(infoSiteStudentsAndGroupsList);
+
+        return infoSiteStudentsAndGroups;
+    }
+
+    private List getStudentGroupsWithoutShiftByGroupProperties(IGroupProperties groupProperties) {
+        List result = new ArrayList();
+        List studentGroups = groupProperties.getAttendsSet().getStudentGroupsWithoutShift();
+        result.addAll(studentGroups);
+        return result;
+    }
 }

@@ -110,9 +110,8 @@ public class PrepareCreateStudentGroup implements IServico {
             	List allStudentGroupAttend;
             
             	while (iterator.hasNext()) {
-            
-            		allStudentGroupAttend = persistentStudentGroupAttend
-					.readAllByStudentGroup((IStudentGroup) iterator.next());
+                    IStudentGroup studentGroup = (IStudentGroup) iterator.next();
+            		allStudentGroupAttend =  studentGroup.getStudentGroupAttends();
             
             		Iterator iterator2 = allStudentGroupAttend.iterator();
             		IAttends frequenta = null;

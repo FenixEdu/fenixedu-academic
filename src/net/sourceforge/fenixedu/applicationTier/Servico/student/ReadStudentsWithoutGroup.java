@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupProperties;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
@@ -46,13 +45,10 @@ public class ReadStudentsWithoutGroup implements IService {
 			ExcepcaoPersistencia {
 
 		final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		final IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSupport
-				.getIPersistentStudentGroupAttend();
 		final IPersistentGroupProperties persistentGroupProperties = persistentSupport
 				.getIPersistentGroupProperties();
 
 		final InfoSiteStudentsWithoutGroup infoSiteStudentsWithoutGroup = new InfoSiteStudentsWithoutGroup();
-
 		final IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties
 				.readByOID(GroupProperties.class, groupPropertiesCode);
 
@@ -73,34 +69,6 @@ public class ReadStudentsWithoutGroup implements IService {
 		}
 		final Integer groupNumber = new Integer(nextGroupNumber + 1);
 		
-//		 if (allStudentsGroups.size() != 0) {
-//		 Collections.max() sort(allStudentsGroups, new
-//		 BeanComparator("groupNumber"));
-//		 Integer lastGroupNumber = ((IStudentGroup) allStudentsGroups
-//		 .get(allStudentsGroups.size() - 1)).getGroupNumber();
-//		 groupNumber = new Integer(lastGroupNumber.intValue() + 1);
-//		
-//		 }
-
-//		IStudentGroup newStudentGroup = persistentStudentGroup
-//		.readStudentGroupByAttendsSetAndGroupNumber(groupProperties
-//				.getAttendsSet(), groupNumber);
-//		final IStudentGroup studentGroup = (IStudentGroup) CollectionUtils
-//				.find(allStudentsGroups, new Predicate() {
-//					public boolean evaluate(Object arg0) {
-//						final IStudentGroup studentGroup = (IStudentGroup) arg0;
-//						return studentGroup.getAttendsSet().getIdInternal()
-//								.equals(attendsSet.getIdInternal())
-//								&& studentGroup.getGroupNumber().equals(
-//										groupNumber);
-//					}
-//				});
-//
-//		if (studentGroup != null) {
-//			throw new NewStudentGroupAlreadyExists();
-//		}
-
-
 		infoSiteStudentsWithoutGroup.setGroupNumber(groupNumber);
 
 		final List attends = attendsSet.getAttends();
@@ -128,7 +96,7 @@ public class ReadStudentsWithoutGroup implements IService {
 		final Set attendsWithOutGroupsSet = new HashSet(attends);
 		for (final Iterator iterator = allStudentsGroups.iterator(); iterator.hasNext(); ) {
 			final IStudentGroup studentGroup = (IStudentGroup) iterator.next();
-			final List allStudentGroupAttend = persistentStudentGroupAttend.readAllByStudentGroup(studentGroup);
+			final List allStudentGroupAttend = studentGroup.getStudentGroupAttends();
 			for (final Iterator iterator2 = allStudentGroupAttend.iterator(); iterator2.hasNext(); ) {
 				final IStudentGroupAttend studentGroupAttend = (IStudentGroupAttend) iterator2.next();
 				attendsWithOutGroupsSet.remove(studentGroupAttend.getAttend());

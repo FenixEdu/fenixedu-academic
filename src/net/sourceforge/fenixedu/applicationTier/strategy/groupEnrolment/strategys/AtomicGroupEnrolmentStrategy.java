@@ -68,7 +68,7 @@ public class AtomicGroupEnrolmentStrategy extends GroupEnrolmentStrategy impleme
                 IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSuport
                         .getIPersistentStudentGroupAttend();
 
-                allStudentGroupAttend = persistentStudentGroupAttend.readAllByStudentGroup(studentGroup);
+                allStudentGroupAttend = studentGroup.getStudentGroupAttends();
 
             } catch (ExcepcaoPersistencia ex) {
                 throw ex;
