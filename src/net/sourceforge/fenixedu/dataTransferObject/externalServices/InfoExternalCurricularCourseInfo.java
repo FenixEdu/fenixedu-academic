@@ -7,7 +7,11 @@
 
 package net.sourceforge.fenixedu.dataTransferObject.externalServices;
 
+import java.util.Iterator;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>
@@ -21,6 +25,8 @@ public class InfoExternalCurricularCourseInfo
     private String code;
     private String ECTSCredits;
     private String credits;
+    private String weigth;
+    private String curricularYear;
 
 
     public String getCredits()
@@ -80,9 +86,27 @@ public class InfoExternalCurricularCourseInfo
 
     static public InfoExternalCurricularCourseInfo newFromDomain(ICurricularCourse course)
     {
+        Integer year = null;
+        for (Iterator iter = course.getScopes().iterator(); iter.hasNext();)
+        {
+            ICurricularCourseScope element = (ICurricularCourseScope) iter.next();
+            int currentYear = element.getCurricularSemester().getCurricularYear().getYear().intValue();
+            if (year == null || currentYear < year.intValue())
+                year = currentYear;
+        }
+
         InfoExternalCurricularCourseInfo info = new InfoExternalCurricularCourseInfo();
+
+        if (year != null)
+        {
+            info.setCurricularYear(new Integer(year).toString());
+        }
         info.setCode(course.getCode());
         info.setName(course.getName());
+        if (course.getWeigth() != null)
+        {
+            info.setWeigth(course.getWeigth().toString());
+        }
         if (course.getEctsCredits() != null)
         {
             info.setECTSCredits(course.getEctsCredits().toString());
@@ -93,5 +117,29 @@ public class InfoExternalCurricularCourseInfo
         }
 
         return info;
+    }
+
+
+    public String getWeigth()
+    {
+        return this.weigth;
+    }
+
+
+    public void setWeigth(String weigth)
+    {
+        this.weigth = weigth;
+    }
+
+
+    public String getCurricularYear()
+    {
+        return this.curricularYear;
+    }
+
+
+    public void setCurricularYear(String curricularYear)
+    {
+        this.curricularYear = curricularYear;
     }
 }

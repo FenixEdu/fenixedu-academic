@@ -65,6 +65,12 @@
 			<creditos-ECTS>
 				<xsl:value-of select="./ECTSCredits"/>
 			</creditos-ECTS>
+			<peso>
+				<xsl:value-of select="./weigth"/>
+			</peso>
+			<ano>
+				<xsl:value-of select="./curricularYear"/>
+			</ano>
 	</disciplina>			
 </xsl:template>
 
