@@ -35,6 +35,7 @@ public class CurricularCourseGroupOJB extends PersistentObjectOJB implements
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyBranch", branch.getIdInternal());
         criteria.addEqualTo("areaType", areaType);
+        criteria.addEqualTo("ojbConcreteClass", AreaCurricularCourseGroup.class.getName());
         return queryList(AreaCurricularCourseGroup.class, criteria);
     }
 
@@ -50,6 +51,7 @@ public class CurricularCourseGroupOJB extends PersistentObjectOJB implements
         criteria.addEqualTo("branch.idInternal", branch.getIdInternal());
         criteria.addEqualTo("curricularCourses.idInternal", curricularCourse.getIdInternal());
         criteria.addEqualTo("areaType", areaType);
+        criteria.addEqualTo("ojbConcreteClass", AreaCurricularCourseGroup.class.getName());
         return (ICurricularCourseGroup) queryObject(AreaCurricularCourseGroup.class, criteria);
     }
 
@@ -59,6 +61,7 @@ public class CurricularCourseGroupOJB extends PersistentObjectOJB implements
         criteria.addEqualTo("branch.idInternal", branch.getIdInternal());
         criteria.addEqualTo("scientificAreas.idInternal", scientificArea.getIdInternal());
         criteria.addEqualTo("areaType", areaType);
+        criteria.addEqualTo("ojbConcreteClass", AreaCurricularCourseGroup.class.getName());
         return (ICurricularCourseGroup) queryObject(AreaCurricularCourseGroup.class, criteria);
     }
 
@@ -67,12 +70,14 @@ public class CurricularCourseGroupOJB extends PersistentObjectOJB implements
         Criteria criteria = new Criteria();
         criteria.addEqualTo("branch.degreeCurricularPlan.idInternal", degreeCurricularPlan
                 .getIdInternal());
+        criteria.addEqualTo("ojbConcreteClass", OptionalCurricularCourseGroup.class.getName());
         return queryList(OptionalCurricularCourseGroup.class, criteria);
     }
 
     public List readOptionalCurricularCourseGroupsFromArea(IBranch area) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("branch.idInternal", area.getIdInternal());
+        criteria.addEqualTo("ojbConcreteClass", OptionalCurricularCourseGroup.class.getName());
         return queryList(OptionalCurricularCourseGroup.class, criteria);
     }
 
