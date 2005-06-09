@@ -246,12 +246,6 @@ public class InitializeExecutionPeriod {
 		}
 	}
 
-	private void store(final Collection<IDomainObject> domainObjects) throws ExcepcaoPersistencia {
-		for (final IDomainObject domainObject : domainObjects) {
-			persistentObject.simpleLockWrite(domainObject);
-		}
-	}
-
 	private void createSchoolClasses(final IExecutionPeriod newExecutionPeriod,
             final IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
         final List<ISchoolClass> schoolClasses = executionPeriod.getSchoolClasses();
