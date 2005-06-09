@@ -20,6 +20,7 @@ import org.apache.commons.beanutils.BeanComparator;
  */
 public class InquiriesUtil extends FenixUtil {
     
+	//CONSTANTS FOR THE INQUIRY FILLING
 	public static final String STUDENT_ATTENDS= "studentAttends";
 	public static final String EVALUATED_STUDENT_ATTENDS = "evaluatedStudentAttends";
 	public static final String ATTENDING_COURSE_TEACHERS = "attendingCourseTeachers";
@@ -73,6 +74,10 @@ public class InquiriesUtil extends FenixUtil {
 	public static final String NO_ATTENDING_COURSE_TEACHER_FORM_ERROR = "noAttendingCourseTeacherForm";
 	
 	public static final String INQUIRY_MESSAGE_KEY = "inquiryMessageKey";
+	
+	//CONSTANTS FOR THE EMAIL REMINDER
+	public static final String DEGREE_CURRICULAR_PLANS_LIST = "degreeCurricularPlansList";
+	public static final String EMAIL_REMINDER_REPORTS_LIST = "emailReminderReportsList";
 	
 
 	public static String formatAnswer(final Double answer) {
