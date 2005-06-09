@@ -122,9 +122,9 @@ public class FillInquiryAction extends FenixDispatchAction {
 
 		//FIXME: THIS SHOULD BE PARAMETRIZABLE ACCORDING TO THE EXECUTION PERIOD PARAMETRIZATION
 		//TODO: THIS IS ONLY READING THE ENROLLED COURSES, AND NOT ALL THE ATTENDING ONES
-		Object[] argsStudentIdExecutionPeriodId = { infoStudent.getIdInternal(), currentExecutionPeriod.getIdInternal(), Boolean.TRUE };
-		List<InfoFrequenta> studentAttends =
-			(List<InfoFrequenta>) ServiceUtils.executeService(userView, "student.ReadAttendsByStudentIdAndExecutionPeriodId", argsStudentIdExecutionPeriodId);
+		Object[] argsStudentIdExecutionPeriodId = { infoStudent.getIdInternal(), currentExecutionPeriod.getIdInternal(), Boolean.TRUE, Boolean.TRUE };
+		List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers> studentAttends =
+			(List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers>) ServiceUtils.executeService(userView, "student.ReadAttendsByStudentIdAndExecutionPeriodId", argsStudentIdExecutionPeriodId);
 		//Order by execution course name
 		Collections.sort(studentAttends, new BeanComparator("disciplinaExecucao.nome"));
 
