@@ -18,7 +18,11 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 public interface IFrequentaPersistente extends IPersistentObject {
-    public IAttends readByAlunoIdAndDisciplinaExecucaoId(Integer alunoId, Integer disciplinaExecucaoId)
+
+	public List readByDegreeCurricularPlanAndExecutionPeriodOrderedByStudentId(Integer degreeCurricularPlanId, Integer executionPeriodId)
+			throws ExcepcaoPersistencia;
+	
+	public IAttends readByAlunoIdAndDisciplinaExecucaoId(Integer alunoId, Integer disciplinaExecucaoId)
             throws ExcepcaoPersistencia;
 
     public IAttends readByAlunoAndDisciplinaExecucao(IStudent aluno,
