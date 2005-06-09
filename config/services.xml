@@ -694,6 +694,17 @@
         </filterChains>
     </service>
     <service>
+        <name>student.ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod</name>
+        <implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod
+		</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerOrGEPAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
         <name>student.ReadAttendsByOID</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.ReadAttendsByOID</implementationClass>
         <description/>
@@ -1101,7 +1112,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ManagerOrCoordinatorAuthorization"/>
+            <chain name="ManagerOrCoordinatorOrGEPAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -8049,6 +8060,14 @@
 		<name>inquiries.ReadInquiriesRegistriesByStudent</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.ReadInquiriesRegistriesByStudent
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+	</service>
+	<service>
+		<name>inquiries.ReadInquiriesRegistriesByExecutionPeriod</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.ReadInquiriesRegistriesByExecutionPeriod
 		</implementationClass>
 		<description/>
 		<isTransactional>true</isTransactional>
