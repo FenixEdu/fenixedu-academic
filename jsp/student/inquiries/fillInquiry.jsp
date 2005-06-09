@@ -320,7 +320,7 @@
 										</td>
 									</c:forTokens>
 									<td>
-										N&atilde;o Sabe
+										<bean:message key="label.inquiries.unknown" bundle="INQUIRIES_RESOURCES"/>
 									</td>
 								</tr>
 								<tr>
