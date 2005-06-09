@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -24,7 +23,7 @@ public class ReadCurrentExecutionYear implements IService {
 
             IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
 
-            infoExecutionYear = (InfoExecutionYear) Cloner.get(executionYear);
+            infoExecutionYear = InfoExecutionYear.newInfoFromDomain(executionYear);
 
         } catch (ExcepcaoPersistencia ex) {
             throw new RuntimeException(ex);
