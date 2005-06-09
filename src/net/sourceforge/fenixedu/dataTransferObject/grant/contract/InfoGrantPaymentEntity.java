@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
+import java.lang.reflect.Proxy;
+
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
@@ -11,15 +13,19 @@ import net.sourceforge.fenixedu.domain.grant.contract.IGrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantProject;
 
+import org.apache.ojb.broker.core.proxy.ProxyHelper;
+
 /**
  * @author pica
  * @author barbosa
  */
 public abstract class InfoGrantPaymentEntity extends InfoObject {
 
-    private static final String grantCostCenterOjbConcreteClass = GrantCostCenter.class.getName();
+    private static final String grantCostCenterOjbConcreteClass = GrantCostCenter.class
+            .getName();
 
-    private static final String grantProjectOjbConcreteClass = GrantProject.class.getName();
+    private static final String grantProjectOjbConcreteClass = GrantProject.class
+            .getName();
 
     protected String number;
 
@@ -105,25 +111,33 @@ public abstract class InfoGrantPaymentEntity extends InfoObject {
 
     public static InfoGrantPaymentEntity newInfoFromDomain(IGrantPaymentEntity grantPaymentEntity) {
         if (grantPaymentEntity != null) {
-            if (grantPaymentEntity instanceof IGrantProject)
+
+            if (grantPaymentEntity instanceof Proxy) {
+                grantPaymentEntity = (IGrantPaymentEntity) ProxyHelper.getRealObject(grantPaymentEntity);
+            }
+
+            if (grantPaymentEntity instanceof GrantProject) {
                 return InfoGrantProjectWithTeacherAndCostCenter
                         .newInfoFromDomain((IGrantProject) grantPaymentEntity);
-            else if (grantPaymentEntity instanceof IGrantCostCenter)
-                return InfoGrantCostCenterWithTeacher
+            } else if (grantPaymentEntity instanceof GrantCostCenter) {
+                    return InfoGrantCostCenterWithTeacher
                         .newInfoFromDomain((IGrantCostCenter) grantPaymentEntity);
-        }
+                }  
+            }
         return null;
     }
 
-    public static IGrantPaymentEntity newDomainFromInfo(InfoGrantPaymentEntity infoGrantPaymentEntity) {
+    public static IGrantPaymentEntity newDomainFromInfo(
+        InfoGrantPaymentEntity infoGrantPaymentEntity) {
         IGrantPaymentEntity grantPaymentEntity = null;
         if (infoGrantPaymentEntity != null) {
-            if (infoGrantPaymentEntity instanceof InfoGrantCostCenter)
+            if (infoGrantPaymentEntity.getOjbConcreteClass().equals(GrantProject.class.getName())){
                 return InfoGrantCostCenterWithTeacher
                         .newDomainFromInfo((InfoGrantCostCenter) infoGrantPaymentEntity);
-            else if (infoGrantPaymentEntity instanceof InfoGrantProject)
+            }else if (infoGrantPaymentEntity.getOjbConcreteClass().equals( GrantCostCenter.class.getName())){
                 return InfoGrantProjectWithTeacherAndCostCenter
                         .newDomainFromInfo((InfoGrantProject) infoGrantPaymentEntity);
+            }
         }
         return grantPaymentEntity;
     }

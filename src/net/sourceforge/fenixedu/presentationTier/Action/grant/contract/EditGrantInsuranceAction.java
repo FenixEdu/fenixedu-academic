@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostC
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantInsurance;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPaymentEntity;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantProject;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -67,6 +69,7 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
                 }
 
             } else {
+
                 infoGrantContract = infoGrantInsurance.getInfoGrantContract();
                 //Populate the form
                 setFormGrantInsurance(grantInsuranceForm, infoGrantInsurance);
@@ -154,10 +157,10 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
         if (infoGrantInsurance.getTotalValue() != null)
             form.set("totalValue", infoGrantInsurance.getTotalValue());
         if (infoGrantInsurance.getInfoGrantPaymentEntity() != null) {
-            if (infoGrantInsurance.getInfoGrantPaymentEntity() instanceof InfoGrantProject)
+            if (infoGrantInsurance.getInfoGrantPaymentEntity() instanceof InfoGrantProject && infoGrantInsurance.getInfoGrantPaymentEntity().getGrantProjectOjbConcreteClass().equals(GrantProject.class.getName()) )
                 form.set("project", infoGrantInsurance.getInfoGrantPaymentEntity().getNumber());
-            else
-                form.set("costcenter", infoGrantInsurance.getInfoGrantPaymentEntity().getNumber());
+            else if((infoGrantInsurance.getInfoGrantPaymentEntity() instanceof InfoGrantCostCenter && infoGrantInsurance.getInfoGrantPaymentEntity().getGrantCostCenterOjbConcreteClass().equals(GrantCostCenter.class.getName()) ))
+                    form.set("costcenter", infoGrantInsurance.getInfoGrantPaymentEntity().getNumber());
         }
         if (infoGrantInsurance.getDateBeginInsurance() != null)
             form.set("dateBeginInsurance", sdf.format(infoGrantInsurance.getDateBeginInsurance()));

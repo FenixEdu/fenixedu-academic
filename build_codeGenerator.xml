@@ -58,6 +58,7 @@
 				<include name="**/Item.java"/>
 				<include name="**/InsuranceValue.java"/>
 				<include name="**/InsuranceTransaction.java"/>
+				<include name="**/InquiriesRegistry.java"/>
 			</fileset>
 	    </delete>
 		<echo level="info" message="Processing of ${dml.definition.file} finished."/>

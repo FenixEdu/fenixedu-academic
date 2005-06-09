@@ -20,9 +20,11 @@ public class InfoGrantProjectWithTeacherAndCostCenter extends InfoGrantProject {
                 setInfoResponsibleTeacher(InfoTeacherWithPerson.newInfoFromDomain(grantProject
                         .getResponsibleTeacher()));
             }
-            if (grantProject.getGrantCostCenter() != null) {
-                setInfoGrantCostCenter(InfoGrantCostCenterWithTeacher.newInfoFromDomain(grantProject
-                        .getGrantCostCenter()));
+            if (grantProject.getOjbConcreteClass().equals(GrantProject.class.getName())){
+                if (grantProject.getGrantCostCenter() != null) {
+                    setInfoGrantCostCenter(InfoGrantCostCenterWithTeacher.newInfoFromDomain(grantProject
+                            .getGrantCostCenter()));
+                }
             }
         }
     }
