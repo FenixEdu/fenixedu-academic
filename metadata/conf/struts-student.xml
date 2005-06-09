@@ -819,7 +819,7 @@
 			type="net.sourceforge.fenixedu.presentationTier.Action.student.inquiries.FillInquiryAction"
 			name = "fillInquiriesForm"
 			scope="request"
-			input="/fillInquiries.do?method=viewAttendingCourses&amp;page=0"
+			input="/fillInquiries.do?method=prepare&amp;page=0"
 			parameter="method"
 			>
 
