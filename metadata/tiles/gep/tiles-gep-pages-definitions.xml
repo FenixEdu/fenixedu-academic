@@ -51,4 +51,17 @@
 		extends="definition.gep.two-column">
 		<put name="body" value="/commons/curriculumHistoric/showCurriculumHistoricReport.jsp"></put>
 	</definition>
+
+    <!-- ==================== Inquiries ================== -->
+	<definition name="choose-degree-curricular-plans" 
+		extends="definition.gep.two-column">
+		<put name="body" value="/gep/inquiries/chooseDegreeCurricularPlans.jsp"></put>
+	</definition>
+	
+	<definition name="show-report"
+		extends="definition.gep.two-column">
+		<put name="body" value="/gep/inquiries/showReport.jsp"></put>
+	</definition>	
+	
+
 </tiles-definitions>
