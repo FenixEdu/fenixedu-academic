@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoEx
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoImprovmentEnrolmentContext;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
@@ -207,10 +208,10 @@ public class ReadImprovmentsToEnroll implements IService  {
 
            List scopes = persistentCurricularCourseScope.readCurricularCourseScopesByCurricularCourseInExecutionPeriod(enrolment.getCurricularCourse(), currentExecutionPeriod);
            if(scopes != null && !scopes.isEmpty()) {
-               CurricularCourseScope curricularCourseScope =  (CurricularCourseScope) CollectionUtils.find(scopes, new Predicate() {
+               ICurricularCourseScope curricularCourseScope =  (ICurricularCourseScope) CollectionUtils.find(scopes, new Predicate() {
 
                 public boolean evaluate(Object arg0) {
-                    CurricularCourseScope curricularCourseScope = (CurricularCourseScope) arg0;
+                    ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
                     if(curricularCourseScope.getCurricularSemester().getSemester().equals(currentExecutionPeriod.getSemester())
                             && curricularCourseScope.getEndDate() == null)
                         return true;
