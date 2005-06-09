@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
+import net.sourceforge.fenixedu.domain.IWebSiteItem;
+
 /**
  * @author Fernanda Quitério 24/09/2003
  *  
@@ -313,6 +315,35 @@ public class InfoWebSiteItem extends InfoObject {
      */
     public void setAuthorName(String authorName) {
         this.authorName = authorName;
+    }
+
+    public void copyFromDomain(final IWebSiteItem webSiteItem) {
+        super.copyFromDomain(webSiteItem);
+        if (webSiteItem != null) {
+            setAuthorEmail(webSiteItem.getAuthorEmail());
+            setAuthorName(webSiteItem.getAuthorName());
+            setCreationDate(webSiteItem.getCreationDate());
+            setExcerpt(webSiteItem.getExcerpt());
+            //setInfoEditor();
+            //setInfoWebSiteSection();
+            //setItemBeginDayCalendar();
+            //setItemEndDayCalendar();
+            setKeywords(webSiteItem.getKeywords());
+            setMainEntryText(webSiteItem.getMainEntryText());
+            setOnlineBeginDay(webSiteItem.getOnlineBeginDay());
+            setOnlineEndDay(webSiteItem.getOnlineEndDay());
+            setPublished(webSiteItem.getPublished());
+            setTitle(webSiteItem.getTitle());
+        }
+    }
+
+    public static InfoWebSiteItem newInfoFromDomain(final IWebSiteItem webSiteItem) {
+        if (webSiteItem != null) {
+            final InfoWebSiteItem infoWebSiteItem = new InfoWebSiteItem();
+            infoWebSiteItem.copyFromDomain(webSiteItem);
+            return infoWebSiteItem;
+        }
+        return null;
     }
 
 }

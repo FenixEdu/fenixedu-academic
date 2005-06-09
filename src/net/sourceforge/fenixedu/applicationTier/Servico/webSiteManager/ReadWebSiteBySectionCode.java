@@ -5,14 +5,11 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
-import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSite;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteSection;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IWebSiteItem;
 import net.sourceforge.fenixedu.domain.IWebSiteSection;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
@@ -26,95 +23,63 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
+
 /**
  * @author Fernanda Quitério 25/09/2003
- *  
+ * 
  */
-public class ReadWebSiteBySectionCode implements IServico {
-    private static ReadWebSiteBySectionCode _servico = new ReadWebSiteBySectionCode();
+public class ReadWebSiteBySectionCode implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    private ReadWebSiteBySectionCode() {
-
-    }
-
-    /**
-     * Returns Service Name
-     */
-    public String getNome() {
-        return "ReadWebSiteBySectionCode";
-    }
-
-    /**
-     * Returns the _servico.
-     * 
-     * @return ReadWebSiteBySectionCode
-     */
-    public static ReadWebSiteBySectionCode getService() {
-        return _servico;
-    }
-
-    public InfoWebSite run(Integer webSiteSectionCode) throws ExcepcaoInexistente, FenixServiceException {
+    public InfoWebSite run(Integer webSiteSectionCode) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
         List infoWebSiteSections = new ArrayList();
         List infoWebSiteItems = new ArrayList();
-        InfoWebSiteSection infoWebSiteSection2 = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentWebSiteSection persistentWebSiteSection = sp.getIPersistentWebSiteSection();
-            IPersistentWebSiteItem persistentWebSiteItem = sp.getIPersistentWebSiteItem();
 
-            IWebSiteSection webSiteSection;
-            webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOID(WebSiteSection.class,
-                    webSiteSectionCode);
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentWebSiteSection persistentWebSiteSection = sp.getIPersistentWebSiteSection();
+        IPersistentWebSiteItem persistentWebSiteItem = sp.getIPersistentWebSiteItem();
 
-            if (webSiteSection == null) {
-                throw new NonExistingServiceException();
-            }
-            infoWebSiteSection2 = Cloner.copyIWebSiteSection2InfoWebSiteSection(webSiteSection);
+        IWebSiteSection webSiteSection;
+        webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOID(WebSiteSection.class,
+                webSiteSectionCode);
 
-            List webSiteSections = persistentWebSiteSection.readByWebSite(webSiteSection.getWebSite());
-            Iterator iterSections = webSiteSections.iterator();
-            while (iterSections.hasNext()) {
-                WebSiteSection section = (WebSiteSection) iterSections.next();
-                InfoWebSiteSection infoWebSiteSection = Cloner
-                        .copyIWebSiteSection2InfoWebSiteSection(section);
+        if (webSiteSection == null) {
+            throw new NonExistingServiceException();
+        }
 
-                List webSiteItems = persistentWebSiteItem.readAllWebSiteItemsByWebSiteSection(section);
-                infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
-                    public Object transform(Object arg0) {
-                        IWebSiteItem webSiteItem = (IWebSiteItem) arg0;
-                        InfoWebSiteItem infoWebSiteItem = Cloner
-                                .copyIWebSiteItem2InfoWebSiteItem(webSiteItem);
+        List webSiteSections = persistentWebSiteSection.readByWebSite(webSiteSection.getWebSite());
+        Iterator iterSections = webSiteSections.iterator();
+        while (iterSections.hasNext()) {
+            IWebSiteSection section = (IWebSiteSection) iterSections.next();
+            InfoWebSiteSection infoWebSiteSection = InfoWebSiteSection.newInfoFromDomain(section);
 
-                        return infoWebSiteItem;
-                    }
-                });
-
-                Collections.sort(infoWebSiteItems, new BeanComparator("creationDate"));
-                if (infoWebSiteSection.getSortingOrder().equals("descendent")) {
-                    Collections.reverse(infoWebSiteItems);
+            List webSiteItems = persistentWebSiteItem.readAllWebSiteItemsByWebSiteSection(section);
+            infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
+                public Object transform(Object arg0) {
+                    IWebSiteItem webSiteItem = (IWebSiteItem) arg0;
+                    InfoWebSiteItem infoWebSiteItem = InfoWebSiteItem.newInfoFromDomain(webSiteItem);
+                    return infoWebSiteItem;
                 }
+            });
 
-                infoWebSiteSection.setInfoItemsList(infoWebSiteItems);
-
-                infoWebSiteSections.add(infoWebSiteSection);
-
+            Collections.sort(infoWebSiteItems, new BeanComparator("creationDate"));
+            if (infoWebSiteSection.getSortingOrder().equals("descendent")) {
+                Collections.reverse(infoWebSiteItems);
             }
 
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
-            FenixServiceException newEx = new FenixServiceException("");
-            newEx.fillInStackTrace();
-            throw newEx;
+            infoWebSiteSection.setInfoItemsList(infoWebSiteItems);
+
+            infoWebSiteSections.add(infoWebSiteSection);
+
         }
 
         InfoWebSite infoWebSite = new InfoWebSite();
         infoWebSite.setSections(infoWebSiteSections);
-        infoWebSite.setName(infoWebSiteSection2.getInfoWebSite().getName());
+        infoWebSite.setName(webSiteSection.getWebSite().getName());
 
         return infoWebSite;
     }
+
 }

@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.IWebSiteSection;
+
 import org.apache.commons.collections.CollectionUtils;
 
 /**
@@ -196,5 +198,28 @@ public class InfoWebSiteSection extends InfoObject {
             }
         }
         return result;
+    }
+
+    public void copyFromDomain(final IWebSiteSection webSiteSection) {
+        super.copyFromDomain(webSiteSection);
+        if (webSiteSection != null) {
+            setExcerptSize(webSiteSection.getExcerptSize());
+            setFtpName(webSiteSection.getFtpName());
+            //setInfoItemsList();
+            //setInfoWebSite();
+            setName(webSiteSection.getName());
+            setSize(webSiteSection.getSize());
+            setSortingOrder(webSiteSection.getSortingOrder());
+            setWhatToSort(webSiteSection.getWhatToSort());
+        }
+    }
+
+    public static InfoWebSiteSection newInfoFromDomain(final IWebSiteSection webSiteSection) {
+        if (webSiteSection != null) {
+            final InfoWebSiteSection infoWebSiteSection = new InfoWebSiteSection();
+            infoWebSiteSection.copyFromDomain(webSiteSection);
+            return infoWebSiteSection;
+        }
+        return null;
     }
 }
