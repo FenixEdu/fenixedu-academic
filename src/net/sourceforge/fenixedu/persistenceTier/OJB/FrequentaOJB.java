@@ -29,6 +29,17 @@ import org.apache.ojb.odmg.HasBroker;
 
 public class FrequentaOJB extends PersistentObjectOJB implements IFrequentaPersistente {
 
+	public List readByDegreeCurricularPlanAndExecutionPeriodOrderedByStudentId(Integer degreeCurricularPlanId,
+			Integer executionPeriodId)
+	throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("enrolment.studentCurricularPlan.degreeCurricularPlan.idInternal", degreeCurricularPlanId);
+//        criteria.addEqualTo("enrolment.executionPeriod.idInternal", executionPeriodId);
+		criteria.addEqualTo("disciplinaExecucao.executionPeriod.idInternal", executionPeriodId);
+		criteria.addOrderBy("aluno.idInternal");
+        return queryList(Attends.class, criteria);
+	}
+
     public List readByUsername(String username) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("aluno.person.username", username);

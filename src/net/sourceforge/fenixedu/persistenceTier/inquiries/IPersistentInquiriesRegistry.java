@@ -19,5 +19,9 @@ public interface IPersistentInquiriesRegistry extends IPersistentObject {
 
 	public List<IInquiriesRegistry> readByStudentId(Integer studentId)
 	throws ExcepcaoPersistencia;
+	
+	public List<IInquiriesRegistry> readByExecutionPeriodId(Integer executionPeriodId)
+	throws ExcepcaoPersistencia;
+
 
 }

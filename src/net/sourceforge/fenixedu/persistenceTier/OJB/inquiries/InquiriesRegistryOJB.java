@@ -30,4 +30,13 @@ public class InquiriesRegistryOJB extends PersistentObjectOJB implements IPersis
 		
 	}
 
+	public List<IInquiriesRegistry> readByExecutionPeriodId(Integer executionPeriodId)
+	throws ExcepcaoPersistencia {
+    	Criteria criteria = new Criteria();
+    	criteria.addEqualTo("keyExecutionPeriod", executionPeriodId);
+    	
+    	return queryList(InquiriesRegistry.class, criteria);
+		
+	}
+
 }
