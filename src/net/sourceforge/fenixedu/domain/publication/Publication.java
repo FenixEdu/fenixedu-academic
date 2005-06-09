@@ -61,7 +61,7 @@ public class Publication extends Publication_Base implements IPublication {
         
         List authors = (List) CollectionUtils.collect(publicationAuthors, new Transformer() {
             public Object transform(Object obj){
-                IPublicationAuthor pa = (PublicationAuthor) obj;
+                IPublicationAuthor pa = (IPublicationAuthor) obj;
                 return pa.getAuthor();
             }
         });
