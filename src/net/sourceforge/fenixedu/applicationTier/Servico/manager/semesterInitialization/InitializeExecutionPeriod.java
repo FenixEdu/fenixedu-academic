@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.semesterInitialization;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -76,6 +77,8 @@ public class InitializeExecutionPeriod {
     final Set<String> curricularCourseCodes;
 
     final Map<String, ISchoolClass> schoolClassMap = new HashMap<String, ISchoolClass>();
+
+    final Map<Class, Collection> objectsToPersist = new HashMap();
 
     int schoolClassCounter = 0;
 
@@ -167,7 +170,15 @@ public class InitializeExecutionPeriod {
     }
 
     private void persist(final IDomainObject domainObject) throws ExcepcaoPersistencia {
-        persistentObject.simpleLockWrite(domainObject);
+        //persistentObject.simpleLockWrite(domainObject);
+    	final Collection domainObjects;
+    	if (!objectsToPersist.containsKey(domainObject.getClass())) {
+    		domainObjects = new ArrayList();
+    		objectsToPersist.put(domainObject.getClass(), domainObjects);
+    	} else {
+    		domainObjects = objectsToPersist.get(domainObject.getClass());
+    	}
+    	domainObjects.add(domainObject);
     }
 
     private void initializeNextExecutionPeriod(final Integer semester, String executionYear)
@@ -184,17 +195,64 @@ public class InitializeExecutionPeriod {
 
         createSchoolClasses(newExecutionPeriod, executionPeriod);
 
-        persistentSupport.confirmarTransaccao();
-        persistentSupport.iniciarTransaccao();
-
         createExecutionCourses(newExecutionPeriod, executionPeriod);
 
-        //persistSchoolClasses();
+        persistSchoolClasses();
+
+        storeDomainObjects();
 
         report();
     }
 
-    private void createSchoolClasses(final IExecutionPeriod newExecutionPeriod,
+    private void storeDomainObjects() throws ExcepcaoPersistencia {
+        persistentSupport.confirmarTransaccao();
+        persistentSupport.iniciarTransaccao();
+        final Collection<ISchoolClass> schoolClasses = objectsToPersist.get(SchoolClass.class);
+        System.out.println("writing " + schoolClasses.size() + " schoolClasses");
+		for (final ISchoolClass schoolClass : schoolClasses) {
+			schoolClass.setAssociatedShifts(null);
+			persistentObject.simpleLockWrite(schoolClass);
+		}
+
+        persistentSupport.confirmarTransaccao();
+        persistentSupport.iniciarTransaccao();
+        final Collection<IExecutionCourse> executionCourses = objectsToPersist.get(ExecutionCourse.class);
+        System.out.println("writing " + executionCourses.size() + " executionCourses");
+		for (final IExecutionCourse executionCourse : executionCourses) {
+			executionCourse.setAssociatedShifts(null);
+			persistentObject.simpleLockWrite(executionCourse);
+		}
+
+        persistentSupport.confirmarTransaccao();
+        persistentSupport.iniciarTransaccao();
+        final Collection<IShift> shifts = objectsToPersist.get(Shift.class);
+        System.out.println("writing " + shifts.size() + " shifts");
+		for (final IShift shift : shifts) {
+			shift.setAssociatedLessons(null);
+			persistentObject.simpleLockWrite(shift);
+		}
+
+        persistentSupport.confirmarTransaccao();
+        persistentSupport.iniciarTransaccao();
+        final Collection<ILesson> lessons = objectsToPersist.get(Lesson.class);
+        System.out.println("writing " + lessons.size() + " lessons");
+		for (final ILesson lesson : lessons) {
+			persistentObject.simpleLockWrite(lesson);
+		}
+        final Collection<IRoomOccupation> roomOccupations = objectsToPersist.get(RoomOccupation.class);
+        System.out.println("writing " + roomOccupations.size() + " roomOccupations");
+		for (final IRoomOccupation roomOccupation : roomOccupations) {
+			persistentObject.simpleLockWrite(roomOccupation);
+		}
+	}
+
+	private void store(final Collection<IDomainObject> domainObjects) throws ExcepcaoPersistencia {
+		for (final IDomainObject domainObject : domainObjects) {
+			persistentObject.simpleLockWrite(domainObject);
+		}
+	}
+
+	private void createSchoolClasses(final IExecutionPeriod newExecutionPeriod,
             final IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
         final List<ISchoolClass> schoolClasses = executionPeriod.getSchoolClasses();
         Collections.sort(schoolClasses, new BeanComparator("nome"));
@@ -212,7 +270,6 @@ public class InitializeExecutionPeriod {
                     processedschoolClass++;
 
                     final ISchoolClass newSchoolClass = new SchoolClass();
-                    persist(newSchoolClass);
                     newSchoolClass.setAnoCurricular(schoolClass.getAnoCurricular());
                     newSchoolClass.setAssociatedShifts(new ArrayList());
                     newSchoolClass.setExecutionDegree(newExecutionDegree);
@@ -264,13 +321,13 @@ public class InitializeExecutionPeriod {
         if (keepAggregate(executionCourse.getAssociatedCurricularCourses())) {
             final IExecutionCourse newExecutionCourse = createExecutionCourse(newExecutionPeriod,
                     executionCourse);
-            executionCourseCounter++;
             final List<ICurricularCourse> curricularCourses = executionCourse
                     .getAssociatedCurricularCourses();
             for (final ICurricularCourse curricularCourse : curricularCourses) {
                 addCurricularCourse(newExecutionCourse, curricularCourse);
             }
             if (!newExecutionCourse.getAssociatedCurricularCourses().isEmpty()) {
+            	executionCourseCounter++;
                 persist(newExecutionCourse);
                 createSchedule(newExecutionCourse, executionCourse);
             }
@@ -281,10 +338,10 @@ public class InitializeExecutionPeriod {
             for (final ICurricularCourse curricularCourse : curricularCourses) {
                 final IExecutionCourse newExecutionCourse = createExecutionCourse(newExecutionPeriod,
                         executionCourse);
-                executionCourseCounter++;
                 newExecutionCourse.setSigla(executionCourse.getSigla() + "_" + i++);
                 addCurricularCourse(newExecutionCourse, curricularCourse);
                 if (!newExecutionCourse.getAssociatedCurricularCourses().isEmpty()) {
+                    executionCourseCounter++;
                     persist(newExecutionCourse);
                 }
             }
@@ -319,7 +376,7 @@ public class InitializeExecutionPeriod {
         newExecutionCourse.setEvaluationMethod(null);
         newExecutionCourse.setExecutionCourseProperties(new ArrayList(0));
         newExecutionCourse.setExecutionPeriod(newExecutionPeriod);
-        //newExecutionPeriod.getAssociatedExecutionCourses().add(newExecutionCourse);
+        newExecutionPeriod.getAssociatedExecutionCourses().add(newExecutionCourse);
         newExecutionCourse.setGroupPropertiesExecutionCourse(new ArrayList(0));
         newExecutionCourse.setGroupPropertiesSenderExecutionCourse(new ArrayList(0));
         newExecutionCourse.setLabHours(executionCourse.getLabHours());
