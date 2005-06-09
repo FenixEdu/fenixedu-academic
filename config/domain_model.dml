@@ -1171,6 +1171,14 @@ class net.sourceforge.fenixedu.domain.GuideSituation extends net.sourceforge.fen
     GuideState situation;
 }
 
+class net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyExecutionPeriod;
+	Integer keyExecutionCourse;
+    Integer keyExecutionDegreeCourse;
+    Integer keyExecutionDegreeStudent;
+    Integer keyStudent;
+}
+
 class net.sourceforge.fenixedu.domain.InsuranceValue extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionYear;
 	Double annualValue;
@@ -3593,6 +3601,41 @@ relation GuideSituationGuide {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Guide playsRole guide;
+}
+
+relation InquiriesRegistryExecutionCourse {
+	net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry playsRole inquiriesRegistries {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
+}
+
+relation InquiriesRegistryExecutionDegreeCourse {
+	net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry playsRole inquiriesRegistriesCourse {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegreeCourse;
+}
+
+relation InquiriesRegistryExecutionDegreeStudent {
+	net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry playsRole inquiriesRegistriesStudent {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegreeStudent;
+}
+
+relation InquiriesRegistryExecutionPeriod {
+	net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry playsRole inquiriesRegistries {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
+}
+
+relation InquiriesRegistryStudent {
+	net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry playsRole inquiriesRegistries {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Student playsRole student;
 }
 
 relation InsuranceTransactionExecutionYear {
