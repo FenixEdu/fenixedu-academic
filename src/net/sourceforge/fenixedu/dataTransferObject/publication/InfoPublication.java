@@ -17,8 +17,8 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.publication.Author;
 import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
+import net.sourceforge.fenixedu.domain.publication.IPublicationAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
-import net.sourceforge.fenixedu.domain.publication.PublicationAuthor;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -111,7 +111,7 @@ public class InfoPublication extends InfoObject {
             List authorsList = (List)CollectionUtils.collect(unsortedAuthorsList,
                     new Transformer() {
                         public Object transform(Object object) {
-                            PublicationAuthor publicationAuthor = (PublicationAuthor) object;
+                            IPublicationAuthor publicationAuthor = (IPublicationAuthor) object;
                             return publicationAuthor.getAuthor();
             }});
             //tranform the authors list into an infoAuthors list
