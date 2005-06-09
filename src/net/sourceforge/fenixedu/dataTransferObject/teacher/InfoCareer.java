@@ -4,7 +4,10 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.teacher;
 
+import java.lang.reflect.Proxy;
 import java.util.Date;
+
+import org.apache.ojb.broker.core.proxy.ProxyHelper;
 
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
@@ -129,11 +132,19 @@ public abstract class InfoCareer extends InfoObject implements ISiteComponent {
     public static InfoCareer newInfoFromDomain(ICareer career) {
         InfoCareer infoCareer = null;
         if (career != null) {
-            if (career instanceof IProfessionalCareer) {
-                infoCareer = InfoProfessionalCareer.newInfoFromDomain((IProfessionalCareer) career);
-            } else if (career instanceof ITeachingCareer) {
+            //TODO since the objects are now proxys and they implement all interfaces of subclasses we need the real object
+            //nevertheless this semantic shouldn't be in an info, it has to be putted in the service
+            final Object object;
+            if (career instanceof Proxy) {
+                object = ProxyHelper.getRealObject(career);
+            } else {
+                object = career;
+            }
+            if (object instanceof ITeachingCareer) {
                 infoCareer = InfoTeachingCareerWithInfoCategory
-                        .newInfoFromDomain((ITeachingCareer) career);
+                        .newInfoFromDomain((ITeachingCareer) object);
+            } else if (object instanceof IProfessionalCareer) {
+                infoCareer = InfoProfessionalCareer.newInfoFromDomain((IProfessionalCareer) object);
             }
         }
         return infoCareer;
