@@ -37,6 +37,7 @@
 	    param:value
             redirect:context
             redirect:url
+		set:var
 	    set:property
 	    set:target
 	    set:value
