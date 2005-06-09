@@ -122,7 +122,7 @@
     </filterChain>
     <filterChain>
         <name>StudentListByDegreeAuthorization</name>
-        <expression>StudentListByDegreeAuthorization</expression>
+        <expression>StudentListByDegreeAuthorization || GEPAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
@@ -869,6 +869,20 @@
     <filterChain>
         <name>CoordinatorOrStudentOrMasterDegreeAuthorization</name>
         <expression>CoordinatorAuthorization || StudentAuthorization || MasterDegreeAdministrativeOfficeAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    <filterChain>
+        <name>ManagerOrCoordinatorOrGEPAuthorization</name>
+        <expression>ManagerAuthorization || CoordinatorAuthorization || GEPAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    <filterChain>
+        <name>ManagerOrGEPAuthorization</name>
+        <expression>ManagerAuthorization || GEPAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
