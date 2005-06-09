@@ -44,7 +44,7 @@ public class PublicationTeacherVO extends VersionedObjectsBase implements IPersi
         return (List<IPublicationTeacher>)CollectionUtils.select(publicationTeachers,new Predicate() {
 
             public boolean evaluate(Object object) {
-                final PublicationTeacher publicationTeacher = (PublicationTeacher) object;
+                final IPublicationTeacher publicationTeacher = (IPublicationTeacher) object;
                 if (publicationTeacher.getTeacher().getIdInternal().equals(teacher.getIdInternal()) &&
                         publicationTeacher.getPublicationArea().equals(publicationArea)) {
                     return true;
