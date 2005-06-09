@@ -25,7 +25,19 @@
 			<form-property name="executionYearID" type="java.lang.String"/>
 			<form-property name="degreeCurricularPlanID" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
-		</form-bean>		
+		</form-bean>	
+		
+			  <!-- =================== Inquiries ============== -->
+      <form-bean name="sendEmailReminderForm" 
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+				 
+        	<form-property type="java.lang.String" name="method" />
+        	<form-property type="java.lang.Integer" name="page" />
+			<form-property type="java.lang.Integer[]" name="degreeCurricularPlanIds"/>
+			
+			
+		</form-bean>	
 		
     </form-beans>
 
@@ -167,6 +179,19 @@
        		parameter="method">
        		<forward name="show-report" path="view-curriculum-historic"/>
        	</action>
+
+	    <!-- ==================== Inquiries ================== -->
+		<action path="/sendEmailReminder"
+			type="net.sourceforge.fenixedu.presentationTier.Action.gep.inquiries.SendEmailReminderAction"
+			name = "sendEmailReminderForm"
+			scope="request"
+			input="/sendEmailReminder.do?method=prepare&amp;page=0"
+			parameter="method"
+			>
+
+			<forward name="chooseDegreeCurricularPlans" path="choose-degree-curricular-plans"/>
+			<forward name="showReport" path="show-report"/>
+		</action>
 
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
