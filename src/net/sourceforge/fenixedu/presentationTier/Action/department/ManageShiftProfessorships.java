@@ -167,7 +167,7 @@ public class ManageShiftProfessorships extends DispatchAction {
                         new InfoTeacher(teacherId), new InfoExecutionCourse(executionCourseId) });
 
         Collections.sort(teacherExecutionCourseProfessorshipShiftsDTO.getInfoShiftPercentageList(),
-                new BeanComparator("shift.tipo.tipo"));
+                new BeanComparator("shift.tipo"));
         if (!hasErrors(request)) {
             populateForm(teacherExecutionCourseProfessorshipShiftsDTO,
                     teacherExecutionCourseShiftProfessorshipForm, request);
