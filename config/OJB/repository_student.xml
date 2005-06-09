@@ -120,4 +120,11 @@
 			>
 		<inverse-foreignkey field-ref="studentIdInternal"/>
 	</collection-descriptor>
+	<collection-descriptor proxy="true"
+			name="inquiriesRegistries"
+			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry"
+			
+			>
+		<inverse-foreignkey field-ref="keyStudent"/>
+	</collection-descriptor>
 </class-descriptor>
