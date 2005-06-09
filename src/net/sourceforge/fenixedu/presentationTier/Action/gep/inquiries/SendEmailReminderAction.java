@@ -96,17 +96,9 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 			report.setExecutionDegree(infoExecutionDegreeStudent);
 			report.setNumberDegreeStudents(studentsList.size());
 
-//			for(InfoStudentWithAttendsAndInquiriesRegistries student : studentsList) {
-//				sendEmailReminder(request, student, currentExecutionPeriod, report, bundle);
-//			}
-			//FIXME:DEBUG
-			int c = 0;
 			for(InfoStudentWithAttendsAndInquiriesRegistries student : studentsList) {
 				sendEmailReminder(request, student, currentExecutionPeriod, report, bundle);
-				if(c++ > 10)
-					break;
 			}
-			//////////////////////////////////////////////
 			reportList.add(report);
 			
 			
@@ -169,7 +161,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
             email = new EMail("mail.adm", originMail);
 
 		} else {
-            email = new EMail("mail.rnl.ist.utl.pt", originMail);
+            email = new EMail("localhost", originMail);
 			subject += " (localhost)";
         }
 		
