@@ -9,6 +9,9 @@
 	<definition name="chooseExecutionYear" extends="definition.coordinator.two-column">
 		<put name="body" value="/coordinator/coordinationTeam/chooseExecutionYear.jsp" />
 	</definition>
+	<definition name="df.page.notAuthorizedSimple" extends="definition.coordinator.two-column" >
+		<put name="body" value="/coordinator/notAuthorizedSimple.jsp" />
+	</definition>	
 	<definition name="addCoordinator" extends="definition.coordinator.two-column">
 		<put name="body" value="/coordinator/coordinationTeam/addCoordinator.jsp" />
 	</definition>
@@ -96,7 +99,7 @@
 	<definition name="showStudentsByTutor" extends="definition.coordinator.two-column">
 		<put name="body" value="/coordinator/tutors/showStudentsByTutor.jsp" />
 		<put name="body-context" value="/coordinator/tutors/context.jsp" />
-	</definition>
+	</definition>	
 
 	<!-- Enrollment -->
 	<definition name="firstPageStudentEnrollementSection" extends="definition.coordinator.two-column.extra-menu.student">
