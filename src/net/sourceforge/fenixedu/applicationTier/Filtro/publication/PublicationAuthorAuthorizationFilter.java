@@ -9,10 +9,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
-
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAuthorizationFilter;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
@@ -22,13 +18,16 @@ import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
 import net.sourceforge.fenixedu.domain.publication.IPublicationAuthor;
 import net.sourceforge.fenixedu.domain.publication.Publication;
-import net.sourceforge.fenixedu.domain.publication.PublicationAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthor;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 
 /**
  * @author <a href="mailto:cgmp@mega.ist.utl.pt">Carlos Pereira </a>
@@ -65,13 +64,10 @@ public class PublicationAuthorAuthorizationFilter extends DomainObjectAuthorizat
 
             //check if the teacher is any of the owners of the publication
             List publicationAuthors = new ArrayList(publication.getPublicationAuthors());
-            //Será que o ordenamento dos autores deve ser feito a este nível ou a nível da apresentação
-            //AIAIAI mudar a ordenação para ser feita a nível da apresentação
             Collections.sort(publicationAuthors, new BeanComparator("order"));
-    
             List authors = (List) CollectionUtils.collect(publicationAuthors, new Transformer() {
                 public Object transform(Object obj){
-                    IPublicationAuthor pa = (PublicationAuthor) obj;
+                    IPublicationAuthor pa = (IPublicationAuthor) obj;
                     return pa.getAuthor();
                 }
             });
