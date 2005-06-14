@@ -533,6 +533,7 @@
 	         <forward name="ShowCurricularCourseList" path="/courses/showCurricularCourses.jsp" />
 	      	 <forward name="showOccupancy" path="/courses/showOccupancyLevels.jsp"/>	           
     	     <forward name="showLoads" path="/courses/showLoads.jsp"/>
+			 <forward name="notAuthorized" path="df.page.notAuthorizedSimple"/>    	     
 		</action>
 		
 	  <!-- Read Teachers Information -->
