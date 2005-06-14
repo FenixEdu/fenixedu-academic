@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Date;
 import java.util.ListIterator;
 
 /**
@@ -12,25 +11,6 @@ import java.util.ListIterator;
  */
 public class Employee extends Employee_Base {
     private IEmployeeHistoric employeeHistoric = null;
-
-    public Employee() {
-    }
-
-    public Employee(Integer idInternal) {
-        setIdInternal(idInternal);
-    }
-
-    public Employee(IPerson person, Integer employeeNumber) {
-        setPerson(person);
-        setEmployeeNumber(employeeNumber);
-    }
-
-    public Employee(IPerson person, Integer employeeNumber, Integer workingHours, Date antiquity) {
-        setPerson(person);
-        setEmployeeNumber(employeeNumber);
-        setWorkingHours(workingHours);
-        setAntiquity(antiquity);
-    }
 
     public IEmployeeHistoric getEmployeeHistoric() {
         return employeeHistoric;
