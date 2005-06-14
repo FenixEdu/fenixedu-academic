@@ -15,8 +15,6 @@ public class Lesson extends Lesson_Base {
 
     protected Calendar _fim;
 
-    protected ShiftType _tipo;
-
     /**
      * Construtor sem argumentos público requerido pela moldura de objectos
      * OJB
@@ -24,11 +22,6 @@ public class Lesson extends Lesson_Base {
     public Lesson() {
     }
 
-    public Lesson(Integer idInternal) {
-        setIdInternal(idInternal);
-    }
-
-   
     public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, ShiftType tipo, IRoom sala,
             IRoomOccupation roomOccupation, IShift shift) {
         setDiaSemana(diaSemana);
@@ -54,14 +47,6 @@ public class Lesson extends Lesson_Base {
 
     public void setFim(Calendar fim) {
         _fim = fim;
-    }
-
-    public ShiftType getTipo() {
-        return _tipo;
-    }
-
-    public void setTipo(ShiftType tipo) {
-        _tipo = tipo;
     }
 
     public String toString() {
@@ -94,4 +79,5 @@ public class Lesson extends Lesson_Base {
         TimePeriod timePeriod = new TimePeriod(this.getInicio(), this.getFim());
         return timePeriod.hours().doubleValue();
     }
+
 }

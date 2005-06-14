@@ -10,16 +10,13 @@ package net.sourceforge.fenixedu.domain;
  * 
  * @author tfc130
  */
-import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ShiftType;
-
 public class Shift extends Shift_Base {
-    protected ShiftType tipo;
     protected Integer ocupation;
+
     protected Double percentage;
- 
+
     public Shift() {
     }
 
@@ -27,30 +24,21 @@ public class Shift extends Shift_Base {
         setIdInternal(idInternal);
     }
 
-    public Shift(String nome, ShiftType tipo, Integer lotacao, IExecutionCourse disciplinaExecucao) {
-        setNome(nome);
-        setTipo(tipo);
-        setLotacao(lotacao);
-        setDisciplinaExecucao(disciplinaExecucao);
-        setAssociatedLessons(new ArrayList());
-        setAssociatedClasses(new ArrayList());
-    }
-
     public Integer getOcupation() {
         return ocupation;
     }
 
-    public ShiftType getTipo() {
-        return tipo;
+    public void setOcupation(Integer ocupation) {
+        this.ocupation = ocupation;
     }
 
-    public void setTipo(ShiftType tipo) {
-        this.tipo = tipo;
+    public Double getPercentage() {
+        return percentage;
     }
 
     public void setPercentage(Double percentage) {
         this.percentage = percentage;
-        }
+    }
 
     public String toString() {
         String result = "[TURNO";
@@ -68,7 +56,7 @@ public class Shift extends Shift_Base {
         if (obj instanceof IShift) {
             IShift turno = (IShift) obj;
             resultado = getIdInternal().equals(turno.getIdInternal());
-    }
+        }
         return resultado;
     }
 
@@ -82,13 +70,4 @@ public class Shift extends Shift_Base {
         return hours;
     }
 
-    public Double getPercentage() {
-        return percentage;
-    }
-    
-
-    public void setOcupation(Integer ocupation) {
-        this.ocupation = ocupation;
-    }
-    
 }

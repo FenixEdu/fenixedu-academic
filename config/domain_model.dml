@@ -24,15 +24,15 @@
  * 
  */
 
-valueType net.sourceforge.fenixedu.util.AgreementType as AgreementType;
-valueType net.sourceforge.fenixedu.tools.enrollment.AreaType as AreaType;
-valueType net.sourceforge.fenixedu.domain.branch.BranchType as BranchType;
+valueType net.sourceforge.fenixedu.util.AgreementType                                           as AgreementType;
+valueType net.sourceforge.fenixedu.tools.enrollment.AreaType                                    as AreaType;
+valueType net.sourceforge.fenixedu.domain.branch.BranchType                                     as BranchType;
 valueType net.sourceforge.fenixedu.util.CurricularCourseExecutionScope                          as CurricularCourseExecutionScope;
 valueType net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType                       as CurricularCourseType;
 valueType net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState as DegreeCurricularPlanState;
-valueType net.sourceforge.fenixedu.domain.degree.DegreeType as DegreeType;
-valueType net.sourceforge.fenixedu.util.DelegateYearType as DelegateYearType; 
-valueType net.sourceforge.fenixedu.util.DiaSemana as DiaSemana;
+valueType net.sourceforge.fenixedu.domain.degree.DegreeType                                     as DegreeType;
+valueType net.sourceforge.fenixedu.util.DelegateYearType                                        as DelegateYearType; 
+valueType net.sourceforge.fenixedu.util.DiaSemana                                               as DiaSemana;
 valueType net.sourceforge.fenixedu.domain.DocumentType                                          as DocumentType;
 valueType net.sourceforge.fenixedu.util.EnrolmentAction                                         as EnrolmentAction;
 valueType net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition                        as EnrollmentCondition;
@@ -57,12 +57,15 @@ valueType net.sourceforge.fenixedu.domain.transactions.PaymentType              
 valueType net.sourceforge.fenixedu.util.PeriodToApplyRestriction                                as PeriodToApplyRestriction;
 valueType net.sourceforge.fenixedu.util.PeriodState                                             as PeriodState;
 valueType net.sourceforge.fenixedu.util.ProposalState                                           as ProposalState;
-valueType net.sourceforge.fenixedu.util.ProviderRegimeType                                      as ProviderRegimeType; 
+valueType net.sourceforge.fenixedu.util.ProviderRegimeType                                      as ProviderRegimeType;
+valueType net.sourceforge.fenixedu.util.PublicationArea                                         as PublicationArea;
+valueType net.sourceforge.fenixedu.util.PublicationType                                         as PublicationType;
 valueType net.sourceforge.fenixedu.domain.person.RoleType                                       as RoleType;
 valueType net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState                      as ReimbursementGuideState;
 valueType net.sourceforge.fenixedu.util.Season                                                  as Season;
 valueType net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason                         as SecretaryEnrolmentStudentReason; 
 valueType net.sourceforge.fenixedu.domain.credits.ServiceExemptionType                          as ServiceExemptionType;
+valueType net.sourceforge.fenixedu.domain.ShiftType                                             as ShiftType; 
 valueType net.sourceforge.fenixedu.util.SituationName                                           as SituationName;
 valueType net.sourceforge.fenixedu.domain.sms.SmsDeliveryType                                   as SmsDeliveryType; 
 valueType net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization                  as Specialization;
@@ -1096,35 +1099,31 @@ class net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent extends net.s
 
 
 class net.sourceforge.fenixedu.domain.GroupProperties extends net.sourceforge.fenixedu.domain.DomainObject {
-        String projectDescription;
-        Integer keyAttendsSet;
-        Integer maximumCapacity;
-        Integer groupMaximumNumber;
-        Integer idealCapacity;
-        Integer minimumCapacity;
-        String name;
-   
+    String projectDescription;
+    Integer keyAttendsSet;
+    Integer maximumCapacity;
+    Integer groupMaximumNumber;
+    Integer idealCapacity;
+    Integer minimumCapacity;
+    String name;
     EnrolmentGroupPolicyType enrolmentPolicy;
-        
-        interface "
-        public net.sourceforge.fenixedu.domain.ShiftType getShiftType();
-        
-        public void setShiftType(net.sourceforge.fenixedu.domain.ShiftType shiftType);
-        
-        public java.util.Calendar getEnrolmentBeginDay();
-        
-		public void setEnrolmentBeginDay(java.util.Calendar enrolmentBeginDay);
-		
-		public java.util.Calendar getEnrolmentEndDay();
+    ShiftType shiftType;
+    
+    interface "
+    public java.util.Calendar getEnrolmentBeginDay();
+    
+	public void setEnrolmentBeginDay(java.util.Calendar enrolmentBeginDay);
+	
+	public java.util.Calendar getEnrolmentEndDay();
 
-		public void setEnrolmentEndDay(java.util.Calendar enrolmentEndDay);
-        
-		public void addGroupPropertiesExecutionCourse(net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
+	public void setEnrolmentEndDay(java.util.Calendar enrolmentEndDay);
+    
+    public java.util.List getExecutionCourses();
+    
+    public void addGroupPropertiesExecutionCourse(net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
 
-		public void removeGroupPropertiesExecutionCourse(net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
-		
-	    public java.util.List getExecutionCourses();
-        "
+	public void removeGroupPropertiesExecutionCourse(net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
+    "
 }
 
 class net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1203,6 +1202,7 @@ class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.do
 	Integer keyRoomOccupation;
 	Integer chaveSala;
     DiaSemana diaSemana;
+    ShiftType tipo;
 
 	interface "
 	public java.util.Calendar getInicio();
@@ -1212,10 +1212,6 @@ class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.do
 	public java.util.Calendar getFim();
 	
 	public void setFim(java.util.Calendar fim);
-
-	public net.sourceforge.fenixedu.domain.ShiftType getTipo();
-	
-	public void setTipo(net.sourceforge.fenixedu.domain.ShiftType tipo);
 
 	public double hours();
 	"
@@ -1943,16 +1939,17 @@ class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.dom
 	Integer chaveDisciplinaExecucao;
 	String nome;
 	Integer lotacao;
-    
-	
-	
+    ShiftType tipo;
+		
 	interface "
-	public net.sourceforge.fenixedu.domain.ShiftType getTipo();
-    public void setTipo(net.sourceforge.fenixedu.domain.ShiftType tipo);
     public Integer getOcupation();
+
     public void setOcupation(Integer integer);
+
     public Double getPercentage();
+
     public void setPercentage(Double percentage);
+
     public double hours();
 	"
 }
@@ -2152,11 +2149,7 @@ class net.sourceforge.fenixedu.domain.Summary extends net.sourceforge.fenixedu.d
 	Boolean isExtraLesson;
     Date summaryDate;
     Date summaryHour;
-	
-	interface "
-    public net.sourceforge.fenixedu.domain.ShiftType getSummaryType();
-    public void setSummaryType(net.sourceforge.fenixedu.domain.ShiftType summaryType);
-	"
+    ShiftType summaryType;
 }
 
 class net.sourceforge.fenixedu.domain.SupportLesson extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2263,21 +2256,19 @@ class net.sourceforge.fenixedu.domain.publication.PublicationType extends net.so
 	String publicationType;
 		
 	interface "
-	
 	public java.util.List getRequiredAttributes();
-	public java.util.List getNonRequiredAttributes();
+
+    public java.util.List getNonRequiredAttributes();
 	"
 }
+
 
 class net.sourceforge.fenixedu.domain.publication.PublicationTeacher extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyTeacher;
 	Integer keyPublication;
-			
-	interface "
-	public void setPublicationArea(net.sourceforge.fenixedu.util.PublicationArea publicationArea);
-	public net.sourceforge.fenixedu.util.PublicationArea getPublicationArea();
-	"
+    PublicationArea publicationArea;
 }
+
 
 class net.sourceforge.fenixedu.domain.publication.Publication extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer issn;
@@ -2315,7 +2306,6 @@ class net.sourceforge.fenixedu.domain.publication.Publication extends net.source
 	String format;
 	Integer keyPublicationType;
 	String publicationString;
-		
 }
 
 class net.sourceforge.fenixedu.domain.teacher.PublicationsNumber extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2323,12 +2313,7 @@ class net.sourceforge.fenixedu.domain.teacher.PublicationsNumber extends net.sou
 	Integer keyTeacher;
 	Date lastModificationDate;
 	Integer international;
-		
-	interface "
-
-	public net.sourceforge.fenixedu.util.PublicationType getPublicationType();
-	public void setPublicationType(net.sourceforge.fenixedu.util.PublicationType publicationType);
-	"
+    PublicationType publicationType;
 }
 
 class net.sourceforge.fenixedu.domain.publication.PublicationFormat extends net.sourceforge.fenixedu.domain.DomainObject {

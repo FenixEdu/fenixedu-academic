@@ -5,8 +5,6 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.domain.ShiftType;
-
 /**
  * @author João Mota
  * @author Susana Fernandes
@@ -15,22 +13,6 @@ import net.sourceforge.fenixedu.domain.ShiftType;
  *  
  */
 public class Summary extends Summary_Base {
-    private ShiftType summaryType;
-
-    public Summary() {
-    }
-
-    public Summary(Integer summaryId) {
-        setIdInternal(summaryId);
-    }
-
-    public ShiftType getSummaryType() {
-        return summaryType;
-    }
-
-    public void setSummaryType(ShiftType summaryType) {
-        this.summaryType = summaryType;
-    }
 
     public boolean compareTo(Object obj) {
         boolean resultado = false;
@@ -45,4 +27,5 @@ public class Summary extends Summary_Base {
         }
         return resultado;
     }
+
 }
