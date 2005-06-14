@@ -84,6 +84,8 @@ public class PersistentEnrolmentPeriod extends PersistentObjectOJB implements IP
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlan.getIdInternal());
         criteria.addEqualTo("executionPeriod.state", PeriodState.CURRENT);
+        criteria.addEqualTo("ojbConcreteClass","net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses");
+        
         // There seems to be a bug with the queryObject when using extents
         // So we'll use queryList for now.
         List result = queryList(EnrolmentPeriodInClasses.class, criteria);
