@@ -1,6 +1,9 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.lang.reflect.Proxy;
 import java.util.Calendar;
+
+import org.apache.ojb.broker.core.proxy.ProxyHelper;
 
 import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IFinalEvaluation;
@@ -116,6 +119,11 @@ public class InfoEvaluation extends InfoShowOccupation implements ISiteComponent
     public static InfoEvaluation newInfoFromDomain(IEvaluation evaluation) {
         InfoEvaluation infoEvaluation = null;
         if (evaluation != null) {
+
+            if (evaluation instanceof Proxy) {
+                evaluation = (IEvaluation) ProxyHelper.getRealObject(evaluation);
+            }
+
             if (evaluation instanceof IWrittenEvaluation) {
                 infoEvaluation = InfoWrittenEvaluation
                         .newInfoFromDomain((IWrittenEvaluation) evaluation);

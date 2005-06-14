@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Factory;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -82,7 +83,6 @@ import net.sourceforge.fenixedu.domain.AttendsSet;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.GroupProperties;
 import net.sourceforge.fenixedu.domain.IAnnouncement;
@@ -137,6 +137,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.ojb.broker.core.proxy.ProxyHelper;
 import org.apache.slide.common.SlideException;
 
 /**
@@ -689,6 +690,10 @@ public class TeacherAdministrationSiteComponentBuilder {
         while (iter.hasNext()) {
             IEvaluation evaluation = (IEvaluation) iter.next();
 
+            if (evaluation instanceof Proxy) {
+                evaluation = (IEvaluation) ProxyHelper.getRealObject(evaluation);
+            }
+
             if (evaluation instanceof IExam) {
                 infoEvaluations.add(InfoEvaluation.newInfoFromDomain(evaluation));
             } else if (evaluation instanceof IFinalEvaluation) {
@@ -746,9 +751,13 @@ public class TeacherAdministrationSiteComponentBuilder {
             IEvaluation evaluation = (IEvaluation) persistentEvaluation.readByOID(Evaluation.class,
                     evaluationCode);
 
-            if (evaluation instanceof Exam) {
+            if (evaluation instanceof Proxy) {
+                evaluation = (IEvaluation) ProxyHelper.getRealObject(evaluation);
+            }
+
+            if (evaluation instanceof IExam) {
                 InfoSiteExamExecutionCourses componentExam = (InfoSiteExamExecutionCourses) component;
-                IExam exam = (Exam) evaluation;
+                IExam exam = (IExam) evaluation;
                 IPersistentExamStudentRoom persistentExamStudentRoom = sp
                         .getIPersistentExamStudentRoom();
                 List enrolledStudents = persistentExamStudentRoom.readByExamOID(exam.getIdInternal());
