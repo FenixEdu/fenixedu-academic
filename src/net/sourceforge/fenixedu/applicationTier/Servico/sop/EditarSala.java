@@ -53,7 +53,6 @@ public class EditarSala implements IService {
 
                 sp.getISalaPersistente().simpleLockWrite(sala);
                 sala.setNome(salaNova.getNome());
-                sala.setEdificio(salaNova.getEdificio());
                 sala.setPiso(salaNova.getPiso());
                 sala.setCapacidadeNormal(salaNova.getCapacidadeNormal());
                 sala.setCapacidadeExame(salaNova.getCapacidadeExame());

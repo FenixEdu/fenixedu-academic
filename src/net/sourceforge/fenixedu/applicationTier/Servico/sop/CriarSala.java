@@ -71,7 +71,6 @@ public class CriarSala implements IService {
         roomDAO.simpleLockWrite(room);
         room.setCapacidadeExame(infoRoom.getCapacidadeExame());
         room.setCapacidadeNormal(infoRoom.getCapacidadeNormal());
-        room.setEdificio(infoRoom.getEdificio());
         room.setNome(infoRoom.getNome());
         room.setPiso(infoRoom.getPiso());
         room.setRoomOccupations(new ArrayList());

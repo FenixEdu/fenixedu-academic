@@ -47,7 +47,7 @@ public class LerSala implements IServico {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IRoom sala = sp.getISalaPersistente().readByName(keySala.getNomeSala());
             if (sala != null)
-                infoSala = new InfoRoom(sala.getNome(), sala.getEdificio(), sala.getPiso(), sala
+                infoSala = new InfoRoom(sala.getNome(), sala.getBuilding().getName(), sala.getPiso(), sala
                         .getTipo(), sala.getCapacidadeNormal(), sala.getCapacidadeExame());
         } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();

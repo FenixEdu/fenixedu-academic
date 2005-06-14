@@ -55,7 +55,7 @@ public class LerSalas implements IServico {
             infoSalas = new ArrayList();
             while (iterator.hasNext()) {
                 IRoom elem = (IRoom) iterator.next();
-                infoSalas.add(new InfoRoom(elem.getNome(), elem.getEdificio(), elem.getPiso(), elem
+                infoSalas.add(new InfoRoom(elem.getNome(), elem.getBuilding().getName(), elem.getPiso(), elem
                         .getTipo(), elem.getCapacidadeNormal(), elem.getCapacidadeExame()));
             }
         } catch (ExcepcaoPersistencia ex) {
