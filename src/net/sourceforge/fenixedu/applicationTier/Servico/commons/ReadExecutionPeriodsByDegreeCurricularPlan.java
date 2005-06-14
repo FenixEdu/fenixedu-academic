@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
@@ -55,7 +56,7 @@ public class ReadExecutionPeriodsByDegreeCurricularPlan implements IService {
             }
             //Start date of the degree curricular plan
             try {
-                start = ((DegreeCurricularPlan) (degreeCurricularPlanDAO.readByOID(
+                start = ((IDegreeCurricularPlan) (degreeCurricularPlanDAO.readByOID(
                         DegreeCurricularPlan.class, degreeCurricularPlanID))).getInitialDate();
             } catch (Exception e) {
                 e.printStackTrace();
