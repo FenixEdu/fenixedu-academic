@@ -79,7 +79,7 @@ manager.url=http://localhost:8080/manager
 #   db.slide.pass: 
 #   slide.config: 
 #
-default.persistenceSupport=net.sourceforge.fenixedu.persistenceTier.delegatedObjects.DelegatePersistenceSupport
+default.persistenceSupport=net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB
 
 db.name=ciapl
 db.user=root
@@ -124,6 +124,9 @@ db.slide.alias=mysql://localhost:3306/slide
 db.slide.user=root
 db.slide.pass=
 slide.config=/home/marvin/workspace/fenix_head/build/WEB-INF/classes/Domain.xml
+
+script.isAlive.check.db=true
+script.isAlive.check.slide=true
 #
 #
 #------------------------------------------------------------------------------
@@ -136,12 +139,18 @@ slide.config=/home/marvin/workspace/fenix_head/build/WEB-INF/classes/Domain.xml
 #  filter.hostname.<hostname>: comma seperated list of RoleTypes that are to
 #                              be provided by the server <hostname>.
 #
-filter.hostnames=localhost
+filter.hostnames=localhost,cidhcp123
 filter.hostname.localhost=PERSON,STUDENT,TEACHER,TIME_TABLE_MANAGER,MASTER_DEGREE_CANDIDATE, \
-	MASTER_DEGREE_ADMINISTRATIVE_OFFICE,TREASURY,COORDINATOR,EMPLOYEE,MANAGEMENT_ASSIDUOUSNESS, \
-	MANAGER, DEGREE_ADMINISTRATIVE_OFFICE, CREDITS_MANAGER, DEPARTMENT_CREDITS_MANAGER, ERASMUS, \
+        MASTER_DEGREE_ADMINISTRATIVE_OFFICE,TREASURY,COORDINATOR,EMPLOYEE,MANAGEMENT_ASSIDUOUSNESS, \
+        MANAGER, DEGREE_ADMINISTRATIVE_OFFICE, CREDITS_MANAGER, DEPARTMENT_CREDITS_MANAGER, ERASMUS, \
     DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER, SCIENTIFIC_COUNCIL, ADMINISTRATOR, OPERATOR, \
-    SEMINARIES_COORDINATOR, WEBSITE_MANAGER, GRANT_OWNER_MANAGER, DEPARTMENT_MEMBER, \
+    SEMINARIES_COORDINATOR, WEBSITE_MANAGER, GRANT_OWNER, GRANT_OWNER_MANAGER, DEPARTMENT_MEMBER, \
+    GEP, DIRECTIVE_COUNCIL, DELEGATE, FIRST_TIME_STUDENT, PROJECTS_MANAGER
+filter.hostname.cidhcp123=PERSON,STUDENT,TEACHER,TIME_TABLE_MANAGER,MASTER_DEGREE_CANDIDATE, \
+        MASTER_DEGREE_ADMINISTRATIVE_OFFICE,TREASURY,COORDINATOR,EMPLOYEE,MANAGEMENT_ASSIDUOUSNESS, \
+        MANAGER, DEGREE_ADMINISTRATIVE_OFFICE, CREDITS_MANAGER, DEPARTMENT_CREDITS_MANAGER, ERASMUS, \
+    DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER, SCIENTIFIC_COUNCIL, ADMINISTRATOR, OPERATOR, \
+    SEMINARIES_COORDINATOR, WEBSITE_MANAGER, GRANT_OWNER, GRANT_OWNER_MANAGER, DEPARTMENT_MEMBER, \
     GEP, DIRECTIVE_COUNCIL, DELEGATE, FIRST_TIME_STUDENT, PROJECTS_MANAGER
 #
 #
