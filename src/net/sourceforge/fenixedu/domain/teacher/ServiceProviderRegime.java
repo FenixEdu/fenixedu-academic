@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.domain.teacher;
 
-import net.sourceforge.fenixedu.util.ProviderRegimeType;
 
 /**
  * @author Leonor Almeida
@@ -12,21 +11,5 @@ import net.sourceforge.fenixedu.util.ProviderRegimeType;
  * 
  */
 public class ServiceProviderRegime extends ServiceProviderRegime_Base {
-    private ProviderRegimeType providerRegimeType;
-
-    /**
-     * @return Returns the providerRegimeType.
-     */
-    public ProviderRegimeType getProviderRegimeType() {
-        return providerRegimeType;
-    }
-
-    /**
-     * @param providerRegimeType
-     *            The providerRegimeType to set.
-     */
-    public void setProviderRegimeType(ProviderRegimeType providerRegimeType) {
-        this.providerRegimeType = providerRegimeType;
-    }
 
 }
