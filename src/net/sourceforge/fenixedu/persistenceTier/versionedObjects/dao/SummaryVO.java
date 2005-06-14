@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.ISummary;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
@@ -66,7 +65,7 @@ public class SummaryVO extends VersionedObjectsBase implements IPersistentSummar
         List summariesAux = new ArrayList();
         
         while(iter.hasNext()){
-            Summary summary = (Summary) iter.next();
+            ISummary summary = (ISummary) iter.next();
                if(summary.getShift().getTipo().equals(summaryType))
                 summariesAux.add(summary);
         }       
@@ -116,9 +115,8 @@ public class SummaryVO extends VersionedObjectsBase implements IPersistentSummar
             ISummary summary = (ISummary) iter.next();
             if(summary.getProfessorship() == null)
                 if((summary.getTeacher() != null) || (summary.getTeacherName() != null))
-                summariesAux.add(summary);            
-        }
-        
+                    summariesAux.add(summary);            
+        }        
         return summariesAux;
     }
     
@@ -133,8 +131,8 @@ public class SummaryVO extends VersionedObjectsBase implements IPersistentSummar
         Iterator iter = summaries.iterator();
         while(iter.hasNext()){
 	            ISummary summary2 = (ISummary) iter.next();
-            if((summary2.getSummaryDate().equals(summaryDate)) && (summary2.getSummaryHour().equals(summaryHour)))
-                summary = summary2;            
+	            if((summary2.getSummaryDate().equals(summaryDate)) && (summary2.getSummaryHour().equals(summaryHour)))
+	                summary = summary2;            
         }        
         }
         return summary;
