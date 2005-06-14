@@ -121,6 +121,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegre
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PaymentPhaseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PersonAccountVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PessoaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PrecedenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ProfessorshipVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationAuthorVO;
@@ -211,7 +212,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPessoaPersistente getIPessoaPersistente() {
-        return null;
+        return new PessoaVO();
     }
 
     public IPersistentStudentGroupAttend getIPersistentStudentGroupAttend() {
