@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithCourseAndDeg
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoImprovmentEnrolmentContext;
-import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;

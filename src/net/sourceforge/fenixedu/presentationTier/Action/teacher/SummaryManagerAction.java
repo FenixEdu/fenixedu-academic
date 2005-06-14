@@ -144,7 +144,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         String lessonType = null;
         if (request.getParameter("bySummaryType") != null
                 && request.getParameter("bySummaryType").length() > 0) {
-            lessonType = (String)request.getParameter("bySummaryType");
+            lessonType = request.getParameter("bySummaryType");
         }
         return lessonType;
     }

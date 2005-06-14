@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContr
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantInsurance;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractRegime;

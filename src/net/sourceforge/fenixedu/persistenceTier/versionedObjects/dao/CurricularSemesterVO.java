@@ -2,13 +2,13 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.domain.ICurricularSemester;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularSemester;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 public class CurricularSemesterVO extends VersionedObjectsBase implements
