@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.fileManager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.IItem;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.fileSuport.FileSuport;
@@ -23,31 +22,17 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * fenix-head ServidorAplicacao.Servico.fileManager
  * 
  * @author João Mota 17/Set/2003
- *  
+ * 
  */
 public class RetrieveItemFile implements IService {
 
-    public RetrieveItemFile() {
+    public FileSuportObject run(Integer itemId, String fileName) throws ExcepcaoPersistencia,
+            SlideException {
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentItem persistentItem = sp.getIPersistentItem();
+        final IItem item = (IItem) persistentItem.readByOID(Item.class, itemId);
+        final IFileSuport fileSuport = FileSuport.getInstance();
 
-    }
-
-    public FileSuportObject run(Integer itemId, String fileName) throws FenixServiceException {
-        FileSuportObject file = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentItem persistentItem = sp.getIPersistentItem();
-            IItem item = new Item(itemId);
-            item = (IItem) persistentItem.readByOID(Item.class, itemId);
-            IFileSuport fileSuport = FileSuport.getInstance();
-
-            file = fileSuport.retrieveFile(item.getSlideName() + "/" + fileName);
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        } catch (SlideException e) {
-            throw new FenixServiceException(e);
-        }
-        return file;
-
+        return fileSuport.retrieveFile(item.getSlideName() + "/" + fileName);
     }
 }
