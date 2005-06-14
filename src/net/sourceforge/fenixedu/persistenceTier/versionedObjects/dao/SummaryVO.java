@@ -107,7 +107,7 @@ public class SummaryVO extends VersionedObjectsBase implements IPersistentSummar
     
     public List readByOtherTeachers(final Integer executionCourseID) throws ExcepcaoPersistencia {
         
-        List summaries = readByExecutionCourse(executionCourseID);
+        List summaries = readByExecutionCourseShifts(executionCourseID);
         Iterator iter = summaries.iterator();
         List summariesAux = new ArrayList();
 
