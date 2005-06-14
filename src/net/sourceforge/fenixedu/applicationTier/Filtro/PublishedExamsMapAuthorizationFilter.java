@@ -31,7 +31,7 @@ public class PublishedExamsMapAuthorizationFilter extends Filtro {
         		if (executionCourseSiteView.getComponent() instanceof InfoSiteEvaluation) {
 
         			InfoSiteEvaluation infoSiteEvaluation  = (InfoSiteEvaluation) executionCourseSiteView.getComponent();
-        			filterUnpublishedInformation(infoSiteEvaluation);
+        			//filterUnpublishedInformation(infoSiteEvaluation);
 
         		}
 
@@ -42,7 +42,7 @@ public class PublishedExamsMapAuthorizationFilter extends Filtro {
 	        	if (response.getReturnObject() instanceof InfoExamsMap) {
 
 	        		InfoExamsMap infoExamsMap = (InfoExamsMap) response.getReturnObject();
-	        		filterUnpublishedInformation(infoExamsMap);
+	        		//filterUnpublishedInformation(infoExamsMap);
 
 	        	}
 	        }
