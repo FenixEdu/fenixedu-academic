@@ -70,6 +70,14 @@
 		<inverse-foreignkey field-ref="keySite"/>
   </collection-descriptor>
 
+	<collection-descriptor proxy="true"
+		name="associatedSections"
+		element-class-ref="net.sourceforge.fenixedu.domain.Section"
+		
+		>
+		<inverse-foreignkey field-ref="keySite"/>
+  </collection-descriptor>
+
 </class-descriptor>
 
 
