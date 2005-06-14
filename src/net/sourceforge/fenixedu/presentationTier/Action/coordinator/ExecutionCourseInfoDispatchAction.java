@@ -9,6 +9,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseOccupancy;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
+import net.sourceforge.fenixedu.dataTransferObject.InfoShiftGroupStatistics;
+import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
+
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -18,19 +32,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
-
-import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseOccupancy;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.InfoShiftGroupStatistics;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
-import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -177,8 +178,14 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction {
         Object args[] = { infoExecutionPeriod, infoExecutionDegree, infoCurricularYear,
                 executionCourseName };
 
-        List infoExecutionCourses = (List) ServiceManagerServiceFactory.executeService(userView,
-                "SearchExecutionCourses", args);
+        List infoExecutionCourses = null;
+        try {
+            infoExecutionCourses = (List) ServiceManagerServiceFactory.executeService(userView,
+                    "SearchExecutionCourses", args);
+        } catch (NotAuthorizedFilterException e) {
+            return mapping.findForward("notAuthorized");
+        }
+        
         if (infoExecutionCourses != null) {
             sortList(request, infoExecutionCourses);
             request.setAttribute(SessionConstants.LIST_INFOEXECUTIONCOURSE, infoExecutionCourses);
