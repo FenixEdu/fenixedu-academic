@@ -557,6 +557,7 @@
 		      scope="request"
 		      type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.CoordinationTeamDispatchAction"
 			  >
+			 <forward name="chooseExecutionYear" path="chooseExecutionYear" /> 
 	         <forward name="coordinationTeam" path="coordinationTeam" /> 
 	         <forward name="addCoordinator" path="addCoordinator" /> 	         
 		</action>		

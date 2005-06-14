@@ -8,15 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
-
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -27,36 +18,60 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 
 /**
  * 
  * @author João Mota
- *  
+ * 
  */
 public class CoordinationTeamDispatchAction extends FenixDispatchAction {
 
-    public ActionForward viewTeam(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
+    public ActionForward chooseExecutionYear(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixServiceException, FenixFilterException {
 
-        HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        
+        IUserView userView = SessionUtils.getUserView(request);
+
         Integer degreeCurricularPlanID = null;
-        if(request.getParameter("degreeCurricularPlanID") != null){
+        if (request.getParameter("degreeCurricularPlanID") != null) {
             degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         }
-        
-        Integer infoExecutionDegreeID = null;
-        Object[] infoArgs = { degreeCurricularPlanID, new Integer(2) };
- 
-	    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan) ServiceUtils
-	    .executeService(userView, "ReadExecutionDegreeByDegreeCurricularPlanID", infoArgs);
 
-        infoExecutionDegreeID = infoExecutionDegree.getIdInternal();
+        Object[] args = { degreeCurricularPlanID };
+        List executionDegrees = (List) ServiceUtils.executeService(userView,
+                "ReadExecutionDegreesByDegreeCurricularPlanID", args);
 
-        request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeID);
-        Object[] args = { infoExecutionDegreeID };
+        request.setAttribute("executionDegrees", executionDegrees);
+
+        return mapping.findForward("chooseExecutionYear");
+    }
+
+    public ActionForward viewTeam(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixActionException, FenixServiceException,
+            FenixFilterException {
+
+        HttpSession session = request.getSession(false);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+        Integer degreeCurricularPlanID = null;
+        if (request.getParameter("degreeCurricularPlanID") != null) {
+            degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        }
+
+        Integer executionDegreeID = new Integer(request.getParameter("infoExecutionDegreeId"));
+        request.setAttribute("infoExecutionDegreeId", executionDegreeID);
+
+        Object[] args = { executionDegreeID };
         List coordinators = new ArrayList();
         try {
             coordinators = (List) ServiceUtils.executeService(userView, "ReadCoordinationTeam", args);
@@ -65,7 +80,7 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
             throw new FenixActionException(e);
         }
         Boolean result = new Boolean(false);
-        Object[] args1 = { infoExecutionDegreeID, userView };
+        Object[] args1 = { executionDegreeID, userView };
         try {
             result = (Boolean) ServiceUtils.executeService(userView, "ReadCoordinationResponsibility",
                     args1);
@@ -80,13 +95,15 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward prepareAddCoordinator(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        
-        Integer degreeCurricularPlanID = new Integer(Integer.parseInt(request.getParameter("degreeCurricularPlanID")));
+
+        Integer degreeCurricularPlanID = new Integer(Integer.parseInt(request
+                .getParameter("degreeCurricularPlanID")));
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-        
+
         String infoExecutionDegreeIdString = request.getParameter("infoExecutionDegreeId");
         Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
         request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);
@@ -107,7 +124,8 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward AddCoordinator(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         DynaActionForm teacherForm = (DynaActionForm) form;
@@ -137,13 +155,14 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward removeCoordinators(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixServiceException, FenixFilterException {
         HttpSession session = request.getSession(false);
-        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);        
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         DynaActionForm removeCoordinatorsForm = (DynaActionForm) form;
         Integer[] coordinatorsIds = (Integer[]) removeCoordinatorsForm.get("coordinatorsIds");
         List coordinators = Arrays.asList(coordinatorsIds);
-        
+
         String infoExecutionDegreeIdString = request.getParameter("infoExecutionDegreeId");
         Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
         request.setAttribute("infoExecutionDegreeId", infoExecutionDegreeId);

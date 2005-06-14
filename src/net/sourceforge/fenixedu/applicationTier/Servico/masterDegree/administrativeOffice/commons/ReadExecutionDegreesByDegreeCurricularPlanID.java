@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
@@ -27,42 +25,24 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  *         Curricular Plan
  */
 public class ReadExecutionDegreesByDegreeCurricularPlanID implements IService {
-    public ReadExecutionDegreesByDegreeCurricularPlanID() {
 
-    }
+    public List run(Integer degreeCurricularPlanID) throws ExcepcaoPersistencia {
 
-    public List run(Integer degreeCurricularPlanID) throws FenixServiceException {
-        List infoExecutionDegreeList = null;
-        try {
-            ISuportePersistente sp;
-            infoExecutionDegreeList = null;
-            List executionDegrees = null;
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp
-                    .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
-                            degreeCurricularPlanID);
+        IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp
+                .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
+                        degreeCurricularPlanID);
 
-            executionDegrees = sp.getIPersistentExecutionDegree().readByDegreeCurricularPlan(
-                    degreeCurricularPlan.getIdInternal());
+        List infoExecutionDegreeList = new ArrayList();
 
-            infoExecutionDegreeList = new ArrayList();
-
-            for (Iterator iter = executionDegrees.iterator(); iter.hasNext();) {
-                IExecutionDegree executionDegree = (IExecutionDegree) iter.next();
-                InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYear
-                        .newInfoFromDomain(executionDegree);
-                infoExecutionDegreeList.add(infoExecutionDegree);
-            }
-
-            return infoExecutionDegreeList;
-
-        } catch (ExcepcaoPersistencia e) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
+        for (Iterator iter = degreeCurricularPlan.getExecutionDegrees().iterator(); iter.hasNext();) {
+            IExecutionDegree executionDegree = (IExecutionDegree) iter.next();
+            infoExecutionDegreeList.add(InfoExecutionDegreeWithInfoExecutionYear
+                    .newInfoFromDomain(executionDegree));
         }
 
-    }
+        return infoExecutionDegreeList;
 
+    }
 }

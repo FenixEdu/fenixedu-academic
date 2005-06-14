@@ -6,6 +6,9 @@
 	<definition name="coordinationTeam" extends="definition.coordinator.two-column">
 		<put name="body" value="/coordinator/coordinationTeam/viewCoordinationTeam.jsp" />
 	</definition>
+	<definition name="chooseExecutionYear" extends="definition.coordinator.two-column">
+		<put name="body" value="/coordinator/coordinationTeam/chooseExecutionYear.jsp" />
+	</definition>
 	<definition name="addCoordinator" extends="definition.coordinator.two-column">
 		<put name="body" value="/coordinator/coordinationTeam/addCoordinator.jsp" />
 	</definition>
