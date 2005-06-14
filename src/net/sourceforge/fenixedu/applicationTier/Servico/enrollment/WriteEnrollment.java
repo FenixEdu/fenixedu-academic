@@ -147,7 +147,7 @@ public class WriteEnrollment implements IService {
         }
 
         List executionCourses = executionCourseDAO.readbyCurricularCourseAndExecutionPeriod(
-                curricularCourse, executionPeriod);
+                curricularCourse.getIdInternal(), executionPeriod.getIdInternal());
         IExecutionCourse executionCourse = null;
         if (executionCourses.size() > 1) {
             Iterator iterator = executionCourses.iterator();

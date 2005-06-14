@@ -163,6 +163,7 @@ public class ReadSummaries implements IService {
                     && (shiftId == null || shiftId.intValue() == 0)
                     && (professorShiftId == null || professorShiftId.intValue() == 0)) {
             summaries = persistentSummary.readByExecutionCourseShifts(executionCourseId);
+            
             List summariesByExecutionCourse = persistentSummary.readByExecutionCourse(executionCourseId);
                 
                 summaries = allSummaries(summaries, summariesByExecutionCourse);
@@ -217,11 +218,12 @@ public class ReadSummaries implements IService {
 
     protected List readSummariesOfOtherTeachersIfResponsible(Integer executionCourseId, Integer professorShiftId, ISuportePersistente persistentSuport, IPersistentSummary persistentSummary, List summaries, List<IProfessorship> professorships) throws ExcepcaoPersistencia {
         IProfessorship professorship = getProfessorship(professorShiftId, professorships);
-        if(professorship != null){
+        
+        if((professorship != null) && (professorShiftId != null) && (professorShiftId.intValue() > 0)){
             IPersistentResponsibleFor persistentResponsibleFor = persistentSuport.getIPersistentResponsibleFor();
             IResponsibleFor responsibleFor = persistentResponsibleFor.readByTeacherAndExecutionCourse(professorship.getTeacher().getIdInternal(), executionCourseId);
                     
-            if ((professorShiftId != null) && (responsibleFor != null)) {            
+            if (responsibleFor != null) {            
                 List summariesByTeacher = persistentSummary.readByOtherTeachers(executionCourseId);
     
                 if (summaries != null) {

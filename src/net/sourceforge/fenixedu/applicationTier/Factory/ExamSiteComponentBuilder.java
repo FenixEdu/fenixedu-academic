@@ -119,7 +119,11 @@ public class ExamSiteComponentBuilder {
                 // Obtain list os execution courses
                 List executionCourses = sp.getIPersistentExecutionCourse()
                         .readByCurricularYearAndExecutionPeriodAndExecutionDegree(
-                                (Integer) curricularYears.get(i), executionPeriod, executionDegree);
+                                (Integer) curricularYears.get(i), 
+                                executionPeriod.getSemester(),
+                                executionDegree.getDegreeCurricularPlan().getName(),
+                                executionDegree.getDegreeCurricularPlan().getDegree().getSigla(),
+                                executionPeriod.getIdInternal());
 
                 // For each execution course obtain curricular courses and
                 // exams

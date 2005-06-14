@@ -276,7 +276,7 @@ public class SeperateExecutionCourse implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
-        List executionCourses = persistentExecutionCourse.readByExecutionPeriod(executionPeriod);
+        List executionCourses = executionPeriod.getAssociatedExecutionCourses();
         return new HashSet(CollectionUtils.collect(executionCourses, new Transformer() {
             public Object transform(Object arg0) {
                 IExecutionCourse executionCourse = (IExecutionCourse) arg0;

@@ -220,5 +220,19 @@
 		
 		>
 		<inverse-foreignkey field-ref="chaveDisciplinaExecucao"/>
-	</collection-descriptor>	
+	</collection-descriptor>
+	
+
+	<collection-descriptor proxy="true" 
+		name="groupPropertiesSenderExecutionCourse" 
+		element-class-ref="net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse">
+		<inverse-foreignkey field-ref="keySenderExecutionCourse"/>
+	</collection-descriptor>
+		
+	<collection-descriptor proxy="true" 
+		name="evaluationExecutionCourses" 
+		element-class-ref="net.sourceforge.fenixedu.domain.EvaluationExecutionCourse">
+		<inverse-foreignkey field-ref="keyExecutionCourse"/>
+	</collection-descriptor>		
+
 </class-descriptor>

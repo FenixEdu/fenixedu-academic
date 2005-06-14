@@ -106,6 +106,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationV
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamExecutionCourseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamStudentRoomVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionCourseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionPeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionYearVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuitySituationVO;
@@ -880,7 +881,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentExecutionCourse getIPersistentExecutionCourse() {
-        return null;
+        return new ExecutionCourseVO();
     }
 
     public IPersistentExecutionDegree getIPersistentExecutionDegree() {

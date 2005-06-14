@@ -18,14 +18,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseAndExams;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewAllExams;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -65,17 +64,19 @@ public class ReadExamsSortedByExecutionDegreeAndCurricularYear implements IServi
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
+            
+//            IExecutionPeriod executionPeriod = Cloner
+//                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 
-            IExecutionPeriod executionPeriod = Cloner
-                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
-
-            IExecutionYear executionYear = executionPeriod.getExecutionYear();
+            
+            InfoExecutionYear executionYear = infoExecutionPeriod.getInfoExecutionYear();
 
             List executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear.getYear(),
                     DegreeType.DEGREE);
 
             for (int k = 0; k < executionDegrees.size(); k++) {
                 IExecutionDegree executionDegree = (IExecutionDegree) executionDegrees.get(k);
+                
                 InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
 
                 for (int curricularYear = 1; curricularYear <= 5; curricularYear++) {
@@ -86,7 +87,11 @@ public class ReadExamsSortedByExecutionDegreeAndCurricularYear implements IServi
 
                     List executionCourses = sp.getIPersistentExecutionCourse()
                             .readByCurricularYearAndExecutionPeriodAndExecutionDegree(
-                                    new Integer(curricularYear), executionPeriod, executionDegree);
+                                    new Integer(curricularYear), 
+                                    infoExecutionPeriod.getSemester(),
+                                    executionDegree.getDegreeCurricularPlan().getName(),
+                                    executionDegree.getDegreeCurricularPlan().getDegree().getSigla(),
+                                    infoExecutionPeriod.getIdInternal());
 
                     for (int i = 0; i < executionCourses.size(); i++) {
                         IExecutionCourse executionCourse = (IExecutionCourse) executionCourses.get(i);

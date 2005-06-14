@@ -11,20 +11,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularYear;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.ISite;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.util.classProperties.ExecutionCoursePropertyName;
 
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
@@ -38,267 +29,152 @@ import org.apache.ojb.odmg.HasBroker;
 
 public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersistentExecutionCourse {
 
-    public List readAll() throws ExcepcaoPersistencia {
-        return queryList(ExecutionCourse.class, null);
+    public ExecutionCourseOJB() {
     }
 
-    /**
-     * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByCurricularYearAndExecutionPeriodAndExecutionDegree(java.lang.Integer,
-     *      Dominio.IExecutionPeriod, java.lang.String)
-     */
+    
     public List readByCurricularYearAndExecutionPeriodAndExecutionDegree(Integer curricularYear,
-            IExecutionPeriod executionPeriod, IExecutionDegree executionDegree)
-            throws ExcepcaoPersistencia {
+            Integer executionPeriodSemestre, String degreeCurricularPlanName, String degreeSigla,
+            Integer executionPeriodID) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-
         criteria.addEqualTo("associatedCurricularCourses.scopes.curricularSemester.curricularYear.year",
                 curricularYear);
         criteria.addEqualTo("associatedCurricularCourses.scopes.curricularSemester.semester",
-                executionPeriod.getSemester());
-        criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.name", executionDegree
-                .getDegreeCurricularPlan().getName());
-        criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.degree.sigla",
-                executionDegree.getDegreeCurricularPlan().getDegree().getSigla());
-        criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
-        criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
+                executionPeriodSemestre);
+        criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.name",
+                degreeCurricularPlanName);
+        criteria
+                .addEqualTo("associatedCurricularCourses.degreeCurricularPlan.degree.sigla", degreeSigla);
+        criteria.addEqualTo("executionPeriod.idInternal", executionPeriodID);
 
         List executionCourseList = queryList(ExecutionCourse.class, criteria, true);
         return executionCourseList;
     }
 
-    /**/
+    
     public List readByCurricularYearAndAllExecutionPeriodAndExecutionDegree(Integer curricularYear,
-            IExecutionPeriod executionPeriod, IExecutionDegree executionDegree)
-            throws ExcepcaoPersistencia {
+            Integer executionPeriodID, String degreeCurricularPlanName,
+            String degreeSigla) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
 
         criteria.addEqualTo("associatedCurricularCourses.scopes.curricularSemester.curricularYear.year",
                 curricularYear);
-        /*
-         * criteria.addEqualTo("associatedCurricularCourses.scopes.curricularSemester.semester",
-         * executionPeriod.getSemester());
-         */
-        criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.name", executionDegree
-                .getDegreeCurricularPlan().getName());
-        criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.degree.sigla",
-                executionDegree.getDegreeCurricularPlan().getDegree().getSigla());
-        criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
-        criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
+        criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.name",
+                degreeCurricularPlanName);
+        criteria
+                .addEqualTo("associatedCurricularCourses.degreeCurricularPlan.degree.sigla", degreeSigla);
+        criteria.addEqualTo("executionPeriod.idInternal", executionPeriodID);
 
         List executionCourseList = queryList(ExecutionCourse.class, criteria, true);
         return executionCourseList;
     }
 
-    /**
-     * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByExecutionPeriodAndExecutionDegree(java.lang.Integer,
-     *      Dominio.IExecutionPeriod, java.lang.String)
-     */
-    public List readByExecutionPeriodAndExecutionDegree(IExecutionPeriod executionPeriod,
-            IExecutionDegree executionDegree) throws ExcepcaoPersistencia {
+    
+    public List readByExecutionPeriodAndExecutionDegree(Integer executionPeriodID,
+            String curricularPlanName,
+            String degreeSigla) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
 
-        criteria.addEqualTo("associatedCurricularCourses.scopes.curricularSemester.semester",
-                executionPeriod.getSemester());
-        criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.name", executionDegree
-                .getDegreeCurricularPlan().getName());
-        criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.degree.sigla",
-                executionDegree.getDegreeCurricularPlan().getDegree().getSigla());
-        criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
-        criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
+        criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.name", curricularPlanName);
+        criteria
+                .addEqualTo("associatedCurricularCourses.degreeCurricularPlan.degree.sigla", degreeSigla);
+        criteria.addEqualTo("executionPeriod.idInternal", executionPeriodID);
 
         List executionCourseList = queryList(ExecutionCourse.class, criteria, true);
 
         return executionCourseList;
     }
 
-    /**
-     * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByExecutionCourseInitials(java.lang.String)
-     */
-    public IExecutionCourse readByExecutionCourseInitialsAndExecutionPeriod(String courseInitials,
-            IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
-
-        Criteria criteria = new Criteria();
-
-        criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
-        criteria.addEqualTo("executionPeriod.executionYear.year", executionPeriod.getExecutionYear()
-                .getYear());
-        criteria.addEqualTo("sigla", courseInitials);
-        return (IExecutionCourse) queryObject(ExecutionCourse.class, criteria);
-    }
-
+    
     public IExecutionCourse readByExecutionCourseInitialsAndExecutionPeriodId(String courseInitials,
             Integer executionPeriodId) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
-
-        criteria.addEqualTo("keyExecutionPeriod", executionPeriodId);
+        criteria.addEqualTo("executionPeriod.idInternal", executionPeriodId);
         criteria.addEqualTo("sigla", courseInitials);
         return (IExecutionCourse) queryObject(ExecutionCourse.class, criteria);
     }
 
-    public void deleteExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
-
-        Criteria crit1 = new Criteria();
-        crit1.addEqualTo("executionPeriod.name", executionCourse.getExecutionPeriod().getName());
-        crit1.addEqualTo("executionPeriod.executionYear.year", executionCourse.getExecutionPeriod()
-                .getExecutionYear().getYear());
-        crit1.addEqualTo("sigla", executionCourse.getSigla());
-        List result = queryList(ExecutionCourse.class, crit1);
-
-        if (result != null && !result.isEmpty()) {
-            IExecutionCourse executionCourseTemp = (IExecutionCourse) result.get(0);
-            super.delete(executionCourseTemp);
-        }
-
-    }
-
-    public List readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
-        return queryList(ExecutionCourse.class, criteria);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByExecutionPeriod(Dominio.IExecutionPeriod,
-     *      Util.TipoCurso)
-     */
-    public List readByExecutionPeriod(IExecutionPeriod executionPeriod, DegreeType curso)
+    
+    public List readByExecutionPeriod(Integer executionPeriodID, DegreeType curso)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
+        criteria.addEqualTo("executionPeriod.idInternal", executionPeriodID);
         criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.degree.tipoCurso", curso);
         return queryList(ExecutionCourse.class, criteria);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(Dominio.IExecutionPeriod,
-     *      Dominio.IExecutionDegree, Dominio.ICurricularYear, java.lang.String)
-     */
+
     public List readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(
-            IExecutionPeriod executionPeriod, IExecutionDegree executionDegree,
-            ICurricularYear curricularYear, String executionCourseName) throws ExcepcaoPersistencia {
+            Integer executionPeriodID, Integer degreeCurricularPlanID,
+            Integer curricularYearID, String executionCourseName) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
+        
         if (executionCourseName != null && !executionCourseName.equals("")) {
             criteria.addLike("nome", executionCourseName);
         }
-        if (curricularYear != null) {
+        
+        if (curricularYearID != null) {
             criteria.addEqualTo(
                     "associatedCurricularCourses.scopes.curricularSemester.curricularYear.idInternal",
-                    curricularYear.getIdInternal());
+                    curricularYearID);
         }
 
-        if (executionDegree != null) {
+        if (degreeCurricularPlanID != null) {
             criteria
                     .addEqualTo(
                             "associatedCurricularCourses.scopes.curricularCourse.degreeCurricularPlan.idInternal",
-                            executionDegree.getDegreeCurricularPlan().getIdInternal());
+                            degreeCurricularPlanID);
         }
-        criteria.addEqualTo("keyExecutionPeriod", executionPeriod.getIdInternal());
-        criteria.addEqualTo("associatedCurricularCourses.scopes.curricularSemester.semester",
-                executionPeriod.getSemester());
+        
+        criteria.addEqualTo("executionPeriod.idInternal", executionPeriodID);
 
         List temp = queryList(ExecutionCourse.class, criteria, true);
 
         return temp;
-        //		return queryList(DisciplinaExecucao.class, criteria, true);
     }
 
-    //	returns a list of teachers in charge ids
-    public List readExecutionCourseTeachers(Integer executionCourseId) throws ExcepcaoPersistencia {
+    
+    public List readbyCurricularCourseAndExecutionPeriod(Integer curricularCourseID,
+            Integer executionPeriodID) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
-
-        criteria.addEqualTo("keyExecutionCourse", executionCourseId);
-
-        return queryList(Professorship.class, criteria);
-    }
-
-    public Boolean readSite(Integer executionCourseId) throws ExcepcaoPersistencia {
-        Boolean result = null;
-
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyExecutionCourse", executionCourseId);
-
-        ISite site = (ISite) queryObject(Site.class, criteria);
-        if (site == null)
-            result = new Boolean(false);
-        else
-            result = new Boolean(true);
-        return result;
-    }
-
-    public List readbyCurricularCourseAndExecutionPeriod(ICurricularCourse curricularCourse,
-            IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
-
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyExecutionPeriod", executionPeriod.getIdInternal());
-        criteria.addEqualTo("associatedCurricularCourses.idInternal", curricularCourse.getIdInternal());
+        criteria.addEqualTo("executionPeriod.idInternal", executionPeriodID);
+        criteria.addEqualTo("associatedCurricularCourses.idInternal", curricularCourseID);
 
         return queryList(ExecutionCourse.class, criteria);
 
     }
-
-    public List readListbyCurricularCourseAndExecutionPeriod(ICurricularCourse curricularCourse,
-            IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
-
+    
+    
+    public List readByDegreeCurricularPlanAndExecutionYear(Integer degreeCurricularPlanID,
+            Integer executionYearID) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyExecutionPeriod", executionPeriod.getIdInternal());
-        criteria.addEqualTo("associatedCurricularCourses.idInternal", curricularCourse.getIdInternal());
-
-        return queryList(ExecutionCourse.class, criteria);
-
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.IPersistentExecutionCourse#readByExecutionDegree(Dominio.ExecutionDegree)
-     */
-    public List readByDegreeCurricularPlanAndExecutionYear(IDegreeCurricularPlan degreeCurricularPlan,
-            IExecutionYear executionYear) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlanKey", degreeCurricularPlan
-                .getIdInternal());
-        criteria.addEqualTo("executionPeriod.keyExecutionYear", executionYear.getIdInternal());
+        criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.idInternal", degreeCurricularPlanID);
+        criteria.addEqualTo("executionPeriod.executionYear.idInternal", executionYearID);
         return queryList(ExecutionCourse.class, criteria);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.IPersistentExecutionCourse#readByExecutionDegreeAndExecutionPeriod(Dominio.IExecutionDegree,
-     *      Dominio.IExecutionPeriod)
-     */
-    public List readByExecutionDegreeAndExecutionPeriod(IExecutionDegree executionDegree,
-            IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+    
+    public List readByExecutionDegreeAndExecutionPeriod(Integer degreeCurricularPlanID,
+            Integer executionPeriodID) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.idInternal",
-                executionDegree.getDegreeCurricularPlan().getIdInternal());
-        criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
+                degreeCurricularPlanID);
+        criteria.addEqualTo("executionPeriod.idInternal", executionPeriodID);
         return queryList(ExecutionCourse.class, criteria, true);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.IPersistentExecutionCourse#readByExecutionCourseIds(java.util.List)
-     */
-    public List readByExecutionCourseIds(List executionCourseIds) throws ExcepcaoPersistencia {
+    
+    public List readByExecutionCourseIds(List<Integer> executionCourseIds) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addIn("idInternal", executionCourseIds);
         return queryList(ExecutionCourse.class, criteria);
     }
 
-    /*
-     * @author Fernanda Quiterio @author jpvl
-     *  
-     */
-    public List readByExecutionPeriodWithNoCurricularCourses(IExecutionPeriod executionPeriod)
+    
+    public List readByExecutionPeriodWithNoCurricularCourses(Integer executionPeriodID)
             throws ExcepcaoPersistencia {
 
         DescriptorRepository descriptorRepository = MetadataManager.getInstance().getRepository();
@@ -316,7 +192,7 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
                         " where ccec.").append(collectionDescriptor.getFksToThisClass()[0]).append(
                         " is null and ec.").append(
                         classDescriptor.getFieldDescriptorByName("keyExecutionPeriod").getColumnName())
-                .append(" = ").append(executionPeriod.getIdInternal());
+                .append(" = ").append(executionPeriodID);
 
         Query query = new QueryBySQL(ExecutionCourse.class, sqlStatement.toString());
         PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
@@ -326,67 +202,43 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
         return collection;
     }
 
-    public IExecutionCourse readbyCurricularCourseAndExecutionPeriodAndExecutionCoursePropertyName(
-            ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod,
-            ExecutionCoursePropertyName executionCoursePropertyName) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyExecutionPeriod", executionPeriod.getIdInternal());
-        criteria.addEqualTo("associatedCurricularCourses.idInternal", curricularCourse.getIdInternal());
-        criteria.addEqualTo("executionCourseProperties.name", executionCoursePropertyName);
-        return (IExecutionCourse) queryObject(ExecutionCourse.class, criteria);
-    }
     
-	public List readByCurricularYearAndExecutionPeriodAndExecutionDegreeList(Integer curricularYear,
-				IExecutionPeriod executionPeriod, List executionDegreeList)
-				throws ExcepcaoPersistencia {
-			Criteria criteria = new Criteria();
-			Criteria criteriaExcutionDegreeName = new Criteria();
-			Criteria criteriaExcutionDegreeSigla = new Criteria();
-		
-			criteria.addEqualTo("associatedCurricularCourses.scopes.curricularSemester.curricularYear.year",
-					curricularYear);
-			criteria.addEqualTo("associatedCurricularCourses.scopes.curricularSemester.semester",
-					executionPeriod.getSemester());
-			if ((executionDegreeList != null) && (executionDegreeList.size() != 0)) {
-			   List executionArrayName = new ArrayList();
-			   List executionArraySigla = new ArrayList();
-			   Iterator iterator = executionDegreeList.iterator();
-			   while (iterator.hasNext()) {
+    public List readByCurricularYearAndExecutionPeriodAndExecutionDegreeList(Integer curricularYear,
+            Integer executionPeriodID, Integer executionPeriodSemestre,
+            List<IExecutionDegree> executionDegreeList) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        Criteria criteriaExcutionDegreeName = new Criteria();
+        Criteria criteriaExcutionDegreeSigla = new Criteria();
 
-				IExecutionDegree cursoExecucao = (IExecutionDegree)iterator.next();
+        criteria.addEqualTo("associatedCurricularCourses.scopes.curricularSemester.curricularYear.year",
+                curricularYear);
+        criteria.addEqualTo("associatedCurricularCourses.scopes.curricularSemester.semester",
+                executionPeriodSemestre);
+        if ((executionDegreeList != null) && (executionDegreeList.size() != 0)) {
+            List executionArrayName = new ArrayList();
+            List executionArraySigla = new ArrayList();
+            Iterator iterator = executionDegreeList.iterator();
+            while (iterator.hasNext()) {
 
-				executionArrayName.add(cursoExecucao.getDegreeCurricularPlan().getName());
-				executionArraySigla.add(cursoExecucao.getDegreeCurricularPlan().getDegree().getSigla() );
-			
-			   }
-			   criteriaExcutionDegreeName.addIn("associatedCurricularCourses.degreeCurricularPlan.name", executionArrayName);
-			   criteria.addAndCriteria(criteriaExcutionDegreeName);
-			   criteriaExcutionDegreeSigla.addIn("associatedCurricularCourses.degreeCurricularPlan.degree.sigla", executionArraySigla);
-			   criteria.addAndCriteria(criteriaExcutionDegreeName);
-			   
-		   }
-					
-//					
-//			criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.name", executionDegree
-//					.getDegreeCurricularPlan().getName());
-//			criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlan.degree.sigla",
-//					executionDegree.getDegreeCurricularPlan().getDegree().getSigla());
-			criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
-			criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
+                IExecutionDegree cursoExecucao = (IExecutionDegree) iterator.next();
 
-			List executionCourseList = queryList(ExecutionCourse.class, criteria, true);
-			return executionCourseList;
-		}
-/*	if ((situations != null) && (situations.size() != 0)) {
-			   List situationsInteger = new ArrayList();
-			   Iterator iterator = situations.iterator();
-			   while (iterator.hasNext()) {
-				   situationsInteger.add(((SituationName) iterator.next()).getSituationName());
+                executionArrayName.add(cursoExecucao.getDegreeCurricularPlan().getName());
+                executionArraySigla.add(cursoExecucao.getDegreeCurricularPlan().getDegree().getSigla());
 
-			   }
-			   criteriaSituations.addIn("situation", situationsInteger);
-			   criteria.addAndCriteria(criteriaSituations);
-		   }*/
+            }
+            criteriaExcutionDegreeName.addIn("associatedCurricularCourses.degreeCurricularPlan.name",
+                    executionArrayName);
+            criteria.addAndCriteria(criteriaExcutionDegreeName);
+            criteriaExcutionDegreeSigla
+                    .addIn("associatedCurricularCourses.degreeCurricularPlan.degree.sigla",
+                            executionArraySigla);
+            criteria.addAndCriteria(criteriaExcutionDegreeName);
 
+        }
+        
+        criteria.addEqualTo("executionPeriod.idInternal", executionPeriodID);
 
+        List executionCourseList = queryList(ExecutionCourse.class, criteria, true);
+        return executionCourseList;
+    }
 }

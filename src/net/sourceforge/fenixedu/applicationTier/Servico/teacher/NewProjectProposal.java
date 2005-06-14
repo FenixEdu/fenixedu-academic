@@ -120,8 +120,7 @@ public class NewProjectProposal implements IService {
         List group = new ArrayList();
         List allOtherProfessors = new ArrayList();
 
-        List professorships = persistentExecutionCourse.readExecutionCourseTeachers(goalExecutionCourse
-                .getIdInternal());
+        List professorships = goalExecutionCourse.getProfessorships();
         Iterator iterProfessorship = professorships.iterator();
         while (iterProfessorship.hasNext()) {
             IProfessorship professorship = (IProfessorship) iterProfessorship.next();
@@ -152,8 +151,7 @@ public class NewProjectProposal implements IService {
 
         List groupAux = new ArrayList();
 
-        List professorshipsAux = persistentExecutionCourse
-                .readExecutionCourseTeachers(startExecutionCourse.getIdInternal());
+        List professorshipsAux = startExecutionCourse.getProfessorships();
         Iterator iterProfessorshipAux = professorshipsAux.iterator();
         while (iterProfessorshipAux.hasNext()) {
             IProfessorship professorshipAux = (IProfessorship) iterProfessorshipAux.next();

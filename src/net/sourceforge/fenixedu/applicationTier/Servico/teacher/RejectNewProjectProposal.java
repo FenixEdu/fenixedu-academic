@@ -93,9 +93,7 @@ public class RejectNewProjectProposal implements IService {
                 if (groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 1
                         || groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 2) {
 
-                    List professorships = persistentExecutionCourse
-                            .readExecutionCourseTeachers(groupPropertiesExecutionCourseAux
-                                    .getExecutionCourse().getIdInternal());
+                    List professorships = groupPropertiesExecutionCourseAux.getExecutionCourse().getProfessorships();
 
                     Iterator iterProfessorship = professorships.iterator();
                     while (iterProfessorship.hasNext()) {
@@ -110,8 +108,7 @@ public class RejectNewProjectProposal implements IService {
                 }
             }
 
-            List professorshipsAux = persistentExecutionCourse
-                    .readExecutionCourseTeachers(executionCourse.getIdInternal());
+            List professorshipsAux = executionCourse.getProfessorships();
 
             Iterator iterProfessorshipsAux = professorshipsAux.iterator();
             while (iterProfessorshipsAux.hasNext()) {

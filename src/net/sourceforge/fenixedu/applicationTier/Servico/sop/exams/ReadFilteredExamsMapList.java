@@ -21,14 +21,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriodAndExams;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -70,14 +68,16 @@ public class ReadFilteredExamsMapList implements IService {
 		   infoExamsMap.setEndSeason1(null);
 		   infoExamsMap.setStartSeason2(null);
 		   infoExamsMap.setEndSeason2(endSeason2);
-           List executionDegreeList=new ArrayList(); 
+           //List executionDegreeList=new ArrayList(); 
 		   // Translate to execute following queries
-		   for (int i = 0; i < infoExecutionDegreeList.size(); i++) {
-		   IExecutionDegree executionDegree = InfoExecutionDegreeWithInfoDegreeCurricularPlan
-				   .newDomainFromInfo((InfoExecutionDegree)infoExecutionDegreeList.get(i));
-			executionDegreeList.add(executionDegree);
-		   }	
-		   IExecutionPeriod executionPeriod = InfoExecutionPeriod.newDomainFromInfo(infoExecutionPeriod);
+           
+//		   for (int i = 0; i < infoExecutionDegreeList.size(); i++) {
+//		       IExecutionDegree executionDegree = InfoExecutionDegreeWithInfoDegreeCurricularPlan
+//				  .newDomainFromInfo((InfoExecutionDegree)infoExecutionDegreeList.get(i));
+//		       executionDegreeList.add(infoExecutionDegree);
+//		   }	
+		   
+           //IExecutionPeriod executionPeriod = InfoExecutionPeriod.newDomainFromInfo(infoExecutionPeriod);
 		
 		   try {
 			   ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -93,11 +93,15 @@ public class ReadFilteredExamsMapList implements IService {
 //				   List executionCourses = sp.getIPersistentExecutionCourse()
 //						   .readByCurricularYearAndExecutionPeriodAndExecutionDegree(
 //								   (Integer) curricularYears.get(i), executionPeriod, executionDegree);
-				for (int n = 0; n < executionDegreeList.size(); n++) {
-					IExecutionDegree execucaoDegree = (IExecutionDegree)executionDegreeList.get(n);
+				for (int n = 0; n < infoExecutionDegreeList.size(); n++) {
+					InfoExecutionDegree infoExecucaoDegree = (InfoExecutionDegree)infoExecutionDegreeList.get(n);
 					List executionCourses = sp.getIPersistentExecutionCourse()
 										   .readByCurricularYearAndExecutionPeriodAndExecutionDegree(
-												   (Integer) curricularYears.get(i), executionPeriod, execucaoDegree);
+                                                   (Integer) curricularYears.get(i),
+                                                   infoExecutionPeriod.getSemester(),
+                                                   infoExecucaoDegree.getInfoDegreeCurricularPlan().getName(),
+                                                   infoExecucaoDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla(),
+                                                   infoExecutionPeriod.getIdInternal());
 				
 				   // For each execution course obtain curricular courses and
 				   // exams
@@ -143,7 +147,7 @@ public class ReadFilteredExamsMapList implements IService {
 								   curricularCourseIDs.add(infoCurricularCourse.getIdInternal());
 								   int numberEnroledStudentsInCurricularCourse = persistentEnrolment
 										   .countEnrolmentsByCurricularCourseAndExecutionPeriod(
-												   infoCurricularCourse.getIdInternal(), executionPeriod
+												   infoCurricularCourse.getIdInternal(), infoExecutionPeriod
 														   .getIdInternal());
 
 								   numberOfStudentsForExam += numberEnroledStudentsInCurricularCourse;

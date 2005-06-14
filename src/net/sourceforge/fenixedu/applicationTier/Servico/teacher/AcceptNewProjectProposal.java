@@ -128,9 +128,7 @@ public class AcceptNewProjectProposal implements IService {
                         || groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 2) {
                     IExecutionCourse personExecutionCourse = groupPropertiesExecutionCourseAux
                             .getExecutionCourse();
-                    List professorships = persistentExecutionCourse
-                            .readExecutionCourseTeachers(groupPropertiesExecutionCourseAux
-                                    .getExecutionCourse().getIdInternal());
+                    List professorships = groupPropertiesExecutionCourseAux.getExecutionCourse().getProfessorships();
                     Iterator iterProfessorship = professorships.iterator();
                     while (iterProfessorship.hasNext()) {
                         IProfessorship professorship = (IProfessorship) iterProfessorship.next();
@@ -158,8 +156,7 @@ public class AcceptNewProjectProposal implements IService {
             }
 
             List groupAux = new ArrayList();
-            List professorshipsAux = persistentExecutionCourse
-                    .readExecutionCourseTeachers(executionCourse.getIdInternal());
+            List professorshipsAux = executionCourse.getProfessorships();
 
             Iterator iterProfessorshipsAux = professorshipsAux.iterator();
             while (iterProfessorshipsAux.hasNext()) {

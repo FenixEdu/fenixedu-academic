@@ -122,7 +122,7 @@ public class ExecutionPeriodVO extends VersionedObjectsBase implements IPersiste
 
         for (Iterator iter = executionPeriods.iterator(); iter.hasNext();) {
             IExecutionPeriod element = (IExecutionPeriod) iter.next();
-            if ((element.getExecutionYear().getIdInternal() == executionYearID)
+            if ((element.getExecutionYear().getIdInternal().equals(executionYearID))
                     && (!element.getState().equals(PeriodState.CLOSED))
                     && (!element.getState().equals(PeriodState.NOT_OPEN))
                     && (element.getSemester().compareTo(new Integer(0)) > 0))

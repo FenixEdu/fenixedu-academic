@@ -243,7 +243,8 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
                 ExecutionDegree.class, infoExecutionDegree.getIdInternal());
 
         List executionCourseList = persistentExecutionCourse.readByExecutionPeriodAndExecutionDegree(
-                executionPeriod, executionDegree);
+                executionPeriod.getIdInternal(), executionDegree.getDegreeCurricularPlan().getName(),
+                executionDegree.getDegreeCurricularPlan().getDegree().getSigla());
         if (executionCourseList == null || executionCourseList.size() <= 0) {
             throw new FenixServiceException("errors.impossible.operation");
         }

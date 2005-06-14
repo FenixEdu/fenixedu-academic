@@ -121,8 +121,12 @@ public class MergeExecutionCourses implements IService {
         copyEvaluationMethod(destination, source, ps);
 
         destination.getAssociatedCurricularCourses().addAll(source.getAssociatedCurricularCourses());
-        persistentExecutionCourse.deleteExecutionCourse(source);
-
+                
+        List executionCourseID = new ArrayList();
+        executionCourseID.add(source.getIdInternal());
+        
+        DeleteExecutionCourses deleteExecutionCourses = new DeleteExecutionCourses();
+        deleteExecutionCourses.run(executionCourseID);
     }
 
     private boolean isMergeAllowed(IExecutionCourse destination, IExecutionCourse source,

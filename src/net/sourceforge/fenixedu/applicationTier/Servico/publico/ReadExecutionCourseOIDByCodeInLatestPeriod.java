@@ -22,7 +22,7 @@ public class ReadExecutionCourseOIDByCodeInLatestPeriod implements IService {
 
         IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
         IExecutionCourse executionCourse = executionCourseDAO
-                .readByExecutionCourseInitialsAndExecutionPeriod(executionCourseCode, executionPeriod);
+                .readByExecutionCourseInitialsAndExecutionPeriodId(executionCourseCode, executionPeriod.getIdInternal());
 
         if (executionCourse != null) {
             return executionCourse.getIdInternal();

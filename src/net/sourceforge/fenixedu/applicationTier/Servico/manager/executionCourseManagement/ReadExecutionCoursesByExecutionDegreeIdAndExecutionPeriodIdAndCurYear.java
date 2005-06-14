@@ -49,7 +49,7 @@ public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYe
 
             if (executionDegreeId == null && curricularYear == null) {
                 executionCourseList = executionCourseDAO
-                        .readByExecutionPeriodWithNoCurricularCourses(executionPeriod);
+                        .readByExecutionPeriodWithNoCurricularCourses(executionPeriod.getIdInternal());
 
             } else {
                 IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
@@ -57,7 +57,10 @@ public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYe
 
                 executionCourseList = executionCourseDAO
                         .readByCurricularYearAndExecutionPeriodAndExecutionDegree(curricularYear,
-                                executionPeriod, executionDegree);
+                                executionPeriod.getSemester(),
+                                executionDegree.getDegreeCurricularPlan().getName(),
+                                executionDegree.getDegreeCurricularPlan().getDegree().getSigla(),
+                                executionPeriod.getIdInternal());
             }
 
             CollectionUtils.collect(executionCourseList, new Transformer() {

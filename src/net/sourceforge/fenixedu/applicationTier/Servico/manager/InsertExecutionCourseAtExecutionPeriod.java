@@ -50,8 +50,8 @@ public class InsertExecutionCourseAtExecutionPeriod implements IService {
                     .getIPersistentExecutionCourse();
 
             existentExecutionCourse = persistentExecutionCourse
-                    .readByExecutionCourseInitialsAndExecutionPeriod(infoExecutionCourse.getSigla(),
-                            executionPeriod);
+                    .readByExecutionCourseInitialsAndExecutionPeriodId(infoExecutionCourse.getSigla(),
+                            executionPeriod.getIdInternal());
 
             if (existentExecutionCourse != null) {
                 throw new ExistingPersistentException();

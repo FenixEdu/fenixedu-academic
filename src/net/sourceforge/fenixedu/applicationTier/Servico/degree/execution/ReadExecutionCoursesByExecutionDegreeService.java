@@ -77,7 +77,7 @@ public class ReadExecutionCoursesByExecutionDegreeService implements IService {
             }
 
             List executionCourseList = executionCourseDAO.readByExecutionDegreeAndExecutionPeriod(
-                    executionDegree, executionPeriod);
+                    executionDegree.getDegreeCurricularPlan().getIdInternal(), executionPeriod.getIdInternal());
 
             infoExecutionCourseList = (List) CollectionUtils.collect(executionCourseList,
                     new Transformer() {

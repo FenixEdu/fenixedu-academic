@@ -86,8 +86,12 @@ public class ReadCurriculumByCurricularCourseCode implements IService {
                     || executionCourse.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
                 InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner
                         .get(executionCourse);
-                infoExecutionCourse.setHasSite(persistentExecutionCourse.readSite(executionCourse
-                        .getIdInternal()));
+                if(executionCourse.getSite() != null){
+                    infoExecutionCourse.setHasSite(true);
+                }
+                else{
+                    infoExecutionCourse.setHasSite(false);
+                }
                 infoExecutionCourses.add(infoExecutionCourse);
             }
         }

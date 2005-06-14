@@ -58,10 +58,13 @@ public class ReadCurricularCourseListOfExecutionCourse implements IServico {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = Cloner
-                    .copyInfoExecutionCourse2ExecutionCourse(infoExecCourse);
-            executionCourse = executionCourseDAO.readByExecutionCourseInitialsAndExecutionPeriod(
-                    executionCourse.getSigla(), executionCourse.getExecutionPeriod());
+           
+//            IExecutionCourse executionCourse = Cloner
+//                    .copyInfoExecutionCourse2ExecutionCourse(infoExecCourse);
+//            
+            IExecutionCourse executionCourse = executionCourseDAO.readByExecutionCourseInitialsAndExecutionPeriodId(
+                    infoExecCourse.getSigla(), infoExecCourse.getInfoExecutionPeriod().getIdInternal());
+            
             if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null)
                 for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {
                     ICurricularCourse curricularCourse = (ICurricularCourse) executionCourse

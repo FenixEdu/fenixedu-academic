@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -53,10 +52,10 @@ public class ReadExecutionCourse implements IServico {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
-            IExecutionPeriod executionPeriod = Cloner
-                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
-            iExecCourse = executionCourseDAO.readByExecutionCourseInitialsAndExecutionPeriod(code,
-                    executionPeriod);
+//            IExecutionPeriod executionPeriod = Cloner
+//                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+            iExecCourse = executionCourseDAO.readByExecutionCourseInitialsAndExecutionPeriodId(code,
+                    infoExecutionPeriod.getIdInternal());
             if (iExecCourse != null)
                 infoExecCourse = (InfoExecutionCourse) Cloner.get(iExecCourse);
         } catch (ExcepcaoPersistencia ex) {

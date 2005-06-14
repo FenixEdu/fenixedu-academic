@@ -4,14 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IServico;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -59,20 +55,23 @@ public class SelectExecutionCourse implements IServico {
 
             IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-            IExecutionDegree executionDegree = InfoExecutionDegree.newDomainFromInfo(infoExecutionDegree);
-            if (executionDegree != null) {
-                executionDegree.setDegreeCurricularPlan(InfoDegreeCurricularPlan
-                        .newDomainFromInfo(infoExecutionDegree.getInfoDegreeCurricularPlan()));
-                executionDegree.getDegreeCurricularPlan().setDegree(
-                        InfoDegree.newDomainFromInfo(infoExecutionDegree.getInfoDegreeCurricularPlan()
-                                .getInfoDegree()));
+           // IExecutionDegree executionDegree = InfoExecutionDegree.newDomainFromInfo(infoExecutionDegree);
+            
+            if (infoExecutionDegree != null) {
+                infoExecutionDegree.setInfoDegreeCurricularPlan(infoExecutionDegree.getInfoDegreeCurricularPlan());
+                infoExecutionDegree.getInfoDegreeCurricularPlan().setInfoDegree(
+                        infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree());
             }
-            IExecutionPeriod executionPeriod = InfoExecutionPeriod
-                    .newDomainFromInfo(infoExecutionPeriod);
+           
+//            IExecutionPeriod executionPeriod = InfoExecutionPeriod
+//                    .newDomainFromInfo(infoExecutionPeriod);
 
             executionCourseList = executionCourseDAO
                     .readByCurricularYearAndExecutionPeriodAndExecutionDegree(curricularYear,
-                            executionPeriod, executionDegree);
+                            infoExecutionPeriod.getSemester(),
+                            infoExecutionDegree.getInfoDegreeCurricularPlan().getName(),
+                            infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla(),
+                            infoExecutionPeriod.getIdInternal());
 
             for (int i = 0; i < executionCourseList.size(); i++) {
                 IExecutionCourse executionCourse = (IExecutionCourse) executionCourseList.get(i);

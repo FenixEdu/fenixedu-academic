@@ -44,8 +44,7 @@ public class ReadExecutionCoursesByExecutionPeriod implements IService {
             if (executionPeriod == null) {
                 throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
             }
-            allExecutionCoursesFromExecutionPeriod = persistentExecutionCourse
-                    .readByExecutionPeriod(executionPeriod);
+            allExecutionCoursesFromExecutionPeriod = executionPeriod.getAssociatedExecutionCourses();
 
             if (allExecutionCoursesFromExecutionPeriod == null
                     || allExecutionCoursesFromExecutionPeriod.isEmpty()) {
@@ -56,7 +55,11 @@ public class ReadExecutionCoursesByExecutionPeriod implements IService {
             Iterator iter = allExecutionCoursesFromExecutionPeriod.iterator();
             while (iter.hasNext()) {
                 IExecutionCourse executionCourse = (IExecutionCourse) iter.next();
-                Boolean hasSite = persistentExecutionCourse.readSite(executionCourse.getIdInternal());
+                Boolean hasSite;
+                if(executionCourse.getSite() != null)
+                    hasSite = true;
+                else
+                    hasSite = false;
 
                 infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
                         .newInfoFromDomain(executionCourse);

@@ -20,11 +20,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InterceptingRoomsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
@@ -65,14 +63,14 @@ public class EditExam implements IServico {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-            IExecutionPeriod executionPeriod = Cloner
-                    .copyInfoExecutionPeriod2IExecutionPeriod(((InfoExecutionCourse) infoViewOldExam
-                            .getInfoExecutionCourses().get(0)).getInfoExecutionPeriod());
+//            IExecutionPeriod executionPeriod = Cloner
+//                    .copyInfoExecutionPeriod2IExecutionPeriod(((InfoExecutionCourse) infoViewOldExam
+//                            .getInfoExecutionCourses().get(0)).getInfoExecutionPeriod());
 
             IExecutionCourse executionCourse = executionCourseDAO
-                    .readByExecutionCourseInitialsAndExecutionPeriod(
-                            ((InfoExecutionCourse) infoViewOldExam.getInfoExecutionCourses().get(0))
-                                    .getSigla(), executionPeriod);
+                    .readByExecutionCourseInitialsAndExecutionPeriodId(
+                            ((InfoExecutionCourse) infoViewOldExam.getInfoExecutionCourses().get(0)).getSigla(),
+                            ((InfoExecutionCourse) infoViewOldExam.getInfoExecutionCourses().get(0)).getInfoExecutionPeriod().getIdInternal());
 
             IExam examFromDBToBeEdited = null;
             boolean newSeasonAlreadyScheduled = false;

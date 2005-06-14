@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -63,8 +64,13 @@ public class ReadExecutionCoursesByCurricularCourse implements IService {
                 InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner
                         .get((IExecutionCourse) iterator.next());
                 try {
-                    hasSite = sp.getIPersistentExecutionCourse().readSite(
-                            infoExecutionCourse.getIdInternal());
+                  
+                   IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, infoExecutionCourse.getIdInternal());
+                   if(executionCourse.getSite() != null)
+                       hasSite = true;
+                   else
+                       hasSite = false;
+                   
                 } catch (ExcepcaoPersistencia ex) {
                     throw new FenixServiceException(ex);
                 }

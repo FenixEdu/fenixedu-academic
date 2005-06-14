@@ -15,13 +15,11 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExamExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExamExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -47,13 +45,13 @@ public class CreateExam implements IService {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-            IExecutionPeriod executionPeriod = Cloner
-                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionCourse
-                            .getInfoExecutionPeriod());
+//            IExecutionPeriod executionPeriod = Cloner
+//                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionCourse
+//                            .getInfoExecutionPeriod());
 
             IExecutionCourse executionCourse = executionCourseDAO
-                    .readByExecutionCourseInitialsAndExecutionPeriod(infoExecutionCourse.getSigla(),
-                            executionPeriod);
+                    .readByExecutionCourseInitialsAndExecutionPeriodId(infoExecutionCourse.getSigla(),
+                            infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
 
             for (int i = 0; i < executionCourse.getAssociatedExams().size(); i++) {
                 IExam exam = (IExam) executionCourse.getAssociatedExams().get(i);

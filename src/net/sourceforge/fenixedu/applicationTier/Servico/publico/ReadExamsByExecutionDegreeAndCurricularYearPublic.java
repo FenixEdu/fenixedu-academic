@@ -21,8 +21,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -57,13 +55,16 @@ public class ReadExamsByExecutionDegreeAndCurricularYearPublic implements IServi
 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IExecutionDegree executionDegree = Cloner
-                    .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
-            IExecutionPeriod executionPeriod = Cloner
-                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+            
+//            IExecutionDegree executionDegree = Cloner
+//                    .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
+//            IExecutionPeriod executionPeriod = Cloner
+//                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 
             List executionCourses = sp.getIPersistentExecutionCourse()
-                    .readByExecutionPeriodAndExecutionDegree(executionPeriod, executionDegree);
+                    .readByExecutionPeriodAndExecutionDegree(infoExecutionPeriod.getIdInternal(), 
+                            infoExecutionDegree.getInfoDegreeCurricularPlan().getName(),
+                            infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
 
             for (int i = 0; i < executionCourses.size(); i++) {
                 IExecutionCourse executionCourse = (IExecutionCourse) executionCourses.get(i);

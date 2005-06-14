@@ -77,8 +77,18 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IService {
 
         //selects execution courses for current execution period
         final IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-        List associatedExecutionCourses = persistentExecutionCourse
-                .readListbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
+       
+//        List associatedExecutionCourses = persistentExecutionCourse
+//                .readListbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
+        
+        
+        List associatedExecutionCourses = new ArrayList();
+        List<IExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
+        for(IExecutionCourse executionCourse : executionCourses){
+            if(executionCourse.getExecutionPeriod().equals(executionPeriod))
+                associatedExecutionCourses.add(executionCourse);
+        }
+        
 
         ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse
                 .getIdInternal());
@@ -120,8 +130,13 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IService {
             InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
                     .newInfoFromDomain(executionCourse);
 
-            infoExecutionCourse.setHasSite(persistentExecutionCourse.readSite(executionCourse
-                    .getIdInternal()));
+            Boolean hasSite;
+            if(executionCourse.getSite() != null)
+                hasSite = true;
+            else
+                hasSite = false;
+            
+            infoExecutionCourse.setHasSite(hasSite);
             infoExecutionCourses.add(infoExecutionCourse);
         }
         infoCurriculum.getInfoCurricularCourse().setInfoAssociatedExecutionCourses(infoExecutionCourses);

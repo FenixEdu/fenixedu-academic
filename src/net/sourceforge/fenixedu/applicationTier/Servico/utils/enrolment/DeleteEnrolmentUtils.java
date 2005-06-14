@@ -136,7 +136,7 @@ public abstract class DeleteEnrolmentUtils {
         ITurnoAlunoPersistente shiftStudentDAO = persistentSuport.getITurnoAlunoPersistente();
 
         List executionCourses = executionCourseDAO.readbyCurricularCourseAndExecutionPeriod(enrolment
-                .getCurricularCourse(), enrolment.getExecutionPeriod());
+                .getCurricularCourse().getIdInternal(), enrolment.getExecutionPeriod().getIdInternal());
 
         Iterator iterator = executionCourses.iterator();
         while (iterator.hasNext()) {

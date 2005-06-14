@@ -10,8 +10,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -59,15 +57,19 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriod implements IServico 
 
             IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-            IExecutionDegree executionDegree = Cloner
-                    .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
-            IExecutionPeriod executionPeriod = Cloner
-                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+//            IExecutionDegree executionDegree = Cloner
+//                    .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
+//            IExecutionPeriod executionPeriod = Cloner
+//                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+            
             List executionCourseList = new ArrayList();
             List temp = null;
             for (int i = 1; i < 6; i++) {
                 temp = executionCourseDAO.readByCurricularYearAndExecutionPeriodAndExecutionDegree(
-                        new Integer(i), executionPeriod, executionDegree);
+                        new Integer(i), infoExecutionPeriod.getSemester(),
+                        infoExecutionDegree.getInfoDegreeCurricularPlan().getName(),
+                        infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla(),
+                        infoExecutionPeriod.getIdInternal());
                 executionCourseList.addAll(temp);
             }
 

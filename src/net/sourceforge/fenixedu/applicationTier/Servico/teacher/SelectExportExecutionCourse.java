@@ -9,8 +9,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -66,16 +64,13 @@ public class SelectExportExecutionCourse implements IServico
 
             IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-            IExecutionDegree executionDegree =
-                Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
-            IExecutionPeriod executionPeriod =
-                Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
-
             executionCourseList =
                 executionCourseDAO.readByCurricularYearAndExecutionPeriodAndExecutionDegree(
                     curricularYear,
-                    executionPeriod,
-                    executionDegree);
+                    infoExecutionPeriod.getSemester(),
+                    infoExecutionDegree.getInfoDegreeCurricularPlan().getName(),
+                    infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla(),               
+                    infoExecutionPeriod.getIdInternal());
 
             for (int i = 0; i < executionCourseList.size(); i++)
             {

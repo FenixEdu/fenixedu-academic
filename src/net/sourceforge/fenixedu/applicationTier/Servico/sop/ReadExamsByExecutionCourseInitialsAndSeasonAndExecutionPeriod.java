@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -58,12 +57,12 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod imple
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IExecutionPeriod executionPeriod = Cloner
-                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+//            IExecutionPeriod executionPeriod = Cloner
+//                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 
             IExecutionCourse executionCourse = sp.getIPersistentExecutionCourse()
-                    .readByExecutionCourseInitialsAndExecutionPeriod(executionCourseInitials,
-                            executionPeriod);
+                    .readByExecutionCourseInitialsAndExecutionPeriodId(executionCourseInitials,
+                            infoExecutionPeriod.getIdInternal());
 
             for (int i = 0; i < executionCourse.getAssociatedExams().size(); i++) {
                 IExam exam = (IExam) executionCourse.getAssociatedExams().get(i);

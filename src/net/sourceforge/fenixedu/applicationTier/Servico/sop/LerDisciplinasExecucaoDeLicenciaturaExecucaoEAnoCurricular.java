@@ -18,8 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.ICurricularYear;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -59,18 +57,19 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular implemen
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-            IExecutionPeriod executionPeriod = Cloner
-                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
-
-            IExecutionDegree executionDegree = Cloner
-                    .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
+//            IExecutionPeriod executionPeriod = Cloner
+//                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+//
+//            IExecutionDegree executionDegree = Cloner
+//                    .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
 
             ICurricularYear curricularYearFromDB = (ICurricularYear) sp.getIPersistentCurricularYear()
                     .readByOID(CurricularYear.class, curricularYear);
 
             listDCDE = executionCourseDAO
-                    .readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(executionPeriod,
-                            executionDegree, curricularYearFromDB, "");
+                    .readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(infoExecutionPeriod.getIdInternal(),
+                            infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal(),
+                            curricularYearFromDB.getIdInternal(), "");
 
             Iterator iterator = listDCDE.iterator();
             listInfoDE = new ArrayList();

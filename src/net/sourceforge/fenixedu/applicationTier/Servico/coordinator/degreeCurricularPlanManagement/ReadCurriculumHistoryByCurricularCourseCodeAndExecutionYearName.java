@@ -91,8 +91,13 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName imp
                     allCurricularCourseScopes = (List) CollectionUtils.union(
                             disjunctionCurricularCourseScopes, intersectionCurricularCourseScopes);
                 }
-                List associatedExecutionCourses = persistentExecutionCourse
-                        .readListbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
+                List associatedExecutionCourses = new ArrayList();
+                List<IExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
+                for(IExecutionCourse executionCourse : executionCourses){
+                    if(executionCourse.getExecutionPeriod().equals(executionPeriod))
+                        associatedExecutionCourses.add(executionCourse);
+                }
+         
                 if (associatedExecutionCourses != null) {
                     allExecutionCourses.addAll(associatedExecutionCourses);
                 }
@@ -131,8 +136,13 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName imp
             InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
                     .newInfoFromDomain(executionCourse);
 
-            infoExecutionCourse.setHasSite(persistentExecutionCourse.readSite(executionCourse
-                    .getIdInternal()));
+            Boolean hasSite;
+            if(executionCourse.getSite() != null)
+                hasSite = true;
+            else
+                hasSite = false;
+            
+            infoExecutionCourse.setHasSite(hasSite);
             infoExecutionCourses.add(infoExecutionCourse);
         }
         infoCurriculum.getInfoCurricularCourse().setInfoAssociatedExecutionCourses(infoExecutionCourses);

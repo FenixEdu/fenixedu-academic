@@ -16,12 +16,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExamExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExamExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -46,18 +44,19 @@ public class AssociateExecutionCourseToExam implements IService {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-            IExecutionPeriod executionPeriod = Cloner
-                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionCourse
-                            .getInfoExecutionPeriod());
+//            IExecutionPeriod executionPeriod = Cloner
+//                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionCourse
+//                            .getInfoExecutionPeriod());
 
             IExecutionCourse executionCourseToBeAssociatedWithExam = executionCourseDAO
-                    .readByExecutionCourseInitialsAndExecutionPeriod(infoExecutionCourse.getSigla(),
-                            executionPeriod);
+                    .readByExecutionCourseInitialsAndExecutionPeriodId(infoExecutionCourse.getSigla(),
+                            infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
 
             // We assume it's the same execution period.
             IExecutionCourse someExecutionCourseAlreadyAssociatedWithExam = executionCourseDAO
-                    .readByExecutionCourseInitialsAndExecutionPeriod(((InfoExecutionCourse) infoViewExam
-                            .getInfoExecutionCourses().get(0)).getSigla(), executionPeriod);
+                    .readByExecutionCourseInitialsAndExecutionPeriodId(((InfoExecutionCourse) infoViewExam
+                            .getInfoExecutionCourses().get(0)).getSigla(), 
+                            infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
 
             // Obtain a mapped exam
             IExam examFromDBToBeAssociated = null;

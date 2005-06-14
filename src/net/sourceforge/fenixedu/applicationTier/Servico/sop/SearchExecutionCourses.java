@@ -71,8 +71,10 @@ public class SearchExecutionCourses implements IService {
             }
 
             List executionCourses = sp.getIPersistentExecutionCourse()
-                    .readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(executionPeriod,
-                            executionDegree, curricularYear, executionCourseName);
+                    .readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(executionPeriod.getIdInternal(),
+                            executionDegree.getDegreeCurricularPlan().getIdInternal(),
+                            curricularYear.getYear(),
+                            executionCourseName);
 
             result = (List) CollectionUtils.collect(executionCourses, new Transformer() {
 
