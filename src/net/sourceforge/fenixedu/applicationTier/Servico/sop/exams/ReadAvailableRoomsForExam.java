@@ -4,22 +4,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentRoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.DiaSemana;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
-
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -29,56 +22,47 @@ public class ReadAvailableRoomsForExam implements IService {
 
     public List run(IPeriod period, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek,
             IRoomOccupation roomOccupationToRemove, Integer normalCapacity, Integer frequency,
-            Integer weekOfStart, Boolean withLabs) throws FenixServiceException {
+            Integer weekOfStart, Boolean withLabs) throws ExcepcaoPersistencia {
 
-        Transformer TRANSFORM_TO_INFOROOM = new Transformer() {
-            public Object transform(Object input) {
-                return Cloner.copyRoom2InfoRoom((IRoom) input);
-            }
-        };
-
-        List availableRooms = null;
-
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentRoomOccupation persistentRoomOccupation = sp.getIPersistentRoomOccupation();
-            List roomOccupations = persistentRoomOccupation.readAll();
-
-            if (roomOccupationToRemove != null) {
-                roomOccupations.remove(roomOccupationToRemove);
-            }
-            List occupiedInfoRooms = new ArrayList();
-
-            for (int iterRO = 0; iterRO < roomOccupations.size(); iterRO++) {
-                IRoomOccupation roomOccupation = (IRoomOccupation) roomOccupations.get(iterRO);
-                boolean occupiedRO = roomOccupation.roomOccupationForDateAndTime(period, startTime,
-                        endTime, dayOfWeek, frequency, weekOfStart);
-
-                if (occupiedRO) {
-                    InfoRoom infoRoom = Cloner.copyRoom2InfoRoom(roomOccupation.getRoom());
-                    occupiedInfoRooms.add(infoRoom);
-                }
-
-            }
-
-            ISalaPersistente persistentRoom = sp.getISalaPersistente();
-            List rooms;
-            if (normalCapacity != null) {
-                rooms = persistentRoom.readByNormalCapacity(normalCapacity);
-            } else if (withLabs.booleanValue()) {
-                rooms = persistentRoom.readAll();
-            } else {
-                rooms = persistentRoom.readForRoomReservation();
-            }
-
-            List allInfoRooms = (List) CollectionUtils.collect(rooms, TRANSFORM_TO_INFOROOM);
-            availableRooms = (List) CollectionUtils.subtract(allInfoRooms, occupiedInfoRooms);
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+        final ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
+        final List<IRoom> rooms;
+        if (normalCapacity != null) {
+            rooms = persistentRoom.readByNormalCapacity(normalCapacity);
+        } else if (withLabs.booleanValue()) {
+            rooms = persistentRoom.readAll();
+        } else {
+            rooms = persistentRoom.readForRoomReservation();
         }
 
-        return availableRooms;
+        final List availableInfoRooms = new ArrayList();
+        for (final IRoom room : rooms) {
+            if (!isOccupied(room, period, startTime, endTime, dayOfWeek, frequency, weekOfStart)) {
+                availableInfoRooms.add(Cloner.copyRoom2InfoRoom(room));
+            }
+        }
+
+        if (roomOccupationToRemove != null
+                && roomOccupationToRemove.roomOccupationForDateAndTime(period, startTime, endTime,
+                        dayOfWeek, frequency, weekOfStart)) {
+            availableInfoRooms.add(Cloner.copyRoom2InfoRoom(roomOccupationToRemove.getRoom()));
+        }
+
+        return availableInfoRooms;
+    }
+
+    private boolean isOccupied(final IRoom room, final IPeriod period, final Calendar startTime,
+            final Calendar endTime, final DiaSemana dayOfWeek, Integer frequency, Integer weekOfStart) {
+        final List<IRoomOccupation> roomOccupations = room.getRoomOccupations();
+        for (final IRoomOccupation roomOccupation : roomOccupations) {
+            boolean isOccupied = roomOccupation.roomOccupationForDateAndTime(period, startTime, endTime,
+                    dayOfWeek, frequency, weekOfStart);
+            if (isOccupied) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

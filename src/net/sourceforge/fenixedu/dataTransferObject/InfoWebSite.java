@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.IWebSite;
+
 import org.apache.commons.collections.CollectionUtils;
 
 /**
@@ -62,5 +64,21 @@ public class InfoWebSite extends InfoObject {
      */
     public void setSections(List sections) {
         this.sections = sections;
+    }
+
+    public void copyFromDomain(final IWebSite webSite) {
+        super.copyFromDomain(webSite);
+        if (webSite != null) {
+            setName(webSite.getName());
+        }
+    }
+
+    public static InfoWebSite newInfoFromDomain(final IWebSite webSite) {
+        if (webSite != null) {
+            final InfoWebSite infoWebSite = new InfoWebSite();
+            infoWebSite.copyFromDomain(webSite);
+            return infoWebSite;
+        }
+        return null;
     }
 }
