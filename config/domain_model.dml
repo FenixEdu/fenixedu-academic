@@ -60,6 +60,7 @@ valueType net.sourceforge.fenixedu.util.ProposalState                           
 valueType net.sourceforge.fenixedu.domain.person.RoleType                                       as RoleType;
 valueType net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState                      as ReimbursementGuideState;
 valueType net.sourceforge.fenixedu.util.Season                                                  as Season;
+valueType net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason                         as SecretaryEnrolmentStudentReason; 
 valueType net.sourceforge.fenixedu.domain.credits.ServiceExemptionType                          as ServiceExemptionType;
 valueType net.sourceforge.fenixedu.util.SituationName                                           as SituationName;
 valueType net.sourceforge.fenixedu.domain.sms.SmsDeliveryType                                   as SmsDeliveryType; 
@@ -1912,11 +1913,7 @@ class net.sourceforge.fenixedu.domain.SchoolClassShift extends net.sourceforge.f
 class net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent extends net.sourceforge.fenixedu.domain.DomainObject {
     String reasonDescription;
     Integer keyStudent;
-
-    interface "
-    public abstract net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason getReasonType();
-    public abstract void setReasonType(net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason reasonType);
-    "
+    SecretaryEnrolmentStudentReason reasonType;
 }
 
 
