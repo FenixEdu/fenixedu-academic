@@ -62,6 +62,7 @@ valueType net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState      
 valueType net.sourceforge.fenixedu.util.Season                                                  as Season;
 valueType net.sourceforge.fenixedu.domain.credits.ServiceExemptionType                          as ServiceExemptionType;
 valueType net.sourceforge.fenixedu.util.SituationName                                           as SituationName;
+valueType net.sourceforge.fenixedu.domain.sms.SmsDeliveryType                                   as SmsDeliveryType; 
 valueType net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization                  as Specialization;
 valueType net.sourceforge.fenixedu.util.State                                                   as State;
 valueType net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState      as StudentCurricularPlanState;
@@ -1862,12 +1863,7 @@ class net.sourceforge.fenixedu.domain.sms.SentSms extends net.sourceforge.fenixe
 	Integer destinationNumber;
     Date deliveryDate;
     Date sendDate;
-
-	interface "
-	public net.sourceforge.fenixedu.domain.sms.SmsDeliveryType getDeliveryType();
-	    
-	public void setDeliveryType(net.sourceforge.fenixedu.domain.sms.SmsDeliveryType deliveryType);
-	"
+    SmsDeliveryType deliveryType;
 }
 
 
