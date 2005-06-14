@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.publication.IAttribute;
+import net.sourceforge.fenixedu.domain.publication.IPublicationType;
 import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -54,7 +55,7 @@ public class ReadRequiredAttributes implements IServico {
 
             IPersistentPublicationType persistentPublicationType = persistentSuport
                     .getIPersistentPublicationType();
-            PublicationType publicationType = (PublicationType) persistentPublicationType.readByOID(
+            IPublicationType publicationType = (IPublicationType) persistentPublicationType.readByOID(
                     PublicationType.class, new Integer(publicationTypeId));
 
             List requiredAttributeList = publicationType.getRequiredAttributes();

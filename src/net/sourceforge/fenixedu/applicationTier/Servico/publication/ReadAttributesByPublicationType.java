@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.publication.IAttribute;
+import net.sourceforge.fenixedu.domain.publication.IPublicationType;
 import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -33,7 +34,7 @@ public class ReadAttributesByPublicationType implements IService {
 
         IPersistentPublicationType persistentPublicationType = persistentSuport
                 .getIPersistentPublicationType();
-        PublicationType publicationType = (PublicationType) persistentPublicationType.readByOID(
+        IPublicationType publicationType = (IPublicationType) persistentPublicationType.readByOID(
                 PublicationType.class, new Integer(publicationTypeID));
 
         List requiredAttributes = publicationType.getRequiredAttributes();

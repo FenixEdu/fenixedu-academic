@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.publication.Author;
 import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
+import net.sourceforge.fenixedu.domain.publication.IPublicationAuthor;
 import net.sourceforge.fenixedu.domain.publication.PublicationAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -93,7 +94,7 @@ public class ReadAuthorPublications implements IServico {
             List<PublicationAuthor> publicationAuthors = (List<PublicationAuthor>) author.getAuthorPublications();
             publications = (List<IPublication>)CollectionUtils.collect(publicationAuthors,new Transformer() {
                 public Object transform(Object object) {
-                    PublicationAuthor publicationAuthor = (PublicationAuthor) object;
+                    IPublicationAuthor publicationAuthor = (IPublicationAuthor) object;
                     return publicationAuthor.getPublication();
                 }
             });
@@ -103,10 +104,11 @@ public class ReadAuthorPublications implements IServico {
             infoPublications = (List) CollectionUtils.collect(publications, new Transformer() {
                         public Object transform(Object o) {
                             IPublication publication = (IPublication) o;
-                            IPublication publication2 = publication;
-                            publication2.setPublicationString(publication.toString());
                             InfoPublication infoPublication = new InfoPublication();
-                            infoPublication.copyFromDomain(publication2);
+                            infoPublication.copyFromDomain(publication);
+                            if (publication != null) {
+                                infoPublication.setPublicationString(publication.toString());
+                            }
                             return infoPublication;
                         }
                     });

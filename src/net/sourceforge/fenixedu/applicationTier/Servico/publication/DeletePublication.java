@@ -40,18 +40,18 @@ public class DeletePublication implements IService {
             final IPublicationAuthor publicationAuthor = (IPublicationAuthor) iterator.next();
             publicationAuthor.setPublication(null);
             publicationAuthor.setAuthor(null);
-            publication.getPublicationAuthors().remove(publicationAuthor);
             persistentPublicationAuthor.deleteByOID(PublicationAuthor.class, publicationAuthor.getIdInternal());
         }
+        publicationAuthors.clear();
 
         final List publicationTeachers = publication.getPublicationTeachers();
         for (final Iterator iterator = publicationTeachers.iterator(); iterator.hasNext(); ) {
             final IPublicationTeacher publicationTeacher = (IPublicationTeacher) iterator.next();
             publicationTeacher.setPublication(null);
             publicationTeacher.setTeacher(null);
-            publication.getPublicationTeachers().remove(publicationTeacher);
             persistentPublicationAuthor.deleteByOID(PublicationTeacher.class, publicationTeacher.getIdInternal());
         }
+        publicationTeachers.clear();
         
 
 		persistentPublication.deleteByOID(Publication.class, publicationId);		

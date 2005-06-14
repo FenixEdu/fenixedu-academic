@@ -55,7 +55,7 @@ public class ReadPublicationSubtypes implements IServico {
 
             IPersistentPublicationType persistentPublicationType = persistentSuport
                     .getIPersistentPublicationType();
-            IPublicationType publicationType = (PublicationType) persistentPublicationType.readByOID(
+            IPublicationType publicationType = (IPublicationType) persistentPublicationType.readByOID(
                     PublicationType.class, new Integer(publicationTypeId));
 
             List publicationSubtypeList = publicationType.getSubtypes();
