@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico;
 
+import org.apache.slide.common.SlideException;
+
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.fileSuport.FileSuport;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
@@ -12,12 +14,11 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class CheckIsAliveService implements IService {
 
-    private static final String filename = "checkIsAlive";
-    private static final String filepath = "/" + filename;
+    private static final String SLIDE_CONTENT_FILENAME = "/EY43/EP81/EC39036/S4613/S4868/I6606/Conceitos.pdf";
 
-    public Boolean run() throws ExcepcaoPersistencia {
+    public Boolean run() throws ExcepcaoPersistencia, SlideException {
         checkFenixDatabaseOps();
-        //checkSlideDatabaseOps();
+        checkSlideDatabaseOps();
         return new Boolean(true);
     }
 
@@ -34,28 +35,14 @@ public class CheckIsAliveService implements IService {
         }
     }
 
-    synchronized private void checkSlideDatabaseOps() {
+    private void checkSlideDatabaseOps() throws SlideException {
         final IFileSuport fileSuport = FileSuport.getInstance();
 
-        boolean resultRead = false;
-        try {
-            fileSuport.beginTransaction();
-            final FileSuportObject fileSuportObject = fileSuport.retrieveFile(filepath);
-            resultRead = fileSuportObject != null;
-            fileSuport.commitTransaction();
-        } catch (Exception ex) {
-            resultRead = false;
-            try {
-                fileSuport.abortTransaction();
-            } catch (Exception ex2) {
-                // nothing else to do.
-            }
-        }
+        final FileSuportObject fileSuportObject = fileSuport.retrieveFile(SLIDE_CONTENT_FILENAME);
 
-        if (!resultRead) {
+        if (fileSuportObject == null) {
             throw new RuntimeException("Problems accesing slide database!");
         }
-
     }
 
 }
