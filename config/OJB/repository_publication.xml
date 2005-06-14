@@ -169,7 +169,7 @@
 	<collection-descriptor proxy="true"
 			name="authorPublications"
 			element-class-ref="net.sourceforge.fenixedu.domain.publication.PublicationAuthor"
-			 >
+			refresh="true" >
 		<inverse-foreignkey field-ref="keyAuthor"/>
 	</collection-descriptor>	
 
