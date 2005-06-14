@@ -56,146 +56,166 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  *         ServidorAplicacao.Servico.teacher
  */
 public class ReadSummaries implements IService {
-    
+
     public SiteView run(Integer executionCourseId, String summaryType, Integer shiftId,
             Integer professorShiftId) throws FenixServiceException, ExcepcaoPersistencia {
-        
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
-            .getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
-                    ExecutionCourse.class, executionCourseId);
-            if (executionCourse == null) {
-                throw new FenixServiceException("no.executionCourse");
-            }
-            
-            IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
+
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
+                .getIPersistentExecutionCourse();
+        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                ExecutionCourse.class, executionCourseId);
+        if (executionCourse == null) {
+            throw new FenixServiceException("no.executionCourse");
+        }
+
+        IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
         ISite site = persistentSite.readByExecutionCourse(executionCourseId);
-            if (site == null) {
-                throw new FenixServiceException("no.site");
-            }
-            
-            //execution courses's lesson types for display to filter summary
-            List lessonTypes = findLessonTypesExecutionCourse(executionCourse);
-            
-            //execution courses's shifts for display to filter summary
-            ITurnoPersistente persistentShift = persistentSuport.getITurnoPersistente();
+        if (site == null) {
+            throw new FenixServiceException("no.site");
+        }
+
+        // execution courses's lesson types for display to filter summary
+        List lessonTypes = findLessonTypesExecutionCourse(executionCourse);
+
+        // execution courses's shifts for display to filter summary
+        ITurnoPersistente persistentShift = persistentSuport.getITurnoPersistente();
         List shifts = persistentShift.readByExecutionCourse(executionCourse.getIdInternal());
-            List infoShifts = new ArrayList();
-            if (shifts != null && shifts.size() > 0) {
-                infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
-                    
-                    public Object transform(Object arg0) {
-                        final IShift turno = (IShift) arg0;
-                        final InfoShift infoShift = InfoShift.newInfoFromDomain(turno);
-                        infoShift.setInfoLessons(new ArrayList(turno.getAssociatedLessons().size()));
+        List infoShifts = new ArrayList();
+        if (shifts != null && shifts.size() > 0) {
+            infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
+
+                public Object transform(Object arg0) {
+                    final IShift turno = (IShift) arg0;
+                    final InfoShift infoShift = InfoShift.newInfoFromDomain(turno);
+                    infoShift.setInfoLessons(new ArrayList(turno.getAssociatedLessons().size()));
                     for (final Iterator iterator = turno.getAssociatedLessons().iterator(); iterator
                             .hasNext();) {
-                            final ILesson lesson = (ILesson) iterator.next();
-                            final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
-                            final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(lesson.getSala());
-                            infoLesson.setInfoSala(infoRoom);
-                            infoShift.getInfoLessons().add(infoLesson);
-                        }
-                        return infoShift;
+                        final ILesson lesson = (ILesson) iterator.next();
+                        final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
+                        final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(lesson.getSala());
+                        infoLesson.setInfoSala(infoRoom);
+                        infoShift.getInfoLessons().add(infoLesson);
                     }
-                });
-            }
-            
-            //execution courses's professorships for display to filter summary
-            IPersistentProfessorship persistentProfessorship = persistentSuport
-            .getIPersistentProfessorship();
-        List<IProfessorship> professorships = persistentProfessorship.readByExecutionCourse(executionCourseId);
-            List infoProfessorships = new ArrayList();
-            if (professorships != null && professorships.size() > 0) {
-                infoProfessorships = (List) CollectionUtils.collect(professorships, new Transformer() {
-                    
-                    public Object transform(Object arg0) {
-                        IProfessorship professorship = (IProfessorship) arg0;
-                        return InfoProfessorshipWithAll.newInfoFromDomain(professorship);
-                    }
-                });
-            }
-            
-            IPersistentSummary persistentSummary = persistentSuport.getIPersistentSummary();
-            List summaries = null;         
+                    return infoShift;
+                }
+            });
+        }
 
-        if (summaryType!= null && !summaryType.equals("0")) {
-            ShiftType sumaryType = ShiftType.valueOf(summaryType);       
-            List summariesBySummaryType = persistentSummary.readByExecutionCourseShiftsAndTypeLesson(
-                    executionCourseId, sumaryType);
-                
-                //read summary also by execution course key
-                //and add to the last list
-                List summariesByExecutionCourseBySummaryType = persistentSummary
-                    .readByExecutionCourseAndType(executionCourseId, sumaryType);
-                
-                summaries = allSummaries(summariesBySummaryType, summariesByExecutionCourseBySummaryType);
-            }
-          
-            if (shiftId != null && shiftId.intValue() > 0) {
-                IShift shiftSelected = (IShift) persistentShift.readByOID(Shift.class, shiftId);
-                if (shiftSelected == null) {
-                    throw new FenixServiceException("no.shift");
+        // execution courses's professorships for display to filter summary
+        IPersistentProfessorship persistentProfessorship = persistentSuport
+                .getIPersistentProfessorship();
+        List<IProfessorship> professorships = persistentProfessorship
+                .readByExecutionCourse(executionCourseId);
+        List infoProfessorships = new ArrayList();
+        if (professorships != null && professorships.size() > 0) {
+            infoProfessorships = (List) CollectionUtils.collect(professorships, new Transformer() {
+
+                public Object transform(Object arg0) {
+                    IProfessorship professorship = (IProfessorship) arg0;
+                    return InfoProfessorshipWithAll.newInfoFromDomain(professorship);
                 }
-                
-            List summariesByShift = persistentSummary.readByShift(executionCourseId, shiftSelected
-                    .getIdInternal());
-                
-                List summariesByExecutionCourseByShift = findLesson(persistentSummary, executionCourse,
-                        shiftSelected);
-                
-                if (summaries != null) {
-                    summaries = (List) CollectionUtils.intersection(summaries, allSummaries(
-                            summariesByShift, summariesByExecutionCourseByShift));
-                } else {
-                    summaries = allSummaries(summariesByShift, summariesByExecutionCourseByShift);
-                }
-            }
-            
-        summaries = readTeacherSummaries(executionCourseId, professorShiftId, persistentProfessorship, persistentSummary, summaries);
-                
-        summaries = readSummariesOfOtherTeachers(executionCourseId, professorShiftId, persistentSummary, summaries);        
-                
-        summaries = readSummariesOfOtherTeachersIfResponsible(executionCourseId, professorShiftId, persistentSuport, persistentSummary, summaries, professorships);
-                
-        if ((summaryType == null)
-                    && (shiftId == null || shiftId.intValue() == 0)
-                    && (professorShiftId == null || professorShiftId.intValue() == 0)) {
+            });
+        }
+
+        IPersistentSummary persistentSummary = persistentSuport.getIPersistentSummary();
+
+        List summaries = readSummariesByType(executionCourseId, summaryType, persistentSummary);
+
+        summaries = readSummariesByShift(executionCourseId, shiftId, executionCourse, persistentShift,
+                persistentSummary, summaries);
+
+        summaries = readTeacherSummaries(executionCourseId, professorShiftId, persistentProfessorship,
+                persistentSummary, summaries);
+
+        summaries = readSummariesOfOtherTeachers(executionCourseId, professorShiftId, persistentSummary,
+                summaries);
+
+        summaries = readSummariesOfOtherTeachersIfResponsible(executionCourseId, professorShiftId,
+                persistentSuport, persistentSummary, summaries, professorships, summaryType);
+
+        if ((summaryType == null || summaryType.equals("0")) && (shiftId == null || shiftId.intValue() == 0)
+                && (professorShiftId == null || professorShiftId.intValue() == 0)) {
             summaries = persistentSummary.readByExecutionCourseShifts(executionCourseId);
+
+            List summariesByExecutionCourse = persistentSummary.readByExecutionCourse(executionCourseId);           
             
-            List summariesByExecutionCourse = persistentSummary.readByExecutionCourse(executionCourseId);
-                
-                summaries = allSummaries(summaries, summariesByExecutionCourse);
+            summaries = allSummaries(summaries, summariesByExecutionCourse);
+        }
+
+        List result = new ArrayList();
+        if (summaries != null && summaries.size() > 0) {
+            Iterator iter = summaries.iterator();
+            while (iter.hasNext()) {
+                ISummary summary = (ISummary) iter.next();
+                InfoSummary infoSummary = InfoSummary.newInfoFromDomain(summary);
+                result.add(infoSummary);
             }
-            
-            List result = new ArrayList();
-            if (summaries != null && summaries.size() > 0) {
-                Iterator iter = summaries.iterator();
-                while (iter.hasNext()) {
-                    ISummary summary = (ISummary) iter.next();
-                    InfoSummary infoSummary = InfoSummary.newInfoFromDomain(summary);					
-                    result.add(infoSummary);
-                }
-            }
-            
-            InfoSiteSummaries bodyComponent = new InfoSiteSummaries();
-            bodyComponent.setInfoSummaries(result);
-            bodyComponent.setExecutionCourse((InfoExecutionCourse) Cloner.get(executionCourse));
-            bodyComponent.setLessonTypes(lessonTypes);
-            bodyComponent.setInfoShifts(infoShifts);
-            bodyComponent.setInfoProfessorships(infoProfessorships);
-            
-            TeacherAdministrationSiteComponentBuilder componentBuilder = TeacherAdministrationSiteComponentBuilder
-            .getInstance();
+        }
+
+        InfoSiteSummaries bodyComponent = new InfoSiteSummaries();
+        bodyComponent.setInfoSummaries(result);
+        bodyComponent.setExecutionCourse((InfoExecutionCourse) Cloner.get(executionCourse));
+        bodyComponent.setLessonTypes(lessonTypes);
+        bodyComponent.setInfoShifts(infoShifts);
+        bodyComponent.setInfoProfessorships(infoProfessorships);
+
+        TeacherAdministrationSiteComponentBuilder componentBuilder = TeacherAdministrationSiteComponentBuilder
+                .getInstance();
         ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null,
                 null, null);
-            SiteView siteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
-            
-            return siteView;
+        SiteView siteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
+
+        return siteView;
+    }
+
+    protected List readSummariesByShift(Integer executionCourseId, Integer shiftId,
+            IExecutionCourse executionCourse, ITurnoPersistente persistentShift,
+            IPersistentSummary persistentSummary, List summaries) throws ExcepcaoPersistencia,
+            FenixServiceException {
+        if (shiftId != null && shiftId.intValue() > 0) {
+            IShift shiftSelected = (IShift) persistentShift.readByOID(Shift.class, shiftId);
+            if (shiftSelected == null) {
+                throw new FenixServiceException("no.shift");
+            }
+
+            List summariesByShift = persistentSummary.readByShift(executionCourseId, shiftSelected
+                    .getIdInternal());
+
+            List summariesByExecutionCourseByShift = findLesson(persistentSummary, executionCourse,
+                    shiftSelected);
+
+            if (summaries != null) {
+                summaries = (List) CollectionUtils.intersection(summaries, allSummaries(
+                        summariesByShift, summariesByExecutionCourseByShift));
+            } else {
+                summaries = allSummaries(summariesByShift, summariesByExecutionCourseByShift);
+            }
         }
-    
-    protected List readTeacherSummaries(Integer executionCourseId, Integer professorShiftId, IPersistentProfessorship persistentProfessorship, IPersistentSummary persistentSummary, List summaries) throws ExcepcaoPersistencia, FenixServiceException {
+        return summaries;
+    }
+
+    protected List readSummariesByType(Integer executionCourseId, String summaryType,
+            IPersistentSummary persistentSummary) throws ExcepcaoPersistencia {
+        List summaries = null;
+        if (summaryType != null && !summaryType.equals("0")) {
+            ShiftType sumaryType = ShiftType.valueOf(summaryType);
+
+            List summariesBySummaryType = persistentSummary.readByExecutionCourseShiftsAndTypeLesson(
+                    executionCourseId, sumaryType);
+
+            List summariesByExecutionCourseBySummaryType = persistentSummary
+                    .readByExecutionCourseAndType(executionCourseId, sumaryType);
+
+            summaries = allSummaries(summariesBySummaryType, summariesByExecutionCourseBySummaryType);
+        }
+        return summaries;
+    }
+
+    protected List readTeacherSummaries(Integer executionCourseId, Integer professorShiftId,
+            IPersistentProfessorship persistentProfessorship, IPersistentSummary persistentSummary,
+            List summaries) throws ExcepcaoPersistencia, FenixServiceException {
+
         if (professorShiftId != null && professorShiftId.intValue() > 0) {
             IProfessorship professorshipSelected = (IProfessorship) persistentProfessorship.readByOID(
                     Professorship.class, professorShiftId);
@@ -216,27 +236,50 @@ public class ReadSummaries implements IService {
         return summaries;
     }
 
-    protected List readSummariesOfOtherTeachersIfResponsible(Integer executionCourseId, Integer professorShiftId, ISuportePersistente persistentSuport, IPersistentSummary persistentSummary, List summaries, List<IProfessorship> professorships) throws ExcepcaoPersistencia {
+    protected List readSummariesOfOtherTeachersIfResponsible(Integer executionCourseId,
+            Integer professorShiftId, ISuportePersistente persistentSuport,
+            IPersistentSummary persistentSummary, List summaries, List<IProfessorship> professorships, String summaryType)
+            throws ExcepcaoPersistencia {
+
         IProfessorship professorship = getProfessorship(professorShiftId, professorships);
-        
-        if((professorship != null) && (professorShiftId != null) && (professorShiftId.intValue() > 0)){
-            IPersistentResponsibleFor persistentResponsibleFor = persistentSuport.getIPersistentResponsibleFor();
-            IResponsibleFor responsibleFor = persistentResponsibleFor.readByTeacherAndExecutionCourse(professorship.getTeacher().getIdInternal(), executionCourseId);
-                    
-            if (responsibleFor != null) {            
-                List summariesByTeacher = persistentSummary.readByOtherTeachers(executionCourseId);
-    
-                if (summaries != null) {
-                    summaries = (List) CollectionUtils.union(summaries, summariesByTeacher);
-                } else {
-                    summaries = summariesByTeacher;
+
+        if ((professorship != null) && (professorShiftId != null) && (professorShiftId.intValue() > 0)) {
+            IPersistentResponsibleFor persistentResponsibleFor = persistentSuport
+                    .getIPersistentResponsibleFor();
+            IResponsibleFor responsibleFor = persistentResponsibleFor.readByTeacherAndExecutionCourse(
+                    professorship.getTeacher().getIdInternal(), executionCourseId);
+
+            if (responsibleFor != null) {
+                List<ISummary> summariesByTeacher = persistentSummary.readByOtherTeachers(executionCourseId);               
+
+                if (summaryType != null && !summaryType.equals("0")) {
+                    ShiftType sumaryType = ShiftType.valueOf(summaryType);
+                
+                    List summariesAux = new ArrayList();
+                    for(ISummary summary : summariesByTeacher){                    
+                        if(summary.getSummaryType().equals(sumaryType))
+                            summariesAux.add(summary);
+                    }
+                                           
+                    if (summaries != null) 
+                        summaries = (List) CollectionUtils.union(summaries, summariesAux);
+                    else 
+                        summaries = summariesAux;                    
+                }
+                else
+                {      
+                    if (summaries != null) 
+                        summaries = (List) CollectionUtils.union(summaries, summariesByTeacher);
+                    else 
+                        summaries = summariesByTeacher;                    
                 }
             }
         }
         return summaries;
     }
 
-    protected List readSummariesOfOtherTeachers(Integer executionCourseId, Integer professorShiftId, IPersistentSummary persistentSummary, List summaries) throws ExcepcaoPersistencia {
+    protected List readSummariesOfOtherTeachers(Integer executionCourseId, Integer professorShiftId,
+            IPersistentSummary persistentSummary, List summaries) throws ExcepcaoPersistencia {
         if (professorShiftId != null && professorShiftId.equals(new Integer(-1))) {
             List summariesByTeacher = persistentSummary.readByOtherTeachers(executionCourseId);
 
@@ -249,10 +292,11 @@ public class ReadSummaries implements IService {
         return summaries;
     }
 
-    protected IProfessorship getProfessorship(Integer professorShiftId, List<IProfessorship> professorships) {
+    protected IProfessorship getProfessorship(Integer professorShiftId,
+            List<IProfessorship> professorships) {
         IProfessorship professorship = null;
-        for(IProfessorship professorship2 : professorships){
-            if(professorship2.getIdInternal().equals(professorShiftId)){
+        for (IProfessorship professorship2 : professorships) {
+            if (professorship2.getIdInternal().equals(professorShiftId)) {
                 professorship = professorship2;
                 break;
             }
@@ -262,69 +306,69 @@ public class ReadSummaries implements IService {
 
     private List findLesson(IPersistentSummary persistentSummary, IExecutionCourse executionCourse,
             IShift shift) throws ExcepcaoPersistencia {
-        
+
         List summariesByExecutionCourse = persistentSummary.readByExecutionCourse(executionCourse
                 .getIdInternal());
-        
-        //copy the list
+
+        // copy the list
         List summariesByShift = new ArrayList();
         summariesByShift.addAll(summariesByExecutionCourse);
-        
+
         if (summariesByExecutionCourse != null && summariesByExecutionCourse.size() > 0) {
             ListIterator iterator = summariesByExecutionCourse.listIterator();
             while (iterator.hasNext()) {
                 ISummary summary = (ISummary) iterator.next();
-                
+
                 Calendar dateAndHourSummary = Calendar.getInstance();
-                
+
                 Calendar summaryDate = Calendar.getInstance();
                 summaryDate.setTime(summary.getSummaryDate());
-                
+
                 Calendar summaryHour = Calendar.getInstance();
                 summaryHour.setTime(summary.getSummaryHour());
-                
+
                 dateAndHourSummary.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
                 dateAndHourSummary.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
                 dateAndHourSummary.set(Calendar.YEAR, summaryDate.get(Calendar.YEAR));
                 dateAndHourSummary.set(Calendar.HOUR_OF_DAY, summaryHour.get(Calendar.HOUR_OF_DAY));
                 dateAndHourSummary.set(Calendar.MINUTE, summaryHour.get(Calendar.MINUTE));
                 dateAndHourSummary.set(Calendar.SECOND, 00);
-                
+
                 Calendar beginLesson = Calendar.getInstance();
                 beginLesson.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
                 beginLesson.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
                 beginLesson.set(Calendar.YEAR, summaryDate.get(Calendar.YEAR));
-                
+
                 Calendar endLesson = Calendar.getInstance();
                 endLesson.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
                 endLesson.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
                 endLesson.set(Calendar.YEAR, summaryDate.get(Calendar.YEAR));
-                
+
                 boolean removeSummary = true;
                 if (shift.getAssociatedLessons() != null && shift.getAssociatedLessons().size() > 0) {
                     ListIterator iterLesson = shift.getAssociatedLessons().listIterator();
                     while (iterLesson.hasNext()) {
                         ILesson lesson = (ILesson) iterLesson.next();
-                        
+
                         beginLesson.set(Calendar.HOUR_OF_DAY, lesson.getInicio().get(
                                 Calendar.HOUR_OF_DAY));
                         beginLesson.set(Calendar.MINUTE, lesson.getInicio().get(Calendar.MINUTE));
                         beginLesson.set(Calendar.SECOND, 00);
-                        
+
                         endLesson.set(Calendar.HOUR_OF_DAY, lesson.getFim().get(Calendar.HOUR_OF_DAY));
                         endLesson.set(Calendar.MINUTE, lesson.getFim().get(Calendar.MINUTE));
                         endLesson.set(Calendar.SECOND, 00);
-                        
+
                         if (summary.getSummaryType().equals(shift.getTipo())
                                 && dateAndHourSummary.get(Calendar.DAY_OF_WEEK) == lesson.getDiaSemana()
-                                .getDiaSemana().intValue()
+                                        .getDiaSemana().intValue()
                                 && !beginLesson.after(dateAndHourSummary)
                                 && endLesson.after(dateAndHourSummary)) {
                             removeSummary = false;
                         }
                     }
                 }
-                
+
                 if (removeSummary) {
                     summariesByShift.remove(summary);
                 }
@@ -332,36 +376,36 @@ public class ReadSummaries implements IService {
         }
         return summariesByShift;
     }
-    
+
     private List allSummaries(List summaries, List summariesByExecutionCourse) {
         List allSummaries = new ArrayList();
-        
+
         if (summaries == null || summaries.size() <= 0) {
             if (summariesByExecutionCourse == null) {
                 return new ArrayList();
             }
             return summariesByExecutionCourse;
         }
-        
+
         if (summariesByExecutionCourse == null || summariesByExecutionCourse.size() <= 0) {
             return summaries;
         }
-        
+
         List intersection = (List) CollectionUtils.intersection(summaries, summariesByExecutionCourse);
-        
+
         allSummaries.addAll(CollectionUtils.disjunction(summaries, intersection));
         allSummaries.addAll(CollectionUtils.disjunction(summariesByExecutionCourse, intersection));
         allSummaries.addAll(intersection);
-        
+
         if (allSummaries == null) {
             return new ArrayList();
         }
         return allSummaries;
     }
-    
+
     private List findLessonTypesExecutionCourse(IExecutionCourse executionCourse) {
         List lessonTypes = new ArrayList();
-        
+
         if (executionCourse.getTheoreticalHours() != null
                 && executionCourse.getTheoreticalHours().intValue() > 0) {
             lessonTypes.add(ShiftType.TEORICA);
@@ -377,7 +421,7 @@ public class ReadSummaries implements IService {
         if (executionCourse.getLabHours() != null && executionCourse.getLabHours().intValue() > 0) {
             lessonTypes.add(ShiftType.LABORATORIAL);
         }
-        
+
         return lessonTypes;
     }
 }
