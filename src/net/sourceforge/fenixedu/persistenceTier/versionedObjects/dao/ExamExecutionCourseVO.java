@@ -34,10 +34,15 @@ public class ExamExecutionCourseVO extends VersionedObjectsBase implements
                     && executionCourse.getExecutionPeriod().getExecutionYear().getYear().equals(year)) {
                 List<IExam> exams = executionCourse.getAssociatedExams();
                 for (IExam exam : exams) {
-                    List<IExamExecutionCourse> examExecutionCourses = exam.getExamExecutionCourses();
-                    for (IExamExecutionCourse examExecutionCourse : examExecutionCourses) {
-                        result.add(examExecutionCourse);
-                    }
+                    //if(exam != null){
+                       List<IExamExecutionCourse> examExecutionCourses = exam.getExamExecutionCourses();
+                       //if(examExecutionCourses != null){
+                           for (IExamExecutionCourse examExecutionCourse : examExecutionCourses) {
+                               result.add(examExecutionCourse);
+                          }
+                       //}
+                       
+                    //}
                 }
             }
         }
