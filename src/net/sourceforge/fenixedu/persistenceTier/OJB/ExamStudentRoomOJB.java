@@ -30,7 +30,7 @@ public class ExamStudentRoomOJB extends PersistentObjectOJB implements IPersiste
     public List readByStudentOID(Integer studentOID) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyStudent", studentOID);
-        return queryList(ExamStudentRoom.class, criteria);
+        return queryList(ExamStudentRoom.class, criteria, true);
     }
 
     public IExamStudentRoom readBy(Integer examOID, Integer studentOID) throws ExcepcaoPersistencia {
