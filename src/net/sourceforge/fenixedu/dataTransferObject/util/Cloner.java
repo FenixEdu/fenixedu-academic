@@ -2943,7 +2943,7 @@ public abstract class Cloner {
         Iterator iter = workLocations.iterator();
 
         while (iter.hasNext()) {
-            WorkLocation workLocation = (WorkLocation) iter.next();
+            IWorkLocation workLocation = (IWorkLocation) iter.next();
             InfoWorkLocation infoWorkLocation = Cloner.copyIWorkLocation2InfoWorkLocation(workLocation);
             listInfoWorkLocations.add(infoWorkLocation);
         }
