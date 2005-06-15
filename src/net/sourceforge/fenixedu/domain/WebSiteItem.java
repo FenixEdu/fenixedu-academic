@@ -10,19 +10,6 @@ public class WebSiteItem extends WebSiteItem_Base {
     private Timestamp creationDate;
 
     /**
-     * Construtor
-     */
-    public WebSiteItem() {
-    }
-
-    /**
-     * Construtor
-     */
-    public WebSiteItem(Integer idInternal) {
-        setIdInternal(idInternal);
-    }
-
-    /**
      * @return
      */
     public Timestamp getCreationDate() {
@@ -35,7 +22,28 @@ public class WebSiteItem extends WebSiteItem_Base {
     public void setCreationDate(Timestamp creationDate) {
         this.creationDate = creationDate;
     }
-    
+
+    public String toString() {
+        String result = "[WEBSITEITEM";
+        result += ", codInt=" + this.getIdInternal();
+        result += ", title=" + this.getTitle();
+        result += ", mainEntryText=" + this.getMainEntryText();
+        result += ", excerpt=" + this.getExcerpt();
+        result += ", published=" + this.getPublished();
+        result += ", creationDate=" + this.getCreationDate();
+        result += ", keywords=" + this.getKeywords();
+        result += ", onlineBeginDay=" + this.getOnlineBeginDay();
+        result += ", onlineEndDay=" + this.getOnlineEndDay();
+        result += ", itemBeginDay=" + this.getItemBeginDay();
+        result += ", itemEndDay=" + this.getItemEndDay();
+        result += ", webSiteSection=" + this.getWebSiteSection();
+        result += ", editor=" + this.getEditor();
+        result += ", authorName=" + this.getAuthorName();
+        result += ", authorEmail=" + this.getAuthorEmail();
+        result += "]";
+        return result;
+    }
+
     public boolean equals(Object arg0) {
         boolean result = false;
         if (arg0 instanceof IWebSiteItem) {
@@ -67,27 +75,6 @@ public class WebSiteItem extends WebSiteItem_Base {
                 || (element1 != null && element2 != null && element1.equals(element2))) {
             result = true;
         }
-        return result;
-    }
-
-    public String toString() {
-        String result = "[WEBSITEITEM";
-        result += ", codInt=" + this.getIdInternal();
-        result += ", title=" + this.getTitle();
-        result += ", mainEntryText=" + this.getMainEntryText();
-        result += ", excerpt=" + this.getExcerpt();
-        result += ", published=" + this.getPublished();
-        result += ", creationDate=" + this.getCreationDate();
-        result += ", keywords=" + this.getKeywords();
-        result += ", onlineBeginDay=" + this.getOnlineBeginDay();
-        result += ", onlineEndDay=" + this.getOnlineEndDay();
-        result += ", itemBeginDay=" + this.getItemBeginDay();
-        result += ", itemEndDay=" + this.getItemEndDay();
-        result += ", webSiteSection=" + this.getWebSiteSection();
-        result += ", editor=" + this.getEditor();
-        result += ", authorName=" + this.getAuthorName();
-        result += ", authorEmail=" + this.getAuthorEmail();
-        result += "]";
         return result;
     }
 

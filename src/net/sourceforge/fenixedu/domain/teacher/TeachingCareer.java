@@ -11,13 +11,6 @@ package net.sourceforge.fenixedu.domain.teacher;
  */
 public class TeachingCareer extends TeachingCareer_Base {
 
-    public TeachingCareer() {
-    }
-
-    public TeachingCareer(Integer idInternal) {
-        setIdInternal(idInternal);
-    }
-
     public String toString() {
         String result = "[Dominio.teacher.TeachingCareer ";
         result += ", beginYear=" + getBeginYear();

@@ -12,12 +12,20 @@ public class WebSite extends WebSite_Base {
         setOjbConcreteClass(this.getClass().getName());
     }
 
-    public WebSite(Integer idInternal) {
-        setMail("");
-        setStyle("");
-        setIdInternal(idInternal);
+    /**
+     * @see java.lang.Object#toString()
+     */
+    public String toString() {
+        String result = "[WEBSITE";
+        result += ", codInt=" + getIdInternal();
+        result += ", name=" + getName();
+        result += ", mail =" + getMail();
+        result += ", style=" + getStyle();
+        result += ", ojbConcreteClass=" + getOjbConcreteClass();
+        result += "]";
+        return result;
     }
-
+    
     /**
      * @see java.lang.Object#equals(java.lang.Object)
      */
@@ -36,20 +44,6 @@ public class WebSite extends WebSite_Base {
                 result = true;
             }
         }
-        return result;
-    }
-
-    /**
-     * @see java.lang.Object#toString()
-     */
-    public String toString() {
-        String result = "[WEBSITE";
-        result += ", codInt=" + getIdInternal();
-        result += ", name=" + getName();
-        result += ", mail =" + getMail();
-        result += ", style=" + getStyle();
-        result += ", ojbConcreteClass=" + getOjbConcreteClass();
-        result += "]";
         return result;
     }
 

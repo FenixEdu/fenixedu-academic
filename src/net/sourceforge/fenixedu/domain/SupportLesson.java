@@ -15,13 +15,6 @@ import org.apache.ojb.broker.PersistenceBrokerException;
 public class SupportLesson extends SupportLesson_Base implements PersistenceBrokerAware,
         ICreditsEventOriginator {
 
-    public SupportLesson() {
-    }
-
-    public SupportLesson(Integer idInternal) {
-        this.setIdInternal(idInternal);
-    }
-
     public boolean equals(Object arg0) {
         boolean result = false;
         if (arg0 instanceof ISupportLesson) {

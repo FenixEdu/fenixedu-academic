@@ -24,13 +24,6 @@ public class TestQuestion extends DomainObject implements ITestQuestion {
 
     private CorrectionFormula formula;
 
-    public TestQuestion() {
-    }
-
-    public TestQuestion(Integer testId) {
-        setIdInternal(testId);
-    }
-
     public Integer getKeyQuestion() {
         return keyQuestion;
     }
@@ -86,4 +79,5 @@ public class TestQuestion extends DomainObject implements ITestQuestion {
     public void setCorrectionFormula(CorrectionFormula formula) {
         this.formula = formula;
     }
+
 }

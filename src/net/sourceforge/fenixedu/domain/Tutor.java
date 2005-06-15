@@ -6,18 +6,8 @@ package net.sourceforge.fenixedu.domain;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class Tutor extends Tutor_Base {
-
-    public Tutor() {
-    }
-
-    /**
-     * @param idInternal
-     */
-    public Tutor(Integer idInternal) {
-        setIdInternal(idInternal);
-    }
 
 }

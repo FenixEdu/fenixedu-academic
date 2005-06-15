@@ -24,13 +24,6 @@ public class Test extends DomainObject implements ITest {
 
     private Integer keyTestScope;
 
-    public Test() {
-    }
-
-    public Test(Integer testId) {
-        setIdInternal(testId);
-    }
-
     public ITestScope getTestScope() {
         return testScope;
     }
@@ -86,4 +79,5 @@ public class Test extends DomainObject implements ITest {
     public void setInformation(String string) {
         information = string;
     }
+
 }

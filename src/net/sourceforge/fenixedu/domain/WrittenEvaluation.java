@@ -10,7 +10,6 @@ import java.util.Calendar;
  * @author Ana e Ricardo
  */
 public class WrittenEvaluation extends WrittenEvaluation_Base {
-
     protected Calendar day;
 
     protected Calendar beginning;
@@ -24,34 +23,6 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     protected Calendar enrollmentEndDay;
 
     protected Calendar enrollmentEndTime;
-
-    public WrittenEvaluation() {
-    }
-
-    public WrittenEvaluation(Integer idInternal) {
-        setIdInternal(idInternal);
-    }
-
-    public WrittenEvaluation(Calendar day, Calendar beginning, Calendar end) {
-        this.setDay(day);
-        this.setBeginning(beginning);
-        this.setEnd(end);
-    }
-
-    public boolean equals(Object obj) {
-        if (obj instanceof IWrittenEvaluation) {
-            IWrittenEvaluation writtenEvaluationObj = (IWrittenEvaluation) obj;
-            return this.getIdInternal().equals(writtenEvaluationObj.getIdInternal());
-        }
-
-        return false;
-    }
-
-    public String toString() {
-        return "[WRITTEN EVALUATION:" + " id= '" + this.getIdInternal() + "'\n" + " day= '"
-                + this.getDay() + "'\n" + " beginning= '" + this.getBeginning() + "'\n" + " end= '"
-                + this.getEnd() + "'\n" + "";
-    }
 
     /**
      * @return
@@ -149,6 +120,21 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
      */
     public void setEnrollmentEndTime(Calendar calendar) {
         enrollmentEndTime = calendar;
+    }
+
+    public String toString() {
+        return "[WRITTEN EVALUATION:" + " id= '" + this.getIdInternal() + "'\n" + " day= '"
+                + this.getDay() + "'\n" + " beginning= '" + this.getBeginning() + "'\n" + " end= '"
+                + this.getEnd() + "'\n" + "";
+    }
+
+    public boolean equals(Object obj) {
+        if (obj instanceof IWrittenEvaluation) {
+            IWrittenEvaluation writtenEvaluationObj = (IWrittenEvaluation) obj;
+            return this.getIdInternal().equals(writtenEvaluationObj.getIdInternal());
+        }
+
+        return false;
     }
 
 }

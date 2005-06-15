@@ -79,8 +79,8 @@ public class DeleteExercise implements IService {
     private void removeTestQuestionFromTest(ISuportePersistente persistentSuport,
             ITestQuestion testQuestion) throws ExcepcaoPersistencia {
         IPersistentTestQuestion persistentTestQuestion = persistentSuport.getIPersistentTestQuestion();
-        ITest test = new Test(testQuestion.getKeyTest());
-        test = (ITest) persistentSuport.getIPersistentTest().readByOID(Test.class,
+
+        ITest test = (ITest) persistentSuport.getIPersistentTest().readByOID(Test.class,
                 testQuestion.getKeyTest(), true);
         if (test == null)
             throw new ExcepcaoPersistencia();
