@@ -16,7 +16,6 @@ import java.util.Map;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteSection;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IWebSiteItem;
 import net.sourceforge.fenixedu.domain.IWebSiteSection;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
@@ -66,19 +65,17 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
 
                 List webSiteItems = persistentWebSiteItem
                         .readPublishedWebSiteItemsByWebSiteSection(webSiteSection);
+                final InfoWebSiteSection infoWebSiteSection = InfoWebSiteSection.newInfoFromDomain(webSiteSection);
                 List infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
 
                     public Object transform(Object arg0) {
                         IWebSiteItem webSiteItem = (IWebSiteItem) arg0;
-                        InfoWebSiteItem infoWebSiteItem = Cloner
-                                .copyIWebSiteItem2InfoWebSiteItem(webSiteItem);
-
+                        InfoWebSiteItem infoWebSiteItem = InfoWebSiteItem.newInfoFromDomain(webSiteItem);
+                        infoWebSiteItem.setInfoWebSiteSection(infoWebSiteSection);
                         return infoWebSiteItem;
                     }
                 });
 
-                InfoWebSiteSection infoWebSiteSection = Cloner
-                        .copyIWebSiteSection2InfoWebSiteSection(webSiteSection);
                 infoWebSiteSection.setInfoItemsList(infoWebSiteItems);
 
                 BeanComparator beanComparator = getBeanComparator(infoWebSiteSection);
@@ -163,7 +160,7 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
                     Ftp.enviarFicheiroScp("/IstFtpServerConfig.properties", excerpts.getName(),
                             infoWebSiteSection.getFtpName() + "/");
                 } catch (IOException e1) {
-                    throw new FenixServiceException();
+                    throw new FenixServiceException(e1);
                 }
                 // delete created file
                 excerpts.delete();

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -13,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentSiteExams;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
-import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExam;
@@ -27,94 +27,96 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+import org.apache.ojb.broker.core.proxy.ProxyHelper;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author João Mota
- *  
+ * 
  */
 
 public class ReadExamsByStudent implements IService {
 
-    public Object run(String username) {
+    public Object run(String username) throws ExcepcaoPersistencia {
 
         List examsToEnroll = new ArrayList();
 
         List infoExamsToEnroll = new ArrayList();
         List infoExamStudentRoomList = new ArrayList();
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExamStudentRoom examStudentRoomDAO = sp.getIPersistentExamStudentRoom();
-            IStudent student = sp.getIPersistentStudent().readByUsername(username);
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExamStudentRoom examStudentRoomDAO = sp.getIPersistentExamStudentRoom();
+        IStudent student = sp.getIPersistentStudent().readByUsername(username);
 
-            if (student != null) {
-                List examsStudentRooms = examStudentRoomDAO.readByStudentOID(student.getIdInternal());
-                Iterator iter = examsStudentRooms.iterator();
-                List examsEnrolled = new ArrayList();
+        if (student != null) {
+            List examsStudentRooms = examStudentRoomDAO.readByStudentOID(student.getIdInternal());
+            Iterator iter = examsStudentRooms.iterator();
+            List examsEnrolled = new ArrayList();
 
-                while (iter.hasNext()) {
-                    IExamStudentRoom examStudentRoom = (IExamStudentRoom) iter.next();
+            while (iter.hasNext()) {
+                IExamStudentRoom examStudentRoom = (IExamStudentRoom) iter.next();
 
-                    InfoExamStudentRoom infoExamStudentRoom = new InfoExamStudentRoom();
-                    infoExamStudentRoom.setIdInternal(examStudentRoom.getIdInternal());
-                    InfoExam infoExam = InfoExam.newInfoFromDomain(examStudentRoom.getExam());
-                    infoExamStudentRoom.setInfoExam(infoExam);
-                    infoExamStudentRoom.getInfoExam().setInfoExecutionCourses(
-                            (List) CollectionUtils.collect(examStudentRoom.getExam()
-                                    .getAssociatedExecutionCourses(), new Transformer() {
+                InfoExamStudentRoom infoExamStudentRoom = new InfoExamStudentRoom();
+                infoExamStudentRoom.setIdInternal(examStudentRoom.getIdInternal());
+                InfoExam infoExam = InfoExam.newInfoFromDomain(examStudentRoom.getExam());
+                infoExamStudentRoom.setInfoExam(infoExam);
+                infoExamStudentRoom.getInfoExam().setInfoExecutionCourses(
+                        (List) CollectionUtils.collect(examStudentRoom.getExam()
+                                .getAssociatedExecutionCourses(), new Transformer() {
 
-                                public Object transform(Object arg0) {
-                                    return InfoExecutionCourse.newInfoFromDomain((IExecutionCourse) arg0);
-                                }
-                            }));
-                    InfoStudent infoStudent = InfoStudent.newInfoFromDomain(examStudentRoom.getStudent());
-                    infoExamStudentRoom.setInfoStudent(infoStudent);
-                    if (examStudentRoom.getRoom() != null) {
-                        InfoRoom infoRoom = InfoRoom.newInfoFromDomain(examStudentRoom.getRoom());
-                        infoExamStudentRoom.setInfoRoom(infoRoom);
-                    }
-                    infoExamStudentRoomList.add(infoExamStudentRoom);
-                    examsEnrolled.add(examStudentRoom.getExam());
+                            public Object transform(Object arg0) {
+                                return InfoExecutionCourse.newInfoFromDomain((IExecutionCourse) arg0);
+                            }
+                        }));
+                InfoStudent infoStudent = InfoStudent.newInfoFromDomain(examStudentRoom.getStudent());
+                infoExamStudentRoom.setInfoStudent(infoStudent);
+                if (examStudentRoom.getRoom() != null) {
+                    InfoRoom infoRoom = InfoRoom.newInfoFromDomain(examStudentRoom.getRoom());
+                    infoExamStudentRoom.setInfoRoom(infoRoom);
                 }
-
-                List attends = sp.getIFrequentaPersistente().readByStudentNumber(student.getNumber(), student.getDegreeType());
-
-                Iterator examsToEnrollIterator = attends.iterator();
-                while (examsToEnrollIterator.hasNext()) {
-                    examsToEnroll.addAll(((IAttends) examsToEnrollIterator.next())
-                            .getDisciplinaExecucao().getAssociatedExams());
-                }
-
-                CollectionUtils.filter(examsToEnroll, new ExamsNotEnrolledPredicate(examsEnrolled));
-
-                Iterator iter3 = examsToEnroll.iterator();
-                while (iter3.hasNext()) {
-
-                    IEvaluation evaluation = (IEvaluation) iter3.next();
-                    if (evaluation instanceof Exam) {
-                        IExam exam = (IExam) evaluation;
-
-                        if (isInDate(exam)) {
-                            InfoExam infoExam = InfoExam.newInfoFromDomain(exam);
-                            infoExam.setInfoExecutionCourses((List) CollectionUtils.collect(exam
-                                    .getAssociatedExecutionCourses(), new Transformer() {
-
-                                public Object transform(Object arg0) {
-                                    return InfoExecutionCourse.newInfoFromDomain((IExecutionCourse) arg0);
-                                }
-                            }));
-
-                            infoExamsToEnroll.add(infoExam);
-                        }
-                    }
-                }
-
+                infoExamStudentRoomList.add(infoExamStudentRoom);
+                examsEnrolled.add(examStudentRoom.getExam());
             }
 
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
+            List attends = sp.getIFrequentaPersistente().readByStudentNumber(student.getNumber(),
+                    student.getDegreeType());
+
+            Iterator examsToEnrollIterator = attends.iterator();
+            while (examsToEnrollIterator.hasNext()) {
+                examsToEnroll.addAll(((IAttends) examsToEnrollIterator.next()).getDisciplinaExecucao()
+                        .getAssociatedExams());
+            }
+
+            CollectionUtils.filter(examsToEnroll, new ExamsNotEnrolledPredicate(examsEnrolled));
+
+            Iterator iter3 = examsToEnroll.iterator();
+            while (iter3.hasNext()) {
+
+                IEvaluation evaluation = (IEvaluation) iter3.next();
+
+                if (evaluation instanceof Proxy) {
+                    evaluation = (IEvaluation) ProxyHelper.getRealObject(evaluation);
+                }
+
+                if (evaluation instanceof IExam) {
+                    IExam exam = (IExam) evaluation;
+
+                    if (isInDate(exam)) {
+                        InfoExam infoExam = InfoExam.newInfoFromDomain(exam);
+                        infoExam.setInfoExecutionCourses((List) CollectionUtils.collect(exam
+                                .getAssociatedExecutionCourses(), new Transformer() {
+
+                            public Object transform(Object arg0) {
+                                return InfoExecutionCourse.newInfoFromDomain((IExecutionCourse) arg0);
+                            }
+                        }));
+
+                        infoExamsToEnroll.add(infoExam);
+                    }
+                }
+            }
+
         }
 
         InfoStudentSiteExams component = new InfoStudentSiteExams(infoExamsToEnroll,

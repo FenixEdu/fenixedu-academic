@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorized
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExamStudentRoom;
 import net.sourceforge.fenixedu.domain.IExam;
+import net.sourceforge.fenixedu.domain.IExamStudentRoom;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
@@ -40,18 +41,16 @@ public class UnEnrollStudentInExam implements IService {
             }
 
             IPersistentExamStudentRoom persistentExamStudentRoom = sp.getIPersistentExamStudentRoom();
-            ExamStudentRoom examStudentRoom = (ExamStudentRoom) persistentExamStudentRoom.readBy(exam
+            IExamStudentRoom examStudentRoom = persistentExamStudentRoom.readBy(exam
                     .getIdInternal(), student.getIdInternal());
             if (examStudentRoom != null) {
                 if (examStudentRoom.getRoom() != null) {
                     throw new notAuthorizedServiceDeleteException();
                 }
                 examStudentRoom.getExam().getExamStudentRooms().remove(examStudentRoom);
-                examStudentRoom.getRoom().getExamStudentRooms().remove(examStudentRoom);
                 examStudentRoom.getStudent().getExamStudentRooms().remove(examStudentRoom);
                 
                 examStudentRoom.setExam(null);
-                examStudentRoom.setRoom(null);
                 examStudentRoom.setStudent(null);
                 
                 sp.getIPersistentExamStudentRoom().deleteByOID(ExamStudentRoom.class,

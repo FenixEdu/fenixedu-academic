@@ -326,8 +326,16 @@ public class InfoWebSiteItem extends InfoObject {
             setExcerpt(webSiteItem.getExcerpt());
             //setInfoEditor();
             //setInfoWebSiteSection();
-            //setItemBeginDayCalendar();
-            //setItemEndDayCalendar();
+            if (webSiteItem.getItemBeginDay() != null) {
+                Calendar calendarBegin = Calendar.getInstance();
+                calendarBegin.setTime(webSiteItem.getItemBeginDay());
+                setItemBeginDayCalendar(calendarBegin);
+            }
+            if (webSiteItem.getItemEndDay() != null) {
+                Calendar calendarEnd = Calendar.getInstance();
+                calendarEnd.setTime(webSiteItem.getItemEndDay());            
+                setItemEndDayCalendar(calendarEnd);
+            }
             setKeywords(webSiteItem.getKeywords());
             setMainEntryText(webSiteItem.getMainEntryText());
             setOnlineBeginDay(webSiteItem.getOnlineBeginDay());

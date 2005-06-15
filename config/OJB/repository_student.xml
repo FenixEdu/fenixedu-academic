@@ -132,4 +132,11 @@
 			element-class-ref="net.sourceforge.fenixedu.domain.Attends">
 		<inverse-foreignkey field-ref="chaveAluno"/>
 	</collection-descriptor>
+	<collection-descriptor proxy="true"
+			name="examStudentRooms"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExamStudentRoom"
+			
+			>
+		<inverse-foreignkey field-ref="keyStudent"/>
+	</collection-descriptor>
 </class-descriptor>

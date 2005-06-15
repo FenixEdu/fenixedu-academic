@@ -52,7 +52,7 @@ public class ReadStudentsEnrolledInExam implements IService {
                 new Transformer() {
 
                     public Object transform(Object input) {
-                        ExamStudentRoom examStudentRoom = (ExamStudentRoom) input;
+                        IExamStudentRoom examStudentRoom = (IExamStudentRoom) input;
 
                         return InfoExamStudentRoomWithInfoStudentAndInfoRoom
                                 .newInfoFromDomain(examStudentRoom);
