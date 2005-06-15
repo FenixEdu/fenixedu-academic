@@ -44,8 +44,7 @@ public class AddCoordinator implements IService {
                 throw new NonExistingServiceException();
             }
             IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-            IExecutionDegree executionDegree = new ExecutionDegree(executionDegreeId);
-            executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(ExecutionDegree.class,
+            IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(ExecutionDegree.class,
                     executionDegreeId);
             if (executionDegree == null) {
                 throw new InvalidArgumentsServiceException();
