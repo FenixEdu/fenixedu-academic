@@ -131,7 +131,8 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
             InfoCountry nationality = new InfoCountry();
             nationality.setNationality((String) changeApplicationInfoForm.get("nationality"));
 
-            infoPerson.setTipoDocumentoIdentificacao(IDDocumentType.valueOf((String) changeApplicationInfoForm.get("identificationDocumentType")));
+            infoPerson.setTipoDocumentoIdentificacao(IDDocumentType
+                    .valueOf((String) changeApplicationInfoForm.get("identificationDocumentType")));
             infoPerson.setNumeroDocumentoIdentificacao((String) changeApplicationInfoForm
                     .get("identificationDocumentNumber"));
             infoPerson.setLocalEmissaoDocumentoIdentificacao((String) changeApplicationInfoForm
@@ -257,10 +258,14 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
             }
 
             request.setAttribute(SessionConstants.NATIONALITY_LIST_KEY, nationalityList);
-            //request.setAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY, Arrays.asList(MaritalStatus.values()));
-            /*request.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY,
-                    TipoDocumentoIdentificacao.toArrayList());*/
-            request.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request.getAttribute(Globals.LOCALE_KEY)));
+            // request.setAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY,
+            // Arrays.asList(MaritalStatus.values()));
+            /*
+             * request.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY,
+             * TipoDocumentoIdentificacao.toArrayList());
+             */
+            request.setAttribute(SessionConstants.SEX_LIST_KEY, Gender
+                    .getSexLabelValues((Locale) request.getAttribute(Globals.LOCALE_KEY)));
             request.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
             request.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
             request.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
@@ -361,7 +366,8 @@ public class ChangeApplicationInfoDispatchAction extends DispatchAction {
         changeApplicationInfoForm.set("majorDegreeYear", infoMasterDegreeCandidate.getMajorDegreeYear());
         changeApplicationInfoForm.set("specializationArea", infoMasterDegreeCandidate
                 .getSpecializationArea());
-        changeApplicationInfoForm.set("average", infoMasterDegreeCandidate.getAverage().toString());
+        changeApplicationInfoForm.set("average", (infoMasterDegreeCandidate.getAverage() == null) ? null
+                : infoMasterDegreeCandidate.getAverage().toString());
 
         if (infoPerson.getSexo() != null)
             changeApplicationInfoForm.set("sex", infoPerson.getSexo().toString());
