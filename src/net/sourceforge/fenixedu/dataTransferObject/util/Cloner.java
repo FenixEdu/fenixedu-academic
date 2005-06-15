@@ -2266,7 +2266,8 @@ public abstract class Cloner {
             candidacy.getCurricularCourse().setIdInternal(infoCandidacy.getCurricularCourse()
                     .getIdInternal());
             
-            candidacy.setStudent(new Student(infoCandidacy.getInfoStudent().getIdInternal()));
+            candidacy.setStudent(new Student());
+            candidacy.getStudent().setIdInternal(infoCandidacy.getInfoStudent().getIdInternal());
             
             candidacy.setTheme(new Theme());
             candidacy.getTheme().setIdInternal(infoCandidacy.getTheme().getIdInternal());

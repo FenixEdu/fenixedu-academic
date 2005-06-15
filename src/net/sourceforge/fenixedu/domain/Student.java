@@ -16,11 +16,7 @@ import org.apache.commons.collections.Predicate;
 public class Student extends Student_Base {
 
     public Student() {
-        setSpecialSeason(new Boolean(false));
-    }
-
-    public Student(Integer idInternal) {
-        setIdInternal(idInternal);
+        setSpecialSeason(Boolean.FALSE);
     }
 
     public String toString() {
