@@ -115,9 +115,7 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
             IStudent student = studentDAO.readStudentByNumberAndDegreeType(infoStudent.getNumber(),
                     DegreeType.DEGREE);
 
-            IExecutionPeriod executionPeriod = new ExecutionPeriod(infoTeacherDegreeFinalProjectStudent
-                    .getInfoExecutionPeriod().getIdInternal());
-            executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
+            IExecutionPeriod executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
                     infoTeacherDegreeFinalProjectStudent.getInfoExecutionPeriod().getIdInternal());
 
             if (student == null) {

@@ -135,11 +135,10 @@ public class ShiftProfessorshipOJB extends PersistentObjectOJB implements IPersi
      *      Dominio.IExecutionPeriod, Util.DiaSemana, java.util.Date,
      *      java.util.Date)
      */
-    public List readOverlappingPeriod(ITeacher teacher, IExecutionPeriod executionPeriod,
+    public List readOverlappingPeriod(ITeacher teacher, Integer executionPeriodId,
             DiaSemana weekDay, Date startTime, Date endTime) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("professorship.executionCourse.keyExecutionPeriod", executionPeriod
-                .getIdInternal());
+        criteria.addEqualTo("professorship.executionCourse.keyExecutionPeriod", executionPeriodId);
         criteria.addEqualTo("professorship.keyTeacher", teacher.getIdInternal());
         criteria.addEqualTo("shift.associatedLessons.diaSemana", weekDay);
         criteria.addEqualTo("percentage", new Double(100));

@@ -32,7 +32,7 @@ public interface IPersistentTeacherInstitutionWorkingTime extends IPersistentObj
      * @param startTime
      * @param endTime
      */
-    List readOverlappingPeriod(ITeacher teacher, IExecutionPeriod executionPeriod, DiaSemana weekDay,
+    List readOverlappingPeriod(ITeacher teacher, Integer executionPeriodId, DiaSemana weekDay,
             Date startTime, Date endTime) throws ExcepcaoPersistencia;
 
     /**

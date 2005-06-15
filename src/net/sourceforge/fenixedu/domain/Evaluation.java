@@ -6,12 +6,4 @@ package net.sourceforge.fenixedu.domain;
  */
 public class Evaluation extends Evaluation_Base {
     
-    public Evaluation() {
-        super();
-        setOjbConcreteClass(this.getClass().getName());
-    }
-
-    public Evaluation(Integer idInternal) {
-        setIdInternal(idInternal);
-    }
 }

@@ -138,7 +138,7 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
             shiftProfessorship.setPercentage(percentage);
 
             CreditsValidator.validatePeriod(professorship.getTeacher(), professorship
-                    .getExecutionCourse().getExecutionPeriod(), shiftProfessorship);
+                    .getExecutionCourse().getExecutionPeriod().getIdInternal(), shiftProfessorship);
 
             shiftProfessorshipAdded.add(shiftProfessorship);
         }

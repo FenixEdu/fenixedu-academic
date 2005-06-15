@@ -19,13 +19,6 @@ public class DistributedTestAdvisory extends DomainObject implements IDistribute
 
     private Integer keyAdvisory;
 
-    public DistributedTestAdvisory() {
-    }
-
-    public DistributedTestAdvisory(Integer distributedTestId) {
-        setIdInternal(distributedTestId);
-    }
-
     public IAdvisory getAdvisory() {
         return advisory;
     }

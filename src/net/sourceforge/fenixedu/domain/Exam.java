@@ -20,10 +20,6 @@ public class Exam extends Exam_Base {
     public Exam() {
     }
 
-    public Exam(Integer idInternal) {
-        setIdInternal(idInternal);
-    }
-
     public Exam(Calendar day, Calendar beginning, Calendar end, Season season) {
         this.setDay(day);
         this.setBeginning(beginning);
@@ -50,7 +46,6 @@ public class Exam extends Exam_Base {
      * @return
      */
     public List getAssociatedRooms() {
-
         return (List) CollectionUtils.collect(super.getAssociatedRoomOccupation(), new Transformer() {
 
             public Object transform(Object arg0) {

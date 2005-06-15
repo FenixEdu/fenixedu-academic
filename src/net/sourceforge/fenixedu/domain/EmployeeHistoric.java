@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 /**
  * 
@@ -9,29 +8,6 @@ import java.util.Date;
  */
 public class EmployeeHistoric extends EmployeeHistoric_Base {
     private Timestamp when = null;
-
-    public EmployeeHistoric() {
-    }
-
-    public EmployeeHistoric(Integer idInternal) {
-        setIdInternal(idInternal);
-    }
-
-    public EmployeeHistoric(IEmployee employee, ICostCenter workingPlaceCostCenter,
-            ICostCenter mailingCostCenter, ICostCenter salaryCostCenter, String calendar,
-            StatusAssiduidade statusAssiduidade, Date beginDate, Date endDate, Integer who,
-            Timestamp when) {
-        setResponsableEmployee(employee);
-        setWorkingPlaceCostCenter(workingPlaceCostCenter);
-        setMailingCostCenter(mailingCostCenter);
-        setSalaryCostCenter(salaryCostCenter);
-        setCalendar(calendar);
-        setStatus(statusAssiduidade);
-        setBeginDate(beginDate);
-        setEndDate(endDate);
-        setWho(who);
-        setWhen(when);
-    }
 
     public Timestamp getWhen() {
         return when;
@@ -54,4 +30,5 @@ public class EmployeeHistoric extends EmployeeHistoric_Base {
         result += "]";
         return result;
     }
+
 }

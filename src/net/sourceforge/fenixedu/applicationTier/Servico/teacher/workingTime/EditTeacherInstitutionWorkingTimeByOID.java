@@ -16,9 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObje
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IDomainObject;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.workTime.ITeacherInstitutionWorkTime;
@@ -76,20 +74,21 @@ public class EditTeacherInstitutionWorkingTimeByOID extends EditDomainObjectServ
             throw new InvalidPeriodException();
 
         ITeacher teacher = new Teacher(infoTeacherInstitutionWorkTime.getInfoTeacher().getIdInternal());
-        IExecutionPeriod executionPeriod = new ExecutionPeriod(infoTeacherInstitutionWorkTime
-                .getInfoExecutionPeriod().getIdInternal());
+
         DiaSemana weekDay = infoTeacherInstitutionWorkTime.getWeekDay();
         Date startTime = infoTeacherInstitutionWorkTime.getStartTime();
         Date endTime = infoTeacherInstitutionWorkTime.getEndTime();
 
-        CreditsValidator.validatePeriod(teacher, executionPeriod, weekDay, startTime, endTime,
+        CreditsValidator.validatePeriod(teacher, infoTeacherInstitutionWorkTime
+                .getInfoExecutionPeriod().getIdInternal(), weekDay, startTime, endTime,
                 PeriodType.INSTITUTION_WORKING_TIME_PERIOD);
         IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO = sp
                 .getIPersistentTeacherInstitutionWorkingTime();
 
         try {
             List teacherInstitutionWorkingTime = teacherInstitutionWorkingTimeDAO.readOverlappingPeriod(
-                    teacher, executionPeriod, weekDay, startTime, endTime);
+                    teacher, infoTeacherInstitutionWorkTime
+                    .getInfoExecutionPeriod().getIdInternal(), weekDay, startTime, endTime);
             boolean ok = true;
             if (!teacherInstitutionWorkingTime.isEmpty()) {
                 if (teacherInstitutionWorkingTime.size() == 1) {

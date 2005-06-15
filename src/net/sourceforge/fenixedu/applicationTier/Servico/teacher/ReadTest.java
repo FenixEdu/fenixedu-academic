@@ -49,8 +49,8 @@ public class ReadTest implements IService {
             persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
                     .getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = new ExecutionCourse(executionCourseId);
-            executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
                     ExecutionCourse.class, executionCourseId);
             if (executionCourse == null) {
                 throw new InvalidArgumentsServiceException();

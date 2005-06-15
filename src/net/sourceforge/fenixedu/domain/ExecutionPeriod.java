@@ -11,21 +11,6 @@ import net.sourceforge.fenixedu.fileSuport.INode;
  */
 public class ExecutionPeriod extends ExecutionPeriod_Base {
 
-    /**
-     * Constructor for ExecutionPeriod.
-     */
-    public ExecutionPeriod() {
-    }
-
-    public ExecutionPeriod(Integer idInternal) {
-        setIdInternal(idInternal);
-    }
-
-    public ExecutionPeriod(String name, IExecutionYear executionYear) {
-        this.setName(name);
-        this.setExecutionYear(executionYear);
-    }
-
     public String toString() {
         String result = "[EXECUTION_PERIOD";
         result += ", internalCode=" + getIdInternal();

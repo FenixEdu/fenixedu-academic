@@ -11,28 +11,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 public class ExecutionCourse extends ExecutionCourse_Base {
-
     private List nonAffiliatedTeachers;
-
-    public ExecutionCourse() {
-    }
-
-    public ExecutionCourse(Integer idInternal) {
-        setIdInternal(idInternal);
-    }
-
-    public ExecutionCourse(String nome, String sigla, Double theoreticalHours, Double praticalHours,
-            Double theoPratHours, Double labHours, IExecutionPeriod executionPeriod) {
-
-        setNome(nome);
-        setSigla(sigla);
-        setTheoreticalHours(theoreticalHours);
-        setPraticalHours(praticalHours);
-        setTheoPratHours(theoPratHours);
-        setLabHours(labHours);
-        setExecutionPeriod(executionPeriod);
-        setComment(new String());
-    }
 
     public String toString() {
         String result = "[EXECUTION_COURSE";
