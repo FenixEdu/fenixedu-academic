@@ -12,11 +12,13 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
  */
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
@@ -28,7 +30,20 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
 public class ExamVO extends VersionedObjectsBase implements IPersistentExam {
+
+    public Collection readAll(final Class clazz) {
+        final Collection evaluations = super.readAll(clazz);
+        CollectionUtils.filter(evaluations, new Predicate() {
+            public boolean evaluate(Object arg0) {
+                final IEvaluation evaluation = (IEvaluation) arg0;
+                return evaluation.getOjbConcreteClass().equals(Exam.class.getName());
+            }});
+        return evaluations;
+    }
 
     public List readBy(Calendar day, Calendar beginning) throws ExcepcaoPersistencia {
 
