@@ -1,72 +1,9 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Date;
-
 /**
  * @author Tania Pousao Created on 30/Out/2003
  */
 public class DegreeInfo extends DegreeInfo_Base {
-
-    public DegreeInfo(Integer idInternal) {
-        setIdInternal(idInternal);
-    }
-
-    public DegreeInfo() {
-    }
-
-    public DegreeInfo(IDegree degree, String objectives, String history, String professionalExits,
-            String additionalInfo, String links, String testIngression, Integer driftsInitial,
-            Integer driftsFirst, Integer driftsSecond, String classifications, Double markMin,
-            Double markMax, Double markAverage, Date lastModificationDate) {
-        this.setDegreeKey(degree.getIdInternal());
-        this.setDegree(degree);
-        this.setObjectives(objectives);
-        this.setHistory(history);
-        this.setProfessionalExits(professionalExits);
-        this.setAdditionalInfo(additionalInfo);
-        this.setLinks(links);
-        this.setTestIngression(testIngression);
-        this.setDriftsInitial(driftsInitial);
-        this.setDriftsFirst(driftsFirst);
-        this.setDriftsSecond(driftsSecond);
-        this.setClassifications(classifications);
-        this.setMarkMin(markMin);
-        this.setMarkMax(markMax);
-        this.setMarkAverage(markAverage);
-        this.setLastModificationDate(lastModificationDate);
-    }
-
-    public DegreeInfo(Integer degreeKey, IDegree degree, String objectives, String history,
-            String professionalExits, String additionalInfo, String links, String testIngression,
-            Integer driftsInitial, Integer driftsFirst, Integer driftsSecond, String classifications,
-            Double markMin, Double markMax, Double markAverage, Date lastModificationDate) {
-        this.setDegreeKey(degreeKey);
-        this.setDegree(degree);
-        this.setObjectives(objectives);
-        this.setHistory(history);
-        this.setProfessionalExits(professionalExits);
-        this.setAdditionalInfo(additionalInfo);
-        this.setLinks(links);
-        this.setTestIngression(testIngression);
-        this.setDriftsInitial(driftsInitial);
-        this.setDriftsFirst(driftsFirst);
-        this.setDriftsSecond(driftsSecond);
-        this.setClassifications(classifications);
-        this.setMarkMin(markMin);
-        this.setMarkMax(markMax);
-        this.setMarkAverage(markAverage);
-        this.setLastModificationDate(lastModificationDate);
-    }
-
-    public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj instanceof IDegreeInfo) {
-            IDegreeInfo degreeInfo = (IDegreeInfo) obj;
-            result = (getDegree() != null && getDegree().equals(degreeInfo.getDegree()));
-        }
-
-        return result;
-    }
 
     public String toString() {
         String result = "[DEGREE_INFO:";
@@ -98,4 +35,15 @@ public class DegreeInfo extends DegreeInfo_Base {
         result += "]";
         return result;
     }
+
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof IDegreeInfo) {
+            IDegreeInfo degreeInfo = (IDegreeInfo) obj;
+            result = (getDegree() != null && getDegree().equals(degreeInfo.getDegree()));
+        }
+
+        return result;
+    }
+
 }
