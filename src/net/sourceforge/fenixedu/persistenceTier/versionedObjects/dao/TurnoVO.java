@@ -15,6 +15,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -87,7 +88,7 @@ public class TurnoVO extends VersionedObjectsBase implements ITurnoPersistente {
          * Criteria crit = new Criteria();
          * crit.addEqualTo("disciplinaExecucao.idInternal",
          * executionCourse.getIdInternal()); return queryList(Shift.class,
-         * crit);
+         * crit);System.out.println("TAMANHO " + result.size()); return result;
          */
 
     }
@@ -143,31 +144,40 @@ public class TurnoVO extends VersionedObjectsBase implements ITurnoPersistente {
     }
 
     public List readAvailableShiftsForClass(Integer schoolClassOID) throws ExcepcaoPersistencia {
-        List<IShift> shifts = (List<IShift>) readAll(Shift.class);
+       
+       // List<IShift> shifts = (List<IShift>) readAll(Shift.class);
         ISchoolClass schoolClass = (ISchoolClass) readByOID(SchoolClass.class, schoolClassOID);
+        
         List result = new ArrayList();
-
-        for (IShift shift : shifts) {
-            List<ICurricularCourse> curricularCourses = shift.getDisciplinaExecucao()
-                    .getAssociatedCurricularCourses();
-            for (ICurricularCourse curricularCourse : curricularCourses) {
-                List<ICurricularCourseScope> curricularCourseScopes = curricularCourse.getScopes();
-                for (ICurricularCourseScope curricularCourseScope : curricularCourseScopes) {
-                    if (curricularCourseScope.getCurricularSemester().getCurricularYear()
-                            .getIdInternal().equals(schoolClass.getAnoCurricular())
-                            && curricularCourse.getDegreeCurricularPlan().getIdInternal().equals(
-                                    schoolClass.getExecutionDegree().getDegreeCurricularPlan()
-                                            .getIdInternal())
-                            && shift.getDisciplinaExecucao().getExecutionPeriod().getIdInternal()
-                                    .equals(schoolClass.getExecutionPeriod().getIdInternal())) {
-                        result.add(shift);
+        
+        IExecutionPeriod executionPeriod = schoolClass.getExecutionPeriod();
+        List<IExecutionCourse> executionCourses = executionPeriod.getAssociatedExecutionCourses();
+        for(IExecutionCourse executionCourse : executionCourses){
+            List<IShift> shifts = executionCourse.getAssociatedShifts();
+            for (IShift shift : shifts) {
+                List<ICurricularCourse> curricularCourses = shift.getDisciplinaExecucao()
+                .getAssociatedCurricularCourses();
+                for (ICurricularCourse curricularCourse : curricularCourses) {
+                    if(curricularCourse.getDegreeCurricularPlan().getIdInternal().equals(schoolClass.getExecutionDegree().getDegreeCurricularPlan().getIdInternal())){
+                        List<ICurricularCourseScope> curricularCourseScopes = curricularCourse.getScopes();
+                        for (ICurricularCourseScope curricularCourseScope : curricularCourseScopes) {
+                            if (curricularCourseScope.getCurricularSemester().getCurricularYear()
+                                    .getIdInternal().equals(schoolClass.getAnoCurricular())){
+                                if(!result.contains(shift)){
+                                    result.add(shift);    
+                                }
+                                
+                            }
+                        }
                     }
                 }
+                
+                
             }
+        
         }
         List classShifts = new TurmaTurnoVO().readByClass(schoolClassOID);
         result.removeAll(classShifts);
-
         return result;
 
         /*
@@ -208,15 +218,21 @@ public class TurnoVO extends VersionedObjectsBase implements ITurnoPersistente {
     public List readShiftsThatContainsStudentAttendsOnExecutionPeriod(Integer studentOID,
             Integer executionPeriodOID) throws ExcepcaoPersistencia {
         IStudent student = (IStudent) readByOID(Student.class, studentOID);
-        List<IShift> shifts = (List<IShift>) readAll(Shift.class);
+
+        List<IAttends> attends = student.getAssociatedAttends();
         List<IShift> result = new ArrayList();
-        for (IShift shift : shifts) {
-            if (shift.getDisciplinaExecucao().getExecutionPeriod().getIdInternal().equals(
-                    executionPeriodOID)
-                    && shift.getDisciplinaExecucao().getAttendingStudents().contains(student)) {
-                result.add(shift);
+
+        for (IAttends attend : attends) {
+            IExecutionCourse executionCourse = attend.getDisciplinaExecucao();
+            if (executionCourse.getExecutionPeriod().getIdInternal().equals(executionPeriodOID)) {
+                List<IShift> shifts = executionCourse.getAssociatedShifts();
+                System.out.println("ADICIONei turnos");
+                result.addAll(shifts);
+
             }
         }
+
+        System.out.println("TAMANHO " + result.size());
         return result;
 
         /*
