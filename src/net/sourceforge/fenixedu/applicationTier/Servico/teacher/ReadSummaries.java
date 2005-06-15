@@ -134,14 +134,7 @@ public class ReadSummaries implements IService {
         summaries = readSummariesOfOtherTeachersIfResponsible(executionCourseId, professorShiftId,
                 persistentSuport, persistentSummary, summaries, professorships, summaryType);
 
-        if ((summaryType == null || summaryType.equals("0")) && (shiftId == null || shiftId.intValue() == 0)
-                && (professorShiftId == null || professorShiftId.intValue() == 0)) {
-            summaries = persistentSummary.readByExecutionCourseShifts(executionCourseId);
-
-            List summariesByExecutionCourse = persistentSummary.readByExecutionCourse(executionCourseId);           
-            
-            summaries = allSummaries(summaries, summariesByExecutionCourse);
-        }
+        summaries = readAllSummaries(executionCourseId, summaryType, shiftId, professorShiftId, persistentSummary, summaries);
 
         List result = new ArrayList();
         if (summaries != null && summaries.size() > 0) {
@@ -167,6 +160,28 @@ public class ReadSummaries implements IService {
         SiteView siteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
 
         return siteView;
+    }
+
+    /**
+     * @param executionCourseId
+     * @param summaryType
+     * @param shiftId
+     * @param professorShiftId
+     * @param persistentSummary
+     * @param summaries
+     * @return
+     * @throws ExcepcaoPersistencia
+     */
+    protected List readAllSummaries(Integer executionCourseId, String summaryType, Integer shiftId, Integer professorShiftId, IPersistentSummary persistentSummary, List summaries) throws ExcepcaoPersistencia {
+        if ((summaryType == null || summaryType.equals("0")) && (shiftId == null || shiftId.intValue() == 0)
+                && (professorShiftId == null || professorShiftId.intValue() == 0)) {
+            summaries = persistentSummary.readByExecutionCourseShifts(executionCourseId);
+
+            List summariesByExecutionCourse = persistentSummary.readByExecutionCourse(executionCourseId);           
+            
+            summaries = allSummaries(summaries, summariesByExecutionCourse);
+        }
+        return summaries;
     }
 
     protected List readSummariesByShift(Integer executionCourseId, Integer shiftId,
