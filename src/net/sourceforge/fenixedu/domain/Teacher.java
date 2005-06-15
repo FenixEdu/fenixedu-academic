@@ -16,18 +16,6 @@ import net.sourceforge.fenixedu.domain.credits.util.InfoCreditsBuilder;
 public class Teacher extends Teacher_Base {
     private Map creditsMap = new HashMap();
 
-    public Teacher() {
-    }
-
-    public Teacher(Integer idInternal) {
-        setIdInternal(idInternal);
-    }
-
-    public Teacher(IPerson person, Integer teacherNumber) {
-        setPerson(person);
-        setTeacherNumber(teacherNumber);
-    }
-
     public String toString() {
         String result = "[Dominio.Teacher ";
         result += ", teacherNumber=" + getTeacherNumber();

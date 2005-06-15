@@ -17,13 +17,6 @@ public class Shift extends Shift_Base {
 
     protected Double percentage;
 
-    public Shift() {
-    }
-
-    public Shift(Integer idInternal) {
-        setIdInternal(idInternal);
-    }
-
     public Integer getOcupation() {
         return ocupation;
     }

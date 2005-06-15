@@ -51,9 +51,8 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
 
     private IShift getIShift(ITurnoPersistente shiftDAO, InfoShiftProfessorship infoShiftProfessorship)
             throws ExcepcaoPersistencia {
-        IShift shift = new Shift(infoShiftProfessorship.getInfoShift().getIdInternal());
-        shift = (IShift) shiftDAO.readByOID(Shift.class, infoShiftProfessorship.getInfoShift()
-                .getIdInternal());
+
+        IShift shift = (IShift) shiftDAO.readByOID(Shift.class, infoShiftProfessorship.getInfoShift().getIdInternal());
         return shift;
     }
 
@@ -137,7 +136,7 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
 
             shiftProfessorship.setPercentage(percentage);
 
-            CreditsValidator.validatePeriod(professorship.getTeacher(), professorship
+            CreditsValidator.validatePeriod(professorship.getTeacher().getIdInternal(), professorship
                     .getExecutionCourse().getExecutionPeriod().getIdInternal(), shiftProfessorship);
 
             shiftProfessorshipAdded.add(shiftProfessorship);

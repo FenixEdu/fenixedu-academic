@@ -61,11 +61,11 @@ public class TeacherInstitutionWorkingTimeOJB extends PersistentObjectOJB implem
      *      Dominio.IExecutionPeriod, Util.DiaSemana, java.util.Date,
      *      java.util.Date)
      */
-    public List readOverlappingPeriod(ITeacher teacher, Integer executionPeriodId,
+    public List readOverlappingPeriod(Integer teacherId, Integer executionPeriodId,
             DiaSemana weekDay, Date startTime, Date endTime) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyExecutionPeriod", executionPeriodId);
-        criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
+        criteria.addEqualTo("keyTeacher", teacherId);
         criteria.addEqualTo("weekDay", weekDay);
 
         Criteria startCriteria = new Criteria();

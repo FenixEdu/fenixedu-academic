@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
  * @author Susana Fernandes
  */
 public class StudentTestQuestion extends DomainObject implements IStudentTestQuestion {
-
     private Integer keyStudent;
 
     private IStudent student;
@@ -35,13 +34,6 @@ public class StudentTestQuestion extends DomainObject implements IStudentTestQue
     private String optionShuffle;
 
     private CorrectionFormula formula;
-
-    public StudentTestQuestion() {
-    }
-
-    public StudentTestQuestion(Integer studentTestQuestionId) {
-        setIdInternal(studentTestQuestionId);
-    }
 
     public IDistributedTest getDistributedTest() {
         return distributedTest;
@@ -146,4 +138,5 @@ public class StudentTestQuestion extends DomainObject implements IStudentTestQue
     public void setCorrectionFormula(CorrectionFormula formula) {
         this.formula = formula;
     }
+
 }

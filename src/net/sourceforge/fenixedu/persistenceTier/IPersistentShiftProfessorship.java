@@ -27,7 +27,7 @@ public interface IPersistentShiftProfessorship extends IPersistentObject {
     IShiftProfessorship readByProfessorshipAndShift(IProfessorship professorship, IShift shift)
             throws ExcepcaoPersistencia;
 
-    List readOverlappingPeriod(ITeacher teacher, Integer executionPeriodId, DiaSemana weekDay,
+    List readOverlappingPeriod(Integer teacherId, Integer executionPeriodId, DiaSemana weekDay,
             Date startTime, Date endTime) throws ExcepcaoPersistencia;
 
     List readByTeacherAndExecutionPeriodAndDegreeType(ITeacher teacher,

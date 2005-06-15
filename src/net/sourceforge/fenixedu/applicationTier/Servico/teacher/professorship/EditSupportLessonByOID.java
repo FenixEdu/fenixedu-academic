@@ -114,7 +114,7 @@ public class EditSupportLessonByOID extends EditDomainObjectService {
         Date startTime = infoSupportLesson.getStartTime();
         Date endTime = infoSupportLesson.getEndTime();
 
-        CreditsValidator.validatePeriod(teacher, executionPeriod.getIdInternal(), weekDay, startTime, endTime,
+        CreditsValidator.validatePeriod(teacher.getIdInternal(), executionPeriod.getIdInternal(), weekDay, startTime, endTime,
                 PeriodType.SUPPORT_LESSON_PERIOD);
 
         IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();

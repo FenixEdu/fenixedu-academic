@@ -53,8 +53,8 @@ public class AddShiftToClasses implements IServico {
             ITurnoPersistente persistentShift = sp.getITurnoPersistente();
             ITurmaPersistente persistentClass = sp.getITurmaPersistente();
 
-            IShift shift = new Shift(keyShift);
-            shift = (IShift) persistentShift.readByOID(Shift.class, keyShift);
+            
+            IShift shift = (IShift) persistentShift.readByOID(Shift.class, keyShift);
             if (shift == null || classesList == null) {
                 throw new InvalidArgumentsServiceException();
             }

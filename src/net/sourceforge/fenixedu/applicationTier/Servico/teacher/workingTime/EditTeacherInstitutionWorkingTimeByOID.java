@@ -17,8 +17,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IDomainObject;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.workTime.ITeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
@@ -73,13 +71,11 @@ public class EditTeacherInstitutionWorkingTimeByOID extends EditDomainObjectServ
         if (end.before(begin))
             throw new InvalidPeriodException();
 
-        ITeacher teacher = new Teacher(infoTeacherInstitutionWorkTime.getInfoTeacher().getIdInternal());
-
         DiaSemana weekDay = infoTeacherInstitutionWorkTime.getWeekDay();
         Date startTime = infoTeacherInstitutionWorkTime.getStartTime();
         Date endTime = infoTeacherInstitutionWorkTime.getEndTime();
 
-        CreditsValidator.validatePeriod(teacher, infoTeacherInstitutionWorkTime
+        CreditsValidator.validatePeriod(infoTeacherInstitutionWorkTime.getInfoTeacher().getIdInternal(), infoTeacherInstitutionWorkTime
                 .getInfoExecutionPeriod().getIdInternal(), weekDay, startTime, endTime,
                 PeriodType.INSTITUTION_WORKING_TIME_PERIOD);
         IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO = sp
@@ -87,7 +83,7 @@ public class EditTeacherInstitutionWorkingTimeByOID extends EditDomainObjectServ
 
         try {
             List teacherInstitutionWorkingTime = teacherInstitutionWorkingTimeDAO.readOverlappingPeriod(
-                    teacher, infoTeacherInstitutionWorkTime
+                    infoTeacherInstitutionWorkTime.getInfoTeacher().getIdInternal(), infoTeacherInstitutionWorkTime
                     .getInfoExecutionPeriod().getIdInternal(), weekDay, startTime, endTime);
             boolean ok = true;
             if (!teacherInstitutionWorkingTime.isEmpty()) {

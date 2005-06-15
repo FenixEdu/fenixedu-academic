@@ -10,7 +10,6 @@ import java.util.Date;
  * @author Susana Fernandes
  */
 public class StudentTestLog extends DomainObject implements IStudentTestLog {
-
     private IStudent student;
 
     private Integer keyStudent;
@@ -22,13 +21,6 @@ public class StudentTestLog extends DomainObject implements IStudentTestLog {
     private Date date;
 
     private String event;
-
-    public StudentTestLog() {
-    }
-
-    public StudentTestLog(Integer testId) {
-        setIdInternal(testId);
-    }
 
     public Date getDate() {
         return date;
