@@ -169,7 +169,17 @@
 			>
 		<fk-pointing-to-this-class column="KEY_CLASS"/>
 		<fk-pointing-to-element-class column="KEY_SHIFT"/>
-	</collection-descriptor>      
+	</collection-descriptor> 
+	
+	<collection-descriptor proxy="true"
+			name="schoolClassShifts"
+			element-class-ref="net.sourceforge.fenixedu.domain.SchoolClassShift"
+			>
+			
+		<inverse-foreignkey field-ref="chaveTurma"/>
+		
+		</collection-descriptor>
+	     
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.Shift -->
