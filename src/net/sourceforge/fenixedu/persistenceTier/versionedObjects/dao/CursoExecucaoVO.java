@@ -101,7 +101,6 @@ public class CursoExecucaoVO extends VersionedObjectsBase implements IPersistent
                 }
             }
         }
-
         return result;
     }
 
@@ -125,9 +124,11 @@ public class CursoExecucaoVO extends VersionedObjectsBase implements IPersistent
     public List readByTeacher(Integer teacherOID) throws ExcepcaoPersistencia {
         ITeacher teacher = (ITeacher) readByOID(Teacher.class, teacherOID);
         List<IExecutionDegree> result = new ArrayList();
-        List<ICoordinator> coordinators = teacher.getCoordinators();
-        for (ICoordinator coordinator : coordinators) {
-            result.add(coordinator.getExecutionDegree());
+        if(teacher != null){
+            List<ICoordinator> coordinators = teacher.getCoordinators();
+            for (ICoordinator coordinator : coordinators) {
+                result.add(coordinator.getExecutionDegree());
+            }
         }
         return result;
 
