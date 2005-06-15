@@ -205,8 +205,8 @@ public class TurnoVO extends VersionedObjectsBase implements ITurnoPersistente {
         if (lessonOID != null) {
             ILesson lesson = (ILesson) readByOID(Lesson.class, lessonOID);
             return lesson.getShift();
-        } else
-            return null;
+        }
+        return null;
 
         /*
          * Criteria criteria = new Criteria();
