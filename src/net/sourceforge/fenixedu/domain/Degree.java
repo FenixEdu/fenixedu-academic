@@ -6,7 +6,6 @@
 
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 /**
  * 
@@ -14,20 +13,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
  */
 
 public class Degree extends Degree_Base {
-
-    /** Construtor sem argumentos público requerido pela moldura de objectos OJB */
-    public Degree() {
-    }
-
-    public Degree(Integer idInternal) {
-        setIdInternal(idInternal);
-    }
-
-    public Degree(String sigla, String nome, DegreeType tipoCurso) {
-        setSigla(sigla);
-        setNome(nome);
-        setTipoCurso(tipoCurso);
-    }
 
     public String toString() {
         String result = "[CURSO";

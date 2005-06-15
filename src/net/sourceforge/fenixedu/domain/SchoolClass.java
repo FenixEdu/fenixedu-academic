@@ -6,55 +6,12 @@
 
 package net.sourceforge.fenixedu.domain;
 
-
 /**
  * 
  * @author Luis Cruz & Sara Ribeiro
  */
 
 public class SchoolClass extends SchoolClass_Base {
-    
-    /**
-     * Construtor sem argumentos p�blico requerido pela moldura de objectos
-     * OJB
-     */
-    public SchoolClass() {
-    }
-
-    public SchoolClass(Integer idInternal) {
-        setIdInternal(idInternal);
-    }
-
-    /**
-     * @deprecated @param
-     *             nome
-     * @param semestre
-     * @param anoCurricular
-     * @param licenciatura
-     */
-    public SchoolClass(String name, Integer semester, Integer curricularYear, IDegree degree) {
-        setNome(name);
-        //	setSemestre(semestre);
-        setAnoCurricular(curricularYear);
-        //	setLicenciatura(licenciatura);
-    }
-
-    public SchoolClass(String name, Integer curricularYear, IExecutionDegree executionDegree,
-            IExecutionPeriod executionPeriod) {
-        setNome(name);
-        setAnoCurricular(curricularYear);
-        setExecutionDegree(executionDegree);
-        setExecutionPeriod(executionPeriod);
-    }
-
-    public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof ISchoolClass) {
-            ISchoolClass turma = (ISchoolClass) obj;
-            resultado = getIdInternal().equals(turma.getIdInternal());
-        }
-        return resultado;
-    }
 
     public String toString() {
         String result = "[TURMA";
@@ -64,6 +21,15 @@ public class SchoolClass extends SchoolClass_Base {
         result += ", executionDegree=" + getExecutionDegree();
         result += "]";
         return result;
+    }
+
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof ISchoolClass) {
+            ISchoolClass turma = (ISchoolClass) obj;
+            resultado = getIdInternal().equals(turma.getIdInternal());
+        }
+        return resultado;
     }
 
 }
