@@ -157,9 +157,9 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
         if (infoGrantInsurance.getTotalValue() != null)
             form.set("totalValue", infoGrantInsurance.getTotalValue());
         if (infoGrantInsurance.getInfoGrantPaymentEntity() != null) {
-            if (infoGrantInsurance.getInfoGrantPaymentEntity() instanceof InfoGrantProject && infoGrantInsurance.getInfoGrantPaymentEntity().getGrantProjectOjbConcreteClass().equals(GrantProject.class.getName()) )
+            if (infoGrantInsurance.getInfoGrantPaymentEntity() instanceof InfoGrantProject && InfoGrantPaymentEntity.getGrantProjectOjbConcreteClass().equals(GrantProject.class.getName()) )
                 form.set("project", infoGrantInsurance.getInfoGrantPaymentEntity().getNumber());
-            else if((infoGrantInsurance.getInfoGrantPaymentEntity() instanceof InfoGrantCostCenter && infoGrantInsurance.getInfoGrantPaymentEntity().getGrantCostCenterOjbConcreteClass().equals(GrantCostCenter.class.getName()) ))
+            else if((infoGrantInsurance.getInfoGrantPaymentEntity() instanceof InfoGrantCostCenter && InfoGrantPaymentEntity.getGrantCostCenterOjbConcreteClass().equals(GrantCostCenter.class.getName()) ))
                     form.set("costcenter", infoGrantInsurance.getInfoGrantPaymentEntity().getNumber());
         }
         if (infoGrantInsurance.getDateBeginInsurance() != null)
