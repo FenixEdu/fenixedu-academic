@@ -30,7 +30,7 @@ public class SalaVO extends VersionedObjectsBase implements ISalaPersistente {
     public IRoom readByName(String nome) throws ExcepcaoPersistencia {
         List<IRoom> rooms = (List<IRoom>) readAll(Room.class);
         for (IRoom room : rooms) {
-            if (room.getNome().equals(nome)) {
+            if (room.getNome().equalsIgnoreCase(nome)) {
                 return room;
             }
         }
