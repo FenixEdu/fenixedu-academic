@@ -13,7 +13,12 @@ public class DAOResultLogger {
 
     public static void logOK(final Object mainDAO, final Object secondaryDAO, final String methodName,
             final Object[] parameters) {
-        System.out.println("DAO results for: " + generateDAOCallWithoutParameters(mainDAO, methodName) + " == " + generateDAOCallWithoutParameters(secondaryDAO, methodName));
+        if (secondaryDAO == null) {
+            System.out.println("Versioned Object DAO for " + mainDAO.getClass().getName() + " is not implemented!");
+        }else{
+            System.out.println("DAO results for: " + generateDAOCallWithoutParameters(mainDAO, methodName) + " == " + generateDAOCallWithoutParameters(secondaryDAO, methodName));
+        }
+        
     }
 
     private static String generateDAOCall(final Object dAO, String methodName, final Object[] parameters) {
