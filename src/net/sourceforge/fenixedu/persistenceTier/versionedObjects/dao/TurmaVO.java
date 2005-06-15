@@ -259,7 +259,7 @@ public class TurmaVO extends VersionedObjectsBase implements ITurmaPersistente {
                 List<IShift> shifts = schoolClass.getAssociatedShifts();
                 for (IShift turno : shifts) {
                     if (turno.getDisciplinaExecucao().getIdInternal().equals(
-                            executionCourse.getIdInternal())) {
+                            executionCourse.getIdInternal()) && !result.contains(schoolClass)) {
                         result.add(schoolClass);
                     }
                 }
@@ -280,6 +280,7 @@ public class TurmaVO extends VersionedObjectsBase implements ITurmaPersistente {
         IExecutionPeriod executionPeriod = (IExecutionPeriod) readByOID(ExecutionPeriod.class,
                 executionPeriodOID);
         IStudent student = (IStudent) readByOID(Student.class, studentOID);
+        System.out.println("STUDENT --> " + student);
         List<ISchoolClass> result = new ArrayList();
         List<ISchoolClass> schoolClasses = executionPeriod.getSchoolClasses();
         for (ISchoolClass schoolClass : schoolClasses) {
@@ -288,12 +289,29 @@ public class TurmaVO extends VersionedObjectsBase implements ITurmaPersistente {
                 if (shift.getDisciplinaExecucao().getExecutionPeriod().getIdInternal().equals(
                         executionPeriod.getIdInternal())) {
                     List<IStudent> students = shift.getDisciplinaExecucao().getAttendingStudents();
+                    System.out.println("DISCIPLINA --> " + shift.getDisciplinaExecucao().getNome());
                     if (students.contains(student)) {
+                        System.out.println("O ALUNO ESTÁ NA LISTA!!!");
                         result.add(schoolClass);
                     }
                 }
             }
         }
+        
+        /*List<IAttends> attendsList = student.getAssociatedAttends();
+        for(IAttends attends : attendsList){
+            IExecutionCourse executionCourse = attends.getDisciplinaExecucao();
+            if(executionCourse.getExecutionPeriod().getIdInternal().equals(executionPeriodOID)){
+                //result.add(schoolClass)
+                List<IShift> shifts = executionCourse.getAssociatedShifts();
+                for(IShift shift : shifts){
+                   List<ISchoolClass> schoolClasses = shift.getAssociatedClasses();
+                }
+            }
+        }*/
+        
+        
+        System.out.println("RESULT " + result);
         return result;
 
         /*
