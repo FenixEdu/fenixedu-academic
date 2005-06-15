@@ -29,7 +29,7 @@ public class DaoTester extends ObjectFenixOJB {
             System.out.println("Transaction started.");
             instance.doTest();
             persistentSupport.confirmarTransaccao();
-        } catch (ExcepcaoPersistencia e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         System.exit(0);
