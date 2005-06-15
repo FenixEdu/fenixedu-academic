@@ -81,7 +81,7 @@ public class SummaryVO extends VersionedObjectsBase implements IPersistentSummar
         
         while(iter.hasNext()){
             ISummary summary = (ISummary) iter.next();
-            if(summary.getKeyShift() == shiftID)
+            if(summary.getShift().getIdInternal().equals(shiftID))
                 summariesAux.add(summary);
         }       
         
