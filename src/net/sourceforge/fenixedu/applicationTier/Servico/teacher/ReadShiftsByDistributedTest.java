@@ -11,9 +11,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.domain.DistributedTest;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IDistributedTest;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -37,10 +35,10 @@ public class ReadShiftsByDistributedTest implements IService {
             persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             List studentsList = new ArrayList();
-            IDistributedTest distributedTest = new DistributedTest(distributedTestId);
+
             if (distributedTestId != null) //lista de alunos que tem teste
                 studentsList = persistentSuport.getIPersistentStudentTestQuestion()
-                        .readStudentsByDistributedTest(distributedTest);
+                        .readStudentsByDistributedTest(distributedTestId);
 
             IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
                     .getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, executionCourseId);

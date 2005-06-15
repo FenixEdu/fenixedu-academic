@@ -43,12 +43,6 @@ public class DistributedTest extends DomainObject implements IDistributedTest {
 
     private List studentQuestions;
 
-    public DistributedTest() {
-    }
-
-    public DistributedTest(Integer distributedTestId) {
-        setIdInternal(distributedTestId);
-    }
 
     public Calendar getBeginDate() {
         return beginDate;
@@ -161,4 +155,5 @@ public class DistributedTest extends DomainObject implements IDistributedTest {
     public void setImsFeedback(Boolean imsFeedback) {
         this.imsFeedback = imsFeedback;
     }
+
 }

@@ -38,7 +38,7 @@ public class ReadStudentsWithDistributedTest implements IService {
                 throw new FenixServiceException();
 
             List studentList = persistentSuport.getIPersistentStudentTestQuestion()
-                    .readStudentsByDistributedTest(distributedTest);
+                    .readStudentsByDistributedTest(distributedTest.getIdInternal());
 
             for (int i = 0; i < studentList.size(); i++)
                 infoStudentList.add(InfoStudentWithInfoPerson.newInfoFromDomain((IStudent) studentList

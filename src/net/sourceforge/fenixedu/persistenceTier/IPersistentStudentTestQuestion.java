@@ -38,7 +38,7 @@ public interface IPersistentStudentTestQuestion extends IPersistentObject {
     public abstract List readByOrderAndDistributedTest(Integer order, IDistributedTest distributedTest)
             throws ExcepcaoPersistencia;
 
-    public abstract List readStudentsByDistributedTest(IDistributedTest distributedTest)
+    public abstract List readStudentsByDistributedTest(Integer distributedTestId)
             throws ExcepcaoPersistencia;
 
     public List readStudentsByDistributedTests(Collection distributedTestsIds)

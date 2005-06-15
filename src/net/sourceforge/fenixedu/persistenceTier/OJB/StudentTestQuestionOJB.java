@@ -93,10 +93,10 @@ public class StudentTestQuestionOJB extends PersistentObjectOJB implements
         return queryList(StudentTestQuestion.class, criteria);
     }
 
-    public List readStudentsByDistributedTest(IDistributedTest distributedTest)
+    public List readStudentsByDistributedTest(Integer distributedTestId)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
+        criteria.addEqualTo("keyDistributedTest", distributedTestId);
         criteria.addEqualTo("testQuestionOrder", new Integer(1));
         List result = queryList(StudentTestQuestion.class, criteria);
         List studentList = new ArrayList();

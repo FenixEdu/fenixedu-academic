@@ -40,7 +40,7 @@ public class ReadStudentsWithoutDistributedTest implements IService {
                 executionCourseId);
         //alunos que tem test
         List studentList = persistentSuport.getIPersistentStudentTestQuestion()
-                .readStudentsByDistributedTest(distributedTest);
+                .readStudentsByDistributedTest(distributedTest.getIdInternal());
         Iterator it = attendList.iterator();
         while (it.hasNext()) {
             IAttends attend = (IAttends) it.next();
