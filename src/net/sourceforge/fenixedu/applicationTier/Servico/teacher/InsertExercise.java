@@ -293,8 +293,9 @@ public class InsertExercise implements IService {
                     final StringBuilder stringBuilder = new StringBuilder();
                     final byte[] b = new byte[1000];
                     for (int readed = 0; (readed = zipFile.read(b)) > -1; stringBuilder
-                            .append(new String(b, 0, readed, "ISO-8859-1")))
-                        ; // nothing to do :o)
+                            .append(new String(b, 0, readed, "ISO-8859-1"))) { 
+                        // nothing to do :o)
+                    }
                     if (stringBuilder.length() <= FILE_SIZE_LIMIT) {
                         xmlFilesList.add(new LabelValueBean(entry.getName(), stringBuilder.toString()));
                     }
