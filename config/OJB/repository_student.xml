@@ -127,4 +127,9 @@
 			>
 		<inverse-foreignkey field-ref="keyStudent"/>
 	</collection-descriptor>
+	<collection-descriptor proxy="true"
+		name="associatedAttends"
+			element-class-ref="net.sourceforge.fenixedu.domain.Attends">
+		<inverse-foreignkey field-ref="chaveAluno"/>
+	</collection-descriptor>
 </class-descriptor>
