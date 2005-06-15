@@ -18,13 +18,6 @@ public class Question extends DomainObject implements IQuestion {
 
     private Boolean visibility;
 
-    public Question() {
-    }
-
-    public Question(Integer questionId) {
-        setIdInternal(questionId);
-    }
-
     public Integer getKeyMetadata() {
         return keyMetadata;
     }

@@ -1,10 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Date;
 import java.util.Iterator;
 
-import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
-import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.util.State;
 
 /**
@@ -12,32 +9,6 @@ import net.sourceforge.fenixedu.util.State;
  */
 
 public class Guide extends Guide_Base {
-
-    public Guide() {
-    }
-
-    /**
-     * @param guideId
-     */
-    public Guide(Integer guideId) {
-        setIdInternal(guideId);
-    }
-
-    public Guide(Integer number, Integer year, Double total, String remarks, IPerson person,
-            IContributor contributor, GuideRequester guideRequester, IExecutionDegree executionDegree,
-            PaymentType paymentType, Date creationDate, Integer version) {
-        this.setContributor(contributor);
-        this.setNumber(number);
-        this.setPerson(person);
-        this.setRemarks(remarks);
-        this.setTotal(total);
-        this.setYear(year);
-        this.setGuideRequester(guideRequester);
-        this.setExecutionDegree(executionDegree);
-        this.setPaymentType(paymentType);
-        this.setCreationDate(creationDate);
-        this.setVersion(version);
-    }
 
     public String toString() {
         String result = "[GUIDE";

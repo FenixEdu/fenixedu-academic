@@ -2,9 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
-import net.sourceforge.fenixedu.util.StudentState;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -17,29 +15,22 @@ import org.apache.commons.collections.Predicate;
 
 public class Student extends Student_Base {
 
+    public Student() {
+        setSpecialSeason(new Boolean(false));
+    }
+
     public Student(Integer idInternal) {
         setIdInternal(idInternal);
     }
 
-    public Student() {
-        setNumber(null);
-        setState(null);
-        setPerson(null);
-        setDegreeType(null);
-        setPersonKey(null);
-        setStudentKind(null);
-        setStudentKindKey(null);
-        setSpecialSeason(new Boolean(false));
-    }
-
-    public Student(Integer number, StudentState state, IPerson person, DegreeType degreeType) {
-        this();
-        setNumber(number);
-        setState(state);
-        setPerson(person);
-        setDegreeType(degreeType);
-        setPersonKey(null);
-        setSpecialSeason(new Boolean(false));
+    public String toString() {
+        String result = "[" + this.getClass().getName() + "; ";
+        result += "internalCode = " + this.getIdInternal() + "; ";
+        result += "number = " + this.getNumber() + "; ";
+        result += "state = " + this.getState() + "; ";
+        result += "degreeType = " + this.getDegreeType() + "; ";
+        result += "studentKind = " + this.getStudentKind() + "; ";
+        return result;
     }
 
     public boolean equals(Object obj) {
@@ -53,16 +44,6 @@ public class Student extends Student_Base {
                             student.getDegreeType()) && this.getPerson().equals(student.getPerson())));
         }
         return resultado;
-    }
-
-    public String toString() {
-        String result = "[" + this.getClass().getName() + "; ";
-        result += "internalCode = " + this.getIdInternal() + "; ";
-        result += "number = " + this.getNumber() + "; ";
-        result += "state = " + this.getState() + "; ";
-        result += "degreeType = " + this.getDegreeType() + "; ";
-        result += "studentKind = " + this.getStudentKind() + "; ";
-        return result;
     }
 
     public IStudentCurricularPlan getActiveStudentCurricularPlan() {

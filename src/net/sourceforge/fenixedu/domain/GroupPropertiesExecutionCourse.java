@@ -3,8 +3,6 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.util.ProposalState;
-
 /**
  * @author joaosa & rmalo
  */
@@ -20,27 +18,10 @@ public class GroupPropertiesExecutionCourse extends GroupPropertiesExecutionCour
     /**
      * Construtor
      */
-    public GroupPropertiesExecutionCourse(Integer idInternal) {
-        this.setIdInternal(idInternal);
-    }
-
-    /**
-     * Construtor
-     */
     public GroupPropertiesExecutionCourse(IGroupProperties groupProperties,
             IExecutionCourse executionCourse) {
         super.setGroupProperties(groupProperties);
         super.setExecutionCourse(executionCourse);
-    }
-
-    /**
-     * Construtor
-     */
-    public GroupPropertiesExecutionCourse(IGroupProperties groupProperties,
-            IExecutionCourse executionCourse, ProposalState proposalState) {
-        super.setGroupProperties(groupProperties);
-        super.setExecutionCourse(executionCourse);
-        this.setProposalState(proposalState);
     }
 
     /**

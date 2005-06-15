@@ -61,8 +61,8 @@ public class ReadTestQuestion implements IService {
             }
 
             IPersistentQuestion persistentQuestion = persistentSuport.getIPersistentQuestion();
-            IQuestion question = new Question(questionId);
-            question = (IQuestion) persistentQuestion.readByOID(Question.class, questionId);
+
+            IQuestion question = (IQuestion) persistentQuestion.readByOID(Question.class, questionId);
             if (question == null) {
                 throw new InvalidArgumentsServiceException();
             }

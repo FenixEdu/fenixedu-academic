@@ -34,13 +34,6 @@ public class Metadata extends DomainObject implements IMetadata {
 
     private List visibleQuestions;
 
-    public Metadata() {
-    }
-
-    public Metadata(Integer metadataId) {
-        setIdInternal(metadataId);
-    }
-
     public IExecutionCourse getExecutionCourse() {
         return executionCourse;
     }

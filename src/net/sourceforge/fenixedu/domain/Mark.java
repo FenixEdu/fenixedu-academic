@@ -8,11 +8,15 @@ package net.sourceforge.fenixedu.domain;
 
 public class Mark extends Mark_Base {
 
-    public Mark() {
-    }
-    
-    public Mark(Integer idInternal) {
-        setIdInternal(idInternal);
+    public String toString() {
+        String result = "[" + this.getClass().getName() + ": ";
+        result += "idInternal = " + getIdInternal() + "; ";
+        result += "mark = " + getMark() + "; ";
+        result += "published mark = " + getPublishedMark() + "; ";
+        result += "evaluation= " + getEvaluation().getIdInternal() + "; ";
+        result += "attend = " + getAttend().getIdInternal() + "; ]";
+
+        return result;
     }
 
     public boolean equals(Object obj) {
@@ -23,17 +27,6 @@ public class Mark extends Mark_Base {
                     && this.getEvaluation().equals(mark.getEvaluation());
         }
         return resultado;
-    }
-
-    public String toString() {
-        String result = "[" + this.getClass().getName() + ": ";
-        result += "idInternal = " + getIdInternal() + "; ";
-        result += "mark = " + getMark() + "; ";
-        result += "published mark = " + getPublishedMark() + "; ";
-        result += "evaluation= " + getEvaluation().getIdInternal() + "; ";
-        result += "attend = " + getAttend().getIdInternal() + "; ]";
-
-        return result;
     }
 
 }

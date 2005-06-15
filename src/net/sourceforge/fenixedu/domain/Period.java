@@ -20,10 +20,6 @@ public class Period extends Period_Base {
     public Period() {
     }
 
-    public Period(Integer idInternal) {
-        setIdInternal(idInternal);
-    }
-
     public Period(Calendar startDate, Calendar endDate) {
         this.setStartDate(startDate);
         this.setEndDate(endDate);

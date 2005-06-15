@@ -17,70 +17,53 @@ import org.apache.commons.collections.Predicate;
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
  */
 public class ReimbursementGuide extends ReimbursementGuide_Base {
+    protected Calendar creationDate;
 
-	protected Calendar creationDate;
+    /**
+     * @return
+     */
+    public Calendar getCreationDate() {
+        return creationDate;
+    }
 
-	/**
-	 * 
-	 */
-	public ReimbursementGuide() {
+    /**
+     * @param creationDate
+     */
+    public void setCreationDate(Calendar creationDate) {
+        this.creationDate = creationDate;
+    }
 
-	}
+    public String toString() {
+        String result = "[" + this.getClass().getName() + ": ";
+        result += " idInternal=" + getIdInternal();
+        result += ", number=" + getNumber();
+        result += ", creation Date=" + creationDate;
+        result += "]";
+        return result;
+    }
 
-	/**
-	 * @param reimbursementGuideId
-	 */
-	public ReimbursementGuide(Integer reimbursementGuideId) {
-		setIdInternal(reimbursementGuideId);
-	}
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof IReimbursementGuide) {
+            IReimbursementGuide reimbursementGuide = (IReimbursementGuide) obj;
 
-	/**
-	 * @return
-	 */
-	public Calendar getCreationDate() {
-		return creationDate;
-	}
+            if ((getNumber() == null && reimbursementGuide.getNumber() == null)
+                    || (getNumber().equals(reimbursementGuide.getNumber()))) {
+                result = true;
+            }
+        }
 
-	/**
-	 * @param creationDate
-	 */
-	public void setCreationDate(Calendar creationDate) {
-		this.creationDate = creationDate;
-	}
+        return result;
+    }
 
-	public IReimbursementGuideSituation getActiveReimbursementGuideSituation() {
-
-		return (IReimbursementGuideSituation) CollectionUtils.find(
-				getReimbursementGuideSituations(), new Predicate() {
-					public boolean evaluate(Object obj) {
-						IReimbursementGuideSituation situation = (IReimbursementGuideSituation) obj;
-						return situation.getState().getState().intValue() == State.ACTIVE;
-					}
-				});
-
-	}
-
-	public boolean equals(Object obj) {
-		boolean result = false;
-		if (obj instanceof IReimbursementGuide) {
-			IReimbursementGuide reimbursementGuide = (IReimbursementGuide) obj;
-
-			if ((getNumber() == null && reimbursementGuide.getNumber() == null)
-					|| (getNumber().equals(reimbursementGuide.getNumber()))) {
-				result = true;
-			}
-		}
-
-		return result;
-	}
-
-	public String toString() {
-		String result = "[" + this.getClass().getName() + ": ";
-		result += " idInternal=" + getIdInternal();
-		result += ", number=" + getNumber();
-		result += ", creation Date=" + creationDate;
-		result += "]";
-		return result;
-	}
+    public IReimbursementGuideSituation getActiveReimbursementGuideSituation() {
+        return (IReimbursementGuideSituation) CollectionUtils.find(getReimbursementGuideSituations(),
+                new Predicate() {
+                    public boolean evaluate(Object obj) {
+                        IReimbursementGuideSituation situation = (IReimbursementGuideSituation) obj;
+                        return situation.getState().getState().intValue() == State.ACTIVE;
+                    }
+                });
+    }
 
 }

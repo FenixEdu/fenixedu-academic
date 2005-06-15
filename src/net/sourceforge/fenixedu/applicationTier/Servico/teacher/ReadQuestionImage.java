@@ -41,9 +41,7 @@ public class ReadQuestionImage implements IService {
 
             IPersistentQuestion persistentQuestion = persistentSuport.getIPersistentQuestion();
 
-            IQuestion question = new Question(exerciseId);
-
-            question = (IQuestion) persistentQuestion.readByOID(Question.class, exerciseId);
+            IQuestion question = (IQuestion) persistentQuestion.readByOID(Question.class, exerciseId);
             ParseQuestion parse = new ParseQuestion();
             String image;
             try {

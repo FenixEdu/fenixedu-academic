@@ -4,20 +4,12 @@
  */
 package net.sourceforge.fenixedu.domain.grant.owner;
 
-
 /**
  * @author Barbosa
  * @author Pica
  *  
  */
 public class GrantOwner extends GrantOwner_Base {
-
-    public GrantOwner() {
-    }
-
-    public GrantOwner(Integer grantOwnerId) {
-        setIdInternal(grantOwnerId);
-    }
 
     public boolean equals(Object obj) {
         boolean result = false;

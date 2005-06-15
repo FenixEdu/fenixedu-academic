@@ -33,10 +33,6 @@ public class RoomOccupation extends RoomOccupation_Base {
     public RoomOccupation() {
     }
 
-    public RoomOccupation(Integer idInternal) {
-        this.setIdInternal(idInternal);
-    }
-
     public RoomOccupation(IRoom room, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek,
             int frequency) {
         this.setRoom(room);
@@ -321,4 +317,5 @@ public class RoomOccupation extends RoomOccupation_Base {
                 && (getDayOfWeek().getDiaSemana().intValue() == day.get(Calendar.DAY_OF_WEEK))
                 && getPeriod().containsDay(day);
     }
+
 }
