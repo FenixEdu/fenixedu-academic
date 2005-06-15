@@ -6,14 +6,13 @@
 
 package net.sourceforge.fenixedu.domain;
 
-
 /**
  * 
  * @author rpfi
  */
 
 public class ExecutionDegree extends ExecutionDegree_Base {
-    
+
     /** Construtor sem argumentos publico requerido pela moldura de objectos OJB */
     public ExecutionDegree() {
     }
@@ -21,22 +20,6 @@ public class ExecutionDegree extends ExecutionDegree_Base {
     public ExecutionDegree(IExecutionYear executionYear, IDegreeCurricularPlan curricularPlan) {
         setExecutionYear(executionYear);
         setDegreeCurricularPlan(curricularPlan);
-    }
-
-    /**
-     * @param executionDegreeId
-     */
-    public ExecutionDegree(Integer executionDegreeId) {
-        setIdInternal(executionDegreeId);
-    }
-
-    public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof IExecutionDegree) {
-            IExecutionDegree cursoExecucao = (IExecutionDegree) obj;
-            resultado = getIdInternal().equals(cursoExecucao.getIdInternal());
-        }
-        return resultado;
     }
 
     public String toString() {
@@ -54,4 +37,14 @@ public class ExecutionDegree extends ExecutionDegree_Base {
         result += "]";
         return result;
     }
+
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof IExecutionDegree) {
+            IExecutionDegree cursoExecucao = (IExecutionDegree) obj;
+            resultado = getIdInternal().equals(cursoExecucao.getIdInternal());
+        }
+        return resultado;
+    }
+
 }
