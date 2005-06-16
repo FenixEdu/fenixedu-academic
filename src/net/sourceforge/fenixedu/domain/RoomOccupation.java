@@ -42,32 +42,46 @@ public class RoomOccupation extends RoomOccupation_Base {
      * @return
      */
     public Calendar getStartTime() {
-        Calendar result = Calendar.getInstance();
-        result.setTime(this.getStartTimeDate());
-        return result;
+        if (this.getStartTimeDate() != null) {
+            Calendar result = Calendar.getInstance();
+            result.setTime(this.getStartTimeDate());
+            return result;
+        }
+        return null;
     }
 
     /**
      * @param calendar
      */
     public void setStartTime(Calendar calendar) {
-        this.setStartTimeDate(calendar.getTime());
+        if (calendar.getTime() != null) {
+            this.setStartTimeDate(calendar.getTime());            
+        } else {
+            this.setStartTimeDate(null);
+        }
     }
 
     /**
      * @return
      */
     public Calendar getEndTime() {
-        Calendar result = Calendar.getInstance();
-        result.setTime(this.getEndTimeDate());
-        return result;
+        if (this.getEndTimeDate() != null) {
+            Calendar result = Calendar.getInstance();
+            result.setTime(this.getEndTimeDate());
+            return result;
+        }
+        return null;
     }
 
     /**
      * @param calendar
      */
     public void setEndTime(Calendar calendar) {
-        this.setEndTimeDate(calendar.getTime());
+        if (calendar.getTime() != null) {
+            this.setEndTimeDate(calendar.getTime());            
+        } else {
+            this.setEndTimeDate(null);
+        }
     }
 
     public String toString() {

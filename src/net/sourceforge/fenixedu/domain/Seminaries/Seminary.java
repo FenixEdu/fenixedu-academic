@@ -20,64 +20,93 @@ public class Seminary extends Seminary_Base {
      * @return
      */
     public Calendar getEnrollmentBeginDate() {
-        Calendar result = Calendar.getInstance();
-        result.setTime(this.getEnrollmentBegin());
-        return result;
+        if (this.getEnrollmentBegin() != null) {
+            Calendar result = Calendar.getInstance();
+            result.setTime(this.getEnrollmentBegin());
+            return result;
+        }
+        return null;
     }
 
     /**
      * @param calendar
      */
     public void setEnrollmentBeginDate(Calendar calendar) {
-        this.setEnrollmentBegin(calendar.getTime());
+        if (calendar.getTime() != null) {
+            this.setEnrollmentBegin(calendar.getTime());    
+        } else {
+            this.setEnrollmentBegin(null);
+        }
     }
     
     /**
      * @return
      */
     public Calendar getEnrollmentBeginTime() {
-        Calendar result = Calendar.getInstance();
-        result.setTime(this.getEnrollmentTimeBegin());
-        return result;
+        if (this.getEnrollmentTimeBegin() != null) {
+            Calendar result = Calendar.getInstance();
+            result.setTime(this.getEnrollmentTimeBegin());
+            return result;
+        }
+        return null;
     }
 
     /**
      * @param calendar
      */
     public void setEnrollmentBeginTime(Calendar calendar) {
-        this.setEnrollmentTimeBegin(calendar.getTime());
+        if (calendar.getTime() != null) {
+            this.setEnrollmentTimeBegin(calendar.getTime());    
+        } else {
+            this.setEnrollmentTimeBegin(null);
+        }
+        
     }
 
     /**
      * @return
      */
     public Calendar getEnrollmentEndDate() {
-        Calendar result = Calendar.getInstance();
-        result.setTime(this.getEnrollmentEnd());
-        return result;
+        if (this.getEnrollmentEnd() != null) {
+            Calendar result = Calendar.getInstance();
+            result.setTime(this.getEnrollmentEnd());
+            return result;
+        }
+        return null;
     }
 
     /**
      * @param calendar
      */
     public void setEnrollmentEndDate(Calendar calendar) {
-        this.setEnrollmentEnd(calendar.getTime());
+        if (calendar.getTime() != null) {
+            this.setEnrollmentEnd(calendar.getTime());    
+        } else {
+            this.setEnrollmentEnd(null);
+        }
     }
 
     /**
      * @return
      */
     public Calendar getEnrollmentEndTime() {
-        Calendar result = Calendar.getInstance();
-        result.setTime(this.getEnrollmentTimeEnd());
-        return result;
+        if (this.getEnrollmentTimeEnd() != null) {
+            Calendar result = Calendar.getInstance();
+            result.setTime(this.getEnrollmentTimeEnd());
+            return result;
+        }
+        return null;
     }
 
     /**
      * @param calendar
      */
     public void setEnrollmentEndTime(Calendar calendar) {
-        this.setEnrollmentTimeEnd(calendar.getTime());
+        if (calendar.getTime() != null) {
+            this.setEnrollmentTimeEnd(calendar.getTime());    
+        } else {
+            this.setEnrollmentTimeEnd(null);
+        }
     }
 
     public String toString() {
