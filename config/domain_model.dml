@@ -1516,7 +1516,7 @@ class net.sourceforge.fenixedu.domain.Period extends net.sourceforge.fenixedu.do
     Date start;
     Date end;
 	
-	interface"
+	interface "
     public java.util.Calendar getStartDate();
     
     public void setStartDate(java.util.Calendar calendar);
@@ -1680,6 +1680,8 @@ class net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess extends n
 	Integer keyProject;
 	Integer keyPerson;
 	Integer keyProjectCoordinator;
+    Date begin;
+    Date end;
 
 	interface " 
     public abstract java.util.Calendar getBeginDate();

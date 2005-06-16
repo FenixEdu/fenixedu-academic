@@ -11,23 +11,39 @@ import java.util.Calendar;
  * 
  */
 public class ProjectAccess extends ProjectAccess_Base {
-    private Calendar beginDate;
 
-    private Calendar endDate;
-
+    /**
+     * @return Returns the beginDate.
+     */
     public Calendar getBeginDate() {
-        return beginDate;
+        Calendar result = Calendar.getInstance();
+        result.setTime(this.getBegin());
+        return result;
     }
 
+    /**
+     * @param beginDate
+     *            The beginDate to set.
+     */
     public void setBeginDate(Calendar beginDate) {
-        this.beginDate = beginDate;
+        this.setBegin(beginDate.getTime());
     }
 
+    /**
+     * @return Returns the endDate.
+     */
     public Calendar getEndDate() {
-        return endDate;
+        Calendar result = Calendar.getInstance();
+        result.setTime(this.getEnd());
+        return result;
     }
 
+    /**
+     * @param endDate
+     *            The endDate to set.
+     */
     public void setEndDate(Calendar endDate) {
-        this.endDate = endDate;
+        this.setEnd(endDate.getTime());
     }
+
 }
