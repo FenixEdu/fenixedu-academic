@@ -13,7 +13,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -46,7 +45,7 @@ public class SearchExecutionCourses implements IService {
 
     public List run(InfoExecutionPeriod infoExecutionPeriod, InfoExecutionDegree infoExecutionDegree,
             InfoCurricularYear infoCurricularYear, String executionCourseName)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws ExcepcaoPersistencia {
 
         List result = null;
 
