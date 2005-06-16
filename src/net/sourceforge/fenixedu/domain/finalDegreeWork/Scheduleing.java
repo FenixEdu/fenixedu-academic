@@ -9,12 +9,16 @@ import java.util.Date;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class Scheduleing extends Scheduleing_Base {
 
-    public Scheduleing() {
-        super();
+    public String toString() {
+        String result = "[Proposal";
+        result += ", idInternal=" + getIdInternal();
+        result += ", executionDegree=" + getExecutionDegree();
+        result += "]";
+        return result;
     }
 
     public boolean equals(Object obj) {
@@ -26,14 +30,6 @@ public class Scheduleing extends Scheduleing_Base {
                 result = getExecutionDegree().equals(scheduleing.getExecutionDegree());
             }
         }
-        return result;
-    }
-
-    public String toString() {
-        String result = "[Proposal";
-        result += ", idInternal=" + getIdInternal();
-        result += ", executionDegree=" + getExecutionDegree();
-        result += "]";
         return result;
     }
 
@@ -112,4 +108,5 @@ public class Scheduleing extends Scheduleing_Base {
         this.setEndOfCandidacyPeriodDate(endOfCandidacyPeriod);
         this.setEndOfCandidacyPeriodTime(endOfCandidacyPeriod);
     }
+
 }
