@@ -16,7 +16,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.domain.Contributor;
+import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.IContributor;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
@@ -24,14 +26,17 @@ import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.IPrice;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.domain.DocumentType;
-import net.sourceforge.fenixedu.domain.GraduationType;
-import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -160,9 +165,18 @@ public class PrepareCreateGuide implements IService {
                 if (student == null)
                     throw new NonExistingServiceException("O Aluno", null);
 
-                List studentCurricularPlanList = sp.getIStudentCurricularPlanPersistente()
-                        .readAllByStudentAndDegreeCurricularPlan(student,
-                                executionDegree.getDegreeCurricularPlan());
+                final Integer degreeCurricularPlanID = executionDegree.getDegreeCurricularPlan().getIdInternal();
+                List studentCurricularPlanList = (List) CollectionUtils.select(student.getStudentCurricularPlans(),new Predicate(){
+                    
+                    public boolean evaluate(Object arg0) {
+                        IStudentCurricularPlan scp = (IStudentCurricularPlan) arg0;
+                        return scp.getDegreeCurricularPlan().getIdInternal().equals(degreeCurricularPlanID);
+                    }});
+                //TODO ver bem isto
+               
+//                List studentCurricularPlanList = sp.getIStudentCurricularPlanPersistente()
+//                        .readAllByStudentAndDegreeCurricularPlan(student,
+//                                executionDegree.getDegreeCurricularPlan());
 
                 // check if student curricular plan contains selected execution
                 // degree

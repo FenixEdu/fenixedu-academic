@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.ITutor;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
@@ -113,8 +114,12 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
                 }
 
                 // check if the student is from old Leic Curricular Plan
-                List studentCurricularPlans = sp.getIStudentCurricularPlanPersistente()
-                        .readAllActiveStudentCurricularPlan(student.getNumber());
+                List studentCurricularPlans = (List) CollectionUtils.select(student.getStudentCurricularPlans(), new Predicate(){
+                    public boolean evaluate(Object arg0) {
+                        IStudentCurricularPlan scp = (IStudentCurricularPlan) arg0;
+                        return scp.getCurrentState().equals(StudentCurricularPlanState.ACTIVE);
+                    }});
+               
                 boolean oldLeicStudent = CollectionUtils.exists(studentCurricularPlans, new Predicate() {
                     public boolean evaluate(Object arg0) {
 

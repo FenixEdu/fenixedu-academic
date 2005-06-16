@@ -39,8 +39,7 @@ public class ReadPosGradStudentCurricularPlans implements IService {
             }
             if (student.getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
                 List resultTemp = new ArrayList();
-                resultTemp.addAll(persistentStudentCurricularPlan.readByStudentNumberAndDegreeType(
-                        student.getNumber(), DegreeType.MASTER_DEGREE));
+                resultTemp.addAll(student.getStudentCurricularPlans());
 
                 Iterator iterator = resultTemp.iterator();
                 while (iterator.hasNext()) {

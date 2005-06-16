@@ -58,8 +58,7 @@ public class ListMasterDegreeStudents implements IService {
         });
 
         for (IDegreeCurricularPlan degreeCurricularPlan : masterDegreeCurricularPlans) {
-            studentCurricularPlans.addAll(sp.getIStudentCurricularPlanPersistente()
-                    .readByDegreeCurricularPlan(degreeCurricularPlan));
+            studentCurricularPlans.addAll(degreeCurricularPlan.getStudentCurricularPlans());
         }
 
         for (IStudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {

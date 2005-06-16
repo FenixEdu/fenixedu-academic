@@ -98,8 +98,7 @@ public class ReadStudentCurricularPlansByPersonAndCriteria implements IService
                     Integer studentNumber = student.getNumber();
 
                     //seleccionar todos os planos do aluno
-		        
-                    studentCPsTemp = sp.getIStudentCurricularPlanPersistente().readByStudentNumberAndDegreeType(studentNumber, degreeType);
+                    studentCPsTemp = student.getStudentCurricularPlans();                   
                     
                     studentCurricularPlans.addAll(studentCPsTemp);
                 }

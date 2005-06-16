@@ -48,8 +48,7 @@ public class ReadStudentsFromDegreeCurricularPlan implements IService {
                     .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                             degreeCurricularPlanID);
 
-            students = sp.getIStudentCurricularPlanPersistente().readByDegreeCurricularPlan(
-                    degreeCurricularPlan);
+            students = degreeCurricularPlan.getStudentCurricularPlans();
 
         } catch (ExcepcaoPersistencia ex) {
 
