@@ -97,8 +97,30 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 			report.setNumberDegreeStudents(studentsList.size());
 
 			for(InfoStudentWithAttendsAndInquiriesRegistries student : studentsList) {
-				sendEmailReminder(request, student, currentExecutionPeriod, report, bundle);
+				sendEmailReminder(request, student, currentExecutionPeriod, report, form, bundle);
 			}
+			
+			//FIXME: DEBUG
+//			int a = 0;
+//			for(InfoStudentWithAttendsAndInquiriesRegistries student : studentsList) {
+//				sendEmailReminder(request, student, currentExecutionPeriod, report, form, bundle);
+//				if(a++ > 3)
+//					break;
+//			}
+//			
+//			boolean resultado = EMail.emailAddressFormatIsValid("naotemarroba.pt");
+//			resultado = EMail.emailAddressFormatIsValid("nao.tem@ponto");
+//			resultado = EMail.emailAddressFormatIsValid("tem.ponto@no.fim.");
+//			resultado = EMail.emailAddressFormatIsValid("@so.tem.server");
+//			resultado = EMail.emailAddressFormatIsValid("so.tem.user@");
+//			resultado = EMail.emailAddressFormatIsValid("serverincorrecto@.pt");
+//			resultado = EMail.emailAddressFormatIsValid("tem espacos@e.nao.devia");
+//			resultado = EMail.emailAddressFormatIsValid("tem.dois@pontos..noserver");
+//			resultado = EMail.emailAddressFormatIsValid("");
+//			resultado = EMail.emailAddressFormatIsValid(null);
+			
+			//////////////////////////////////////////////
+
 			reportList.add(report);
 			
 			
@@ -110,11 +132,11 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 	
 	private boolean sendEmailReminder(HttpServletRequest request,
 			InfoStudentWithAttendsAndInquiriesRegistries student, InfoExecutionPeriod currentExecutionPeriod,
-			InfoInquiriesEmailReminderReport report, ResourceBundle bundle) {
+			InfoInquiriesEmailReminderReport report, DynaActionForm form, ResourceBundle bundle) {
 
 		String emailAddress = student.getInfoPerson().getEmail();
 		
-		if((emailAddress == null) || (emailAddress.length() == 0)) {
+		if(!EMail.emailAddressFormatIsValid(emailAddress)) {
 			return false;
 
 		} else {
@@ -147,13 +169,13 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 		if(numberUnansweredInquiries == 0)
 			return false;
 
-		String bodyIntro = bundle.getString("message.inquiries.email.reminder.body.intro");
-		String bodyEnd = bundle.getString("message.inquiries.email.reminder.body.end");
-		String body = bodyIntro + unevaluatedCoursesNames + bodyEnd;
+		String bodyIntro = (String) form.get("bodyTextIntro");
+		String bodyEnd = (String) form.get("bodyTextEnd");
+		String body = bodyIntro + "\n" + unevaluatedCoursesNames + "\n" + bodyEnd;
 		
-		String subject = bundle.getString("message.inquiries.email.reminder.subject");
-		subject += " - " + currentExecutionPeriod.getSemester() + bundle.getString("label.inquiries.ord.semester");
-		subject += ", " + currentExecutionPeriod.getInfoExecutionYear().getYear();
+		String subject = (String) form.get("bodyTextSubject");
+//		subject += " - " + currentExecutionPeriod.getSemester() + bundle.getString("label.inquiries.ord.semester");
+//		subject += ", " + currentExecutionPeriod.getInfoExecutionYear().getYear();
 		
 		String originMail = bundle.getString("message.inquiries.email.reminder.origin.mail");
 
@@ -161,7 +183,8 @@ public class SendEmailReminderAction extends FenixDispatchAction {
             email = new EMail("mail.adm", originMail);
 
 		} else {
-            email = new EMail("localhost", originMail);
+//            email = new EMail("localhost", originMail);
+            email = new EMail("mail.rnl.ist.utl.pt", originMail);
 			subject += " (localhost)";
         }
 		
