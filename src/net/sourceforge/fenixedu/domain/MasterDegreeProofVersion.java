@@ -50,11 +50,18 @@ public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
     }
 
     public Timestamp getLastModification() {
-        return new Timestamp(this.getLastModificationDate().getTime());
+        if (this.getLastModificationDate() != null) {
+            return new Timestamp(this.getLastModificationDate().getTime());
+        }
+        return null;
     }
 
     public void setLastModification(Timestamp lastModification) {
-        this.getLastModificationDate().setTime(lastModification.getTime());
+        if (lastModification != null) {
+            this.setLastModificationDate(new Date(lastModification.getTime()));
+        } else {
+            this.setLastModificationDate(null);
+        }
     }
 
     public String toString() {

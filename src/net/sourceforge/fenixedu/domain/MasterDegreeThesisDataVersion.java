@@ -6,6 +6,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.util.State;
@@ -39,11 +40,18 @@ public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion
     }
 
     public Timestamp getLastModification() {
-        return new Timestamp(this.getLastModificationDate().getTime());
+        if (this.getLastModificationDate() != null) {
+            return new Timestamp(this.getLastModificationDate().getTime());
+        }
+        return null;
     }
 
     public void setLastModification(Timestamp lastModification) {
-        this.getLastModificationDate().setTime(lastModification.getTime());
+        if (lastModification != null) {
+            this.setLastModificationDate(new Date(lastModification.getTime()));
+        } else {
+            this.setLastModificationDate(null);
+        }
     }
 
     public String toString() {
