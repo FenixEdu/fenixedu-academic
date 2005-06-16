@@ -13,14 +13,6 @@ import org.apache.ojb.broker.PersistenceBrokerException;
 public class Professorship extends Professorship_Base implements ICreditsEventOriginator,
         PersistenceBrokerAware {
 
-    public Professorship() {
-    }
-
-    public Professorship(ITeacher teacher, IExecutionCourse executionCourse) {
-        setTeacher(teacher);
-        setExecutionCourse(executionCourse);
-    }
-
     public String toString() {
         String result = "Professorship :\n";
         result += "\n  - ExecutionCourse : " + getExecutionCourse();
