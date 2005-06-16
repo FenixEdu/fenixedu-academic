@@ -1227,7 +1227,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             "error.notAuthorizedItemDelete.fileExists"));
             saveErrors(request, actionErrors);
         } catch (FenixServiceException fenixServiceException) {
-            throw new FenixActionException(fenixServiceException.getMessage());
+            throw new FenixActionException(fenixServiceException);
         }
         return viewSection(mapping, form, request, response);
     }
