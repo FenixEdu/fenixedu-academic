@@ -18,63 +18,71 @@ import org.apache.commons.collections.Predicate;
 
 public class DomainObject extends DomainObject_Base {
 
-	public boolean equals(Object obj) {
-		if (obj != null && obj instanceof IDomainObject) {
-			IDomainObject domainObject = (IDomainObject) obj;
-			if (getIdInternal() != null && domainObject.getIdInternal() != null
-					&& getIdInternal().equals(domainObject.getIdInternal())) {
+    protected static void doLockWriteOn(Object obj) {
+        try {
+            net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB.getInstance().lockWrite(obj);             
+        } catch (Exception e) {
+            throw new Error("Couldn't obtain lockwrite on object");
+        }
+    }
 
-				Collection thisInterfaces = getInterfaces(getClass());
-				Collection objInterfaces = getInterfaces(domainObject
-						.getClass());
+    public boolean equals(Object obj) {
+        if (obj != null && obj instanceof IDomainObject) {
+            IDomainObject domainObject = (IDomainObject) obj;
+            if (getIdInternal() != null && domainObject.getIdInternal() != null
+                    && getIdInternal().equals(domainObject.getIdInternal())) {
 
-				thisInterfaces = CollectionUtils.select(thisInterfaces,
-						new IS_NOT_IDOMAIN_PREDICATE());
-				objInterfaces = CollectionUtils.select(objInterfaces,
-						new IS_NOT_IDOMAIN_PREDICATE());
+                Collection thisInterfaces = getInterfaces(getClass());
+                Collection objInterfaces = getInterfaces(domainObject
+                        .getClass());
 
-				if (!CollectionUtils
-						.intersection(thisInterfaces, objInterfaces).isEmpty()) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+                thisInterfaces = CollectionUtils.select(thisInterfaces,
+                        new IS_NOT_IDOMAIN_PREDICATE());
+                objInterfaces = CollectionUtils.select(objInterfaces,
+                        new IS_NOT_IDOMAIN_PREDICATE());
 
-	private List<Class> getInterfaces(Class thisClass) {
+                if (!CollectionUtils
+                        .intersection(thisInterfaces, objInterfaces).isEmpty()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
-		List<Class> result = new ArrayList<Class>();
+    private List<Class> getInterfaces(Class thisClass) {
 
-		Class innerClass = thisClass;
-		while (innerClass != null && !innerClass.equals(DomainObject_Base.class)
-				&& !innerClass.equals(DomainObject.class)) {
-			if (innerClass.getInterfaces().length != 0) {
-				result.addAll(Arrays.asList(innerClass.getInterfaces()));
-			}
-			innerClass = innerClass.getSuperclass();
-		}
+        List<Class> result = new ArrayList<Class>();
 
-		return result;
-	}
+        Class innerClass = thisClass;
+        while (innerClass != null && !innerClass.equals(DomainObject_Base.class)
+                && !innerClass.equals(DomainObject.class)) {
+            if (innerClass.getInterfaces().length != 0) {
+                result.addAll(Arrays.asList(innerClass.getInterfaces()));
+            }
+            innerClass = innerClass.getSuperclass();
+        }
 
-	public int hashCode() {
-		if (getIdInternal() != null) {
-			return getIdInternal().intValue();
-		}
-		return super.hashCode();
-	}
+        return result;
+    }
 
-	public class IS_NOT_IDOMAIN_PREDICATE implements Predicate {
+    public int hashCode() {
+        if (getIdInternal() != null) {
+            return getIdInternal().intValue();
+        }
+        return super.hashCode();
+    }
 
-		public boolean evaluate(Object arg0) {
-			Class class1 = (Class) arg0;
-			if (class1.getName().equals(IDomainObject.class.getName())) {
-				return false;
-			}
-			return true;
+    public class IS_NOT_IDOMAIN_PREDICATE implements Predicate {
 
-		}
-	}
+        public boolean evaluate(Object arg0) {
+            Class class1 = (Class) arg0;
+            if (class1.getName().equals(IDomainObject.class.getName())) {
+                return false;
+            }
+            return true;
+
+        }
+    }
 
 }
