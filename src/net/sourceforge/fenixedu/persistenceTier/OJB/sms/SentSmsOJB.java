@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.sms;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -23,19 +22,9 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class SentSmsOJB extends PersistentObjectOJB implements IPersistentSentSms {
 
-    public SentSmsOJB() {
-        super();
-    }
-
-    public List readByPerson(IPerson person) throws ExcepcaoPersistencia {
+    public List readByPerson(Integer personID, Integer interval) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("person.idInternal", person.getIdInternal());
-        return queryList(SentSms.class, crit, "sendDate", false);
-    }
-
-    public List readByPerson(IPerson person, Integer interval) throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();
-        crit.addEqualTo("person.idInternal", person.getIdInternal());
+        crit.addEqualTo("person.idInternal", personID);
         return readInterval(SentSms.class, crit, interval, new Integer(0), "sendDate", false);
     }
 

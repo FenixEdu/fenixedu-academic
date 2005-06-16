@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.persistenceTier.sms;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -17,9 +16,8 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  *  
  */
 public interface IPersistentSentSms extends IPersistentObject {
-    public abstract List readByPerson(IPerson person) throws ExcepcaoPersistencia;
 
-    public abstract List readByPerson(IPerson person, Integer interval) throws ExcepcaoPersistencia;
+    public abstract List readByPerson(Integer personID, Integer interval) throws ExcepcaoPersistencia;
 
     public abstract Integer countByPersonAndDatePeriod(Integer personId, Date startDate, Date endDate)
             throws ExcepcaoPersistencia;
