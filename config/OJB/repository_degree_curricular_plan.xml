@@ -143,6 +143,12 @@
             >
 		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
 	</collection-descriptor>
+	<collection-descriptor proxy="true"
+			name="studentCurricularPlans"
+			element-class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
+>
+		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
+	</collection-descriptor>	
 	
 </class-descriptor>
 
