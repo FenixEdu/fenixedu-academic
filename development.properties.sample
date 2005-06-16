@@ -1,0 +1,16 @@
+#
+#
+#------------------------------------------------------------------------------
+# Wiki Configuration
+#------------------------------------------------------------------------------
+#
+#   default.backend.host: remote host url.
+#   default.backend.port: remote host port
+#   default.backend.remoteApplication.uri: remote host application
+#      ussage: http(s)://<default.backend.host>:<default.backend.port>/<default.backend.remoteApplication.uri>
+#   default.frontend.localApplication.uri: local application
+#
+wiki.host=localhost
+wiki.port=80
+#
+#

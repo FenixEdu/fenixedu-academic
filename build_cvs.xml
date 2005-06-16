@@ -4,22 +4,54 @@
     <property environment="env"/>
 	<property name="encoding" value="ISO-8859-1"/>	
 
+	<property file="development.properties"/>
+
+    <property name="lib" location="lib" />
+	<property name="build.home" location="build"/>
+	<property name="build.home.temp" value="${build.home}/temp"/>
+	<property name="build.home.temp.classes" value="${build.home.temp}/temp/classes"/>
+	<property name="build.home.webinf" value="${build.home}/WEB-INF"/>
+	<property name="build.home.webinf.classes" value="${build.home.webinf}/classes"/>
+
 	<target name="publishCommitLogs">
 <!--
+		<delete file="${cvs.log.file}"/>
 		<cvschangelog
-				cvsRoot=":ext:lepc@fenix-cvs.ist.utl.pt:/home/ciapl/cvs"
-				cvsRsh="ssh"
-				destfile="changelog.xml"
-				daysinpast="10"
+				cvsRoot="${cvs.root}"
+				cvsRsh="${cvs.rsh}"
+				destfile="${cvs.log.file}"
+				daysinpast="1"
 		  />
 -->
-        <style in="changelog.xml" 
-               out="changelog.txt" 
-               style="etc/changelog.xsl">
+		<delete file="${cvs.log.output}"/>
+		<style in="${cvs.log.file}"
+               out="${cvs.log.output}"
+               style="${cvs.log.stylesheet}">
           <param name="title" expression="CVS Commit Log"/>
-          <param name="module" expression="fenix"/>
-          <param name="cvsweb" expression="https://fenix-cvs.ist.utl.pt/cgi-bin/cvsweb.cgi/fenix"/>
+          <param name="cvsweb" expression="${cvs.web.address}"/>
         </style>
+		<antcall target="publish" />
 	</target>
+
+	<target name="publish"
+            description="Publishes to wiki">
+		<ant antfile="build_codeGenerator.xml" target="compile"/>
+		<java classname="pt.utl.ist.report.WikiPublisher"
+				fork="yes"
+				failonerror="false"
+				maxmemory="256m">
+			<arg value="${wiki.host}"/>
+			<arg value="${wiki.port}"/>
+			<arg value="${wiki.page}"/>
+			<arg value="${cvs.log.output}"/>
+			<classpath>
+				<pathelement path="${build.home.temp.classes}"/>
+				<pathelement path="${build.home.webinf.classes}"/>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+			</classpath>
+		</java>
+    </target>
 
 </project>
