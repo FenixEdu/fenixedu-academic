@@ -19,16 +19,15 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteEvaluationStatistics;
-import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularYear;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -37,7 +36,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseReport;
 import net.sourceforge.fenixedu.util.NumberUtils;
-import net.sourceforge.fenixedu.domain.ShiftType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -64,16 +62,12 @@ public class SearchExecutionCourses implements IService {
                         ExecutionDegree.class, infoExecutionDegree.getIdInternal());
             }
 
-            ICurricularYear curricularYear = null;
-            if (infoCurricularYear != null) {
-                curricularYear = (ICurricularYear) sp.getIPersistentCurricularYear().readByOID(
-                        CurricularYear.class, infoCurricularYear.getIdInternal());
-            }
+            Integer curricularYearID = (infoCurricularYear != null) ? infoCurricularYear.getIdInternal() : null;
 
             List executionCourses = sp.getIPersistentExecutionCourse()
                     .readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(executionPeriod.getIdInternal(),
                             executionDegree.getDegreeCurricularPlan().getIdInternal(),
-                            curricularYear.getYear(),
+                            curricularYearID,
                             executionCourseName);
 
             result = (List) CollectionUtils.collect(executionCourses, new Transformer() {
