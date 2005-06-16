@@ -16,29 +16,6 @@ import java.util.List;
  */
 public class Attends extends Attends_Base {
 
-    public Attends() {
-    }
-
-    public Attends(IStudent aluno, IExecutionCourse disciplinaExecucao) {
-        setAluno(aluno);
-        setDisciplinaExecucao(disciplinaExecucao);
-    }
-
-    public Attends(IStudent aluno, IExecutionCourse disciplinaExecucao, IEnrolment enrolment) {
-        setAluno(aluno);
-        setDisciplinaExecucao(disciplinaExecucao);
-        setEnrolment(enrolment);
-    }
-
-    public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof IAttends) {
-            IAttends frequenta = (IAttends) obj;
-            resultado = getIdInternal().equals(frequenta.getIdInternal());
-        }
-        return resultado;
-    }
-
     public String toString() {
         String result = "[ATTEND";
         result += ", codigoInterno=" + getIdInternal();
@@ -47,6 +24,15 @@ public class Attends extends Attends_Base {
         result += ", Enrolment=" + getEnrolment();
         result += "]";
         return result;
+    }
+    
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof IAttends) {
+            IAttends frequenta = (IAttends) obj;
+            resultado = getIdInternal().equals(frequenta.getIdInternal());
+        }
+        return resultado;
     }
 
     public List getAttendsSets() {

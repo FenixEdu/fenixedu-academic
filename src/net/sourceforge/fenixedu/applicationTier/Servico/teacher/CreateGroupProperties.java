@@ -79,7 +79,8 @@ public class CreateGroupProperties implements IService {
         groupPropertiesExecutionCourse.setProposalState(new ProposalState(new Integer(1)));
 
         IAttendsSet attendsSet;
-        attendsSet = new AttendsSet(executionCourse.getNome());
+        attendsSet = new AttendsSet();
+        attendsSet.setName(executionCourse.getNome());
         persistentAttendsSet.simpleLockWrite(attendsSet);
 
         IAttendInAttendsSet attendInAttendsSet;
