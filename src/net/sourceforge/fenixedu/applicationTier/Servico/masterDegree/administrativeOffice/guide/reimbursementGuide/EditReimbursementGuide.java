@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.IGuideEntry;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IPersonAccount;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.PersonAccount;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide;
@@ -137,6 +138,11 @@ public class EditReimbursementGuide implements IService {
                 IPersistentPersonAccount persistentPersonAccount = ps.getIPersistentPersonAccount();
                 IPersonAccount personAccount = persistentPersonAccount.readByPerson(reimbursementGuide
                         .getGuide().getPerson().getIdInternal());
+
+                if (personAccount == null) {
+                    personAccount = new PersonAccount(reimbursementGuide.getGuide().getPerson());
+                    persistentPersonAccount.simpleLockWrite(personAccount);
+                }
 
                 IPersistentReimbursementTransaction persistentReimbursementTransaction = ps
                         .getIPersistentReimbursementTransaction();

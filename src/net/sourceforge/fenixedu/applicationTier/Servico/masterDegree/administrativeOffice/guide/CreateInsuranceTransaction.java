@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.IGuideEntry;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IPersonAccount;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.PersonAccount;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.transactions.IInsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
@@ -58,7 +59,12 @@ public class CreateInsuranceTransaction implements IService {
         }
 
         IPersonAccount personAccount = sp.getIPersistentPersonAccount().readByPerson(guide.getPerson().getIdInternal());
-
+        
+        if(personAccount == null){
+            personAccount = new PersonAccount(guide.getPerson());
+            sp.getIPersistentPersonAccount().simpleLockWrite(personAccount);
+        }
+        
         IInsuranceTransaction insuranceTransaction = new InsuranceTransaction(guideEntry.getPrice(),
                 new Timestamp(Calendar.getInstance().getTimeInMillis()), guideEntry.getDescription(),
                 guide.getPaymentType(), TransactionType.INSURANCE_PAYMENT, Boolean.FALSE, responsible,

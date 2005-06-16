@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.IGuideSituation;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IPersonAccount;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.PersonAccount;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.IPaymentTransaction;
@@ -139,6 +140,12 @@ public class ChangeGuideSituation implements IService {
                     IPersistentPersonAccount persistentPersonAccount = sp.getIPersistentPersonAccount();
                     IPersonAccount personAccount = persistentPersonAccount.readByPerson(guide
                             .getPerson().getIdInternal());
+                    
+                    if(personAccount == null){
+                        personAccount = new PersonAccount(guide.getPerson());
+                        persistentPersonAccount.simpleLockWrite(personAccount);
+                    }
+                    
                     IPersistentGratuitySituation persistentGratuitySituation = sp
                             .getIPersistentGratuitySituation();
 

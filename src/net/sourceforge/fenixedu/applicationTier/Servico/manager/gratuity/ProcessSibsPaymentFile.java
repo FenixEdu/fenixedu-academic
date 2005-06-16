@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IPersonAccount;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.PersonAccount;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFile;
@@ -194,7 +195,12 @@ public class ProcessSibsPaymentFile implements IService {
                     userView.getUtilizador());
 
             IPersonAccount personAccount = sp.getIPersistentPersonAccount().readByPerson(
-                    student.getPerson().getIdInternal());
+                    student.getPerson().getIdInternal());            
+            
+            if(personAccount == null){
+                personAccount = new PersonAccount(student.getPerson());
+                sp.getIPersistentPersonAccount().simpleLockWrite(personAccount);
+            }
 
             if (sibsPaymentFileEntry.getPaymentType().equals(SibsPaymentType.INSURANCE)) {
 
