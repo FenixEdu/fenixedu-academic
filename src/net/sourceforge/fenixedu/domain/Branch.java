@@ -14,9 +14,15 @@ import org.apache.commons.collections.Predicate;
  */
 
 public class Branch extends Branch_Base {
-    /**
-     * @author Nuno Correia & Ricardo Rodrigues
-     */
+
+    public String toString() {
+        String result = "[" + this.getClass().getName() + ": ";
+        result += "idInternal = " + getIdInternal() + "; ";
+        result += "name = " + this.getName() + "; ";
+        result += "code = " + this.getCode() + "; ";
+        result += "acronym = " + this.getAcronym() + "]\n";
+        return result;
+    }
 
     public boolean equals(Object obj) {
         boolean result = false;
@@ -28,21 +34,9 @@ public class Branch extends Branch_Base {
         return result;
     }
 
-    public String toString() {
-        String result = "[" + this.getClass().getName() + ": ";
-        result += "idInternal = " + getIdInternal() + "; ";
-        result += "name = " + this.getName() + "; ";
-        result += "code = " + this.getCode() + "; ";
-        result += "acronym = " + this.getAcronym() + "]\n";
-        return result;
-    }
-
-    /**
-     * @author Fernanda Quit�rio
-     */
     public Boolean representsCommonBranch() {
-
-        if (this.getBranchType().equals(net.sourceforge.fenixedu.domain.branch.BranchType.valueOf("COMMON"))) {
+        if (this.getBranchType().equals(
+                net.sourceforge.fenixedu.domain.branch.BranchType.valueOf("COMMON"))) {
             return Boolean.TRUE;
         }
         return Boolean.FALSE;

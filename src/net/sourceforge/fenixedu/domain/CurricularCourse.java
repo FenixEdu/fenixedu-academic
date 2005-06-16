@@ -16,7 +16,16 @@ import org.apache.commons.lang.StringUtils;
  */
 
 public class CurricularCourse extends CurricularCourse_Base {
-    private String uniqueKeyForEnrollment;  // For enrollment purposes
+    private String uniqueKeyForEnrollment; // For enrollment purposes
+
+    public String toString() {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("[").append(this.getClass()).append(":").append("idInternal = ").append(
+                this.getIdInternal()).append(";name = ").append(this.getName()).append(";code = ")
+                .append(this.getCode()).append("\n degreeCurricularPlan = ").append(
+                        this.getDegreeCurricularPlan()).append(";type = ").append(this.getType());
+        return stringBuffer.toString();
+    }
 
     public boolean equals(Object obj) {
         if (obj instanceof ICurricularCourse) {
@@ -24,15 +33,6 @@ public class CurricularCourse extends CurricularCourse_Base {
             return getIdInternal().equals(curricularCourse.getIdInternal());
         }
         return false;
-    }
-
-    public String toString() {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("[").append(this.getClass()).append(":").append("idInternal = ").append(
-                this.getIdInternal()).append(";name = ").append(this.getName()).append(";code = ").append(
-                this.getCode()).append("\n degreeCurricularPlan = ").append(this.getDegreeCurricularPlan())
-                .append(";type = ").append(this.getType());
-        return stringBuffer.toString();
     }
 
     public void setCode(String code) {
@@ -62,12 +62,15 @@ public class CurricularCourse extends CurricularCourse_Base {
     public boolean curricularCourseIsMandatory() {
         return getMandatory().booleanValue();
     }
-    
-    public List<ICurricularCourseScope> getActiveScopesInExecutionPeriod(final IExecutionPeriod executionPeriod){
+
+    public List<ICurricularCourseScope> getActiveScopesInExecutionPeriod(
+            final IExecutionPeriod executionPeriod) {
         List<ICurricularCourseScope> activeScopesInExecutionPeriod = new ArrayList<ICurricularCourseScope>();
         for (Iterator iter = getScopes().iterator(); iter.hasNext();) {
             ICurricularCourseScope scope = (ICurricularCourseScope) iter.next();
-            if((scope.getBeginDate().getTime().getTime() <= executionPeriod.getBeginDate().getTime()) && ((scope.getEndDate() == null) || (scope.getEndDate().getTime().getTime() >= executionPeriod.getEndDate().getTime()))) {
+            if ((scope.getBeginDate().getTime().getTime() <= executionPeriod.getBeginDate().getTime())
+                    && ((scope.getEndDate() == null) || (scope.getEndDate().getTime().getTime() >= executionPeriod
+                            .getEndDate().getTime()))) {
                 activeScopesInExecutionPeriod.add(scope);
             }
         }
@@ -144,12 +147,12 @@ public class CurricularCourse extends CurricularCourse_Base {
                         });
 
                 if (curricularCourseScopesFound != null && !curricularCourseScopesFound.isEmpty()) {
-                    //                    if (curricularCourseScopesFound.size() == 1) {
-                    //                        curricularYearToReturn =
+                    // if (curricularCourseScopesFound.size() == 1) {
+                    // curricularYearToReturn =
                     // getCurricularYearWithLowerYear(this.getScopes());
-                    //                    } else {
+                    // } else {
                     curricularYearToReturn = getCurricularYearWithLowerYear(curricularCourseScopesFound);
-                    //                    }
+                    // }
                 } else {
                     notFoundInSemester = true;
                 }
@@ -206,10 +209,10 @@ public class CurricularCourse extends CurricularCourse_Base {
         List result = (List) CollectionUtils.select(scopes, new Predicate() {
             public boolean evaluate(Object obj) {
                 ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
-                return ((curricularCourseScope.getBranch().getBranchType().equals(
-                        BranchType.COMNBR) || curricularCourseScope.getBranch().equals(branch))
-                        && curricularCourseScope.getCurricularSemester().getSemester().equals(semester)
-                        && curricularCourseScope.isActive().booleanValue());
+                return ((curricularCourseScope.getBranch().getBranchType().equals(BranchType.COMNBR) || curricularCourseScope
+                        .getBranch().equals(branch))
+                        && curricularCourseScope.getCurricularSemester().getSemester().equals(semester) && curricularCourseScope
+                        .isActive().booleanValue());
             }
         });
 
@@ -253,4 +256,5 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return StringUtils.lowerCase(stringBuffer.toString());
     }
+
 }
