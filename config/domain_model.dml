@@ -1303,6 +1303,7 @@ class net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion extends net.
 	String dissertationTitle;
 	Integer keyEmployee;
 	State currentState;
+    Date lastModificationDate;
 	
 	interface "
     public void setLastModification(java.sql.Timestamp lastModification);

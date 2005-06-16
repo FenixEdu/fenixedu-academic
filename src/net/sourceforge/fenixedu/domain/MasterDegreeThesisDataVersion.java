@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.util.State;
  */
 public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion_Base {
     private List externalAssistentGuiders;
-    private Timestamp lastModification;
 
     public MasterDegreeThesisDataVersion() {
     }
@@ -31,30 +30,6 @@ public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion
         this.setCurrentState(currentState);
     }
 
-    /**
-     * @param masterDegreeThesis
-     * @param externalAssistentGuiders
-     * @param assistentGuiders
-     * @param guiders
-     * @param responsibleEmployee
-     * @param dissertationTitle
-     * @param lastModification
-     * @param currentState
-     */
-    public MasterDegreeThesisDataVersion(IMasterDegreeThesis masterDegreeThesis,
-            List externalAssistentGuiders, List assistentGuiders, List guiders,
-            IEmployee responsibleEmployee, String dissertationTitle, Timestamp lastModification,
-            State currentState) {
-        this.setMasterDegreeThesis(masterDegreeThesis);
-        this.setExternalAssistentGuiders(externalAssistentGuiders);
-        this.setAssistentGuiders(assistentGuiders);
-        this.setGuiders(guiders);
-        this.setResponsibleEmployee(responsibleEmployee);
-        this.setDissertationTitle(dissertationTitle);
-        this.setLastModification(lastModification);
-        this.setCurrentState(currentState);
-    }
-
     public void setExternalAssistentGuiders(List externalAssistentGuiders) {
         this.externalAssistentGuiders = externalAssistentGuiders;
     }
@@ -63,12 +38,12 @@ public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion
         return externalAssistentGuiders;
     }
 
-    public void setLastModification(Timestamp lastModification) {
-        this.lastModification = lastModification;
+    public Timestamp getLastModification() {
+        return new Timestamp(this.getLastModificationDate().getTime());
     }
 
-    public Timestamp getLastModification() {
-        return lastModification;
+    public void setLastModification(Timestamp lastModification) {
+        this.getLastModificationDate().setTime(lastModification.getTime());
     }
 
     public String toString() {
