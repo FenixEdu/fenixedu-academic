@@ -13,9 +13,6 @@ import net.sourceforge.fenixedu.util.CalendarUtil;
  * 
  */
 public class Period extends Period_Base {
-    protected Calendar startDate;
-
-    protected Calendar endDate;
 
     public Period() {
     }
@@ -28,35 +25,39 @@ public class Period extends Period_Base {
     /**
      * @return
      */
-    public Calendar getEndDate() {
-        return endDate;
-    }
-
-    /**
-     * @return
-     */
     public Calendar getStartDate() {
-        return startDate;
+        Calendar result = Calendar.getInstance();
+        result.setTime(this.getStart());
+        return result;
     }
 
     /**
      * @param calendar
      */
     public void setEndDate(Calendar calendar) {
-        endDate = calendar;
+        this.setEnd(calendar.getTime());
+    }
+
+    /**
+     * @return
+     */
+    public Calendar getEndDate() {
+        Calendar result = Calendar.getInstance();
+        result.setTime(this.getEnd());
+        return result;
     }
 
     /**
      * @param calendar
      */
     public void setStartDate(Calendar calendar) {
-        startDate = calendar;
+        this.setStart(calendar.getTime());
     }
 
     public boolean equals(Object obj) {
         if (obj instanceof IPeriod) {
             IPeriod periodObj = (IPeriod) obj;
-            if (startDate.equals(periodObj.getStartDate()) && endDate.equals(periodObj.getEndDate())) {
+            if (this.getStartDate().equals(periodObj.getStartDate()) && this.getEndDate().equals(periodObj.getEndDate())) {
                 return true;
             }
 
@@ -92,7 +93,7 @@ public class Period extends Period_Base {
     }
     
     public boolean containsDay(Calendar day){
-        return !(startDate.after(day) || endDate.before(day));
+        return !(this.getStartDate().after(day) || this.getEndDate().before(day));
     }
 
 }
