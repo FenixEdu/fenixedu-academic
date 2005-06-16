@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * 
@@ -9,11 +10,18 @@ import java.sql.Timestamp;
 public class EmployeeHistoric extends EmployeeHistoric_Base {
 
     public Timestamp getWhen() {
-        return new Timestamp(this.getWhenDate().getTime());
+        if (this.getWhenDate() != null) {
+            return new Timestamp(this.getWhenDate().getTime());
+        }
+        return null;
     }
 
     public void setWhen(Timestamp when) {
-        this.getWhenDate().setTime(when.getTime());
+        if (when != null) {
+            this.setWhenDate(new Date(when.getTime()));
+        } else {
+            this.setWhenDate(null);
+        }
     }
 
     public String toString() {
