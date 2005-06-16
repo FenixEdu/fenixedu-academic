@@ -138,6 +138,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SalaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ScientificAreaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SecretaryEnrolmentStudentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SectionVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SentSmsVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPaymentFileEntryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPaymentFileVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SiteVO;
@@ -522,7 +523,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentSentSms getIPersistentSentSms() {
-        return null;
+        return new SentSmsVO();
     }
 
     public IPersistentGaugingTestResult getIPersistentGaugingTestResult() {
