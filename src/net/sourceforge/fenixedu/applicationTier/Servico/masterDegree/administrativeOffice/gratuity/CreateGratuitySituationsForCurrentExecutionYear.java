@@ -54,7 +54,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
                 .getIStudentCurricularPlanPersistente();
 
         IPersistentGratuitySituation gratuitySituationDAO = sp.getIPersistentGratuitySituation();
-
+        
         // read master degree and specialization execution degrees
         List executionDegreeList = sp.getIPersistentExecutionDegree().readByExecutionYearAndDegreeType(
                 executionYear.getYear(), DegreeType.MASTER_DEGREE);
@@ -66,17 +66,16 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
 
             if (gratuityValues == null) {
                 continue;
-            }
+            }            
 
             this.firstYear = isFirstYear(executionDegree);
 
-            List studentCurricularPlanList = studentCurricularPlanDAO
-                    .readByDegreeCurricularPlan(executionDegree.getDegreeCurricularPlan());
+			List studentCurricularPlanList = executionDegree.getDegreeCurricularPlan().getStudentCurricularPlans();
 
             for (Iterator iterator = studentCurricularPlanList.iterator(); iterator.hasNext();) {
 
                 IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();
-
+                
                 IGratuitySituation gratuitySituation = gratuitySituationDAO
                         .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
                                 studentCurricularPlan.getIdInternal(), gratuityValues.getIdInternal());
@@ -94,6 +93,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
         }
 
     }
+
 
     private boolean isFirstYear(IExecutionDegree executionDegree) {
         List<IExecutionDegree> executionDegrees = executionDegree.getDegreeCurricularPlan()
