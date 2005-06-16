@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project basedir="." default="publishCommitLogs" name="CVS Tools">
+
+    <property environment="env"/>
+	<property name="encoding" value="ISO-8859-1"/>	
+
+	<target name="publishCommitLogs">
+<!--
+		<cvschangelog
+				cvsRoot=":ext:lepc@fenix-cvs.ist.utl.pt:/home/ciapl/cvs"
+				cvsRsh="ssh"
+				destfile="changelog.xml"
+				daysinpast="10"
+		  />
+-->
+        <style in="changelog.xml" 
+               out="changelog.txt" 
+               style="etc/changelog.xsl">
+          <param name="title" expression="CVS Commit Log"/>
+          <param name="module" expression="fenix"/>
+          <param name="cvsweb" expression="https://fenix-cvs.ist.utl.pt/cgi-bin/cvsweb.cgi/fenix"/>
+        </style>
+	</target>
+
+</project>
