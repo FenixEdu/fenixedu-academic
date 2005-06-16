@@ -141,6 +141,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SectionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPaymentFileEntryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SibsPaymentFileVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SiteVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentCurricularPlanVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentGroupAttendVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentGroupVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentKindVO;
@@ -297,7 +298,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentStudentCurricularPlan getIStudentCurricularPlanPersistente() {
-        return null;
+        return new StudentCurricularPlanVO();
     }
 
     public IPersistentBranch getIPersistentBranch() {
