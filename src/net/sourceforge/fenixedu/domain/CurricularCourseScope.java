@@ -10,36 +10,52 @@ import java.util.Calendar;
 
 public class CurricularCourseScope extends CurricularCourseScope_Base {
 
-    private Calendar beginDate;
-
-    private Calendar endDate;
-    
-
-    
-
-    public CurricularCourseScope() {
-        setIdInternal(null);
-        setBranch(null);
-        setCurricularCourse(null);
-        setCurricularSemester(null);
-        setBranchKey(null);
-        setCurricularCourseKey(null);
-        setCurricularSemesterKey(null);
+    /**
+     * @return Returns the beginDate.
+     */
+    public Calendar getBeginDate() {
+        Calendar result = Calendar.getInstance();
+        result.setTime(this.getBegin());
+        return result;
     }
 
     /**
-     * @deprecated
+     * @param beginDate
+     *            The beginDate to set.
      */
-    public CurricularCourseScope(ICurricularCourse curricularCourse,
-            ICurricularSemester curricularSemester, IBranch branch) {
-        this();
-        setCurricularCourse(curricularCourse);
-        setCurricularSemester(curricularSemester);
-        setBranch(branch);
+    public void setBeginDate(Calendar beginDate) {
+        this.setBegin(beginDate.getTime());
+    }
+
+    /**
+     * @return Returns the endDate.
+     */
+    public Calendar getEndDate() {
+        Calendar result = Calendar.getInstance();
+        result.setTime(this.getEnd());
+        return result;
+    }
+
+    /**
+     * @param endDate
+     *            The endDate to set.
+     */
+    public void setEndDate(Calendar endDate) {
+        this.setEnd(endDate.getTime());
+    }
+
+    public String toString() {
+        String result = "[" + this.getClass().getName() + ": ";
+        result += "idInternal = " + this.getIdInternal() + "; ";
+        result += "curricularCourse = " + this.getCurricularCourse() + "; ";
+        result += "curricularSemester = " + this.getCurricularSemester() + "; ";
+        result += "branch = " + this.getBranch() + "; ";
+        result += "endDate = " + this.getEndDate() + "]\n";
+
+        return result;
     }
 
     public boolean equals(Object obj) {
-
         boolean resultado = false;
 
         if (obj instanceof ICurricularCourseScope) {
@@ -59,52 +75,12 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
         return resultado;
     }
 
-    public String toString() {
-        String result = "[" + this.getClass().getName() + ": ";
-        result += "idInternal = " + this.getIdInternal() + "; ";
-        result += "curricularCourse = " + this.getCurricularCourse() + "; ";
-        result += "curricularSemester = " + this.getCurricularSemester() + "; ";
-        result += "branch = " + this.getBranch() + "; ";
-        result += "endDate = " + this.endDate + "]\n";
-
-        return result;
-    }
-
     public Boolean isActive() {
         Boolean result = Boolean.FALSE;
-        if (this.endDate == null) {
+        if (this.getEndDate() == null) {
             result = Boolean.TRUE;
         }
         return result;
     }
 
-    /**
-     * @return Returns the beginDate.
-     */
-    public Calendar getBeginDate() {
-        return beginDate;
-    }
-
-    /**
-     * @param beginDate
-     *            The beginDate to set.
-     */
-    public void setBeginDate(Calendar beginDate) {
-        this.beginDate = beginDate;
-    }
-
-    /**
-     * @return Returns the endDate.
-     */
-    public Calendar getEndDate() {
-        return endDate;
-    }
-
-    /**
-     * @param endDate
-     *            The endDate to set.
-     */
-    public void setEndDate(Calendar endDate) {
-        this.endDate = endDate;
-    }
 }
