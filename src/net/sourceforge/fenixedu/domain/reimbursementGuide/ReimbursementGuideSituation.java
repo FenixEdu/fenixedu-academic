@@ -17,25 +17,35 @@ public class ReimbursementGuideSituation extends ReimbursementGuideSituation_Bas
      * @return
      */
     public Calendar getModificationDate() {
-        Calendar result = Calendar.getInstance();
-        result.setTime(this.getModification());
-        return result;
+        if (this.getModification() != null) {
+            Calendar result = Calendar.getInstance();
+            result.setTime(this.getModification());
+            return result;
+        }
+        return null;
     }
 
     /**
      * @param modificationDate
      */
     public void setModificationDate(Calendar modificationDate) {
-        this.setModification(modificationDate.getTime());
+        if (modificationDate.getTime() != null) {
+            this.setModification(modificationDate.getTime());            
+        } else {
+            this.setModification(null);
+        }
     }
 
     /**
      * @return Returns the officialDate.
      */
     public Calendar getOfficialDate() {
-        Calendar result = Calendar.getInstance();
-        result.setTime(this.getOfficial());
-        return result;
+        if (this.getOfficial() != null) {
+            Calendar result = Calendar.getInstance();
+            result.setTime(this.getOfficial());
+            return result;
+        }
+        return null;
     }
 
     /**
@@ -43,7 +53,11 @@ public class ReimbursementGuideSituation extends ReimbursementGuideSituation_Bas
      *            The officialDate to set.
      */
     public void setOfficialDate(Calendar officialDate) {
-        this.setModification(officialDate.getTime());
+        if (officialDate.getTime() != null) {
+            this.setModification(officialDate.getTime());    
+        } else {
+            this.setModification(null);
+        }
     }
 
     public boolean equals(Object obj) {

@@ -26,32 +26,46 @@ public class Period extends Period_Base {
      * @return
      */
     public Calendar getStartDate() {
-        Calendar result = Calendar.getInstance();
-        result.setTime(this.getStart());
-        return result;
+        if (this.getStart() != null) {
+            Calendar result = Calendar.getInstance();
+            result.setTime(this.getStart());
+            return result;
+        }
+        return null;
     }
 
     /**
      * @param calendar
      */
     public void setEndDate(Calendar calendar) {
-        this.setEnd(calendar.getTime());
+        if (calendar.getTime() != null) {
+            this.setEnd(calendar.getTime());
+        } else {
+            this.setEnd(null);
+        }
     }
 
     /**
      * @return
      */
     public Calendar getEndDate() {
-        Calendar result = Calendar.getInstance();
-        result.setTime(this.getEnd());
-        return result;
+        if (this.getEnd() != null) {
+            Calendar result = Calendar.getInstance();
+            result.setTime(this.getEnd());
+            return result;
+        }
+        return null;
     }
 
     /**
      * @param calendar
      */
     public void setStartDate(Calendar calendar) {
-        this.setStart(calendar.getTime());
+        if (calendar.getTime() != null) {
+            this.setStart(calendar.getTime());    
+        } else {
+            this.setStart(null);
+        }
     }
 
     public boolean equals(Object obj) {

@@ -22,16 +22,23 @@ public class ReimbursementGuide extends ReimbursementGuide_Base {
      * @return
      */
     public Calendar getCreationDate() {
-        Calendar result = Calendar.getInstance();
-        result.setTime(this.getCreation());
-        return result;
+        if (this.getCreation() != null) {
+            Calendar result = Calendar.getInstance();
+            result.setTime(this.getCreation());
+            return result;
+        }
+        return null;
     }
 
     /**
      * @param creationDate
      */
     public void setCreationDate(Calendar creationDate) {
-        this.setCreation(creationDate.getTime());
+        if (creationDate.getTime() != null) {
+            this.setCreation(creationDate.getTime());    
+        } else {
+            this.setCreation(null);
+        }
     }
 
     public String toString() {
