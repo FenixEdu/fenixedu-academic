@@ -18,9 +18,12 @@
 </h3>
 
 <br/>
-<p><strong>Escolha um ou mais planos curriculares:</strong></p>
+
 
 <logic:present name='<%= InquiriesUtil.DEGREE_CURRICULAR_PLANS_LIST %>'>
+	<p class="caps"><strong>
+		<bean:message key="title.inquiries.choose.curricular.plans" bundle="INQUIRIES_RESOURCES"/>
+	</strong></p>
 	<html:form action="/sendEmailReminder">
 		<html:hidden property="method" value="sendEmails" />
 		<%--ul style="list-style-type: none;"--%>
@@ -57,19 +60,60 @@
 
 				</c:if>
 			</logic:iterate>
+		</table>		
+
+		<br/><br/>
+
+		<p class="caps"><strong>
+			<bean:message key="title.inquiries.edit.reminder" bundle="INQUIRIES_RESOURCES"/>
+		</strong></p>
+		
+		<font class="underline italic">
+			<bean:message key="title.inquiries.reminder.sender.email" bundle="INQUIRIES_RESOURCES"/>
+		</font>
+		&nbsp;
+		<bean:message key="message.inquiries.email.reminder.origin.mail" bundle="INQUIRIES_RESOURCES"/>
+		<br/>
+
+
+		<p class="underline italic">
+			<bean:message key="title.inquiries.reminder.subject" bundle="INQUIRIES_RESOURCES"/>
+		</p>
+		<bean:define id="subject">
+			<bean:message key="message.inquiries.email.reminder.subject" bundle="INQUIRIES_RESOURCES"/>
+		</bean:define>
+		<html:text property="bodyTextSubject" styleClass="reminder" value='<%= subject %>' />
 			
+		<p class="underline italic">
+			<bean:message key="title.inquiries.reminder.body" bundle="INQUIRIES_RESOURCES"/>
+		</p>
+		<bean:define id="bodyIntro">
+			<bean:message key="message.inquiries.email.reminder.body.intro" bundle="INQUIRIES_RESOURCES"/>
+		</bean:define>
+		<html:textarea property="bodyTextIntro" styleClass="reminder" rows="10" value='<%= bodyIntro %>' />
+	
+		<br/>
+		<strong>
+			<bean:message key="title.inquiries.reminder.unevaluated.courses" bundle="INQUIRIES_RESOURCES"/>
+		</strong>
+		<br/>
+
+		<bean:define id="bodyEnd">
+			<bean:message key="message.inquiries.email.reminder.body.end" bundle="INQUIRIES_RESOURCES"/>
+		</bean:define>
+		<html:textarea property="bodyTextEnd" styleClass="reminder" rows="5" value='<%= bodyEnd %>' />
+		<br/>
+		<br/>
+
+		<table class="reminder">
 			<tr>
-				<td class="invisible" align="right" colspan="3">
-					&nbsp;
-				</td>
-			<tr>
-				<td class="invisible" align="right" colspan="3">
+				<td align="right">
 					<html:submit styleClass="inputbuttonSmall">
 						<bean:message key="button.inquiries.send.email.reminder" bundle="INQUIRIES_RESOURCES"/>
 					</html:submit>
 				</td>
 			</tr>
-		</table>
+		</table>			
 
 
 	</html:form>
