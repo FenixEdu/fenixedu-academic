@@ -10,116 +10,117 @@ import java.util.Calendar;
  * @author Ana e Ricardo
  */
 public class WrittenEvaluation extends WrittenEvaluation_Base {
-    protected Calendar day;
-
-    protected Calendar beginning;
-
-    protected Calendar end;
-
-    protected Calendar enrollmentBeginDay;
-
-    protected Calendar enrollmentBeginTime;
-
-    protected Calendar enrollmentEndDay;
-
-    protected Calendar enrollmentEndTime;
 
     /**
      * @return
      */
     public Calendar getBeginning() {
-        return beginning;
-    }
-
-    /**
-     * @return
-     */
-    public Calendar getDay() {
-        return day;
-    }
-
-    /**
-     * @return
-     */
-    public Calendar getEnd() {
-        return end;
-    }
-
-    /**
-     * @return
-     */
-    public Calendar getEnrollmentBeginDay() {
-        return enrollmentBeginDay;
-    }
-
-    /**
-     * @return
-     */
-    public Calendar getEnrollmentBeginTime() {
-        return enrollmentBeginTime;
-    }
-
-    /**
-     * @return
-     */
-    public Calendar getEnrollmentEndDay() {
-        return enrollmentEndDay;
-    }
-
-    /**
-     * @return
-     */
-    public Calendar getEnrollmentEndTime() {
-        return enrollmentEndTime;
+        Calendar result = Calendar.getInstance();
+        result.setTime(this.getBeginningDate());
+        return result;
     }
 
     /**
      * @param calendar
      */
     public void setBeginning(Calendar calendar) {
-        beginning = calendar;
+        this.setBeginningDate(calendar.getTime());
+    }
+
+    /**
+     * @return
+     */
+    public Calendar getDay() {
+        Calendar result = Calendar.getInstance();
+        result.setTime(this.getDayDate());
+        return result;
     }
 
     /**
      * @param calendar
      */
     public void setDay(Calendar calendar) {
-        day = calendar;
+        this.setDayDate(calendar.getTime());
+    }
+
+    /**
+     * @return
+     */
+    public Calendar getEnd() {
+        Calendar result = Calendar.getInstance();
+        result.setTime(this.getEndDate());
+        return result;
     }
 
     /**
      * @param calendar
      */
     public void setEnd(Calendar calendar) {
-        end = calendar;
+        this.setEndDate(calendar.getTime());
+    }
+
+    /**
+     * @return
+     */
+    public Calendar getEnrollmentBeginDay() {
+        Calendar result = Calendar.getInstance();
+        result.setTime(this.getEnrollmentBeginDayDate());
+        return result;
     }
 
     /**
      * @param calendar
      */
     public void setEnrollmentBeginDay(Calendar calendar) {
-        enrollmentBeginDay = calendar;
+        this.setEnrollmentBeginDayDate(calendar.getTime());
+    }
+
+    /**
+     * @return
+     */
+    public Calendar getEnrollmentBeginTime() {
+        Calendar result = Calendar.getInstance();
+        result.setTime(this.getEnrollmentBeginTimeDate());
+        return result;
     }
 
     /**
      * @param calendar
      */
     public void setEnrollmentBeginTime(Calendar calendar) {
-        enrollmentBeginTime = calendar;
+        this.setEnrollmentBeginTimeDate(calendar.getTime());
+    }
+
+    /**
+     * @return
+     */
+    public Calendar getEnrollmentEndDay() {
+        Calendar result = Calendar.getInstance();
+        result.setTime(this.getEnrollmentEndDayDate());
+        return result;
     }
 
     /**
      * @param calendar
      */
     public void setEnrollmentEndDay(Calendar calendar) {
-        enrollmentEndDay = calendar;
+        this.setEnrollmentEndDayDate(calendar.getTime());
+    }
+
+    /**
+     * @return
+     */
+    public Calendar getEnrollmentEndTime() {
+        Calendar result = Calendar.getInstance();
+        result.setTime(this.getEnrollmentEndTimeDate());
+        return result;
     }
 
     /**
      * @param calendar
      */
     public void setEnrollmentEndTime(Calendar calendar) {
-        enrollmentEndTime = calendar;
+        this.setEnrollmentEndTimeDate(calendar.getTime());
     }
 
     public String toString() {

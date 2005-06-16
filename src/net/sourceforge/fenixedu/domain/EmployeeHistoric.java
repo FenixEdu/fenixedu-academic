@@ -7,14 +7,13 @@ import java.sql.Timestamp;
  * @author Tânia Pousão
  */
 public class EmployeeHistoric extends EmployeeHistoric_Base {
-    private Timestamp when = null;
 
     public Timestamp getWhen() {
-        return when;
+        return new Timestamp(this.getWhenDate().getTime());
     }
 
     public void setWhen(Timestamp when) {
-        this.when = when;
+        this.getWhenDate().setTime(when.getTime());
     }
 
     public String toString() {

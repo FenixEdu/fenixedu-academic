@@ -633,6 +633,7 @@ class net.sourceforge.fenixedu.domain.EmployeeHistoric extends net.sourceforge.f
     Integer keyStatus;
     Integer who;
     Integer keyEmployee;
+    Date whenDate;
     
     interface "
     public java.sql.Timestamp getWhen();
@@ -732,7 +733,14 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 
 
 	class net.sourceforge.fenixedu.domain.WrittenEvaluation extends net.sourceforge.fenixedu.domain.Evaluation {
-
+        Date dayDate;
+        Date beginningDate;
+        Date endDate;
+        Date enrollmentBeginDayDate;
+        Date enrollmentBeginTimeDate;
+        Date enrollmentEndDayDate;
+        Date enrollmentEndTimeDate;
+        
         interface"
 		public java.util.Calendar getDay();
 		
