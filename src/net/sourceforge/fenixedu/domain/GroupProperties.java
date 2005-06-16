@@ -14,15 +14,14 @@ import java.util.List;
  * 
  */
 public class GroupProperties extends GroupProperties_Base {
-    private Calendar enrolmentBeginDay;
-
-    private Calendar enrolmentEndDay;
 
     /**
      * @return Calendar
      */
     public Calendar getEnrolmentBeginDay() {
-        return enrolmentBeginDay;
+        Calendar result = Calendar.getInstance();
+        result.setTime(this.getEnrolmentBeginDayDate());
+        return result;
     }
 
     /**
@@ -32,14 +31,16 @@ public class GroupProperties extends GroupProperties_Base {
      *            The enrolmentBeginDay to set
      */
     public void setEnrolmentBeginDay(Calendar enrolmentBeginDay) {
-        this.enrolmentBeginDay = enrolmentBeginDay;
+        this.setEnrolmentBeginDayDate(enrolmentBeginDay.getTime());
     }
 
     /**
      * @return Calendar
      */
     public Calendar getEnrolmentEndDay() {
-        return enrolmentEndDay;
+        Calendar result = Calendar.getInstance();
+        result.setTime(this.getEnrolmentEndDayDate());
+        return result;
     }
 
     /**
@@ -49,7 +50,7 @@ public class GroupProperties extends GroupProperties_Base {
      *            The enrolmentEndDay to set
      */
     public void setEnrolmentEndDay(Calendar enrolmentEndDay) {
-        this.enrolmentEndDay = enrolmentEndDay;
+        this.setEnrolmentEndDayDate(enrolmentEndDay.getTime());
     }
 
     /**

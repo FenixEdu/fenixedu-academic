@@ -775,7 +775,7 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 		class net.sourceforge.fenixedu.domain.Exam extends net.sourceforge.fenixedu.domain.WrittenEvaluation {
             Season season;
             
-			interface"
+			interface "
 			public java.util.List getAssociatedRooms();
 			"	
 		}
@@ -1137,7 +1137,9 @@ class net.sourceforge.fenixedu.domain.GroupProperties extends net.sourceforge.fe
     String name;
     EnrolmentGroupPolicyType enrolmentPolicy;
     ShiftType shiftType;
-    
+    Date enrolmentBeginDayDate;
+    Date enrolmentEndDayDate;
+
     interface "
     public java.util.Calendar getEnrolmentBeginDay();
     
