@@ -16,13 +16,11 @@ import net.sourceforge.fenixedu.util.State;
  *         (naat@mega.ist.utl.pt)
  */
 public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
-    private Timestamp lastModification;
 
     /**
      * Default Constructor
      */
     public MasterDegreeProofVersion() {
-
     }
 
     /**
@@ -51,12 +49,12 @@ public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
         this.setExternalJuries(externalJuries);
     }
 
-    public void setLastModification(Timestamp lastModification) {
-        this.lastModification = lastModification;
+    public Timestamp getLastModification() {
+        return new Timestamp(this.getLastModificationDate().getTime());
     }
 
-    public Timestamp getLastModification() {
-        return lastModification;
+    public void setLastModification(Timestamp lastModification) {
+        this.getLastModificationDate().setTime(lastModification.getTime());
     }
 
     public String toString() {
@@ -64,7 +62,7 @@ public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
         result += "idInternal = " + this.getIdInternal() + "; \n";
         result += "masterDegreeThesis = " + this.getMasterDegreeThesis().getIdInternal() + "; \n";
         result += "responsibleEmployee = " + this.getResponsibleEmployee().getIdInternal() + "; \n";
-        result += "lastModification = " + this.lastModification.toString() + "; \n";
+        result += "lastModification = " + this.getLastModification().toString() + "; \n";
         result += "proofDate = " + this.getProofDate().toString() + "; \n";
         result += "thesisDeliveryDate = " + this.getThesisDeliveryDate().toString() + "; \n";
         result += "finalResult = " + this.getFinalResult().toString() + "; \n";
@@ -81,7 +79,7 @@ public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
         if (obj instanceof IMasterDegreeProofVersion) {
             IMasterDegreeProofVersion masterDegreeProofVersion = (IMasterDegreeProofVersion) obj;
             result = getMasterDegreeThesis().equals(masterDegreeProofVersion.getMasterDegreeThesis())
-                    && this.lastModification.equals(masterDegreeProofVersion.getLastModification());
+                    && this.getLastModification().equals(masterDegreeProofVersion.getLastModification());
         }
 
         return result;
