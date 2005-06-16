@@ -42,7 +42,7 @@ public class ReadSentSmsByPerson implements IService {
 
             List infoSentSmsList = new ArrayList();
 
-            List sentSmsList = persistentSentSms.readByPerson(person, new Integer(50));
+            List sentSmsList = persistentSentSms.readByPerson(person.getIdInternal(), new Integer(50));
             Iterator it = sentSmsList.iterator();
             ISentSms sentSms = null;
 
