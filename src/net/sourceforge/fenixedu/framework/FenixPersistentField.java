@@ -94,7 +94,7 @@ public class FenixPersistentField extends PersistentFieldBase {
         {
             try
             {
-                return m.invoke(ProxyHelper.getRealObject(target), null);
+                return m.invoke(ProxyHelper.getRealObject(target), (Object[]) null);
             }
             catch (Throwable e)
             {
