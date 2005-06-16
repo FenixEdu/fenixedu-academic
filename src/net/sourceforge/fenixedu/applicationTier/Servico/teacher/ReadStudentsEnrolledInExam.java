@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeacherStudentsEnroll
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.ExamStudentRoom;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExamStudentRoom;
 import net.sourceforge.fenixedu.domain.ISite;
