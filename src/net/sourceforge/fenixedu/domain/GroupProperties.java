@@ -19,9 +19,12 @@ public class GroupProperties extends GroupProperties_Base {
      * @return Calendar
      */
     public Calendar getEnrolmentBeginDay() {
-        Calendar result = Calendar.getInstance();
-        result.setTime(this.getEnrolmentBeginDayDate());
-        return result;
+        if (this.getEnrolmentBeginDayDate() != null) {
+            Calendar result = Calendar.getInstance();
+            result.setTime(this.getEnrolmentBeginDayDate());
+            return result;
+        }
+        return null;
     }
 
     /**
@@ -31,16 +34,23 @@ public class GroupProperties extends GroupProperties_Base {
      *            The enrolmentBeginDay to set
      */
     public void setEnrolmentBeginDay(Calendar enrolmentBeginDay) {
-        this.setEnrolmentBeginDayDate(enrolmentBeginDay.getTime());
+        if (enrolmentBeginDay.getTime() != null) {
+            this.setEnrolmentBeginDayDate(enrolmentBeginDay.getTime());
+        } else {
+            this.setEnrolmentBeginDayDate(null);
+        }
     }
 
     /**
      * @return Calendar
      */
     public Calendar getEnrolmentEndDay() {
-        Calendar result = Calendar.getInstance();
-        result.setTime(this.getEnrolmentEndDayDate());
-        return result;
+        if (this.getEnrolmentEndDayDate() != null) {
+            Calendar result = Calendar.getInstance();
+            result.setTime(this.getEnrolmentEndDayDate());
+            return result;
+        }
+        return null;
     }
 
     /**
@@ -50,7 +60,11 @@ public class GroupProperties extends GroupProperties_Base {
      *            The enrolmentEndDay to set
      */
     public void setEnrolmentEndDay(Calendar enrolmentEndDay) {
-        this.setEnrolmentEndDayDate(enrolmentEndDay.getTime());
+        if (enrolmentEndDay.getTime() != null) {
+            this.setEnrolmentEndDayDate(enrolmentEndDay.getTime());
+        } else {
+            this.setEnrolmentEndDayDate(null);
+        }
     }
 
     /**

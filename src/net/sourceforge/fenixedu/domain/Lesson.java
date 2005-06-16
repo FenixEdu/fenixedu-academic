@@ -30,23 +30,37 @@ public class Lesson extends Lesson_Base {
     }
 
     public Calendar getInicio() {
-        Calendar result = Calendar.getInstance();
-        result.setTime(this.getBegin());
-        return result;
+        if (this.getBegin() != null) {
+            Calendar result = Calendar.getInstance();
+            result.setTime(this.getBegin());
+            return result;
+        }
+        return null;
     }
 
     public void setInicio(Calendar inicio) {
-        this.setBegin(inicio.getTime());
+        if (inicio.getTime() != null) {
+            this.setBegin(inicio.getTime());
+        } else {
+            this.setBegin(null);
+        }
     }
 
     public Calendar getFim() {
-        Calendar result = Calendar.getInstance();
-        result.setTime(this.getEnd());
-        return result;
+        if (this.getEnd() != null) {
+            Calendar result = Calendar.getInstance();
+            result.setTime(this.getEnd());
+            return result;
+        }
+        return null;
     }
 
     public void setFim(Calendar fim) {
-        this.setEnd(fim.getTime());
+        if (fim.getTime() != null) {
+            this.setEnd(fim.getTime());    
+        } else {
+            this.setEnd(null);
+        }
     }
 
     public String toString() {
