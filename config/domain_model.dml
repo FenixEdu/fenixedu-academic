@@ -1835,15 +1835,17 @@ class net.sourceforge.fenixedu.domain.RoomOccupation extends net.sourceforge.fen
 	Integer frequency;
 	Integer keyPeriod;
     DiaSemana dayOfWeek;
+    Date startTimeDate;
+    Date endTimeDate;
 
-	interface"
-	public java.util.Calendar getEndTime();
+	interface "
+    public java.util.Calendar getStartTime();
+
+    public void setStartTime(java.util.Calendar calendar);
+    
+    public java.util.Calendar getEndTime();
 	
 	public void setEndTime(java.util.Calendar calendar);
-
-	public java.util.Calendar getStartTime();
-
-	public void setStartTime(java.util.Calendar calendar);
 
 	public boolean roomOccupationForDateAndTime(IRoomOccupation roomOccupation);
 	
@@ -1862,7 +1864,11 @@ class net.sourceforge.fenixedu.domain.Seminaries.Seminary extends net.sourceforg
     Boolean hasCaseStudy;
     Integer allowedCandidaciesPerStudent;
     String name;
-    
+    Date enrollmentBegin;
+    Date enrollmentTimeBegin;
+    Date enrollmentEnd;
+    Date enrollmentTimeEnd;
+
     interface "
     public java.util.Calendar getEnrollmentBeginDate();
 

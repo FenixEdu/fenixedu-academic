@@ -23,10 +23,6 @@ public class RoomOccupation extends RoomOccupation_Base {
 
     public static final int QUINZENAL = 3;
 
-    protected Calendar startTime;
-
-    protected Calendar endTime;
-
     /**
      * Construtor
      */
@@ -46,35 +42,39 @@ public class RoomOccupation extends RoomOccupation_Base {
      * @return
      */
     public Calendar getStartTime() {
-        return startTime;
+        Calendar result = Calendar.getInstance();
+        result.setTime(this.getStartTimeDate());
+        return result;
     }
 
     /**
      * @param calendar
      */
     public void setStartTime(Calendar calendar) {
-        startTime = calendar;
+        this.setStartTimeDate(calendar.getTime());
     }
 
     /**
      * @return
      */
     public Calendar getEndTime() {
-        return endTime;
+        Calendar result = Calendar.getInstance();
+        result.setTime(this.getEndTimeDate());
+        return result;
     }
 
     /**
      * @param calendar
      */
     public void setEndTime(Calendar calendar) {
-        endTime = calendar;
+        this.setEndTimeDate(calendar.getTime());
     }
 
     public String toString() {
         String result = "[ROOM OCCUPATION";
         result += ", codInt=" + getIdInternal();
-        result += ", startTime=" + DateFormatUtils.format(startTime.getTime(), "HH:mm");
-        result += ", endTime=" + DateFormatUtils.format(endTime.getTime(), "HH:mm");
+        result += ", startTime=" + DateFormatUtils.format(this.getStartTime().getTime(), "HH:mm");
+        result += ", endTime=" + DateFormatUtils.format(this.getEndTime().getTime(), "HH:mm");
         result += ", dayOfWeek=" + getDayOfWeek();
         result += ", periodId=" + getPeriod().getIdInternal();
         result += ", period="
@@ -313,7 +313,7 @@ public class RoomOccupation extends RoomOccupation_Base {
     }
 
     public boolean containedIn(Calendar day, Calendar beginning, Calendar end) {
-        return startTime.equals(beginning) && endTime.equals(end)
+        return this.getStartTime().equals(beginning) && this.getEndTime().equals(end)
                 && (getDayOfWeek().getDiaSemana().intValue() == day.get(Calendar.DAY_OF_WEEK))
                 && getPeriod().containsDay(day);
     }
