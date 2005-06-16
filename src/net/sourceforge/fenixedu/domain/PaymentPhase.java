@@ -15,20 +15,14 @@ import org.apache.struts.util.MessageResources;
 public class PaymentPhase extends PaymentPhase_Base {
     private List transactionList;
 
-    /**
-     * @return Returns the description.
-     */
-    public String getDescription() {
+    public String toString() {
+        StringBuffer object = new StringBuffer();
+        object = object.append("\n[PaymentPhase: ").append("idInternal= ").append(getIdInternal())
+                .append(" starDate= ").append(getStartDate()).append("; endDate= ").append(getEndDate())
+                .append("; value= ").append(getValue()).append("; description= ").append(
+                        getDescription()).append("\n");
 
-        MessageResources messages = MessageResources
-                .getMessageResources("ServidorApresentacao.ApplicationResources");
-
-        String newDescription = null;
-        newDescription = messages.getMessage(super.getDescription());
-        if (newDescription == null) {
-            newDescription = super.getDescription();
-        }
-        return newDescription;
+        return object.toString();
     }
 
     /**
@@ -46,14 +40,19 @@ public class PaymentPhase extends PaymentPhase_Base {
         this.transactionList = transactionList;
     }
 
-    public String toString() {
-        StringBuffer object = new StringBuffer();
-        object = object.append("\n[PaymentPhase: ").append("idInternal= ").append(getIdInternal())
-                .append(" starDate= ").append(getStartDate()).append("; endDate= ").append(getEndDate()).append(
-                        "; value= ").append(getValue()).append("; description= ").append(
-                        getDescription()).append("\n");
+    /**
+     * @return Returns the description.
+     */
+    public String getDescription() {
+        MessageResources messages = MessageResources
+                .getMessageResources("ServidorApresentacao.ApplicationResources");
 
-        return object.toString();
+        String newDescription = null;
+        newDescription = messages.getMessage(super.getDescription());
+        if (newDescription == null) {
+            newDescription = super.getDescription();
+        }
+        return newDescription;
     }
 
 }
