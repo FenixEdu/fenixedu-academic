@@ -51,7 +51,7 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
      *            The endDate to set.
      */
     public void setEndDate(Calendar endDate) {
-        if (endDate.getTime() != null) {
+        if (endDate != null) {
             this.setEnd(endDate.getTime());
         } else {
             this.setEnd(null);
