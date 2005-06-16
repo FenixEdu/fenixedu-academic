@@ -10,8 +10,17 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
 
 public class Precedence extends Precedence_Base {
 
-    public Precedence() {
-        super();
+    public String toString() {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("Precedence:\n");
+        stringBuffer.append(this.getCurricularCourse()).append("\n");
+        List restrictions = this.getRestrictions();
+        for (int i = 0; i < restrictions.size(); i++) {
+            IRestriction restriction = (IRestriction) restrictions.get(i);
+            stringBuffer.append(restriction).append("\n");
+        }
+        stringBuffer.append("---------\n");
+        return stringBuffer.toString();
     }
 
     public boolean equals(Object obj) {
@@ -33,19 +42,6 @@ public class Precedence extends Precedence_Base {
             }
         }
         return result;
-    }
-
-    public String toString() {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("Precedence:\n");
-        stringBuffer.append(this.getCurricularCourse()).append("\n");
-        List restrictions = this.getRestrictions();
-        for (int i = 0; i < restrictions.size(); i++) {
-            IRestriction restriction = (IRestriction) restrictions.get(i);
-            stringBuffer.append(restriction).append("\n");
-        }
-        stringBuffer.append("---------\n");
-        return stringBuffer.toString();
     }
 
     public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
