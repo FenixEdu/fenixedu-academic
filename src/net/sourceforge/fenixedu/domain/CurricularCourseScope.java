@@ -14,9 +14,12 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
      * @return Returns the beginDate.
      */
     public Calendar getBeginDate() {
-        Calendar result = Calendar.getInstance();
-        result.setTime(this.getBegin());
-        return result;
+        if (this.getBegin() != null) {
+            Calendar result = Calendar.getInstance();
+            result.setTime(this.getBegin());
+            return result;
+        }
+        return null;
     }
 
     /**
@@ -24,16 +27,23 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
      *            The beginDate to set.
      */
     public void setBeginDate(Calendar beginDate) {
-        this.setBegin(beginDate.getTime());
+        if (beginDate != null) {
+            this.setBegin(beginDate.getTime());
+        } else {
+            this.setBegin(null);
+        }
     }
 
     /**
      * @return Returns the endDate.
      */
     public Calendar getEndDate() {
-        Calendar result = Calendar.getInstance();
-        result.setTime(this.getEnd());
-        return result;
+        if (this.getEnd() != null) {
+            Calendar result = Calendar.getInstance();
+            result.setTime(this.getEnd());
+            return result;
+        }
+        return null;
     }
 
     /**
@@ -41,7 +51,11 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
      *            The endDate to set.
      */
     public void setEndDate(Calendar endDate) {
-        this.setEnd(endDate.getTime());
+        if (endDate.getTime() != null) {
+            this.setEnd(endDate.getTime());
+        } else {
+            this.setEnd(null);
+        }
     }
 
     public String toString() {
