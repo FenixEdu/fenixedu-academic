@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -31,10 +30,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author Luis Cruz
  */
 public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan implements IService {
-
-    public ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan() {
-        super();
-    }
 
     public List run(Integer executionDegreeOID) throws FenixServiceException {
         List finalDegreeWorkProposalHeaders = new ArrayList();
@@ -48,7 +43,7 @@ public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan implement
             if (finalDegreeWorkProposals != null) {
                 finalDegreeWorkProposalHeaders = new ArrayList();
                 for (int i = 0; i < finalDegreeWorkProposals.size(); i++) {
-                    IProposal proposal = (Proposal) finalDegreeWorkProposals.get(i);
+                    IProposal proposal = (IProposal) finalDegreeWorkProposals.get(i);
 
                     if (proposal != null) {
                         FinalDegreeWorkProposalHeader finalDegreeWorkProposalHeader = new FinalDegreeWorkProposalHeader();
