@@ -12,28 +12,30 @@ import java.util.Calendar;
  * 
  */
 public class ReimbursementGuideSituation extends ReimbursementGuideSituation_Base {
-    protected Calendar modificationDate;
-    protected Calendar officialDate;
 
     /**
      * @return
      */
     public Calendar getModificationDate() {
-        return modificationDate;
+        Calendar result = Calendar.getInstance();
+        result.setTime(this.getModification());
+        return result;
     }
 
     /**
      * @param modificationDate
      */
     public void setModificationDate(Calendar modificationDate) {
-        this.modificationDate = modificationDate;
+        this.setModification(modificationDate.getTime());
     }
 
     /**
      * @return Returns the officialDate.
      */
     public Calendar getOfficialDate() {
-        return officialDate;
+        Calendar result = Calendar.getInstance();
+        result.setTime(this.getOfficial());
+        return result;
     }
 
     /**
@@ -41,7 +43,7 @@ public class ReimbursementGuideSituation extends ReimbursementGuideSituation_Bas
      *            The officialDate to set.
      */
     public void setOfficialDate(Calendar officialDate) {
-        this.officialDate = officialDate;
+        this.setModification(officialDate.getTime());
     }
 
     public boolean equals(Object obj) {

@@ -1714,6 +1714,7 @@ class net.sourceforge.fenixedu.domain.Qualification extends net.sourceforge.feni
 class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyGuide;
 	Integer number;
+    Date creation;
 
 	interface "
 	public java.util.Calendar getCreationDate();
@@ -1737,6 +1738,8 @@ class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSitua
 	Integer keyEmployee;
     State state;
     ReimbursementGuideState reimbursementGuideState;
+    Date modification;
+    Date official;
 	
 	interface "
     public java.util.Calendar getModificationDate();

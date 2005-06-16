@@ -17,27 +17,28 @@ import org.apache.commons.collections.Predicate;
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
  */
 public class ReimbursementGuide extends ReimbursementGuide_Base {
-    protected Calendar creationDate;
 
     /**
      * @return
      */
     public Calendar getCreationDate() {
-        return creationDate;
+        Calendar result = Calendar.getInstance();
+        result.setTime(this.getCreation());
+        return result;
     }
 
     /**
      * @param creationDate
      */
     public void setCreationDate(Calendar creationDate) {
-        this.creationDate = creationDate;
+        this.setCreation(creationDate.getTime());
     }
 
     public String toString() {
         String result = "[" + this.getClass().getName() + ": ";
-        result += " idInternal=" + getIdInternal();
-        result += ", number=" + getNumber();
-        result += ", creation Date=" + creationDate;
+        result += " idInternal=" + this.getIdInternal();
+        result += ", number=" + this.getNumber();
+        result += ", creation Date=" + this.getCreationDate();
         result += "]";
         return result;
     }
