@@ -11,13 +11,9 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.util.date.TimePeriod;
 
 public class Lesson extends Lesson_Base {
-    protected Calendar _inicio;
-
-    protected Calendar _fim;
 
     /**
-     * Construtor sem argumentos público requerido pela moldura de objectos
-     * OJB
+     * Construtor sem argumentos público requerido pela moldura de objectos OJB
      */
     public Lesson() {
     }
@@ -34,19 +30,23 @@ public class Lesson extends Lesson_Base {
     }
 
     public Calendar getInicio() {
-        return _inicio;
+        Calendar result = Calendar.getInstance();
+        result.setTime(this.getBegin());
+        return result;
     }
 
     public void setInicio(Calendar inicio) {
-        _inicio = inicio;
+        this.setBegin(inicio.getTime());
     }
 
     public Calendar getFim() {
-        return _fim;
+        Calendar result = Calendar.getInstance();
+        result.setTime(this.getEnd());
+        return result;
     }
 
     public void setFim(Calendar fim) {
-        _fim = fim;
+        this.setEnd(fim.getTime());
     }
 
     public String toString() {

@@ -1233,6 +1233,8 @@ class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.do
 	Integer chaveSala;
     DiaSemana diaSemana;
     ShiftType tipo;
+    Date begin;
+    Date end;
 
 	interface "
 	public java.util.Calendar getInicio();
