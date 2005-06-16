@@ -203,4 +203,30 @@ public class EMail extends FenixUtil {
         }
         return true;
     }
+	
+	public static boolean emailAddressFormatIsValid(String emailAddress) {
+		if((emailAddress == null) || (emailAddress.length() == 0))
+			return false;
+						
+		if(emailAddress.indexOf(' ') > 0)
+			return false;
+		
+		String[] atSplit = emailAddress.split("@");
+		if(atSplit.length != 2)
+			return false;
+
+		else if((atSplit[0].length() == 0) || (atSplit[1].length() == 0))
+			return false;
+		
+		String domain = new String(atSplit[1]);
+
+		if(domain.lastIndexOf('.') == (domain.length() - 1))
+			return false;
+		
+		if(domain.indexOf('.') <= 0)
+			return false;
+				
+		return true;
+		
+	}
 }
