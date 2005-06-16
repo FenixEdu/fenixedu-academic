@@ -104,8 +104,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
 
                 IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
-                List studentCurricularPlanList = studentCurricularPlanDAO
-                        .readByDegreeCurricularPlan(degreeCurricularPlan);
+                List studentCurricularPlanList = degreeCurricularPlan.getStudentCurricularPlans();
 
                 //add insurance lines
                 for (Iterator iterator = studentCurricularPlanList.iterator(); iterator.hasNext();) {

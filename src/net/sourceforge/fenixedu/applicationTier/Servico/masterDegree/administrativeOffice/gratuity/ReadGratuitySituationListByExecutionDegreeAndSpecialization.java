@@ -16,6 +16,8 @@ import net.sourceforge.fenixedu.domain.IGratuitySituation;
 import net.sourceforge.fenixedu.domain.IGratuityValues;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
@@ -25,8 +27,10 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
-import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
-import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -125,11 +129,15 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
                     continue;
                 }
 
-                List studentCurricularPlanList = studentCurricularPlanDAO
-                        .readAllByDegreeCurricularPlanAndSpecialization(executionDegree
-                                .getDegreeCurricularPlan(), specialization);
+                List allStudentCurricularPlans = executionDegree.getDegreeCurricularPlan().getStudentCurricularPlans();
+                List filteredStudentCurricularPlans = (List) CollectionUtils.select(allStudentCurricularPlans,new Predicate(){
 
-                for (Iterator iterator = studentCurricularPlanList.iterator(); iterator.hasNext();) {
+                    public boolean evaluate(Object arg0) {
+                        IStudentCurricularPlan scp = (IStudentCurricularPlan) arg0;
+                        return scp.getSpecialization() != null;
+                    }});
+
+                for (Iterator iterator = filteredStudentCurricularPlans.iterator(); iterator.hasNext();) {
                     IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator
                             .next();
 

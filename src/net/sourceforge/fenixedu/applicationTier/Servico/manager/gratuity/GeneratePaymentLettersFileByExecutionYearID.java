@@ -283,8 +283,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 
                 IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
-                List studentCurricularPlanList = studentCurricularPlanDAO
-                        .readByDegreeCurricularPlan(degreeCurricularPlan);
+                List studentCurricularPlanList = degreeCurricularPlan.getStudentCurricularPlans();
 
                 IGratuityValues gratuityValues = executionDegree.getGratuityValues();
 
@@ -336,8 +335,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 
                         IGratuitySituation gratuitySituation = gratuitySituationDAO
                                 .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
-                                        studentCurricularPlan.getIdInternal(), gratuityValues
-                                                .getIdInternal());
+                                        studentCurricularPlan.getIdInternal(), gratuityValues.getIdInternal());
 
                         if (gratuitySituation != null) {
 

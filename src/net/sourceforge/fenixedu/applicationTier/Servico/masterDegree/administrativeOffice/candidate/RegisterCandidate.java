@@ -203,11 +203,18 @@ public class RegisterCandidate implements IService {
             // ActiveStudentCurricularPlanAlreadyExistsServiceException();
             // }
 
-            IStudentCurricularPlan existingStudentCurricularPlan = sp
-                    .getIStudentCurricularPlanPersistente().readByStudentDegreeCurricularPlanAndState(
-                            student,
-                            masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan(),
-                            StudentCurricularPlanState.ACTIVE);
+            List<IStudentCurricularPlan> studentCurricularPalns = masterDegreeCandidate
+                    .getExecutionDegree().getDegreeCurricularPlan().getStudentCurricularPlans();
+            
+            IStudentCurricularPlan existingStudentCurricularPlan = null;                
+            for (IStudentCurricularPlan scp : studentCurricularPalns) {
+                if (scp.getStudent().getIdInternal().equals(student.getIdInternal())
+                        && scp.getCurrentState().equals(StudentCurricularPlanState.ACTIVE)) {
+                    existingStudentCurricularPlan = scp;
+                    break;
+                }
+            }
+
             if (existingStudentCurricularPlan != null) {
                 throw new ExistingServiceException();
             }

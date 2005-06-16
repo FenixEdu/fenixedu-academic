@@ -238,8 +238,7 @@ public class ProcessSibsPaymentFile implements IService {
 
             // DegreeType should be changed in future to meet Degree gratuity
             // requirements
-            List studentCurricularPlanList = sp.getIStudentCurricularPlanPersistente()
-                    .readByStudentNumberAndDegreeType(student.getNumber(), DegreeType.MASTER_DEGREE);
+            List studentCurricularPlanList = student.getStudentCurricularPlans();
 
             List executionDegrees = new ArrayList();
             List studentCurricularPlans = new ArrayList();

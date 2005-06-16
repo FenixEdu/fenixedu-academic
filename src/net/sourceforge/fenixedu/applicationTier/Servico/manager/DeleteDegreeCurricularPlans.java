@@ -72,8 +72,7 @@ public class DeleteDegreeCurricularPlans implements IService {
                             if (!branches.isEmpty())
                                 undeletedDegreeCurricularPlansNames.add(degreeCurricularPlan.getName());
                             else {
-                                studentCurricularPlans = persistentStudentCurricularPlan
-                                        .readByDegreeCurricularPlan(degreeCurricularPlan);
+                                studentCurricularPlans = degreeCurricularPlan.getStudentCurricularPlans();
                                 if (!studentCurricularPlans.isEmpty())
                                     undeletedDegreeCurricularPlansNames.add(degreeCurricularPlan
                                             .getName());
