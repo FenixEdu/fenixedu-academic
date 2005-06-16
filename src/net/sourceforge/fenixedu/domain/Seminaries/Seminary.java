@@ -32,7 +32,7 @@ public class Seminary extends Seminary_Base {
      * @param calendar
      */
     public void setEnrollmentBeginDate(Calendar calendar) {
-        if (calendar.getTime() != null) {
+        if (calendar != null) {
             this.setEnrollmentBegin(calendar.getTime());    
         } else {
             this.setEnrollmentBegin(null);
@@ -55,7 +55,7 @@ public class Seminary extends Seminary_Base {
      * @param calendar
      */
     public void setEnrollmentBeginTime(Calendar calendar) {
-        if (calendar.getTime() != null) {
+        if (calendar != null) {
             this.setEnrollmentTimeBegin(calendar.getTime());    
         } else {
             this.setEnrollmentTimeBegin(null);
@@ -79,7 +79,7 @@ public class Seminary extends Seminary_Base {
      * @param calendar
      */
     public void setEnrollmentEndDate(Calendar calendar) {
-        if (calendar.getTime() != null) {
+        if (calendar != null) {
             this.setEnrollmentEnd(calendar.getTime());    
         } else {
             this.setEnrollmentEnd(null);
@@ -102,7 +102,7 @@ public class Seminary extends Seminary_Base {
      * @param calendar
      */
     public void setEnrollmentEndTime(Calendar calendar) {
-        if (calendar.getTime() != null) {
+        if (calendar != null) {
             this.setEnrollmentTimeEnd(calendar.getTime());    
         } else {
             this.setEnrollmentTimeEnd(null);

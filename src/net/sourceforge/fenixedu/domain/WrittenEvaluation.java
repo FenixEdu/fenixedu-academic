@@ -27,7 +27,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
      * @param calendar
      */
     public void setBeginning(Calendar calendar) {
-        if (calendar.getTime() != null) {
+        if (calendar != null) {
             this.setBeginningDate(calendar.getTime());
         } else {
             this.setBeginningDate(null);
@@ -50,7 +50,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
      * @param calendar
      */
     public void setDay(Calendar calendar) {
-        if (calendar.getTime() != null) {
+        if (calendar != null) {
             this.setDayDate(calendar.getTime());
         } else {
             this.setDayDate(null);
@@ -73,7 +73,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
      * @param calendar
      */
     public void setEnd(Calendar calendar) {
-        if (calendar.getTime() != null) {
+        if (calendar != null) {
             this.setEndDate(calendar.getTime());    
         } else {
             this.setEndDate(null);
@@ -96,7 +96,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
      * @param calendar
      */
     public void setEnrollmentBeginDay(Calendar calendar) {
-        if (calendar.getTime() != null) {
+        if (calendar != null) {
             this.setEnrollmentBeginDayDate(calendar.getTime());    
         } else {
             this.setEnrollmentBeginDayDate(null);
@@ -119,7 +119,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
      * @param calendar
      */
     public void setEnrollmentBeginTime(Calendar calendar) {
-        if (calendar.getTime() != null) {
+        if (calendar != null) {
             this.setEnrollmentBeginTimeDate(calendar.getTime());
         } else {
             this.setEnrollmentBeginTimeDate(null);
@@ -142,7 +142,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
      * @param calendar
      */
     public void setEnrollmentEndDay(Calendar calendar) {
-        if (calendar.getTime() != null) {
+        if (calendar != null) {
             this.setEnrollmentEndDayDate(calendar.getTime());
         } else {
             this.setEnrollmentEndDayDate(null);
@@ -165,7 +165,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
      * @param calendar
      */
     public void setEnrollmentEndTime(Calendar calendar) {
-        if (calendar.getTime() != null) {
+        if (calendar != null) {
             this.setEnrollmentEndTimeDate(calendar.getTime());
         } else {
             this.setEnrollmentEndTimeDate(null);

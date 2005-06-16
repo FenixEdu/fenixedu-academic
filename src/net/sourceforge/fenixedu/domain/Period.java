@@ -38,7 +38,7 @@ public class Period extends Period_Base {
      * @param calendar
      */
     public void setEndDate(Calendar calendar) {
-        if (calendar.getTime() != null) {
+        if (calendar != null) {
             this.setEnd(calendar.getTime());
         } else {
             this.setEnd(null);
@@ -61,7 +61,7 @@ public class Period extends Period_Base {
      * @param calendar
      */
     public void setStartDate(Calendar calendar) {
-        if (calendar.getTime() != null) {
+        if (calendar != null) {
             this.setStart(calendar.getTime());    
         } else {
             this.setStart(null);

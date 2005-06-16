@@ -34,7 +34,7 @@ public class GroupProperties extends GroupProperties_Base {
      *            The enrolmentBeginDay to set
      */
     public void setEnrolmentBeginDay(Calendar enrolmentBeginDay) {
-        if (enrolmentBeginDay.getTime() != null) {
+        if (enrolmentBeginDay != null) {
             this.setEnrolmentBeginDayDate(enrolmentBeginDay.getTime());
         } else {
             this.setEnrolmentBeginDayDate(null);
@@ -60,7 +60,7 @@ public class GroupProperties extends GroupProperties_Base {
      *            The enrolmentEndDay to set
      */
     public void setEnrolmentEndDay(Calendar enrolmentEndDay) {
-        if (enrolmentEndDay.getTime() != null) {
+        if (enrolmentEndDay != null) {
             this.setEnrolmentEndDayDate(enrolmentEndDay.getTime());
         } else {
             this.setEnrolmentEndDayDate(null);

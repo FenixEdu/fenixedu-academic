@@ -29,7 +29,7 @@ public class ProjectAccess extends ProjectAccess_Base {
      *            The beginDate to set.
      */
     public void setBeginDate(Calendar beginDate) {
-        if (beginDate.getTime() != null) {
+        if (beginDate != null) {
             this.setBegin(beginDate.getTime());    
         } else {
             this.setBegin(null);
@@ -53,7 +53,7 @@ public class ProjectAccess extends ProjectAccess_Base {
      *            The endDate to set.
      */
     public void setEndDate(Calendar endDate) {
-        if (endDate.getTime() != null) {
+        if (endDate != null) {
             this.setEnd(endDate.getTime());            
         } else {
             this.setEnd(null);

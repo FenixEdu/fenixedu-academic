@@ -29,7 +29,7 @@ public class ReimbursementGuideSituation extends ReimbursementGuideSituation_Bas
      * @param modificationDate
      */
     public void setModificationDate(Calendar modificationDate) {
-        if (modificationDate.getTime() != null) {
+        if (modificationDate != null) {
             this.setModification(modificationDate.getTime());            
         } else {
             this.setModification(null);
@@ -53,7 +53,7 @@ public class ReimbursementGuideSituation extends ReimbursementGuideSituation_Bas
      *            The officialDate to set.
      */
     public void setOfficialDate(Calendar officialDate) {
-        if (officialDate.getTime() != null) {
+        if (officialDate != null) {
             this.setModification(officialDate.getTime());    
         } else {
             this.setModification(null);

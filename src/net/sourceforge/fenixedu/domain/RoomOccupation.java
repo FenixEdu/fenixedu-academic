@@ -54,7 +54,7 @@ public class RoomOccupation extends RoomOccupation_Base {
      * @param calendar
      */
     public void setStartTime(Calendar calendar) {
-        if (calendar.getTime() != null) {
+        if (calendar != null) {
             this.setStartTimeDate(calendar.getTime());            
         } else {
             this.setStartTimeDate(null);
@@ -77,7 +77,7 @@ public class RoomOccupation extends RoomOccupation_Base {
      * @param calendar
      */
     public void setEndTime(Calendar calendar) {
-        if (calendar.getTime() != null) {
+        if (calendar != null) {
             this.setEndTimeDate(calendar.getTime());            
         } else {
             this.setEndTimeDate(null);

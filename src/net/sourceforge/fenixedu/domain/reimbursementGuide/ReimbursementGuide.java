@@ -34,7 +34,7 @@ public class ReimbursementGuide extends ReimbursementGuide_Base {
      * @param creationDate
      */
     public void setCreationDate(Calendar creationDate) {
-        if (creationDate.getTime() != null) {
+        if (creationDate != null) {
             this.setCreation(creationDate.getTime());    
         } else {
             this.setCreation(null);

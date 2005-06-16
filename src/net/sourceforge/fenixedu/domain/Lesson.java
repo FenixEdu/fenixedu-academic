@@ -39,7 +39,7 @@ public class Lesson extends Lesson_Base {
     }
 
     public void setInicio(Calendar inicio) {
-        if (inicio.getTime() != null) {
+        if (inicio != null) {
             this.setBegin(inicio.getTime());
         } else {
             this.setBegin(null);
@@ -56,7 +56,7 @@ public class Lesson extends Lesson_Base {
     }
 
     public void setFim(Calendar fim) {
-        if (fim.getTime() != null) {
+        if (fim != null) {
             this.setEnd(fim.getTime());    
         } else {
             this.setEnd(null);
