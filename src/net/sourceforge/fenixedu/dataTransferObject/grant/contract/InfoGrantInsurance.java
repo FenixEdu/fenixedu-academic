@@ -4,15 +4,12 @@
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.Calendar;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantInsurance;
-import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.projectsManagement.FormatDouble;
 
 /**
