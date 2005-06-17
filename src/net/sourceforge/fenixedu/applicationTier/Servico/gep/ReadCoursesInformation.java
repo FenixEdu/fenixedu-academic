@@ -33,11 +33,11 @@ import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IProfessorship;
+import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.ResponsibleFor;
-import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -53,7 +53,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseReport;
-import net.sourceforge.fenixedu.domain.ShiftType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -347,7 +346,7 @@ public class ReadCoursesInformation implements IService {
         List infoResponsibleTeachers = new ArrayList();
         Iterator iter = responsiblesFor.iterator();
         while (iter.hasNext()) {
-            ResponsibleFor responsibleFor = (ResponsibleFor) iter.next();
+            IResponsibleFor responsibleFor = (IResponsibleFor) iter.next();
             ITeacher teacher = responsibleFor.getTeacher();
             infoResponsibleTeachers.add(InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher));
         }
@@ -395,7 +394,7 @@ public class ReadCoursesInformation implements IService {
         List lessons = new ArrayList();
 
         for (int i = 0; i < shifts.size(); i++) {
-            Shift shift = (Shift) shifts.get(i);
+            IShift shift = (IShift) shifts.get(i);
             lessons.addAll(shift.getAssociatedLessons());
         }
 
