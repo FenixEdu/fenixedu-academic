@@ -30,9 +30,9 @@ public class HttpClientFactory {
 		final Protocol protocol = getProtocol(host, serverPort);
 
 		client.getHostConfiguration().setHost(host, serverPort, protocol);
-		client.getState().setCookiePolicy(CookiePolicy.COMPATIBILITY);
+		client.getState().setCookiePolicy(CookiePolicy.getDefaultPolicy());
 		client.setConnectionTimeout(CONNECTION_TIMEOUT);
-		client.setStrictMode(true);
+		client.setStrictMode(false);
 
 		logger.debug("Created new HttpClient to: http://" + host + ":" + port);
 

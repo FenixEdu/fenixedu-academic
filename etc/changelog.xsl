@@ -4,7 +4,6 @@
     xmlns:xsl='http://www.w3.org/1999/XSL/Transform'
     version='1.0'>
 
-  <xsl:param name="title"/>
   <xsl:param name="module"/>
   <xsl:param name="cvsweb"/>
 
@@ -21,7 +20,6 @@
   </xsl:template>
 
   <xsl:template match="changelog">
-== <xsl:value-of select="$title"/> ==
 <xsl:text>
 
 </xsl:text>
@@ -47,7 +45,9 @@
 
   <xsl:template match="author"><xsl:attribute name="href">mailto:<xsl:value-of select="."/></xsl:attribute><xsl:value-of select="."/></xsl:template>
 
-  <xsl:template match="file"><xsl:value-of select="$cvsweb"/>/<xsl:value-of select="name" /> (<xsl:value-of select="revision"/>)</xsl:template>
+  <xsl:template match="file"><xsl:value-of select="$cvsweb"/>/<xsl:value-of select="name" /> (<xsl:value-of select="revision"/>)<xsl:text>
+
+</xsl:text></xsl:template>
 
   <!-- Any elements within a msg are processed,
        so that we can preserve HTML tags. -->

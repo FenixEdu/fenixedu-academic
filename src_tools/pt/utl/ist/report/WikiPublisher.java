@@ -19,9 +19,11 @@ public class WikiPublisher {
 		final String wikiPort = args[1];
 		final String wikiPage = args[2];
 		final String filename = args[3];
+        final String wikiUsername = args[4];
+        final String wikiPassword = args[5];
 
 		try {
-			publishReport(wikiHost, wikiPort, wikiPage, filename);
+			publishReport(wikiHost, wikiPort, wikiPage, filename, wikiUsername, wikiPassword);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -30,7 +32,7 @@ public class WikiPublisher {
 	}
 
 	private static void publishReport(final String wikiHost,
-			final String wikiPort, final String wikiPage, final String filename)
+			final String wikiPort, final String wikiPage, final String filename, String wikiUsername, String wikiPassword)
 			throws IOException {
 
         final FileReader fileReader = new FileReader(filename);
@@ -42,29 +44,45 @@ public class WikiPublisher {
         }
         fileReader.close();
 
-		postResults(wikiHost, wikiPort, wikiPage, fileContents.toString());
+		postResults(wikiHost, wikiPort, wikiPage, fileContents.toString(), wikiUsername, wikiPassword);
 	}
 
 	private static void postResults(final String wikiHost,
 			final String wikiPort, final String wikiPage,
-			final String fileContents) {
+			final String fileContents, final String wikiUsername, final String wikiPassword) {
 		try {
 			final HttpClient httpClient = HttpClientFactory.getHttpClient(
 					wikiHost, wikiPort);
+
+            final GetMethod loginMethod = HttpClientFactory
+            .getGetMethod("/UserPreferences");
+            executeMethod(httpClient, loginMethod);
+
+            final GetMethod submitLoginMethod = HttpClientFactory
+            .getGetMethod("/UserPreferences" + "#preview");
+
+            final NameValuePair[] loginNameValuePairs = new NameValuePair[5];
+            loginNameValuePairs[0] = new NameValuePair("action", "userform");
+            loginNameValuePairs[1] = new NameValuePair("username", wikiUsername);
+            loginNameValuePairs[2] = new NameValuePair("password", wikiPassword);
+            loginNameValuePairs[3] = new NameValuePair("login", "Login");
+            loginNameValuePairs[4] = new NameValuePair("method", "POST");
+            submitLoginMethod.setQueryString(loginNameValuePairs);
+            executeMethod(httpClient, submitLoginMethod);
 
 			final GetMethod editMethod = HttpClientFactory
 					.getGetMethod("/" + wikiPage + "?action=edit");
 			executeMethod(httpClient, editMethod);
 
 			final GetMethod submitEditFormMethod = HttpClientFactory
-					.getGetMethod(wikiPage + "#preview");
+					.getGetMethod("/" + wikiPage + "#preview");
 
 			final NameValuePair[] nameValuePairs = new NameValuePair[2];
 			nameValuePairs[0] = new NameValuePair("action", "savepage");
 			nameValuePairs[1] = new NameValuePair("savetext", fileContents);
 			submitEditFormMethod.setQueryString(nameValuePairs);
 			executeMethod(httpClient, submitEditFormMethod);
-		} catch (Exception e) {
+        } catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -73,8 +91,8 @@ public class WikiPublisher {
 			final GetMethod method) throws IOException, HttpException {
 		method.setFollowRedirects(true);
 		httpClient.executeMethod(method);
-		method.releaseConnection();
-		method.recycle();
+        //method.releaseConnection();
+		//method.recycle();
 	}
 
 }
