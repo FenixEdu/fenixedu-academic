@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.enrolment.improvment;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -36,94 +37,113 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author nmgo
  */
 public class ImprovmentUnEnrollService implements IService {
-    
-    public Object run(Integer studentNumber, List enrolmentsIds) throws FenixServiceException{
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentEnrollment persistentEnrollment = sp.getIPersistentEnrolment();
-            IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp.getIPersistentEnrolmentEvaluation();
-            
-            IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-            IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
-            if(student == null) {
+
+    public Object run(Integer studentNumber, List enrolmentsIds) throws FenixServiceException,
+            ExcepcaoPersistencia {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentEnrollment persistentEnrollment = sp.getIPersistentEnrolment();
+        IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp
+                .getIPersistentEnrolmentEvaluation();
+
+        IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+        IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
+                DegreeType.DEGREE);
+        if (student == null) {
+            throw new InvalidArgumentsServiceException();
+        }
+
+        Iterator iterator = enrolmentsIds.iterator();
+        while (iterator.hasNext()) {
+            Integer enrolmentId = (Integer) iterator.next();
+            IEnrolment enrollment = (IEnrolment) persistentEnrollment.readByOID(Enrolment.class,
+                    enrolmentId);
+            if (enrollment == null) {
                 throw new InvalidArgumentsServiceException();
             }
-            
-            Iterator iterator = enrolmentsIds.iterator();
-            while(iterator.hasNext()) {
-                Integer enrolmentId = (Integer) iterator.next();
-                IEnrolment enrollment = (IEnrolment) persistentEnrollment.readByOID(Enrolment.class, enrolmentId);
-                if(enrollment == null) {
-                    throw new InvalidArgumentsServiceException();
-                }
-                IEnrolmentEvaluation improvmentEnrolmentEvaluation = (IEnrolmentEvaluation) CollectionUtils.find(enrollment.getEvaluations(), new Predicate() {
+            IEnrolmentEvaluation improvmentEnrolmentEvaluation = (IEnrolmentEvaluation) CollectionUtils
+                    .find(enrollment.getEvaluations(), new Predicate() {
 
-                    public boolean evaluate(Object arg0) {
-                        IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) arg0;
-                        if(enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT)
-                                && enrolmentEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ))
-                            return true;
-                        return false;
-                    }
-                    
-                });
-                
-                if(improvmentEnrolmentEvaluation != null) {
-                    persistentEnrolmentEvaluation.delete(improvmentEnrolmentEvaluation);
+                        public boolean evaluate(Object arg0) {
+                            IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) arg0;
+                            if (enrolmentEvaluation.getEnrolmentEvaluationType().equals(
+                                    EnrolmentEvaluationType.IMPROVEMENT)
+                                    && enrolmentEvaluation.getEnrolmentEvaluationState().equals(
+                                            EnrolmentEvaluationState.TEMPORARY_OBJ))
+                                return true;
+                            return false;
+                        }
+
+                    });
+
+            if (improvmentEnrolmentEvaluation != null) {
+                if(improvmentEnrolmentEvaluation.getEmployee() != null) {
+                    improvmentEnrolmentEvaluation.getEmployee().getEnrolmentEvaluations().remove(improvmentEnrolmentEvaluation);
+                    improvmentEnrolmentEvaluation.setEmployee(null);
+                }
+
+                if(improvmentEnrolmentEvaluation.getPersonResponsibleForGrade() != null) {
+                    improvmentEnrolmentEvaluation.getPersonResponsibleForGrade().getEnrolmentEvaluations().remove(improvmentEnrolmentEvaluation);
+                    improvmentEnrolmentEvaluation.setPersonResponsibleForGrade(null);
                 }
                 
-                setAttend(sp, enrollment, student);
+                enrollment.getEvaluations().remove(improvmentEnrolmentEvaluation);
+                improvmentEnrolmentEvaluation.setEnrolment(null);
+
+                persistentEnrolmentEvaluation.delete(improvmentEnrolmentEvaluation);
             }
-            
-            return new Boolean(true);
-            
-        }catch(ExcepcaoPersistencia ep) {
-            throw new FenixServiceException(ep);
+
+            setAttend(sp, enrollment, student);
         }
+
+        return new Boolean(true);
+
     }
-    
+
     /**
      * @param sp
      * @param enrollment
      * @param student
      */
-    private void setAttend(ISuportePersistente sp, IEnrolment enrollment, final IStudent student) throws ExcepcaoPersistencia{
-        
-        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-        final IExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-        
-        IFrequentaPersistente frequentaPersistente = sp.getIFrequentaPersistente();
-        
-        List executionCourses = enrollment.getCurricularCourse().getAssociatedExecutionCourses();
-        IExecutionCourse currentExecutionCourse = (IExecutionCourse) CollectionUtils.find(executionCourses, new Predicate() {
+    private void setAttend(ISuportePersistente sp, IEnrolment enrollment, final IStudent student)
+            throws ExcepcaoPersistencia {
 
-            public boolean evaluate(Object arg0) {
-                IExecutionCourse executionCourse = (IExecutionCourse) arg0;
-                if(executionCourse.getExecutionPeriod().equals(currentExecutionPeriod))
-                	return true;
-                return false;
-            }
-            
-        });
-        
-        if(currentExecutionCourse != null) {
+        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        final IExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod
+                .readActualExecutionPeriod();
+
+        IFrequentaPersistente frequentaPersistente = sp.getIFrequentaPersistente();
+
+        List executionCourses = enrollment.getCurricularCourse().getAssociatedExecutionCourses();
+        IExecutionCourse currentExecutionCourse = (IExecutionCourse) CollectionUtils.find(
+                executionCourses, new Predicate() {
+
+                    public boolean evaluate(Object arg0) {
+                        IExecutionCourse executionCourse = (IExecutionCourse) arg0;
+                        if (executionCourse.getExecutionPeriod().equals(currentExecutionPeriod))
+                            return true;
+                        return false;
+                    }
+
+                });
+
+        if (currentExecutionCourse != null) {
             List attends = currentExecutionCourse.getAttends();
             IAttends attend = (IAttends) CollectionUtils.find(attends, new Predicate() {
 
                 public boolean evaluate(Object arg0) {
                     IAttends frequenta = (IAttends) arg0;
-                    if(frequenta.getAluno().equals(student))
-                    	return true;
+                    if (frequenta.getAluno().equals(student))
+                        return true;
                     return false;
                 }
-                
+
             });
-            if(attend != null) {
+            if (attend != null) {
                 frequentaPersistente.simpleLockWrite(attend);
                 attend.setEnrolment(null);
             }
         }
-        
+
     }
 
 }
