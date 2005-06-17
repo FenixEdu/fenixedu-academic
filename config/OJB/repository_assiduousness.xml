@@ -52,6 +52,13 @@
 	>
 	<inverse-foreignkey field-ref="keyEmployee"/>
   </collection-descriptor> 
+  <collection-descriptor proxy="true"
+	name="enrolmentEvaluations"
+	element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentEvaluation"
+	auto_retrieve="true"
+	>
+	<inverse-foreignkey field-ref="enrolmentKey"/>
+  </collection-descriptor> 
 </class-descriptor>
 
 <class-descriptor proxy="dynamic" 
