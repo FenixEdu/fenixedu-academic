@@ -37,33 +37,23 @@
 		<java classname="dml.DmlCompiler" fork="true">
 			<arg value="-f"/>
 			<arg value="-d"/>
+			<arg value="${src}"/>
+			<arg value="-db"/>
 			<arg value="${src_gen}"/>
 			<arg value="${config}/${dml.definition.file}"/>
+			<!--<arg value="-gf"/>-->
 			<classpath>
 				<fileset dir="${lib}">
 					<include name="dml.jar"/>
+					<!--<include name="dml-runtime.jar"/>-->
 					<include name="antlr.jar"/>
 				</fileset>
 			</classpath>
 		</java>
-		<delete includeEmptyDirs="true">
-			<fileset dir="${src_gen}">
-				<include name="**/*.java"/>
-				<exclude name="**/*_Base.java"/>
-				<exclude name="**/I*.java"/>
-			</fileset>
-	    </delete>
-	    <delete includeEmptyDirs="true">
-			<fileset dir="${src_gen}">
-				<include name="**/Item.java"/>
-				<include name="**/InsuranceValue.java"/>
-				<include name="**/InsuranceTransaction.java"/>
-				<include name="**/InquiriesRegistry.java"/>
-			</fileset>
-	    </delete>
 		<echo level="info" message="Processing of ${dml.definition.file} finished."/>
 	</target>
 
+	
     <target name="clean-all"
     		description="Removes any generated files">
 		<delete dir="${build.home.temp}"/>
