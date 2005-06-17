@@ -9,28 +9,103 @@
     <property name="lib" location="lib" />
 	<property name="build.home" location="build"/>
 	<property name="build.home.temp" value="${build.home}/temp"/>
-	<property name="build.home.temp.classes" value="${build.home.temp}/temp/classes"/>
+	<property name="build.home.temp.classes" value="${build.home.temp}/classes"/>
 	<property name="build.home.webinf" value="${build.home}/WEB-INF"/>
 	<property name="build.home.webinf.classes" value="${build.home.webinf}/classes"/>
 
+
+	<target name="publishAll">
+		<property name="time.yesterday" value="2005/06/15"/>
+		<property name="time.today" value="2005/06/16"/>
+		<property name="time.yesterday.wiki-format" value="2005-06-15"/>
+		<antcall target="generateLogs">
+			<param name="start" value="${time.yesterday} 00:00"/>
+			<param name="end" value="${time.today} 00:00"/>
+			<param name="page" value="${wiki.page}/${time.yesterday.wiki-format}"/>
+		</antcall>
+
+		<property name="time.yesterday" value="2005/06/14"/>
+		<property name="time.today" value="2005/06/15"/>
+		<property name="time.yesterday.wiki-format" value="2005-06-14"/>
+		<antcall target="generateLogs">
+			<param name="start" value="${time.yesterday} 00:00"/>
+			<param name="end" value="${time.today} 00:00"/>
+			<param name="page" value="${wiki.page}/${time.yesterday.wiki-format}"/>
+		</antcall>
+
+		<property name="time.yesterday" value="2005/06/13"/>
+		<property name="time.today" value="2005/06/14"/>
+		<property name="time.yesterday.wiki-format" value="2005-06-13"/>
+		<antcall target="generateLogs">
+			<param name="start" value="${time.yesterday} 00:00"/>
+			<param name="end" value="${time.today} 00:00"/>
+			<param name="page" value="${wiki.page}/${time.yesterday.wiki-format}"/>
+		</antcall>
+
+	</target>
+
 	<target name="publishCommitLogs">
-<!--
+		<tstamp>
+			<format property="time.yesterday" pattern="yyyy/MM/dd" offset="-24" unit="hour"/>
+		</tstamp>
+		<tstamp>
+			<format property="time.today" pattern="yyyy/MM/dd" unit="hour"/>
+		</tstamp>
+		<tstamp>
+			<format property="time.yesterday.wiki-format" pattern="yyyy-MM-dd" offset="-24" unit="hour"/>
+		</tstamp>
+
+		<antcall target="generateLogs">
+			<param name="start" value="${time.yesterday} 00:00"/>
+			<param name="end" value="${time.today} 00:00"/>
+			<param name="page" value="${wiki.page}/${time.yesterday.wiki-format}"/>
+		</antcall>
+	</target>
+
+	<target name="generateLogs">
 		<delete file="${cvs.log.file}"/>
 		<cvschangelog
 				cvsRoot="${cvs.root}"
 				cvsRsh="${cvs.rsh}"
 				destfile="${cvs.log.file}"
-				daysinpast="1"
-		  />
--->
+                start="${start}"
+                end="${end}"
+				>
+			<user displayname="AminMahomedAmirali" userid=""/>
+			<user displayname="AndreFernandes" userid=""/>
+			<user displayname="AngelaAlmeida" userid="ciapl-angela"/>
+			<user displayname="AntonioRitoSilva" userid="ars"/>
+			<user displayname="CarlosPereira" userid=""/>
+			<user displayname="FranciscoPassos" userid=""/>
+			<user displayname="FranciscoPaulo" userid=""/>
+			<user displayname="JoaoBrito" userid=""/>
+			<user displayname="JoaoFialho" userid=""/>
+			<user displayname="JoaoFigueiredo" userid=""/>
+			<user displayname="JoaoLuz" userid="jpvl"/>
+			<user displayname="JoaoMota" userid="ciapl-jacm"/>
+			<user displayname="JoaoSa" userid=""/>
+			<user displayname="LuisCruz" userid="lepc"/>
+			<user displayname="?LuisEgidio" userid="lmre"/>
+			<user displayname="ManuelPinto" userid=""/>
+			<user displayname="PedroSantos" userid=""/>
+			<user displayname="RicardoRodrigues" userid="rcro"/>
+			<user displayname="RitaCarvalho" userid=""/>
+			<user displayname="RitaFerreira" userid=""/>
+			<user displayname="RuiLopes" userid=""/>
+			<user displayname="shezad" userid=""/>
+			<user displayname="?SusanaFernandes" userid=""/>
+			<user displayname="?TaniaNunes" userid=""/>
+			<user displayname="velouria" userid=""/>
+		</cvschangelog>
 		<delete file="${cvs.log.output}"/>
 		<style in="${cvs.log.file}"
                out="${cvs.log.output}"
                style="${cvs.log.stylesheet}">
-          <param name="title" expression="CVS Commit Log"/>
           <param name="cvsweb" expression="${cvs.web.address}"/>
         </style>
-		<antcall target="publish" />
+		<antcall target="publish">
+			<param name="page" value="${wiki.page}/${time.yesterday.wiki-format}"/>
+		</antcall>
 	</target>
 
 	<target name="publish"
@@ -42,8 +117,10 @@
 				maxmemory="256m">
 			<arg value="${wiki.host}"/>
 			<arg value="${wiki.port}"/>
-			<arg value="${wiki.page}"/>
+			<arg value="${page}"/>
 			<arg value="${cvs.log.output}"/>
+			<arg value="${wiki.username}"/>
+			<arg value="${wiki.password}"/>
 			<classpath>
 				<pathelement path="${build.home.temp.classes}"/>
 				<pathelement path="${build.home.webinf.classes}"/>
