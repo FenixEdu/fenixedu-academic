@@ -11,4 +11,8 @@ package net.sourceforge.fenixedu.domain.teacher;
  */
 public abstract class Career extends Career_Base {
 
+    public Career() {
+        this.setOjbConcreteClass(this.getClass().getName());
+    }
+    
 }
