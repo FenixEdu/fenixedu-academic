@@ -273,4 +273,11 @@
 		>
 		<inverse-foreignkey field-ref="keyPerson"/>
 	</collection-descriptor>
+	<collection-descriptor proxy="true" 
+		name="enrolmentEvaluations" 
+		element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentEvaluation"
+		
+		>
+		<inverse-foreignkey field-ref="personResponsibleForGradeKey"/>
+	</collection-descriptor>
 </class-descriptor>
