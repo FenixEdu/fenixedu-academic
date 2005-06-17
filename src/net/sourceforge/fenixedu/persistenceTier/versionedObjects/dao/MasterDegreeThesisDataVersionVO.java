@@ -82,9 +82,8 @@ public class MasterDegreeThesisDataVersionVO extends VersionedObjectsBase implem
                 IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion = (IMasterDegreeThesisDataVersion) arg0;
                 if (masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.INACTIVE)) {
                     return true;
-                } else {
-                    return false;
-                }
+                } 
+                return false;
             }
 
         });

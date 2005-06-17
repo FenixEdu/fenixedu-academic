@@ -35,8 +35,8 @@ public class CurricularCourseEquivalenceVO extends VersionedObjectsBase
 			});
 			
 		}
-		else
-			return null;
+        
+        return null;
 	}
 
 }

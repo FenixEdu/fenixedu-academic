@@ -102,10 +102,8 @@ public class FenixPersistentField extends PersistentFieldBase {
                 throw new MetadataException("Error invoking method:" + m.getName() + " in object " + target.getClass().getName(), e);
             }
         }
-        else
-        {
-            throw new MetadataException("Can't get ReadMethod for property:" + pd.getName() + " in object " + target.getClass().getName());
-        }
+
+        throw new MetadataException("Can't get ReadMethod for property:" + pd.getName() + " in object " + target.getClass().getName());
     }
 
     private void setValueFor(PropertyDescriptor pd, Object target, Object value)

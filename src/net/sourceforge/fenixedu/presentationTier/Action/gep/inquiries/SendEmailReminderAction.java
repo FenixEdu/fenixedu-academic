@@ -138,10 +138,9 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 		
 		if(!EMail.emailAddressFormatIsValid(emailAddress)) {
 			return false;
-
-		} else {
-			report.addStudentsWithEmail(1);
-		}
+		} 
+        report.addStudentsWithEmail(1);
+		
 		
 		EMail email = null;
 

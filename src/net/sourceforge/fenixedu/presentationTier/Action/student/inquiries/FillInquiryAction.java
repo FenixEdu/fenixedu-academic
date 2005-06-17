@@ -35,12 +35,12 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeache
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiry;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoRoomWithInfoInquiriesRoom;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.InquiriesUtil;
-import net.sourceforge.fenixedu.domain.ShiftType;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
@@ -80,12 +80,10 @@ public class FillInquiryAction extends FenixDispatchAction {
         if (attendingCourseTeachers.size() == 0) {
 			request.setAttribute(InquiriesUtil.INQUIRY_MESSAGE_KEY, "message.inquiries.unavailable.course");
             return actionMapping.findForward("unavailableInquiry");
+		} 
 			
-		} else {
-			request.setAttribute(InquiriesUtil.ANCHOR, "inquiry");
+        request.setAttribute(InquiriesUtil.ANCHOR, "inquiry");
         return actionMapping.findForward("fillInquiry");
-    }
-
     }	
 
 	public ActionForward prepareCourses(ActionMapping actionMapping,
@@ -1495,10 +1493,8 @@ public class FillInquiryAction extends FenixDispatchAction {
 			}
 
             return removedArray;
-
-        } else {
-            return array;
-        }
+        } 
+        return array;
     }
 
 	private Double[] removeFromArray(Double[] array, Integer position) {
@@ -1516,9 +1512,8 @@ public class FillInquiryAction extends FenixDispatchAction {
 
             return removedArray;
 
-        } else {
-            return array;
         }
+        return array;
     }
 
 	private Boolean[] removeFromArray(Boolean[] array, Integer position) {
@@ -1536,9 +1531,8 @@ public class FillInquiryAction extends FenixDispatchAction {
 
             return removedArray;
 
-        } else {
-            return array;
-        }
+        } 
+        return array;
     }
 
     private void removeTeacherFromSelectedTeachersForm(DynaActionForm inquiryForm, Integer position) {
