@@ -79,16 +79,18 @@ public class ImprovmentEnrollService implements IService{
                     throw new InvalidArgumentsServiceException();
                 }
                 
+                persistentEnrollment.simpleLockWrite(enrollment);
+                
                 //create new Improvment EnrolmentEvaluation
                 IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
                 persistentEnrolmentEvaluation.simpleLockWrite(enrolmentEvaluation);
+                enrollment.getEvaluations().add(enrolmentEvaluation);
                 enrolmentEvaluation.setEmployee(employee);
                 enrolmentEvaluation.setWhen(new Date());
                 enrolmentEvaluation.setEnrolment(enrollment);
                 enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
                 enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.IMPROVEMENT);
                                 
-                
                 setAttend(sp, enrollment, student);
             }
             
