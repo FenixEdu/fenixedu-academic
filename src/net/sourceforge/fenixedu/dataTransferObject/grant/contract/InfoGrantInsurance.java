@@ -3,12 +3,17 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Calendar;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantInsurance;
 import net.sourceforge.fenixedu.util.CalendarUtil;
+import net.sourceforge.fenixedu.util.projectsManagement.FormatDouble;
 
 /**
  * @author Barbosa
@@ -118,11 +123,23 @@ public class InfoGrantInsurance extends InfoObject {
      * multiply by the constant value 'dayValueOfInsurance'
      */
     public static Double calculateTotalValue(Date dateBegin, Date dateEnd) {
+      
         if (dateBegin != null && dateEnd != null && dateBegin.before(dateEnd)) {
-            Integer daysBetweenDates = CalendarUtil.getNumberOfDaysBetweenDates(dateBegin, dateEnd);
-            double numberOfDays = daysBetweenDates.doubleValue();
+            Calendar c1 = Calendar.getInstance();
+            Calendar c2 = Calendar.getInstance();
 
-            return new Double(numberOfDays * getDayValueOfInsurance().doubleValue());
+            Integer numberOfMonth=0;
+            Integer numberOfYear=0;
+            Integer value=1;
+            c1.setTime(dateBegin);
+            c2.setTime(dateEnd);
+           
+            numberOfYear = 12*(c2.get(Calendar.YEAR)-c1.get(Calendar.YEAR));  
+            numberOfMonth = (c2.get(Calendar.MONTH)-c1.get(Calendar.MONTH))+1;
+            value=numberOfYear+numberOfMonth;
+            return new Double(FormatDouble.round(((getDayValueOfInsurance().doubleValue())/12)*value));
+           
+          
         }
         return new Double(0);
     }
@@ -166,4 +183,6 @@ public class InfoGrantInsurance extends InfoObject {
         }
         return grantInsurance;
     }
+    
+
 }
