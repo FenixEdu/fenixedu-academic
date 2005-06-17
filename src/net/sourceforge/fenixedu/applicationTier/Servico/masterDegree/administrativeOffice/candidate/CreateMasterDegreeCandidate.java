@@ -111,7 +111,14 @@ public class CreateMasterDegreeCandidate implements IService {
 			// Give the Person Role
 			person.setPersonRoles(new ArrayList());
 			person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(RoleType.PERSON));
-		}
+		}else{
+            if(person.getUsername().startsWith("INA")){
+                // Generate Person Username
+                sp.getIPessoaPersistente().simpleLockWrite(person);
+                String username = GenerateUsername.getCandidateUsername(masterDegreeCandidate);
+                person.setUsername(username);
+            }
+        }
 
 		if (!person.getPersonRoles().contains(
 				sp.getIPersistentRole().readByRoleType(RoleType.MASTER_DEGREE_CANDIDATE))) {
