@@ -106,7 +106,7 @@ public class EditGratuitySituationById implements IService {
             double reimbursedValue = 0;
 
             while (it.hasNext()) {
-                gratuityTransaction = (GratuityTransaction) it.next();
+                gratuityTransaction = (IGratuityTransaction) it.next();
                 payedValue += gratuityTransaction.getValue().doubleValue();
 
                 if (gratuityTransaction.getGuideEntry() != null) {
