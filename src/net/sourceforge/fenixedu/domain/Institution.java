@@ -6,21 +6,9 @@ package net.sourceforge.fenixedu.domain;
 
 /**
  * @author Ricardo Rodrigues
- *
+ * 
  */
 
-public class Institution extends DomainObject implements IInstitution{
-
-    protected String name;
-
-    public String getName() {
-        return name;
-    }
-    
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    
+public class Institution extends Institution_Base {
 
 }

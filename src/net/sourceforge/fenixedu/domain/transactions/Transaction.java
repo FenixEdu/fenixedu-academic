@@ -1,10 +1,7 @@
 package net.sourceforge.fenixedu.domain.transactions;
 
 import java.sql.Timestamp;
-
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IPersonAccount;
-import net.sourceforge.fenixedu.domain.transactions.TransactionType;
+import java.util.Date;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -12,40 +9,14 @@ import net.sourceforge.fenixedu.domain.transactions.TransactionType;
  */
 public abstract class Transaction extends Transaction_Base {
 
-	private Timestamp transactionDate;
-
-	public Transaction() {
-	}
-
-	/**
-	 * @param value
-	 * @param transactionDate
-	 * @param remarks
-	 * @param paymentType
-	 * @param transactionType
-	 * @param wasInternalBalance
-	 * @param responsiblePerson
-	 * @param personAccount
-	 */
-	protected Transaction(Double value, Timestamp transactionDate,
-			String remarks, PaymentType paymentType,
-			TransactionType transactionType, Boolean wasInternalBalance,
-			IPerson responsiblePerson, IPersonAccount personAccount) {
-        this.setValue(value);
-		this.setTransactionDate(transactionDate);
-		this.setRemarks(remarks);
-		this.setPaymentType(paymentType);
-		this.setTransactionType(transactionType);
-        this.setWasInternalBalance(wasInternalBalance);
-        this.setResponsiblePerson(responsiblePerson);
-        this.setPersonAccount(personAccount);
-	}
-
 	/**
 	 * @return Returns the transactionDate.
 	 */
 	public Timestamp getTransactionDate() {
-		return transactionDate;
+        if (this.getTransaction() != null) {
+            return new Timestamp(this.getTransaction().getTime());
+        }
+        return null;
 	}
 
 	/**
@@ -53,7 +24,11 @@ public abstract class Transaction extends Transaction_Base {
 	 *            The transactionDate to set.
 	 */
 	public void setTransactionDate(Timestamp transactionDate) {
-		this.transactionDate = transactionDate;
+        if (transactionDate != null) {
+            this.setTransaction(new Date(transactionDate.getTime()));
+        } else {
+            this.setTransaction(null);
+        }
 	}
 
 }

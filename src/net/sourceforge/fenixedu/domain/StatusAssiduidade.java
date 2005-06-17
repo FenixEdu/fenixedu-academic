@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * 
  * @author Fernanda Quitério & Tânia Pousão
  */
 public class StatusAssiduidade extends StatusAssiduidade_Base {
-    private Timestamp _quando;
 
     public StatusAssiduidade() {
         setIdInternal(0);
@@ -38,11 +38,18 @@ public class StatusAssiduidade extends StatusAssiduidade_Base {
     }
 
     public Timestamp getQuando() {
-        return _quando;
+        if (this.getWhen() != null) {
+            return new Timestamp(this.getWhen().getTime());
+        }
+        return null;
     }
 
     public void setQuando(Timestamp quando) {
-        _quando = quando;
+        if (quando != null) {
+            this.setWhen(new Date(quando.getTime()));
+        } else {
+            this.setWhen(null);
+        }
     }
 
     public boolean equals(Object obj) {

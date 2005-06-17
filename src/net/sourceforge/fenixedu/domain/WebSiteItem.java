@@ -1,26 +1,33 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * @author Fernanda Quitério 23/09/2003
- *  
+ * 
  */
 public class WebSiteItem extends WebSiteItem_Base {
-    private Timestamp creationDate;
 
     /**
      * @return
      */
     public Timestamp getCreationDate() {
-        return creationDate;
+        if (this.getCreation() != null) {
+            return new Timestamp(this.getCreation().getTime());
+        }
+        return null;
     }
 
     /**
      * @param creationDate
      */
     public void setCreationDate(Timestamp creationDate) {
-        this.creationDate = creationDate;
+        if (creationDate != null) {
+            this.setCreation(new Date(creationDate.getTime()));
+        } else {
+            this.setCreation(null);
+        }
     }
 
     public String toString() {

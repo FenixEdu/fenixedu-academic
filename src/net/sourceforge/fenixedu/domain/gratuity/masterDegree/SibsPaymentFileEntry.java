@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.domain.gratuity.masterDegree;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
@@ -13,7 +14,6 @@ import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
  *         (naat@mega.ist.utl.pt)
  */
 public class SibsPaymentFileEntry extends SibsPaymentFileEntry_Base {
-    private Timestamp transactionDate;
 
     public SibsPaymentFileEntry() {
     }
@@ -43,7 +43,10 @@ public class SibsPaymentFileEntry extends SibsPaymentFileEntry_Base {
      * @return Returns the transactionDate.
      */
     public Timestamp getTransactionDate() {
-        return transactionDate;
+        if (this.getTransaction() != null) {
+            return new Timestamp(this.getTransaction().getTime());
+        }
+        return null;
     }
 
     /**
@@ -51,7 +54,11 @@ public class SibsPaymentFileEntry extends SibsPaymentFileEntry_Base {
      *            The transactionDate to set.
      */
     public void setTransactionDate(Timestamp transactionDate) {
-        this.transactionDate = transactionDate;
+        if (transactionDate != null) {
+            this.setTransaction(new Date(transactionDate.getTime()));
+        } else {
+            this.setTransaction(null);
+        }
     }
 
     public String toString() {
@@ -62,7 +69,7 @@ public class SibsPaymentFileEntry extends SibsPaymentFileEntry_Base {
         result += "paymentStatus = " + this.getPaymentStatus() + "; \n";
         result += "sibsPaymentFile = " + getSibsPaymentFile().toString() + "; \n";
         result += "studentNumber = " + getStudentNumber() + "; \n";
-        result += "transactionDate = " + this.transactionDate.toString() + "; \n";
+        result += "transactionDate = " + this.getTransactionDate().toString() + "; \n";
         result += "year = " + getYear() + "; \n";
         result += "] \n";
 

@@ -11,7 +11,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 public class ExecutionCourse extends ExecutionCourse_Base {
-    private List nonAffiliatedTeachers;
 
     public String toString() {
         String result = "[EXECUTION_COURSE";
@@ -116,14 +115,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                         DegreeType.DEGREE);
             }
         });
-    }
-
-    public List getNonAffiliatedTeachers() {
-        return nonAffiliatedTeachers;
-    }
-
-    public void setNonAffiliatedTeachers(List nonAffiliatedTeachers) {
-        this.nonAffiliatedTeachers = nonAffiliatedTeachers;
     }
 
 }
