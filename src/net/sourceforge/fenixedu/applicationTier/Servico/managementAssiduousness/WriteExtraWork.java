@@ -70,7 +70,7 @@ public class WriteExtraWork implements IService {
                             ExtraWork.class, infoExtraWork.getIdInternal());
                 }
                 if (extraWork == null) {
-                    extraWork = extraWorkDAO.readExtraWorkByDay(extraWork.getDay());
+                    extraWork = extraWorkDAO.readExtraWorkByDay(infoExtraWork.getDay());
                 }
                 
                 if (extraWork == null) {

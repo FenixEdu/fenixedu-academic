@@ -130,7 +130,7 @@ public class WriteExtraWorkRequests implements IService {
                 extraWorkRequestsList, new Transformer() {
 
                     public Object transform(Object arg0) {
-                        ExtraWorkRequests extraWorkRequests = (ExtraWorkRequests) arg0;
+                        IExtraWorkRequests extraWorkRequests = (IExtraWorkRequests) arg0;
                         return InfoExtraWorkRequestsWithAll
                                 .newInfoFromDomain(extraWorkRequests);
                     }

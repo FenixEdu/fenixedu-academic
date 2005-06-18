@@ -27,6 +27,10 @@
 		<put name="navLocal" value="/managementAssiduousness/assiduousnessMenu.jsp"/>
 		<put name="body" value="/managementAssiduousness/moneyCostCenter/showMoneyCostCenterList.jsp"/>
 	</definition>
+	<definition name="managementAssiduousnessWelcome.extraWork.confirmation.moneyCostCenterList" extends="definition.managementAssiduousness.masterPage">
+		<put name="navLocal" value="/managementAssiduousness/assiduousnessMenu.jsp"/>
+		<put name="body" value="/managementAssiduousness/moneyCostCenter/showConfirmationMoneyCostCenterList.jsp"/>
+	</definition>
 	<definition name="managementAssiduousnessWelcome.extraWork.employee.input" extends="definition.managementAssiduousness.masterPage">
 		<put name="navLocal" value="/managementAssiduousness/assiduousnessMenu.jsp"/>
 		<put name="body" value="/managementAssiduousness/extraWork/inputDateAndEmployee.jsp"/>

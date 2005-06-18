@@ -48,7 +48,7 @@
 		</tiles:insert>
       </td>            
     </tr>
-    <tr><td colspan="2" align="left"><br></td></tr>
+    <%--<tr><td colspan="2" align="left"><br></td></tr>
     <tr>
       <td colspan="2">
       	<bean:define id="headers" name="headers3" />      	
@@ -60,6 +60,6 @@
 			<tiles:put name="rows" beanName="body" />
 		</tiles:insert>
       </td>            
-    </tr>
+    </tr>--%>
 </table>
   

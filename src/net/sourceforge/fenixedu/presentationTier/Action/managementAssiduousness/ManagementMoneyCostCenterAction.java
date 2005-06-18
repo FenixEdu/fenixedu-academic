@@ -128,7 +128,7 @@ public class ManagementMoneyCostCenterAction extends FenixDispatchAction {
                 .setAttribute("infoMoneyCostCenterList",
                         infoMoneyCostCenterList);
 
-        return mapping.findForward("showMoneyCostCenterList");
+        return mapping.findForward("showConfirmationMoneyCostCenterList");
     }
 
     private InfoMoneyCostCenter getMoneyCostCenter(HttpServletRequest request,

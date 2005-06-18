@@ -64,6 +64,7 @@
 				validate="true">
 			<forward name="inputYear" path="managementAssiduousnessWelcome.extraWork.inputYear"/>
 			<forward name="showMoneyCostCenterList" path="managementAssiduousnessWelcome.extraWork.moneyCostCenterList"/>
+			<forward name="showConfirmationMoneyCostCenterList" path="managementAssiduousnessWelcome.extraWork.confirmation.moneyCostCenterList"/>
 		</action>	
 		<action path="/workByEmployee" 
 	      		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.WorkByEmployeeAction" 
