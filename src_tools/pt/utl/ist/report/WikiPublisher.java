@@ -44,7 +44,10 @@ public class WikiPublisher {
         }
         fileReader.close();
 
-		postResults(wikiHost, wikiPort, wikiPage, fileContents.toString(), wikiUsername, wikiPassword);
+        final String fileContentsString = fileContents.toString();
+        if (fileContentsString.trim().length() > 0) {
+        	postResults(wikiHost, wikiPort, wikiPage, fileContentsString, wikiUsername, wikiPassword);
+        }
 	}
 
 	private static void postResults(final String wikiHost,
@@ -54,12 +57,10 @@ public class WikiPublisher {
 			final HttpClient httpClient = HttpClientFactory.getHttpClient(
 					wikiHost, wikiPort);
 
-            final GetMethod loginMethod = HttpClientFactory
-            .getGetMethod("/UserPreferences");
-            executeMethod(httpClient, loginMethod);
+            final GetMethod method = HttpClientFactory.getGetMethod("/UserPreferences");
+            executeMethod(httpClient, method, false);
 
-            final GetMethod submitLoginMethod = HttpClientFactory
-            .getGetMethod("/UserPreferences" + "#preview");
+            method.setPath("/UserPreferences" + "#preview");
 
             final NameValuePair[] loginNameValuePairs = new NameValuePair[5];
             loginNameValuePairs[0] = new NameValuePair("action", "userform");
@@ -67,32 +68,45 @@ public class WikiPublisher {
             loginNameValuePairs[2] = new NameValuePair("password", wikiPassword);
             loginNameValuePairs[3] = new NameValuePair("login", "Login");
             loginNameValuePairs[4] = new NameValuePair("method", "POST");
-            submitLoginMethod.setQueryString(loginNameValuePairs);
-            executeMethod(httpClient, submitLoginMethod);
+            method.setQueryString(loginNameValuePairs);
+            executeMethod(httpClient, method, false);
 
-			final GetMethod editMethod = HttpClientFactory
-					.getGetMethod("/" + wikiPage + "?action=edit");
-			executeMethod(httpClient, editMethod);
+            method.setPath("/" + wikiPage);
+            executeMethod(httpClient, method, false);
 
-			final GetMethod submitEditFormMethod = HttpClientFactory
-					.getGetMethod("/" + wikiPage + "#preview");
+            System.out.println("###########################################################");
 
-			final NameValuePair[] nameValuePairs = new NameValuePair[2];
+			method.setPath("/" + wikiPage + "?action=edit");
+			executeMethod(httpClient, method, true);
+
+            System.out.println("###########################################################");
+            System.out.println("###########################################################");
+
+			method.setPath("/" + wikiPage);
+
+			final NameValuePair[] nameValuePairs = new NameValuePair[4];
 			nameValuePairs[0] = new NameValuePair("action", "savepage");
-			nameValuePairs[1] = new NameValuePair("savetext", fileContents);
-			submitEditFormMethod.setQueryString(nameValuePairs);
-			executeMethod(httpClient, submitEditFormMethod);
+			nameValuePairs[1] = new NameValuePair("button_save", "Save Changes");
+			nameValuePairs[2] = new NameValuePair("savetext", fileContents);
+			nameValuePairs[3] = new NameValuePair("method", "post");
+			method.setQueryString(nameValuePairs);
+			executeMethod(httpClient, method, true);
         } catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 	protected static void executeMethod(final HttpClient httpClient,
-			final GetMethod method) throws IOException, HttpException {
+			final GetMethod method, boolean showInfo) throws IOException, HttpException {
 		method.setFollowRedirects(true);
 		httpClient.executeMethod(method);
+
+		if (showInfo) {
+			System.out.println(method.getResponseBodyAsString());
+		}
+
         //method.releaseConnection();
-		//method.recycle();
+		method.recycle();
 	}
 
 }

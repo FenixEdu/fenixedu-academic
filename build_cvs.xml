@@ -14,34 +14,12 @@
 	<property name="build.home.webinf.classes" value="${build.home.webinf}/classes"/>
 
 
-	<target name="publishAll">
-		<property name="time.yesterday" value="2005/06/15"/>
-		<property name="time.today" value="2005/06/16"/>
-		<property name="time.yesterday.wiki-format" value="2005-06-15"/>
+	<target name="publishByParam">
 		<antcall target="generateLogs">
-			<param name="start" value="${time.yesterday} 00:00"/>
-			<param name="end" value="${time.today} 00:00"/>
-			<param name="page" value="${wiki.page}/${time.yesterday.wiki-format}"/>
+			<param name="start" value="${year}/${month}/${day1} 00:00"/>
+			<param name="end" value="${year}/${month}/${day2} 00:00"/>
+			<param name="page" value="${wiki.page}/${year}-${month}-${day1}"/>
 		</antcall>
-
-		<property name="time.yesterday" value="2005/06/14"/>
-		<property name="time.today" value="2005/06/15"/>
-		<property name="time.yesterday.wiki-format" value="2005-06-14"/>
-		<antcall target="generateLogs">
-			<param name="start" value="${time.yesterday} 00:00"/>
-			<param name="end" value="${time.today} 00:00"/>
-			<param name="page" value="${wiki.page}/${time.yesterday.wiki-format}"/>
-		</antcall>
-
-		<property name="time.yesterday" value="2005/06/13"/>
-		<property name="time.today" value="2005/06/14"/>
-		<property name="time.yesterday.wiki-format" value="2005-06-13"/>
-		<antcall target="generateLogs">
-			<param name="start" value="${time.yesterday} 00:00"/>
-			<param name="end" value="${time.today} 00:00"/>
-			<param name="page" value="${wiki.page}/${time.yesterday.wiki-format}"/>
-		</antcall>
-
 	</target>
 
 	<target name="publishCommitLogs">
@@ -63,7 +41,6 @@
 	</target>
 
 	<target name="generateLogs">
-		<delete file="${cvs.log.file}"/>
 		<cvschangelog
 				cvsRoot="${cvs.root}"
 				cvsRsh="${cvs.rsh}"
@@ -71,7 +48,7 @@
                 start="${start}"
                 end="${end}"
 				>
-			<user displayname="AminMahomedAmirali" userid=""/>
+		<user displayname="AminMahomedAmirali" userid=""/>
 			<user displayname="AndreFernandes" userid=""/>
 			<user displayname="AngelaAlmeida" userid="ciapl-angela"/>
 			<user displayname="AntonioRitoSilva" userid="ars"/>
@@ -104,7 +81,7 @@
           <param name="cvsweb" expression="${cvs.web.address}"/>
         </style>
 		<antcall target="publish">
-			<param name="page" value="${wiki.page}/${time.yesterday.wiki-format}"/>
+			<param name="page" value="${page}"/>
 		</antcall>
 	</target>
 
@@ -114,7 +91,7 @@
 		<java classname="pt.utl.ist.report.WikiPublisher"
 				fork="yes"
 				failonerror="false"
-				maxmemory="256m">
+				maxmemory="512m">
 			<arg value="${wiki.host}"/>
 			<arg value="${wiki.port}"/>
 			<arg value="${page}"/>
