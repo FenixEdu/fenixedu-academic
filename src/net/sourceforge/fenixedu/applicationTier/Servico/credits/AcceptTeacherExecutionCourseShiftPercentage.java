@@ -43,7 +43,7 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
     }
 
     /**
-     *  
+     * 
      */
     public AcceptTeacherExecutionCourseShiftPercentage() {
 
@@ -52,7 +52,8 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
     private IShift getIShift(ITurnoPersistente shiftDAO, InfoShiftProfessorship infoShiftProfessorship)
             throws ExcepcaoPersistencia {
 
-        IShift shift = (IShift) shiftDAO.readByOID(Shift.class, infoShiftProfessorship.getInfoShift().getIdInternal());
+        IShift shift = (IShift) shiftDAO.readByOID(Shift.class, infoShiftProfessorship.getInfoShift()
+                .getIdInternal());
         return shift;
     }
 
@@ -63,14 +64,14 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            ITurnoPersistente shiftDAO = sp.getITurnoPersistente();            
+            ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
             IPersistentShiftProfessorship shiftProfessorshipDAO = sp
                     .getIPersistentTeacherShiftPercentage();
             IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
-            
-            //read professorship
-            IProfessorship professorship = professorshipDAO.readByTeacherAndExecutionCourse(infoTeacher.getIdInternal(),
-                    infoExecutionCourse.getIdInternal());
+
+            // read professorship
+            IProfessorship professorship = professorshipDAO.readByTeacherAndExecutionCourse(infoTeacher
+                    .getIdInternal(), infoExecutionCourse.getIdInternal());
 
             if (professorship != null) {
                 Iterator iterator = infoShiftProfessorshipList.iterator();
@@ -87,7 +88,7 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
             throw new FenixServiceException(e);
         }
 
-        return shiftWithErrors; //retorna a lista com os turnos que causaram
+        return shiftWithErrors; // retorna a lista com os turnos que causaram
         // erros!
     }
 
@@ -126,21 +127,31 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
         if (percentage.doubleValue() == 0) {
             shiftProfessorshipDAO.delete(shiftProfessorship);
             shiftProfessorshipDeleted.add(shiftProfessorship);
+            if (professorship.getAssociatedShiftProfessorship() != null) {
+                professorship.getAssociatedShiftProfessorship().remove(shiftProfessorship);
+            }
+            if (shift.getAssociatedShiftProfessorship() != null) {
+                shift.getAssociatedShiftProfessorship().remove(shiftProfessorship);
+            }
         } else {
 
             if (shiftProfessorship == null) {
                 toAdd = true;
                 shiftProfessorship = new ShiftProfessorship();
                 shiftProfessorship.setProfessorship(professorship);
-                shiftProfessorship.setShift(shift);                
+                shiftProfessorship.setShift(shift);
             }
             shiftProfessorshipDAO.simpleLockWrite(shiftProfessorship);
 
-            if(toAdd){
-                professorship.getAssociatedShiftProfessorship().add(shiftProfessorship);
-                shift.getAssociatedShiftProfessorship().add(shiftProfessorship);
+            if (toAdd) {
+                if (professorship.getAssociatedShiftProfessorship() != null) {
+                    professorship.getAssociatedShiftProfessorship().add(shiftProfessorship);
+                }
+                if (shift.getAssociatedShiftProfessorship() != null) {
+                    shift.getAssociatedShiftProfessorship().add(shiftProfessorship);
+                }
             }
-            shiftProfessorship.setPercentage(percentage);            
+            shiftProfessorship.setPercentage(percentage);
 
             CreditsValidator.validatePeriod(professorship.getTeacher().getIdInternal(), professorship
                     .getExecutionCourse().getExecutionPeriod().getIdInternal(), shiftProfessorship);
