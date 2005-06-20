@@ -216,13 +216,10 @@
         <action path="/removeProfessorship" 
             input="/showTeacherProfessorshipsForManagement.do" 
             name="teacherExecutionCourseForm" scope="request" parameter="method" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship.RemoveProfessorshipAction" validate="false">
-            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteTeacher$ExistingShiftProfessorship" 
-                key="message.existing.shiftProfessorship" 
-                path="/showTeacherProfessorshipsForManagement.do"/>
-            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteTeacher$ExistingSupportLesson" 
-                key="message.existing.supportLesson" 
-                path="/showTeacherProfessorshipsForManagement.do"/>
+            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship.RemoveProfessorshipAction" validate="false">            
+            <exception type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteTeacher$ExistingAssociatedCredits"          
+                key="message.existing.associatedCredits"
+                path="/showTeacherProfessorshipsForManagement.do"/>            
                 
             <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException" 
                 key="message.professorship.isResponsibleFor" 
