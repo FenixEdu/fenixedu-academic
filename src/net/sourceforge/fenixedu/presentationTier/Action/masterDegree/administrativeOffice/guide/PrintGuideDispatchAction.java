@@ -123,7 +123,7 @@ public class PrintGuideDispatchAction extends DispatchAction {
                 throw new FenixActionException();
             }
 
-            if (infoGuide.getGuideRequester().equals(GuideRequester.STUDENT.name())) {
+            if (infoGuide.getGuideRequester().equals(GuideRequester.STUDENT)) {
 
                 InfoStudent infoStudent = null;
                 List infoStudents = null;
