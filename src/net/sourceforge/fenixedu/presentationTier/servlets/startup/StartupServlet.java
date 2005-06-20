@@ -22,86 +22,104 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstan
  */
 public class StartupServlet extends HttpServlet {
 
-    private static final String GRATUITY_SITUATION_CREATOR_TASK_CONFIG = "/GratuitySituationCreatorTask.properties";
+	private static final String GRATUITY_SITUATION_CREATOR_TASK_CONFIG = "/GratuitySituationCreatorTask.properties";
 
-    /**
-     * @see javax.servlet.Servlet#init(javax.servlet.ServletConfig)
-     */
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        try {
-            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
-                    null, "ReadCurrentExecutionPeriod", null);
-            config.getServletContext().setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY,
-                    infoExecutionPeriod);
+	/**
+	 * @see javax.servlet.Servlet#init(javax.servlet.ServletConfig)
+	 */
+	public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+		try {
+			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils
+					.executeService(null, "ReadCurrentExecutionPeriod", null);
+			config.getServletContext().setAttribute(
+					SessionConstants.INFO_EXECUTION_PERIOD_KEY,
+					infoExecutionPeriod);
 
-            setScheduleForGratuitySituationCreation();
+			setScheduleForGratuitySituationCreation();
 
-        } catch (Throwable e) {
-            throw new ServletException("Error reading actual execution period!", e);
-        }
-    }
+		} catch (Throwable e) {
+			throw new ServletException(
+					"Error reading actual execution period!", e);
+		}
 
-    /**
-     *  
-     */
-    private void setScheduleForGratuitySituationCreation() {
+		try {
+			final Boolean result = (Boolean) ServiceManagerServiceFactory
+					.executeService(null, "CheckIsAliveService", null);
 
-        TimerTask gratuitySituationCreatorTask = new TimerTask() {
+			if (result != null && result.booleanValue()) {
+				System.out.println("Check is alive is working.");
+			} else {
+				System.out.println("Check is alive is not working.");
+			}
+		} catch (Exception ex) {
+			System.out.println("Check is alive is not working. Caught excpetion.");
+			ex.printStackTrace();
+		}
+	}
 
-            public void run() {
-                
+	/**
+	 * 
+	 */
+	private void setScheduleForGratuitySituationCreation() {
 
-                try {
-                    Object[] args = { "" };
-                    ServiceManagerServiceFactory.executeService(null,
-                            "CreateGratuitySituationsForCurrentExecutionYear", args);
+		TimerTask gratuitySituationCreatorTask = new TimerTask() {
 
-                } catch (Exception e) {
-                }
+			public void run() {
 
-                //temporary
-                try {
-                    Object[] args2003_2004 = { "2003/2004" };
-                    ServiceManagerServiceFactory.executeService(null,
-                            "CreateGratuitySituationsForCurrentExecutionYear",
-                            args2003_2004);
+				try {
+					Object[] args = { "" };
+					ServiceManagerServiceFactory.executeService(null,
+							"CreateGratuitySituationsForCurrentExecutionYear",
+							args);
 
-                } catch (Exception e) {
-                }
+				} catch (Exception e) {
+				}
 
-            }
+				// temporary
+				try {
+					Object[] args2003_2004 = { "2003/2004" };
+					ServiceManagerServiceFactory.executeService(null,
+							"CreateGratuitySituationsForCurrentExecutionYear",
+							args2003_2004);
 
-        };
+				} catch (Exception e) {
+				}
 
-        Properties properties = new Properties();
-        try {
-            properties.load(this.getClass().getResourceAsStream(GRATUITY_SITUATION_CREATOR_TASK_CONFIG));
+			}
 
-            Calendar calendar = Calendar.getInstance();
-            String hourString = properties.getProperty("hour");
-            int scheduledHour = Integer.parseInt(hourString);
-            if (scheduledHour == -1) {
-                return;
-            }
-            int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+		};
 
-            calendar.set(Calendar.HOUR_OF_DAY, scheduledHour);
-            calendar.set(Calendar.MINUTE, 0);
-            calendar.set(Calendar.SECOND, 0);
-            calendar.set(Calendar.MILLISECOND, 0);
+		Properties properties = new Properties();
+		try {
+			properties.load(this.getClass().getResourceAsStream(
+					GRATUITY_SITUATION_CREATOR_TASK_CONFIG));
 
-            if (currentHour >= scheduledHour) {
-                calendar.add(Calendar.DAY_OF_MONTH, 1);
-            }
-            Date firstTimeDate = calendar.getTime();
+			Calendar calendar = Calendar.getInstance();
+			String hourString = properties.getProperty("hour");
+			int scheduledHour = Integer.parseInt(hourString);
+			if (scheduledHour == -1) {
+				return;
+			}
+			int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
 
-            Timer timer = new Timer();
+			calendar.set(Calendar.HOUR_OF_DAY, scheduledHour);
+			calendar.set(Calendar.MINUTE, 0);
+			calendar.set(Calendar.SECOND, 0);
+			calendar.set(Calendar.MILLISECOND, 0);
 
-            timer.schedule(gratuitySituationCreatorTask, firstTimeDate, 3600 * 24 * 1000);
+			if (currentHour >= scheduledHour) {
+				calendar.add(Calendar.DAY_OF_MONTH, 1);
+			}
+			Date firstTimeDate = calendar.getTime();
 
-        } catch (Exception e) {
-        }
+			Timer timer = new Timer();
 
-    }
+			timer.schedule(gratuitySituationCreatorTask, firstTimeDate,
+					3600 * 24 * 1000);
+
+		} catch (Exception e) {
+		}
+
+	}
 }
