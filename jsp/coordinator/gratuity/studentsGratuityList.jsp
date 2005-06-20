@@ -10,11 +10,9 @@
 
 <bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request"/>
-<bean:define id="year1" name="year1" scope="request"/>
-<bean:define id="year2" name="year2" scope="request"/>
 <bean:define id="degree" name="degree" scope="request"/>
 <bean:define id="order" name="order" scope="request"/>
-<bean:define id="chosenYear"><%=pageContext.findAttribute("chosenYear").toString()%></bean:define>
+<bean:define id="chosenYear" name="chosenYear" />
 
 <h2><bean:message key="link.masterDegree.administrativeOffice.gratuity.listStudents"/></h2>
 
@@ -22,12 +20,12 @@
 	<h2>
 		<bean:message key="link.masterDegree.administrativeOffice.gratuity.chosenYear"/>
 		<html:select onchange="this.form.submit();" property="chosenYear">
-			<html:option value="1">
-				<%= year1 %>
-			</html:option>
-			<html:option value="2">
-				<%= year2 %>
-			</html:option>	
+			<logic:iterate id="executionYearTemp" name="executionYears">
+				<bean:define id="executionYearString" name="executionYearTemp" property="year" type="java.lang.String"/>
+				<html:option value="<%= executionYearString %>">
+					<bean:write name="executionYearString" />
+				</html:option>
+			</logic:iterate>
 		</html:select>	
 		<html:hidden property="degreeCurricularPlanID" />
 		<html:hidden property="order" />
@@ -40,8 +38,7 @@
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td align="center" class="infoselected">
-			<bean:define id="executionYearLabel"><%=pageContext.findAttribute("executionYear")%></bean:define>	
-			<b><bean:message key="label.masterDegree.gratuity.executionYear" /></b>&nbsp;<bean:write name="executionYearLabel"/><br>
+			<b><bean:message key="label.masterDegree.gratuity.executionYear" /></b>&nbsp;<bean:write name="chosenYear"/><br>
 
 			<bean:define id="degreeString"><%=pageContext.findAttribute("degree").toString()%></bean:define>	
 		

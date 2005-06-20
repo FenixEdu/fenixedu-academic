@@ -256,19 +256,21 @@ public class StudentsGratuityListAction extends DispatchAction {
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         // data from request
-        Integer executionYear = null;
+        String executionYearString = null;
         Integer degreeCurricularPlanID = null;
         String orderingType = null;
+        
 
         try {
 
             orderingType = request.getParameter("order");
             if (orderingType != null) {
-                executionYear = new Integer(Integer.parseInt(request.getParameter("chosenYear")));
-                degreeCurricularPlanID = new Integer(Integer.parseInt(request
-                        .getParameter("degreeCurricularPlanID")));
+                executionYearString = request.getParameter("chosenYear");
+                degreeCurricularPlanID = new Integer(request
+                        .getParameter("degreeCurricularPlanID"));
+
             } else {
-                executionYear = (Integer) studentGratuityListForm.get("chosenYear");
+                executionYearString = (String) studentGratuityListForm.get("chosenYear");
                 degreeCurricularPlanID = (Integer) studentGratuityListForm.get("degreeCurricularPlanID");
                 orderingType = (String) studentGratuityListForm.get("order");
             }
@@ -277,8 +279,12 @@ public class StudentsGratuityListAction extends DispatchAction {
                     "error.masterDegree.gratuity.impossible.studentsGratuityList"));
             return mapping.getInputForward();
         }
-
-        Object[] args = { degreeCurricularPlanID, executionYear };
+        
+        if(executionYearString == null){
+            executionYearString = "";
+        }
+        Object[] args = { degreeCurricularPlanID, executionYearString };
+        
         InfoExecutionDegree infoExecutionDegree = null;
         try {
             infoExecutionDegree = (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
@@ -307,26 +313,6 @@ public class StudentsGratuityListAction extends DispatchAction {
             return mapping.getInputForward();
         }
 
-        String year1 = ((InfoExecutionYear) executionYearList.get(0)).getYear();
-        String year2 = ((InfoExecutionYear) executionYearList.get(1)).getYear();
-
-        // String year1 = null;
-        // String year2 = null;
-
-        // if(executionYear.equals(new Integer(1))){
-        // //first year selected
-        // year1 = new String((executionDegreeDate.getYear()+1900) + "/" +
-        // (executionDegreeDate.getYear()+1901));
-        // year2 = new String((executionDegreeDate.getYear()+1901) + "/" +
-        // (executionDegreeDate.getYear()+1902));
-        // }
-        // else{
-        // //second year selected
-        // year1 = new String((executionDegreeDate.getYear()+1899) + "/" +
-        // (executionDegreeDate.getYear()+1900));
-        // year2 = new String((executionDegreeDate.getYear()+1900) + "/" +
-        // (executionDegreeDate.getYear()+1901));
-        // }
 
         // getting the gratuity list
         Object[] gratuityArgs = { infoExecutionDegree.getIdInternal(),
@@ -360,17 +346,11 @@ public class StudentsGratuityListAction extends DispatchAction {
         request.setAttribute("totalPayedValue", totalPayedValue);
         request.setAttribute("totalRemaingValue", totalRemaingValue);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-        request.setAttribute("year1", year1);
-        request.setAttribute("year2", year2);
+        request.setAttribute("executionYears", executionYearList);                
         request.setAttribute("degree", degree);
-        request.setAttribute("chosenYear", executionYear);
+        request.setAttribute("chosenYear", infoExecutionDegree.getInfoExecutionYear().getYear());
         request.setAttribute("order", orderingType);
         request.setAttribute("infoGratuitySituationList", infoGratuitySituationList);
-        if (executionYear.equals(new Integer(1))) {
-            request.setAttribute("executionYear", year1);
-        } else {
-            request.setAttribute("executionYear", year2);
-        }
 
         return mapping.findForward("studentsGratuityList");
     }

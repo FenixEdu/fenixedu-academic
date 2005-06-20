@@ -76,7 +76,7 @@
 					<br/>
 				</li>
 				<li>
-					<html:link page='<%= "/studentsGratuityList.do?method=coordinatorStudentsGratuityList&amp;chosenYear=1&amp;order=studentNumber&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>'>
+					<html:link page='<%= "/studentsGratuityList.do?method=coordinatorStudentsGratuityList&amp;order=studentNumber&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>'>
 						<bean:message key="link.coordinator.studentAndGratuityListByDegree"/>
 					</html:link>
 					<br/>

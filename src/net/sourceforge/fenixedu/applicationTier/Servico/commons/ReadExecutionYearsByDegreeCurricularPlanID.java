@@ -6,12 +6,12 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
-import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
@@ -26,59 +26,33 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * 
- * @author  <a href="mailto:amam@mega.ist.utl.pt">Amin Amirali</a>
- * @author  <a href="mailto:frnp@mega.ist.utl.pt">Francisco Paulo</a>
+ * @author <a href="mailto:amam@mega.ist.utl.pt">Amin Amirali</a>
+ * @author <a href="mailto:frnp@mega.ist.utl.pt">Francisco Paulo</a>
  * 
  */
 public class ReadExecutionYearsByDegreeCurricularPlanID implements IService {
 
-    public List run(Integer degreeCurricularPlanID) {
+    public List run(Integer degreeCurricularPlanID) throws ExcepcaoPersistencia {
 
-        List result = null;
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        ISuportePersistente sp = null;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         IPersistentDegreeCurricularPlan degreeCurricularPlanDAO = sp
                 .getIPersistentDegreeCurricularPlan();
         IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
-        Date end = null;
-        Date start = null;
 
-        //End date of the current year
-        try {
-            end = executionYearDAO.readCurrentExecutionYear().getEndDate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        //Start date of the degree curricular plan
-        try {
-            start = ((DegreeCurricularPlan) (degreeCurricularPlanDAO.readByOID(
-                    DegreeCurricularPlan.class, degreeCurricularPlanID))).getInitialDate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) degreeCurricularPlanDAO
+                .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
 
-        List executionYears = null;
+        List<IExecutionYear> executionYears = (List<IExecutionYear>) CollectionUtils.collect(
+                degreeCurricularPlan.getExecutionDegrees(), new Transformer() {
 
-        try {
-            executionYears = executionYearDAO.readExecutionYearsInPeriod(start, end);
-        } catch (ExcepcaoPersistencia e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-        result = (List) CollectionUtils.collect(executionYears, new Transformer() {
-            public Object transform(Object input) {
-                IExecutionYear executionYear = (IExecutionYear) input;
-                InfoExecutionYear infoExecutionYear = (InfoExecutionYear) Cloner.get(executionYear);
-                return infoExecutionYear;
-            }
-        });
+                    public Object transform(Object arg0) {
+                        IExecutionDegree executionDegree = (IExecutionDegree) arg0;
+                        return InfoExecutionYear.newInfoFromDomain(executionDegree.getExecutionYear());
+                    }
 
-        return result;
+                });
+
+        return executionYears;
     }
-
 }
