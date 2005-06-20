@@ -103,7 +103,7 @@ public class ReadStudentsByIdArray implements IService {
                 }
                 break;
             }
-            InfoStudent infoStudent = InfoStudent.newInfoFromDomain((Student) persistentSuport
+            InfoStudent infoStudent = InfoStudent.newInfoFromDomain((IStudent) persistentSuport
                     .getIPersistentStudent().readByOID(Student.class, new Integer(students[i])));
             if (!studentsList.contains(infoStudent))
                 studentsList.add(infoStudent);
