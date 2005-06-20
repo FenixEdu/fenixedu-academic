@@ -34,7 +34,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     }
 
     private void notifyTeacher() {
-        if (this.getExecutionCourse().isMasterDegreeOnly()) {
+        if (this.getExecutionCourse() != null && this.getExecutionCourse().isMasterDegreeOnly()) {
             ITeacher teacher = this.getTeacher();
             teacher.notifyCreditsChange(CreditsEvent.MASTER_DEGREE_LESSONS, this);
         }
