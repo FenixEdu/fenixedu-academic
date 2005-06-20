@@ -9,60 +9,42 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.ISchoolClassShift;
 import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.SchoolClassShift;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class RemoverTurno implements IService {
 
-    public RemoverTurno() {
-    }
+    public Object run(final InfoShift infoShift, final InfoClass infoClass) throws ExcepcaoPersistencia {
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 
-    public Object run(InfoShift infoShift, InfoClass infoClass) throws ExcepcaoPersistencia {
-
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        IShift shift = Cloner.copyInfoShift2IShift(infoShift);
-        ISchoolClass classTemp = Cloner.copyInfoClass2Class(infoClass);
-
-        // Read From Database
-
-        IShift shiftToDelete = sp.getITurnoPersistente().readByNameAndExecutionCourse(shift.getNome(),
-                shift.getDisciplinaExecucao().getIdInternal());
-        ISchoolClass classToDelete = sp.getITurmaPersistente()
-                .readByNameAndExecutionDegreeAndExecutionPeriod(classTemp.getNome(),
-                        classTemp.getExecutionDegree().getIdInternal(),
-                        classTemp.getExecutionPeriod().getIdInternal());
-        ISchoolClassShift turmaTurnoToDelete = null;
-        if ((shiftToDelete != null) && (classToDelete != null)) {
-            turmaTurnoToDelete = sp.getITurmaTurnoPersistente().readByTurmaAndTurno(
-                    classToDelete.getIdInternal(), shiftToDelete.getIdInternal());
-        } else
+        final IShift shift = (IShift) persistentShift.readByOID(Shift.class, infoShift.getIdInternal());
+        if (shift == null) {
             return Boolean.FALSE;
-
-        // Check if exists
-        if (turmaTurnoToDelete != null) {
-
-            turmaTurnoToDelete.getTurma().getSchoolClassShifts().remove(turmaTurnoToDelete);
-            turmaTurnoToDelete.setTurma(null);
-
-            turmaTurnoToDelete.getTurno().getSchoolClassShifts().remove(turmaTurnoToDelete);
-            turmaTurnoToDelete.setTurno(null);
-
-            sp.getITurmaTurnoPersistente().deleteByOID(SchoolClassShift.class,
-                    turmaTurnoToDelete.getIdInternal());
-           
-            // sp.getITurmaTurnoPersistente().delete(turmaTurnoToDelete);
+        }
+        final ISchoolClass schoolClass = (ISchoolClass) CollectionUtils.find(shift.getAssociatedClasses(), new Predicate() {
+            public boolean evaluate(Object arg0) {
+                final ISchoolClass schoolClass = (ISchoolClass) arg0;
+                return schoolClass.getIdInternal().equals(infoClass.getIdInternal());
+            }
+        });
+        if (schoolClass == null) {
+            return Boolean.FALSE;
         }
 
-        else
-            return Boolean.FALSE;
+        persistentShift.simpleLockWrite(shift);
+        shift.getAssociatedClasses().remove(schoolClass);
+        schoolClass.getAssociatedShifts().remove(shift);
 
         return Boolean.TRUE;
     }
