@@ -5,11 +5,6 @@
 
     <form name="changeApplicationInfoForm">
     
-    
-      <field property="mobilePhone" depends="integer" page="1">
-        <arg0 key="label.person.mobilePhone" />
-      </field>
-      
       <field property="email" depends="email" page="1">
         <arg0 key="Este" resource="false" />
       </field>
@@ -73,11 +68,7 @@
       
       <field property="addressDistrict" depends="required" page="2">
         <arg0 key="label.person.addressDistrict" />
-      </field>
-      
-      <field property="telephone" depends="integer" page="2">
-        <arg0 key="label.person.telephone" />
-      </field>
+      </field>      
       
       <field property="contributorNumber" depends="required,integer" page="2">
         <arg0 key="label.person.contributorNumber" />
