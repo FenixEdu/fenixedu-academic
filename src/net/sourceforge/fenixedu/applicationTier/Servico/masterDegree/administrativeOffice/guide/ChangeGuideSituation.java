@@ -221,6 +221,8 @@ public class ChangeGuideSituation implements IService {
                 }
 
                 // Write the new Situation
+                
+                guide.getGuideSituations().add(newGuideSituation);
 
             } catch (ExcepcaoPersistencia ex) {
                 FenixServiceException newEx = new FenixServiceException("Persistence layer error");
