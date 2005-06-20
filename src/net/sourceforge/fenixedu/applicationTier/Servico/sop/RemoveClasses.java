@@ -41,7 +41,6 @@ public class RemoveClasses implements IService {
 
             shift.getAssociatedClasses().remove(schoolClass);
 
-            sp.getITurmaPersistente().simpleLockWrite(schoolClass);
             schoolClass.getAssociatedShifts().remove(shift);
         }
 
