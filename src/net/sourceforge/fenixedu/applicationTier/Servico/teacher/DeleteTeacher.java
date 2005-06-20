@@ -5,10 +5,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.teacher.ExistingShiftProfessorship;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.teacher.ExistingSupportLesson;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IResponsibleFor;
+import net.sourceforge.fenixedu.domain.IShiftProfessorship;
 import net.sourceforge.fenixedu.domain.ISummary;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ResponsibleFor;
@@ -20,11 +19,15 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Fernanda Quitério
- *  
+ * 
  */
 public class DeleteTeacher implements IService {
 
@@ -38,9 +41,9 @@ public class DeleteTeacher implements IService {
         IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();
         IPersistentShiftProfessorship shiftProfessorshipDAO = sp.getIPersistentShiftProfessorship();
 
-        //note: removed the possibility for a responsible teacher to remove
+        // note: removed the possibility for a responsible teacher to remove
         // from himself the professorship
-        //(it was a feature that didnt make sense)
+        // (it was a feature that didnt make sense)
         IResponsibleFor responsibleFor = persistentResponsibleFor.readByTeacherAndExecutionCourse(
                 teacherCode, infoExecutionCourseCode);
         IPersistentResponsibleFor responsibleForDAO = sp.getIPersistentResponsibleFor();
@@ -56,9 +59,25 @@ public class DeleteTeacher implements IService {
                 teacherCode, infoExecutionCourseCode);
 
         List shiftProfessorshipList = shiftProfessorshipDAO.readByProfessorship(professorshipToDelete);
-        List supportLessonList = supportLessonDAO.readByProfessorship(professorshipToDelete.getIdInternal());
+        List supportLessonList = supportLessonDAO.readByProfessorship(professorshipToDelete
+                .getIdInternal());
 
-        if (shiftProfessorshipList.isEmpty() && supportLessonList.isEmpty()) {
+        boolean hasCredits = false;
+        boolean hasSupportLessons = supportLessonList != null && !supportLessonList.isEmpty();
+
+        if (!shiftProfessorshipList.isEmpty()) {
+            hasCredits = CollectionUtils.exists(shiftProfessorshipList, new Predicate() {
+
+                public boolean evaluate(Object arg0) {
+                    IShiftProfessorship shiftProfessorship = (IShiftProfessorship) arg0;
+                    return shiftProfessorship.getPercentage() != null
+                            && shiftProfessorship.getPercentage() != 0;
+                }
+
+            });
+        }
+
+        if (!hasCredits && !hasSupportLessons) {
             IPersistentSummary persistentSummary = sp.getIPersistentSummary();
             List summaryList = persistentSummary.readByTeacher(professorshipToDelete
                     .getExecutionCourse().getIdInternal(), professorshipToDelete.getTeacher()
@@ -74,10 +93,11 @@ public class DeleteTeacher implements IService {
             deleteProfessorship(persistentProfessorship, professorshipToDelete);
 
         } else {
-            if (!shiftProfessorshipList.isEmpty()) {
-                throw new ExistingShiftProfessorship();
+            if (hasCredits) {
+                throw new ExistingAssociatedCredits();
+            } else if (hasSupportLessons) {
+                throw new ExistingAssociatedSupportLessons();
             }
-            throw new ExistingSupportLesson();
         }
         return Boolean.TRUE;
     }
@@ -85,20 +105,20 @@ public class DeleteTeacher implements IService {
     private void deleteResponsibleFor(final IResponsibleFor responsibleFor,
             final IPersistentResponsibleFor responsibleForDAO) throws ExcepcaoPersistencia {
         responsibleFor.getExecutionCourse().getResponsibleTeachers().remove(responsibleFor);
-        responsibleFor.setExecutionCourse(null);
         responsibleFor.getTeacher().getAssociatedResponsibles().remove(responsibleFor);
+        responsibleFor.setExecutionCourse(null);
         responsibleFor.setTeacher(null);
         responsibleForDAO.deleteByOID(ResponsibleFor.class, responsibleFor.getIdInternal());
     }
 
     private void deleteProfessorship(final IPersistentProfessorship persistentProfessorship,
             final IProfessorship professorshipToDelete) throws ExcepcaoPersistencia {
-        
+
         if (professorshipToDelete.getAssociatedSummaries() != null)
             professorshipToDelete.getAssociatedSummaries().clear();
         if (professorshipToDelete.getSupportLessons() != null)
             professorshipToDelete.getSupportLessons().clear();
-        
+
         if (professorshipToDelete.getAssociatedShiftProfessorship() != null)
             professorshipToDelete.getAssociatedShiftProfessorship().clear();
 
@@ -115,5 +135,13 @@ public class DeleteTeacher implements IService {
 
     protected boolean canDeleteResponsibleFor() {
         return false;
+    }
+
+    private class ExistingAssociatedCredits extends FenixServiceException {
+
+    }
+
+    private class ExistingAssociatedSupportLessons extends FenixServiceException {
+
     }
 }
