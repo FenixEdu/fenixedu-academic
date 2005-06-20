@@ -219,7 +219,10 @@
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship.RemoveProfessorshipAction" validate="false">            
             <exception type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteTeacher$ExistingAssociatedCredits"          
                 key="message.existing.associatedCredits"
-                path="/showTeacherProfessorshipsForManagement.do"/>            
+                path="/showTeacherProfessorshipsForManagement.do"/>         
+			<exception type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteTeacher$ExistingAssociatedSupportLessons"          
+                key="message.existing.associatedSupportLessons"
+                path="/showTeacherProfessorshipsForManagement.do"/>                          
                 
             <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException" 
                 key="message.professorship.isResponsibleFor" 
