@@ -122,19 +122,25 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
             IShiftProfessorship shiftProfessorship, List shiftProfessorshipDeleted,
             List shiftProfessorshipAdded) throws ExcepcaoPersistencia, OverlappingPeriodException,
             FenixServiceException {
+        boolean toAdd = false;
         if (percentage.doubleValue() == 0) {
             shiftProfessorshipDAO.delete(shiftProfessorship);
             shiftProfessorshipDeleted.add(shiftProfessorship);
         } else {
 
             if (shiftProfessorship == null) {
+                toAdd = true;
                 shiftProfessorship = new ShiftProfessorship();
                 shiftProfessorship.setProfessorship(professorship);
-                shiftProfessorship.setShift(shift);
+                shiftProfessorship.setShift(shift);                
             }
             shiftProfessorshipDAO.simpleLockWrite(shiftProfessorship);
 
-            shiftProfessorship.setPercentage(percentage);
+            if(toAdd){
+                professorship.getAssociatedShiftProfessorship().add(shiftProfessorship);
+                shift.getAssociatedShiftProfessorship().add(shiftProfessorship);
+            }
+            shiftProfessorship.setPercentage(percentage);            
 
             CreditsValidator.validatePeriod(professorship.getTeacher().getIdInternal(), professorship
                     .getExecutionCourse().getExecutionPeriod().getIdInternal(), shiftProfessorship);
