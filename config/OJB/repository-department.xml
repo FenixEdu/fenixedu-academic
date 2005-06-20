@@ -29,7 +29,7 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-<!--	<collection-descriptor proxy="true"
+<!--	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="disciplinasAssociadas"
 			element-class-ref="net.sourceforge.fenixedu.domain.DepartmentCourse"
 			>

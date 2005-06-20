@@ -93,10 +93,9 @@
 			>
 		<foreignkey field-ref="keySite"/>
 	</reference-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedCurricularCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
-  		    collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			indirection-table="CURRICULAR_COURSE_EXECUTION_COURSE"
 			auto-retrieve="true"
 			
@@ -104,7 +103,7 @@
 		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE"/>
 		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedExams"
 			element-class-ref="net.sourceforge.fenixedu.domain.Exam"
 			indirection-table="EXAM_EXECUTION_COURSE"
@@ -117,7 +116,7 @@
 		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE"/>
 		<fk-pointing-to-element-class column="KEY_EVALUATION"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedEvaluations"
 			element-class-ref="net.sourceforge.fenixedu.domain.Evaluation"
 			indirection-table="EXAM_EXECUTION_COURSE"
@@ -130,7 +129,7 @@
 		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE"/>
 		<fk-pointing-to-element-class column="KEY_EVALUATION"/>
 	</collection-descriptor>
-    <collection-descriptor proxy="true"
+    <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="attendingStudents"
 			element-class-ref="net.sourceforge.fenixedu.domain.Student"
 			indirection-table="ATTEND"
@@ -143,7 +142,7 @@
 		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE"/>
 		<fk-pointing-to-element-class column="KEY_STUDENT"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="attends"
 		element-class-ref="net.sourceforge.fenixedu.domain.Attends"
 		
@@ -153,7 +152,7 @@
 		>
 		<inverse-foreignkey field-ref="chaveDisciplinaExecucao"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="executionCourseProperties"
 		element-class-ref="net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty"
 		
@@ -163,7 +162,7 @@
 		>
 		<inverse-foreignkey field-ref="keyExecutionCourse"/>
 	</collection-descriptor>     
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="responsibleTeachers"
 		element-class-ref="net.sourceforge.fenixedu.domain.ResponsibleFor"
 		
@@ -173,7 +172,7 @@
 		>
 		<inverse-foreignkey field-ref="keyExecutionCourse"/>
 	</collection-descriptor>        
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="professorships"
 		element-class-ref="net.sourceforge.fenixedu.domain.Professorship"
 		
@@ -183,15 +182,14 @@
 		>
 		<inverse-foreignkey field-ref="keyExecutionCourse"/>
 	</collection-descriptor>	
-	<collection-descriptor proxy="true" 
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 			name="groupPropertiesExecutionCourse" 
 			element-class-ref="net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse"
 			>
 		<inverse-foreignkey field-ref="keyExecutionCourse"/>
     </collection-descriptor>
-    <collection-descriptor proxy="true"
+    <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="nonAffiliatedTeachers"
-			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"			
 			element-class-ref="net.sourceforge.fenixedu.domain.NonAffiliatedTeacher"
 			
 			indirection-table="NON_AFFILIATED_TEACHER_PROFESSORSHIPS"
@@ -200,21 +198,21 @@
 		<fk-pointing-to-element-class column="KEY_NON_AFFILIATED_TEACHER" />
 		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE" />
 	</collection-descriptor>
-	<collection-descriptor proxy="true" 
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="associatedBibliographicReferences" 
 		element-class-ref="net.sourceforge.fenixedu.domain.BibliographicReference"
 		
 		>
 		<inverse-foreignkey field-ref="keyExecutionCourse"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" 
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="associatedSummaries" 
 		element-class-ref="net.sourceforge.fenixedu.domain.Summary"
 		
 		>
 		<inverse-foreignkey field-ref="keyExecutionCourse"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" 
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="associatedShifts" 
 		element-class-ref="net.sourceforge.fenixedu.domain.Shift"
 		
@@ -223,13 +221,13 @@
 	</collection-descriptor>
 	
 
-	<collection-descriptor proxy="true" 
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="groupPropertiesSenderExecutionCourse" 
 		element-class-ref="net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse">
 		<inverse-foreignkey field-ref="keySenderExecutionCourse"/>
 	</collection-descriptor>
 		
-	<collection-descriptor proxy="true" 
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="evaluationExecutionCourses" 
 		element-class-ref="net.sourceforge.fenixedu.domain.EvaluationExecutionCourse">
 		<inverse-foreignkey field-ref="keyExecutionCourse"/>

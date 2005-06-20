@@ -172,7 +172,7 @@
          class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.Group">
          <foreignkey field-ref="keyGroupAttributed"/>
       </reference-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="branches"
 			element-class-ref="net.sourceforge.fenixedu.domain.Branch"
 			indirection-table="FINAL_DEGREE_WORK_PROPOSAL_BRANCH"
@@ -182,11 +182,9 @@
 		<fk-pointing-to-this-class column="KEY_FINAL_DEGREE_WORK_PROPOSAL"/>
 		<fk-pointing-to-element-class column="KEY_BRANCH"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="groupProposals"
          element-class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal"
-         collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         auto-retrieve="true"
          
          >
 		<inverse-foreignkey field-ref="keyFinalDegreeWorkProposal"/>
@@ -322,20 +320,16 @@
          class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree">
          <foreignkey field-ref="keyExecutionDegree"/>
       </reference-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="groupStudents"
 			element-class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent"
-			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			auto-retrieve="true"
-			
+
 			>
 		<inverse-foreignkey field-ref="keyFinalDegreeDegreeWorkGroup"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="groupProposals"
          element-class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal"
-         collection-class="org.apache.ojb.broker.util.collections.RemovalAwareCollection"
-         auto-retrieve="true"
          
          >
 		<inverse-foreignkey field-ref="keyFinalDegreeDegreeWorkGroup"/>

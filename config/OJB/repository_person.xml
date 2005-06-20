@@ -218,19 +218,15 @@
          >
          <foreignkey field-ref="keyAuthor"/>
     </reference-descriptor>
-    <collection-descriptor proxy="true"
+    <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="personRoles"
          element-class-ref="net.sourceforge.fenixedu.domain.Role"
-         
-         collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          indirection-table = "PERSON_ROLE"
-         auto-retrieve="true"
-              
     >
     	<fk-pointing-to-this-class  column="KEY_PERSON" />
     	<fk-pointing-to-element-class column="KEY_ROLE" />
     </collection-descriptor>    
-    <collection-descriptor proxy="true"
+    <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="manageableDepartmentCredits"
          element-class-ref="net.sourceforge.fenixedu.domain.Department"
          
@@ -243,7 +239,7 @@
     	<fk-pointing-to-this-class  column="KEY_PERSON" />
     	<fk-pointing-to-element-class column="KEY_DEPARTMENT" />
     </collection-descriptor>    
-    <collection-descriptor proxy="true"
+    <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="advisories"
          element-class-ref="net.sourceforge.fenixedu.domain.Advisory"
          
@@ -259,21 +255,21 @@
 	    	class="net.sourceforge.fenixedu.persistenceTier.customQueries.AdvisoryFilter">
 	    </query-customizer>
     </collection-descriptor>    
-	<collection-descriptor proxy="true" 
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="associatedAlteredCurriculums" 
 		element-class-ref="net.sourceforge.fenixedu.domain.Curriculum"
 		
 		>
 		<inverse-foreignkey field-ref="keyPersonWhoAltered"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" 
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="associatedTeachers" 
 		element-class-ref="net.sourceforge.fenixedu.domain.Teacher"
 		
 		>
 		<inverse-foreignkey field-ref="keyPerson"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" 
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="enrolmentEvaluations" 
 		element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentEvaluation"
 		

@@ -79,7 +79,7 @@
             >
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="evaluations"
 			
 			
@@ -87,7 +87,7 @@
 		<inverse-foreignkey field-ref="enrolmentKey"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="equivalentEnrolmentForEnrolmentEquivalences"
 			
 			
@@ -95,7 +95,7 @@
 		<inverse-foreignkey field-ref="equivalentEnrolmentKey"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="enrolmentEquivalences"
 			
 			
@@ -103,7 +103,7 @@
 		<inverse-foreignkey field-ref="enrolmentKey"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="attends"
 			
 			
@@ -111,7 +111,7 @@
 		<inverse-foreignkey field-ref="keyEnrolment"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="creditsInAnySecundaryAreas"
 			
 			
@@ -119,7 +119,7 @@
 		<inverse-foreignkey field-ref="enrolmentKey"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="creditsInScientificAreas"
 			
 			
@@ -211,7 +211,7 @@
             >
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="evaluations"
 			
 			
@@ -220,7 +220,7 @@
 	</collection-descriptor>    
 	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
 	
-<collection-descriptor proxy="true"
+<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="equivalentEnrolmentForEnrolmentEquivalences"
 			
 			
@@ -228,7 +228,7 @@
 		<inverse-foreignkey field-ref="equivalentEnrolmentKey"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="enrolmentEquivalences"
 			
 			
@@ -236,7 +236,7 @@
 		<inverse-foreignkey field-ref="enrolmentKey"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="attends"
 			
 			
@@ -244,7 +244,7 @@
 		<inverse-foreignkey field-ref="keyEnrolment"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="creditsInAnySecundaryAreas"
 			
 			
@@ -252,7 +252,7 @@
 		<inverse-foreignkey field-ref="enrolmentKey"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="creditsInScientificAreas"
 			
 			
@@ -340,7 +340,7 @@
             >
 		<foreignkey field-ref="keyExecutionPeriod"/>
 	</reference-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="evaluations"
 			
 			
@@ -349,7 +349,7 @@
 	</collection-descriptor>    
 	<field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>
 	
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="equivalentEnrolmentForEnrolmentEquivalences"
 			
 			
@@ -357,7 +357,7 @@
 		<inverse-foreignkey field-ref="equivalentEnrolmentKey"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="enrolmentEquivalences"
 			
 			
@@ -365,7 +365,7 @@
 		<inverse-foreignkey field-ref="enrolmentKey"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="attends"
 			
 			
@@ -373,7 +373,7 @@
 		<inverse-foreignkey field-ref="keyEnrolment"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="creditsInAnySecundaryAreas"
 			
 			
@@ -381,7 +381,7 @@
 		<inverse-foreignkey field-ref="enrolmentKey"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="creditsInScientificAreas"
 			
 			

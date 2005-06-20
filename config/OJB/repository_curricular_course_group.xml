@@ -60,7 +60,7 @@
 			>
 		<foreignkey field-ref="keyBranch"/>
 	</reference-descriptor>		
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="curricularCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			indirection-table="CURRICULAR_COURSE_CURRICULAR_COURSE_GROUP"
@@ -68,7 +68,7 @@
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE_GROUP"/>
 		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="scientificAreas"
 			element-class-ref="net.sourceforge.fenixedu.domain.ScientificArea"
 			indirection-table="SCIENTIFIC_AREA_CURRICULAR_COURSE_GROUP"
@@ -126,7 +126,7 @@
 			>
 		<foreignkey field-ref="keyBranch"/>
 	</reference-descriptor>		
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="curricularCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			indirection-table="CURRICULAR_COURSE_CURRICULAR_COURSE_GROUP"
@@ -134,7 +134,7 @@
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE_GROUP"/>
 		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="scientificAreas"
 			element-class-ref="net.sourceforge.fenixedu.domain.ScientificArea"
 			indirection-table="SCIENTIFIC_AREA_CURRICULAR_COURSE_GROUP"

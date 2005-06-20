@@ -104,11 +104,9 @@
           <foreignkey field-ref="executionDegreeKey"/>
           </reference-descriptor>
           
-         <collection-descriptor proxy="true"
+         <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 	         name="situations"
 	         element-class-ref="net.sourceforge.fenixedu.domain.CandidateSituation"
-    		 collection-class="org.apache.ojb.odmg.collections.DListImpl"
-	         
 			>
            <inverse-foreignkey field-ref="candidateKey"/>
 	         <!--auto-retrieve="true"-->
@@ -345,7 +343,7 @@
       <foreignkey field-ref="keyExecutionDegree"/>
       </reference-descriptor>
        
-    <collection-descriptor proxy="true"
+    <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="guideEntries"
          
      	
@@ -354,7 +352,7 @@
        <inverse-foreignkey field-ref="keyGuide"/>
      </collection-descriptor>
 
-    <collection-descriptor proxy="true"
+    <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="guideSituations"
          
      	
@@ -363,7 +361,7 @@
        <inverse-foreignkey field-ref="keyGuide"/>
      </collection-descriptor>
      
-     <collection-descriptor proxy="true"
+     <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="reimbursementGuides"
          
 		 
@@ -441,7 +439,7 @@
           <foreignkey field-ref="keyGuide"/>
       </reference-descriptor>
 	  
-	 <collection-descriptor proxy="true"
+	 <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="reimbursementGuideEntries"
          
          auto-retrieve="true"
@@ -764,7 +762,7 @@
       	locking="true"
       />
         
-    <collection-descriptor proxy="true"
+    <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="masterDegreeProofVersions"
          auto-retrieve="true"
          
@@ -774,7 +772,7 @@
        <inverse-foreignkey field-ref="keyMasterDegreeThesis"/>
      </collection-descriptor>
         
-     <collection-descriptor proxy="true"
+     <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="masterDegreeThesisDataVersions"
          auto-retrieve="true"
          
@@ -847,7 +845,7 @@
       	locking="true"
       />
                 
-        <collection-descriptor proxy="true"
+        <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         	name="guiders"
 	        element-class-ref="net.sourceforge.fenixedu.domain.Teacher"
     	    auto-retrieve="true"
@@ -861,7 +859,7 @@
         	<fk-pointing-to-element-class column="KEY_TEACHER"/>
       	</collection-descriptor>
         
-        <collection-descriptor proxy="true"
+        <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         	name="externalGuiders"
 	        element-class-ref="net.sourceforge.fenixedu.domain.ExternalPerson"
     	    auto-retrieve="true"
@@ -875,7 +873,7 @@
         	<fk-pointing-to-element-class column="KEY_EXTERNAL_PERSON"/>
       	</collection-descriptor>
         
-        <collection-descriptor proxy="true"
+        <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 	        name="assistentGuiders"
     	    element-class-ref="net.sourceforge.fenixedu.domain.Teacher"
         	auto-retrieve="true"
@@ -889,7 +887,7 @@
 	        <fk-pointing-to-element-class column="KEY_TEACHER"/>
       	</collection-descriptor>
       	        
-        <collection-descriptor proxy="true"
+        <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
     	    name="externalAssistentGuiders"
         	element-class-ref="net.sourceforge.fenixedu.domain.ExternalPerson"
 	        auto-retrieve="true"
@@ -1006,7 +1004,7 @@
 	        <foreignkey field-ref="keyEmployee"/>
 		</reference-descriptor>
 		
-		<collection-descriptor proxy="true"
+		<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         	name="juries"
 	        element-class-ref="net.sourceforge.fenixedu.domain.Teacher"
     	    auto-retrieve="true"
@@ -1020,7 +1018,7 @@
         	<fk-pointing-to-element-class column="KEY_TEACHER"/>
       	</collection-descriptor> 
       	
-      	<collection-descriptor proxy="true"
+      	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         	name="externalJuries"
 	        element-class-ref="net.sourceforge.fenixedu.domain.ExternalPerson"
     	    auto-retrieve="true"
@@ -1132,7 +1130,7 @@
           <foreignkey field-ref="keyGuide"/>
       </reference-descriptor>
       
-      <collection-descriptor proxy="true"
+      <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="reimbursementGuideSituations"
          
          auto-retrieve="true"
@@ -1143,7 +1141,7 @@
 		<inverse-foreignkey field-ref="keyReimbursementGuide"/>
 	  </collection-descriptor>
 	  
-	  <collection-descriptor proxy="true"
+	  <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="reimbursementGuideEntries"
          
          auto-retrieve="true"
@@ -1420,7 +1418,7 @@
     >
         <foreignkey field-ref="keyEmployee"/>
     </reference-descriptor>    
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="paymentPhaseList"
 		element-class-ref="net.sourceforge.fenixedu.domain.PaymentPhase"
 		
@@ -1527,7 +1525,7 @@
     >
         <foreignkey field-ref="keyStudentCurricularPlan"/>
     </reference-descriptor>   
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="transactionList"
 		element-class-ref="net.sourceforge.fenixedu.domain.transactions.GratuityTransaction"
 		
@@ -1617,7 +1615,7 @@
       	jdbc-type="INTEGER"
       	locking="true"
     />
-    <collection-descriptor proxy="true"
+    <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
     	name="sibsPaymentFileEntries"
 	 	auto-retrieve="true"
         

@@ -311,43 +311,42 @@
         <foreignkey field-ref="keyCourseHistoric"/>
     </reference-descriptor> 
     
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedExecutionCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 			indirection-table="CURRICULAR_COURSE_EXECUTION_COURSE"
- 		    collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			>
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE"/>
 		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="scopes"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseScope"
 			>
 		<inverse-foreignkey field-ref="curricularCourseKey"/>
 	</collection-descriptor>   
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedCurriculums"
 			element-class-ref="net.sourceforge.fenixedu.domain.Curriculum"
 			
 			>
 		<inverse-foreignkey field-ref="keyCurricularCourse"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="oldCurricularCourseEquivalences"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseEquivalence"
 			
 			>
 		<inverse-foreignkey field-ref="oldCurricularCourseKey"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="curricularCourseEquivalences"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseEquivalence"
 			
 			>
 		<inverse-foreignkey field-ref="equivalentCurricularCourseKey"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="curricularCourseGroups"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseGroup"
 			indirection-table="CURRICULAR_COURSE_CURRICULAR_COURSE_GROUP"
@@ -356,7 +355,7 @@
 		<fk-pointing-to-element-class column="KEY_CURRICULAR_COURSE_GROUP"/>
 	</collection-descriptor>
 
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="enrolments"
 			element-class-ref="net.sourceforge.fenixedu.domain.Enrolment"
 			
@@ -364,28 +363,28 @@
 		<inverse-foreignkey field-ref="curricularCourseKey"/>
 	</collection-descriptor>	
 
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="enrolmentLogs"
 			element-class-ref="net.sourceforge.fenixedu.domain.log.EnrolmentLog"
 			
 			>
 		<inverse-foreignkey field-ref="keyCurricularCourse"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="notNeedToEnrollInCurricularCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse"
 			
 			>
 		<inverse-foreignkey field-ref="curricularCourseKey"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="candidateEnrolments"
 			element-class-ref="net.sourceforge.fenixedu.domain.CandidateEnrolment"
 			
 			>
 		<inverse-foreignkey field-ref="curricularCourseKey"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="precedences"
 			element-class-ref="net.sourceforge.fenixedu.domain.precedences.Precedence"
 			
@@ -393,7 +392,7 @@
 		<inverse-foreignkey field-ref="keyCurricularCourse"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="restrictionsByCurricularCourse"
 			element-class-ref="net.sourceforge.fenixedu.domain.precedences.RestrictionByCurricularCourse"
 			
@@ -401,14 +400,14 @@
 		<inverse-foreignkey field-ref="keyPrecedentCurricularCourse"/>
 	</collection-descriptor>
 
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="courseEquivalencies"
 			element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency"
 			
 			>
 		<inverse-foreignkey field-ref="curricularCourseIdInternal"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedCandidancies"
 			element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.Candidacy"
 			
@@ -441,7 +440,7 @@
       	locking="true"
       />
 	  
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="curricularSemesters"
 		element-class-ref="net.sourceforge.fenixedu.domain.CurricularSemester">
 		<inverse-foreignkey field-ref="curricularYearKey"/>
@@ -485,7 +484,7 @@
 
 
 <!--
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedCurricularCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
 			indirection-table="CURRICULAR_COURSE_CURRICULAR_SEMESTER"
@@ -496,7 +495,7 @@
 	</collection-descriptor>
 -->
 
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="scopes"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseScope"
 			>
@@ -536,7 +535,7 @@
 		>
 		<foreignkey field-ref="enrolmentKey"/>
 	</reference-descriptor>
-    <collection-descriptor proxy="true" 
+    <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
     	name="equivalenceRestrictions" 
     	element-class-ref="net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence" 
     	>
@@ -658,13 +657,10 @@
 			>
 		<foreignkey field-ref="branchKey"/>
 	</reference-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedWrittenEvaluations"
 			element-class-ref="net.sourceforge.fenixedu.domain.WrittenEvaluation"
 			indirection-table="WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE"
-			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			
-			
 			>
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE_SCOPE"/>
 		<fk-pointing-to-element-class column="KEY_WRITTEN_EVALUATION"/>
@@ -873,7 +869,7 @@
 		jdbc-type="INTEGER"
 		locking="true"
 	/>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="areaCurricularCourseGroups"
 			element-class-ref="net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup"
 			indirection-table="SCIENTIFIC_AREA_CURRICULAR_COURSE_GROUP"

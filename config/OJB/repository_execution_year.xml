@@ -41,34 +41,34 @@
       jdbc-type="DATE"
       conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
     />
-  <collection-descriptor proxy="true"
+  <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="executionPeriods"
 		element-class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
 		>
 	<inverse-foreignkey field-ref="keyExecutionYear"/>
   </collection-descriptor>  
-  <collection-descriptor proxy="true"
+  <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="delegate"
 		element-class-ref="net.sourceforge.fenixedu.domain.student.Delegate"
 		
 		>
 	<inverse-foreignkey field-ref="keyExecutionYear"/>
   </collection-descriptor>  
-  <collection-descriptor proxy="true"
+  <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="insuranceTransactions"
 		element-class-ref="net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction"
 		
 		>
 	<inverse-foreignkey field-ref="keyExecutionYear"/>
   </collection-descriptor>  
-  <collection-descriptor proxy="true"
+  <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="executionDegrees"
 		element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
 		
 		>
 	<inverse-foreignkey field-ref="academicYear"/>
   </collection-descriptor>  
-  <collection-descriptor proxy="true"
+  <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="students"
 		element-class-ref="net.sourceforge.fenixedu.domain.Student"
 		

@@ -5,7 +5,7 @@
     <reference-descriptor name="curricularCourse" class-ref="net.sourceforge.fenixedu.domain.CurricularCourse">
 	    <foreignkey field-ref="keyCurricularCourse"/>
     </reference-descriptor>
-    <collection-descriptor proxy="true" name="restrictions" element-class-ref="net.sourceforge.fenixedu.domain.precedences.Restriction"  >
+    <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" name="restrictions" element-class-ref="net.sourceforge.fenixedu.domain.precedences.Restriction"  >
        <inverse-foreignkey field-ref="keyPrecedence"/>
     </collection-descriptor>
 </class-descriptor>

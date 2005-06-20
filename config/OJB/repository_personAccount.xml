@@ -43,7 +43,7 @@
 		<foreignkey field-ref="keyPerson"/>
 	</reference-descriptor>
 	
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="transactions"
 		element-class-ref="net.sourceforge.fenixedu.domain.transactions.Transaction"
 		

@@ -73,7 +73,7 @@
       	jdbc-type="INTEGER"
       	locking="true"
 	/>
-    <collection-descriptor proxy="true"
+    <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="visibleQuestions"
 		element-class-ref="net.sourceforge.fenixedu.domain.Question"
 		
@@ -334,14 +334,14 @@
         column="KEY_TEST_SCOPE"
         jdbc-type="INTEGER"
 	/>
-	 <collection-descriptor proxy="true"
+	 <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="studentLogs"
 		element-class-ref="net.sourceforge.fenixedu.domain.StudentTestLog"
 		auto-delete="true"
 		>
 		<inverse-foreignkey field-ref="keyDistributedTest"/>
 	</collection-descriptor>
-	 <collection-descriptor proxy="true"
+	 <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="studentQuestions"
 		element-class-ref="net.sourceforge.fenixedu.domain.StudentTestQuestion"
 		auto-delete="true"
@@ -534,7 +534,7 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-	  <collection-descriptor proxy="true"
+	  <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedExecutionCourses"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 			indirection-table="EXAM_EXECUTION_COURSE"

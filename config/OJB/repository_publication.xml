@@ -51,13 +51,13 @@
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
 	<field-descriptor name="publicationType" column="PUBLICATION_TYPE" jdbc-type="VARCHAR"/>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="publicationTypeAttributes"
 			element-class-ref="net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute"
 			>
 		<inverse-foreignkey field-ref="keyPublicationType"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          	name="subtypes"
          	element-class-ref="net.sourceforge.fenixedu.domain.publication.PublicationSubtype">
          <inverse-foreignkey field-ref="keyPublicationType"/>
@@ -69,7 +69,7 @@
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
 	<field-descriptor name="attributeType" column="ATTRIBUTE_TYPE" jdbc-type="VARCHAR"/>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="publicationTypeAttributes"
 			element-class-ref="net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute"
 			>
@@ -119,14 +119,14 @@
 	    <foreignkey field-ref="keyPublicationType"/>
     </reference-descriptor>
     
-    <collection-descriptor proxy="true"
+    <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="publicationTeachers"
 			element-class-ref="net.sourceforge.fenixedu.domain.publication.PublicationTeacher"
 			
 	        >
 		<inverse-foreignkey field-ref="keyPublication"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="publicationAuthors"
 			element-class-ref="net.sourceforge.fenixedu.domain.publication.PublicationAuthor"
 			
@@ -166,7 +166,7 @@
     <field-descriptor name="author" column="AUTHOR" jdbc-type="VARCHAR"/>
 	<field-descriptor name="organization" column="ORGANISATION" jdbc-type="VARCHAR"/>
 
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="authorPublications"
 			element-class-ref="net.sourceforge.fenixedu.domain.publication.PublicationAuthor"
 			refresh="true" >

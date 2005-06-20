@@ -75,7 +75,7 @@
          conversion="org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion"
       />
 
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="equivalencies"
          element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency"
          
@@ -84,7 +84,7 @@
         <inverse-foreignkey field-ref="seminaryIdInternal"/>
      </collection-descriptor>
      
-     <collection-descriptor proxy="true"
+     <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="candidacies"
          element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.Candidacy"
          
@@ -158,13 +158,10 @@
 	      <foreignkey field-ref="modalityIdInternal"/>
      </reference-descriptor>
     
-     <collection-descriptor proxy="true"
+     <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         name="themes"
-        collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.Theme"
 	    indirection-table="EQUIVALENCY_THEME"
-        
-        
         orderby="name"
         sort="ASC"
      >
@@ -240,7 +237,7 @@
       	locking="true"
       />
 
-	  <collection-descriptor proxy="true"
+	  <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         name="caseStudies"
         element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CaseStudy"
 		
@@ -304,7 +301,7 @@
      </reference-descriptor>
 
 	 	<!-- Choices made to this case study -->
-      <collection-descriptor proxy="true"
+      <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="seminaryCandidacies"
          element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice"
 		 orderby="order"
@@ -417,7 +414,7 @@
 	      <foreignkey field-ref="themeIdInternal"/>
      </reference-descriptor>
 	<!-- Choosen case studies -->
-      <collection-descriptor proxy="true"
+      <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="caseStudyChoices"
          element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice"
 		 orderby="order"

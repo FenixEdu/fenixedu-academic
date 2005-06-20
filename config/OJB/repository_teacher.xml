@@ -232,12 +232,10 @@
 		<foreignkey field-ref="keyInstitution"/>
 	</reference-descriptor>
 	
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="executionCourses"
-			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"			
 			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
 			indirection-table="NON_AFFILIATED_TEACHER_PROFESSORSHIPS"
-			
 			>
 		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE" />
 		<fk-pointing-to-this-class column="KEY_NON_AFFILIATED_TEACHER" />

@@ -106,33 +106,33 @@
 			class-ref="net.sourceforge.fenixedu.domain.ExecutionYear">
 		<foreignkey field-ref="keyRegistrationYear"/>
 	</reference-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="studentCurricularPlans"
 			element-class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
 			
 			>
 		<inverse-foreignkey field-ref="studentKey"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedCandidancies"
 			element-class-ref="net.sourceforge.fenixedu.domain.Seminaries.Candidacy"
 			
 			>
 		<inverse-foreignkey field-ref="studentIdInternal"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="inquiriesRegistries"
 			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry"
 			
 			>
 		<inverse-foreignkey field-ref="keyStudent"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="associatedAttends"
 			element-class-ref="net.sourceforge.fenixedu.domain.Attends">
 		<inverse-foreignkey field-ref="chaveAluno"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="examStudentRooms"
 			element-class-ref="net.sourceforge.fenixedu.domain.ExamStudentRoom"
 			

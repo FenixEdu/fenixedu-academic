@@ -45,14 +45,14 @@
          class-ref="net.sourceforge.fenixedu.domain.Person">
          <foreignkey field-ref="keyPerson"/>
   </reference-descriptor>
-  <collection-descriptor proxy="true"
+  <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 	name="historicList"
 	element-class-ref="net.sourceforge.fenixedu.domain.EmployeeHistoric"
 	auto_retrieve="true"
 	>
 	<inverse-foreignkey field-ref="keyEmployee"/>
   </collection-descriptor> 
-  <collection-descriptor proxy="true"
+  <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 	name="enrolmentEvaluations"
 	element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentEvaluation"
 	auto_retrieve="true"

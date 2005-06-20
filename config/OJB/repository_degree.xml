@@ -41,42 +41,42 @@
 		column="CLASS_NAME_FOR_DEGREE_CURRICULAR_PLANS"
 		jdbc-type="VARCHAR"
 	/>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="degreeCurricularPlans"
 			element-class-ref="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
 			
 			>
 		<inverse-foreignkey field-ref="degreeKey"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="degreeInfos"
 			element-class-ref="net.sourceforge.fenixedu.domain.DegreeInfo"
 			>
 		<inverse-foreignkey field-ref="degreeKey"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="delegate"
 			element-class-ref="net.sourceforge.fenixedu.domain.student.Delegate"
 			>
 		<inverse-foreignkey field-ref="keyDegree"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="oldInquiriesSummary"
 			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary"
 			>
 		<inverse-foreignkey field-ref="keyDegree"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="oldInquiriesTeachersRes"
 			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes"
 			>
 		<inverse-foreignkey field-ref="keyDegree"/>
 	</collection-descriptor>
 	
-	<collection-descriptor proxy="true"
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="oldInquiriesCoursesRes"
 			element-class-ref="net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes"
 			>
