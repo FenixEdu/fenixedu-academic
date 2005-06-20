@@ -93,9 +93,9 @@ public class UpdateTeacherExecutionYearResponsabilities implements IService {
             for (int i = 0; i < responsibleFors.size(); i++) {
                 IResponsibleFor responsibleFor = (IResponsibleFor) responsibleFors.get(i);
                 responsibleFor.getExecutionCourse().getResponsibleTeachers().remove(responsibleFor);
-                responsibleFor.setExecutionCourse(null);
                 responsibleFor.getTeacher().getAssociatedResponsibles().remove(responsibleFor);
                 responsibleFor.setTeacher(null);
+                responsibleFor.setExecutionCourse(null);
                 responsibleForDAO.deleteByOID(ResponsibleFor.class, responsibleFor.getIdInternal());
             }
         }
@@ -112,6 +112,8 @@ public class UpdateTeacherExecutionYearResponsabilities implements IService {
                 responsibleForDAO.simpleLockWrite(responsibleFor);
                 responsibleFor.setTeacher(teacher);
                 responsibleFor.setExecutionCourse(executionCourse);
+                teacher.getAssociatedResponsibles().add(responsibleFor);
+                executionCourse.getResponsibleTeachers().add(responsibleFor);
                 ResponsibleForValidator.getInstance().validateResponsibleForList(teacher,
                         executionCourse, responsibleFor, responsibleForDAO);
             }
