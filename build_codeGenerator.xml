@@ -16,7 +16,7 @@
 	<!-- Directories for compiled code -->
 	<property name="build.home" location="build"/>
 	<property name="build.home.temp" value="${build.home}/temp"/>
-	<property name="build.home.temp.classes" value="${build.home.temp}/temp/classes"/>
+	<property name="build.home.temp.classes" value="${build.home.temp}/classes"/>
 	<property name="build.home.webinf" value="${build.home}/WEB-INF"/>
 	<property name="build.home.webinf.classes" value="${build.home.webinf}/classes"/>
 
