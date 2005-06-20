@@ -6,6 +6,10 @@ package net.sourceforge.fenixedu.domain;
  */
 public class FinalEvaluation extends FinalEvaluation_Base {
 
+    public FinalEvaluation() {
+        this.setOjbConcreteClass(FinalEvaluation.class.getName());
+    }
+
     public boolean equals(Object obj) {
         if (obj instanceof FinalEvaluation) {
             FinalEvaluation finalEvaluationObj = (FinalEvaluation) obj;

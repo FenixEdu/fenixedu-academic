@@ -18,9 +18,11 @@ import org.apache.commons.collections.Transformer;
 public class Exam extends Exam_Base {
 
     public Exam() {
+        this.setOjbConcreteClass(Exam.class.getName());
     }
 
     public Exam(Calendar day, Calendar beginning, Calendar end, Season season) {
+        this.setOjbConcreteClass(Exam.class.getName());
         this.setDay(day);
         this.setBeginning(beginning);
         this.setEnd(end);

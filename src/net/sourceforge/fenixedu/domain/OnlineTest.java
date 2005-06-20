@@ -15,6 +15,7 @@ public class OnlineTest extends Evaluation implements IOnlineTest {
     private IDistributedTest distributedTest;
 
     public OnlineTest() {
+        this.setOjbConcreteClass(OnlineTest.class.getName());
     }
 
     public IDistributedTest getDistributedTest() {

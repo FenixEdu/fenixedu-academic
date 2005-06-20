@@ -10,6 +10,10 @@ package net.sourceforge.fenixedu.domain;
  */
 public class WrittenTest extends WrittenTest_Base {
 
+    public WrittenTest() {
+        this.setOjbConcreteClass(WrittenTest.class.getName());
+    }
+
     public String toString() {
         return "[WRITTEN_TEST:" + " id= '" + this.getIdInternal() + "'\n" + " day= '" + this.getDay()
                 + "'\n" + " beginning= '" + this.getBeginning() + "'\n" + " end= '" + this.getEnd()
