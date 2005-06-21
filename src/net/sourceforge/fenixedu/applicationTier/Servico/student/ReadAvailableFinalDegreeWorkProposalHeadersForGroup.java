@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
@@ -25,62 +24,58 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup implements IService {
 
-    public List run(Integer groupOID) throws FenixServiceException {
+    public List run(Integer groupOID) throws ExcepcaoPersistencia {
         List finalDegreeWorkProposalHeaders = new ArrayList();
 
-        try {
-            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
-                    .getIPersistentFinalDegreeWork();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
+                .getIPersistentFinalDegreeWork();
 
-            IGroup group = (IGroup) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
+        IGroup group = (IGroup) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
 
-            if (group != null && group.getExecutionDegree() != null) {
-                List finalDegreeWorkProposals = persistentFinalDegreeWork
-                        .readPublishedFinalDegreeWorkProposalsByExecutionDegree(group
-                                .getExecutionDegree().getIdInternal());
+        if (group != null && group.getExecutionDegree() != null) {
+            List finalDegreeWorkProposals = persistentFinalDegreeWork
+                    .readPublishedFinalDegreeWorkProposalsByExecutionDegree(group.getExecutionDegree()
+                            .getIdInternal());
 
-                if (finalDegreeWorkProposals != null) {
-                    finalDegreeWorkProposalHeaders = new ArrayList();
-                    for (int i = 0; i < finalDegreeWorkProposals.size(); i++) {
-                        IProposal proposal = (IProposal) finalDegreeWorkProposals.get(i);
+            if (finalDegreeWorkProposals != null) {
+                finalDegreeWorkProposalHeaders = new ArrayList();
+                for (int i = 0; i < finalDegreeWorkProposals.size(); i++) {
+                    IProposal proposal = (IProposal) finalDegreeWorkProposals.get(i);
 
-                        if (proposal != null
-                                && !CollectionUtils.exists(group.getGroupProposals(),
-                                        new PREDICATE_FIND_GROUP_PROPOSAL_BY_PROPOSAL(proposal))) {
-                            FinalDegreeWorkProposalHeader finalDegreeWorkProposalHeader = new FinalDegreeWorkProposalHeader();
+                    if (proposal != null
+                            && !CollectionUtils.exists(group.getGroupProposals(),
+                                    new PREDICATE_FIND_GROUP_PROPOSAL_BY_PROPOSAL(proposal))) {
+                        FinalDegreeWorkProposalHeader finalDegreeWorkProposalHeader = new FinalDegreeWorkProposalHeader();
 
-                            finalDegreeWorkProposalHeader.setIdInternal(proposal.getIdInternal());
-                            finalDegreeWorkProposalHeader
-                                    .setProposalNumber(proposal.getProposalNumber());
-                            finalDegreeWorkProposalHeader.setTitle(proposal.getTitle());
-                            finalDegreeWorkProposalHeader.setExecutionYear(proposal.getExecutionDegree().getExecutionYear().getYear());
-                            if (proposal.getOrientator() != null) {
-                                finalDegreeWorkProposalHeader.setOrientatorOID(proposal.getOrientator()
-                                        .getIdInternal());
-                                finalDegreeWorkProposalHeader.setOrientatorName(proposal.getOrientator()
-                                        .getPerson().getNome());
-                            }
-                            if (proposal.getCoorientator() != null) {
-                                finalDegreeWorkProposalHeader.setCoorientatorOID(proposal
-                                        .getCoorientator().getIdInternal());
-                                finalDegreeWorkProposalHeader.setCoorientatorName(proposal
-                                        .getCoorientator().getPerson().getNome());
-                            }
-                            finalDegreeWorkProposalHeader.setCompanyLink(proposal.getCompanionName());
-                            finalDegreeWorkProposalHeader.setStatus(proposal.getStatus());
-
-                            finalDegreeWorkProposalHeaders.add(finalDegreeWorkProposalHeader);
+                        finalDegreeWorkProposalHeader.setIdInternal(proposal.getIdInternal());
+                        finalDegreeWorkProposalHeader.setProposalNumber(proposal.getProposalNumber());
+                        finalDegreeWorkProposalHeader.setTitle(proposal.getTitle());
+                        finalDegreeWorkProposalHeader.setExecutionYear(proposal.getExecutionDegree()
+                                .getExecutionYear().getYear());
+                        if (proposal.getOrientator() != null) {
+                            finalDegreeWorkProposalHeader.setOrientatorOID(proposal.getOrientator()
+                                    .getIdInternal());
+                            finalDegreeWorkProposalHeader.setOrientatorName(proposal.getOrientator()
+                                    .getPerson().getNome());
                         }
+                        if (proposal.getCoorientator() != null) {
+                            finalDegreeWorkProposalHeader.setCoorientatorOID(proposal.getCoorientator()
+                                    .getIdInternal());
+                            finalDegreeWorkProposalHeader.setCoorientatorName(proposal.getCoorientator()
+                                    .getPerson().getNome());
+                        }
+                        finalDegreeWorkProposalHeader.setCompanyLink(proposal.getCompanionName());
+                        finalDegreeWorkProposalHeader.setStatus(proposal.getStatus());
+
+                        finalDegreeWorkProposalHeaders.add(finalDegreeWorkProposalHeader);
                     }
                 }
             }
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
         }
 
         return finalDegreeWorkProposalHeaders;
