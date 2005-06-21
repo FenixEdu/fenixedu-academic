@@ -13,7 +13,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.publication.Author;
 import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
@@ -138,7 +138,7 @@ public class InfoPublication extends InfoObject {
             Iterator it2 = teachers.iterator();
             List infoTeachersList = new ArrayList();        
             while (it2.hasNext()){
-                Teacher teacher = (Teacher) it2.next();
+                ITeacher teacher = (ITeacher) it2.next();
                 InfoTeacher infoTeacher = new InfoTeacher();
                 infoTeacher.copyFromDomain(teacher);
                 infoTeachersList.add(infoTeacher);
