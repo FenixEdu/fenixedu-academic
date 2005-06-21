@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.enrolment.improvment;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -241,7 +242,7 @@ public class ReadImprovmentsToEnroll implements IService  {
                 public boolean evaluate(Object arg0) {
                     ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
                     if(curricularCourseScope.getCurricularSemester().getSemester().equals(currentExecutionPeriod.getSemester())
-                            && curricularCourseScope.getEndDate() == null)
+                            && (curricularCourseScope.getEndDate() == null || (curricularCourseScope.getEnd().compareTo(new Date())) >= 0))
                         return true;
                     return false;
                 }                   
