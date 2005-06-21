@@ -57,7 +57,7 @@ public class SopClassTimeTableLessonContentRenderer implements LessonSlotContent
                                 "&amp;curricular_year_oid=").append(infoCurricularYear.getIdInternal())
                         .append("&amp;execution_degree_oid=")
                         .append(infoExecutionDegree.getIdInternal()).append("'>").append(
-                                lesson.getTipo()).append("</a>").append(")&nbsp;");
+                                lesson.getTipo().getSiglaTipoAula()).append("</a>").append(")&nbsp;");
             }
 
             strBuffer.append(" <a href='pesquisarSala.do?name=").append(

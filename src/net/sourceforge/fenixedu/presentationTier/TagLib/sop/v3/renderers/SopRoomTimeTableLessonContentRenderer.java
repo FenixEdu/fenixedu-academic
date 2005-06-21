@@ -40,7 +40,7 @@ public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentR
             //        an execution degree context. View room occupation does
             //        NOT contain this context, and therefor the jump cannot
             //        be made.
-            strBuffer.append("&nbsp;(").append(lesson.getTipo()).append(")");
+            strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")");
 
             //TODO(rspl): Will it stay like this the interface for showing
             // it is a quinzenal lesson?
