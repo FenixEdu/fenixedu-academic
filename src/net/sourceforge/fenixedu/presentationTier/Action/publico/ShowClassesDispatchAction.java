@@ -38,45 +38,46 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
         Integer degreeOID = new Integer(request.getParameter("degreeOID"));
         request.setAttribute("degreeID", degreeOID);
 
-        //List classViewsForCurrentAndPreviousPeriods = getClassViewsForCurrentAndPreviousPeriods(request,
-        //        degreeOID);
-
-        List classViewsForCurrentAndNextPeriods = getClassViewsForCurrentAndNextPeriods(request,
+        List classViewsForCurrentAndPreviousPeriods = getClassViewsForCurrentAndPreviousPeriods(request,
                 degreeOID);
+
+//        List classViewsForCurrentAndNextPeriods = getClassViewsForCurrentAndNextPeriods(request,
+//                degreeOID);
         String language = getLocaleLanguageFromRequest(request);
         getInfoDegreeCurricularPlan(request, degreeOID,language);
 
-        //InfoExecutionPeriod previouseInfoExecutionPeriod = getPreviouseExecutionPeriod(request);
+        InfoExecutionPeriod previouseInfoExecutionPeriod = getPreviouseExecutionPeriod(request);
 
-        InfoExecutionPeriod nextInfoExecutionPeriod = getNextExecutionPeriod(request);
+        //InfoExecutionPeriod nextInfoExecutionPeriod = getNextExecutionPeriod(request);
 
         //organizeClassViews(request, classViewsForCurrentAndPreviousPeriods, previouseInfoExecutionPeriod);
 
-        organizeClassViewsNext(request, classViewsForCurrentAndNextPeriods, nextInfoExecutionPeriod);
+        organizeClassViewsNext(request, classViewsForCurrentAndPreviousPeriods, previouseInfoExecutionPeriod);
+        //organizeClassViewsNext(request, classViewsForCurrentAndNextPeriods, nextInfoExecutionPeriod);
 
         return mapping.findForward("show-classes-list");
     }
 
-    /**
-     * @param request
-     * @return
-     * @throws FenixServiceException
-     */
-    private InfoExecutionPeriod getNextExecutionPeriod(HttpServletRequest request)
-            throws FenixServiceException, FenixFilterException {
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-                .getAttribute(SessionConstants.EXECUTION_PERIOD);
-
-        Object[] args = { infoExecutionPeriod.getIdInternal() };
-
-        InfoExecutionPeriod previousInfoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils
-                .executeService(null, "ReadNextExecutionPeriod", args);
-
-        request.setAttribute("nextInfoExecutionPeriod", previousInfoExecutionPeriod);
-
-        return previousInfoExecutionPeriod;
-    }
-
+//    /**
+//     * @param request
+//     * @return
+//     * @throws FenixServiceException
+//     */
+//    private InfoExecutionPeriod getNextExecutionPeriod(HttpServletRequest request)
+//            throws FenixServiceException, FenixFilterException {
+//        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+//                .getAttribute(SessionConstants.EXECUTION_PERIOD);
+//
+//        Object[] args = { infoExecutionPeriod.getIdInternal() };
+//
+//        InfoExecutionPeriod previousInfoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils
+//                .executeService(null, "ReadNextExecutionPeriod", args);
+//
+//        request.setAttribute("nextInfoExecutionPeriod", previousInfoExecutionPeriod);
+//
+//        return previousInfoExecutionPeriod;
+//    }
+//
     /**
      * @param request
      * @param classViews
@@ -105,36 +106,36 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
 
     }
 
-//    private InfoExecutionPeriod getPreviouseExecutionPeriod(HttpServletRequest request)
-//            throws FenixServiceException {
-//        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
-//                .getAttribute(SessionConstants.EXECUTION_PERIOD);
-//
-//        Object[] args = { infoExecutionPeriod.getIdInternal() };
-//
-//        InfoExecutionPeriod previousInfoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils
-//                .executeService(null, "ReadPreviousExecutionPeriod", args);
-//
-//        request.setAttribute("previousInfoExecutionPeriod", previousInfoExecutionPeriod);
-//
-//        return previousInfoExecutionPeriod;
-//    }
-//
-//    private List getClassViewsForCurrentAndPreviousPeriods(HttpServletRequest request, Integer degreeOID)
-//            throws FenixServiceException {
-//        Object[] args = { degreeOID };
-//
-//        return (List) ServiceManagerServiceFactory.executeService(null,
-//                "ReadClassesForCurrentAndPreviousPeriodByDegree", args);
-//    }
+    private InfoExecutionPeriod getPreviouseExecutionPeriod(HttpServletRequest request)
+            throws FenixServiceException, FenixFilterException {
+        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
+                .getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-    private List getClassViewsForCurrentAndNextPeriods(HttpServletRequest request, Integer degreeOID)
+        Object[] args = { infoExecutionPeriod.getIdInternal() };
+
+        InfoExecutionPeriod previousInfoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils
+                .executeService(null, "ReadPreviousExecutionPeriod", args);
+
+        request.setAttribute("previousInfoExecutionPeriod", previousInfoExecutionPeriod);
+
+        return previousInfoExecutionPeriod;
+    }
+
+    private List getClassViewsForCurrentAndPreviousPeriods(HttpServletRequest request, Integer degreeOID)
             throws FenixServiceException, FenixFilterException {
         Object[] args = { degreeOID };
 
         return (List) ServiceManagerServiceFactory.executeService(null,
-                "ReadClassesForCurrentAndNextPeriodByDegree", args);
+                "ReadClassesForCurrentAndPreviousPeriodByDegree", args);
     }
+
+//    private List getClassViewsForCurrentAndNextPeriods(HttpServletRequest request, Integer degreeOID)
+//            throws FenixServiceException, FenixFilterException {
+//        Object[] args = { degreeOID };
+//
+//        return (List) ServiceManagerServiceFactory.executeService(null,
+//                "ReadClassesForCurrentAndNextPeriodByDegree", args);
+//    }
 
     private void getInfoDegreeCurricularPlan(HttpServletRequest request, Integer degreeOID,String language)
             throws FenixServiceException, FenixFilterException {
@@ -145,11 +146,9 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
         infoDegree.prepareEnglishPresentation(language);
         request.setAttribute("infoDegree", infoDegree);
     }
+
     private String getLocaleLanguageFromRequest(HttpServletRequest request) {
-
         Locale locale = (Locale) request.getSession(false).getAttribute(Action.LOCALE_KEY);
-        Locale locale2 = request.getLocale();
-
         return  locale.getLanguage();
 
     }
