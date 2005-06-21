@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -29,10 +28,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  *  
  */
 public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup implements IService {
-
-    public ReadAvailableFinalDegreeWorkProposalHeadersForGroup() {
-        super();
-    }
 
     public List run(Integer groupOID) throws FenixServiceException {
         List finalDegreeWorkProposalHeaders = new ArrayList();
@@ -52,7 +47,7 @@ public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup implements ISer
                 if (finalDegreeWorkProposals != null) {
                     finalDegreeWorkProposalHeaders = new ArrayList();
                     for (int i = 0; i < finalDegreeWorkProposals.size(); i++) {
-                        IProposal proposal = (Proposal) finalDegreeWorkProposals.get(i);
+                        IProposal proposal = (IProposal) finalDegreeWorkProposals.get(i);
 
                         if (proposal != null
                                 && !CollectionUtils.exists(group.getGroupProposals(),
