@@ -91,6 +91,14 @@ public class FillInquiryAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
 		
+		//FIXME: This should be parametrizable
+		Boolean inquiriesAreOpen = Boolean.FALSE; //this should invoque a service to verify if there is an open inquiry
+		if(!inquiriesAreOpen) {
+			request.setAttribute(InquiriesUtil.INQUIRY_MESSAGE_KEY, "message.inquiries.no.open.inquiries");		
+			return actionMapping.findForward("inquiryIntroduction");
+		}
+			
+		
         IUserView userView = SessionUtils.getUserView(request);
 
         Object argsStudentUserName[] = { userView.getUtilizador() };
