@@ -131,10 +131,10 @@ public abstract class InfoGrantPaymentEntity extends InfoObject {
         InfoGrantPaymentEntity infoGrantPaymentEntity) {
         IGrantPaymentEntity grantPaymentEntity = null;
         if (infoGrantPaymentEntity != null) {
-            if (infoGrantPaymentEntity.getOjbConcreteClass().equals(GrantProject.class.getName())){
+            if (infoGrantPaymentEntity.getOjbConcreteClass().equals(GrantCostCenter.class.getName())){
                 return InfoGrantCostCenterWithTeacher
                         .newDomainFromInfo((InfoGrantCostCenter) infoGrantPaymentEntity);
-            }else if (infoGrantPaymentEntity.getOjbConcreteClass().equals( GrantCostCenter.class.getName())){
+            }else if (infoGrantPaymentEntity.getOjbConcreteClass().equals(GrantProject.class.getName())){
                 return InfoGrantProjectWithTeacherAndCostCenter
                         .newDomainFromInfo((InfoGrantProject) infoGrantPaymentEntity);
             }
