@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.enrolment.improvment;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
