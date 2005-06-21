@@ -13,11 +13,14 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
+import org.apache.log4j.Logger;
 import org.apache.slide.common.SlideException;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class CheckIsAliveService implements IService {
+
+    private static final Logger logger = Logger.getLogger(CheckIsAliveService.class);
 
     private static final String SLIDE_CONTENT_FILENAME = "/EY43/EP81/EC39036/S4613/S4868/I6606/Conceitos.pdf";
     private static boolean CHECK_DB = false;
@@ -39,18 +42,23 @@ public class CheckIsAliveService implements IService {
         } catch (IOException e) {
         }
 
-        System.out.println("CheckIsAliveService - will check db: " + CHECK_DB);
-        System.out.println("CheckIsAliveService - will check slide: " + CHECK_SLIDE);
+        logger.info("CheckIsAliveService - will check db: " + CHECK_DB);
+        logger.info("CheckIsAliveService - will check slide: " + CHECK_SLIDE);
     }
 
-    public Boolean run() throws ExcepcaoPersistencia, SlideException {
-        if (CHECK_DB) {
-            checkFenixDatabaseOps();
+    public Boolean run() {
+        try {
+            if (CHECK_DB) {
+                checkFenixDatabaseOps();
+            }
+            if (CHECK_SLIDE) {
+                checkSlideDatabaseOps();
+            }
+            return new Boolean(true);
+        } catch (Throwable t) {
+            logger.fatal("Got unexepected exception in check alive service. ", t);
+            throw new RuntimeException(t);
         }
-        if (CHECK_SLIDE) {
-            checkSlideDatabaseOps();
-        }
-        return new Boolean(true);
     }
 
     private void checkFenixDatabaseOps() throws ExcepcaoPersistencia {
@@ -62,7 +70,8 @@ public class CheckIsAliveService implements IService {
         final IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
 
         if (executionYear.getIdInternal() == null) {
-            throw new RuntimeException("Problems accesing fenix database!");
+            logger.fatal("Got a null result checking fenix database.");
+            throw new RuntimeException("Problems accesing fenix database! Got a null result.");
         }
     }
 
@@ -72,7 +81,8 @@ public class CheckIsAliveService implements IService {
         final FileSuportObject fileSuportObject = fileSuport.retrieveFile(SLIDE_CONTENT_FILENAME);
 
         if (fileSuportObject == null) {
-            throw new RuntimeException("Problems accesing slide database!");
+            logger.fatal("Got a null result checking slide database.");
+            throw new RuntimeException("Problems accesing slide database! Got a null result.");
         }
     }
 
