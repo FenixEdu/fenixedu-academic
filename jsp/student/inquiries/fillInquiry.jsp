@@ -565,7 +565,6 @@
 															</td>
 														</tr>
 														<html:hidden property="selectedAttendingCourseTeachersId" value='<%= "" + selectedAttendingCourseTeacherId %>'/>
-														<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.TEORICA.name()) %>
 														<html:hidden property="selectedAttendingCourseTeachersClassTypeT" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.TEORICA.name()) %>' />
 														<html:hidden property="selectedAttendingCourseTeachersClassTypeP" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.PRATICA.name()) %>' />
 														<html:hidden property="selectedAttendingCourseTeachersClassTypeL" value='<%= "" + selectedAttendingCourseTeacher.hasClassType(ShiftType.LABORATORIAL.name()) %>' />
