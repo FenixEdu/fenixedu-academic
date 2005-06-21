@@ -498,15 +498,15 @@ public class InitializeExecutionPeriod {
         newRoomOccupation.setEndTime(roomOccupation.getEndTime());
         newRoomOccupation.setFrequency(roomOccupation.getFrequency());
         newRoomOccupation.setLesson(lesson);
-        lesson.setRoomOccupation(roomOccupation);
+        lesson.setRoomOccupation(newRoomOccupation);
 
         final IPeriod period = getPeriod(lesson);
         newRoomOccupation.setPeriod(period);
-        period.getRoomOccupations().add(roomOccupation);
+        period.getRoomOccupations().add(newRoomOccupation);
 
         final IRoom room = roomOccupation.getRoom();
         newRoomOccupation.setRoom(room);
-        room.getRoomOccupations().add(roomOccupation);
+        room.getRoomOccupations().add(newRoomOccupation);
         newRoomOccupation.setStartTime(roomOccupation.getStartTime());
         newRoomOccupation.setWeekOfQuinzenalStart(roomOccupation.getWeekOfQuinzenalStart());
         newRoomOccupation.setWrittenEvaluation(null);
