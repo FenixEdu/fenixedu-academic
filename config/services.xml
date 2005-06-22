@@ -8794,7 +8794,7 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gep.ListMasterDegreeStudents</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>s>
-    </service>        
+    </service>    
     <service>
         <name>ReadTeachersByNumbers</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadTeachersByNumbers</implementationClass>
@@ -8808,5 +8808,29 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains/>
+    </service> 
+    <service>
+        <name>StoreApplicationDocuments</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.fileManager.StoreApplicationDocuments</implementationClass>
+        <description>Candidacy application documents submission</description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
+    <service>
+        <name>RetrieveApplicationDocument</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.fileManager.RetrieveApplicationDocument</implementationClass>
+        <description>Returns a candidacy application document</description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
     </service>    
+    <service>
+        <name>ReadDegreeCandidatesWithFilter</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadDegreeCandidatesWithFilter</implementationClass>
+        <description>Reads all candidates of a degree curricular plan by a filter</description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
 </serviceDefinitions>
