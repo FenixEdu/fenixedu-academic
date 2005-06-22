@@ -243,6 +243,11 @@
 		column="CLASS_NAME_FOR_STUDENT_CURRICULAR_PLANS"
 		jdbc-type="VARCHAR"
 	/>
+	<field-descriptor
+		name="anotation"
+		column="ANOTATION"
+		jdbc-type="LONGVARCHAR"
+	/>
 	<reference-descriptor
 			name="degree"
 			class-ref="net.sourceforge.fenixedu.domain.Degree"
@@ -379,6 +384,11 @@
 		column="CLASS_NAME_FOR_STUDENT_CURRICULAR_PLANS"
 		jdbc-type="VARCHAR"
 	/>
+	<field-descriptor
+		name="anotation"
+		column="ANOTATION"
+		jdbc-type="LONGVARCHAR"
+	/>
 	<reference-descriptor
 			name="degree"
 			class-ref="net.sourceforge.fenixedu.domain.Degree"
@@ -514,6 +524,11 @@
 		name="concreteClassForStudentCurricularPlans"
 		column="CLASS_NAME_FOR_STUDENT_CURRICULAR_PLANS"
 		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="anotation"
+		column="ANOTATION"
+		jdbc-type="LONGVARCHAR"
 	/>
 	<reference-descriptor
 			name="degree"
@@ -652,6 +667,11 @@
 		column="CLASS_NAME_FOR_STUDENT_CURRICULAR_PLANS"
 		jdbc-type="VARCHAR"
 	/>
+	<field-descriptor
+		name="anotation"
+		column="ANOTATION"
+		jdbc-type="LONGVARCHAR"
+	/>
 	<reference-descriptor
 			name="degree"
 			class-ref="net.sourceforge.fenixedu.domain.Degree"
@@ -722,7 +742,7 @@
 	<field-descriptor
 		name="state"
 		column="STATE"
-		jdbc-type="INTEGER"
+		jdbc-type="VARCHAR"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion"
 	/>
 	<field-descriptor
@@ -788,6 +808,11 @@
 		name="concreteClassForStudentCurricularPlans"
 		column="CLASS_NAME_FOR_STUDENT_CURRICULAR_PLANS"
 		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="anotation"
+		column="ANOTATION"
+		jdbc-type="LONGVARCHAR"
 	/>
 	<reference-descriptor
 			name="degree"
