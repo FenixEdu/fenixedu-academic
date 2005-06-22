@@ -52,7 +52,7 @@ public class DegreeCurricularPlanLEEC extends DegreeCurricularPlanLEEC_Base {
             IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
                     .getIPersistentCurricularCourseGroup();
 
-            List groups = curricularCourseGroupDAO.readByBranchAndAreaType(area, areaType);
+            List groups = curricularCourseGroupDAO.readByBranchAndAreaType(area.getIdInternal(), areaType);
 
             int groupsSize = groups.size();
 

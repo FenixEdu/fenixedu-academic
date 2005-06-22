@@ -144,7 +144,7 @@ public class ReadStudentMarksByCurricularCourse implements IService {
                 EnrolmentEvaluationState enrolmentEvaluationState = new EnrolmentEvaluationState(
                         EnrolmentEvaluationState.FINAL);
                 enrolmentEvaluations = persistentEnrolmentEvaluation
-                        .readEnrolmentEvaluationByEnrolmentEvaluationState(enrolment,
+                        .readEnrolmentEvaluationByEnrolmentEvaluationState(enrolment.getIdInternal(),
                                 enrolmentEvaluationState);
                 // enrolmentEvaluations = enrolment.getEvaluations();
 

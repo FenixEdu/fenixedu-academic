@@ -215,7 +215,7 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
 
         IEnrolmentEvaluation enrollmentEvaluationToWrite = enrollmentEvaluationDAO
                 .readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGradeAndWhenAlteredDate(
-                        newEnrollment, EnrolmentEvaluationType.EQUIVALENCE, grade, newEnrollment
+                        newEnrollment.getIdInternal(), EnrolmentEvaluationType.EQUIVALENCE, grade, newEnrollment
                                 .getCreationDate());
 
         if (enrollmentEvaluationToWrite == null) {
@@ -320,7 +320,6 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
         if ((enrollment != null) && (enrollment instanceof EnrolmentInExtraCurricularCourse)) {
 			DeleteEnrollment deleteEnrolmentService = new DeleteEnrollment();
 			deleteEnrolmentService.run(enrollment.getIdInternal());
-            //enrollmentDAO.deleteByOID(Enrolment.class, enrollment.getIdInternal());
         }
     }
 

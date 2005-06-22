@@ -16,12 +16,8 @@ import net.sourceforge.fenixedu.domain.IEnrolmentPeriodInCurricularCourses;
  */
 public interface IPersistentEnrolmentPeriod extends IPersistentObject {
 
-    /**
-     * @param degreeCurricularPlan
-     * @return
-     */
     IEnrolmentPeriodInCurricularCourses readActualEnrolmentPeriodForDegreeCurricularPlan(
-            IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;
+			Integer degreeCurricularPlanId) throws ExcepcaoPersistencia;
 
     /**
      * 
@@ -30,15 +26,10 @@ public interface IPersistentEnrolmentPeriod extends IPersistentObject {
      *         If doesn't exist other curricular plan then it returns null.
      */
     IEnrolmentPeriodInCurricularCourses readNextEnrolmentPeriodForDegreeCurricularPlan(
-            IDegreeCurricularPlan plan) throws ExcepcaoPersistencia;
-
-    public EnrolmentPeriodInCurricularCourses readEnrolmentPeriodByKeyAndDegreeCurricularPlan(
-            Integer key, IDegreeCurricularPlan plan) throws ExcepcaoPersistencia;
+            Integer degreeCurricularPlanId) throws ExcepcaoPersistencia;
 
     public IEnrolmentPeriodInClasses readCurrentClassesEnrollmentPeriodForDegreeCurricularPlan(
-            IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;
+			Integer degreeCurricularPlanId) throws ExcepcaoPersistencia;
 
     public List readAllEnrollmentPeriodsInCourses() throws ExcepcaoPersistencia;
-
-    public List readAllEnrollmentPeriodsInClasses() throws ExcepcaoPersistencia;
 }

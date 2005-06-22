@@ -79,7 +79,7 @@ public class VerifyLEECCurricularPlan {
         IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
                 .getIPersistentCurricularCourseGroup();
 
-        List groups = curricularCourseGroupDAO.readByBranchAndAreaType(branch, areaType);
+        List groups = curricularCourseGroupDAO.readByBranchAndAreaType(branch.getIdInternal(), areaType);
         Iterator iterator1 = groups.iterator();
         while (iterator1.hasNext()) {
             ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) iterator1.next();

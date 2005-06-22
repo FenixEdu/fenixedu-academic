@@ -16,6 +16,9 @@ public class SecretaryEnrolmentStudentVO extends VersionedObjectsBase implements
 		Collection<ISecretaryEnrolmentStudent> secretaryEnrolmentStudents = readAll(SecretaryEnrolmentStudent.class);
 		
 		for (ISecretaryEnrolmentStudent secretaryEnrolmentStudent : secretaryEnrolmentStudents) {
+			if (secretaryEnrolmentStudent.getStudent() == null)
+				System.out.println("Ay caramba!");
+			
 			if (secretaryEnrolmentStudent.getStudent().getNumber().equals(studentNumber))
 				return secretaryEnrolmentStudent;
 		}

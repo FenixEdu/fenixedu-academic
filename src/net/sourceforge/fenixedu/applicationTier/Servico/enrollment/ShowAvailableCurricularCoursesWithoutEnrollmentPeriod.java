@@ -176,11 +176,11 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements IS
         IPersistentEnrolmentPeriod enrolmentPeriodDAO = persistentSuport.getIPersistentEnrolmentPeriod();
         IEnrolmentPeriodInCurricularCourses enrolmentPeriod = enrolmentPeriodDAO
                 .readActualEnrolmentPeriodForDegreeCurricularPlan(studentActiveCurricularPlan
-                        .getDegreeCurricularPlan());
+                        .getDegreeCurricularPlan().getIdInternal());
         if (enrolmentPeriod == null) {
             IEnrolmentPeriodInCurricularCourses nextEnrolmentPeriod = enrolmentPeriodDAO
                     .readNextEnrolmentPeriodForDegreeCurricularPlan(studentActiveCurricularPlan
-                            .getDegreeCurricularPlan());
+                            .getDegreeCurricularPlan().getIdInternal());
             Date startDate = null;
             Date endDate = null;
             if (nextEnrolmentPeriod != null) {

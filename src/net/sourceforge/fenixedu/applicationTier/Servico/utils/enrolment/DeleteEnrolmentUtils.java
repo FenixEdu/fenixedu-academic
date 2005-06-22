@@ -117,12 +117,42 @@ public abstract class DeleteEnrolmentUtils {
             while (iterator.hasNext()) {
                 IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
 
-                enrolmentEvaluationDAO.deleteByOID(EnrolmentEvaluation.class, enrolmentEvaluation
-                        .getIdInternal());
+				deleteEnrolmentEvaluationKeepingEnrolmentReference(enrolmentEvaluation, enrolmentEvaluationDAO);
             }
+			enrolment.getEvaluations().clear();
         }
     }
 
+	protected static void deleteEnrolmentEvaluationKeepingEnrolmentReference(IEnrolmentEvaluation enrolmentEvaluation,
+			IPersistentEnrolmentEvaluation persistentEvaluation) throws ExcepcaoPersistencia{
+		
+		if (enrolmentEvaluation.getPersonResponsibleForGrade() != null) {
+			enrolmentEvaluation.getPersonResponsibleForGrade().getEnrolmentEvaluations().remove(enrolmentEvaluation);
+			enrolmentEvaluation.setPersonResponsibleForGrade(null);
+		}
+		
+		if (enrolmentEvaluation.getPersonResponsibleForGrade() != null) {
+			enrolmentEvaluation.getEmployee().getEnrolmentEvaluations().remove(enrolmentEvaluation);
+			enrolmentEvaluation.setEmployee(null);	
+		}
+		
+		enrolmentEvaluation.setEnrolment(null);
+
+		persistentEvaluation.deleteByOID(EnrolmentEvaluation.class, enrolmentEvaluation.getIdInternal());
+	}
+
+	
+	public static void deleteEnrolmentEvaluation(IEnrolmentEvaluation enrolmentEvaluation,
+			IPersistentEnrolmentEvaluation persistentEvaluation) throws ExcepcaoPersistencia{
+		
+		enrolmentEvaluation.getEnrolment().getEvaluations().remove(enrolmentEvaluation);
+		
+		deleteEnrolmentEvaluationKeepingEnrolmentReference(enrolmentEvaluation, persistentEvaluation);
+		
+		
+	}
+	
+	
     /**
      * @param enrolment
      * @throws ExcepcaoPersistencia

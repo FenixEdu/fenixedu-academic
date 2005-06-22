@@ -196,7 +196,7 @@ public class WriteEnrollment implements IService {
                 .getIPersistentEnrolmentEvaluation();
 
         IEnrolmentEvaluation enrolmentEvaluation = enrollmentEvaluationDAO
-                .readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGrade(enrolment,
+                .readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGrade(enrolment.getIdInternal(),
                         EnrolmentEvaluationType.NORMAL, null);
 
         if (enrolmentEvaluation == null) {

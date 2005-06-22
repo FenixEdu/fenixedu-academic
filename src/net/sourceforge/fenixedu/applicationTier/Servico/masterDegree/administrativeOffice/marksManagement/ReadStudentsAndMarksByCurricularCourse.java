@@ -78,8 +78,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IService {
                 IEnrolment enrolment = (IEnrolment) iterEnrolment.next();
                 if (enrolment.getStudentCurricularPlan().getDegreeCurricularPlan().getDegree()
                         .getTipoCurso().equals(DegreeType.MASTER_DEGREE)) {
-                    List allEnrolmentEvaluations = persistentEnrolmentEvaluation
-                            .readEnrolmentEvaluationByEnrolment(enrolment);
+                    List allEnrolmentEvaluations = enrolment.getEvaluations();
                     IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) allEnrolmentEvaluations
                             .get(allEnrolmentEvaluations.size() - 1);
                     enrolmentEvaluations.add(enrolmentEvaluation);

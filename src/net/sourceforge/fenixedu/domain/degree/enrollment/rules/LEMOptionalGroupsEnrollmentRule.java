@@ -50,7 +50,7 @@ public class LEMOptionalGroupsEnrollmentRule implements IEnrollmentRule {
             suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentCurricularCourseGroup = suportePersistente.getIPersistentCurricularCourseGroup();
             List optionalCurricularCourseGroups = persistentCurricularCourseGroup
-                    .readOptionalCurricularCourseGroupsFromArea(studentCurricularPlan.getBranch());
+                    .readOptionalCurricularCourseGroupsFromArea(studentCurricularPlan.getBranch().getIdInternal());
 
             ICurricularCourseGroup optionalCurricularCourseGroup = (ICurricularCourseGroup) CollectionUtils
                     .find(optionalCurricularCourseGroups, new Predicate() {

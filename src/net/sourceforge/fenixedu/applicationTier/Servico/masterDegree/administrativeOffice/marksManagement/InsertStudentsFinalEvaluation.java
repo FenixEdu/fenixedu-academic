@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
@@ -147,10 +148,9 @@ public class InsertStudentsFinalEvaluation implements IService {
             InfoEnrolmentEvaluation infoEnrolmentEvaluation) throws ExcepcaoPersistencia,
             FenixServiceException {
 
-        IEnrolment enrolmentToSearch = new Enrolment();
-        enrolmentToSearch.setIdInternal(infoEnrolmentEvaluation.getInfoEnrolment().getIdInternal());
-        List enrolmentEvaluationsForEnrolment = persistentEnrolmentEvaluation
-                .readEnrolmentEvaluationByEnrolment(enrolmentToSearch);
+		IPersistentEnrollment persistentEnrollment = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentEnrolment(); 
+        IEnrolment enrolmentToSearch = (IEnrolment)persistentEnrollment.readByOID(Enrolment.class, infoEnrolmentEvaluation.getInfoEnrolment().getIdInternal());
+        List enrolmentEvaluationsForEnrolment = enrolmentToSearch.getEvaluations();
         if (enrolmentEvaluationsForEnrolment == null || enrolmentEvaluationsForEnrolment.size() == 0) {
             //		it will never happen!!
             throw new FenixServiceException();

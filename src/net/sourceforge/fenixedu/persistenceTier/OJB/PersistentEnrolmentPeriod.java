@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
@@ -29,7 +30,9 @@ public class PersistentEnrolmentPeriod extends PersistentObjectOJB implements IP
      * @see ServidorPersistente.OJB.IPersistentEnrolmentPeriod#readActualEnrolmentPeriodForDegreeCurricularPlan(Dominio.IDegreeCurricularPlan)
      */
     public IEnrolmentPeriodInCurricularCourses readActualEnrolmentPeriodForDegreeCurricularPlan(
-            IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
+            Integer degreeCurricularPlanId) throws ExcepcaoPersistencia {
+		IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan)readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
+		
         Criteria crit = new Criteria();
         crit.addEqualTo("degreeCurricularPlan.name", degreeCurricularPlan.getName());
         crit
@@ -44,9 +47,6 @@ public class PersistentEnrolmentPeriod extends PersistentObjectOJB implements IP
             return (IEnrolmentPeriodInCurricularCourses) result.get(0);
         }
         return null;
-
-        //return (IEnrolmentPeriodInCurricularCourses)
-        // queryObject(EnrolmentPeriodInCurricularCourses.class, crit);
     }
 
     /*
@@ -55,10 +55,12 @@ public class PersistentEnrolmentPeriod extends PersistentObjectOJB implements IP
      * @see ServidorPersistente.OJB.IPersistentEnrolmentPeriod#readNextEnrolmentPeriodForDegreeCurricularPlan(Dominio.IDegreeCurricularPlan)
      */
     public IEnrolmentPeriodInCurricularCourses readNextEnrolmentPeriodForDegreeCurricularPlan(
-            IDegreeCurricularPlan plan) throws ExcepcaoPersistencia {
+            Integer degreeCurricularPlanId) throws ExcepcaoPersistencia {
+		IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan)readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
+		
         Criteria crit = new Criteria();
-        crit.addEqualTo("degreeCurricularPlan.name", plan.getName());
-        crit.addEqualTo("degreeCurricularPlan.degree.sigla", plan.getDegree().getSigla());
+        crit.addEqualTo("degreeCurricularPlan.name", degreeCurricularPlan.getName());
+        crit.addEqualTo("degreeCurricularPlan.degree.sigla", degreeCurricularPlan.getDegree().getSigla());
         Date date = new Date();
         crit.addGreaterThan("startDate", date);
 
@@ -70,17 +72,12 @@ public class PersistentEnrolmentPeriod extends PersistentObjectOJB implements IP
         return null;
     }
 
-    public EnrolmentPeriodInCurricularCourses readEnrolmentPeriodByKeyAndDegreeCurricularPlan(
-            Integer key, IDegreeCurricularPlan plan) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("idInternal", key);
-        criteria.addEqualTo("keyDegreeCurricularPlan", plan.getIdInternal());
-        return (EnrolmentPeriodInCurricularCourses) queryList(EnrolmentPeriodInCurricularCourses.class,
-                criteria).get(0);
-    }
+
 
     public IEnrolmentPeriodInClasses readCurrentClassesEnrollmentPeriodForDegreeCurricularPlan(
-            IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
+            Integer degreeCurricularPlanId) throws ExcepcaoPersistencia {
+		IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan)readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
+		
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlan.getIdInternal());
         criteria.addEqualTo("executionPeriod.state", PeriodState.CURRENT);
@@ -94,8 +91,6 @@ public class PersistentEnrolmentPeriod extends PersistentObjectOJB implements IP
         }
         return null;
 
-        //return (IEnrolmentPeriodInClasses)
-        // queryObject(EnrolmentPeriodInClasses.class, criteria);
     }
 
     public List readAllEnrollmentPeriodsInCourses() throws ExcepcaoPersistencia {
@@ -103,8 +98,4 @@ public class PersistentEnrolmentPeriod extends PersistentObjectOJB implements IP
         return queryList(EnrolmentPeriodInCurricularCourses.class, criteria);
     }
 
-    public List readAllEnrollmentPeriodsInClasses() throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        return queryList(EnrolmentPeriodInClasses.class, criteria);
-    }
 }

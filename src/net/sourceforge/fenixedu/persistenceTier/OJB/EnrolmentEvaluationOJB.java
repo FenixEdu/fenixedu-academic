@@ -21,23 +21,11 @@ public class EnrolmentEvaluationOJB extends PersistentObjectOJB implements
         IPersistentEnrolmentEvaluation {
 
 
-    public void delete(IEnrolmentEvaluation enrolmentEvaluation) throws ExcepcaoPersistencia {
-        try {
-            super.delete(enrolmentEvaluation);
-        } catch (ExcepcaoPersistencia ex) {
-            throw ex;
-        }
-    }
-
-    public List readAll() throws ExcepcaoPersistencia {
-        return queryList(EnrolmentEvaluation.class, new Criteria());
-    }
-
     public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGrade(
-            IEnrolment enrolment, EnrolmentEvaluationType evaluationType, String grade)
+            Integer enrolmentId, EnrolmentEvaluationType evaluationType, String grade)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
+        criteria.addEqualTo("enrolment.idInternal", enrolmentId);
         criteria.addEqualTo("enrolmentEvaluationType", evaluationType);
         if (grade == null) {
             criteria.addIsNull("grade");
@@ -51,46 +39,23 @@ public class EnrolmentEvaluationOJB extends PersistentObjectOJB implements
         return enrolmentEvaluation;
     }
 
-    public List readEnrolmentEvaluationByEnrolment(IEnrolment enrolment) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
-        List result = queryList(EnrolmentEvaluation.class, criteria);
-        return result;
-    }
-
-    public List readEnrolmentEvaluationByEnrolmentEvaluationState(IEnrolment enrolment,
+    public List readEnrolmentEvaluationByEnrolmentEvaluationState(Integer enrolmentId,
             EnrolmentEvaluationState evaluationState) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
+        criteria.addEqualTo("enrolment.idInternal", enrolmentId);
         criteria.addEqualTo("enrolmentEvaluationState", evaluationState);
 
         List examsWithRepetition = queryList(EnrolmentEvaluation.class, criteria);
         return examsWithRepetition;
     }
 
-    public IEnrolmentEvaluation readByUnique(Date whenAlter, IEnrolment enrolment)
-            throws ExcepcaoPersistencia {
-        try {
-            Criteria criteria = new Criteria();
-            criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
-            criteria.addEqualTo("when", whenAlter);
-            IEnrolmentEvaluation evaluationsWithRepetition = (IEnrolmentEvaluation) queryObject(
-                    EnrolmentEvaluation.class, criteria);
-
-            return evaluationsWithRepetition;
-        } catch (ExcepcaoPersistencia e) {
-            throw e;
-        }
-    }
 
     public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGradeAndWhenAlteredDate(
-            IEnrolment enrolment, EnrolmentEvaluationType evaluationType, String grade, Date whenAltered)
+            Integer enrolmentId, EnrolmentEvaluationType evaluationType, String grade, Date whenAltered)
             throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
-        //		criteria.addEqualTo("enrolmentEvaluationType",
-        // evaluationType.getType());
+        criteria.addEqualTo("enrolment.idInternal", enrolmentId);
         criteria.addEqualTo("enrolmentEvaluationType", evaluationType);
         criteria.addEqualTo("grade", grade);
         criteria.addEqualTo("when", whenAltered);
@@ -134,14 +99,12 @@ public class EnrolmentEvaluationOJB extends PersistentObjectOJB implements
         return queryList(EnrolmentEvaluation.class, finalCriteria);
     }
     
-    /* (non-Javadoc)
-     * @see ServidorPersistente.IPersistentEnrolmentEvaluation#readEnrolmentEvaluationByEnrolmentEvaluationStateAndType(Dominio.IEnrollment, Util.EnrolmentEvaluationState, Util.EnrolmentEvaluationType)
-     */
+
     public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentEvaluationStateAndType(
-            IEnrolment enrolment, EnrolmentEvaluationState temporary_obj,
+            Integer enrolmentId, EnrolmentEvaluationState temporary_obj,
             EnrolmentEvaluationType enrolmentEvaluationType) throws ExcepcaoPersistencia{
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
+        criteria.addEqualTo("enrolment.idInternal", enrolmentId);
         criteria.addEqualTo("enrolmentEvaluationState", temporary_obj);
         criteria.addEqualTo("enrolmentEvaluationType", enrolmentEvaluationType);
         

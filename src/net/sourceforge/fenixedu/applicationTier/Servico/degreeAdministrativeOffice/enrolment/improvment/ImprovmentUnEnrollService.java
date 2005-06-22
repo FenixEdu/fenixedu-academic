@@ -8,6 +8,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.utils.enrolment.DeleteEnrolmentUtils;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IEnrolment;
@@ -75,20 +76,8 @@ public class ImprovmentUnEnrollService implements IService {
                     });
 
             if (improvmentEnrolmentEvaluation != null) {
-                if(improvmentEnrolmentEvaluation.getEmployee() != null) {
-                    improvmentEnrolmentEvaluation.getEmployee().getEnrolmentEvaluations().remove(improvmentEnrolmentEvaluation);
-                    improvmentEnrolmentEvaluation.setEmployee(null);
-                }
-
-                if(improvmentEnrolmentEvaluation.getPersonResponsibleForGrade() != null) {
-                    improvmentEnrolmentEvaluation.getPersonResponsibleForGrade().getEnrolmentEvaluations().remove(improvmentEnrolmentEvaluation);
-                    improvmentEnrolmentEvaluation.setPersonResponsibleForGrade(null);
-                }
-                
-                enrollment.getEvaluations().remove(improvmentEnrolmentEvaluation);
-                improvmentEnrolmentEvaluation.setEnrolment(null);
-
-                persistentEnrolmentEvaluation.delete(improvmentEnrolmentEvaluation);
+				IPersistentEnrolmentEvaluation persistentEvaluation = sp.getIPersistentEnrolmentEvaluation();
+				DeleteEnrolmentUtils.deleteEnrolmentEvaluation(improvmentEnrolmentEvaluation, persistentEvaluation);
             }
 
             setAttend(sp, enrollment, student);

@@ -277,7 +277,7 @@ public class SubmitMarks implements IService {
             //verifyYetSubmitMarks(enrolment);
 
             enrolmentEvaluation = persistentEnrolmentEvaluation
-                    .readEnrolmentEvaluationByEnrolmentEvaluationStateAndType(enrolment,
+                    .readEnrolmentEvaluationByEnrolmentEvaluationStateAndType(enrolment.getIdInternal(),
                             EnrolmentEvaluationState.TEMPORARY_OBJ, enrolmentEvaluationType);
 
             //There can exist only one enrolmentEvaluation with Temporary State

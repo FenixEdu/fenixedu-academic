@@ -31,52 +31,45 @@ public class CurricularCourseGroupOJB extends PersistentObjectOJB implements
     public CurricularCourseGroupOJB() {
     }
 
-    public List readByBranchAndAreaType(IBranch branch, AreaType areaType) throws ExcepcaoPersistencia {
+    public List readByBranchAndAreaType(Integer branchId, AreaType areaType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyBranch", branch.getIdInternal());
+        criteria.addEqualTo("keyBranch", branchId);
         criteria.addEqualTo("areaType", areaType);
         criteria.addEqualTo("ojbConcreteClass", AreaCurricularCourseGroup.class.getName());
         return queryList(AreaCurricularCourseGroup.class, criteria);
     }
 
-    public List readByBranch(IBranch branch) throws ExcepcaoPersistencia {
+    public ICurricularCourseGroup readByBranchAndCurricularCourseAndAreaType(Integer branchId,
+            Integer curricularCourseId, AreaType areaType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyBranch", branch.getIdInternal());
-        return queryList(CurricularCourseGroup.class, criteria);
-    }
-
-    public ICurricularCourseGroup readByBranchAndCurricularCourseAndAreaType(IBranch branch,
-            ICurricularCourse curricularCourse, AreaType areaType) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("branch.idInternal", branch.getIdInternal());
-        criteria.addEqualTo("curricularCourses.idInternal", curricularCourse.getIdInternal());
+        criteria.addEqualTo("branch.idInternal", branchId);
+        criteria.addEqualTo("curricularCourses.idInternal", curricularCourseId);
         criteria.addEqualTo("areaType", areaType);
         criteria.addEqualTo("ojbConcreteClass", AreaCurricularCourseGroup.class.getName());
         return (ICurricularCourseGroup) queryObject(AreaCurricularCourseGroup.class, criteria);
     }
 
-    public ICurricularCourseGroup readByBranchAndScientificAreaAndAreaType(IBranch branch,
-            IScientificArea scientificArea, AreaType areaType) throws ExcepcaoPersistencia {
+    public ICurricularCourseGroup readByBranchAndScientificAreaAndAreaType(Integer branchId,
+            Integer scientificAreaId, AreaType areaType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("branch.idInternal", branch.getIdInternal());
-        criteria.addEqualTo("scientificAreas.idInternal", scientificArea.getIdInternal());
+        criteria.addEqualTo("branch.idInternal", branchId);
+        criteria.addEqualTo("scientificAreas.idInternal", scientificAreaId);
         criteria.addEqualTo("areaType", areaType);
         criteria.addEqualTo("ojbConcreteClass", AreaCurricularCourseGroup.class.getName());
         return (ICurricularCourseGroup) queryObject(AreaCurricularCourseGroup.class, criteria);
     }
 
     public List readAllOptionalCurricularCourseGroupsFromDegreeCurricularPlan(
-            IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
+            Integer degreeCurricularPlanId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("branch.degreeCurricularPlan.idInternal", degreeCurricularPlan
-                .getIdInternal());
+        criteria.addEqualTo("branch.degreeCurricularPlan.idInternal", degreeCurricularPlanId);
         criteria.addEqualTo("ojbConcreteClass", OptionalCurricularCourseGroup.class.getName());
         return queryList(OptionalCurricularCourseGroup.class, criteria);
     }
 
-    public List readOptionalCurricularCourseGroupsFromArea(IBranch area) throws ExcepcaoPersistencia {
+    public List readOptionalCurricularCourseGroupsFromArea(Integer areaId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("branch.idInternal", area.getIdInternal());
+        criteria.addEqualTo("branch.idInternal", areaId);
         criteria.addEqualTo("ojbConcreteClass", OptionalCurricularCourseGroup.class.getName());
         return queryList(OptionalCurricularCourseGroup.class, criteria);
     }

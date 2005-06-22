@@ -116,16 +116,20 @@
 		</init-param>
 	</filter>
 	<filter-mapping>
+		<filter-name>I18NFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+	    <filter-name>indexFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
  		 <filter-name>profiling</filter-name>
  		 <url-pattern>*.jsp</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
  		 <filter-name>profiling</filter-name>
  		 <url-pattern>*.do</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>I18NFilter</filter-name>
-		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>CacheFilter</filter-name>
@@ -146,10 +150,6 @@
 	<filter-mapping>
 		<filter-name>DegreeForwardFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-	    <filter-name>indexFilter</filter-name>
-	    <url-pattern>/*</url-pattern>
 	</filter-mapping>
     <!-- Listeners -->
 	<listener>
@@ -311,12 +311,12 @@
 	<session-config>
 			<session-timeout>120</session-timeout>
 	</session-config>    
-
+<!--
 	<error-page>
 	    <exception-type>java.lang.Exception</exception-type>
 	    <location>/showErrorPage.do</location>
 	</error-page> 
-
+-->
     <taglib>
         <taglib-uri>/WEB-INF/struts-html.tld</taglib-uri>
         <taglib-location>/WEB-INF/struts-html.tld</taglib-location>

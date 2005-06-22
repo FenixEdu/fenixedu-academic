@@ -75,8 +75,7 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IService {
             Iterator iterEnrolment = enrolments.listIterator();
             while (iterEnrolment.hasNext()) {
                 IEnrolment enrolment = (IEnrolment) iterEnrolment.next();
-                List allEnrolmentEvaluations = persistentEnrolmentEvaluation
-                        .readEnrolmentEvaluationByEnrolment(enrolment);
+                List allEnrolmentEvaluations = enrolment.getEvaluations();
                 IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) allEnrolmentEvaluations
                         .get(allEnrolmentEvaluations.size() - 1);
                 enrolmentEvaluations.add(enrolmentEvaluation);

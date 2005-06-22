@@ -263,6 +263,12 @@
 		<inverse-foreignkey field-ref="keyPersonWhoAltered"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+		name="enrolmentEvaluations" 
+		element-class-ref="net.sourceforge.fenixedu.domain.EnrolmentEvaluation"
+		>
+		<inverse-foreignkey field-ref="personResponsibleForGradeKey"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="associatedTeachers" 
 		element-class-ref="net.sourceforge.fenixedu.domain.Teacher"
 		

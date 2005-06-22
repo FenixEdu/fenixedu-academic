@@ -177,7 +177,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
 
         if (creditsInAreaGroups != null && branch != null && areaType != null) {
             ICurricularCourseGroup curricularCourseGroup = curricularCourseGroupDAO
-                    .readByBranchAndCurricularCourseAndAreaType(branch, curricularCourse, areaType);
+                    .readByBranchAndCurricularCourseAndAreaType(branch.getIdInternal(), curricularCourse.getIdInternal(), areaType);
 
             sumInHashMap(creditsInAreaGroups, curricularCourseGroup.getIdInternal(),
                     curricularCourseCredits);
@@ -191,8 +191,8 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
                 .getIPersistentCurricularCourseGroup();
 
         ICurricularCourseGroup curricularCourseGroup = curricularCourseGroupDAO
-                .readByBranchAndCurricularCourseAndAreaType(studentCurricularPlan.getBranch(),
-                        curricularCourse, AreaType.SPECIALIZATION);
+                .readByBranchAndCurricularCourseAndAreaType(studentCurricularPlan.getBranch().getIdInternal(),
+                        curricularCourse.getIdInternal(), AreaType.SPECIALIZATION);
 
         return curricularCourseGroup != null;
     }
@@ -204,8 +204,8 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
                 .getIPersistentCurricularCourseGroup();
 
         ICurricularCourseGroup curricularCourseGroup = curricularCourseGroupDAO
-                .readByBranchAndCurricularCourseAndAreaType(studentCurricularPlan.getSecundaryBranch(),
-                        curricularCourse, AreaType.SECONDARY);
+                .readByBranchAndCurricularCourseAndAreaType(studentCurricularPlan.getSecundaryBranch().getIdInternal(),
+                        curricularCourse.getIdInternal(), AreaType.SECONDARY);
 
         return curricularCourseGroup != null;
     }
@@ -245,12 +245,12 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
                         ScientificArea.class, scientificAreaID);
 
                 ICurricularCourseGroup specializationGroup = curricularCourseGroupDAO
-                        .readByBranchAndScientificAreaAndAreaType(studentCurricularPlan.getBranch(),
-                                scientificArea, AreaType.SPECIALIZATION);
+                        .readByBranchAndScientificAreaAndAreaType(studentCurricularPlan.getBranch().getIdInternal(),
+                                scientificArea.getIdInternal(), AreaType.SPECIALIZATION);
 
                 ICurricularCourseGroup secundaryGroup = curricularCourseGroupDAO
-                        .readByBranchAndScientificAreaAndAreaType(studentCurricularPlan
-                                .getSecundaryBranch(), scientificArea, AreaType.SECONDARY);
+                        .readByBranchAndScientificAreaAndAreaType(studentCurricularPlan.getSecundaryBranch().getIdInternal(),
+								scientificArea.getIdInternal(), AreaType.SECONDARY);
 
                 if ((specializationGroup != null) && (secundaryGroup != null)) {
                     List groups = new ArrayList();
@@ -556,7 +556,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
         List secundaryAreaCurricularCourses = new ArrayList();
 
         List groups = curricularCourseGroupDAO.readByBranchAndAreaType(studentCurricularPlan
-                .getSecundaryBranch(), AreaType.SECONDARY);
+                .getSecundaryBranch().getIdInternal(), AreaType.SECONDARY);
 
         int size = groups.size();
         for (int i = 0; i < size; i++) {
@@ -580,7 +580,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
         List specializationAreaCurricularCourses = new ArrayList();
 
         List groups = curricularCourseGroupDAO.readByBranchAndAreaType(
-                studentCurricularPlan.getBranch(), AreaType.SPECIALIZATION);
+                studentCurricularPlan.getBranch().getIdInternal(), AreaType.SPECIALIZATION);
 
         int size = groups.size();
         for (int i = 0; i < size; i++) {

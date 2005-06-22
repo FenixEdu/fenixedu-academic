@@ -232,7 +232,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                     .getIPersistentCurricularCourseGroup();
 
             groups = curricularCourseGroupDAO
-                    .readAllOptionalCurricularCourseGroupsFromDegreeCurricularPlan(this);
+                    .readAllOptionalCurricularCourseGroupsFromDegreeCurricularPlan(this.getIdInternal());
 
         } catch (ExcepcaoPersistencia e) {
             throw new RuntimeException(e);

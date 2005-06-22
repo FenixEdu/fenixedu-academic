@@ -36,7 +36,7 @@ public class DegreeCurricularPlanLEICTAGUS extends DegreeCurricularPlanLEICTAGUS
             IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
                     .getIPersistentCurricularCourseGroup();
 
-            List groups = curricularCourseGroupDAO.readByBranchAndAreaType(area, areaType);
+            List groups = curricularCourseGroupDAO.readByBranchAndAreaType(area.getIdInternal(), areaType);
 
             int groupsSize = groups.size();
 
