@@ -228,4 +228,7 @@ public class Person extends Person_Base {
         return "/photos/person/P" + getIdInternal();
     }
 
+    public String getSlideNameForCandidateDocuments() {
+        return "/candidateDocuments/person/P" + getIdInternal();
+    }
 }
