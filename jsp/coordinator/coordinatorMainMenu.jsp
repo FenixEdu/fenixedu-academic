@@ -47,6 +47,17 @@
 		        	<br/>
 					<br/>
 				</li>
+				<li>
+					<bean:define id="link3">/printAllCandidatesList.do?method=prepare&degreeCurricularPlanID=
+	        		</bean:define>
+		        	<bean:define id="printAllCandidatesListLink">
+    					<bean:write name="link3"/><bean:write name="degreeCurricularPlanID"/>
+    				</bean:define> 	
+					<html:link page="<%= pageContext.findAttribute("printAllCandidatesListLink").toString() %>">
+					<bean:message key="link.masterDegree.candidateListFilter.printListAllCandidatesFilterMenu"/></html:link>
+		        	<br/>
+					<br/>
+				</li>
 			</ul>
 			</p>
 			<p><strong>&raquo; <bean:message key="link.coordinator.student"/></strong>
@@ -142,7 +153,6 @@
 			    <bean:message key="link.student.enrollment" /></html:link>
 			    <br/>
 				<br/>
-				</html:link>
 			</li>		
 			
 			<%--
