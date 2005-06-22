@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.IAnnouncement;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentAnnouncement;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -19,50 +18,36 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Fernanda Quitério
- *  
+ * 
  */
 public class CreateAnnouncement implements IService {
 
     private ISuportePersistente persistentSupport = null;
-
     private IPersistentAnnouncement persistentAnnouncement = null;
-
-    public CreateAnnouncement() {
-    }
 
     private void checkIfAnnouncementExists(String announcementTitle, ISite announcementSite,
             Date currentDate) throws FenixServiceException {
         IAnnouncement announcement = null;
         persistentAnnouncement = persistentSupport.getIPersistentAnnouncement();
-
         try {
             announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite(
                     announcementTitle, currentDate, announcementSite.getIdInternal());
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia.getMessage());
         }
-
         if (announcement != null)
             throw new ExistingServiceException();
     }
 
-    /**
-     * Executes the service.
-     * 
-     * @throws ExcepcaoPersistencia
-     */
     public boolean run(Integer infoExecutionCourseCode, String newAnnouncementTitle,
             String newAnnouncementInformation) throws FenixServiceException, ExcepcaoPersistencia {
-        ISite site = null;
 
         Calendar calendar = Calendar.getInstance();
 
         persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
-                .getIPersistentExecutionCourse();
         IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
 
-        site = persistentSite.readByExecutionCourse(infoExecutionCourseCode);
+        ISite site = persistentSite.readByExecutionCourse(infoExecutionCourseCode);
 
         checkIfAnnouncementExists(newAnnouncementTitle, site,
                 new Timestamp(calendar.getTime().getTime()));

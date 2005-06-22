@@ -17,20 +17,14 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Fernanda Quitério
- *  
+ * 
  */
 
 public class EditAnnouncementService implements IService {
 
-    ISuportePersistente persistentSupport = null;
+    private ISuportePersistente persistentSupport = null;
 
     private IPersistentAnnouncement persistentAnnouncement = null;
-
-    /**
-     * The constructor of this class.
-     */
-    public EditAnnouncementService() {
-    }
 
     private void checkIfAnnouncementExists(String oldAnnouncementTitle, Date date,
             String announcementTitle, ISite announcementSite) throws FenixServiceException {
@@ -49,38 +43,25 @@ public class EditAnnouncementService implements IService {
         }
     }
 
-    /**
-     * Executes the service.
-     */
     public boolean run(Integer infoExecutionCourseCode, Integer announcementCode,
-            String announcementNewTitle, String announcementNewInformation) throws FenixServiceException {
+            String announcementNewTitle, String announcementNewInformation)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISite site = null;
-        Date date = null;
-        IAnnouncement iAnnouncement = null;
-        try {
-            persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        persistentAnnouncement = persistentSupport.getIPersistentAnnouncement();
 
-            persistentAnnouncement = persistentSupport.getIPersistentAnnouncement();
-
-            // read announcement
-
-            iAnnouncement = (IAnnouncement) persistentAnnouncement.readByOID(Announcement.class,
-                    announcementCode, true);
-            if (iAnnouncement == null) {
-                throw new InvalidArgumentsServiceException();
-            }
-
-            String announcementOldTitle = iAnnouncement.getTitle();
-            date = iAnnouncement.getCreationDate();
-
-            // read executionCourse and site
-            site = iAnnouncement.getSite();
-
-            checkIfAnnouncementExists(announcementOldTitle, date, announcementNewTitle, site);
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia.getMessage());
+        IAnnouncement iAnnouncement = (IAnnouncement) persistentAnnouncement.readByOID(
+                Announcement.class, announcementCode);
+        if (iAnnouncement == null) {
+            throw new InvalidArgumentsServiceException();
         }
+        persistentAnnouncement.simpleLockWrite(iAnnouncement);
+
+        String announcementOldTitle = iAnnouncement.getTitle();
+        Date date = iAnnouncement.getCreationDate();
+        ISite site = iAnnouncement.getSite();
+
+        checkIfAnnouncementExists(announcementOldTitle, date, announcementNewTitle, site);
 
         Timestamp lastModificationDate = new Timestamp(new Date(System.currentTimeMillis()).getTime());
         iAnnouncement.setTitle(announcementNewTitle);

@@ -4,7 +4,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -26,17 +25,17 @@ public class ReadAnnouncements implements IService {
 
     public List run(InfoSite infoSite) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        ISite site = sp.getIPersistentSite().readByExecutionCourse(
-                infoSite.getInfoExecutionCourse().getIdInternal());
-        List announcementsList = sp.getIPersistentAnnouncement().readAnnouncementsBySite(
-                site.getIdInternal());
-        List<InfoAnnouncement> infoAnnouncementsList = new ArrayList<InfoAnnouncement>();
+        final ISuportePersistente suportePersistente = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
 
-        if (announcementsList != null && announcementsList.isEmpty() == false) {
-            Iterator iterAnnouncements = announcementsList.iterator();
-            while (iterAnnouncements.hasNext()) {
-                IAnnouncement announcement = (IAnnouncement) iterAnnouncements.next();
+        final ISite site = suportePersistente.getIPersistentSite().readByExecutionCourse(
+                infoSite.getInfoExecutionCourse().getIdInternal());
+        final List<IAnnouncement> announcementsList = site.getAssociatedAnnouncements();
+
+        final List<InfoAnnouncement> infoAnnouncementsList = new ArrayList<InfoAnnouncement>();
+
+        if (announcementsList != null) {
+            for (final IAnnouncement announcement : announcementsList) {
                 infoAnnouncementsList.add(Cloner.copyIAnnouncement2InfoAnnouncement(announcement));
             }
         }

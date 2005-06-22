@@ -11,23 +11,22 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Fernanda Quitério
- *  
+ * 
  */
 public class DeleteAnnouncementService implements IService {
 
     public boolean run(Integer infoExecutionCourseCode, Integer announcementCode)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentAnnouncement persistentAnnouncement = persistentSupport
-                    .getIPersistentAnnouncement();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentAnnouncement persistentAnnouncement = persistentSupport.getIPersistentAnnouncement();
 
-            IAnnouncement iAnnouncement = (IAnnouncement) persistentAnnouncement.readByOID(
-                    Announcement.class, announcementCode);
+        IAnnouncement iAnnouncement = (IAnnouncement) persistentAnnouncement.readByOID(
+                Announcement.class, announcementCode);
 
-            if (iAnnouncement != null) {
-                persistentAnnouncement.deleteByOID(Announcement.class, iAnnouncement.getIdInternal());
-            }
+        if (iAnnouncement != null) {
+            persistentAnnouncement.deleteByOID(Announcement.class, iAnnouncement.getIdInternal());
+        }
 
         return true;
     }
