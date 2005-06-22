@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator;
 
+import java.io.DataOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,20 +10,32 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FileAlreadyExistsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FileNameTooLongServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.domain.ApplicationDocumentType;
+import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
 public class CandidateOperationDispatchAction extends DispatchAction {
+
+    /** request params * */
+    public static final String REQUEST_DOCUMENT_TYPE = "documentType";
 
     public ActionForward getCandidates(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -55,7 +69,8 @@ public class CandidateOperationDispatchAction extends DispatchAction {
     }
 
     public ActionForward chooseCandidate(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException {
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -72,11 +87,115 @@ public class CandidateOperationDispatchAction extends DispatchAction {
             e.printStackTrace();
             throw new FenixActionException();
         }
-        
+
+        List candidateStudyPlan = getCandidateStudyPlanByCandidateID(candidateID, userView);
+
         request.setAttribute("masterDegreeCandidate", infoMasterDegreeCandidate);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        request.setAttribute("candidateStudyPlan", candidateStudyPlan);
 
         return mapping.findForward("ActionReady");
+    }
+
+    public ActionForward showApplicationDocuments(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        HttpSession session = request.getSession(false);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        ActionErrors actionErrors = new ActionErrors();
+
+        String documentTypeStr = (String) request.getParameter(REQUEST_DOCUMENT_TYPE);
+        Integer degreeCurricularPlanID = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
+        Integer candidateID = new Integer(request.getParameter("candidateID"));
+
+        InfoMasterDegreeCandidate masterDegreeCandidate = null;
+        try {
+            Object args[] = { candidateID };
+            masterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
+                    .executeService(userView, "GetCandidatesByID", args);
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+
+        FileSuportObject file = null;
+        try {
+            Object args[] = {
+                    masterDegreeCandidate.getInfoPerson().getIdInternal(),
+                    ((documentTypeStr != null) ? ApplicationDocumentType.valueOf(documentTypeStr)
+                            : ApplicationDocumentType.CURRICULUM_VITAE) };
+            file = (FileSuportObject) ServiceUtils.executeService(userView,
+                    "RetrieveApplicationDocument", args);
+
+        } catch (FileAlreadyExistsServiceException e1) {
+        } catch (FileNameTooLongServiceException e1) {
+        } catch (FenixServiceException e1) {
+        }
+
+        if (file != null) {
+            response.setHeader("Content-disposition", "attachment;filename=" + file.getFileName());
+            response.setContentType(file.getContentType());
+            DataOutputStream dos = new DataOutputStream(response.getOutputStream());
+            dos.write(file.getContent());
+            dos.close();
+        } else {
+            List candidateStudyPlan = getCandidateStudyPlanByCandidateID(candidateID, userView);
+            request.setAttribute("masterDegreeCandidate", masterDegreeCandidate);
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+            request.setAttribute("candidateStudyPlan", candidateStudyPlan);
+            return mapping.findForward("ActionReady");
+        }
+
+        return null;
+
+    }
+
+    /**
+     * 
+     * @param userView
+     * @param actionErrors
+     * @param request
+     * @param mapping
+     * @return
+     */
+    private InfoPerson readPersonByUsername(IUserView userView, ActionErrors actionErrors,
+            HttpServletRequest request, ActionMapping mapping) {
+        InfoPerson result = null;
+
+        try {
+            Object[] args = { userView.getUtilizador() };
+            result = (InfoPerson) ServiceUtils.executeService(userView, "ReadPersonByUsername", args);
+            return result;
+        } catch (ExcepcaoInexistente e) {
+            actionErrors.add("unknownPerson", new ActionError("error.exception.nonExisting", userView
+                    .getUtilizador()));
+            saveErrors(request, actionErrors);
+        } catch (FenixServiceException e) {
+            actionErrors.add("unableReadPerson", new ActionError("errors.unableReadPerson", userView
+                    .getUtilizador()));
+            saveErrors(request, actionErrors);
+        } catch (FenixFilterException e) {
+            actionErrors.add("unableReadPerson", new ActionError("errors.unableReadPerson", userView
+                    .getUtilizador()));
+            saveErrors(request, actionErrors);
+        }
+        return null;
+    }
+
+    /**
+     * 
+     * @author Ricardo Clerigo & Telmo Nabais
+     * @param candidateID
+     * @param userView
+     * @return
+     */
+    private ArrayList getCandidateStudyPlanByCandidateID(Integer candidateID, IUserView userView) {
+        Object[] args = { candidateID };
+
+        try {
+            return (ArrayList) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadCandidateEnrolmentsByCandidateID", args);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 }

@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.candidate;
 
+import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -18,6 +19,8 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FileAlreadyExistsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FileNameTooLongServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
@@ -25,19 +28,23 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
+import net.sourceforge.fenixedu.domain.ApplicationDocumentType;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
+import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.Data;
 import net.sourceforge.fenixedu.util.RandomStringGenerator;
 import net.sourceforge.fenixedu.util.SituationName;
 
 import org.apache.struts.Globals;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -52,6 +59,9 @@ import org.apache.struts.util.LabelValueBean;
  * 
  */
 public class ListCandidatesDispatchAction extends DispatchAction {
+
+    /** request params * */
+    public static final String REQUEST_DOCUMENT_TYPE = "documentType";
 
     public ActionForward prepareChoose(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -256,6 +266,11 @@ public class ListCandidatesDispatchAction extends DispatchAction {
                 throw new Exception(e);
             }
 
+            List candidateStudyPlan = getCandidateStudyPlanByCandidateID(candidateID, userView);
+
+            if (candidateStudyPlan != null)
+                request.setAttribute("studyPlan", candidateStudyPlan);
+
             request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, result);
             return mapping.findForward("VisualizeCandidate");
 
@@ -313,11 +328,14 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 
             request.setAttribute(SessionConstants.NATIONALITY_LIST_KEY, nationalityList);
             request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
-            //request.setAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY, Arrays.asList(MaritalStatus.values()));
-            /*request.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY,
-                    TipoDocumentoIdentificacao.toArrayList());*/
-            request.setAttribute(SessionConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
-                    .getAttribute(Globals.LOCALE_KEY)));
+            // request.setAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY,
+            // Arrays.asList(MaritalStatus.values()));
+            /*
+             * request.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY,
+             * TipoDocumentoIdentificacao.toArrayList());
+             */
+            request.setAttribute(SessionConstants.SEX_LIST_KEY, Gender
+                    .getSexLabelValues((Locale) request.getAttribute(Globals.LOCALE_KEY)));
             request.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
             request.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
             request.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
@@ -399,7 +417,8 @@ public class ListCandidatesDispatchAction extends DispatchAction {
             InfoCountry nationality = new InfoCountry();
             nationality.setNationality((String) editCandidateForm.get("nationality"));
 
-            infoPerson.setTipoDocumentoIdentificacao(IDDocumentType.valueOf((String) editCandidateForm.get("identificationDocumentType")));
+            infoPerson.setTipoDocumentoIdentificacao(IDDocumentType.valueOf((String) editCandidateForm
+                    .get("identificationDocumentType")));
             infoPerson.setNumeroDocumentoIdentificacao((String) editCandidateForm
                     .get("identificationDocumentNumber"));
             infoPerson.setLocalEmissaoDocumentoIdentificacao((String) editCandidateForm
@@ -673,6 +692,84 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 
         }
         return false;
+    }
+
+    /**
+     * 
+     * @author Ricardo Clerigo & Telmo Nabais
+     * @param candidateID
+     * @param userView
+     * @return
+     */
+    private List getCandidateStudyPlanByCandidateID(Integer candidateID, IUserView userView) {
+        Object[] args = { candidateID };
+
+        try {
+            return (List) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadCandidateEnrolmentsByCandidateID", args);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 
+     * @author Ricardo Clérigo & Telmo Nabais
+     */
+    public ActionForward showApplicationDocuments(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        HttpSession session = request.getSession(false);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        ActionErrors actionErrors = new ActionErrors();
+
+        String documentTypeStr = (String) request.getParameter(REQUEST_DOCUMENT_TYPE);
+
+        Integer candidateID = new Integer(request.getParameter("candidateID"));
+
+        InfoMasterDegreeCandidate masterDegreeCandidate = null;
+        try {
+            Object args[] = { candidateID };
+            masterDegreeCandidate = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
+                    .executeService(userView, "GetCandidatesByID", args);
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+
+        FileSuportObject file = null;
+        try {
+            Object args[] = {
+                    masterDegreeCandidate.getInfoPerson().getIdInternal(),
+                    ((documentTypeStr != null) ? ApplicationDocumentType.valueOf(documentTypeStr)
+                            : ApplicationDocumentType.CURRICULUM_VITAE) };
+            file = (FileSuportObject) ServiceUtils.executeService(userView,
+                    "RetrieveApplicationDocument", args);
+
+        } catch (FileAlreadyExistsServiceException e1) {
+        } catch (FileNameTooLongServiceException e1) {
+        } catch (FenixServiceException e1) {
+        }
+
+        if (file != null) {
+            response.setHeader("Content-disposition", "attachment;filename=" + file.getFileName());
+            response.setContentType(file.getContentType());
+            DataOutputStream dos = new DataOutputStream(response.getOutputStream());
+            dos.write(file.getContent());
+            dos.close();
+        }else{
+            request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, masterDegreeCandidate);
+            return mapping.findForward("VisualizeCandidate");
+        }
+
+        return null;
+    }
+
+    private boolean validateApplicationDocumentType(Integer tipoDocumento) {
+        if (tipoDocumento != ApplicationDocumentType.CURRICULUM_VITAE.ordinal()
+                && tipoDocumento != ApplicationDocumentType.INTEREST_LETTER.ordinal()
+                && tipoDocumento != ApplicationDocumentType.HABILITATION_CERTIFICATE.ordinal())
+            return false;
+        return true;
     }
 
 }
