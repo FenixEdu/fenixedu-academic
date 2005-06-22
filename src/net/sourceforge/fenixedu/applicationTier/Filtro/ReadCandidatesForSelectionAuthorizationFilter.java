@@ -87,7 +87,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
         // Read The DegreeCurricularPlan
         try {
 
-            executionDegree = (ExecutionDegree) PersistenceSupportFactory.getDefaultPersistenceSupport()
+            executionDegree = (IExecutionDegree) PersistenceSupportFactory.getDefaultPersistenceSupport()
                     .getIPersistentExecutionDegree().readByOID(ExecutionDegree.class, executionDegreeID);
 
         } catch (Exception e) {

@@ -32,7 +32,7 @@ public class ReadCandidatesForSelection implements IService {
 
 		IPersistentExecutionDegree executionDegreeDAO = sp
 				.getIPersistentExecutionDegree();
-		IExecutionDegree executionDegree = (ExecutionDegree) executionDegreeDAO
+		IExecutionDegree executionDegree = (IExecutionDegree) executionDegreeDAO
 				.readByOID(ExecutionDegree.class, executionDegreeID);
 
 		resultTemp = sp.getIPersistentCandidateSituation()
