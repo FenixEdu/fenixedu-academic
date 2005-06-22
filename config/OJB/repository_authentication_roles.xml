@@ -355,6 +355,13 @@
 		>
 		<inverse-foreignkey field-ref="teacherKey"/>
 	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+		name="masterDegreeCandidates" 
+		element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeCandidate"
+		
+		>
+		<inverse-foreignkey field-ref="guiderKey"/>
+	</collection-descriptor>
 	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         	name="masterDegreeThesisGuider"
 	        element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion"
