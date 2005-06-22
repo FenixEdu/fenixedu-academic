@@ -48,6 +48,14 @@ public class InfoMasterDegreeCandidate extends InfoObject {
 
     private String givenCreditsRemarks;
 
+    private Boolean courseAssistant;
+
+    private String coursesToAssist;
+
+    private InfoTeacher infoGuider;
+
+    private Boolean hasGuider;
+
     /**
      * @return
      */
@@ -68,7 +76,8 @@ public class InfoMasterDegreeCandidate extends InfoObject {
 
     public InfoMasterDegreeCandidate(InfoPerson person, InfoExecutionDegree executionDegree,
             Integer candidateNumber, Specialization specialization, String majorDegree,
-            String majorDegreeSchool, Integer majorDegreeYear, Double average) {
+            String majorDegreeSchool, Integer majorDegreeYear, Double average, Boolean courseAssistant,
+            String coursesToAssist, InfoTeacher infoGuider, Boolean hasGuider) {
         this.infoPerson = person;
         this.infoExecutionDegree = executionDegree;
         this.candidateNumber = candidateNumber;
@@ -77,7 +86,10 @@ public class InfoMasterDegreeCandidate extends InfoObject {
         this.majorDegreeSchool = majorDegreeSchool;
         this.majorDegreeYear = majorDegreeYear;
         this.average = average;
-
+        this.courseAssistant = courseAssistant;
+        this.coursesToAssist = coursesToAssist;
+        this.infoGuider = infoGuider;
+        this.hasGuider = hasGuider;
     }
 
     public boolean equals(Object o) {
@@ -123,7 +135,16 @@ public class InfoMasterDegreeCandidate extends InfoObject {
         result += "\n  - Substitute Order  : " + substituteOrder;
         result += "\n  - Given Credits  : " + givenCredits;
         result += "\n  - Given Credits Remarks  : " + givenCreditsRemarks;
-
+        result += "\n  - Deseja dar aulas? : " + (this.courseAssistant.booleanValue() ? "Sim" : "Nao");
+        if (this.courseAssistant.booleanValue())
+            result += "\n  - Deseja dar aulas as seguintes cadeiras : " + this.coursesToAssist;
+        if (this.infoGuider != null) {
+            if (this.hasGuider)
+                result += "\n  - Orientador : " + this.infoGuider.getTeacherNumber() + " - " +
+                    this.infoGuider.getInfoPerson().getNome();
+            else result += "\n  - Conselheiro : " + this.infoGuider.getTeacherNumber() + " - " +
+                    this.infoGuider.getInfoPerson().getNome();
+        }
         return result;
     }
 
@@ -195,6 +216,14 @@ public class InfoMasterDegreeCandidate extends InfoObject {
      */
     public Specialization getSpecialization() {
         return specialization;
+    }
+
+    public Boolean getCourseAssistant() {
+            return courseAssistant;
+        }
+    
+    public String getCoursesToAssist() {
+        return coursesToAssist;
     }
 
     /**
@@ -295,6 +324,14 @@ public class InfoMasterDegreeCandidate extends InfoObject {
         givenCredits = double1;
     }
 
+    public void setCourseAssistant(Boolean courseAssistant) {
+        this.courseAssistant = courseAssistant;
+    }
+
+    public void setCoursesToAssist(String coursesToAssist) {
+        this.coursesToAssist = coursesToAssist;
+    }
+
     public void copyFromDomain(IMasterDegreeCandidate masterDegreeCandidate) {
         super.copyFromDomain(masterDegreeCandidate);
         if (masterDegreeCandidate != null) {
@@ -307,9 +344,15 @@ public class InfoMasterDegreeCandidate extends InfoObject {
             setMajorDegreeYear(masterDegreeCandidate.getMajorDegreeYear());
             setSpecializationArea(masterDegreeCandidate.getSpecializationArea());
             setSpecialization(masterDegreeCandidate.getSpecialization());
+            setCourseAssistant(masterDegreeCandidate.getCourseAssistant());
+            setCoursesToAssist(masterDegreeCandidate.getCoursesToAssist());
             setSubstituteOrder(masterDegreeCandidate.getSubstituteOrder());
             setInfoCandidateSituation(InfoCandidateSituation.newInfoFromDomain(masterDegreeCandidate.getActiveCandidateSituation()));
             setInfoExecutionDegree(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan.newInfoFromDomain(masterDegreeCandidate.getExecutionDegree()));
+            if (masterDegreeCandidate.getGuider() != null)
+                setInfoGuider(new InfoTeacher(masterDegreeCandidate.getGuider().getTeacherNumber(),
+                        InfoPerson.newInfoFromDomain(masterDegreeCandidate.getGuider().getPerson())));
+            setHasGuider(masterDegreeCandidate.getHasGuider());
         }
     }
 
@@ -322,4 +365,21 @@ public class InfoMasterDegreeCandidate extends InfoObject {
         }
         return infoMasterDegreeCandidate;
     }
+
+    public InfoTeacher getInfoGuider() {
+        return infoGuider;
 }
+    public void setInfoGuider(InfoTeacher infoGuider) {
+        this.infoGuider = infoGuider;
+    }
+
+    public Boolean getHasGuider() {
+        return hasGuider;
+    }
+
+    public void setHasGuider(Boolean hasGuider) {
+        this.hasGuider = hasGuider;
+    }
+}
+
+// RMCC&TAFN Stop Here
