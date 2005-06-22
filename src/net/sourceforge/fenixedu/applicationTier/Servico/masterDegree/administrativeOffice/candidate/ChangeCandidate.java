@@ -11,8 +11,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.SendMail;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
@@ -61,8 +63,7 @@ public class ChangeCandidate implements IService {
             person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,
                     masterDegreeCandidate.getPerson().getIdInternal(), true);
 
-            person.setIdDocumentType(newCandidate.getInfoPerson()
-                    .getTipoDocumentoIdentificacao());
+            person.setIdDocumentType(newCandidate.getInfoPerson().getTipoDocumentoIdentificacao());
             person.setNumeroDocumentoIdentificacao(newCandidate.getInfoPerson()
                     .getNumeroDocumentoIdentificacao());
 
@@ -170,6 +171,44 @@ public class ChangeCandidate implements IService {
 
                 candidateSituation.setSituation(newCandidate.getInfoCandidateSituation().getSituation());
                 candidateSituation.setValidation(new State(State.ACTIVE));
+
+                if (masterDegreeCandidate.getPerson() != null
+                        && masterDegreeCandidate.getPerson().getEmail() != null) {
+
+                    ResourceBundle rb = ResourceBundle
+                            .getBundle("ServidorApresentacao.ApplicationResources");
+
+                    List toList, CCList, BCCList;
+                    toList = new ArrayList();
+                    CCList = new ArrayList();
+                    BCCList = new ArrayList();
+                    toList.add(masterDegreeCandidate.getPerson().getEmail());
+                    String fromName, from, subject;
+                    fromName = rb.getString("masterDegreeCandidate.email.fromName");
+                    from = rb.getString("masterDegreeCandidate.email.fromEmail");
+                    subject = rb.getString("masterDegreeCandidate.email.subject")
+                            + masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan()
+                                    .getName();
+
+                    StringBuilder text = new StringBuilder();
+                    text.append(rb.getString("masterDegreeCandidate.email.greeting"));
+                    text.append(" ");
+                    text.append(masterDegreeCandidate.getPerson().getNome());
+                    text.append(rb.getString("masterDegreeCandidate.email.period"));
+                    text.append(rb.getString("masterDegreeCandidate.email.newLine"));
+                    text.append(rb.getString("masterDegreeCandidate.email.body"));
+                    text.append(candidateSituation.getSituation().toString());
+                    text.append(rb.getString("masterDegreeCandidate.email.period"));
+                    text.append(rb.getString("masterDegreeCandidate.email.newLine"));
+                    text.append(rb.getString("masterDegreeCandidate.email.newLine"));
+                    text.append(rb.getString("masterDegreeCandidate.email.goodbye"));
+
+                    try {
+                        SendMail sendMailService = new SendMail();
+                        sendMailService.run(toList, CCList, BCCList, fromName, from, subject, text.toString());
+                    } catch (Exception e) {
+                    }
+                }
 
             }
 
