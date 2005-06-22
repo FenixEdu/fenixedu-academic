@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoItem;
@@ -16,32 +15,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Fernanda Quitério
  *  
  */
-public class EditItem implements IServico {
-
-    private static EditItem service = new EditItem();
-
-    /**
-     * 
-     * The singleton access method of this class.
-     *  
-     */
-
-    public static EditItem getService() {
-
-        return service;
-
-    }
-
-    public String getNome() {
-
-        return "EditItem";
-
-    }
+public class EditItem implements IService {
 
     // this method reorders some items but not the item that we are editing
     private Integer organizeItemsOrder(Integer newOrder, Integer oldOrder, ISection section)
