@@ -172,4 +172,39 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
 		return queryList(MasterDegreeCandidate.class, criteria);
 	}
 
+    public List readAllCandidatesByDCPlanIDSpecSituationAndIsAssistant(Integer degreeCurricularPlanId, 
+    		Specialization specialization, SituationName situation, 
+    		Boolean givesClasses) throws ExcepcaoPersistencia {
+
+    	// se nenhum valor e' dado, retorna vazio
+        if (degreeCurricularPlanId == null && specialization == null && situation == null
+                && givesClasses == null)
+            return null;
+
+        Criteria criteria = new Criteria();
+
+        // id do degreecurricularplan
+        if (degreeCurricularPlanId != null) {
+            criteria.addEqualTo("executionDegree.degreeCurricularPlan.idInternal", degreeCurricularPlanId);
+        }
+
+        // specialization
+        if (specialization != null) {
+            criteria.addEqualTo("specialization", specialization);
+        }
+
+        // situacao
+        if (situation != null) {
+            criteria.addEqualTo("situations.situation", situation.getSituationName());
+            criteria.addEqualTo("situations.validation", new Integer(State.ACTIVE));
+        }
+
+        // da aulas?
+        if (givesClasses != null) {
+            criteria.addEqualTo("courseAssistant", givesClasses.booleanValue());
+        }
+        
+        return queryList(MasterDegreeCandidate.class, criteria);
+    }
+    
 } // End of class definition

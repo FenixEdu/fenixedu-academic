@@ -113,4 +113,8 @@ public interface IPersistentMasterDegreeCandidate extends IPersistentObject {
 	 */
 	public List readByPersonID(Integer personID) throws ExcepcaoPersistencia;
 
+    public List readAllCandidatesByDCPlanIDSpecSituationAndIsAssistant(Integer degreeCurricularPlanId, 
+    		Specialization specialization, SituationName situation, 
+    		Boolean givesClasses) throws ExcepcaoPersistencia;
+
 } // End of class definition

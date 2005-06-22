@@ -242,4 +242,9 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 		return person.getMasterDegreeCandidates();
 	}
 
+    public List readAllCandidatesByDCPlanIDSpecSituationAndIsAssistant(Integer degreeCurricularPlanId, Specialization specialization, SituationName situation, Boolean givesClasses) throws ExcepcaoPersistencia {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 } // End of class definition
