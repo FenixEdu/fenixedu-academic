@@ -79,13 +79,14 @@ public class CurricularCourseScopeVO extends VersionedObjectsBase implements
 		ICurricularCourse curricularCourse = (ICurricularCourse) readByOID(CurricularCourse.class,curricularCourseId);
 		if (curricularCourse != null) {
 			List<ICurricularCourseScope> scopes = curricularCourse.getScopes();
-			return (List)CollectionUtils.select(scopes,new Predicate(){
+			List result = (List)CollectionUtils.select(scopes,new Predicate(){
 				public boolean evaluate(Object o) {
 					ICurricularCourseScope ccs = (ICurricularCourseScope) o;
 					
 					return isCurricularCourseScopeInTimeSpan(ccs,beginDate,endDate);
 				}
 			});
+			return result;
 		}
 		return null;
 	}
@@ -157,6 +158,6 @@ public class CurricularCourseScopeVO extends VersionedObjectsBase implements
 	}
 	
 	private boolean isCurricularCourseScopeInTimeSpan(ICurricularCourseScope ccs, Date beginDate, Date endDate) {
-		return ccs.getBeginDate().before(endDate) && (ccs.getEndDate() == null || (ccs.getEndDate().after(beginDate)));
+		return ccs.getBegin().before(endDate) && (ccs.getEndDate() == null || (ccs.getEnd().after(beginDate)));
 	}
 }
