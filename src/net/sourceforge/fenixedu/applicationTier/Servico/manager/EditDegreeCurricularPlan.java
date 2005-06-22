@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
@@ -16,7 +15,6 @@ import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -24,54 +22,44 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class EditDegreeCurricularPlan implements IService {
 
-    public EditDegreeCurricularPlan() {
-    }
+    public void run(InfoDegreeCurricularPlan newInfoDegreeCP)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-    public void run(InfoDegreeCurricularPlan newInfoDegreeCP) throws FenixServiceException {
+        final ISuportePersistente persistentSuport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
 
-        IDegree degree = null;
-        IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
-        IDegreeCurricularPlan oldDegreeCP = null;
-        ICursoPersistente persistentDegree = null;
-        String newName = null;
+        final IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport
+                .getIPersistentDegreeCurricularPlan();
+        final ICursoPersistente persistentDegree = persistentSuport
+                .getICursoPersistente();
 
-        try {
-
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            persistentDegreeCurricularPlan = persistentSuport.getIPersistentDegreeCurricularPlan();
-            oldDegreeCP = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOID(
-                    DegreeCurricularPlan.class, newInfoDegreeCP.getIdInternal());
-
-            if (oldDegreeCP == null) {
-                throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
-            }
-            persistentDegree = persistentSuport.getICursoPersistente();
-            Integer degreeId = oldDegreeCP.getDegree().getIdInternal();
-            degree = (IDegree)persistentDegree.readByOID(Degree.class,degreeId);
-
-            if (degree == null) {
-                throw new NonExistingServiceException("message.nonExistingDegree", null);
-            }
-            newName = newInfoDegreeCP.getName();
-
-            persistentDegreeCurricularPlan.simpleLockWrite(oldDegreeCP);
-            oldDegreeCP.setName(newName);
-            oldDegreeCP.setDegree(degree);
-            oldDegreeCP.setState(newInfoDegreeCP.getState());
-            oldDegreeCP.setInitialDate(newInfoDegreeCP.getInitialDate());
-            oldDegreeCP.setEndDate(newInfoDegreeCP.getEndDate());
-            oldDegreeCP.setDegreeDuration(newInfoDegreeCP.getDegreeDuration());
-            oldDegreeCP.setMinimalYearForOptionalCourses(newInfoDegreeCP
-                    .getMinimalYearForOptionalCourses());
-            oldDegreeCP.setNeededCredits(newInfoDegreeCP.getNeededCredits());
-            oldDegreeCP.setMarkType(newInfoDegreeCP.getMarkType());
-            oldDegreeCP.setNumerusClausus(newInfoDegreeCP.getNumerusClausus());
-            oldDegreeCP.setAnotation(newInfoDegreeCP.getAnotation());
-
-        } catch (ExistingPersistentException ex) {
-            throw new ExistingServiceException(ex);
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
+        final IDegreeCurricularPlan degreeCP = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
+                .readByOID(DegreeCurricularPlan.class, newInfoDegreeCP
+                        .getIdInternal());
+        if (degreeCP == null) {
+            throw new NonExistingServiceException(
+                    "message.nonExistingDegreeCurricularPlan", null);
         }
+        final IDegree degree = degreeCP.getDegree();
+        if (degree == null) {
+            throw new NonExistingServiceException("message.nonExistingDegree",
+                    null);
+        }
+
+        final String newName = newInfoDegreeCP.getName();
+
+        persistentDegreeCurricularPlan.simpleLockWrite(degreeCP);
+        degreeCP.setName(newName);
+        degreeCP.setState(newInfoDegreeCP.getState());
+        degreeCP.setInitialDate(newInfoDegreeCP.getInitialDate());
+        degreeCP.setEndDate(newInfoDegreeCP.getEndDate());
+        degreeCP.setDegreeDuration(newInfoDegreeCP.getDegreeDuration());
+        degreeCP.setMinimalYearForOptionalCourses(newInfoDegreeCP
+                .getMinimalYearForOptionalCourses());
+        degreeCP.setNeededCredits(newInfoDegreeCP.getNeededCredits());
+        degreeCP.setMarkType(newInfoDegreeCP.getMarkType());
+        degreeCP.setNumerusClausus(newInfoDegreeCP.getNumerusClausus());
+        degreeCP.setAnotation(newInfoDegreeCP.getAnotation());
+
     }
 }
