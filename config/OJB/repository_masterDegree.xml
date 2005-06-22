@@ -79,7 +79,22 @@
 	     name="givenCreditsRemarks"
 	     column="GIVEN_CREDITS_REMARKS"
      	 jdbc-type="LONGVARCHAR"/>
-	  />
+     <field-descriptor id="13"
+         name="courseAssistant"
+         column="COURSE_ASSISTANT"
+         jdbc-type="BIT"/>
+     <field-descriptor id="14"
+         name="coursesToAssist"
+         column="COURSES_TO_ASSIST"
+         jdbc-type="LONGVARCHAR"/>
+     <field-descriptor id="15"
+         name="guiderKey"
+         column="TEACHER_KEY"
+         jdbc-type="INTEGER"/>
+     <field-descriptor id="16"
+         name="hasGuider"
+         column="HAS_GUIDER"
+         jdbc-type="BIT"/> 
       <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
@@ -103,6 +118,15 @@
       	  >
           <foreignkey field-ref="executionDegreeKey"/>
           </reference-descriptor>
+          
+	    <reference-descriptor
+	        name="guider"
+	        class-ref="net.sourceforge.fenixedu.domain.Teacher"
+	        proxy="true"
+	        refresh="true"
+	    >
+	        <foreignkey field-ref="guiderKey"/> 
+	    </reference-descriptor>
           
          <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 	         name="situations"

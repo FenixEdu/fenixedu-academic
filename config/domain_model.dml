@@ -1323,6 +1323,10 @@ class net.sourceforge.fenixedu.domain.MasterDegreeCandidate extends net.sourcefo
 	String majorDegree;
 	Integer candidateNumber;
     Specialization specialization;
+	Boolean courseAssistant;
+	String coursesToAssist;
+	Integer guiderKey;
+	Boolean hasGuider;
 	
 	interface "
 	public ICandidateSituation getActiveCandidateSituation();
@@ -1632,6 +1636,8 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 
 	interface "
     public String getSlideName();
+    
+    public String getSlideNameForCandidateDocuments();
     "
 }
 
@@ -3955,6 +3961,13 @@ relation MasterDegreeCandidateExecutionDegree {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
+}
+
+relation MasterDegreeCandidateGuider {
+	net.sourceforge.fenixedu.domain.MasterDegreeCandidate playsRole masterDegreeCandidates {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Teacher playsRole guider;
 }
 
 relation MasterDegreeCandidatePerson {
