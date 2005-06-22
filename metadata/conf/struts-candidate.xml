@@ -19,6 +19,18 @@
         <form-property name="body" type="java.lang.String" />
       </form-bean>
 
+	  <!-- bean dynaform for the application documents submission -->
+      <form-bean name="insertApplicationDocumentsForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+      			dynamic="true">
+		<form-property name="username" type="java.lang.String"/>
+		<form-property name="cvFile" type="org.apache.struts.upload.FormFile"/>
+		<form-property name="cmiFile" type="org.apache.struts.upload.FormFile"/>
+		<form-property name="chFile" type="org.apache.struts.upload.FormFile"/>
+		<form-property name="chFile2" type="org.apache.struts.upload.FormFile"/>
+		<form-property name="page" type="java.lang.Integer"/>
+	  </form-bean>
+
       <!-- Bean for change of Application Information -->
       <form-bean name="changeApplicationInfoForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
@@ -124,6 +136,18 @@
       <!-- Action for Visualization Of the Candidate's Application Information -->
       <action path="/visualizeApplicationInfo" forward="/visualizeApplicationInfo.jsp"/>      
 
+      <!-- Action for Visualization Of the Candidate's Application Information -->
+      <action path="/insertApplicationDocuments" forward="/insertApplicationDocuments.jsp"/>      
+
+      <action path="/insertApplicationDocumentsService"
+	     attribute="insertApplicationDocumentsForm"
+	          name="insertApplicationDocumentsForm"
+	         input="/insertApplicationDocuments.do"
+	      validate="true"
+      	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate.InsertApplicationDocumentsAction">
+      	  <forward name="chooseFile" path="/insertApplicationDocuments.jsp"/>
+      </action>
+
       <!-- Dispatch Action to Change the Candidate's Application Information -->
       <action path="/changeApplicationInfoDispatchAction"
 	     attribute="changeApplicationInfoForm"
@@ -148,6 +172,24 @@
               >
       </action>
 
+
+	<!-- Action for show candidate's application documents -->
+      <action path="/showApplicationDocuments"
+	      input="/showApplicationDocuments.do"
+	      validate="true"
+	      parameter="method"
+   	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate.ShowApplicationDocumentDispatchAction">
+      	  <forward name="showApplicationDocumentsList" path="/showApplicationDocuments.jsp"/>
+      	  <forward name="notOK" path="/showApplicationDocuments.do?method=prepare"/>
+      </action>
+
+	<!-- Action show candidate's study plan -->
+      <action path="/showStudyPlanForCandidate"
+	      input="/showStudyPlanForCandidate.do"
+	      validate="true"
+   	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate.ShowStudyPlanForCandidateAction">
+   	      <forward name="Sucess" path="/showStudyPlanForCandidate.jsp"/>
+      </action>
 
     </action-mappings>
     
