@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -69,7 +68,6 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService {
 
             if (isStudentCurricularPlanFromChosenExecutionYear(studentCurricularPlan, executionPeriod
                     .getExecutionYear().getYear())) {
-                IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
                 List enrolmentsInExecutionPeriod = studentCurricularPlan
                         .getAllStudentEnrolledEnrollmentsInExecutionPeriod(executionPeriod);
 

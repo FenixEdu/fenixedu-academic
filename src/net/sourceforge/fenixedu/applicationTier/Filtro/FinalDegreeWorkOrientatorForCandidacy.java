@@ -29,8 +29,6 @@ public class FinalDegreeWorkOrientatorForCandidacy extends AccessControlFilter {
             throw new NotAuthorizedFilterException("authentication.not.provided");
         }
 
-        Object[] params = request.getServiceParameters().parametersArray();
-
         //final String studentCurricularPlanId = (String) request.getServiceParameters().parametersArray()[1];
         final StudentCurricularPlanIDDomainType studentCurricularPlanIDDomainType = (StudentCurricularPlanIDDomainType) request.getServiceParameters().parametersArray()[1];
         final Integer studentCurricularPlanId = studentCurricularPlanIDDomainType.getId();

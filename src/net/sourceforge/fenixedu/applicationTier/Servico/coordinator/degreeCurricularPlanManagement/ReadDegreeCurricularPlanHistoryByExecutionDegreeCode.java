@@ -63,8 +63,7 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode implements ISe
                     while (iterator.hasNext()) {
                         ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
 
-                        List curricularCourseScopes = sp.getIPersistentCurricularCourseScope()
-                                .readByCurricularCourse(curricularCourse);
+                        List curricularCourseScopes = curricularCourse.getScopes();
 
                         if (curricularCourseScopes != null) {
                             curricularCourse.setScopes(curricularCourseScopes);

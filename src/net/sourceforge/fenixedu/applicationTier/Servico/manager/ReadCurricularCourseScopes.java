@@ -34,8 +34,7 @@ public class ReadCurricularCourseScopes implements IService {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse()
                     .readByOID(CurricularCourse.class, curricularCourseId);
-            allCurricularCourseScopes = sp.getIPersistentCurricularCourseScope()
-                    .readCurricularCourseScopesByCurricularCourse(curricularCourse);
+            allCurricularCourseScopes = curricularCourse.getScopes();
 
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);

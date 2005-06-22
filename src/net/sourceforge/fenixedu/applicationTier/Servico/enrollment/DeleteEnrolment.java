@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.precedences.IRestrictionByCurricularCours
 import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRestriction;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -36,8 +35,6 @@ public class DeleteEnrolment implements IService {
         try {
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentEnrollment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
-            IPersistentEnrolmentEvaluation enrolmentEvaluationDAO = persistentSuport
-                    .getIPersistentEnrolmentEvaluation();
             IPersistentRestriction persistentRestriction = persistentSuport.getIPersistentRestriction();
             final IEnrolment enrollment1 = (IEnrolment) enrolmentDAO.readByOID(Enrolment.class,
                     enrolmentID);

@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -35,8 +34,6 @@ public class DeleteEnrollmentsList implements IService {
             
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentEnrollment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
-            IPersistentEnrolmentEvaluation enrolmentEvaluationDAO = persistentSuport
-                    .getIPersistentEnrolmentEvaluation();
             
             if (enrolmentIDList != null && enrolmentIDList.size() > 0) {
                 ListIterator iterator = enrolmentIDList.listIterator();

@@ -152,8 +152,6 @@ public class CreateOrEditGrantContract implements IService {
         IPersistentGrantType pGrantType = sp.getIPersistentGrantType();
         IPersistentGrantContract pGrantContract = sp
                 .getIPersistentGrantContract();
-        IPersistentGrantCostCenter pCostContract = sp
-                .getIPersistentGrantCostCenter();
         IPersistentGrantOwner pGrantOwner = sp.getIPersistentGrantOwner();
         IPersistentGrantOrientationTeacher pGrantOrientationTeacher = sp
                 .getIPersistentGrantOrientationTeacher();

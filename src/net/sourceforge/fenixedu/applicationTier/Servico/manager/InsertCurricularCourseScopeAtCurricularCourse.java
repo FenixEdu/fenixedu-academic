@@ -69,14 +69,21 @@ public class InsertCurricularCourseScopeAtCurricularCourse implements IService {
             ICurricularCourseScope curricularCourseScopeFromDB = null;
             curricularCourseScopeFromDB = persistentCurricularCourseScope
                     .readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(
-                            curricularCourse, curricularSemester, branch, null);
+                            curricularCourse.getIdInternal(), 
+                            curricularSemester.getIdInternal(), 
+                            branch.getIdInternal(), null);
             if (curricularCourseScopeFromDB != null) {
                 throw new ExistingPersistentException();
             }
             persistentCurricularCourseScope.simpleLockWrite(curricularCourseScope);
-            curricularCourseScope.setBranch(branch);
-            curricularCourseScope.setCurricularCourse(curricularCourse);
-            curricularCourseScope.setCurricularSemester(curricularSemester);
+            
+			curricularCourseScope.setBranch(branch);
+			branch.getScopes().add(curricularCourseScope);
+			curricularCourseScope.setCurricularCourse(curricularCourse);
+			curricularCourse.getScopes().add(curricularCourseScope);
+			curricularCourseScope.setCurricularSemester(curricularSemester);
+			curricularSemester.getScopes().add(curricularCourseScope);
+			
             curricularCourseScope.setBeginDate(infoCurricularCourseScope.getBeginDate());
             curricularCourseScope.setEndDate(null);
             curricularCourseScope.setAnotation(infoCurricularCourseScope.getAnotation());

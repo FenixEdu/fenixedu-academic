@@ -360,8 +360,8 @@ public class ReadCoursesInformation implements IService {
         while (iter.hasNext()) {
             ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
             List curricularCourseScopes = sp.getIPersistentCurricularCourseScope()
-                    .readCurricularCourseScopesByCurricularCourseInExecutionYear(curricularCourse,
-                            executionYear);
+                    .readCurricularCourseScopesByCurricularCourseInExecutionYear(curricularCourse.getIdInternal(),
+                            executionYear.getBeginDate(),executionYear.getEndDate());
             List infoScopes = getInfoScopes(curricularCourseScopes, sp);
 
             InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree

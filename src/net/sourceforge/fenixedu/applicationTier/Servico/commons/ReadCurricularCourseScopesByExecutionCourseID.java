@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -43,9 +44,10 @@ public class ReadCurricularCourseScopesByExecutionCourseID implements IService {
             while (iterator.hasNext()) {
                 ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
 
-                List curricularCourseScopes = sp.getIPersistentCurricularCourseScope()
-                        .readCurricularCourseScopesByCurricularCourseInExecutionPeriod(curricularCourse,
-                                executionCourse.getExecutionPeriod());
+                IExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+				List curricularCourseScopes = sp.getIPersistentCurricularCourseScope()
+                        .readCurricularCourseScopesByCurricularCourseInExecutionPeriod(curricularCourse.getIdInternal(),
+                                executionPeriod.getBeginDate(),executionPeriod.getEndDate());
 
                 InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
                         .newInfoFromDomain(curricularCourse);

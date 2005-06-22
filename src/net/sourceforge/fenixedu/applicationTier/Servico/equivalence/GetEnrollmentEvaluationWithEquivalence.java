@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEquivalence;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEquivalentEnrolmentForEnrolmentEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -88,8 +87,6 @@ public class GetEnrollmentEvaluationWithEquivalence extends EnrollmentEquivalenc
             IPersistentEnrollment enrollmentDAO = persistenceDAO.getIPersistentEnrolment();
             IPersistentEnrolmentEquivalence enrollmentEquivalenceDAO = persistenceDAO
                     .getIPersistentEnrolmentEquivalence();
-            IPersistentEquivalentEnrolmentForEnrolmentEquivalence equivalentEnrollmentForEnrollmentEquivalenceDAO = persistenceDAO
-                    .getIPersistentEquivalentEnrolmentForEnrolmentEquivalence();
 
             IEnrolment enrollment = (IEnrolment) enrollmentDAO
                     .readByOID(Enrolment.class, enrollmentID);

@@ -235,7 +235,7 @@ public class ReadImprovmentsToEnroll implements IService  {
         while(iterator.hasNext()) {
            IEnrolment enrolment = (IEnrolment) iterator.next();
 
-           List scopes = persistentCurricularCourseScope.readCurricularCourseScopesByCurricularCourseInExecutionPeriod(enrolment.getCurricularCourse(), currentExecutionPeriod);
+           List scopes = persistentCurricularCourseScope.readCurricularCourseScopesByCurricularCourseInExecutionPeriod(enrolment.getCurricularCourse().getIdInternal(), currentExecutionPeriod.getBeginDate(), currentExecutionPeriod.getEndDate());
            if(scopes != null && !scopes.isEmpty()) {
                ICurricularCourseScope curricularCourseScope =  (ICurricularCourseScope) CollectionUtils.find(scopes, new Predicate() {
 

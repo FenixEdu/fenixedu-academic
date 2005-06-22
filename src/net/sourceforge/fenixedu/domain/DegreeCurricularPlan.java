@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PrecedencesEnroll
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PreviousYearsCurricularCourseEnrollmentRule;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
@@ -85,29 +84,19 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
         List curricularCourses = new ArrayList();
 
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory
-                    .getDefaultPersistenceSupport();
-            IPersistentCurricularCourseScope curricularCourseScopeDAO = persistentSuport
-                    .getIPersistentCurricularCourseScope();
+        List scopes = area.getScopes();
 
-            List scopes = curricularCourseScopeDAO.readByBranch(area);
+		int scopesSize = scopes.size();
 
-            int scopesSize = scopes.size();
+		for (int i = 0; i < scopesSize; i++) {
+		    ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) scopes.get(i);
 
-            for (int i = 0; i < scopesSize; i++) {
-                ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) scopes.get(i);
+		    ICurricularCourse curricularCourse = curricularCourseScope.getCurricularCourse();
 
-                ICurricularCourse curricularCourse = curricularCourseScope.getCurricularCourse();
-
-                if (!curricularCourses.contains(curricularCourse)) {
-                    curricularCourses.add(curricularCourse);
-                }
-            }
-
-        } catch (ExcepcaoPersistencia e) {
-            throw new RuntimeException(e);
-        }
+		    if (!curricularCourses.contains(curricularCourse)) {
+		        curricularCourses.add(curricularCourse);
+		    }
+		}
 
         return curricularCourses;
     }

@@ -80,8 +80,8 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName imp
             while (iterExecutionPeriods.hasNext()) {
                 IExecutionPeriod executionPeriod = (IExecutionPeriod) iterExecutionPeriods.next();
                 List curricularCourseScopes = persistentCurricularCourseScope
-                        .readCurricularCourseScopesByCurricularCourseInExecutionPeriod(curricularCourse,
-                                executionPeriod);
+                        .readCurricularCourseScopesByCurricularCourseInExecutionPeriod(curricularCourse.getIdInternal(),
+                                executionPeriod.getBeginDate(),executionPeriod.getEndDate());
                 if (curricularCourseScopes != null) {
                     List disjunctionCurricularCourseScopes = (List) CollectionUtils.disjunction(
                             allCurricularCourseScopes, curricularCourseScopes);

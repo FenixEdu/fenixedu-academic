@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -23,7 +22,6 @@ public class ReadExecutionCourseSite implements IService {
 
         InfoSite infoSite = null;
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
         final ISite site = sp.getIPersistentSite().readByExecutionCourse(infoExecutionCourse.getIdInternal());
         if (site != null)

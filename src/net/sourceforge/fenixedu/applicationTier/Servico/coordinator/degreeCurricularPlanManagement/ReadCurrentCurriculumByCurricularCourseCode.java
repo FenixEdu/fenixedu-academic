@@ -62,7 +62,7 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IService {
         }
         //selects active curricular course scopes
         List activeCurricularCourseScopes = persistentCurricularCourseScope
-                .readActiveCurricularCourseScopesByCurricularCourse(curricularCourse);
+                .readActiveCurricularCourseScopesByCurricularCourse(curricularCourse.getIdInternal());
 
         activeCurricularCourseScopes = (List) CollectionUtils.select(activeCurricularCourseScopes,
                 new Predicate() {

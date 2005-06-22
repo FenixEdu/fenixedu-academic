@@ -78,7 +78,7 @@ public class ReadCurricularCourseScopeListByDegreeCurricularPlan implements ISer
                 curricularCourse = (ICurricularCourse) iterator.next();
 
                 List curricularCourseScopes = sp.getIPersistentCurricularCourseScope()
-                        .readActiveCurricularCourseScopesByCurricularCourse(curricularCourse);
+                        .readActiveCurricularCourseScopesByCurricularCourse(curricularCourse.getIdInternal());
 
                 if (curricularCourseScopes != null) {
                     iteratorScopes = curricularCourseScopes.listIterator();
