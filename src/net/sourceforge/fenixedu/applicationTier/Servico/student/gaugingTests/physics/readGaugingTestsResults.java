@@ -47,7 +47,7 @@ public class readGaugingTestsResults implements IService {
 
             IPersistentStudent persistentStudent = ps.getIPersistentStudent();
 
-            IStudent student = persistentStudent.readByPersonAndDegreeType(person,
+            IStudent student = persistentStudent.readByPersonAndDegreeType(person.getIdInternal(),
                     DegreeType.DEGREE);
             if (student == null) {
                 return null;

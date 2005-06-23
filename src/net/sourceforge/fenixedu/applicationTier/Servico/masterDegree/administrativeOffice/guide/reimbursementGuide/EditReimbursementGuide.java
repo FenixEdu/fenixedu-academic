@@ -178,7 +178,7 @@ public class EditReimbursementGuide implements IService {
 
                         IPerson studentPerson = reimbursementGuide.getGuide().getPerson();
                         IStudent student = ps.getIPersistentStudent().readByPersonAndDegreeType(
-                                studentPerson, DegreeType.MASTER_DEGREE);
+                                studentPerson.getIdInternal(), DegreeType.MASTER_DEGREE);
                         IExecutionDegree executionDegree = reimbursementGuide.getGuide()
                                 .getExecutionDegree();
 

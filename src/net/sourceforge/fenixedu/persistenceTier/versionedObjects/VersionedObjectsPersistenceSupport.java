@@ -151,6 +151,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentCurr
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentGroupAttendVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentGroupVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentKindVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.StudentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SummaryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SupportLessonVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TeacherVO;
@@ -488,7 +489,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentStudent getIPersistentStudent() {
-        return null;
+        return new StudentVO();
     }
 
     public IPersistentResidenceCandidacies getIPersistentResidenceCandidacies() {

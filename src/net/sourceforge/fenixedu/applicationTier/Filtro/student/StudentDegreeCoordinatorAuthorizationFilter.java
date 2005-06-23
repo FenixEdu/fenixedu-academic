@@ -73,7 +73,7 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
 
             IStudent student1 = sp.getIPersistentStudent().readByUsername(username);
 
-            List students = sp.getIPersistentStudent().readbyPerson(student1.getPerson());
+            List students = student1.getPerson().getStudents();
 
             // for each of the Person's Student roles
             for (Iterator studentsIterator = students.iterator(); studentsIterator.hasNext();) {

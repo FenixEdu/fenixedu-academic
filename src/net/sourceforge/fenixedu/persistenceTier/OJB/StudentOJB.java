@@ -12,34 +12,20 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 import org.apache.ojb.broker.query.Criteria;
 
 public class StudentOJB extends PersistentObjectOJB implements IPersistentStudent {
-
-    /**
-     * @deprecated
-     */
-    public IStudent readByNumeroAndEstado(Integer numero, Integer estado, DegreeType degreeType)
-            throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();
-        crit.addEqualTo("number", numero);
-        crit.addEqualTo("state", estado);
-        crit.addEqualTo("degreeType", degreeType);
-        return (IStudent) queryObject(Student.class, crit);
-
-    }
-
-    public IStudent readByUsername(String username) throws ExcepcaoPersistencia {
+//
+	
+	public IStudent readByUsername(String username) throws ExcepcaoPersistencia {
 
         Criteria crit = new Criteria();
         crit.addEqualTo("person.username", username);
@@ -47,31 +33,11 @@ public class StudentOJB extends PersistentObjectOJB implements IPersistentStuden
         IStudent student = (IStudent) queryObject(Student.class, crit);
 
         return student;
-
     }
 
     //	---------------------------------------------------------------------------------------------------------
 
     // feitos por David \ Ricardo
-
-    public void delete(IStudent student) throws ExcepcaoPersistencia {
-        try {
-            super.delete(student);
-        } catch (ExcepcaoPersistencia ex) {
-            throw ex;
-        }
-    }
-
-    public IStudent readStudentByDegreeTypeAndPerson(DegreeType degreeType, IPerson person)
-            throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();
-        crit.addEqualTo("degreeType", degreeType);
-        crit.addEqualTo("person.username", person.getUsername());
-        crit.addEqualTo("person.numeroDocumentoIdentificacao", person.getNumeroDocumentoIdentificacao());
-        crit.addEqualTo("person.idDocumentType", person.getIdDocumentType());
-        return (IStudent) queryObject(Student.class, crit);
-
-    }
 
     public IStudent readStudentByNumberAndDegreeType(Integer number, DegreeType degreeType)
             throws ExcepcaoPersistencia {
@@ -86,10 +52,10 @@ public class StudentOJB extends PersistentObjectOJB implements IPersistentStuden
         return queryList(Student.class, new Criteria());
     }
 
-    public IStudent readByPersonAndDegreeType(IPerson person, DegreeType degreeType)
+    public IStudent readByPersonAndDegreeType(Integer personId, DegreeType degreeType)
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
-        crit.addEqualTo("person.idInternal", person.getIdInternal());
+        crit.addEqualTo("person.idInternal", personId);
         crit.addEqualTo("degreeType", degreeType);
         return (IStudent) queryObject(Student.class, crit);
 
@@ -116,14 +82,6 @@ public class StudentOJB extends PersistentObjectOJB implements IPersistentStuden
 
         return new Integer(number.intValue() + 1);
 
-    }
-
-    public List readbyPerson(IPerson person) throws ExcepcaoPersistencia {
-
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("personKey", person.getIdInternal());
-
-        return queryList(Student.class, criteria);
     }
 
     public List readMasterDegreeStudentsByNameIDnumberIDtypeAndStudentNumber(String studentName,
@@ -153,27 +111,14 @@ public class StudentOJB extends PersistentObjectOJB implements IPersistentStuden
         return queryList(Student.class, criteria);
     }
 
-    public List readAllBySpan(Integer spanNumber, Integer numberOfElementsInSpan)
-            throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        return readSpan(Student.class, criteria, numberOfElementsInSpan, spanNumber);
-    }
-
     public Integer countAll() {
         return new Integer(count(Student.class, new Criteria()));
     }
 
-    public List readStudentbyRegistrationYear(IExecutionYear executionYear) throws ExcepcaoPersistencia {
+    public List readStudentByPersonRole(RoleType roleType) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("keyRegistrationYear", executionYear.getIdInternal());
-        return queryList(Student.class, criteria);
-    }
-
-    public List readStudentByPersonRole(IRole role) throws ExcepcaoPersistencia {
-
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("person.personRoles.roleType", role.getRoleType());
+        criteria.addEqualTo("person.personRoles.roleType", roleType);
         return queryList(Student.class, criteria);
     }
 

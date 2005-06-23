@@ -39,7 +39,7 @@ public class CreateGratuityTransaction implements IService {
                 guideEntryID);
 
         IGuide guide = guideEntry.getGuide();
-        IStudent student = sp.getIPersistentStudent().readByPersonAndDegreeType(guide.getPerson(),
+        IStudent student = sp.getIPersistentStudent().readByPersonAndDegreeType(guide.getPerson().getIdInternal(),
                 DegreeType.MASTER_DEGREE);
         IGratuitySituation gratuitySituation = sp.getIPersistentGratuitySituation()
                 .readGratuitySituationByExecutionDegreeAndStudent(guide.getExecutionDegree().getIdInternal(), student.getIdInternal());

@@ -76,7 +76,7 @@ public class StudentTutorAuthorizationFilter extends AccessControlFilter
 		            return "noAuthorization";
 		        }
     	        
-    	        List allStudents = sp.getIPersistentStudent().readbyPerson(student.getPerson());
+    	        List allStudents = student.getPerson().getStudents();
     	        if (allStudents == null || allStudents.isEmpty()) 
 		        {
 		            return "noAuthorization";

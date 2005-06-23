@@ -159,7 +159,7 @@ public class ChangeGuideSituation implements IService {
                         IPerson studentPerson = guide.getPerson();
 
                         IStudent student = sp.getIPersistentStudent().readByPersonAndDegreeType(
-                                studentPerson, DegreeType.MASTER_DEGREE);
+                                studentPerson.getIdInternal(), DegreeType.MASTER_DEGREE);
 
                         IExecutionDegree executionDegree = guide.getExecutionDegree();
 

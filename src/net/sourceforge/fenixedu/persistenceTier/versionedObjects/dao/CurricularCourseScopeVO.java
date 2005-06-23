@@ -88,7 +88,7 @@ public class CurricularCourseScopeVO extends VersionedObjectsBase implements
 			});
 			return result;
 		}
-		return null;
+		return new ArrayList(0);
 	}
 
 	public List readCurricularCourseScopesByDegreeCurricularPlanInExecutionYear(
@@ -121,7 +121,7 @@ public class CurricularCourseScopeVO extends VersionedObjectsBase implements
 				}
 			});
 		}
-		return null;
+		return new ArrayList(0);
 	}
 
 	public List readActiveCurricularCourseScopesByDegreeCurricularPlanAndCurricularYear(

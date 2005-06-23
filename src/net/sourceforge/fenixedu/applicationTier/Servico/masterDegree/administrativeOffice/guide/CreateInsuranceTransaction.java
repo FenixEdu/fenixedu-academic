@@ -45,7 +45,7 @@ public class CreateInsuranceTransaction implements IService {
         IPersistentInsuranceTransaction insuranceTransactionDAO = sp
                 .getIPersistentInsuranceTransaction();
 
-        IStudent student = sp.getIPersistentStudent().readByPersonAndDegreeType(guide.getPerson(),
+        IStudent student = sp.getIPersistentStudent().readByPersonAndDegreeType(guide.getPerson().getIdInternal(),
                 DegreeType.MASTER_DEGREE);
         IPerson responsible = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
 

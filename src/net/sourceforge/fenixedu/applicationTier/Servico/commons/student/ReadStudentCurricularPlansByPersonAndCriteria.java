@@ -83,7 +83,7 @@ public class ReadStudentCurricularPlansByPersonAndCriteria implements IService
             if (curricularPlanID.isAll() || curricularPlanID.isNewest())
             {
                 IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
-                List students = sp.getIPersistentStudent().readbyPerson(person);
+                List students = person.getStudents();
                 List studentCPsTemp = null;
                 
                 Iterator studentsIterator = students.iterator();

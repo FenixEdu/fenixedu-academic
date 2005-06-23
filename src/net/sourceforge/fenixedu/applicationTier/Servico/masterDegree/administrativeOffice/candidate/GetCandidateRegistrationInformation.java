@@ -38,7 +38,7 @@ public class GetCandidateRegistrationInformation implements IService {
                             candidateID);
 
             IStudent student = sp.getIPersistentStudent().readByPersonAndDegreeType(
-                    masterDegreeCandidate.getPerson(), DegreeType.MASTER_DEGREE);
+                    masterDegreeCandidate.getPerson().getIdInternal(), DegreeType.MASTER_DEGREE);
 
             IStudentCurricularPlan studentCurricularPlan = sp.getIStudentCurricularPlanPersistente()
                     .readActiveStudentCurricularPlan(student.getNumber(), DegreeType.MASTER_DEGREE);

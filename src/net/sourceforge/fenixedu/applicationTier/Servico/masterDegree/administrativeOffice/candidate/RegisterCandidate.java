@@ -134,7 +134,7 @@ public class RegisterCandidate implements IService {
             // Check if a Master Degree Student Already Exists
             if (student == null) {
                 student = sp.getIPersistentStudent().readByPersonAndDegreeType(
-                        masterDegreeCandidate.getPerson(), DegreeType.MASTER_DEGREE);
+                        masterDegreeCandidate.getPerson().getIdInternal(), DegreeType.MASTER_DEGREE);
             }
 
             IRole role = (IRole) CollectionUtils.find(
