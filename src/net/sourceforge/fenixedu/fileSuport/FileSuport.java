@@ -9,7 +9,7 @@ package net.sourceforge.fenixedu.fileSuport;
  * @author João Mota
  * 
  * 30/Jul/2003 fenix-head fileSuport
- *  
+ * 
  */
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,6 +24,7 @@ import javax.transaction.NotSupportedException;
 import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 
+import org.apache.log4j.Logger;
 import org.apache.slide.authenticate.CredentialsToken;
 import org.apache.slide.authenticate.SecurityToken;
 import org.apache.slide.common.Domain;
@@ -41,57 +42,62 @@ import org.apache.slide.structure.SubjectNode;
 
 public class FileSuport implements IFileSuport {
 
-    private static FileSuport instance = null;
+    private static final Logger logger = Logger.getLogger(FileSuport.class);
 
-    private NamespaceAccessToken token;
+    private static final FileSuport instance = new FileSuport();
 
-    private Structure structure;
+    private static final NamespaceAccessToken token;
 
-    private Content content;
+    private static final Structure structure;
 
-    private SlideToken slideToken;
+    private static final Content content;
+
+    private static final SlideToken slideToken;
 
     private static final String CONFIG_SLIDE = "/slide.properties";
 
-    private String MAX_FILE_SIZE = "";
+    private static final String MAX_FILE_SIZE;
 
-    private String MAX_STORAGE_SIZE = "";
+    private static final String MAX_STORAGE_SIZE;
 
-    public static synchronized FileSuport getInstance() {
-        if (instance == null) {
-            instance = new FileSuport();
+    static {
+        boolean initOK = false;
+        for (int i = 0; i < 3; i++) {
+            try {
+                Domain.init(getConfigLocation());
+                initOK = true;
+                break;
+            } catch (Exception e) {
+                logger.error(e);
+                try {
+                    Runtime.getRuntime().wait(500);
+                } catch (InterruptedException e1) {
+                }
+            }
         }
-        return instance;
-    }
+        if (!initOK) throw new RuntimeException("Unable to init " + FileSuport.class.getName());
 
-    /** Creates a new instance of FileSuport */
-    private FileSuport() {
-        init();
-    }
-
-    private void init() {
-        try {
-            Domain.init(getConfigLocation());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
         String namespace = Domain.getDefaultNamespace();
-        this.token = Domain.accessNamespace(new SecurityToken(new String()), namespace);
-        this.structure = token.getStructureHelper();
-        this.content = token.getContentHelper();
-        this.slideToken = new SlideTokenImpl(new CredentialsToken(new String("root")));
-        this.MAX_FILE_SIZE = getMaxFileSize();
-        this.MAX_STORAGE_SIZE = getMaxStorageSize();
+        token = Domain.accessNamespace(new SecurityToken(""), namespace);
+        structure = token.getStructureHelper();
+        content = token.getContentHelper();
+        slideToken = new SlideTokenImpl(new CredentialsToken("root"));
+        MAX_FILE_SIZE = getMaxFileSize();
+        MAX_STORAGE_SIZE = getMaxStorageSize();
+    }
+
+    public static FileSuport getInstance() {
+        return instance;
     }
 
     /**
      * @return
      */
-    private String getMaxFileSize() {
+    private static String getMaxFileSize() {
         Properties properties = new Properties();
         String maxFileSize = null;
         try {
-            properties.load(getClass().getResourceAsStream(FileSuport.CONFIG_SLIDE));
+            properties.load(FileSuport.class.getResourceAsStream(FileSuport.CONFIG_SLIDE));
             maxFileSize = properties.getProperty("maxFileSize");
         } catch (IOException e) {
         }
@@ -101,11 +107,11 @@ public class FileSuport implements IFileSuport {
     /**
      * @return
      */
-    private String getMaxStorageSize() {
+    private static String getMaxStorageSize() {
         Properties properties = new Properties();
         String maxStorageSize = null;
         try {
-            properties.load(getClass().getResourceAsStream(FileSuport.CONFIG_SLIDE));
+            properties.load(FileSuport.class.getResourceAsStream(FileSuport.CONFIG_SLIDE));
             maxStorageSize = properties.getProperty("maxStorageSize");
         } catch (IOException e) {
         }
@@ -144,11 +150,11 @@ public class FileSuport implements IFileSuport {
     /**
      * @return
      */
-    private String getConfigLocation() {
+    private static String getConfigLocation() {
         Properties properties = new Properties();
         String location = null;
         try {
-            properties.load(getClass().getResourceAsStream(FileSuport.CONFIG_SLIDE));
+            properties.load(FileSuport.class.getResourceAsStream(FileSuport.CONFIG_SLIDE));
             location = properties.getProperty("location");
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -533,7 +539,8 @@ public class FileSuport implements IFileSuport {
         try {
             fileInDb = retrieveFile(file.getUri() + "/" + file.getFileName());
         } catch (SlideException e) {
-            //file doesnt exist
+            logger.warn(e);
+            // file doesnt exist
         }
         if (fileInDb == null) {
             storeFile(file.getFileName(), file.getUri(), file.getContent(), file.getContentType(), file
@@ -581,7 +588,7 @@ public class FileSuport implements IFileSuport {
         try {
             fileInDb = retrieveFile(path);
         } catch (SlideException e) {
-            //file doesnt exist
+            // file doesnt exist
         }
         if (fileInDb == null) {
             storeFile(file.getFileName(), file.getUri(), file.getContent(), file.getContentType(), file
