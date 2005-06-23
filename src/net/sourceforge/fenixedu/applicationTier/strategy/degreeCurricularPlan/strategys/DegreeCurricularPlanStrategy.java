@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoFinalResult;
-import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
@@ -258,7 +257,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
             Collections.sort(aux, dateComparator);
             Collections.reverse(aux);
         }
-        EnrolmentEvaluation latestEvaluation = (EnrolmentEvaluation) aux.get(0);
+        IEnrolmentEvaluation latestEvaluation = (IEnrolmentEvaluation) aux.get(0);
         newEnrolmentList.add(latestEvaluation);
 
         return newEnrolmentList;
