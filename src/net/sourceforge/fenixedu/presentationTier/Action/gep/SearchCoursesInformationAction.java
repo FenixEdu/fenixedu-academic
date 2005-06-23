@@ -117,8 +117,16 @@ public class SearchCoursesInformationAction extends SearchAction {
                 });
                 Collections.sort(infoScopes1, comparatorChain2);
                 Collections.sort(infoScopes2, comparatorChain2);
-                InfoCurricularCourseScope infoScope1 = (InfoCurricularCourseScope) infoScopes1.get(0);
-                InfoCurricularCourseScope infoScope2 = (InfoCurricularCourseScope) infoScopes2.get(0);
+                InfoCurricularCourseScope infoScope1 = null;
+                InfoCurricularCourseScope infoScope2 = null;
+                if(infoScopes1.isEmpty()){
+                    return 0;
+                }   
+                infoScope1 = (InfoCurricularCourseScope) infoScopes1.get(0);
+                if(infoScopes2.isEmpty()){
+                    return 0;
+                }
+                infoScope2 = (InfoCurricularCourseScope) infoScopes2.get(0);
                 return comparatorChain2.compare(infoScope1, infoScope2);
             }
         });
