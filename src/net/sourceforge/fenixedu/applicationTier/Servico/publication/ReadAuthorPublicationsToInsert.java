@@ -19,8 +19,8 @@ import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.publication.Author;
 import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
+import net.sourceforge.fenixedu.domain.publication.IPublicationAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
-import net.sourceforge.fenixedu.domain.publication.PublicationAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -90,10 +90,10 @@ public class ReadAuthorPublicationsToInsert implements IService {
             persistentAuthor.lockWrite(newAuthor);
 
         } else {
-            List<PublicationAuthor> publicationAuthors = (List<PublicationAuthor>) author.getAuthorPublications();
+            List<IPublicationAuthor> publicationAuthors = (List<IPublicationAuthor>) author.getAuthorPublications();
             authorPublications = (List<IPublication>)CollectionUtils.collect(publicationAuthors,new Transformer() {
                 public Object transform(Object object) {
-                    PublicationAuthor publicationAuthor = (PublicationAuthor) object;
+                    IPublicationAuthor publicationAuthor = (IPublicationAuthor) object;
                     return publicationAuthor.getPublication();
                 }
             });
