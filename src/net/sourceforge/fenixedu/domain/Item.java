@@ -24,8 +24,8 @@ public class Item extends Item_Base {
 
     public boolean equals(Object obj) {
         boolean resultado = false;
-        if (obj instanceof Item) {
-            Item item = (Item) obj;
+        if (obj instanceof IItem) {
+            IItem item = (IItem) obj;
             resultado = (getName().equals(item.getName())) && getSection().equals(item.getSection());
         }
         return resultado;
