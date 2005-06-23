@@ -283,7 +283,7 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
             Locale locale = new Locale("pt", "PT");
             Date date = new Date();
             String anoLectivo = "";
-            if (newEnrolmentList != null && newEnrolmentList.size() > 1) {
+            if (newEnrolmentList != null && newEnrolmentList.size() > 0) {
                 anoLectivo = ((InfoEnrolment) newEnrolmentList.get(0)).getInfoExecutionPeriod()
                         .getInfoExecutionYear().getYear();
             }
