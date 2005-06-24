@@ -2069,6 +2069,8 @@ class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.dom
     public void setPercentage(Double percentage);
 
     public double hours();
+    
+    public void associateSchoolClass(net.sourceforge.fenixedu.domain.ISchoolClass schoolClass);
 	"
 }
 

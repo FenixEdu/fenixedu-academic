@@ -63,4 +63,16 @@ public class Shift extends Shift_Base {
         return hours;
     }
 
+    public void associateSchoolClass(ISchoolClass schoolClass) {
+        if (schoolClass == null) {
+            throw new NullPointerException();
+        }
+        if (!this.getAssociatedClasses().contains(schoolClass)) {
+            this.getAssociatedClasses().add(schoolClass);
+        }
+        if (!schoolClass.getAssociatedShifts().contains(this)) {
+            schoolClass.getAssociatedShifts().add(this);
+        }
+    }
+
 }
