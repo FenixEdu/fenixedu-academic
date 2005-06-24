@@ -11,6 +11,11 @@ package net.sourceforge.fenixedu.domain.teacher;
  */
 public class ProfessionalCareer extends ProfessionalCareer_Base {
 
+    public ProfessionalCareer() {
+        super();
+        setOjbConcreteClass(ProfessionalCareer.class.getName());
+    }
+    
     public String toString() {
         String result = "[Dominio.teacher.ProfessionalCareer ";
         result += ", beginYear=" + getBeginYear();
