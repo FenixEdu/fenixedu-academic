@@ -16,7 +16,9 @@ import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoSummar
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoSummaryPTEReportLine;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.projectsManagement.IAdiantamentosReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.ICabimentosReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.IExpensesReportLine;
@@ -38,16 +40,18 @@ public class ReadExpensesReport implements IService {
     public ReadExpensesReport() {
     }
 
-    public InfoExpensesReport run(InfoExpensesReport infoReport, String userView, ReportType reportType, Integer projectCode, String rubric)
-            throws ExcepcaoPersistencia {
+    public InfoExpensesReport run(String username, String costCenter, InfoExpensesReport infoReport, ReportType reportType, Integer projectCode,
+            String rubric, String userNumber) throws ExcepcaoPersistencia {
 
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        Integer userNumber = getUserNumber(persistentSuport, userView);
+
         PersistentSuportOracle p = PersistentSuportOracle.getInstance();
-        if (userNumber != null
+        Integer coordID = new Integer(userNumber);
+
+        if (coordID != null
                 && projectCode != null
-                && (p.getIPersistentProject().isUserProject(userNumber, projectCode) || persistentSuport.getIPersistentProjectAccess()
-                        .hasPersonProjectAccess(userView, projectCode))) {
+                && (p.getIPersistentProject().isUserProject(coordID, projectCode) || persistentSuport.getIPersistentProjectAccess()
+                        .hasPersonProjectAccess(username, projectCode))) {
 
             List infoLines = new ArrayList();
 

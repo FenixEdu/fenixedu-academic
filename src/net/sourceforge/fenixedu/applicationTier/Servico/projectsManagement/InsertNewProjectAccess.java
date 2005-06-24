@@ -8,10 +8,8 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.projectsManagement.IProject;
 import net.sourceforge.fenixedu.domain.projectsManagement.IProjectAccess;
@@ -31,17 +29,24 @@ public class InsertNewProjectAccess implements IService {
     public InsertNewProjectAccess() {
     }
 
-    public void run(String userView, String username, GregorianCalendar beginDate, GregorianCalendar endDate) throws ExcepcaoPersistencia {
+    public void run(String userView, String costCenter, String username, GregorianCalendar beginDate, GregorianCalendar endDate, String userNumber)
+            throws ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
         if (person == null)
             throw new IllegalArgumentException();
         sp.getIPersistentProjectAccess().deleteByPersonAndDate(person);
         IPersistentSuportOracle po = PersistentSuportOracle.getInstance();
-        Integer coordinatorCode = po.getIPersistentProjectUser().getUserCoordId(getUserNumber(sp, userView));
-        if (!hasProjectsManagerRole(person)) {
+        Integer coordinatorCode = new Integer(userNumber);
+        Boolean isCostCenter = false;
+        RoleType roleType = RoleType.PROJECTS_MANAGER;
+        if (costCenter != null && !costCenter.equals("")) {
+            roleType = RoleType.INSTITUCIONAL_PROJECTS_MANAGER;
+            isCostCenter = true;
+        }
+        if (!hasProjectsManagerRole(person, roleType)) {
             sp.getIPessoaPersistente().simpleLockWrite(person);
-            person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(RoleType.PROJECTS_MANAGER));
+            person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(roleType));
         }
         List projectCodes = sp.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndCoordinator(username, coordinatorCode, true);
         List projectList = po.getIPersistentProject().readByCoordinatorAndNotProjectsCodes(coordinatorCode, projectCodes);
@@ -58,19 +63,28 @@ public class InsertNewProjectAccess implements IService {
             projectAccess.setKeyProject(new Integer(project.getProjectCode()));
             projectAccess.setBeginDate(beginDate);
             projectAccess.setEndDate(endDate);
+            projectAccess.setCostCenter(isCostCenter);
         }
     }
 
-    public void run(String userView, String username, String[] projectCodes, GregorianCalendar beginDate, GregorianCalendar endDate)
-            throws ExcepcaoPersistencia {
+    public void run(String userView, String costCenter, String username, String[] projectCodes, GregorianCalendar beginDate,
+            GregorianCalendar endDate, String userNumber) throws ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
         if (person == null)
             throw new IllegalArgumentException();
         sp.getIPersistentProjectAccess().deleteByPersonAndDate(person);
-        if (!hasProjectsManagerRole(person)) {
+
+        Boolean isCostCenter = false;
+        RoleType roleType = RoleType.PROJECTS_MANAGER;
+        if (costCenter != null && !costCenter.equals("")) {
+            roleType = RoleType.INSTITUCIONAL_PROJECTS_MANAGER;
+            isCostCenter = true;
+        }
+
+        if (!hasProjectsManagerRole(person, roleType)) {
             sp.getIPessoaPersistente().simpleLockWrite(person);
-            person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(RoleType.PROJECTS_MANAGER));
+            person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(roleType));
         }
 
         for (int i = 0; i < projectCodes.length; i++) {
@@ -78,37 +92,24 @@ public class InsertNewProjectAccess implements IService {
                 throw new IllegalArgumentException();
 
             IPersistentSuportOracle po = PersistentSuportOracle.getInstance();
-            Integer coordinatorCode = po.getIPersistentProjectUser().getUserCoordId(getUserNumber(sp, userView));
             IProjectAccess projectAccess = new ProjectAccess();
             sp.getIPersistentProjectAccess().simpleLockWrite(projectAccess);
             projectAccess.setPerson(person);
             projectAccess.setKeyPerson(person.getIdInternal());
-            projectAccess.setKeyProjectCoordinator(coordinatorCode);
+            projectAccess.setKeyProjectCoordinator(new Integer(userNumber));
             projectAccess.setKeyProject(new Integer(projectCodes[i]));
             projectAccess.setBeginDate(beginDate);
             projectAccess.setEndDate(endDate);
+            projectAccess.setCostCenter(isCostCenter);
         }
     }
 
-    private boolean hasProjectsManagerRole(IPerson person) {
+    private boolean hasProjectsManagerRole(IPerson person, RoleType roleType) {
         Iterator iterator = person.getPersonRoles().iterator();
         while (iterator.hasNext())
-            if (((IRole) iterator.next()).getRoleType().equals(RoleType.PROJECTS_MANAGER))
+            if (((IRole) iterator.next()).getRoleType().equals(roleType))
                 return true;
         return false;
     }
 
-    private Integer getUserNumber(ISuportePersistente sp, String userView) throws ExcepcaoPersistencia {
-        Integer userNumber = null;
-        ITeacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(userView);
-        if (teacher != null)
-            userNumber = teacher.getTeacherNumber();
-        else {
-            IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView);
-            IEmployee employee = sp.getIPersistentEmployee().readByPerson(person);
-            if (employee != null)
-                userNumber = employee.getEmployeeNumber();
-        }
-        return userNumber;
-    }
 }

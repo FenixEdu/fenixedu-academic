@@ -38,6 +38,11 @@
 		jdbc-type="TIMESTAMP"
         conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.Calendar2DateTimeFieldConversion"
     />
+   <field-descriptor
+		name="costCenter"
+		column="COST_CENTER"
+		jdbc-type="BIT"
+	/>
 	<field-descriptor
 		name="ackOptLock"
       	column="ACK_OPT_LOCK"

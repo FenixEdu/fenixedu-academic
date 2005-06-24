@@ -4,75 +4,61 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="df.page.projectManager" extends="definition.projectManager.two-column">
-		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
+		<put name="body" value="/projectsManagement/firstPage.jsp" />
+	</definition>
+	<definition name="df.page.institucionaProjectManager" extends="definition.projectManager.two-column">
+		<put name="navLocal" value="/projectsManagement/costCenterNavBar.jsp" />
 		<put name="body" value="/projectsManagement/firstPage.jsp" />
 	</definition>
 	<definition name="project-List" extends="definition.projectManager.two-column">
-		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
 		<put name="body" value="/projectsManagement/projectList.jsp" />
 	</definition>
 	<definition name="coordinators-List" extends="definition.projectManager.two-column">
-		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
 		<put name="body" value="/projectsManagement/coordinatorsList.jsp" />
 	</definition>
 	<definition name="show-Summary-Report" extends="definition.projectManager.two-column">
-		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
 		<put name="body" value="/projectsManagement/showSummaryReport.jsp" />
 	</definition>
 	<definition name="show-Expenses-Report" extends="definition.projectManager.two-column">
-		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
 		<put name="body" value="/projectsManagement/showExpensesReport.jsp" />
 	</definition>
 	<definition name="show-Revenue-Report" extends="definition.projectManager.two-column">
-		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
 		<put name="body" value="/projectsManagement/showRevenueReport.jsp" />
 	</definition>
 	<definition name="show-Movements-Report" extends="definition.projectManager.two-column">
-		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
 		<put name="body" value="/projectsManagement/showMovementsReport.jsp" />
 	</definition>
 	<definition name="show-Complete-Expenses-Report" extends="definition.projectManager.two-column">
-		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
 		<put name="body" value="/projectsManagement/showCompleteExpensesReport.jsp" />
 	</definition>
 	<definition name="show-Opening-Project-File-Report" extends="definition.projectManager.two-column">
-		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
 		<put name="body" value="/projectsManagement/showOpeningProjectFileReport.jsp" />
 	</definition>
 	<definition name="show-Project-Budgetary-Balance-Report" extends="definition.projectManager.two-column">
-		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
 		<put name="body" value="/projectsManagement/showProjectBudgetaryBalanceReport.jsp" />
 	</definition>
 	<definition name="help-Page" extends="definition.projectManager.two-column">
-		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
 		<put name="body" value="/projectsManagement/helpPage.jsp" />
 	</definition>
 	<definition name="choose-Project" extends="definition.projectManager.two-column">
-		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
 		<put name="body" value="/projectsManagement/chooseProject.jsp" />
 	</definition>
 	<definition name="show-Project-Accesses" extends="definition.projectManager.two-column">
-		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
 		<put name="body" value="/projectsManagement/showProjectAccesses.jsp" />
 	</definition>
 	<definition name="choose-Dates" extends="definition.projectManager.two-column">
-		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
 		<put name="body" value="/projectsManagement/chooseDates.jsp" />
 	</definition>
 	<definition name="edit-Project-Access" extends="definition.projectManager.two-column">
-		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
 		<put name="body" value="/projectsManagement/editProjectAccess.jsp" />
 	</definition>
 	<definition name="choose-Person" extends="definition.projectManager.two-column">
-		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
 		<put name="body" value="/projectsManagement/choosePerson.jsp" />
 	</definition>
 	<definition name="show-Person-Accesses" extends="definition.projectManager.two-column">
-		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
 		<put name="body" value="/projectsManagement/showPersonAccesses.jsp" />
 	</definition>
-		<definition name="show-Projects-Accesses" extends="definition.projectManager.two-column">
-		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
+	<definition name="show-Projects-Accesses" extends="definition.projectManager.two-column">
 		<put name="body" value="/projectsManagement/showProjectsAccesses.jsp" />
 	</definition>
 </tiles-definitions>

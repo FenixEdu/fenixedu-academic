@@ -1,7 +1,13 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<h2><bean:message key="title.accessDelegation" /></h2>
+<bean:define id="code" value="" />
+<h2><bean:message key="title.accessDelegation" /> <logic:present name="infoCostCenter" scope="request">
+	&nbsp;-&nbsp;<bean:write name="infoCostCenter" property="description" />
+	<bean:define id="cc" name="infoCostCenter" property="code" scope="request" />
+	<bean:define id="code" value="<%="&amp;costCenter="+cc.toString()%>" />
+</logic:present></h2>
+
 <script language="Javascript" type="text/javascript">
 <!--
 var disable = false;
@@ -85,8 +91,9 @@ function getIndex(input){
 					<td td class="listClasses"><bean:write name="infoProject" property="title" /></td>
 					<td td class="listClasses"><bean:write name="projectAccess" property="beginDateFormatted" /></td>
 					<td td class="listClasses"><bean:write name="projectAccess" property="endDateFormatted" /></td>
-					<td><html:link page="<%="/projectAccessEdition.do?method=prepareEditProjectAccess&amp;projectCode="+projectCode+"&amp;personCode="+personCode%>">Editar</html:link></td>
-					<td><html:link page="<%="/projectAccess.do?method=removePersonAccess&amp;projectCode="+projectCode+"&amp;username="+username%>">Remover</html:link></td>
+					<td><html:link
+						page="<%="/projectAccessEdition.do?method=prepareEditProjectAccess&amp;projectCode="+projectCode+"&amp;personCode="+personCode+code%>">Editar</html:link></td>
+					<td><html:link page="<%="/projectAccess.do?method=removePersonAccess&amp;projectCode="+projectCode+"&amp;username="+username+code%>">Remover</html:link></td>
 				</tr>
 			</logic:iterate>
 		</table>
@@ -112,6 +119,10 @@ function getIndex(input){
 				<html:hidden property="username" value="<%=(pageContext.findAttribute("username")).toString()%>" />
 				<html:hidden property="method" value="delegateAccess" />
 				<html:hidden property="page" value="2" />
+				<logic:present name="infoCostCenter" scope="request">
+					<bean:define id="cc" name="infoCostCenter" property="code" scope="request" />
+					<html:hidden property="costCenter" value="<%=cc.toString()%>" />
+				</logic:present>
 				<logic:present name="noProjectsSelected">
 					<span class="error"><bean:message key="errors.requiredProject" /></span>
 				</logic:present>

@@ -24,19 +24,26 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class PersistentProject implements IPersistentProject {
 
-    public List readByUserLogin(String userLogin) throws ExcepcaoPersistencia {
-        List projects = new ArrayList();
+    public List<IProject> readByUserLogin(String userLogin) throws ExcepcaoPersistencia {
+        List<IProject> projects = new ArrayList<IProject>();
 
-        String query = " select p.projectCode, p.title, p.origem, p.tipo, p.custo, p.coordenacao, p.UNID_EXPLORACAO "
-                + " from  V_PROJECTOS p , web_user_projs up " + " where up.login = ? and p.projectCode = up.id_proj order by p.projectCode";
+        StringBuffer query = new StringBuffer();
+        query
+                .append("select p.projectCode, p.title, p.origem, p.tipo, p.custo, p.coordenacao, p.UNID_EXPLORACAO from  V_PROJECTOS p , web_user_projs up where up.login ='");
+        query.append(userLogin);
+        query.append("' and p.projectCode = up.id_proj order by p.projectCode");
+        // String query = " select p.projectCode, p.title, p.origem, p.tipo,
+        // p.custo, p.coordenacao, p.UNID_EXPLORACAO "
+        // + " from V_PROJECTOS p , web_user_projs up " + " where up.login = ?
+        // and p.projectCode = up.id_proj order by p.projectCode";
 
         try {
             PersistentSuportOracle p = PersistentSuportOracle.getInstance();
             p.startTransaction();
 
-            PreparedStatement stmt = p.prepareStatement(query);
+            PreparedStatement stmt = p.prepareStatement(query.toString());
 
-            stmt.setString(1, userLogin);
+            // stmt.setString(1, userLogin);
 
             ResultSet rs = stmt.executeQuery();
 
@@ -59,8 +66,8 @@ public class PersistentProject implements IPersistentProject {
         return projects;
     }
 
-    public List readByProjectsCodes(List projectCodes) throws ExcepcaoPersistencia {
-        List projects = new ArrayList();
+    public List<IProject> readByProjectsCodes(List<Integer> projectCodes) throws ExcepcaoPersistencia {
+        List<IProject> projects = new ArrayList<IProject>();
         if (projectCodes != null && projectCodes.size() != 0) {
             StringBuffer stringBuffer = new StringBuffer();
             stringBuffer
@@ -101,8 +108,8 @@ public class PersistentProject implements IPersistentProject {
         return projects;
     }
 
-    public List readByCoordinatorAndNotProjectsCodes(Integer coordinatorId, List projectCodes) throws ExcepcaoPersistencia {
-        List projects = new ArrayList();
+    public List<IProject> readByCoordinatorAndNotProjectsCodes(Integer coordinatorId, List projectCodes) throws ExcepcaoPersistencia {
+        List<IProject> projects = new ArrayList<IProject>();
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer
                 .append("select p.projectCode, p.title, p.origem, p.tipo, p.custo, p.coordenacao, p.UNID_EXPLORACAO from  V_PROJECTOS p , web_user_projs up where up.login = '");

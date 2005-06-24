@@ -1,7 +1,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<h2><bean:message key="title.accessDelegation" /></h2>
+<h2><bean:message key="title.accessDelegation" /> <logic:present name="infoCostCenter" scope="request">
+	&nbsp;-&nbsp;<bean:write name="infoCostCenter" property="description" />
+</logic:present></h2>
 <logic:present name="noPerson">
 	<span class="error"><bean:message key="errors.noPerson" /></span>
 </logic:present>
@@ -23,6 +25,10 @@
 	<html:form action="/projectAccess" focus="username">
 		<html:hidden property="method" value="showPersonAccesses" />
 		<html:hidden property="page" value="0" />
+		<logic:present name="infoCostCenter" scope="request">
+			<bean:define id="cc" name="infoCostCenter" property="code" scope="request" />
+			<html:hidden property="costCenter" value="<%=cc.toString()%>" />
+		</logic:present>
 		<table>
 			<tr>
 				<td><bean:message key="label.username" /></td>

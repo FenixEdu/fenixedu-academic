@@ -26,20 +26,27 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class RemoveProjectAccess implements IService {
 
-    public void run(String personUsername, Integer projectCode) throws ExcepcaoPersistencia {
+    public void run(String username, String costCenter, String personUsername, Integer projectCode, String userNumber) throws ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentProjectAccess persistentProjectAccess = sp.getIPersistentProjectAccess();
         IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(personUsername);
-        if (persistentProjectAccess.countByPerson(person) == 1) {
+
+        RoleType roleType = RoleType.PROJECTS_MANAGER;
+        Boolean isCostCenter = false;
+        if (costCenter != null && !costCenter.equals("")) {
+            roleType = RoleType.INSTITUCIONAL_PROJECTS_MANAGER;
+            isCostCenter = true;
+        }
+
+        if (persistentProjectAccess.countByPersonAndCC(person, isCostCenter) == 1) {
             IPersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getInstance();
             if (persistentSuportOracle.getIPersistentProject().countUserProject(getUserNumber(sp, person)) == 0) {
                 sp.getIPessoaPersistente().simpleLockWrite(person);
 
-                List oldRolesList = person.getPersonRoles();
+                List<IRole> oldRolesList = person.getPersonRoles();
                 person.setPersonRoles(new ArrayList());
-                for (int i = 0; i < oldRolesList.size(); i++) {
-                    IRole role = (IRole) oldRolesList.get(i);
-                    if (!role.getRoleType().equals(RoleType.PROJECTS_MANAGER)) {
+                for (IRole role : oldRolesList) {
+                    if (!role.getRoleType().equals(roleType)) {
                         person.getPersonRoles().add(role);
                     }
                 }

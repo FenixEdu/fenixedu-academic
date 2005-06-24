@@ -1746,6 +1746,7 @@ class net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess extends n
 	Integer keyProjectCoordinator;
     Date begin;
     Date end;
+    Boolean costCenter;
 
 	interface " 
     public abstract java.util.Calendar getBeginDate();

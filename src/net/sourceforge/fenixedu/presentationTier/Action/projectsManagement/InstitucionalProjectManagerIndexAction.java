@@ -4,15 +4,17 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.projectsManagement;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoRubric;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -23,19 +25,19 @@ import org.apache.struts.action.ActionMapping;
  * @author Susana Fernandes
  * 
  */
-public class IndexAction extends FenixAction {
+public class InstitucionalProjectManagerIndexAction extends FenixAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixFilterException, FenixServiceException {
 
         final IUserView userView = SessionUtils.getUserView(request);
-        String costCenter = request.getParameter("costCenter");
-        ServiceManagerServiceFactory.executeService(userView, "ReviewProjectAccess", new Object[] { userView.getUtilizador(), costCenter });
 
-        if (costCenter != null && !costCenter.equals("")) {
-            request.setAttribute("infoCostCenter", ServiceUtils.executeService(userView, "ReadCostCenter", new Object[] { userView.getUtilizador(),
-                    costCenter }));
-        }
+        ServiceManagerServiceFactory.executeService(userView, "ReviewProjectAccess", new Object[] { userView.getUtilizador(),
+                mapping.getModuleConfig().getPrefix() });
+        List<InfoRubric> infoCostCenterList = (List) ServiceManagerServiceFactory.executeService(userView, "ReadUserCostCenters", new Object[] {
+                userView.getUtilizador(), mapping.getModuleConfig().getPrefix() });
+        request.setAttribute("infoCostCenterList", infoCostCenterList);
+        request.setAttribute("infoCostCenter", new InfoRubric());
         return mapping.findForward("success");
     }
 }

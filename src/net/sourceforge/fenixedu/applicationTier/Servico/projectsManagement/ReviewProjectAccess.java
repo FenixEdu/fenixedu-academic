@@ -28,20 +28,37 @@ public class ReviewProjectAccess implements IService {
     public ReviewProjectAccess() {
     }
 
-    public void run(String userView) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(String username, String costCenter, String userNumber) throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentProjectAccess persistentProjectAccess = sp.getIPersistentProjectAccess();
-        IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView);
-        if (persistentProjectAccess.countByPerson(person) == 0) {
+        IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
+        IRole role = sp.getIPersistentRole().readByRoleType(RoleType.PROJECTS_MANAGER);
+        if (persistentProjectAccess.countByPersonAndCC(person, false) == 0) {
             ITeacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(person.getUsername());
             if (teacher == null) {
                 IEmployee employee = sp.getIPersistentEmployee().readByPerson(person);
                 if (employee != null) {
                     IPersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getInstance();
                     if ((persistentSuportOracle.getIPersistentProject().countUserProject(employee.getEmployeeNumber()) == 0)) {
-                        IRole role = sp.getIPersistentRole().readByRoleType(RoleType.PROJECTS_MANAGER);
-                        role.setRoleType(RoleType.PROJECTS_MANAGER);
-                        persistentProjectAccess.deleteByPerson(person);
+                        persistentProjectAccess.deleteByPersonAndCC(person, false);
+                        IPersonRole personRole = sp.getIPersistentPersonRole().readByPersonAndRole(person, role);
+                        if (personRole != null)
+                            sp.getIPersistentPersonRole().deleteByOID(PersonRole.class, personRole.getIdInternal());
+                    }
+                } else
+                    throw new FenixServiceException();
+            }
+        }
+
+        role = sp.getIPersistentRole().readByRoleType(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
+        if (persistentProjectAccess.countByPersonAndCC(person, true) == 0) {
+            ITeacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(person.getUsername());
+            if (teacher == null) {
+                IEmployee employee = sp.getIPersistentEmployee().readByPerson(person);
+                if (employee != null) {
+                    IPersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getInstance();
+                    if ((persistentSuportOracle.getIPersistentProject().countUserProject(employee.getEmployeeNumber()) == 0)) {
+                        persistentProjectAccess.deleteByPersonAndCC(person, true);
                         IPersonRole personRole = sp.getIPersistentPersonRole().readByPersonAndRole(person, role);
                         if (personRole != null)
                             sp.getIPersistentPersonRole().deleteByOID(PersonRole.class, personRole.getIdInternal());

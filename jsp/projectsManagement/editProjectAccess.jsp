@@ -24,7 +24,9 @@ function getIndex(input){
 }
 // -->
 </script>
-<h2><bean:message key="title.changeProjectAccessDates" /></h2>
+<h2><bean:message key="title.changeProjectAccessDates" /> <logic:present name="infoCostCenter" scope="request">
+	&nbsp;-&nbsp;<bean:write name="infoCostCenter" property="description" />
+</logic:present></h2>
 <br />
 <br />
 <logic:present name="infoProjectAccess" scope="request">
@@ -39,6 +41,10 @@ function getIndex(input){
 		<html:hidden property="personCode" value="<%=personCode.toString()%>" />
 		<html:hidden property="username" value="<%=username.toString()%>" />
 		<html:hidden property="page" value="1" />
+		<logic:present name="infoCostCenter" scope="request">
+			<bean:define id="cc" name="infoCostCenter" property="code" />
+			<html:hidden property="costCenter" value="<%=cc.toString()%>" />
+		</logic:present>
 
 		<table>
 			<tr>
@@ -101,6 +107,10 @@ function getIndex(input){
 	<td><html:form action="/projectAccess">
 		<html:hidden property="method" value="showPersonAccesses" />
 		<html:hidden property="username" value="<%=username.toString()%>" />
+		<logic:present name="infoCostCenter" scope="request">
+			<bean:define id="cc" name="infoCostCenter" property="code" />
+			<html:hidden property="costCenter" value="<%=cc.toString()%>" />
+		</logic:present>
 		<html:submit styleClass="inputbutton">
 			<bean:message key="label.back" />
 		</html:submit>

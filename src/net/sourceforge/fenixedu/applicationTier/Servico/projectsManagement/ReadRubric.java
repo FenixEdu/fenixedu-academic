@@ -22,12 +22,12 @@ public class ReadRubric implements IService {
     public ReadRubric() {
     }
 
-    public List run(RubricType rubricType) throws ExcepcaoPersistencia {
+    public List run(String username, String costCenter, RubricType rubricType, String userNumber) throws ExcepcaoPersistencia {
         PersistentSuportOracle p = PersistentSuportOracle.getInstance();
-        List rubricList = p.getIPersistentRubric().getRubricList(rubricType.getRubricTableName());
-        List infoRubricList = new ArrayList();
-        for (int i = 0; i < rubricList.size(); i++)
-            infoRubricList.add(InfoRubric.newInfoFromDomain((IRubric) rubricList.get(i)));
+        List<IRubric> rubricList = p.getIPersistentRubric().getRubricList(rubricType.getRubricTableName());
+        List<InfoRubric> infoRubricList = new ArrayList<InfoRubric>();
+        for (IRubric rubric : rubricList)
+            infoRubricList.add(InfoRubric.newInfoFromDomain(rubric));
 
         return infoRubricList;
     }

@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoRubric;
+import net.sourceforge.fenixedu.domain.IEmployee;
+import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.projectsManagement.IProject;
 import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -18,29 +22,24 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author Susana Fernandes
  */
-public class ReadCoordinators implements IService {
+public class ReadUserCostCenters implements IService {
 
-    public ReadCoordinators() {
+    public ReadUserCostCenters() {
     }
 
     public List run(String username, String costCenter, String userNumber) throws ExcepcaoPersistencia {
-        List<InfoRubric> coordinatorsList = new ArrayList<InfoRubric>();
+        List<InfoRubric> infoCostCenterList = new ArrayList<InfoRubric>();
 
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         PersistentSuportOracle p = PersistentSuportOracle.getInstance();
-        Integer thisCoordinator = new Integer(userNumber);
+        List<IRubric> costCenterList = p.getIPersistentProjectUser().getInstitucionalProjectCoordId(new Integer(userNumber));
 
-        List<Integer> coordinatorsCodes = persistentSuport.getIPersistentProjectAccess().readCoordinatorsCodesByPersonUsernameAndDatesAndCC(username,
-                costCenter);
-        if (thisCoordinator != null && !coordinatorsCodes.contains(thisCoordinator))
-            coordinatorsCodes.add(thisCoordinator);
-        for (int coord = 0; coord < coordinatorsCodes.size(); coord++) {
-            IRubric rubric = p.getIPersistentProjectUser().readProjectCoordinator(coordinatorsCodes.get(coord));
-            if (rubric != null)
-                coordinatorsList.add(InfoRubric.newInfoFromDomain(rubric));
+        costCenterList.addAll(p.getIPersistentProjectUser().getInstitucionalProjectByCCIDs(
+                persistentSuport.getIPersistentProjectAccess().readCCCodesByPersonUsernameAndDate(username)));
+
+        for (IRubric cc : costCenterList) {
+            infoCostCenterList.add(InfoRubric.newInfoFromDomain(cc));
         }
-
-        return coordinatorsList;
+        return infoCostCenterList;
     }
 }

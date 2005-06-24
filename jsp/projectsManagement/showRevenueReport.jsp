@@ -4,6 +4,19 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/projectReports.tld" prefix="report"%>
 <logic:present name="infoReport">
+	<bean:define id="code" value="" />
+	<logic:present name="infoCostCenter" scope="request">
+		<table class="viewHeader">
+			<tr>
+				<td>
+				<h3><bean:write name="infoCostCenter" property="description" /></h3>
+				</td>
+			</tr>
+		</table>
+		<bean:define id="cc" name="infoCostCenter" property="code" scope="request" />
+		<bean:define id="code" value="<%="&amp;costCenter="+cc.toString()%>" />
+
+	</logic:present>
 	<logic:notEmpty name="infoReport" property="infoProject">
 		<bean:define id="infoProject" name="infoReport" property="infoProject" />
 		<table class="viewHeader" width="100%" cellspacing="0">
@@ -14,7 +27,7 @@
 				<logic:notEmpty name="infoReport" property="lines">
 					<bean:define id="projectCode" name="infoProject" property="projectCode" />
 					<td class="infoop" width="20"><html:link
-						page="<%="/projectReport.do?method=exportToExcel&amp;reportType=revenueReport&amp;projectCode="+projectCode%>">
+						page="<%="/projectReport.do?method=exportToExcel&amp;reportType=revenueReport&amp;projectCode="+projectCode+code%>">
 						<html:img border="0" src="<%= request.getContextPath() + "/images/excel.bmp"%>" altKey="link.exportToExcel" align="right" />
 					</html:link></td>
 				</logic:notEmpty>

@@ -6,6 +6,18 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants"%>
 
 <logic:present name="infoSummaryReport">
+	<bean:define id="code" value="" />
+	<logic:present name="infoCostCenter" scope="request">
+		<table class="viewHeader">
+			<tr>
+				<td>
+				<h3><bean:write name="infoCostCenter" property="description" /></h3>
+				</td>
+			</tr>
+		</table>
+		<bean:define id="cc" name="infoCostCenter" property="code" scope="request" />
+		<bean:define id="code" value="<%="&amp;costCenter="+cc.toString()%>" />
+	</logic:present>
 	<bean:define id="infoCoordinator" name="infoSummaryReport" property="infoCoordinator" />
 	<bean:define id="coodinatorCode" name="infoCoordinator" property="code" />
 	<table class="viewHeader" width="100%" cellspacing="0">
@@ -15,7 +27,7 @@
 			</td>
 			<logic:notEmpty name="infoSummaryReport" property="lines">
 				<td class="infoop" width="20"><html:link
-					page="<%="/projectReport.do?method=exportToExcel&amp;reportType=summaryReport&amp;coordinatorCode="+coodinatorCode%>">
+					page="<%="/projectReport.do?method=exportToExcel&amp;reportType=summaryReport&amp;coordinatorCode="+coodinatorCode+code%>">
 					<html:img border="0" src="<%= request.getContextPath() + "/images/excel.bmp"%>" altKey="link.exportToExcel" align="right" />
 				</html:link></td>
 			</logic:notEmpty>

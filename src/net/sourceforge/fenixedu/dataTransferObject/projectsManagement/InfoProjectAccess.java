@@ -98,6 +98,7 @@ public class InfoProjectAccess extends InfoObject {
     }
 
     public void copyFromDomain(IProjectAccess projectAccess) {
+        super.copyFromDomain(projectAccess);
         if (projectAccess != null) {
             setInfoPerson(InfoPerson.newInfoFromDomain(projectAccess.getPerson()));
             setProjectCoordinator(projectAccess.getKeyProjectCoordinator());

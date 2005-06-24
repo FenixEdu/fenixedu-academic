@@ -47,12 +47,16 @@
   <global-forwards type="org.apache.struts.action.ActionForward">
     <forward name="logoff" path="/logoff.do" contextRelative="true"/>
     <forward name="index" path="/index.do" redirect="true"/>
+    <forward name="institucionalProjectIndex" path="/institucionalProjectIndex.do" redirect="true"/>
   </global-forwards>
 
   <!-- ========== Action Mapping Definitions ============================== -->
   <action-mappings type="org.apache.struts.action.ActionMapping">
 	<action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.IndexAction">
-    	<forward name="success" path="/index.jsp"/>
+    	<forward name="success" path="df.page.projectManager"/>
+    </action>
+    <action path="/institucionalProjectIndex" type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.InstitucionalProjectManagerIndexAction">
+    	<forward name="success" path="df.page.institucionaProjectManager"/>
     </action>
     <action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
     <action path="/projectReport" type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.ProjectReportsDispatchAction" 

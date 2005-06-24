@@ -27,19 +27,22 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class PersistentExpensesReport extends PersistentReport implements IPersistentExpensesReport {
 
-    public List getCompleteReport(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia {
-        List result = new ArrayList();
+    public List<IExpensesReportLine> getCompleteReport(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia {
+        List<IExpensesReportLine> result = new ArrayList<IExpensesReportLine>();
 
         try {
             PersistentSuportOracle p = PersistentSuportOracle.getInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
 
-            String query = new String(
-                    "select \"idMov\", \"Membro\", \"Rubrica\", \"Tipo\", \"data\", \"Descrição\", \"Valor\", \"Iva\", \"Total\" from " + tableOrView
-                            + " where PROJECTCODE='" + projectCode + "' order by \"data\", \"idMov\"");
-            PreparedStatement stmt = p.prepareStatement(query);
-            ResultSet rs = stmt.executeQuery(query);
+            StringBuffer query = new StringBuffer();
+            query.append("select \"idMov\", \"Membro\", \"Rubrica\", \"Tipo\", \"data\", \"Descrição\", \"Valor\", \"Iva\", \"Total\" from ");
+            query.append(tableOrView);
+            query.append(" where PROJECTCODE='");
+            query.append(projectCode);
+            query.append("' order by \"data\", \"idMov\"");
+            PreparedStatement stmt = p.prepareStatement(query.toString());
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 IExpensesReportLine report = new ExpensesReportLine();
                 report.setProjectCode(projectCode);
@@ -66,19 +69,24 @@ public class PersistentExpensesReport extends PersistentReport implements IPersi
         return result;
     }
 
-    public List getReportByRubric(ReportType reportType, Integer projectCode, String rubric) throws ExcepcaoPersistencia {
-        List result = new ArrayList();
+    public List<IExpensesReportLine> getReportByRubric(ReportType reportType, Integer projectCode, String rubric) throws ExcepcaoPersistencia {
+        List<IExpensesReportLine> result = new ArrayList<IExpensesReportLine>();
 
         try {
             PersistentSuportOracle p = PersistentSuportOracle.getInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
 
-            String query = new String(
-                    "select \"idMov\", \"Membro\", \"Rubrica\", \"Tipo\", \"data\", \"Descrição\", \"Valor\", \"Iva\", \"Total\" from " + tableOrView
-                            + " where PROJECTCODE='" + projectCode + "' and \"Rubrica\"='" + rubric + "'");
-            PreparedStatement stmt = p.prepareStatement(query);
-            ResultSet rs = stmt.executeQuery(query);
+            StringBuffer query = new StringBuffer();
+            query.append("select \"idMov\", \"Membro\", \"Rubrica\", \"Tipo\", \"data\", \"Descrição\", \"Valor\", \"Iva\", \"Total\" from ");
+            query.append(tableOrView);
+            query.append(" where PROJECTCODE='");
+            query.append(projectCode);
+            query.append("' and \"Rubrica\"='");
+            query.append(rubric);
+            query.append("' order by \"data\", \"idMov\"");
+            PreparedStatement stmt = p.prepareStatement(query.toString());
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 IExpensesReportLine report = new ExpensesReportLine();
                 report.setProjectCode(projectCode);
@@ -105,17 +113,20 @@ public class PersistentExpensesReport extends PersistentReport implements IPersi
         return result;
     }
 
-    public List getRubricList(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia {
-        List rubricList = new ArrayList();
+    public List<LabelValueBean> getRubricList(ReportType reportType, Integer projectCode) throws ExcepcaoPersistencia {
+        List<LabelValueBean> rubricList = new ArrayList<LabelValueBean>();
         try {
             PersistentSuportOracle p = PersistentSuportOracle.getInstance();
             p.startTransaction();
-            String query = "select distinct r.COD, r.DESCRICAO from " + RubricType.EXPENSES_RUBRIC_TABLE_NAME + " r, " + getTableOrViewName(p, reportType)
-                    + " p where p.PROJECTCODE='" + projectCode + "' and p.\"Rubrica\"=r.COD";
-            // String query = "select distinct \"Rubrica\" from " +
-            // getTableOrViewName(p, reportType) + " where PROJECTCODE='" +
-            // projectCode + "'";
-            PreparedStatement stmt = p.prepareStatement(query);
+            StringBuffer query = new StringBuffer();
+            query.append("select distinct r.COD, r.DESCRICAO from ");
+            query.append(RubricType.EXPENSES_RUBRIC_TABLE_NAME);
+            query.append(" r, ");
+            query.append(getTableOrViewName(p, reportType));
+            query.append(" p where p.PROJECTCODE='");
+            query.append(projectCode);
+            query.append("' and p.\"Rubrica\"=r.COD");
+            PreparedStatement stmt = p.prepareStatement(query.toString());
 
             ResultSet rs = stmt.executeQuery();
 

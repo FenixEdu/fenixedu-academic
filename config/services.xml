@@ -8178,6 +8178,28 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>ReadUserCostCenters</name>
+		<implementationClass>
+			net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReadUserCostCenters
+		</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ProjectsManagerAuthorization" />
+		</filterChains>
+	</service>
+	<service>
+		<name>ReadCostCenter</name>
+		<implementationClass>
+			net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReadCostCenter
+		</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ProjectsManagerAuthorization" />
+		</filterChains>
+	</service>
+	<service>
 		<name>ReadCoordinators</name>
 		<implementationClass>
 			net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReadCoordinators

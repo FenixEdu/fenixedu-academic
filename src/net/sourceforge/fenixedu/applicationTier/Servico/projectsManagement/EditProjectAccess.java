@@ -23,8 +23,8 @@ public class EditProjectAccess implements IService {
     public EditProjectAccess() {
     }
 
-    public void run(Integer personId, Integer projectCode, Calendar beginDate, Calendar endDate) throws FenixServiceException,
-            ExcepcaoPersistencia {
+    public void run(String username, String costCenter, Integer personId, Integer projectCode, Calendar beginDate, Calendar endDate, String userNumber)
+            throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentProjectAccess persistentProjectAccess = sp.getIPersistentProjectAccess();
         IProjectAccess projectAccess = persistentProjectAccess.readByPersonIdAndProjectAndDate(personId, projectCode);

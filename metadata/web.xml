@@ -283,6 +283,10 @@
             <param-value>/WEB-INF/conf/struts-projectsManagement.xml</param-value>
         </init-param>
         <init-param>
+            <param-name>config/institucionalProjectsManagement</param-name>
+            <param-value>/WEB-INF/conf/struts-projectsManagement.xml</param-value>
+        </init-param>
+        <init-param>
             <param-name>config/external</param-name>
             <param-value>/WEB-INF/conf/struts-external.xml</param-value>
         </init-param>        

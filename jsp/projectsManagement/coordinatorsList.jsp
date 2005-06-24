@@ -3,7 +3,25 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <bean:define id="reportType" value="<%=request.getAttribute("reportType").toString()%>" />
-<h2><bean:message key="title.projects" />&nbsp;-&nbsp;<bean:message key="<%="title."+reportType%>" /></h2>
+<logic:present name="infoCostCenter" scope="request">
+	<table class="viewHeader">
+		<tr>
+			<td>
+			<h3><bean:message key="title.projects" />&nbsp;-&nbsp;<bean:write name="infoCostCenter" property="description" /></h3>
+			</td>
+		</tr>
+	</table>
+	<br />
+	<blockquote>
+	<h2>
+</logic:present>
+<logic:notPresent name="infoCostCenter" scope="request">
+	<blockquote>
+	<h2><bean:message key="title.projects" />&nbsp;-&nbsp;
+</logic:notPresent>
+<bean:message key="<%="title."+reportType%>" />
+</h2>
+</blockquote>
 <br />
 <br />
 <logic:present name="coordinatorsList">

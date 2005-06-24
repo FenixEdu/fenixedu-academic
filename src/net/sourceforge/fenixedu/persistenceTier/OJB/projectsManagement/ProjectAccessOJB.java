@@ -32,15 +32,15 @@ public class ProjectAccessOJB extends PersistentObjectOJB implements IPersistent
         criteria.addGreaterOrEqualThan("endDate", Calendar.getInstance().getTime());
         return (IProjectAccess) queryObject(ProjectAccess.class, criteria);
     }
-    
-    public List readByCoordinator(Integer coordinatorCode) throws ExcepcaoPersistencia {
+
+    public List<IProjectAccess> readByCoordinator(Integer coordinatorCode) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyProjectCoordinator", coordinatorCode);
         criteria.addGreaterOrEqualThan("endDate", Calendar.getInstance().getTime());
         return queryList(ProjectAccess.class, criteria);
     }
 
-    public List readByPersonUsernameAndCoordinatorAndDate(String username, Integer coordinatorCode) throws ExcepcaoPersistencia {
+    public List<IProjectAccess> readByPersonUsernameAndCoordinatorAndDate(String username, Integer coordinatorCode) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("person.username", username);
         criteria.addEqualTo("keyProjectCoordinator", coordinatorCode);
@@ -48,42 +48,67 @@ public class ProjectAccessOJB extends PersistentObjectOJB implements IPersistent
         return queryList(ProjectAccess.class, criteria);
     }
 
-    public List readProjectCodesByPersonUsernameAndDate(String username) throws ExcepcaoPersistencia {
+    public List<Integer> readProjectCodesByPersonUsernameAndDateAndCC(String username, String cc) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("person.username", username);
         criteria.addLessOrEqualThan("beginDate", Calendar.getInstance().getTime());
         criteria.addGreaterOrEqualThan("endDate", Calendar.getInstance().getTime());
-        List allPersonProjects = queryList(ProjectAccess.class, criteria);
-        List result = new ArrayList();
-        for (int i = 0; i < allPersonProjects.size(); i++)
-            result.add(((IProjectAccess) allPersonProjects.get(i)).getKeyProject());
+        if (cc != null && !cc.equals("")) {
+            criteria.addEqualTo("keyProjectCoordinator", cc);
+            criteria.addEqualTo("costCenter", true);
+        } else
+            criteria.addEqualTo("costCenter", false);
+        List<IProjectAccess> allPersonProjects = queryList(ProjectAccess.class, criteria);
+        List<Integer> result = new ArrayList<Integer>();
+        for (IProjectAccess projectAccess : allPersonProjects)
+            result.add(projectAccess.getKeyProject());
         return result;
     }
 
-    public List readProjectCodesByPersonUsernameAndCoordinator(String username, Integer coordinatorCode, boolean all) throws ExcepcaoPersistencia {
+    public List<Integer> readCCCodesByPersonUsernameAndDate(String username) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("person.username", username);
+        criteria.addLessOrEqualThan("beginDate", Calendar.getInstance().getTime());
+        criteria.addGreaterOrEqualThan("endDate", Calendar.getInstance().getTime());
+        criteria.addEqualTo("costCenter", true);
+        List<IProjectAccess> allPersonProjects = queryList(ProjectAccess.class, criteria);
+        List<Integer> result = new ArrayList<Integer>();
+        for (IProjectAccess projectAccess : allPersonProjects)
+            if (!result.contains(projectAccess.getKeyProjectCoordinator()))
+                result.add(projectAccess.getKeyProjectCoordinator());
+        return result;
+    }
+
+    public List<Integer> readProjectCodesByPersonUsernameAndCoordinator(String username, Integer coordinatorCode, boolean all)
+            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("person.username", username);
         criteria.addEqualTo("keyProjectCoordinator", coordinatorCode);
         if (!all)
             criteria.addLessOrEqualThan("beginDate", Calendar.getInstance().getTime());
         criteria.addGreaterOrEqualThan("endDate", Calendar.getInstance().getTime());
-        List allPersonProjects = queryList(ProjectAccess.class, criteria);
-        List result = new ArrayList();
-        for (int i = 0; i < allPersonProjects.size(); i++)
-            result.add(((IProjectAccess) allPersonProjects.get(i)).getKeyProject());
+        List<IProjectAccess> allPersonProjects = queryList(ProjectAccess.class, criteria);
+        List<Integer> result = new ArrayList<Integer>();
+        for (IProjectAccess projectAccess : allPersonProjects)
+            result.add(projectAccess.getKeyProject());
         return result;
     }
 
-    public List readCoordinatorsCodesByPersonUsernameAndDates(String username) throws ExcepcaoPersistencia {
+    public List<Integer> readCoordinatorsCodesByPersonUsernameAndDatesAndCC(String username, String cc) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("person.username", username);
         criteria.addLessOrEqualThan("beginDate", Calendar.getInstance().getTime());
         criteria.addGreaterOrEqualThan("endDate", Calendar.getInstance().getTime());
-        List allPersonProjects = queryList(ProjectAccess.class, criteria);
-        List result = new ArrayList();
-        for (int i = 0; i < allPersonProjects.size(); i++)
-            if (!result.contains(((IProjectAccess) allPersonProjects.get(i)).getKeyProjectCoordinator()))
-                result.add(((IProjectAccess) allPersonProjects.get(i)).getKeyProjectCoordinator());
+        if (cc != null && !cc.equals("")) {
+            criteria.addEqualTo("keyProjectCoordinator", cc);
+            criteria.addEqualTo("costCenter", true);
+        } else
+            criteria.addEqualTo("costCenter", false);
+        List<IProjectAccess> allPersonProjects = queryList(ProjectAccess.class, criteria);
+        List<Integer> result = new ArrayList<Integer>();
+        for (IProjectAccess projectAccess : allPersonProjects)
+            if (!result.contains(projectAccess.getKeyProjectCoordinator()))
+                result.add(projectAccess.getKeyProjectCoordinator());
         return result;
     }
 
@@ -108,20 +133,22 @@ public class ProjectAccessOJB extends PersistentObjectOJB implements IPersistent
         return count(ProjectAccess.class, criteria);
     }
 
-    public int countByPerson(IPerson person) {
+    public int countByPersonAndCC(IPerson person, Boolean cc) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyPerson", person.getIdInternal());
         criteria.addLessOrEqualThan("beginDate", Calendar.getInstance().getTime());
         criteria.addGreaterOrEqualThan("endDate", Calendar.getInstance().getTime());
+        criteria.addEqualTo("costCenter", cc);
         return count(ProjectAccess.class, criteria);
     }
 
-    public void deleteByPerson(IPerson person) throws ExcepcaoPersistencia {
+    public void deleteByPersonAndCC(IPerson person, Boolean cc) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyPerson", person.getIdInternal());
-        List allPersonProjects = queryList(ProjectAccess.class, criteria);
-        for (int i = 0; i < allPersonProjects.size(); i++) {
-            delete((IProjectAccess) allPersonProjects.get(i));
+        criteria.addEqualTo("costCenter", cc);
+        List<IProjectAccess> allPersonProjects = queryList(ProjectAccess.class, criteria);
+        for (IProjectAccess projectAccess : allPersonProjects) {
+            delete(projectAccess);
         }
     }
 
@@ -129,9 +156,9 @@ public class ProjectAccessOJB extends PersistentObjectOJB implements IPersistent
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyPerson", person.getIdInternal());
         criteria.addLessOrEqualThan("endDate", Calendar.getInstance().getTime());
-        List allPersonProjects = queryList(ProjectAccess.class, criteria);
-        for (int i = 0; i < allPersonProjects.size(); i++) {
-            delete((IProjectAccess) allPersonProjects.get(i));
+        List<IProjectAccess> allPersonProjects = queryList(ProjectAccess.class, criteria);
+        for (IProjectAccess projectAccess : allPersonProjects) {
+            delete(projectAccess);
         }
     }
 

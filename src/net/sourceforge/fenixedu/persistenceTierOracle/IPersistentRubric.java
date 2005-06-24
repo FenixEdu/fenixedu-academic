@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.persistenceTierOracle;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -13,5 +14,5 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  */
 public interface IPersistentRubric {
-    public abstract List getRubricList(String rubricTableName) throws ExcepcaoPersistencia;
+    public abstract List<IRubric> getRubricList(String rubricTableName) throws ExcepcaoPersistencia;
 }

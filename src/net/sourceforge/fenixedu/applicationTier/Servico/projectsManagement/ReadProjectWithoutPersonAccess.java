@@ -24,15 +24,16 @@ public class ReadProjectWithoutPersonAccess implements IService {
     public ReadProjectWithoutPersonAccess() {
     }
 
-    public List run(String userView, String username) throws ExcepcaoPersistencia {
+    public List run(String userName, String costCenter, String newUserName, String userNumber) throws ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        Integer coordinatorId = (sp.getIPersistentTeacher().readTeacherByUsername(userView)).getTeacherNumber();
-        List projectCodes = sp.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndCoordinator(username, coordinatorId, true);
+        Integer coordinatorId = new Integer(userNumber);
+        List projectCodes = sp.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndCoordinator(newUserName, coordinatorId, true);
         IPersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getInstance();
-        List projectList = persistentSuportOracle.getIPersistentProject().readByCoordinatorAndNotProjectsCodes(coordinatorId, projectCodes);
-        List infoProjects = new ArrayList();
-        for (int i = 0; i < projectList.size(); i++)
-            infoProjects.add(InfoProject.newInfoFromDomain((IProject) projectList.get(i)));
+        List<IProject> projectList = persistentSuportOracle.getIPersistentProject().readByCoordinatorAndNotProjectsCodes(coordinatorId, projectCodes);
+        List<InfoProject> infoProjects = new ArrayList<InfoProject>();
+        for (IProject project : projectList) {
+            infoProjects.add(InfoProject.newInfoFromDomain(project));
+        }
         return infoProjects;
     }
 

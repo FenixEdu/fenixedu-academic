@@ -14,11 +14,11 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  */
 public interface IPersistentProject {
-    public abstract List readByUserLogin(String userLogin) throws ExcepcaoPersistencia;
+    public abstract List<IProject> readByUserLogin(String userLogin) throws ExcepcaoPersistencia;
 
-    public abstract List readByProjectsCodes(List projectCodes) throws ExcepcaoPersistencia;
+    public abstract List<IProject> readByProjectsCodes(List<Integer> projectCodes) throws ExcepcaoPersistencia;
 
-    public abstract List readByCoordinatorAndNotProjectsCodes(Integer coordinatorId, List projectCodes) throws ExcepcaoPersistencia;
+    public abstract List<IProject> readByCoordinatorAndNotProjectsCodes(Integer coordinatorId, List projectCodes) throws ExcepcaoPersistencia;
 
     public abstract IProject readProject(Integer projectCode) throws ExcepcaoPersistencia;
 
