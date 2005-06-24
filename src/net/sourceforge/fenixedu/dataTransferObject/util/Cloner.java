@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.util;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -176,6 +177,7 @@ import net.sourceforge.fenixedu.util.State;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+import org.apache.ojb.broker.core.proxy.ProxyHelper;
 
 /**
  * @author jpvl
@@ -2570,6 +2572,10 @@ public abstract class Cloner {
     public static InfoCareer copyICareer2InfoCareer(ICareer career) {
         InfoCareer infoCareer = null;
 
+        if (career instanceof Proxy) {
+            career = (ICareer) ProxyHelper.getRealObject(career);
+        }
+        
         if (career instanceof IProfessionalCareer) {
             IProfessionalCareer professionalCareer = (IProfessionalCareer) career;
             infoCareer = copyIProfessionalCareer2InfoProfessionalCareer(professionalCareer);
