@@ -2017,6 +2017,10 @@ class net.sourceforge.fenixedu.domain.SchoolClass extends net.sourceforge.fenixe
 	String nome;
 	Integer keyExecutionPeriod;
 	Integer anoCurricular;
+	
+	interface "
+	public void associateShift(net.sourceforge.fenixedu.domain.IShift shift);
+	"
 }
 
 

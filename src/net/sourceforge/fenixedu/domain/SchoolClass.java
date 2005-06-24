@@ -32,4 +32,16 @@ public class SchoolClass extends SchoolClass_Base {
         return resultado;
     }
 
+    public void associateShift(IShift shift) {
+        if (shift == null) {
+            throw new NullPointerException();
+        }
+        if (!this.getAssociatedShifts().contains(shift)) {
+            this.getAssociatedShifts().add(shift);
+        }
+        if (!shift.getAssociatedClasses().contains(this)) {
+            shift.getAssociatedClasses().add(this);
+        }
+    }
+
 }
