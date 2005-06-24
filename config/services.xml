@@ -4260,24 +4260,6 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>ReadAllClasses</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadAllClasses</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>AddShiftToClasses</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.AddShiftToClasses</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadUserManageableDepartments</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.person.ReadUserManageableDepartments</implementationClass>
@@ -4295,15 +4277,6 @@
 	<service>
 		<name>ReadAllClasses</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ReadAllClasses</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>AddShiftToClasses</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.AddShiftToClasses</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>

@@ -1267,25 +1267,6 @@
 		<forward name="VerSala" path="/viewRoomForExams.do" />
       </action>
 
-	<action   path="/listClasses"
-              name="shiftForm"
-              attribute="shiftForm"
-              type="net.sourceforge.fenixedu.presentationTier.Action.sop.AddShiftsToClassesDA"
-              parameter="method"
-              scope="request">
-          <forward name="showClasses" path="/addShiftToClasses.jsp"/>
-      </action>
-
-      <action input="/listClasses.do?method=showClasses"	
-			  name="addShiftToClasses"	
-      		  path="/addShiftToClasses"
-              scope="request"
-              type="net.sourceforge.fenixedu.presentationTier.Action.sop.AddShiftsToClassesDA"
-              parameter="method"
-              validate="true">
-           <forward name="sucess" path="/gestaoHorarios.do"/>         
-      </action>
-
       <action path="/consultAllRoomsForExams"
               type="net.sourceforge.fenixedu.presentationTier.Action.sop.ViewAllRoomsForExamsFormAction"
               >
