@@ -309,9 +309,20 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
             FenixServiceException {
         DynaActionForm insertPublicationForm = (DynaActionForm) form;
 
+        ActionErrors errors = new ActionErrors();
         String name = (String) insertPublicationForm.get("authorName");
+        if(name == null || name.equals("")){
+            errors.add("error1", new ActionError("message.publication.missingAuthor"));
+        }
         String org = (String) insertPublicationForm.get("authorOrganization");
-
+        if(org == null || org.equals("")){
+            errors.add("error2", new ActionError("message.publication.missingOrganization"));
+        }
+        
+        if (!errors.isEmpty()) {
+            saveErrors(request, errors);
+            return mapping.findForward("searchAuthors");
+        }
         String nameAndOrg = name + "'.'" + org;
 
         Integer[] authorsId = (Integer[]) insertPublicationForm.get("authorsId");

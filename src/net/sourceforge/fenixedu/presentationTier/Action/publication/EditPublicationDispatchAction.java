@@ -410,8 +410,20 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixFilterException, FenixServiceException {
     	DynaActionForm insertPublicationForm = (DynaActionForm) form;
     	
-    	String name = (String)insertPublicationForm.get("authorName");
-    	String org = (String)insertPublicationForm.get("authorOrganization");
+        ActionErrors errors = new ActionErrors();
+        String name = (String) insertPublicationForm.get("authorName");
+        if(name == null || name.equals("")){
+            errors.add("error1", new ActionError("message.publication.missingAuthor"));
+        }
+        String org = (String) insertPublicationForm.get("authorOrganization");
+        if(org == null || org.equals("")){
+            errors.add("error2", new ActionError("message.publication.missingOrganization"));
+        }
+        
+        if (!errors.isEmpty()) {
+            saveErrors(request, errors);
+            return mapping.findForward("searchAuthors");
+        }
     	
     	String nameAndOrg = name + "'.'" + org;
     	
