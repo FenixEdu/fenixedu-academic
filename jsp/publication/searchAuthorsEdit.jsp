@@ -57,7 +57,7 @@
 		<html:hidden property="authorsName" value="<%= authorsNameList[authorsIndex.intValue()] %>" />		
 	</logic:iterate>
 
-	<html:errors />
+	<span class="error"><html:errors /></span >
 
 	<p>
 		<bean:message key="message.publication.stringNomeSearch"/>: 
