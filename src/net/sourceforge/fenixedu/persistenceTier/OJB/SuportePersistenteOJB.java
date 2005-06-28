@@ -938,8 +938,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
                 throw new StorageException("No current transaction!");
             if (list != null) {
                 for (int i = 0; i < list.size(); i++) {
-                    Object obj = list.get(i);
-                    tx.lock(obj, Transaction.READ);
+                    lockRead(list.get(i));
                 }
             }
         } catch (ODMGRuntimeException ex) {
@@ -951,10 +950,10 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     public void lockRead(Object obj) throws StorageException {
         try {
             Transaction tx = _odmg.currentTransaction();
-            tx.lock(obj, Transaction.WRITE);
+            tx.lock(obj, Transaction.READ);
 
         } catch (ODMGRuntimeException ex) {
-            throw new StorageException(ExcepcaoPersistencia.UPGRADE_LOCK, ex);
+            throw new StorageException(ExcepcaoPersistencia.READ_LOCK, ex);
         }
     }
 
