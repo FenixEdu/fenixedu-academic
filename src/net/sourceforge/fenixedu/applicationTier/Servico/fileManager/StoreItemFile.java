@@ -4,6 +4,14 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.fileManager;
 
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
+
+import org.apache.slide.common.SlideException;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FileAlreadyExistsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FileNameTooLongServiceException;
@@ -22,62 +30,47 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * fenix-head ServidorAplicacao.Servico.fileManager
  * 
  * @author João Mota 17/Set/2003
- *  
+ * 
  */
 public class StoreItemFile implements IService {
 
-    public StoreItemFile() {
-    }
+    public Boolean run(FileSuportObject file, Integer itemId) throws FenixServiceException,
+            ExcepcaoPersistencia, NotSupportedException, SystemException, SlideException,
+            SecurityException, IllegalStateException, RollbackException, HeuristicMixedException,
+            HeuristicRollbackException {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentItem persistentItem = sp.getIPersistentItem();
+        IItem item = (IItem) persistentItem.readByOID(Item.class, itemId);
+        file.setUri(item.getSlideName());
+        file.setRootUri(item.getSection().getSite().getExecutionCourse().getSlideName());
+        IFileSuport fileSuport = FileSuport.getInstance();
 
-    public Boolean run(FileSuportObject file, Integer itemId) throws FenixServiceException {
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentItem persistentItem = sp.getIPersistentItem();
-            IItem item = (IItem) persistentItem.readByOID(Item.class, itemId);
-            file.setUri(item.getSlideName());
-            file.setRootUri(item.getSection().getSite().getExecutionCourse().getSlideName());
-            IFileSuport fileSuport = FileSuport.getInstance();
-            try {
-                fileSuport.beginTransaction();
-            } catch (Exception e) {
-                throw new FenixServiceException(e);
-            }
-            try {
-                if (!fileSuport.isFileNameValid(file)) {
-                    try {
-                        fileSuport.abortTransaction();
-                    } catch (Exception e1) {
-                        throw new FenixServiceException(e1);
-                    }
-                    throw new FileNameTooLongServiceException();
-                }
-                if (fileSuport.isStorageAllowed(file)) {
-                    boolean result = fileSuport.storeFile(file);
-                    if (!result) {
-                        try {
-                            fileSuport.abortTransaction();
-                        } catch (Exception e1) {
-                            throw new FenixServiceException(e1);
-                        }
-                        throw new FileAlreadyExistsServiceException();
-                    }
-                    fileSuport.commitTransaction();
-                    return new Boolean(true);
-                }
-                fileSuport.commitTransaction();
-                return new Boolean(false);
+        fileSuport.beginTransaction();
 
-            } catch (FileNameTooLongServiceException e1) {
-                throw e1;
-            } catch (FileAlreadyExistsServiceException e1) {
-                throw e1;
-            } catch (FenixServiceException e1) {
-                throw e1;
+        if (!fileSuport.isFileNameValid(file)) {
+            try {
+                fileSuport.abortTransaction();
             } catch (Exception e1) {
                 throw new FenixServiceException(e1);
             }
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+            throw new FileNameTooLongServiceException();
         }
+        if (fileSuport.isStorageAllowed(file)) {
+            boolean result = fileSuport.storeFile(file);
+            if (!result) {
+                try {
+                    fileSuport.abortTransaction();
+                } catch (Exception e1) {
+                    throw new FenixServiceException(e1);
+                }
+                fileSuport.commitTransaction();
+                throw new FileAlreadyExistsServiceException();
+            }
+            fileSuport.commitTransaction();
+            return new Boolean(true);
+        }
+        fileSuport.commitTransaction();
+        return new Boolean(false);
+
     }
 }
