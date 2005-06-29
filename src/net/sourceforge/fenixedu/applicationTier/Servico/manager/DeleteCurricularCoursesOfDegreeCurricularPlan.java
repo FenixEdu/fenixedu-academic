@@ -79,7 +79,7 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan implements IService {
                             Iterator iterator = scopes.iterator();
                             CurricularCourseScopeOJB scopeOJB = new CurricularCourseScopeOJB();
                             while (iterator.hasNext()) {
-                                scopeOJB.delete((ICurricularCourseScope) iterator.next());
+                                scopeOJB.delete(iterator.next());
                             }
                         } else {
                             undeletedCurricularCourses.add(curricularCourse.getName());

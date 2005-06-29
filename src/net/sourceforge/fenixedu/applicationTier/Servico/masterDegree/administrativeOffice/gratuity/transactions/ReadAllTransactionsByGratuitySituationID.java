@@ -106,8 +106,7 @@ public class ReadAllTransactionsByGratuitySituationID implements IService {
                     IReimbursementGuide reimbursementGuide = (IReimbursementGuide) sp
                             .getIPersistentReimbursementGuide().readByOID(
                                     ReimbursementGuide.class,
-                                    ((IReimbursementGuideEntry) reimbursementGuideEntry)
-                                            .getKeyReimbursementGuide());
+                                    reimbursementGuideEntry.getKeyReimbursementGuide());
 
                     if (reimbursementGuide.getActiveReimbursementGuideSituation()
                             .getReimbursementGuideState().equals(ReimbursementGuideState.PAYED) == false) {

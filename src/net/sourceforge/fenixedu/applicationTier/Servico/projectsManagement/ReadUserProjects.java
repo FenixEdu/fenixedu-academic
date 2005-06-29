@@ -34,7 +34,7 @@ public class ReadUserProjects implements IService {
             projectList.addAll(p.getIPersistentProject().readByProjectsCodes(
                     persistentSuport.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndDateAndCC(username, costCenter)));
         for (int i = 0; i < projectList.size(); i++)
-            infoProjectList.add(InfoProject.newInfoFromDomain((IProject) projectList.get(i)));
+            infoProjectList.add(InfoProject.newInfoFromDomain(projectList.get(i)));
 
         return infoProjectList;
     }

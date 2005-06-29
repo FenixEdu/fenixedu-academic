@@ -103,7 +103,7 @@ public class CandidateOperationDispatchAction extends DispatchAction {
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         ActionErrors actionErrors = new ActionErrors();
 
-        String documentTypeStr = (String) request.getParameter(REQUEST_DOCUMENT_TYPE);
+        String documentTypeStr = request.getParameter(REQUEST_DOCUMENT_TYPE);
         Integer degreeCurricularPlanID = Integer.valueOf(request.getParameter("degreeCurricularPlanID"));
         Integer candidateID = new Integer(request.getParameter("candidateID"));
 

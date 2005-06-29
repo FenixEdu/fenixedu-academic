@@ -6,8 +6,6 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IEnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.IEnrolmentPeriodInCurricularCourses;
 

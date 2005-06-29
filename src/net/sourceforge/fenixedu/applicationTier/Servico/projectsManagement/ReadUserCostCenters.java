@@ -8,10 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoRubric;
-import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.projectsManagement.IProject;
 import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

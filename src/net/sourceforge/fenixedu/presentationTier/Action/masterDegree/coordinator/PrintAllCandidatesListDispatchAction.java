@@ -73,7 +73,7 @@ public class PrintAllCandidatesListDispatchAction extends DispatchAction {
 
 		DynaActionForm f = (DynaActionForm)form;
 		String reqFilterBy = (String) f.get(REQUEST_FILTERBY);
-		String reqDegreeCurricularId = (String) request.getParameter(REQUEST_DEGREE_CURRICULAR_ID);
+		String reqDegreeCurricularId = request.getParameter(REQUEST_DEGREE_CURRICULAR_ID);
 		
 		if (request.getParameter(REQUEST_EXPORT)!=null)
 			reqExportToExcel = true;
@@ -145,8 +145,8 @@ public class PrintAllCandidatesListDispatchAction extends DispatchAction {
     	
 		DynaActionForm f = (DynaActionForm)form;
 		String reqFilterWithValue = (String) f.get(REQUEST_FILTERWITHVALUE);
-		String reqFilterBy = (String) request.getParameter(REQUEST_FILTERBY);
-		String reqDegreeCurricularId = (String) request.getParameter(REQUEST_DEGREE_CURRICULAR_ID);
+		String reqFilterBy = request.getParameter(REQUEST_FILTERBY);
+		String reqDegreeCurricularId = request.getParameter(REQUEST_DEGREE_CURRICULAR_ID);
 		
 		if (request.getParameter(REQUEST_EXPORT)!=null)
 			reqExportToExcel = true;

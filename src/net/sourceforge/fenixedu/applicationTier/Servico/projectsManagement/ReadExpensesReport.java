@@ -16,9 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoSummar
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoSummaryPTEReportLine;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.projectsManagement.IAdiantamentosReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.ICabimentosReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.IExpensesReportLine;

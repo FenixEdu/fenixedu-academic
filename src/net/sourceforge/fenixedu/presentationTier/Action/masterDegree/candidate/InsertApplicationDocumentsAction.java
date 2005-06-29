@@ -60,7 +60,7 @@ public class InsertApplicationDocumentsAction extends FenixAction {
         FormFile chFormFile = (FormFile) appDocForm.get("chFile");
         FormFile chFormFile2 = (FormFile) appDocForm.get("chFile2");
 
-        String username = (String) userView.getUtilizador();
+        String username = userView.getUtilizador();
         ActionErrors actionErrors = new ActionErrors();
 
         InfoPerson infoPerson = getPessoaByUsername(username, userView, actionErrors);

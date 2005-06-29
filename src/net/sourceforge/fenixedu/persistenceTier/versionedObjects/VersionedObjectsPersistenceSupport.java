@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects;
 
-import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.*;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
@@ -88,8 +87,8 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.Contributor
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CoordinatorVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CountryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CourseReportVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularCourseGroupVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularCourseEquivalenceVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularCourseGroupVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularCourseScopeVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularCourseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CurricularSemesterVO;
@@ -102,9 +101,9 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DegreeInfoV
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DepartmentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrollmentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentEquivalenceVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EquivalentEnrolmentForEnrolmentEquivalenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentEvaluationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentPeriodVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EquivalentEnrolmentForEnrolmentEquivalenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationExecutionCourseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationMethodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationVO;

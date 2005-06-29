@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.apache.ojb.broker.query.Criteria;
 
 public class EnrolmentPeriodVO extends VersionedObjectsBase implements IPersistentEnrolmentPeriod {
 

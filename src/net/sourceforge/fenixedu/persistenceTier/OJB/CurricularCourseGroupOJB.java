@@ -7,12 +7,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup;
-import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
-import net.sourceforge.fenixedu.domain.IBranch;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IScientificArea;
 import net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;

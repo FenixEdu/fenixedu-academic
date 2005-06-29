@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
