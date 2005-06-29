@@ -68,6 +68,9 @@
 					<fileset dir="${config}"/>
 				</copy>
 
+				<copy todir="${build.home.webinf}" file="${config}/domain_model.dml"/>
+				<delete file="${build.home.webinf.libs}/dml.jar"/>
+
 				<copy todir="${build.home.webinf}">
 					<fileset dir="${config.web}" >
 						<include name="**/*.*"/>
