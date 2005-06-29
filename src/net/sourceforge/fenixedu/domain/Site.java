@@ -4,32 +4,14 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * @author Ivo Brandão
  */
 public class Site extends Site_Base {
-    private IExecutionCourse executionCourse;
 
-    /**
-     * @return IDisciplinaExecucao
-     */
-    public IExecutionCourse getExecutionCourse() {
-        return executionCourse;
-    }
-
-    /**
-     * Sets the executionCourse.
-     * 
-     * @param executionCourse
-     *            The executionCourse to set
-     */
-    public void setExecutionCourse(IExecutionCourse executionCourse) {
-        this.executionCourse = executionCourse;
-    }
-
-    /**
-     * @see java.lang.Object#toString()
-     */
     public String toString() {
         String result = "[SITE";
         result += ", codInt=" + getIdInternal();
@@ -42,15 +24,24 @@ public class Site extends Site_Base {
         return result;
     }
 
-    /**
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     public boolean equals(Object arg0) {
         boolean result = false;
         if (arg0 instanceof ISite) {
-            result = (getExecutionCourse().equals(((ISite) arg0).getExecutionCourse()));
+            ISite site = (ISite) arg0;
+            result = (getExecutionCourse().equals(site.getExecutionCourse()));
         }
         return result;
     }
 
+    public void createAnnouncement(final String announcementTitle, final String announcementInformation) {
+        
+        if (announcementTitle == null || announcementInformation == null) {
+            throw new NullPointerException();
+        }
+        
+        final Date currentDate = Calendar.getInstance().getTime();
+        final IAnnouncement announcement = new Announcement(announcementTitle, currentDate, currentDate,
+                announcementInformation, this);
+        this.getAssociatedAnnouncements().add(announcement);
+    }  
 }

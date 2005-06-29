@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -11,10 +12,6 @@ import java.util.Date;
 public class Announcement extends Announcement_Base {
 
     public Announcement() {
-    }
-
-    public Announcement(Integer announcementCode) {
-        setIdInternal(announcementCode);
     }
 
     public Announcement(String title, Date creationDate, Date lastModifiedDate, String information,
@@ -26,7 +23,7 @@ public class Announcement extends Announcement_Base {
         setInformation(information);
         setSite(site);
     }
-   
+
     public Announcement(String title, Date date, ISite site) {
         setTitle(title);
         setCreationDate(date);
@@ -42,5 +39,34 @@ public class Announcement extends Announcement_Base {
         result += ", site=" + getSite();
         result += "]";
         return result;
+    }
+
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof IAnnouncement) {
+            IAnnouncement announcement = (IAnnouncement) obj;
+            resultado = this.getTitle().equals(announcement.getTitle())
+                    && this.getInformation().equals(announcement.getInformation());
+
+        }
+        return resultado;
+    }
+
+    public void editAnnouncement(final String newAnnouncementTitle,
+            final String newAnnouncementInformation) {
+
+        if (newAnnouncementTitle == null || newAnnouncementInformation == null) {
+            throw new NullPointerException();
+        }
+
+        final Date currentDate = Calendar.getInstance().getTime();
+        setTitle(newAnnouncementTitle);
+        setInformation(newAnnouncementInformation);
+        setLastModifiedDate(currentDate);
+    }
+
+    public void deleteAnnouncement() {
+        getSite().getAssociatedAnnouncements().remove(this);
+        setSite(null);
     }
 }

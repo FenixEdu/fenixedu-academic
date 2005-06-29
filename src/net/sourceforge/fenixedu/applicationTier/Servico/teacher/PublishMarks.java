@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -10,14 +8,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.sms.SmsNotSentServiceException;
 import net.sourceforge.fenixedu.applicationTier.utils.SmsUtil;
 import net.sourceforge.fenixedu.applicationTier.utils.exceptions.FenixUtilException;
-import net.sourceforge.fenixedu.domain.Announcement;
 import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.IAnnouncement;
 import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IMark;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentAnnouncement;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
@@ -48,19 +43,9 @@ public class PublishMarks implements IService {
             evaluation.setPublishmentMessage(" ");
         } else {
             evaluation.setPublishmentMessage(publishmentMessage);
-
             // create announcement
-            Calendar calendar = Calendar.getInstance();
-
-            IAnnouncement announcement = new Announcement();
-            IPersistentAnnouncement persistentAnnouncement = sp.getIPersistentAnnouncement();
-            persistentAnnouncement.simpleLockWrite(announcement);
-            announcement.setInformation(publishmentMessage);
-            announcement.setCreationDate(new Timestamp(calendar.getTimeInMillis()));
-            announcement.setLastModifiedDate(new Timestamp(calendar.getTimeInMillis()));
-            announcement.setSite(site);
-            announcement.setTitle(announcementTitle);
-
+            siteDAO.simpleLockWrite(site);
+            site.createAnnouncement(announcementTitle, publishmentMessage);
         }
 
         // publish marks

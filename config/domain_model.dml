@@ -108,6 +108,11 @@ class net.sourceforge.fenixedu.domain.Announcement extends net.sourceforge.fenix
 	String title;
     Date creationDate;
     Date lastModifiedDate;
+    
+    interface "
+    public void editAnnouncement(String newAnnouncementTitle, String newAnnouncementInformation);
+	public void deleteAnnouncement();
+    "
 }
 
 
@@ -2119,6 +2124,10 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 	Integer keyExecutionCourse;
 	String introduction;
 	String alternativeSite;
+	
+	interface "
+	public void createAnnouncement(String announcementTitle, String announcementInformation);		
+	"
 }
 
 
