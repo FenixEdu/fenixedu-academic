@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.domain;
 
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.List;
 
 import net.sourceforge.fenixedu.util.State;
 
@@ -16,7 +15,6 @@ import net.sourceforge.fenixedu.util.State;
  *         (naat@mega.ist.utl.pt)
  */
 public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion_Base {
-    private List externalAssistentGuiders;
 
     public MasterDegreeThesisDataVersion() {
     }
@@ -29,14 +27,6 @@ public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion
         this.setDissertationTitle(dissertationTitle);
         this.setLastModification(lastModification);
         this.setCurrentState(currentState);
-    }
-
-    public void setExternalAssistentGuiders(List externalAssistentGuiders) {
-        this.externalAssistentGuiders = externalAssistentGuiders;
-    }
-
-    public List getExternalAssistentGuiders() {
-        return externalAssistentGuiders;
     }
 
     public Timestamp getLastModification() {
