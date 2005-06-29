@@ -19,6 +19,6 @@ public interface IPersistentMasterDegreeProofVersion extends IPersistentObject {
     public IMasterDegreeProofVersion readActiveByStudentCurricularPlan(
             IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia;
 
-    public List readNotActiveByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan)
+    public List readNotActiveByStudentCurricularPlan(Integer studentCurricularPlanID)
             throws ExcepcaoPersistencia;
 }

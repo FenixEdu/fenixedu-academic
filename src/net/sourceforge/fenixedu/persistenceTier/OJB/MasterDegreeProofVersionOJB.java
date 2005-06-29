@@ -39,12 +39,11 @@ public class MasterDegreeProofVersionOJB extends PersistentObjectOJB implements
         return storedMasterDegreeProofVersion;
     }
 
-    public List readNotActiveByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan)
+    public List readNotActiveByStudentCurricularPlan(Integer studentCurricularPlanID)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
 
-        criteria.addEqualTo("masterDegreeThesis.studentCurricularPlan.idInternal", studentCurricularPlan
-                .getIdInternal());
+        criteria.addEqualTo("masterDegreeThesis.studentCurricularPlan.idInternal", studentCurricularPlanID);
         criteria.addNotEqualTo("currentState", new Integer(State.ACTIVE));
         List result = queryList(MasterDegreeProofVersion.class, criteria, "lastModification", false);
 

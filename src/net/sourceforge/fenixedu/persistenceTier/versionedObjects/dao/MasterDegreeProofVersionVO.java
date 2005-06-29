@@ -12,6 +12,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.IMasterDegreeProofVersion;
 import net.sourceforge.fenixedu.domain.IMasterDegreeThesis;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeProofVersion;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
@@ -22,51 +23,54 @@ import net.sourceforge.fenixedu.util.State;
  *         (naat@mega.ist.utl.pt)
  */
 public class MasterDegreeProofVersionVO extends VersionedObjectsBase implements
-		IPersistentMasterDegreeProofVersion {
+        IPersistentMasterDegreeProofVersion {
 
-	public IMasterDegreeProofVersion readActiveByStudentCurricularPlan(
-			IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
+    public IMasterDegreeProofVersion readActiveByStudentCurricularPlan(
+            IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
 
-		if (studentCurricularPlan.getMasterDegreeThesis() != null) {
+        if (studentCurricularPlan.getMasterDegreeThesis() != null) {
 
-			for (IMasterDegreeThesis masterDegreeThesis : (List<IMasterDegreeThesis>) studentCurricularPlan
-					.getMasterDegreeThesis()) {
+            for (IMasterDegreeThesis masterDegreeThesis : (List<IMasterDegreeThesis>) studentCurricularPlan
+                    .getMasterDegreeThesis()) {
 
-				if (masterDegreeThesis.getMasterDegreeProofVersions() != null) {
+                if (masterDegreeThesis.getMasterDegreeProofVersions() != null) {
 
-					for (IMasterDegreeProofVersion masterDegreeProofVersion : (List<IMasterDegreeProofVersion>) masterDegreeThesis
-							.getMasterDegreeProofVersions()) {
-						if (masterDegreeProofVersion.getCurrentState().equals(State.ACTIVE)) {
-							return masterDegreeProofVersion;
-						}
-					}
-				}
-			}
-		}
-		return null;
-	}
+                    for (IMasterDegreeProofVersion masterDegreeProofVersion : (List<IMasterDegreeProofVersion>) masterDegreeThesis
+                            .getMasterDegreeProofVersions()) {
+                        if (masterDegreeProofVersion.getCurrentState().equals(State.ACTIVE)) {
+                            return masterDegreeProofVersion;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
 
-	public List readNotActiveByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan)
-			throws ExcepcaoPersistencia {
+    public List readNotActiveByStudentCurricularPlan(Integer studentCurricularPlanID)
+            throws ExcepcaoPersistencia {
 
-		List<IMasterDegreeProofVersion> result = new ArrayList();
+        final IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) readByOID(
+                StudentCurricularPlan.class, studentCurricularPlanID);
 
-		if (studentCurricularPlan.getMasterDegreeThesis() != null) {
+        List<IMasterDegreeProofVersion> result = new ArrayList();
 
-			for (IMasterDegreeThesis masterDegreeThesis : (List<IMasterDegreeThesis>) studentCurricularPlan
-					.getMasterDegreeThesis()) {
+        if (studentCurricularPlan.getMasterDegreeThesis() != null) {
 
-				if (masterDegreeThesis.getMasterDegreeProofVersions() != null) {
+            for (IMasterDegreeThesis masterDegreeThesis : (List<IMasterDegreeThesis>) studentCurricularPlan
+                    .getMasterDegreeThesis()) {
 
-					for (IMasterDegreeProofVersion masterDegreeProofVersion : (List<IMasterDegreeProofVersion>) masterDegreeThesis
-							.getMasterDegreeProofVersions()) {
-						if (!masterDegreeProofVersion.getCurrentState().equals(State.ACTIVE)) {
-							result.add(masterDegreeProofVersion);
-						}
-					}
-				}
-			}
-		}
-		return result;
-	}
+                if (masterDegreeThesis.getMasterDegreeProofVersions() != null) {
+
+                    for (IMasterDegreeProofVersion masterDegreeProofVersion : (List<IMasterDegreeProofVersion>) masterDegreeThesis
+                            .getMasterDegreeProofVersions()) {
+                        if (!masterDegreeProofVersion.getCurrentState().equals(State.ACTIVE)) {
+                            result.add(masterDegreeProofVersion);
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
 }
