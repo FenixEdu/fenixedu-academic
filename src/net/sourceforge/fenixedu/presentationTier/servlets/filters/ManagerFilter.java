@@ -14,11 +14,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
-/**
- * 17/Fev/2003
- * 
- * @author jpvl
- */
 public class ManagerFilter implements Filter {
 
     public void init(FilterConfig config) {
@@ -30,7 +25,7 @@ public class ManagerFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
-        IUserView userView = SessionUtils.getUserView((HttpServletRequest) request);
+        final IUserView userView = SessionUtils.getUserView((HttpServletRequest) request);
         if (userView == null || !userView.hasRoleType(RoleType.MANAGER)) {
             throw new RuntimeException();
         }
