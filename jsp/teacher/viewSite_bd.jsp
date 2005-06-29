@@ -4,8 +4,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>	 
 
+<p>
 <span class="error"><html:errors/></span>
-</br>
+</p>
 
 <logic:messagesPresent property="error.exception.notAuthorized">
 	<span class="error">
