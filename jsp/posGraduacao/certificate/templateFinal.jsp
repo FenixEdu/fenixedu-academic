@@ -5,8 +5,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <br />
 <br />
-<div align="right" style="margin-right: 100px;">Coordenador do Núcleo de Pós-Graduação e Formação Contínua,</div>
-<br />
-<div align="right" style="margin-right: 100px;">(Nuno Riscado)</div>
+<div align="right" style="margin-right: 100px;">Dr. Nuno Riscado</div>
+<div align="right" style="margin-right: 100px;">(Coordenador do Núcleo de Pós-Graduação e Formação Contínua)</div>
 <br />
 <p><bean:write name="<%= SessionConstants.DATE %>" /></p>
