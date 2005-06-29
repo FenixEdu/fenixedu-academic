@@ -50,9 +50,7 @@ public class StudentGroup extends StudentGroup_Base {
     public boolean equals(Object arg0) {
         boolean result = false;
         if (arg0 instanceof IStudentGroup) {
-            result = (getAttendsSet().equals(((IStudentGroup) arg0).getAttendsSet()))
-                    && (getGroupNumber().equals(((IStudentGroup) arg0).getGroupNumber()));
-
+            result = getIdInternal().equals(((IStudentGroup) arg0).getIdInternal());
         }
         return result;
     }

@@ -41,8 +41,7 @@ public class StudentGroupAttend extends StudentGroupAttend_Base {
     public boolean equals(Object arg0) {
         boolean result = false;
         if (arg0 instanceof IStudentGroupAttend) {
-            result = (getStudentGroup().equals(((IStudentGroupAttend) arg0).getStudentGroup()))
-                    && (getAttend().equals(((IStudentGroupAttend) arg0).getAttend()));
+            result = getIdInternal().equals(((IStudentGroupAttend) arg0).getIdInternal());
         }
         return result;
     }
