@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.domain.IItem;
 import net.sourceforge.fenixedu.domain.ISection;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -23,11 +22,7 @@ public class InsertItem implements IService {
         final ISuportePersistente persistentSuport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
         final IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
-        
-        //
-        final IPersistentItem persistentItem = persistentSuport.getIPersistentItem();
-        //
-        
+                       
         final ISection section = (ISection) persistentSection.readByOID(Section.class, sectionCode);
                      
         persistentSection.simpleLockWrite(section);
@@ -35,7 +30,7 @@ public class InsertItem implements IService {
         IItem item = section.insertItem(infoItem.getName(), infoItem.getInformation(), infoItem.getUrgent(), infoItem.getItemOrder());
         
         //
-        persistentItem.simpleLockWrite(item);
+        persistentSuport.getIPersistentItem().simpleLockWrite(item);
         //
         
         return new Boolean(true);
