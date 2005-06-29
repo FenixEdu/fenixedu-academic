@@ -86,53 +86,47 @@ public class ReadFinalDegreeWorkStudentGroupByUsername implements IService {
                 for (int i = 0; i < group.getGroupProposals().size(); i++) {
                     IGroupProposal groupProposal = (IGroupProposal) group.getGroupProposals().get(i);
                     if (groupProposal != null) {
-                        try {
-                            groupProposal.getIdInternal();
-
-                            InfoGroupProposal infoGroupProposal = new InfoGroupProposal();
-                            infoGroupProposal.setIdInternal(groupProposal.getIdInternal());
-                            infoGroupProposal.setOrderOfPreference(groupProposal.getOrderOfPreference());
-                            IProposal proposal = groupProposal.getFinalDegreeWorkProposal();
-                            if (proposal != null) {
-                                InfoProposal infoProposal = new InfoProposal();
-                                infoProposal.setIdInternal(proposal.getIdInternal());
-                                infoProposal.setProposalNumber(proposal.getProposalNumber());
-                                infoProposal.setTitle(proposal.getTitle());
-                                ITeacher orientator = proposal.getOrientator();
-                                if (orientator != null) {
-                                    InfoTeacher infoTeacher = new InfoTeacher();
-                                    IPerson person = orientator.getPerson();
-                                    if (person != null) {
-                                        InfoPerson infoPerson = new InfoPerson();
-                                        infoPerson.setNome(person.getNome());
-                                        infoTeacher.setInfoPerson(infoPerson);
-                                    }
-                                    infoProposal.setOrientator(infoTeacher);
+                        InfoGroupProposal infoGroupProposal = new InfoGroupProposal();
+                        infoGroupProposal.setIdInternal(groupProposal.getIdInternal());
+                        infoGroupProposal.setOrderOfPreference(groupProposal.getOrderOfPreference());
+                        IProposal proposal = groupProposal.getFinalDegreeWorkProposal();
+                        if (proposal != null) {
+                            InfoProposal infoProposal = new InfoProposal();
+                            infoProposal.setIdInternal(proposal.getIdInternal());
+                            infoProposal.setProposalNumber(proposal.getProposalNumber());
+                            infoProposal.setTitle(proposal.getTitle());
+                            ITeacher orientator = proposal.getOrientator();
+                            if (orientator != null) {
+                                InfoTeacher infoTeacher = new InfoTeacher();
+                                IPerson person = orientator.getPerson();
+                                if (person != null) {
+                                    InfoPerson infoPerson = new InfoPerson();
+                                    infoPerson.setNome(person.getNome());
+                                    infoTeacher.setInfoPerson(infoPerson);
                                 }
-                                ITeacher coOrientator = proposal.getCoorientator();
-                                if (coOrientator != null) {
-                                    InfoTeacher infoTeacher = new InfoTeacher();
-                                    IPerson person = coOrientator.getPerson();
-                                    if (person != null) {
-                                        InfoPerson infoPerson = new InfoPerson();
-                                        infoPerson.setNome(person.getNome());
-                                        infoTeacher.setInfoPerson(infoPerson);
-                                    }
-                                    infoProposal.setCoorientator(infoTeacher);
-                                }
-                                infoProposal.setCompanionName(proposal.getCompanionName());
-                                IGroup attributedGroup = proposal.getGroupAttributedByTeacher();
-                                if (attributedGroup != null
-                                        && attributedGroup.getIdInternal().equals(group.getIdInternal())) {
-                                    infoProposal.setGroupAttributedByTeacher(infoGroup);
-                                }
-
-                                infoGroupProposal.setFinalDegreeWorkProposal(infoProposal);
+                                infoProposal.setOrientator(infoTeacher);
                             }
-                            infoGroup.getGroupProposals().add(infoGroupProposal);
-                        } catch (Exception e) {
-                            // proxy to groupProposal is null
+                            ITeacher coOrientator = proposal.getCoorientator();
+                            if (coOrientator != null) {
+                                InfoTeacher infoTeacher = new InfoTeacher();
+                                IPerson person = coOrientator.getPerson();
+                                if (person != null) {
+                                    InfoPerson infoPerson = new InfoPerson();
+                                    infoPerson.setNome(person.getNome());
+                                    infoTeacher.setInfoPerson(infoPerson);
+                                }
+                                infoProposal.setCoorientator(infoTeacher);
+                            }
+                            infoProposal.setCompanionName(proposal.getCompanionName());
+                            IGroup attributedGroup = proposal.getGroupAttributedByTeacher();
+                            if (attributedGroup != null
+                                    && attributedGroup.getIdInternal().equals(group.getIdInternal())) {
+                                infoProposal.setGroupAttributedByTeacher(infoGroup);
+                            }
+
+                            infoGroupProposal.setFinalDegreeWorkProposal(infoProposal);
                         }
+                        infoGroup.getGroupProposals().add(infoGroupProposal);
                     }
                 }
             }
