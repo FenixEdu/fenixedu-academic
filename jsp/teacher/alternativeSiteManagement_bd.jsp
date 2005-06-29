@@ -3,6 +3,10 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<p>
+<span class="error"><html:errors/></span>
+</p>
+
 <h2><bean:message key="title.personalizationOptions"/></h2>
 <logic:present name="siteView"> 
 <html:form action="/alternativeSite">

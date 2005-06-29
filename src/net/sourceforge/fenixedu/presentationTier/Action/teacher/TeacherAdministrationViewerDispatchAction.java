@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FileAlreadyExistsServiceException;
@@ -142,8 +143,15 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         infoSiteNew.setIntroduction(introduction);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         Object args[] = { objectCode, infoSiteNew };
+        
+        ActionErrors errors = new ActionErrors();
         try {
             ServiceManagerServiceFactory.executeService(userView, "EditCustomizationOptions", args);
+        } catch (NotAuthorizedFilterException e) {
+            errors.add("notResponsible", new ActionError("label.notAuthorized.courseInformation"));
+            saveErrors(request, errors);
+
+            return mapping.getInputForward();
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
