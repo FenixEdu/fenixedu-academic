@@ -8,14 +8,19 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 
+import net.sourceforge.fenixedu.domain.IExternalPerson;
+import net.sourceforge.fenixedu.domain.IMasterDegreeProofVersion;
+import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
 import net.sourceforge.fenixedu.util.State;
 
 /**
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 public class InfoMasterDegreeProofVersion extends InfoObject {
 
@@ -146,6 +151,63 @@ public class InfoMasterDegreeProofVersion extends InfoObject {
 
     public void setInfoExternalJuries(List infoExternalJuries) {
         this.infoExternalJuries = infoExternalJuries;
+    }
+
+    /**
+     * @param externalPersons
+     * @return
+     */
+    private List copyExternalPersons(List externalPersons) {
+        return (List) CollectionUtils.collect(externalPersons, new Transformer() {
+            public Object transform(Object arg0) {
+                IExternalPerson externalPerson = (IExternalPerson) arg0;
+                return InfoExternalPersonWithPersonAndWLocation.newInfoFromDomain(externalPerson);
+            }
+        });
+    }
+
+    /**
+     * @param masterDegreeThesisDataVersion
+     * @return
+     */
+    private List copyTeachers(List teachers) {
+        return (List) CollectionUtils.collect(teachers, new Transformer() {
+            public Object transform(Object arg0) {
+                ITeacher teacher = (ITeacher) arg0;
+                return InfoTeacherWithPerson.newInfoFromDomain(teacher);
+            }
+        });
+    }
+
+    public static InfoMasterDegreeProofVersion newInfoFromDomain(
+            IMasterDegreeProofVersion masterDegreeProofVersion) {
+        InfoMasterDegreeProofVersion infoMasterDegreeProofVersion = null;
+        if (masterDegreeProofVersion != null) {
+            infoMasterDegreeProofVersion = new InfoMasterDegreeProofVersion();
+            infoMasterDegreeProofVersion.copyFromDomain(masterDegreeProofVersion);
+        }
+        return infoMasterDegreeProofVersion;
+    }
+
+    protected void copyFromDomain(IMasterDegreeProofVersion masterDegreeProofVersion) {
+        super.copyFromDomain(masterDegreeProofVersion);
+        if (masterDegreeProofVersion != null) {
+            this.setInfoMasterDegreeThesis(InfoMasterDegreeThesis
+                    .newInfoFromDomain(masterDegreeProofVersion.getMasterDegreeThesis()));
+            this.setAttachedCopiesNumber(masterDegreeProofVersion.getAttachedCopiesNumber());
+            this.setCurrentState(masterDegreeProofVersion.getCurrentState());
+            this.setFinalResult(masterDegreeProofVersion.getFinalResult());
+            this.setLastModification(masterDegreeProofVersion.getLastModification());
+            this.setProofDate(masterDegreeProofVersion.getProofDate());
+            this.setThesisDeliveryDate(masterDegreeProofVersion.getThesisDeliveryDate());
+            this.setInfoJuries(copyTeachers(masterDegreeProofVersion.getJuries()));
+            this
+                    .setInfoExternalJuries(copyExternalPersons(masterDegreeProofVersion
+                            .getExternalJuries()));
+            this.setInfoResponsibleEmployee(InfoEmployeeWithPerson
+                    .newInfoFromDomain(masterDegreeProofVersion.getResponsibleEmployee()));
+        }
+
     }
 
 }
