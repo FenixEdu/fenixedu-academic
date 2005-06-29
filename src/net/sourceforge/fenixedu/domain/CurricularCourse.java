@@ -16,7 +16,6 @@ import org.apache.commons.lang.StringUtils;
  */
 
 public class CurricularCourse extends CurricularCourse_Base {
-    private String uniqueKeyForEnrollment; // For enrollment purposes
 
     public String toString() {
         StringBuffer stringBuffer = new StringBuffer();
@@ -33,30 +32,6 @@ public class CurricularCourse extends CurricularCourse_Base {
             return getIdInternal().equals(curricularCourse.getIdInternal());
         }
         return false;
-    }
-
-    public void setCode(String code) {
-        super.setCode(code);
-        DegreeType tipoCurso = (this.getDegreeCurricularPlan() != null && this.getDegreeCurricularPlan()
-                .getDegree() != null) ? this.getDegreeCurricularPlan().getDegree().getTipoCurso() : null;
-        this.uniqueKeyForEnrollment = constructUniqueEnrollmentKey(this.getCode(), this.getName(),
-                tipoCurso);
-    }
-
-    public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
-        super.setDegreeCurricularPlan(degreeCurricularPlan);
-        DegreeType tipoCurso = (this.getDegreeCurricularPlan() != null && this.getDegreeCurricularPlan()
-                .getDegree() != null) ? this.getDegreeCurricularPlan().getDegree().getTipoCurso() : null;
-        this.uniqueKeyForEnrollment = constructUniqueEnrollmentKey(this.getCode(), this.getName(),
-                tipoCurso);
-    }
-
-    public void setName(String name) {
-        super.setName(name);
-        DegreeType tipoCurso = (this.getDegreeCurricularPlan() != null && this.getDegreeCurricularPlan()
-                .getDegree() != null) ? this.getDegreeCurricularPlan().getDegree().getTipoCurso() : null;
-        this.uniqueKeyForEnrollment = constructUniqueEnrollmentKey(this.getCode(), this.getName(),
-                tipoCurso);
     }
 
     public boolean curricularCourseIsMandatory() {
@@ -85,7 +60,7 @@ public class CurricularCourse extends CurricularCourse_Base {
             final Integer semester) {
 
         if (this.getScopes().size() == 1) {
-            return ((ICurricularCourseScope) this.getScopes().get(0)).getCurricularSemester()
+            return this.getScopes().get(0).getCurricularSemester()
                     .getCurricularYear();
         }
 
@@ -169,7 +144,9 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getCurricularCourseUniqueKeyForEnrollment() {
-        return uniqueKeyForEnrollment;
+        DegreeType degreeType = (this.getDegreeCurricularPlan() != null && this.getDegreeCurricularPlan()
+                .getDegree() != null) ? this.getDegreeCurricularPlan().getDegree().getTipoCurso() : null;
+        return constructUniqueEnrollmentKey(this.getCode(), this.getName(), degreeType);
     }
 
     public boolean hasActiveScopeInGivenSemester(final Integer semester) {

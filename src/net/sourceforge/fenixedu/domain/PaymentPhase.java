@@ -20,7 +20,7 @@ public class PaymentPhase extends PaymentPhase_Base {
         object = object.append("\n[PaymentPhase: ").append("idInternal= ").append(getIdInternal())
                 .append(" starDate= ").append(getStartDate()).append("; endDate= ").append(getEndDate())
                 .append("; value= ").append(getValue()).append("; description= ").append(
-                        getDescription()).append("\n");
+                        getDescriptionFromMessageResourses()).append("\n");
 
         return object.toString();
     }
@@ -43,9 +43,9 @@ public class PaymentPhase extends PaymentPhase_Base {
     /**
      * @return Returns the description.
      */
-    public String getDescription() {
+    public String getDescriptionFromMessageResourses() {
         MessageResources messages = MessageResources
-                .getMessageResources("ServidorApresentacao.ApplicationResources");
+            .getMessageResources("ServidorApresentacao.ApplicationResources");
 
         String newDescription = null;
         newDescription = messages.getMessage(super.getDescription());
