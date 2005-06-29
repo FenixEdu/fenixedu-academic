@@ -848,6 +848,8 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 	public boolean hasProposals();
 	
     public boolean isMasterDegreeOnly();
+    
+    public void createSite();
     "
 }
 
@@ -2126,7 +2128,8 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 	String alternativeSite;
 	
 	interface "
-	public void createAnnouncement(String announcementTitle, String announcementInformation);		
+	public net.sourceforge.fenixedu.domain.IAnnouncement createAnnouncement(String announcementTitle, String announcementInformation);		
+	public void editSite(String initialStatement, String introduction, String mail, String alternativeSite);
 	"
 }
 

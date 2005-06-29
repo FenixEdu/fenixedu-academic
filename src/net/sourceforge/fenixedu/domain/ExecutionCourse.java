@@ -116,5 +116,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
         });
     }
-
+    
+    public void createSite() {
+        final ISite site = new Site();
+        site.setAssociatedAnnouncements(new ArrayList());
+        site.setAssociatedSections(new ArrayList());
+        site.setExecutionCourse(this);
+        
+        setSite(site);
+    }
+    
 }

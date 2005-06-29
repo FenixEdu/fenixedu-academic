@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import net.sourceforge.fenixedu.domain.IAnnouncement;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
@@ -22,8 +23,10 @@ public class CreateAnnouncement implements IService {
 
         final ISite site = persistentSite.readByExecutionCourse(infoExecutionCourseCode);
         persistentSite.simpleLockWrite(site);
-        site.createAnnouncement(announcementTitle, announcementInformation);
+        IAnnouncement announcement = site.createAnnouncement(announcementTitle, announcementInformation);
 
+        persistentSupport.getIPersistentAnnouncement().simpleLockWrite(announcement);
+        
         return true;
     }
 }
