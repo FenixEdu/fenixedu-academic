@@ -51,10 +51,13 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends Aut
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
 
-        if (((id != null && id.getRoles() != null
-                && !AuthorizationUtils.containsRole(id.getRoles(), getRoleType()) && !isResponsibleForExecutionCourse(
-                id, arguments)))
-                || (id == null) || (id.getRoles() == null)) {
+        try {
+            if ((id == null) || (id.getRoles() == null)
+                    || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
+                    || !isResponsibleForExecutionCourse(id, arguments)) {
+                throw new NotAuthorizedFilterException();
+            }
+        } catch (RuntimeException e) {
             throw new NotAuthorizedFilterException();
         }
     }
