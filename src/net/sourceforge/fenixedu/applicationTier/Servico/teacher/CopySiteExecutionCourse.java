@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.ListIterator;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -38,7 +39,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class CopySiteExecutionCourse implements IService {
     public void run(Integer executionCourseIDFrom, Integer executionCourseIDTo)
-            throws ExcepcaoPersistencia {
+            throws ExcepcaoPersistencia, ExistingServiceException {
         
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentSite persistentSite = sp.getIPersistentSite();
@@ -140,17 +141,11 @@ public class CopySiteExecutionCourse implements IService {
                     ListIterator iteratorItens = itens.listIterator();
                     while (iteratorItens.hasNext()) {
                         IItem item = (IItem) iteratorItens.next();
-
-                        Item itemNew = new Item();
-                        persistentItem.simpleLockWrite(itemNew);
-                        itemNew.setInformation(item.getInformation());
-                        itemNew.setItemOrder(item.getItemOrder());
-                        itemNew.setName(item.getName());
-                        itemNew.setSection(sectionNew);
-                        itemNew.setUrgent(item.getUrgent());
+                     
+                        persistentSection.simpleLockWrite(sectionNew);
+                        sectionNew.insertItem(item.getName(), item.getInformation(), item.getUrgent(), item.getItemOrder());
                     }
                 }
-
                 sectionsTo.add(sectionNew);
             }
         }

@@ -19,35 +19,43 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
  */
 public class ItemVO extends VersionedObjectsBase implements IPersistentItem {
 
+    public IItem readBySectionAndName(Integer sectionID, String executionCourseSigla,
+            String executionPeriodYear, String executionPeriodName, String itemName)
+            throws ExcepcaoPersistencia {
+        Collection<ISection> sections = readAll(Section.class);
+        for (ISection section : sections) {
+            if ((section.getIdInternal().equals(sectionID))
+                    && (section.getSite().getExecutionCourse().getSigla().equals(executionCourseSigla))
+                    && (section.getSite().getExecutionCourse().getExecutionPeriod().getName()
+                            .equals(executionPeriodName))
+                    && (section.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear()
+                            .getYear().equals(executionPeriodYear))) {
 
-    public IItem readBySectionAndName(Integer sectionID, String executionCourseSigla, String executionPeriodYear, String executionPeriodName, String itemName) throws ExcepcaoPersistencia {
-        Collection<ISection> sections = readAll(Section.class);        
-        for(ISection section : sections){
-            if((section.getIdInternal().equals(sectionID)) && (section.getSite().getExecutionCourse().getSigla().equals(executionCourseSigla))
-                    && (section.getSite().getExecutionCourse().getExecutionPeriod().getName().equals(executionPeriodName))
-                    && (section.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear().equals(executionPeriodYear))){
-                
                 List<IItem> items = section.getAssociatedItems();
-                
-                for(IItem item : items){
-                    if(item.getName().equals(itemName))
+
+                for (IItem item : items) {
+                    if (item.getName().equals(itemName))
                         return item;
-                }            
-            }                                       
-        }        
+                }
+            }
+        }
         return null;
     }
 
-    public List readAllItemsBySection(Integer sectionID, String executionCourseSigla, String executionPeriodYear, String executionPeriodName) throws ExcepcaoPersistencia {
+    public List readAllItemsBySection(Integer sectionID, String executionCourseSigla,
+            String executionPeriodYear, String executionPeriodName) throws ExcepcaoPersistencia {
         Collection<ISection> sections = readAll(Section.class);
-        for(ISection section : sections){
-            if((section.getIdInternal().equals(sectionID)) && (section.getSite().getExecutionCourse().getSigla().equals(executionCourseSigla))
-                    && (section.getSite().getExecutionCourse().getExecutionPeriod().getName().equals(executionPeriodName))
-                    && (section.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear().equals(executionPeriodYear))){
-                
-                 return section.getAssociatedItems();                   
-            }                                       
-        }        
+        for (ISection section : sections) {
+            if ((section.getIdInternal().equals(sectionID))
+                    && (section.getSite().getExecutionCourse().getSigla().equals(executionCourseSigla))
+                    && (section.getSite().getExecutionCourse().getExecutionPeriod().getName()
+                            .equals(executionPeriodName))
+                    && (section.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear()
+                            .getYear().equals(executionPeriodYear))) {
+
+                return section.getAssociatedItems();
+            }
+        }
         return new ArrayList();
     }
 }

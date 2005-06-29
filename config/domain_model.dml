@@ -1283,6 +1283,11 @@ class net.sourceforge.fenixedu.domain.Item extends net.sourceforge.fenixedu.doma
 	Integer itemOrder;
 	String information;
 	String name;
+	
+	interface "
+		public void deleteItem() throws net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;;
+		public void editItem(String itemName, String itemInformation, Boolean itemUrgent, Integer insertItemOrder);
+	"
 }
 
 class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2054,6 +2059,11 @@ class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.d
 	Integer keySite;
 	String name;
 	Date lastModifiedDate;
+	
+	interface "
+		public IItem insertItem(String itemName, String itemInformation, Boolean itemUrgency, Integer insertItemOrder)
+			throws net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+	"
 }
 
 
