@@ -25,7 +25,7 @@ public class ExecutionCourseTimeTableLessonContentRenderer implements LessonSlot
         if (showOccupation instanceof InfoLesson) {
             InfoLesson lesson = (InfoLesson) showOccupation;
 
-            strBuffer.append(lesson.getTipo()).append("&nbsp;");
+            strBuffer.append(lesson.getTipo().getSiglaTipoAula()).append("&nbsp;");
             strBuffer.append("<a href='siteViewer.do?method=roomViewer&amp;roomName=");
             strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append(
                     "&amp;objectCode=");

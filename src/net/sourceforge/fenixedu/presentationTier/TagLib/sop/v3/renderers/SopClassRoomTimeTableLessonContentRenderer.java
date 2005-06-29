@@ -29,7 +29,7 @@ public class SopClassRoomTimeTableLessonContentRenderer implements LessonSlotCon
             strBuffer.append("<a href='viewSite.do?method=firstPage&amp;objectCode=");
             strBuffer.append(infoExecutionCourse.getIdInternal());
             strBuffer.append("'>").append(infoExecutionCourse.getSigla())
-                    .append("&nbsp;(").append(lesson.getTipo()).append(")").append("</a>");
+                    .append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")").append("</a>");
         } else {
             InfoExam infoExam = (InfoExam) showOccupation;
             for (int iterEC = 0; iterEC < infoExam.getAssociatedExecutionCourse().size(); iterEC++) {

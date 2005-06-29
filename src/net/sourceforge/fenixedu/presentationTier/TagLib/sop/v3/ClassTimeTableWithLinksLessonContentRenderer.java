@@ -41,7 +41,7 @@ public class ClassTimeTableWithLinksLessonContentRenderer implements LessonSlotC
             strBuffer.append("&nbsp;");
             List infoShiftList = lesson.getInfoShiftList();
             for (int index = 0; index < infoShiftList.size(); index++) {
-                strBuffer.append("&nbsp;(").append(lesson.getTipo()).append(")&nbsp;");
+                strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")&nbsp;");
             }
 
             strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());

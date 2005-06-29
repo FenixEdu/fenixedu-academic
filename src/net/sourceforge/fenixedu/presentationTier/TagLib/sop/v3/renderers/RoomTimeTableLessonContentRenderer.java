@@ -32,7 +32,7 @@ public class RoomTimeTableLessonContentRenderer implements LessonSlotContentRend
             strBuffer.append(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
             strBuffer.append("'>").append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla())
                     .append("</a>");
-            strBuffer.append("&nbsp;(").append(lesson.getTipo()).append(")");
+            strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")");
 
             //TODO(rspl): Will it stay like this the interface for showing
             // it is a quinzenal lesson?

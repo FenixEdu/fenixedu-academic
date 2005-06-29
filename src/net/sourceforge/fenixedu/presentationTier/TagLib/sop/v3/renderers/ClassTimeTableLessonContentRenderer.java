@@ -33,7 +33,7 @@ public class ClassTimeTableLessonContentRenderer implements LessonSlotContentRen
             InfoExecutionCourse ec = lesson.getInfoShift().getInfoDisciplinaExecucao();
             strBuffer.append("'>").append("<abbr title='").append(ec.getNome()).append("'>").append(ec.getSigla()).append("</abbr>")
                     .append("</a>");
-            strBuffer.append("&nbsp;(").append(lesson.getTipo()).append(")&nbsp;");
+            strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")&nbsp;");
             strBuffer
                     .append(" <a href='siteViewer.do?method=roomViewer&amp;roomName=")
                     .append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append(
