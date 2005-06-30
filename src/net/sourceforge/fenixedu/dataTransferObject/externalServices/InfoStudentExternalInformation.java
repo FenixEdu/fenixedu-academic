@@ -19,6 +19,7 @@ public class InfoStudentExternalInformation
     private InfoExternalPersonInfo person;
     private InfoExternalDegreeCurricularPlanInfo degree;
     private Collection courses;
+    private Collection availableRemainingCourses; // courses that the student must choose from
     /**
      * @return Returns the courses.
      */
@@ -71,4 +72,10 @@ public class InfoStudentExternalInformation
     {
         this.number = number;
     }
+	public Collection getAvailableRemainingCourses() {
+		return availableRemainingCourses;
+	}
+	public void setAvailableRemainingCourses(Collection availableRemainingCourses) {
+		this.availableRemainingCourses = availableRemainingCourses;
+	}
 }

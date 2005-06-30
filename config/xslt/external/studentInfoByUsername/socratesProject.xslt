@@ -6,7 +6,7 @@
 
 <xsl:template match="list">
 	<info-aluno>
-	<xsl:apply-templates select="net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoStudentExternalInformation"/>
+		<xsl:apply-templates select="net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoStudentExternalInformation"/>
 	</info-aluno>
 </xsl:template>
 
@@ -16,24 +16,40 @@
 		</numero>					
 		<xsl:apply-templates select="degree"/>
 		<xsl:apply-templates select="person"/>
-		<xsl:apply-templates select="courses"/>
+		<disciplinas>		
+			<xsl:apply-templates select="courses"/>
+			<xsl:apply-templates select="availableRemainingCourses/net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalCurricularCourseInfo"/>	
+		</disciplinas>		
 						
 </xsl:template> 
 
 <xsl:template match="courses">
-		<disciplinas>
 			<xsl:apply-templates select="net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalEnrollmentInfo"/>	
-		</disciplinas>
 </xsl:template> 
 
 <xsl:template match="net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalEnrollmentInfo">
 	<disciplina>
+			<nome>
+				<xsl:value-of select="./course/name"/>
+			</nome>
 		<codigo>
 			<xsl:value-of select="./course/code"/>
 		</codigo>
+			<creditos>
+				<xsl:value-of select="./course/credits"/>
+			</creditos>
+			<creditos-ECTS>
+				<xsl:value-of select="./course/ECTSCredits"/>
+			</creditos-ECTS>
+			<peso>
+				<xsl:value-of select="./course/weigth"/>
+			</peso>
+			<ano>
+				<xsl:value-of select="./course/curricularYear"/>
+			</ano>	
 		<nota>
 			<xsl:value-of select="./finalGrade"/>
-		</nota>		
+		</nota>
 	</disciplina>						
 </xsl:template> 
 
@@ -48,9 +64,6 @@
 					<ramo>
 						<xsl:apply-templates select="branch"/>
 					</ramo>
-					<disciplinas>
-						<xsl:apply-templates select="courses/net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalCurricularCourseInfo"/>	
-					</disciplinas>
 				</curso>
 </xsl:template> 
 
@@ -74,6 +87,7 @@
 			<ano>
 				<xsl:value-of select="./curricularYear"/>
 			</ano>
+			<nota/>
 	</disciplina>			
 </xsl:template>
 
