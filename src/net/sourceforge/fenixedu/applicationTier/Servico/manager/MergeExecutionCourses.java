@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,13 +17,13 @@ import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.IAnnouncement;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IBibliographicReference;
 import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IEvaluationMethod;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IFinalEvaluation;
 import net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IResponsibleFor;
@@ -62,6 +63,7 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersisten
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.ojb.broker.core.proxy.ProxyHelper;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
@@ -220,7 +222,10 @@ public class MergeExecutionCourses implements IService {
             Iterator iter = sourceEvaluations.iterator();
             while (iter.hasNext()) {
                 IEvaluation evaluation = (IEvaluation) iter.next();
-                if (evaluation instanceof FinalEvaluation) {
+                if (evaluation instanceof Proxy) {
+                    evaluation = (IEvaluation) ProxyHelper.getRealObject(evaluation);
+                }
+                if (evaluation instanceof IFinalEvaluation) {
                     persistentObject.deleteByOID(Evaluation.class, evaluation.getIdInternal());
                 } else {
                     throw new InvalidArgumentsServiceException();
