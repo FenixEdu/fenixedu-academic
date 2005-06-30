@@ -13,10 +13,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -29,15 +29,10 @@ public class EditarTurma implements IService {
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final IExecutionPeriod executionPeriod = Cloner
-                .copyInfoExecutionPeriod2IExecutionPeriod(oldClassView.getInfoExecutionPeriod());
-
-        final IExecutionDegree executionDegree = Cloner
-                .copyInfoExecutionDegree2ExecutionDegree(oldClassView.getInfoExecutionDegree());
-
-        final ISchoolClass classToEdit = sp.getITurmaPersistente()
-                .readByNameAndExecutionDegreeAndExecutionPeriod(oldClassView.getNome(),
-                        executionDegree.getIdInternal(), executionPeriod.getIdInternal());
+        final ISchoolClass classToEdit = (ISchoolClass) sp.getITurmaPersistente().readByOID(
+                SchoolClass.class, oldClassView.getIdInternal());
+        final IExecutionPeriod executionPeriod = classToEdit.getExecutionPeriod();
+        final IExecutionDegree executionDegree = classToEdit.getExecutionDegree();
 
         final ISchoolClass otherClassWithSameNewName = sp.getITurmaPersistente()
                 .readByNameAndExecutionDegreeAndExecutionPeriod(newClassView.getNome(),
