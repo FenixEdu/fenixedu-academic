@@ -14,14 +14,15 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -32,30 +33,26 @@ public class ReadPersonCandidatesAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        IUserView userView = SessionUtils.getUserView(request);
 
-            Object args[] = new Object[1];
-            args[0] = userView;
-            List candidates = null;
-            try {
-                candidates = (List) ServiceManagerServiceFactory.executeService(userView,
-                        "ReadPersonCandidates", args);
-            } catch (FenixServiceException e) {
-                throw new FenixActionException(e);
+        Object args[] = { userView };
 
-            }
-            if (candidates.size() == 1) {
-                session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, candidates.get(0));
-                return mapping.findForward("Success");
-            }
-
-            session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
-            return mapping.findForward("ChooseCandidate");
-
+        List<InfoMasterDegreeCandidate> candidates = null;
+        try {
+            candidates = (List<InfoMasterDegreeCandidate>) ServiceManagerServiceFactory.executeService(userView,
+                    "ReadPersonCandidates", args);
+        } catch (FenixServiceException e) {
+            throw new FenixActionException(e);
         }
-        throw new Exception();
+
+        if (candidates.size() == 1) {
+            request.setAttribute("candidateID", candidates.get(0).getIdInternal());
+            return mapping.findForward("Success");
+        }
+
+        request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, candidates);
+        return mapping.findForward("ChooseCandidate");
+
     }
 
 }
