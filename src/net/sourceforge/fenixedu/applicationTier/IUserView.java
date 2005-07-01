@@ -14,12 +14,8 @@ public interface IUserView extends Serializable {
 
     public String getFullName();
 
-	public Collection getRoles();
-
-	public ICandidateView getCandidateView();
+    public Collection getRoles();
 
     boolean hasRoleType(final RoleType roleType);
-
-	public void setCandidateView(ICandidateView candidateView);
 
 }
