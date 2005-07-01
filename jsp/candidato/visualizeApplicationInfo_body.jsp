@@ -8,7 +8,7 @@
 
 <h2><bean:message key="label.candidate.applicationInfoSituation" /></h2>
     <table>
-    <bean:define id="applicationInfo" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="session" />
+    <bean:define id="applicationInfo" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" />
         <logic:present name="applicationInfo">
           <!-- Nome -->
           <tr>

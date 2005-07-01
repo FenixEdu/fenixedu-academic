@@ -17,7 +17,7 @@
    <table>
    
     <logic:present name="<%= SessionConstants.CANDIDATE_SITUATION %>">
-		<bean:define id="situation" name="<%= SessionConstants.CANDIDATE_SITUATION %>" scope="session" />    
+		<bean:define id="situation" name="<%= SessionConstants.CANDIDATE_SITUATION %>" />    
         <!-- Situacao da Candidatura -->
         <tr>
 	        <td><h2><bean:message key="label.candidate.applicationInfoSituation" /></h2></td>
