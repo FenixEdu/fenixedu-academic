@@ -78,7 +78,7 @@
         	<form-property name="idExpirationDateYear" type="java.lang.String" /> 
         	<form-property name="username" type="java.lang.String" /> 
         	<form-property name="areaOfAreaCode" type="java.lang.String" /> 
-        	
+        	<form-property name="candidateID" type="java.lang.Integer" />
         	
       </form-bean>
 
@@ -134,7 +134,10 @@
       </action>
 	
       <!-- Action for Visualization Of the Candidate's Application Information -->
-      <action path="/visualizeApplicationInfo" forward="/visualizeApplicationInfo.jsp"/>      
+      <action path="/visualizeApplicationInfo"
+      	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate.VisualizeCandidateAction">
+      	  <forward name="Success" path="/visualizeApplicationInfo.jsp"/>
+      </action>     
 
       <!-- Action for Visualization Of the Candidate's Application Information -->
       <action path="/insertApplicationDocuments" forward="/insertApplicationDocuments.jsp"/>      
