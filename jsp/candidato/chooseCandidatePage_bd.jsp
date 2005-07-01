@@ -5,25 +5,21 @@
 <%@ page import="java.util.List" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 
+<span class="error"><html:errors/></span>
 
-   <span class="error"><html:errors/></span>
+<bean:define id="candidateList" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_LIST %>"  />
 
-    <bean:define id="candidateList" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_LIST %>" scope="session" />
-    
+<%= ((List) candidateList).size() %> <bean:message key="label.masterDegree.administrativeOffice.candidatesFound"/>        
 
-	<bean:define id="link">/chooseCandidate.do?candidate=</bean:define>
+<br><bean:message key="label.masterDegree.chooseOne"/><br>
 
-    <%= ((List) candidateList).size()%> <bean:message key="label.masterDegree.administrativeOffice.candidatesFound"/>        
-    <br><bean:message key="label.masterDegree.chooseOne"/><br>
-    <% if (((List) candidateList).size() != 0) { %>
-        	<logic:iterate id="candidate" name="candidateList" indexId="indexCandidate">
-            	<bean:define id="candidateLink">
-            		<bean:write name="link"/><bean:write name="indexCandidate"/>
-            	</bean:define>
-                <html:link page='<%= pageContext.findAttribute("candidateLink").toString() %>'>
-                    <bean:write name="candidate" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.nome" /> - 
-        			<bean:message name="candidate" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
-                </html:link>
-                <br>
-        	</logic:iterate>
-	<% } %>
+<logic:iterate id="candidate" name="candidateList" indexId="indexCandidate">
+	<bean:define id="candidateLink">
+		/chooseCandidate.do?candidateID=<bean:write name="candidate" property="idInternal"/>
+	</bean:define>
+	<html:link page='<%= pageContext.findAttribute("candidateLink").toString() %>'>
+        <bean:write name="candidate" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.nome" /> - 
+		<bean:message name="candidate" property="specialization.name" bundle="ENUMERATION_RESOURCES"/>
+    </html:link>
+    <br/>
+</logic:iterate>
