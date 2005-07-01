@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -610,8 +611,8 @@ public class ListCandidatesDispatchAction extends DispatchAction {
         editCandidateForm.set("fatherName", infoPerson.getNomePai());
         editCandidateForm.set("motherName", infoPerson.getNomeMae());
 
-        if (infoPerson.getInfoPais() == null) {
-            editCandidateForm.set("nationality", null);
+        if (infoPerson.getInfoPais() == null) {            
+            editCandidateForm.set("nationality", ResourceBundle.getBundle("ServidorApresentacao.GlobalResources").getString("default.nationality"));
         } else {
             editCandidateForm.set("nationality", infoPerson.getInfoPais().getNationality());
         }
