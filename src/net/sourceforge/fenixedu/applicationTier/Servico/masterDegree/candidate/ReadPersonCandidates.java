@@ -16,69 +16,45 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.candidate;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
-import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
-import net.sourceforge.fenixedu.domain.ICandidateSituation;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.State;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadPersonCandidates implements IService {
 
-    public Object run(IUserView userView) throws ExcepcaoInexistente, FenixServiceException {
-
-        ISuportePersistente sp = null;
+    public Object run(IUserView userView) throws ExcepcaoInexistente, FenixServiceException,
+            ExcepcaoPersistencia {
 
         String username = new String(userView.getUtilizador());
-        List candidates = null;
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            candidates = sp.getIPersistentMasterDegreeCandidate().readMasterDegreeCandidatesByUsername(
-                    username);
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        List candidates = sp.getIPersistentMasterDegreeCandidate().readMasterDegreeCandidatesByUsername(
+                username);
 
-        if (candidates == null)
+        if (candidates == null) {
             throw new ExcepcaoInexistente("No Candidates Found !!");
-
-        Iterator iterator = candidates.iterator();
-        List result = new ArrayList();
-        while (iterator.hasNext()) {
-            IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) iterator.next();
-            InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
-                    .newInfoFromDomain(masterDegreeCandidate);
-            Iterator situationIterator = masterDegreeCandidate.getSituations().iterator();
-            List situations = new ArrayList();
-            while (situationIterator.hasNext()) {
-                InfoCandidateSituation infoCandidateSituation = Cloner
-                        .copyICandidateSituation2InfoCandidateSituation((ICandidateSituation) situationIterator
-                                .next());
-                situations.add(infoCandidateSituation);
-
-                // Check if this is the Active Situation
-                if (infoCandidateSituation.getValidation().equals(new State(State.ACTIVE)))
-                    infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
-            }
-            infoMasterDegreeCandidate.setSituationList(situations);
-            result.add(infoMasterDegreeCandidate);
-
         }
-        return result;
+
+        return CollectionUtils.collect(candidates, new Transformer() {
+
+            public Object transform(Object arg0) {
+                IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) arg0;
+                return InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidate);
+            }
+
+        });
+
     }
 }

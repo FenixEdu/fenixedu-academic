@@ -25,26 +25,12 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ChangePersonalInfo implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public ChangePersonalInfo() {
-    }
-
     public IUserView run(IUserView userView, InfoPerson newInfoPerson) throws ExcepcaoInexistente,
             FenixServiceException, ExistingPersistentException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = null;
-        IPerson person = null;
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
         if (person == null) {
             throw new ExcepcaoInexistente("Unknown Person !!");
         }
