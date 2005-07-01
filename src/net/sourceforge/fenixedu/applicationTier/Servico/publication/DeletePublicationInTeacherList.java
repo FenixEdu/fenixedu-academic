@@ -31,7 +31,7 @@ public class DeletePublicationInTeacherList implements IService {
         IPersistentPublication persistentPublication = sp.getIPersistentPublication();
         IPersistentPublicationTeacher persistentPublicationTeacher = sp.getIPersistentPublicationTeacher();
 
-        ITeacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class, teacherId);
+        ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class, teacherId);
         IPublication publication = (IPublication) persistentPublication.readByOID(Publication.class,publicationId);
         persistentTeacher.simpleLockWrite(teacher);
         List publicationTeachers2 = (List) CollectionUtils.select(teacher.getTeacherPublications(), new Predicate() {
