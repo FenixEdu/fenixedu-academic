@@ -190,6 +190,8 @@ public abstract class SessionConstants {
     public static final String CANDIDATE_SITUATION_LIST = "candidate_situation_list";
 
     public static final String MASTER_DEGREE_CANDIDATE = "master_degree_candidate";
+    
+    public static final String MASTER_DEGREE_CANDIDATE_ID = "master_degree_candidate_id";    
 
     public static final String MASTER_DEGREE_CANDIDATE_LIST = "master_degree_candidate_list";
 
