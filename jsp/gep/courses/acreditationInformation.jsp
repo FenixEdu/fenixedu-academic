@@ -5,7 +5,10 @@
 <%@ page import="java.util.Calendar" %>
 <logic:present name="infoSiteCoursesInformation">
 	<logic:iterate id="infoSiteCourseInformation" name="infoSiteCoursesInformation">
+
 		<logic:present name="infoExecutionDegree">
+			<%-- page is to show information of a given execution degree --%>
+
 			<logic:iterate id="curricularCourse" name="infoSiteCourseInformation" property="infoCurricularCourses">
 				<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.idInternal"/>
 				<logic:equal name="curricularCourse" 
@@ -18,22 +21,32 @@
 					</h3>
 					<h3><bean:message key="label.acred.course" bundle="GEP_RESOURCES"/>
 					<bean:write name="curricularCourse" property="name"/></h3>
-					<table width="90%" cellspacing="1" border="0">
+					<table class="ects_headertable" width="90%" cellspacing="0" border="0">
+						<tr>
+							<td><strong><bean:message key="label.ects.curricularYear" bundle="GEP_RESOURCES"/></strong></td>
+							<td><strong><bean:message key="label.ects.semester" bundle="GEP_RESOURCES"/></strong></td>
+							<td colspan="2"><strong><bean:message key="label.ects.branch" bundle="GEP_RESOURCES"/></strong></td>
+						</tr>											
+						<logic:iterate id="curricularCourseScope" name="curricularCourse" property="infoScopes">
+							<tr>
+					  			<td><bean:write name="curricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year"/></td>
+								<td><bean:write name="curricularCourseScope" property="infoCurricularSemester.semester" /></td>
+								<td colspan="2">
+									<logic:present name="curricularCourseScope" property="infoBranch.acronym">
+										<bean:write name="curricularCourseScope" property="infoBranch.acronym"/>
+									</logic:present>
+									<logic:notPresent name="curricularCourseScope" property="infoBranch.acronym">-</logic:notPresent>
+								</td>											
+							</tr>
+						</logic:iterate>
 						<tr>
 							<td>
 								<strong>
-									<bean:message key="label.ects.curricularYear" bundle="GEP_RESOURCES"/>/
-									<bean:message key="label.ects.semester" bundle="GEP_RESOURCES"/>/
-									<bean:message key="label.ects.branch" bundle="GEP_RESOURCES"/>
+									<bean:message key="label.gep.code" bundle="GEP_RESOURCES"/>:
 								</strong>
 							</td>
-				  			<td>
-				  				<logic:iterate id="curricularCourseScope" name="curricularCourse" property="infoScopes">
-									<bean:write name="curricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year" />&nbsp;
-									<bean:write name="curricularCourseScope" property="infoCurricularSemester.semester" />&nbsp;
-									<bean:write name="curricularCourseScope" property="infoBranch.acronym"/>
-									<br/ >
-								</logic:iterate>
+							<td>
+								<bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.sigla"/>
 							</td>
 							<td>
 								<strong><bean:message key="label.ects.mandatoryOrOptional"
@@ -47,16 +60,6 @@
 						  			<bean:message key="message.courseInformation.optional" />
 						  		</logic:equal>
 					  		</td>		  				
-						</tr>
-						<tr>
-							<td>
-								<strong>
-									<bean:message key="label.gep.code" bundle="GEP_RESOURCES"/>:
-								</strong>
-							</td>
-							<td colspan="3">
-								<bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.sigla"/>
-							</td>
 						</tr>
 					 	<tr>
 							<td><strong><bean:message key="label.ects.credits"
@@ -80,7 +83,7 @@
 							<td>
 								<strong><bean:message key="label.ects.executionYear" bundle="GEP_RESOURCES"/></strong>
 							</td>							
-							<td>
+							<td colspan="3">
 								<bean:write name="infoExecutionDegree" property="infoExecutionYear.year"/>
 							</td>
 						</tr>
@@ -88,7 +91,7 @@
 							<td>
 								<strong><bean:message key="label.ects.executionPeriod" bundle="GEP_RESOURCES"/></strong>
 							</td>
-							<td>
+							<td colspan="3">
 								<bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.infoExecutionPeriod.name"/>
 							</td>
 						</tr>
@@ -269,9 +272,13 @@
 						</tr>
 					</table>
 				</logic:equal>
+				<br/><hr><br/><br/>
 			</logic:iterate>
 		</logic:present>
+		
 		<logic:notPresent name="infoExecutionDegree">
+			<%-- page is to show information of ALL execution degrees --%>
+
 			<logic:iterate id="curricularCourse" name="infoSiteCourseInformation" property="infoCurricularCourses">
 				<h2><bean:message key="label.acred.courseInfo" bundle="GEP_RESOURCES"/></h2>
 				<h3>
@@ -281,22 +288,32 @@
 				<br/>
 				<h3><bean:message key="label.acred.course" bundle="GEP_RESOURCES"/>
 				<bean:write name="curricularCourse" property="name"/></h3>
-				<table width="90%" cellspacing="1" border="0">
+				<table class="ects_headertable" width="90%" cellspacing="0">
+					<tr>
+						<td><strong><bean:message key="label.ects.curricularYear" bundle="GEP_RESOURCES"/></strong></td>
+						<td><strong><bean:message key="label.ects.semester" bundle="GEP_RESOURCES"/></strong></td>
+						<td colspan="2"><strong><bean:message key="label.ects.branch" bundle="GEP_RESOURCES"/></strong></td>
+					</tr>											
+					<logic:iterate id="curricularCourseScope" name="curricularCourse" property="infoScopes">
+						<tr>
+				  			<td><bean:write name="curricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year"/></td>
+							<td><bean:write name="curricularCourseScope" property="infoCurricularSemester.semester" /></td>
+							<td colspan="2">
+								<logic:present name="curricularCourseScope" property="infoBranch.acronym">
+									<bean:write name="curricularCourseScope" property="infoBranch.acronym"/>
+								</logic:present>
+								<logic:notPresent name="curricularCourseScope" property="infoBranch.acronym">-</logic:notPresent>
+							</td>											
+						</tr>
+					</logic:iterate>
 					<tr>
 						<td>
 							<strong>
-								<bean:message key="label.ects.curricularYear" bundle="GEP_RESOURCES"/>/
-								<bean:message key="label.ects.semester" bundle="GEP_RESOURCES"/>/
-								<bean:message key="label.ects.branch" bundle="GEP_RESOURCES"/>
+								<bean:message key="label.gep.code" bundle="GEP_RESOURCES"/>:
 							</strong>
 						</td>
-			  			<td>
-			  				<logic:iterate id="curricularCourseScope" name="curricularCourse" property="infoScopes">
-								<bean:write name="curricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year" />&nbsp;
-								<bean:write name="curricularCourseScope" property="infoCurricularSemester.semester" />&nbsp;
-								<bean:write name="curricularCourseScope" property="infoBranch.acronym"/>
-								<br/ >
-							</logic:iterate>
+						<td>
+							<bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.sigla"/>
 						</td>
 						<td>
 							<strong><bean:message key="label.ects.mandatoryOrOptional"
@@ -310,16 +327,7 @@
 					  			<bean:message key="message.courseInformation.optional" />
 					  		</logic:equal>
 				  		</td>		  				
-					</tr>
-					<tr>
-						<td>
-							<strong>
-								<bean:message key="label.gep.code" bundle="GEP_RESOURCES"/>:
-							</strong>
-						</td>
-						<td colspan="3">
-							<bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.sigla"/>
-						</td>
+						
 					</tr>
 				 	<tr>
 						<td><strong><bean:message key="label.ects.credits"
@@ -330,7 +338,7 @@
 					</tr>
 					<tr>
 						<td><strong><bean:message key="label.ects.webPage"
-												  bundle="GEP_RESOURCES"/></strong>
+												  bundle="GEP_RESOURCES"/></strong></td>
 						<td colspan="3">
 							<bean:define id="objectCode" name="infoSiteCourseInformation" property="infoExecutionCourse.idInternal"/>
 							<bean:define id="courseURL" type="java.lang.String">
@@ -340,6 +348,22 @@
 								<bean:write name="curricularCourse" property="acronym"/>
 							</bean:define>
 							<html:link href="<%= courseURL %>"><bean:write name="courseURL"/></html:link>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<strong><bean:message key="label.ects.executionYear" bundle="GEP_RESOURCES"/></strong>
+						</td>							
+						<td colspan="3">
+							<bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.infoExecutionPeriod.infoExecutionYear.year"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<strong><bean:message key="label.ects.executionPeriod" bundle="GEP_RESOURCES"/></strong>
+						</td>
+						<td colspan="3">
+							<bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.infoExecutionPeriod.name"/>
 						</td>
 					</tr>
 					<bean:define id="labels" value="false"/>
@@ -518,8 +542,10 @@
 						</td>
 					</tr>
 				</table>
+			<br/><hr><br/><br/>
 			</logic:iterate>
 		</logic:notPresent>
+
 	</logic:iterate>
 	<% String today = Calendar.getInstance().getTime().toGMTString(); %>
 	<p align="right"><%=today%></p>
