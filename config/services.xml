@@ -7744,13 +7744,10 @@
 	<service>
 		<name>ReadMasterDegreeCandidateByID</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.ReadMasterDegreeCandidateByID
+            net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.candidate.ReadMasterDegreeCandidateByID
 		</implementationClass>
-		<description />
 		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="CoordinatorAuthorization" />
-		</filterChains>
+		<filterChains/>
 	</service>
 	<service>
 		<name>ReadExecutionDegreeByDegreeCurricularPlanID</name>
@@ -8827,5 +8824,5 @@
         <isTransactional>true</isTransactional>
         <filterChains>
         </filterChains>
-    </service>
+    </service>  
 </serviceDefinitions>
