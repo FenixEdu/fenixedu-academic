@@ -178,6 +178,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contr
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantTypeVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.owner.GrantOwnerVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.places.campus.CampusVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.projectsManagement.ProjectAccessVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.CandidacyVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.CaseStudyChoiceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.CaseStudyVO;
@@ -508,7 +509,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentProjectAccess getIPersistentProjectAccess() {
-        return null;
+        return new ProjectAccessVO();
     }
 
     public IPersistentManagementPositionCreditLine getIPersistentManagementPositionCreditLine() {
