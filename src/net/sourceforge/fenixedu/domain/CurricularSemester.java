@@ -9,11 +9,6 @@ package net.sourceforge.fenixedu.domain;
 public class CurricularSemester extends CurricularSemester_Base {
 
     public CurricularSemester() {
-        setSemester(null);
-        setIdInternal(null);
-        setCurricularYearKey(null);
-        setCurricularYear(null);
-        setScopes(null);
     }
 
     public CurricularSemester(Integer semester, ICurricularYear curricularYear) {

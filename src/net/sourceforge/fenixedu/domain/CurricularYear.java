@@ -9,7 +9,6 @@ package net.sourceforge.fenixedu.domain;
 public class CurricularYear extends CurricularYear_Base {
 
     public CurricularYear() {
-        setYear(null);
     }
 
     public CurricularYear(Integer year) {
@@ -30,4 +29,5 @@ public class CurricularYear extends CurricularYear_Base {
         result += "year = " + this.getYear() + "]\n";
         return result;
     }
+
 }

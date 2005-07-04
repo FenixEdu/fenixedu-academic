@@ -14,16 +14,12 @@ package net.sourceforge.fenixedu.domain;
 public class DepartmentCourse extends DepartmentCourse_Base {
 
     public DepartmentCourse() {
-        setNome("");
-        setSigla("");
-        setDepartamento(null);
     }
 
     public DepartmentCourse(String nome, String sigla, IDepartment departamento) {
-        setCodigoInterno(null);
-        setNome(nome);
-        setSigla(sigla);
-        setDepartamento(departamento);
+        this.setNome(nome);
+        this.setSigla(sigla);
+        this.setDepartamento(departamento);
     }
 
     public boolean equals(Object obj) {
