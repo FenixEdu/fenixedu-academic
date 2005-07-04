@@ -21,11 +21,6 @@ import net.sourceforge.fenixedu.util.State;
 public class CandidateSituation extends CandidateSituation_Base {
 
 	public CandidateSituation() {
-	    setMasterDegreeCandidate(null);
-	    setSituation(null);
-	    setDate(null);
-	    setRemarks(null);
-	    setValidation(null);   
 	}
 
 	public CandidateSituation(Date date, String remarks, State validation,

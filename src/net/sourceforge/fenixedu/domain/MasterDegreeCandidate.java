@@ -21,19 +21,8 @@ import net.sourceforge.fenixedu.util.State;
 public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
 
 	public MasterDegreeCandidate() {
-		setMajorDegree(null);
-		setExecutionDegree(null);
-		setCandidateNumber(null);
-		setSpecialization(null);
-		setMajorDegreeSchool(null);
-		setMajorDegreeYear(null);
-		setAverage(null);
-		setSituations(null);
-		setPerson(null);
-        setGuider(null);
-        setHasGuider(false);
-        setCourseAssistant(false);
-        setCoursesToAssist("");		
+        this.setHasGuider(false);
+        this.setCourseAssistant(false);
 	}
 
 	public MasterDegreeCandidate(IPerson person,
@@ -42,23 +31,22 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
 					String majorDegreeSchool, Integer majorDegreeYear, Double average,
             ITeacher guider, Boolean hasGuider,
             Boolean courseAssistant, String coursesToAssist) {
-		setPerson(person);
+		this.setPerson(person);
 		this.setExecutionDegree(executionDegree);
-		setCandidateNumber(candidateNumber);
-        setSpecialization(specialization);
-		setMajorDegree(majorDegree);
-		setMajorDegreeSchool(majorDegreeSchool);
-		setMajorDegreeYear(majorDegreeYear);
-		setAverage(average);
-        setGuider(guider);
-        setHasGuider(hasGuider);
-        setCourseAssistant(courseAssistant);
-        setCoursesToAssist(coursesToAssist);		
+		this.setCandidateNumber(candidateNumber);
+        this.setSpecialization(specialization);
+		this.setMajorDegree(majorDegree);
+		this.setMajorDegreeSchool(majorDegreeSchool);
+		this.setMajorDegreeYear(majorDegreeYear);
+		this.setAverage(average);
+        this.setGuider(guider);
+        this.setHasGuider(hasGuider);
+        this.setCourseAssistant(courseAssistant);
+        this.setCoursesToAssist(coursesToAssist);		
 
 	}
 
 	public boolean equals(Object o) {
-
 		boolean result = false;
 		if (o instanceof IMasterDegreeCandidate) {
 
