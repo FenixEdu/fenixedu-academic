@@ -271,8 +271,8 @@
 							</td>
 						</tr>
 					</table>
+					<br/><hr><br/><br/>
 				</logic:equal>
-				<br/><hr><br/><br/>
 			</logic:iterate>
 		</logic:present>
 		
