@@ -31,10 +31,10 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IMark;
 import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Mark;
-import net.sourceforge.fenixedu.domain.ResponsibleFor;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -108,7 +108,7 @@ public class SubmitMarks implements IService {
             IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
             IPerson pessoa = pessoaPersistente.lerPessoaPorUsername(userView.getUtilizador());
             IEmployee employee = readEmployee(pessoa);
-            ITeacher teacher = ((ResponsibleFor) professors.get(0)).getTeacher();
+            ITeacher teacher = ((IResponsibleFor) professors.get(0)).getTeacher();
 
             
             //Separate improvments/normal/not enrolled/postGraduate attends
