@@ -46,7 +46,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class InsertPublicationInTeacherList implements IService {
 
     public SiteView run(Integer teacherId, Integer publicationId, String publicationArea)
-            throws ExcepcaoPersistencia {
+            throws Exception {
         InfoSitePublications infoSitePublications = new InfoSitePublications();
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
@@ -64,13 +64,21 @@ public class InsertPublicationInTeacherList implements IService {
         IPublicationTeacher publicationTeacher = persistentPublicationTeacher
                 .readByTeacherAndPublication(teacher, publication);
 
-        if (publicationTeacher == null)
+        if (publicationTeacher == null) {
             publicationTeacher = new PublicationTeacher();
 
-        persistentPublicationTeacher.simpleLockWrite(publicationTeacher);
-        publicationTeacher.setPublication(publication);
-        publicationTeacher.setTeacher(teacher);
-        publicationTeacher.setPublicationArea(PublicationArea.getEnum(publicationArea));
+            persistentPublicationTeacher.simpleLockWrite(publicationTeacher);
+            publicationTeacher.setPublication(publication);
+            publicationTeacher.setTeacher(teacher);
+            publicationTeacher.setPublicationArea(PublicationArea.getEnum(publicationArea));
+
+            persistentTeacher.simpleLockWrite(teacher);
+            teacher.getTeacherPublications().add(publicationTeacher);
+            persistentPublication.simpleLockWrite(publication);
+            publication.getPublicationTeachers().add(publicationTeacher);
+        } else {
+            throw new Exception("Business Logic bug");
+        }
         return null;
     }
 
