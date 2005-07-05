@@ -54,9 +54,9 @@ public class ReimbursementGuideSituation extends ReimbursementGuideSituation_Bas
      */
     public void setOfficialDate(Calendar officialDate) {
         if (officialDate != null) {
-            this.setModification(officialDate.getTime());    
+            this.setOfficial(officialDate.getTime());    
         } else {
-            this.setModification(null);
+            this.setOfficial(null);
         }
     }
 
