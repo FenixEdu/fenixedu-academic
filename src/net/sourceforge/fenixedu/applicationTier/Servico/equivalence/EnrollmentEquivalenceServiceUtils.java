@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithInfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -156,8 +155,8 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service {
     protected String getEnrollmentGrade(IEnrolment enrollment) {
         // This sorts the list ascendingly so we need to reverse it to get the
         // first object.
-        Collections.sort(enrollment.getEvaluations());
+        Collections.sort((List)enrollment.getEvaluations());
         Collections.reverse(enrollment.getEvaluations());
-        return ((IEnrolmentEvaluation) enrollment.getEvaluations().get(0)).getGrade();
+        return enrollment.getEvaluations().get(0).getGrade();
     }
 }

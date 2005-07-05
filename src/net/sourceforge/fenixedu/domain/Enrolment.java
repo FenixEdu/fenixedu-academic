@@ -32,16 +32,11 @@ public class Enrolment extends Enrolment_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
-
         if (obj instanceof IEnrolment) {
-            IEnrolment enrolment = (IEnrolment) obj;
-
-            result = this.getStudentCurricularPlan().equals(enrolment.getStudentCurricularPlan())
-                    && this.getCurricularCourse().equals(enrolment.getCurricularCourse())
-                    && this.getExecutionPeriod().equals(enrolment.getExecutionPeriod());
+            final IEnrolment enrolment = (IEnrolment) obj;
+            return this.getIdInternal().equals(enrolment.getIdInternal());
         }
-        return result;
+        return false;
     }
 
     private void createNewEnrolmentLog(EnrolmentAction action, PersistenceBroker arg0)
@@ -56,7 +51,6 @@ public class Enrolment extends Enrolment_Base {
 
     public void afterDelete(PersistenceBroker arg0) throws PersistenceBrokerException {
         createNewEnrolmentLog(EnrolmentAction.UNENROL, arg0);
-
     }
 
     public void afterInsert(PersistenceBroker arg0) throws PersistenceBrokerException {

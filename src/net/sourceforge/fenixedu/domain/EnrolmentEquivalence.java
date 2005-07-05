@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-
 /**
  * @author dcs-rjao
  * 
@@ -9,18 +8,12 @@ package net.sourceforge.fenixedu.domain;
 
 public class EnrolmentEquivalence extends EnrolmentEquivalence_Base {
 
-    public EnrolmentEquivalence() {
-    }
-
     public boolean equals(Object obj) {
-        boolean resultado = false;
-
         if (obj instanceof IEnrolmentEquivalence) {
-            IEnrolmentEquivalence equivalence = (IEnrolmentEquivalence) obj;
-
-            resultado = (this.getEnrolment().equals(equivalence.getEnrolment()));
+            final IEnrolmentEquivalence enrolmentEquivalence = (IEnrolmentEquivalence) obj;
+            return this.getIdInternal().equals(enrolmentEquivalence.getIdInternal());
         }
-        return resultado;
+        return false;
     }
 
     public String toString() {
@@ -28,4 +21,5 @@ public class EnrolmentEquivalence extends EnrolmentEquivalence_Base {
         result += "enrolment = " + getEnrolment() + "; ";
         return result;
     }
+
 }

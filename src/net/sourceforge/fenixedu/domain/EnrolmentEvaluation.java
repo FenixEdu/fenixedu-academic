@@ -33,13 +33,11 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
     }
     
     public boolean equals(Object obj) {
-        boolean result = false;
         if (obj instanceof IEnrolmentEvaluation) {
-            IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) obj;
-            result = this.getEnrolment().equals(enrolmentEvaluation.getEnrolment())
-                    && this.getIdInternal().equals(enrolmentEvaluation.getIdInternal());
+            final IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) obj;
+            return this.getIdInternal().equals(enrolmentEvaluation.getIdInternal());
         }
-        return result;
+        return false;
     }
 
     /**

@@ -7,14 +7,11 @@ package net.sourceforge.fenixedu.domain;
 public class CreditsInAnySecundaryArea extends CreditsInAnySecundaryArea_Base {
 
     public boolean equals(Object obj) {
-        boolean result = false;
         if (obj instanceof ICreditsInAnySecundaryArea) {
-            ICreditsInAnySecundaryArea creditsInSpecificScientificArea = (ICreditsInAnySecundaryArea) obj;
-            result = this.getEnrolment().equals(creditsInSpecificScientificArea.getEnrolment())
-                    && this.getStudentCurricularPlan().equals(
-                            creditsInSpecificScientificArea.getStudentCurricularPlan());
+            final ICreditsInAnySecundaryArea creditsInAnySecundaryArea = (ICreditsInAnySecundaryArea) obj;
+            return this.getIdInternal().equals(creditsInAnySecundaryArea.getIdInternal());
         }
-        return result;
+        return false;
     }
 
     public String toString() {

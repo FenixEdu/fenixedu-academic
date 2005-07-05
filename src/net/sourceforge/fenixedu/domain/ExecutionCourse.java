@@ -64,21 +64,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     }
 
-    public void addGroupPropertiesExecutionCourse(
-            IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse) {
-        if (getGroupPropertiesExecutionCourse() == null) {
-            setGroupPropertiesExecutionCourse(new ArrayList());
-            getGroupPropertiesExecutionCourse().add(groupPropertiesExecutionCourse);
-        } else {
-            getGroupPropertiesExecutionCourse().add(groupPropertiesExecutionCourse);
-        }
-    }
-
-    public void removeGroupPropertiesExecutionCourse(
-            IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse) {
-        getGroupPropertiesExecutionCourse().remove(groupPropertiesExecutionCourse);
-    }
-
     public boolean existsGroupPropertiesExecutionCourse(
             IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse) {
         return getGroupPropertiesExecutionCourse().contains(groupPropertiesExecutionCourse);

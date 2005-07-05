@@ -20,15 +20,11 @@ public class BibliographicReference extends BibliographicReference_Base {
     }
     
     public boolean equals(Object obj) {
-        boolean result = false;
         if (obj instanceof IBibliographicReference) {
-            IBibliographicReference refBiblio = (IBibliographicReference) obj;
-            result = getTitle().equals(refBiblio.getTitle())
-                    && getAuthors().equals(refBiblio.getAuthors())
-                    && getReference().equals(refBiblio.getReference())
-                    && (getYear() == refBiblio.getYear());
+            final IBibliographicReference bibliographicReference = (IBibliographicReference) obj;
+            return this.getIdInternal().equals(bibliographicReference.getIdInternal());
         }
-        return result;
+        return false;
     }
 
 }

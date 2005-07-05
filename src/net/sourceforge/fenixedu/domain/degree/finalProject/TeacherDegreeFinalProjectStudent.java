@@ -20,13 +20,9 @@ public class TeacherDegreeFinalProjectStudent extends TeacherDegreeFinalProjectS
         ICreditsEventOriginator, PersistenceBrokerAware {
 
     public boolean equals(Object obj) {
-        if (obj instanceof TeacherDegreeFinalProjectStudent) {
-            TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (TeacherDegreeFinalProjectStudent) obj;
-
-            return (this.getStudent().equals(teacherDegreeFinalProjectStudent.getStudent())
-                    && this.getTeacher().equals(teacherDegreeFinalProjectStudent.getTeacher()) && this
-                    .getExecutionPeriod().equals(teacherDegreeFinalProjectStudent.getExecutionPeriod()));
-
+        if (obj instanceof ITeacherDegreeFinalProjectStudent) {
+            final ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (ITeacherDegreeFinalProjectStudent) obj;
+            return this.getIdInternal().equals(teacherDegreeFinalProjectStudent.getIdInternal());
         }
         return false;
     }
@@ -39,7 +35,7 @@ public class TeacherDegreeFinalProjectStudent extends TeacherDegreeFinalProjectS
         ITeacher teacher = this.getTeacher();
         teacher.notifyCreditsChange(CreditsEvent.DEGREE_FINAL_PROJECT_STUDENT, this);
     }
-    
+
     public void afterInsert(PersistenceBroker broker) throws PersistenceBrokerException {
         notifyTeacher();
     }
@@ -51,7 +47,7 @@ public class TeacherDegreeFinalProjectStudent extends TeacherDegreeFinalProjectS
     public void afterDelete(PersistenceBroker broker) throws PersistenceBrokerException {
         notifyTeacher();
     }
-    
+
     public void beforeUpdate(PersistenceBroker broker) throws PersistenceBrokerException {
     }
 

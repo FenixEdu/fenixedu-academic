@@ -27,13 +27,13 @@ public class Employee extends Employee_Base {
         result += "]";
         return result;
     }
-    
+
     public boolean equals(Object obj) {
-        boolean resultado = false;
         if (obj instanceof IEmployee) {
-            resultado = getEmployeeNumber().equals(((IEmployee) obj).getEmployeeNumber());
+            final IEmployee employee = (IEmployee) obj;
+            return this.getIdInternal().equals(employee.getIdInternal());
         }
-        return resultado;
+        return false;
     }
 
     public void fillEmployeeHistoric() {

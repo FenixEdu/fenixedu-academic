@@ -135,8 +135,8 @@ public class RoomSiteComponentBuilder {
                             infoRoomOccupation.setInfoRoom(infoRoom);
                             infoLesson.setInfoRoomOccupation(infoRoomOccupation);
 
-                            shift.setAssociatedLessons(new ArrayList(1));
-                            shift.getAssociatedLessons().add(infoLesson);
+//                            shift.setAssociatedLessons(new ArrayList(1));
+//                            shift.getAssociatedLessons().add(infoLesson);
 
                             IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
                             InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);

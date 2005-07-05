@@ -44,15 +44,11 @@ public class Curriculum extends Curriculum_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
         if (obj instanceof ICurriculum) {
-            ICurriculum curriculum = (ICurriculum) obj;
-
-            result = ((getCurricularCourse() == null && curriculum.getCurricularCourse() == null) || (getCurricularCourse() != null
-                    && curriculum.getCurricularCourse() != null && getCurricularCourse().equals(
-                    curriculum.getCurricularCourse())));
+            final ICurriculum curriculum = (ICurriculum) obj;
+            return this.getIdInternal().equals(curriculum.getIdInternal());
         }
-        return result;
+        return false;
     }
 
     public String toString() {

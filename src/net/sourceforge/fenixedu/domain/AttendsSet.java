@@ -21,19 +21,6 @@ public class AttendsSet extends AttendsSet_Base {
         return result;
     }
 
-    public void addAttendInAttendsSet(IAttendInAttendsSet attendInAttendsSet) {
-        if (attendInAttendsSet == null) {
-            super.setAttendInAttendsSet(new ArrayList());
-            super.getAttendInAttendsSet().add(attendInAttendsSet);
-        } else {
-            super.getAttendInAttendsSet().add(attendInAttendsSet);
-        }
-    }
-
-    public void removeAttendInAttendsSet(IAttendInAttendsSet attendInAttendsSet) {
-        super.getAttendInAttendsSet().remove(attendInAttendsSet);
-    }
-
     public boolean existsAttendInAttendsSet(IAttendInAttendsSet attendInAttendsSet) {
         return super.getAttendInAttendsSet().contains(attendInAttendsSet);
     }

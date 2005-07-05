@@ -10,16 +10,11 @@ public class CreditsInScientificArea extends CreditsInScientificArea_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
         if (obj instanceof ICreditsInScientificArea) {
-            ICreditsInScientificArea creditsInSpecificScientificArea = (ICreditsInScientificArea) obj;
-            result = this.getEnrolment().equals(creditsInSpecificScientificArea.getEnrolment())
-                    && this.getStudentCurricularPlan().equals(
-                            creditsInSpecificScientificArea.getStudentCurricularPlan())
-                    && this.getScientificArea().equals(
-                            creditsInSpecificScientificArea.getScientificArea());
+            final ICreditsInScientificArea creditsInScientificArea = (ICreditsInScientificArea) obj;
+            return this.getIdInternal().equals(creditsInScientificArea.getIdInternal());
         }
-        return result;
+        return false;
     }
 
     public String toString() {

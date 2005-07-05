@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.domain.credits;
 
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.credits.event.CreditsEvent;
 
 import org.apache.ojb.broker.PersistenceBroker;
@@ -15,6 +14,10 @@ import org.apache.ojb.broker.PersistenceBrokerException;
  */
 public abstract class CreditLine extends CreditLine_Base implements PersistenceBrokerAware {
 
+    protected abstract CreditsEvent getCreditEventGenerated();
+
+    protected abstract void notifyTeacher();
+    
     public void afterDelete(PersistenceBroker broker) throws PersistenceBrokerException {
         notifyTeacher();
     }
@@ -27,11 +30,6 @@ public abstract class CreditLine extends CreditLine_Base implements PersistenceB
         notifyTeacher();
     }
 
-    protected void notifyTeacher() {
-        ITeacher teacher = this.getTeacher();
-        teacher.notifyCreditsChange(getCreditEventGenerated(), this);
-    }
-
     public void afterLookup(PersistenceBroker broker) throws PersistenceBrokerException {
     }
 
@@ -42,9 +40,6 @@ public abstract class CreditLine extends CreditLine_Base implements PersistenceB
     }
 
     public void beforeUpdate(PersistenceBroker broker) throws PersistenceBrokerException {
-
     }
-
-    protected abstract CreditsEvent getCreditEventGenerated();
 
 }

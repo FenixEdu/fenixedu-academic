@@ -5,6 +5,7 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
@@ -14,17 +15,17 @@ public class Contributor extends Contributor_Base {
     }
 
     public Contributor(Integer contributorNumber, String contributorName, String contributorAddress) {
-        setContributorNumber(contributorNumber);
-        setContributorName(contributorName);
-        setContributorAddress(contributorAddress);
+        this.setContributorNumber(contributorNumber);
+        this.setContributorName(contributorName);
+        this.setContributorAddress(contributorAddress);
     }
 
-    public boolean equals(Object o) {
-        return ((o instanceof IContributor)
-                && (getContributorNumber().equals(((IContributor) o).getContributorNumber()))
-                && (getContributorName().equals(((IContributor) o).getContributorName())) && (getContributorAddress()
-                .equals(((IContributor) o).getContributorAddress())));
-
+    public boolean equals(Object obj) {
+        if (obj instanceof IContributor) {
+            final IContributor contributor = (IContributor) obj;
+            return this.getIdInternal().equals(contributor.getIdInternal());
+        }
+        return false;
     }
 
     public String toString() {

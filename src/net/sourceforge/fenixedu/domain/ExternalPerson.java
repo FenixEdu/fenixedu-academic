@@ -12,12 +12,11 @@ package net.sourceforge.fenixedu.domain;
 public class ExternalPerson extends ExternalPerson_Base {
 
     public boolean equals(Object obj) {
-        boolean result = false;
         if (obj instanceof IExternalPerson) {
-            IExternalPerson externalPerson = (IExternalPerson) obj;
-            result = this.getPerson().equals(externalPerson.getPerson());
+            final IExternalPerson externalPerson = (IExternalPerson) obj;
+            return this.getIdInternal().equals(externalPerson.getIdInternal());
         }
-        return result;
+        return false;
     }
 
 }

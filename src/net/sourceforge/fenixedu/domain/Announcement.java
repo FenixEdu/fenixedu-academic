@@ -42,14 +42,11 @@ public class Announcement extends Announcement_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
         if (obj instanceof IAnnouncement) {
-            IAnnouncement announcement = (IAnnouncement) obj;
-            resultado = this.getTitle().equals(announcement.getTitle())
-                    && this.getInformation().equals(announcement.getInformation());
-
+            final IAnnouncement announcement = (IAnnouncement) obj;
+            return this.getIdInternal().equals(announcement.getIdInternal());
         }
-        return resultado;
+        return false;
     }
 
     public void editAnnouncement(final String newAnnouncementTitle,

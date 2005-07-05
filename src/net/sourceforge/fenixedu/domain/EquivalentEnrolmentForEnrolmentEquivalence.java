@@ -7,20 +7,16 @@ package net.sourceforge.fenixedu.domain;
 /**
  * @author jpvl
  */
-public class EquivalentEnrolmentForEnrolmentEquivalence extends EquivalentEnrolmentForEnrolmentEquivalence_Base {
-
-    public EquivalentEnrolmentForEnrolmentEquivalence() {
-    }
+public class EquivalentEnrolmentForEnrolmentEquivalence extends
+        EquivalentEnrolmentForEnrolmentEquivalence_Base {
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-
         if (obj instanceof IEquivalentEnrolmentForEnrolmentEquivalence) {
-            IEquivalentEnrolmentForEnrolmentEquivalence equivalence = (IEquivalentEnrolmentForEnrolmentEquivalence) obj;
-
-            resultado = (this.getEnrolmentEquivalence().equals(equivalence.getEnrolmentEquivalence()))
-                    && (this.getEquivalentEnrolment().equals(equivalence.getEquivalentEnrolment()));
+            final IEquivalentEnrolmentForEnrolmentEquivalence equivalentEnrolmentForEnrolmentEquivalence = (IEquivalentEnrolmentForEnrolmentEquivalence) obj;
+            return this.getIdInternal().equals(
+                    equivalentEnrolmentForEnrolmentEquivalence.getIdInternal());
         }
-        return resultado;
+        return false;
     }
+
 }

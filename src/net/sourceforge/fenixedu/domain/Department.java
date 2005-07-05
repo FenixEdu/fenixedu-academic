@@ -13,23 +13,12 @@ package net.sourceforge.fenixedu.domain;
 
 public class Department extends Department_Base {
 
-//    private Set disciplinasAssociadas;
-
-    public Department() {
-    }
-
-    public Department(String name, String code) {
-        setName(name);
-        setCode(code);
-    }
-
     public boolean equals(Object obj) {
-        boolean resultado = false;
         if (obj instanceof IDepartment) {
-            IDepartment d = (IDepartment) obj;
-            resultado = getCode().equals(d.getCode());
+            final IDepartment department = (IDepartment) obj;
+            return this.getIdInternal().equals(department.getIdInternal());
         }
-        return resultado;
+        return false;
     }
 
     public String toString() {
@@ -41,15 +30,4 @@ public class Department extends Department_Base {
         return result;
     }
 
-  
-/*	
-    public Set getDisciplinasAssociadas() {
-        return disciplinasAssociadas;
-    }
-
-
-    public void setDisciplinasAssociadas(Set disciplinasAssociadas) {
-        this.disciplinasAssociadas = disciplinasAssociadas;
-    }
-*/
 }

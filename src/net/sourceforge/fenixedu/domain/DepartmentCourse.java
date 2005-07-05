@@ -13,27 +13,17 @@ package net.sourceforge.fenixedu.domain;
 
 public class DepartmentCourse extends DepartmentCourse_Base {
 
-    public DepartmentCourse() {
-    }
-
-    public DepartmentCourse(String nome, String sigla, IDepartment departamento) {
-        this.setNome(nome);
-        this.setSigla(sigla);
-        this.setDepartamento(departamento);
-    }
-
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof DepartmentCourse) {
-            DepartmentCourse d = (DepartmentCourse) obj;
-            resultado = (getNome().equals(d.getNome()) && getSigla().equals(d.getSigla()));
+        if (obj instanceof IDepartmentCourse) {
+            final IDepartmentCourse departmentCourse = (IDepartmentCourse) obj;
+            return this.getIdInternal().equals(departmentCourse.getIdInternal());
         }
-        return resultado;
+        return false;
     }
 
     public String toString() {
         String result = "[DISCIPLINA_DEPARTAMENTO";
-        result += ", codInt=" + getCodigoInterno();
+        result += ", codInt=" + getIdInternal();
         result += ", sigla=" + getSigla();
         result += ", nome=" + getNome();
         result += ", departamento=" + getDepartamento();

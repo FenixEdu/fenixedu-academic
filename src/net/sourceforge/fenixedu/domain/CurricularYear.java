@@ -16,12 +16,11 @@ public class CurricularYear extends CurricularYear_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
         if (obj instanceof ICurricularYear) {
-            ICurricularYear curricularYear = (ICurricularYear) obj;
-            resultado = (this.getYear().equals(curricularYear.getYear()));
+            final ICurricularYear curricularYear = (ICurricularYear) obj;
+            return this.getIdInternal().equals(curricularYear.getIdInternal());
         }
-        return resultado;
+        return false;
     }
 
     public String toString() {

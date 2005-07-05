@@ -25,13 +25,11 @@ public class Branch extends Branch_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
         if (obj instanceof IBranch) {
-            IBranch branch = (IBranch) obj;
-            result = this.getCode().equals(branch.getCode())
-                    && this.getDegreeCurricularPlan().equals(branch.getDegreeCurricularPlan());
+            final IBranch branch = (IBranch) obj;
+            return this.getIdInternal().equals(branch.getIdInternal());
         }
-        return result;
+        return false;
     }
 
     public Boolean representsCommonBranch() {

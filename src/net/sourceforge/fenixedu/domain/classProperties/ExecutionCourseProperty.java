@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.classProperties;
 
 
+
 /**
  * @author David Santos in Apr 7, 2004
  */
@@ -8,13 +9,11 @@ package net.sourceforge.fenixedu.domain.classProperties;
 public class ExecutionCourseProperty extends ExecutionCourseProperty_Base {
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
         if (obj instanceof IExecutionCourseProperty) {
-            IExecutionCourseProperty o = (IExecutionCourseProperty) obj;
-            resultado = (this.getName().equals(o.getName()) && this.getExecutionCourse().equals(
-                    o.getExecutionCourse()));
+            final IExecutionCourseProperty executionCourseProperty = (IExecutionCourseProperty) obj;
+            return this.getIdInternal().equals(executionCourseProperty.getIdInternal());
         }
-        return resultado;
+        return false;
     }
 
     public String toString() {

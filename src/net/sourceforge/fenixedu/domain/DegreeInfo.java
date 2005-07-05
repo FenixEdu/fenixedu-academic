@@ -37,13 +37,11 @@ public class DegreeInfo extends DegreeInfo_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
         if (obj instanceof IDegreeInfo) {
-            IDegreeInfo degreeInfo = (IDegreeInfo) obj;
-            result = (getDegree() != null && getDegree().equals(degreeInfo.getDegree()));
+            final IDegreeInfo degreeInfo = (IDegreeInfo) obj;
+            return this.getIdInternal().equals(degreeInfo.getIdInternal());
         }
-
-        return result;
+        return false;
     }
 
 }

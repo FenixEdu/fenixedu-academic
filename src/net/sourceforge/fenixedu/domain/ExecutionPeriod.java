@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.fileSuport.INode;
  * 
  * @author João Mota
  * @author jpvl
- *  
+ * 
  */
 public class ExecutionPeriod extends ExecutionPeriod_Base {
 
@@ -25,7 +25,7 @@ public class ExecutionPeriod extends ExecutionPeriod_Base {
     public boolean equals(Object obj) {
         if (obj instanceof IExecutionPeriod) {
             final IExecutionPeriod executionPeriod = (IExecutionPeriod) obj;
-            return getIdInternal().equals(executionPeriod.getIdInternal());
+            return this.getIdInternal().equals(executionPeriod.getIdInternal());
         }
         return super.equals(obj);
     }

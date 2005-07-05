@@ -131,10 +131,6 @@ class net.sourceforge.fenixedu.domain.Attends extends net.sourceforge.fenixedu.d
 	interface "
 	public java.util.List getAttendsSets();
 
-	public void addAttendInAttendsSet(IAttendInAttendsSet attendInAttendsSet);
-	
-	public void removeAttendInAttendsSet(IAttendInAttendsSet attendInAttendsSet);
-	
 	public boolean existsAttendInAttendsSet(IAttendInAttendsSet attendInAttendsSet);
 	"	
 }
@@ -147,11 +143,7 @@ class net.sourceforge.fenixedu.domain.AttendsSet extends net.sourceforge.fenixed
     interface "
    	public java.util.List getAttends();
     
-    public void addAttendInAttendsSet(IAttendInAttendsSet attendInAttendsSet);
-
-	public void removeAttendInAttendsSet(IAttendInAttendsSet attendInAttendsSet);
-
-	public boolean existsAttendInAttendsSet(IAttendInAttendsSet attendInAttendsSet);
+    public boolean existsAttendInAttendsSet(IAttendInAttendsSet attendInAttendsSet);
 
 	public void addStudentGroup(IStudentGroup studentGroup);
 
@@ -606,7 +598,6 @@ class net.sourceforge.fenixedu.domain.DepartmentCourse extends net.sourceforge.f
 	String nome;
 	String sigla;
 	Integer chaveDepartamento;
-	Integer codigoInterno;
 }
 
 
@@ -837,10 +828,6 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 	
 	public IGroupProperties getGroupPropertiesByName(String name);
 	
-	public void addGroupPropertiesExecutionCourse(IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
-	
-	public void removeGroupPropertiesExecutionCourse(IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
-
 	public boolean existsGroupPropertiesExecutionCourse(IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
 		
 	public boolean existsGroupPropertiesExecutionCourse();
@@ -1153,10 +1140,6 @@ class net.sourceforge.fenixedu.domain.GroupProperties extends net.sourceforge.fe
 	public void setEnrolmentEndDay(java.util.Calendar enrolmentEndDay);
     
     public java.util.List getExecutionCourses();
-    
-    public void addGroupPropertiesExecutionCourse(IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
-
-	public void removeGroupPropertiesExecutionCourse(IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse);
     "
 }
 
@@ -2350,6 +2333,13 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	public net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits getExecutionPeriodCredits(IExecutionPeriod executionPeriod);
 	
 	public void notifyCreditsChange(net.sourceforge.fenixedu.domain.credits.event.CreditsEvent creditsEvent, net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator originator);
+    /*
+    public java.util.List<net.sourceforge.fenixedu.domain.credits.IManagementPositionCreditLine> managementPositionCreditLines();
+    
+    public java.util.List<net.sourceforge.fenixedu.domain.credits.IOtherTypeCreditLine> otherTypeCreditLines();
+    
+    public java.util.List<net.sourceforge.fenixedu.domain.credits.IServiceExemptionCreditLine> serviceExemptionSituations();
+*/
 	"
 }
 
@@ -2573,46 +2563,27 @@ class net.sourceforge.fenixedu.domain.transactions.Transaction extends net.sourc
 	"	
 }
 
-class net.sourceforge.fenixedu.domain.transactions.PaymentTransaction extends net.sourceforge.fenixedu.domain.transactions.Transaction {
-	Integer keyGuideEntry;
-}
+    class net.sourceforge.fenixedu.domain.transactions.PaymentTransaction extends net.sourceforge.fenixedu.domain.transactions.Transaction {
+    	Integer keyGuideEntry;
+    }
 
-class net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction extends net.sourceforge.fenixedu.domain.transactions.Transaction {
-	Boolean wasInternalBalance;
-	Double value;
-	Integer keyReimbursementGuideEntry;
-	String remarks;
-	Integer keyPersonAccount;
-	Integer keyResponsiblePerson;
-}
+        class net.sourceforge.fenixedu.domain.transactions.GratuityTransaction extends net.sourceforge.fenixedu.domain.transactions.PaymentTransaction {
+            Integer keyGratuitySituation;
+        }
 
-class net.sourceforge.fenixedu.domain.transactions.GratuityTransaction extends net.sourceforge.fenixedu.domain.transactions.PaymentTransaction {
-	Boolean wasInternalBalance;
-	Double value;	
-	String remarks;
-	Integer keyGratuitySituation;
-	Integer keyPersonAccount;
-	Integer keyResponsiblePerson;
-}
+        class net.sourceforge.fenixedu.domain.transactions.SmsTransaction extends net.sourceforge.fenixedu.domain.transactions.PaymentTransaction {
+        }
 
-class net.sourceforge.fenixedu.domain.transactions.SmsTransaction extends net.sourceforge.fenixedu.domain.transactions.PaymentTransaction {
-	Boolean wasInternalBalance;
-	Double value;
-	String remarks;
-	Integer keyPersonAccount;
-	Integer keyResponsiblePerson;
-}
+        class net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction extends net.sourceforge.fenixedu.domain.transactions.PaymentTransaction {
+            Integer keyExecutionYear;
+            Integer keyStudent;
+        }
+        
+    class net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction extends net.sourceforge.fenixedu.domain.transactions.Transaction {
+    	Integer keyReimbursementGuideEntry;
+    }
 
-class net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction extends net.sourceforge.fenixedu.domain.transactions.PaymentTransaction {
-	Boolean wasInternalBalance;
-	Double value;
-	String remarks;
-	Integer keyPersonAccount;
-	Integer keyExecutionYear;
-	Integer keyResponsiblePerson;
-	Integer keyStudent;
-}
-
+    
 class net.sourceforge.fenixedu.domain.WorkLocation extends net.sourceforge.fenixedu.domain.DomainObject {
 	String name;
 }
@@ -2797,20 +2768,13 @@ relation CourseEquivalencyTheme {
 }
 
 
-relation CreditLineTeacher {
-    net.sourceforge.fenixedu.domain.credits.CreditLine playsRole associatedCreditLines {
-        multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
-}
-
-
 relation CurricularCourseCourseEquivalency {
     net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency playsRole courseEquivalencies {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse;
 }
+
 
 relation CurricularCourseCurricularCourseEquivalence {
 	net.sourceforge.fenixedu.domain.CurricularCourseEquivalence playsRole curricularCourseEquivalences {
@@ -3928,11 +3892,6 @@ relation InsuranceTransactionExecutionYear {
 	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
 }
 
-relation InsuranceTransactionGuideEntry {
-	net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction playsRole insuranceTransaction;
-	net.sourceforge.fenixedu.domain.GuideEntry playsRole guideEntry;
-}
-
 relation InsuranceValueExecutionYear {
 	net.sourceforge.fenixedu.domain.InsuranceValue playsRole insuranceValue;
 	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear;
@@ -4178,6 +4137,7 @@ relation PaymentPhaseGratuityValues {
 	net.sourceforge.fenixedu.domain.GratuityValues playsRole gratuityValues;
 }
 
+
 relation PaymentTransactionGuideEntry {
 	net.sourceforge.fenixedu.domain.transactions.PaymentTransaction playsRole paymentTransactions {
 		multiplicity *;
@@ -4185,12 +4145,6 @@ relation PaymentTransactionGuideEntry {
 	net.sourceforge.fenixedu.domain.GuideEntry playsRole guideEntry;
 }
 
-relation PaymentTransactionPersonAccount {
-	net.sourceforge.fenixedu.domain.transactions.PaymentTransaction playsRole paymentTransactions {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.PersonAccount playsRole personAccount;
-}
 
 relation PeriodRoomOccupation {
 	net.sourceforge.fenixedu.domain.Period playsRole period;
@@ -4390,17 +4344,12 @@ relation ReimbursementGuideSituationReimbursementGuide {
 	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuide;
 }
 
-relation ReimbursementTransactionPersonAccount {
-	net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction playsRole reimbursementTransactions {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.PersonAccount playsRole personAccount;
-}
 
 relation ReimbursementTransactionReimbursementGuideEntry {
 	net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction playsRole reimbursementTransaction;
 	net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntry;
 }
+
 
 relation ResidenceCandidaciesStudent {
     net.sourceforge.fenixedu.domain.student.ResidenceCandidacies playsRole associatedResidenceCandidacies {
@@ -4593,12 +4542,6 @@ relation SiteAnnouncement {
 	net.sourceforge.fenixedu.domain.Site playsRole site;
 }
 
-relation SmsTransactionPersonAccount {
-	net.sourceforge.fenixedu.domain.transactions.SmsTransaction playsRole smsTransactions {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.PersonAccount playsRole personAccount;
-}
 
 relation StudentCurricularPlanBranch {
     net.sourceforge.fenixedu.domain.StudentCurricularPlan playsRole studentCurricularPlans {

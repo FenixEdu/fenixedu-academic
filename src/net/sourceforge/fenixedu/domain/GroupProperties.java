@@ -115,21 +115,4 @@ public class GroupProperties extends GroupProperties_Base {
         return executionCourses;
     }
 
-    public void addGroupPropertiesExecutionCourse(
-            IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse) {
-
-        if (super.getGroupPropertiesExecutionCourse() == null) {
-            super.setGroupPropertiesExecutionCourse(new ArrayList());
-            super.getGroupPropertiesExecutionCourse().add(groupPropertiesExecutionCourse);
-        } else {
-            super.getGroupPropertiesExecutionCourse().add(groupPropertiesExecutionCourse);
-        }
-
-    }
-
-    public void removeGroupPropertiesExecutionCourse(
-            IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse) {
-        super.getGroupPropertiesExecutionCourse().remove(groupPropertiesExecutionCourse);
-    }
-
 }

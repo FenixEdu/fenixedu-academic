@@ -46,19 +46,6 @@ public class Attends extends Attends_Base {
         return attendsSets;
     }
 
-    public void addAttendInAttendsSet(IAttendInAttendsSet attendInAttendsSet) {
-        if (getAttendInAttendsSet() == null) {
-            setAttendInAttendsSet(new ArrayList());
-            getAttendInAttendsSet().add(attendInAttendsSet);
-        } else {
-            getAttendInAttendsSet().add(attendInAttendsSet);
-        }
-    }
-
-    public void removeAttendInAttendsSet(IAttendInAttendsSet attendInAttendsSet) {
-        getAttendInAttendsSet().remove(attendInAttendsSet);
-    }
-
     public boolean existsAttendInAttendsSet(IAttendInAttendsSet attendInAttendsSet) {
         return getAttendInAttendsSet().contains(attendInAttendsSet);
     }

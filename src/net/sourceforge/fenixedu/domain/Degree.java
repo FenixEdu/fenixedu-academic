@@ -6,7 +6,6 @@
 
 package net.sourceforge.fenixedu.domain;
 
-
 /**
  * 
  * @author Nuno Nunes & Joana Mota
@@ -25,12 +24,11 @@ public class Degree extends Degree_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
         if (obj instanceof IDegree) {
-            IDegree curso = (IDegree) obj;
-            resultado = getSigla().equals(curso.getSigla());
+            final IDegree degree = (IDegree) obj;
+            return this.getIdInternal().equals(degree.getIdInternal());
         }
-        return resultado;
+        return false;
     }
 
     public IDegreeCurricularPlan getNewDegreeCurricularPlan() {

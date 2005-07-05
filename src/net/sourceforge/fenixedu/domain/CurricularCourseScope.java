@@ -70,23 +70,11 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-
         if (obj instanceof ICurricularCourseScope) {
-            ICurricularCourseScope ccs = (ICurricularCourseScope) obj;
-
-            resultado = (((getBranch() == null && ccs.getBranch() == null) || (getBranch() != null
-                    && ccs.getBranch() != null && getBranch().equals(ccs.getBranch())))
-                    && ((getCurricularCourse() == null && ccs.getCurricularCourse() == null) || (getCurricularCourse() != null
-                            && ccs.getCurricularCourse() != null && getCurricularCourse().equals(
-                            ccs.getCurricularCourse())))
-                    && ((getCurricularSemester() == null && ccs.getCurricularSemester() == null) || (getCurricularSemester() != null
-                            && ccs.getCurricularSemester() != null && getCurricularSemester().equals(
-                            ccs.getCurricularSemester()))) && ((getEndDate() == null && ccs.getEndDate() == null) || (getEndDate() != null
-                    && ccs.getEndDate() != null && getEndDate().equals(ccs.getEndDate()))));
+            final ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
+            return getIdInternal().equals(curricularCourseScope.getIdInternal());
         }
-
-        return resultado;
+        return false;
     }
 
     public Boolean isActive() {

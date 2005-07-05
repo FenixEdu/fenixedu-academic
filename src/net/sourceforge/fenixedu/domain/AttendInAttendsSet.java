@@ -31,13 +31,12 @@ public class AttendInAttendsSet extends AttendInAttendsSet_Base {
     /**
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public boolean equals(Object arg0) {
-        boolean result = false;
-        if (arg0 instanceof IAttendInAttendsSet) {
-            result = (getAttend().equals(((IAttendInAttendsSet) arg0).getAttend()))
-                    && (getAttendsSet().equals(((IAttendInAttendsSet) arg0).getAttendsSet()));
+    public boolean equals(Object obj) {
+        if (obj instanceof IAttendInAttendsSet) {
+            final IAttendInAttendsSet attendInAttendsSet = (IAttendInAttendsSet) obj;
+            return this.getIdInternal().equals(attendInAttendsSet.getIdInternal());
         }
-        return result;
+        return false;
     }
 
 }

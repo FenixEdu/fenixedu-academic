@@ -1,0 +1,5 @@
+package relations;
+
+public class EnrolmentEquivalenceEquivalentEnrolmentForEnrolmentEquivalence extends EnrolmentEquivalenceEquivalentEnrolmentForEnrolmentEquivalence_Base {
+    
+}

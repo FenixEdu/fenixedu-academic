@@ -10,7 +10,7 @@ package net.sourceforge.fenixedu.domain;
  *  
  */
 public class ExamStudentRoom extends ExamStudentRoom_Base {
-    
+
     /**
      *  
      */
@@ -18,22 +18,17 @@ public class ExamStudentRoom extends ExamStudentRoom_Base {
     }
 
     public ExamStudentRoom(IExam exam, IStudent student, IRoom room) {
-        setExam(exam);
-        setStudent(student);
-        setRoom(room);
+        this.setExam(exam);
+        this.setStudent(student);
+        this.setRoom(room);
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-
         if (obj instanceof IExamStudentRoom) {
-            IExamStudentRoom examStudentRoom = (IExamStudentRoom) obj;
-            IRoom room = examStudentRoom.getRoom();
-            IRoom thisRoom = this.getRoom();
-            resultado = this.getExam().equals(examStudentRoom.getExam())
-                    && (((thisRoom == null) && (room == null)) || ((thisRoom != null) && (thisRoom
-                            .equals(room)))) && this.getStudent().equals(examStudentRoom.getStudent());
+            final IExamStudentRoom examStudentRoom = (IExamStudentRoom) obj;
+            return this.getIdInternal().equals(examStudentRoom.getIdInternal());
         }
-        return resultado;
+        return false;
     }
+
 }

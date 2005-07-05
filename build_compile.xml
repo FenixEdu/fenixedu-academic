@@ -33,7 +33,7 @@
     <property name="web-content" location="jsp"/>
 
 	<!-- DML definition file -->
-	<property name="dml.definition.file" value="domain_model.dml"/>
+	<property name="dml.definition.file" value="${config}/domain_model.dml"/>
 
 	<!-- Compilation options -->
 	<property name="compile.debug"       value="on"/>
@@ -464,7 +464,19 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			<src path="${src_gen}"/>
 			<src path="${src}"/>
 		</javac>
-	</target>
+        <java classname="net.sourceforge.fenixedu.tools.AddOJBConstructors" 
+			dir="${build.home.webinf.classes}"
+			fork="true">
+			<classpath>
+				<pathelement path="${build.home.webinf.classes}"/>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+			<arg value="net.sourceforge.fenixedu.persistenceTier.OJB.DomainAllocator"/>
+			<arg value="${dml.definition.file}"/>
+		</java>	
+    </target>
 
     <target name="includeJ2EEjar"
             description="Copies j2ee jar to deploy dir.">

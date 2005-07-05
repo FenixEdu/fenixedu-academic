@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.IStudentCurricularPlanLEEC;
+import net.sourceforge.fenixedu.domain.IStudentCurricularPlanLEIC;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
@@ -85,13 +87,13 @@ public class DeleteBranches implements IService {
 		branch.getDegreeCurricularPlan().getAreas().remove(branch);
 		
 		IPersistentStudentCurricularPlan persistentSCP = sp.getIStudentCurricularPlanPersistente();
-		List<IStudentCurricularPlan> scpsLEIC = branch.getSecundaryStudentCurricularPlansLEIC();
+		List<IStudentCurricularPlanLEIC> scpsLEIC = branch.getSecundaryStudentCurricularPlansLEIC();
 		for(IStudentCurricularPlan scp : scpsLEIC) {
 			persistentSCP.simpleLockWrite(scp);
 			scp.setSecundaryBranch(null);
 		}
 		
-		List<IStudentCurricularPlan> scpsLEEC = branch.getSecundaryStudentCurricularPlansLEEC();
+		List<IStudentCurricularPlanLEEC> scpsLEEC = branch.getSecundaryStudentCurricularPlansLEEC();
 		for(IStudentCurricularPlan scp : scpsLEEC) {
 			persistentSCP.simpleLockWrite(scp);
 			scp.setSecundaryBranch(null);

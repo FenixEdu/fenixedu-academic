@@ -619,8 +619,9 @@ public class ExecutionCourseSiteComponentBuilder {
 
             IShift shift = lesson.getShift();
 			InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-            shift.setAssociatedLessons(new ArrayList(1));
-            shift.getAssociatedLessons().add(infoLesson);
+            
+            infoShift.setInfoLessons(new ArrayList(1));
+            infoShift.getInfoLessons().add(infoLesson);
 
             IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
             InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
@@ -861,13 +862,11 @@ public class ExecutionCourseSiteComponentBuilder {
         List infoCurricularCourseList = new ArrayList();
         if (executionCourse.getAssociatedCurricularCourses() != null)
             for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) executionCourse
-                        .getAssociatedCurricularCourses().get(i);
+                ICurricularCourse curricularCourse = executionCourse.getAssociatedCurricularCourses().get(i);
                 InfoCurricularCourse infoCurricularCourse = copyFromDomain(curricularCourse);
                 infoCurricularCourseScopeList = new ArrayList();
                 for (int j = 0; j < curricularCourse.getScopes().size(); j++) {
-                    ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse
-                            .getScopes().get(j);
+                    ICurricularCourseScope curricularCourseScope = curricularCourse.getScopes().get(j);
                     InfoCurricularCourseScope infoCurricularCourseScope = copyFromDomain(curricularCourseScope);
                     infoCurricularCourseScopeList.add(infoCurricularCourseScope);
                 }

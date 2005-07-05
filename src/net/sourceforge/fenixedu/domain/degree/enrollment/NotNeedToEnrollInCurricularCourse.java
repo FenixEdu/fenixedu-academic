@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.degree.enrollment;
 
-
 /**
  * @author David Santos in Jun 17, 2004
  */
@@ -12,15 +11,11 @@ public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricul
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
         if (obj instanceof INotNeedToEnrollInCurricularCourse) {
-            INotNeedToEnrollInCurricularCourse o = (INotNeedToEnrollInCurricularCourse) obj;
-            result = this.getCurricularCourse().equals(o.getCurricularCourse())
-                    && this.getStudentCurricularPlan().equals(o.getStudentCurricularPlan());
+            final INotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = (INotNeedToEnrollInCurricularCourse) obj;
+            return this.getIdInternal().equals(notNeedToEnrollInCurricularCourse.getIdInternal());
         }
-        return result;
+        return false;
     }
-
-
 
 }

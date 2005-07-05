@@ -8,28 +8,9 @@ package net.sourceforge.fenixedu.domain;
 /**
  * @author João Mota
  * 
- *  
+ * 
  */
 public class EvaluationMethod extends EvaluationMethod_Base {
-
-    public EvaluationMethod() {
-    }
-
-    public EvaluationMethod(IExecutionCourse executionCourse) {
-        setExecutionCourse(executionCourse);
-    }
-
-    public EvaluationMethod(IExecutionCourse executionCourse, String evaluationElements) {
-        setExecutionCourse(executionCourse);
-        setEvaluationElements(evaluationElements);
-    }
-
-    public EvaluationMethod(IExecutionCourse executionCourse, String evaluationElements,
-            String evaluationElementsEn) {
-        setExecutionCourse(executionCourse);
-        setEvaluationElements(evaluationElements);
-        setEvaluationElementsEn(evaluationElementsEn);
-    }
 
     public String toString() {
         String result = "[EvaluationMethod";
@@ -40,11 +21,12 @@ public class EvaluationMethod extends EvaluationMethod_Base {
         return result;
     }
 
-    public boolean equals(Object arg0) {
-        boolean result = false;
-        if (arg0 instanceof IEvaluationMethod) {
-            result = getExecutionCourse().equals(((IEvaluationMethod) arg0).getExecutionCourse());
+    public boolean equals(Object obj) {
+        if (obj instanceof IEvaluationMethod) {
+            final IEvaluationMethod evaluationMethod = (IEvaluationMethod) obj;
+            return this.getIdInternal().equals(evaluationMethod.getIdInternal());
         }
-        return result;
+        return false;
     }
+
 }

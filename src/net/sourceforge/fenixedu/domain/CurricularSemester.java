@@ -13,18 +13,16 @@ public class CurricularSemester extends CurricularSemester_Base {
 
     public CurricularSemester(Integer semester, ICurricularYear curricularYear) {
         this();
-        setSemester(semester);
-        setCurricularYear(curricularYear);
+        this.setSemester(semester);
+        this.setCurricularYear(curricularYear);
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
         if (obj instanceof ICurricularSemester) {
-            ICurricularSemester curricularSemester = (ICurricularSemester) obj;
-            resultado = (this.getSemester().equals(curricularSemester.getSemester()) && (this
-                    .getCurricularYear().equals(curricularSemester.getCurricularYear())));
+            final ICurricularSemester curricularSemester = (ICurricularSemester) obj;
+            return getIdInternal().equals(curricularSemester.getIdInternal());
         }
-        return resultado;
+        return false;
     }
 
     public String toString() {
@@ -34,4 +32,5 @@ public class CurricularSemester extends CurricularSemester_Base {
         result += "curricularYear = " + this.getCurricularYear() + "]\n";
         return result;
     }
+    
 }

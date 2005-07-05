@@ -6,6 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Branch;
+import net.sourceforge.fenixedu.domain.IAreaCurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
@@ -25,7 +26,7 @@ public class CurricularCourseGroupVO extends VersionedObjectsBase implements IPe
 	   public List readByBranchAndAreaType(Integer branchId, AreaType areaType) throws ExcepcaoPersistencia {
 		   
 		   IBranch branch = (IBranch)readByOID(Branch.class, branchId);
-		   List<ICurricularCourseGroup> curricularCourseGroups = branch.getAreaCurricularCourseGroups();
+		   List<IAreaCurricularCourseGroup> curricularCourseGroups = branch.getAreaCurricularCourseGroups();
 		   List<ICurricularCourseGroup> result = new ArrayList();
 		   
 		   for (ICurricularCourseGroup curricularCourseGroup : curricularCourseGroups){
@@ -40,7 +41,7 @@ public class CurricularCourseGroupVO extends VersionedObjectsBase implements IPe
 	            Integer curricularCourseId, AreaType areaType) throws ExcepcaoPersistencia {
 			
 		   IBranch branch = (IBranch)readByOID(Branch.class, branchId);
-		   List<ICurricularCourseGroup> curricularCourseGroups = branch.getAreaCurricularCourseGroups();
+		   List<IAreaCurricularCourseGroup> curricularCourseGroups = branch.getAreaCurricularCourseGroups();
 		   
 		   for (ICurricularCourseGroup curricularCourseGroup : curricularCourseGroups){
 			   if (curricularCourseGroup.getAreaType().equals(areaType)){
@@ -60,7 +61,7 @@ public class CurricularCourseGroupVO extends VersionedObjectsBase implements IPe
 	            Integer scientificAreaId, AreaType areaType) throws ExcepcaoPersistencia {
 			
 			IBranch branch = (IBranch)readByOID(Branch.class, branchId);
-			List<ICurricularCourseGroup> curricularCourseGroups = branch.getAreaCurricularCourseGroups();
+			List<IAreaCurricularCourseGroup> curricularCourseGroups = branch.getAreaCurricularCourseGroups();
 			
 			for (ICurricularCourseGroup curricularCourseGroup : curricularCourseGroups){
 				if (curricularCourseGroup.getAreaType().equals(areaType)){

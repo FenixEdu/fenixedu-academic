@@ -18,12 +18,10 @@ public class ExamExecutionCourse extends ExamExecutionCourse_Base {
     }
 
     public boolean equals(Object obj) {
-        if (obj instanceof ExamExecutionCourse) {
-            ExamExecutionCourse examObj = (ExamExecutionCourse) obj;
-            return this.getExam().equals(examObj.getExam())
-                    && this.getExecutionCourse().equals(examObj.getExecutionCourse());
+        if (obj instanceof IExamExecutionCourse) {
+            final IExamExecutionCourse examExecutionCourse = (IExamExecutionCourse) obj;
+            return this.getIdInternal().equals(examExecutionCourse.getIdInternal());
         }
-
         return false;
     }
 
@@ -31,4 +29,5 @@ public class ExamExecutionCourse extends ExamExecutionCourse_Base {
         return "[EXAM_EXECUTIONCOURSE:" + " exam= '" + this.getExam() + "'" + " execution_course= '"
                 + this.getExecutionCourse() + "'" + "]";
     }
+
 }

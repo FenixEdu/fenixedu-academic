@@ -40,12 +40,12 @@
 			<arg value="${src}"/>
 			<arg value="-db"/>
 			<arg value="${src_gen}"/>
-			<arg value="${config}/${dml.definition.file}"/>
-			<!--<arg value="-gf"/>-->
+			<arg value="-gf"/>
+			<arg value="${dml.definition.file}"/>
 			<classpath>
 				<fileset dir="${lib}">
 					<include name="dml.jar"/>
-					<!--<include name="dml-runtime.jar"/>-->
+					<include name="dml-runtime.jar"/>
 					<include name="antlr.jar"/>
 				</fileset>
 			</classpath>

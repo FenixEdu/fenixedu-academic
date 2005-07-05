@@ -42,7 +42,7 @@
 <!-- *************************************************************************************************************** -->
 <class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.DepartmentCourse" table="DEPARTMENT_COURSE">
 	<field-descriptor
-		name="codigoInterno"
+		name="idInternal"
 		column="ID_INTERNAL"
 		jdbc-type="INTEGER"
 		primarykey="true"
