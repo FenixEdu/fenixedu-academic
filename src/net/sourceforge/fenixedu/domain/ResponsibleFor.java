@@ -19,7 +19,8 @@ public class ResponsibleFor extends ResponsibleFor_Base {
         boolean result = false;
         if (obj instanceof IResponsibleFor) {
             IResponsibleFor responsibleFor = (IResponsibleFor) obj;
-            result = getIdInternal().equals(responsibleFor.getIdInternal());
+            result = getTeacher().equals(responsibleFor.getTeacher());
+            result &= getExecutionCourse().equals(responsibleFor.getExecutionCourse());
         }
         return result;
     }
