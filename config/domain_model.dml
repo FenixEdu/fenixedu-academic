@@ -1639,6 +1639,10 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
 class net.sourceforge.fenixedu.domain.PersonAccount extends net.sourceforge.fenixedu.domain.DomainObject {
 	Double balance;
 	Integer keyPerson;
+	
+	interface "
+    public java.util.List getPaymentTransactions();    
+    "
 }
 
 
