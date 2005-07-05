@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.domain.grant.owner;
 
+import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractRegime;
+
 /**
  * @author Barbosa
  * @author Pica
@@ -12,13 +14,11 @@ package net.sourceforge.fenixedu.domain.grant.owner;
 public class GrantOwner extends GrantOwner_Base {
 
     public boolean equals(Object obj) {
-        boolean result = false;
         if (obj instanceof IGrantOwner) {
-            IGrantOwner grantOwner = (IGrantOwner) obj;
-            result = (((getNumber().equals(grantOwner.getNumber())) && (getPerson().equals(grantOwner
-                    .getPerson()))));
+            final IGrantOwner grantOwner = (IGrantOwner) obj;
+            return this.getIdInternal().equals(grantOwner.getIdInternal());
         }
-        return result;
+        return false;
     }
 
 }

@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.domain.gratuity.masterDegree;
 
+import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
+
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
@@ -21,18 +23,12 @@ public class SibsPaymentFile extends SibsPaymentFile_Base {
 	}
 
 	public boolean equals(Object obj) {
-		boolean result = false;
-
-		if ((obj instanceof ISibsPaymentFile)) {
-			ISibsPaymentFile sibsFile = (ISibsPaymentFile) obj;
-			if ((sibsFile.getFilename() != null)
-					&& (getFilename().equals(sibsFile.getFilename()))) {
-				result = true;
-			}
-		}
-
-		return result;
-	}
+        if (obj instanceof ISibsPaymentFile) {
+            final ISibsPaymentFile sibsPaymentFile = (ISibsPaymentFile) obj;
+            return this.getIdInternal().equals(sibsPaymentFile.getIdInternal());
+        }
+        return false;
+    }
 
 	public String toString() {
 

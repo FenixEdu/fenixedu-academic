@@ -4,11 +4,21 @@
  */
 package net.sourceforge.fenixedu.domain.gaugingTests.physics;
 
+import net.sourceforge.fenixedu.domain.IEmployeeHistoric;
+
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 26/Nov/2003
  *  
  */
 public class GaugingTestResult extends GaugingTestResult_Base {
+    
+    public boolean equals(Object obj) {
+        if (obj instanceof IGaugingTestResult) {
+            final IGaugingTestResult gaugingTest = (IGaugingTestResult) obj;
+            return this.getIdInternal().equals(gaugingTest.getIdInternal());
+        }
+        return false;
+    }
 
 }

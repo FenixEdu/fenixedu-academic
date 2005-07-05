@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.domain.gesdis;
 
+import net.sourceforge.fenixedu.domain.gaugingTests.physics.IGaugingTestResult;
+
 
 /**
  * @author Leonor Almeida
@@ -22,5 +24,13 @@ public class CourseHistoric extends CourseHistoric_Base {
         result += ", curricularCourse=" + getCurricularCourse();
         result += "]";
         return result;
+    }
+    
+    public boolean equals(Object obj) {
+        if (obj instanceof ICourseHistoric) {
+            final ICourseHistoric courseHistoric = (ICourseHistoric) obj;
+            return this.getIdInternal().equals(courseHistoric.getIdInternal());
+        }
+        return false;
     }
 }

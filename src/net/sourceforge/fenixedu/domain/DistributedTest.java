@@ -155,5 +155,13 @@ public class DistributedTest extends DomainObject implements IDistributedTest {
     public void setImsFeedback(Boolean imsFeedback) {
         this.imsFeedback = imsFeedback;
     }
+    
+    public boolean equals(Object obj) {
+        if (obj instanceof IDistributedTest) {
+            final IDistributedTest distributedTest = (IDistributedTest) obj;
+            return this.getIdInternal().equals(distributedTest.getIdInternal());
+        }
+        return false;
+    }
 
 }

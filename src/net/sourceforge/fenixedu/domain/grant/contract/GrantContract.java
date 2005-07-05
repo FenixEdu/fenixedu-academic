@@ -4,6 +4,8 @@
  */
 package net.sourceforge.fenixedu.domain.grant.contract;
 
+import net.sourceforge.fenixedu.domain.gesdis.IStudentCourseReport;
+
 
 /**
  * @author Barbosa
@@ -13,13 +15,11 @@ package net.sourceforge.fenixedu.domain.grant.contract;
 public class GrantContract extends GrantContract_Base {
 
     public boolean equals(Object obj) {
-        boolean result = false;
         if (obj instanceof IGrantContract) {
-            IGrantContract grantContract = (IGrantContract) obj;
-            result = (((getContractNumber().equals(grantContract.getContractNumber())) && (getGrantOwner()
-                    .equals(grantContract.getGrantOwner()))));
+            final IGrantContract grantContract = (IGrantContract) obj;
+            return this.getIdInternal().equals(grantContract.getIdInternal());
         }
-        return result;
+        return false;
     }
 	
 }

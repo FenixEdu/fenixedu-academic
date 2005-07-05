@@ -14,4 +14,11 @@ package net.sourceforge.fenixedu.domain.gesdis;
  */
 public class StudentCourseReport extends StudentCourseReport_Base {
 
+    public boolean equals(Object obj) {
+        if (obj instanceof IStudentCourseReport) {
+            final IStudentCourseReport studentCourseReport = (IStudentCourseReport) obj;
+            return this.getIdInternal().equals(studentCourseReport.getIdInternal());
+        }
+        return false;
+    }
 }

@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.precedences;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.IAnnouncement;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 
 /**
@@ -24,26 +25,14 @@ public class Precedence extends Precedence_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
-        if ((obj != null) && (this.getClass().equals(obj.getClass()))) {
-            IPrecedence precedence = (IPrecedence) obj;
-            result = this.getCurricularCourse().equals(precedence.getCurricularCourse());
-            if (result) {
-                List precedenceRestrictions = precedence.getRestrictions();
-                if (precedenceRestrictions != null) {
-                    for (int i = 0; i < precedenceRestrictions.size() && result; i++) {
-                        IRestriction restriction = (IRestriction) precedenceRestrictions.get(i);
-                        result = this.getRestrictions().contains(restriction);
-                    }
-                } else {
-                    result = this.getRestrictions() == null;
-                }
-
-            }
+        if (obj instanceof IPrecedence) {
+            final IPrecedence precedence = (IPrecedence) obj;
+            return this.getIdInternal().equals(precedence.getIdInternal());
         }
-        return result;
+        return false;
     }
-
+    
+    
     public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
         List restrictions = getRestrictions();
 

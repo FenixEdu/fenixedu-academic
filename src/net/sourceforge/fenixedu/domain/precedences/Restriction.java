@@ -13,12 +13,10 @@ public abstract class Restriction extends Restriction_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
         if (obj instanceof IRestriction) {
-            IRestriction restriction = (IRestriction) obj;
-            result = restriction.getPrecedence().getCurricularCourse().equals(
-                    this.getPrecedence().getCurricularCourse());
+            final IRestriction restriction = (IRestriction) obj;
+            return this.getIdInternal().equals(restriction.getIdInternal());
         }
-        return result;
+        return false;
     }
 }

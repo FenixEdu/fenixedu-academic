@@ -50,5 +50,14 @@ public class DistributedTestAdvisory extends DomainObject implements IDistribute
     public void setKeyDistributedTest(Integer keyDistributedTest) {
         this.keyDistributedTest = keyDistributedTest;
     }
+    
+    public boolean equals(Object obj) {
+        if (obj instanceof IDistributedTestAdvisory) {
+            final IDistributedTestAdvisory distributedTestAdvisory = (IDistributedTestAdvisory) obj;
+            return this.getIdInternal().equals(distributedTestAdvisory.getIdInternal());
+        }
+        return false;
+    }
+
 
 }
