@@ -20,13 +20,11 @@ public class Mark extends Mark_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof Mark) {
-            Mark mark = (Mark) obj;
-            resultado = this.getAttend().equals(mark.getAttend())
-                    && this.getEvaluation().equals(mark.getEvaluation());
+        if (obj instanceof IMark) {
+            final IMark mark = (IMark) obj;
+            return this.getIdInternal().equals(mark.getIdInternal());
         }
-        return resultado;
+        return false;
     }
 
 }

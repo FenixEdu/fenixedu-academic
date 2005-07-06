@@ -28,12 +28,11 @@ public class Item extends Item_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
         if (obj instanceof IItem) {
-            IItem item = (IItem) obj;
-            resultado = (getName().equals(item.getName())) && getSection().equals(item.getSection());
+            final IItem item = (IItem) obj;
+            return this.getIdInternal().equals(item.getIdInternal());
         }
-        return resultado;
+        return false;
     }
 
     public String getSlideName() {
@@ -53,9 +52,9 @@ public class Item extends Item_Base {
         if (size > 0) {
             throw new notAuthorizedServiceDeleteException();
         }
-        
+
         if (this.getSection() != null && this.getSection().getAssociatedItems() != null) {
-           
+
             List<IItem> items = this.getSection().getAssociatedItems();
 
             items.remove(this);
@@ -73,40 +72,40 @@ public class Item extends Item_Base {
 
     public void editItem(String newItemName, String newItemInformation, Boolean newItemUrgent,
             Integer newOrder) {
-                
+
         if (newOrder.intValue() != this.getItemOrder().intValue()) {
             newOrder = organizeItemsOrder(newOrder, this.getItemOrder(), this.getSection());
-        }        
-               
+        }
+
         this.setInformation(newItemInformation);
         this.setItemOrder(newOrder);
         this.setName(newItemName);
-        this.setUrgent(newItemUrgent);        
+        this.setUrgent(newItemUrgent);
     }
 
     private Integer organizeItemsOrder(Integer newOrder, Integer oldOrder, ISection section) {
-        
+
         if (newOrder.intValue() == -2) {
             newOrder = new Integer(section.getAssociatedItems().size() - 1);
         }
 
         List<IItem> items = section.getAssociatedItems();
-        
+
         if (newOrder.intValue() - oldOrder.intValue() > 0)
-            for(IItem item : items) {
+            for (IItem item : items) {
                 int iterItemOrder = item.getItemOrder().intValue();
                 if (iterItemOrder > oldOrder.intValue() && iterItemOrder <= newOrder.intValue()) {
                     item.setItemOrder(new Integer(iterItemOrder - 1));
                 }
             }
         else
-            for(IItem item : items) {                
+            for (IItem item : items) {
                 int iterItemOrder = item.getItemOrder().intValue();
                 if (iterItemOrder >= newOrder.intValue() && iterItemOrder < oldOrder.intValue()) {
                     item.setItemOrder(new Integer(iterItemOrder + 1));
                 }
             }
-        
+
         return newOrder;
     }
 }

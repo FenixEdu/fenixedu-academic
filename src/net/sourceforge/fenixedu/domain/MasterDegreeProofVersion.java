@@ -81,15 +81,11 @@ public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
-
         if (obj instanceof IMasterDegreeProofVersion) {
-            IMasterDegreeProofVersion masterDegreeProofVersion = (IMasterDegreeProofVersion) obj;
-            result = getMasterDegreeThesis().equals(masterDegreeProofVersion.getMasterDegreeThesis())
-                    && this.getLastModification().equals(masterDegreeProofVersion.getLastModification());
+            final IMasterDegreeProofVersion masterDegreeProofVersion = (IMasterDegreeProofVersion) obj;
+            return this.getIdInternal().equals(masterDegreeProofVersion.getIdInternal());
         }
-
-        return result;
+        return false;
     }
 
 }
