@@ -7,20 +7,12 @@ package net.sourceforge.fenixedu.domain;
  */
 public class ResponsibleFor extends ResponsibleFor_Base {
 
-    public ResponsibleFor() {
-    }
-
-    public ResponsibleFor(ITeacher teacher, IExecutionCourse executionCourse) {
-        setTeacher(teacher);
-        setExecutionCourse(executionCourse);
-    }
-
     public boolean equals(Object obj) {
-        boolean result = false;
         if (obj instanceof IResponsibleFor) {
-            IResponsibleFor responsibleFor = (IResponsibleFor) obj;
-            result = getIdInternal().equals(responsibleFor.getIdInternal());
+            final IResponsibleFor responsibleFor = (IResponsibleFor) obj;
+            return this.getIdInternal().equals(responsibleFor.getIdInternal());
         }
-        return result;
+        return false;
     }
+
 }
