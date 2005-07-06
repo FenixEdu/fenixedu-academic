@@ -11,8 +11,8 @@ public class FinalEvaluation extends FinalEvaluation_Base {
     }
 
     public boolean equals(Object obj) {
-        if (obj instanceof FinalEvaluation) {
-            FinalEvaluation finalEvaluationObj = (FinalEvaluation) obj;
+        if (obj instanceof IFinalEvaluation) {
+            IFinalEvaluation finalEvaluationObj = (IFinalEvaluation) obj;
             return this.getIdInternal().equals(finalEvaluationObj.getIdInternal());
         }
 
