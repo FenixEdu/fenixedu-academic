@@ -19,12 +19,11 @@ public class StudentKind extends StudentKind_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
         if (obj instanceof IStudentKind) {
-            IStudentKind studentType = (IStudentKind) obj;
-            resultado = (this.getStudentType().equals(studentType.getStudentType()));
+            final IStudentKind studentKind = (IStudentKind) obj;
+            return this.getIdInternal().equals(studentKind.getIdInternal());
         }
-        return resultado;
+        return false;
     }
 
 }

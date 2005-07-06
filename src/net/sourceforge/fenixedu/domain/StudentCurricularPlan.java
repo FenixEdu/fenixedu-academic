@@ -32,18 +32,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     protected Map acumulatedEnrollments; // For enrollment purposes only
 
     public StudentCurricularPlan() {
-        setOjbConcreteClass(getClass().getName());
-    }
-
-    public boolean equals(Object obj) {
-        boolean result = false;
-
-        if (obj instanceof IStudentCurricularPlan) {
-            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) obj;
-            result = getIdInternal().equals(studentCurricularPlan.getIdInternal());
-        }
-
-        return result;
+        this.setOjbConcreteClass(getClass().getName());
     }
 
     public String toString() {
@@ -59,6 +48,14 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             result += "employee = " + this.getEmployee().getPerson().getNome() + "]\n";
         }
         return result;
+    }
+
+    public boolean equals(Object obj) {
+        if (obj instanceof IStudentCurricularPlan) {
+            final IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) obj;
+            return this.getIdInternal().equals(studentCurricularPlan.getIdInternal());
+        }
+        return false;
     }
 
     public IBranch getSecundaryBranch() {
@@ -80,7 +77,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     // -------------------------------------------------------------
 
     public List getAllEnrollments() {
-
         IStudentCurricularPlan pastStudentCurricularPlan = (IStudentCurricularPlan) CollectionUtils
                 .find(getStudent().getStudentCurricularPlans(), new Predicate() {
                     public boolean evaluate(Object obj) {
@@ -143,13 +139,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public int getNumberOfApprovedCurricularCourses() {
-
         int counter = 0;
 
         int size = getDegreeCurricularPlan().getCurricularCourses().size();
         for (int i = 0; i < size; i++) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) getDegreeCurricularPlan()
-                    .getCurricularCourses().get(i);
+            ICurricularCourse curricularCourse = getDegreeCurricularPlan().getCurricularCourses().get(i);
             if (isCurricularCourseApproved(curricularCourse)) {
                 counter++;
             }
@@ -235,7 +229,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public boolean isCurricularCourseApproved(ICurricularCourse curricularCourse) {
-
         List studentApprovedEnrollments = getStudentEnrollmentsWithApprovedState();
 
         List result = (List) CollectionUtils.collect(studentApprovedEnrollments, new Transformer() {
@@ -248,11 +241,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         });
 
         return isApproved(curricularCourse, result);
-
     }
 
     public boolean isCurricularCourseEnrolled(ICurricularCourse curricularCourse) {
-
         List studentEnrolledEnrollments = getStudentEnrollmentsWithEnrolledState();
 
         List result = (List) CollectionUtils.collect(studentEnrolledEnrollments, new Transformer() {
@@ -795,8 +786,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
         int size2 = optionalCurricularCourseGroup.getCurricularCourses().size();
         for (int j = 0; j < size2; j++) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) optionalCurricularCourseGroup
-                    .getCurricularCourses().get(j);
+            ICurricularCourse curricularCourse = optionalCurricularCourseGroup.getCurricularCourses().get(j);
             if (isCurricularCourseEnrolled(curricularCourse)
                     || isCurricularCourseApproved(curricularCourse)) {
                 count++;
