@@ -1,3 +1,34 @@
+/* 
+* ################################################################
+* 
+* FenixEdu: The Java(TM) Object-Oriented Framework for University 
+*	    Academic Applications
+* 
+* Copyright (C) 2002-2003 IST/Technical University of Lisbon
+* Contact: suporte@dot.ist.utl.pt
+* 
+* This library is free software; you can redistribute it and/or
+* modify it under the terms of the GNU Lesser General Public
+* License as published by the Free Software Foundation; either
+* version 2.1 of the License, or any later version.
+*  
+* This library is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+* Lesser General Public License for more details.
+* 
+* You should have received a copy of the GNU Lesser General Public
+* License along with this library; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
+* USA
+*  
+*  Initial developer(s):               The Fenix Team
+*                               http://fenix-ashes.ist.utl.pt/
+*
+*  Contributor(s): José Pedro Pereira - Educare S.A. - http://www.linkare.com
+* 
+* ################################################################
+*/ 
 package net.sourceforge.fenixedu.presentationTier.servlets;
 
 import java.io.IOException;
@@ -30,11 +61,7 @@ import dml.DomainModel;
 import dml.Role;
 import dml.Slot;
 
-/**
- * 
- * @author João Cachopo
- *
- */
+
 public class DomainBrowserServlet extends HttpServlet {
 
     private static DomainModel domainModel;
@@ -48,9 +75,8 @@ public class DomainBrowserServlet extends HttpServlet {
         if (domainModelName != null) {
             String domainPath = getServletContext().getRealPath(domainModelName);
             System.out.println("Using the domain at path: '" + domainPath + "'");
-            CompilerArgs compArgs = new CompilerArgs(new String[] {"-d", "/tmp", "-f", domainPath});
             try { 
-                domainModel = DmlCompiler.getDomainModel(compArgs);
+                domainModel = DmlCompiler.getDomainModel(new String[] { domainPath }, true);
             } catch (Exception e) {
                 domainModel = null;
             }
@@ -72,6 +98,8 @@ public class DomainBrowserServlet extends HttpServlet {
                 renderDomainObject(out, RequestParams.parse(req, "domainClass", "objId"));
             } else if ("/listRole".equals(path)) {
                 renderDomainObjectRole(out, RequestParams.parse(req, "domainClass", "objId", "role"));
+            } else if ("/checkDomain".equals(path)) {
+                checkDomain(out);
             } else {
                 renderMainIndex(out);
             }        
@@ -348,6 +376,132 @@ public class DomainBrowserServlet extends HttpServlet {
             out.println("<P>There are none...</P>\n");
         }
     }
+
+
+    protected void checkDomain(PrintWriter out) throws Exception {
+        out.println("<H1>Domain Check</H1>\n");
+
+        if (domainModel != null) {
+            SuportePersistenteOJB supPers = SuportePersistenteOJB.getInstance();
+
+            for (DomainClass domClass : getAllDomainClasses()) {
+                System.out.println("CHECK DOMAIN: checking " + domClass.getFullName());
+                
+                List<Role> roles = getAllRoles(domClass);
+                if (! roles.isEmpty()) {
+                    try {
+                        supPers.beginTransaction();
+                        
+                        Collection insts = supPers.getIPersistentObject().readAll(Class.forName(domClass.getFullName()));
+                        if (insts.size() == 0) {
+                            out.print("<P>Can't check ");
+                            out.print(domClass.getFullName());
+                            out.println(": there are no instances!</P>");
+                        } else {
+                            for (Role role : roles) {
+                                String header = 
+                                    "<P>Checking role " 
+                                    + role.getName() 
+                                    + " for class " 
+                                    + domClass.getFullName()
+                                    + "<UL>";
+
+                                int objsWithRoleNonEmpty = 0;
+                                int objsWithInverseOK = 0;
+                                int count = 0;
+
+                                for (Object instObj : (Collection)insts) {
+                                    if (count > 10) {
+                                        break;
+                                    } else {
+                                        count++;
+                                    }
+                                    
+                                    DomainObject domObj = getDomainObject(instObj);
+                                    Object roleValue = getAttributeValue(domObj, role.getName());
+                                    if (roleValue != null) {
+                                        if (role.getMultiplicityUpper() == 1) {
+                                            objsWithRoleNonEmpty++;
+                                            if (checkInverseRelation(domObj, getDomainObject(roleValue), role)) {
+                                                objsWithInverseOK++;
+                                            } else {
+                                                if (header != null) {
+                                                    out.println(header);
+                                                    header = null;
+                                                    renderWrongRelation(out, domObj, role, domClass);
+                                                }
+                                            }                                            
+                                        } else {
+                                            for (Object targetObj : (Collection)roleValue) {
+                                                objsWithRoleNonEmpty++;
+                                                if (checkInverseRelation(domObj, getDomainObject(targetObj), role)) {
+                                                    objsWithInverseOK++;
+                                                } else {
+                                                    if (header != null) {
+                                                        out.println(header);
+                                                        header = null;
+                                                        renderWrongRelation(out, domObj, role, domClass);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (objsWithRoleNonEmpty != objsWithInverseOK) {
+                                    if (header != null) {
+                                        out.println(header);
+                                        header = null;
+                                    }
+                                    out.print("<LI>Summary: ");
+                                    out.print(insts.size());
+                                    out.print("total objects, ");
+                                    out.print(objsWithRoleNonEmpty);
+                                    out.print(" relations checked, ");
+                                    out.print(objsWithInverseOK);
+                                    out.println(" relations with inverse OK</LI>");
+                                }
+
+                                if (header == null) {
+                                    out.println("</UL>");
+                                }
+
+                            }
+                        }
+                    } finally {
+                        supPers.abortTransaction();
+                    }
+                }
+            }
+        } else {
+            out.println("<P>There are none...</P>\n");
+        }
+    }
+
+    protected void renderWrongRelation(PrintWriter out, DomainObject obj, Role role, DomainClass domClass) throws Exception {
+        System.out.println("wrong relation");
+        out.println("<LI>");
+        renderObjectId(out, obj, domClass);
+        out.println("</LI>\n");
+    }
+
+    private boolean checkInverseRelation(DomainObject source, DomainObject target, Role role) {
+        Role inverseRole = null;
+        for (Role otherRole : (List<Role>)role.getRelation().getRoles()) {
+            if (otherRole != role) {
+                inverseRole = otherRole;
+                break;
+            }
+        }
+
+        Object inverseRoleValue = getAttributeValue(target, inverseRole.getName());
+        if (inverseRole.getMultiplicityUpper() == 1) {
+            return (source == getDomainObject(inverseRoleValue));
+        } else {
+            return ((Collection)inverseRoleValue).contains(source);
+        }
+    }
+
 
 
     private static HashMap<DomainClass,List<String>> domainClassesAttributes = new HashMap<DomainClass,List<String>>();

@@ -84,24 +84,16 @@ public class AddOJBConstructors extends ClassLoader implements Opcodes {
             System.err.println("Usage: AddOJBConstructors <DomainAllocator classFullName> <dml file 1> ... <dml file n>");
         }
 
-        String[] argsToDML = new String[args.length + 3 - 1];
-        argsToDML[0] = "-d";
-        argsToDML[1] = "/tmp";
-        argsToDML[2] = "-f";
+        String[] dmlFiles = new String[args.length - 1];
+        System.arraycopy(args, 1, dmlFiles, 0, args.length - 1);
+        DomainModel domainModel = DmlCompiler.getDomainModel(dmlFiles, true);
 
-        String domainAllocFullName = args[0];
-
-        System.arraycopy(args, 1, argsToDML, 3, args.length - 1);
-
-        CompilerArgs compArgs = new CompilerArgs(argsToDML);
-        DomainModel domainModel = DmlCompiler.getDomainModel(compArgs);
-
-        AddOJBConstructors loader = new AddOJBConstructors(domainModel);
-        
+        AddOJBConstructors loader = new AddOJBConstructors(domainModel);        
         for (Iterator iter = domainModel.getClasses(); iter.hasNext();) {
             loader.loadClass(((DomainClass)iter.next()).getFullName());
         }
 
+        String domainAllocFullName = args[0];
         dumpDomainAllocatorClass(domainAllocFullName, domainModel);
     }
 
