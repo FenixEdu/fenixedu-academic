@@ -51,17 +51,11 @@ public class ReimbursementGuide extends ReimbursementGuide_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
         if (obj instanceof IReimbursementGuide) {
-            IReimbursementGuide reimbursementGuide = (IReimbursementGuide) obj;
-
-            if ((getNumber() == null && reimbursementGuide.getNumber() == null)
-                    || (getNumber().equals(reimbursementGuide.getNumber()))) {
-                result = true;
-            }
+            final IReimbursementGuide reimbursementGuide = (IReimbursementGuide) obj;
+            return this.getIdInternal().equals(reimbursementGuide.getIdInternal());
         }
-
-        return result;
+        return false;
     }
 
     public IReimbursementGuideSituation getActiveReimbursementGuideSituation() {

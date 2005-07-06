@@ -30,7 +30,7 @@ public class ReimbursementGuideSituation extends ReimbursementGuideSituation_Bas
      */
     public void setModificationDate(Calendar modificationDate) {
         if (modificationDate != null) {
-            this.setModification(modificationDate.getTime());            
+            this.setModification(modificationDate.getTime());
         } else {
             this.setModification(null);
         }
@@ -54,24 +54,18 @@ public class ReimbursementGuideSituation extends ReimbursementGuideSituation_Bas
      */
     public void setOfficialDate(Calendar officialDate) {
         if (officialDate != null) {
-            this.setOfficial(officialDate.getTime());    
+            this.setOfficial(officialDate.getTime());
         } else {
             this.setOfficial(null);
         }
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
         if (obj instanceof IReimbursementGuideSituation) {
-            IReimbursementGuideSituation reimbursementGuideSituation = (IReimbursementGuideSituation) obj;
-
-            if ((this.getIdInternal() == null && reimbursementGuideSituation.getIdInternal() == null)
-                    || (this.getIdInternal().equals(reimbursementGuideSituation.getIdInternal()))) {
-                result = true;
-            }
+            final IReimbursementGuideSituation reimbursementGuideSituation = (IReimbursementGuideSituation) obj;
+            return this.getIdInternal().equals(reimbursementGuideSituation.getIdInternal());
         }
-
-        return result;
+        return false;
     }
 
 }

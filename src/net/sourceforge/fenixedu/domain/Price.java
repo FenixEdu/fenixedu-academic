@@ -35,18 +35,11 @@ public class Price extends Price_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
         if (obj instanceof IPrice) {
-            IPrice guideEntry = (IPrice) obj;
-
-            resultado =
-
-            getGraduationType().equals(guideEntry.getGraduationType())
-                    && getDocumentType().equals(guideEntry.getDocumentType())
-                    && getDescription().equals(guideEntry.getDescription());
+            final IPrice price = (IPrice) obj;
+            return this.getIdInternal().equals(price.getIdInternal());
         }
-
-        return resultado;
+        return false;
     }
 
 }
