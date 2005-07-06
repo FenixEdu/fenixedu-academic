@@ -14,17 +14,15 @@ public class GuideSituation extends GuideSituation_Base {
     }
 
     public GuideSituation(GuideState situation, String remarks, Date date, IGuide guide, State state) {
-        setRemarks(remarks);
-        setGuide(guide);
-        setSituation(situation);
-        setDate(date);
-        setState(state);
-
+        this.setRemarks(remarks);
+        this.setGuide(guide);
+        this.setSituation(situation);
+        this.setDate(date);
+        this.setState(state);
     }
 
     public String toString() {
         String result = "[GUIDE SITUATION";
-
         result += ", remarks=" + getRemarks();
         result += ", guide=" + getGuide();
         result += ", guide Situtation=" + getSituation();
@@ -35,19 +33,11 @@ public class GuideSituation extends GuideSituation_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof GuideSituation) {
-            GuideSituation guideSituation = (GuideSituation) obj;
-
-            if (((getGuide() == null && guideSituation.getGuide() == null) || (getGuide()
-                    .equals(guideSituation.getGuide())))
-                    && ((getSituation() == null && guideSituation.getSituation() == null) || (getSituation()
-                            .equals(guideSituation.getSituation())))) {
-                resultado = true;
-            }
+        if (obj instanceof IGuideSituation) {
+            final IGuideSituation guideSituation = (IGuideSituation) obj;
+            return this.getIdInternal().equals(guideSituation.getIdInternal());
         }
-
-        return resultado;
+        return false;
     }
 
 }

@@ -29,19 +29,11 @@ public class Guide extends Guide_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
         if (obj instanceof IGuide) {
-            IGuide guide = (IGuide) obj;
-
-            if (((getNumber() == null && guide.getNumber() == null) || (getNumber().equals(guide
-                    .getNumber())))
-                    && ((getYear() == null && guide.getYear() == null) || (getYear().equals(guide
-                            .getYear())))) {
-                resultado = true;
-            }
+            final IGuide guide = (IGuide) obj;
+            return this.getIdInternal().equals(guide.getIdInternal());
         }
-
-        return resultado;
+        return false;
     }
 
     public IGuideSituation getActiveSituation() {
