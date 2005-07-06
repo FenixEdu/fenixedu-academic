@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.domain.student;
 
-
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
@@ -20,15 +19,13 @@ public class ResidenceCandidacies extends ResidenceCandidacies_Base {
         result += "\n  - Dislocated : " + getDislocated();
         return result;
     }
-    
+
     public boolean equals(Object obj) {
-        boolean result = false;
         if (obj instanceof IResidenceCandidacies) {
-            IResidenceCandidacies residenceCandidacy = (IResidenceCandidacies) obj;
-            result = (this.getStudent().equals(residenceCandidacy.getStudent()) && this.getCreationDate()
-                    .equals(residenceCandidacy.getCreationDate()));
+            final IResidenceCandidacies residenceCandidacies = (IResidenceCandidacies) obj;
+            return this.getIdInternal().equals(residenceCandidacies.getIdInternal());
         }
-        return result;
+        return false;
     }
 
 }

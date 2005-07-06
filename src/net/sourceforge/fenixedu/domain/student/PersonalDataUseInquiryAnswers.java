@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.student;
 
-
 /**
  * @author Nuno Correia & Ricardo Rodrigues
  * 
@@ -24,12 +23,11 @@ public class PersonalDataUseInquiryAnswers extends PersonalDataUseInquiryAnswers
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj instanceof PersonalDataUseInquiryAnswers) {
-            PersonalDataUseInquiryAnswers inquiryanswer = (PersonalDataUseInquiryAnswers) obj;
-            result = getKeyStudent().equals(inquiryanswer.getKeyStudent());
+        if (obj instanceof IPersonalDataUseInquiryAnswers) {
+            final IPersonalDataUseInquiryAnswers personalDataUseInquiryAnswers = (IPersonalDataUseInquiryAnswers) obj;
+            return this.getIdInternal().equals(personalDataUseInquiryAnswers.getIdInternal());
         }
-        return result;
+        return false;
     }
 
     public void setAnswer(Integer id, Boolean answer) {
@@ -57,6 +55,5 @@ public class PersonalDataUseInquiryAnswers extends PersonalDataUseInquiryAnswers
             break;
         }
     }
-
 
 }

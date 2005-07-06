@@ -16,7 +16,7 @@ import org.apache.commons.collections.Predicate;
 public class Student extends Student_Base {
 
     public Student() {
-        setSpecialSeason(Boolean.FALSE);
+        this.setSpecialSeason(Boolean.FALSE);
     }
 
     public String toString() {
@@ -30,16 +30,11 @@ public class Student extends Student_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
         if (obj instanceof IStudent) {
-            IStudent student = (IStudent) obj;
-
-            resultado = (student != null)
-                    && ((this.getNumber().equals(student.getNumber()) && this.getDegreeType().equals(
-                            student.getDegreeType())) || (this.getDegreeType().equals(
-                            student.getDegreeType()) && this.getPerson().equals(student.getPerson())));
+            final IStudent student = (IStudent) obj;
+            return this.getIdInternal().equals(student.getIdInternal());
         }
-        return resultado;
+        return false;
     }
 
     public IStudentCurricularPlan getActiveStudentCurricularPlan() {
