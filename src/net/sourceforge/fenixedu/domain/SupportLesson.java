@@ -15,33 +15,17 @@ import org.apache.ojb.broker.PersistenceBrokerException;
 public class SupportLesson extends SupportLesson_Base implements PersistenceBrokerAware,
         ICreditsEventOriginator {
 
-    public boolean equals(Object arg0) {
-        boolean result = false;
-        if (arg0 instanceof ISupportLesson) {
-            ISupportLesson supportLessonsTimetable = (ISupportLesson) arg0;
-
-            if (elementsAreEqual(supportLessonsTimetable.getProfessorship(), this.getProfessorship())
-                    && elementsAreEqual(supportLessonsTimetable.getStartTime(), this.getStartTime())
-                    && elementsAreEqual(supportLessonsTimetable.getEndTime(), this.getEndTime())
-                    && elementsAreEqual(supportLessonsTimetable.getWeekDay(), this.getWeekDay())) {
-                result = true;
-            }
+    public boolean equals(Object obj) {
+        if (obj instanceof ISupportLesson) {
+            final ISupportLesson supportLesson = (ISupportLesson) obj;
+            return this.getIdInternal().equals(supportLesson.getIdInternal());
         }
-        return result;
+        return false;
     }
 
     public double hours() {
         TimePeriod timePeriod = new TimePeriod(this.getStartTime(), this.getEndTime());
         return timePeriod.hours().doubleValue();
-    }
-
-    private boolean elementsAreEqual(Object element1, Object element2) {
-        boolean result = false;
-        if ((element1 == null && element2 == null)
-                || (element1 != null && element2 != null && element1.equals(element2))) {
-            result = true;
-        }
-        return result;
     }
 
     public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod) {

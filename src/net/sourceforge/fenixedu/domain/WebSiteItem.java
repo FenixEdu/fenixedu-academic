@@ -51,38 +51,12 @@ public class WebSiteItem extends WebSiteItem_Base {
         return result;
     }
 
-    public boolean equals(Object arg0) {
-        boolean result = false;
-        if (arg0 instanceof IWebSiteItem) {
-            IWebSiteItem webSiteItem = (IWebSiteItem) arg0;
-
-            if (elementsAreEqual(webSiteItem.getTitle(), this.getTitle())
-                    && elementsAreEqual(webSiteItem.getCreationDate(), this.getCreationDate())
-                    && elementsAreEqual(webSiteItem.getEditor(), this.getEditor())
-                    && elementsAreEqual(webSiteItem.getAuthorName(), this.getAuthorName())
-                    && elementsAreEqual(webSiteItem.getAuthorEmail(), this.getAuthorEmail())
-                    && elementsAreEqual(webSiteItem.getExcerpt(), this.getExcerpt())
-                    && elementsAreEqual(webSiteItem.getItemBeginDay(), this.getItemBeginDay())
-                    && elementsAreEqual(webSiteItem.getItemEndDay(), this.getItemEndDay())
-                    && elementsAreEqual(webSiteItem.getKeywords(), this.getKeywords())
-                    && elementsAreEqual(webSiteItem.getMainEntryText(), this.getMainEntryText())
-                    && elementsAreEqual(webSiteItem.getOnlineBeginDay(), this.getOnlineBeginDay())
-                    && elementsAreEqual(webSiteItem.getOnlineEndDay(), this.getOnlineEndDay())
-                    && elementsAreEqual(webSiteItem.getPublished(), this.getPublished())
-                    && elementsAreEqual(webSiteItem.getWebSiteSection(), this.getWebSiteSection())) {
-                result = true;
-            }
+    public boolean equals(Object obj) {
+        if (obj instanceof IWebSiteItem) {
+            final IWebSiteItem webSiteItem = (IWebSiteItem) obj;
+            return this.getIdInternal().equals(webSiteItem.getIdInternal());
         }
-        return result;
-    }
-
-    private boolean elementsAreEqual(Object element1, Object element2) {
-        boolean result = false;
-        if ((element1 == null && element2 == null)
-                || (element1 != null && element2 != null && element1.equals(element2))) {
-            result = true;
-        }
-        return result;
+        return false;
     }
 
 }

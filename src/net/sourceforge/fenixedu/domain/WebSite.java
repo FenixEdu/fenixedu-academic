@@ -7,9 +7,9 @@ package net.sourceforge.fenixedu.domain;
 public class WebSite extends WebSite_Base {
 
     public WebSite() {
-        setMail("");
-        setStyle("");
-        setOjbConcreteClass(this.getClass().getName());
+        this.setMail("");
+        this.setStyle("");
+        this.setOjbConcreteClass(this.getClass().getName());
     }
 
     /**
@@ -29,22 +29,12 @@ public class WebSite extends WebSite_Base {
     /**
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public boolean equals(Object arg0) {
-        boolean result = false;
-
-        if (arg0 instanceof IWebSite) {
-            IWebSite webSite = (IWebSite) arg0;
-
-            if (((webSite.getName() == null && this.getName() == null) || (webSite.getName() != null
-                    && this.getName() != null && webSite.getName().equals(this.getName())))
-                    && ((webSite.getMail() == null && this.getMail() == null) || (webSite.getMail() != null
-                            && this.getMail() != null && webSite.getMail().equals(this.getMail())))
-                    && ((webSite.getStyle() == null && this.getStyle() == null) || (webSite.getStyle() != null
-                            && this.getStyle() != null && webSite.getStyle().equals(this.getStyle())))) {
-                result = true;
-            }
+    public boolean equals(Object obj) {
+        if (obj instanceof IWebSite) {
+            final IWebSite webSite = (IWebSite) obj;
+            return this.getIdInternal().equals(webSite.getIdInternal());
         }
-        return result;
+        return false;
     }
 
 }

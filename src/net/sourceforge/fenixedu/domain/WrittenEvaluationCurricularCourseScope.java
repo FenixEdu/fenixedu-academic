@@ -9,10 +9,11 @@ public class WrittenEvaluationCurricularCourseScope extends WrittenEvaluationCur
     }
 
     public boolean equals(Object obj) {
-        return ((obj instanceof WrittenEvaluationCurricularCourseScope)
-                && (((WrittenEvaluationCurricularCourseScope) obj).getCurricularCourseScope()
-                        .equals(getCurricularCourseScope())) && (((WrittenEvaluationCurricularCourseScope) obj)
-                .getWrittenEvaluation().equals(getWrittenEvaluation())));
+        if (obj instanceof IWrittenEvaluationCurricularCourseScope) {
+            final IWrittenEvaluationCurricularCourseScope writtenEvaluationCurricularCourseScope = (IWrittenEvaluationCurricularCourseScope) obj;
+            return this.getIdInternal().equals(writtenEvaluationCurricularCourseScope.getIdInternal());
+        }
+        return false;
     }
 
     public String toString() {

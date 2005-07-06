@@ -8,26 +8,19 @@ package net.sourceforge.fenixedu.domain;
 
 public class University extends University_Base {
 
-    public University() {
-    }
-
-    public boolean equals(Object obj) {
-        boolean resultado = false;
-
-        if (obj instanceof IUniversity) {
-            IUniversity universityCode = (IUniversity) obj;
-
-            resultado = (this.getCode().equals(universityCode.getCode()))
-                    && (this.getName().equals(universityCode.getName()));
-        }
-        return resultado;
-    }
-
     public String toString() {
         String result = "[" + this.getClass().getName() + "; ";
         result += "code = " + this.getCode() + "; ";
         result += "name = " + this.getName() + "; ";
         return result;
     }
-	
+
+    public boolean equals(Object obj) {
+        if (obj instanceof IUniversity) {
+            final IUniversity university = (IUniversity) obj;
+            return this.getIdInternal().equals(university.getIdInternal());
+        }
+        return false;
+    }
+
 }
