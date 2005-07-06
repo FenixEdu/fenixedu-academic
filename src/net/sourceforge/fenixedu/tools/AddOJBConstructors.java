@@ -23,10 +23,24 @@ public class AddOJBConstructors extends ClassLoader implements Opcodes {
         this.domainModel = domainModel;
     }
 
+    static String descToName(String desc) {
+        return desc.replace('/', '.');
+    }
+
+    static String nameToDesc(String name) {
+        return name.replace('.', '/');
+    }
+
+    public boolean isDomainBaseClass(String name) {
+        return (name.endsWith("_Base") && (domainModel.findClass(name.substring(0, name.length() - 5)) != null));
+    }
+
+    public boolean isDomainNonBaseClass(String name) {
+        return (domainModel.findClass(name) != null);
+    }
+
     public boolean belongsToDomainModel(String name) {
-        return ((domainModel.findClass(name) != null) 
-                || (name.endsWith("_Base") 
-                    && (domainModel.findClass(name.substring(0, name.length() - 5)) != null)));
+        return isDomainNonBaseClass(name) || isDomainBaseClass(name);
     }
 
     protected synchronized Class loadClass(String name, boolean resolve) throws ClassNotFoundException {
@@ -37,7 +51,7 @@ public class AddOJBConstructors extends ClassLoader implements Opcodes {
         }
         
         // find the resource for the class file
-        URL classURL = getResource(name.replace('.','/') + ".class");
+        URL classURL = getResource(nameToDesc(name) + ".class");
         if (classURL == null) {
             throw new ClassNotFoundException(name);
         }
@@ -100,7 +114,7 @@ public class AddOJBConstructors extends ClassLoader implements Opcodes {
     public static void dumpDomainAllocatorClass(String domainAllocFullName, DomainModel model) throws Exception {
         ClassWriter cw = new ClassWriter(true);
 
-        String domainAllocClassDesc = domainAllocFullName.replace('.', '/');
+        String domainAllocClassDesc = nameToDesc(domainAllocFullName);
         cw.visit(V1_5, ACC_PUBLIC + ACC_SUPER, domainAllocClassDesc, null, "java/lang/Object", null);
 
         String sourceName = domainAllocFullName.substring(domainAllocFullName.lastIndexOf('.') + 1);
@@ -122,7 +136,7 @@ public class AddOJBConstructors extends ClassLoader implements Opcodes {
         for (Iterator iter = model.getClasses(); iter.hasNext();) {
             String domClassName = ((DomainClass)iter.next()).getFullName();
 
-            String domClassDesc = domClassName.replace('.', '/');
+            String domClassDesc = nameToDesc(domClassName);
             String methodName = "allocate_" + domClassName.replace('.', '_');
             mv = cw.visitMethod(ACC_PUBLIC + ACC_STATIC, methodName, "()L" + domClassDesc + ";", null, null);
             mv.visitCode();
@@ -143,16 +157,27 @@ public class AddOJBConstructors extends ClassLoader implements Opcodes {
 
 
     class AddOJBConstructorClassAdapter extends ClassAdapter implements Opcodes {
-        private String superName = null;
+        private String classDesc = null;
+        private String superDesc = null;
         private boolean foundConstructor = false;
+        private boolean warnOnFiels = false;
 
         public AddOJBConstructorClassAdapter(ClassVisitor cv) {
             super(cv);
         }
 
         public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
-            this.superName = superName;
+            this.classDesc = name;
+            this.superDesc = superName;
+            this.warnOnFiels = isDomainNonBaseClass(descToName(classDesc));
             super.visit(version, access, name, signature, superName, interfaces);
+        }
+
+        public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
+            if (warnOnFiels && ((access & ACC_STATIC) == 0)) {
+                System.err.println(classDesc + ": field not declared on base class -> " + name);
+            }
+            return super.visitField(access, name, desc, signature, value);
         }
 
         public void visitEnd() {
@@ -168,15 +193,24 @@ public class AddOJBConstructors extends ClassLoader implements Opcodes {
             if ("<init>".equals(name) && CONSTRUCTOR_DESC.equals(desc)) {
                 // we process it and remove the original, if any, by returning null
                 mv.visitCode();
-                if (belongsToDomainModel(superName)) {
+                boolean initWrappers = isDomainBaseClass(descToName(classDesc));
+                if (belongsToDomainModel(descToName(superDesc))) {
                     mv.visitVarInsn(ALOAD, 0);
                     mv.visitVarInsn(ALOAD, 1);
-                    mv.visitMethodInsn(INVOKESPECIAL, superName, "<init>", CONSTRUCTOR_DESC);
+                    mv.visitMethodInsn(INVOKESPECIAL, superDesc, "<init>", CONSTRUCTOR_DESC);
+                    if (initWrappers) {
+                        mv.visitVarInsn(ALOAD, 0);
+                        mv.visitMethodInsn(INVOKESPECIAL, classDesc, "initWrappers", "()V");
+                    }
                     mv.visitInsn(RETURN);
                     mv.visitMaxs(2, 2);
                 } else {
                     mv.visitVarInsn(ALOAD, 0);
-                    mv.visitMethodInsn(INVOKESPECIAL, superName, "<init>", "()V");
+                    mv.visitMethodInsn(INVOKESPECIAL, superDesc, "<init>", "()V");
+                    if (initWrappers) {
+                        mv.visitVarInsn(ALOAD, 0);
+                        mv.visitMethodInsn(INVOKESPECIAL, classDesc, "initWrappers", "()V");
+                    }
                     mv.visitInsn(RETURN);
                     mv.visitMaxs(1, 2);
                 }
