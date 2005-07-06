@@ -11,7 +11,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
-import net.sourceforge.fenixedu.domain.publication.Author;
 import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -65,7 +64,7 @@ public class InsertPublicationAuthors implements IService {
             List authorsList = persistentAuthor.readAuthorsBySubName(infoAuthor.getAuthor());
             Iterator it1 = authorsList.iterator();
             while (it1.hasNext()) {
-                IAuthor tempAuthor = (Author) it1.next();
+                IAuthor tempAuthor = (IAuthor) it1.next();
                 // Where we'll consider that the set (Author,Organization) is
                 // unique
                 // althought it isn't that way in the database
