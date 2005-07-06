@@ -215,7 +215,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
         IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
                 .getIStudentCurricularPlanPersistente();
 
-        IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
+        IStudentCurricularPlan studentCurricularPlan = null;
         if (arguments[1] != null) {
 
             studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan.readByOID(

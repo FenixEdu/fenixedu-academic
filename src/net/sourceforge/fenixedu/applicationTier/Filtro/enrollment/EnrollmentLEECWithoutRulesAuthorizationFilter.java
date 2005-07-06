@@ -112,8 +112,7 @@ public class EnrollmentLEECWithoutRulesAuthorizationFilter extends Authorization
                 IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
                         .getIStudentCurricularPlanPersistente();
 
-                IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
-                studentCurricularPlan = persistentStudentCurricularPlan
+                IStudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan
                         .readActiveByStudentNumberAndDegreeType(studentNumber, DEGREE_TYPE);
                 if (studentCurricularPlan != null
                         && studentCurricularPlan.getDegreeCurricularPlan() != null

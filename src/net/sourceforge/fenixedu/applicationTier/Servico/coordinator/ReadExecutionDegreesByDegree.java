@@ -29,14 +29,10 @@ public class ReadExecutionDegreesByDegree implements IService {
         ISuportePersistente sp;
         List allExecutionDegrees = null;
         try {
-            IDegree degree = new Degree();
-            degree.setIdInternal(idDegree);
-
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionDegree cursoExecucaoPersistente = sp.getIPersistentExecutionDegree();
 
-            allExecutionDegrees = cursoExecucaoPersistente.readExecutionsDegreesByDegree(degree
-                    .getIdInternal());
+            allExecutionDegrees = cursoExecucaoPersistente.readExecutionsDegreesByDegree(idDegree);
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);
         }

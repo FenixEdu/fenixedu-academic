@@ -13,8 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
@@ -52,8 +50,6 @@ public class ReadStudentMarksByCurricularCourse implements IService {
         List enrolmentEvaluations = null;
         InfoTeacher infoTeacher = null;
         List infoSiteEnrolmentEvaluations = new ArrayList();
-        IEnrolment enrolment = new Enrolment();
-        IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -62,9 +58,8 @@ public class ReadStudentMarksByCurricularCourse implements IService {
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
             // read curricularCourse by ID
-            ICurricularCourse curricularCourse = new CurricularCourse();
-            curricularCourse.setIdInternal(curricularCourseID);
-            curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOID(
+            ICurricularCourse curricularCourse = 
+                (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOID(
                     CurricularCourse.class, curricularCourseID, false);
 
             final ICurricularCourse curricularCourseTemp = curricularCourse;
@@ -120,6 +115,7 @@ public class ReadStudentMarksByCurricularCourse implements IService {
 
             }
             // }
+            IEnrolment enrolment = null;
             if (executionYear != null) {
                 enrolment = sp.getIPersistentEnrolment()
                         .readEnrolmentByStudentNumberAndCurricularCourse(studentCurricularPlan.getStudent().getNumber(),
@@ -161,7 +157,7 @@ public class ReadStudentMarksByCurricularCourse implements IService {
                 if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
                     ListIterator iter = enrolmentEvaluations.listIterator();
                     while (iter.hasNext()) {
-                        enrolmentEvaluation = (IEnrolmentEvaluation) iter.next();
+                        IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iter.next();
                         InfoEnrolmentEvaluation infoEnrolmentEvaluation = Cloner
                                 .copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrolmentEvaluation);
                         InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod

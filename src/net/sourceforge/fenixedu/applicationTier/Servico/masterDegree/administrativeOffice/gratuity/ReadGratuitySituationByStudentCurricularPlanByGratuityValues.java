@@ -7,11 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
-import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
-import net.sourceforge.fenixedu.domain.IGratuityValues;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -34,15 +30,9 @@ public class ReadGratuitySituationByStudentCurricularPlanByGratuityValues implem
             IPersistentGratuitySituation persistentGratuitySituation = sp
                     .getIPersistentGratuitySituation();
 
-            IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
-            studentCurricularPlan.setIdInternal(studentCurricularPlanID);
-
-            IGratuityValues gratuityValues = new GratuityValues();
-            gratuityValues.setIdInternal(gratuityValuesID);
-
             gratuitySituation = persistentGratuitySituation
                     .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
-                            studentCurricularPlan.getIdInternal(), gratuityValues.getIdInternal());
+                            studentCurricularPlanID, gratuityValuesID);
         } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();
             throw new FenixServiceException("error.impossible.insertExemptionGratuity");

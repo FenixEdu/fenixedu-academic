@@ -44,7 +44,7 @@ public class ReadAuthorByKeyPerson implements IServico {
     }
 
     public IAuthor run(IUserView userView) throws FenixServiceException {
-        IAuthor author = new Author();
+        IAuthor author = null;
 
         ISuportePersistente sp;
         try {

@@ -50,24 +50,18 @@ public class LerOcupacaoDeTurnos implements IServico {
 
     public Object run(List infoShiftList) {
 
-        List alunos = new ArrayList();
-
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            InfoShift infoShift = new InfoShift();
             Iterator infoShiftsIterator = infoShiftList.iterator();
 
             while (infoShiftsIterator.hasNext()) {
-                infoShift = (InfoShift) infoShiftsIterator.next();
+                InfoShift infoShift = (InfoShift) infoShiftsIterator.next();
 
-                IShift shift = new Shift();
-                shift = Cloner.copyInfoShift2IShift(infoShift);
-
-                alunos = sp.getITurnoAlunoPersistente().readByShift(shift.getIdInternal());
+                List alunos = sp.getITurnoAlunoPersistente().readByShift(infoShift.getIdInternal());
 
                 Integer ocupation = new Integer(alunos.size());
-                Double percentage = new Double(alunos.size() * 100 / shift.getLotacao().intValue());
+                Double percentage = new Double(alunos.size() * 100 / infoShift.getLotacao().intValue());
 
                 infoShift.setOcupation(ocupation);
                 infoShift.setPercentage(percentage);

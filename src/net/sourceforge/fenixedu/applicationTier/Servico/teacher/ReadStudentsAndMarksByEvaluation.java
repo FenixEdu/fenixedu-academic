@@ -46,7 +46,6 @@ public class ReadStudentsAndMarksByEvaluation implements IService {
     public Object run(Integer executionCourseCode, Integer evaluationCode) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        IEvaluation evaluation = new Evaluation();
         InfoEvaluation infoEvaluation = new InfoEvaluation();
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
@@ -63,7 +62,7 @@ public class ReadStudentsAndMarksByEvaluation implements IService {
         //Evaluation
 
         IPersistentEvaluation evaluationDAO = sp.getIPersistentEvaluation();
-        evaluation = (IEvaluation) evaluationDAO.readByOID(Evaluation.class, evaluationCode);
+        IEvaluation evaluation = (IEvaluation) evaluationDAO.readByOID(Evaluation.class, evaluationCode);
 
         infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 

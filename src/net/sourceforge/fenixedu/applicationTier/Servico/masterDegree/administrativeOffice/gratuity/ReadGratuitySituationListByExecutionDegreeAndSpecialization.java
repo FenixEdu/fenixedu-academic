@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
@@ -89,10 +88,9 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
             } else {
                 // the execution degree wasn't supplied so
                 // we have to show all execution degrees from the choosen year
-                IExecutionYear executionYear = new ExecutionYear();
                 if (executionYearName != null) {
                     IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-                    executionYear = persistentExecutionYear.readExecutionYearByName(executionYearName);
+                    IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName(executionYearName);
                     if (executionYear != null) {
                         executionDegreeList = executionDegreeDAO.readByExecutionYearAndDegreeType(
                                 executionYear.getYear(), DegreeType.MASTER_DEGREE);

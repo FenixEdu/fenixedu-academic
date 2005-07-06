@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
@@ -38,13 +37,11 @@ public class LerAlunosDeTurno implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IShift shift = new Shift();
-
         IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(keyTurno
                 .getInfoExecutionCourse());
 
         ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-        shift = persistentShift.readByNameAndExecutionCourse(keyTurno.getShiftName(), executionCourse.getIdInternal());
+        IShift shift = persistentShift.readByNameAndExecutionCourse(keyTurno.getShiftName(), executionCourse.getIdInternal());
 
         alunos = sp.getITurnoAlunoPersistente().readByShift(shift.getIdInternal());
 

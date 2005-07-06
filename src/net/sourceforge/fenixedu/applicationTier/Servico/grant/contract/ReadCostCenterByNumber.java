@@ -25,12 +25,11 @@ public class ReadCostCenterByNumber implements IService {
 		//When creating a New Contract its needed to verify if the costContract exists
 		//chosen for orientator really exists
 		InfoGrantCostCenter infoGrantCostCenter = new InfoGrantCostCenter();
-		IGrantCostCenter costCenter = new GrantCostCenter();
 		
 		try {  
 			ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 			IPersistentGrantCostCenter pCostContract = sp.getIPersistentGrantCostCenter();
-			costCenter = pCostContract.readGrantCostCenterByNumber(costContractNumber);
+			IGrantCostCenter costCenter = pCostContract.readGrantCostCenterByNumber(costContractNumber);
 		    if (costCenter == null)
 		        throw new GrantOrientationTeacherNotFoundException();
 		    infoGrantCostCenter = InfoGrantCostCenter.newInfoFromDomain(costCenter);

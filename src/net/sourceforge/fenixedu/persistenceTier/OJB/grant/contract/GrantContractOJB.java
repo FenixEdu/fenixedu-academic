@@ -42,12 +42,11 @@ public class GrantContractOJB extends PersistentObjectOJB implements IPersistent
 
     public Integer readMaxGrantContractNumberByGrantOwner(Integer grantOwnerId)
             throws ExcepcaoPersistencia {
-        IGrantContract grantContract = new GrantContract();
         Integer maxGrantContractNumber = new Integer(0);
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("key_grant_owner", grantOwnerId);
-        grantContract = (IGrantContract) queryObject(GrantContract.class, criteria, "number", false);
+        IGrantContract grantContract = (IGrantContract) queryObject(GrantContract.class, criteria, "number", false);
         if (grantContract != null)
             maxGrantContractNumber = grantContract.getContractNumber();
         return maxGrantContractNumber;

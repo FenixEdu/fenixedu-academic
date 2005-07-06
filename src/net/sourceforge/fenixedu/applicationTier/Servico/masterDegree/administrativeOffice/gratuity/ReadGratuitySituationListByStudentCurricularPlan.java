@@ -38,11 +38,8 @@ public class ReadGratuitySituationListByStudentCurricularPlan implements IServic
             IPersistentGratuitySituation persistentGratuitySituation = sp
                     .getIPersistentGratuitySituation();
 
-            IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
-            studentCurricularPlan.setIdInternal(studentCurricularPlanID);
-
             gratuitySituations = persistentGratuitySituation
-                    .readGratuitySituatuionListByStudentCurricularPlan(studentCurricularPlan.getIdInternal());
+                    .readGratuitySituatuionListByStudentCurricularPlan(studentCurricularPlanID);
 
         } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();
