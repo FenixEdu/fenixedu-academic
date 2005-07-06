@@ -2,16 +2,24 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.GuideSituation;
@@ -86,7 +94,18 @@ public class CreateGuideFromTransactions implements IService {
         // infoGuideSituation.setDate(calendar.getTime());
         infoGuideSituation.setSituation(situationOfGuide);
 
-        guide = InfoGuide.newDomainFromInfo(infoGuide);
+//        guide = InfoGuide.newDomainFromInfo(infoGuide);
+        
+        guide.setCreationDate(infoGuide.getCreationDate());
+        guide.setGuideRequester(infoGuide.getGuideRequester());
+        guide.setNumber(infoGuide.getNumber());
+        guide.setPaymentDate(infoGuide.getPaymentDate());
+        guide.setPaymentType(infoGuide.getPaymentType());
+        guide.setRemarks(infoGuide.getRemarks());
+        guide.setTotal(infoGuide.getTotal());
+        guide.setVersion(infoGuide.getVersion());
+        guide.setYear(infoGuide.getYear());
+        
 
         // FIXME: Remove the : guide.setGuideEntries(null); WHY????
         guide.setGuideEntries(null);

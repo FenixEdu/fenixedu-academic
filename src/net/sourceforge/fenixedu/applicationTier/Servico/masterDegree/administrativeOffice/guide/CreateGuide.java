@@ -14,11 +14,17 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
+import net.sourceforge.fenixedu.domain.Contributor;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideSituation;
+import net.sourceforge.fenixedu.domain.IContributor;
+import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IGuide;
 import net.sourceforge.fenixedu.domain.IGuideEntry;
 import net.sourceforge.fenixedu.domain.IGuideSituation;
+import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -42,10 +48,10 @@ public class CreateGuide implements IService {
     }
 
     public InfoGuide run(InfoGuide infoGuide, String othersRemarks, Double othersPrice, String remarks,
-            GuideState situationOfGuide, String paymentType) throws FenixServiceException {
+            GuideState situationOfGuide, String paymentType) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
-        ISuportePersistente sp = null;
-        IGuide guide = new Guide();
+        ISuportePersistente sp = sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IGuideSituation guideSituation = null;
 
         // Check the Guide Situation
@@ -70,17 +76,7 @@ public class CreateGuide implements IService {
         infoGuide.setTotal(CalculateGuideTotal.calculate(infoGuide));
 
         // Get the Guide Number
-
-        Integer guideNumber = null;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            guideNumber = sp.getIPersistentGuide().generateGuideNumber(infoGuide.getYear());
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
-
+        Integer guideNumber = sp.getIPersistentGuide().generateGuideNumber(infoGuide.getYear());
         infoGuide.setNumber(guideNumber);
 
         // Create the new Guide Situation
@@ -93,50 +89,53 @@ public class CreateGuide implements IService {
         infoGuideSituation.setDate(calendar.getTime());
         infoGuideSituation.setSituation(situationOfGuide);
 
-        guide = InfoGuide.newDomainFromInfo(infoGuide);
+        // guide = InfoGuide.newDomainFromInfo(infoGuide);
 
-        guide.setIdInternal(null);
-        
-        
-        //      FIXME: Remove the : guide.setGuideEntries(null); WHY????
-        guide.setGuideEntries(null);
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            sp.getIPersistentGuide().simpleLockWrite(guide);
-            if (situationOfGuide.equals(GuideState.PAYED)) {
-                guide.setPaymentType(PaymentType.valueOf(paymentType));
-                guide.setPaymentDate(calendar.getTime());
-            }
+        IPerson person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,
+                infoGuide.getInfoPerson().getIdInternal());
+        IExecutionDegree executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree()
+                .readByOID(ExecutionDegree.class, infoGuide.getInfoExecutionDegree().getIdInternal());
+        IContributor contributor = (IContributor) sp.getIPersistentContributor().readByOID(
+                Contributor.class, infoGuide.getInfoContributor().getIdInternal());
 
-            // Get the Execution Degree
+        IGuide guide = new Guide();
+        sp.getIPersistentGuide().simpleLockWrite(guide);
+        guide.setExecutionDegree(executionDegree);
+        guide.setContributor(contributor);
+        guide.setPerson(person);
+        guide.setCreationDate(infoGuide.getCreationDate());
+        guide.setGuideRequester(infoGuide.getGuideRequester());
+        guide.setNumber(infoGuide.getNumber());
+        guide.setPaymentDate(infoGuide.getPaymentDate());
+        guide.setPaymentType(infoGuide.getPaymentType());
+        guide.setRemarks(infoGuide.getRemarks());
+        guide.setTotal(infoGuide.getTotal());
+        guide.setVersion(infoGuide.getVersion());
+        guide.setYear(infoGuide.getYear());
 
-            // Write the new Guide
-
-            // Write the new Entries of the Guide
-            Iterator iterator = infoGuide.getInfoGuideEntries().iterator();
-            List guideEntries = new ArrayList();
-            while (iterator.hasNext()) {
-                IGuideEntry guideEntry = InfoGuideEntry.newDomainFromInfo((InfoGuideEntry) iterator.next());
-                sp.getIPersistentGuideEntry().simpleLockWrite(guideEntry);
-                guideEntries.add(guideEntry);
-                guideEntry.setGuide(guide);
-            }
-            guide.setGuideEntries(guideEntries);
-            
-
-
-            // Write the New Guide Situation
-            
-            guideSituation = new GuideSituation(situationOfGuide,remarks,calendar.getTime(),guide,new State(State.ACTIVE));
-            sp.getIPersistentGuideSituation().simpleLockWrite(guideSituation);
-            
-            guide.setGuideSituations(new ArrayList());
-            guide.getGuideSituations().add(guideSituation);
-            
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error", ex);
-            throw newEx;
+        if (situationOfGuide.equals(GuideState.PAYED)) {
+            guide.setPaymentType(PaymentType.valueOf(paymentType));
+            guide.setPaymentDate(calendar.getTime());
         }
+
+        // Write the new Entries of the Guide
+        Iterator iterator = infoGuide.getInfoGuideEntries().iterator();
+        List guideEntries = new ArrayList();
+        while (iterator.hasNext()) {
+            IGuideEntry guideEntry = InfoGuideEntry.newDomainFromInfo((InfoGuideEntry) iterator.next());
+            sp.getIPersistentGuideEntry().simpleLockWrite(guideEntry);
+            guideEntries.add(guideEntry);
+            guideEntry.setGuide(guide);
+        }
+        guide.setGuideEntries(guideEntries);
+
+        // Write the New Guide Situation
+        guideSituation = new GuideSituation(situationOfGuide, remarks, calendar.getTime(), guide,
+                new State(State.ACTIVE));
+        sp.getIPersistentGuideSituation().simpleLockWrite(guideSituation);
+
+        guide.setGuideSituations(new ArrayList());
+        guide.getGuideSituations().add(guideSituation);
 
         InfoGuide result = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide);
         result.setInfoGuideEntries(infoGuide.getInfoGuideEntries());
