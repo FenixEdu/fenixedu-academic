@@ -33,15 +33,15 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 19/Dez/2003
+ * @author <a href="mailto:joao.mota@ist.utl.pt">Joï¿½o Mota </a> 19/Dez/2003
  *  
  */
 public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 	
 	private String makeBodyHeader(String executionYear, Integer semester, Integer teacherType) {
 		
-		String sem = semester.intValue() == 0 ? "Ambos Semestres" : (semester.intValue() + "º Semestre");
-		String teacher = teacherType.intValue() == 0 ? "Todos os Docentes" : "Apenas Responsáveis";		
+		String sem = semester.intValue() == 0 ? "Ambos Semestres" : (semester.intValue() + "ï¿½ Semestre");
+		String teacher = teacherType.intValue() == 0 ? "Todos os Docentes" : "Apenas Responsï¿½veis";		
 		String header = "Ano Lectivo " + executionYear + " - " + sem + " - " + teacher;
 		
 		return header;
@@ -260,7 +260,6 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
     private String getLocaleLanguageFromRequest(HttpServletRequest request) {
 
         Locale locale = (Locale) request.getSession(false).getAttribute(Action.LOCALE_KEY);
-        Locale locale2 = request.getLocale();
         return  locale.getLanguage();
 
     }

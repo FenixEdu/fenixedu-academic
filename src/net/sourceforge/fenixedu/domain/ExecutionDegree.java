@@ -29,7 +29,6 @@ public class ExecutionDegree extends ExecutionDegree_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
         if (obj instanceof IExecutionDegree) {
             final IExecutionDegree cursoExecucao = (IExecutionDegree) obj;
             return this.getIdInternal().equals(cursoExecucao.getIdInternal());

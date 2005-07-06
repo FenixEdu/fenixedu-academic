@@ -30,7 +30,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 /**
- * @author Tânia Pousão Create on 20/Nov/2003
+ * @author Tï¿½nia Pousï¿½o Create on 20/Nov/2003
  */
 public class ShowCourseSiteAction extends FenixContextDispatchAction {
     
@@ -198,7 +198,6 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction {
     private String getLocaleLanguageFromRequest(HttpServletRequest request) {
 
         Locale locale = (Locale) request.getSession(false).getAttribute(Action.LOCALE_KEY);
-        Locale locale2 = request.getLocale();
         return  locale.getLanguage();
 
     }

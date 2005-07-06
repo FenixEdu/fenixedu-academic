@@ -97,8 +97,6 @@ public class UnEnrollGroupShift implements IService {
             throws ExcepcaoPersistencia {
         boolean found = false;
 
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         List studentGroupAttends = studentGroup.getStudentGroupAttends();
         IStudentGroupAttend studentGroupAttend = null;
         Iterator iterStudentGroupAttends = studentGroupAttends.iterator();

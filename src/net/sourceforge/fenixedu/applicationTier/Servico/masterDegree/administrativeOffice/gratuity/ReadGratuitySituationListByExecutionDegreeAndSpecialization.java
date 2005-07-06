@@ -69,9 +69,6 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
         try {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
-            IPersistentGratuityValues gratuityValuesDAO = sp.getIPersistentGratuityValues();
-            IPersistentStudentCurricularPlan studentCurricularPlanDAO = sp
-                    .getIStudentCurricularPlanPersistente();
             IPersistentGratuitySituation gratuitySituationDAO = sp.getIPersistentGratuitySituation();
 
             IPersistentInsuranceTransaction insuranceTransactionDAO = sp
@@ -101,12 +98,6 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
             if (executionDegreeList == null || executionDegreeList.size() == 0) {
                 throw new FenixServiceException(
                         "error.masterDegree.gratuity.impossible.studentsGratuityList");
-            }
-
-            // SPECIALIZATION
-            Specialization specialization = null;
-            if (!specializationName.equals("all")) {
-                specialization = Specialization.valueOf(specializationName);
             }
 
             // GRATUITY SITUATION

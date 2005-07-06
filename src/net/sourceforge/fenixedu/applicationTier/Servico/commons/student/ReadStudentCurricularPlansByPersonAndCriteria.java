@@ -36,7 +36,7 @@ import org.apache.commons.collections.Predicate;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
- * @author André Fernandes / João Brito
+ * @author Andrï¿½ Fernandes / Joï¿½o Brito
  *
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
@@ -88,15 +88,12 @@ public class ReadStudentCurricularPlansByPersonAndCriteria implements IService
                 
                 Iterator studentsIterator = students.iterator();
                 
-                // para cada Student que esta Person é
+                // para cada Student que esta Person ï¿½
                 // juntar todos os SCP
                 while(studentsIterator.hasNext())
                 {
                     IStudent student = (IStudent)studentsIterator.next();
                             
-                    DegreeType degreeType = student.getDegreeType();
-                    Integer studentNumber = student.getNumber();
-
                     //seleccionar todos os planos do aluno
                     studentCPsTemp = student.getStudentCurricularPlans();                   
                     

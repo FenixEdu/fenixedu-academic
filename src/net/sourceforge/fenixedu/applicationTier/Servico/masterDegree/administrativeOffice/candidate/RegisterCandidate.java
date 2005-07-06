@@ -309,7 +309,6 @@ public class RegisterCandidate implements IService {
             studentCurricularPlanResult = studentCurricularPlan;
 
             // Create Gratuity Situations
-            IPersistentGratuityValues gratuityValuesDAO = sp.getIPersistentGratuityValues();
             IPersistentGratuitySituation gratuitySituationDAO = sp.getIPersistentGratuitySituation();
             IGratuityValues gratuityValues = masterDegreeCandidate.getExecutionDegree().getGratuityValues();
 

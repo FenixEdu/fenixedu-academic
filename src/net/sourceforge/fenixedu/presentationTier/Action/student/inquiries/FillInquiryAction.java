@@ -52,7 +52,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 /**
- * @author João Fialho & Rita Ferreira
+ * @author Joï¿½o Fialho & Rita Ferreira
  * 
  */
 public class FillInquiryAction extends FenixDispatchAction {
@@ -358,7 +358,6 @@ public class FillInquiryAction extends FenixDispatchAction {
 				request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_TEACHER, currentAttendingCourseTeacher);
 				request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_ROOM, currentAttendingCourseRoom);
 
-				Integer currentAttendingCourseRoomId = (Integer) inquiryForm.get("currentAttendingCourseRoomId");
 				request.setAttribute(InquiriesUtil.COMPLETE_ATTENDING_COURSE_ROOM_ID, newAttendingCourseRoomId);
 
             } else {
@@ -371,8 +370,6 @@ public class FillInquiryAction extends FenixDispatchAction {
 //				attendingCourseRoom.setAlreadyEvaluatedFlag(true);
 				attendingCourseRoom.setInquiriesRoom(newAttendingCourseRoom);
                 selectedAttendingCourseRooms.add(newAttendingCourseRoom);
-
-                int roomFormPosition = selectedAttendingCourseRooms.size() - 1;
 
 				request.setAttribute(InquiriesUtil.CURRENT_ATTENDING_COURSE_ROOM, newAttendingCourseRoom);
 				request.setAttribute(InquiriesUtil.ANCHOR, InquiriesUtil.CURRENT_ATTENDING_COURSE_ROOM_FORM_ANCHOR);
@@ -963,8 +960,6 @@ public class FillInquiryAction extends FenixDispatchAction {
         final InfoExecutionCourse finalCourse = attends.getDisciplinaExecucao();
 
         // Obtaining the professorships related to this execution course
-		Object[] argsAttendingExecutionCourse = { finalCourse };
-
 //		List attendingCourseTeachers =
 //			(List) ServiceUtils.executeService(
 //					userView, "ReadTeachersByExecutionCourseProfessorship", argsAttendingExecutionCourse);
@@ -1558,10 +1553,6 @@ public class FillInquiryAction extends FenixDispatchAction {
 			(Boolean[]) inquiryForm.get("selectedAttendingCourseTeacherIsAffiliated");
 		inquiryForm.set("selectedAttendingCourseTeacherIsAffiliated",
 				removeFromArray(selectedAttendingCourseTeacherIsAffiliated, position));
-
-        // Attending course teacher class types
-		String[] currentAttendingCourseTeacherClassType =
-			(String[]) inquiryForm.get("currentAttendingCourseTeacherClassType");
 
 		Boolean[] selectedAttendingCourseTeachersClassTypeT =
 			(Boolean[]) inquiryForm.get("selectedAttendingCourseTeachersClassTypeT");

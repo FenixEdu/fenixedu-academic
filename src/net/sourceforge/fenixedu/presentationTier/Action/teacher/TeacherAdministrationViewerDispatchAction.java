@@ -97,7 +97,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 
 
 /**
- * @author Fernanda Quitério
+ * @author Fernanda Quitï¿½rio
  */
 public class TeacherAdministrationViewerDispatchAction extends FenixDispatchAction
 {
@@ -178,15 +178,12 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             return mapping.findForward("showAnnouncements");
         }
         
-        HttpSession session = request.getSession(false);
-        
         return mapping.findForward("insertAnnouncement");
         
     }
     
     public ActionForward prepareCreateAnnouncement(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        HttpSession session = request.getSession(false);
         readSiteView(request, null, null, null, null);
         
         DynaActionForm actionForm = (DynaActionForm) form;
@@ -910,7 +907,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         try {
             ServiceManagerServiceFactory.executeService(userView, "InsertSection", args);
         } catch (ExistingServiceException e) {
-            throw new ExistingActionException("Uma secção com esse nome", e);
+            throw new ExistingActionException("Uma secï¿½ï¿½o com esse nome", e);
         } catch (FenixServiceException fenixServiceException) {
             throw new FenixActionException(fenixServiceException.getMessage());
         }
@@ -1643,9 +1640,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         shiftTypeValues.add(new Integer(4));
         shiftTypeValues.add(new Integer(5));
         List shiftTypeNames = new ArrayList();
-        shiftTypeNames.add("Teórico");
-        shiftTypeNames.add("Prático");
-        shiftTypeNames.add("Teórico-Prático");
+        shiftTypeNames.add("Teï¿½rico");
+        shiftTypeNames.add("Prï¿½tico");
+        shiftTypeNames.add("Teï¿½rico-Prï¿½tico");
         shiftTypeNames.add("Laboratorial");
         shiftTypeNames.add("Sem Turno");
         
@@ -1843,7 +1840,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         enrolmentPolicyValues.add(new Integer(2));
         
         List enrolmentPolicyNames = new ArrayList();
-        enrolmentPolicyNames.add("Atómica");
+        enrolmentPolicyNames.add("Atï¿½mica");
         enrolmentPolicyNames.add("Individual");
         
         InfoGroupProperties infoGroupProperties = ((InfoSiteGroupProperties) siteView.getComponent())

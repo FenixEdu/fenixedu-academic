@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
- * @author João Mota
+ * @author Joï¿½o Mota
  * 
  *  
  */
@@ -32,7 +32,6 @@ public class ExecutionCourseSiteComponentService implements IService {
             Integer curricularCourseId) throws FenixServiceException,
             NonExistingAssociatedCurricularCoursesServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
         IPersistentSite persistentSite = sp.getIPersistentSite();
 
         final ISite site;

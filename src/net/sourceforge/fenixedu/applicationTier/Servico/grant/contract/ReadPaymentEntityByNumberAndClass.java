@@ -24,7 +24,6 @@ public class ReadPaymentEntityByNumberAndClass implements IService {
     public InfoGrantPaymentEntity run(String paymentEntityNumber, String className)
             throws FenixServiceException {
         IGrantPaymentEntity grantPaymentEntity = null;
-        IGrantPaymentEntity grantPaymentEntityM = null;
         InfoGrantPaymentEntity result = null;
         IPersistentGrantPaymentEntity pgpe = null;
 

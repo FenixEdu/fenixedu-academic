@@ -118,8 +118,6 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-            IPersistentStudentGroupAttend persistentStudentGroupAttend = sp
-                    .getIPersistentStudentGroupAttend();
 
             IStudent student = persistentStudent.readByUsername(username);
 
@@ -163,8 +161,6 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-            IPersistentStudentGroupAttend persistentStudentGroupAttend = sp
-                    .getIPersistentStudentGroupAttend();
 
             IStudent student = persistentStudent.readByUsername(username);
 
@@ -200,14 +196,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
             IStudentGroup studentGroup, IShift shift) {
         boolean result = false;
 
-        List listStudentGroupAttend = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            listStudentGroupAttend = studentGroup.getStudentGroupAttends();
-
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
-        }
+        List listStudentGroupAttend = studentGroup.getStudentGroupAttends();
         int nrOfElements = listStudentGroupAttend.size();
         Integer maximumCapacity = groupProperties.getMaximumCapacity();
         if (maximumCapacity == null)
@@ -223,18 +212,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
             IStudentGroup studentGroup) throws ExcepcaoPersistencia {
 
         boolean result = false;
-        List allStudentGroupAttend = new ArrayList();
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory
-                    .getDefaultPersistenceSupport();
-            IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSuport
-                    .getIPersistentStudentGroupAttend();
-
-            allStudentGroupAttend = studentGroup.getStudentGroupAttends();
-
-        } catch (ExcepcaoPersistencia ex) {
-            throw ex;
-        }
+        List allStudentGroupAttend = studentGroup.getStudentGroupAttends();
 
         if (allStudentGroupAttend.size() == 1 && allStudentGroupAttend.contains(studentGroupAttend))
             result = true;

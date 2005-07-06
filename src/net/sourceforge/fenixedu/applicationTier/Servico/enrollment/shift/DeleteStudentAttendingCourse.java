@@ -22,7 +22,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /*
  * 
- * @author Fernanda Quitério 11/Fev/2004
+ * @author Fernanda Quitï¿½rio 11/Fev/2004
  *  
  */
 public class DeleteStudentAttendingCourse implements IService {
@@ -92,7 +92,6 @@ public class DeleteStudentAttendingCourse implements IService {
         try {
             IFrequentaPersistente persistentAttends = sp.getIFrequentaPersistente();
             ITurnoAlunoPersistente persistentShiftStudent = sp.getITurnoAlunoPersistente();
-            IPersistentStudentGroupAttend studentGroupAttendDAO = sp.getIPersistentStudentGroupAttend();
 
             IAttends attend = persistentAttends.readByAlunoAndDisciplinaExecucao(student,
                     executionCourse);

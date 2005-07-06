@@ -48,11 +48,6 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
             executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(year);
         }
 
-        IPersistentGratuityValues gratuityValuesDAO = sp.getIPersistentGratuityValues();
-
-        IPersistentStudentCurricularPlan studentCurricularPlanDAO = sp
-                .getIStudentCurricularPlanPersistente();
-
         IPersistentGratuitySituation gratuitySituationDAO = sp.getIPersistentGratuitySituation();
         
         // read master degree and specialization execution degrees

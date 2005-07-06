@@ -29,7 +29,6 @@ public class ShowStudyPlanForCandidateAction extends FenixAction {
 
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        ActionErrors actionErrors = new ActionErrors();
         ArrayList candidateStudyPlan = null;
 
         InfoMasterDegreeCandidate infoMasterDegreeCandidate = getMasterDegreeCandidate(userView, session);

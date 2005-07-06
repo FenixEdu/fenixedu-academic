@@ -150,8 +150,6 @@ public class ProcessSibsPaymentFile implements IService {
 
         IPersistentGratuitySituation gratuitySituationDAO = sp.getIPersistentGratuitySituation();
 
-        IPersistentGratuityValues gratuityValuesDAO = sp.getIPersistentGratuityValues();
-
         IPersistentInsuranceValue insuranceValueDAO = sp.getIPersistentInsuranceValue();
 
         // lets build transactions for the entries in file

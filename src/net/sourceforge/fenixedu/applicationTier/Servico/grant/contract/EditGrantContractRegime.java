@@ -84,8 +84,6 @@ public class EditGrantContractRegime extends EditDomainObjectService {
             try {
                 IPersistentGrantOrientationTeacher persistentGrantOrientationTeacher = sp
                         .getIPersistentGrantOrientationTeacher();
-                IPersistentTeacher persistentTeacher = sp
-                        .getIPersistentTeacher();
                 IPersistentGrantCostCenter pGrantCostCenter = sp
                 .getIPersistentGrantCostCenter();
                 IPersistentTeacher pTeacher = sp.getIPersistentTeacher();

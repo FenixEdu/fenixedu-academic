@@ -31,12 +31,10 @@ public class PrepareEditStudentGroupMembers implements IService {
     public List run(Integer executionCourseCode, Integer studentGroupCode) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
         List frequentas = new ArrayList();
         List infoStudentList = new ArrayList();
 
         ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        persistentStudentGroupAttend = ps.getIPersistentStudentGroupAttend();
 
         IStudentGroup studentGroup = (IStudentGroup) ps.getIPersistentStudentGroup().readByOID(
                 StudentGroup.class, studentGroupCode);

@@ -51,7 +51,7 @@ import net.sourceforge.fenixedu.util.State;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> <br>
+ * @author <a href="mailto:joao.mota@ist.utl.pt">Joï¿½o Mota </a> <br>
  *         <strong>Description: </strong> <br>
  *         This service edits a reimbursement guide. Editing a reimbursement
  *         guide is in reallity the creation of a new reimbursement guide
@@ -282,7 +282,6 @@ public class EditReimbursementGuide implements IService {
      */
     private boolean checkReimbursementGuideEntriesSum(IReimbursementGuideEntry reimbursementGuideEntry,
             ISuportePersistente suportePersistente) throws FenixServiceException {
-        IPersistentGuideEntry persistentGuideEntry = suportePersistente.getIPersistentGuideEntry();
         IPersistentReimbursementGuideEntry persistentReimbursementGuideEntry = suportePersistente
                 .getIPersistentReimbursementGuideEntry();
 

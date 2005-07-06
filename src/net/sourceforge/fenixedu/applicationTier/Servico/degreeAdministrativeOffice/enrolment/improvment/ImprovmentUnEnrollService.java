@@ -42,8 +42,6 @@ public class ImprovmentUnEnrollService implements IService {
             ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentEnrollment persistentEnrollment = sp.getIPersistentEnrolment();
-        IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp
-                .getIPersistentEnrolmentEvaluation();
 
         IPersistentStudent persistentStudent = sp.getIPersistentStudent();
         IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,

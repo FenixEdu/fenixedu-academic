@@ -38,8 +38,6 @@ public class ReadExecutionYearsByDegreeCurricularPlanID implements IService {
 
         IPersistentDegreeCurricularPlan degreeCurricularPlanDAO = sp
                 .getIPersistentDegreeCurricularPlan();
-        IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
-
         IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) degreeCurricularPlanDAO
                 .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
 

@@ -55,9 +55,6 @@ public class DeleteShifts implements IService {
                 // deleted
                 List studentGroupShift = shift.getAssociatedStudentGroups();
                 for (int i = 0; i < studentGroupShift.size(); i++) {
-                    IPersistentStudentGroupAttend persistentStudentGroupAttend = sp
-                            .getIPersistentStudentGroupAttend();
-
                     IStudentGroup studentGroup = (IStudentGroup) studentGroupShift.get(i);
                     List studentGroupAttendShift = studentGroup.getStudentGroupAttends();
                     if (studentGroupAttendShift != null && studentGroupAttendShift.size() > 0) {

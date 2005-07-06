@@ -40,7 +40,7 @@ import org.apache.commons.collections.Predicate;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
- * @author Fernanda Quitério 10/07/2003
+ * @author Fernanda Quitï¿½rio 10/07/2003
  *  
  */
 public class ReadStudentsFinalEvaluationForConfirmation implements IService {
@@ -53,8 +53,6 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IService {
         InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp
-                    .getIPersistentEnrolmentEvaluation();
             IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
             IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();

@@ -30,8 +30,6 @@ public class DeleteDegrees implements IService {
 
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             ICursoPersistente persistentDegree = sp.getICursoPersistente();
-            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
-                    .getIPersistentDegreeCurricularPlan();
 
             Iterator iter = degreesInternalIds.iterator();
             List degreeCurricularPlans;

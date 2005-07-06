@@ -61,8 +61,6 @@ public class TimeTable {
      * @param day
      */
     private String getDiaSemanaLabel(int day, Locale locale, PageContext pageContext) {
-        ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
-        
         switch (day) {
         case 0:
             return getMessageResource(pageContext, "public.degree.information.label.monday", locale);

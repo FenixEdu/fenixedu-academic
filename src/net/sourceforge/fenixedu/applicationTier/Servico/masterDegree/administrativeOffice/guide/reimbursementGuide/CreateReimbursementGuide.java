@@ -42,7 +42,7 @@ import net.sourceforge.fenixedu.util.State;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> <br>
+ * @author <a href="mailto:joao.mota@ist.utl.pt">Joï¿½o Mota </a> <br>
  *         <strong>Description: </strong> <br>
  *         This service creates a reimbursement guide and associates it with a
  *         payment guide. It also creates the reimbursement guide situation and
@@ -181,10 +181,6 @@ public class CreateReimbursementGuide implements IService {
     private boolean checkReimbursementGuideEntriesSum(
             IReimbursementGuideEntry newReimbursementGuideEntry, ISuportePersistente suportePersistente)
             throws FenixServiceException {
-        IPersistentGuideEntry persistentGuideEntry = suportePersistente.getIPersistentGuideEntry();
-        IPersistentReimbursementGuideEntry persistentReimbursementGuideEntry = suportePersistente
-                .getIPersistentReimbursementGuideEntry();
-
         IGuideEntry guideEntry = newReimbursementGuideEntry.getGuideEntry();
         Double guideEntryValue = new Double(guideEntry.getPrice().doubleValue()
                 * guideEntry.getQuantity().intValue());

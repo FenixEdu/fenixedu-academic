@@ -26,7 +26,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 
 /**
- * @author Tânia Pousão
+ * @author Tï¿½nia Pousï¿½o
  * 
  */
 public class ReadExtraWorkRequests implements IService {
@@ -42,17 +42,8 @@ public class ReadExtraWorkRequests implements IService {
             sp = SuportePersistenteOJB.getInstance();
 
             // Read employee logged
-            IEmployee employeeWho = null;
-
-            IPessoaPersistente personDAO = sp.getIPessoaPersistente();
-            IPersistentEmployee employeeDAO = sp.getIPersistentEmployee();
-
-            IPerson personWho = personDAO.lerPessoaPorUsername(usernameWho);
-            if (personWho != null) {
-                employeeWho = employeeDAO.readByPerson(personWho.getIdInternal().intValue());
-            }
-
             IPersistentCostCenter costCenterDAO = sp.getIPersistentCostCenter();
+
             ICostCenter costCenter = costCenterDAO.readCostCenterByCode(costCenterCode);
             if (costCenter == null) {
                 // TODO

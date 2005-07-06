@@ -35,7 +35,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 /**
- * @author Fernanda Quitério 06/Nov/2003
+ * @author Fernanda Quitï¿½rio 06/Nov/2003
  */
 public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchAction {
     public ActionForward showActiveCurricularCourses(ActionMapping mapping, ActionForm form,
@@ -261,7 +261,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
             return mapping.findForward("degreeCurricularPlanManagement");
         }
 
-        //	»»»»»»»»»»»»»»»»» USER CAN EDIT ««««««««««««««««««««««««
+        //	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ USER CAN EDIT ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
         request.setAttribute("infoExecutionDegreeCode", infoExecutionDegreeCode);
         request.setAttribute("canEdit", String.valueOf(canEdit.booleanValue()));
@@ -348,7 +348,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
         Integer infoCurricularCourseCode = getAndSetIntegerToRequest("infoCurricularCourseCode", request);
         String executionYear = getAndSetStringToRequest("executionYear", request);
-        Integer degreeCurricularPlanID = getAndSetIntegerToRequest("degreeCurricularPlanID", request);        
+        getAndSetIntegerToRequest("degreeCurricularPlanID", request);        
         getAndSetStringToRequest("infoCurricularCourseName", request);
 
         InfoCurriculum infoCurriculum = null;
@@ -402,7 +402,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
         Integer infoExecutionDegreeCode = getAndSetIntegerToRequest("infoExecutionDegreeCode", request);
         Integer infoCurricularCourseCode = getAndSetIntegerToRequest("infoCurricularCourseCode", request);
-        Integer degreeCurricularPlanID = getAndSetIntegerToRequest("degreeCurricularPlanID", request);
+        getAndSetIntegerToRequest("degreeCurricularPlanID", request);
         
         // check that this user can edit curricular course information
         Boolean canEdit = new Boolean(false);
@@ -437,7 +437,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
             return mapping.findForward("degreeCurricularPlanManagement");
         }
 
-        //	»»»»»»»»»»»»»»»»»»»» USER CAN EDIT «««««««««««««««««««««
+        //	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ USER CAN EDIT ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
         request.setAttribute("canEdit", String.valueOf(canEdit.booleanValue()));
 

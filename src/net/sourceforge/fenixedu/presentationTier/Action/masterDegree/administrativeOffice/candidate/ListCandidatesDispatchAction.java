@@ -722,7 +722,6 @@ public class ListCandidatesDispatchAction extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        ActionErrors actionErrors = new ActionErrors();
 
         String documentTypeStr = request.getParameter(REQUEST_DOCUMENT_TYPE);
 

@@ -31,7 +31,7 @@ import org.apache.commons.collections.Transformer;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
- * @author Tânia Pousão
+ * @author Tï¿½nia Pousï¿½o
  * 
  */
 public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear implements IService {
@@ -72,7 +72,6 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear implements
             }
 
             // read execution degree's gratuity values
-            IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGratuityValues();
             gratuityValues = executionDegree.getGratuityValues();
 
         } catch (ExcepcaoPersistencia e) {

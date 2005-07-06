@@ -64,8 +64,6 @@ public class PrepareCreateStudentGroup implements IServico {
     public ISiteComponent run(Integer executionCourseCode,
             Integer groupPropertiesCode) throws FenixServiceException {
 
-        IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
-
         List frequentas = new ArrayList();
 
         List infoStudentInformationList = new ArrayList();
@@ -76,9 +74,6 @@ public class PrepareCreateStudentGroup implements IServico {
 
             ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
         
-            persistentStudentGroupAttend = ps
-                    .getIPersistentStudentGroupAttend();
-
              groupProperties = (IGroupProperties) ps
                     .getIPersistentGroupProperties().readByOID(
                             GroupProperties.class, groupPropertiesCode);

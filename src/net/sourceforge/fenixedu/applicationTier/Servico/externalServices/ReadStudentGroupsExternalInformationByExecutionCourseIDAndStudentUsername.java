@@ -66,8 +66,6 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
     {
         InfoExternalStudentGroup result = null;
         Collection studentGroups = group.getAttendsSet().getStudentGroups();
-        IPersistentStudentGroupAttend persistentStudentGroupAttend = PersistenceSupportFactory.getDefaultPersistenceSupport()
-                .getIPersistentStudentGroupAttend();
 
         for (Iterator iter = studentGroups.iterator(); iter.hasNext();)
         {

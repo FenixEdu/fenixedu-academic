@@ -43,11 +43,7 @@ public class EditLesson implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IAulaPersistente aulaPersistente = sp.getIAulaPersistente();
-        IRoom salaAntiga = sp.getISalaPersistente().readByName(aulaAntiga.getInfoSala().getNome());
         IRoom salaNova = sp.getISalaPersistente().readByName(aulaNova.getInfoSala().getNome());
-
-        IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(aulaNova
-                .getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod());
 
         ILesson aula = (ILesson) aulaPersistente.readByOID(Lesson.class, aulaAntiga.getIdInternal());
         IShift shift = aula.getShift();

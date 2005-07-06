@@ -121,10 +121,6 @@ public class EnrollGroupShift implements IService {
     
     private boolean checkStudentInStudentGroup(IStudent student,IStudentGroup studentGroup)throws FenixServiceException{
     	boolean found = false;
-    	try {
-    	ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-    	IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSupport
-		.getIPersistentStudentGroupAttend();
     	List studentGroupAttends = studentGroup.getStudentGroupAttends();
     	IStudentGroupAttend studentGroupAttend = null;
     	Iterator iterStudentGroupAttends = studentGroupAttends.iterator();
@@ -133,9 +129,6 @@ public class EnrollGroupShift implements IService {
     		if(studentGroupAttend.getAttend().getAluno().equals(student)){
     			found = true;
     		}
-    	}
-    	} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-    		throw new FenixServiceException(excepcaoPersistencia.getMessage());
     	}
     	return found;
     }

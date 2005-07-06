@@ -33,7 +33,6 @@ public class ReadPrecedencesFromDegreeCurricularPlan implements IService {
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentDegreeCurricularPlan degreeCurricularPlanDAO = persistentSuport
                     .getIPersistentDegreeCurricularPlan();
-            IPersistentPrecedence precedenceDAO = persistentSuport.getIPersistentPrecedence();
 
             IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) degreeCurricularPlanDAO
                     .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);

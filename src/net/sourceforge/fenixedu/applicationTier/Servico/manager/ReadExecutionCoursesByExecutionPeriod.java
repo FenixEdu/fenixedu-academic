@@ -36,7 +36,6 @@ public class ReadExecutionCoursesByExecutionPeriod implements IService {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
             IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
                     ExecutionPeriod.class, executionPeriodId);

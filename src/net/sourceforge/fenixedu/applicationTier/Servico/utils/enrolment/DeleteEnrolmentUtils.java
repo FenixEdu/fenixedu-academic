@@ -161,8 +161,6 @@ public abstract class DeleteEnrolmentUtils {
         IPersistentExecutionCourse executionCourseDAO = persistentSuport.getIPersistentExecutionCourse();
         IFrequentaPersistente attendDAO = persistentSuport.getIFrequentaPersistente();
         IPersistentMark markDAO = persistentSuport.getIPersistentMark();
-        IPersistentStudentGroupAttend studentGroupAttendDAO = persistentSuport
-                .getIPersistentStudentGroupAttend();
         ITurnoAlunoPersistente shiftStudentDAO = persistentSuport.getITurnoAlunoPersistente();
 
         List executionCourses = executionCourseDAO.readbyCurricularCourseAndExecutionPeriod(enrolment

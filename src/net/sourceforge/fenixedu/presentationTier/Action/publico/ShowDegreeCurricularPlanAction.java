@@ -30,7 +30,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 /**
- * @author Tânia Pousão Created on 9/Out/2003
+ * @author Tï¿½nia Pousï¿½o Created on 9/Out/2003
  */
 public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
 
@@ -248,8 +248,6 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
     private String getLocaleLanguageFromRequest(HttpServletRequest request) {
 
         Locale locale = (Locale) request.getSession(false).getAttribute(Action.LOCALE_KEY);
-        Locale locale2 = request.getLocale();
-
         return  locale.getLanguage();
 
     }

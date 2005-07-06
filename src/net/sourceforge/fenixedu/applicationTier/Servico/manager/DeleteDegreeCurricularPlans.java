@@ -36,9 +36,6 @@ public class DeleteDegreeCurricularPlans implements IService {
                     .getIPersistentDegreeCurricularPlan();
             IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
             IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-            IPersistentBranch persistentBranch = sp.getIPersistentBranch();
-            IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
-                    .getIStudentCurricularPlanPersistente();
 
             Iterator iter = degreeCurricularPlansIds.iterator();
 

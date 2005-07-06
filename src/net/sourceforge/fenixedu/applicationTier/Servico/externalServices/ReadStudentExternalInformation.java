@@ -55,8 +55,6 @@ public class ReadStudentExternalInformation implements IService {
 		Collection result = new ArrayList();
 		IPessoaPersistente persistentPerson = PersistenceSupportFactory
 				.getDefaultPersistenceSupport().getIPessoaPersistente();
-		IPersistentStudent persistentStudent = PersistenceSupportFactory
-				.getDefaultPersistenceSupport().getIPersistentStudent();
 		IPerson person = persistentPerson.lerPessoaPorUsername(username);
 		Collection students = person.getStudents();
 		for (Iterator iter = students.iterator(); iter.hasNext();) {

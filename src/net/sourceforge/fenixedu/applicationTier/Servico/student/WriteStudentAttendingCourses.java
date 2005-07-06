@@ -30,9 +30,9 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * Describe class <code>WriteStudentAttendingCourses</code> here.
  * 
- * @author <a href="mailto:tdi-dev@tagus.ist.utl.pt">tdi-dev:Edgar Gonçalves
+ * @author <a href="mailto:tdi-dev@tagus.ist.utl.pt">tdi-dev:Edgar Gonï¿½alves
  *         </a>
- * @author Fernanda Quitério
+ * @author Fernanda Quitï¿½rio
  * @version 1.0
  */
 public class WriteStudentAttendingCourses implements IService {
@@ -152,7 +152,6 @@ public class WriteStudentAttendingCourses implements IService {
             IFrequentaPersistente persistentAttends) throws FenixServiceException {
         try {
             ITurnoAlunoPersistente persistentShiftStudent = sp.getITurnoAlunoPersistente();
-            IPersistentStudentGroupAttend studentGroupAttendDAO = sp.getIPersistentStudentGroupAttend();
 
             Iterator iterator = attendingCoursesToRemove.iterator();
             while (iterator.hasNext()) {

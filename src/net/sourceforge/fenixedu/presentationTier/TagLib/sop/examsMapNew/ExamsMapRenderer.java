@@ -722,10 +722,6 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 	}
 	
 	private void renderHeader(StringBuffer strBuffer, PageContext pageContext) {
-        
-        ResourceBundle bundle = ResourceBundle
-            .getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
-        
         String makeLocale =  getMessageResource(pageContext, "public.degree.information.label.monday") + "," + getMessageResource(pageContext, "public.degree.information.label.tusday") 
                              + "," + getMessageResource(pageContext, "public.degree.information.label.wednesday") + "," + getMessageResource(pageContext, "public.degree.information.label.thursday")+ "," + getMessageResource(pageContext, "public.degree.information.label.friday")
                              + "," + getMessageResource(pageContext, "public.degree.information.label.saturday");

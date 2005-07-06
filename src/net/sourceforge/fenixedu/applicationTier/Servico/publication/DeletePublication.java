@@ -31,7 +31,6 @@ public class DeletePublication implements IService {
 		final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentPublication persistentPublication = sp.getIPersistentPublication();
         final IPersistentPublicationAuthor persistentPublicationAuthor = sp.getIPersistentPublicationAuthor();
-        final IPersistentPublicationTeacher persistentPublicationTeacher = sp.getIPersistentPublicationTeacher();
 
         final IPublication publication = (IPublication) persistentPublication.readByOID(Publication.class, publicationId);
 

@@ -69,9 +69,6 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
             IExecutionYear executionYear = (IExecutionYear) sp.getIPersistentExecutionYear().readByOID(
                     ExecutionYear.class, executionYearID);
 
-            IPersistentStudentCurricularPlan studentCurricularPlanDAO = sp
-                    .getIStudentCurricularPlanPersistente();
-
             IPersistentGratuitySituation gratuitySituationDAO = sp.getIPersistentGratuitySituation();
 
             IPersistentInsuranceTransaction insuranceTransactionDAO = sp

@@ -148,7 +148,6 @@ public class ExamVO extends VersionedObjectsBase implements IPersistentExam {
 
     public List readByRoomAndWeek(String roomName, Calendar day) throws ExcepcaoPersistencia {
         List<IExam> result = new ArrayList();
-        List<IExam> examAux = new ArrayList();
         List<IExam> exams = (List<IExam>) readAll(Exam.class);
 
         // day.add(Calendar.DATE, Calendar.MONDAY -

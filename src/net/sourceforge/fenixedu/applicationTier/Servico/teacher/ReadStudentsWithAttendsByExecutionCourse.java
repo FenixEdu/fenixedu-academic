@@ -59,7 +59,7 @@ import org.apache.commons.collections.Transformer;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
- * @author André Fernandes / João Brito
+ * @author Andrï¿½ Fernandes / Joï¿½o Brito
  */
 public class ReadStudentsWithAttendsByExecutionCourse implements IService {
 
@@ -90,8 +90,6 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
     public Object run(Integer executionCourseCode, List curricularPlansIds, List enrollmentTypeFilters,
             List shiftIds) throws FenixServiceException, ExcepcaoPersistencia {
         ISite site = null;
-
-        long start = System.currentTimeMillis();
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentEnrollment persistentEnrollment = sp.getIPersistentEnrolment();
@@ -429,7 +427,6 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
 
         Map result = new HashMap();
         List allStudentsGroups = new ArrayList();
-        IPersistentStudentGroupAttend pga = sp.getIPersistentStudentGroupAttend();
 
         Iterator gpIt = groupPropertiesList.iterator();
         while (gpIt.hasNext()) {

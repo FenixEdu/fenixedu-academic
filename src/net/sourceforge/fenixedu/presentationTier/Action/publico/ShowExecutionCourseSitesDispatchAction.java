@@ -143,7 +143,6 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixContextDispatch
     private String getLocaleLanguageFromRequest(HttpServletRequest request) {
 
         Locale locale = (Locale) request.getSession(false).getAttribute(Action.LOCALE_KEY);
-        Locale locale2 = request.getLocale();
 
         return  locale.getLanguage();
 

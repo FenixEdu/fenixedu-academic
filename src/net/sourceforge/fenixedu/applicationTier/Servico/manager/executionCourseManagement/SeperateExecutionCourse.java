@@ -273,9 +273,6 @@ public class SeperateExecutionCourse implements IService {
     }
 
     private Set getExecutionCourseCodes(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-
         List executionCourses = executionPeriod.getAssociatedExecutionCourses();
         return new HashSet(CollectionUtils.collect(executionCourses, new Transformer() {
             public Object transform(Object arg0) {

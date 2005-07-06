@@ -252,8 +252,6 @@ public class CreateOrEditGrantContract implements IService {
             final ITeacher teacher = pTeacher.readByNumber(grantOrientationTeacherInfo.getOrientationTeacherInfo().getTeacherNumber());
             final IGrantOrientationTeacher oldGrantOrientationTeacher;
             final IGrantOrientationTeacher newGrantOrientationTeacher;
-            final IGrantOrientationTeacher grantOrientationTeacher;
-            
             if (teacher == null)
                 throw new GrantOrientationTeacherNotFoundException();
             

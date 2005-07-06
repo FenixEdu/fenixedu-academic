@@ -114,10 +114,6 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
 
 	public IMasterDegreeCandidate readByNumberAndExecutionDegreeAndSpecialization(Integer number,
 			Integer executionDegreeID, Specialization specialization) throws ExcepcaoPersistencia {
-
-		IExecutionDegree executionDegree = (IExecutionDegree) readByOID(ExecutionDegree.class,
-				executionDegreeID);
-
 		Criteria crit = new Criteria();
 		crit.addEqualTo("specialization", specialization);
 		crit.addEqualTo("executionDegree.idInternal", executionDegreeID);
@@ -140,8 +136,6 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
 	public IMasterDegreeCandidate readByExecutionDegreeAndPersonAndNumber(Integer executionDegreeID,
 			Integer personID, Integer number) throws ExcepcaoPersistencia {
 
-		IExecutionDegree executionDegree = (IExecutionDegree) readByOID(ExecutionDegree.class,
-				executionDegreeID);
 		IPerson person = (IPerson) readByOID(Person.class, personID);
 
 		Criteria crit = new Criteria();

@@ -118,18 +118,18 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
         /* Criar o bean de semestres */
         List semestres = new ArrayList();
         semestres.add(new LabelValueBean("escolher", ""));
-        semestres.add(new LabelValueBean("1 º", "1"));
-        semestres.add(new LabelValueBean("2 º", "2"));
+        semestres.add(new LabelValueBean("1 ï¿½", "1"));
+        semestres.add(new LabelValueBean("2 ï¿½", "2"));
         request.setAttribute("semestres", semestres);
 
         /* Criar o bean de anos curricutares */
         List anosCurriculares = new ArrayList();
         anosCurriculares.add(new LabelValueBean("escolher", ""));
-        anosCurriculares.add(new LabelValueBean("1 º", "1"));
-        anosCurriculares.add(new LabelValueBean("2 º", "2"));
-        anosCurriculares.add(new LabelValueBean("3 º", "3"));
-        anosCurriculares.add(new LabelValueBean("4 º", "4"));
-        anosCurriculares.add(new LabelValueBean("5 º", "5"));
+        anosCurriculares.add(new LabelValueBean("1 ï¿½", "1"));
+        anosCurriculares.add(new LabelValueBean("2 ï¿½", "2"));
+        anosCurriculares.add(new LabelValueBean("3 ï¿½", "3"));
+        anosCurriculares.add(new LabelValueBean("4 ï¿½", "4"));
+        anosCurriculares.add(new LabelValueBean("5 ï¿½", "5"));
         request.setAttribute("curricularYearList", anosCurriculares);
 
         /* Cria o form bean com as licenciaturas em execucao. */
@@ -476,7 +476,6 @@ public class ChooseContextDispatchActionNew extends FenixDateAndTimeDispatchActi
        private String getLocaleLanguageFromRequest(HttpServletRequest request) {
 
         Locale locale = (Locale) request.getSession(false).getAttribute(Action.LOCALE_KEY);
-        Locale locale2 = request.getLocale();
         return  locale.getLanguage();
 
     }

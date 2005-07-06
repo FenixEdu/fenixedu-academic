@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
- * @author João Mota 2/Out/2003
+ * @author Joï¿½o Mota 2/Out/2003
  */
 
 public class ReadPosGradStudentCurricularPlans implements IService {
@@ -29,8 +29,6 @@ public class ReadPosGradStudentCurricularPlans implements IService {
         List result = new ArrayList();
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
-                    .getIStudentCurricularPlanPersistente();
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
             IStudent student = (IStudent) persistentStudent.readByOID(Student.class, studentId);
 

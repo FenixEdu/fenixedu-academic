@@ -244,9 +244,6 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
             IExecutionYear executionYear = (IExecutionYear) sp.getIPersistentExecutionYear().readByOID(
                     ExecutionYear.class, executionYearID);
 
-            IPersistentStudentCurricularPlan studentCurricularPlanDAO = sp
-                    .getIStudentCurricularPlanPersistente();
-
             IPersistentGratuitySituation gratuitySituationDAO = sp.getIPersistentGratuitySituation();
 
             IPersistentInsuranceTransaction insuranceTransactionDAO = sp
@@ -254,8 +251,6 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 
             IInsuranceValue insuranceValue = sp.getIPersistentInsuranceValue().readByExecutionYear(
                     executionYear.getIdInternal());
-
-            IPersistentGratuityValues gratuityValuesDAO = sp.getIPersistentGratuityValues();
 
             if (insuranceValue == null) {
                 throw new InsuranceNotDefinedServiceException("error.insurance.notDefinedForThisYear");

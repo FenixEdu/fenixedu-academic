@@ -22,7 +22,7 @@ public class PublishedExamsMapAuthorizationFilter extends Filtro {
         		ExecutionCourseSiteView executionCourseSiteView = (ExecutionCourseSiteView) response.getReturnObject();
         		if (executionCourseSiteView.getComponent() instanceof InfoSiteEvaluation) {
 
-        			InfoSiteEvaluation infoSiteEvaluation  = (InfoSiteEvaluation) executionCourseSiteView.getComponent();
+        			//InfoSiteEvaluation infoSiteEvaluation  = (InfoSiteEvaluation) executionCourseSiteView.getComponent();
         			//filterUnpublishedInformation(infoSiteEvaluation);
 
         		}
@@ -33,7 +33,7 @@ public class PublishedExamsMapAuthorizationFilter extends Filtro {
 
 	        	if (response.getReturnObject() instanceof InfoExamsMap) {
 
-	        		InfoExamsMap infoExamsMap = (InfoExamsMap) response.getReturnObject();
+	        		//InfoExamsMap infoExamsMap = (InfoExamsMap) response.getReturnObject();
 	        		//filterUnpublishedInformation(infoExamsMap);
 
 	        	}

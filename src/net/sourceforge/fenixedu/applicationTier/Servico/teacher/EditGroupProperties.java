@@ -53,13 +53,11 @@ public class EditGroupProperties implements IService {
             IGroupProperties groupProperties) throws FenixServiceException {
 
         IPersistentStudentGroup persistentStudentGroup = null;
-        IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
         List errors = new ArrayList();
         try {
             ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             persistentStudentGroup = ps.getIPersistentStudentGroup();
-            persistentStudentGroupAttend = ps.getIPersistentStudentGroupAttend();
             List allStudentsGroup = groupProperties.getAttendsSet().getStudentGroups();
 
             Integer groupMaximumNumber = infoGroupProperties.getGroupMaximumNumber();

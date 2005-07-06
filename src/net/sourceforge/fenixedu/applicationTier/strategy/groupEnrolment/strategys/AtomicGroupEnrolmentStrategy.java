@@ -61,18 +61,7 @@ public class AtomicGroupEnrolmentStrategy extends GroupEnrolmentStrategy impleme
             result = true;
         else {
 
-            List allStudentGroupAttend = new ArrayList();
-            try {
-
-                ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-                IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSuport
-                        .getIPersistentStudentGroupAttend();
-
-                allStudentGroupAttend = studentGroup.getStudentGroupAttends();
-
-            } catch (ExcepcaoPersistencia ex) {
-                throw ex;
-            }
+            List allStudentGroupAttend = studentGroup.getStudentGroupAttends();
 
             int numberOfGroupElements = allStudentGroupAttend.size();
 

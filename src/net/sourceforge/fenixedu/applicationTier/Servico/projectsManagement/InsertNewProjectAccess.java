@@ -91,7 +91,6 @@ public class InsertNewProjectAccess implements IService {
             if (sp.getIPersistentProjectAccess().countByPersonAndProject(person, new Integer(projectCodes[i])) != 0)
                 throw new IllegalArgumentException();
 
-            IPersistentSuportOracle po = PersistentSuportOracle.getInstance();
             IProjectAccess projectAccess = new ProjectAccess();
             sp.getIPersistentProjectAccess().simpleLockWrite(projectAccess);
             projectAccess.setPerson(person);

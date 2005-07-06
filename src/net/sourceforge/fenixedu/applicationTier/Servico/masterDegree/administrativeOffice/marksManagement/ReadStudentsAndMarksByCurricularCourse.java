@@ -43,7 +43,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
- * @author Fernanda Quitério 01/07/2003
+ * @author Fernanda Quitï¿½rio 01/07/2003
  *  
  */
 public class ReadStudentsAndMarksByCurricularCourse implements IService {
@@ -57,8 +57,6 @@ public class ReadStudentsAndMarksByCurricularCourse implements IService {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-            IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp
-                    .getIPersistentEnrolmentEvaluation();
             IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 

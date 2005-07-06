@@ -30,7 +30,7 @@ public class PessoaVO extends PersistentObjectOJB implements IPessoaPersistente 
         final List persons = new ArrayList();
         
         for (final IPerson person : (List<IPerson>) readAll(Person.class)) {
-            if (person.getNome().toLowerCase().matches(name.toLowerCase())){
+            if (person.getNome().toLowerCase().matches(nameToMatch.toLowerCase())){
                 persons.add(person);
             }
         }

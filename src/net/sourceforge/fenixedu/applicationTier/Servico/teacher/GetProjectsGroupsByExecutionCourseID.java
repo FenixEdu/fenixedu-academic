@@ -48,8 +48,6 @@ public class GetProjectsGroupsByExecutionCourseID implements IService {
                 .getDefaultPersistenceSupport();
         IPersistentExecutionCourse persistentExecutionCourse = persistenceSupport
                 .getIPersistentExecutionCourse();
-        IPersistentStudentGroupAttend persistentGroupAttend = persistenceSupport
-                .getIPersistentStudentGroupAttend();
         List ids = new ArrayList();
         ids.add(id);
         List projects = ((IExecutionCourse) persistentExecutionCourse.readByExecutionCourseIds(ids).get(

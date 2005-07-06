@@ -60,7 +60,6 @@ public class AcceptNewProjectProposal implements IService {
             IPersistentGroupProperties persistentGroupProperties = sp.getIPersistentGroupProperties();
             IPersistentGroupPropertiesExecutionCourse persistentGroupPropertiesExecutionCourse = sp
                     .getIPersistentGroupPropertiesExecutionCourse();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
             IPersistentAttendInAttendsSet persistentAttendInAttendsSet = sp
                     .getIPersistentAttendInAttendsSet();
@@ -209,7 +208,7 @@ public class AcceptNewProjectProposal implements IService {
 
         String msg;
         msg = new String(
-                "A proposta de co-avaliação do agrupamento "
+                "A proposta de co-avaliaï¿½ï¿½o do agrupamento "
                         + groupPropertiesExecutionCourse.getGroupProperties().getName()
                         + ", enviada pelo docente "
                         + senderPerson.getNome()
@@ -220,8 +219,8 @@ public class AcceptNewProjectProposal implements IService {
                         + " da disciplina "
                         + executionCourse.getNome()
                         + "!"
-                        + "<br>A partir deste momento poder-se-á dirijir à área de gestão de grupos da disciplina "
-                        + personExecutionCourse.getNome() + " para gerir a nova co-avaliação.");
+                        + "<br>A partir deste momento poder-se-ï¿½ dirijir ï¿½ ï¿½rea de gestï¿½o de grupos da disciplina "
+                        + personExecutionCourse.getNome() + " para gerir a nova co-avaliaï¿½ï¿½o.");
 
         advisory.setMessage(msg);
         advisory.setOnlyShowOnce(new Boolean(true));

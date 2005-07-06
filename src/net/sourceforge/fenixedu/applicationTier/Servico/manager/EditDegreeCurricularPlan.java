@@ -29,8 +29,6 @@ public class EditDegreeCurricularPlan implements IService {
 
         final IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport
                 .getIPersistentDegreeCurricularPlan();
-        final ICursoPersistente persistentDegree = persistentSuport
-                .getICursoPersistente();
 
         final IDegreeCurricularPlan degreeCP = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
                 .readByOID(DegreeCurricularPlan.class, newInfoDegreeCP

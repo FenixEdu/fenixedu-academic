@@ -28,8 +28,6 @@ public class DeleteStudentCurricularPlan implements IService {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
                 .getIStudentCurricularPlanPersistente();
-        final IPersistentEnrollment persistentEnrollment = persistentSupport.getIPersistentEnrolment();
-
         final IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan
                 .readByOID(StudentCurricularPlan.class, studentCurricularPlanId);
         final List enrollments = studentCurricularPlan.getEnrolments();

@@ -51,7 +51,6 @@ public class RejectNewProjectProposal implements IService {
             IPersistentGroupProperties persistentGroupProperties = sp.getIPersistentGroupProperties();
             IPersistentGroupPropertiesExecutionCourse persistentGroupPropertiesExecutionCourse = sp
                     .getIPersistentGroupPropertiesExecutionCourse();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
             IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperties.readByOID(
@@ -160,7 +159,7 @@ public class RejectNewProjectProposal implements IService {
         advisory.setSubject("Proposta Enviada Rejeitada");
 
         String msg;
-        msg = new String("A proposta de co-avaliação do agrupamento "
+        msg = new String("A proposta de co-avaliaï¿½ï¿½o do agrupamento "
                 + groupPropertiesExecutionCourse.getGroupProperties().getName()
                 + ", enviada pelo docente " + senderPerson.getNome() + " da disciplina "
                 + groupPropertiesExecutionCourse.getSenderExecutionCourse().getNome()
