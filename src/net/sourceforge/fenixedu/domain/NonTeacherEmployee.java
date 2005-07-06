@@ -12,19 +12,21 @@ package net.sourceforge.fenixedu.domain;
 public class NonTeacherEmployee extends NonTeacherEmployee_Base {
 
     public NonTeacherEmployee() {
-        setIdInternal(0);
-        setChaveFuncionario(0);
+        this.setIdInternal(0);
+        this.setChaveFuncionario(0);
     }
 
     public NonTeacherEmployee(int codigoInterno, int chaveFuncionario) {
-        setIdInternal(codigoInterno);
-        setChaveFuncionario(chaveFuncionario);
+        this.setIdInternal(codigoInterno);
+        this.setChaveFuncionario(chaveFuncionario);
     }
 
     public boolean equals(Object obj) {
-        return ((obj instanceof NonTeacherEmployee)
-                && (getIdInternal() == ((NonTeacherEmployee) obj).getIdInternal()) && (getChaveFuncionario() == ((NonTeacherEmployee) obj)
-                .getChaveFuncionario()));
+        if (obj instanceof INonTeacherEmployee) {
+            final INonTeacherEmployee nonTeacherEmployee = (INonTeacherEmployee) obj;
+            return this.getIdInternal().equals(nonTeacherEmployee.getIdInternal());
+        }
+        return false;
     }
 
 }
