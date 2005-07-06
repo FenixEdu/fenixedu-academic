@@ -97,7 +97,9 @@ public class CandidacyVO extends VersionedObjectsBase implements IPersistentSemi
                 addCandidacy = false;
             }
 
-            result.add(candidacy);
+            if (addCandidacy) {
+            	result.add(candidacy);
+            }
         }
 
        return result;
