@@ -2197,6 +2197,10 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
     Specialization specialization;
     
     interface "
+    public IBranch getSecundaryBranch();
+
+    public void setSecundaryBranch(IBranch secundaryBranch);
+    
     public boolean areNewAreasCompatible(IBranch specializationArea, IBranch secundaryArea)
         throws net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia, net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException, net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 
@@ -2229,8 +2233,6 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
     
     public int getNumberOfEnrolledCurricularCourses();
     
-    public IBranch getSecundaryBranch();
-
     public boolean isCurricularCourseApproved(ICurricularCourse curricularCourse);
     
     public boolean isCurricularCourseEnrolled(ICurricularCourse curricularCourse);
@@ -2244,8 +2246,6 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
     public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea);
     
     public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea);
-    
-    public void setSecundaryBranch(IBranch secundaryBranch);
     "
 }
 
@@ -2337,13 +2337,6 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	public net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits getExecutionPeriodCredits(IExecutionPeriod executionPeriod);
 	
 	public void notifyCreditsChange(net.sourceforge.fenixedu.domain.credits.event.CreditsEvent creditsEvent, net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator originator);
-    /*
-    public java.util.List<net.sourceforge.fenixedu.domain.credits.IManagementPositionCreditLine> managementPositionCreditLines();
-    
-    public java.util.List<net.sourceforge.fenixedu.domain.credits.IOtherTypeCreditLine> otherTypeCreditLines();
-    
-    public java.util.List<net.sourceforge.fenixedu.domain.credits.IServiceExemptionCreditLine> serviceExemptionSituations();
-*/
 	"
 }
 
