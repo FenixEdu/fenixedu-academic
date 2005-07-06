@@ -70,13 +70,8 @@ public class Period extends Period_Base {
 
     public boolean equals(Object obj) {
         if (obj instanceof IPeriod) {
-            IPeriod periodObj = (IPeriod) obj;
-            if (this.getStartDate().equals(periodObj.getStartDate()) && this.getEndDate().equals(periodObj.getEndDate())) {
-                return true;
-            }
-
-            return false;
-
+            final IPeriod period = (IPeriod) obj;
+            return this.getIdInternal().equals(period.getIdInternal());
         }
         return false;
     }
