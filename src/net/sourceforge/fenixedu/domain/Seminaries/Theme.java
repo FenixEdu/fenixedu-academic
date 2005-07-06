@@ -5,7 +5,6 @@
  */
 package net.sourceforge.fenixedu.domain.Seminaries;
 
-
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  * 
@@ -14,14 +13,6 @@ package net.sourceforge.fenixedu.domain.Seminaries;
  *  
  */
 public class Theme extends Theme_Base {
-
-    public Theme() {
-    }
-
-    public Theme(String name, String description) {
-        this.setName(name);
-        this.setDescription(description);
-    }
 
     public String toString() {
         String retorno;
@@ -37,15 +28,11 @@ public class Theme extends Theme_Base {
      * true if the names are equals
      */
     public boolean equals(Object obj) {
-        boolean equalsResult = false;
         if (obj instanceof ITheme) {
-            ITheme theme = (ITheme) obj;
-            if (theme.getName() == null)
-                equalsResult = (this.getName() == null);
-            else
-                equalsResult = this.getName().equalsIgnoreCase(theme.getName());
+            final ITheme theme = (ITheme) obj;
+            return this.getIdInternal().equals(theme.getIdInternal());
         }
-        return equalsResult;
+        return false;
     }
 
 }

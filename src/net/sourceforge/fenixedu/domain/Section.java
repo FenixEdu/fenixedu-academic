@@ -29,15 +29,12 @@ public class Section extends Section_Base {
         return result;
     }
 
-    public boolean equals(Object arg0) {
-        boolean result = false;
-        if (arg0 instanceof ISection) {
-            result = (getName().equals(((ISection) arg0).getName()))
-                    && (getSite().equals(((ISection) arg0).getSite()))
-                    && ((getSuperiorSection() == null && ((ISection) arg0).getSuperiorSection() == null) || (getSuperiorSection()
-                            .equals(((ISection) arg0).getSuperiorSection())));
+    public boolean equals(Object obj) {
+        if (obj instanceof ISection) {
+            final ISection section = (ISection) obj;
+            return this.getIdInternal().equals(section.getIdInternal());
         }
-        return result;
+        return false;
     }
 
     public String getSlideName() {
@@ -58,16 +55,15 @@ public class Section extends Section_Base {
     public IItem insertItem(String itemName, String itemInformation, Boolean itemUrgent,
             Integer insertItemOrder) throws ExistingServiceException {
 
-        if (itemName == null || insertItemOrder == null || itemUrgent == null
-                || insertItemOrder == null) {
+        if (itemName == null || insertItemOrder == null || itemUrgent == null || insertItemOrder == null) {
             throw new NullPointerException();
         }
 
-        for(IItem item : (List<IItem>)this.getAssociatedItems()){
-           if(item.getName().equals(itemName))
-               throw new ExistingServiceException();
+        for (IItem item : this.getAssociatedItems()) {
+            if (item.getName().equals(itemName))
+                throw new ExistingServiceException();
         }
-                
+
         IItem item = new Item();
         item.setInformation(itemInformation);
         item.setName(itemName);
@@ -75,12 +71,12 @@ public class Section extends Section_Base {
         item.setUrgent(itemUrgent);
         Integer itemOrder = new Integer(organizeExistingItemsOrder(insertItemOrder.intValue()));
         item.setItemOrder(itemOrder);
-        
-        if(this.getAssociatedItems() == null)
+
+        if (this.getAssociatedItems() == null)
             this.setAssociatedItems(new ArrayList());
-            
-        this.getAssociatedItems().add(item);  
-        
+
+        this.getAssociatedItems().add(item);
+
         return item;
     }
 

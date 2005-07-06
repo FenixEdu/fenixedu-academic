@@ -33,12 +33,12 @@ public class Seminary extends Seminary_Base {
      */
     public void setEnrollmentBeginDate(Calendar calendar) {
         if (calendar != null) {
-            this.setEnrollmentBegin(calendar.getTime());    
+            this.setEnrollmentBegin(calendar.getTime());
         } else {
             this.setEnrollmentBegin(null);
         }
     }
-    
+
     /**
      * @return
      */
@@ -56,11 +56,11 @@ public class Seminary extends Seminary_Base {
      */
     public void setEnrollmentBeginTime(Calendar calendar) {
         if (calendar != null) {
-            this.setEnrollmentTimeBegin(calendar.getTime());    
+            this.setEnrollmentTimeBegin(calendar.getTime());
         } else {
             this.setEnrollmentTimeBegin(null);
         }
-        
+
     }
 
     /**
@@ -80,7 +80,7 @@ public class Seminary extends Seminary_Base {
      */
     public void setEnrollmentEndDate(Calendar calendar) {
         if (calendar != null) {
-            this.setEnrollmentEnd(calendar.getTime());    
+            this.setEnrollmentEnd(calendar.getTime());
         } else {
             this.setEnrollmentEnd(null);
         }
@@ -103,7 +103,7 @@ public class Seminary extends Seminary_Base {
      */
     public void setEnrollmentEndTime(Calendar calendar) {
         if (calendar != null) {
-            this.setEnrollmentTimeEnd(calendar.getTime());    
+            this.setEnrollmentTimeEnd(calendar.getTime());
         } else {
             this.setEnrollmentTimeEnd(null);
         }
@@ -124,15 +124,11 @@ public class Seminary extends Seminary_Base {
      * true if the names are equals
      */
     public boolean equals(Object obj) {
-        boolean equalsResult = false;
         if (obj instanceof ISeminary) {
-            ISeminary seminary = (ISeminary) obj;
-            if (seminary.getName() == null)
-                equalsResult = (this.getName() == null);
-            else
-                equalsResult = this.getName().equalsIgnoreCase(seminary.getName());
+            final ISeminary seminary = (ISeminary) obj;
+            return this.getIdInternal().equals(seminary.getIdInternal());
         }
-        return equalsResult;
+        return false;
     }
 
 }

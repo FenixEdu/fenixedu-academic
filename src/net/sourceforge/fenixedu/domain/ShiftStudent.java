@@ -17,13 +17,11 @@ public class ShiftStudent extends ShiftStudent_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
         if (obj instanceof IShiftStudent) {
-            IShiftStudent shiftStudent = (IShiftStudent) obj;
-            result = getShift().equals(shiftStudent.getShift())
-                    && getStudent().equals(shiftStudent.getStudent());
+            final IShiftStudent shiftStudent = (IShiftStudent) obj;
+            return this.getIdInternal().equals(shiftStudent.getIdInternal());
         }
-        return result;
+        return false;
     }
 
 }

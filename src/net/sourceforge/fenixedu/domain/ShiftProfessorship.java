@@ -11,18 +11,8 @@ import org.apache.ojb.broker.PersistenceBrokerException;
  * @author Tânia & Alexandra
  *  
  */
-public class ShiftProfessorship extends ShiftProfessorship_Base implements PersistenceBrokerAware, ICreditsEventOriginator {
-
-    public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof IShiftProfessorship) {
-            IShiftProfessorship shiftProfessorship = (IShiftProfessorship) obj;
-
-            resultado = (getProfessorship().equals(shiftProfessorship.getProfessorship()))
-                    && (getShift().equals(shiftProfessorship.getShift()));
-        }
-        return resultado;
-    }
+public class ShiftProfessorship extends ShiftProfessorship_Base implements PersistenceBrokerAware,
+        ICreditsEventOriginator {
 
     public String toString() {
         String result = "[CREDITS_TEACHER";
@@ -32,15 +22,23 @@ public class ShiftProfessorship extends ShiftProfessorship_Base implements Persi
         return result;
     }
 
+    public boolean equals(Object obj) {
+        if (obj instanceof IShiftProfessorship) {
+            final IShiftProfessorship shiftProfessorship = (IShiftProfessorship) obj;
+            return this.getIdInternal().equals(shiftProfessorship.getIdInternal());
+        }
+        return false;
+    }
+
     public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod) {
         return this.getProfessorship().getExecutionCourse().getExecutionPeriod().equals(executionPeriod);
     }
-    
+
     private void notifyTeacher() {
         ITeacher teacher = this.getProfessorship().getTeacher();
         teacher.notifyCreditsChange(CreditsEvent.LESSONS, this);
     }
-    
+
     public void afterUpdate(PersistenceBroker pb) throws PersistenceBrokerException {
         notifyTeacher();
     }
@@ -56,7 +54,7 @@ public class ShiftProfessorship extends ShiftProfessorship_Base implements Persi
     public void afterDelete(PersistenceBroker pb) throws PersistenceBrokerException {
         notifyTeacher();
     }
-    
+
     public void beforeUpdate(PersistenceBroker pb) throws PersistenceBrokerException {
     }
 

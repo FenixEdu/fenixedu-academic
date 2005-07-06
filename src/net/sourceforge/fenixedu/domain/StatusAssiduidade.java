@@ -10,31 +10,31 @@ import java.util.Date;
 public class StatusAssiduidade extends StatusAssiduidade_Base {
 
     public StatusAssiduidade() {
-        setIdInternal(0);
-        setEstado("inactivo");
-        setAssiduidade("false");
-	    setQuem(0);
+        this.setIdInternal(0);
+        this.setEstado("inactivo");
+        this.setAssiduidade("false");
+        this.setQuem(0);
     }
 
     public StatusAssiduidade(Integer codigoInterno, String sigla, String designacao, String estado,
             String assiduidade) {
-        setIdInternal(codigoInterno);
-        setSigla(sigla);
-        setDesignacao(designacao);
-        setEstado(estado);
-        setAssiduidade(assiduidade);
-        setQuem(0);
+        this.setIdInternal(codigoInterno);
+        this.setSigla(sigla);
+        this.setDesignacao(designacao);
+        this.setEstado(estado);
+        this.setAssiduidade(assiduidade);
+        this.setQuem(0);
     }
 
     public StatusAssiduidade(Integer codigoInterno, String sigla, String designacao, String estado,
             String assiduidade, Integer quem, Timestamp quando) {
-        setIdInternal(codigoInterno);
-        setSigla(sigla);
-        setDesignacao(designacao);
-        setEstado(estado);
-        setAssiduidade(assiduidade);
-        setQuem(quem);
-        setQuando(quando);
+        this.setIdInternal(codigoInterno);
+        this.setSigla(sigla);
+        this.setDesignacao(designacao);
+        this.setEstado(estado);
+        this.setAssiduidade(assiduidade);
+        this.setQuem(quem);
+        this.setQuando(quando);
     }
 
     public Timestamp getQuando() {
@@ -53,18 +53,11 @@ public class StatusAssiduidade extends StatusAssiduidade_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
-
-        if (obj instanceof StatusAssiduidade) {
-            StatusAssiduidade status = (StatusAssiduidade) obj;
-
-            resultado = (this.getIdInternal() == status.getIdInternal()
-                    && this.getSigla() == status.getSigla()
-                    && this.getDesignacao() == status.getDesignacao()
-                    && this.getEstado() == status.getEstado() && this.getAssiduidade() == status
-                    .getAssiduidade());
+        if (obj instanceof IStatusAssiduidade) {
+            final IStatusAssiduidade statusAssiduidade = (IStatusAssiduidade) obj;
+            return this.getIdInternal().equals(statusAssiduidade.getIdInternal());
         }
-        return resultado;
+        return false;
     }
 
 }

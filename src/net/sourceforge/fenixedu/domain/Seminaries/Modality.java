@@ -10,17 +10,9 @@ package net.sourceforge.fenixedu.domain.Seminaries;
  * 
  * 
  * Created at Jul 23, 2003, 10:15:55 AM
- *  
+ * 
  */
 public class Modality extends Modality_Base {
-
-    public Modality() {
-    }
-
-    public Modality(String name, String description) {
-        this.setDescription(description);
-        this.setName(name);
-    }
 
     public String toString() {
         String retorno;
@@ -35,15 +27,11 @@ public class Modality extends Modality_Base {
      * true if the names are equals
      */
     public boolean equals(Object obj) {
-        boolean equalsResult = false;
         if (obj instanceof IModality) {
-            IModality modality = (IModality) obj;
-            if (modality.getName() == null)
-                equalsResult = (this.getName() == null);
-            else
-                equalsResult = this.getName().equalsIgnoreCase(modality.getName());
+            final IModality modality = (IModality) obj;
+            return this.getIdInternal().equals(modality.getIdInternal());
         }
-        return equalsResult;
+        return false;
     }
 
 }

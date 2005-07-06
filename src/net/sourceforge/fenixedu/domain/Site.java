@@ -25,13 +25,12 @@ public class Site extends Site_Base {
         return result;
     }
 
-    public boolean equals(Object arg0) {
-        boolean result = false;
-        if (arg0 instanceof ISite) {
-            ISite site = (ISite) arg0;
-            result = (getExecutionCourse().equals(site.getExecutionCourse()));
+    public boolean equals(Object obj) {
+        if (obj instanceof ISite) {
+            final ISite site = (ISite) obj;
+            return this.getIdInternal().equals(site.getIdInternal());
         }
-        return result;
+        return false;
     }
 
     public IAnnouncement createAnnouncement(final String announcementTitle,
@@ -63,4 +62,5 @@ public class Site extends Site_Base {
         setMail(mail);
         setAlternativeSite(alternativeSite);
     }
+
 }
