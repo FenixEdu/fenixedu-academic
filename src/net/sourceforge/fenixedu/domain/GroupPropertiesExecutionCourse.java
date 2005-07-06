@@ -39,15 +39,12 @@ public class GroupPropertiesExecutionCourse extends GroupPropertiesExecutionCour
     /**
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public boolean equals(Object arg0) {
-        boolean result = false;
-        if (arg0 instanceof IGroupPropertiesExecutionCourse) {
-            result = (getGroupProperties().equals(((IGroupPropertiesExecutionCourse) arg0)
-                    .getGroupProperties()))
-                    && (getExecutionCourse().equals(((IGroupPropertiesExecutionCourse) arg0)
-                            .getExecutionCourse()));
+    public boolean equals(Object obj) {
+        if (obj instanceof IGroupPropertiesExecutionCourse) {
+            final IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse) obj;
+            return this.getIdInternal().equals(groupPropertiesExecutionCourse.getIdInternal());
         }
-        return result;
+        return false;
     }
 
 }

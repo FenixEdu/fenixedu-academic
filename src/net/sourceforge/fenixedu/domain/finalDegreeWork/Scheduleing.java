@@ -22,15 +22,11 @@ public class Scheduleing extends Scheduleing_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
         if (obj instanceof IScheduleing) {
             IScheduleing scheduleing = (IScheduleing) obj;
-
-            if (getExecutionDegree() != null && scheduleing != null) {
-                result = getExecutionDegree().equals(scheduleing.getExecutionDegree());
-            }
+            return this.getIdInternal().equals(scheduleing.getIdInternal());
         }
-        return result;
+        return false;
     }
 
     public Date getEndOfProposalPeriod() {
