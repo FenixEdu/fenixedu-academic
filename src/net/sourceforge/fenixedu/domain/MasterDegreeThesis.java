@@ -11,20 +11,6 @@ package net.sourceforge.fenixedu.domain;
  */
 public class MasterDegreeThesis extends MasterDegreeThesis_Base {
 
-    // fields
-
-    public MasterDegreeThesis() {
-
-    }
-
-    /**
-     * @param studentCurricularPlan
-     */
-    public MasterDegreeThesis(IStudentCurricularPlan studentCurricularPlan) {
-        super();
-        setStudentCurricularPlan(studentCurricularPlan);
-    }
-
     public String toString() {
         String result = "[" + this.getClass().getName() + ": \n";
         result += "idInternal = " + getIdInternal() + "; \n";
@@ -38,12 +24,10 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
     }
 
     public boolean equals(Object obj) {
-
         if (obj instanceof IMasterDegreeThesis) {
-            IMasterDegreeThesis masterDegreeThesis = (IMasterDegreeThesis) obj;
-            return masterDegreeThesis.getIdInternal().equals(getIdInternal());
+            final IMasterDegreeThesis masterDegreeThesis = (IMasterDegreeThesis) obj;
+            return this.getIdInternal().equals(masterDegreeThesis.getIdInternal());
         }
-
         return false;
     }
 

@@ -95,7 +95,8 @@ public class CreateMasterDegreeThesis implements IService {
                     .getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,
                             infoStudentCurricularPlan.getIdInternal(),true);
 
-            IMasterDegreeThesis masterDegreeThesis = new MasterDegreeThesis(studentCurricularPlan);            
+            IMasterDegreeThesis masterDegreeThesis = new MasterDegreeThesis();
+            masterDegreeThesis.setStudentCurricularPlan(studentCurricularPlan);
             studentCurricularPlan.setMasterDegreeThesis(masterDegreeThesis);
             sp.getIPersistentMasterDegreeThesis().simpleLockWrite(masterDegreeThesis);
 
