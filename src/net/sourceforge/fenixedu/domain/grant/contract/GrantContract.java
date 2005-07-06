@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.domain.grant.contract;
 
-import net.sourceforge.fenixedu.domain.gesdis.IStudentCourseReport;
 
 
 /**

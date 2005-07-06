@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.domain.grant.owner;
 
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractRegime;
 
 /**
  * @author Barbosa
