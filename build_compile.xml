@@ -533,6 +533,8 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 	       		<include name="net/sourceforge/fenixedu/utilInsc/**/*.class"/>
 	       		<include name="net/sourceforge/fenixedu/utilTests/**/*.class"/>
 	       		<include name="net/sourceforge/fenixedu/tools/**/*.class"/>
+	       		<include name="net/sourceforge/fenixedu/framework/**/*.class"/>
+	       		<include name="relations/*.class"/>
 				<include name="org/**/*.class"/>
 			</fileset>
 		</jar>
