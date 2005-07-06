@@ -27,9 +27,6 @@ import org.apache.struts.upload.FormFile;
 
 public class InsertApplicationDocumentsAction extends FenixAction {
 
-    /** request constants * */
-    private static final String REQUEST_UPLOAD_STATUS = "uploadStatus";
-
     /** file names * */
     private final String CANDIDATE_CH_FNAME = "candidateCH";
 

@@ -31,8 +31,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadExamsByDayAndBeginning implements IService {
 
-    private static ReadExamsByDayAndBeginning _servico = new ReadExamsByDayAndBeginning();
-
     public InfoViewExam run(Calendar day, Calendar beginning) throws ExcepcaoPersistencia {
         InfoViewExam infoViewExam = new InfoViewExam();
         List infoViewExams = new ArrayList();

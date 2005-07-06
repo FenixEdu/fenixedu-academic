@@ -35,9 +35,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadExpensesReport implements IService {
 
-    public ReadExpensesReport() {
-    }
-
     public InfoExpensesReport run(String username, String costCenter, InfoExpensesReport infoReport, ReportType reportType, Integer projectCode,
             String rubric, String userNumber) throws ExcepcaoPersistencia {
 
@@ -98,17 +95,4 @@ public class ReadExpensesReport implements IService {
         return infoReport;
     }
 
-    private Integer getUserNumber(ISuportePersistente sp, String userView) throws ExcepcaoPersistencia {
-        Integer userNumber = null;
-        ITeacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(userView);
-        if (teacher != null)
-            userNumber = teacher.getTeacherNumber();
-        else {
-            IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView);
-            IEmployee employee = sp.getIPersistentEmployee().readByPerson(person);
-            if (employee != null)
-                userNumber = employee.getEmployeeNumber();
-        }
-        return userNumber;
-    }
 }

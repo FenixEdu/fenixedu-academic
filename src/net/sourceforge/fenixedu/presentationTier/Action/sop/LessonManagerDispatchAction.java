@@ -300,25 +300,6 @@ public class LessonManagerDispatchAction extends
         throw new Exception();
     }
 
-    private ActionErrors checkTimeInterval(Calendar begining, Calendar end) {
-        ActionErrors actionErrors = new ActionErrors();
-        String beginMinAppend = "";
-        String endMinAppend = "";
-
-        if (begining.get(Calendar.MINUTE) == 0)
-            beginMinAppend = "0";
-        if (end.get(Calendar.MINUTE) == 0)
-            endMinAppend = "0";
-
-        if (begining.getTime().getTime() >= end.getTime().getTime()) {
-            actionErrors.add(INVALID_TIME_INTERVAL, new ActionError(INVALID_TIME_INTERVAL, ""
-                    + begining.get(Calendar.HOUR_OF_DAY) + ":" + begining.get(Calendar.MINUTE)
-                    + beginMinAppend + " - " + end.get(Calendar.HOUR_OF_DAY) + ":"
-                    + end.get(Calendar.MINUTE) + endMinAppend));
-        }
-        return actionErrors;
-    }
-
     private ActionErrors getActionErrors(InfoLessonServiceResult result, Calendar inicio, Calendar fim) {
         ActionErrors actionErrors = new ActionErrors();
         String beginMinAppend = "";

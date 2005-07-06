@@ -193,11 +193,11 @@ public class ListCandidatesDispatchAction extends DispatchAction {
                 if (degreeName != null)
                     query += "  - Degree: " + degreeName + "<br />";
                 if (specialization != null)
-                    query += "  - Tipo de Especialização: " + specialization.toString() + "<br />";
+                    query += "  - Tipo de Especializaï¿½ï¿½o: " + specialization.toString() + "<br />";
                 if (situationName != null)
-                    query += "  - Situação do Candidato: " + situationName.toString() + "<br />";
+                    query += "  - Situaï¿½ï¿½o do Candidato: " + situationName.toString() + "<br />";
                 if (candidateNumber != null)
-                    query += "  - Número de Candidato: " + candidateNumber + "<br />";
+                    query += "  - Nï¿½mero de Candidato: " + candidateNumber + "<br />";
             }
 
             session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST);
@@ -716,7 +716,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 
     /**
      * 
-     * @author Ricardo Clérigo & Telmo Nabais
+     * @author Ricardo Clï¿½rigo & Telmo Nabais
      */
     public ActionForward showApplicationDocuments(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -763,14 +763,6 @@ public class ListCandidatesDispatchAction extends DispatchAction {
         }
 
         return null;
-    }
-
-    private boolean validateApplicationDocumentType(Integer tipoDocumento) {
-        if (tipoDocumento != ApplicationDocumentType.CURRICULUM_VITAE.ordinal()
-                && tipoDocumento != ApplicationDocumentType.INTEREST_LETTER.ordinal()
-                && tipoDocumento != ApplicationDocumentType.HABILITATION_CERTIFICATE.ordinal())
-            return false;
-        return true;
     }
 
 }

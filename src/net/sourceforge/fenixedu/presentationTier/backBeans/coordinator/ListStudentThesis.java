@@ -21,8 +21,6 @@ public class ListStudentThesis {
 
     private Integer degreeCurricularPlanID;
 
-    private List masterDegreeThesisDataVersions;
-
     private IUserView userView;
 
     public ListStudentThesis() {
@@ -60,10 +58,6 @@ public class ListStudentThesis {
 
         return null;
 
-    }
-
-    public void setMasterDegreeThesisDataVersions(List masterDegreeThesisDataVersions) {
-        this.masterDegreeThesisDataVersions = masterDegreeThesisDataVersions;
     }
 
 }

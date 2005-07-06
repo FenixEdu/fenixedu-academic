@@ -21,8 +21,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class LerTurma implements IService {
 
-    private static LerTurma _servico = new LerTurma();
-
     public InfoClass run(String className, InfoExecutionDegree infoExecutionDegree,
             InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia {
 

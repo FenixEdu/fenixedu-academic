@@ -150,38 +150,6 @@ public class CandidateOperationDispatchAction extends DispatchAction {
 
     /**
      * 
-     * @param userView
-     * @param actionErrors
-     * @param request
-     * @param mapping
-     * @return
-     */
-    private InfoPerson readPersonByUsername(IUserView userView, ActionErrors actionErrors,
-            HttpServletRequest request, ActionMapping mapping) {
-        InfoPerson result = null;
-
-        try {
-            Object[] args = { userView.getUtilizador() };
-            result = (InfoPerson) ServiceUtils.executeService(userView, "ReadPersonByUsername", args);
-            return result;
-        } catch (ExcepcaoInexistente e) {
-            actionErrors.add("unknownPerson", new ActionError("error.exception.nonExisting", userView
-                    .getUtilizador()));
-            saveErrors(request, actionErrors);
-        } catch (FenixServiceException e) {
-            actionErrors.add("unableReadPerson", new ActionError("errors.unableReadPerson", userView
-                    .getUtilizador()));
-            saveErrors(request, actionErrors);
-        } catch (FenixFilterException e) {
-            actionErrors.add("unableReadPerson", new ActionError("errors.unableReadPerson", userView
-                    .getUtilizador()));
-            saveErrors(request, actionErrors);
-        }
-        return null;
-    }
-
-    /**
-     * 
      * @author Ricardo Clerigo & Telmo Nabais
      * @param candidateID
      * @param userView

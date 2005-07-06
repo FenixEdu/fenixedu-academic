@@ -172,7 +172,7 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
             List types = new ArrayList();
             types.add(new LabelValueBean("*", null));
             types.add(new LabelValueBean("Anfiteatro", (new Integer(TipoSala.ANFITEATRO)).toString()));
-            types.add(new LabelValueBean("Laboratório", (new Integer(TipoSala.LABORATORIO)).toString()));
+            types.add(new LabelValueBean("Laboratï¿½rio", (new Integer(TipoSala.LABORATORIO)).toString()));
             types.add(new LabelValueBean("Plana", (new Integer(TipoSala.PLANA)).toString()));
             request.setAttribute("publico.types", types);
 
@@ -247,11 +247,5 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
         return mapping.findForward("Sucess");
 
     }
-    private String getLocaleLanguageFromRequest(HttpServletRequest request) {
 
-        Locale locale = (Locale) request.getSession(false).getAttribute(Action.LOCALE_KEY);
-        Locale locale2 = request.getLocale();
-        return  locale.getLanguage();
-
-    }
 }

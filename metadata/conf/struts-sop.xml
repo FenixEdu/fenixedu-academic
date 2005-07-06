@@ -1000,22 +1000,6 @@
 	         <forward name="listClasses" path="ClassesManagerDA.do?method=listClasses"/>             
       </action>
 
-      <action parameter="method"
-      	      input = "/viewShiftList.jsp"
-		      path="/ClassShiftManagerDA"
-              type="net.sourceforge.fenixedu.presentationTier.Action.sop.ClassShiftManagerDispatchAction"
-              validate="false"
-		>
-		<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
-			   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-               handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
-               />
-	         <forward name="viewClassShiftList" path="/viewShiftList.jsp"/>  
-	         <forward name="viewAvailableShiftList" path="/viewShiftList.jsp"/>  
-      </action>
-
-
-
 	  <!-- Choose Execution Course Form for lessons -->
       <action name="chooseExecutionCourseForm"
 		      input="/escolherDisciplinaExecucao.jsp"

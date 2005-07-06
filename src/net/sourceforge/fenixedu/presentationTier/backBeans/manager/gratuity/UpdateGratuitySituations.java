@@ -24,8 +24,6 @@ public class UpdateGratuitySituations extends FenixBackingBean {
 
     private String executionYear;
     
-    private List executionYears;
-
     public void update(ActionEvent evt) {
 
         Object[] args = { this.executionYear };
