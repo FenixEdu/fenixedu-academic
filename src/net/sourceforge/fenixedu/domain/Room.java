@@ -26,12 +26,11 @@ public class Room extends Room_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
         if (obj instanceof IRoom) {
-            IRoom sala = (IRoom) obj;
-            resultado = (getNome().equals(sala.getNome()));
+            final IRoom room = (IRoom) obj;
+            return this.getIdInternal().equals(room.getIdInternal());
         }
-        return resultado;
+        return false;
     }
 
 }

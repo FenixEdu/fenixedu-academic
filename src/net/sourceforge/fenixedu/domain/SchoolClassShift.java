@@ -20,8 +20,8 @@ public class SchoolClassShift extends SchoolClassShift_Base {
     }
 
     public SchoolClassShift(ISchoolClass schoolClass, IShift shift) {
-        setTurma(schoolClass);
-        setTurno(shift);
+        this.setTurma(schoolClass);
+        this.setTurno(shift);
     }
 
     public String toString() {
@@ -35,13 +35,11 @@ public class SchoolClassShift extends SchoolClassShift_Base {
     }
 
     public boolean equals(Object obj) {
-        boolean result = false;
         if (obj instanceof ISchoolClassShift) {
-            ISchoolClassShift schoolClass_shift = (ISchoolClassShift) obj;
-            result = getTurma().equals(schoolClass_shift.getTurma())
-                    && getTurno().equals(schoolClass_shift.getTurno());
+            final ISchoolClassShift schoolClassShift = (ISchoolClassShift) obj;
+            return this.getIdInternal().equals(schoolClassShift.getIdInternal());
         }
-        return result;
+        return false;
     }
 
 }
