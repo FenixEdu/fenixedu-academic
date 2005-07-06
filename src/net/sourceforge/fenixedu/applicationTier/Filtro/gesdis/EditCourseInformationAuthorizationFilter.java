@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.ResponsibleFor;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -82,14 +81,14 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
                     ExecutionCourse.class, infoExecutionCourse.getIdInternal());
 
             IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-            List responsiblesFor = persistentResponsibleFor.readByExecutionCourse(executionCourse.getIdInternal());
-            IResponsibleFor responsibleFor = new ResponsibleFor(teacher, executionCourse);
-
-            if (!responsiblesFor.contains(responsibleFor)) {
-                return false;
+            List<IResponsibleFor> responsiblesFor = persistentResponsibleFor.readByExecutionCourse(executionCourse.getIdInternal());
+            
+            for (IResponsibleFor responsibleFor : responsiblesFor) {
+                if(responsibleFor.getTeacher().equals(teacher) && responsibleFor.getExecutionCourse().equals(executionCourse))
+                    return true;
             }
+            return false;
 
-            return true;
         } catch (ExcepcaoPersistencia e) {
 
             return false;
