@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.ResponsibleFor;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -35,11 +34,11 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadDetailedTeacherProfessorshipsAbstractService implements IService {
     private final class Professorships2DetailProfessorship implements Transformer {
-        private final List responsibleFors;
+        private final List<IResponsibleFor> responsiblesFor;
 
-        private Professorships2DetailProfessorship(List responsibleFors) {
+        private Professorships2DetailProfessorship(List<IResponsibleFor> responsiblesFor) {
             super();
-            this.responsibleFors = responsibleFors;
+            this.responsiblesFor = responsiblesFor;
         }
 
         public Object transform(Object input) {
@@ -53,12 +52,16 @@ public class ReadDetailedTeacherProfessorshipsAbstractService implements IServic
             List executionCourseCurricularCoursesList = getInfoCurricularCourses(detailedProfessorship,
                     executionCourse);
 
-            IResponsibleFor responsibleFor = new ResponsibleFor();
-            responsibleFor.setExecutionCourse(professorship.getExecutionCourse());
-            responsibleFor.setTeacher(professorship.getTeacher());
-
-            Boolean responsible = Boolean.valueOf(responsibleFors.contains(responsibleFor));
-            detailedProfessorship.setResponsibleFor(responsible);
+            boolean responsible = false;
+            for (IResponsibleFor responsibleFor : responsiblesFor) {
+                if (responsibleFor.getTeacher().equals(professorship.getTeacher())
+                        && responsibleFor.getExecutionCourse()
+                                .equals(professorship.getExecutionCourse())) {
+                    responsible = true;
+                    break;
+                }
+            }
+            detailedProfessorship.setResponsibleFor(Boolean.valueOf(responsible));
 
             detailedProfessorship.setInfoProfessorship(infoProfessorShip);
             detailedProfessorship
@@ -111,8 +114,8 @@ public class ReadDetailedTeacherProfessorshipsAbstractService implements IServic
 
     /**
      * @param teacherId
-     * @return @throws
-     *         ExcepcaoPersistencia
+     * @return
+     * @throws ExcepcaoPersistencia
      */
     protected ITeacher readTeacher(Integer teacherId, IPersistentTeacher teacherDAO)
             throws NotFoundTeacher, ExcepcaoPersistencia {
