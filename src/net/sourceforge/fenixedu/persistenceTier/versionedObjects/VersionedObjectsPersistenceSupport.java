@@ -177,6 +177,13 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contr
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantSubsidyVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantTypeVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.owner.GrantOwnerVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.InquiriesCourseVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.InquiriesRegistryVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.InquiriesRoomVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.InquiriesTeacherVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.OldInquiriesCoursesResVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.OldInquiriesSummaryVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.OldInquiriesTeachersResVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.places.campus.CampusVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.projectsManagement.ProjectAccessVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.CandidacyVO;
@@ -537,7 +544,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentOldInquiriesSummary getIPersistentOldInquiriesSummary() {
-        return null;
+        return new OldInquiriesSummaryVO();
     }
 
     public IPersistentGrantOwner getIPersistentGrantOwner() {
@@ -829,7 +836,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentOldInquiriesTeachersRes getIPersistentOldInquiriesTeachersRes() {
-        return null;
+        return new OldInquiriesTeachersResVO();
     }
 
     public IPersistentFAQEntries getIPersistentFAQEntries() {
@@ -949,23 +956,23 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentOldInquiriesCoursesRes getIPersistentOldInquiriesCoursesRes() {
-        return null;
+        return new OldInquiriesCoursesResVO();
     }
 
     public IPersistentInquiriesCourse getIPersistentInquiriesCourse() {
-        return null;
+        return new InquiriesCourseVO();
     }
 
     public IPersistentInquiriesRegistry getIPersistentInquiriesRegistry() {
-        return null;
+        return new InquiriesRegistryVO();
     }
 
     public IPersistentInquiriesRoom getIPersistentInquiriesRoom() {
-        return null;
+        return new InquiriesRoomVO();
     }
 
     public IPersistentInquiriesTeacher getIPersistentInquiriesTeacher() {
-        return null;
+        return new InquiriesTeacherVO();
     }
 
     public IPersistentInstitution getIPersistentInstitution() {
@@ -975,5 +982,5 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     public IPersistentNonAffiliatedTeacher getIPersistentNonAffiliatedTeacher() {
         return null;
     }
-
+	
 }
