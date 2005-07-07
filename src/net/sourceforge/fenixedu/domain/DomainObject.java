@@ -18,11 +18,23 @@ import org.apache.commons.collections.Predicate;
 
 public class DomainObject extends DomainObject_Base {
 
+    private static boolean lockMode = true;
+
+    public static void turnOffLockMode() {
+        lockMode = false;
+    }
+    public static void turnOnLockMode() {
+        lockMode = true;
+    }
+
     protected static void doLockWriteOn(Object obj) {
-        try {
-            net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB.getInstance().lockWrite(obj);             
-        } catch (Exception e) {
-            throw new Error("Couldn't obtain lockwrite on object");
+        if (lockMode) {
+            try {
+                net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB.getInstance()
+                        .lockWrite(obj);
+            } catch (Exception e) {
+                throw new Error("Couldn't obtain lockwrite on object");
+            }
         }
     }
 
@@ -33,16 +45,12 @@ public class DomainObject extends DomainObject_Base {
                     && getIdInternal().equals(domainObject.getIdInternal())) {
 
                 Collection thisInterfaces = getInterfaces(getClass());
-                Collection objInterfaces = getInterfaces(domainObject
-                        .getClass());
+                Collection objInterfaces = getInterfaces(domainObject.getClass());
 
-                thisInterfaces = CollectionUtils.select(thisInterfaces,
-                        new IS_NOT_IDOMAIN_PREDICATE());
-                objInterfaces = CollectionUtils.select(objInterfaces,
-                        new IS_NOT_IDOMAIN_PREDICATE());
+                thisInterfaces = CollectionUtils.select(thisInterfaces, new IS_NOT_IDOMAIN_PREDICATE());
+                objInterfaces = CollectionUtils.select(objInterfaces, new IS_NOT_IDOMAIN_PREDICATE());
 
-                if (!CollectionUtils
-                        .intersection(thisInterfaces, objInterfaces).isEmpty()) {
+                if (!CollectionUtils.intersection(thisInterfaces, objInterfaces).isEmpty()) {
                     return true;
                 }
             }

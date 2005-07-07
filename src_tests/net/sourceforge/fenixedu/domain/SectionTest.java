@@ -10,12 +10,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 
 import junit.framework.TestCase;
 
-public class SectionTest extends TestCase {
+public class SectionTest extends DomainTestBase {
 
     ISection section;
     
     protected void setUp() throws Exception {
         super.setUp();
+        DomainObject.turnOffLockMode();
         
         section = new Section();
         section.setIdInternal(0);

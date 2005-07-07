@@ -10,7 +10,7 @@ import java.util.Date;
 
 import junit.framework.TestCase;
 
-public class AnnouncementTest extends TestCase {
+public class AnnouncementTest extends DomainTestBase {
 
     private ISite site;
 
@@ -18,6 +18,7 @@ public class AnnouncementTest extends TestCase {
 
     protected void setUp() throws Exception {
         super.setUp();
+        DomainObject.turnOffLockMode();
 
         IExecutionCourse executionCourse = new ExecutionCourse();
         executionCourse.setIdInternal(0);

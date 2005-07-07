@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorized
 
 import junit.framework.TestCase;
 
-public class ItemTest extends TestCase {
+public class ItemTest extends DomainTestBase {
 
     ISection section;
     ISection sectionSuperior;
@@ -22,6 +22,7 @@ public class ItemTest extends TestCase {
 
     protected void setUp() throws Exception {
         super.setUp();
+        DomainObject.turnOffLockMode();
         
         executionYear = new ExecutionYear();
         

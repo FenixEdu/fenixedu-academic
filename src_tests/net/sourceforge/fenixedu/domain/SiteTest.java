@@ -10,7 +10,7 @@ import java.util.Date;
 
 import junit.framework.TestCase;
 
-public class SiteTest extends TestCase {
+public class SiteTest extends DomainTestBase {
 
     private ISite site;
 

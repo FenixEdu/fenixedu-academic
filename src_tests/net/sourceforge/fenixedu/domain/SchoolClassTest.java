@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
-public class SchoolClassTest extends TestCase {
+public class SchoolClassTest extends DomainTestBase {
 
     ISchoolClass schoolClass;
 
