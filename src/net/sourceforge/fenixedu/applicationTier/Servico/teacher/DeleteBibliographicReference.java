@@ -26,8 +26,7 @@ public class DeleteBibliographicReference implements IService {
                 .readByOID(BibliographicReference.class, bibliographicReferenceOID);
 
         if (bibliographicReference != null) {
-            bibliographicReference.getExecutionCourse().getAssociatedBibliographicReferences().remove(
-                    bibliographicReference);
+            bibliographicReference.delete();
             persistentBibliographicReference.deleteByOID(BibliographicReference.class,
                     bibliographicReference.getIdInternal());
         }

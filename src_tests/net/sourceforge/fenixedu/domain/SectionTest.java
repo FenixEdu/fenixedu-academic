@@ -8,8 +8,6 @@ import java.util.ArrayList;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 
-import junit.framework.TestCase;
-
 public class SectionTest extends DomainTestBase {
 
     ISection section;

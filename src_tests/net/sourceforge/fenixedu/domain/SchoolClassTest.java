@@ -5,8 +5,6 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 
-import junit.framework.TestCase;
-
 public class SchoolClassTest extends DomainTestBase {
 
     ISchoolClass schoolClass;

@@ -8,8 +8,6 @@ import java.util.ArrayList;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
 
-import junit.framework.TestCase;
-
 public class ItemTest extends DomainTestBase {
 
     ISection section;

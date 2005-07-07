@@ -110,8 +110,8 @@ class net.sourceforge.fenixedu.domain.Announcement extends net.sourceforge.fenix
     Date lastModifiedDate;
     
     interface "
-    public void editAnnouncement(String newAnnouncementTitle, String newAnnouncementInformation);
-	public void deleteAnnouncement();
+    public void edit(String newAnnouncementTitle, String newAnnouncementInformation);
+	public void delete();
     "
 }
 
@@ -171,6 +171,12 @@ class net.sourceforge.fenixedu.domain.BibliographicReference extends net.sourcef
 	String authors;
 	String title;
 	String reference;
+	
+	interface "
+	public void edit(String title, String authors, String reference, String year, Boolean optional);
+    
+    public void delete();	
+	"
 }
 
 
@@ -794,6 +800,12 @@ class net.sourceforge.fenixedu.domain.EvaluationMethod extends net.sourceforge.f
 	String evaluationElements;
 	String evaluationElementsEn;
 	Integer keyExecutionCourse;
+	
+	interface "
+	public void edit(String evaluationElements, String evaluationElementsEng);
+	
+	public void delete();
+	"
 }
 
 
@@ -837,6 +849,10 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
     public boolean isMasterDegreeOnly();
     
     public void createSite();
+    
+    public void createEvaluationMethod(String evaluationElements, String evaluationElementsEng);
+    
+    public void createBibliographicReference(String title, String authors, String reference, String year, Boolean optional);
     "
 }
 
@@ -2127,8 +2143,11 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 	String alternativeSite;
 	
 	interface "
-	public net.sourceforge.fenixedu.domain.IAnnouncement createAnnouncement(String announcementTitle, String announcementInformation);		
-	public void editSite(String initialStatement, String introduction, String mail, String alternativeSite);
+	public void edit(String initialStatement, String introduction, String mail, String alternativeSite);
+	
+	public void createAnnouncement(String announcementTitle, String announcementInformation);			
+	
+	public void createSection(String sectionName, ISection parentSection, Integer sectionOrder);
 	"
 }
 

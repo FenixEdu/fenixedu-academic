@@ -11,8 +11,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.BibliographicReference;
-import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
 import net.sourceforge.fenixedu.domain.IBibliographicReference;
@@ -24,15 +22,10 @@ import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IShiftStudent;
-import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ResponsibleFor;
 import net.sourceforge.fenixedu.domain.ShiftStudent;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoAlunoPersistente;
@@ -49,7 +42,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * 
  * @author Luis Cruz
- *  
+ * 
  */
 public class SeperateExecutionCourse implements IService {
 
@@ -93,44 +86,37 @@ public class SeperateExecutionCourse implements IService {
     private void copyBibliographicReferences(ISuportePersistente sp, IPersistentObject persistentObject,
             IExecutionCourse destinationExecutionCourse, IExecutionCourse originExecutionCourse)
             throws ExcepcaoPersistencia {
-        IPersistentBibliographicReference persistentBibliographicReference = sp
-                .getIPersistentBibliographicReference();
-        List bibliographicReferences = persistentBibliographicReference
-                .readBibliographicReference(originExecutionCourse.getIdInternal());
-        for (int i = 0; i < bibliographicReferences.size(); i++) {
-            IBibliographicReference bibliographicReference = (IBibliographicReference) bibliographicReferences
-                    .get(i);
-            IBibliographicReference newibliographicReference = new BibliographicReference();
-            persistentObject.simpleLockWrite(newibliographicReference);
-            newibliographicReference.setAuthors(bibliographicReference.getAuthors());
-            newibliographicReference.setExecutionCourse(destinationExecutionCourse);
-            newibliographicReference.setOptional(bibliographicReference.getOptional());
-            newibliographicReference.setReference(bibliographicReference.getReference());
-            newibliographicReference.setTitle(bibliographicReference.getTitle());
-            newibliographicReference.setYear(bibliographicReference.getYear());
+
+        final Iterator bibliographicReferences = originExecutionCourse
+                .getAssociatedBibliographicReferencesIterator();
+        while (bibliographicReferences.hasNext()) {
+            final IBibliographicReference bibliographicReference = (IBibliographicReference) bibliographicReferences
+                    .next();
+            persistentObject.simpleLockWrite(destinationExecutionCourse);
+            destinationExecutionCourse.createBibliographicReference(bibliographicReference.getTitle(),
+                    bibliographicReference.getAuthors(), bibliographicReference.getReference(),
+                    bibliographicReference.getYear(), bibliographicReference.getOptional());
+
         }
     }
 
     private void copyEvaluationMethod(ISuportePersistente sp, IPersistentObject persistentObject,
             IExecutionCourse destinationExecutionCourse, IExecutionCourse originExecutionCourse)
             throws ExcepcaoPersistencia {
-        IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();
-        IEvaluationMethod evaluationMethod = persistentEvaluationMethod
-                .readByIdExecutionCourse(originExecutionCourse.getIdInternal());
+
+        IEvaluationMethod evaluationMethod = originExecutionCourse.getEvaluationMethod();
         if (evaluationMethod != null) {
-            IEvaluationMethod newEvaluationMethod = new EvaluationMethod();
-            persistentObject.simpleLockWrite(newEvaluationMethod);
-            newEvaluationMethod.setEvaluationElements(evaluationMethod.getEvaluationElements());
-            newEvaluationMethod.setEvaluationElementsEn(evaluationMethod.getEvaluationElementsEn());
-            newEvaluationMethod.setExecutionCourse(destinationExecutionCourse);
+            persistentObject.simpleLockWrite(destinationExecutionCourse);
+            destinationExecutionCourse.createEvaluationMethod(evaluationMethod.getEvaluationElements(),
+                    evaluationMethod.getEvaluationElementsEn());
+            evaluationMethod.delete();
         }
     }
 
     private void createNewSite(IPersistentObject persistentObject,
             IExecutionCourse destinationExecutionCourse) throws ExcepcaoPersistencia {
-        ISite site = new Site();
-        persistentObject.simpleLockWrite(site);
-        site.setExecutionCourse(destinationExecutionCourse);
+        persistentObject.simpleLockWrite(destinationExecutionCourse);
+        destinationExecutionCourse.createSite();
     }
 
     private List getShifts(final ISuportePersistente sp, final IExecutionCourse originExecutionCourse)
@@ -167,7 +153,7 @@ public class SeperateExecutionCourse implements IService {
                     .hasNext();) {
                 IShiftStudent studentShift = (IShiftStudent) studentShiftIterator.next();
                 if (!transferedStudents.contains(studentShift.getStudent().getIdInternal())) {
-                    //persistentStudentShift.delete(studentShift);
+                    // persistentStudentShift.delete(studentShift);
                     studentShift.getStudent().getShiftStudents().remove(studentShift);
                     studentShift.getShift().getStudentShifts().remove(studentShift);
                     studentShift.setShift(null);

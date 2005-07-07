@@ -4,11 +4,8 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
-import junit.framework.TestCase;
 
 public class AnnouncementTest extends DomainTestBase {
 
@@ -18,14 +15,12 @@ public class AnnouncementTest extends DomainTestBase {
 
     protected void setUp() throws Exception {
         super.setUp();
-        DomainObject.turnOffLockMode();
 
         IExecutionCourse executionCourse = new ExecutionCourse();
         executionCourse.setIdInternal(0);
 
         site = new Site();
         site.setIdInternal(0);
-        site.setAssociatedAnnouncements(new ArrayList());
         site.setExecutionCourse(executionCourse);
 
         announcement = new Announcement();
@@ -33,9 +28,7 @@ public class AnnouncementTest extends DomainTestBase {
         announcement.setTitle("Title");
         announcement.setInformation("Information");
         announcement.setSite(site);
-        announcement.setCreationDate(Calendar.getInstance().getTime());
-
-        site.getAssociatedAnnouncements().add(announcement);
+        announcement.setCreationDate(Calendar.getInstance().getTime());        
     }
 
     protected void tearDown() throws Exception {
@@ -44,10 +37,10 @@ public class AnnouncementTest extends DomainTestBase {
 
     public void testEditAnnouncement() {
         try {
-            announcement.editAnnouncement(null, null);
+            announcement.edit(null, null);
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
-            assertEquals("Size unexpected!", 1, site.getAssociatedAnnouncements().size());
+            assertEquals("Size unexpected!", 1, site.getAssociatedAnnouncementsCount());
             assertEquals("Different Announcement Title!", "Title", announcement.getTitle());
             assertEquals("Different Announcement Information!", "Information", announcement
                     .getInformation());
@@ -55,10 +48,10 @@ public class AnnouncementTest extends DomainTestBase {
         }
 
         try {
-            announcement.editAnnouncement("TitleEdited", null);
+            announcement.edit("TitleEdited", null);
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
-            assertEquals("Size unexpected!", 1, site.getAssociatedAnnouncements().size());
+            assertEquals("Size unexpected!", 1, site.getAssociatedAnnouncementsCount());
             assertEquals("Different Announcement Title!", "Title", announcement.getTitle());
             assertEquals("Different Announcement Information!", "Information", announcement
                     .getInformation());
@@ -66,10 +59,10 @@ public class AnnouncementTest extends DomainTestBase {
         }
 
         try {
-            announcement.editAnnouncement(null, "InformationEdited");
+            announcement.edit(null, "InformationEdited");
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
-            assertEquals("Size unexpected!", 1, site.getAssociatedAnnouncements().size());
+            assertEquals("Size unexpected!", 1, site.getAssociatedAnnouncementsCount());
             assertEquals("Different Announcement Title!", "Title", announcement.getTitle());
             assertEquals("Different Announcement Information!", "Information", announcement
                     .getInformation());
@@ -78,11 +71,11 @@ public class AnnouncementTest extends DomainTestBase {
 
         final Date dateBeforeEdition = Calendar.getInstance().getTime();
         sleep(1000);
-        announcement.editAnnouncement("TitleEdited", "InformationEdited");
+        announcement.edit("TitleEdited", "InformationEdited");
         sleep(1000);
         final Date dateAfterEdition = Calendar.getInstance().getTime();
 
-        assertEquals("Size unexpected!", 1, site.getAssociatedAnnouncements().size());
+        assertEquals("Size unexpected!", 1, site.getAssociatedAnnouncementsCount());
         assertEquals("Different Announcement Title!", "TitleEdited", announcement.getTitle());
         assertEquals("Different Announcement Information!", "InformationEdited", announcement
                 .getInformation());
@@ -96,10 +89,10 @@ public class AnnouncementTest extends DomainTestBase {
     }
 
     public void testDeleteAnnouncement() {
-        assertEquals("Size unexpected!", 1, site.getAssociatedAnnouncements().size());
-        announcement.deleteAnnouncement();
-        assertEquals("Size unexpected!", 0, site.getAssociatedAnnouncements().size());
-        assertNull("Different Element!", announcement.getSite());
+        assertEquals("Size unexpected!", 1, site.getAssociatedAnnouncementsCount());
+        announcement.delete();
+        assertEquals("Size unexpected in AssociatedAnnouncements!", 0, site.getAssociatedAnnouncementsCount());
+        assertNull("Expected Null Site in Announcement!", announcement.getSite());
     }
 
     private void sleep(long time) {

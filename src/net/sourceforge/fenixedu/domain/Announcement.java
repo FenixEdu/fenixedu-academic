@@ -16,7 +16,6 @@ public class Announcement extends Announcement_Base {
 
     public Announcement(String title, Date creationDate, Date lastModifiedDate, String information,
             ISite site) {
-
         setTitle(title);
         setCreationDate(creationDate);
         setLastModifiedDate(lastModifiedDate);
@@ -43,21 +42,16 @@ public class Announcement extends Announcement_Base {
         return false;
     }
 
-    public void editAnnouncement(final String newAnnouncementTitle,
-            final String newAnnouncementInformation) {
-
+    public void edit(final String newAnnouncementTitle, final String newAnnouncementInformation) {
         if (newAnnouncementTitle == null || newAnnouncementInformation == null) {
             throw new NullPointerException();
         }
-
-        final Date currentDate = Calendar.getInstance().getTime();
         setTitle(newAnnouncementTitle);
         setInformation(newAnnouncementInformation);
-        setLastModifiedDate(currentDate);
+        setLastModifiedDate(Calendar.getInstance().getTime());
     }
 
-    public void deleteAnnouncement() {
-        getSite().getAssociatedAnnouncements().remove(this);
+    public void delete() {
         setSite(null);
     }
 

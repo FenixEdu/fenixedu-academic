@@ -11,12 +11,9 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ISite;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
@@ -57,8 +54,6 @@ public class InsertExecutionCourseAtExecutionPeriod implements IService {
                 throw new ExistingPersistentException();
             }
 
-            IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
-
             persistentExecutionCourse.simpleLockWrite(executionCourse);
             executionCourse.setNome(infoExecutionCourse.getNome());
             executionCourse.setExecutionPeriod(executionPeriod);
@@ -69,9 +64,7 @@ public class InsertExecutionCourseAtExecutionPeriod implements IService {
             executionCourse.setTheoreticalHours(infoExecutionCourse.getTheoreticalHours());
             executionCourse.setComment(infoExecutionCourse.getComment());
 
-            ISite site = new Site();
-            persistentSite.simpleLockWrite(site);
-            site.setExecutionCourse(executionCourse);
+            executionCourse.createSite();            
 
         } catch (ExistingPersistentException existingException) {
             throw new ExistingServiceException("A disciplina execução com sigla "

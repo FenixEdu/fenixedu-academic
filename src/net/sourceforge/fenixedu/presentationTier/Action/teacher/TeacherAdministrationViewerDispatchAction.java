@@ -312,9 +312,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             announcementCodeString = (String) request.getAttribute("announcementCode");
         }
         Integer announcementCode = new Integer(announcementCodeString);
-        Integer objectCode = getObjectCode(request);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object args[] = { objectCode, announcementCode };
+        Object args[] = { announcementCode };
         try {
             ServiceManagerServiceFactory.executeService(userView, "DeleteAnnouncementService", args);
         } catch (FenixServiceException e) {
@@ -728,17 +727,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String authors = (String) editBibliographicReferenceForm.get("authors");
         String reference = (String) editBibliographicReferenceForm.get("reference");
         String year = (String) editBibliographicReferenceForm.get("year");
-        //String optionalStr = (String)
-        // editBibliographicReferenceForm.get("optional");
         Boolean optional = new Boolean((String) editBibliographicReferenceForm.get("optional"));
-        //		if
-        // (optionalStr.equals(this.getResources(request).getMessage("message.optional")))
-        // {
-        //			optional = new Boolean(true);
-        //		} else {
-        //			optional = new Boolean(false);
-        //		}
-        Object args[] = { objectCode, bibliographicReferenceCode, title, authors, reference, year,
+        Object args[] = {bibliographicReferenceCode, title, authors, reference, year,
                 optional };
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         try {

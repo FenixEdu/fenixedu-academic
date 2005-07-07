@@ -101,14 +101,38 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
         });
     }
-    
+
     public void createSite() {
         final ISite site = new Site();
-        site.setAssociatedAnnouncements(new ArrayList());
-        site.setAssociatedSections(new ArrayList());
         site.setExecutionCourse(this);
-        
-        setSite(site);
     }
-    
+
+    public void createEvaluationMethod(final String evaluationElements,
+            final String evaluationElementsEng) {
+        if (evaluationElements == null || evaluationElementsEng == null)
+            throw new NullPointerException();
+
+        final IEvaluationMethod evaluationMethod = new EvaluationMethod();
+        evaluationMethod.setEvaluationElements(evaluationElements);
+        evaluationMethod.setEvaluationElementsEn(evaluationElementsEng);
+        evaluationMethod.setExecutionCourse(this);
+    }
+
+    public void createBibliographicReference(final String title, final String authors,
+            final String reference, final String year, final Boolean optional) {
+        if (title == null || authors == null || reference == null || year == null || optional == null)
+            throw new NullPointerException();
+
+        final IBibliographicReference bibliographicReference = new BibliographicReference();
+        bibliographicReference.setTitle(title);
+        bibliographicReference.setAuthors(authors);
+        bibliographicReference.setReference(reference);
+        bibliographicReference.setYear(year);
+        bibliographicReference.setOptional(optional);
+        bibliographicReference.setExecutionCourse(this);
+    }
+
+    public void createCourseReport() {
+
+    }
 }

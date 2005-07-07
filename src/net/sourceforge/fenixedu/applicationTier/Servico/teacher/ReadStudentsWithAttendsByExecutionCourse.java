@@ -47,7 +47,6 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPl
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroupAttend;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.AttendacyStateSelectionType;

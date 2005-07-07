@@ -32,7 +32,7 @@ public class EditAnnouncementService implements IService {
             throw new InvalidArgumentsServiceException();
         }
         persistentAnnouncement.simpleLockWrite(announcement);
-        announcement.editAnnouncement(newAnnouncementTitle, newAnnouncementInformation);
+        announcement.edit(newAnnouncementTitle, newAnnouncementInformation);
 
         return true;
     }

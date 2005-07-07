@@ -26,11 +26,9 @@ public class EditSite implements IService {
                 .getIdInternal());
 
         persistentSite.simpleLockWrite(siteOld);
-        siteOld.setAlternativeSite(infoSiteNew.getAlternativeSite());
-        siteOld.setMail(infoSiteNew.getMail());
-        siteOld.setInitialStatement(infoSiteNew.getInitialStatement());
-        siteOld.setIntroduction(infoSiteNew.getIntroduction());
+        siteOld.edit(infoSiteNew.getInitialStatement(), infoSiteNew.getIntroduction(), infoSiteNew
+                .getMail(), infoSiteNew.getAlternativeSite());
 
-        return new Boolean(true);
+        return true;
     }
 }

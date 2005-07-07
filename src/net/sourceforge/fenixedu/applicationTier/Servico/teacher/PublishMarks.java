@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.sms.SmsNotSen
 import net.sourceforge.fenixedu.applicationTier.utils.SmsUtil;
 import net.sourceforge.fenixedu.applicationTier.utils.exceptions.FenixUtilException;
 import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.IAnnouncement;
 import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IMark;
 import net.sourceforge.fenixedu.domain.ISite;
@@ -44,13 +43,8 @@ public class PublishMarks implements IService {
             evaluation.setPublishmentMessage(" ");
         } else {
             evaluation.setPublishmentMessage(publishmentMessage);
-            // create announcement
             siteDAO.simpleLockWrite(site);
-            IAnnouncement announcement = site.createAnnouncement(announcementTitle, publishmentMessage);
-            
-            //
-            sp.getIPersistentAnnouncement().simpleLockWrite(announcement);
-            //
+            site.createAnnouncement(announcementTitle, publishmentMessage);                       
         }
 
         // publish marks
