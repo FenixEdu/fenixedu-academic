@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
  */
 
 public class CurricularCourse2Enroll implements Serializable {
-
     private ICurricularCourse curricularCourse;
 
     private CurricularCourseEnrollmentType enrollmentType;
@@ -22,19 +21,6 @@ public class CurricularCourse2Enroll implements Serializable {
     private Integer accumulatedWeight;
 
     private Boolean optionalCurricularCourse;
-
-    /**
-     *  
-     */
-    public CurricularCourse2Enroll() {
-    }
-
-    public CurricularCourse2Enroll(ICurricularCourse curricularCourse,
-            CurricularCourseEnrollmentType enrollmentRuleType, Boolean optionalCurricularCourse) {
-        this.curricularCourse = curricularCourse;
-        this.enrollmentType = enrollmentRuleType;
-        this.optionalCurricularCourse = optionalCurricularCourse;
-    }
 
     /**
      * @return Returns the curricularCourse.
@@ -101,8 +87,7 @@ public class CurricularCourse2Enroll implements Serializable {
     public boolean equals(Object obj) {
         if (obj instanceof CurricularCourse2Enroll) {
             CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) obj;
-            return this.getCurricularCourse().getIdInternal().equals(
-                    curricularCourse2Enroll.getCurricularCourse().getIdInternal());
+            return this.getCurricularCourse().equals(curricularCourse2Enroll.getCurricularCourse());
         }
         return false;
     }
