@@ -11,27 +11,23 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
  */
 
 public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
-    
-	private String RECTIFICATION = "RECTIFICAÇÃO";
-
-    public EnrolmentEvaluation() {
-    }
+    private String RECTIFICATION = "RECTIFICAÇÃO";
 
     public String toString() {
         String result = "[" + this.getClass().getName() + "; ";
         result += "grade = " + this.getGrade() + "; ";
         result += "enrolmentEvaluationType = " + this.getEnrolmentEvaluationType() + "; ";
         result += "examDate = " + this.getExamDate() + "; ";
-        result += "personResponsibleForGrade = " + getPersonResponsibleForGrade() + "; ";
+        result += "personResponsibleForGrade = " + this.getPersonResponsibleForGrade() + "; ";
         result += "enrolmentEvaluationState = " + this.getEnrolmentEvaluationState() + "; ";
         result += "when = " + this.getWhen() + "; ";
         result += "checkSum = " + this.getCheckSum() + "; ";
-        result += "enrolment = " + getEnrolment() + "; ";
+        result += "enrolment = " + this.getEnrolment() + "; ";
         result += "gradeAvailableDate = " + this.getGradeAvailableDate() + "]\n";
-        result += "employee = " + getEmployee() + "; ";
+        result += "employee = " + this.getEmployee() + "; ";
         return result;
     }
-    
+
     public boolean equals(Object obj) {
         if (obj instanceof IEnrolmentEvaluation) {
             final IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) obj;
@@ -45,8 +41,8 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
      */
     public int compareTo(Object o) {
         IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) o;
-        EnrollmentState myEnrolmentState = getEnrollmentStateByGrade(this.getGrade());
-        EnrollmentState otherEnrolmentState = getEnrollmentStateByGrade(enrolmentEvaluation.getGrade());
+        EnrollmentState myEnrolmentState = this.getEnrollmentStateByGrade(this.getGrade());
+        EnrollmentState otherEnrolmentState = this.getEnrollmentStateByGrade(enrolmentEvaluation.getGrade());
         String otherGrade = enrolmentEvaluation.getGrade();
         Date otherWhenAltered = enrolmentEvaluation.getWhen();
 
@@ -61,8 +57,9 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
             return 1;
         } else if (enrolmentEvaluation.getObservation() != null
                 && enrolmentEvaluation.getObservation().equals(this.RECTIFICATION)) {
-            if(this.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT)){
-                return compareForEqualStates(myEnrolmentState,otherEnrolmentState,otherGrade,otherWhenAltered);
+            if (this.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT)) {
+                return compareForEqualStates(myEnrolmentState, otherEnrolmentState, otherGrade,
+                        otherWhenAltered);
             }
             return -1;
         } else if (myEnrolmentState.equals(otherEnrolmentState)) {
@@ -167,13 +164,13 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
     }
 
     public boolean isNormal() {
-        if(getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL))
+        if (getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL))
             return true;
         return false;
     }
 
     public boolean isImprovment() {
-        if(getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT))
+        if (getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT))
             return true;
         return false;
     }
