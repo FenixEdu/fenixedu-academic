@@ -69,7 +69,7 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
 
             while(teachersResIter.hasNext()) {
                 InfoOldInquiriesTeachersRes ioits = (InfoOldInquiriesTeachersRes)teachersResIter.next();
-                if(iep.getIdInternal() == ioits.getKeyExecutionPeriod()) {
+                if(iep.equals(ioits.getExecutionPeriod())) {
                     found = true;
                     break;
                 }

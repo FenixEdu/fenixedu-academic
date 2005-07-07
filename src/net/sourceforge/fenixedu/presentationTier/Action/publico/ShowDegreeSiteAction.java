@@ -36,7 +36,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 /**
- * @author Tï¿½nia Pousï¿½o Create on 11/Nov/2003
+ * @author Tânia Pousão Create on 11/Nov/2003
  */
 public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 
@@ -273,7 +273,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 
             while (summaryIter.hasNext()) {
                 InfoOldInquiriesSummary iois = (InfoOldInquiriesSummary) summaryIter.next();
-                if (iep.getIdInternal() == iois.getKeyExecutionPeriod()) {
+                if (iep.equals(iois.getExecutionPeriod())) {
                     found = true;
                     break;
                 }
