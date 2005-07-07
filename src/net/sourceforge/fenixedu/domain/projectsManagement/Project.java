@@ -107,8 +107,11 @@ public class Project implements IProject, Serializable {
     }
 
     public boolean equals(Object obj) {
-        if ((obj != null) && (obj instanceof Project))
-            return (projectCode != null) && projectCode.equals(((Project) obj).getProjectCode());
+        if (obj instanceof IProject) {
+            final IProject project = (IProject) obj;
+            return this.getProjectCode().equals(project.getProjectCode());
+        }
         return false;
     }
+
 }
