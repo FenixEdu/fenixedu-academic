@@ -21,11 +21,9 @@ public class TeacherInstitutionWorkTime extends TeacherInstitutionWorkTime_Base 
         ICreditsEventOriginator, PersistenceBrokerAware {
 
     public boolean equals(Object obj) {
-        if (obj instanceof TeacherInstitutionWorkTime) {
-            TeacherInstitutionWorkTime teacherInstitutionWorkTime = (TeacherInstitutionWorkTime) obj;
-            return this.getStartTime().equals(teacherInstitutionWorkTime.getStartTime())
-                    && this.getTeacher().equals(teacherInstitutionWorkTime.getTeacher())
-                    && this.getWeekDay().equals(teacherInstitutionWorkTime.getWeekDay());
+        if (obj instanceof ITeacherInstitutionWorkTime) {
+            final ITeacherInstitutionWorkTime teacherInstitutionWorkTime = (ITeacherInstitutionWorkTime) obj;
+            return this.getIdInternal().equals(teacherInstitutionWorkTime.getIdInternal());
         }
         return false;
     }
