@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
 import net.sourceforge.fenixedu.domain.publication.IPublicationAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -249,7 +250,7 @@ public class InfoPublication extends InfoObject {
         }
     }
     
-	public static List copyAuthorsFromInfo(InfoPublication infoPublication){
+	public static List copyAuthorsFromInfo(InfoPublication infoPublication) throws ExcepcaoPersistencia{
         
         Iterator it = infoPublication.getInfoPublicationAuthors().iterator();
         List authorsList = new ArrayList();

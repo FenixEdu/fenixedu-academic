@@ -13,8 +13,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.publication.Author;
 import net.sourceforge.fenixedu.domain.publication.IAuthor;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author <a href="mailto:cgmp@mega.ist.utl.pt">Carlos Pereira </a> & <a href="mailto:fmmp@mega.ist.utl.pt">Francisco Passos </a>
@@ -46,28 +48,21 @@ public class InfoAuthor extends InfoObject {
      * Copies the infoAuthor to an Author object except the publications List for wich
      * @param 
      */
-    public void copyToDomain(InfoAuthor infoAuthor, IAuthor author){
+    public void copyToDomain(InfoAuthor infoAuthor, IAuthor author) throws ExcepcaoPersistencia{
         if (infoAuthor != null && author != null){
             super.copyToDomain(infoAuthor, author);
 	        author.setAuthor(infoAuthor.getAuthor());
 	        author.setKeyPerson(infoAuthor.getKeyPerson());
 	        author.setOrganization(infoAuthor.getOrganization());
 	        InfoPerson infoPerson = infoAuthor.getInfoPessoa();
-	        if (keyPerson != null){
-		        IPerson pessoa = new Person();
-		        infoPerson.copyToDomain(infoPerson, pessoa);
+	        if (infoAuthor.getKeyPerson() != null){
+                
+                ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		        IPerson pessoa = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,infoAuthor.getKeyPerson());
+		        
 		        author.setPerson(pessoa);
 	        }
         }
-    }
-    
-    public static IAuthor newDomainFromInfo(InfoAuthor infoAuthor){
-        IAuthor author = null;
-        if(infoAuthor != null){
-            author = new Author();
-            infoAuthor.copyToDomain(infoAuthor, author);
-        }
-        return author;
     }
      
 	public InfoAuthor(){

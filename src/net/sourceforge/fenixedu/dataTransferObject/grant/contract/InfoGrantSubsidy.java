@@ -8,6 +8,7 @@ import java.util.Date;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantSubsidy;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author pica
@@ -174,7 +175,7 @@ public class InfoGrantSubsidy extends InfoObject {
         return infoGrantSubsidy;
     }
 
-    public void copyToDomain(InfoGrantSubsidy infoGrantSubsidy, IGrantSubsidy grantSubsidy) {
+    public void copyToDomain(InfoGrantSubsidy infoGrantSubsidy, IGrantSubsidy grantSubsidy) throws ExcepcaoPersistencia {
         super.copyToDomain(infoGrantSubsidy, grantSubsidy);
 
         grantSubsidy.setDateBeginSubsidy(infoGrantSubsidy.getDateBeginSubsidy());
@@ -185,7 +186,7 @@ public class InfoGrantSubsidy extends InfoObject {
         grantSubsidy.setValueFullName(infoGrantSubsidy.getValueFullName());
     }
 
-    public static IGrantSubsidy newDomainFromInfo(InfoGrantSubsidy infoGrantSubsidy) {
+    public static IGrantSubsidy newDomainFromInfo(InfoGrantSubsidy infoGrantSubsidy) throws ExcepcaoPersistencia {
         IGrantSubsidy grantSubsidy = null;
         if (infoGrantSubsidy != null) {
             grantSubsidy = new GrantSubsidy();

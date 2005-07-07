@@ -18,6 +18,9 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
 import net.sourceforge.fenixedu.domain.publication.PublicationAuthor;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -64,16 +67,17 @@ public class InfoAuthorWithInfoPublications extends InfoAuthor {
      * Copies the infoAuthor to an Author object except the publications List for wich
      * @param 
      */
-    public void copyToDomain(InfoAuthorWithInfoPublications infoAuthor, IAuthor author){
+    public void copyToDomain(InfoAuthorWithInfoPublications infoAuthor, IAuthor author) throws ExcepcaoPersistencia{
         if (infoAuthor != null && author != null){
             super.copyToDomain(infoAuthor, author);
 	        author.setAuthor(infoAuthor.getAuthor());
 	        author.setKeyPerson(infoAuthor.getKeyPerson());
 	        author.setOrganization(infoAuthor.getOrganization());
 	        InfoPerson infoPerson = infoAuthor.getInfoPessoa();
-	        if (keyPerson != null){
-		        IPerson pessoa = new Person();
-		        infoPerson.copyToDomain(infoPerson, pessoa);
+	        if (infoAuthor.getKeyPerson() != null){
+                ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+                IPerson pessoa = (IPerson)sp.getIPessoaPersistente().readByOID(Person.class, infoAuthor.getKeyPerson());
+		        
 		        author.setPerson(pessoa);
 	        }
         }

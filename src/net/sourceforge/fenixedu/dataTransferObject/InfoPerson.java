@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
@@ -927,13 +926,4 @@ public class InfoPerson extends InfoObject {
 
         person.setAvailablePhoto(infoPerson.getAvailablePhoto());
     }
-
-    public static IPerson newDomainFromInfo(InfoPerson infoPerson) {
-        IPerson person = null;
-        if (infoPerson != null) {
-            person = new Person();
-            infoPerson.copyToDomain(infoPerson, person);
-        }
-        return person;
-    }	
 }

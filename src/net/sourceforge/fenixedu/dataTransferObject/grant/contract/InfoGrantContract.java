@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantContract;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Barbosa
@@ -186,7 +187,7 @@ public class InfoGrantContract extends InfoObject {
         return infoGrantContract;
     }
 
-    public void copyToDomain(InfoGrantContract infoGrantContract, IGrantContract grantContract) {
+    public void copyToDomain(InfoGrantContract infoGrantContract, IGrantContract grantContract) throws ExcepcaoPersistencia {
         super.copyToDomain(infoGrantContract, grantContract);
        
         grantContract.setContractNumber(infoGrantContract.getContractNumber());
@@ -199,7 +200,7 @@ public class InfoGrantContract extends InfoObject {
 
     }
 
-    public static IGrantContract newDomainFromInfo(InfoGrantContract infoGrantContract) {
+    public static IGrantContract newDomainFromInfo(InfoGrantContract infoGrantContract) throws ExcepcaoPersistencia {
         IGrantContract grantContract = null;
         if (infoGrantContract != null) {
             grantContract = new GrantContract();

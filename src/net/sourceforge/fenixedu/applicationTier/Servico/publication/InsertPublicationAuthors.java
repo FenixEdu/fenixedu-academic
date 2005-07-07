@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
+import net.sourceforge.fenixedu.domain.publication.Author;
 import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -79,7 +80,8 @@ public class InsertPublicationAuthors implements IService {
         }
 
         if (author == null) {
-            author = InfoAuthor.newDomainFromInfo(infoAuthor);
+            author = (IAuthor)sp.getIPersistentAuthor().readByOID(Author.class,infoAuthor.getIdInternal());
+            infoAuthor.copyToDomain(infoAuthor,author);
             persistentAuthor.lockWrite(author);
         }
 

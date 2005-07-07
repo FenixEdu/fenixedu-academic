@@ -151,9 +151,9 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
 
             persons = removeFromPersonsTheAuthorsInserted(persons, authorsIds, userView);
 
-            List newAuthors = infoAuthorsPersons(authors, new Author());
+            List newAuthors = infoAuthorsPersons(authors, Author.class);
 
-            List newPersons = infoAuthorsPersons(persons, new Person());
+            List newPersons = infoAuthorsPersons(persons, Person.class);
 
             List infoAuthorsPersons = joinAuthorsAndPersons(newAuthors, newPersons);
 
@@ -323,10 +323,10 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
         return actionForward;
     }
 
-    public List infoAuthorsPersons(List listObjects, Object object) {
+    public List infoAuthorsPersons(List listObjects, Class clazz) {
         List infoAuthorPersons = new ArrayList();
 
-        if (object instanceof Author) {
+        if (clazz.equals(Author.class)) {
 
             infoAuthorPersons = (List) CollectionUtils.collect(listObjects, new Transformer() {
                 public Object transform(Object o) {

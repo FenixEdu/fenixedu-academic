@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantPart;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author pica
@@ -105,13 +106,13 @@ public class InfoGrantPart extends InfoObject {
         return infoGrantPart;
     }
 
-    public void copyToDomain(InfoGrantPart infoGrantPart, IGrantPart grantPart) {
+    public void copyToDomain(InfoGrantPart infoGrantPart, IGrantPart grantPart) throws ExcepcaoPersistencia {
         super.copyToDomain(infoGrantPart, grantPart);
 
         grantPart.setPercentage(infoGrantPart.getPercentage());
     }
 
-    public static IGrantPart newDomainFromInfo(InfoGrantPart infoGrantPart) {
+    public static IGrantPart newDomainFromInfo(InfoGrantPart infoGrantPart) throws ExcepcaoPersistencia {
         IGrantPart grantPart = null;
         if (infoGrantPart != null) {
             grantPart = new GrantPart();

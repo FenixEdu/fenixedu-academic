@@ -4,18 +4,12 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.IGuide;
-import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
+import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -358,49 +352,5 @@ public class InfoGuide extends InfoObject {
         }
         return infoGuide;
     }
-    
-    public void copyToDomain(InfoGuide infoGuide, IGuide guide) {
-        super.copyToDomain(infoGuide, guide);
-        
-        guide.setContributor(InfoContributor.newDomainFromInfo(infoGuide.getInfoContributor()));
-        guide.setPerson(InfoPerson.newDomainFromInfo(infoGuide.getInfoPerson()));
-        guide.setExecutionDegree(InfoExecutionDegree.newDomainFromInfo(infoGuide.getInfoExecutionDegree()));
-        
-        if(infoGuide.getInfoGuideEntries() != null){
-            Collection guideEntries = CollectionUtils.transformedCollection(infoGuide.getInfoGuideEntries(), new Transformer() {
-                
-                    public Object transform(Object arg0) {
-                        InfoGuideEntry infoGuideEntry = (InfoGuideEntry) arg0;
-                        return InfoGuideEntry.newDomainFromInfo(infoGuideEntry);                
-                    }
-                
-                });
-                
-                guide.setGuideEntries(new ArrayList(guideEntries));
-        }
-        
-        
-        guide.setCreationDate(infoGuide.getCreationDate());
-        guide.setGuideRequester(infoGuide.getGuideRequester());
-        //guide.setGuideSituations(infoGuide.getInfoGuideSituations());
-        guide.setNumber(infoGuide.getNumber());
-        guide.setPaymentDate(infoGuide.getPaymentDate());
-        guide.setPaymentType(infoGuide.getPaymentType());
-        //guide.setReimbursementGuides(null);
-        guide.setRemarks(infoGuide.getRemarks());
-        guide.setTotal(infoGuide.getTotal());
-        guide.setVersion(infoGuide.getVersion());
-        guide.setYear(infoGuide.getYear());
-        
-    }
 
-    public static IGuide newDomainFromInfo(InfoGuide infoGuide) {
-        IGuide guide = null;
-
-        if (infoGuide != null) {
-            guide = new Guide();
-            infoGuide.copyToDomain(infoGuide, guide);
-        }
-        return guide;
-    }
 }

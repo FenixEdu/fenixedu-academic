@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.ICandidateSituation;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -43,7 +44,8 @@ public class ReadCandidateListByPersonAndExecutionDegree implements IService {
 
             IExecutionDegree executionDegree = Cloner
                     .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
-            IPerson person = Cloner.copyInfoPerson2IPerson(infoPerson);
+            IPerson person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,infoPerson.getIdInternal());
+            infoPerson.copyToDomain(infoPerson,person);
 
             result = sp.getIPersistentMasterDegreeCandidate().readByExecutionDegreeAndPersonAndNumber(
                     executionDegree.getIdInternal(), person.getIdInternal(), number);

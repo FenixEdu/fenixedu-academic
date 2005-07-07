@@ -9,6 +9,7 @@ import java.util.Date;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractMovement;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Barbosa
@@ -111,9 +112,10 @@ public class InfoGrantContractMovement extends InfoObject {
 
     /**
      * @param grantMovement
+     * @throws ExcepcaoPersistencia 
      */
     public void copyToDomain(InfoGrantContractMovement infoGrantContractMovement,
-            IGrantContractMovement grantContractMovement) {
+            IGrantContractMovement grantContractMovement) throws ExcepcaoPersistencia {
         super.copyToDomain(infoGrantContractMovement, grantContractMovement);
 
         grantContractMovement.setLocation(infoGrantContractMovement.getLocation());
@@ -124,9 +126,10 @@ public class InfoGrantContractMovement extends InfoObject {
     /**
      * @param GrantMovement
      * @return
+     * @throws ExcepcaoPersistencia 
      */
     public static IGrantContractMovement newDomainFromInfo(
-            InfoGrantContractMovement infoGrantContractMovement) {
+            InfoGrantContractMovement infoGrantContractMovement) throws ExcepcaoPersistencia {
         IGrantContractMovement grantContractMovement = null;
         if (infoGrantContractMovement != null) {
             grantContractMovement = new GrantContractMovement();

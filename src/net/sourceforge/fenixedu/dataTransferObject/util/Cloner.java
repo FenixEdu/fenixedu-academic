@@ -139,7 +139,6 @@ import net.sourceforge.fenixedu.domain.gesdis.ICourseHistoric;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.IStudentCourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
-import net.sourceforge.fenixedu.domain.publication.Author;
 import net.sourceforge.fenixedu.domain.publication.IAttribute;
 import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublicationFormat;
@@ -3235,19 +3234,6 @@ public abstract class Cloner {
         InfoPublicationFormat infoPublicationFormat = new InfoPublicationFormat();
         copyObjectProperties(infoPublicationFormat, PublicationFormat);
         return infoPublicationFormat;
-    }
-
-    public static IAuthor copyInfoAuthor2IAuthor(InfoAuthor infoAuthor) {
-        IAuthor author = new Author();
-        IPerson person = new Person();
-        if (infoAuthor.getKeyPerson() != null) {
-            person = copyInfoPerson2IPerson(infoAuthor.getInfoPessoa());
-        }
-        copyObjectProperties(author, infoAuthor);
-        if (infoAuthor.getKeyPerson() != null) {
-            author.setPerson(person);
-        }
-        return author;
     }
 
     public static InfoAuthor copyIAuthor2InfoAuthor(IAuthor author) {

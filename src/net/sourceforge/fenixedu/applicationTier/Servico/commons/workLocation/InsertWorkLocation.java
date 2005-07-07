@@ -15,40 +15,21 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class InsertWorkLocation implements IService {
 
-    private static InsertWorkLocation service = new InsertWorkLocation();
+    public IWorkLocation run(String workLocationName) throws FenixServiceException, ExcepcaoPersistencia {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IWorkLocation storedWorkLocation = sp.getIPersistentWorkLocation().readByName(workLocationName);
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static InsertWorkLocation getService() {
-        return service;
-    }
-
-    /**
-     * The actor of this class.
-     */
-    private InsertWorkLocation() {
-    }
-
-    public void run(String workLocationName) throws FenixServiceException {
-        try {
-            IWorkLocation workLocation = new WorkLocation();
-            workLocation.setName(workLocationName);
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IWorkLocation storedWorkLocation = sp.getIPersistentWorkLocation().readByName(
-                    workLocationName);
-
-            if (storedWorkLocation != null) {
-                throw new ExistingServiceException(
-                        "error.exception.commons.workLocation.workLocationAlreadyExists");
-            }
-
-            sp.getIPersistentWorkLocation().simpleLockWrite(workLocation);
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
+        if (storedWorkLocation != null) {
+            throw new ExistingServiceException(
+                    "error.exception.commons.workLocation.workLocationAlreadyExists");
         }
+
+        IWorkLocation workLocation = new WorkLocation();
+        workLocation.setName(workLocationName);
+
+        sp.getIPersistentWorkLocation().simpleLockWrite(workLocation);
+
+        return workLocation;
+
     }
 }

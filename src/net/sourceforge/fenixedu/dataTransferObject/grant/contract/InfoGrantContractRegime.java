@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantCostCenter;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Pica
@@ -273,7 +274,7 @@ public class InfoGrantContractRegime extends InfoObject {
     }
 
     public void copyToDomain(InfoGrantContractRegime infoGrantContractRegime,
-            IGrantContractRegime grantContractRegime) {
+            IGrantContractRegime grantContractRegime) throws ExcepcaoPersistencia {
         super.copyToDomain(infoGrantContractRegime, grantContractRegime);
 
         grantContractRegime.setDateBeginContract(infoGrantContractRegime.getDateBeginContract());
@@ -291,7 +292,7 @@ public class InfoGrantContractRegime extends InfoObject {
         
     }
 
-    public static IGrantContractRegime newDomainFromInfo(InfoGrantContractRegime infoGrantContractRegime) {
+    public static IGrantContractRegime newDomainFromInfo(InfoGrantContractRegime infoGrantContractRegime) throws ExcepcaoPersistencia {
         IGrantContractRegime grantContractRegime = null;
         if (infoGrantContractRegime != null) {
             grantContractRegime = new GrantContractRegime();            

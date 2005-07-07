@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Barbosa
@@ -126,7 +127,7 @@ public class InfoGrantOwner extends InfoObject {
         return infoGrantOwner;
     }
 
-    public void copyToDomain(InfoGrantOwner infoGrantOwner, IGrantOwner grantOwner) {
+    public void copyToDomain(InfoGrantOwner infoGrantOwner, IGrantOwner grantOwner) throws ExcepcaoPersistencia {
         super.copyToDomain(infoGrantOwner, grantOwner);
 
         grantOwner.setCardCopyNumber(infoGrantOwner.getCardCopyNumber());
@@ -134,7 +135,7 @@ public class InfoGrantOwner extends InfoObject {
         grantOwner.setNumber(infoGrantOwner.getGrantOwnerNumber());
     }
 
-    public static IGrantOwner newDomainFromInfo(InfoGrantOwner infoGrantOwner) {
+    public static IGrantOwner newDomainFromInfo(InfoGrantOwner infoGrantOwner) throws ExcepcaoPersistencia {
         IGrantOwner grantOwner = null;
         if (infoGrantOwner != null) {
             grantOwner = new GrantOwner();

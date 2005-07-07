@@ -624,66 +624,6 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
         }
 
         request.setAttribute("searchedAuthorsList", authorsList);
-//
-//        return mapping.findForward("searchAuthors");
-    	
-    	
-//    	//PFON code
-//    	 HttpSession session = request.getSession(false);
-//
-//         DynaActionForm dynaForm = (DynaActionForm) form;
-//
-//         ActionForward actionForward;
-//
-//         //IUserView userView = SessionUtils.getUserView(request);
-//
-//         Integer publicationTypeId = (Integer) dynaForm.get("infoPublicationTypeId");
-//
-//         Integer[] list = (Integer[]) dynaForm.get("authorsId");
-//         List newList = Arrays.asList(list);
-//         List authorsIds = new ArrayList();
-//         authorsIds.addAll(newList);
-//
-//         String stringAuthorSearch = request.getParameter("searchedAuthorName");
-//
-//         if (stringAuthorSearch == null || stringAuthorSearch.length() == PublicationConstants.ZERO_VALUE) {
-//
-//             List infoAuthors = readInfoAuthors(authorsIds, userView);
-//             request.setAttribute("infoAuthorsList", infoAuthors);
-//
-//             ActionErrors errors = new ActionErrors();
-//             errors.add("nonValidating", new ActionError("message.publication.notSearchFilled"));
-//             saveErrors(request, errors);
-//             return mapping.findForward("searchAuthors");
-//         }
-//         String newStringAuthorSearch = PublicationConstants.CONCATE_STRING_TO_SEARCH
-//                 + stringAuthorSearch + PublicationConstants.CONCATE_STRING_TO_SEARCH;
-//
-//         if (session != null) {
-//
-//             Object[] args = { newStringAuthorSearch.replace(' ','%'), userView };
-//
-//             List authors = (List) ServiceUtils.executeService(userView, "ReadAuthors", args);
-//
-//             List persons = (List) ServiceUtils.executeService(userView, "ReadPersonsNotAuthors", args);
-//
-//             authors = removeFromAuthorsTheAuthorsInserted(authors, authorsIds);
-//
-//             persons = removeFromPersonsTheAuthorsInserted(persons, authorsIds, userView);
-//
-//             List newAuthors = infoAuthorsPersons(authors, new Author());
-//
-//             List newPersons = infoAuthorsPersons(persons, new Person());
-//
-//             List infoAuthorsPersons = joinAuthorsAndPersons(newAuthors, newPersons);
-//
-//             List finalInfoAuthorsPersons = sortListByName(infoAuthorsPersons);
-//
-//             List infoAuthors = readInfoAuthors(authorsIds, userView);
-//
-//             request.setAttribute("infoAuthorsList", infoAuthors);
-//             request.setAttribute("infoAuthorsPersons", finalInfoAuthorsPersons);
-//         }
 
          return mapping.findForward("searchAuthors");
     }

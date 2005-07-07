@@ -59,8 +59,9 @@ public abstract class EditDomainObjectService implements IService {
      * 
      * @param infoObject
      * @return
+     * @throws ExcepcaoPersistencia 
      */
-    protected abstract IDomainObject clone2DomainObject(InfoObject infoObject);
+    protected abstract IDomainObject clone2DomainObject(InfoObject infoObject) throws ExcepcaoPersistencia;
 
     /**
      * By default this method does nothing

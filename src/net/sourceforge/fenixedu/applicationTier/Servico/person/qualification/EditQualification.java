@@ -39,7 +39,7 @@ public class EditQualification extends EditDomainObjectService {
      * 
      * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(net.sourceforge.fenixedu.dataTransferObject.InfoObject)
      */
-    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
+    protected IDomainObject clone2DomainObject(InfoObject infoObject) throws ExcepcaoPersistencia {
         return InfoQualificationWithPersonAndCountry.newDomainFromInfo((InfoQualification) infoObject);
     }
 

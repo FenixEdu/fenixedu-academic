@@ -83,6 +83,7 @@ public class Person extends Person_Base {
         this.setAvailableEmail(Boolean.FALSE);
         this.setAvailableWebSite(Boolean.FALSE);
         this.setAvailablePhoto(Boolean.FALSE);
+
     }
 
     /*
@@ -185,10 +186,7 @@ public class Person extends Person_Base {
     public boolean equals(final Object obj) {
         if (obj instanceof IPerson) {
             IPerson person = (IPerson) obj;
-            return (((getNumeroDocumentoIdentificacao().equals(person
-                    .getNumeroDocumentoIdentificacao())) && (this.getIdDocumentType()
-                    .equals(person.getIdDocumentType()))) || (getUsername().equals(person
-                    .getUsername())));
+            return getIdInternal().equals(person.getIdInternal());
         }
         return false;
     }
@@ -199,5 +197,33 @@ public class Person extends Person_Base {
 
     public String getSlideNameForCandidateDocuments() {
         return "/candidateDocuments/person/P" + getIdInternal();
+    }
+    
+    public void delete() {
+        this.getAdvisories().clear();
+        this.getAssociatedAlteredCurriculums().clear();
+        this.setAssociatedPersonAccount(null);
+        this.getAssociatedPersonRoles().clear();
+        this.getAssociatedTeachers().clear();
+        this.getEditedWebSiteItems().clear();
+        this.setEmployee(null);
+        this.getEnrolmentEvaluations().clear();
+        this.setExternalPerson(null);
+        this.setGender(null);
+        this.setGrantOwner(null);
+        this.getGroupPropertiesExecutionCourseReceiver().clear();
+        this.getGroupPropertiesExecutionCourseSender().clear();
+        this.getGuides().clear();
+        this.setIdDocumentType(null);
+        this.getManageableDepartmentCredits().clear();
+        this.setMaritalStatus(null);
+        this.getMasterDegreeCandidates().clear();
+        this.setPais(null);
+        this.getPersonRoles().clear();
+        this.getProjectAccesses().clear();
+        this.setQualification(null);
+        this.getResponsabilityTransactions().clear();
+        this.getSentSms().clear();
+        this.getStudents().clear();
     }
 }

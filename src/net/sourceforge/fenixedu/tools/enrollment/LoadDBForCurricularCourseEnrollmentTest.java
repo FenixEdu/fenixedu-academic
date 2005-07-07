@@ -162,6 +162,7 @@ public class LoadDBForCurricularCourseEnrollmentTest {
             // -------------------------------------------------------------------------------------------------------
             if (person != null) {
                 persistenceDAO.getIPessoaPersistente().deleteByOID(Person.class, person.getIdInternal());
+                person.delete();
             }
 
             if (student != null) {

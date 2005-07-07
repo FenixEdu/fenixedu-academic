@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantPart;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Pica
@@ -34,7 +35,7 @@ public class InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity extends InfoGran
         return infoGrantPartWithSubsidyAndTeacherAndPaymentEntity;
     }
 
-    public void copyToDomain(InfoGrantPart infoGrantPart, IGrantPart grantPart) {
+    public void copyToDomain(InfoGrantPart infoGrantPart, IGrantPart grantPart) throws ExcepcaoPersistencia {
         super.copyToDomain(infoGrantPart, grantPart);
 
         grantPart.setGrantPaymentEntity(InfoGrantPaymentEntity.newDomainFromInfo(infoGrantPart
@@ -45,7 +46,7 @@ public class InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity extends InfoGran
                 .getInfoGrantSubsidy()));
     }
 
-    public static IGrantPart newDomainFromInfo(InfoGrantPart infoGrantPart) {
+    public static IGrantPart newDomainFromInfo(InfoGrantPart infoGrantPart) throws ExcepcaoPersistencia {
         IGrantPart grantPart = null;
         InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity infoGrantPartWithSubsidyAndTeacherAndPaymentEntity = null;
         if (infoGrantPart != null) {

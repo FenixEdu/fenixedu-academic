@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantOrientationTeacher;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Barbosa
@@ -109,7 +110,7 @@ public class InfoGrantOrientationTeacher extends InfoObject {
     }
 
     public void copyToDomain(InfoGrantOrientationTeacher infoGrantOrientationTeacher,
-            IGrantOrientationTeacher grantOrientationTeacher) {
+            IGrantOrientationTeacher grantOrientationTeacher) throws ExcepcaoPersistencia {
         super.copyToDomain(infoGrantOrientationTeacher, grantOrientationTeacher);
 
         grantOrientationTeacher.setBeginDate(infoGrantOrientationTeacher.getBeginDate());
@@ -117,7 +118,7 @@ public class InfoGrantOrientationTeacher extends InfoObject {
     }
 
     public static IGrantOrientationTeacher newDomainFromInfo(
-            InfoGrantOrientationTeacher infoGrantOrientationTeacher) {
+            InfoGrantOrientationTeacher infoGrantOrientationTeacher) throws ExcepcaoPersistencia {
         IGrantOrientationTeacher grantOrientationTeacher = null;
         if (infoGrantOrientationTeacher != null) {
             grantOrientationTeacher = new GrantOrientationTeacher();

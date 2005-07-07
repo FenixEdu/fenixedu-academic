@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwnerWithPerson;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantContract;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Pica
@@ -35,7 +36,7 @@ public class InfoGrantContractWithGrantOwnerAndGrantType extends InfoGrantContra
         return infoGrantContract;
     }
 
-    public void copyToDomain(InfoGrantContract infoGrantContract, IGrantContract grantContract) {
+    public void copyToDomain(InfoGrantContract infoGrantContract, IGrantContract grantContract) throws ExcepcaoPersistencia {
         super.copyToDomain(infoGrantContract, grantContract);
         grantContract.setGrantOwner(InfoGrantOwnerWithPerson.newDomainFromInfo(infoGrantContract
                 .getGrantOwnerInfo()));
@@ -44,7 +45,7 @@ public class InfoGrantContractWithGrantOwnerAndGrantType extends InfoGrantContra
          grantContract.setGrantCostCenter(InfoGrantCostCenter.newDomainFromInfo(infoGrantContract.getGrantCostCenterInfo()));
     }
 
-    public static IGrantContract newDomainFromInfo(InfoGrantContract infoGrantContract) {
+    public static IGrantContract newDomainFromInfo(InfoGrantContract infoGrantContract) throws ExcepcaoPersistencia {
         IGrantContract grantContract = null;
         InfoGrantContractWithGrantOwnerAndGrantType infoGrantContractWithGrantOwnerAndGrantType = null;
         if (infoGrantContract != null) {

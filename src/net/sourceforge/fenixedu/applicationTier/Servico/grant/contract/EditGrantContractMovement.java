@@ -28,7 +28,7 @@ public class EditGrantContractMovement extends EditDomainObjectService {
     public EditGrantContractMovement() {
     }
 
-    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
+    protected IDomainObject clone2DomainObject(InfoObject infoObject) throws ExcepcaoPersistencia {
         return InfoGrantContractMovementWithContract
                 .newDomainFromInfo((InfoGrantContractMovement) infoObject);
     }

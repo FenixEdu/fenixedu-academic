@@ -31,7 +31,7 @@ public class EditGrantSubsidy extends EditDomainObjectService {
     public EditGrantSubsidy() {
     }
 
-    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
+    protected IDomainObject clone2DomainObject(InfoObject infoObject) throws ExcepcaoPersistencia {
         return InfoGrantSubsidyWithContract.newDomainFromInfo((InfoGrantSubsidy) infoObject);
     }
 

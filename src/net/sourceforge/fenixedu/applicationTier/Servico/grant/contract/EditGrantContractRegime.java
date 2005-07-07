@@ -43,7 +43,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
     public EditGrantContractRegime() {
     }
 
-    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
+    protected IDomainObject clone2DomainObject(InfoObject infoObject) throws ExcepcaoPersistencia {
         return InfoGrantContractRegimeWithTeacherAndContract
                 .newDomainFromInfo((InfoGrantContractRegime) infoObject);
     }

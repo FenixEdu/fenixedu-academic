@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
 import net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantInsurance;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Pica
@@ -31,7 +32,7 @@ public class InfoGrantInsuranceWithContractAndPaymentEntity extends InfoGrantIns
         return infoGrantInsuranceWithContract;
     }
 
-    public void copyToDomain(InfoGrantInsurance infoGrantInsurance, IGrantInsurance grantInsurance) {
+    public void copyToDomain(InfoGrantInsurance infoGrantInsurance, IGrantInsurance grantInsurance) throws ExcepcaoPersistencia {
         super.copyToDomain(infoGrantInsurance, grantInsurance);
 
         grantInsurance.setGrantContract(InfoGrantContract.newDomainFromInfo(infoGrantInsurance
@@ -40,7 +41,7 @@ public class InfoGrantInsuranceWithContractAndPaymentEntity extends InfoGrantIns
                 .getInfoGrantPaymentEntity()));
     }
 
-    public static IGrantInsurance newDomainFromInfo(InfoGrantInsurance infoGrantInsurance) {
+    public static IGrantInsurance newDomainFromInfo(InfoGrantInsurance infoGrantInsurance) throws ExcepcaoPersistencia {
         IGrantInsurance grantInsurance = null;
         InfoGrantInsuranceWithContractAndPaymentEntity infoGrantInsuranceWithContractAndPaymentEntity = null;
         if (infoGrantInsurance != null) {
