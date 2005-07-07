@@ -59,17 +59,11 @@ public class Question extends DomainObject implements IQuestion {
     }
 
     public boolean equals(Object obj) {
-        boolean resultado = false;
         if (obj instanceof IQuestion) {
-            IQuestion question = (IQuestion) obj;
-            resultado = (question != null) && this.getIdInternal().equals(question.getIdInternal())
-                    && this.getKeyMetadata().equals(question.getKeyMetadata())
-                    && this.getVisibility().equals(question.getVisibility())
-                    && this.getXmlFile().equals(question.getXmlFile())
-                    && this.getXmlFileName().equals(question.getXmlFileName());
+            final IQuestion question = (IQuestion) obj;
+            return this.getIdInternal().equals(question.getIdInternal());
         }
-
-        return resultado;
+        return false;
     }
 
 }
