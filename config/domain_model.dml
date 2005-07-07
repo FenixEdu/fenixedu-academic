@@ -1633,6 +1633,8 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     public String getSlideName();
     
     public String getSlideNameForCandidateDocuments();
+    
+    public void delete();
     "
 }
 
@@ -2412,6 +2414,13 @@ class net.sourceforge.fenixedu.domain.publication.PublicationTeacher extends net
 	Integer keyTeacher;
 	Integer keyPublication;
     PublicationArea publicationArea;
+}
+
+
+class net.sourceforge.fenixedu.domain.publication.Authorship extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyAuthor;
+	Integer keyPublication;
+	Integer order;
 }
 
 
@@ -4918,6 +4927,20 @@ relation PublicationAuthorAuthor {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.publication.Author playsRole author;
+}
+
+relation AuthorshipPerson {
+	net.sourceforge.fenixedu.domain.publication.Authorship playsRole personAuthorships {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.Person playsRole author;
+}
+
+relation PublicationAuthorship {
+	net.sourceforge.fenixedu.domain.publication.Authorship playsRole publicationAuthorships {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.publication.Publication playsRole publication;
 }
 
 relation AuthorPerson {
