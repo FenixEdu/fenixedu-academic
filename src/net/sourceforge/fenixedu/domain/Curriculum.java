@@ -12,35 +12,18 @@ package net.sourceforge.fenixedu.domain;
  */
 public class Curriculum extends Curriculum_Base {
 
-    /** Creates a new instance of Curriculum */
-    public Curriculum() {
-    }
-
-    public Curriculum(ICurricularCourse curricularCourse) {
-        setCurricularCourse(curricularCourse);
-    }
-
-    public Curriculum(ICurricularCourse curricularCourse, String generalObjectives,
-            String operacionalObjectives, String program) {
-        setGeneralObjectives(generalObjectives);
-        setOperacionalObjectives(operacionalObjectives);
-        setProgram(program);
-        setCurricularCourse(curricularCourse);
-    }
-
-    public Curriculum(ICurricularCourse curricularCourse, String generalObjectives,
-            String operacionalObjectives, String generalObjectivesEn, String operacionalObjectivesEn) {
-        setGeneralObjectives(generalObjectives);
-        setOperacionalObjectives(operacionalObjectives);
-        setGeneralObjectivesEn(generalObjectivesEn);
-        setOperacionalObjectivesEn(operacionalObjectivesEn);
-        setCurricularCourse(curricularCourse);
-    }
-
-    public Curriculum(ICurricularCourse curricularCourse, String program, String programEn) {
-        setProgram(program);
-        setProgramEn(programEn);
-        setCurricularCourse(curricularCourse);
+    public String toString() {
+        String result = "[CURRICULUM";
+        result += "codigo interno" + this.getIdInternal();
+        result += "Objectivos Operacionais" + this.getOperacionalObjectives();
+        result += "Objectivos gerais" + this.getGeneralObjectives();
+        result += "programa" + this.getProgram();
+        result += "Objectivos Operacionais em Inglês" + this.getOperacionalObjectivesEn();
+        result += "Objectivos gerais em Inglês" + this.getGeneralObjectivesEn();
+        result += "programa em Inglês" + this.getProgramEn();
+        result += "curricular Course" + this.getCurricularCourse();
+        result += "]";
+        return result;
     }
 
     public boolean equals(Object obj) {
@@ -51,17 +34,4 @@ public class Curriculum extends Curriculum_Base {
         return false;
     }
 
-    public String toString() {
-        String result = "[CURRICULUM";
-        result += "codigo interno" + getIdInternal();
-        result += "Objectivos Operacionais" + getOperacionalObjectives();
-        result += "Objectivos gerais" + getGeneralObjectives();
-        result += "programa" + getProgram();
-        result += "Objectivos Operacionais em Inglês" + getOperacionalObjectivesEn();
-        result += "Objectivos gerais em Inglês" + getGeneralObjectivesEn();
-        result += "programa em Inglês" + getProgramEn();
-        result += "curricular Course" + getCurricularCourse();
-        result += "]";
-        return result;
-    }
 }

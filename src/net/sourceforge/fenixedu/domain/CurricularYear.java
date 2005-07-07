@@ -8,11 +8,10 @@ package net.sourceforge.fenixedu.domain;
 
 public class CurricularYear extends CurricularYear_Base {
 
-    public CurricularYear() {
-    }
-
-    public CurricularYear(Integer year) {
-        setYear(year);
+    public String toString() {
+        String result = "[" + this.getClass().getName() + ": ";
+        result += "year = " + this.getYear() + "]\n";
+        return result;
     }
 
     public boolean equals(Object obj) {
@@ -21,12 +20,6 @@ public class CurricularYear extends CurricularYear_Base {
             return this.getIdInternal().equals(curricularYear.getIdInternal());
         }
         return false;
-    }
-
-    public String toString() {
-        String result = "[" + this.getClass().getName() + ": ";
-        result += "year = " + this.getYear() + "]\n";
-        return result;
     }
 
 }
