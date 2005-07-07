@@ -8,19 +8,7 @@ package net.sourceforge.fenixedu.domain.finalDegreeWork;
  * @author Luis Cruz
  *  
  */
-public class Group extends Group_Base {  
-
-    public boolean equals(Object obj) {
-        boolean result = false;
-        if (obj instanceof IGroup) {
-            IGroup group = (IGroup) obj;
-
-            if (group.getIdInternal() != null && getIdInternal() != null) {
-                result = group.getIdInternal().equals(getIdInternal());
-            }
-        }
-        return result;
-    }
+public class Group extends Group_Base {
 
     public String toString() {
         String result = "[Group";
@@ -29,5 +17,13 @@ public class Group extends Group_Base {
         result += "]";
         return result;
     }
-    
+
+    public boolean equals(Object obj) {
+        if (obj instanceof IGroup) {
+            final IGroup group = (IGroup) obj;
+            return this.getIdInternal().equals(group.getIdInternal());
+        }
+        return false;
+    }
+
 }
