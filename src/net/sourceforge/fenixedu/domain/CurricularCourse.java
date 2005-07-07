@@ -60,8 +60,7 @@ public class CurricularCourse extends CurricularCourse_Base {
             final Integer semester) {
 
         if (this.getScopes().size() == 1) {
-            return ((ICurricularCourseScope) this.getScopes().get(0)).getCurricularSemester()
-                    .getCurricularYear();
+            return this.getScopes().get(0).getCurricularSemester().getCurricularYear();
         }
 
         ICurricularYear curricularYearToReturn = null;
