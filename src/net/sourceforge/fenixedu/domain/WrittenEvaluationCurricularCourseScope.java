@@ -5,7 +5,10 @@ package net.sourceforge.fenixedu.domain;
  */
 public class WrittenEvaluationCurricularCourseScope extends WrittenEvaluationCurricularCourseScope_Base {
 
-    public WrittenEvaluationCurricularCourseScope() {
+    public String toString() {
+        return "[WRITTEN EVALUATION CURRICULAR COURSE SCOPE:" + " WrittenEvaluation= '"
+                + this.getWrittenEvaluation() + "'\n" + " CurricularCourseScope= '"
+                + this.getCurricularCourseScope() + "'\n" + "";
     }
 
     public boolean equals(Object obj) {
@@ -14,12 +17,6 @@ public class WrittenEvaluationCurricularCourseScope extends WrittenEvaluationCur
             return this.getIdInternal().equals(writtenEvaluationCurricularCourseScope.getIdInternal());
         }
         return false;
-    }
-
-    public String toString() {
-        return "[WRITTEN EVALUATION CURRICULAR COURSE SCOPE:" + " WrittenEvaluation= '"
-                + this.getWrittenEvaluation() + "'\n" + " CurricularCourseScope= '"
-                + this.getCurricularCourseScope() + "'\n" + "";
     }
 
 }

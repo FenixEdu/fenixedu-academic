@@ -55,8 +55,10 @@ public class AdicionarTurno implements IService {
         IShift shift = sp.getITurnoPersistente().readByNameAndExecutionCourse(infoShift.getNome(),
                 executionCourse.getIdInternal());
 
-        turmaTurno = new SchoolClassShift(group, shift);
-
+        turmaTurno = new SchoolClassShift();
+        turmaTurno.setTurma(group);
+        turmaTurno.setTurno(shift);
+        
         try {
             sp.getITurmaTurnoPersistente().simpleLockWrite(turmaTurno);
         } catch (ExistingPersistentException e) {

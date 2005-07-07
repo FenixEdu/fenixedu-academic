@@ -12,18 +12,6 @@ package net.sourceforge.fenixedu.domain;
  */
 public class SchoolClassShift extends SchoolClassShift_Base {
 
-    /**
-     * Construtor sem argumentos p�blico requerido pela moldura de objectos
-     * OJB
-     */
-    public SchoolClassShift() {
-    }
-
-    public SchoolClassShift(ISchoolClass schoolClass, IShift shift) {
-        this.setTurma(schoolClass);
-        this.setTurno(shift);
-    }
-
     public String toString() {
         String result = "[TURMA_TURNO";
         result += ", turma=" + getTurma();
