@@ -11,25 +11,6 @@ import java.util.Date;
  */
 public class Announcement extends Announcement_Base {
 
-    public Announcement() {
-    }
-
-    public Announcement(String title, Date creationDate, Date lastModifiedDate, String information,
-            ISite site) {
-
-        setTitle(title);
-        setCreationDate(creationDate);
-        setLastModifiedDate(lastModifiedDate);
-        setInformation(information);
-        setSite(site);
-    }
-
-    public Announcement(String title, Date date, ISite site) {
-        setTitle(title);
-        setCreationDate(date);
-        setSite(site);
-    }
-
     public String toString() {
         String result = "[ANNOUNCEMENT";
 
@@ -66,4 +47,5 @@ public class Announcement extends Announcement_Base {
         getSite().getAssociatedAnnouncements().remove(this);
         setSite(null);
     }
+
 }

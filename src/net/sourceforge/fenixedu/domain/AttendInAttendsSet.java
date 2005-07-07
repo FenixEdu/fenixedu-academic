@@ -9,14 +9,6 @@ package net.sourceforge.fenixedu.domain;
 
 public class AttendInAttendsSet extends AttendInAttendsSet_Base {
 
-    public AttendInAttendsSet() {
-    }
-
-    public AttendInAttendsSet(IAttends attend, IAttendsSet attendsSet) {
-        super.setAttend(attend);
-        super.setAttendsSet(attendsSet);
-    }
-
     /**
      * @see java.lang.Object#toString()
      */
