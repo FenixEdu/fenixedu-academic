@@ -405,15 +405,6 @@
 		<isTransactional>true</isTransactional>
 	</service>
 	<service>
-		<name>LerTurnosDeTurma</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.LerTurnosDeTurma</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>LerAulasDeTurno</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.LerAulasDeTurno</implementationClass>
 		<description />
