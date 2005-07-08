@@ -163,7 +163,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurnoAlunoV
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.TurnoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.UniversityVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.WorkLocationVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.WrittenEvaluationCurricularCourseScopeVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.WrittenTestVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.credits.ManagementPositionCreditLineVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.credits.OtherTypeCreditLineVO;
@@ -265,11 +264,11 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     public IPersistentResponsibleFor getIPersistentResponsibleFor() {
         return new ResponsibleForVO();
     }
-
+/*
     public IPersistentWrittenEvaluationCurricularCourseScope getIPersistentWrittenEvaluationCurricularCourseScope() {
         return new WrittenEvaluationCurricularCourseScopeVO();
     }
-
+*/
     public IPersistentPublicationAuthor getIPersistentPublicationAuthor() {
         return new PublicationAuthorVO();
     }

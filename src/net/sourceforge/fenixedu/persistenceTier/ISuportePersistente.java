@@ -166,7 +166,7 @@ public interface ISuportePersistente {
 
     public IPersistentWrittenTest getIPersistentWrittenTest();
 
-    public IPersistentWrittenEvaluationCurricularCourseScope getIPersistentWrittenEvaluationCurricularCourseScope();
+    //public IPersistentWrittenEvaluationCurricularCourseScope getIPersistentWrittenEvaluationCurricularCourseScope();
 
     public IPersistentExamExecutionCourse getIPersistentExamExecutionCourse();
 

@@ -2407,12 +2407,6 @@ class net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation extends net.source
     Integer support;
 }
 
-
-class net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyWrittenEvaluation;
-	Integer keyCurricularCourseScope;
-}
-
 class net.sourceforge.fenixedu.domain.publication.Author extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyPerson;
 	String organization;
@@ -4897,20 +4891,6 @@ relation WrittenEvaluationCurricularCourseScope {
 	net.sourceforge.fenixedu.domain.CurricularCourseScope playsRole associatedCurricularCourseScope {
 		multiplicity *;
 	}
-}
-
-relation WrittenEvaluationCurricularCourseScopeCurricularCourseScope {
-	net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope playsRole writtenEvaluationCurricularCourseScopes {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.CurricularCourseScope playsRole curricularCourseScope;
-}
-
-relation WrittenEvaluationCurricularCourseScopeWrittenEvaluation {
-	net.sourceforge.fenixedu.domain.WrittenEvaluationCurricularCourseScope playsRole writtenEvaluationCurricularCourseScopes {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.WrittenEvaluation playsRole writtenEvaluation;
 }
 
 relation WrittenEvaluationRoomOccupation {

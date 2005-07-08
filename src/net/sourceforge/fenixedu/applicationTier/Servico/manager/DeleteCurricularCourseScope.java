@@ -37,11 +37,9 @@ public class DeleteCurricularCourseScope implements IService {
             if (scope != null) {
                 // added by Fernanda Quitério
                 List writtenEvaluations = scope.getAssociatedWrittenEvaluations();
-				List writtenEvaluationCurricularCourseScopes = scope.getWrittenEvaluationCurricularCourseScopes();
-                if ((writtenEvaluations == null || 
-						writtenEvaluations.isEmpty()) &&
-					(writtenEvaluationCurricularCourseScopes == null || 
-						writtenEvaluationCurricularCourseScopes.isEmpty())){
+
+                if (writtenEvaluations == null || 
+						writtenEvaluations.isEmpty()){
 				
 					dereferenceCurricularCourseScope(scope);
 					persistentCurricularCourseScope.deleteByOID(CurricularCourseScope.class, scope.getIdInternal());
@@ -54,11 +52,8 @@ public class DeleteCurricularCourseScope implements IService {
         }
     }
 
-	private void dereferenceCurricularCourseScope(ICurricularCourseScope scope) {
-/*		IPersistentCurricularSemester persistentCurricularSemester = sp.getIPersistentCurricularSemester();
-		IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-		IPersistentBranch persistentBranch = sp.getIPersistentBranch();
-	*/	
+	public static void dereferenceCurricularCourseScope(ICurricularCourseScope scope) {
+
 		ICurricularSemester curricularSemester = scope.getCurricularSemester();
 		ICurricularCourse curricularCourse = scope.getCurricularCourse();
 		IBranch branch = scope.getBranch();
