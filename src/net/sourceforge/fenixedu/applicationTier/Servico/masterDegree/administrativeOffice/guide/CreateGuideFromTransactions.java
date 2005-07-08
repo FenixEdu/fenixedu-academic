@@ -2,27 +2,22 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
-import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
-import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.domain.DocumentType;
+import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.GuideSituation;
+import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.IContributor;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IGuide;
@@ -37,10 +32,7 @@ import net.sourceforge.fenixedu.domain.transactions.Transaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.domain.DocumentType;
-import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.util.NumberUtils;
-import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.util.State;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 

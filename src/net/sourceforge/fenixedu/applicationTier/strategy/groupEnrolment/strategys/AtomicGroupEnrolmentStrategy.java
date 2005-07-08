@@ -4,16 +4,12 @@
 
 package net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IGroupProperties;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroupAttend;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author asnr and scpo
