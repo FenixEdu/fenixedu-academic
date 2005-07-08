@@ -19,66 +19,49 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
- *  
+ * 
  */
 public class InsertExternalPerson implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public InsertExternalPerson() {
-    }
+    public void run(String name, String sex, String address, Integer workLocationID, String phone,
+            String mobile, String homepage, String email) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
-    public void run(String name, String sex, String address, Integer workLocationID, String phone, String mobile,
-            String homepage, String email) throws FenixServiceException {
-        IExternalPerson externalPerson = null;
-        IExternalPerson storedExternalPerson = null;
-        IPerson person = null;
-        IWorkLocation storedWorkLocation = null;
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IExternalPerson storedExternalPerson = sp.getIPersistentExternalPerson()
+                .readByNameAndAddressAndWorkLocationID(name, address, workLocationID);
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            storedExternalPerson = sp.getIPersistentExternalPerson()
-                    .readByNameAndAddressAndWorkLocationID(name, address, workLocationID);
+        if (storedExternalPerson != null)
+            throw new ExistingServiceException(
+                    "error.exception.commons.externalPerson.existingExternalPerson");
 
-            if (storedExternalPerson != null)
-                throw new ExistingServiceException(
-                        "error.exception.commons.externalPerson.existingExternalPerson");
+        IWorkLocation storedWorkLocation = (IWorkLocation) sp.getIPersistentWorkLocation().readByOID(
+                WorkLocation.class, workLocationID);
 
-            storedWorkLocation = (IWorkLocation) sp.getIPersistentWorkLocation().readByOID(
-                    WorkLocation.class, workLocationID);
+        // generate new identification number
+        String lastDocumentIdNumber = sp.getIPersistentExternalPerson().readLastDocumentIdNumber();
+        int nextID = Integer.parseInt(lastDocumentIdNumber) + 1;
+        lastDocumentIdNumber = "" + nextID;
 
-            //generate new identification number
-            String lastDocumentIdNumber = sp.getIPersistentExternalPerson().readLastDocumentIdNumber();
-            int nextID = Integer.parseInt(lastDocumentIdNumber) + 1;
-            lastDocumentIdNumber = "" + nextID;
+        IPerson person = new Person();
+        person.setNome(name);
+        person.setGender(Gender.valueOf(sex));
+        person.setMorada(address);
+        person.setTelefone(phone);
+        person.setTelemovel(mobile);
+        person.setEnderecoWeb(homepage);
+        person.setEmail(email);
+        person.setNumeroDocumentoIdentificacao(lastDocumentIdNumber);
+        person.setIdDocumentType(IDDocumentType.EXTERNAL);
+        person.setUsername("e" + lastDocumentIdNumber);
 
-            externalPerson = new ExternalPerson();
-            person = new Person();
+        sp.getIPessoaPersistente().simpleLockWrite(person);
 
-            person.setNome(name);
-            person.setGender(Gender.valueOf(sex));
-            person.setMorada(address);
-            person.setTelefone(phone);
-            person.setTelemovel(mobile);
-            person.setEnderecoWeb(homepage);
-            person.setEmail(email);
-            person.setNumeroDocumentoIdentificacao(lastDocumentIdNumber);
-            person.setIdDocumentType(IDDocumentType.EXTERNAL);
-            person.setUsername("e" + lastDocumentIdNumber);
+        IExternalPerson externalPerson = new ExternalPerson();        
+        externalPerson.setPerson(person);
+        externalPerson.setWorkLocation(storedWorkLocation);
 
-            sp.getIPessoaPersistente().simpleLockWrite(person);
-
-            externalPerson.setPerson(person);
-            externalPerson.setWorkLocation(storedWorkLocation);
-
-            sp.getIPersistentExternalPerson().simpleLockWrite(externalPerson);
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+        sp.getIPersistentExternalPerson().simpleLockWrite(externalPerson);
 
     }
 }
