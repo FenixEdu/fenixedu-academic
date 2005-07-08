@@ -74,8 +74,8 @@ public class ViewReimbursementGuide implements IService {
         CollectionUtils.transform(reibursementGuideEntries, new Transformer() {
 
             public Object transform(Object arg0) {
-                InfoReimbursementGuideEntry infoReimbursementGuideEntry = Cloner
-                        .copyIReimbursementGuideEntry2InfoReimbursementGuideEntry((IReimbursementGuideEntry) arg0);
+                InfoReimbursementGuideEntry infoReimbursementGuideEntry = 
+                    InfoReimbursementGuideEntry.newInfoFromDomain((IReimbursementGuideEntry) arg0);                    
                 return infoReimbursementGuideEntry;
             }
 

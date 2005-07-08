@@ -8,7 +8,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationSubtypeWithPublicationType;
 import net.sourceforge.fenixedu.domain.publication.IPublicationSubtype;
 import net.sourceforge.fenixedu.domain.publication.IPublicationType;
 import net.sourceforge.fenixedu.domain.publication.PublicationType;
@@ -63,7 +63,7 @@ public class ReadPublicationSubtypes implements IServico {
             List result = (List) CollectionUtils.collect(publicationSubtypeList, new Transformer() {
                 public Object transform(Object o) {
                     IPublicationSubtype publicationSubtype = (IPublicationSubtype) o;
-                    return Cloner.copyIPublicationSubtype2InfoPublicationSubtype(publicationSubtype);
+                    return InfoPublicationSubtypeWithPublicationType.newInfoFromDomain(publicationSubtype);                    
                 }
             });
 

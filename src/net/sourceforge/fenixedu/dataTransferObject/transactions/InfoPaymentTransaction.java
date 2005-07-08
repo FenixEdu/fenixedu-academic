@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.transactions;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.transactions.IGratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.IInsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.IPaymentTransaction;
@@ -48,7 +47,7 @@ public abstract class InfoPaymentTransaction extends InfoTransaction {
 
         InfoGuideEntry infoGuideEntry = null;
         if (paymentTransaction.getGuideEntry() != null) {
-            infoGuideEntry = Cloner.copyIGuideEntry2InfoGuideEntry(paymentTransaction.getGuideEntry());
+            infoGuideEntry = InfoGuideEntry.newInfoFromDomain(paymentTransaction.getGuideEntry());
         }
 
         this.infoGuideEntry = infoGuideEntry;

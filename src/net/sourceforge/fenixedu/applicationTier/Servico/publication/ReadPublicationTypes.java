@@ -8,7 +8,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationTypeWithAttributesAndSubtypes;
 import net.sourceforge.fenixedu.domain.publication.IPublicationType;
 import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -22,13 +22,13 @@ import org.apache.commons.collections.Transformer;
 /**
  * @author TJBF
  * @author PFON
- *  
+ * 
  */
 public class ReadPublicationTypes implements IServico {
     private static ReadPublicationTypes service = new ReadPublicationTypes();
 
     /**
-     *  
+     * 
      */
     private ReadPublicationTypes() {
 
@@ -51,16 +51,18 @@ public class ReadPublicationTypes implements IServico {
     public List run(String user) throws FenixServiceException {
         try {
 
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            ISuportePersistente persistentSuport = PersistenceSupportFactory
+                    .getDefaultPersistenceSupport();
 
             IPersistentPublicationType persistentPublicationType = persistentSuport
                     .getIPersistentPublicationType();
-            List publicationTypeList = (List)persistentPublicationType.readAll(PublicationType.class);
+            List publicationTypeList = (List) persistentPublicationType.readAll(PublicationType.class);
 
             List result = (List) CollectionUtils.collect(publicationTypeList, new Transformer() {
                 public Object transform(Object o) {
                     IPublicationType publicationType = (IPublicationType) o;
-                    return Cloner.copyIPublicationType2InfoPublicationType(publicationType);
+                    return InfoPublicationTypeWithAttributesAndSubtypes
+                            .newInfoFromDomain(publicationType);
                 }
             });
 
