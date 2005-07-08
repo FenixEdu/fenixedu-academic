@@ -53,8 +53,8 @@ public class ReadAllTransactionsByGratuitySituationID implements IService {
 
         List insuranceTransactionList = sp.getIPersistentInsuranceTransaction()
                 .readAllByExecutionYearAndStudent(
-                        gratuitySituation.getGratuityValues().getExecutionDegree().getExecutionYear(),
-                        gratuitySituation.getStudentCurricularPlan().getStudent());
+                        gratuitySituation.getGratuityValues().getExecutionDegree().getExecutionYear().getIdInternal(),
+                        gratuitySituation.getStudentCurricularPlan().getStudent().getIdInternal());
 
         // read insurance transactions
         for (Iterator iter = insuranceTransactionList.iterator(); iter.hasNext();) {
@@ -64,7 +64,7 @@ public class ReadAllTransactionsByGratuitySituationID implements IService {
         }
 
         List gratuityTransactionList = sp.getIPersistentGratuityTransaction()
-                .readAllByGratuitySituation(gratuitySituation);
+                .readAllByGratuitySituation(gratuitySituation.getIdInternal());
 
         // read gratuity transactions
         for (Iterator iter = gratuityTransactionList.iterator(); iter.hasNext();) {

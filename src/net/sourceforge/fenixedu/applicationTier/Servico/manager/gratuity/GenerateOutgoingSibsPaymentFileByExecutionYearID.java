@@ -118,7 +118,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
                     studentsWithInsuranceChecked.put(student.getIdInternal(), null);
 
                     List insuranceTransactionList = insuranceTransactionDAO
-                            .readAllNonReimbursedByExecutionYearAndStudent(executionYear, student);
+                            .readAllNonReimbursedByExecutionYearAndStudent(executionYear.getIdInternal(), student.getIdInternal());
 
                     if (insuranceTransactionList.size() == 0) {
 

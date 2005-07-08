@@ -206,7 +206,7 @@ public class ProcessSibsPaymentFile implements IService {
                         .getIdInternal());
 
                 List insuranceTransactionList = insuranceTransactionDAO
-                        .readAllNonReimbursedByExecutionYearAndStudent(executionYear, student);
+                        .readAllNonReimbursedByExecutionYearAndStudent(executionYear.getIdInternal(), student.getIdInternal());
 
                 if (insuranceTransactionList.size() > 0) {
                     sibsPaymentFileEntry.setPaymentStatus(SibsPaymentStatus.DUPLICATE_INSURANCE_PAYMENT);

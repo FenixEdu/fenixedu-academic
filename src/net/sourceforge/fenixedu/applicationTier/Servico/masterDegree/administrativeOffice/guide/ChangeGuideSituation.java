@@ -199,7 +199,7 @@ public class ChangeGuideSituation implements IService {
 
                             List insuranceTransactionList = insuranceTransactionDAO
                                     .readAllNonReimbursedByExecutionYearAndStudent(executionDegree
-                                            .getExecutionYear(), student);
+                                            .getExecutionYear().getIdInternal(), student.getIdInternal());
 
                             if (insuranceTransactionList.isEmpty() == false) {
                                 throw new ExistingServiceException(

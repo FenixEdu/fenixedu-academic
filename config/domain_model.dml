@@ -1660,6 +1660,7 @@ class net.sourceforge.fenixedu.domain.PersonAccount extends net.sourceforge.feni
 	
 	interface "
     public java.util.List getPaymentTransactions();    
+    public java.util.List getInsuranceTransactions();        
     "
 }
 

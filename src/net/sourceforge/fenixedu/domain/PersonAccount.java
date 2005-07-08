@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.transactions.IInsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.IPaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.ITransaction;
 
@@ -36,5 +37,16 @@ public class PersonAccount extends PersonAccount_Base {
 
         return result;
     }
+	
+	 public List getInsuranceTransactions() {
+
+	        List result = new ArrayList<IInsuranceTransaction>();
+	        for (ITransaction transaction : this.getTransactions()) {
+	            if (transaction instanceof IInsuranceTransaction) {
+	                result.add((IInsuranceTransaction) transaction);
+	            }
+	        }
+	        return result;
+	    }
 
 }

@@ -51,7 +51,7 @@ public class CreateInsuranceTransaction implements IService {
 
         List insuranceTransactionList = insuranceTransactionDAO
                 .readAllNonReimbursedByExecutionYearAndStudent(guide.getExecutionDegree()
-                        .getExecutionYear(), student);
+                        .getExecutionYear().getIdInternal(), student.getIdInternal());
 
         if (insuranceTransactionList.isEmpty() == false) {
             throw new ExistingServiceException(

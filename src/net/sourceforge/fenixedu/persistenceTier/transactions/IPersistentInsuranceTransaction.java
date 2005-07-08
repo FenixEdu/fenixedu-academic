@@ -21,10 +21,10 @@ public interface IPersistentInsuranceTransaction extends IPersistentObject {
      * ExcepcaoPersistencia;
      */
 
-    public List readAllNonReimbursedByExecutionYearAndStudent(IExecutionYear executionYear,
-            IStudent student) throws ExcepcaoPersistencia;
+    public List readAllNonReimbursedByExecutionYearAndStudent(Integer executionYearID,
+            Integer studentID) throws ExcepcaoPersistencia;
 
-    public List readAllByExecutionYearAndStudent(IExecutionYear executionYear, IStudent student)
+    public List readAllByExecutionYearAndStudent(Integer executionYearID, Integer studentID)
             throws ExcepcaoPersistencia;
 
 }

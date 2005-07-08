@@ -296,7 +296,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
                         studentsWithInsuranceChecked.put(student.getIdInternal(), null);
 
                         List insuranceTransactionList = insuranceTransactionDAO
-                                .readAllNonReimbursedByExecutionYearAndStudent(executionYear, student);
+                                .readAllNonReimbursedByExecutionYearAndStudent(executionYear.getIdInternal(), student.getIdInternal());
 
                         if (insuranceTransactionList.size() == 0) {
                             // student hasn't payed insurance

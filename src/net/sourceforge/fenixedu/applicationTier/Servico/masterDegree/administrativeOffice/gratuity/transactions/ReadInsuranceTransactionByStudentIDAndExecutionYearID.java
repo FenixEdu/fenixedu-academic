@@ -50,7 +50,7 @@ public class ReadInsuranceTransactionByStudentIDAndExecutionYearID implements IS
             }
 
             List insuranceTransactionList = insuranceTransactionDAO
-                    .readAllNonReimbursedByExecutionYearAndStudent(executionYear, student);
+                    .readAllNonReimbursedByExecutionYearAndStudent(executionYear.getIdInternal(), student.getIdInternal());
 
             if (insuranceTransactionList.size() > 1) {
                 throw new FenixServiceException(

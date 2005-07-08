@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
@@ -150,7 +151,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 
                     List insuranceTransactionList = insuranceTransactionDAO
                             .readAllNonReimbursedByExecutionYearAndStudent(executionDegree
-                                    .getExecutionYear(), studentCurricularPlan.getStudent());
+                                    .getExecutionYear().getIdInternal(), studentCurricularPlan.getStudent().getIdInternal());
 
                     /*
                      * IInsuranceTransaction insuranceTransaction =

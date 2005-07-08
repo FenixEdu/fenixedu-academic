@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.transactions;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IGratuitySituation;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.ObjectFenixOJB;
@@ -17,14 +16,11 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class GratuityTransactionOJB extends ObjectFenixOJB implements IPersistentGratuityTransaction {
 
-    public GratuityTransactionOJB() {
-    }
-
-    public List readAllByGratuitySituation(IGratuitySituation gratuitySituation)
+    public List readAllByGratuitySituation(Integer gratuitySituationID)
             throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("gratuitySituation.idInternal", gratuitySituation.getIdInternal());
+        criteria.addEqualTo("gratuitySituation.idInternal", gratuitySituationID);
         return queryList(GratuityTransaction.class, criteria);
 
     }
