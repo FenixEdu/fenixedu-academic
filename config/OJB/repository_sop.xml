@@ -832,6 +832,37 @@
          >
          <inverse-foreignkey field-ref="keyPeriod"/>
       </collection-descriptor>
+      <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+         name="executionDegreesForExamsFirstSemester"
+         element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
+         >
+         <inverse-foreignkey field-ref="keyPeriodExamsFirstSemester"/>
+      </collection-descriptor>
+      <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+         name="executionDegreesForExamsFirstSemester"
+         element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
+         >
+         <inverse-foreignkey field-ref="keyPeriodExamsFirstSemester"/>
+      </collection-descriptor>
+      <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+         name="executionDegreesForExamsSecondSemester"
+         element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
+         >
+         <inverse-foreignkey field-ref="keyPeriodExamsSecondSemester"/>
+      </collection-descriptor>
+      <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+         name="executionDegreesForLessonsFirstSemester"
+         element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
+         >
+         <inverse-foreignkey field-ref="keyPeriodLessonsFirstSemester"/>
+      </collection-descriptor>
+      <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+         name="executionDegreesForLessonsSecondSemester"
+         element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
+         >
+         <inverse-foreignkey field-ref="keyPeriodLessonsSecondSemester"/>
+      </collection-descriptor>
+
    </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.Evaluation -->
