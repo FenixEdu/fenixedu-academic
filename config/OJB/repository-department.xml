@@ -29,12 +29,25 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-<!--	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="disciplinasAssociadas"
-			element-class-ref="net.sourceforge.fenixedu.domain.DepartmentCourse"
-			>
+    <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+         name="associatedPersons"
+         element-class-ref="net.sourceforge.fenixedu.domain.Person"
+         
+         indirection-table = "crd_CREDITS_MANAGER_DEPARTMENT"
+         auto-retrieve="true"
+         
+         auto-update="false"
+         auto-delete="false"
+		>
+    	<fk-pointing-to-this-class column="KEY_DEPARTMENT"/>
+    	<fk-pointing-to-element-class column="KEY_PERSON"/>
+    </collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		name="disciplinasAssociadas"
+		element-class-ref="net.sourceforge.fenixedu.domain.DepartmentCourse"
+		>
 		<inverse-foreignkey field-ref="chaveDepartamento"/>
-	</collection-descriptor>     -->
+	</collection-descriptor>
 </class-descriptor>   
 
 <!-- *************************************************************************************************************** -->

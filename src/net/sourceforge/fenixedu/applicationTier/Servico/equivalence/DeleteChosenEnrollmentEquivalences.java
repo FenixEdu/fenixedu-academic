@@ -113,7 +113,7 @@ public class DeleteChosenEnrollmentEquivalences extends EnrollmentEquivalenceSer
                     }
 
                     for (int k = 0; k < enrollment.getEvaluations().size(); k++) {
-                        IEnrolmentEvaluation enrollmentEvaluation = (IEnrolmentEvaluation) enrollment
+                        IEnrolmentEvaluation enrollmentEvaluation = enrollment
                                 .getEvaluations().get(k);
                         enrolmentEvaluationDAO.deleteByOID(EnrolmentEvaluation.class,
                                 enrollmentEvaluation.getIdInternal());

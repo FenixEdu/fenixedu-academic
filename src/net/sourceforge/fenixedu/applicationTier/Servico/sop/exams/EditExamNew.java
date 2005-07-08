@@ -85,7 +85,7 @@ public class EditExamNew implements IService {
                 }
 
                 for (int j = 0; j < executionCourse.getAssociatedExams().size(); j++) {
-                    IEvaluation evaluation = (IEvaluation) executionCourse.getAssociatedEvaluations()
+                    IEvaluation evaluation = executionCourse.getAssociatedEvaluations()
                             .get(j);
                     if (evaluation instanceof IExam) {
                         IExam examAux = (IExam) evaluation;
@@ -128,7 +128,7 @@ public class EditExamNew implements IService {
             List indexesToRemove = new ArrayList();
 
             for (int i = 0; i < exam.getAssociatedCurricularCourseScope().size(); i++) {
-                ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) exam
+                ICurricularCourseScope curricularCourseScope = exam
                         .getAssociatedCurricularCourseScope().get(i);
                 if (!scopeIDs.contains(curricularCourseScope.getIdInternal().toString())) {
                     indexesToRemove.add(new Integer(i));
@@ -160,7 +160,7 @@ public class EditExamNew implements IService {
 
             List executionCourseIDs = Arrays.asList(executionCourseIDArray);
             for (int i = 0; i < exam.getAssociatedExecutionCourses().size(); i++) {
-                IExecutionCourse executionCourse = (IExecutionCourse) exam
+                IExecutionCourse executionCourse = exam
                         .getAssociatedExecutionCourses().get(i);
                 if (!executionCourseIDs.contains(executionCourse.getIdInternal().toString())) {
                     exam.getAssociatedExecutionCourses().remove(executionCourse);
@@ -175,7 +175,7 @@ public class EditExamNew implements IService {
             IPeriod period;
             if (exam.getAssociatedRoomOccupation() != null
                     && exam.getAssociatedRoomOccupation().size() != 0) {
-                period = ((IRoomOccupation) exam.getAssociatedRoomOccupation().get(0)).getPeriod();
+                period = exam.getAssociatedRoomOccupation().get(0).getPeriod();
 
                 List rooms = period.getRoomOccupations();
                 if (rooms.size() == exam.getAssociatedRoomOccupation().size()) {

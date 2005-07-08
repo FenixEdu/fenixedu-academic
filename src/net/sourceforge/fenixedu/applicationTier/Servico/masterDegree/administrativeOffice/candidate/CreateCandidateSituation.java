@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate;
 
 import java.util.Calendar;
-import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -34,7 +33,7 @@ public class CreateCandidateSituation implements IService {
 			throw new ExcepcaoInexistente("Unknown Master Degree Candidate");
 		}
 
-		for (ICandidateSituation candidateSituation : (List<ICandidateSituation>) masterDegreeCandidate
+		for (ICandidateSituation candidateSituation : masterDegreeCandidate
 				.getSituations()) {
 			if (candidateSituation.getValidation().equals(new State(State.ACTIVE))) {
 				sp.getIPersistentCandidateSituation().simpleLockWrite(candidateSituation);

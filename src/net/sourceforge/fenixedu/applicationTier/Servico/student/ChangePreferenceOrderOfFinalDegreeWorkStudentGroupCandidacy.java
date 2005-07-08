@@ -33,7 +33,7 @@ public class ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy impleme
                 GroupProposal.class, groupProposalOID);
         if (group != null && groupProposal != null) {
             for (int i = 0; i < group.getGroupProposals().size(); i++) {
-                IGroupProposal otherGroupProposal = (IGroupProposal) group.getGroupProposals().get(i);
+                IGroupProposal otherGroupProposal = group.getGroupProposals().get(i);
                 if (otherGroupProposal != null
                         && !groupProposal.getIdInternal().equals(otherGroupProposal.getIdInternal())) {
                     int otherOrderOfPreference = otherGroupProposal.getOrderOfPreference().intValue();

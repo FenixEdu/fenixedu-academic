@@ -77,7 +77,7 @@ public class DeleteShifts implements IService {
                 }
 
                 for (int i = 0; i < shift.getAssociatedLessons().size(); i++) {
-                    ILesson lesson = (ILesson) shift.getAssociatedLessons().get(i);
+                    ILesson lesson = shift.getAssociatedLessons().get(i);
 
                     IRoomOccupation roomOccupation = lesson.getRoomOccupation();
 
@@ -99,7 +99,7 @@ public class DeleteShifts implements IService {
                 }
 
                 for (int i = 0; i < shift.getAssociatedClasses().size(); i++) {
-                    ISchoolClass schoolClass = (ISchoolClass) shift.getAssociatedClasses().get(i);
+                    ISchoolClass schoolClass = shift.getAssociatedClasses().get(i);
                     sp.getITurmaPersistente().simpleLockWrite(schoolClass);
                     schoolClass.getAssociatedShifts().remove(shift);
                 }

@@ -212,7 +212,7 @@ public class SeperateExecutionCourse implements IService {
 
         destinationExecutionCourse.setProfessorships(new ArrayList());
         for (int i = 0; i < originExecutionCourse.getProfessorships().size(); i++) {
-            IProfessorship professorship = (IProfessorship) originExecutionCourse.getProfessorships()
+            IProfessorship professorship = originExecutionCourse.getProfessorships()
                     .get(i);
             IProfessorship newProfessorship = new Professorship();
             persistentObject.simpleLockWrite(newProfessorship);
@@ -223,7 +223,7 @@ public class SeperateExecutionCourse implements IService {
 
         destinationExecutionCourse.setResponsibleTeachers(new ArrayList());
         for (int i = 0; i < originExecutionCourse.getResponsibleTeachers().size(); i++) {
-            IResponsibleFor responsibleFor = (IResponsibleFor) originExecutionCourse
+            IResponsibleFor responsibleFor = originExecutionCourse
                     .getResponsibleTeachers().get(i);
             IResponsibleFor newResponsibleFor = new ResponsibleFor();
             persistentObject.simpleLockWrite(newResponsibleFor);

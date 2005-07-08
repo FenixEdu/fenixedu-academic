@@ -64,7 +64,7 @@ public class ReadExamsByDayAndBeginning implements IService {
 
             if (tempExam.getAssociatedExecutionCourses() != null) {
                 for (int k = 0; k < tempExam.getAssociatedExecutionCourses().size(); k++) {
-                    IExecutionCourse executionCourse = (IExecutionCourse) tempExam
+                    IExecutionCourse executionCourse = tempExam
                             .getAssociatedExecutionCourses().get(k);
                     tempInfoExecutionCourses.add(Cloner.get(executionCourse));
 

@@ -41,7 +41,7 @@ public class OldInquiriesTeachersResVO extends VersionedObjectsBase implements I
 
 		IExecutionPeriod executionPeriod = (IExecutionPeriod) readByOID(ExecutionPeriod.class, executionPeriodId);
 		
-		List<IOldInquiriesTeachersRes> inquiriesTeachersRes = (List<IOldInquiriesTeachersRes>) executionPeriod.getOldInquiriesTeachersRes();
+		List<IOldInquiriesTeachersRes> inquiriesTeachersRes = executionPeriod.getOldInquiriesTeachersRes();
 
 		List<IOldInquiriesTeachersRes> res = new ArrayList<IOldInquiriesTeachersRes>();
 		
@@ -66,7 +66,7 @@ public class OldInquiriesTeachersResVO extends VersionedObjectsBase implements I
         
 		IDegree degree = (IDegree) readByOID(Degree.class, degreeId);
 		
-		List<IOldInquiriesTeachersRes> inquiriesTeachersRes = (List<IOldInquiriesTeachersRes>) degree.getOldInquiriesTeachersRes();
+		List<IOldInquiriesTeachersRes> inquiriesTeachersRes = degree.getOldInquiriesTeachersRes();
 
 		List<IOldInquiriesTeachersRes> res = new ArrayList<IOldInquiriesTeachersRes>();
 		
@@ -87,7 +87,7 @@ public class OldInquiriesTeachersResVO extends VersionedObjectsBase implements I
         
 		IDegree degree = (IDegree) readByOID(Degree.class, degreeId);
 		
-		List<IOldInquiriesTeachersRes> inquiriesTeachersRes = (List<IOldInquiriesTeachersRes>) degree.getOldInquiriesTeachersRes();
+		List<IOldInquiriesTeachersRes> inquiriesTeachersRes = degree.getOldInquiriesTeachersRes();
 
 		List<IOldInquiriesTeachersRes> res = new ArrayList<IOldInquiriesTeachersRes>();
 		
@@ -104,7 +104,7 @@ public class OldInquiriesTeachersResVO extends VersionedObjectsBase implements I
     public List readByDegreeId(Integer degreeId) throws ExcepcaoPersistencia {
 		IDegree degree = (IDegree) readByOID(Degree.class, degreeId);
 		
-		List<IOldInquiriesTeachersRes> inquiriesTeachersRes = (List<IOldInquiriesTeachersRes>) degree.getOldInquiriesTeachersRes();
+		List<IOldInquiriesTeachersRes> inquiriesTeachersRes = degree.getOldInquiriesTeachersRes();
 		return inquiriesTeachersRes;
     }
 

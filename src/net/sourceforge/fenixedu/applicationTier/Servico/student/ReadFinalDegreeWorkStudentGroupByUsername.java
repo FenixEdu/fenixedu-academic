@@ -47,7 +47,7 @@ public class ReadFinalDegreeWorkStudentGroupByUsername implements IService {
                 infoGroup.setGroupStudents(new ArrayList());
 
                 for (int i = 0; i < group.getGroupStudents().size(); i++) {
-                    IGroupStudent groupStudent = (IGroupStudent) group.getGroupStudents().get(i);
+                    IGroupStudent groupStudent = group.getGroupStudents().get(i);
                     if (groupStudent != null) {
                         InfoGroupStudent infoGroupStudent = new InfoGroupStudent();
                         infoGroupStudent.setIdInternal(groupStudent.getIdInternal());
@@ -84,7 +84,7 @@ public class ReadFinalDegreeWorkStudentGroupByUsername implements IService {
             if (group.getGroupProposals() != null) {
                 infoGroup.setGroupProposals(new ArrayList());
                 for (int i = 0; i < group.getGroupProposals().size(); i++) {
-                    IGroupProposal groupProposal = (IGroupProposal) group.getGroupProposals().get(i);
+                    IGroupProposal groupProposal = group.getGroupProposals().get(i);
                     if (groupProposal != null) {
                         InfoGroupProposal infoGroupProposal = new InfoGroupProposal();
                         infoGroupProposal.setIdInternal(groupProposal.getIdInternal());

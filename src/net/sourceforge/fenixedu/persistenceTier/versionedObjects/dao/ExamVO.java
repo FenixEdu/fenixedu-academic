@@ -174,9 +174,8 @@ public class ExamVO extends VersionedObjectsBase implements IPersistentExam {
             throws ExcepcaoPersistencia {
         IExam exam = (IExam) readByOID(Exam.class, examOID);
 
-        for (IExecutionCourse executionCourse : (List<IExecutionCourse>) exam
-                .getAssociatedExecutionCourses()) {
-            for (IStudent student : (List<IStudent>) executionCourse.getAttendingStudents()) {
+        for (IExecutionCourse executionCourse : exam.getAssociatedExecutionCourses()) {
+            for (IStudent student : executionCourse.getAttendingStudents()) {
                 if (student.getPerson().getUsername().equals(studentsUsername)) {
                     return true;
                 }

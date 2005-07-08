@@ -75,7 +75,7 @@ public class ReadExamsByExecutionDegreeAndCurricularYearPublic implements IServi
                         .get(executionCourse));
 
                 for (int j = 0; j < executionCourse.getAssociatedExams().size(); j++) {
-                    IExam exam = (IExam) executionCourse.getAssociatedExams().get(j);
+                    IExam exam = executionCourse.getAssociatedExams().get(j);
                     if (exam.getSeason().getseason().intValue() == Season.SEASON1) {
                         infoExecutionCourseAndExams.setInfoExam1(Cloner.copyIExam2InfoExam(exam));
                     } else if (exam.getSeason().getseason().intValue() == Season.SEASON2) {

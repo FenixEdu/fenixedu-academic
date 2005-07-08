@@ -36,7 +36,7 @@ public class ApagarTurma implements IService {
         //sp.getITurmaPersistente().simpleLockWrite(schoolClass);
         
         //Shift
-        for(IShift shift : (List<IShift>) schoolClass.getAssociatedShifts()){
+        for(IShift shift : schoolClass.getAssociatedShifts()){
             shift.getAssociatedClasses().remove(schoolClass);
         }
         schoolClass.getAssociatedShifts().clear();

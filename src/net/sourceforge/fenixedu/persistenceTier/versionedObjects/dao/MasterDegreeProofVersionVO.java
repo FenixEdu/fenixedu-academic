@@ -35,7 +35,7 @@ public class MasterDegreeProofVersionVO extends VersionedObjectsBase implements
 
                 if (masterDegreeThesis.getMasterDegreeProofVersions() != null) {
 
-                    for (IMasterDegreeProofVersion masterDegreeProofVersion : (List<IMasterDegreeProofVersion>) masterDegreeThesis
+                    for (IMasterDegreeProofVersion masterDegreeProofVersion : masterDegreeThesis
                             .getMasterDegreeProofVersions()) {
                         if (masterDegreeProofVersion.getCurrentState().equals(State.ACTIVE)) {
                             return masterDegreeProofVersion;
@@ -62,7 +62,7 @@ public class MasterDegreeProofVersionVO extends VersionedObjectsBase implements
 
                 if (masterDegreeThesis.getMasterDegreeProofVersions() != null) {
 
-                    for (IMasterDegreeProofVersion masterDegreeProofVersion : (List<IMasterDegreeProofVersion>) masterDegreeThesis
+                    for (IMasterDegreeProofVersion masterDegreeProofVersion : masterDegreeThesis
                             .getMasterDegreeProofVersions()) {
                         if (!masterDegreeProofVersion.getCurrentState().equals(State.ACTIVE)) {
                             result.add(masterDegreeProofVersion);

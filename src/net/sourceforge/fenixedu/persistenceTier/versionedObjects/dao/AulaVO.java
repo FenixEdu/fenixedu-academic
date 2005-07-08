@@ -29,7 +29,7 @@ public class AulaVO extends VersionedObjectsBase implements IAulaPersistente {
             throws ExcepcaoPersistencia {
         final IRoom room = (IRoom) readByOID(Room.class, roomOID);
         final List<ILesson> lessons = new ArrayList<ILesson>();
-        for (final IRoomOccupation roomOccupation : ((List<IRoomOccupation>) room.getRoomOccupations())) {
+        for (final IRoomOccupation roomOccupation : room.getRoomOccupations()) {
             final ILesson lesson = roomOccupation.getLesson();
             if (lesson != null && lesson.getExecutionPeriod().getIdInternal().equals(executionPeriodOID)) {
                 lessons.add(lesson);

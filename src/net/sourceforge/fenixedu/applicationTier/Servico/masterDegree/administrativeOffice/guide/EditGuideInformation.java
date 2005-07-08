@@ -179,7 +179,7 @@ public class EditGuideInformation implements IService {
 					
 					
 					if(guideEntry.getReimbursementGuideEntries()!=null){
-						for(IReimbursementGuideEntry reimbursementGuideEntry : (List<IReimbursementGuideEntry>)guideEntry.getReimbursementGuideEntries()){
+						for(IReimbursementGuideEntry reimbursementGuideEntry : guideEntry.getReimbursementGuideEntries()){
 							sp.getIPersistentReimbursementGuide().simpleLockWrite(reimbursementGuideEntry.getReimbursementGuide());
 							reimbursementGuideEntry.getReimbursementGuide().getReimbursementGuideEntries().remove(reimbursementGuideEntry);
 							sp.getIPersistentGuideEntry().deleteByOID(ReimbursementGuideEntry.class,reimbursementGuideEntry.getIdInternal());

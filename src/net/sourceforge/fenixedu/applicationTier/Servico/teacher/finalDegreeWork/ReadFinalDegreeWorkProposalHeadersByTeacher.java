@@ -96,7 +96,7 @@ public class ReadFinalDegreeWorkProposalHeadersByTeacher implements IService {
                                 && !proposal.getGroupProposals().isEmpty()) {
                             finalDegreeWorkProposalHeader.setGroupProposals(new ArrayList());
                             for (int j = 0; j < proposal.getGroupProposals().size(); j++) {
-                                IGroupProposal groupProposal = (IGroupProposal) proposal
+                                IGroupProposal groupProposal = proposal
                                         .getGroupProposals().get(j);
                                 if (groupProposal != null) {
                                     InfoGroupProposal infoGroupProposal = new InfoGroupProposal();
@@ -110,7 +110,7 @@ public class ReadFinalDegreeWorkProposalHeadersByTeacher implements IService {
                                         if (group.getGroupStudents() != null) {
                                             infoGroup.setGroupStudents(new ArrayList());
                                             for (int k = 0; k < group.getGroupStudents().size(); k++) {
-                                                IGroupStudent groupStudent = (IGroupStudent) group
+                                                IGroupStudent groupStudent = group
                                                         .getGroupStudents().get(k);
 
                                                 if (groupStudent != null) {

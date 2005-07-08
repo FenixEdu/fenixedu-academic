@@ -67,7 +67,7 @@ public class ReadPublishedFinalDegreeWorkProposalHeaders implements IService {
                     if (proposal.getBranches() != null) {
                         finalDegreeWorkProposalHeader.setBranches(new ArrayList());
                         for (int j = 0; j < proposal.getBranches().size(); j++) {
-                            IBranch branch = (IBranch) proposal.getBranches().get(j);
+                            IBranch branch = proposal.getBranches().get(j);
 
                             if (branch != null) {
                                 InfoBranch infoBranch = new InfoBranch();
@@ -83,7 +83,7 @@ public class ReadPublishedFinalDegreeWorkProposalHeaders implements IService {
                         infoGroup.setGroupStudents(new ArrayList());
                         for (int j = 0; j < proposal.getGroupAttributedByTeacher().getGroupStudents()
                                 .size(); j++) {
-                            IGroupStudent groupStudent = (IGroupStudent) proposal
+                            IGroupStudent groupStudent = proposal
                                     .getGroupAttributedByTeacher().getGroupStudents().get(j);
                             InfoGroupStudent infoGroupStudent = new InfoGroupStudent();
                             InfoStudent infoStudent = new InfoStudent();
@@ -101,7 +101,7 @@ public class ReadPublishedFinalDegreeWorkProposalHeaders implements IService {
                         InfoGroup infoGroup = new InfoGroup();
                         infoGroup.setGroupStudents(new ArrayList());
                         for (int j = 0; j < proposal.getGroupAttributed().getGroupStudents().size(); j++) {
-                            IGroupStudent groupStudent = (IGroupStudent) proposal.getGroupAttributed()
+                            IGroupStudent groupStudent = proposal.getGroupAttributed()
                                     .getGroupStudents().get(j);
                             InfoGroupStudent infoGroupStudent = new InfoGroupStudent();
                             InfoStudent infoStudent = new InfoStudent();

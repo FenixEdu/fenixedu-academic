@@ -73,7 +73,7 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 
 		final IExecutionDegree executionDegree = (IExecutionDegree) readByOID(ExecutionDegree.class,
 				executionDegreeID);
-		final List<IMasterDegreeCandidate> masterDegreeCandidates = (List<IMasterDegreeCandidate>) executionDegree
+		final List<IMasterDegreeCandidate> masterDegreeCandidates = executionDegree
 				.getMasterDegreeCandidates();
 
 		for (final IMasterDegreeCandidate masterDegreeCandidate : masterDegreeCandidates) {
@@ -102,7 +102,7 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 
 		final IExecutionYear executionYear = (IExecutionYear) readByOID(ExecutionYear.class,
 				executionYearID);
-		final List<IExecutionDegree> executionDegrees = (List<IExecutionDegree>) executionYear
+		final List<IExecutionDegree> executionDegrees = executionYear
 				.getExecutionDegrees();
 
 		final List<IMasterDegreeCandidate> masterDegreeCandidatesByYear = new ArrayList<IMasterDegreeCandidate>();
@@ -141,7 +141,7 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 			}
 			if (mask.get(3) && checked) {
 				checked = false;
-				for (ICandidateSituation candidateSituation : (List<ICandidateSituation>) masterDegreeCandidate
+				for (ICandidateSituation candidateSituation : masterDegreeCandidate
 						.getSituations()) {
 					if (candidateSituation.getSituation().equals(situationName)) {
 						checked = true;
@@ -163,7 +163,7 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 		final IExecutionDegree executionDegree = (IExecutionDegree) readByOID(ExecutionDegree.class,
 				executionDegreeID);
 
-		final List<IMasterDegreeCandidate> masterDegreeCandidates = (List<IMasterDegreeCandidate>) executionDegree
+		final List<IMasterDegreeCandidate> masterDegreeCandidates = executionDegree
 				.getMasterDegreeCandidates();
 
 		for (final IMasterDegreeCandidate masterDegreeCandidate : masterDegreeCandidates) {
@@ -182,7 +182,7 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 
 		final IPerson person = (IPerson) readByOID(Person.class, personID);
 
-		final List<IMasterDegreeCandidate> masterDegreeCandidates = (List<IMasterDegreeCandidate>) person
+		final List<IMasterDegreeCandidate> masterDegreeCandidates = person
 				.getMasterDegreeCandidates();
 
 		for (final IMasterDegreeCandidate masterDegreeCandidate : masterDegreeCandidates) {
@@ -199,7 +199,7 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 
 		final IPerson person = (IPerson) readByOID(Person.class, personID);
 
-		final List<IMasterDegreeCandidate> masterDegreeCandidates = (List<IMasterDegreeCandidate>) person
+		final List<IMasterDegreeCandidate> masterDegreeCandidates = person
 				.getMasterDegreeCandidates();
 
 		for (final IMasterDegreeCandidate masterDegreeCandidate : masterDegreeCandidates) {
@@ -227,7 +227,7 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 
 		final List<IMasterDegreeCandidate> result = new ArrayList<IMasterDegreeCandidate>();
 
-		for (IExecutionDegree degree : (List<IExecutionDegree>) degreeCurricularPlan
+		for (IExecutionDegree degree : degreeCurricularPlan
 				.getExecutionDegrees()) {
 			result.addAll(degree.getMasterDegreeCandidates());
 		}

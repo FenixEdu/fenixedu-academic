@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -92,7 +91,7 @@ public class ReadAllRoomsExamsMap implements IService {
         public Object transform(Object exam) {
             InfoExam infoExam = Cloner.copyIExam2InfoExam((IExam) exam);
             infoExam.setInfoExecutionCourse((InfoExecutionCourse) Cloner
-                    .get((IExecutionCourse) ((IExam) exam).getAssociatedExecutionCourses().get(0)));
+                    .get(((IExam) exam).getAssociatedExecutionCourses().get(0)));
             return infoExam;
         }
     };

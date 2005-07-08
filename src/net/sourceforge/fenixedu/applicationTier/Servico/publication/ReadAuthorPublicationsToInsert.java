@@ -90,7 +90,7 @@ public class ReadAuthorPublicationsToInsert implements IService {
             persistentAuthor.lockWrite(newAuthor);
 
         } else {
-            List<IPublicationAuthor> publicationAuthors = (List<IPublicationAuthor>) author.getAuthorPublications();
+            List<IPublicationAuthor> publicationAuthors = author.getAuthorPublications();
             authorPublications = (List<IPublication>)CollectionUtils.collect(publicationAuthors,new Transformer() {
                 public Object transform(Object object) {
                     IPublicationAuthor publicationAuthor = (IPublicationAuthor) object;

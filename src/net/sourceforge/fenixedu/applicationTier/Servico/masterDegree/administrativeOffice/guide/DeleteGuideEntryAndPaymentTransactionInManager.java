@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
@@ -65,7 +63,7 @@ public class DeleteGuideEntryAndPaymentTransactionInManager implements IService 
         }
 
 		if(guideEntry.getReimbursementGuideEntries()!=null){
-			for(IReimbursementGuideEntry reimbursementGuideEntry : (List<IReimbursementGuideEntry>)guideEntry.getReimbursementGuideEntries()){
+			for(IReimbursementGuideEntry reimbursementGuideEntry : guideEntry.getReimbursementGuideEntries()){
 				sp.getIPersistentReimbursementGuide().simpleLockWrite(reimbursementGuideEntry.getReimbursementGuide());
 				reimbursementGuideEntry.getReimbursementGuide().getReimbursementGuideEntries().remove(reimbursementGuideEntry);
 				sp.getIPersistentGuideEntry().deleteByOID(ReimbursementGuideEntry.class,reimbursementGuideEntry.getIdInternal());

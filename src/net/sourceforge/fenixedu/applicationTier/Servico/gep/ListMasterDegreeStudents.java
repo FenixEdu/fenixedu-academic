@@ -47,7 +47,7 @@ public class ListMasterDegreeStudents implements IService {
 
             public boolean evaluate(Object arg0) {
                 IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) arg0;
-                for (IExecutionDegree executionDegree : (List<IExecutionDegree>) degreeCurricularPlan
+                for (IExecutionDegree executionDegree : degreeCurricularPlan
                         .getExecutionDegrees()) {
                     if (executionDegree.getExecutionYear().equals(executionYear)) {
                         return true;

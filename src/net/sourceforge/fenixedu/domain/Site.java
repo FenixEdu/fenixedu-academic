@@ -99,7 +99,7 @@ public class Site extends Site_Base {
 
     private List<ISection> getAssociatedSectionsWhithSiteAsParent() {
         final List<ISection> result = new ArrayList();
-        for (final ISection section : (List<ISection>) this.getAssociatedSections()) {
+        for (final ISection section : this.getAssociatedSections()) {
             if (section.getSuperiorSection() == null) {
                 result.add(section);
             }

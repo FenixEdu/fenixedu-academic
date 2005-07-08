@@ -37,7 +37,7 @@ public class RemoveProposalFromFinalDegreeWorkStudentGroup implements IService {
                 new PREDICATE_FIND_BY_ID(groupProposalOID));
         if (groupProposal != null) {
             for (int i = 0; i < group.getGroupProposals().size(); i++) {
-                IGroupProposal otherGroupProposal = (IGroupProposal) group.getGroupProposals().get(i);
+                IGroupProposal otherGroupProposal = group.getGroupProposals().get(i);
                 if (!groupProposal.equals(otherGroupProposal)
                         && groupProposal.getOrderOfPreference().intValue() < otherGroupProposal
                                 .getOrderOfPreference().intValue()) {

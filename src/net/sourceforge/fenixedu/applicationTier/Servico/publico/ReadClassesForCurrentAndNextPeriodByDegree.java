@@ -46,7 +46,7 @@ public class ReadClassesForCurrentAndNextPeriodByDegree implements IService {
 
     private void constructViews(final List classViews, final IDegree degree,
             final IExecutionPeriod executionPeriod) {
-        for (final ISchoolClass schoolClass : (List<ISchoolClass>) executionPeriod.getSchoolClasses()) {
+        for (final ISchoolClass schoolClass : executionPeriod.getSchoolClasses()) {
             if (isForDegree(schoolClass, degree)) {
                 ClassView classView = new ClassView();
                 classView.setClassName(schoolClass.getNome());

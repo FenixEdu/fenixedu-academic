@@ -61,7 +61,7 @@ public class AssociateExecutionCourseToExam implements IService {
             // Obtain a mapped exam
             IExam examFromDBToBeAssociated = null;
             for (int i = 0; i < someExecutionCourseAlreadyAssociatedWithExam.getAssociatedExams().size(); i++) {
-                IExam exam = (IExam) someExecutionCourseAlreadyAssociatedWithExam.getAssociatedExams()
+                IExam exam = someExecutionCourseAlreadyAssociatedWithExam.getAssociatedExams()
                         .get(i);
                 if (exam.getSeason().equals(infoViewExam.getInfoExam().getSeason())) {
                     examFromDBToBeAssociated = exam;
@@ -73,7 +73,7 @@ public class AssociateExecutionCourseToExam implements IService {
             // doesn't already have an exam scheduled for the corresponding
             // season
             for (int i = 0; i < executionCourseToBeAssociatedWithExam.getAssociatedExams().size(); i++) {
-                IExam exam = (IExam) executionCourseToBeAssociatedWithExam.getAssociatedExams().get(i);
+                IExam exam = executionCourseToBeAssociatedWithExam.getAssociatedExams().get(i);
                 if (exam.getSeason().equals(infoViewExam.getInfoExam().getSeason())) {
                     throw new ExistingServiceException();
                 }

@@ -349,7 +349,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
             final IShift shift = (IShift) iterator.next();
 
             boolean studentInShift = false;
-            for (final IShiftStudent shiftStudent : (List<IShiftStudent>) shift.getStudentShifts()) {
+            for (final IShiftStudent shiftStudent : shift.getStudentShifts()) {
                 if (shiftStudent.getStudent().getIdInternal().equals(attend.getAluno().getIdInternal())) {
                     studentInShift = true;
                     break;

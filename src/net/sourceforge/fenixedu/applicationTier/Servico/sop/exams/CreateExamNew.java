@@ -128,7 +128,7 @@ public class CreateExamNew implements IServico {
             while (iterExecutionCourses.hasNext()) {
                 IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();
                 for (int i = 0; i < executionCourse.getAssociatedExams().size(); i++) {
-                    IExam examAux = (IExam) executionCourse.getAssociatedExams().get(i);
+                    IExam examAux = executionCourse.getAssociatedExams().get(i);
                     if (examAux.getSeason().equals(season)) {
                         // is necessary to confirm if is for the same scope
                         List scopes = examAux.getAssociatedCurricularCourseScope();

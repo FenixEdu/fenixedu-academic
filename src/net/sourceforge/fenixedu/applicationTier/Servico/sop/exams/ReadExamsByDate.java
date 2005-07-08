@@ -85,12 +85,12 @@ public class ReadExamsByDate implements IServico {
                 tempInfoDegrees = new ArrayList();
                 tempInfoExecutionCourses = new ArrayList();
                 // int totalNumberStudentsForExam = 0;
-                IExecutionPeriod executionPeriod = ((IExecutionCourse) tempExam
-                        .getAssociatedExecutionCourses().get(0)).getExecutionPeriod();
+                IExecutionPeriod executionPeriod = tempExam
+                        .getAssociatedExecutionCourses().get(0).getExecutionPeriod();
 
                 if (tempExam.getAssociatedExecutionCourses() != null) {
                     for (int k = 0; k < tempExam.getAssociatedExecutionCourses().size(); k++) {
-                        IExecutionCourse executionCourse = (IExecutionCourse) tempExam
+                        IExecutionCourse executionCourse = tempExam
                                 .getAssociatedExecutionCourses().get(k);
                         tempInfoExecutionCourses.add(Cloner.get(executionCourse));
 
@@ -99,7 +99,7 @@ public class ReadExamsByDate implements IServico {
                 int numberOfStudentsForExam = 0;
                 List curricularCourseIDs = new ArrayList();
                 for (int j = 0; j < tempExam.getAssociatedCurricularCourseScope().size(); j++) {
-                    ICurricularCourseScope scope = (ICurricularCourseScope) tempExam
+                    ICurricularCourseScope scope = tempExam
                             .getAssociatedCurricularCourseScope().get(j);
                     if (!curricularCourseIDs.contains(scope.getCurricularCourse().getIdInternal())) {
                         curricularCourseIDs.add(scope.getCurricularCourse().getIdInternal());

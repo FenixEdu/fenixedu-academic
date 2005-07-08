@@ -75,7 +75,7 @@ public class ReadExamsWithRooms implements IServico {
             List validDistributions = new ArrayList();
             while (iter.hasNext()) {
                 IExamStudentRoom examStudentRoom = (IExamStudentRoom) iter.next();
-                IExecutionCourse executionCourse = (IExecutionCourse) examStudentRoom.getExam()
+                IExecutionCourse executionCourse = examStudentRoom.getExam()
                         .getAssociatedExecutionCourses().get(0);
                 if (currentPeriod != null && executionCourse != null
                         && executionCourse.getExecutionPeriod() != null

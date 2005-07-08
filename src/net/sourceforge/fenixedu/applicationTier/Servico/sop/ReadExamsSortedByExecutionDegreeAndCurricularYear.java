@@ -102,7 +102,7 @@ public class ReadExamsSortedByExecutionDegreeAndCurricularYear implements IServi
                                 .get(executionCourse));
 
                         for (int j = 0; j < executionCourse.getAssociatedExams().size(); j++) {
-                            IEvaluation evaluation = (IEvaluation) executionCourse.getAssociatedExams()
+                            IEvaluation evaluation = executionCourse.getAssociatedExams()
                                     .get(j);
 
                             if (evaluation instanceof IExam) {

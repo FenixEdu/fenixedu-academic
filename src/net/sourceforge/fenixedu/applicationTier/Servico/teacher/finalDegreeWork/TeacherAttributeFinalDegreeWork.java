@@ -50,7 +50,7 @@ public class TeacherAttributeFinalDegreeWork implements IService {
                             || !proposal.getGroupAttributedByTeacher().equals(group)) {
                         proposal.setGroupAttributedByTeacher(group);
                         for (int i = 0; i < group.getGroupProposals().size(); i++) {
-                            IGroupProposal otherGroupProposal = (IGroupProposal) group
+                            IGroupProposal otherGroupProposal = group
                                     .getGroupProposals().get(i);
                             IProposal otherProposal = otherGroupProposal.getFinalDegreeWorkProposal();
                             if (!otherProposal.getIdInternal().equals(proposal.getIdInternal())

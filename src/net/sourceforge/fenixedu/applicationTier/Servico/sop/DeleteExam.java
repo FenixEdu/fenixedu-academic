@@ -48,7 +48,7 @@ public class DeleteExam implements IService {
         examToDelete.getExamStudentRooms().clear();
 
         examToDelete.getAssociatedExecutionCourses().clear();
-        for (final IRoomOccupation roomOccupation : (List<IRoomOccupation>) examToDelete
+        for (final IRoomOccupation roomOccupation : examToDelete
                 .getAssociatedRoomOccupation()) {
             roomOccupation.setPeriod(null);
             roomOccupation.setRoom(null);
@@ -58,7 +58,7 @@ public class DeleteExam implements IService {
         }
         examToDelete.getAssociatedRoomOccupation().clear();
 
-        for (final ICurricularCourseScope curricularCourseScope : (List<ICurricularCourseScope>) examToDelete
+        for (final ICurricularCourseScope curricularCourseScope : examToDelete
                 .getAssociatedCurricularCourseScope()) {
             curricularCourseScope.getAssociatedWrittenEvaluations().remove(examToDelete);
         }

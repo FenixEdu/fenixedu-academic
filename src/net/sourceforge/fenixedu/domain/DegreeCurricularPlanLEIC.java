@@ -46,13 +46,11 @@ public class DegreeCurricularPlanLEIC extends DegreeCurricularPlanLEIC_Base {
 
         int curricularCoursesSize = degreeCurricularPlan.getCurricularCourses().size();
         for (int i = 0; i < curricularCoursesSize; i++) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) degreeCurricularPlan
-                    .getCurricularCourses().get(i);
+            ICurricularCourse curricularCourse = degreeCurricularPlan.getCurricularCourses().get(i);
 
             int curricularCourseScopesSize = curricularCourse.getScopes().size();
             for (int j = 0; j < curricularCourseScopesSize; j++) {
-                ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse
-                        .getScopes().get(j);
+                ICurricularCourseScope curricularCourseScope = curricularCourse.getScopes().get(j);
                 if ((curricularCourseScope.getCurricularSemester().getCurricularYear().getYear()
                         .intValue() == 5)
                         && (!curricularCourses.contains(curricularCourse))) {

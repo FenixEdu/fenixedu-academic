@@ -113,7 +113,7 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear impl
                         .get(((IShift) shifts.get(i)).getDisciplinaExecucao());
                 infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
                 for (int j = 0; j < ((IShift) shifts.get(i)).getAssociatedLessons().size(); j++) {
-                    ILesson lesson = (ILesson) ((IShift) shifts.get(i)).getAssociatedLessons().get(j);
+                    ILesson lesson = ((IShift) shifts.get(i)).getAssociatedLessons().get(j);
                     InfoLesson infoLesson = new InfoLesson();
                     InfoRoom infoRoom = Cloner.copyRoom2InfoRoom(lesson.getSala());
                     InfoRoomOccupation infoRoomOccupation = Cloner

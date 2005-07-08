@@ -114,7 +114,7 @@ public class GuideVO extends VersionedObjectsBase implements IPersistentGuide {
 
 		for (final IGuide guide : guides) {
 			if (guide.getYear().equals(guideYear)) {
-				for (IGuideSituation guideSituation : (List<IGuideSituation>) guide.getGuideSituations()) {
+				for (IGuideSituation guideSituation : guide.getGuideSituations()) {
 					if (guideSituation.getState().equals(State.ACTIVE)
 							&& guideSituation.getSituation().equals(situationOfGuide)) {
 						result.add(guide);

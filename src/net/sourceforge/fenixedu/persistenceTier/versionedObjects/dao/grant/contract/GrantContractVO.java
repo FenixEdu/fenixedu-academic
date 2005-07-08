@@ -79,7 +79,7 @@ public class GrantContractVO extends VersionedObjectsBase implements IPersistent
         for (IGrantContract grantContract : grantContracts) {
 
             boolean verifiesConditions = true;
-            for (IGrantContractRegime grantContractRegime : (List<IGrantContractRegime>) grantContract
+            for (IGrantContractRegime grantContractRegime : grantContract
                     .getContractRegimes()) {
 
                 if (!grantContractRegime.getState().equals(desiredContractRegimeState)) {
@@ -150,7 +150,7 @@ public class GrantContractVO extends VersionedObjectsBase implements IPersistent
         for (IGrantContract grantContract : grantContracts) {
 
             boolean verifiesConditions = true;
-            for (IGrantContractRegime grantContractRegime : (List<IGrantContractRegime>) grantContract
+            for (IGrantContractRegime grantContractRegime : grantContract
                     .getContractRegimes()) {
 
                 if (justActiveContracts != null

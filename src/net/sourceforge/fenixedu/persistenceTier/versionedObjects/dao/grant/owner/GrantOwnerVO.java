@@ -98,9 +98,9 @@ public class GrantOwnerVO extends VersionedObjectsBase implements IPersistentGra
         for (IGrantOwner owner : grantOwners) {
 
             boolean verifiesContract = true;
-            for (IGrantContract grantContract : (List<IGrantContract>) owner.getGrantContracts()) {
+            for (IGrantContract grantContract : owner.getGrantContracts()) {
 
-                for (IGrantContractRegime grantContractRegime : (List<IGrantContractRegime>) grantContract
+                for (IGrantContractRegime grantContractRegime : grantContract
                         .getContractRegimes()) {
                     if (justActiveContracts != null
                             && justActiveContracts.booleanValue()

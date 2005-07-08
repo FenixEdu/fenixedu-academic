@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ICandidateSituation;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
@@ -29,7 +28,7 @@ public class InfoMasterDegreeCandidateWithInfoPerson extends InfoMasterDegreeCan
             setSituationList(new ArrayList<InfoCandidateSituation>(masterDegreeCandidate.getSituations()
                     .size()));
 
-            for (ICandidateSituation candidateSituation : (List<ICandidateSituation>) masterDegreeCandidate
+            for (ICandidateSituation candidateSituation : masterDegreeCandidate
                     .getSituations()) {
                 getSituationList().add(InfoCandidateSituation.newInfoFromDomain(candidateSituation));
 

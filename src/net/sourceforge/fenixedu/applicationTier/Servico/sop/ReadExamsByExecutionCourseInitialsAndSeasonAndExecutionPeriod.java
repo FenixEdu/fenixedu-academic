@@ -65,14 +65,14 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod imple
                             infoExecutionPeriod.getIdInternal());
 
             for (int i = 0; i < executionCourse.getAssociatedExams().size(); i++) {
-                IExam exam = (IExam) executionCourse.getAssociatedExams().get(i);
+                IExam exam = executionCourse.getAssociatedExams().get(i);
                 if (exam.getSeason().equals(season)) {
                     infoViewExamByDayAndShift.setInfoExam(Cloner.copyIExam2InfoExam(exam));
 
                     List infoExecutionCourses = new ArrayList();
                     List infoDegrees = new ArrayList();
                     for (int j = 0; j < exam.getAssociatedExecutionCourses().size(); j++) {
-                        IExecutionCourse tempExecutionCourse = (IExecutionCourse) exam
+                        IExecutionCourse tempExecutionCourse = exam
                                 .getAssociatedExecutionCourses().get(j);
                         infoExecutionCourses.add(Cloner.get(tempExecutionCourse));
 

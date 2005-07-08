@@ -192,7 +192,7 @@ public class ReadTeacherInformation implements IService {
         // FIXME possible cause of error: this execution period is used for
         // what?
         infoSiteTeacherInformation.setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
-                .newInfoFromDomain((IExecutionPeriod) executionYear.getExecutionPeriods().get(0)));
+                .newInfoFromDomain(executionYear.getExecutionPeriods().get(0)));
 
         return new SiteView(infoSiteTeacherInformation);
     }

@@ -244,7 +244,7 @@ public class InsertGratuityData implements IService {
         try {
             if (gratuityValues.getPaymentPhaseList() != null
                     && gratuityValues.getPaymentPhaseList().size() > 0) {
-                for (IPaymentPhase paymentPhase : (List<IPaymentPhase>) gratuityValues
+                for (IPaymentPhase paymentPhase : gratuityValues
                         .getPaymentPhaseList()) {
                     persistentPaymentPhase.deleteByOID(PaymentPhase.class, paymentPhase.getIdInternal());
                 }

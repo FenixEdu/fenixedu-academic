@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
-import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IShift;
@@ -90,9 +89,9 @@ public class EditarTurno implements IService {
         if (shiftToEdit.getAssociatedLessons() != null) {
             for (int i = 0; i < shiftToEdit.getAssociatedLessons().size(); i++) {
                 sp.getIAulaPersistente().simpleLockWrite(
-                        (IDomainObject) shiftToEdit.getAssociatedLessons().get(i));
-                ((ILesson) shiftToEdit.getAssociatedLessons().get(i)).setTipo(infoShiftNew.getTipo());
-                ((ILesson) shiftToEdit.getAssociatedLessons().get(i)).setShift(shiftToEdit);
+                        shiftToEdit.getAssociatedLessons().get(i));
+                shiftToEdit.getAssociatedLessons().get(i).setTipo(infoShiftNew.getTipo());
+                shiftToEdit.getAssociatedLessons().get(i).setShift(shiftToEdit);
                 //((ILesson)
                 // shift.getAssociatedLessons().get(i)).setDisciplinaExecucao(executionCourse);
             }

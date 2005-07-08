@@ -49,7 +49,7 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup implements IService {
 
         PREDICATE_FILTER_STUDENT_ID predicate = new PREDICATE_FILTER_STUDENT_ID(studentToRemoveID);
         for (int i = 0; i < group.getGroupStudents().size(); i++) {
-            IGroupStudent groupStudent = (IGroupStudent) group.getGroupStudents().get(i);
+            IGroupStudent groupStudent = group.getGroupStudents().get(i);
             if (!predicate.evaluate(groupStudent)) {
                 persistentFinalDegreeWork.deleteByOID(GroupStudent.class, groupStudent.getIdInternal());
             }

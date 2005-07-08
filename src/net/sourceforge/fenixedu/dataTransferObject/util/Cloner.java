@@ -1125,7 +1125,7 @@ public abstract class Cloner {
         if (exam != null && exam.getAssociatedCurricularCourseScope() != null
                 && exam.getAssociatedCurricularCourseScope().size() > 0) {
             for (int i = 0; i < exam.getAssociatedCurricularCourseScope().size(); i++) {
-                ICurricularCourseScope scope = (ICurricularCourseScope) exam
+                ICurricularCourseScope scope = exam
                         .getAssociatedCurricularCourseScope().get(i);
                 infoCurricularCourseScope
                         .add(copyICurricularCourseScope2InfoCurricularCourseScope(scope));
@@ -1138,7 +1138,7 @@ public abstract class Cloner {
                 && exam.getAssociatedRoomOccupation().size() > 0) {
 
             for (int i = 0; i < exam.getAssociatedRoomOccupation().size(); i++) {
-                infoRoomOccupation.add(copyIRoomOccupation2InfoRoomOccupation((IRoomOccupation) exam
+                infoRoomOccupation.add(copyIRoomOccupation2InfoRoomOccupation(exam
                         .getAssociatedRoomOccupation().get(i)));
             }
         }
@@ -1149,7 +1149,7 @@ public abstract class Cloner {
                 && exam.getAssociatedExecutionCourses().size() > 0) {
 
             for (int i = 0; i < exam.getAssociatedExecutionCourses().size(); i++) {
-                infoExecutionCourse.add(get((IExecutionCourse) exam.getAssociatedExecutionCourses().get(
+                infoExecutionCourse.add(get(exam.getAssociatedExecutionCourses().get(
                         i)));
             }
         }

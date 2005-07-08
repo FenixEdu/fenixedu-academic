@@ -54,7 +54,7 @@ public class CreateExam implements IService {
                             infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
 
             for (int i = 0; i < executionCourse.getAssociatedExams().size(); i++) {
-                IExam exam = (IExam) executionCourse.getAssociatedExams().get(i);
+                IExam exam = executionCourse.getAssociatedExams().get(i);
                 if (exam.getSeason().equals(season)) {
                     throw new ExistingServiceException();
                 }

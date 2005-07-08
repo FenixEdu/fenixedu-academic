@@ -15,7 +15,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -132,10 +131,10 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
             crit.addEqualTo("day", examFromDB.getDay());
             crit.addEqualTo("beginning", examFromDB.getBeginning());
             crit.addEqualTo("associatedExecutionCourses.executionPeriod.name",
-                    ((IExecutionCourse) examFromDB.getAssociatedExecutionCourses().get(0))
+                    examFromDB.getAssociatedExecutionCourses().get(0)
                             .getExecutionPeriod().getName());
             crit.addEqualTo("associatedExecutionCourses.executionPeriod.executionYear.year",
-                    ((IExecutionCourse) examFromDB.getAssociatedExecutionCourses().get(0))
+                    examFromDB.getAssociatedExecutionCourses().get(0)
                             .getExecutionPeriod().getExecutionYear().getYear());
             List otherExams = queryList(Exam.class, crit);
 

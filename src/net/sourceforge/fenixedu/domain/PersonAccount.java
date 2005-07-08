@@ -31,7 +31,7 @@ public class PersonAccount extends PersonAccount_Base {
         List result = new ArrayList<IPaymentTransaction>();
         for (ITransaction transaction : this.getTransactions()) {
             if (transaction instanceof IPaymentTransaction) {
-                result.add((IPaymentTransaction) transaction);
+                result.add(transaction);
             }
         }
 
@@ -43,7 +43,7 @@ public class PersonAccount extends PersonAccount_Base {
 	        List result = new ArrayList<IInsuranceTransaction>();
 	        for (ITransaction transaction : this.getTransactions()) {
 	            if (transaction instanceof IInsuranceTransaction) {
-	                result.add((IInsuranceTransaction) transaction);
+	                result.add(transaction);
 	            }
 	        }
 	        return result;

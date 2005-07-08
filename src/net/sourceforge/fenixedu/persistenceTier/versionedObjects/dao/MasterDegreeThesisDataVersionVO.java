@@ -99,8 +99,7 @@ public class MasterDegreeThesisDataVersionVO extends VersionedObjectsBase implem
         final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) readByOID(
                 DegreeCurricularPlan.class, degreeCurricularPlanID);
 
-        for (IStudentCurricularPlan studentCurricularPlan : (List<IStudentCurricularPlan>) degreeCurricularPlan
-                .getStudentCurricularPlans()) {
+        for (IStudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
 
             final List<IMasterDegreeThesisDataVersion> masterDegreeThesisDataVersions = studentCurricularPlan
                     .getMasterDegreeThesis().getMasterDegreeThesisDataVersions();

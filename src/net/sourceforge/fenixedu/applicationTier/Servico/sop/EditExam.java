@@ -75,7 +75,7 @@ public class EditExam implements IServico {
             IExam examFromDBToBeEdited = null;
             boolean newSeasonAlreadyScheduled = false;
             for (int i = 0; i < executionCourse.getAssociatedExams().size(); i++) {
-                IExam exam = (IExam) executionCourse.getAssociatedExams().get(i);
+                IExam exam = executionCourse.getAssociatedExams().get(i);
                 if (exam.getSeason().equals(infoViewOldExam.getInfoExam().getSeason())) {
                     examFromDBToBeEdited = exam;
                 } else if (exam.getSeason().equals(season)) {

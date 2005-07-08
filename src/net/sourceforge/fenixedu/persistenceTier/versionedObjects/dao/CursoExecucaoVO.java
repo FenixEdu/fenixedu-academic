@@ -111,8 +111,7 @@ public class CursoExecucaoVO extends VersionedObjectsBase implements IPersistent
 
         List<IDegreeCurricularPlan> degreeCurricularPlans = degree.getDegreeCurricularPlans();
         for (IDegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
-            for (IExecutionDegree executionDegree : (List<IExecutionDegree>) degreeCurricularPlan
-                    .getExecutionDegrees()) {
+            for (IExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
                 if (executionDegree.getExecutionYear().getYear().equals(year)) {
                     result.add(executionDegree);
                 }
@@ -168,11 +167,9 @@ public class CursoExecucaoVO extends VersionedObjectsBase implements IPersistent
     public List readExecutionsDegreesByDegree(Integer degreeOID) throws ExcepcaoPersistencia {
         IDegree degree = (IDegree) readByOID(Degree.class, degreeOID);
         List<IExecutionDegree> result = new ArrayList();
-        List<IDegreeCurricularPlan> degreeCurricularPlans = (List<IDegreeCurricularPlan>) degree
-                .getDegreeCurricularPlans();
+        List<IDegreeCurricularPlan> degreeCurricularPlans = degree.getDegreeCurricularPlans();
         for (IDegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
-            for (IExecutionDegree executionDegree : (List<IExecutionDegree>) degreeCurricularPlan
-                    .getExecutionDegrees()) {
+            for (IExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
                 result.add(executionDegree);
             }
         }

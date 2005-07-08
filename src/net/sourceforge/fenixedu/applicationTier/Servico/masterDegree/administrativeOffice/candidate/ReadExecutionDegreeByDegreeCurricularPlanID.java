@@ -87,7 +87,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID implements IService {
 
         if (executionYear.equals("")) {
             return InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
-                    .newInfoFromDomain((IExecutionDegree) degreeCurricularPlan.getExecutionDegrees()
+                    .newInfoFromDomain(degreeCurricularPlan.getExecutionDegrees()
                             .get(0));
         }
 
