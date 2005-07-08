@@ -10,7 +10,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.externalServices;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.GetEnrolmentGrade;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -33,7 +32,6 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
@@ -83,8 +81,7 @@ public class ReadStudentExternalInformation implements IService {
 						boolean availableToEnroll = true;
 						boolean atLeastOnOpenScope = false;
 						ICurricularCourse course = (ICurricularCourse) arg0;
-						for (ICurricularCourseScope scope : (List<ICurricularCourseScope>) course
-								.getScopes()) {
+						for (ICurricularCourseScope scope : course.getScopes()) {
 							atLeastOnOpenScope |= scope.isActive()
 									.booleanValue();
 						}
@@ -94,7 +91,7 @@ public class ReadStudentExternalInformation implements IService {
 								.getActiveStudentCurricularPlan()
 								.isCurricularCourseApproved(course);
 						return availableToEnroll;
-					};
+					}
 				}
 
 		);
@@ -107,7 +104,7 @@ public class ReadStudentExternalInformation implements IService {
 								.newFromDomain(course);
 						return info;
 
-					};
+					}
 				}
 
 		);

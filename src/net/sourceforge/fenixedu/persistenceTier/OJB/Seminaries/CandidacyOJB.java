@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.ICandidacy;
-import net.sourceforge.fenixedu.domain.Seminaries.ICaseStudyChoice;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
@@ -88,19 +87,19 @@ public class CandidacyOJB extends PersistentObjectOJB implements IPersistentSemi
             boolean case1 = true, case2 = true, case3 = true, case4 = true, case5 = true;
             ICandidacy candidacy = (ICandidacy) iterator.next();
             if (case1Id.intValue() != -1 && candidacy.getCaseStudyChoices().size() > 0)
-                case1 = ((ICaseStudyChoice) candidacy.getCaseStudyChoices().get(0)).getCaseStudy()
+                case1 = candidacy.getCaseStudyChoices().get(0).getCaseStudy()
                         .getIdInternal().intValue() == case1Id.intValue();
             if (case2Id.intValue() != -1 && candidacy.getCaseStudyChoices().size() > 1)
-                case2 = ((ICaseStudyChoice) candidacy.getCaseStudyChoices().get(1)).getCaseStudy()
+                case2 = candidacy.getCaseStudyChoices().get(1).getCaseStudy()
                         .getIdInternal().intValue() == case2Id.intValue();
             if (case3Id.intValue() != -1 && candidacy.getCaseStudyChoices().size() > 2)
-                case3 = ((ICaseStudyChoice) candidacy.getCaseStudyChoices().get(2)).getCaseStudy()
+                case3 = candidacy.getCaseStudyChoices().get(2).getCaseStudy()
                         .getIdInternal().intValue() == case3Id.intValue();
             if (case4Id.intValue() != -1 && candidacy.getCaseStudyChoices().size() > 3)
-                case4 = ((ICaseStudyChoice) candidacy.getCaseStudyChoices().get(3)).getCaseStudy()
+                case4 = candidacy.getCaseStudyChoices().get(3).getCaseStudy()
                         .getIdInternal().intValue() == case4Id.intValue();
             if (case5Id.intValue() != -1 && candidacy.getCaseStudyChoices().size() > 4)
-                case5 = ((ICaseStudyChoice) candidacy.getCaseStudyChoices().get(4)).getCaseStudy()
+                case5 = candidacy.getCaseStudyChoices().get(4).getCaseStudy()
                         .getIdInternal().intValue() == case5Id.intValue();
             if (case1 && case2 && case3 && case4 && case5)
                 filteredCandidacies.add(candidacy);
