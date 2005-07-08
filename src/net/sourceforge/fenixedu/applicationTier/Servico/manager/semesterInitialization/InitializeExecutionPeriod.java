@@ -282,8 +282,7 @@ public class InitializeExecutionPeriod {
 
     private IExecutionDegree findExecutionDegree(final IDegreeCurricularPlan degreeCurricularPlan,
             final IExecutionYear executionYear) {
-        for (final IExecutionDegree executionDegree : (List<IExecutionDegree>) degreeCurricularPlan
-                .getExecutionDegrees()) {
+        for (final IExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
             if (executionYear.getIdInternal().equals(executionDegree.getExecutionYear().getIdInternal())) {
                 return executionDegree;
             }
@@ -404,8 +403,7 @@ public class InitializeExecutionPeriod {
             System.out.println("DAM");
         }
 
-        for (final ICurricularCourseScope curricularCourseScope : ((List<ICurricularCourseScope>) curricularCourse
-                .getScopes())) {
+        for (final ICurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
             if (curricularCourseScope.getCurricularSemester().getSemester().equals(
                     executionPeriod.getSemester())
                     && (executionPeriod.getEndDate().getTime() > curricularCourseScope.getBeginDate()
@@ -420,7 +418,7 @@ public class InitializeExecutionPeriod {
 
     private void createSchedule(final IExecutionCourse newExecutionCourse,
             final IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
-        for (final IShift shift : (List<IShift>) executionCourse.getAssociatedShifts()) {
+        for (final IShift shift : executionCourse.getAssociatedShifts()) {
             createShift(shift, newExecutionCourse);
         }
     }
@@ -445,7 +443,7 @@ public class InitializeExecutionPeriod {
 
         processedShifts++;
 
-        for (final ISchoolClass schoolClass : (List<ISchoolClass>) shift.getAssociatedClasses()) {
+        for (final ISchoolClass schoolClass : shift.getAssociatedClasses()) {
             final ISchoolClass newSchoolClass = schoolClassMap.get(schoolClass.getNome());
             addSchoolClass(newShift, newSchoolClass);
         }
@@ -453,7 +451,7 @@ public class InitializeExecutionPeriod {
         if (!newShift.getAssociatedClasses().isEmpty()) {
             shiftCounter++;
 
-            for (final ILesson lesson : (List<ILesson>) shift.getAssociatedLessons()) {
+            for (final ILesson lesson : shift.getAssociatedLessons()) {
                 createLesson(lesson, newShift);
             }
 
@@ -519,7 +517,7 @@ public class InitializeExecutionPeriod {
     }
 
     private IPeriod getPeriod(final ILesson lesson) {
-        final ISchoolClass schoolClass = ((ISchoolClass) lesson.getShift().getAssociatedClasses().get(0));
+        final ISchoolClass schoolClass = lesson.getShift().getAssociatedClasses().get(0);
         final IExecutionDegree executionDegree = schoolClass.getExecutionDegree();
 
         if (schoolClass.getExecutionPeriod().getSemester().intValue() == 1) {

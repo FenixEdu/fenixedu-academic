@@ -42,21 +42,21 @@ public class FinalDegreeWorkOrientatorForCandidacy extends AccessControlFilter {
         final IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 
         final IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
-        for (final ITeacher teacher : (List<ITeacher>) person.getAssociatedTeachers()) {
+        for (final ITeacher teacher : person.getAssociatedTeachers()) {
 
-            final List<IProposal> orientatingProposals = ((List<IProposal>) teacher.getAssociatedProposalsByOrientator());
-            final List<IProposal> coorientatingProposals = ((List<IProposal>) teacher.getAssociatedProposalsByCoorientator());
+            final List<IProposal> orientatingProposals = teacher.getAssociatedProposalsByOrientator();
+            final List<IProposal> coorientatingProposals = teacher.getAssociatedProposalsByCoorientator();
 
             final List<IProposal> proposals = new ArrayList(orientatingProposals.size() + coorientatingProposals.size());
             proposals.addAll(orientatingProposals);
             proposals.addAll(coorientatingProposals);
 
             for (final IProposal proposal : proposals) {
-                for (final IGroupProposal groupProposal : (List<IGroupProposal>) proposal.getGroupProposals()) {
+                for (final IGroupProposal groupProposal : proposal.getGroupProposals()) {
                     final IGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
-                    for (final IGroupStudent groupStudent : (List<IGroupStudent>) group.getGroupStudents()) {
+                    for (final IGroupStudent groupStudent : group.getGroupStudents()) {
                         final IStudent student = groupStudent.getStudent();
-                        for (final IStudentCurricularPlan studentCurricularPlan : (List<IStudentCurricularPlan>) student.getStudentCurricularPlans()) {
+                        for (final IStudentCurricularPlan studentCurricularPlan : student.getStudentCurricularPlans()) {
                             if (studentCurricularPlan.getIdInternal().equals(studentCurricularPlanId)) {
                                 return;
                             }

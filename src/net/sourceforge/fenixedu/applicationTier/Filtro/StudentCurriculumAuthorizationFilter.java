@@ -143,8 +143,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
             if (group != null) {
                 IExecutionDegree executionDegree = group.getExecutionDegree();
                 for (int i = 0; i < executionDegree.getCoordinatorsList().size(); i++) {
-                    ICoordinator coordinator = (ICoordinator) executionDegree.getCoordinatorsList().get(
-                            i);
+                    ICoordinator coordinator = executionDegree.getCoordinatorsList().get(i);
                     if (coordinator.getTeacher().getPerson().getUsername().equals(id.getUtilizador())) {
                         // The student is a candidate for a final degree work of
                         // the degree of the
@@ -154,7 +153,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
                 }
 
                 for (int i = 0; i < group.getGroupProposals().size(); i++) {
-                    IGroupProposal groupProposal = (IGroupProposal) group.getGroupProposals().get(i);
+                    IGroupProposal groupProposal = group.getGroupProposals().get(i);
                     IProposal proposal = groupProposal.getFinalDegreeWorkProposal();
                     ITeacher teacher = proposal.getOrientator();
 

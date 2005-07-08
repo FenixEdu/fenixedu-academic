@@ -36,7 +36,7 @@ public class AttributeFinalDegreeWork implements IService {
 
             IGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
             for (int i = 0; i < group.getGroupProposals().size(); i++) {
-                IGroupProposal otherGroupProposal = (IGroupProposal) group.getGroupProposals().get(i);
+                IGroupProposal otherGroupProposal = group.getGroupProposals().get(i);
                 if (!otherGroupProposal.getIdInternal().equals(groupProposal.getIdInternal())
                         && otherGroupProposal.getFinalDegreeWorkProposal().getGroupAttributed() != null
                         && otherGroupProposal.getFinalDegreeWorkProposal().getGroupAttributed()
