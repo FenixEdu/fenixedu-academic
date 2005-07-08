@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentPublicationAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
-import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationTeacher;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**

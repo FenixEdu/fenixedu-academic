@@ -9,10 +9,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 
+import net.sourceforge.fenixedu.constants.assiduousness.Constants;
 import net.sourceforge.fenixedu.domain.Feriado;
 import net.sourceforge.fenixedu.domain.Horario;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IFeriadoPersistente;
-import net.sourceforge.fenixedu.constants.assiduousness.Constants;
 
 /**
  * @author Fernanda Quitério e Tania Pousão

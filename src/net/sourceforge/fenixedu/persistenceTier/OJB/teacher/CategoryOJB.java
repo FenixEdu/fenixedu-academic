@@ -9,13 +9,13 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.teacher;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.ojb.broker.query.Criteria;
-
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.ICategory;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
+
+import org.apache.ojb.broker.query.Criteria;
 
 /**
  * @author Leonor Almeida

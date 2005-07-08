@@ -15,13 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
-
 import net.sourceforge.fenixedu.applicationTier.Executor;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.PersistenceException;
@@ -29,10 +22,17 @@ import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoAut
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoSeguroConsultarFuncionario;
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoSeguroConsultarVerbete;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
+import net.sourceforge.fenixedu.constants.assiduousness.Constants;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.FormataCalendar;
-import net.sourceforge.fenixedu.constants.assiduousness.Constants;
+
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 
 /**
  * @author Tânia Pousão

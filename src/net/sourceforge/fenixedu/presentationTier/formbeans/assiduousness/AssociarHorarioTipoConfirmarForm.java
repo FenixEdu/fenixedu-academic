@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import org.apache.struts.action.ActionForm;
-
-import net.sourceforge.fenixedu.domain.NonTeacherEmployee;
 import net.sourceforge.fenixedu.domain.Funcionario;
 import net.sourceforge.fenixedu.domain.Horario;
 import net.sourceforge.fenixedu.domain.HorarioTipo;
 import net.sourceforge.fenixedu.domain.IStrategyHorarios;
+import net.sourceforge.fenixedu.domain.NonTeacherEmployee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.SuporteStrategyHorarios;
+
+import org.apache.struts.action.ActionForm;
 
 /**
  * 

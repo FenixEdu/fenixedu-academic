@@ -8,10 +8,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.constants.assiduousness.Constants;
 import net.sourceforge.fenixedu.domain.Funcionario;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IFuncionarioPersistente;
 import net.sourceforge.fenixedu.persistenceTierJDBC.SuportePersistenteOracle;
-import net.sourceforge.fenixedu.constants.assiduousness.Constants;
 
 /**
  * @author Nanda & Tânia

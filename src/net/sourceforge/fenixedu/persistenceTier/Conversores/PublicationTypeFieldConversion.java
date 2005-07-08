@@ -4,10 +4,10 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
+import net.sourceforge.fenixedu.util.PublicationType;
+
 import org.apache.commons.beanutils.ConversionException;
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
-
-import net.sourceforge.fenixedu.util.PublicationType;
 
 /**
  * @author Leonor Almeida

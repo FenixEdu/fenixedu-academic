@@ -7,8 +7,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.ojb.broker.query.Criteria;
-
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.ITest;
 import net.sourceforge.fenixedu.domain.ITestScope;
@@ -16,6 +14,8 @@ import net.sourceforge.fenixedu.domain.Test;
 import net.sourceforge.fenixedu.domain.TestScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTest;
+
+import org.apache.ojb.broker.query.Criteria;
 
 /**
  * @author Susana Fernandes

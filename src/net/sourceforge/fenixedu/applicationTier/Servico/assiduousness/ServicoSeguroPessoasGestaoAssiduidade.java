@@ -5,9 +5,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.ServicoAutorizacao;
 import net.sourceforge.fenixedu.applicationTier.ServicoSeguro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
+import net.sourceforge.fenixedu.constants.assiduousness.Constants;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTierJDBC.SuportePersistente;
-import net.sourceforge.fenixedu.constants.assiduousness.Constants;
 
 /**
  * 

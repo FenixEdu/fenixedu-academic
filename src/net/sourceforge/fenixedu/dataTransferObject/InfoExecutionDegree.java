@@ -11,8 +11,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import org.apache.commons.collections.CollectionUtils;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.util.MessageResources;

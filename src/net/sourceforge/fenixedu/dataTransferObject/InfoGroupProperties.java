@@ -8,8 +8,8 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IGroupProperties;
-import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
 
 /**
  * @author asnr and scpo

@@ -5,6 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;

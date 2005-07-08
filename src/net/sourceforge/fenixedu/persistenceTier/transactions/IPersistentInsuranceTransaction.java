@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.persistenceTier.transactions;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 

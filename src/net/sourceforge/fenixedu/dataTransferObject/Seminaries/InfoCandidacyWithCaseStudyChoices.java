@@ -2,12 +2,11 @@ package net.sourceforge.fenixedu.dataTransferObject.Seminaries;
 
 import java.util.List;
 
-import org.apache.commons.collections.Transformer;
-
 import net.sourceforge.fenixedu.domain.Seminaries.ICandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.ICaseStudyChoice;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 
 /**
  * @author Fernanda Quitério

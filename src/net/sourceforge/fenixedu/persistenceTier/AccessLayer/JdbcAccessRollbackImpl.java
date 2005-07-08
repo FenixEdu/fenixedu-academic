@@ -11,6 +11,9 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.Map.Entry;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.util.FileUtils;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerException;
@@ -20,9 +23,6 @@ import org.apache.ojb.broker.core.ValueContainer;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.metadata.FieldDescriptor;
 import org.apache.ojb.broker.query.Query;
-
-import net.sourceforge.fenixedu.util.FileUtils;
-import net.sourceforge.fenixedu._development.PropertiesManager;
 
 /**
  * @author Pedro Santos & Rita Carvalho

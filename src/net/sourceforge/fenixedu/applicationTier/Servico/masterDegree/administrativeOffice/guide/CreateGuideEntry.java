@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.Iterator;
 
+import net.sourceforge.fenixedu.domain.DocumentType;
+import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.IGuide;
@@ -9,8 +11,6 @@ import net.sourceforge.fenixedu.domain.IGuideEntry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.domain.DocumentType;
-import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.util.NumberUtils;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 

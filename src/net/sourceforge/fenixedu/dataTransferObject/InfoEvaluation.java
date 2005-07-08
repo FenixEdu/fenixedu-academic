@@ -3,15 +3,15 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.lang.reflect.Proxy;
 import java.util.Calendar;
 
-import org.apache.ojb.broker.core.proxy.ProxyHelper;
-
 import net.sourceforge.fenixedu.domain.IEvaluation;
 import net.sourceforge.fenixedu.domain.IFinalEvaluation;
 import net.sourceforge.fenixedu.domain.IOnlineTest;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.EvaluationType;
-import net.sourceforge.fenixedu.domain.ShiftType;
+
+import org.apache.ojb.broker.core.proxy.ProxyHelper;
 
 /**
  * @author Ângela

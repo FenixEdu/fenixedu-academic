@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTierJDBC;
 
+import net.sourceforge.fenixedu.constants.assiduousness.Constants;
 import net.sourceforge.fenixedu.persistenceTierJDBC.Relacional.CartaoRelacional;
 import net.sourceforge.fenixedu.persistenceTierJDBC.Relacional.CentroCustoRelacional;
 import net.sourceforge.fenixedu.persistenceTierJDBC.Relacional.FeriadoRelacional;
@@ -21,7 +22,6 @@ import net.sourceforge.fenixedu.persistenceTierJDBC.Relacional.RegularizacaoMarc
 import net.sourceforge.fenixedu.persistenceTierJDBC.Relacional.StatusAssiduidadeRelacional;
 import net.sourceforge.fenixedu.persistenceTierJDBC.Relacional.UnidadeMarcacaoRelacional;
 import net.sourceforge.fenixedu.persistenceTierJDBC.Relacional.UtilRelacional;
-import net.sourceforge.fenixedu.constants.assiduousness.Constants;
 
 public class SuportePersistente {
     private static SuportePersistente _instance = null;

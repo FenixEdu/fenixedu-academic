@@ -6,8 +6,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.department;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.presentationTier.Action.framework.SearchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;

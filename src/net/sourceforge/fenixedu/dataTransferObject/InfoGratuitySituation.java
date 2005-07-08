@@ -8,9 +8,9 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 import net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 
 /**
  * @author Tânia Pousão

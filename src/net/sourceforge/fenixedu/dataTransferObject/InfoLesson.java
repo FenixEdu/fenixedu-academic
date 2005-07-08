@@ -15,8 +15,8 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.util.DiaSemana;
 
 public class InfoLesson extends InfoShowOccupation implements ISmsDTO {
     protected DiaSemana _diaSemana;

@@ -7,8 +7,6 @@ package net.sourceforge.fenixedu.dataTransferObject.teacher;
 import java.lang.reflect.Proxy;
 import java.util.Date;
 
-import org.apache.ojb.broker.core.proxy.ProxyHelper;
-
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
@@ -16,6 +14,8 @@ import net.sourceforge.fenixedu.domain.CareerType;
 import net.sourceforge.fenixedu.domain.teacher.ICareer;
 import net.sourceforge.fenixedu.domain.teacher.IProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.ITeachingCareer;
+
+import org.apache.ojb.broker.core.proxy.ProxyHelper;
 
 /**
  * @author Leonor Almeida

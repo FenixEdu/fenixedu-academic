@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.Room;
 import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.inquiries.IInquiriesCourse;
@@ -54,7 +55,6 @@ import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRe
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRoom;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesTeacher;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
-import net.sourceforge.fenixedu.domain.ShiftType;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author João Fialho & Rita Ferreira

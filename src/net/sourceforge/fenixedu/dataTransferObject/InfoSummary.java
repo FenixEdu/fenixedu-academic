@@ -11,8 +11,8 @@ import java.util.ListIterator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
 import net.sourceforge.fenixedu.domain.ISummary;
-import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.util.DiaSemana;
 
 /**
  * @author João Mota

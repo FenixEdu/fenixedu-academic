@@ -11,13 +11,13 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.apache.struts.Globals;
-import org.apache.struts.util.MessageResources;
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomExamsMap;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMap.renderers.ExamsMapContentRenderer;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMap.renderers.ExamsMapSlotContentRenderer;
+
+import org.apache.struts.Globals;
+import org.apache.struts.util.MessageResources;
 
 /**
  * @author Luis Cruz & Sara Ribeiro

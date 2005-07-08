@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.assiduousness;
 
-import net.sourceforge.fenixedu.domain.Funcionario;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.applicationTier.ServicoAutorizacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizeException;
+import net.sourceforge.fenixedu.domain.Funcionario;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IFuncNaoDocentePersistente;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IFuncionarioPersistente;
 import net.sourceforge.fenixedu.persistenceTierJDBC.SuportePersistente;

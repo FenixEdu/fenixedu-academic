@@ -5,16 +5,15 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.struts.Globals;
-import org.apache.struts.util.RequestUtils;
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.util.DiaSemana;
+
+import org.apache.struts.Globals;
+import org.apache.struts.util.RequestUtils;
 
 /**
  * @author jpvl

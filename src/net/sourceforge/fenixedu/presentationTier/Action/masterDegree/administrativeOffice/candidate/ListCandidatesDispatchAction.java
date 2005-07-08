@@ -45,7 +45,6 @@ import net.sourceforge.fenixedu.util.RandomStringGenerator;
 import net.sourceforge.fenixedu.util.SituationName;
 
 import org.apache.struts.Globals;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;

@@ -19,13 +19,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
 import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoPaymentTransaction;
+import net.sourceforge.fenixedu.domain.DocumentType;
+import net.sourceforge.fenixedu.domain.GraduationType;
+import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 import net.sourceforge.fenixedu.util.Data;
-import net.sourceforge.fenixedu.domain.DocumentType;
-import net.sourceforge.fenixedu.domain.GraduationType;
-import net.sourceforge.fenixedu.domain.GuideState;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

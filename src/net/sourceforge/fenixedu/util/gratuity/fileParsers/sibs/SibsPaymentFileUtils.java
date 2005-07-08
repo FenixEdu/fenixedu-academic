@@ -13,8 +13,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import pt.ist.utl.fenix.utils.SibsPaymentCodeFactory;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.InvalidSibsPaymentFileFormatServiceException;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
@@ -22,6 +20,7 @@ import net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFile;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFileEntry;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
+import pt.ist.utl.fenix.utils.SibsPaymentCodeFactory;
 
 
 /**

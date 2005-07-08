@@ -9,10 +9,10 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ISummary;
+import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
-import net.sourceforge.fenixedu.domain.ShiftType;
 
 import org.apache.ojb.broker.query.Criteria;
 

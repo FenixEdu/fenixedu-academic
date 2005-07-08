@@ -11,18 +11,18 @@ import java.util.ListIterator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import net.sourceforge.fenixedu.constants.assiduousness.Constants;
+import net.sourceforge.fenixedu.domain.CostCenter;
+import net.sourceforge.fenixedu.domain.Funcionario;
+import net.sourceforge.fenixedu.domain.Horario;
+import net.sourceforge.fenixedu.domain.NonTeacherEmployee;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.StatusAssiduidade;
+
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
-
-import net.sourceforge.fenixedu.domain.CostCenter;
-import net.sourceforge.fenixedu.domain.NonTeacherEmployee;
-import net.sourceforge.fenixedu.domain.Funcionario;
-import net.sourceforge.fenixedu.domain.Horario;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.StatusAssiduidade;
-import net.sourceforge.fenixedu.constants.assiduousness.Constants;
 
 /**
  * @author Fernanda Quitério & Tania Pousão

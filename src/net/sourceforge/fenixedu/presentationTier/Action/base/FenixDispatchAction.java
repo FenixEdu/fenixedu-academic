@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;

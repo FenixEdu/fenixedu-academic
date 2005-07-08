@@ -6,10 +6,12 @@
 
 package net.sourceforge.fenixedu.persistenceTier;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 
 public interface IPessoaPersistente extends IPersistentObject {
     /**

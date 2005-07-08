@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentAttendInAttendsSet;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupProperties;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupPropertiesExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;

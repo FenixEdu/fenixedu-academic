@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.domain.gratuity.masterDegree;
 
-import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed

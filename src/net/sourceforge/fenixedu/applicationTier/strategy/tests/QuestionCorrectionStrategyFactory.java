@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.strategy.tests;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.FENIX_LIDQuestionCorrectionStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.FENIX_NUMQuestionCorrectionStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.FENIX_STRQuestionCorrectionStrategy;
@@ -12,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.IMS_LID
 import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.IMS_NUMQuestionCorrectionStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.IMS_STRQuestionCorrectionStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.IQuestionCorrectionStrategy;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 

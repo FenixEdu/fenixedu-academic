@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.HashMap;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
 
 /**

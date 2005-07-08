@@ -2,13 +2,12 @@ package net.sourceforge.fenixedu.dataTransferObject.Seminaries;
 
 import java.util.List;
 
-import org.apache.commons.collections.Transformer;
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.Seminaries.ICourseEquivalency;
 import net.sourceforge.fenixedu.domain.Seminaries.ITheme;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 
 /**
  * @author Fernanda Quitério

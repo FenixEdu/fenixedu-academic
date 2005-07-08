@@ -1,17 +1,23 @@
 package net.sourceforge.fenixedu.tools;
 
-import org.objectweb.asm.*;
-
 import java.io.File;
-import java.io.InputStream;
 import java.io.FileOutputStream;
-
+import java.io.InputStream;
 import java.net.URL;
-
 import java.util.HashSet;
 import java.util.Iterator;
 
-import dml.*;
+import org.objectweb.asm.ClassAdapter;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.FieldVisitor;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+
+import dml.DmlCompiler;
+import dml.DomainClass;
+import dml.DomainModel;
 
 public class AddOJBConstructors extends ClassLoader implements Opcodes {
     private static final String CONSTRUCTOR_DESC = "(Lorg/apache/ojb/odmg/OJB;)V";

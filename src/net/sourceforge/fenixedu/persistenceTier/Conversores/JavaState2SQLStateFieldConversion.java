@@ -6,9 +6,9 @@
 
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
-
 import net.sourceforge.fenixedu.util.State;
+
+import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
 /**
  * 

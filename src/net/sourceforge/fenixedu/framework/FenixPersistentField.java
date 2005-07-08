@@ -11,9 +11,11 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ojb.broker.core.proxy.ProxyHelper;
 import org.apache.ojb.broker.metadata.MetadataException;
+import org.apache.ojb.broker.metadata.fieldaccess.AbstractPersistentField;
+import org.apache.ojb.broker.metadata.fieldaccess.PersistentField;
+import org.apache.ojb.broker.metadata.fieldaccess.PersistentFieldBase;
 import org.apache.ojb.broker.util.ClassHelper;
 import org.apache.ojb.broker.util.logging.Logger;
-import org.apache.ojb.broker.metadata.fieldaccess.PersistentFieldBase;
 
 public class FenixPersistentField extends PersistentFieldBase {
     private Class type;

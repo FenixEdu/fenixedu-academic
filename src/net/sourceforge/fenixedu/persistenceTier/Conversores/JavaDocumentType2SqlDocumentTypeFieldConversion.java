@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
-
 import net.sourceforge.fenixedu.domain.DocumentType;
+
+import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
 /**
  * 
