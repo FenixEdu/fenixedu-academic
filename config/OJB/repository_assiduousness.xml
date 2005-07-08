@@ -234,6 +234,26 @@
   	name="section2" 
   	column="seccao2" 
   	jdbc-type="VARCHAR"/>
+
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+    	name="workingPlaceCostCenterAssociatedEmployeeHistorics"
+        element-class-ref="net.sourceforge.fenixedu.domain.EmployeeHistoric"
+		>
+		<inverse-foreignkey field-ref="keyWorkingPlaceCostCenter"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+    	name="mailingCostCenterAssociatedEmployeeHistorics"
+        element-class-ref="net.sourceforge.fenixedu.domain.EmployeeHistoric"
+		>
+		<inverse-foreignkey field-ref="keyMailingCostCenter"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+    	name="salaryCostCenterAssociatedEmployeeHistorics"
+        element-class-ref="net.sourceforge.fenixedu.domain.EmployeeHistoric"
+		>
+		<inverse-foreignkey field-ref="keySalaryCostCenter"/>
+	</collection-descriptor>
+
 </class-descriptor>
 
 <!-- Old classes -->
