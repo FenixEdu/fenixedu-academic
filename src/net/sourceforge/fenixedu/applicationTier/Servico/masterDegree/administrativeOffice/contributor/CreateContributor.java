@@ -20,12 +20,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class CreateContributor implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public CreateContributor() {
-    }
-
     public void run(InfoContributor newContributor) throws Exception {
 
         IContributor contributor = new Contributor();
@@ -41,7 +35,7 @@ public class CreateContributor implements IService {
             if (contributor != null) {
                 throw new ExistingServiceException();
             }
-            contributor = InfoContributor.newDomainFromInfo(newContributor);
+            newContributor.copyToDomain(newContributor, contributor);
 
             sp.getIPersistentContributor().simpleLockWrite(contributor);
         } catch (ExistingPersistentException ex) {

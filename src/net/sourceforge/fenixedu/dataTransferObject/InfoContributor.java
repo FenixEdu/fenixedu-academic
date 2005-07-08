@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.domain.IContributor;
 
 /**
@@ -120,13 +119,4 @@ public class InfoContributor extends InfoObject {
         contributor.setContributorNumber(infoContributor.getContributorNumber());
     }
 
-    public static IContributor newDomainFromInfo(InfoContributor infoContributor) {
-        IContributor contributor = null;
-
-        if (infoContributor != null) {
-            contributor = new Contributor();
-            infoContributor.copyToDomain(infoContributor, contributor);
-        }
-        return contributor;
-    }
 }
