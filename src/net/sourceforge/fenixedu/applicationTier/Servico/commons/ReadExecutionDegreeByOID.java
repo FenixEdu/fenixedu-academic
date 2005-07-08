@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinatorWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlanAndInfoCampus;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ICoordinator;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
@@ -65,20 +65,20 @@ public class ReadExecutionDegreeByOID implements IService {
                 }
 
                 if (executionDegree.getPeriodExamsFirstSemester() != null) {
-                    infoExecutionDegree.setInfoPeriodExamsFirstSemester(Cloner
-                            .copyIPeriod2InfoPeriod(executionDegree.getPeriodExamsFirstSemester()));
+                    infoExecutionDegree.setInfoPeriodExamsFirstSemester(InfoPeriod
+                            .newInfoFromDomain(executionDegree.getPeriodExamsFirstSemester()));
                 }
                 if (executionDegree.getPeriodExamsSecondSemester() != null) {
-                    infoExecutionDegree.setInfoPeriodExamsSecondSemester(Cloner
-                            .copyIPeriod2InfoPeriod(executionDegree.getPeriodExamsSecondSemester()));
+                    infoExecutionDegree.setInfoPeriodExamsSecondSemester(InfoPeriod
+                            .newInfoFromDomain(executionDegree.getPeriodExamsSecondSemester()));
                 }
                 if (executionDegree.getPeriodLessonsFirstSemester() != null) {
-                    infoExecutionDegree.setInfoPeriodLessonsFirstSemester(Cloner
-                            .copyIPeriod2InfoPeriod(executionDegree.getPeriodLessonsFirstSemester()));
+                    infoExecutionDegree.setInfoPeriodLessonsFirstSemester(InfoPeriod
+                            .newInfoFromDomain(executionDegree.getPeriodLessonsFirstSemester()));
                 }
                 if (executionDegree.getPeriodLessonsSecondSemester() != null) {
-                    infoExecutionDegree.setInfoPeriodLessonsSecondSemester(Cloner
-                            .copyIPeriod2InfoPeriod(executionDegree.getPeriodLessonsSecondSemester()));
+                    infoExecutionDegree.setInfoPeriodLessonsSecondSemester(InfoPeriod
+                            .newInfoFromDomain(executionDegree.getPeriodLessonsSecondSemester()));
                 }
 
             }
