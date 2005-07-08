@@ -76,12 +76,4 @@ public class SibsPaymentFileEntry extends SibsPaymentFileEntry_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof ISibsPaymentFileEntry) {
-            final ISibsPaymentFileEntry sibsPaymentFileEntry = (ISibsPaymentFileEntry) obj;
-            return this.getIdInternal().equals(sibsPaymentFileEntry.getIdInternal());
-        }
-        return false;
-    }
-
 }

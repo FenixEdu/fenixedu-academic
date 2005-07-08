@@ -23,11 +23,4 @@ public class CourseHistoric extends CourseHistoric_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof ICourseHistoric) {
-            final ICourseHistoric courseHistoric = (ICourseHistoric) obj;
-            return this.getIdInternal().equals(courseHistoric.getIdInternal());
-        }
-        return false;
-    }
 }

@@ -31,14 +31,6 @@ public class Enrolment extends Enrolment_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IEnrolment) {
-            final IEnrolment enrolment = (IEnrolment) obj;
-            return this.getIdInternal().equals(enrolment.getIdInternal());
-        }
-        return false;
-    }
-
     private void createNewEnrolmentLog(EnrolmentAction action, PersistenceBroker arg0)
             throws PersistenceBrokerException {
         IEnrolmentLog enrolmentLog = new EnrolmentLog();

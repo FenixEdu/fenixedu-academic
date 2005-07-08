@@ -12,11 +12,4 @@ public abstract class Restriction extends Restriction_Base {
         setOjbConcreteClass(this.getClass().getName());
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IRestriction) {
-            final IRestriction restriction = (IRestriction) obj;
-            return this.getIdInternal().equals(restriction.getIdInternal());
-        }
-        return false;
-    }
 }

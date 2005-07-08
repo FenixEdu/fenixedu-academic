@@ -28,14 +28,6 @@ public class Employee extends Employee_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IEmployee) {
-            final IEmployee employee = (IEmployee) obj;
-            return this.getIdInternal().equals(employee.getIdInternal());
-        }
-        return false;
-    }
-
     public void fillEmployeeHistoric() {
         if (getHistoricList() != null) {
             ListIterator iterator = getHistoricList().listIterator();

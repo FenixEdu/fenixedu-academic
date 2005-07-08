@@ -78,16 +78,6 @@ public class Lesson extends Lesson_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof ILesson) {
-            ILesson aula = (ILesson) obj;
-            resultado = getIdInternal().equals(aula.getIdInternal());
-        }
-
-        return resultado;
-    }
-
     public double hours() {
         TimePeriod timePeriod = new TimePeriod(this.getInicio(), this.getFim());
         return timePeriod.hours().doubleValue();

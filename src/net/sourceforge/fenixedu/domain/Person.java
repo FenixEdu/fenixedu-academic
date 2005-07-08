@@ -182,14 +182,6 @@ public class Person extends Person_Base {
         stringBuilder.append("]");
         return stringBuilder.toString();
     }
-    
-    public boolean equals(final Object obj) {
-        if (obj instanceof IPerson) {
-            IPerson person = (IPerson) obj;
-            return getIdInternal().equals(person.getIdInternal());
-        }
-        return false;
-    }
 
     public String getSlideName() {
         return "/photos/person/P" + getIdInternal();

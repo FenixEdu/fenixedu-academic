@@ -15,12 +15,4 @@ public class University extends University_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IUniversity) {
-            final IUniversity university = (IUniversity) obj;
-            return this.getIdInternal().equals(university.getIdInternal());
-        }
-        return false;
-    }
-
 }

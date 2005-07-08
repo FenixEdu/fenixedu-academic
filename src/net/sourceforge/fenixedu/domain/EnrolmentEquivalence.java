@@ -8,14 +8,6 @@ package net.sourceforge.fenixedu.domain;
 
 public class EnrolmentEquivalence extends EnrolmentEquivalence_Base {
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IEnrolmentEquivalence) {
-            final IEnrolmentEquivalence enrolmentEquivalence = (IEnrolmentEquivalence) obj;
-            return this.getIdInternal().equals(enrolmentEquivalence.getIdInternal());
-        }
-        return false;
-    }
-
     public String toString() {
         String result = "[" + this.getClass().getName() + "; ";
         result += "enrolment = " + getEnrolment() + "; ";

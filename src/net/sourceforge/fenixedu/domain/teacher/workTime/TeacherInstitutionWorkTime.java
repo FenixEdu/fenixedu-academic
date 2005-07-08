@@ -20,14 +20,6 @@ import org.apache.ojb.broker.PersistenceBrokerException;
 public class TeacherInstitutionWorkTime extends TeacherInstitutionWorkTime_Base implements
         ICreditsEventOriginator, PersistenceBrokerAware {
 
-    public boolean equals(Object obj) {
-        if (obj instanceof ITeacherInstitutionWorkTime) {
-            final ITeacherInstitutionWorkTime teacherInstitutionWorkTime = (ITeacherInstitutionWorkTime) obj;
-            return this.getIdInternal().equals(teacherInstitutionWorkTime.getIdInternal());
-        }
-        return false;
-    }
-
     public double hours() {
         TimePeriod timePeriod = new TimePeriod(this.getStartTime(), this.getEndTime());
         return timePeriod.hours().doubleValue();

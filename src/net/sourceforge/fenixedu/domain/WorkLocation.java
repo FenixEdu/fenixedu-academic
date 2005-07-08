@@ -10,14 +10,4 @@ package net.sourceforge.fenixedu.domain;
  */
 public class WorkLocation extends WorkLocation_Base {
 
-	public boolean equals(Object obj) {
-		boolean result = false;
-
-		if (obj instanceof IWorkLocation) {
-			IWorkLocation workLocation = (IWorkLocation) obj;
-			result = getName().equals(workLocation.getName());
-		}
-		return result;
-	}
-
 }

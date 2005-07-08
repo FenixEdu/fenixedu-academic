@@ -20,14 +20,6 @@ public class EvaluationMethod extends EvaluationMethod_Base {
         result += "]";
         return result;
     }
-
-    public boolean equals(Object obj) {
-        if (obj instanceof IEvaluationMethod) {
-            final IEvaluationMethod evaluationMethod = (IEvaluationMethod) obj;
-            return this.getIdInternal().equals(evaluationMethod.getIdInternal());
-        }
-        return false;
-    }
     
     public void edit(String evaluationElements, String evaluationElementsEng) {
         if (evaluationElements == null || evaluationElementsEng == null)

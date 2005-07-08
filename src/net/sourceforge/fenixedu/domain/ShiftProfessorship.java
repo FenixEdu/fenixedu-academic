@@ -22,14 +22,6 @@ public class ShiftProfessorship extends ShiftProfessorship_Base implements Persi
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IShiftProfessorship) {
-            final IShiftProfessorship shiftProfessorship = (IShiftProfessorship) obj;
-            return this.getIdInternal().equals(shiftProfessorship.getIdInternal());
-        }
-        return false;
-    }
-
     public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod) {
         return this.getProfessorship().getExecutionCourse().getExecutionPeriod().equals(executionPeriod);
     }

@@ -10,13 +10,4 @@ public class FinalEvaluation extends FinalEvaluation_Base {
         this.setOjbConcreteClass(FinalEvaluation.class.getName());
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IFinalEvaluation) {
-            IFinalEvaluation finalEvaluationObj = (IFinalEvaluation) obj;
-            return this.getIdInternal().equals(finalEvaluationObj.getIdInternal());
-        }
-
-        return false;
-    }
-
 }

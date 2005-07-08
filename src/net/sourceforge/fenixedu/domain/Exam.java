@@ -35,15 +35,6 @@ public class Exam extends Exam_Base {
                 + " season= '" + this.getSeason() + "'\n" + "";
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IExam) {
-            IExam examObj = (IExam) obj;
-            return this.getIdInternal().equals(examObj.getIdInternal());
-        }
-
-        return false;
-    }
-
     /**
      * @return
      */

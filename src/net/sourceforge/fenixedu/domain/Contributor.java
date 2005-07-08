@@ -20,14 +20,6 @@ public class Contributor extends Contributor_Base {
         this.setContributorAddress(contributorAddress);
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IContributor) {
-            final IContributor contributor = (IContributor) obj;
-            return this.getIdInternal().equals(contributor.getIdInternal());
-        }
-        return false;
-    }
-
     public String toString() {
         String result = "Contributor:\n";
         result += "\n  - Internal Code : " + getIdInternal();

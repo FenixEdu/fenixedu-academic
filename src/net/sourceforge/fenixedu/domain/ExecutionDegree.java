@@ -28,12 +28,4 @@ public class ExecutionDegree extends ExecutionDegree_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IExecutionDegree) {
-            final IExecutionDegree cursoExecucao = (IExecutionDegree) obj;
-            return this.getIdInternal().equals(cursoExecucao.getIdInternal());
-        }
-        return false;
-    }
-
 }

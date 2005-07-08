@@ -17,13 +17,5 @@ public class GrantContractRegime extends GrantContractRegime_Base {
         }
         return Boolean.FALSE;
     }
-    
-    public boolean equals(Object obj) {
-        if (obj instanceof IGrantContractRegime) {
-            final IGrantContractRegime grantContractRegime = (IGrantContractRegime) obj;
-            return this.getIdInternal().equals(grantContractRegime.getIdInternal());
-        }
-        return false;
-    }
 
 }

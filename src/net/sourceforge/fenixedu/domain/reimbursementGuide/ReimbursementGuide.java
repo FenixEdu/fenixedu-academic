@@ -50,14 +50,6 @@ public class ReimbursementGuide extends ReimbursementGuide_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IReimbursementGuide) {
-            final IReimbursementGuide reimbursementGuide = (IReimbursementGuide) obj;
-            return this.getIdInternal().equals(reimbursementGuide.getIdInternal());
-        }
-        return false;
-    }
-
     public IReimbursementGuideSituation getActiveReimbursementGuideSituation() {
         return (IReimbursementGuideSituation) CollectionUtils.find(getReimbursementGuideSituations(),
                 new Predicate() {

@@ -22,18 +22,6 @@ public class CandidateEnrolment extends CandidateEnrolment_Base {
 		setCurricularCourse(curricularCourse);
 	}
 
-	public boolean equals(Object obj) {
-		boolean result = false;
-		if (obj instanceof ICandidateEnrolment) {
-			ICandidateEnrolment candidateEnrolment = (ICandidateEnrolment) obj;
-			result = getMasterDegreeCandidate().equals(
-					candidateEnrolment.getMasterDegreeCandidate())
-					&& getCurricularCourse().equals(
-							candidateEnrolment.getCurricularCourse());
-		}
-		return result;
-	}
-
 	public String toString() {
 		String result = "[CANDIDATE_ENROLMENT";
 		result += ", codInt=" + getIdInternal();

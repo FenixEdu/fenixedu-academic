@@ -19,14 +19,6 @@ import org.apache.ojb.broker.PersistenceBrokerException;
 public class TeacherDegreeFinalProjectStudent extends TeacherDegreeFinalProjectStudent_Base implements
         ICreditsEventOriginator, PersistenceBrokerAware {
 
-    public boolean equals(Object obj) {
-        if (obj instanceof ITeacherDegreeFinalProjectStudent) {
-            final ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (ITeacherDegreeFinalProjectStudent) obj;
-            return this.getIdInternal().equals(teacherDegreeFinalProjectStudent.getIdInternal());
-        }
-        return false;
-    }
-
     public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod) {
         return this.getExecutionPeriod().equals(executionPeriod);
     }

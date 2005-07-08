@@ -20,13 +20,4 @@ public class WrittenTest extends WrittenTest_Base {
                 + "'\n" + "";
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IWrittenTest) {
-            IWrittenTest writtenTestObj = (IWrittenTest) obj;
-            return this.getIdInternal().equals(writtenTestObj.getIdInternal());
-        }
-
-        return false;
-    }
-
 }

@@ -18,20 +18,4 @@ public class ReimbursementGuideEntry extends ReimbursementGuideEntry_Base {
 	public ReimbursementGuideEntry() {
 	}
 
-	public boolean equals(Object obj) {
-		boolean result = false;
-		if (obj instanceof IReimbursementGuideEntry) {
-			IReimbursementGuideEntry reimbursementGuideEntry = (IReimbursementGuideEntry) obj;
-
-			if ((this.getIdInternal() == null && reimbursementGuideEntry
-					.getGuideEntry() == null)
-					|| (this.getIdInternal().equals(reimbursementGuideEntry
-							.getIdInternal()))) {
-				result = true;
-			}
-		}
-
-		return result;
-	}
-
 }

@@ -120,15 +120,4 @@ public class Seminary extends Seminary_Base {
         return result;
     }
 
-    /**
-     * true if the names are equals
-     */
-    public boolean equals(Object obj) {
-        if (obj instanceof ISeminary) {
-            final ISeminary seminary = (ISeminary) obj;
-            return this.getIdInternal().equals(seminary.getIdInternal());
-        }
-        return false;
-    }
-
 }

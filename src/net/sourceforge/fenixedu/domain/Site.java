@@ -26,14 +26,6 @@ public class Site extends Site_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof ISite) {
-            final ISite site = (ISite) obj;
-            return this.getIdInternal().equals(site.getIdInternal());
-        }
-        return false;
-    }
-
     public void edit(final String initialStatement, final String introduction, final String mail,
             final String alternativeSite) {
         if (initialStatement == null || introduction == null || mail == null || alternativeSite == null) {

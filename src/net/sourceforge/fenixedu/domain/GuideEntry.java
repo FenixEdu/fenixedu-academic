@@ -33,12 +33,4 @@ public class GuideEntry extends GuideEntry_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IGuideEntry) {
-            final IGuideEntry guideEntry = (IGuideEntry) obj;
-            return this.getIdInternal().equals(guideEntry.getIdInternal());
-        }
-        return false;
-    }
-
 }

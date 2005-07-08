@@ -58,12 +58,4 @@ public class Question extends DomainObject implements IQuestion {
         visibility = boolean1;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IQuestion) {
-            final IQuestion question = (IQuestion) obj;
-            return this.getIdInternal().equals(question.getIdInternal());
-        }
-        return false;
-    }
-
 }

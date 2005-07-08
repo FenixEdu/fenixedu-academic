@@ -178,13 +178,4 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
                 + this.getEnd() + "'\n" + "";
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IWrittenEvaluation) {
-            IWrittenEvaluation writtenEvaluationObj = (IWrittenEvaluation) obj;
-            return this.getIdInternal().equals(writtenEvaluationObj.getIdInternal());
-        }
-
-        return false;
-    }
-
 }

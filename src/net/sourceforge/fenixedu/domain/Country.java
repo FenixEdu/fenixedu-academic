@@ -23,14 +23,6 @@ public class Country extends Country_Base {
 		setName(name);
     }
 
-    public boolean equals(final Object obj) {
-        if (obj instanceof ICountry) {
-            final ICountry country = (ICountry) obj;
-            return getIdInternal().equals(country.getIdInternal());
-        }
-        return false;
-    }
-
     public String toString() {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("[COUNTRY idInternal= ");

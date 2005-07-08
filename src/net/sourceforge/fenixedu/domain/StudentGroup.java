@@ -44,15 +44,4 @@ public class StudentGroup extends StudentGroup_Base {
         return result;
     }
 
-    /**
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    public boolean equals(Object arg0) {
-        boolean result = false;
-        if (arg0 instanceof IStudentGroup) {
-            result = getIdInternal().equals(((IStudentGroup) arg0).getIdInternal());
-        }
-        return result;
-    }
-
 }

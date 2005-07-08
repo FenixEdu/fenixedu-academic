@@ -38,11 +38,4 @@ public class EmployeeHistoric extends EmployeeHistoric_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IEmployeeHistoric) {
-            final IEmployeeHistoric employeeHistoric = (IEmployeeHistoric) obj;
-            return this.getIdInternal().equals(employeeHistoric.getIdInternal());
-        }
-        return false;
-    }
 }

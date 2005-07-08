@@ -21,12 +21,4 @@ public class GroupProposal extends GroupProposal_Base {
         return result;
     }
     
-    public boolean equals(Object obj) {
-        if (obj instanceof IGroupProposal) {
-            final IGroupProposal groupProposal = (IGroupProposal) obj;
-            return this.getIdInternal().equals(groupProposal.getIdInternal());
-        }
-        return false;
-    }
-
 }

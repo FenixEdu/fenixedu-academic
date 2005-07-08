@@ -20,17 +20,6 @@ public class ExecutionYear extends ExecutionYear_Base {
         return result;
     }
 
-    /**
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    public boolean equals(Object obj) {
-        if (obj instanceof IExecutionYear) {
-            final IExecutionYear executionYear = (IExecutionYear) obj;
-            return this.getIdInternal().equals(executionYear.getIdInternal());
-        }
-        return false;
-    }
-
     public String getSlideName() {
         String result = "/EY" + getIdInternal();
         return result;

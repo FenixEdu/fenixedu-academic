@@ -32,12 +32,4 @@ public class GuideSituation extends GuideSituation_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IGuideSituation) {
-            final IGuideSituation guideSituation = (IGuideSituation) obj;
-            return this.getIdInternal().equals(guideSituation.getIdInternal());
-        }
-        return false;
-    }
-
 }

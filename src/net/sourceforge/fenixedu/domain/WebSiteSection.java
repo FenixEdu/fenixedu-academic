@@ -24,15 +24,4 @@ public class WebSiteSection extends WebSiteSection_Base {
         return result;
     }
 
-    /**
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    public boolean equals(Object obj) {
-        if (obj instanceof IWebSiteSection) {
-            final IWebSiteSection webSiteSection = (IWebSiteSection) obj;
-            return this.getIdInternal().equals(webSiteSection.getIdInternal());
-        }
-        return false;
-    }
-
 }

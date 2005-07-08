@@ -10,12 +10,4 @@ public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricul
         super();
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof INotNeedToEnrollInCurricularCourse) {
-            final INotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = (INotNeedToEnrollInCurricularCourse) obj;
-            return this.getIdInternal().equals(notNeedToEnrollInCurricularCourse.getIdInternal());
-        }
-        return false;
-    }
-
 }

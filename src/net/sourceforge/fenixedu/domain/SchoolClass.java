@@ -23,15 +23,6 @@ public class SchoolClass extends SchoolClass_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof ISchoolClass) {
-            ISchoolClass turma = (ISchoolClass) obj;
-            resultado = getIdInternal().equals(turma.getIdInternal());
-        }
-        return resultado;
-    }
-
     public void associateShift(IShift shift) {
         if (shift == null) {
             throw new NullPointerException();

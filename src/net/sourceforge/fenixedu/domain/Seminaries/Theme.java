@@ -24,15 +24,4 @@ public class Theme extends Theme_Base {
         return retorno;
     }
 
-    /**
-     * true if the names are equals
-     */
-    public boolean equals(Object obj) {
-        if (obj instanceof ITheme) {
-            final ITheme theme = (ITheme) obj;
-            return this.getIdInternal().equals(theme.getIdInternal());
-        }
-        return false;
-    }
-
 }

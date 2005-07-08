@@ -23,15 +23,6 @@ public class Precedence extends Precedence_Base {
         return stringBuffer.toString();
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IPrecedence) {
-            final IPrecedence precedence = (IPrecedence) obj;
-            return this.getIdInternal().equals(precedence.getIdInternal());
-        }
-        return false;
-    }
-    
-    
     public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
         List restrictions = getRestrictions();
 

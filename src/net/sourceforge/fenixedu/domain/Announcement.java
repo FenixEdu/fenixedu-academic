@@ -34,14 +34,6 @@ public class Announcement extends Announcement_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IAnnouncement) {
-            final IAnnouncement announcement = (IAnnouncement) obj;
-            return this.getIdInternal().equals(announcement.getIdInternal());
-        }
-        return false;
-    }
-
     public void edit(final String newAnnouncementTitle, final String newAnnouncementInformation) {
         if (newAnnouncementTitle == null || newAnnouncementInformation == null) {
             throw new NullPointerException();

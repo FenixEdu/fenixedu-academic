@@ -21,14 +21,6 @@ public class SibsPaymentFile extends SibsPaymentFile_Base {
 		setFilename(filename);
 	}
 
-	public boolean equals(Object obj) {
-        if (obj instanceof ISibsPaymentFile) {
-            final ISibsPaymentFile sibsPaymentFile = (ISibsPaymentFile) obj;
-            return this.getIdInternal().equals(sibsPaymentFile.getIdInternal());
-        }
-        return false;
-    }
-
 	public String toString() {
 
 		String result = "[" + this.getClass().getName() + ": \n";

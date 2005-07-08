@@ -21,12 +21,4 @@ public class GroupStudent extends GroupStudent_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IGroupStudent) {
-            final IGroupStudent groupStudent = (IGroupStudent) obj;
-            return this.getIdInternal().equals(groupStudent.getIdInternal());
-        }
-        return false;
-    }
-
 }

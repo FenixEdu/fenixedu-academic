@@ -68,14 +68,6 @@ public class Period extends Period_Base {
         }
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IPeriod) {
-            final IPeriod period = (IPeriod) obj;
-            return this.getIdInternal().equals(period.getIdInternal());
-        }
-        return false;
-    }
-
     public Calendar getEndDateOfComposite() {
         Calendar end = this.getEndDate();
         IPeriod period = this.getNextPeriod();

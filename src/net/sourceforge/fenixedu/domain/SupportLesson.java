@@ -15,14 +15,6 @@ import org.apache.ojb.broker.PersistenceBrokerException;
 public class SupportLesson extends SupportLesson_Base implements PersistenceBrokerAware,
         ICreditsEventOriginator {
 
-    public boolean equals(Object obj) {
-        if (obj instanceof ISupportLesson) {
-            final ISupportLesson supportLesson = (ISupportLesson) obj;
-            return this.getIdInternal().equals(supportLesson.getIdInternal());
-        }
-        return false;
-    }
-
     public double hours() {
         TimePeriod timePeriod = new TimePeriod(this.getStartTime(), this.getEndTime());
         return timePeriod.hours().doubleValue();

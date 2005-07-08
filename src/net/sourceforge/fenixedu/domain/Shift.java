@@ -44,15 +44,6 @@ public class Shift extends Shift_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof IShift) {
-            IShift turno = (IShift) obj;
-            resultado = getIdInternal().equals(turno.getIdInternal());
-        }
-        return resultado;
-    }
-
     public double hours() {
         double hours = 0;
         List lessons = this.getAssociatedLessons();

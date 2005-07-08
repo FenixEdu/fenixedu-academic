@@ -29,14 +29,6 @@ public class Section extends Section_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof ISection) {
-            final ISection section = (ISection) obj;
-            return this.getIdInternal().equals(section.getIdInternal());
-        }
-        return false;
-    }
-
     public String getSlideName() {
         String result = getParentNode().getSlideName() + "/S" + getIdInternal();
         return result;

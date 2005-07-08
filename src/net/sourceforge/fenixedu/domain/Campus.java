@@ -5,14 +5,6 @@ package net.sourceforge.fenixedu.domain;
  */
 public class Campus extends Campus_Base {
 
-	public boolean equals(final Object obj) {
-        if (obj instanceof ICampus) {
-            final ICampus campus = (ICampus) obj;
-            return getName().equals(campus.getName());
-        }
-        return false;
-    }
-
     public String toString() {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("[INFODEGREE_INFO: idInternal= ");

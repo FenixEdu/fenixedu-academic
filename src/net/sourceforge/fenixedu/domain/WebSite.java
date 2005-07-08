@@ -26,15 +26,4 @@ public class WebSite extends WebSite_Base {
         return result;
     }
     
-    /**
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    public boolean equals(Object obj) {
-        if (obj instanceof IWebSite) {
-            final IWebSite webSite = (IWebSite) obj;
-            return this.getIdInternal().equals(webSite.getIdInternal());
-        }
-        return false;
-    }
-
 }

@@ -22,14 +22,6 @@ public class ExecutionPeriod extends ExecutionPeriod_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IExecutionPeriod) {
-            final IExecutionPeriod executionPeriod = (IExecutionPeriod) obj;
-            return this.getIdInternal().equals(executionPeriod.getIdInternal());
-        }
-        return super.equals(obj);
-    }
-
     public String getSlideName() {
         String result = getParentNode().getSlideName() + "/EP" + getIdInternal();
         return result;

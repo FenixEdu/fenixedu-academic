@@ -4,20 +4,18 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.lang.reflect.Proxy;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
+import org.apache.ojb.broker.core.proxy.ProxyHelper;
 
 /**
  * @author jpvl
  */
+public abstract class DomainObject extends DomainObject_Base {
 
-public class DomainObject extends DomainObject_Base {
-
+    // This variable was created so that locking of domain objects can be
+    // disabled for writting test cases. Testing domain code can be done
+    // without persisting anything.
     private static boolean lockMode = true;
 
     public static void turnOffLockMode() {
@@ -33,64 +31,43 @@ public class DomainObject extends DomainObject_Base {
                 net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB.getInstance()
                         .lockWrite(obj);
             } catch (Exception e) {
-                throw new Error("Couldn't obtain lockwrite on object");
+                throw new Error("Couldn't obtain lockwrite on object", e);
             }
         }
     }
 
-    public boolean equals(Object obj) {
-        if (obj != null && obj instanceof IDomainObject) {
-            IDomainObject domainObject = (IDomainObject) obj;
-            if (getIdInternal() != null && domainObject.getIdInternal() != null
-                    && getIdInternal().equals(domainObject.getIdInternal())) {
 
-                Collection thisInterfaces = getInterfaces(getClass());
-                Collection objInterfaces = getInterfaces(domainObject.getClass());
+    public DomainObject() {
+        super();
 
-                thisInterfaces = CollectionUtils.select(thisInterfaces, new IS_NOT_IDOMAIN_PREDICATE());
-                objInterfaces = CollectionUtils.select(objInterfaces, new IS_NOT_IDOMAIN_PREDICATE());
-
-                if (!CollectionUtils.intersection(thisInterfaces, objInterfaces).isEmpty()) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        // All domain objects become persistent upon there creation.
+        // Locking the object will also set the idInternal which will be
+        // used by both the hashcode and the equals methods
+        doLockWriteOn(this);
     }
 
-    private List<Class> getInterfaces(Class thisClass) {
-
-        List<Class> result = new ArrayList<Class>();
-
-        Class innerClass = thisClass;
-        while (innerClass != null && !innerClass.equals(DomainObject_Base.class)
-                && !innerClass.equals(DomainObject.class)) {
-            if (innerClass.getInterfaces().length != 0) {
-                result.addAll(Arrays.asList(innerClass.getInterfaces()));
-            }
-            innerClass = innerClass.getSuperclass();
-        }
-
-        return result;
-    }
-
-    public int hashCode() {
+    public final int hashCode() {
         if (getIdInternal() != null) {
             return getIdInternal().intValue();
         }
-        return super.hashCode();
+
+        throw new RuntimeException("Domain object idInternal not set!");
     }
 
-    public class IS_NOT_IDOMAIN_PREDICATE implements Predicate {
-
-        public boolean evaluate(Object arg0) {
-            Class class1 = (Class) arg0;
-            if (class1.getName().equals(IDomainObject.class.getName())) {
-                return false;
+    public final boolean equals(Object obj) {
+        if (obj != null && obj instanceof IDomainObject) {
+            IDomainObject domainObject = (IDomainObject) obj;
+            if (domainObject instanceof Proxy) {
+                domainObject = (IDomainObject) ProxyHelper.getRealObject(domainObject);
             }
-            return true;
 
+            if (this.getClass() == domainObject.getClass()
+                    && getIdInternal() != null
+                    && getIdInternal().equals(domainObject.getIdInternal())) {
+                return true;
+            }
         }
+        return false;
     }
 
 }

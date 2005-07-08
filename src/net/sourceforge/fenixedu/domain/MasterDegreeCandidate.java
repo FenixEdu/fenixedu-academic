@@ -46,15 +46,6 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
 
 	}
 
-	public boolean equals(Object o) {
-		boolean result = false;
-		if (o instanceof IMasterDegreeCandidate) {
-
-            result = getIdInternal().equals(((IMasterDegreeCandidate) o).getIdInternal());
-		}
-		return result;
-	}
-
 	public String toString() {
 		String result = "Master Degree Candidate :\n";
 		result += "\n  - Internal Code : " + getIdInternal();

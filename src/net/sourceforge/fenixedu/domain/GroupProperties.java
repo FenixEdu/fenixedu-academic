@@ -86,17 +86,6 @@ public class GroupProperties extends GroupProperties_Base {
     }
 
     /**
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    public boolean equals(Object obj) {
-        if (obj instanceof IGroupProperties) {
-            final IGroupProperties groupProperties = (IGroupProperties) obj;
-            return this.getIdInternal().equals(groupProperties.getIdInternal());
-        }
-        return false;
-    }
-
-    /**
      * @return List
      */
     public List getExecutionCourses() {

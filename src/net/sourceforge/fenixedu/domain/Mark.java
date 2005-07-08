@@ -19,12 +19,4 @@ public class Mark extends Mark_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IMark) {
-            final IMark mark = (IMark) obj;
-            return this.getIdInternal().equals(mark.getIdInternal());
-        }
-        return false;
-    }
-
 }

@@ -13,12 +13,4 @@ public class CreditsInScientificArea extends CreditsInScientificArea_Base {
         return result;
     }
     
-    public boolean equals(Object obj) {
-        if (obj instanceof ICreditsInScientificArea) {
-            final ICreditsInScientificArea creditsInScientificArea = (ICreditsInScientificArea) obj;
-            return this.getIdInternal().equals(creditsInScientificArea.getIdInternal());
-        }
-        return false;
-    }
-
 }

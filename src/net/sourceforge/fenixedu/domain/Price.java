@@ -32,12 +32,4 @@ public class Price extends Price_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IPrice) {
-            final IPrice price = (IPrice) obj;
-            return this.getIdInternal().equals(price.getIdInternal());
-        }
-        return false;
-    }
-
 }

@@ -8,14 +8,6 @@ package net.sourceforge.fenixedu.domain;
  */
 public class Advisory extends Advisory_Base {
 
-    public boolean equals(final Object obj) {
-        if (obj instanceof IAdvisory) {
-            final IAdvisory advisory = (IAdvisory) obj;
-            return this.getIdInternal().equals(advisory.getIdInternal());
-        }
-        return false;
-    }
-
     public String toString() {
 		final StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("[");

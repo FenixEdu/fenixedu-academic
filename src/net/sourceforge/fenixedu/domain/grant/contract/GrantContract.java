@@ -13,12 +13,4 @@ package net.sourceforge.fenixedu.domain.grant.contract;
  */
 public class GrantContract extends GrantContract_Base {
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IGrantContract) {
-            final IGrantContract grantContract = (IGrantContract) obj;
-            return this.getIdInternal().equals(grantContract.getIdInternal());
-        }
-        return false;
-    }
-	
 }

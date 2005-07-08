@@ -21,14 +21,6 @@ public class Scheduleing extends Scheduleing_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IScheduleing) {
-            IScheduleing scheduleing = (IScheduleing) obj;
-            return this.getIdInternal().equals(scheduleing.getIdInternal());
-        }
-        return false;
-    }
-
     public Date getEndOfProposalPeriod() {
         if (this.getEndOfProposalPeriodDate() != null && this.getEndOfProposalPeriodTime() != null) {
             Calendar calendar = Calendar.getInstance();

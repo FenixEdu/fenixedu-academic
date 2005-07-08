@@ -30,14 +30,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public DegreeCurricularPlan() {
         setOjbConcreteClass(getClass().getName());
     }
-    
-    public boolean equals(Object obj) {
-        if (obj instanceof IDegreeCurricularPlan) {
-            final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) obj;
-            return this.getIdInternal().equals(degreeCurricularPlan.getIdInternal());
-        }
-        return false;
-    }
 
     public String toString() {
         String result = "[" + this.getClass().getName() + ": ";

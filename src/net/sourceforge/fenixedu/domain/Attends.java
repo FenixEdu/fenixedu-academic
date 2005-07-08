@@ -25,15 +25,6 @@ public class Attends extends Attends_Base {
         result += "]";
         return result;
     }
-    
-    public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof IAttends) {
-            IAttends frequenta = (IAttends) obj;
-            resultado = getIdInternal().equals(frequenta.getIdInternal());
-        }
-        return resultado;
-    }
 
     public List getAttendsSets() {
         List attendsSets = new ArrayList();

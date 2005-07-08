@@ -52,12 +52,4 @@ public class StatusAssiduidade extends StatusAssiduidade_Base {
         }
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IStatusAssiduidade) {
-            final IStatusAssiduidade statusAssiduidade = (IStatusAssiduidade) obj;
-            return this.getIdInternal().equals(statusAssiduidade.getIdInternal());
-        }
-        return false;
-    }
-
 }

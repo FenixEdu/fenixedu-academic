@@ -45,12 +45,4 @@ public class CandidateSituation extends CandidateSituation_Base {
 		return result;
 	}
 
-	public boolean equals(Object o) {
-		if (o != null && o instanceof ICandidateSituation) {
-			return this.getIdInternal().equals(
-					((ICandidateSituation) o).getIdInternal());
-		}
-		return false;
-	}
-	
 }

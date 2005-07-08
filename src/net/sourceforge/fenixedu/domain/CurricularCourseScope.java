@@ -69,14 +69,6 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof ICurricularCourseScope) {
-            final ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
-            return getIdInternal().equals(curricularCourseScope.getIdInternal());
-        }
-        return false;
-    }
-
     public Boolean isActive() {
         Boolean result = Boolean.FALSE;
         if (this.getEndDate() == null) {

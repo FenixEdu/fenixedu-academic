@@ -20,12 +20,4 @@ public class ResidenceCandidacies extends ResidenceCandidacies_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IResidenceCandidacies) {
-            final IResidenceCandidacies residenceCandidacies = (IResidenceCandidacies) obj;
-            return this.getIdInternal().equals(residenceCandidacies.getIdInternal());
-        }
-        return false;
-    }
-
 }

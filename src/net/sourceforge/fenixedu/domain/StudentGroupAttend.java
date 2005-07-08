@@ -34,16 +34,5 @@ public class StudentGroupAttend extends StudentGroupAttend_Base {
         result += "]";
         return result;
     }
-   
-    /**
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    public boolean equals(Object arg0) {
-        boolean result = false;
-        if (arg0 instanceof IStudentGroupAttend) {
-            result = getIdInternal().equals(((IStudentGroupAttend) arg0).getIdInternal());
-        }
-        return result;
-    }
 
 }

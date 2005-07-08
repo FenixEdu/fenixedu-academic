@@ -28,15 +28,4 @@ public class AttendInAttendsSet extends AttendInAttendsSet_Base {
         return result;
     }
 
-    /**
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    public boolean equals(Object obj) {
-        if (obj instanceof IAttendInAttendsSet) {
-            final IAttendInAttendsSet attendInAttendsSet = (IAttendInAttendsSet) obj;
-            return this.getIdInternal().equals(attendInAttendsSet.getIdInternal());
-        }
-        return false;
-    }
-
 }

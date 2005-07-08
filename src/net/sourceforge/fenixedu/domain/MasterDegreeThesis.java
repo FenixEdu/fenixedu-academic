@@ -23,12 +23,4 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IMasterDegreeThesis) {
-            final IMasterDegreeThesis masterDegreeThesis = (IMasterDegreeThesis) obj;
-            return this.getIdInternal().equals(masterDegreeThesis.getIdInternal());
-        }
-        return false;
-    }
-
 }

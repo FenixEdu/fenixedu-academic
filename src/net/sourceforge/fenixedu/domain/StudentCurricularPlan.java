@@ -50,14 +50,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IStudentCurricularPlan) {
-            final IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) obj;
-            return this.getIdInternal().equals(studentCurricularPlan.getIdInternal());
-        }
-        return false;
-    }
-
     public IBranch getSecundaryBranch() {
         return null;
     }

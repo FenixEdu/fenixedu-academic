@@ -24,14 +24,6 @@ public class Branch extends Branch_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IBranch) {
-            final IBranch branch = (IBranch) obj;
-            return this.getIdInternal().equals(branch.getIdInternal());
-        }
-        return false;
-    }
-
     public Boolean representsCommonBranch() {
         if (this.getBranchType().equals(
                 net.sourceforge.fenixedu.domain.branch.BranchType.valueOf("COMMON"))) {

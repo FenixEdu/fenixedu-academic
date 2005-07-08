@@ -60,13 +60,4 @@ public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IMasterDegreeThesisDataVersion) {
-            IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion = (IMasterDegreeThesisDataVersion) obj;
-            return masterDegreeThesisDataVersion.getIdInternal().equals(getIdInternal());
-        }
-
-        return false;
-    }
-
 }

@@ -14,12 +14,4 @@ public class CurricularYear extends CurricularYear_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof ICurricularYear) {
-            final ICurricularYear curricularYear = (ICurricularYear) obj;
-            return this.getIdInternal().equals(curricularYear.getIdInternal());
-        }
-        return false;
-    }
-
 }

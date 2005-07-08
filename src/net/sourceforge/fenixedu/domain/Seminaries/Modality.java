@@ -23,15 +23,4 @@ public class Modality extends Modality_Base {
         return retorno;
     }
 
-    /**
-     * true if the names are equals
-     */
-    public boolean equals(Object obj) {
-        if (obj instanceof IModality) {
-            final IModality modality = (IModality) obj;
-            return this.getIdInternal().equals(modality.getIdInternal());
-        }
-        return false;
-    }
-
 }

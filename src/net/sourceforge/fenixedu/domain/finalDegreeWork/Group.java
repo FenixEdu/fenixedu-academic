@@ -18,12 +18,4 @@ public class Group extends Group_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IGroup) {
-            final IGroup group = (IGroup) obj;
-            return this.getIdInternal().equals(group.getIdInternal());
-        }
-        return false;
-    }
-
 }

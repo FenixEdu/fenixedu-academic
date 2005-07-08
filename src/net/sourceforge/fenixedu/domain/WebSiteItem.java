@@ -51,12 +51,4 @@ public class WebSiteItem extends WebSiteItem_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IWebSiteItem) {
-            final IWebSiteItem webSiteItem = (IWebSiteItem) obj;
-            return this.getIdInternal().equals(webSiteItem.getIdInternal());
-        }
-        return false;
-    }
-
 }

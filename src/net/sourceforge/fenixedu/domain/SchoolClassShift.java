@@ -22,12 +22,4 @@ public class SchoolClassShift extends SchoolClassShift_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof ISchoolClassShift) {
-            final ISchoolClassShift schoolClassShift = (ISchoolClassShift) obj;
-            return this.getIdInternal().equals(schoolClassShift.getIdInternal());
-        }
-        return false;
-    }
-
 }

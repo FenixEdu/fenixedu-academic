@@ -28,14 +28,6 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IEnrolmentEvaluation) {
-            final IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) obj;
-            return this.getIdInternal().equals(enrolmentEvaluation.getIdInternal());
-        }
-        return false;
-    }
-
     /**
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */

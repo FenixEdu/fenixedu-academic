@@ -21,13 +21,5 @@ public class CourseReport extends CourseReport_Base {
         result += "]";
         return result;
     }
-    
-    public boolean equals(Object obj) {
-        if (obj instanceof ICourseReport) {
-            final ICourseReport courseReport = (ICourseReport) obj;
-            return this.getIdInternal().equals(courseReport.getIdInternal());
-        }
-        return false;
-    }
 
 }

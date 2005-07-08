@@ -10,12 +10,4 @@ package net.sourceforge.fenixedu.domain.gaugingTests.physics;
  */
 public class GaugingTestResult extends GaugingTestResult_Base {
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IGaugingTestResult) {
-            final IGaugingTestResult gaugingTest = (IGaugingTestResult) obj;
-            return this.getIdInternal().equals(gaugingTest.getIdInternal());
-        }
-        return false;
-    }
-
 }

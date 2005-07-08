@@ -23,14 +23,6 @@ public class Degree extends Degree_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IDegree) {
-            final IDegree degree = (IDegree) obj;
-            return this.getIdInternal().equals(degree.getIdInternal());
-        }
-        return false;
-    }
-
     public IDegreeCurricularPlan getNewDegreeCurricularPlan() {
         IDegreeCurricularPlan degreeCurricularPlan = null;
 

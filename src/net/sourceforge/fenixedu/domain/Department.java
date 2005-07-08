@@ -13,14 +13,6 @@ package net.sourceforge.fenixedu.domain;
 
 public class Department extends Department_Base {
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IDepartment) {
-            final IDepartment department = (IDepartment) obj;
-            return this.getIdInternal().equals(department.getIdInternal());
-        }
-        return false;
-    }
-
     public String toString() {
         String result = "[DEPARTAMENT";
         result += ", codInt=" + getIdInternal();

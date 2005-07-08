@@ -25,14 +25,6 @@ public class Teacher extends Teacher_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof ITeacher) {
-            resultado = getTeacherNumber().equals(((ITeacher) obj).getTeacherNumber());
-        }
-        return resultado;
-    }
-
     public InfoCredits getExecutionPeriodCredits(IExecutionPeriod executionPeriod) {
         InfoCredits credits = (InfoCredits) creditsMap.get(executionPeriod);
         if (credits == null) {

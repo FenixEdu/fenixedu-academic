@@ -26,12 +26,4 @@ public class Curriculum extends Curriculum_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof ICurriculum) {
-            final ICurriculum curriculum = (ICurriculum) obj;
-            return this.getIdInternal().equals(curriculum.getIdInternal());
-        }
-        return false;
-    }
-
 }

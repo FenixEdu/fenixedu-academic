@@ -22,14 +22,6 @@ public class PersonalDataUseInquiryAnswers extends PersonalDataUseInquiryAnswers
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IPersonalDataUseInquiryAnswers) {
-            final IPersonalDataUseInquiryAnswers personalDataUseInquiryAnswers = (IPersonalDataUseInquiryAnswers) obj;
-            return this.getIdInternal().equals(personalDataUseInquiryAnswers.getIdInternal());
-        }
-        return false;
-    }
-
     public void setAnswer(Integer id, Boolean answer) {
         switch (id.intValue()) {
         case 1:

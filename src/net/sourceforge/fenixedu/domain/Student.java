@@ -29,14 +29,6 @@ public class Student extends Student_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IStudent) {
-            final IStudent student = (IStudent) obj;
-            return this.getIdInternal().equals(student.getIdInternal());
-        }
-        return false;
-    }
-
     public IStudentCurricularPlan getActiveStudentCurricularPlan() {
         List curricularPlans = getStudentCurricularPlans();
         IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) CollectionUtils.find(

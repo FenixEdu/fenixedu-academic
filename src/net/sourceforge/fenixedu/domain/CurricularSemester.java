@@ -16,12 +16,4 @@ public class CurricularSemester extends CurricularSemester_Base {
         return result;
     }
     
-    public boolean equals(Object obj) {
-        if (obj instanceof ICurricularSemester) {
-            final ICurricularSemester curricularSemester = (ICurricularSemester) obj;
-            return getIdInternal().equals(curricularSemester.getIdInternal());
-        }
-        return false;
-    }
-
 }

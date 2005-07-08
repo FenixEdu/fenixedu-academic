@@ -28,14 +28,6 @@ public class Guide extends Guide_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IGuide) {
-            final IGuide guide = (IGuide) obj;
-            return this.getIdInternal().equals(guide.getIdInternal());
-        }
-        return false;
-    }
-
     public IGuideSituation getActiveSituation() {
         if (this.getGuideSituations() != null) {
             Iterator iterator = this.getGuideSituations().iterator();

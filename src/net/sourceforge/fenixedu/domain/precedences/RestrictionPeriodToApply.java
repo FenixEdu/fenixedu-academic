@@ -18,19 +18,6 @@ public class RestrictionPeriodToApply extends RestrictionPeriodToApply_Base impl
         return stringBuffer.toString();
     }
 
-    public boolean equals(Object obj) {
-        boolean result = super.equals(obj);
-        if ((result) && (obj instanceof IRestrictionPeriodToApply)) {
-            IRestrictionPeriodToApply restrictionPeriodToApply = (IRestrictionPeriodToApply) obj;
-            result = restrictionPeriodToApply.getPeriodToApplyRestriction().equals(
-                    this.getPeriodToApplyRestriction())
-                    && this.getClass().getName().equals(restrictionPeriodToApply.getClass().getName());
-        } else if (result) {
-            result = false;
-        }
-        return result;
-    }
-
     public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
         IExecutionPeriod executionPeriod = precedenceContext.getExecutionPeriod();
 

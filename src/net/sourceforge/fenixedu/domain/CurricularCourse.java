@@ -26,14 +26,6 @@ public class CurricularCourse extends CurricularCourse_Base {
         return stringBuffer.toString();
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof ICurricularCourse) {
-            final ICurricularCourse curricularCourse = (ICurricularCourse) obj;
-            return getIdInternal().equals(curricularCourse.getIdInternal());
-        }
-        return false;
-    }
-
     public boolean curricularCourseIsMandatory() {
         return getMandatory().booleanValue();
     }

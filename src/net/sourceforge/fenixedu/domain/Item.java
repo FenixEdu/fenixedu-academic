@@ -27,14 +27,6 @@ public class Item extends Item_Base {
         return result;
     }
 
-    public boolean equals(Object obj) {
-        if (obj instanceof IItem) {
-            final IItem item = (IItem) obj;
-            return this.getIdInternal().equals(item.getIdInternal());
-        }
-        return false;
-    }
-
     public String getSlideName() {
         String result = getParentNode().getSlideName() + "/I" + getIdInternal();
         return result;
