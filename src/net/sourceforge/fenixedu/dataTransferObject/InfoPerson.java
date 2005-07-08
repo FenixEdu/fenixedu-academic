@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author tfc130
@@ -877,7 +878,7 @@ public class InfoPerson extends InfoObject {
         return infoPerson;
     }
 
-    public void copyToDomain(InfoPerson infoPerson, IPerson person) {
+    public void copyToDomain(InfoPerson infoPerson, IPerson person) throws ExcepcaoPersistencia {
         super.copyToDomain(infoPerson, person);
 
         person.setNome(infoPerson.getNome());

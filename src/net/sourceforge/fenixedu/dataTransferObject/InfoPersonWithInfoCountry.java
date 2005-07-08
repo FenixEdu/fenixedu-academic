@@ -4,11 +4,16 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.ICountry;
 import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author João Mota
- *  
+ * 
  */
 public class InfoPersonWithInfoCountry extends InfoPerson {
 
@@ -28,8 +33,13 @@ public class InfoPersonWithInfoCountry extends InfoPerson {
         return infoPerson;
     }
 
-    public void copyToDomain(InfoPerson infoPerson, IPerson person) {
+    public void copyToDomain(InfoPerson infoPerson, IPerson person) throws ExcepcaoPersistencia {
         super.copyToDomain(infoPerson, person);
-        person.setPais(InfoCountry.newDomainFromInfo(infoPerson.getInfoPais()));
+
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ICountry country = (ICountry) sp.getIPersistentCountry().readByOID(Country.class,
+                infoPerson.getInfoPais().getIdInternal());
+        person.setPais(country);
     }
+
 }

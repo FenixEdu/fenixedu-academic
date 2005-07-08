@@ -5,6 +5,8 @@ package net.sourceforge.fenixedu.dataTransferObject.person;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonWithInfoCountry;
+import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.ICountry;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IQualification;
 import net.sourceforge.fenixedu.domain.Person;
@@ -36,18 +38,23 @@ public class InfoQualificationWithPersonAndCountry extends InfoQualification {
         return infoQualification;
     }
 
-    public void copyToDomain(InfoQualification infoQualification, IQualification qualification) throws ExcepcaoPersistencia {
+    public void copyToDomain(InfoQualification infoQualification, IQualification qualification)
+            throws ExcepcaoPersistencia {
         super.copyToDomain(infoQualification, qualification);
 
-        qualification.setCountry(InfoCountry.newDomainFromInfo(infoQualification.getInfoCountry()));
-        
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPerson person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,infoQualification.getInfoPerson().getIdInternal());
-        
+
+        ICountry country = (ICountry) sp.getIPersistentCountry().readByOID(Country.class,
+                infoQualification.getInfoCountry().getIdInternal());
+        qualification.setCountry(country);
+
+        IPerson person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,
+                infoQualification.getInfoPerson().getIdInternal());
         qualification.setPerson(person);
     }
 
-    public static IQualification newDomainFromInfo(InfoQualification infoQualification) throws ExcepcaoPersistencia {
+    public static IQualification newDomainFromInfo(InfoQualification infoQualification)
+            throws ExcepcaoPersistencia {
         IQualification qualification = null;
         InfoQualificationWithPersonAndCountry infoQualificationWithPersonAndCountry = null;
         if (infoQualification != null) {
@@ -57,4 +64,5 @@ public class InfoQualificationWithPersonAndCountry extends InfoQualification {
         }
         return qualification;
     }
+
 }

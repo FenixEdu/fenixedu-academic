@@ -6,7 +6,6 @@
 
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.ICountry;
 
 /**
@@ -120,15 +119,6 @@ public class InfoCountry extends InfoObject {
         country.setCode(infoCountry.getCode());
         country.setName(infoCountry.getName());
         country.setNationality(infoCountry.getNationality());
-    }
-
-    public static ICountry newDomainFromInfo(InfoCountry infoCountry) {
-        ICountry country = null;
-        if (infoCountry != null) {
-            country = new Country();
-            infoCountry.copyToDomain(infoCountry, country);
-        }
-        return country;
     }
 
 }
