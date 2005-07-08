@@ -124,7 +124,7 @@ public class ReadFinalDegreeWorkProposal implements IService {
                 if (proposal.getBranches() != null && !proposal.getBranches().isEmpty()) {
                     infoProposal.setBranches(new ArrayList());
                     for (int i = 0; i < proposal.getBranches().size(); i++) {
-                        IBranch branch = (IBranch) proposal.getBranches().get(i);
+                        IBranch branch = proposal.getBranches().get(i);
                         if (branch != null) {
                             InfoBranch infoBranch = new InfoBranch();
                             infoBranch.setIdInternal(branch.getIdInternal());

@@ -82,7 +82,7 @@ public class LEMOptionalPairGroupsEnrollmentRule implements IEnrollmentRule {
         List curricularCoursesToEnroll = new ArrayList();
         int size = ccg.getCurricularCourses().size();
         for (int iter = 0; iter < size; iter++) {
-            ICurricularCourse cc = (ICurricularCourse) ccg.getCurricularCourses().get(iter);
+            ICurricularCourse cc = ccg.getCurricularCourses().get(iter);
             curricularCoursesToEnroll.add(new CurricularCourse2Enroll(cc, null, null));
         }
         return curricularCoursesToEnroll;

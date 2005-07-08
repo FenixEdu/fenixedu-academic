@@ -49,7 +49,7 @@ public class ReadCurricularCourseListByExecutionCourseCode implements IService {
 
         if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null) {
             for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) executionCourse
+                ICurricularCourse curricularCourse = executionCourse
                         .getAssociatedCurricularCourses().get(i);
 
                 InfoCurricularCourse infoCurricularCourse = Cloner

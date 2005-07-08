@@ -15,7 +15,7 @@ public class EnrolmentEquivalenceVO extends VersionedObjectsBase implements
 		IEnrolment enrolment = (IEnrolment)readByOID(Enrolment.class,enrolmentId);
 		
 		if (enrolment != null && !enrolment.getEnrolmentEquivalences().isEmpty()) {
-			return (IEnrolmentEquivalence) enrolment.getEnrolmentEquivalences().get(0);
+			return enrolment.getEnrolmentEquivalences().get(0);
 		}
 		return null;
 	}

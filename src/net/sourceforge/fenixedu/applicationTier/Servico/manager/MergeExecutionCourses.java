@@ -297,7 +297,7 @@ public class MergeExecutionCourses implements IService {
         List sourceAttends = source.getAttends();
         Map alreadyAttendingDestination = new HashMap();
         for (int i = 0; i < destination.getAttends().size(); i++) {
-            IAttends attend = (IAttends) destination.getAttends().get(i);
+            IAttends attend = destination.getAttends().get(i);
             alreadyAttendingDestination.put(attend.getAluno().getNumber().toString(), attend);
         }
         Iterator iter = sourceAttends.iterator();

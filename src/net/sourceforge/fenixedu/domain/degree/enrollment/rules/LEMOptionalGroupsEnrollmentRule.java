@@ -60,9 +60,9 @@ public class LEMOptionalGroupsEnrollmentRule implements IEnrollmentRule {
                         }
                     });
 
-            ICurricularCourse firstOptionalCurricularCourse = (ICurricularCourse) optionalCurricularCourseGroup
+            ICurricularCourse firstOptionalCurricularCourse = optionalCurricularCourseGroup
                     .getCurricularCourses().get(0);
-            ICurricularCourse secondOptionalCurricularCourse = (ICurricularCourse) optionalCurricularCourseGroup
+            ICurricularCourse secondOptionalCurricularCourse = optionalCurricularCourseGroup
                     .getCurricularCourses().get(1);
 
             if (studentCurricularPlan.isCurricularCourseEnrolled(firstOptionalCurricularCourse)

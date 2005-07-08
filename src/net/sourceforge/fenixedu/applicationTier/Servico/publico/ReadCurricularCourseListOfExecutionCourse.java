@@ -67,13 +67,13 @@ public class ReadCurricularCourseListOfExecutionCourse implements IServico {
             
             if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null)
                 for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {
-                    ICurricularCourse curricularCourse = (ICurricularCourse) executionCourse
+                    ICurricularCourse curricularCourse = executionCourse
                             .getAssociatedCurricularCourses().get(i);
                     InfoCurricularCourse infoCurricularCourse = Cloner
                             .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
                     infoCurricularCourseScopeList = new ArrayList();
                     for (int j = 0; j < curricularCourse.getScopes().size(); j++) {
-                        ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse
+                        ICurricularCourseScope curricularCourseScope = curricularCourse
                                 .getScopes().get(j);
                         InfoCurricularCourseScope infoCurricularCourseScope = Cloner
                                 .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
