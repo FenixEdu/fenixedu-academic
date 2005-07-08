@@ -11,10 +11,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
+import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -120,12 +126,15 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
         }
 
         result.addAll(curricularCoursesFromOtherAreasToMantain);
-
+        //FIXME
+        if(result.isEmpty() || allTemporary(result)){
+        	result.addAll(getOptionalCourses(result));
+        }
         return result;
     }
 
 
-    private void calculateGroupsCreditsFromEnrollments(IStudentCurricularPlan studentCurricularPlan,
+	private void calculateGroupsCreditsFromEnrollments(IStudentCurricularPlan studentCurricularPlan,
             List specializationAndSecundaryAreaCurricularCoursesToCountForCredits,
             HashMap creditsInScientificAreas, HashMap creditsInSpecializationAreaGroups,
             HashMap creditsInSecundaryAreaGroups) {
@@ -182,5 +191,88 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
             return true;
         return false;
     }
+    
+    
+    
+    //FIXME
+    private boolean allTemporary(List<CurricularCourse2Enroll> result) {
+    	for (CurricularCourse2Enroll enroll : result) {
+			if(!enroll.getEnrollmentType().equals(CurricularCourseEnrollmentType.TEMPORARY)){
+				return false;
+			}
+		}
+		return true;
+	}
+    
+	private List<CurricularCourse2Enroll> getOptionalCourses(List<CurricularCourse2Enroll> result) {
+		List<ICurricularCourse> tagusCourses = getTagus4And5Courses();
+		List<ICurricularCourse> leicCourses = getLEIC4And5Courses();
+		List<CurricularCourse2Enroll> curricularCoursesToEnroll = new ArrayList<CurricularCourse2Enroll>();
+		if(result.isEmpty()) {
+			curricularCoursesToEnroll.addAll(transformToCurricularCoursesToEnroll(tagusCourses, false));
+			curricularCoursesToEnroll.addAll(transformToCurricularCoursesToEnroll(leicCourses, false));
+		}
+		return null;
+	}
 
+
+	private List<CurricularCourse2Enroll> transformToCurricularCoursesToEnroll(List<ICurricularCourse> leicCourses, boolean temporary) {
+		List<CurricularCourse2Enroll> result = new ArrayList<CurricularCourse2Enroll>();
+		CurricularCourse2Enroll course2Enroll = new CurricularCourse2Enroll();
+		
+		return null;
+	}
+
+
+	private List<ICurricularCourse> getLEIC4And5Courses() {
+		List<Integer> years = new ArrayList<Integer>();
+		years.add(Integer.valueOf(4));
+		years.add(Integer.valueOf(5));
+		List<ICurricularCourse> result = new ArrayList<ICurricularCourse>();
+		List<ICurricularCourse> curricularCourses = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourses();
+		for (ICurricularCourse curricularCourse : curricularCourses) {
+			if(!studentCurricularPlan.isCurricularCourseApproved(curricularCourse)) {
+				if(isAnyScopeActive(curricularCourse.getScopes(), years)) {
+					result.add(curricularCourse);
+				}
+			}
+		}
+		return result;
+	}
+
+
+	private List<ICurricularCourse> getTagus4And5Courses() {
+		try {
+			List<Integer> years = new ArrayList<Integer>();
+			years.add(Integer.valueOf(4));
+			years.add(Integer.valueOf(5));
+			List<ICurricularCourse> result = new ArrayList<ICurricularCourse>();
+				IDegreeCurricularPlan tagusCurricularPlan = (IDegreeCurricularPlan) PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class, 89);
+			List<ICurricularCourse> curricularCourses = tagusCurricularPlan.getCurricularCourses();
+			for (ICurricularCourse curricularCourse : curricularCourses) {
+				if(!studentCurricularPlan.isCurricularCourseApproved(curricularCourse)) {
+					if(isAnyScopeActive(curricularCourse.getScopes(), years)) {
+						result.add(curricularCourse);
+					}
+				}
+			}
+			return result;
+		}catch(ExcepcaoPersistencia e) {
+			throw new RuntimeException(e);
+		}
+
+	}
+
+
+	private boolean isAnyScopeActive(List<ICurricularCourseScope> scopes,
+			List<Integer> years) {
+		for (ICurricularCourseScope curricularCourseScope : scopes) {
+			if (curricularCourseScope.isActive() && 
+					years.contains(curricularCourseScope.getCurricularSemester().getCurricularYear().getYear())&& 
+					curricularCourseScope.getCurricularSemester().getSemester().equals(executionPeriod.getSemester())) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
