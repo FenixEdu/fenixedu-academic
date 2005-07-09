@@ -466,6 +466,8 @@ class net.sourceforge.fenixedu.domain.CurricularCourseScope extends net.sourcefo
     public void setEndDate(java.util.Calendar endDate);
     
     public Boolean isActive();
+	
+	public void deleteCurricularCourseScope() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
     "
 }
 

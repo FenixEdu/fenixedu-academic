@@ -1,6 +1,10 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Calendar;
+import java.util.List;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.CantDeleteServiceException;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**
  * @author dcs-rjao
@@ -76,5 +80,18 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
         }
         return result;
     }
+	
+	
+	public void deleteCurricularCourseScope() throws DomainException {
+		List writtenEvaluations = getAssociatedWrittenEvaluations();
+
+	    if (writtenEvaluations == null || writtenEvaluations.isEmpty()) {		
+			setCurricularSemester(null);
+			setCurricularCourse(null);
+			setBranch(null);
+        } else {
+            throw new DomainException(this.getClass().getName(), "ola mundo");
+        }
+	}
 
 }

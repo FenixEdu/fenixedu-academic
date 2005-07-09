@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ICurricularSemester;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -25,7 +26,6 @@ public class DeleteCurricularCourseScope implements IService {
     public DeleteCurricularCourseScope() {
     }
 
-    // delete a scope
     public void run(Integer scopeId) throws FenixServiceException {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -35,31 +35,16 @@ public class DeleteCurricularCourseScope implements IService {
             ICurricularCourseScope scope = (ICurricularCourseScope) persistentCurricularCourseScope
                     .readByOID(CurricularCourseScope.class, scopeId);
             if (scope != null) {
-                // added by Fernanda Quitério
-                List writtenEvaluations = scope.getAssociatedWrittenEvaluations();
-
-                if (writtenEvaluations == null || 
-						writtenEvaluations.isEmpty()){
 				
-					dereferenceCurricularCourseScope(scope);
+				try {
+					scope.deleteCurricularCourseScope();
 					persistentCurricularCourseScope.deleteByOID(CurricularCourseScope.class, scope.getIdInternal());
-                } else {
-                    throw new CantDeleteServiceException();
-                }
-            }
+				}
+				catch (DomainException e) {
+					throw new CantDeleteServiceException();
+				}            }
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
     }
-
-	public static void dereferenceCurricularCourseScope(ICurricularCourseScope scope) {
-
-		ICurricularSemester curricularSemester = scope.getCurricularSemester();
-		ICurricularCourse curricularCourse = scope.getCurricularCourse();
-		IBranch branch = scope.getBranch();
-		
-		curricularSemester.getScopes().remove(scope);
-		curricularCourse.getScopes().remove(scope);
-		branch.getScopes().remove(scope);
-	}
 }

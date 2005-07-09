@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ICurriculum;
 import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
@@ -69,9 +70,12 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan implements IService {
                             Iterator iterator = scopes.iterator();
 
                             while (iterator.hasNext()) {
-								ICurricularCourseScope scope = (ICurricularCourseScope)iterator.next();
-								DeleteCurricularCourseScope.dereferenceCurricularCourseScope(scope);
-								persistentCurricularCourseScope.deleteByOID(CurricularCourseScope.class, scope.getIdInternal());
+								try {
+									ICurricularCourseScope scope = (ICurricularCourseScope)iterator.next();
+									scope.deleteCurricularCourseScope();
+									persistentCurricularCourseScope.deleteByOID(CurricularCourseScope.class, scope.getIdInternal());	
+								}
+								catch (DomainException e) {}
                             }
                         } else {
                             undeletedCurricularCourses.add(curricularCourse.getName());
