@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 
 
-public class CurricularCourseScopeTest  extends DomainTestBase {
+public class CurricularCourseScopeTest extends DomainTestBase {
 
 	private ICurricularCourseScope curricularCourseScopeToDelete;
 	private ICurricularCourseScope curricularCourseScopeNotToDelete;

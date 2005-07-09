@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.precedences;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 /**
  * @author David Santos in Jun 9, 2004
  */
@@ -12,4 +14,9 @@ public abstract class RestrictionByCurricularCourse extends RestrictionByCurricu
         stringBuffer.append(this.getPrecedentCurricularCourse()).append("\n");
         return stringBuffer.toString();
     }
+	
+	public void deleteRestriction(){
+		super.deleteRestriction();
+		setPrecedentCurricularCourse(null);
+	}
 }

@@ -1865,6 +1865,7 @@ class net.sourceforge.fenixedu.domain.precedences.Restriction extends net.source
 	
 	interface " 	
 	public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType evaluate(net.sourceforge.fenixedu.domain.precedences.PrecedenceContext precedenceContext);
+	public void deleteRestriction();
 	"
 }
 
