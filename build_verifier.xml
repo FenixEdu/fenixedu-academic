@@ -20,6 +20,11 @@
 	<property name="build.home.webinf" value="${build.home}/WEB-INF"/>
 	<property name="build.home.webinf.classes" value="${build.home.webinf}/classes"/>
 
+	<!-- DML definition file -->
+	<property name="dml.definition.file" value="${config}/domain_model.dml"/>
+
+  <property name="analysis.subdir" value=""/>
+
     <!-- Directories with libraries (JARs) -->
     <property name="lib" location="lib" />
 
@@ -44,5 +49,38 @@
 			</classpath>
 		</java>
     </target>
+
+
+  <path id="classpath.analysis">
+    <pathelement path="${build.home.temp.classes}"/>
+    <fileset dir="${lib}">
+      <include name="**/*.jar"/>
+    </fileset>
+  </path>
+
+  <target name="ask-subdir" unless="analysis.subdir">
+    <input message="Which subdirectory to analyze? "
+           addproperty="analysis.subdir"/>
+  </target>
+
+  <target name="analysis-compile">
+    <ant antfile="build_compile.xml" target="compile" />
+    <ant antfile="build_codeGenerator.xml" target="compile" />
+  </target>
+
+
+  <target name="find-new-of-domain-objects"
+          depends="analysis-compile"
+          description="Report occurrences of domain object's allocations.">
+    <java classname="pt.utl.ist.analysis.FindDomainObjectAllocations" fork="true">
+      <classpath refid="classpath.analysis"/>
+      <arg value="-d"/>
+      <arg value="${dml.definition.file}"/>
+      <arg value="-f"/>
+      <arg value="${build.home.webinf.classes}/${analysis.subdir}"/>
+      <arg value="-i"/>
+      <arg value="net.sourceforge.fenixedu.persistenceTier.OJB.DomainAllocator"/>
+    </java>
+  </target>
 
 </project>
