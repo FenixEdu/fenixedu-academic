@@ -17,11 +17,6 @@
 	<p>
 	<ul>
 		<li>
-			<html:link forward="equivalence"><bean:message key="link.coordinator.equivalence"/></html:link>
-			<br/>
-			<br/>
-		</li>
-		<li>
 			<html:link page="<%= "/viewStudentCurriculum.do?method=prepareView&amp;executionDegreeId=" + infoExecutionDegreeID.toString() + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 			    <bean:message key="link.student.curriculum" /></html:link>
 			    <br/>

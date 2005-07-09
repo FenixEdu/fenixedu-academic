@@ -122,8 +122,6 @@
 		<forward name="index" path="/index.do" redirect="true"/>
 		<forward name="globalOutOfPeriod" path="definition.out.of.period" redirect="true"/>
 		<forward name="enrolment" path="/globalEnrolment.do"/>
-
-		<forward name="equivalence" path="/equivalence/equivalence.do" contextRelative="true"/>		
 	</global-forwards>
 
 	<!-- ========== Action Mapping Definitions ============================== -->

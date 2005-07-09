@@ -14,9 +14,6 @@
 		<html:link page="/changeStudentAreas.do?method=chooseStudent&amp;degreeType=DEGREE"><bean:message key="title.student.change.areas"/></html:link>
 	</li>
 
-	<li> 
-		<html:link forward="equivalence"><bean:message key="link.manual.equivalence"/></html:link>
-	</li>
 	<li>
 		<html:link page="/generateDeclaration.do?method=prepare&amp;page=0"><bean:message key="title.student.print.registrationDeclaration"/></html:link>
 	</li>

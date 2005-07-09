@@ -12,7 +12,6 @@
 	    <li><html:link page="/chooseDeclarationInfoAction.do?method=prepare&page=0"><bean:message key="link.declarations" /></html:link></li>
 	    <li><html:link page="/chooseFinalResultInfoAction.do?method=prepare&page=0"><bean:message key="link.finalResult" /></html:link></li>
 	    <li><html:link page="/courseEnrolmentWithoutRulesManagerDA.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=MASTER_DEGREE"><bean:message key="link.masterDegree.enrollment"/></html:link></li>
-	    <li><html:link forward="equivalence"><bean:message key="link.masterDegree.equivalence"/></html:link></li>
 	    <li><html:link page="/seeStudentAndCurricularPlans.do?method=start"><bean:message key="link.masterDegree.administrativeOffice.seeStudentCurricularPlans"/></html:link></li>
 	</blockquote>
 </ul>
