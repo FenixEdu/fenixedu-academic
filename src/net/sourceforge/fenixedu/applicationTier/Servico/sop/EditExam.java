@@ -117,9 +117,7 @@ public class EditExam implements IServico {
         try {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             ISalaPersistente persistentRoom = sp.getISalaPersistente();
-            IExam examQuery = new Exam(examDate, examTime, null, null);
-            examQuery.setIdInternal(exam.getIdInternal());
-            List availableRooms = persistentRoom.readAvailableRooms(examQuery.getIdInternal());
+            List availableRooms = persistentRoom.readAvailableRooms(exam.getIdInternal());
 
             if (availableRooms.containsAll(exam.getAssociatedRooms())) {
                 return true;
