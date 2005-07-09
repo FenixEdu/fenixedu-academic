@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -33,13 +34,15 @@ public class DeleteCurricularCourseGroup implements IService {
                     .getIPersistentCurricularCourseGroup();
             ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) persistentCurricularCourseGroup
                     .readByOID(CurricularCourseGroup.class, groupId);
-            if (curricularCourseGroup.getCurricularCourses() == null
-                    || curricularCourseGroup.getCurricularCourses().isEmpty()) {
-                persistentCurricularCourseGroup.deleteByOID(CurricularCourseGroup.class, groupId);
-            } else {
-                throw new InvalidArgumentsServiceException();
-            }
-
+			if (curricularCourseGroup != null) {
+				try {
+					curricularCourseGroup.deleteCurricularCourseGroup();
+					persistentCurricularCourseGroup.deleteByOID(CurricularCourseGroup.class,groupId);
+				} catch (DomainException e) {
+					throw new InvalidArgumentsServiceException();
+				}
+			}
+			// inexistent CurricularCourseGroup
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }

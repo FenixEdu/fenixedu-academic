@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 
 /**
  * @author Nuno Correia
@@ -13,4 +15,13 @@ public abstract class CurricularCourseGroup extends CurricularCourseGroup_Base {
         super();
         this.setOjbConcreteClass(this.getClass().getName());
     }
+	
+	public void deleteCurricularCourseGroup() throws DomainException {
+		if (getCurricularCourses() == null || getCurricularCourses().isEmpty()) {
+			setBranch(null);
+			getScientificAreas().clear();
+		} else {
+			throw new DomainException(this.getClass().getName(), "ola mundo");			
+		}
+	}
 }

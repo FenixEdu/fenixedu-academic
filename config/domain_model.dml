@@ -436,6 +436,8 @@ class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourcefo
     
     public net.sourceforge.fenixedu.tools.enrollment.AreaType getAreaType();
     public void setAreaType(net.sourceforge.fenixedu.tools.enrollment.AreaType areaType);
+	
+	public void deleteCurricularCourseGroup() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
     "
 }
 
@@ -495,6 +497,12 @@ class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.do
 	String nameEn;
 	String sigla;
     DegreeType tipoCurso;
+	
+	interface "
+
+	public void deleteDegree () throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+	
+	"
 }
 
 
