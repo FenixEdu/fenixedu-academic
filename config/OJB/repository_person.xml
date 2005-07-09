@@ -293,6 +293,13 @@
 	</collection-descriptor>
 	
 	
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="personAuthorships"
+			element-class-ref="net.sourceforge.fenixedu.domain.publication.Authorship"
+			refresh="true" >
+		<inverse-foreignkey field-ref="keyAuthor"/>
+	</collection-descriptor>	
+	
 	
 	
 </class-descriptor>

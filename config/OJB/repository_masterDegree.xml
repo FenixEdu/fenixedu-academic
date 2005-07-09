@@ -1345,6 +1345,17 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
+      
+  	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		name="externalPersons"
+		element-class-ref="net.sourceforge.fenixedu.domain.ExternalPerson"
+		
+		auto-retrieve="true"
+		auto-update="false"
+		auto-delete="false"
+		>
+		<inverse-foreignkey field-ref="keyWorkLocation"/>
+	 </collection-descriptor>
                
  </class-descriptor>  
    
