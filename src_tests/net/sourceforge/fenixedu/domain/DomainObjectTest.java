@@ -6,74 +6,73 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 public class DomainObjectTest extends DomainTestBase {
 
-    private class SomeDomainObject extends Site {
+    private class SomeDomainObject extends DomainObject {
     }
 
-    private ISuportePersistente persistentSupport;
-
-    private void beginTransaction() {
-        try {
-            persistentSupport.iniciarTransaccao();
-        } catch (ExcepcaoPersistencia e) {
-            fail("Unexpected excpetion beginning transaction.");
-        }        
+    private class SomeOtherDomainObject extends DomainObject {
     }
 
-    private void abortTransaction() {
-        try {
-            persistentSupport.cancelarTransaccao();
-        } catch (ExcepcaoPersistencia e) {
-            fail("Unexpected excpetion beginning transaction.");
-        }        
+    private class SomeOtherObject {
     }
+
+
+    private SomeDomainObject someDomainObject1;
+    private SomeDomainObject someDomainObject2;
+    private SomeOtherDomainObject someOtherDomainObject;
+    private SomeOtherObject someOtherObject;
+    private SomeDomainObject someBadDomainObject;
 
     protected void setUp() throws Exception {
         super.setUp();
 
-        persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        someDomainObject1 = new SomeDomainObject();
+        someDomainObject1.setIdInternal(1);
+
+        someDomainObject2 = new SomeDomainObject();
+        someDomainObject2.setIdInternal(2);
+
+        someOtherDomainObject = new SomeOtherDomainObject();
+        someOtherDomainObject.setIdInternal(1);
+
+        someOtherObject = new SomeOtherObject();
+
+        someBadDomainObject = new SomeDomainObject();
     }
 
+
     public void testHashCode() {
-        SomeDomainObject domainObject = new SomeDomainObject();
-        try {
-            domainObject.hashCode();
-            fail("Expected RuntimeException because idInternal was not set.");
-        } catch (final RuntimeException rex) {
-            assertNull("Domain object idInternal was set outside of a transaction.",
-                    domainObject.getIdInternal());
-        }
+    	assertEquals("Unexpected hashCode for domain object.", 1, someDomainObject1.hashCode());
+    	assertEquals("Unexpected hashCode for domain object.", 2, someDomainObject2.hashCode());
+    	assertEquals("Unexpected hashCode for domain object.", 1, someOtherDomainObject.hashCode());
 
-        DomainObject.turnOnLockMode();
-        beginTransaction();
-
-        domainObject = new SomeDomainObject();
-        final int hashCode = domainObject.hashCode();
-        assertTrue("Domain object idInternal was not properly set.", hashCode > 0);
-
-        final SomeDomainObject anotherDomainObject = new SomeDomainObject();
-        final int anotherHashCode = anotherDomainObject.hashCode();
-        assertTrue("Domain object idInternal was not properly set.", hashCode > 0);
-
-        assertTrue("Two domain objects cannot have the same hashCode.", hashCode != anotherHashCode);
-        assertTrue("A domain objects hashCode does not change.", hashCode == domainObject.hashCode());
-
-        abortTransaction();
-        DomainObject.turnOffLockMode();
+    	try {
+    		someBadDomainObject.hashCode();
+    		fail("HashCode for imporoperly created object should cause an exception.");
+    	} catch (RuntimeException ex) {
+    		assertNull("IdInternal was not initialized.", someBadDomainObject.getIdInternal());
+    	}
     }
 
     public void testEquals() {
-        DomainObject.turnOnLockMode();
-        beginTransaction();
+    	assertFalse("Domain object is not equals to null.", someDomainObject1.equals(null));
 
-        final SomeDomainObject domainObject = new SomeDomainObject();
-        final SomeDomainObject anotherDomainObject = new SomeDomainObject();
+    	assertTrue("Domain object is always equals to itself.",
+    			someDomainObject1.equals(someDomainObject1));
 
-        assertFalse("A domain object is not equals to null.", domainObject.equals(null));
-        assertTrue("A domain object is always equals to itself.", domainObject.equals(domainObject));
-        assertFalse("A domain object is only equals to itself.", domainObject.equals(anotherDomainObject));
+    	assertFalse("Domain object is not equals to any other domain object of sane class.",
+    			someDomainObject1.equals(someDomainObject2));
+    	assertFalse("Domain object is not equals to any other domain object of sane class.",
+    			someDomainObject2.equals(someDomainObject1));
 
-        abortTransaction();
-        DomainObject.turnOffLockMode();
+    	assertFalse("Domain object is not equals to any other domain object.",
+    			someDomainObject1.equals(someOtherDomainObject));
+    	assertFalse("Domain object is not equals to any other domain object.",
+    			someOtherDomainObject.equals(someDomainObject1));
+
+    	assertFalse("Domain object is not equals to any other object.",
+    			someDomainObject1.equals(someOtherObject));
+    	assertFalse("Domain object is not equals to any other object.",
+    			someOtherObject.equals(someDomainObject1));
     }
 
 }
