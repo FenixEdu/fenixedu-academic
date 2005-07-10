@@ -24,19 +24,13 @@ public class DeletePrecedenceFromDegreeCurricularPlan implements IService {
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentPrecedence precedenceDAO = persistentSuport.getIPersistentPrecedence();
 
-            IPrecedence precedence = (IPrecedence) precedenceDAO.readByOID(Precedence.class,
-                    precedenceID);
-
-            List restrictions = precedence.getRestrictions();
-            int size = restrictions.size();
-
-            for (int i = 0; i < size; i++) {
-                IRestriction restriction = (IRestriction) restrictions.get(i);
-                precedenceDAO.deleteByOID(Restriction.class, restriction.getIdInternal());
-            }
-
-            precedenceDAO.deleteByOID(Precedence.class, precedenceID);
-
+            IPrecedence precedence = (IPrecedence) precedenceDAO.readByOID(Precedence.class, precedenceID);
+       
+			if (precedence != null) {
+				precedence.deletePrecedence();
+	            precedenceDAO.deleteByOID(Precedence.class, precedenceID);	
+			}
+			
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }

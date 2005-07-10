@@ -1702,6 +1702,7 @@ class net.sourceforge.fenixedu.domain.precedences.Precedence extends net.sourcef
 	
 	interface " 
 	public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType evaluate(net.sourceforge.fenixedu.domain.precedences.PrecedenceContext precedenceContext);
+	public void deletePrecedence();
 	"
 }
 

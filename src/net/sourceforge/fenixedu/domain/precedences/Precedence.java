@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.precedences;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**
  * @author David Santos in Jun 9, 2004
@@ -38,5 +39,17 @@ public class Precedence extends Precedence_Base {
 
         return evaluate;
     }
-
+	
+	
+	public void deletePrecedence() {
+		
+		List<IRestriction> restrictions = getRestrictions();
+		for (IRestriction restriction : restrictions) {
+			if (restriction instanceof IRestrictionByCurricularCourse)
+				((IRestrictionByCurricularCourse)restriction).setPrecedentCurricularCourse(null);
+		}
+		
+		setCurricularCourse(null);
+		getRestrictions().clear();
+	}
 }
