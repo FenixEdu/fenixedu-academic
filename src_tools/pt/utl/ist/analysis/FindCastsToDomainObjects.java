@@ -3,16 +3,16 @@ package pt.utl.ist.analysis;
 import org.objectweb.asm.*;
 import org.objectweb.asm.commons.*;
 
-public class FindDomainObjectAllocations extends DomainDrivenClassFilesVisitor implements Opcodes {
+public class FindCastsToDomainObjects extends DomainDrivenClassFilesVisitor implements Opcodes {
 
-    private int totalNews = 0;
+    private int totalCasts = 0;
 
     protected MethodVisitor makeMethodVisitor(MethodVisitor mv, final String methodName, final String className) {
         return new MethodAdapter(mv) {
                 public void visitTypeInsn(int opcode, String desc) {
-                    if ((opcode == NEW) && getModelInfo().belongsToDomainModel(descToName(desc))) {
-                        totalNews++;
-                        System.out.println(className + ": method " + methodName + " -> new " + desc);
+                    if ((opcode == CHECKCAST) && getModelInfo().isDomainClass(descToName(desc))) {
+                        totalCasts++;
+                        System.out.println(className + ": method " + methodName + " -> cast to " + desc);
                     }
                     super.visitTypeInsn(opcode, desc);
                 }
@@ -20,10 +20,10 @@ public class FindDomainObjectAllocations extends DomainDrivenClassFilesVisitor i
     }
 
     public static void main (final String args[]) throws Exception {
-        FindDomainObjectAllocations visitor = new FindDomainObjectAllocations();
+        FindCastsToDomainObjects visitor = new FindCastsToDomainObjects();
         visitor.processArgs(args);
         visitor.start();
 
-        System.out.println("Total allocations = " + visitor.totalNews);
+        System.out.println("Total casts = " + visitor.totalCasts);
     }
 }

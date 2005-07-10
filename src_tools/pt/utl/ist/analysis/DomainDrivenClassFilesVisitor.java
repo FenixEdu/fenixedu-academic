@@ -40,9 +40,6 @@ public class DomainDrivenClassFilesVisitor extends ClassFilesVisitor {
         return modelInfo;
     }
 
-    protected boolean descBelongsToDomainModel(String desc) {
-        return getModelInfo().belongsToDomainModel(descToName(desc));
-    }
 
     protected boolean shouldProcessClass(String name) {
         for (String ignoreRe : ignoreClasses) {
@@ -57,7 +54,7 @@ public class DomainDrivenClassFilesVisitor extends ClassFilesVisitor {
         return new DefaultClassVisitor();
     }
     
-    protected MethodVisitor makeMethodVisitor(MethodVisitor mv, String className) {
+    protected MethodVisitor makeMethodVisitor(MethodVisitor mv, String methodName, String className) {
         return mv;
     }
 
@@ -84,7 +81,7 @@ public class DomainDrivenClassFilesVisitor extends ClassFilesVisitor {
         public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
             MethodVisitor mv = super.visitMethod(access, name, desc, signature, exceptions);
             if (processIt) {
-                return makeMethodVisitor(mv, className);
+                return makeMethodVisitor(mv, name, className);
             } else {
                 return mv;
             }

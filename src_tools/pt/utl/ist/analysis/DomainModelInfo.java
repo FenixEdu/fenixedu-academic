@@ -29,6 +29,10 @@ public class DomainModelInfo {
                 && (domainModel.findClass(name) != null));
     }
 
+    public boolean isDomainClass(String name){
+        return isDomainNonBaseClass(name) || isDomainBaseClass(name);
+    }
+
     public boolean isInterface(String name) {
         if (domainModel != null) {
             // The pos of the first char is one plus the pos of the last dot

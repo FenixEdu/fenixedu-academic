@@ -83,4 +83,54 @@
     </java>
   </target>
 
+  <target name="find-casts-for-domain-objects"
+          depends="analysis-compile"
+          description="Report occurrences of casts to domain objects.">
+    <java classname="pt.utl.ist.analysis.FindCastsToDomainObjects" fork="true">
+      <classpath refid="classpath.analysis"/>
+      <arg value="-d"/>
+      <arg value="${dml.definition.file}"/>
+      <arg value="-f"/>
+      <arg value="${build.home.webinf.classes}/${analysis.subdir}"/>
+      <arg value="-i"/>
+      <arg value="net.sourceforge.fenixedu.domain.*_Base"/>
+    </java>
+  </target>
+
+  <target name="find-instanceofs-domain-objects"
+          depends="analysis-compile"
+          description="Report occurrences of instanceofs domain objects.">
+    <java classname="pt.utl.ist.analysis.FindInstanceofsDomainObjects" fork="true">
+      <classpath refid="classpath.analysis"/>
+      <arg value="-d"/>
+      <arg value="${dml.definition.file}"/>
+      <arg value="-f"/>
+      <arg value="${build.home.webinf.classes}/${analysis.subdir}"/>
+    </java>
+  </target>
+
+  <target name="find-setter-calls"
+          depends="analysis-compile"
+          description="Report occurrences of calls to setter methods.">
+    <java classname="pt.utl.ist.analysis.FindSetCallsToDomainObjects" fork="true">
+      <classpath refid="classpath.analysis"/>
+      <arg value="-d"/>
+      <arg value="${dml.definition.file}"/>
+      <arg value="-f"/>
+      <arg value="${build.home.webinf.classes}/${analysis.subdir}"/>
+    </java>
+  </target>
+
+  <target name="find-setter-calls-with-no-previous-lock"
+          depends="analysis-compile"
+          description="Report occurrences of calls to setter methods.">
+    <java classname="pt.utl.ist.analysis.FindSetCallsWithNoLockWrite" fork="true">
+      <classpath refid="classpath.analysis"/>
+      <arg value="-d"/>
+      <arg value="${dml.definition.file}"/>
+      <arg value="-f"/>
+      <arg value="${build.home.webinf.classes}/${analysis.subdir}"/>
+    </java>
+  </target>
+
 </project>
