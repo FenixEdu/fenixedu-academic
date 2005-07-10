@@ -62,7 +62,6 @@ public class EditLesson implements IService {
                 break;
             }
         }
-        shift.setAssociatedLessons(associatedLessons);
         if (aula != null) {
             result = valid(newLesson);
             if (result.getMessageType() == 1) {
@@ -181,10 +180,6 @@ public class EditLesson implements IService {
         ILesson lesson = null;
         double duration = 0;
         List associatedLessons = shift.getAssociatedLessons();
-        if (associatedLessons == null) {
-            associatedLessons = shift.getAssociatedLessons();
-            shift.setAssociatedLessons(associatedLessons);
-        }
         for (int i = 0; i < associatedLessons.size(); i++) {
             lesson = (ILesson) associatedLessons.get(i);
             if (!lesson.getIdInternal().equals(alteredLesson.getIdInternal())) {

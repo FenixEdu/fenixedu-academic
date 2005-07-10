@@ -73,13 +73,10 @@ public class CreateMasterDegreeCandidate implements IService {
 		Calendar actualDate = Calendar.getInstance();
 		candidateSituation.setDate(actualDate.getTime());
 
-		List situations = new ArrayList();
-		situations.add(candidateSituation);
-
 		// Create the Candidate
 		IMasterDegreeCandidate masterDegreeCandidate = new MasterDegreeCandidate();
 		masterDegreeCandidateDAO.simpleLockWrite(masterDegreeCandidate);
-		masterDegreeCandidate.setSituations(situations);
+		masterDegreeCandidate.addSituations(candidateSituation);
 		candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
 		masterDegreeCandidate.setSpecialization(degreeType);
 		masterDegreeCandidate.setExecutionDegree(executionDegree);
@@ -109,7 +106,6 @@ public class CreateMasterDegreeCandidate implements IService {
 			person.setUsername(username);
 
 			// Give the Person Role
-			person.setPersonRoles(new ArrayList());
 			person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(RoleType.PERSON));
 		}else{
             if(person.getUsername().startsWith("INA")){

@@ -120,21 +120,17 @@ public class CreateGuide implements IService {
 
         // Write the new Entries of the Guide
         Iterator iterator = infoGuide.getInfoGuideEntries().iterator();
-        List guideEntries = new ArrayList();
         while (iterator.hasNext()) {
             IGuideEntry guideEntry = InfoGuideEntry.newDomainFromInfo((InfoGuideEntry) iterator.next());
             sp.getIPersistentGuideEntry().simpleLockWrite(guideEntry);
-            guideEntries.add(guideEntry);
             guideEntry.setGuide(guide);
         }
-        guide.setGuideEntries(guideEntries);
 
         // Write the New Guide Situation
         guideSituation = new GuideSituation(situationOfGuide, remarks, calendar.getTime(), guide,
                 new State(State.ACTIVE));
         sp.getIPersistentGuideSituation().simpleLockWrite(guideSituation);
 
-        guide.setGuideSituations(new ArrayList());
         guide.getGuideSituations().add(guideSituation);
 
         InfoGuide result = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide);

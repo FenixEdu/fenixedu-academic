@@ -107,7 +107,6 @@ public class CreatePersonBaseClass {
                 personToLock = new Person();
                 pPerson.simpleLockWrite(personToLock);
 
-                personToLock.setPersonRoles(new ArrayList());
                 personToLock.getPersonRoles().add(
                         sp.getIPersistentRole().readByRoleType(RoleType.PERSON));
                 islocked = true;

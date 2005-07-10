@@ -27,8 +27,6 @@ public class Publication extends Publication_Base implements IPublication {
 
     public Publication() {
         super();
-        setPublicationAuthors(new ArrayList());
-        setPublicationTeachers(new ArrayList());
     } 
 
     public String toString() {

@@ -44,10 +44,6 @@ public class AssociateCurricularCoursesToExecutionCourse implements IService {
                 }
 
                 List curricularCourses = executionCourse.getAssociatedCurricularCourses();
-                if (curricularCourses == null) {
-                    curricularCourses = new ArrayList();
-                }
-                List curricularCoursesToAssociate = new ArrayList();
                 Iterator iter = curricularCourseIds.iterator();
                 while (iter.hasNext()) {
                     Integer curricularCourseId = (Integer) iter.next();
@@ -57,19 +53,10 @@ public class AssociateCurricularCoursesToExecutionCourse implements IService {
                     if (curricularCourse == null) {
                         throw new NonExistingServiceException("noCurricularCourse");
                     }
-                    List executionCourses = curricularCourse.getAssociatedExecutionCourses();
-                    if (executionCourses == null) {
-                        executionCourses = new ArrayList();
-                    }
-                    if (!curricularCourses.contains(curricularCourse)
-                            && !executionCourses.contains(executionCourse)) {
-                        curricularCoursesToAssociate.add(curricularCourse);
-                        executionCourses.add(executionCourse);
-                        curricularCourse.setAssociatedExecutionCourses(executionCourses);
+                    if (! curricularCourse.hasAssociatedExecutionCourses(executionCourse)) {
+                        curricularCourse.addAssociatedExecutionCourses(executionCourse);
                     }
                 }
-                curricularCourses.addAll(curricularCoursesToAssociate);
-                executionCourse.setAssociatedCurricularCourses(curricularCourses);
             }
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);

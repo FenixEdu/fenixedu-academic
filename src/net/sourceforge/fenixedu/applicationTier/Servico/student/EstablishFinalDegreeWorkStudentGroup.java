@@ -45,7 +45,6 @@ public class EstablishFinalDegreeWorkStudentGroup implements IService {
         if (group == null) {
             group = new Group();
             persistentFinalDegreeWork.simpleLockWrite(group);
-            group.setGroupStudents(new ArrayList());
             IStudent student = persistentStudent.readByUsername(username);
             if (student != null) {
                 IGroupStudent groupStudent = new GroupStudent();

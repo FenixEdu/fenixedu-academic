@@ -168,10 +168,6 @@ public class CreateOrEditGrantContract implements IService {
             infoGrantContract.setContractNumber(newContractNumber);
 
             grantContract = new GrantContract();
-            grantContract.setAssociatedGrantContractMovements(new ArrayList(0));
-            grantContract.setAssociatedGrantInsurances(new ArrayList(0));
-            grantContract.setAssociatedGrantSubsidies(new ArrayList(0));
-            grantContract.setContractRegimes(new ArrayList(0));
         } else {
             grantContract = pGrantContract
                     .readGrantContractByNumberAndGrantOwner(infoGrantContract

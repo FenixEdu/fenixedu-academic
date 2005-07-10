@@ -216,9 +216,7 @@ public class EditReimbursementGuide implements IService {
             persistentObject.simpleLockWrite(activeSituation);
             activeSituation.setState(new State(State.INACTIVE_STRING));
 
-            List reimbursementGuideSituations = reimbursementGuide.getReimbursementGuideSituations();
-            reimbursementGuideSituations.add(newActiveSituation);
-            reimbursementGuide.setReimbursementGuideSituations(reimbursementGuideSituations);
+            reimbursementGuide.addReimbursementGuideSituations(newActiveSituation);
 
             persistentObject.simpleLockWrite(newActiveSituation);
 

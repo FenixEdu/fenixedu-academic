@@ -198,19 +198,12 @@ public class SeperateExecutionCourse implements IService {
     private IExecutionCourse createNewExecutionCourse(IPersistentObject persistentObject,
             IExecutionCourse originExecutionCourse) throws ExcepcaoPersistencia {
         IExecutionCourse destinationExecutionCourse = new ExecutionCourse();
-        destinationExecutionCourse.setAssociatedCurricularCourses(new ArrayList());
-        destinationExecutionCourse.setAssociatedEvaluations(new ArrayList());
-        destinationExecutionCourse.setAssociatedExams(new ArrayList());
-        destinationExecutionCourse.setAttendingStudents(new ArrayList());
-        destinationExecutionCourse.setAttends(new ArrayList());
         destinationExecutionCourse.setComment("");
-        destinationExecutionCourse.setExecutionCourseProperties(new ArrayList());
         destinationExecutionCourse.setExecutionPeriod(originExecutionCourse.getExecutionPeriod());
         destinationExecutionCourse.setLabHours(originExecutionCourse.getLabHours());
         destinationExecutionCourse.setNome(originExecutionCourse.getNome());
         destinationExecutionCourse.setPraticalHours(originExecutionCourse.getPraticalHours());
 
-        destinationExecutionCourse.setProfessorships(new ArrayList());
         for (int i = 0; i < originExecutionCourse.getProfessorships().size(); i++) {
             IProfessorship professorship = originExecutionCourse.getProfessorships()
                     .get(i);
@@ -221,7 +214,6 @@ public class SeperateExecutionCourse implements IService {
             destinationExecutionCourse.getProfessorships().add(newProfessorship);
         }
 
-        destinationExecutionCourse.setResponsibleTeachers(new ArrayList());
         for (int i = 0; i < originExecutionCourse.getResponsibleTeachers().size(); i++) {
             IResponsibleFor responsibleFor = originExecutionCourse
                     .getResponsibleTeachers().get(i);

@@ -27,7 +27,7 @@ public class SetPersonRoles implements IService {
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPerson person = persistentSuport.getIPessoaPersistente().lerPessoaPorUsername(username);
             persistentSuport.getIPessoaPersistente().simpleLockWrite(person);
-            person.setPersonRoles(new ArrayList());
+            person.getPersonRoles().clear();
             for (int i = 0; i < roleOIDs.size(); i++) {
                 IRole role = (IRole) persistentSuport.getIPessoaPersistente().readByOID(Role.class,
                         ((Integer) roleOIDs.get(i)));

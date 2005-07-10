@@ -210,8 +210,8 @@ public class InitializeExecutionPeriod {
         final Collection<ISchoolClass> schoolClasses = objectsToPersist.get(SchoolClass.class);
         System.out.println("writing " + schoolClasses.size() + " schoolClasses");
 		for (final ISchoolClass schoolClass : schoolClasses) {
-			schoolClass.setAssociatedShifts(null);
 			persistentObject.simpleLockWrite(schoolClass);
+			schoolClass.getAssociatedShifts().clear();
 		}
 
         persistentSupport.confirmarTransaccao();
@@ -219,8 +219,8 @@ public class InitializeExecutionPeriod {
         final Collection<IExecutionCourse> executionCourses = objectsToPersist.get(ExecutionCourse.class);
         System.out.println("writing " + executionCourses.size() + " executionCourses");
 		for (final IExecutionCourse executionCourse : executionCourses) {
-			executionCourse.setAssociatedShifts(null);
 			persistentObject.simpleLockWrite(executionCourse);
+			executionCourse.getAssociatedShifts().clear();
 		}
 
         persistentSupport.confirmarTransaccao();
@@ -228,8 +228,8 @@ public class InitializeExecutionPeriod {
         final Collection<IShift> shifts = objectsToPersist.get(Shift.class);
         System.out.println("writing " + shifts.size() + " shifts");
 		for (final IShift shift : shifts) {
-			shift.setAssociatedLessons(null);
 			persistentObject.simpleLockWrite(shift);
+			shift.getAssociatedLessons().clear();
 		}
 
         persistentSupport.confirmarTransaccao();
@@ -265,7 +265,6 @@ public class InitializeExecutionPeriod {
 
                     final ISchoolClass newSchoolClass = new SchoolClass();
                     newSchoolClass.setAnoCurricular(schoolClass.getAnoCurricular());
-                    newSchoolClass.setAssociatedShifts(new ArrayList());
                     newSchoolClass.setExecutionDegree(newExecutionDegree);
                     newExecutionDegree.getSchoolClasses().add(newSchoolClass);
                     newSchoolClass.setExecutionPeriod(newExecutionPeriod);
@@ -354,30 +353,16 @@ public class InitializeExecutionPeriod {
             final IExecutionCourse executionCourse) {
         final IExecutionCourse newExecutionCourse = new ExecutionCourse();
 
-        newExecutionCourse.setAssociatedBibliographicReferences(new ArrayList(executionCourse
-                .getAssociatedBibliographicReferences()));
-        newExecutionCourse.setAssociatedCurricularCourses(new ArrayList());
-        newExecutionCourse.setAssociatedEvaluations(new ArrayList(0));
-        newExecutionCourse.setAssociatedExams(new ArrayList(0));
-        newExecutionCourse.setAssociatedShifts(new ArrayList(0));
-        newExecutionCourse.setAssociatedSummaries(new ArrayList(0));
-        newExecutionCourse.setAttendingStudents(new ArrayList(0));
-        newExecutionCourse.setAttends(new ArrayList(0));
+        newExecutionCourse.getAssociatedBibliographicReferences().addAll(executionCourse
+                .getAssociatedBibliographicReferences());
         newExecutionCourse.setComment(new String());
         newExecutionCourse.setCourseReport(null);
-        newExecutionCourse.setEvaluationExecutionCourses(new ArrayList(0));
         newExecutionCourse.setEvaluationMethod(null);
-        newExecutionCourse.setExecutionCourseProperties(new ArrayList(0));
         newExecutionCourse.setExecutionPeriod(newExecutionPeriod);
         newExecutionPeriod.getAssociatedExecutionCourses().add(newExecutionCourse);
-        newExecutionCourse.setGroupPropertiesExecutionCourse(new ArrayList(0));
-        newExecutionCourse.setGroupPropertiesSenderExecutionCourse(new ArrayList(0));
         newExecutionCourse.setLabHours(executionCourse.getLabHours());
         newExecutionCourse.setNome(executionCourse.getNome());
-        newExecutionCourse.setNonAffiliatedTeachers(new ArrayList(0));
         newExecutionCourse.setPraticalHours(executionCourse.getPraticalHours());
-        newExecutionCourse.setProfessorships(new ArrayList(0));
-        newExecutionCourse.setResponsibleTeachers(new ArrayList(0));
         newExecutionCourse.setSigla(executionCourse.getSigla());
         newExecutionCourse.setSite(executionCourse.getSite());
         newExecutionCourse.setTheoPratHours(executionCourse.getTheoPratHours());
@@ -426,11 +411,6 @@ public class InitializeExecutionPeriod {
     private void createShift(final IShift shift, final IExecutionCourse executionCourse)
             throws ExcepcaoPersistencia {
         final IShift newShift = new Shift();
-        newShift.setAssociatedClasses(new ArrayList());
-        newShift.setAssociatedLessons(new ArrayList());
-        newShift.setAssociatedShiftProfessorship(new ArrayList());
-        newShift.setAssociatedStudentGroups(new ArrayList());
-        newShift.setAssociatedSummaries(new ArrayList());
         newShift.setAvailabilityFinal(shift.getLotacao());
         newShift.setDisciplinaExecucao(executionCourse);
         newShift.setLotacao(shift.getLotacao());
@@ -438,7 +418,6 @@ public class InitializeExecutionPeriod {
         newShift.setOcupation(Integer.valueOf(0));
         newShift.setPercentage(Double.valueOf(0));
         // newShift.setSchoolClassShifts(new ArrayList());
-        newShift.setStudentShifts(new ArrayList());
         newShift.setTipo(shift.getTipo());
 
         processedShifts++;

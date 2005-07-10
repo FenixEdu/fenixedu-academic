@@ -36,7 +36,6 @@ public class AssociateExecutionCourseToCurricularCourse implements IService {
 
             IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
                     .getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse;
 
             IPersistentCurricularCourse persistentCurricularCourse = persistentSuport
                     .getIPersistentCurricularCourse();
@@ -47,9 +46,6 @@ public class AssociateExecutionCourseToCurricularCourse implements IService {
                 throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
 
             List executionCourses = curricularCourse.getAssociatedExecutionCourses();
-            if (executionCourses == null) {
-                executionCourses = new ArrayList();
-            }
             Iterator iter = executionCourses.iterator();
 
             while (iter.hasNext()) {
@@ -59,20 +55,14 @@ public class AssociateExecutionCourseToCurricularCourse implements IService {
                     throw new ExistingServiceException("message.unavailable.execution.period", null);
             }
 
-            executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
                     ExecutionCourse.class, executionCourseId);
             if (executionCourse == null) {
                 throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
             }
-            List curricularCourses = executionCourse.getAssociatedCurricularCourses();
-            if (!executionCourses.contains(executionCourse)
-                    && !curricularCourses.contains(curricularCourse)) {
+            if (! curricularCourse.hasAssociatedExecutionCourses(executionCourse)) {
                 persistentCurricularCourse.simpleLockWrite(curricularCourse);
-                executionCourses.add(executionCourse);
-                curricularCourses.add(curricularCourse);
-                curricularCourse.setAssociatedExecutionCourses(executionCourses);
-                executionCourse.setAssociatedCurricularCourses(curricularCourses);
-
+                curricularCourse.addAssociatedExecutionCourses(executionCourse);
             }
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
             throw new FenixServiceException(excepcaoPersistencia);

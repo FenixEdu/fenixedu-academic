@@ -109,7 +109,8 @@ public class DepartmentOJB extends PersistentObjectOJB implements IPersistentDep
         IPersistentEmployee employeeDAO = new EmployeeOJB();
 
         IEmployee employee = employeeDAO.readByNumber(teacher.getTeacherNumber());
-        employee.setHistoricList(employeeDAO.readHistoricByKeyEmployee(employee.getIdInternal()
+        employee.getHistoricList().clear();
+        employee.getHistoricList().addAll(employeeDAO.readHistoricByKeyEmployee(employee.getIdInternal()
                 .intValue()));
 
         employee.fillEmployeeHistoric();

@@ -45,9 +45,6 @@ public class CriarTurno implements IService {
         Integer availabilityFinal = new Integer(new Double(Math.ceil(1.10 * newShift.getLotacao()
                 .doubleValue())).intValue());
         newShift.setAvailabilityFinal(availabilityFinal);
-        newShift.setAssociatedLessons(new ArrayList());
-        newShift.setAssociatedClasses(new ArrayList());
-        newShift.setAssociatedShiftProfessorship(new ArrayList());
 
         return InfoShiftWithInfoExecutionCourse.newInfoFromDomain(newShift);
 

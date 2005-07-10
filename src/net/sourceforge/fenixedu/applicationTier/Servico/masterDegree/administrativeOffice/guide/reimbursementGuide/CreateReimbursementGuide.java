@@ -113,7 +113,6 @@ public class CreateReimbursementGuide implements IService {
             reimbursementGuide.setCreationDate(Calendar.getInstance());
             reimbursementGuide.setNumber(reimbursementGuideNumber);
             reimbursementGuide.setGuide(guide);
-            guide.getReimbursementGuides().add(reimbursementGuide);
 
             // read employee
             IPersistentEmployee persistentEmployee = ps.getIPersistentEmployee();
@@ -132,13 +131,8 @@ public class CreateReimbursementGuide implements IService {
             reimbursementGuideSituation.setRemarks(remarks);
             reimbursementGuideSituation.setState(new State(State.ACTIVE));
 
-            List reimbursementGuideSituations = new ArrayList();
-            reimbursementGuideSituations.add(reimbursementGuideSituation);
-            reimbursementGuide.setReimbursementGuideSituations(reimbursementGuideSituations);
-
             // reimbursement Guide Entries
             it = reimbursementGuideEntries.iterator();
-            List reimbursementGuideEntriesList = new ArrayList();
             while (it.hasNext()) {
                 reimbursementGuideEntry = (IReimbursementGuideEntry) it.next();
 
@@ -151,7 +145,6 @@ public class CreateReimbursementGuide implements IService {
                 }
 
                 reimbursementGuideEntry.setReimbursementGuide(reimbursementGuide);
-                reimbursementGuideEntriesList.add(reimbursementGuideEntry);
 
                 IGuideEntry guideEntry = (IGuideEntry) persistentObject.readByOID(GuideEntry.class,
                         reimbursementGuideEntry.getGuideEntry().getIdInternal());
@@ -161,7 +154,6 @@ public class CreateReimbursementGuide implements IService {
 
                 persistentReimbursementGuideEntry.simpleLockWrite(reimbursementGuideEntry);
             }
-            reimbursementGuide.setReimbursementGuideEntries(reimbursementGuideEntriesList);
             guide.getReimbursementGuides().add(reimbursementGuide);
             return reimbursementGuide.getIdInternal();
 

@@ -52,8 +52,6 @@ public class DissociateExecutionCourse implements IService {
                 persistentCurricularCourse.simpleLockWrite(curricularCourse);
                 executionCourses.remove(executionCourse);
                 curricularCourses.remove(curricularCourse);
-                executionCourse.setAssociatedCurricularCourses(curricularCourses);
-                curricularCourse.setAssociatedExecutionCourses(executionCourses);
             }
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);

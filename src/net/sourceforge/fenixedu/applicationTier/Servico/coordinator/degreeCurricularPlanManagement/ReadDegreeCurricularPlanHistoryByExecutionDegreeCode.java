@@ -59,16 +59,6 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode implements ISe
 
                 if (allCurricularCourses != null && !allCurricularCourses.isEmpty()) {
 
-                    Iterator iterator = allCurricularCourses.iterator();
-                    while (iterator.hasNext()) {
-                        ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
-
-                        List curricularCourseScopes = curricularCourse.getScopes();
-
-                        if (curricularCourseScopes != null) {
-                            curricularCourse.setScopes(curricularCourseScopes);
-                        }
-                    }
                     infoDegreeCurricularPlan = createInfoDegreeCurricularPlan(executionDegree,
                             allCurricularCourses);
                 }

@@ -45,8 +45,8 @@ public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
         this.setFinalResult(finalResult);
         this.setAttachedCopiesNumber(attachedCopiesNumber);
         this.setCurrentState(currentState);
-        this.setJuries(juries);
-        this.setExternalJuries(externalJuries);
+        this.getJuries().addAll(juries);
+        this.getExternalJuries().addAll(externalJuries);
     }
 
     public Timestamp getLastModification() {

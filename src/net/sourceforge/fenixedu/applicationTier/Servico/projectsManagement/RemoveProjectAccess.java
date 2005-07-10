@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IPerson;
@@ -43,12 +44,12 @@ public class RemoveProjectAccess implements IService {
             if (persistentSuportOracle.getIPersistentProject().countUserProject(getUserNumber(sp, person)) == 0) {
                 sp.getIPessoaPersistente().simpleLockWrite(person);
 
-                List<IRole> oldRolesList = person.getPersonRoles();
-                person.setPersonRoles(new ArrayList());
-                for (IRole role : oldRolesList) {
-                    if (!role.getRoleType().equals(roleType)) {
-                        person.getPersonRoles().add(role);
-                    }
+                Iterator iter = person.getPersonRolesIterator();
+                while (iter.hasNext()) {
+                    IRole role = (IRole) iter.next();
+                    if (role.getRoleType().equals(roleType)) {
+                        iter.remove();
+                    }                    
                 }
             }
         }

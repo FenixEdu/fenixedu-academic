@@ -187,7 +187,6 @@ public class EditExamNew implements IService {
                             examDate, null);
                     if (period == null) {
                         period = new Period();
-                        period.setRoomOccupations(new ArrayList());
                         persistentPeriod.simpleLockWrite(period);
                         period.setStartDate(examDate);
                         period.setEndDate(examDate);
@@ -200,7 +199,6 @@ public class EditExamNew implements IService {
                         examDate, null);
                 if (period == null) {
                     period = new Period();
-                    period.setRoomOccupations(new ArrayList());
                     persistentPeriod.simpleLockWrite(period);
                     period.setStartDate(examDate);
                     period.setEndDate(examDate);

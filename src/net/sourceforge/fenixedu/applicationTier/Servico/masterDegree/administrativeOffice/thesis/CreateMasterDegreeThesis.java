@@ -110,14 +110,13 @@ public class CreateMasterDegreeThesis implements IService {
                     .copyListInfoExternalPerson2ListIExternalPerson(infoExternalPersonExternalGuiders);
             List externalAssistentGuiders = Cloner
                     .copyListInfoExternalPerson2ListIExternalPerson(infoExternalPersonExternalAssistentGuiders);
-            masterDegreeThesisDataVersion.setGuiders(guiders);
-            masterDegreeThesisDataVersion.setAssistentGuiders(assistentGuiders);
-            masterDegreeThesisDataVersion.setExternalGuiders(externalGuiders);
-            masterDegreeThesisDataVersion.setExternalAssistentGuiders(externalAssistentGuiders);
+            masterDegreeThesisDataVersion.getGuiders().addAll(guiders);
+            masterDegreeThesisDataVersion.getAssistentGuiders().addAll(assistentGuiders);
+            masterDegreeThesisDataVersion.getExternalGuiders().addAll(externalGuiders);
+            masterDegreeThesisDataVersion.getExternalAssistentGuiders().addAll(externalAssistentGuiders);
             sp.getIPersistentMasterDegreeThesisDataVersion().simpleLockWrite(
                     masterDegreeThesisDataVersion);
             
-            masterDegreeThesis.setMasterDegreeThesisDataVersions(new ArrayList());
             masterDegreeThesis.getMasterDegreeThesisDataVersions().add(masterDegreeThesisDataVersion);
 
         } catch (ExcepcaoPersistencia ex) {

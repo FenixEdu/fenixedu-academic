@@ -108,7 +108,7 @@ public class SubmitFinalWorkProposal implements IService {
         proposal.setTitle(infoProposal.getTitle());
         proposal.setUrl(infoProposal.getUrl());
 
-        proposal.setBranches(new ArrayList());
+        proposal.getBranches().clear();
         if (infoProposal.getBranches() != null && !infoProposal.getBranches().isEmpty()) {
             for (int i = 0; i < infoProposal.getBranches().size(); i++) {
                 InfoBranch infoBranch = (InfoBranch) infoProposal.getBranches().get(i);

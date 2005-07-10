@@ -382,16 +382,14 @@ public abstract class Cloner {
                 .getInfoDisciplinaExecucao());
 
         copyObjectProperties(shift, infoShift);
-        List lessons = new ArrayList();
         if (shift.getAssociatedLessons() != null) {
             for (int i = 0; i < shift.getAssociatedLessons().size(); i++) {
                 InfoLesson infoLesson = (InfoLesson) shift.getAssociatedLessons().get(i);
                 ILesson lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
-                lessons.add(lesson);
+                shift.addAssociatedLessons(lesson);
             }
         }
         shift.setDisciplinaExecucao(executionCourse);
-        shift.setAssociatedLessons(lessons);
         return shift;
     }
 
@@ -1030,23 +1028,18 @@ public abstract class Cloner {
 
         if (infoExam != null && infoExam.getAssociatedCurricularCourseScope() != null
                 && infoExam.getAssociatedCurricularCourseScope().size() > 0) {
-            List curricularCourseScopes = new ArrayList();
             for (int i = 0; i < infoExam.getAssociatedCurricularCourseScope().size(); i++) {
-                curricularCourseScopes
-                        .add(copyInfoCurricularCourseScope2ICurricularCourseScope((InfoCurricularCourseScope) infoExam
-                                .getAssociatedCurricularCourseScope().get(i)));
+                exam.addAssociatedCurricularCourseScope(copyInfoCurricularCourseScope2ICurricularCourseScope((InfoCurricularCourseScope) infoExam
+                                                                                                             .getAssociatedCurricularCourseScope().get(i)));
             }
-            exam.setAssociatedCurricularCourseScope(curricularCourseScopes);
         }
 
         if (infoExam != null && infoExam.getAssociatedRoomOccupation() != null
                 && infoExam.getAssociatedRoomOccupation().size() > 0) {
-            List roomOccupation = new ArrayList();
             for (int i = 0; i < infoExam.getAssociatedRoomOccupation().size(); i++) {
-                roomOccupation.add(copyInfoRoomOccupation2IRoomOccupation((InfoRoomOccupation) infoExam
-                        .getAssociatedRoomOccupation().get(i)));
+                exam.addAssociatedRoomOccupation(copyInfoRoomOccupation2IRoomOccupation((InfoRoomOccupation) infoExam
+                                                                                        .getAssociatedRoomOccupation().get(i)));
             }
-            exam.setAssociatedRoomOccupation(roomOccupation);
         }
 
         return exam;
@@ -1824,7 +1817,6 @@ public abstract class Cloner {
         ICandidacy candidacy = null;
         if (infoCandidacy != null) {
             candidacy = new Candidacy();
-            List caseStudyChoices = new LinkedList();
             candidacy.setMotivation(infoCandidacy.getMotivation());
             for (Iterator iter = infoCandidacy.getCaseStudyChoices().iterator(); iter.hasNext();) {
                 InfoCaseStudyChoice element = (InfoCaseStudyChoice) iter.next();
@@ -1832,10 +1824,8 @@ public abstract class Cloner {
                 caseStudy.setOrder(element.getOrder());
                 caseStudy.setCaseStudy(new CaseStudy());
                 caseStudy.getCaseStudy().setIdInternal(element.getCaseStudy().getIdInternal());
-                caseStudyChoices.add(caseStudy);
+                candidacy.addCaseStudyChoices(caseStudy);
             }
-
-            candidacy.setCaseStudyChoices(caseStudyChoices);
 
             candidacy.setCurricularCourse(new CurricularCourse());
             candidacy.getCurricularCourse().setIdInternal(

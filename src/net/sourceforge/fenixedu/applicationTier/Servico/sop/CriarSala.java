@@ -73,7 +73,6 @@ public class CriarSala implements IService {
         room.setCapacidadeNormal(infoRoom.getCapacidadeNormal());
         room.setNome(infoRoom.getNome());
         room.setPiso(infoRoom.getPiso());
-        room.setRoomOccupations(new ArrayList());
         room.setTipo(infoRoom.getTipo());
         room.setBuilding(building);
 

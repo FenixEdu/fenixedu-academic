@@ -119,8 +119,6 @@ public class SibsPaymentFileUtils {
 
         }
 
-        sibsFile.setSibsPaymentFileEntries(sibsFileEntries);
-
         Collections.sort(sibsFileEntries, new Comparator() {
 
             public int compare(Object leftObject, Object rightObject) {
@@ -139,6 +137,8 @@ public class SibsPaymentFileUtils {
             }
 
         });
+
+        sibsFile.getSibsPaymentFileEntries().addAll(sibsFileEntries);
 
         return sibsFile;
     }

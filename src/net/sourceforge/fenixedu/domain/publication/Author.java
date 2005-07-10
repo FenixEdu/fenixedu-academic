@@ -16,11 +16,6 @@ import java.util.ArrayList;
  */
 public class Author extends Author_Base implements IAuthor{
 
-	public Author(){	
-	    super();
-	    setAuthorPublications(new ArrayList());
-	}
-	
 	public String toString() {
 		return "keyPerson: "+getKeyPerson()+", person: "+getPerson()+", author: "+getAuthor()+", organization: "+getOrganization();
 	}

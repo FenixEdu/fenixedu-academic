@@ -70,9 +70,6 @@ public class AddCoordinator implements IService {
                     IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
                     persistentPerson.simpleLockWrite(person);
 
-                    if (person.getPersonRoles() == null) {
-                        person.setPersonRoles(new ArrayList());
-                    }
                     if (!person.getPersonRoles().contains(role)) {
                         person.getPersonRoles().add(role);
                     }

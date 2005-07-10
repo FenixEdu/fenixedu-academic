@@ -78,7 +78,6 @@ public class CreateExamNew implements IServico {
             IPersistentRoomOccupation roomOccupationDAO = sp.getIPersistentRoomOccupation();
             // Exam
             IExam exam = new Exam(examDate, examStartTime, examEndTime, season);
-            exam.setAssociatedRoomOccupation(new ArrayList());
             // Writing the new exam to the database
             try {
                 IPersistentExam persistentExam = sp.getIPersistentExam();
@@ -102,7 +101,7 @@ public class CreateExamNew implements IServico {
             } catch (ExcepcaoPersistencia ex) {
                 throw new FenixServiceException(ex);
             }
-            exam.setAssociatedExecutionCourses(executionCourseList);
+            exam.getAssociatedExecutionCourses().addAll(executionCourseList);
 
             // Scopes
             List scopesList = new ArrayList();
@@ -120,7 +119,7 @@ public class CreateExamNew implements IServico {
             } catch (ExcepcaoPersistencia ex) {
                 throw new FenixServiceException(ex);
             }
-            exam.setAssociatedCurricularCourseScope(scopesList);
+            exam.getAssociatedCurricularCourseScope().addAll(scopesList);
 
             // This is needed for confirming if doesn't exists an exam for that
             // season
@@ -153,7 +152,6 @@ public class CreateExamNew implements IServico {
                             examDate, null);
                     if (period == null) {
                         period = new Period(examDate, examDate);
-                        period.setRoomOccupations(new ArrayList());
                         sp.getIPersistentPeriod().lockWrite(period);
                     }
                 } catch (ExistingPersistentException ex) {
@@ -180,7 +178,7 @@ public class CreateExamNew implements IServico {
                     while (iter.hasNext()) {
                         IRoomOccupation roomOccupationInDB = (IRoomOccupation) iter.next();
                         if (roomOccupation.roomOccupationForDateAndTime(roomOccupationInDB)) {
-                            throw new ExistingServiceException("A sala tá ocupada");
+                            throw new ExistingServiceException("A sala está ocupada");
                         }
                     }
 

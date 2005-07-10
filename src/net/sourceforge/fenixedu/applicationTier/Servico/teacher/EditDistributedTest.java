@@ -105,9 +105,7 @@ public class EditDistributedTest implements IService {
                 IOnlineTest onlineTest = new OnlineTest();
                 persistentSuport.getIPersistentEvaluation().simpleLockWrite(onlineTest);
                 onlineTest.setDistributedTest(distributedTest);
-                List executionCourseList = new ArrayList();
-                executionCourseList.add(executionCourse);
-                onlineTest.setAssociatedExecutionCourses(executionCourseList);
+                onlineTest.addAssociatedExecutionCourses(executionCourse);
                 List studentList = persistentSuport.getIPersistentStudentTestQuestion().readStudentsByDistributedTest(distributedTest.getIdInternal());
                 Iterator studentIt = studentList.iterator();
                 while (studentIt.hasNext()) {

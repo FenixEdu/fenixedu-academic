@@ -64,9 +64,6 @@ public class Section extends Section_Base {
         Integer itemOrder = new Integer(organizeExistingItemsOrder(insertItemOrder.intValue()));
         item.setItemOrder(itemOrder);
 
-        if (this.getAssociatedItems() == null)
-            this.setAssociatedItems(new ArrayList());
-
         this.getAssociatedItems().add(item);
 
         return item;

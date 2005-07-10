@@ -224,7 +224,6 @@ public class RegisterCandidate implements IService {
             IBranch branch = (IBranch) sp.getIPersistentBranch().readByOID(Branch.class, branchID);
 
             studentCurricularPlan.setBranch(branch);
-            studentCurricularPlan.setEnrolments(new ArrayList());
             studentCurricularPlan.setCurrentState(StudentCurricularPlanState.ACTIVE);
             studentCurricularPlan.setDegreeCurricularPlan(masterDegreeCandidate.getExecutionDegree()
                     .getDegreeCurricularPlan());
@@ -250,7 +249,6 @@ public class RegisterCandidate implements IService {
                 enrolment.setExecutionPeriod(sp.getIPersistentExecutionPeriod()
                         .readActualExecutionPeriod());
                 enrolment.setStudentCurricularPlan(studentCurricularPlan);
-                enrolment.setEvaluations(new ArrayList());
                 enrolment.setCondition(EnrollmentCondition.FINAL);
 
                 IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();

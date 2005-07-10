@@ -60,8 +60,6 @@ public class DissociateCurricularCourseByExecutionCourseId implements IService {
             if (!executionCourses.isEmpty() && !curricularCourses.isEmpty()) {
                 executionCourses.remove(executionCourse);
                 curricularCourses.remove(curricularCourse);
-                executionCourse.setAssociatedCurricularCourses(curricularCourses);
-                curricularCourse.setAssociatedExecutionCourses(executionCourses);
             }
         } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();

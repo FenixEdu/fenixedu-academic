@@ -97,10 +97,10 @@ public class ChangeMasterDegreeThesisData implements IService {
         Collection<IExternalPerson> externalAssistentGuiders = sp.getIPersistentExternalPerson()
                 .readByIDs(externalAssistentGuidersIDs);
 
-        masterDegreeThesisDataVersion.setGuiders((List) guiders);
-        masterDegreeThesisDataVersion.setAssistentGuiders((List) assistentGuiders);
-        masterDegreeThesisDataVersion.setExternalGuiders((List) externalGuiders);
-        masterDegreeThesisDataVersion.setExternalAssistentGuiders((List) externalAssistentGuiders);
+        masterDegreeThesisDataVersion.getGuiders().addAll((List) guiders);
+        masterDegreeThesisDataVersion.getAssistentGuiders().addAll((List) assistentGuiders);
+        masterDegreeThesisDataVersion.getExternalGuiders().addAll((List) externalGuiders);
+        masterDegreeThesisDataVersion.getExternalAssistentGuiders().addAll((List) externalAssistentGuiders);
 
         sp.getIPersistentMasterDegreeThesisDataVersion().simpleLockWrite(masterDegreeThesisDataVersion);
 

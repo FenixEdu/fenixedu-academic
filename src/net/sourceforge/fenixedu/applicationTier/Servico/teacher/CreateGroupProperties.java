@@ -65,7 +65,6 @@ public class CreateGroupProperties implements IService {
             throw new ExistingServiceException();
         }
         List attends = new ArrayList();
-        List attendInAttendsSetList = new ArrayList();
         attends = persistentFrequenta.readByExecutionCourse(executionCourseCode);
 
         IGroupProperties newGroupProperties = Cloner
@@ -90,12 +89,10 @@ public class CreateGroupProperties implements IService {
 
             attendInAttendsSet = new AttendInAttendsSet(frequenta, attendsSet);
             persistentAttendInAttendsSet.simpleLockWrite(attendInAttendsSet);
-            attendInAttendsSetList.add(attendInAttendsSet);
+            attendsSet.addAttendInAttendsSet(attendInAttendsSet);
             frequenta.addAttendInAttendsSet(attendInAttendsSet);
         }
         attendsSet.setGroupProperties(newGroupProperties);
-        attendsSet.setAttendInAttendsSet(attendInAttendsSetList);
-        attendsSet.setStudentGroups(new ArrayList());
 
         newGroupProperties.setAttendsSet(attendsSet);
         newGroupProperties.addGroupPropertiesExecutionCourse(groupPropertiesExecutionCourse);

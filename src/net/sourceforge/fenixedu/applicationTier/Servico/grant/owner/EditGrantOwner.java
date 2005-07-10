@@ -111,9 +111,6 @@ public class EditGrantOwner extends CreatePersonBaseClass implements IService {
                 grantOwner = new GrantOwner();
 
                 pPerson.lockWrite(person);
-                if (person.getPersonRoles() == null) {
-                    person.setPersonRoles(new ArrayList());
-                }
                 IPersistentRole persistentRole = sp.getIPersistentRole();
                 person.getPersonRoles().add(persistentRole.readByRoleType(RoleType.GRANT_OWNER));
             }

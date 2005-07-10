@@ -159,8 +159,9 @@ public class ExtraWorkSheet implements IService {
                 return null;
             }
             // »»»»»»»»»read employee historc to found working cost center
-            employee.setHistoricList(employeeDAO.readHistoricByKeyEmployee(employee.getIdInternal()
-                    .intValue()));
+            employee.getHistoricList().clear();
+            employee.getHistoricList().addAll(employeeDAO.readHistoricByKeyEmployee(employee.getIdInternal()
+                                                                                    .intValue()));
             employee.fillEmployeeHistoric();
 
             // »»»»»»»»»build extra work for to fill sheet

@@ -99,8 +99,6 @@ public class CreateGuideFromTransactions implements IService {
         guide.setYear(infoGuide.getYear());
         
 
-        // FIXME: Remove the : guide.setGuideEntries(null); WHY????
-        guide.setGuideEntries(null);
         try {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             sp.getIPersistentGuide().simpleLockWrite(guide);
@@ -132,7 +130,6 @@ public class CreateGuideFromTransactions implements IService {
 
             // Write the new Entries of the Guide
             Iterator iterator = transactionsIDs.iterator();
-            List guideEntries = new ArrayList();
             IPaymentTransaction transaction = null;
             Integer transactionId = null;
             IGuideEntry guideEntry = null;
@@ -163,7 +160,6 @@ public class CreateGuideFromTransactions implements IService {
                 guideEntry.setDescription("");
 
                 sp.getIPersistentGuideEntry().simpleLockWrite(guideEntry);
-                guideEntries.add(guideEntry);
                 guideEntry.setGuide(guide);
 
                 transaction.setGuideEntry(guideEntry);
@@ -177,14 +173,10 @@ public class CreateGuideFromTransactions implements IService {
             // Guide Total Price
             guide.setTotal(NumberUtils.formatNumber(new Double(guideTotal), 2));
 
-            guide.setGuideEntries(guideEntries);
-
             // Write the New Guide Situation
             guideSituation = new GuideSituation(infoGuideSituation.getSituation(), infoGuideSituation
                     .getRemarks(), infoGuideSituation.getDate(), guide, infoGuideSituation.getState());
             sp.getIPersistentGuideSituation().simpleLockWrite(guideSituation);
-
-            guide.setGuideSituations(new ArrayList());
 
             guide.getGuideSituations().add(guideSituation);
         } catch (ExcepcaoPersistencia ex) {

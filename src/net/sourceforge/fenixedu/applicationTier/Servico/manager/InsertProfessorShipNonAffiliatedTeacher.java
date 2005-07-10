@@ -51,12 +51,9 @@ public class InsertProfessorShipNonAffiliatedTeacher implements IService {
         
         List nonAffiliatedTeachers = executionCourse.getNonAffiliatedTeachers();
         nonAffiliatedTeachers.add(nonAffiliatedTeacher);
-        executionCourse.setNonAffiliatedTeachers(nonAffiliatedTeachers);
         
         List executionCourses = nonAffiliatedTeacher.getExecutionCourses();
         executionCourses.add(executionCourse);
-        nonAffiliatedTeacher.setExecutionCourses(executionCourses);
-    
     }
 
 }
