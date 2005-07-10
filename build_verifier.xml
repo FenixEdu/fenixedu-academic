@@ -34,21 +34,37 @@
   	<property name="compile.optimize"    value="on"/>
 
 
-    <target name="ojb2dmlVerifier"
-    		description="Verify DML mapping from OJB Mapping.">
-    	<ant antfile="build_compile.xml" target="compile" />
-    	<ant antfile="build_codeGenerator.xml" target="compile" />
-		<java classname="pt.utl.ist.domain.DomainDMLOJBVerifier" fork="true">
-			<classpath>
-				<pathelement path="${build.home.temp.classes}"/>
-				<pathelement path="${build.home.webinf.classes}"/>
-                <fileset dir="${lib}">
-                    <include name="**/*.jar"/>
-                	<exclude name="**/berserk.jar"/>
-                </fileset>
-			</classpath>
-		</java>
-    </target>
+  <target name="ojb2dmlVerifier"
+          depends="analysis-compile"
+          description="Verify DML mapping from OJB Mapping.">
+    <java classname="pt.utl.ist.domain.DomainDMLOJBVerifier" fork="true">
+      <classpath>
+	<pathelement path="${build.home.temp.classes}"/>
+	<pathelement path="${build.home.webinf.classes}"/>
+	<fileset dir="${lib}">
+	  <include name="**/*.jar"/>
+	  <exclude name="**/berserk.jar"/>
+	</fileset>
+      </classpath>
+    </java>
+  </target>
+
+
+  <target name="dml2ojbVerifier"
+          depends="analysis-compile"
+          description="Verify OJB mapping from DML Mapping.">
+    <java classname="pt.utl.ist.domain.FindMissingOJBMappings" fork="true">
+      <classpath>
+	<pathelement path="${build.home.temp.classes}"/>
+	<pathelement path="${build.home.webinf.classes}"/>
+	<fileset dir="${lib}">
+	  <include name="**/*.jar"/>
+	  <exclude name="**/berserk.jar"/>
+	</fileset>
+      </classpath>
+      <arg value="${dml.definition.file}"/>      
+    </java>
+  </target>
 
 
   <path id="classpath.analysis">
