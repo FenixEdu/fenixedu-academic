@@ -7,9 +7,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.IBranch;
+import net.sourceforge.fenixedu.domain.ICreditsInAnySecundaryArea;
 import net.sourceforge.fenixedu.domain.ICreditsInScientificArea;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
@@ -104,7 +104,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
         if (givenCreditsInAnySecundaryAreas != null && !givenCreditsInAnySecundaryAreas.isEmpty()) {
             int size = givenCreditsInAnySecundaryAreas.size();
             for (int i = 0; i < size; i++) {
-                CreditsInAnySecundaryArea creditsInAnySecundaryArea = (CreditsInAnySecundaryArea) givenCreditsInAnySecundaryAreas
+                ICreditsInAnySecundaryArea creditsInAnySecundaryArea = (ICreditsInAnySecundaryArea) givenCreditsInAnySecundaryAreas
                         .get(i);
                 creditsInAnySecundaryAreas += creditsInAnySecundaryArea.getGivenCredits().intValue();
             }
