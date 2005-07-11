@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.credits.util.InfoCreditsBuilder;
  */
 public class Teacher extends Teacher_Base {
     private Map creditsMap = new HashMap();
-
+    
     public String toString() {
         String result = "[Dominio.Teacher ";
         result += ", teacherNumber=" + getTeacherNumber();
@@ -23,8 +23,8 @@ public class Teacher extends Teacher_Base {
         result += ", category= " + getCategory();
         result += "]";
         return result;
-    }
-
+    }   
+    
     public InfoCredits getExecutionPeriodCredits(IExecutionPeriod executionPeriod) {
         InfoCredits credits = (InfoCredits) creditsMap.get(executionPeriod);
         if (credits == null) {
@@ -33,7 +33,7 @@ public class Teacher extends Teacher_Base {
         }
         return credits;
     }
-
+    
     public void notifyCreditsChange(CreditsEvent creditsEvent, ICreditsEventOriginator originator) {
         Iterator iterator = this.creditsMap.keySet().iterator();
         while (iterator.hasNext()) {
@@ -43,5 +43,41 @@ public class Teacher extends Teacher_Base {
             }
         }
     }
-
+    
+    public List responsibleFors(){
+        List<IProfessorship> professorships = this.getProfessorships();
+        List res = new ArrayList();
+        
+        for(IProfessorship professorship : professorships){
+            if(professorship.getResponsibleFor())
+                res.add(professorship);
+        }
+        
+        return res;
+    }
+    
+    public IProfessorship responsibleFor(Integer executionCourseId){
+        List<IProfessorship> professorships = this.getProfessorships();
+        
+        for(IProfessorship professorship : professorships){
+            if(professorship.getResponsibleFor() && professorship.getExecutionCourse().getIdInternal().equals(executionCourseId))
+                return professorship;
+        }
+        
+        return null;
+    }
+    
+    public void updateResponsabilitiesFor(Integer executionYearId, List<Integer> newResponsabilities){
+        List<IProfessorship> responsibleFors = this.responsibleFors();
+        
+        for(IProfessorship professorship : responsibleFors){
+            IExecutionCourse executionCourse = professorship.getExecutionCourse();
+            if(executionCourse.getExecutionPeriod().getExecutionYear().getIdInternal().equals(executionYearId)){
+                if(newResponsabilities.contains(executionCourse.getIdInternal()))
+                    professorship.setResponsibleFor(true);
+                else
+                    professorship.setResponsibleFor(false);
+            }
+        }
+    }
 }

@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.fileSuport.FileSuport;
 import net.sourceforge.fenixedu.fileSuport.IFileSuport;
 import net.sourceforge.fenixedu.fileSuport.INode;
@@ -37,21 +37,22 @@ public class Item extends Item_Base {
         return section;
     }
 
-    public void deleteItem() throws notAuthorizedServiceDeleteException {
+    public void delete() throws DomainException {
 
         IFileSuport fileSuport = FileSuport.getInstance();
         long size = fileSuport.getDirectorySize(this.getSlideName());
         if (size > 0) {
-            throw new notAuthorizedServiceDeleteException();
+            throw new DomainException(this.getClass().getName(), "");
         }
+        
+        ISection section = this.getSection();
 
         if (this.getSection() != null && this.getSection().getAssociatedItems() != null) {
-
-            List<IItem> items = this.getSection().getAssociatedItems();
-
-            items.remove(this);
+                        
             this.setSection(null);
-
+            
+            List<IItem> items = section.getAssociatedItems();
+            
             int associatedItemOrder;
             for (IItem item : items) {
                 associatedItemOrder = item.getItemOrder().intValue();
@@ -62,7 +63,7 @@ public class Item extends Item_Base {
         }
     }
 
-    public void editItem(String newItemName, String newItemInformation, Boolean newItemUrgent,
+    public void edit(String newItemName, String newItemInformation, Boolean newItemUrgent,
             Integer newOrder) {
 
         if (newOrder.intValue() != this.getItemOrder().intValue()) {

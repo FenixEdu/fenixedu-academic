@@ -859,10 +859,12 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
     public boolean isMasterDegreeOnly();
     
     public void createSite();
-    
+        
     public void createEvaluationMethod(String evaluationElements, String evaluationElementsEng);
     
     public void createBibliographicReference(String title, String authors, String reference, String year, Boolean optional);
+
+    public java.util.List responsibleFors();
     "
 }
 
@@ -1294,8 +1296,8 @@ class net.sourceforge.fenixedu.domain.Item extends net.sourceforge.fenixedu.doma
 	String name;
 	
 	interface "
-		public void deleteItem() throws net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;;
-		public void editItem(String itemName, String itemInformation, Boolean itemUrgent, Integer insertItemOrder);
+		public void delete() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+		public void edit(String itemName, String itemInformation, Boolean itemUrgent, Integer insertItemOrder);
 	"
 }
 
@@ -1718,6 +1720,7 @@ class net.sourceforge.fenixedu.domain.Price extends net.sourceforge.fenixedu.dom
 class net.sourceforge.fenixedu.domain.Professorship extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyTeacher;
 	Integer keyExecutionCourse;
+	Boolean responsibleFor;
 	Double hours;
 
     interface "
@@ -1852,12 +1855,6 @@ class net.sourceforge.fenixedu.domain.student.ResidenceCandidacies extends net.s
     String observations;
     Boolean dislocated;
     Integer keyStudent;
-}
-
-
-class net.sourceforge.fenixedu.domain.ResponsibleFor extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyExecutionCourse;
-	Integer keyTeacher;
 }
 
 class net.sourceforge.fenixedu.domain.precedences.Restriction extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2079,8 +2076,14 @@ class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.d
 	Date lastModifiedDate;
 	
 	interface "
-		public IItem insertItem(String itemName, String itemInformation, Boolean itemUrgency, Integer insertItemOrder)
-			throws net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+		
+		public void insertItem(String itemName, String itemInformation, Boolean itemUrgency, Integer insertItemOrder)
+			throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+		
+		public void edit(String newSectionName, Integer newOrder);
+		
+		public void delete()
+			throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
 	"
 }
 
@@ -2371,6 +2374,12 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	public net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits getExecutionPeriodCredits(IExecutionPeriod executionPeriod);
 	
 	public void notifyCreditsChange(net.sourceforge.fenixedu.domain.credits.event.CreditsEvent creditsEvent, net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator originator);
+	
+	public java.util.List responsibleFors();
+	
+	public net.sourceforge.fenixedu.domain.IProfessorship responsibleFor(Integer executionCourseId);
+	
+	public void updateResponsabilitiesFor(Integer executionYearId, java.util.List<Integer> newResponsabilities);
 	"
 }
 
@@ -3312,15 +3321,6 @@ relation ExecutionCourseReport {
 	}
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 }
-
-
-relation ExecutionCourseResponsibleFor {
-	net.sourceforge.fenixedu.domain.ResponsibleFor playsRole responsibleTeachers {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
-}
-
 
 relation ExecutionCourseSite {
 	net.sourceforge.fenixedu.domain.Site playsRole site {
@@ -4815,14 +4815,6 @@ relation TeacherOtherTypeCreditLine {
 
 relation TeacherProfessorship {
 	net.sourceforge.fenixedu.domain.Professorship playsRole professorships {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
-}
-
-
-relation TeacherResponsibleFor {
-	net.sourceforge.fenixedu.domain.ResponsibleFor playsRole associatedResponsibles {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;

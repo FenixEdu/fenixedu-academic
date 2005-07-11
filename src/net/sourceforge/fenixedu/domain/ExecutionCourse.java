@@ -106,6 +106,18 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         final ISite site = new Site();
         site.setExecutionCourse(this);
     }
+    
+    public List responsibleFors(){
+        List<IProfessorship> professorships = this.getProfessorships();
+        List res = new ArrayList();
+        
+        for(IProfessorship professorship : professorships){
+            if(professorship.getResponsibleFor())
+                res.add(professorship);
+        }
+        
+        return res;
+    }
 
     public void createEvaluationMethod(final String evaluationElements,
             final String evaluationElementsEng) {
