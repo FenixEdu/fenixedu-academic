@@ -15,6 +15,9 @@ import net.sourceforge.fenixedu.domain.IScientificArea;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.precedences.IPrecedence;
 import net.sourceforge.fenixedu.domain.precedences.IRestriction;
+import net.sourceforge.fenixedu.domain.precedences.IRestrictionByNumberOfDoneCurricularCourses;
+import net.sourceforge.fenixedu.domain.precedences.IRestrictionDoneCurricularCourse;
+import net.sourceforge.fenixedu.domain.precedences.IRestrictionPeriodToApply;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionByNumberOfDoneCurricularCourses;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionDoneCurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionPeriodToApply;
@@ -203,19 +206,19 @@ public class VerifyLEECCurricularPlan {
                     while (iterator3.hasNext()) {
                         IRestriction restriction = (IRestriction) iterator3.next();
                         if (restriction instanceof RestrictionByNumberOfDoneCurricularCourses) {
-                            RestrictionByNumberOfDoneCurricularCourses actualRestriction = (RestrictionByNumberOfDoneCurricularCourses) restriction;
+                            IRestrictionByNumberOfDoneCurricularCourses actualRestriction = (IRestrictionByNumberOfDoneCurricularCourses) restriction;
                             Integer numberOfDoneCurricularCourses = actualRestriction
                                     .getNumberOfCurricularCourses();
                             System.out.print("\t\t");
                             System.out.println(numberOfDoneCurricularCourses + " disciplinas feitas");
                         } else if (restriction instanceof RestrictionDoneCurricularCourse) {
-                            RestrictionDoneCurricularCourse actualRestriction = (RestrictionDoneCurricularCourse) restriction;
+                            IRestrictionDoneCurricularCourse actualRestriction = (IRestrictionDoneCurricularCourse) restriction;
                             System.out.print("\t\t");
                             System.out.println(actualRestriction.getPrecedentCurricularCourse()
                                     .getName()
                                     + " feita");
                         } else if (restriction instanceof RestrictionPeriodToApply) {
-                            RestrictionPeriodToApply actualRestriction = (RestrictionPeriodToApply) restriction;
+                            IRestrictionPeriodToApply actualRestriction = (IRestrictionPeriodToApply) restriction;
                             System.out.print("\t\t");
                             System.out.println("no "
                                     + actualRestriction.getPeriodToApplyRestriction().getValue()

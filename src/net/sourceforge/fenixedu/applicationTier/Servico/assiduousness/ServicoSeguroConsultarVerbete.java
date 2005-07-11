@@ -14,12 +14,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteExc
 import net.sourceforge.fenixedu.constants.assiduousness.Constants;
 import net.sourceforge.fenixedu.domain.Funcionario;
 import net.sourceforge.fenixedu.domain.Horario;
+import net.sourceforge.fenixedu.domain.IStatusAssiduidade;
 import net.sourceforge.fenixedu.domain.IStrategyHorarios;
 import net.sourceforge.fenixedu.domain.IStrategyJustificacoes;
 import net.sourceforge.fenixedu.domain.Justificacao;
 import net.sourceforge.fenixedu.domain.MarcacaoPonto;
 import net.sourceforge.fenixedu.domain.ParamJustificacao;
-import net.sourceforge.fenixedu.domain.StatusAssiduidade;
 import net.sourceforge.fenixedu.domain.SuporteStrategyHorarios;
 import net.sourceforge.fenixedu.domain.SuporteStrategyJustificacoes;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IFeriadoPersistente;
@@ -612,7 +612,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
                         Constants.ASSIDUIDADE_PENDENTE)) {
             //enquanto tiver status pendente escreve o status a que corresponde
             construirListaDiasPendente(
-                    (StatusAssiduidade) servicoSeguroLerStatusAssiduidadeFuncionario
+                    (IStatusAssiduidade) servicoSeguroLerStatusAssiduidadeFuncionario
                             .getListaStatusAssiduidade().get(0), new Timestamp(
                             calendarioFim.getTimeInMillis()));
 
@@ -629,7 +629,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
         }
     } /* verificarStatusAssiduidade */
 
-    private void construirListaDiasPendente(StatusAssiduidade status,
+    private void construirListaDiasPendente(IStatusAssiduidade status,
             Timestamp dataFim) throws NotExecuteException {
         Calendar calendario = Calendar.getInstance();
         calendario.setLenient(false);

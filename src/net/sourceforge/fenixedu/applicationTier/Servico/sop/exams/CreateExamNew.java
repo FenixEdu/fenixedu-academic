@@ -133,7 +133,7 @@ public class CreateExamNew implements IServico {
                         List scopes = examAux.getAssociatedCurricularCourseScope();
                         Iterator iterScopes = scopes.iterator();
                         while (iterScopes.hasNext()) {
-                            CurricularCourseScope scope = (CurricularCourseScope) iterScopes.next();
+                            ICurricularCourseScope scope = (ICurricularCourseScope) iterScopes.next();
                             if (scopesList.contains(scope)) {
                                 throw new ExistingServiceException();
                             }

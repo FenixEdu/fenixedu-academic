@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
@@ -32,14 +33,7 @@ public class EditExamRooms implements IService {
 
     IPersistentExam persistentExam = null;
 
-    /**
-     * The actor of this class.
-     */
-    public EditExamRooms() {
-    }
-
     public InfoExam run(InfoExam infoExam, final List roomsForExam) throws FenixServiceException {
-
         ServiceSetUp();
 
         List finalRoomList = new ArrayList();
@@ -47,7 +41,7 @@ public class EditExamRooms implements IService {
 
         try {
 
-            final Exam exam = (Exam) persistentRoom
+            final IExam exam = (IExam) persistentRoom
                     .readByOID(Exam.class, infoExam.getIdInternal(), true);
             if (exam == null) {
                 throw new NonExistingServiceException();

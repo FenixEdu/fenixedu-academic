@@ -71,12 +71,6 @@ public class RegisterCandidate implements IService {
 
     boolean personIsLocked = false;
 
-    /**
-     * The actor of this class.
-     */
-    public RegisterCandidate() {
-    }
-
     public InfoCandidateRegistration run(Integer candidateID, Integer branchID, Integer studentNumber,
             IUserView userView) throws FenixServiceException {
 
@@ -360,7 +354,7 @@ public class RegisterCandidate implements IService {
         infoCandidateRegistration.setEnrolments(new ArrayList());
         Iterator iterator = studentCurricularPlanResult.getEnrolments().iterator();
         while (iterator.hasNext()) {
-            Enrolment enrolment = (Enrolment) iterator.next();
+            IEnrolment enrolment = (IEnrolment) iterator.next();
             InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
                     .newInfoFromDomain(enrolment);
             infoCandidateRegistration.getEnrolments().add(infoEnrolment);
@@ -424,4 +418,5 @@ public class RegisterCandidate implements IService {
 
         return totalValue;
     }
+
 }

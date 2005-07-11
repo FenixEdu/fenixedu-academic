@@ -8,7 +8,7 @@ import java.util.ListIterator;
 import net.sourceforge.fenixedu.applicationTier.ServicoAutorizacao;
 import net.sourceforge.fenixedu.applicationTier.ServicoSeguro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
-import net.sourceforge.fenixedu.domain.StatusAssiduidade;
+import net.sourceforge.fenixedu.domain.IStatusAssiduidade;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IFuncionarioPersistente;
 import net.sourceforge.fenixedu.persistenceTierJDBC.SuportePersistente;
 
@@ -52,7 +52,7 @@ public class ServicoSeguroLerStatusAssiduidadeFuncionario extends ServicoSeguro 
         ListIterator iteradorStatus = this.listaStatusAssiduidade.listIterator();
         List listaEstados = new ArrayList();
         while (iteradorStatus.hasNext()) {
-            StatusAssiduidade status = (StatusAssiduidade) iteradorStatus.next();
+            IStatusAssiduidade status = (IStatusAssiduidade) iteradorStatus.next();
             listaEstados.add(status.getEstado());
         }
         return listaEstados;

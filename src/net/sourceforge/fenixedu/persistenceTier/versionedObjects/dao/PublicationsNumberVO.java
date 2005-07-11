@@ -20,7 +20,7 @@ public class PublicationsNumberVO extends VersionedObjectsBase implements IPersi
         
         final List<PublicationsNumber> publicationsNumbers = (List<PublicationsNumber>) readAll(PublicationsNumber.class);
         
-        return (PublicationsNumber) CollectionUtils.find(publicationsNumbers,new Predicate() {
+        return (IPublicationsNumber) CollectionUtils.find(publicationsNumbers,new Predicate() {
 
             public boolean evaluate(Object object) {
                 final IPublicationsNumber publicationsNumber = (IPublicationsNumber)object;

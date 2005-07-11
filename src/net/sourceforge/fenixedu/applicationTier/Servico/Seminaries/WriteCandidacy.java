@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.ICandidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.ICaseStudyChoice;
 import net.sourceforge.fenixedu.domain.Seminaries.IModality;
@@ -78,7 +77,7 @@ public class WriteCandidacy implements IService {
             candidacy.setCurricularCourse(readCurricularCourse);
 
             if (modality.getIdInternal().equals(infoCandidacy.getInfoModality().getIdInternal())) {
-                ((Candidacy) candidacy).setThemeIdInternal(null);
+                candidacy.setThemeIdInternal(null);
                 candidacy.setTheme(null);
             } else {
                 ITheme readTheme = (ITheme) persistentTheme.readByOID(Theme.class,
@@ -87,7 +86,7 @@ public class WriteCandidacy implements IService {
             }
             if (!infoCandidacy.getInfoSeminary().getHasThemes().booleanValue())
             {
-                ((Candidacy) candidacy).setThemeIdInternal(null);
+                candidacy.setThemeIdInternal(null);
                 candidacy.setTheme(null);                
             }
             for (Iterator iter = candidacy.getCaseStudyChoices().iterator(); iter.hasNext();) {

@@ -70,7 +70,7 @@ public class MarkOJB extends PersistentObjectOJB implements IPersistentMark {
         List marks = queryList(Mark.class, criteria);
         Iterator it = marks.iterator();
         while (it.hasNext()) {
-            delete((Mark) it.next());
+            delete((IMark) it.next());
         }
     }
 }
