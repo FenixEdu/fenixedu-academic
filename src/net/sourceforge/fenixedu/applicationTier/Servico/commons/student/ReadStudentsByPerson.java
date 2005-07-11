@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.Person;
@@ -23,15 +23,17 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadStudentsByPerson implements IService {
 
     public List run(InfoPerson infoPerson) throws ExcepcaoPersistencia {
-        final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente persistentSuport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
 
-		IPerson person = (IPerson) persistentSuport.getIPessoaPersistente().readByOID(Person.class,infoPerson.getIdInternal());
-		
+        IPerson person = (IPerson) persistentSuport.getIPessoaPersistente().readByOID(Person.class,
+                infoPerson.getIdInternal());
+
         final List students = person.getStudents();
         final List infoStudents = new ArrayList(students.size());
-        for (final Iterator iterator = students.iterator(); iterator.hasNext(); ) {
-            final IStudent student = (IStudent) iterator.next();
-            final InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(student);
+        for (final Iterator iterator = students.iterator(); iterator.hasNext();) {
+            final InfoStudent infoStudent = InfoStudentWithInfoPerson
+                    .newInfoFromDomain((IStudent) iterator.next());
             infoStudents.add(infoStudent);
         }
         return infoStudents;
