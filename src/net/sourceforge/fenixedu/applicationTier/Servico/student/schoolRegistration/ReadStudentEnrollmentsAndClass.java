@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithInfoCurricul
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
+import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.ShiftStudent;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -36,10 +36,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author Ricardo Rodrigues
  */
 public class ReadStudentEnrollmentsAndClass implements IService {
-
-    public ReadStudentEnrollmentsAndClass() {
-
-    }
 
     public List run(IUserView userView) throws ExcepcaoPersistencia {
 
@@ -92,7 +88,7 @@ public class ReadStudentEnrollmentsAndClass implements IService {
         List classesName = new ArrayList();
         InfoClass infoClass = new InfoClass();
         for (int iter = 0; iter < studentShifts.size(); iter++) {
-            ShiftStudent shiftStudent = (ShiftStudent) studentShifts.get(0);
+            IShiftStudent shiftStudent = (IShiftStudent) studentShifts.get(0);
             List classes = shiftStudent.getShift().getAssociatedClasses();
             if (classes.size() == 1) {
                 ISchoolClass klass = (ISchoolClass) classes.get(0);
@@ -124,7 +120,7 @@ public class ReadStudentEnrollmentsAndClass implements IService {
                     ShiftType.TEORICO_PRATICA });
 
             public boolean evaluate(Object input) {
-                ShiftStudent shiftStudent = (ShiftStudent) input;
+                IShiftStudent shiftStudent = (IShiftStudent) input;
                 return validTypes.contains(shiftStudent.getShift().getTipo());
             }
         });

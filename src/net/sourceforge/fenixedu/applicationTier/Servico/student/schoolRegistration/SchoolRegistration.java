@@ -77,7 +77,7 @@ public class SchoolRegistration implements IService {
         result = CollectionUtils.exists(pessoa.getPersonRoles(), new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IRole role = (Role) arg0;
+                IRole role = (IRole) arg0;
 
                 IRole newRole = new Role();
                 newRole.setRoleType(RoleType.FIRST_TIME_STUDENT);
@@ -157,7 +157,7 @@ public class SchoolRegistration implements IService {
         CollectionUtils.filter(pessoa.getPersonRoles(), new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IRole role = (Role) arg0;
+                IRole role = (IRole) arg0;
 
                 IRole newRole = new Role();
                 newRole.setRoleType(RoleType.FIRST_TIME_STUDENT);

@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
-import net.sourceforge.fenixedu.domain.publication.PublicationAuthor;
+import net.sourceforge.fenixedu.domain.publication.IPublicationAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -48,7 +48,7 @@ public class InfoAuthorWithInfoPublications extends InfoAuthor {
             List publicationList = (List)CollectionUtils.collect(publicationAuthors,
                     new Transformer() {
                         public Object transform(Object object) {
-                            PublicationAuthor publicationAuthor = (PublicationAuthor) object;
+                            IPublicationAuthor publicationAuthor = (IPublicationAuthor) object;
                             return publicationAuthor.getPublication();
             }});
             

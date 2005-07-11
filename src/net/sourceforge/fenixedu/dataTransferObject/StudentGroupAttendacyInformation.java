@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.StudentGroupAttend;
+import net.sourceforge.fenixedu.domain.IStudentGroupAttend;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -116,7 +116,7 @@ public class StudentGroupAttendacyInformation extends InfoObject {
     public boolean isStudentMemberOfThisGroup(Integer studentNumber) {
 
         for (Iterator iterator = this.getGroupAttends().iterator(); iterator.hasNext();) {
-            StudentGroupAttend studentGroupAttend = (StudentGroupAttend) iterator.next();
+            IStudentGroupAttend studentGroupAttend = (IStudentGroupAttend) iterator.next();
             IAttends attendacy = studentGroupAttend.getAttend();
             if (attendacy.getAluno().getNumber().equals(studentNumber))
                 return true;

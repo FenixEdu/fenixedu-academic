@@ -7,7 +7,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -33,7 +32,7 @@ public class ReadOpenExecutionYears implements IService {
             List infoOpenExecutionYears = (List) CollectionUtils.collect(openExecutionYears,
                     new Transformer() {
                         public Object transform(Object obj) {
-                            IExecutionYear executionYear = (ExecutionYear) obj;
+                            IExecutionYear executionYear = (IExecutionYear) obj;
                             InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
                             infoExecutionYear.copyFromDomain(executionYear);
                             return infoExecutionYear;

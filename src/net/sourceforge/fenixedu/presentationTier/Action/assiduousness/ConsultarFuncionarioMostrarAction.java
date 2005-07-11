@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoSeg
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
 import net.sourceforge.fenixedu.constants.assiduousness.Constants;
 import net.sourceforge.fenixedu.domain.Funcionario;
-import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.presentationTier.formbeans.assiduousness.ConsultarFuncionarioMostrarForm;
 
 import org.apache.struts.action.Action;
@@ -36,7 +36,7 @@ public final class ConsultarFuncionarioMostrarAction extends Action {
         ActionErrors errors = new ActionErrors();
         HttpSession session = request.getSession();
 
-        Person pessoa = (Person) session.getAttribute(Constants.USER_KEY);
+        IPerson pessoa = (IPerson) session.getAttribute(Constants.USER_KEY);
 
         ServicoAutorizacaoLer servicoAutorizacaoLer = new ServicoAutorizacaoLer();
         ServicoSeguroLerFuncionario servicoSeguroLerFuncionario = new ServicoSeguroLerFuncionario(

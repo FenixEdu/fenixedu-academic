@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.ServicoAutorizaca
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ServicoSeguroAlterarPessoa;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ServicoSeguroLerPessoa;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
+import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.formbeans.person.DadosForm;
 import net.sourceforge.fenixedu.util.EMail;
@@ -108,7 +109,7 @@ public final class ForgotPasswordAction extends Action {
         // envia o mail de nova password para todas as pessoas de gestao de
         // assiduidade e para a pessoa caso tenha email
         while (iterador.hasNext()) {
-            Person pessoaDestino = (Person) iterador.next();
+            IPerson pessoaDestino = (IPerson) iterador.next();
             if (EMail.send("mail.adm", "assiduidade", pessoaDestino.getEmail(),
                     "Nova Password para acesso à Assiduidade do Funcionário número "
                             + passwordForm.getUsername(), "A nova password do funcionário número "
