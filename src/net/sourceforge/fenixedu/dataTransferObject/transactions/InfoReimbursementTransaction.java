@@ -1,13 +1,12 @@
 package net.sourceforge.fenixedu.dataTransferObject.transactions;
 
 import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuideEntry;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.transactions.IReimbursementTransaction;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
- *  
+ * 
  */
 public class InfoReimbursementTransaction extends InfoTransaction {
 
@@ -17,10 +16,8 @@ public class InfoReimbursementTransaction extends InfoTransaction {
 
         super.copyFromDomain(reimbursementTransaction);
 
-        this.infoReimbursementGuideEntry = Cloner
-                .copyIReimbursementGuideEntry2InfoReimbursementGuideEntry(reimbursementTransaction
-                        .getReimbursementGuideEntry());
-
+        this.infoReimbursementGuideEntry = InfoReimbursementGuideEntry
+                .newInfoFromDomain(reimbursementTransaction.getReimbursementGuideEntry());
     }
 
     public static InfoReimbursementTransaction newInfoFromDomain(
