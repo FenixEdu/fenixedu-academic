@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.constants.publication.PublicationConstants;
@@ -84,8 +83,6 @@ import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeach
 import net.sourceforge.fenixedu.dataTransferObject.gaugingTests.physics.InfoGaugingTestResult;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseHistoric;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
-import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuideEntry;
-import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuideSituation;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAttribute;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthorPerson;
@@ -128,9 +125,6 @@ import net.sourceforge.fenixedu.domain.gesdis.IStudentCourseReport;
 import net.sourceforge.fenixedu.domain.publication.IAttribute;
 import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublicationFormat;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideSituation;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 import net.sourceforge.fenixedu.domain.teacher.ICareer;
@@ -1029,16 +1023,18 @@ public abstract class Cloner {
         if (infoExam != null && infoExam.getAssociatedCurricularCourseScope() != null
                 && infoExam.getAssociatedCurricularCourseScope().size() > 0) {
             for (int i = 0; i < infoExam.getAssociatedCurricularCourseScope().size(); i++) {
-                exam.addAssociatedCurricularCourseScope(copyInfoCurricularCourseScope2ICurricularCourseScope((InfoCurricularCourseScope) infoExam
-                                                                                                             .getAssociatedCurricularCourseScope().get(i)));
+                exam
+                        .addAssociatedCurricularCourseScope(copyInfoCurricularCourseScope2ICurricularCourseScope((InfoCurricularCourseScope) infoExam
+                                .getAssociatedCurricularCourseScope().get(i)));
             }
         }
 
         if (infoExam != null && infoExam.getAssociatedRoomOccupation() != null
                 && infoExam.getAssociatedRoomOccupation().size() > 0) {
             for (int i = 0; i < infoExam.getAssociatedRoomOccupation().size(); i++) {
-                exam.addAssociatedRoomOccupation(copyInfoRoomOccupation2IRoomOccupation((InfoRoomOccupation) infoExam
-                                                                                        .getAssociatedRoomOccupation().get(i)));
+                exam
+                        .addAssociatedRoomOccupation(copyInfoRoomOccupation2IRoomOccupation((InfoRoomOccupation) infoExam
+                                .getAssociatedRoomOccupation().get(i)));
             }
         }
 
@@ -2219,16 +2215,6 @@ public abstract class Cloner {
         return serviceProviderRegime;
     }
 
-    public static InfoReimbursementGuideSituation copyIReimbursementGuideSituation2InfoReimbursementGuideSituation(
-            IReimbursementGuideSituation reimbursementGuideSituation) {
-        InfoReimbursementGuideSituation infoReimbursementGuideSituation = new InfoReimbursementGuideSituation();
-        InfoEmployee infoEmployee = copyIEmployee2InfoEmployee(reimbursementGuideSituation.getEmployee());
-        copyObjectProperties(infoReimbursementGuideSituation, reimbursementGuideSituation);
-        infoReimbursementGuideSituation.setInfoEmployee(infoEmployee);
-
-        return infoReimbursementGuideSituation;
-    }
-
     public static IOrientation copyInfoOrientation2IOrientation(InfoOrientation infoOrientation) {
         IOrientation orientation = new Orientation();
         ITeacher teacher = Cloner.copyInfoTeacher2Teacher(infoOrientation.getInfoTeacher());
@@ -2570,53 +2556,6 @@ public abstract class Cloner {
 
         infoCreditLine.setInfoTeacher(infoTeacher);
         return infoCreditLine;
-    }
-
-    public static IReimbursementGuideEntry copyInfoReimbursementGuideEntry2IReimbursementGuideEntry(
-            InfoReimbursementGuideEntry infoReimbursementGuideEntry) {
-
-        IReimbursementGuideEntry reimbursementGuideEntry = new ReimbursementGuideEntry();
-
-        IGuideEntry guideEntry = null;
-
-        if (infoReimbursementGuideEntry.getInfoGuideEntry() != null) {
-            guideEntry = copyInfoGuideEntry2IGuideEntry(infoReimbursementGuideEntry.getInfoGuideEntry());
-            reimbursementGuideEntry.setGuideEntry(guideEntry);
-        }
-        copyObjectProperties(reimbursementGuideEntry, infoReimbursementGuideEntry);
-
-        return reimbursementGuideEntry;
-
-    }
-
-    public static List copyListInfoReimbursementGuideEntries2ListIReimbursementGuideEntries(
-            List listInfoReimbursementGuideEntries) {
-        List listReimbursementGuideEntries = new ArrayList(listInfoReimbursementGuideEntries.size());
-
-        Iterator iterListInfoReimbursementGuideEntries = listInfoReimbursementGuideEntries.iterator();
-
-        while (iterListInfoReimbursementGuideEntries.hasNext()) {
-            InfoReimbursementGuideEntry infoReimbursementGuideEntry = (InfoReimbursementGuideEntry) iterListInfoReimbursementGuideEntries
-                    .next();
-            IReimbursementGuideEntry reimbursementGuideEntry = Cloner
-                    .copyInfoReimbursementGuideEntry2IReimbursementGuideEntry(infoReimbursementGuideEntry);
-            listReimbursementGuideEntries.add(reimbursementGuideEntry);
-        }
-
-        return listReimbursementGuideEntries;
-    }
-
-    public static InfoReimbursementGuideEntry copyIReimbursementGuideEntry2InfoReimbursementGuideEntry(
-            IReimbursementGuideEntry reimbursementGuideEntry) {
-        InfoReimbursementGuideEntry infoReimbursementGuideEntry = new InfoReimbursementGuideEntry();
-
-        InfoGuideEntry infoGuideEntry = InfoGuideEntry.newInfoFromDomain(reimbursementGuideEntry
-                .getGuideEntry());
-
-        copyObjectProperties(infoReimbursementGuideEntry, reimbursementGuideEntry);
-        infoReimbursementGuideEntry.setInfoGuideEntry(infoGuideEntry);
-
-        return infoReimbursementGuideEntry;
     }
 
     public static InfoAttribute copyIAttribute2InfoAttribute(IAttribute attribute) {
