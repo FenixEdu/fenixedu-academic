@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndDegreeCurricularPlanAndDegreeAndContributor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry;
@@ -140,7 +141,8 @@ public class InfoReimbursementGuide extends InfoObject {
         super.copyFromDomain(reimbursementGuide);
         if (reimbursementGuide != null) {
             setCreationDate(reimbursementGuide.getCreationDate());
-            setInfoGuide(InfoGuide.newInfoFromDomain(reimbursementGuide.getGuide()));
+            setInfoGuide(InfoGuideWithPersonAndExecutionDegreeAndDegreeCurricularPlanAndDegreeAndContributor
+                    .newInfoFromDomain(reimbursementGuide.getGuide()));
             setNumber(reimbursementGuide.getNumber());
 
             List infoReimbursementGuideEntries = (List) CollectionUtils.collect(reimbursementGuide
