@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea;
-import net.sourceforge.fenixedu.domain.CreditsInScientificArea;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.IBranch;
+import net.sourceforge.fenixedu.domain.ICreditsInScientificArea;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
@@ -83,7 +83,7 @@ public class SpecificLEECEnrollmentRule extends SpecificEnrolmentRule implements
         if (givenCreditsInScientificAreas != null && !givenCreditsInScientificAreas.isEmpty()) {
             int size = givenCreditsInScientificAreas.size();
             for (int i = 0; i < size; i++) {
-                CreditsInScientificArea creditsInScientificArea = (CreditsInScientificArea) givenCreditsInScientificAreas
+                ICreditsInScientificArea creditsInScientificArea = (ICreditsInScientificArea) givenCreditsInScientificAreas
                         .get(i);
                 sumInHashMap(creditsInScientificAreas, creditsInScientificArea.getScientificArea()
                         .getIdInternal(), creditsInScientificArea.getGivenCredits());
