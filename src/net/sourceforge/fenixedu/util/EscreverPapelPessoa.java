@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoAut
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ServicoSeguroEscreverPapelPessoa;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ServicoSeguroLerTodasPessoas;
-import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.IPerson;
 
 /**
  * 
@@ -34,9 +34,9 @@ public class EscreverPapelPessoa extends FenixUtil {
         }
 
         ListIterator iteradorFuncionario = servicoSeguroLerTodasPessoas.getListaPessoas().listIterator();
-        Person pessoa = null;
+        IPerson pessoa = null;
         while (iteradorFuncionario.hasNext()) {
-            pessoa = (Person) iteradorFuncionario.next();
+            pessoa = (IPerson) iteradorFuncionario.next();
 
             // actualizar os papeis desta pessoa
             ServicoSeguroEscreverPapelPessoa servicoSeguroEscreverPapelPessoa = new ServicoSeguroEscreverPapelPessoa(

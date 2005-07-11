@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -136,7 +137,7 @@ public class PessoaRelacional implements IPessoaPersistente {
 
     }
 
-    public boolean escreverPapelPessoa(Person pessoa, int chaveRole) {
+    public boolean escreverPapelPessoa(IPerson pessoa, int chaveRole) {
         boolean resultado = false;
 
         try {

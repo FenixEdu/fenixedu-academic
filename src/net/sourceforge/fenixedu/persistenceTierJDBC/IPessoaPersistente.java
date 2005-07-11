@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.persistenceTierJDBC;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
 
 /**
@@ -14,7 +15,7 @@ public interface IPessoaPersistente {
 
     public boolean escreverPessoa(Person pessoa);
 
-    public boolean escreverPapelPessoa(Person pessoa, int chaveRole);
+    public boolean escreverPapelPessoa(IPerson pessoa, int chaveRole);
 
     public List lerCargos(int chavePessoa);
 
