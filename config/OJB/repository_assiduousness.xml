@@ -59,6 +59,13 @@
 	>
 	<inverse-foreignkey field-ref="enrolmentKey"/>
   </collection-descriptor> 
+  <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+	name="reimbursementGuideSituations"
+	element-class-ref="net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation"
+	auto_retrieve="true"
+	>
+	<inverse-foreignkey field-ref="keyEmployee"/>
+  </collection-descriptor>   
 </class-descriptor>
 
 <class-descriptor proxy="dynamic" 
