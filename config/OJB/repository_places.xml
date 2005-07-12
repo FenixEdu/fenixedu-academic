@@ -15,10 +15,16 @@
 		column="NAME"
 		jdbc-type="VARCHAR"
 	/>
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
+	<field-descriptor
+		name="ackOptLock"
+		column="ACK_OPT_LOCK"
+	  	jdbc-type="INTEGER"
+	  	locking="true"
+	/>
+   <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		name="executionDegrees"
+		element-class-ref="net.sourceforge.fenixedu.domain.ExecutionDegree"
+		>
+		<inverse-foreignkey field-ref="keyCampus"/>
+   </collection-descriptor>             
 </class-descriptor>
