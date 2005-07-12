@@ -1,13 +1,13 @@
 
 package pt.utl.ist.analysis;
 
-import org.objectweb.asm.*;
-import org.objectweb.asm.commons.*;
-
 import java.io.File;
-import java.io.InputStream;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
+
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassVisitor;
 
 public abstract class ClassFilesVisitor {
 
