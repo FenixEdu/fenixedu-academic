@@ -46,40 +46,4 @@ public class Teacher extends Teacher_Base {
         }
     }
     
-    public List responsibleFors(){
-        List<IProfessorship> professorships = this.getProfessorships();
-        List res = new ArrayList();
-        
-        for(IProfessorship professorship : professorships){
-            if(professorship.getResponsibleFor())
-                res.add(professorship);
-        }
-        
-        return res;
-    }
-    
-    public IProfessorship responsibleFor(Integer executionCourseId){
-        List<IProfessorship> professorships = this.getProfessorships();
-        
-        for(IProfessorship professorship : professorships){
-            if(professorship.getResponsibleFor() && professorship.getExecutionCourse().getIdInternal().equals(executionCourseId))
-                return professorship;
-        }
-        
-        return null;
-    }
-    
-    public void updateResponsabilitiesFor(Integer executionYearId, List<Integer> newResponsabilities){
-        List<IProfessorship> responsibleFors = this.responsibleFors();
-        
-        for(IProfessorship professorship : responsibleFors){
-            IExecutionCourse executionCourse = professorship.getExecutionCourse();
-            if(executionCourse.getExecutionPeriod().getExecutionYear().getIdInternal().equals(executionYearId)){
-                if(newResponsabilities.contains(executionCourse.getIdInternal()))
-                    professorship.setResponsibleFor(true);
-                else
-                    professorship.setResponsibleFor(false);
-            }
-        }
-    }
 }

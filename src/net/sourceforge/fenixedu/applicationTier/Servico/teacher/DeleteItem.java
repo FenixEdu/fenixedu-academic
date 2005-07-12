@@ -26,7 +26,7 @@ public class DeleteItem implements IService {
             return new Boolean(true);
         }
 
-        deletedItem.deleteItem();
+        //deletedItem.deleteItem();
 
         persistentItem.deleteByOID(Item.class, deletedItem.getIdInternal());
 

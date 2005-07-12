@@ -35,7 +35,7 @@ public class EditItem implements IService {
             }
                      
             persistentItem.simpleLockWrite(item);
-            item.editItem(newInfoItem.getName(), newInfoItem.getInformation(), newInfoItem.getUrgent(), newInfoItem.getItemOrder());
+            //item.editItem(newInfoItem.getName(), newInfoItem.getInformation(), newInfoItem.getUrgent(), newInfoItem.getItemOrder());
 
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);

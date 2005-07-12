@@ -27,10 +27,10 @@ public class InsertItem implements IService {
                      
         persistentSection.simpleLockWrite(section);
                        
-        IItem item = section.insertItem(infoItem.getName(), infoItem.getInformation(), infoItem.getUrgent(), infoItem.getItemOrder());
+        //IItem item = section.insertItem(infoItem.getName(), infoItem.getInformation(), infoItem.getUrgent(), infoItem.getItemOrder());
         
         //
-        persistentSuport.getIPersistentItem().simpleLockWrite(item);
+        //persistentSuport.getIPersistentItem().simpleLockWrite(item);
         //
         
         return new Boolean(true);

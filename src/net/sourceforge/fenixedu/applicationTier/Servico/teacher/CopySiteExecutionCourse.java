@@ -143,10 +143,10 @@ public class CopySiteExecutionCourse implements IService {
                         IItem item = (IItem) iteratorItens.next();
                      
                         persistentSection.simpleLockWrite(sectionNew);
-                        IItem item2 = sectionNew.insertItem(item.getName(), item.getInformation(), item.getUrgent(), item.getItemOrder());
+                        //IItem item2 = sectionNew.insertItem(item.getName(), item.getInformation(), item.getUrgent(), item.getItemOrder());
                         
                         //
-                        persistentItem.simpleLockWrite(item2);
+                        //persistentItem.simpleLockWrite(item2);
                         //
                     }
                 }
