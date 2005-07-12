@@ -578,8 +578,14 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
- 
-  </class-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		name="guides"
+		element-class-ref="net.sourceforge.fenixedu.domain.Guide"
+		>
+		<inverse-foreignkey field-ref="keyContributor"/>
+	</collection-descriptor>
+
+</class-descriptor>
  
  <!-- End of definitions for class CONTRIBUTOR -->
 
