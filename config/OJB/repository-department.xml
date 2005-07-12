@@ -87,5 +87,11 @@
 			class-ref="net.sourceforge.fenixedu.domain.Department"
 			>
 		<foreignkey field-ref="chaveDepartamento"/>
-	</reference-descriptor>     
+	</reference-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		name="associatedCurricularCourses"
+		element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourse"
+         >
+		<inverse-foreignkey field-ref="departmentCourseKey"/>
+	</collection-descriptor>
 </class-descriptor>
