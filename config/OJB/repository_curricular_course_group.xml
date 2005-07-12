@@ -76,6 +76,14 @@
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE_GROUP"/>
 		<fk-pointing-to-element-class column="KEY_SCIENTIFIC_AREA"/>
 	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="scientificAreasForThis"
+			element-class-ref="net.sourceforge.fenixedu.domain.ScientificArea"
+			indirection-table="SCIENTIFIC_AREA_CURRICULAR_COURSE_GROUP"
+			>
+		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE_GROUP"/>
+		<fk-pointing-to-element-class column="KEY_SCIENTIFIC_AREA"/>
+	</collection-descriptor>
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
