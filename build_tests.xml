@@ -9,6 +9,9 @@
 	<property name="build.home.webinf" value="${build.home}/WEB-INF"/>
 	<property name="build.home.webinf.classes" value="${build.home.webinf}/classes"/>
 
+    <property name="docs" location="docs" />
+    <property name="report.tests" location="${docs}/tests" />
+
     <property name="lib" location="lib" />
 
 	<property name="compile.debug"       value="on"/>
@@ -46,6 +49,38 @@
                 </fileset>
             </classpath>
         </junit>
+    </target>
+
+    <target name="report-tests"
+    		description="Run all tests and generate a report"
+    		depends="compile-tests">
+    	<delete dir="${report.tests}"/>
+    	<mkdir dir="${report.tests}"/>
+		<junit haltonfailure="false" printsummary="yes" dir="${build.home.webinf.classes}">
+            <formatter type="xml"/>
+            <batchtest fork="yes" todir="${report.tests}">
+                <fileset dir="${src_tests}">
+				   	<include name="**/*Test.java"/>
+				</fileset>
+            </batchtest>
+            <classpath>
+                <pathelement path="${build.home.webinf.classes}"/>
+                <fileset dir="${lib}">
+                    <include name="*.jar"/>
+                </fileset>
+            </classpath>
+        </junit>
+    	<junitreport todir="${report.tests}">
+    	  <fileset dir="${report.tests}">
+    	    <include name="TEST-*.xml"/>
+    	  </fileset>
+    	  <report format="frames" todir="${report.tests}/html"/>
+    	</junitreport>
+    	<delete>
+      	  <fileset dir="${report.tests}">
+      	    <include name="TEST-*.xml"/>
+      	  </fileset>    		
+    	</delete>
     </target>
 
 </project>
