@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 public class DomainObjectTest extends DomainTestBase {
 
