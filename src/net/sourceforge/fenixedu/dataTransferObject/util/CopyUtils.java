@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject.util;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.IDomainObject;
@@ -14,6 +15,7 @@ import net.sourceforge.fenixedu.domain.IDomainObject;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.ojb.broker.core.proxy.ProxyHelper;
 
 /**
  * @author Luis Cruz & João Luz
@@ -48,15 +50,16 @@ public class CopyUtils {
          * 
          * @author jpvl
          */
+        
+        if (sourceBean instanceof Proxy) {
+            sourceBean = ProxyHelper.getRealObject(sourceBean);
+        }
+        
         PropertyDescriptor[] fields = PropertyUtils.getPropertyDescriptors(sourceBean.getClass());
-        for (int i = 0; i < fields.length; i++) {
-            PropertyDescriptor propertyDescriptor = fields[i];
+        for (PropertyDescriptor propertyDescriptor : fields) {
             Class fieldClass = propertyDescriptor.getPropertyType();
-            //Class[] interfaces = fieldClass.getInterfaces();
-            //List interfacesList = Arrays.asList(interfaces);
 
-            if (//CollectionUtils.intersection(interfacesNotToCopy, interfacesList).isEmpty()
-                shouldCopyPropertyOfClass(fieldClass)
+            if (fieldClass != null && shouldCopyPropertyOfClass(fieldClass)
                     && !propertyDescriptor.getName().equals("class")
                     && !propertyDescriptor.getName().equals("slideName")) {
                 Object value = PropertyUtils.getProperty(sourceBean, propertyDescriptor.getName());
@@ -69,8 +72,6 @@ public class CopyUtils {
                 if ((propertyDescriptor.getName().equals("idInternal"))
                         && ((value == null) || (((Integer) value).intValue() == 0))) {
                     //lets force the destination value to be null instead of 0
-                    //BeanUtils.setProperty(destinationBean,
-                    // propertyDescriptor.getName(), null);
                     String propertySetMethodName = "set"
                             + StringUtils.capitalize(propertyDescriptor.getName());
                     Class[] paramTypes = { Integer.class };
