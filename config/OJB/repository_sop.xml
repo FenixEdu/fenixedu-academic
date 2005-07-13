@@ -1116,6 +1116,14 @@
 			>
 		<inverse-foreignkey field-ref="keyExam"/>
 	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="associatedExecutionCoursesForExam"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
+			indirection-table="EXAM_EXECUTION_COURSE"
+			>
+		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
+		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
+	</collection-descriptor>
 </class-descriptor>
 
 <!-- Definitions for net.sourceforge.fenixedu.domain.WrittenEvaluation -->
