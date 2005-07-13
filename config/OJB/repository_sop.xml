@@ -890,6 +890,26 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="associatedExecutionCourses"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
+			indirection-table="EXAM_EXECUTION_COURSE"
+			>
+		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
+		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="evaluationExecutionCourses"
+			element-class-ref="net.sourceforge.fenixedu.domain.EvaluationExecutionCourse"
+			>
+		<inverse-foreignkey field-ref="keyEvaluation"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="marks"
+			element-class-ref="net.sourceforge.fenixedu.domain.Mark"
+			>
+		<inverse-foreignkey field-ref="keyEvaluation"/>
+	</collection-descriptor>
 </class-descriptor>
 
 
