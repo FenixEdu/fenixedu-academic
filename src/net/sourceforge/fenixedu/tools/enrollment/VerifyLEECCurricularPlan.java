@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.tools.enrollment;
 
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -18,9 +19,6 @@ import net.sourceforge.fenixedu.domain.precedences.IRestriction;
 import net.sourceforge.fenixedu.domain.precedences.IRestrictionByNumberOfDoneCurricularCourses;
 import net.sourceforge.fenixedu.domain.precedences.IRestrictionDoneCurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.IRestrictionPeriodToApply;
-import net.sourceforge.fenixedu.domain.precedences.RestrictionByNumberOfDoneCurricularCourses;
-import net.sourceforge.fenixedu.domain.precedences.RestrictionDoneCurricularCourse;
-import net.sourceforge.fenixedu.domain.precedences.RestrictionPeriodToApply;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
@@ -30,6 +28,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.ojb.broker.core.proxy.ProxyHelper;
 
 /**
  * @author David Santos in Jan 29, 2004
@@ -205,19 +204,24 @@ public class VerifyLEECCurricularPlan {
                     Iterator iterator3 = restrictions.iterator();
                     while (iterator3.hasNext()) {
                         IRestriction restriction = (IRestriction) iterator3.next();
-                        if (restriction instanceof RestrictionByNumberOfDoneCurricularCourses) {
+
+                        if (restriction instanceof Proxy) {
+                            restriction = (IRestriction) ProxyHelper.getRealObject(restriction);
+                        }
+
+                        if (restriction instanceof IRestrictionByNumberOfDoneCurricularCourses) {
                             IRestrictionByNumberOfDoneCurricularCourses actualRestriction = (IRestrictionByNumberOfDoneCurricularCourses) restriction;
                             Integer numberOfDoneCurricularCourses = actualRestriction
                                     .getNumberOfCurricularCourses();
                             System.out.print("\t\t");
                             System.out.println(numberOfDoneCurricularCourses + " disciplinas feitas");
-                        } else if (restriction instanceof RestrictionDoneCurricularCourse) {
+                        } else if (restriction instanceof IRestrictionDoneCurricularCourse) {
                             IRestrictionDoneCurricularCourse actualRestriction = (IRestrictionDoneCurricularCourse) restriction;
                             System.out.print("\t\t");
                             System.out.println(actualRestriction.getPrecedentCurricularCourse()
                                     .getName()
                                     + " feita");
-                        } else if (restriction instanceof RestrictionPeriodToApply) {
+                        } else if (restriction instanceof IRestrictionPeriodToApply) {
                             IRestrictionPeriodToApply actualRestriction = (IRestrictionPeriodToApply) restriction;
                             System.out.print("\t\t");
                             System.out.println("no "
