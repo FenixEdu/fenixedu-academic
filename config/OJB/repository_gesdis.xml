@@ -101,12 +101,12 @@
     <field-descriptor id="3"
         name="creationDate"
         column="CREATION_DATE"
-        jdbc-type="TIMESTAMP"
+        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>
     <field-descriptor id="4"
         name="lastModifiedDate"
         column="LAST_MODIFICATION_DATE"
-        jdbc-type="TIMESTAMP"
+        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>
     <field-descriptor id="5"
         name="information"

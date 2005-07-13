@@ -54,7 +54,7 @@
     <field-descriptor
     	name="lastModificationDate"	
     	column="LAST_MODIFICATION_DATE"
-    	jdbc-type="TIMESTAMP"    	
+    	jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"    	
     />    
     <field-descriptor
         name="keyPersonWhoAltered"

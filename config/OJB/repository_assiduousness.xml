@@ -215,7 +215,7 @@
   <field-descriptor
     name="when"
     column="quando"
-    jdbc-type="TIMESTAMP"
+    jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
   />
 
   <reference-descriptor
@@ -380,7 +380,7 @@
   <field-descriptor
     name="quando"
     column="quando"
-    jdbc-type="TIMESTAMP"
+    jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
   />  	
 </class-descriptor>
 
@@ -463,7 +463,7 @@
   <field-descriptor id="14"
     name="quando"
     column="quando"
-    jdbc-type="TIMESTAMP"
+    jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
   />
   <reference-descriptor
          name="person"

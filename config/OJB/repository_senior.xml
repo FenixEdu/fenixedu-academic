@@ -24,7 +24,7 @@
 	<field-descriptor
 		name="expectedDegreeTermination"
 		column="EXPECTED_DEGREE_TERMINATION"
-		jdbc-type="TIMESTAMP"
+		jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>
   	<field-descriptor
    		name="expectedDegreeAverageGrade"
@@ -64,7 +64,7 @@
 	<field-descriptor
 		name="lastModificationDate"
 		column="LAST_MODIFICATION_DATE"
-		jdbc-type="TIMESTAMP"
+		jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
 	/>
 	<reference-descriptor 
 			name="student" 

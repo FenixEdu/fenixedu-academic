@@ -138,7 +138,7 @@
   <field-descriptor id="51"
     name="ingles_data_act"
     column="Ingles_data_act"
-    jdbc-type="TIMESTAMP"
+    jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
   />
       <field-descriptor
       	name="ackOptLock"
