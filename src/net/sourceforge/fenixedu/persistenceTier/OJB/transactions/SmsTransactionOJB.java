@@ -9,7 +9,4 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentSmsTrans
  *  
  */
 public class SmsTransactionOJB extends ObjectFenixOJB implements IPersistentSmsTransaction {
-
-    public SmsTransactionOJB() {
-    }
 }
