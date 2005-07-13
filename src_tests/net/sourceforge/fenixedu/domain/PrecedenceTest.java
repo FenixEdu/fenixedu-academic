@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.sourceforge.fenixedu.domain.precedences.IPrecedence;
 import net.sourceforge.fenixedu.domain.precedences.IRestriction;
 import net.sourceforge.fenixedu.domain.precedences.IRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
@@ -31,11 +28,8 @@ public class PrecedenceTest extends DomainTestBase {
 		ICurricularCourse curricularCourse = new CurricularCourse();
 		curricularCourse.setIdInternal(1);
 		
-		List<IRestriction> restrictions = new ArrayList<IRestriction>();
-		
-		restrictions.add(restriction);
-		restrictions.add(restrictionByCurricularCourse);
-		precedence.setRestrictions(restrictions);
+		precedence.addRestrictions(restriction);
+		precedence.addRestrictions(restrictionByCurricularCourse);
 		restrictionByCurricularCourse.setPrecedentCurricularCourse(curricularCourse);
 		precedence.setCurricularCourse(curricularCourse);
     }
