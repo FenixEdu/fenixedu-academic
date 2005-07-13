@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.persistenceTier.transactions;
 
-import java.util.List;
-
-import net.sourceforge.fenixedu.domain.IPersonAccount;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
 /**
@@ -13,6 +9,4 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  *  
  */
 public interface IPersistentTransaction extends IPersistentObject {
-
-    public List readAllByPersonAccount(IPersonAccount personAccount) throws ExcepcaoPersistencia;
 }
