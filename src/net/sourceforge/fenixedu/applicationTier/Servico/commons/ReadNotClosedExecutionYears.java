@@ -3,8 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -19,27 +18,21 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadNotClosedExecutionYears implements IService {
 
-    public ReadNotClosedExecutionYears() {
-    }
+    public List run() throws ExcepcaoPersistencia {
 
-    public List run() throws FenixServiceException {
+        List<InfoExecutionYear> result = new ArrayList();
+        
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+        List<IExecutionYear> executionYears = persistentExecutionYear.readNotClosedExecutionYears();
 
-        List result = new ArrayList();
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-
-            List executionYears = persistentExecutionYear.readNotClosedExecutionYears();
-
-            if (executionYears != null) {
-                for (int i = 0; i < executionYears.size(); i++) {
-                    result.add(Cloner.get((IExecutionYear) executionYears.get(i)));
-                }
+        if (executionYears != null) {
+            for (IExecutionYear executionYear : executionYears) {
+                result.add(InfoExecutionYear.newInfoFromDomain(executionYear));
             }
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
         }
 
         return result;
     }
+
 }

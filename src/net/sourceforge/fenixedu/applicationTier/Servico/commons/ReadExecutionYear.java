@@ -5,9 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -18,27 +16,21 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author João Mota
  * 
- *  
+ * 
  */
 public class ReadExecutionYear implements IService {
 
-    public InfoExecutionYear run(String year) throws FenixServiceException {
+    public InfoExecutionYear run(String year) throws ExcepcaoPersistencia {
 
-        InfoExecutionYear result = null;
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
+        IExecutionYear executionYear = executionYearDAO.readExecutionYearByName(year);
 
-            IExecutionYear executionYear = executionYearDAO.readExecutionYearByName(year);
-            if (executionYear != null) {
-                result = (InfoExecutionYear) Cloner.get(executionYear);
-            }
-
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
+        if (executionYear != null) {
+            return InfoExecutionYear.newInfoFromDomain(executionYear);
         }
-
-        return result;
+        
+        return null;
     }
 
 }
