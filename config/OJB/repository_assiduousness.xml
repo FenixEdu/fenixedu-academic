@@ -66,6 +66,54 @@
 	>
 	<inverse-foreignkey field-ref="keyEmployee"/>
   </collection-descriptor>   
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		name="employeesNotTeacher"
+		element-class-ref="net.sourceforge.fenixedu.domain.EmployeeNotTeacher"
+		>
+		<inverse-foreignkey field-ref="keyEmployee"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		name="gratuitySituations"
+		element-class-ref="net.sourceforge.fenixedu.domain.GratuitySituation"
+		>
+		<inverse-foreignkey field-ref="keyEmployee"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		name="gratuityValues"
+		element-class-ref="net.sourceforge.fenixedu.domain.GratuityValues"
+		>
+		<inverse-foreignkey field-ref="keyEmployee"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		name="masterDegreeProofVersions"
+		element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeProofVersion"
+		>
+		<inverse-foreignkey field-ref="keyEmployee"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		name="masterDegreeThesisDataVersions"
+		element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion"
+		>
+		<inverse-foreignkey field-ref="keyEmployee"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		name="nonTeacherEmployees"
+		element-class-ref="net.sourceforge.fenixedu.domain.NonTeacherEmployee"
+		>
+		<inverse-foreignkey field-ref="chaveFuncionario"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		name="responsibleEmployeeAssociatedEmployeeHistorics"
+		element-class-ref="net.sourceforge.fenixedu.domain.EmployeeHistoric"
+		>
+		<inverse-foreignkey field-ref="keyResponsableEmployee"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		name="studentCurricularPlans"
+		element-class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan"
+		>
+		<inverse-foreignkey field-ref="employeeKey"/>
+	</collection-descriptor>
 </class-descriptor>
 
 <class-descriptor proxy="dynamic" 
