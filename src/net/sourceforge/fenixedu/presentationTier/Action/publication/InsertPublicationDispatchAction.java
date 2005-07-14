@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationType;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.publication.Author;
 import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublicationType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -557,7 +556,7 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
     public List infoAuthorsPersons(List listObjects, Object object) {
         List infoAuthorPersons = new ArrayList();
 
-        if (object instanceof Author) {
+        if (object instanceof IAuthor) {
 
             infoAuthorPersons = (List) CollectionUtils.collect(listObjects, new Transformer() {
                 public Object transform(Object o) {
