@@ -11,27 +11,12 @@ public class SectionTest extends DomainTestBase {
     ISection section, section2, section3, section4, section5, section6;
     ISite site;
     IItem item, item2;
-    IExecutionCourse executionCourse;
-    IExecutionPeriod executionPeriod;
-    IExecutionYear executionYear;
-    
+       
     protected void setUp() throws Exception {
         super.setUp();
-                
-        executionYear = new ExecutionYear();
-        executionYear.setIdInternal(0);
-        
-        executionPeriod = new ExecutionPeriod();
-        executionPeriod.setIdInternal(0);
-        executionPeriod.setExecutionYear(executionYear);
-                
-        executionCourse = new ExecutionCourse();
-        executionCourse.setIdInternal(0);
-        executionCourse.setExecutionPeriod(executionPeriod);
-        
+                     
         site = new Site();
-        site.setIdInternal(0);
-        site.setExecutionCourse(executionCourse);
+        site.setIdInternal(0);        
         
         //Secção Superior
         section = new Section();
@@ -93,8 +78,7 @@ public class SectionTest extends DomainTestBase {
         item2.setInformation("ItemInformation2");
         item2.setUrgent(false);
         item2.setItemOrder(1);
-        item2.setSection(section3);
-             
+        item2.setSection(section3);             
     }
 
     protected void tearDown() throws Exception {
@@ -206,16 +190,10 @@ public class SectionTest extends DomainTestBase {
     
     public void testDeleteSection(){
         
-        try {
-            section3.delete();
-            
-        } catch (DomainException e) {
-            assertEquals("Size Unexpected", 6, section.getAssociatedSectionsCount());
-        }
-        
-        //Test Remove Items 
-        assertEquals("Size Unexpected", 0, section3.getAssociatedItemsCount());
-       
+        section3.delete();
+                           
+        // Test: Remove Items
+        assertEquals("Size Unexpected", 0, section3.getAssociatedItemsCount());              
         assertNull("Section Unexpected", item.getSection());
         assertNull("Section Unexpected", item2.getSection());
         
@@ -234,13 +212,8 @@ public class SectionTest extends DomainTestBase {
         assertEquals("Order Unexpected", 0, site.getAssociatedSections(0).getSectionOrder().intValue());
         assertEquals("Order Unexpected", 1, site.getAssociatedSections(3).getSectionOrder().intValue());
         assertEquals("Order Unexpected", 2, site.getAssociatedSections(4).getSectionOrder().intValue());
-        
-        try {
-            section.delete();
-            
-        } catch (DomainException e) {
-            assertEquals("Size Unexpected", 5, site.getAssociatedSectionsCount());
-        }
+               
+        section.delete();
         
         assertEquals("Size Unexpected", 2, site.getAssociatedSectionsCount());
         assertEquals("Size Unexpected", 0, section.getAssociatedSectionsCount());
