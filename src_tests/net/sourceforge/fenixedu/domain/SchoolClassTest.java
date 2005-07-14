@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.util.ArrayList;
 
 public class SchoolClassTest extends DomainTestBase {
 
@@ -15,11 +14,9 @@ public class SchoolClassTest extends DomainTestBase {
         super.setUp();
         
         schoolClass = new SchoolClass();
-        schoolClass.setIdInternal(0);
-        schoolClass.setAssociatedShifts(new ArrayList());
+        schoolClass.setIdInternal(0);        
         shift = new Shift();
         shift.setIdInternal(0);
-        shift.setAssociatedClasses(new ArrayList());
     }
 
     protected void tearDown() throws Exception {
