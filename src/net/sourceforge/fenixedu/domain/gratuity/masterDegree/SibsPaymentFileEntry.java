@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.domain.gratuity.masterDegree;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
@@ -28,7 +27,7 @@ public class SibsPaymentFileEntry extends SibsPaymentFileEntry_Base {
      * @param sibsPaymentStatusType
      */
     public SibsPaymentFileEntry(Integer year, Integer studentNumber, SibsPaymentType paymentType,
-            Timestamp transactionDate, Double payedValue, ISibsPaymentFile sibsPaymentFile,
+            Date transactionDate, Double payedValue, ISibsPaymentFile sibsPaymentFile,
             SibsPaymentStatus paymentStatus) {
         this.setYear(year);
         this.setStudentNumber(studentNumber);
@@ -37,28 +36,6 @@ public class SibsPaymentFileEntry extends SibsPaymentFileEntry_Base {
         this.setPayedValue(payedValue);
         this.setSibsPaymentFile(sibsPaymentFile);
         this.setPaymentStatus(paymentStatus);
-    }
-
-    /**
-     * @return Returns the transactionDate.
-     */
-    public Timestamp getTransactionDate() {
-        if (this.getTransaction() != null) {
-            return new Timestamp(this.getTransaction().getTime());
-        }
-        return null;
-    }
-
-    /**
-     * @param transactionDate
-     *            The transactionDate to set.
-     */
-    public void setTransactionDate(Timestamp transactionDate) {
-        if (transactionDate != null) {
-            this.setTransaction(new Date(transactionDate.getTime()));
-        } else {
-            this.setTransaction(null);
-        }
     }
 
     public String toString() {

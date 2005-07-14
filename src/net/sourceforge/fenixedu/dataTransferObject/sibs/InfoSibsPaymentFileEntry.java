@@ -95,7 +95,9 @@ public class InfoSibsPaymentFileEntry extends InfoObject {
         setPaymentStatus(sibsPaymentFileEntry.getPaymentStatus());
         setPaymentType(sibsPaymentFileEntry.getPaymentType());
         setStudentNumber(sibsPaymentFileEntry.getStudentNumber());
-        setTransactionDate(sibsPaymentFileEntry.getTransactionDate());
+        if (sibsPaymentFileEntry.getTransactionDate() != null) {
+            this.setTransactionDate(new Timestamp(sibsPaymentFileEntry.getTransactionDate().getTime()));
+        }
         setYear(sibsPaymentFileEntry.getYear());
         setIdInternal(sibsPaymentFileEntry.getIdInternal());
 

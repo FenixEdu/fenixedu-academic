@@ -152,7 +152,9 @@ public class InfoMasterDegreeThesisDataVersion extends InfoObject {
         if (masterDegreeThesisDataVersion != null) {
             setCurrentState(masterDegreeThesisDataVersion.getCurrentState());
             setDissertationTitle(masterDegreeThesisDataVersion.getDissertationTitle());
-            setLastModification(masterDegreeThesisDataVersion.getLastModification());
+            if (masterDegreeThesisDataVersion.getLastModification() != null) {
+                this.setLastModification(new Timestamp(masterDegreeThesisDataVersion.getLastModification().getTime()));
+            }
         }
     }
 

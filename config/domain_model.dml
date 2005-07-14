@@ -651,13 +651,7 @@ class net.sourceforge.fenixedu.domain.EmployeeHistoric extends net.sourceforge.f
     Integer keyStatus;
     Integer who;
     Integer keyEmployee;
-    Date whenDate;
-    
-    interface "
-    public java.sql.Timestamp getWhen();
-
-    public void setWhen(java.sql.Timestamp when);
-    "
+    Date when;
 }
 
 
@@ -1388,13 +1382,7 @@ class net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion extends net.
 	String dissertationTitle;
 	Integer keyEmployee;
 	State currentState;
-    Date lastModificationDate;
-	
-	interface "
-    public void setLastModification(java.sql.Timestamp lastModification);
-    
-    public java.sql.Timestamp getLastModification();
-	"
+    Date lastModification;
 }
 
 
@@ -2093,7 +2081,7 @@ class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.d
 		
 		public void edit(String newSectionName, Integer newOrder);
 		
-		public void delete();			
+		public void delete();
 	"
 }
 
@@ -2151,13 +2139,7 @@ class net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry
 	Double payedValue;
     SibsPaymentType paymentType;
     SibsPaymentStatus paymentStatus;
-    Date transaction;
-    
-	interface "
-	public java.sql.Timestamp getTransactionDate();
-	
-	public void setTransactionDate(java.sql.Timestamp transactionDate);
-	"
+    Date transactionDate;
 }
 
 class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.domain.DomainObject {
