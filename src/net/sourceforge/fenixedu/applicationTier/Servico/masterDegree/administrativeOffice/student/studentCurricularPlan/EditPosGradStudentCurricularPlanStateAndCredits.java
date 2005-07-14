@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.studentCurricularPlan;
 
+import java.lang.reflect.Proxy;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
@@ -14,6 +15,7 @@ import net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IEnrolment;
+import net.sourceforge.fenixedu.domain.IEnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -28,6 +30,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+
+import org.apache.ojb.broker.core.proxy.ProxyHelper;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -99,8 +104,12 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
                 while (iterator.hasNext()) {
                     IEnrolment enrolment = (IEnrolment) iterator.next();
 
+                    if (enrolment instanceof Proxy) {
+                        enrolment = (IEnrolment) ProxyHelper.getRealObject(enrolment);
+                    }
+                    
                     if (extraCurricularCourses.contains(enrolment.getIdInternal())) {
-                        if (!(enrolment instanceof EnrolmentInExtraCurricularCourse)) {
+                        if (!(enrolment instanceof IEnrolmentInExtraCurricularCourse)) {
 
 
                             IEnrolment auxEnrolment = new EnrolmentInExtraCurricularCourse();
@@ -118,7 +127,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
                             changeAnnulled2ActiveIfActivePlan(newState, persistentEnrolment, enrolment);
                         }
                     } else {
-                        if (enrolment instanceof EnrolmentInExtraCurricularCourse) {
+                        if (enrolment instanceof IEnrolmentInExtraCurricularCourse) {
                             
                             IEnrolment auxEnrolment = new Enrolment();
                             persistentEnrolment.simpleLockWrite(auxEnrolment);
