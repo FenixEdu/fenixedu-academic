@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.curricularCourseGroupsManagement;
 
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -11,12 +12,11 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseGroupWithCoursesToAdd;
-import net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
+import net.sourceforge.fenixedu.domain.IAreaCurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
@@ -27,55 +27,46 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+import org.apache.ojb.broker.core.proxy.ProxyHelper;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author João Mota
- *  
+ * 
  */
 public class ReadCoursesByCurricularCourseGroup implements IService {
 
-    /**
-     *  
-     */
-    public ReadCoursesByCurricularCourseGroup() {
+    public InfoCurricularCourseGroupWithCoursesToAdd run(Integer groupId) throws ExcepcaoPersistencia {
 
-    }
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSuport
+                .getIPersistentCurricularCourseGroup();
+        ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) persistentCurricularCourseGroup
+                .readByOID(CurricularCourseGroup.class, groupId);
 
-    public InfoCurricularCourseGroupWithCoursesToAdd run(Integer groupId) throws FenixServiceException {
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSuport
-                    .getIPersistentCurricularCourseGroup();
-            ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) persistentCurricularCourseGroup
-                    .readByOID(CurricularCourseGroup.class, groupId);
+        List courses = curricularCourseGroup.getCurricularCourses();
+        List infoCurricularCourses = tranformToListOfInfoCurricularCourses(courses);
 
-            List courses = curricularCourseGroup.getCurricularCourses();
-            List infoCurricularCourses = tranformToListOfInfoCurricularCourses(courses);
-
-            List coursesToAdd = getCoursesToAdd(curricularCourseGroup);
-            if (courses != null) {
-                coursesToAdd.removeAll(courses);
-            }
-            List infoCurricularCoursesToAdd = tranformToListOfInfoCurricularCourses(coursesToAdd);
-            Collections.sort(infoCurricularCoursesToAdd, new Comparator() {
-
-                public int compare(Object o1, Object o2) {
-
-                    return ((InfoCurricularCourse) o1).getName().compareTo(
-                            ((InfoCurricularCourse) o2).getName());
-                }
-            });
-            InfoCurricularCourseGroupWithCoursesToAdd composite = new InfoCurricularCourseGroupWithCoursesToAdd();
-            composite.setInfoCurricularCourseGroup(InfoCurricularCourseGroup
-                    .newInfoFromDomain(curricularCourseGroup));
-            composite.setInfoCurricularCourses(infoCurricularCourses);
-            composite.setInfoCurricularCoursesToAdd(infoCurricularCoursesToAdd);
-            return composite;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+        List coursesToAdd = getCoursesToAdd(curricularCourseGroup);
+        if (courses != null) {
+            coursesToAdd.removeAll(courses);
         }
+        List infoCurricularCoursesToAdd = tranformToListOfInfoCurricularCourses(coursesToAdd);
+        Collections.sort(infoCurricularCoursesToAdd, new Comparator() {
+
+            public int compare(Object o1, Object o2) {
+
+                return ((InfoCurricularCourse) o1).getName().compareTo(
+                        ((InfoCurricularCourse) o2).getName());
+            }
+        });
+        InfoCurricularCourseGroupWithCoursesToAdd composite = new InfoCurricularCourseGroupWithCoursesToAdd();
+        composite.setInfoCurricularCourseGroup(InfoCurricularCourseGroup
+                .newInfoFromDomain(curricularCourseGroup));
+        composite.setInfoCurricularCourses(infoCurricularCourses);
+        composite.setInfoCurricularCoursesToAdd(infoCurricularCoursesToAdd);
+        return composite;
     }
 
     /**
@@ -100,6 +91,11 @@ public class ReadCoursesByCurricularCourseGroup implements IService {
      * @return
      */
     private List getCoursesToAdd(ICurricularCourseGroup curricularCourseGroup) {
+        
+        if (curricularCourseGroup instanceof Proxy) {
+            curricularCourseGroup = (ICurricularCourseGroup) ProxyHelper.getRealObject(curricularCourseGroup);
+        }
+        
         Iterator iter = curricularCourseGroup.getBranch().getDegreeCurricularPlan()
                 .getCurricularCourses().iterator();
         List coursesToAdd = new ArrayList();
@@ -108,7 +104,7 @@ public class ReadCoursesByCurricularCourseGroup implements IService {
             ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
 
             if (!coursesToAdd.contains(curricularCourse)
-                    && (curricularCourseGroup instanceof AreaCurricularCourseGroup || (containsScope(
+                    && (curricularCourseGroup instanceof IAreaCurricularCourseGroup || (containsScope(
                             curricularCourseGroup, curricularCourse)))) {
                 coursesToAdd.add(curricularCourse);
             }
@@ -146,7 +142,6 @@ public class ReadCoursesByCurricularCourseGroup implements IService {
      * @return
      */
     private boolean haveCommonCurricularSemester(List scopes2, List scopes) {
-
         return !((List) CollectionUtils
                 .intersection(getSemestersList(scopes2), getSemestersList(scopes))).isEmpty();
     }
@@ -166,4 +161,5 @@ public class ReadCoursesByCurricularCourseGroup implements IService {
         }
         return semesters;
     }
+
 }
