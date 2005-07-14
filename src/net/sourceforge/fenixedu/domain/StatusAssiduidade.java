@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.sql.Timestamp;
 import java.util.Date;
+
 
 /**
  * 
@@ -27,7 +27,7 @@ public class StatusAssiduidade extends StatusAssiduidade_Base {
     }
 
     public StatusAssiduidade(Integer codigoInterno, String sigla, String designacao, String estado,
-            String assiduidade, Integer quem, Timestamp quando) {
+            String assiduidade, Integer quem, Date quando) {
         this.setIdInternal(codigoInterno);
         this.setSigla(sigla);
         this.setDesignacao(designacao);
@@ -35,21 +35,6 @@ public class StatusAssiduidade extends StatusAssiduidade_Base {
         this.setAssiduidade(assiduidade);
         this.setQuem(quem);
         this.setQuando(quando);
-    }
-
-    public Timestamp getQuando() {
-        if (this.getWhen() != null) {
-            return new Timestamp(this.getWhen().getTime());
-        }
-        return null;
-    }
-
-    public void setQuando(Timestamp quando) {
-        if (quando != null) {
-            this.setWhen(new Date(quando.getTime()));
-        } else {
-            this.setWhen(null);
-        }
     }
 
 }

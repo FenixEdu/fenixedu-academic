@@ -61,7 +61,9 @@ public abstract class InfoTransaction extends InfoObject {
         super.copyFromDomain(transaction);
         this.paymentType = transaction.getPaymentType();
         this.remarks = transaction.getRemarks();
-        this.transactionDate = transaction.getTransactionDate();
+        if (transaction.getTransactionDate() != null) {
+            this.setTransactionDate(new Timestamp(transaction.getTransactionDate().getTime()));
+        }
         this.transactionType = transaction.getTransactionType();
         this.value = transaction.getValue();
         this.wasInternalBalance = transaction.getWasInternalBalance();

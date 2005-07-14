@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.StatusAssiduidade;
@@ -88,7 +89,7 @@ public class StatusAssiduidadeRelacional implements IStatusAssiduidadePersistent
                 status = new StatusAssiduidade(resultadoQuery.getInt("codigoInterno"), resultadoQuery
                         .getString("sigla"), resultadoQuery.getString("designacao"), resultadoQuery
                         .getString("estado"), resultadoQuery.getString("assiduidade"), resultadoQuery
-                        .getInt("quem"), resultadoQuery.getTimestamp("quando"));
+                        .getInt("quem"), new Date(resultadoQuery.getTimestamp("quando").getTime()));
             }
         } catch (Exception e) {
             System.out.println("StatusAssiduidadeRelacional.lerStatus: " + e.toString());
@@ -110,7 +111,7 @@ public class StatusAssiduidadeRelacional implements IStatusAssiduidadePersistent
                 status = new StatusAssiduidade(resultadoQuery.getInt("codigoInterno"), resultadoQuery
                         .getString("sigla"), resultadoQuery.getString("designacao"), resultadoQuery
                         .getString("estado"), resultadoQuery.getString("assiduidade"), resultadoQuery
-                        .getInt("quem"), resultadoQuery.getTimestamp("quando"));
+                        .getInt("quem"), new Date(resultadoQuery.getTimestamp("quando").getTime()));
             }
         } catch (Exception e) {
             System.out.println("StatusAssiduidadeRelacional.lerStatus: " + e.toString());
@@ -134,7 +135,7 @@ public class StatusAssiduidadeRelacional implements IStatusAssiduidadePersistent
                 status = new StatusAssiduidade(resultadoQuery.getInt("codigoInterno"), resultadoQuery
                         .getString("sigla"), resultadoQuery.getString("designacao"), resultadoQuery
                         .getString("estado"), resultadoQuery.getString("assiduidade"), resultadoQuery
-                        .getInt("quem"), resultadoQuery.getTimestamp("quando"));
+                        .getInt("quem"), new Date(resultadoQuery.getTimestamp("quando").getTime()));
             }
         } catch (Exception e) {
             System.out.println("StatusAssiduidadeRelacional.lerStatus: " + e.toString());
@@ -155,7 +156,7 @@ public class StatusAssiduidadeRelacional implements IStatusAssiduidadePersistent
                 listaStatus.add(new StatusAssiduidade(resultadoQuery.getInt("codigoInterno"),
                         resultadoQuery.getString("sigla"), resultadoQuery.getString("designacao"),
                         resultadoQuery.getString("estado"), resultadoQuery.getString("assiduidade"),
-                        resultadoQuery.getInt("quem"), resultadoQuery.getTimestamp("quando")));
+                        resultadoQuery.getInt("quem"), new Date(resultadoQuery.getTimestamp("quando").getTime())));
             }
         } catch (Exception e) {
             System.out.println("StatusAssiduidadeRelacional.lerTodosStatus" + e.toString());
@@ -178,7 +179,7 @@ public class StatusAssiduidadeRelacional implements IStatusAssiduidadePersistent
                 listaStatus.add(new StatusAssiduidade(resultadoQuery.getInt("codigoInterno"),
                         resultadoQuery.getString("sigla"), resultadoQuery.getString("designacao"),
                         resultadoQuery.getString("estado"), resultadoQuery.getString("assiduidade"),
-                        resultadoQuery.getInt("quem"), resultadoQuery.getTimestamp("quando")));
+                        resultadoQuery.getInt("quem"), new Date(resultadoQuery.getTimestamp("quando").getTime())));
             }
         } catch (Exception e) {
             System.out.println("StatusAssiduidadeRelacional.lerTodosStatusActivos" + e.toString());
@@ -201,7 +202,7 @@ public class StatusAssiduidadeRelacional implements IStatusAssiduidadePersistent
                 listaStatus.add(new StatusAssiduidade(resultadoQuery.getInt("codigoInterno"),
                         resultadoQuery.getString("sigla"), resultadoQuery.getString("designacao"),
                         resultadoQuery.getString("estado"), resultadoQuery.getString("assiduidade"),
-                        resultadoQuery.getInt("quem"), resultadoQuery.getTimestamp("quando")));
+                        resultadoQuery.getInt("quem"), new Date(resultadoQuery.getTimestamp("quando").getTime())));
             }
         } catch (Exception e) {
             System.out.println("StatusAssiduidadeRelacional.lerTodosStatusInactivos" + e.toString());
@@ -224,7 +225,7 @@ public class StatusAssiduidadeRelacional implements IStatusAssiduidadePersistent
                 listaStatus.add(new StatusAssiduidade(resultadoQuery.getInt("codigoInterno"),
                         resultadoQuery.getString("sigla"), resultadoQuery.getString("designacao"),
                         resultadoQuery.getString("estado"), resultadoQuery.getString("assiduidade"),
-                        resultadoQuery.getInt("quem"), resultadoQuery.getTimestamp("quando")));
+                        resultadoQuery.getInt("quem"), new Date(resultadoQuery.getTimestamp("quando").getTime())));
             }
         } catch (Exception e) {
             System.out.println("StatusAssiduidadeRelacional.lerTodosStatusPendentes" + e.toString());

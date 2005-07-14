@@ -322,7 +322,9 @@ public class InfoWebSiteItem extends InfoObject {
         if (webSiteItem != null) {
             setAuthorEmail(webSiteItem.getAuthorEmail());
             setAuthorName(webSiteItem.getAuthorName());
-            setCreationDate(webSiteItem.getCreationDate());
+            if (webSiteItem.getCreationDate() != null) {
+                this.setCreationDate(new Timestamp(webSiteItem.getCreationDate().getTime()));
+            }
             setExcerpt(webSiteItem.getExcerpt());
             //setInfoEditor();
             //setInfoWebSiteSection();
