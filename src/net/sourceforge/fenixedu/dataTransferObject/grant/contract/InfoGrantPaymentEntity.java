@@ -21,13 +21,6 @@ import org.apache.ojb.broker.core.proxy.ProxyHelper;
  * @author barbosa
  */
 public abstract class InfoGrantPaymentEntity extends InfoObject {
-
-    private static final String grantCostCenterOjbConcreteClass = GrantCostCenter.class
-            .getName();
-
-    private static final String grantProjectOjbConcreteClass = GrantProject.class
-            .getName();
-
     protected String number;
 
     protected String designation;
@@ -92,14 +85,14 @@ public abstract class InfoGrantPaymentEntity extends InfoObject {
      * @return Returns the grantCostCenterOjbConcreteClass.
      */
     public static String getGrantCostCenterOjbConcreteClass() {
-        return grantCostCenterOjbConcreteClass;
+        return GrantCostCenter.class.getName();
     }
 
     /**
      * @return Returns the grantProjectOjbConcreteClass.
      */
     public static String getGrantProjectOjbConcreteClass() {
-        return grantProjectOjbConcreteClass;
+        return GrantProject.class.getName();
     }
 
     /**
@@ -117,25 +110,25 @@ public abstract class InfoGrantPaymentEntity extends InfoObject {
                 grantPaymentEntity = (IGrantPaymentEntity) ProxyHelper.getRealObject(grantPaymentEntity);
             }
 
-            if (grantPaymentEntity instanceof GrantProject) {
+            if (grantPaymentEntity instanceof IGrantProject) {
                 return InfoGrantProjectWithTeacherAndCostCenter
                         .newInfoFromDomain((IGrantProject) grantPaymentEntity);
-            } else if (grantPaymentEntity instanceof GrantCostCenter) {
-                    return InfoGrantCostCenterWithTeacher
+            } else if (grantPaymentEntity instanceof IGrantCostCenter) {
+                return InfoGrantCostCenterWithTeacher
                         .newInfoFromDomain((IGrantCostCenter) grantPaymentEntity);
-                }  
             }
+        }
         return null;
     }
 
-    public static IGrantPaymentEntity newDomainFromInfo(
-        InfoGrantPaymentEntity infoGrantPaymentEntity) throws ExcepcaoPersistencia {
+    public static IGrantPaymentEntity newDomainFromInfo(InfoGrantPaymentEntity infoGrantPaymentEntity)
+            throws ExcepcaoPersistencia {
         IGrantPaymentEntity grantPaymentEntity = null;
         if (infoGrantPaymentEntity != null) {
-            if (infoGrantPaymentEntity.getOjbConcreteClass().equals(GrantCostCenter.class.getName())){
+            if (infoGrantPaymentEntity.getOjbConcreteClass().equals(GrantCostCenter.class.getName())) {
                 return InfoGrantCostCenterWithTeacher
                         .newDomainFromInfo((InfoGrantCostCenter) infoGrantPaymentEntity);
-            }else if (infoGrantPaymentEntity.getOjbConcreteClass().equals(GrantProject.class.getName())){
+            } else if (infoGrantPaymentEntity.getOjbConcreteClass().equals(GrantProject.class.getName())) {
                 return InfoGrantProjectWithTeacherAndCostCenter
                         .newDomainFromInfo((InfoGrantProject) infoGrantPaymentEntity);
             }
