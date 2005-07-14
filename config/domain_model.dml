@@ -320,6 +320,12 @@ class net.sourceforge.fenixedu.domain.gesdis.CourseReport extends net.sourceforg
 	String report;
 	Date lastModificationDate;
 	Integer keyExecutionCourse;
+	
+	interface "
+	public void edit(String newReport);
+    
+    public void delete();
+	"
 }
 
 
@@ -863,6 +869,8 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
     public void createEvaluationMethod(String evaluationElements, String evaluationElementsEng);
     
     public void createBibliographicReference(String title, String authors, String reference, String year, Boolean optional);
+    
+    public void createCourseReport(String report);
     "
 }
 
@@ -2166,7 +2174,7 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 	
 	public void createAnnouncement(String announcementTitle, String announcementInformation);			
 	
-	public void createSection(String sectionName, ISection parentSection, Integer sectionOrder);
+	public net.sourceforge.fenixedu.domain.ISection createSection(String sectionName, ISection parentSection, Integer sectionOrder);
 	"
 }
 

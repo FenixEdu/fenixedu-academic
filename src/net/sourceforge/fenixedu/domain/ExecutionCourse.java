@@ -1,10 +1,13 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
+import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
 import net.sourceforge.fenixedu.fileSuport.INode;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -106,7 +109,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         final ISite site = new Site();
         site.setExecutionCourse(this);
     }
-    
+
     public void createEvaluationMethod(final String evaluationElements,
             final String evaluationElementsEng) {
         if (evaluationElements == null || evaluationElementsEng == null)
@@ -132,7 +135,13 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         bibliographicReference.setExecutionCourse(this);
     }
 
-    public void createCourseReport() {
+    public void createCourseReport(String report) {
+        if (report == null)
+            throw new NullPointerException();
 
+        final ICourseReport courseReport = new CourseReport();
+        courseReport.setReport(report);
+        courseReport.setLastModificationDate(Calendar.getInstance().getTime());
+        courseReport.setExecutionCourse(this);
     }
 }

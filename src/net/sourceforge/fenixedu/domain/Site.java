@@ -51,7 +51,7 @@ public class Site extends Site_Base {
         announcement.setSite(this);
     }
 
-    public void createSection(String sectionName, ISection parentSection, Integer sectionOrder) {
+    public ISection createSection(String sectionName, ISection parentSection, Integer sectionOrder) {
         if (sectionName == null || sectionOrder == null)
             throw new NullPointerException();
 
@@ -64,6 +64,8 @@ public class Site extends Site_Base {
         
         section.setSite(this);
         section.setSuperiorSection(parentSection);
+        
+        return section;
     }
 
     private Integer organizeExistingSectionsOrder(final ISection parentSection, int sectionOrder) {

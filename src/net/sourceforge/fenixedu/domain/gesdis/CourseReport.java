@@ -6,6 +6,8 @@
  */
 package net.sourceforge.fenixedu.domain.gesdis;
 
+import java.util.Calendar;
+
 
 /**
  * @author Leonor Almeida
@@ -20,6 +22,18 @@ public class CourseReport extends CourseReport_Base {
         result += ", executionCourse=" + getExecutionCourse();
         result += "]";
         return result;
+    }
+    
+    public void edit(String newReport) {
+        if (newReport == null)
+            throw new NullPointerException();
+        
+        setReport(newReport);
+        setLastModificationDate(Calendar.getInstance().getTime());
+    }
+    
+    public void delete() {
+        setExecutionCourse(null);
     }
 
 }

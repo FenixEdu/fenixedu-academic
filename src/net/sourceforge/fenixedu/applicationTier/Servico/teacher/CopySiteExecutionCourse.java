@@ -4,14 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.Iterator;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.domain.BibliographicReference;
-import net.sourceforge.fenixedu.domain.EvaluationMethod;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IBibliographicReference;
 import net.sourceforge.fenixedu.domain.IEvaluationMethod;
@@ -19,16 +15,9 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IItem;
 import net.sourceforge.fenixedu.domain.ISection;
 import net.sourceforge.fenixedu.domain.ISite;
-import net.sourceforge.fenixedu.domain.Item;
-import net.sourceforge.fenixedu.domain.Section;
-import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -38,157 +27,106 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  *  
  */
 public class CopySiteExecutionCourse implements IService {
-    public void run(Integer executionCourseIDFrom, Integer executionCourseIDTo)
-            throws ExcepcaoPersistencia, ExistingServiceException {
+    
+    public void run(Integer executionCourseFromID, Integer executionCourseToID)
+            throws ExcepcaoPersistencia, FenixServiceException, DomainException {        
         
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentSite persistentSite = sp.getIPersistentSite();
-
-        //Course From
-        ISite siteFrom = persistentSite.readByExecutionCourse(executionCourseIDFrom);
-        if (siteFrom == null)
-            return;
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();      
+        final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
         
-        IExecutionCourse executionCourseFrom = siteFrom.getExecutionCourse();
-
-        //Course To
-        ISite siteTo = persistentSite.readByExecutionCourse(executionCourseIDTo);
-        if (siteTo == null)
-            siteTo = new Site();
-   
-        //begin copy
-        persistentSite.simpleLockWrite(siteTo);
-
-        //copy course if it isn't
-        IExecutionCourse executionCourseTo = siteTo.getExecutionCourse();
-        if (executionCourseTo == null) {
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            executionCourseTo = (IExecutionCourse) persistentExecutionCourse.readByOID(
-                    ExecutionCourse.class, executionCourseIDTo);
-            siteTo.setExecutionCourse(executionCourseTo);
+        final IExecutionCourse executionCourseFrom = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseFromID);
+        if (executionCourseFrom == null)
+            throw new InvalidArgumentsServiceException();
+        
+        final IExecutionCourse executionCourseTo = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseToID);
+        if (executionCourseTo == null)
+            throw new InvalidArgumentsServiceException();
+                
+        ISite siteFrom = executionCourseFrom.getSite();
+        if (siteFrom == null) {
+            throw new FenixServiceException();            
         }
+        
+        ISite siteTo = executionCourseTo.getSite();
+        if (siteTo == null) {
+            executionCourseTo.createSite();
+            siteTo = executionCourseTo.getSite();
+        }
+                
+        persistentExecutionCourse.simpleLockWrite(executionCourseTo);               
+        siteTo.edit(siteFrom.getInitialStatement(), siteFrom.getIntroduction(), siteFrom.getMail(), siteFrom.getAlternativeSite());
+        
+        copySectionsAndItems(siteFrom, siteTo);
+        copyBibliographicReference(executionCourseFrom, executionCourseTo);
+        copyEvaluationMethod(executionCourseFrom, executionCourseTo);
+        
+    }
 
-        siteTo.setAlternativeSite(siteFrom.getAlternativeSite());
-        siteTo.setInitialStatement(siteFrom.getInitialStatement());
-        siteTo.setIntroduction(siteFrom.getIntroduction());
-        siteTo.setMail(siteFrom.getMail());
-        siteTo.setStyle(siteFrom.getStyle());
-
-        //copy section and them itens, but before delete them if exists
-        IPersistentSection persistentSection = sp.getIPersistentSection();
-        List sectionsFrom = persistentSection.readBySite(siteFrom.getExecutionCourse().getSigla(),
-                siteFrom.getExecutionCourse().getExecutionPeriod().getName(),
-                siteFrom.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
-        if (sectionsFrom != null || sectionsFrom.size() > 0) {
-            //Delete sections and itens
-            List sectionsTo = persistentSection.readBySite(siteTo.getExecutionCourse().getSigla(),
-                    siteTo.getExecutionCourse().getExecutionPeriod().getName(),
-                    siteTo.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
-            IPersistentItem persistentItem = sp.getIPersistentItem();
-            if (sectionsTo != null && sectionsTo.size() > 0) {
-                ListIterator iteratorSection = sectionsTo.listIterator();
-                while (iteratorSection.hasNext()) {
-                    ISection section = (ISection) iteratorSection.next();
-                    List itens = persistentItem.readAllItemsBySection(section.getIdInternal(),
-                            section.getSite().getExecutionCourse().getSigla(),
-                            section.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear(),
-                            section.getSite().getExecutionCourse().getExecutionPeriod().getName());
-                    if (itens != null && itens.size() > 0) {
-                        ListIterator iteratorItens = itens.listIterator();
-                        while (iteratorItens.hasNext()) {
-                            IItem item = (IItem) iteratorItens.next();
-                            persistentItem.deleteByOID(Item.class, item.getIdInternal());
-                        }
-                    }
-                    persistentSection.deleteByOID(Section.class, section.getIdInternal());
+    private void copySectionsAndItems(ISite siteFrom, ISite siteTo) throws DomainException {        
+        
+        deleteSectionsAndItemsIfExistFrom(siteTo);
+        
+        if (siteFrom.getAssociatedSectionsCount() > 0) {
+            Iterator associatedSections = siteFrom.getAssociatedSectionsIterator();
+            while (associatedSections.hasNext()) {                
+                ISection sectionFrom = (ISection) associatedSections.next();
+                if (sectionFrom.getSuperiorSection() == null) {
+                    ISection sectionTo = siteTo.createSection(sectionFrom.getName(), null, sectionFrom.getSectionOrder());
+                    copyItemsFrom(sectionFrom, sectionTo);
+                    copySubSectionsAndItemsFrom(sectionFrom, sectionTo, siteTo);
                 }
             }
-
-            //Copy sections and itens
-            ListIterator iterator = sectionsFrom.listIterator();
-            sectionsTo = new ArrayList();
-            while (iterator.hasNext()) {
-                ISection sectionFrom = (ISection) iterator.next();
-
-                ISection sectionNew = new Section();
-                persistentSection.simpleLockWrite(sectionNew);
-                sectionNew.setName(sectionFrom.getName());
-                sectionNew.setSectionOrder(sectionFrom.getSectionOrder());
-                sectionNew.setSite(siteTo);
-
-                //find the superior section
-                ISection sectionSuperiorTo = null;
-                if (sectionFrom.getSuperiorSection() != null) {
-                    ListIterator iteratorsSectionsTo = sectionsTo.listIterator();
-                    while (iteratorsSectionsTo.hasNext()) {
-                        ISection sectionTo = (ISection) iteratorsSectionsTo.next();
-                        if (sectionTo.getName().equals(sectionFrom.getSuperiorSection().getName())) {
-                            sectionSuperiorTo = sectionTo;
-                            break;
-                        }
-                    }
-                }
-                sectionNew.setSuperiorSection(sectionSuperiorTo);
-
-                sectionNew.setLastModifiedDate(Calendar.getInstance().getTime());
-
-                //section's itens
-                List itens = persistentItem.readAllItemsBySection(sectionFrom.getIdInternal(),
-                        sectionFrom.getSite().getExecutionCourse().getSigla(),
-                        sectionFrom.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear(),
-                        sectionFrom.getSite().getExecutionCourse().getExecutionPeriod().getName());
-                if (itens != null && itens.size() > 0) {
-                    ListIterator iteratorItens = itens.listIterator();
-                    while (iteratorItens.hasNext()) {
-                        IItem item = (IItem) iteratorItens.next();
-                     
-                        persistentSection.simpleLockWrite(sectionNew);
-                        //IItem item2 = sectionNew.insertItem(item.getName(), item.getInformation(), item.getUrgent(), item.getItemOrder());
-                        
-                        //
-                        //persistentItem.simpleLockWrite(item2);
-                        //
-                    }
-                }
-                sectionsTo.add(sectionNew);
-            }
         }
+    }
 
-        //Copy Bibliographic
-        IPersistentBibliographicReference persistentBibliographicReference = sp
-                .getIPersistentBibliographicReference();
-        List bibliographicReferenceList = persistentBibliographicReference
-                .readBibliographicReference(executionCourseFrom.getIdInternal());
-        if (bibliographicReferenceList != null && bibliographicReferenceList.size() > 0) {
-            ListIterator iterator = bibliographicReferenceList.listIterator();
-            while (iterator.hasNext()) {
-                IBibliographicReference bibliographicReference = (IBibliographicReference) iterator
-                        .next();
+    private void copySubSectionsAndItemsFrom(ISection sectionFrom, ISection sectionTo, ISite siteTo) {                
+        if (sectionFrom.getAssociatedSectionsCount() > 0) {
+            Iterator associatedSections = sectionFrom.getAssociatedSectionsIterator();
+            while (associatedSections.hasNext()) {                
+                ISection subSectionFrom = (ISection) associatedSections.next();
+                if (subSectionFrom.getSuperiorSection() != null) {
+                    ISection subSectionTo = siteTo.createSection(subSectionFrom.getName(), sectionTo, subSectionFrom.getSectionOrder());
+                    copyItemsFrom(subSectionFrom, subSectionTo);
+                    copySubSectionsAndItemsFrom(subSectionFrom, subSectionTo, siteTo);
+                }
+            }
+        }                
+    }
 
-                IBibliographicReference bibliographicReferenceTo = new BibliographicReference();
-                persistentBibliographicReference.simpleLockWrite(bibliographicReferenceTo);
-                bibliographicReferenceTo.setExecutionCourse(executionCourseTo);
-                bibliographicReferenceTo.setAuthors(bibliographicReference.getAuthors());
-                bibliographicReferenceTo.setOptional(bibliographicReference.getOptional());
-                bibliographicReferenceTo.setReference(bibliographicReference.getReference());
-                bibliographicReferenceTo.setTitle(bibliographicReference.getTitle());
-                bibliographicReferenceTo.setYear(bibliographicReference.getYear());
+    private void copyItemsFrom(ISection sectionFrom, ISection sectionTo) {
+        if (sectionFrom.getAssociatedItemsCount() > 0) {
+            Iterator associatedItems = sectionFrom.getAssociatedItemsIterator();
+            while (associatedItems.hasNext()) {
+                IItem item = (IItem) associatedItems.next();
+                //TODO: sectionTo.insertItem(item.getName(), item.getInformation(), item.getUrgent(), item.getItemOrder());
             }
-        }
-        //Copy Evaluation Method
-        IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();
-        IEvaluationMethod evaluationMethod = persistentEvaluationMethod
-                .readByIdExecutionCourse(executionCourseFrom.getIdInternal());
-        if (evaluationMethod != null) {
-            IEvaluationMethod evaluationMethodTo = persistentEvaluationMethod
-                    .readByIdExecutionCourse(executionCourseTo.getIdInternal());
-            if (evaluationMethodTo == null) {
-                evaluationMethodTo = new EvaluationMethod();
+        }        
+    }
+
+    private void deleteSectionsAndItemsIfExistFrom(ISite siteTo) throws DomainException {
+        if (siteTo.getAssociatedSectionsCount() > 0) {
+            Iterator associatedSections = siteTo.getAssociatedSectionsIterator();
+            while (associatedSections.hasNext()) {
+                ISection section = (ISection) associatedSections.next();
+                section.delete();
+            }            
+        }        
+    }
+
+    private void copyBibliographicReference(final IExecutionCourse executionCourseFrom, IExecutionCourse executionCourseTo) {
+        if (executionCourseFrom.getAssociatedBibliographicReferencesCount() > 0) {
+            Iterator bibliographicReferences = executionCourseFrom.getAssociatedBibliographicReferencesIterator();
+            while (bibliographicReferences.hasNext()) {
+                IBibliographicReference bibliographicReference = (IBibliographicReference) bibliographicReferences.next();
+                executionCourseTo.createBibliographicReference(bibliographicReference.getTitle(), bibliographicReference.getAuthors(), bibliographicReference.getReference(), bibliographicReference.getYear(), bibliographicReference.getOptional());
             }
-            persistentEvaluationMethod.simpleLockWrite(evaluationMethodTo);
-            evaluationMethodTo.setExecutionCourse(executionCourseTo);
-            evaluationMethodTo.setEvaluationElements(evaluationMethod.getEvaluationElements());
-            evaluationMethodTo.setEvaluationElementsEn(evaluationMethod.getEvaluationElementsEn());
+        }        
+    }
+
+    private void copyEvaluationMethod(final IExecutionCourse executionCourseFrom, IExecutionCourse executionCourseTo) {
+        if (executionCourseFrom.getEvaluationMethod() != null) {
+            IEvaluationMethod evaluationMethod = executionCourseFrom.getEvaluationMethod();
+            executionCourseTo.createEvaluationMethod(evaluationMethod.getEvaluationElements(), evaluationMethod.getEvaluationElementsEn());
         }
     }
 }

@@ -295,12 +295,4 @@ public class SiteTest extends DomainTestBase {
         assertNotNull("Expected Not Null Section items!", section.getAssociatedItems());
         assertNotNull("Expected Not Null Section SubSections!", section.getAssociatedSections());
     }
-
-    private void sleep(long time) {
-        try {
-            Thread.sleep(time);
-        } catch (InterruptedException e) {
-        }
-    }
-
 }

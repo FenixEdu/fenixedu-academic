@@ -94,12 +94,4 @@ public class AnnouncementTest extends DomainTestBase {
         assertEquals("Size unexpected in AssociatedAnnouncements!", 0, site.getAssociatedAnnouncementsCount());
         assertNull("Expected Null Site in Announcement!", announcement.getSite());
     }
-
-    private void sleep(long time) {
-        try {
-            Thread.sleep(time);
-        } catch (InterruptedException e) {
-        }
-    }
-
 }

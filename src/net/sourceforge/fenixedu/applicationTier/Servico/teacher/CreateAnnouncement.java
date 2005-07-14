@@ -24,7 +24,7 @@ public class CreateAnnouncement implements IService {
         final ISite site = persistentSite.readByExecutionCourse(infoExecutionCourseCode);
         if (site == null)
             throw new InvalidArgumentsServiceException();
-        persistentSite.simpleLockWrite(site);
+
         site.createAnnouncement(announcementTitle, announcementInformation);
         
         return true;

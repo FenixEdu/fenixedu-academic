@@ -13,4 +13,11 @@ public class DomainTestBase extends TestCase {
         DomainObject.turnOffLockMode();
     }
 
+    protected void sleep(long time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+        }
+    }
+
 }
