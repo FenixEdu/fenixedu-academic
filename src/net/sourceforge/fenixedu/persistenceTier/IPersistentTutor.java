@@ -20,5 +20,5 @@ public interface IPersistentTutor extends IPersistentObject {
 
     public ITutor readTeachersByStudent(IStudent student) throws ExcepcaoPersistencia;
 
-    public List readStudentsByTeacher(ITeacher teacher) throws ExcepcaoPersistencia;
+    public List readStudentsByTeacher(Integer teacherId, Integer teacherNumber) throws ExcepcaoPersistencia;
 }

@@ -65,7 +65,7 @@ public class TutorAuthorizationFilter extends AuthorizationByRoleFilter {
             
             ITeacher teacher = persistentTeacher.readTeacherByUsername((String) argumentos[0]);
 
-            List tutorStudents = persistentTutor.readStudentsByTeacher(teacher);
+            List tutorStudents = persistentTutor.readStudentsByTeacher(teacher.getIdInternal(), teacher.getTeacherNumber());
             
             if (tutorStudents == null) {
             	 return false;

@@ -56,13 +56,13 @@ public class TutorOJB extends PersistentObjectOJB implements IPersistentTutor {
      * 
      * @see ServidorPersistente.IPersistentTutor#readStudentsByTeacher(Dominio.ITeacher)
      */
-    public List readStudentsByTeacher(ITeacher teacher) throws ExcepcaoPersistencia {
+    public List readStudentsByTeacher(Integer teacherId, Integer teacherNumber) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        if (teacher != null && teacher.getIdInternal() != null) {
-            criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
+        if (teacherId != null) {
+            criteria.addEqualTo("teacher.idInternal", teacherId);
         }
-        if (teacher != null && teacher.getTeacherNumber() != null) {
-            criteria.addEqualTo("teacher.teacherNumber", teacher.getTeacherNumber());
+        if (teacherNumber != null) {
+            criteria.addEqualTo("teacher.teacherNumber", teacherNumber);
         }
         return queryList(Tutor.class, criteria);
     }

@@ -6,10 +6,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTutor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTutorWithInfoStudent;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.ITutor;
@@ -26,45 +24,33 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ViewStudentsByTutor implements IService {
 
-    public ViewStudentsByTutor() {
-
-    }
-
     /*
      * This service returns a list of students that tutor tutorizes
      */
-
-    public List run(String userName) throws FenixServiceException {
+    public List run(String userName) throws FenixServiceException, ExcepcaoPersistencia {
         if (userName == null) {
             throw new FenixServiceException("error.tutor.impossibleOperation");
         }
 
         List infoTutorStudents = new ArrayList();
-        ISuportePersistente sp = null;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IPersistentTutor persistentTutor = sp.getIPersistentTutor();
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(userName);
+        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        ITeacher teacher = persistentTeacher.readTeacherByUsername(userName);
 
-            List tutorStudents = persistentTutor.readStudentsByTeacher(teacher);
-            if (tutorStudents == null) {
-                return infoTutorStudents;
-            }
+        IPersistentTutor persistentTutor = sp.getIPersistentTutor();
+        List<ITutor> tutorStudents = persistentTutor.readStudentsByTeacher(teacher.getIdInternal(),
+                teacher.getTeacherNumber());
 
-            ListIterator iteratorTutorStudents = tutorStudents.listIterator();
-            while (iteratorTutorStudents.hasNext()) {
-                ITutor tutor = (ITutor) iteratorTutorStudents.next();
-                InfoTutor infoTutor = InfoTutorWithInfoStudent.newInfoFromDomain(tutor);
-                infoTutorStudents.add(infoTutor);
-            }
-
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw new FenixServiceException("error.tutor.impossibleOperation");
+        if (tutorStudents == null) {
+            return infoTutorStudents;
         }
-       return infoTutorStudents;
+
+        for (ITutor tutor : tutorStudents) {
+            infoTutorStudents.add(InfoTutorWithInfoStudent.newInfoFromDomain(tutor));
+        }
+
+        return infoTutorStudents;
     }
+
 }
