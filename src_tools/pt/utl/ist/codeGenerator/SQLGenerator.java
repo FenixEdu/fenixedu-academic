@@ -1,7 +1,6 @@
 package pt.utl.ist.codeGenerator;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -11,8 +10,6 @@ import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.metadata.DescriptorRepository;
 import org.apache.ojb.broker.metadata.FieldDescriptor;
 import org.apache.ojb.broker.metadata.MetadataManager;
-
-import com.crossdb.sql.Column;
 
 public class SQLGenerator {
 
