@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
+import net.sourceforge.fenixedu.domain.IAreaCurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup;
@@ -54,7 +55,7 @@ public class InsertCurricularCourseGroup implements IService {
         curricularCourseGroup.setBranch(branch);
         curricularCourseGroup.setName(name);
 
-        if (curricularCourseGroup instanceof AreaCurricularCourseGroup) {
+        if (curricularCourseGroup instanceof IAreaCurricularCourseGroup) {
             curricularCourseGroup.setAreaType(AreaType.valueOf(areaType));
             curricularCourseGroup.setMaximumCredits(maximumValue);
             curricularCourseGroup.setMinimumCredits(minimumValue);
