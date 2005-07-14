@@ -2093,7 +2093,7 @@ class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.d
 		
 		public void edit(String newSectionName, Integer newOrder);
 		
-		public void delete();
+		public void delete();			
 	"
 }
 
@@ -2384,13 +2384,6 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	public net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits getExecutionPeriodCredits(IExecutionPeriod executionPeriod);
 	
 	public void notifyCreditsChange(net.sourceforge.fenixedu.domain.credits.event.CreditsEvent creditsEvent, net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator originator);
-	
-	public java.util.List responsibleFors();
-	
-	public net.sourceforge.fenixedu.domain.IProfessorship responsibleFor(Integer executionCourseId);
-	
-	public void updateResponsabilitiesFor(Integer executionYearId, java.util.List<Integer> newResponsabilities)
-		throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
 	"
 }
 
