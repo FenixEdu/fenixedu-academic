@@ -197,7 +197,10 @@ public class InfoMasterDegreeProofVersion extends InfoObject {
             this.setAttachedCopiesNumber(masterDegreeProofVersion.getAttachedCopiesNumber());
             this.setCurrentState(masterDegreeProofVersion.getCurrentState());
             this.setFinalResult(masterDegreeProofVersion.getFinalResult());
-            this.setLastModification(masterDegreeProofVersion.getLastModification());
+            if (masterDegreeProofVersion.getLastModification() != null) {
+                this.setLastModification(new Timestamp(masterDegreeProofVersion.getLastModification()
+                        .getTime()));
+            }
             this.setProofDate(masterDegreeProofVersion.getProofDate());
             this.setThesisDeliveryDate(masterDegreeProofVersion.getThesisDeliveryDate());
             this.setInfoJuries(copyTeachers(masterDegreeProofVersion.getJuries()));

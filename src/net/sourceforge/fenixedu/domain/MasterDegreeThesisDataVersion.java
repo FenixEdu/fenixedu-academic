@@ -5,7 +5,7 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 import net.sourceforge.fenixedu.util.State;
 
@@ -19,7 +19,7 @@ public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion
     }
 
     public MasterDegreeThesisDataVersion(IMasterDegreeThesis masterDegreeThesis,
-            IEmployee responsibleEmployee, String dissertationTitle, Timestamp lastModification,
+            IEmployee responsibleEmployee, String dissertationTitle, Date lastModification,
             State currentState) {
         this.setMasterDegreeThesis(masterDegreeThesis);
         this.setResponsibleEmployee(responsibleEmployee);

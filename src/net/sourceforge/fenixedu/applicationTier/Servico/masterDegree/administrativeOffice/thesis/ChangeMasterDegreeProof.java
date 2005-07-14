@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -94,8 +93,7 @@ public class ChangeMasterDegreeProof implements IService {
 					.copyListInfoExternalPerson2ListIExternalPerson(infoExternalPersonExternalJuries);
 
 			IMasterDegreeProofVersion masterDegreeProofVersion = new MasterDegreeProofVersion(
-					storedMasterDegreeThesis, employee, new Timestamp(
-							new Date().getTime()), proofDate,
+					storedMasterDegreeThesis, employee, new Date(), proofDate,
 					thesisDeliveryDate, finalResult, attachedCopiesNumber,
 					new State(State.ACTIVE), teacherJuries, externalJuries);
 			sp.getIPersistentMasterDegreeProofVersion().simpleLockWrite(

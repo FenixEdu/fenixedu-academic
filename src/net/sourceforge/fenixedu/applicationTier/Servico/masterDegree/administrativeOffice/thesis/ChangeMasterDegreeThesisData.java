@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis;
 
-import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -87,7 +86,7 @@ public class ChangeMasterDegreeThesisData implements IService {
 
         IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion = new MasterDegreeThesisDataVersion(
                 storedMasterDegreeThesisDataVersion.getMasterDegreeThesis(), employee,
-                dissertationTitle, new Timestamp(new Date().getTime()), new State(State.ACTIVE));
+                dissertationTitle, new Date(), new State(State.ACTIVE));
 
         Collection<ITeacher> guiders = sp.getIPersistentTeacher().readByNumbers(guidersNumbers);
         Collection<ITeacher> assistentGuiders = sp.getIPersistentTeacher().readByNumbers(

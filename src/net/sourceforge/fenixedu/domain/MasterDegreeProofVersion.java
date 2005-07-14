@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
      * @param currentState
      */
     public MasterDegreeProofVersion(IMasterDegreeThesis masterDegreeThesis,
-            IEmployee responsibleEmployee, Timestamp lastModification, Date proofDate,
+            IEmployee responsibleEmployee, Date lastModification, Date proofDate,
             Date thesisDeliveryDate, MasterDegreeClassification finalResult,
             Integer attachedCopiesNumber, State currentState, List juries, List externalJuries) {
         this.setMasterDegreeThesis(masterDegreeThesis);
@@ -47,21 +46,6 @@ public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
         this.setCurrentState(currentState);
         this.getJuries().addAll(juries);
         this.getExternalJuries().addAll(externalJuries);
-    }
-
-    public Timestamp getLastModification() {
-        if (this.getLastModificationDate() != null) {
-            return new Timestamp(this.getLastModificationDate().getTime());
-        }
-        return null;
-    }
-
-    public void setLastModification(Timestamp lastModification) {
-        if (lastModification != null) {
-            this.setLastModificationDate(new Date(lastModification.getTime()));
-        } else {
-            this.setLastModificationDate(null);
-        }
     }
 
     public String toString() {

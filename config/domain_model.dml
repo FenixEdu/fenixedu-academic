@@ -1364,13 +1364,7 @@ class net.sourceforge.fenixedu.domain.MasterDegreeProofVersion extends net.sourc
     Date proofDate;
     State currentState;
     MasterDegreeClassification finalResult;
-    Date lastModificationDate;
-	
-	interface "
-    public void setLastModification(java.sql.Timestamp lastModification);
-   	
-   	public java.sql.Timestamp getLastModification();
-	"
+    Date lastModification;
 }
 
 class net.sourceforge.fenixedu.domain.MasterDegreeThesis extends net.sourceforge.fenixedu.domain.DomainObject {

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -102,7 +101,7 @@ public class CreateMasterDegreeThesis implements IService {
             // write data version
             IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion = new MasterDegreeThesisDataVersion(
                     masterDegreeThesis, employee, dissertationTitle,
-                    new Timestamp(new Date().getTime()), new State(State.ACTIVE));
+                    new Date(), new State(State.ACTIVE));
             List guiders = Cloner.copyListInfoTeacher2ListITeacher(infoTeacherGuiders);
             List assistentGuiders = Cloner.copyListInfoTeacher2ListITeacher(infoTeacherAssistentGuiders);
             List externalGuiders = Cloner
