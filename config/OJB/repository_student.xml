@@ -139,4 +139,11 @@
 			>
 		<inverse-foreignkey field-ref="keyStudent"/>
 	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="enrolmentLogs"
+			element-class-ref="net.sourceforge.fenixedu.domain.log.EnrolmentLog"
+			
+			>
+		<inverse-foreignkey field-ref="keyStudent"/>
+	</collection-descriptor>
 </class-descriptor>
