@@ -33,9 +33,8 @@ public class EditItem implements IService {
             if (item == null) {
                 throw new ExistingServiceException();
             }
-                     
-            persistentItem.simpleLockWrite(item);
-            //item.editItem(newInfoItem.getName(), newInfoItem.getInformation(), newInfoItem.getUrgent(), newInfoItem.getItemOrder());
+                                      
+            item.edit(newInfoItem.getName(), newInfoItem.getInformation(), newInfoItem.getUrgent(), newInfoItem.getItemOrder());
 
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);

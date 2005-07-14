@@ -9,8 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.fileSuport.FileSuport;
-import net.sourceforge.fenixedu.fileSuport.IFileSuport;
 import net.sourceforge.fenixedu.fileSuport.INode;
 
 /**
@@ -132,15 +130,8 @@ public class Section extends Section_Base {
         return newOrder;
     }
 
-    public void delete() throws DomainException {        
-        
-        IFileSuport fileSuport = FileSuport.getInstance();
-        long size = 1;
-        size = fileSuport.getDirectorySize(this.getSlideName());
-        if (size > 0) {
-            throw new DomainException(this.getClass().getName(), "");
-        }
-
+    public void delete(){        
+               
         ISection superiorSection = this.getSuperiorSection();
         ISite sectionSite = this.getSite();
         Integer sectionToDeleteOrder = this.getSectionOrder();
@@ -163,17 +154,16 @@ public class Section extends Section_Base {
             }
         }
         
-        //Delete Associations with Site 
-        this.setSite(null);
-        
         //Delete Associations with Superior Section if exists
         if(superiorSection != null){           
             this.setSuperiorSection(null);
-        }                     
-                
-        //ReOrder Sections                        
-        List<ISection> sectionsReordered = getSections(superiorSection, sectionSite);
+        }  
         
+        //Delete Associations with Site 
+        this.setSite(null);
+                                                  
+        //ReOrder Sections                        
+        List<ISection> sectionsReordered = getSections(superiorSection, sectionSite);        
         for(ISection section : sectionsReordered) {
             Integer sectionOrder = section.getSectionOrder();
             if (sectionOrder.intValue() > sectionToDeleteOrder.intValue()) {
