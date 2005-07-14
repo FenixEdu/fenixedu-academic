@@ -30,7 +30,6 @@ public class CreateSiteInExecutionCourse implements IService {
         if (executionCourse == null) {
             throw new NonExistingServiceException("message.non.existing.execution.course", null);
         }
-        persistentExecutionCourse.simpleLockWrite(executionCourse);
         executionCourse.createSite();
     }
 }

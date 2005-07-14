@@ -29,7 +29,6 @@ public class CreateBibliographicReference implements IService {
         if (executionCourse == null)
             throw new InvalidArgumentsServiceException();
 
-        persistentExecutionCourse.simpleLockWrite(executionCourse);
         executionCourse.createBibliographicReference(newBibliographyTitle, newBibliographyAuthors,
                 newBibliographyReference, newBibliographyYear, newBibliographyOptional);
         return true;

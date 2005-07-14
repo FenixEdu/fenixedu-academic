@@ -5,21 +5,18 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
+import java.util.Iterator;
+
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IBibliographicReference;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -28,7 +25,7 @@ import pt.utl.ist.berserk.ServiceResponse;
 
 /**
  * @author João Mota
- *  
+ * 
  */
 public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizationFilter extends
         AuthorizationByRoleFilter {
@@ -37,106 +34,56 @@ public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizati
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
-     */
     protected RoleType getRoleType() {
         return RoleType.TEACHER;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
-     *      pt.utl.ist.berserk.ServiceResponse)
-     */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
         if ((id == null) || (id.getRoles() == null)
                 || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
-                || !lecturesExecutionCourse(id, arguments)
-                || !bibliographicReferenceBelongsExecutionCourse(id, arguments)) {
+                || !bibliographicReferenceBelongsToTeacherExecutionCourse(id, arguments)) {
             throw new NotAuthorizedFilterException();
         }
     }
 
-    /**
-     * @param id
-     * @param argumentos
-     * @return
-     */
-    private boolean bibliographicReferenceBelongsExecutionCourse(IUserView id, Object[] argumentos) {
-        InfoExecutionCourse infoExecutionCourse = null;
-        IExecutionCourse executionCourse = null;
-        ISuportePersistente sp;
-        IBibliographicReference bibReference = null;
-        InfoBibliographicReference infoBibReference = null;
-
-        if (argumentos == null) {
+    private boolean bibliographicReferenceBelongsToTeacherExecutionCourse(IUserView id, Object[] args) {
+        if (args == null)
             return false;
-        }
-        try {
 
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            if (argumentos[0] instanceof InfoExecutionCourse) {
-                infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
-            } else {
-                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
-                        ExecutionCourse.class, (Integer) argumentos[0]);
-            }
-            IPersistentBibliographicReference persistentBibliographicReference = sp
+        boolean result = false;
+        try {
+            final ISuportePersistente persistentSupport = PersistenceSupportFactory
+                    .getDefaultPersistenceSupport();
+            final IPersistentBibliographicReference persistentBibliographicReference = persistentSupport
                     .getIPersistentBibliographicReference();
-            if (argumentos[1] instanceof InfoBibliographicReference) {
-                infoBibReference = (InfoBibliographicReference) argumentos[1];
-                bibReference = (IBibliographicReference) persistentBibliographicReference.readByOID(
-                        BibliographicReference.class, infoBibReference.getIdInternal());
-            } else {
-                bibReference = (IBibliographicReference) persistentBibliographicReference.readByOID(
-                        BibliographicReference.class, (Integer) argumentos[1]);
+            final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
+            final Integer bibliographicReferenceID = getBibliographicReference(args);
+            final IBibliographicReference bibliographicReference = (IBibliographicReference) persistentBibliographicReference
+                    .readByOID(BibliographicReference.class, bibliographicReferenceID);
+            final ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+
+            if (bibliographicReference != null && teacher != null) {
+                final IExecutionCourse executionCourse = bibliographicReference.getExecutionCourse();
+                final Iterator associatedProfessorships = teacher.getProfessorshipsIterator();
+                // Check if Teacher has a professorship to ExecutionCourse BibliographicReference
+                while (associatedProfessorships.hasNext()) {
+                    IProfessorship professorship = (IProfessorship) associatedProfessorships.next();
+                    if (professorship.getExecutionCourse().equals(executionCourse)) {
+                        result = true;
+                        break;
+                    }
+                }
             }
-        } catch (Exception e) {
-            return false;
+        } catch (ExcepcaoPersistencia e) {
+            result = false;
         }
-        return ((bibReference != null) && (bibReference.getExecutionCourse().equals(executionCourse)));
+        return result;
     }
 
-    private boolean lecturesExecutionCourse(IUserView id, Object[] argumentos) {
-
-        Integer executionCourseID = null;
-
-        if (argumentos == null) {
-            return false;
-        }
-        try {
-
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-            if (argumentos[0] instanceof InfoExecutionCourse) {
-                InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourseID = infoExecutionCourse.getIdInternal();
-            } else {
-                executionCourseID = (Integer) argumentos[0];
-            }
-
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            IProfessorship professorship = null;
-            if (teacher != null) {
-                IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-                professorship = persistentProfessorship.readByTeacherAndExecutionCourse(teacher
-                        .getIdInternal(), executionCourseID);
-            }
-            return professorship != null;
-
-        } catch (Exception e) {
-            return false;
-        }
+    private Integer getBibliographicReference(Object[] args) {
+        return (Integer) args[0];
     }
-
 }

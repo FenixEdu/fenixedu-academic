@@ -24,7 +24,6 @@ public class EditEvaluation implements IService {
         final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse(); 
         final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, infoExecutionCourseCode);
 
-        persistentExecutionCourse.simpleLockWrite(executionCourse);
         if (executionCourse.getEvaluationMethod() == null) { // Create a new one
             executionCourse.createEvaluationMethod(infoEvaluationMethod.getEvaluationElements(),
                     infoEvaluationMethod.getEvaluationElementsEn());

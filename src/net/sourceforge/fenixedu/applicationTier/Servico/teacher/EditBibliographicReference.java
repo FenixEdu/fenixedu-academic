@@ -30,7 +30,6 @@ public class EditBibliographicReference implements IService {
         if (bibliographicReference == null) {
             throw new InvalidArgumentsServiceException();
         }
-        persistentBibliographicReference.simpleLockWrite(bibliographicReference);
         bibliographicReference.edit(newTitle, newAuthors, newReference, newYear, optional);
 
         return true;

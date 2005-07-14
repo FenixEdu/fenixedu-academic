@@ -29,7 +29,6 @@ public class InsertSection implements IService {
         if (sectionCode != null) {
             parentSection = (ISection) persistentSection.readByOID(Section.class, sectionCode);
         }
-        persistentSite.simpleLockWrite(site);
         site.createSection(sectionName, parentSection, sectionOrder);
          
         return new Boolean(true);

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.IBibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -11,12 +12,12 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Fernanda Quitério
- *  
+ * 
  */
 public class DeleteBibliographicReference implements IService {
 
-    public boolean run(Integer infoExecutionCourseCode, Integer bibliographicReferenceOID)
-            throws FenixServiceException, ExcepcaoPersistencia {
+    public boolean run(Integer bibliographicReferenceOID) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentBibliographicReference persistentBibliographicReference = persistentSupport
@@ -25,11 +26,12 @@ public class DeleteBibliographicReference implements IService {
         IBibliographicReference bibliographicReference = (IBibliographicReference) persistentBibliographicReference
                 .readByOID(BibliographicReference.class, bibliographicReferenceOID);
 
-        if (bibliographicReference != null) {
-            bibliographicReference.delete();
-            persistentBibliographicReference.deleteByOID(BibliographicReference.class,
-                    bibliographicReference.getIdInternal());
+        if (bibliographicReference == null) {
+            throw new InvalidArgumentsServiceException();
         }
+        bibliographicReference.delete();
+        persistentBibliographicReference.deleteByOID(BibliographicReference.class,
+                bibliographicReference.getIdInternal());
 
         return true;
     }

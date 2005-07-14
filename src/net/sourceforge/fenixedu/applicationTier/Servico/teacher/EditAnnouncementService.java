@@ -17,9 +17,8 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class EditAnnouncementService implements IService {
 
-    public boolean run(Integer infoExecutionCourseCode, Integer announcementCode,
-            String newAnnouncementTitle, String newAnnouncementInformation) throws ExcepcaoPersistencia,
-            FenixServiceException {
+    public boolean run(Integer announcementCode, String newAnnouncementTitle,
+            String newAnnouncementInformation) throws ExcepcaoPersistencia, FenixServiceException {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
@@ -31,7 +30,6 @@ public class EditAnnouncementService implements IService {
         if (announcement == null) {
             throw new InvalidArgumentsServiceException();
         }
-        persistentAnnouncement.simpleLockWrite(announcement);
         announcement.edit(newAnnouncementTitle, newAnnouncementInformation);
 
         return true;

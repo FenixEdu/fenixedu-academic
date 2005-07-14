@@ -282,24 +282,70 @@
 		>
 		<inverse-foreignkey field-ref="personResponsibleForGradeKey"/>
 	</collection-descriptor>
-	
-	
-	
-	
 	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="students" 
 		element-class-ref="net.sourceforge.fenixedu.domain.Student">
 			<inverse-foreignkey field-ref="personKey"/>
 	</collection-descriptor>
-	
-	
 	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="personAuthorships"
 			element-class-ref="net.sourceforge.fenixedu.domain.publication.Authorship"
 			refresh="true" >
 		<inverse-foreignkey field-ref="keyAuthor"/>
-	</collection-descriptor>	
-	
-	
-	
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="associatedPersonRoles"
+			element-class-ref="net.sourceforge.fenixedu.domain.PersonRole"
+			refresh="true" >
+		<inverse-foreignkey field-ref="keyPerson"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="editedWebSiteItems"
+			element-class-ref="net.sourceforge.fenixedu.domain.WebSiteItem"
+			refresh="true" >
+		<inverse-foreignkey field-ref="keyEditor"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="guides"
+			element-class-ref="net.sourceforge.fenixedu.domain.Guide"
+			refresh="true" >
+		<inverse-foreignkey field-ref="keyPerson"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="sentSms"
+			element-class-ref="net.sourceforge.fenixedu.domain.sms.SentSms"
+			refresh="true" >
+		<inverse-foreignkey field-ref="keyPerson"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="responsabilityTransactions"
+			element-class-ref="net.sourceforge.fenixedu.domain.transactions.Transaction"
+			refresh="true" >
+		<inverse-foreignkey field-ref="keyResponsiblePerson"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="projectAccesses"
+			element-class-ref="net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess"
+			refresh="true" >
+		<inverse-foreignkey field-ref="keyPerson"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="masterDegreeCandidates"
+			element-class-ref="net.sourceforge.fenixedu.domain.MasterDegreeCandidate"
+			refresh="true" >
+		<inverse-foreignkey field-ref="personKey"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="groupPropertiesExecutionCourseReceiver"
+			element-class-ref="net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse"
+			refresh="true" >
+		<inverse-foreignkey field-ref="keyReceiverPerson"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="groupPropertiesExecutionCourseSender"
+			element-class-ref="net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse"
+			refresh="true" >
+		<inverse-foreignkey field-ref="keySenderPerson"/>
+	</collection-descriptor>
+		
 </class-descriptor>

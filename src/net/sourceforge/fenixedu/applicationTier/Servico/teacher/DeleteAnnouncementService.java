@@ -16,7 +16,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class DeleteAnnouncementService implements IService {
 
-    public boolean run(Integer executionCourseID, Integer announcementCode)
+    public boolean run(Integer announcementCode)
             throws FenixServiceException, ExcepcaoPersistencia {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory

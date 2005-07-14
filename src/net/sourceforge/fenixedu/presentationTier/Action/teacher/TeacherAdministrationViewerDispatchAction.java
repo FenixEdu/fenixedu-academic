@@ -267,13 +267,12 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             announcementCodeString = (String) request.getAttribute("announcementCode");
         }
         Integer announcementCode = new Integer(announcementCodeString);
-        Integer objectCode = getObjectCode(request);
         DynaActionForm insertAnnouncementForm = (DynaActionForm) form;
         String newTitle = (String) insertAnnouncementForm.get("title");
         String newInformation = (String) insertAnnouncementForm.get("information");
 
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object args[] = { objectCode, announcementCode, newTitle, newInformation };
+        Object args[] = { announcementCode, newTitle, newInformation };
         try {
             ServiceManagerServiceFactory.executeService(userView, "EditAnnouncementService", args);
         } catch (FenixServiceException e) {
@@ -294,9 +293,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             announcementCodeString = (String) request.getAttribute("announcementCode");
         }
         Integer announcementCode = new Integer(announcementCodeString);
-        Integer objectCode = getObjectCode(request);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object args[] = { objectCode, announcementCode };
+        Object args[] = { announcementCode };
         try {
             ServiceManagerServiceFactory.executeService(userView, "DeleteAnnouncementService", args);
         } catch (FenixServiceException e) {
@@ -503,8 +501,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward viewEvaluationMethod(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
             FenixFilterException {
-        // ISiteComponent evaluationComponent = new
-        // InfoSiteEvaluationMethods();
 
         ISiteComponent evaluationComponent = new InfoEvaluationMethod();
 
@@ -535,42 +531,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
 
         return mapping.findForward("editEvaluationMethod");
-
-        // BEFORE
-        // ISiteComponent evaluationComponent = new InfoCurriculum();
-        //
-        // String curricularCourseCodeString =
-        // request.getParameter("curricularCourseCode");
-        // Integer curricularCourseCode = new
-        // Integer(curricularCourseCodeString);
-        //
-        // try {
-        // readSiteView(
-        // request,
-        // evaluationComponent,
-        // null,
-        // curricularCourseCode,
-        // null);
-        //
-        // } catch (FenixActionException e1) {
-        // throw e1;
-        // }
-        // TeacherAdministrationSiteView siteView =
-        // (TeacherAdministrationSiteView) request.getAttribute("siteView");
-        //
-        // if (siteView.getComponent() != null) {
-        // DynaActionForm evaluationForm = (DynaActionForm) form;
-        // evaluationForm.set(
-        // "evaluationElements",
-        // ((InfoCurriculum) siteView.getComponent())
-        // .getEvaluationElements());
-        // evaluationForm.set(
-        // "evaluationElementsEn",
-        // ((InfoCurriculum) siteView.getComponent())
-        // .getEvaluationElementsEn());
-        // }
-        // request.setAttribute("curricularCourseCode", curricularCourseCode);
-        // return mapping.findForward("editEvaluationMethod");
     }
 
     public ActionForward editEvaluationMethod(ActionMapping mapping, ActionForm form,
@@ -600,38 +560,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
 
         return viewEvaluationMethod(mapping, form, request, response);
-
-        // BEFORE
-        // HttpSession session = request.getSession(false);
-        // Integer objectCode = getObjectCode(request);
-        // String curricularCourseCodeString =
-        // request.getParameter("curricularCourseCode");
-        // Integer curricularCourseCode = new
-        // Integer(curricularCourseCodeString);
-        //
-        // DynaActionForm evaluationForm = (DynaActionForm) form;
-        //
-        // InfoCurriculum infoCurriculumNew = new InfoCurriculum();
-        // infoCurriculumNew.setIdInternal(curricularCourseCode);
-        // infoCurriculumNew.setEvaluationElements((String)
-        // evaluationForm.get("evaluationElements"));
-        // infoCurriculumNew.setEvaluationElementsEn((String)
-        // evaluationForm.get("evaluationElementsEn"));
-        //
-        // Object args[] = { objectCode, curricularCourseCode,
-        // infoCurriculumNew };
-        //
-        // IUserView userView = (IUserView)
-        // session.getAttribute(SessionConstants.U_VIEW);
-        // GestorServicos serviceManager = GestorServicos.manager();
-        // try {
-        // ServiceManagerServiceFactory.executeService(userView,
-        // "EditEvaluation", args);
-        //
-        // } catch (FenixServiceException e) {
-        // throw new FenixActionException(e);
-        // }
-        // return viewEvaluationMethod(mapping, form, request, response);
     }
 
     // ======================== Bibliographic References Management
@@ -741,9 +669,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
                     .getAttribute("bibliographicReferenceCode");
         }
         Integer bibliographicReferenceCode = new Integer(bibliographicReferenceCodeString);
-        Integer objectCode = getObjectCode(request);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        Object args[] = { objectCode, bibliographicReferenceCode };
+        Object args[] = { bibliographicReferenceCode };
         try {
             ServiceManagerServiceFactory.executeService(userView, "DeleteBibliographicReference", args);
         } catch (FenixServiceException e) {

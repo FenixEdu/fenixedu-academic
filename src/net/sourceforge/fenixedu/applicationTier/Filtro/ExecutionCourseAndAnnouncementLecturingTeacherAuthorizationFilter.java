@@ -9,15 +9,15 @@ import java.util.Iterator;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoAnnouncement;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.Announcement;
 import net.sourceforge.fenixedu.domain.IAnnouncement;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IProfessorship;
+import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentAnnouncement;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.ServiceRequest;
@@ -61,25 +61,22 @@ public class ExecutionCourseAndAnnouncementLecturingTeacherAuthorizationFilter e
                     .getDefaultPersistenceSupport();
             final IPersistentAnnouncement persistentAnnouncement = persistentSupport
                     .getIPersistentAnnouncement();
+            final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
             final Integer announcementID = getAnnouncementID(args);
             final IAnnouncement announcement = (IAnnouncement) persistentAnnouncement.readByOID(
                     Announcement.class, announcementID);
-            if (announcement != null) {
-                final Integer executionCourseID = getExecutionCourseID(args);
-                IExecutionCourse executionCourse = announcement.getSite().getExecutionCourse();
-                // Check if Announcement Belongs to the same ExecutionCourse
-                if (executionCourse.getIdInternal().equals(executionCourseID)) {
-                    // Then Check if Teacher has a professorship to that
-                    // ExecutionCourse
-                    final Iterator associatedProfessorships = executionCourse
-                            .getProfessorshipsIterator();
-                    while (associatedProfessorships.hasNext()) {
-                        IProfessorship professorship = (IProfessorship) associatedProfessorships.next();
-                        if (professorship.getExecutionCourse().getIdInternal().equals(executionCourseID)) {
-                            result = true;
-                            break;
-                        }
+            final ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+
+            if (announcement != null && teacher != null) {
+                final IExecutionCourse executionCourse = announcement.getSite().getExecutionCourse();
+                // Check if Teacher has a professorship to ExecutionCourse Announcement
+                final Iterator associatedProfessorships = teacher.getProfessorshipsIterator();
+                while (associatedProfessorships.hasNext()) {
+                    IProfessorship professorship = (IProfessorship) associatedProfessorships.next();
+                    if (professorship.getExecutionCourse().equals(executionCourse)) {
+                        result = true;
+                        break;
                     }
                 }
             }
@@ -89,25 +86,7 @@ public class ExecutionCourseAndAnnouncementLecturingTeacherAuthorizationFilter e
         return result;
     }
 
-    private Integer getExecutionCourseID(Object[] args) {
-        Integer executionCourseID;
-        if (args[0] instanceof InfoExecutionCourse) {
-            InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) args[0];
-            executionCourseID = infoExecutionCourse.getIdInternal();
-        } else {
-            executionCourseID = (Integer) args[0];
-        }
-        return executionCourseID;
-    }
-
     private Integer getAnnouncementID(Object[] args) {
-        Integer announcementID;
-        if (args[0] instanceof InfoAnnouncement) {
-            InfoAnnouncement infoAnnouncement = (InfoAnnouncement) args[1];
-            announcementID = infoAnnouncement.getIdInternal();
-        } else {
-            announcementID = (Integer) args[1];
-        }
-        return announcementID;
+        return (Integer) args[0];
     }
 }

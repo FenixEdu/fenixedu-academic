@@ -25,7 +25,6 @@ public class EditSite implements IService {
         ISite siteOld = persistentSite.readByExecutionCourse(infoSiteOld.getInfoExecutionCourse()
                 .getIdInternal());
 
-        persistentSite.simpleLockWrite(siteOld);
         siteOld.edit(infoSiteNew.getInitialStatement(), infoSiteNew.getIntroduction(), infoSiteNew
                 .getMail(), infoSiteNew.getAlternativeSite());
 
