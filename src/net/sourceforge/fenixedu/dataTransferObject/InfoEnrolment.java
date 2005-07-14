@@ -1,14 +1,17 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.lang.reflect.Proxy;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse;
-import net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.IEnrolment;
+import net.sourceforge.fenixedu.domain.IEnrolmentInExtraCurricularCourse;
+import net.sourceforge.fenixedu.domain.IEnrolmentInOptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
+
+import org.apache.ojb.broker.core.proxy.ProxyHelper;
 
 /**
  * @author dcs-rjao
@@ -30,11 +33,14 @@ public class InfoEnrolment extends InfoObject {
 
     // to be used to keep the actual enrolment evaluation
     private InfoEnrolmentEvaluation infoEnrolmentEvaluation;
-    
-    //used in the curriculum marks list
+
+    // used in the curriculum marks list
     private InfoEnrolmentEvaluation infoNormalEnrolmentEvaluation;
+
     private InfoEnrolmentEvaluation infoImprovmentEnrolmentEvaluation;
+
     private InfoEnrolmentEvaluation infoSpecialSeasonEnrolmentEvaluation;
+
     private InfoEnrolmentEvaluation infoEquivalenceEnrolmentEvaluation;
 
     private List infoEvaluations;
@@ -220,18 +226,26 @@ public class InfoEnrolment extends InfoObject {
     public void copyFromDomain(IEnrolment enrollment) {
         super.copyFromDomain(enrollment);
         if (enrollment != null) {
+
+            if (enrollment instanceof Proxy) {
+                enrollment = (IEnrolment) ProxyHelper.getRealObject(enrollment);
+            }
+
             setCreationDate(enrollment.getCreationDate());
             setEnrolmentEvaluationType(enrollment.getEnrolmentEvaluationType());
             setEnrollmentState(enrollment.getEnrollmentState());
             setAccumulatedWeight(enrollment.getAccumulatedWeight());
             setCondition(enrollment.getCondition());
-			setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(enrollment.getCurricularCourse()));
-			setInfoExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(enrollment.getExecutionPeriod()));
-			setInfoStudentCurricularPlan(InfoStudentCurricularPlan.newInfoFromDomain(enrollment.getStudentCurricularPlan()));
-			
-            if (enrollment instanceof EnrolmentInExtraCurricularCourse) {
+            setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(enrollment
+                    .getCurricularCourse()));
+            setInfoExecutionPeriod(InfoExecutionPeriod
+                    .newInfoFromDomain(enrollment.getExecutionPeriod()));
+            setInfoStudentCurricularPlan(InfoStudentCurricularPlan.newInfoFromDomain(enrollment
+                    .getStudentCurricularPlan()));
+
+            if (enrollment instanceof IEnrolmentInExtraCurricularCourse) {
                 setEnrollmentTypeResourceKey("option.curricularCourse.extra");
-            } else if (enrollment instanceof EnrolmentInOptionalCurricularCourse) {
+            } else if (enrollment instanceof IEnrolmentInOptionalCurricularCourse) {
                 setEnrollmentTypeResourceKey("option.curricularCourse.optional");
             } else {
                 setEnrollmentTypeResourceKey(enrollment.getCurricularCourse().getType().getKeyName());
@@ -264,56 +278,68 @@ public class InfoEnrolment extends InfoObject {
     public void setCondition(EnrollmentCondition condition) {
         this.condition = condition;
     }
+
     /**
      * @return Returns the infoImprovmentEnrolmentEvaluation.
      */
     public InfoEnrolmentEvaluation getInfoImprovmentEnrolmentEvaluation() {
         return infoImprovmentEnrolmentEvaluation;
     }
+
     /**
-     * @param infoImprovmentEnrolmentEvaluation The infoImprovmentEnrolmentEvaluation to set.
+     * @param infoImprovmentEnrolmentEvaluation
+     *            The infoImprovmentEnrolmentEvaluation to set.
      */
     public void setInfoImprovmentEnrolmentEvaluation(
             InfoEnrolmentEvaluation infoImprovmentEnrolmentEvaluation) {
         this.infoImprovmentEnrolmentEvaluation = infoImprovmentEnrolmentEvaluation;
     }
+
     /**
      * @return Returns the infoNormalEnrolmentEvaluation.
      */
     public InfoEnrolmentEvaluation getInfoNormalEnrolmentEvaluation() {
         return infoNormalEnrolmentEvaluation;
     }
+
     /**
-     * @param infoNormalEnrolmentEvaluation The infoNormalEnrolmentEvaluation to set.
+     * @param infoNormalEnrolmentEvaluation
+     *            The infoNormalEnrolmentEvaluation to set.
      */
-    public void setInfoNormalEnrolmentEvaluation(
-            InfoEnrolmentEvaluation infoNormalEnrolmentEvaluation) {
+    public void setInfoNormalEnrolmentEvaluation(InfoEnrolmentEvaluation infoNormalEnrolmentEvaluation) {
         this.infoNormalEnrolmentEvaluation = infoNormalEnrolmentEvaluation;
     }
+
     /**
      * @return Returns the infoSpecialSeasonEnrolmentEvaluation.
      */
     public InfoEnrolmentEvaluation getInfoSpecialSeasonEnrolmentEvaluation() {
         return infoSpecialSeasonEnrolmentEvaluation;
     }
+
     /**
-     * @param infoSpecialSeasonEnrolmentEvaluation The infoSpecialSeasonEnrolmentEvaluation to set.
+     * @param infoSpecialSeasonEnrolmentEvaluation
+     *            The infoSpecialSeasonEnrolmentEvaluation to set.
      */
     public void setInfoSpecialSeasonEnrolmentEvaluation(
             InfoEnrolmentEvaluation infoSpecialSeasonEnrolmentEvaluation) {
         this.infoSpecialSeasonEnrolmentEvaluation = infoSpecialSeasonEnrolmentEvaluation;
     }
+
     /**
      * @return Returns the infoEquivalenceEnrolmentEvaluation.
      */
     public InfoEnrolmentEvaluation getInfoEquivalenceEnrolmentEvaluation() {
         return infoEquivalenceEnrolmentEvaluation;
     }
+
     /**
-     * @param infoEquivalenceEnrolmentEvaluation The infoEquivalenceEnrolmentEvaluation to set.
+     * @param infoEquivalenceEnrolmentEvaluation
+     *            The infoEquivalenceEnrolmentEvaluation to set.
      */
     public void setInfoEquivalenceEnrolmentEvaluation(
             InfoEnrolmentEvaluation infoEquivalenceEnrolmentEvaluation) {
         this.infoEquivalenceEnrolmentEvaluation = infoEquivalenceEnrolmentEvaluation;
     }
+
 }
