@@ -12,7 +12,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  * @author tfc130
  * @author Pedro Santos e Rita Carvalho
  */
-import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;

@@ -4,8 +4,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.person.base;
 
-import java.util.ArrayList;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;

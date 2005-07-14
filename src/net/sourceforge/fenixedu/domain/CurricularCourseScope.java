@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.CantDeleteServiceException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**

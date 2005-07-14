@@ -409,7 +409,7 @@ public class DomainBrowserServlet extends HttpServlet {
                                 int objsWithInverseOK = 0;
                                 int count = 0;
 
-                                for (Object instObj : (Collection)insts) {
+                                for (Object instObj : insts) {
                                     if (count > 10) {
                                         break;
                                     } else {

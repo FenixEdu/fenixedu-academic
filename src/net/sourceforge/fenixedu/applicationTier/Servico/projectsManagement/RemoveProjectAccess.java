@@ -4,8 +4,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Iterator;
 
 import net.sourceforge.fenixedu.domain.IEmployee;

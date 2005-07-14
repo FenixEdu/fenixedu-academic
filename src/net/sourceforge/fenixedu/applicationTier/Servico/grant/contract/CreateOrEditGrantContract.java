@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.GrantOrientationTeacherNotFoundException;

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.precedences;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**
  * @author David Santos in Jun 9, 2004

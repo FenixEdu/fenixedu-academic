@@ -54,7 +54,7 @@ public class Section extends Section_Base {
             throw new NullPointerException();
         }
 
-        for (IItem item : (List<IItem>) this.getAssociatedItems()) {
+        for (IItem item : this.getAssociatedItems()) {
             if (item.getName().equals(itemName))
                 throw new DomainException(this.getClass().getName(), "");
         }

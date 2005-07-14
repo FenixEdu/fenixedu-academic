@@ -4,8 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.owner;
 
-import java.util.ArrayList;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.base.CreatePersonBaseClass;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;

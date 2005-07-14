@@ -1,7 +1,8 @@
 package pt.utl.ist.analysis;
 
-import org.objectweb.asm.*;
-import org.objectweb.asm.commons.*;
+import org.objectweb.asm.MethodAdapter;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 public class FindCastsToDomainObjects extends DomainDrivenClassFilesVisitor implements Opcodes {
 

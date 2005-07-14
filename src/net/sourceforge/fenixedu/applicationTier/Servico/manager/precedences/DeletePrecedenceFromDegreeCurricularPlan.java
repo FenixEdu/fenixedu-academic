@@ -1,12 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.precedences;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.precedences.IPrecedence;
-import net.sourceforge.fenixedu.domain.precedences.IRestriction;
 import net.sourceforge.fenixedu.domain.precedences.Precedence;
-import net.sourceforge.fenixedu.domain.precedences.Restriction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPrecedence;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

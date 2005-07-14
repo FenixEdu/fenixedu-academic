@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.precedences;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**
  * @author David Santos in Jun 9, 2004

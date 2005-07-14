@@ -7,7 +7,6 @@
 package net.sourceforge.fenixedu.domain.publication;
 
 
-import java.util.ArrayList;
 /**
  * @author TJBF & PFON
  * 

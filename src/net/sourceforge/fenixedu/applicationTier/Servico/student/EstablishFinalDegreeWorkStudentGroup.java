@@ -4,8 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import java.util.ArrayList;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
