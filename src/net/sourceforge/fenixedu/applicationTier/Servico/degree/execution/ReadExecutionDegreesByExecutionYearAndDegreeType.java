@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -38,20 +37,20 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeType implements IServic
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
 
-        IExecutionYear executionYear = null;
+		String executionYear = null;
         if (infoExecutionYear == null) {
             IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-            executionYear = persistentExecutionYear.readCurrentExecutionYear();
+            executionYear = persistentExecutionYear.readCurrentExecutionYear().getYear();
         } else {
-            executionYear = InfoExecutionYear.newDomainFromInfo(infoExecutionYear);
+            executionYear = infoExecutionYear.getYear();
         }
 
         List executionDegrees = null;
 
         if (degreeType == null) {
-            executionDegrees = executionDegreeDAO.readByExecutionYear(executionYear.getYear());
+            executionDegrees = executionDegreeDAO.readByExecutionYear(executionYear);
         } else {
-            executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear.getYear(),
+            executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear,
                     degreeType);
         }
 
