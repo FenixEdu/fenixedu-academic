@@ -4,14 +4,12 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
-import java.lang.reflect.InvocationTargetException;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.GrantOrientationTeacherNotFoundException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.GrantTypeNotFoundException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.InvalidGrantPaymentEntityException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContract;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantOrientationTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantOrientationTeacherWithTeacherAndGrantContract;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
@@ -31,9 +29,6 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantType;
-
-import org.apache.commons.beanutils.PropertyUtils;
-
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -110,13 +105,13 @@ public class CreateOrEditGrantContract implements IService {
 
         grantContract.setGrantOrientationTeacher(grantOrientationTeacher);
 
-        IGrantCostCenter grantCostCenter = new GrantCostCenter();
+       
         if (infoGrantContract.getGrantCostCenterInfo() != null
-                && infoGrantContract.getGrantCostCenterInfo().getNumber() != null) { // ||
-            grantCostCenter = pGrantCostCenter.readGrantCostCenterByNumber(infoGrantContract
+                && infoGrantContract.getGrantCostCenterInfo().getNumber() != null) { 
+           IGrantCostCenter grantCostCenter = (IGrantCostCenter) pGrantCostCenter.readGrantCostCenterByNumber(infoGrantContract
                     .getGrantCostCenterInfo().getNumber());
             if (grantCostCenter == null)
-                throw new GrantOrientationTeacherNotFoundException();
+                throw new InvalidGrantPaymentEntityException();
             grantContract.setGrantCostCenter(grantCostCenter);
 
         } else {
@@ -128,38 +123,59 @@ public class CreateOrEditGrantContract implements IService {
         grantContract.setEndContractMotive(infoGrantContract.getEndContractMotive());
     }
 
-    private IGrantOrientationTeacher createNewGrantOrientationTeacher(ISuportePersistente sp,
-            InfoGrantOrientationTeacher grantOrientationTeacherInfo, IGrantContract grantContract)
-            throws FenixServiceException, ExcepcaoPersistencia {
-
-        IPersistentTeacher pTeacher = sp.getIPersistentTeacher();
-        IPersistentGrantOrientationTeacher pGrantOrientationTeacher = sp
-                .getIPersistentGrantOrientationTeacher();
-
-        final ITeacher teacher = pTeacher.readByNumber(grantOrientationTeacherInfo
-                .getOrientationTeacherInfo().getTeacherNumber());
-        final IGrantOrientationTeacher oldGrantOrientationTeacher;
-        final IGrantOrientationTeacher newGrantOrientationTeacher;
-        if (teacher == null)
-            throw new GrantOrientationTeacherNotFoundException();
-
-        newGrantOrientationTeacher = new GrantOrientationTeacher();
-        pGrantOrientationTeacher.simpleLockWrite(newGrantOrientationTeacher);
-        oldGrantOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract
-                .newDomainFromInfo(grantOrientationTeacherInfo);
-
-        try {
-            PropertyUtils.copyProperties(newGrantOrientationTeacher, oldGrantOrientationTeacher);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        newGrantOrientationTeacher.setGrantContract(grantContract);
-        newGrantOrientationTeacher.setOrientationTeacher(teacher);
-
+    private IGrantOrientationTeacher createNewGrantOrientationTeacher(
+            ISuportePersistente sp,
+            InfoGrantOrientationTeacher grantOrientationTeacherInfo,
+            IGrantContract grantContract)throws FenixServiceException, ExcepcaoPersistencia {
+        
+            IPersistentTeacher pTeacher = sp.getIPersistentTeacher();
+            IPersistentGrantOrientationTeacher pGrantOrientationTeacher = sp
+            .getIPersistentGrantOrientationTeacher();
+            
+            final ITeacher teacher = pTeacher.readByNumber(grantOrientationTeacherInfo.getOrientationTeacherInfo().getTeacherNumber());
+          //  final IGrantOrientationTeacher oldGrantOrientationTeacher;
+            final IGrantOrientationTeacher newGrantOrientationTeacher;
+            if (teacher == null)
+                throw new GrantOrientationTeacherNotFoundException();
+            
+//             InfoTeacher infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
+//             grantOrientationTeacherInfo.setOrientationTeacherInfo(infoTeacher);
+//             grantOrientationTeacherInfo.setGrantContractInfo(InfoGrantContract.newInfoFromDomain(grantContract));
+             
+             newGrantOrientationTeacher = new GrantOrientationTeacher();
+             pGrantOrientationTeacher.simpleLockWrite(newGrantOrientationTeacher);
+             newGrantOrientationTeacher.setBeginDate(grantOrientationTeacherInfo.getBeginDate());
+             newGrantOrientationTeacher.setEndDate(grantOrientationTeacherInfo.getEndDate());
+             
+             newGrantOrientationTeacher.setGrantContract(grantContract);
+             newGrantOrientationTeacher.setKeyContract(grantContract.getIdInternal());
+             
+             newGrantOrientationTeacher.setKeyTeacher(teacher.getIdInternal());
+             newGrantOrientationTeacher.setOrientationTeacher(teacher);
+            
+//             oldGrantOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract.newDomainFromInfo(grantOrientationTeacherInfo);
+//             PropertyUtils.copyProperties(newGrantOrientationTeacher,
+//                   oldGrantOrientationTeacher);
+//             try {
+//                 PropertyUtils.copyProperties(newGrantOrientationTeacher,
+//                       oldGrantOrientationTeacher);
+//              //  FenixPropertyUtils.copyProperties(newGrantOrientationTeacher,oldGrantOrientationTeacher);
+//            } catch (IllegalAccessException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            } catch (InvocationTargetException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            } catch (NoSuchMethodException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            }
+//             newGrantOrientationTeacher.setGrantContract(grantContract);
+//             newGrantOrientationTeacher.setOrientationTeacher(teacher);
+             
+  
+            
+        // TODO Auto-generated method stub
         return newGrantOrientationTeacher;
     }
 
