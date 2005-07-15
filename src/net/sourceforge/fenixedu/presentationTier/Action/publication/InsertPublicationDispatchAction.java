@@ -24,10 +24,8 @@ import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationType;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublicationType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
@@ -113,12 +111,17 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
                 infoAuthors.add(author);
             } else {
                 Object[] argReadAuthor = { arrayId[i] };
-                InfoAuthor author = (InfoAuthor) ServiceUtils.executeService(userView, "ReadAuthorById",
+                InfoPerson infoPerson = (InfoPerson) ServiceUtils.executeService(userView, "ReadPerson",
                         argReadAuthor);
-                InfoPerson person = (InfoPerson) ServiceUtils.executeService(userView, "ReadPerson",
-                        new Object[] { author.getKeyPerson() });
-                author.setInfoPessoa(person);
-                infoAuthors.add(author);
+                
+                InfoAuthor infoAuthor = new InfoAuthor();
+                infoAuthor.setAuthor(infoPerson.getNome());
+                infoAuthor.setIdInternal(infoPerson.getIdInternal());
+                infoAuthor.setInfoPessoa(infoPerson);
+                infoAuthor.setKeyPerson(infoPerson.getIdInternal());
+                infoAuthor.setOrganization("");
+                
+                infoAuthors.add(infoAuthor);
             }
         }
 
@@ -284,19 +287,17 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
         if (authorsId.length == 0) {
             InfoPerson infoPerson = (InfoPerson) ServiceUtils.executeService(userView,
                     "ReadPersonByUserview", new Object[] { userView });
-            InfoAuthor infoAuthor = (InfoAuthor) ServiceUtils.executeService(userView,
-                    "ReadAuthorByPersonId", new Object[] { userView.getUtilizador() });
 
             Integer[] newAuthorsId = new Integer[1];
             String[] newAuthorsName = new String[1];
 
-            newAuthorsId[newAuthorsId.length - 1] = infoAuthor.getIdInternal();
+            newAuthorsId[newAuthorsId.length - 1] = infoPerson.getIdInternal();
             newAuthorsName[newAuthorsName.length - 1] = infoPerson.getNome();
 
             insertPublicationForm.set("authorsId", newAuthorsId);
             insertPublicationForm.set("authorsName", newAuthorsName);
 
-            insertPublicationForm.set("creatorId", infoAuthor.getIdInternal());
+            insertPublicationForm.set("creatorId", infoPerson.getIdInternal());
 
         }
 
@@ -428,8 +429,7 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward selectAuthor(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-            FenixServiceException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
         DynaActionForm insertPublicationForm = (DynaActionForm) form;
         IUserView userView = SessionUtils.getUserView(request);
@@ -451,20 +451,16 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
             errors.add("error1", new ActionError("message.publication.repeatedAuthor"));
         } else {
 
-            InfoAuthor infoAuthor = null;
-
-            try {
-                infoAuthor = (InfoAuthor) ServiceUtils.executeService(userView, "ReadAuthorById",
-                        new Object[] { selectedAuthorId });
-                if (infoAuthor.getAuthor() == null || infoAuthor.getAuthor().equals("")) {
-                    InfoPerson infoPerson = (InfoPerson) ServiceUtils.executeService(userView,
-                            "ReadPerson", new Object[] { infoAuthor.getKeyPerson() });
-                    infoAuthor.setAuthor(infoPerson.getNome());
-                }
-            } catch (FenixServiceException e) {
-                e.printStackTrace();
-                throw new FenixActionException(e);
-            }
+            
+            InfoPerson infoPerson = (InfoPerson) ServiceUtils.executeService(userView, "ReadPerson",
+                    new Object[] { selectedAuthorId });
+            
+            InfoAuthor infoAuthor = new InfoAuthor();
+            infoAuthor.setAuthor(infoPerson.getNome());
+            infoAuthor.setIdInternal(infoPerson.getIdInternal());
+            infoAuthor.setInfoPessoa(infoPerson);
+            infoAuthor.setKeyPerson(infoPerson.getIdInternal());
+            infoAuthor.setOrganization("");
 
             Integer[] newAuthorsId = new Integer[authorsId.length + 1];
             String[] newAuthorsName = new String[authorsName.length + 1];
@@ -491,7 +487,7 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward searchAuthor(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm insertPublicationForm = (DynaActionForm) form;
@@ -503,30 +499,12 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
             return mapping.findForward("searchAuthors");
         }
 
-        Object[] arg = { searchedAuthorName };
-        List authorsList = null, personList = null;
+        Object[] arg = { userView, searchedAuthorName };
+        List infoAuthorList = new ArrayList<InfoAuthor>();
 
-        // ATEN??O, MAIS OBJECTOS DE DOM?NIO NA APRESENTA??O!!
-        try {
-            authorsList = (List) ServiceUtils.executeService(userView, "ReadAuthorsByName", arg);
-            personList = (List) ServiceUtils.executeService(userView, "ReadPersonsNotAuthors",
-                    new Object[] { "%" + searchedAuthorName.replace(' ', '%') + "%", userView });
-            Iterator iter = personList.iterator();
-            while (iter.hasNext()) {
-                IPerson pessoa = (IPerson) iter.next();
-                InfoAuthor infoAuthor = (InfoAuthor) ServiceUtils.executeService(userView,
-                        "ReadAuthorByPersonId", new Object[] { pessoa.getIdInternal() });
-                if (pessoa.getIdInternal() != null)
-                    infoAuthor.setKeyPerson(pessoa.getIdInternal());
-                infoAuthor.setAuthor(pessoa.getNome());
-                if (infoAuthor.getIdInternal() != null)
-                    authorsList.add(infoAuthor);
-            }
-        } catch (FenixServiceException e) {
-            e.printStackTrace();
-        }
+        infoAuthorList = (List<InfoAuthor>) ServiceUtils.executeService(userView, "ReadAuthorsByName", arg);
 
-        request.setAttribute("searchedAuthorsList", authorsList);
+        request.setAttribute("searchedAuthorsList", infoAuthorList);
         
         return mapping.findForward("searchAuthors");
     }
@@ -546,8 +524,10 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
 
         List infoAuthors = (List) CollectionUtils.collect(authors, new Transformer() {
             public Object transform(Object o) {
-                IAuthor author = (IAuthor) o;
-                return Cloner.copyIAuthor2InfoAuthor(author);
+                IPerson author = (IPerson) o;
+                InfoPerson infoPerson = new InfoPerson();
+                infoPerson.copyFromDomain(author);
+                return infoPerson;
             }
         });
         return infoAuthors;
@@ -556,12 +536,14 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
     public List infoAuthorsPersons(List listObjects, Object object) {
         List infoAuthorPersons = new ArrayList();
 
-        if (object instanceof IAuthor) {
+        if (object instanceof IPerson) {
 
             infoAuthorPersons = (List) CollectionUtils.collect(listObjects, new Transformer() {
                 public Object transform(Object o) {
-                    IAuthor author = (IAuthor) o;
-                    return Cloner.copyIAuthor2InfoAuthorperson(author);
+                    IPerson author = (IPerson) o;
+                    InfoPerson infoPerson = new InfoPerson();
+                    infoPerson.copyFromDomain(author);
+                    return infoPerson;
                 }
             });
 
@@ -609,4 +591,10 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
         return infoAuthorpersons;
     }
 
+    public ActionForward cancel(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) {
+
+        return mapping.findForward("done");
+    }
+    
 }

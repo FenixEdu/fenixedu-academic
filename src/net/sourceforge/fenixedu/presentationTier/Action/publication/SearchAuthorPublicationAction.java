@@ -26,11 +26,10 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.constants.publication.PublicationConstants;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.publication.Author;
-import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublicationType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -141,9 +140,9 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
 
         if (session != null) {
 
-            Object[] args = { newStringAuthorSearch, userView };
+            Object[] args = { newStringAuthorSearch };
 
-            List authors = (List) ServiceUtils.executeService(userView, "ReadAuthors", args);
+            List authors = (List) ServiceUtils.executeService(userView, "ReadAuthorsByName", args);
 
             List persons = (List) ServiceUtils.executeService(userView, "ReadPersonsNotAuthors", args);
 
@@ -151,7 +150,7 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
 
             persons = removeFromPersonsTheAuthorsInserted(persons, authorsIds, userView);
 
-            List newAuthors = infoAuthorsPersons(authors, Author.class);
+            List newAuthors = infoAuthorsPersons(authors, Person.class);
 
             List newPersons = infoAuthorsPersons(persons, Person.class);
 
@@ -171,167 +170,18 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
         return actionForward;
     }
 
-    public ActionForward insertAuthorsInPublication(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
 
-        DynaActionForm dynaForm = (DynaActionForm) actionForm;
-
-        IUserView userView = SessionUtils.getUserView(request);
-
-        Integer publicationTypeId = (Integer) dynaForm.get("infoPublicationTypeId");
-
-        List authorsPersonskeys = Arrays.asList((String[]) dynaForm.get("authorsPersonsCodes"));
-
-        String typePublication = (String) dynaForm.get("typePublication");
-
-        Integer idTeacher = (Integer) dynaForm.get("teacherId");
-
-        String[] list = (String[]) dynaForm.get("authorsIds");
-        List newList = Arrays.asList(list);
-        List authorsIds = new ArrayList();
-        authorsIds.addAll(newList);
-
-        ActionForward actionForward = null;
-
-        if (session != null) {
-
-            List infoAuthors = getInfoAuthors(userView, authorsPersonskeys);
-
-            List infoAuthorsInserteds = readInfoAuthors(authorsIds, userView);
-
-            infoAuthors.addAll(infoAuthorsInserteds);
-
-            request.setAttribute("infoAuthorsList", infoAuthors);
-
-            dynaForm.set("infoPublicationTypeId", publicationTypeId);
-            dynaForm.set("typePublication", typePublication);
-            dynaForm.set("teacherId", idTeacher);
-            actionForward = mapping.findForward("show-search-author-form");
-        }
-
-        return actionForward;
-    }
-
-    public ActionForward deleteAuthorInPublication(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
-
-        DynaActionForm dynaForm = (DynaActionForm) actionForm;
-
-        IUserView userView = SessionUtils.getUserView(request);
-
-        Integer publicationTypeId = (Integer) dynaForm.get("infoPublicationTypeId");
-
-        String[] list = (String[]) dynaForm.get("authorsIds");
-        List newList = Arrays.asList(list);
-        List authorsIds = new ArrayList();
-        authorsIds.addAll(newList);
-
-        String[] idsToDelete = (String[]) dynaForm.get("authorsIdstoDelete");
-        List authorsIdsToDelete = Arrays.asList(idsToDelete);
-
-        String typePublication = (String) dynaForm.get("typePublication");
-
-        Integer idTeacher = (Integer) dynaForm.get("teacherId");
-
-        ActionForward actionForward = null;
-
-        if (session != null) {
-
-            Iterator iterator = authorsIdsToDelete.iterator();
-            while (iterator.hasNext()) {
-                String authorIdToDelete = (String) iterator.next();
-                authorsIds.remove(authorIdToDelete);
-            }
-
-            List infoAuthors = readInfoAuthors(authorsIds, userView);
-
-            request.setAttribute("infoAuthorsList", infoAuthors);
-            dynaForm.set("infoPublicationTypeId", publicationTypeId);
-            dynaForm.set("typePublication", typePublication);
-            dynaForm.set("teacherId", idTeacher);
-            actionForward = mapping.findForward("show-search-author-form");
-        }
-
-        return actionForward;
-    }
-
-    public ActionForward insertAuthorInPublication(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession(false);
-
-        DynaActionForm dynaForm = (DynaActionForm) actionForm;
-
-        ActionForward actionForward = mapping.findForward("show-search-author-form");
-
-        IUserView userView = SessionUtils.getUserView(request);
-
-        boolean validate = false;
-
-        Integer publicationTypeId = (Integer) dynaForm.get("infoPublicationTypeId");
-
-        String[] list = (String[]) dynaForm.get("authorsIds");
-        List newList = Arrays.asList(list);
-        List authorsIds = new ArrayList();
-        authorsIds.addAll(newList);
-
-        String typePublication = (String) dynaForm.get("typePublication");
-
-        Integer idTeacher = (Integer) dynaForm.get("teacherId");
-
-        String stringName = request.getParameter("authorName");
-
-        ActionErrors errors = new ActionErrors();
-
-        if (stringName == null || stringName.length() == 0) {
-            errors.add("nonValidatingName", new ActionError("message.publication.notNameFilled"));
-            validate = true;
-        }
-
-        String stringOrganisation = request.getParameter("authorOrganisation");
-
-        if (stringOrganisation == null || stringOrganisation.length() == 0) {
-            errors.add("nonValidatingOrganisation", new ActionError(
-                    "message.publication.notOrganisationFilled"));
-            validate = true;
-        }
-
-        List infoAuthors = new ArrayList();
-        if (validate) {
-            infoAuthors = readInfoAuthors(authorsIds, userView);
-            request.setAttribute("infoAuthorsPersons", new ArrayList());
-            saveErrors(request, errors);
-        } else {
-            if (session != null) {
-
-                Object[] args1 = { stringName, stringOrganisation };
-
-                IAuthor author = (IAuthor) ServiceUtils.executeService(userView, "InsertAuthor", args1);
-
-                authorsIds.add(author.getIdInternal().toString());
-                infoAuthors = readInfoAuthors(authorsIds, userView);
-
-            }
-        }
-
-        request.setAttribute("infoAuthorsList", infoAuthors);
-        dynaForm.set("infoPublicationTypeId", publicationTypeId);
-        dynaForm.set("typePublication", typePublication);
-        dynaForm.set("teacherId", idTeacher);
-
-        return actionForward;
-    }
-
-    public List infoAuthorsPersons(List listObjects, Class clazz) {
+    private List infoAuthorsPersons(List listObjects, Class clazz) {
         List infoAuthorPersons = new ArrayList();
 
-        if (clazz.equals(Author.class)) {
+        if (clazz.equals(Person.class)) {
 
             infoAuthorPersons = (List) CollectionUtils.collect(listObjects, new Transformer() {
                 public Object transform(Object o) {
-                    IAuthor author = (IAuthor) o;
-                    return Cloner.copyIAuthor2InfoAuthorperson(author);
+                    IPerson author = (IPerson) o;
+                    InfoPerson infoPerson = new InfoPerson();
+                    infoPerson.copyFromDomain(author);
+                    return infoPerson;
                 }
             });
 
@@ -349,7 +199,7 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
 
     }
 
-    public List joinAuthorsAndPersons(List authors, List persons) {
+    private List joinAuthorsAndPersons(List authors, List persons) {
         List authorsPersons = new ArrayList();
 
         if ((authors == null || authors.size() == PublicationConstants.ZERO_VALUE)
@@ -370,7 +220,7 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
         return authorsPersons;
     }
 
-    public List sortListByName(List infoAuthorpersons) {
+    private List sortListByName(List infoAuthorpersons) {
 
         ComparatorChain comparatorChain = new ComparatorChain();
         comparatorChain.addComparator(new BeanComparator(PublicationConstants.BEAN_COMPARATOR_NAME));
@@ -380,51 +230,7 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
 
     }
 
-    public List getInfoAuthors(IUserView userView, List authorsPersonsKey) throws FenixServiceException, FenixFilterException {
-        List infoAuthors = new ArrayList();
-
-        List authorsIds = new ArrayList();
-        List personsIds = new ArrayList();
-
-        Iterator iterator = authorsPersonsKey.iterator();
-
-        while (iterator.hasNext()) {
-
-            String keyIdInternal = (String) iterator.next();
-            Integer size = new Integer(keyIdInternal.length());
-            char charToChoose = keyIdInternal.charAt(size.intValue() - PublicationConstants.ONE_VALUE);
-            String stringIdInternal = keyIdInternal.substring(PublicationConstants.ZERO_VALUE, size
-                    .intValue()
-                    - PublicationConstants.ONE_VALUE);
-            Integer idInternal = new Integer(stringIdInternal);
-
-            if (charToChoose == PublicationConstants.CHAR_INIT_PERSON) {
-                personsIds.add(idInternal);
-            } else {
-                authorsIds.add(idInternal);
-            }
-        }
-
-        Object[] args = { personsIds };
-
-        List personAuthors = (List) ServiceUtils.executeService(userView, "InsertNewAuthorsAsPersons",
-                args);
-
-        Object[] args1 = { authorsIds };
-        List authors = (List) ServiceUtils.executeService(userView, "ReadAuthorsToInsert", args1);
-
-        authors.addAll(personAuthors);
-
-        infoAuthors = (List) CollectionUtils.collect(authors, new Transformer() {
-            public Object transform(Object o) {
-                IAuthor author = (IAuthor) o;
-                return Cloner.copyIAuthor2InfoAuthor(author);
-            }
-        });
-        return infoAuthors;
-    }
-
-    public List readInfoAuthors(List authorsIds, IUserView userView) throws FenixServiceException, FenixFilterException {
+    private List readInfoAuthors(List authorsIds, IUserView userView) throws FenixServiceException, FenixFilterException {
 
         List newAuthorsIds = new ArrayList();
         Iterator iteratorIds = authorsIds.iterator();
@@ -439,8 +245,10 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
 
         List infoAuthors = (List) CollectionUtils.collect(authors, new Transformer() {
             public Object transform(Object o) {
-                IAuthor author = (IAuthor) o;
-                return Cloner.copyIAuthor2InfoAuthor(author);
+                IPerson author = (IPerson) o;
+                InfoPerson infoPerson = new InfoPerson();
+                infoPerson.copyFromDomain(author);
+                return infoPerson;
             }
         });
         return infoAuthors;
@@ -460,7 +268,7 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
 
         while (iteratorAuthors.hasNext()) {
 
-            IAuthor author = (IAuthor) iteratorAuthors.next();
+            IPerson author = (IPerson) iteratorAuthors.next();
             iteratorAuthorsIds = authorsIds.iterator();
             contains = Boolean.FALSE;
             while (iteratorAuthorsIds.hasNext()) {
@@ -487,7 +295,6 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
      */
     private List removeFromPersonsTheAuthorsInserted(List persons, List authorsIds, IUserView userView)
             throws FenixServiceException, FenixFilterException {
-        // TODO Auto-generated method stub
 
         List newAuthorsIds = new ArrayList();
         Iterator iteratorIds = authorsIds.iterator();
@@ -513,11 +320,11 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
             contains = Boolean.FALSE;
 
             while (authorsIterator.hasNext()) {
-                IAuthor author = (IAuthor) authorsIterator.next();
+                IPerson author = (IPerson) authorsIterator.next();
 
-                if (author.getKeyPerson() != null
-                        && author.getKeyPerson().intValue() != PublicationConstants.ZERO_VALUE) {
-                    if (author.getKeyPerson().intValue() == person.getIdInternal().intValue()) {
+                if (author.getIdInternal() != null
+                        && author.getIdInternal().intValue() != PublicationConstants.ZERO_VALUE) {
+                    if (author.getIdInternal().intValue() == person.getIdInternal().intValue()) {
                         contains = Boolean.TRUE;
                     }
                 }

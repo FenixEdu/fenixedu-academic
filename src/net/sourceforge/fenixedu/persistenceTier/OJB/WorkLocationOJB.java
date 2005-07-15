@@ -29,4 +29,5 @@ public class WorkLocationOJB extends PersistentObjectOJB implements IPersistentW
     public List readAll() throws ExcepcaoPersistencia {
         return queryList(WorkLocation.class, new Criteria());
     }
+
 }

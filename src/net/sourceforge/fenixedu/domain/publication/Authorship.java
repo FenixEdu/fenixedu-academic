@@ -6,4 +6,9 @@ public class Authorship extends Authorship_Base {
         super();
     }
     
+    public void delete()
+    {
+        setAuthor(null);
+        setPublication(null);
+    }
 }

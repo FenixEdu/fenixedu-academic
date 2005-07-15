@@ -205,6 +205,16 @@
         column="AVAILABLE_PHOTO"
         jdbc-type="BIT"
     />
+    <field-descriptor 
+	   name="keyExternalPerson"    
+	   column="KEY_EXTERNAL_PERSON"  
+	   jdbc-type="INTEGER"
+    />
+    <reference-descriptor
+    	name="externalPerson"
+        class-ref="net.sourceforge.fenixedu.domain.ExternalPerson">
+	    <foreignkey field-ref="keyExternalPerson"/>
+	</reference-descriptor>
     <reference-descriptor
          name="pais"
          class-ref="net.sourceforge.fenixedu.domain.Country"

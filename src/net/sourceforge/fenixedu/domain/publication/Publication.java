@@ -11,6 +11,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.IPerson;
+
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -54,29 +56,21 @@ public class Publication extends Publication_Base implements IPublication {
 
         publication += " - ";
 
-        List publicationAuthors = new ArrayList(this.getPublicationAuthors());
-        Collections.sort(publicationAuthors, new BeanComparator("order"));
+        List publicationAuthorships = new ArrayList(this.getPublicationAuthorships());
+        Collections.sort(publicationAuthorships, new BeanComparator("order"));
         
-        List authors = (List) CollectionUtils.collect(publicationAuthors, new Transformer() {
+        List authors = (List) CollectionUtils.collect(publicationAuthorships, new Transformer() {
             public Object transform(Object obj){
-                IPublicationAuthor pa = (IPublicationAuthor) obj;
+                IAuthorship pa = (IAuthorship) obj;
                 return pa.getAuthor();
             }
         });
         
         Iterator iteratorAuthors = authors.iterator();
         while (iteratorAuthors.hasNext()) {
-            IAuthor author = (IAuthor) iteratorAuthors.next();
+            IPerson author = (IPerson) iteratorAuthors.next();
 
-            if (author.getKeyPerson() != null && author.getKeyPerson().intValue() != 0) {
-            	if (author.getPerson() == null)
-            		publication += "NULL!, ";
-            	else
-            		publication += author.getPerson().getNome()+", ";
-            } else {
-                publication += author.getAuthor() + ", ";
-            }
-            //publication += ", ";
+       		publication += author.getNome()+", ";
         }
 
         if (getJournalName() != null && getJournalName().length() != 0) {
@@ -219,5 +213,20 @@ public class Publication extends Publication_Base implements IPublication {
         }
 
         return publication;
+    }
+    
+    public void delete()
+    {
+        setType(null);
+        
+        for (IPublicationTeacher publicationTeacher : getPublicationTeachers()) {
+            publicationTeacher.setTeacher(null);
+        }
+        getPublicationTeachers().clear();
+        
+        for (IAuthorship authorship : getPublicationAuthorships()) {
+            authorship.setAuthor(null);
+        }
+        getPublicationAuthorships().clear();
     }
 }

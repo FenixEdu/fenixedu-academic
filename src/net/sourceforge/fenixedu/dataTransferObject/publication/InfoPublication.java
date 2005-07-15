@@ -13,13 +13,15 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.publication.Author;
-import net.sourceforge.fenixedu.domain.publication.IAuthor;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.publication.IAuthorship;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
-import net.sourceforge.fenixedu.domain.publication.IPublicationAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -107,19 +109,19 @@ public class InfoPublication extends InfoObject {
             setFormat(publication.getFormat());
             setIdInternal(publication.getIdInternal());
             
-            List unsortedAuthorsList = new ArrayList(publication.getPublicationAuthors());
+            List unsortedAuthorsList = new ArrayList(publication.getPublicationAuthorships());
             Collections.sort(unsortedAuthorsList, new BeanComparator("order"));
             List authorsList = (List)CollectionUtils.collect(unsortedAuthorsList,
                     new Transformer() {
                         public Object transform(Object object) {
-                            IPublicationAuthor publicationAuthor = (IPublicationAuthor) object;
+                            IAuthorship publicationAuthor = (IAuthorship) object;
                             return publicationAuthor.getAuthor();
             }});
             //tranform the authors list into an infoAuthors list
             Iterator it1 = authorsList.iterator();
             List infoAuthorsList = new ArrayList();        
             while (it1.hasNext()){
-                IAuthor author = (IAuthor) it1.next();
+                IPerson author = (IPerson) it1.next();
                 InfoAuthor infoAuthor = new InfoAuthor();
                 infoAuthor.copyFromDomain(author);
                 infoAuthorsList.add(infoAuthor);
@@ -186,7 +188,7 @@ public class InfoPublication extends InfoObject {
 
     public void copyToDomain(InfoPublication infoPublication, IPublication publication){
         if (infoPublication != null && publication != null) {
-            super.copyToDomain(infoPublication, publication);
+            //super.copyToDomain(infoPublication, publication);
             publication.setConference(infoPublication.getConference());
             publication.setCountry(infoPublication.getCountry());
             publication.setCriticizedAuthor(infoPublication.getCriticizedAuthor());
@@ -256,7 +258,10 @@ public class InfoPublication extends InfoObject {
         List authorsList = new ArrayList();
         while(it.hasNext()){
             InfoAuthor infoAuthor = (InfoAuthor) it.next();
-            IAuthor author = new Author();
+            
+            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            IPerson author = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,infoAuthor.getInfoPessoa().getIdInternal());
+            
             infoAuthor.copyToDomain(infoAuthor, author);
             authorsList.add(author);
         }
@@ -814,7 +819,8 @@ public class InfoPublication extends InfoObject {
 	/**
 	 * @return Returns the infoPublicationAuthors.
 	 */
-	public List getInfoPublicationAuthors() {
+    
+	public List<InfoPublicationAuthor> getInfoPublicationAuthors() {
 		return infoPublicationAuthors;
 	}
 
@@ -828,7 +834,7 @@ public class InfoPublication extends InfoObject {
 	/**
 	 * @param infoPublicationAuthors The infoPublicationAuthors to set.
 	 */
-	public void setInfoPublicationAuthors(List infoPublicationAuthors) {
+	public void setInfoPublicationAuthors(List<InfoPublicationAuthor> infoPublicationAuthors) {
 		this.infoPublicationAuthors = infoPublicationAuthors;
 	}
 

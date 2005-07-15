@@ -1644,7 +1644,8 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     MaritalStatus maritalStatus;
     Gender gender;
     IDDocumentType idDocumentType; 
-
+	Integer keyExternalPerson;
+	
 	interface "
     public String getSlideName();
     
@@ -2422,6 +2423,9 @@ class net.sourceforge.fenixedu.domain.publication.PublicationTeacher extends net
 	Integer keyTeacher;
 	Integer keyPublication;
     PublicationArea publicationArea;
+    interface "
+    public void delete();
+    "
 }
 
 
@@ -2429,6 +2433,9 @@ class net.sourceforge.fenixedu.domain.publication.Authorship extends net.sourcef
 	Integer keyAuthor;
 	Integer keyPublication;
 	Integer order;
+	interface "
+	public void delete();
+	"
 }
 
 
@@ -2468,6 +2475,10 @@ class net.sourceforge.fenixedu.domain.publication.Publication extends net.source
 	String format;
 	Integer keyPublicationType;
 	String publicationString;
+	
+	interface "
+	public void delete();
+	"
 }
 
 class net.sourceforge.fenixedu.domain.teacher.PublicationsNumber extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2486,7 +2497,7 @@ class net.sourceforge.fenixedu.domain.publication.Attribute extends net.sourcefo
 	String attributeType;
 		
 	interface "
-	public java.util.List getPublications();
+	public java.util.List getPublicationTypes();
 	"
 }
 

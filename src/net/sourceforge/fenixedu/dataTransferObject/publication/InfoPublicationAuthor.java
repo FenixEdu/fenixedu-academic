@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.dataTransferObject.publication;
 
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.publication.IPublicationAuthor;
+import net.sourceforge.fenixedu.domain.publication.IAuthorship;
 
 /**
  * @author <a href="mailto:cgmp@mega.ist.utl.pt">Carlos Pereira </a> & <a href="mailto:fmmp@mega.ist.utl.pt">Francisco Passos </a>
@@ -25,7 +25,7 @@ public class InfoPublicationAuthor extends InfoObject {
     /* (non-Javadoc)
      * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
      */
-    public void copyFromDomain(IPublicationAuthor publicationAuthor) {
+    public void copyFromDomain(IAuthorship publicationAuthor) {
         super.copyFromDomain(publicationAuthor);
         if (publicationAuthor != null){
 	        this.setKeyAuthor(publicationAuthor.getKeyAuthor());
@@ -41,7 +41,7 @@ public class InfoPublicationAuthor extends InfoObject {
     }
   
     /* Does not copy Object's, merely primitive type variables */
-    public void copyToDomain(InfoPublicationAuthor infoPublicationAuthor, IPublicationAuthor publicationAuthor){
+    public void copyToDomain(InfoPublicationAuthor infoPublicationAuthor, IAuthorship publicationAuthor){
         if (infoPublicationAuthor != null && publicationAuthor != null){
             super.copyToDomain(infoPublicationAuthor, publicationAuthor);
             publicationAuthor.setKeyAuthor(infoPublicationAuthor.getKeyAuthor());

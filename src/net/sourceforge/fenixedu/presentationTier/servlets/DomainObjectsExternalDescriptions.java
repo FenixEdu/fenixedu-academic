@@ -11,7 +11,4 @@ public class DomainObjectsExternalDescriptions {
         return ann.getTitle() + " (site de " + ann.getSite().getExecutionCourse().getNome() + ")";
     }
 
-    public static String getShortDescription(net.sourceforge.fenixedu.domain.publication.Author author) {
-        return author.getAuthor();
-    }
 }

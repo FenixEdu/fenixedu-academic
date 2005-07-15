@@ -239,7 +239,7 @@ public class ChangeMarkDispatchAction extends DispatchAction {
                 Object args[] = { newEnrolmentEvaluation.getInfoPersonResponsibleForGrade()
                         .getUsername() };
                 infoTeacher = (InfoTeacher) ServiceManagerServiceFactory.executeService(userView,
-                        "ReadTeacherByUserName", args);
+                        "ReadTeacherByUsername", args);
             } catch (ExistingServiceException e) {
                 throw new ExistingActionException(e);
             }

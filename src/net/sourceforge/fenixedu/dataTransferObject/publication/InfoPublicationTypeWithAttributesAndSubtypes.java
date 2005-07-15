@@ -1,27 +1,12 @@
-/*
- * Created on Mar 29, 2004
- *
- * To change the template for this generated file go to
- * Window - Preferences - Java - Code Generation - Code and Comments
- */
 package net.sourceforge.fenixedu.dataTransferObject.publication;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.publication.IAttribute;
 import net.sourceforge.fenixedu.domain.publication.IPublicationSubtype;
 import net.sourceforge.fenixedu.domain.publication.IPublicationType;
 
-/**
- * @author TJBF & PFON
- * @author Carlos Pereira
- * @author Francisco Passos
- * 
- * To change the template for this generated type comment go to Window -
- * Preferences - Java - Code Generation - Code and Comments
- */
 public class InfoPublicationTypeWithAttributesAndSubtypes extends InfoPublicationType {
 
     public InfoPublicationTypeWithAttributesAndSubtypes() {
@@ -31,25 +16,22 @@ public class InfoPublicationTypeWithAttributesAndSubtypes extends InfoPublicatio
     public void copyFromDomain(IPublicationType pubType) {
         super.copyFromDomain(pubType);
         if (pubType != null) {
+            
 	        attributes = new ArrayList();
-	        IAttribute att = null;
-	        for (Iterator iter = pubType.getRequiredAttributes().iterator()
-	                ;iter.hasNext();
-	                att = (IAttribute)iter.next()){
-	            attributes.add(InfoAttribute.newInfoFromDomain(att));
-	        }
-	        for (Iterator iter = pubType.getNonRequiredAttributes().iterator()
-	                ;iter.hasNext();
-	                att = (IAttribute)iter.next()){
-	            attributes.add(InfoAttribute.newInfoFromDomain(att));
-	        }
+            
+            for (IAttribute attribute : (List<IAttribute>)pubType.getRequiredAttributes()) {
+                attributes.add(InfoAttribute.newInfoFromDomain(attribute));
+            }
+            
+            for (IAttribute attribute : (List<IAttribute>)pubType.getNonRequiredAttributes()) {
+                attributes.add(InfoAttribute.newInfoFromDomain(attribute));
+            }
+            
 	        subtypes = new ArrayList();
-	        IPublicationSubtype subtype = null;
-	        for (Iterator iter = pubType.getSubtypes().iterator()
-	                ;iter.hasNext();
-	                subtype = (IPublicationSubtype)iter.next()){
-	            subtypes.add(InfoPublicationSubtype.newInfoFromDomain(subtype));
-	        }
+            
+            for (IPublicationSubtype publicationSubtype : pubType.getSubtypes()) {
+                subtypes.add(InfoPublicationSubtype.newInfoFromDomain(publicationSubtype));
+            }
         }
     }
     

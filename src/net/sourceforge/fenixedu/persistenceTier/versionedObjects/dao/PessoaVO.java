@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -12,6 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.Predicate;
 
 public class PessoaVO extends PersistentObjectOJB implements IPessoaPersistente {
 
@@ -130,6 +132,26 @@ public class PessoaVO extends PersistentObjectOJB implements IPessoaPersistente 
 
         return result;
 
+    }
+
+    public List<IPerson> readPersonsBySubName(String subName) throws ExcepcaoPersistencia {
+        
+        final List<IPerson> persons = (List<IPerson>) readAll(Person.class);
+
+        final String stringToMatch = subName.replace("%", ".*").replace(" ", ".*");
+
+        return (List<IPerson>) CollectionUtils.select(persons, new Predicate() {
+
+            public boolean evaluate(Object object) {
+                IPerson person = (IPerson) object;
+                if ( person.getNome().toLowerCase().matches(stringToMatch.toLowerCase())) 
+                {
+                    return true;
+                }
+                return false;
+            }
+
+        });
     }
 
 }

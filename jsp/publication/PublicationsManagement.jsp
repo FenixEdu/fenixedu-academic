@@ -50,23 +50,11 @@
 		
 		<table style="text-align:left" width="100%">	
 			<logic:iterate id="infoPublication" name="infoSitePublications" property="infoPublications">
-				<bean:define id="publicationTypeId" name="infoPublication" property="keyPublicationType"/>
 				<tr>
 					<td class="listClasses" style="text-align:left">
 						<bean:write name="infoPublication" property="publicationString" />
 					</td>
-					<%--
-					<td class="listClasses" style="text-align:left">
-						<bean:define id="publicationTypeId" name="infoPublication" property="keyPublicationType"/>
-						< %-- Tratar isto como uma qualquer publicação e não como sendo especificamente didatica --% >
-						<html:link page='<%= "/publicationDidatic.do?method=prepareEdit&amp;typePublication=Didatic&amp;page=0&amp;publicationTypeId=" + publicationTypeId %>'
-							paramId="idInternal"
-							paramName="infoPublication" 
-							paramProperty="idInternal">
-							<bean:message key="label.edit" />
-						</html:link>
-					</td>
-					--%>
+
 					<td class="listClasses" style="text-align:left">
 						<html:link page="/editPublication.do?method=prepare"
 							paramId="idInternal"

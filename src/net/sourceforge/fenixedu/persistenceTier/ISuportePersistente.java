@@ -51,7 +51,7 @@ import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersist
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentMoneyCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.places.campus.IPersistentCampus;
 import net.sourceforge.fenixedu.persistenceTier.projectsManagement.IPersistentProjectAccess;
-import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthor;
+import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthorship;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
@@ -414,8 +414,6 @@ public interface ISuportePersistente {
 
     public IPersistentPublicationFormat getIPersistentPublicationFormat();
 
-    public IPersistentAuthor getIPersistentAuthor();
-
     public IPersistentSibsPaymentFile getIPersistentSibsPaymentFile();
 
     public IPersistentSibsPaymentFileEntry getIPersistentSibsPaymentFileEntry();
@@ -447,8 +445,6 @@ public interface ISuportePersistente {
     public IPersistentGlossaryEntries getIPersistentGlossaryEntries();
     
     // Ricardo Rodrigues
-    public IPersistentPublicationAuthor getIPersistentPublicationAuthor();
-
 	public IPersistentPublicationTeacher getIPersistentPublicationTeacher();
 
     public IPersistentAttendInAttendsSet getIPersistentAttendInAttendsSet();
@@ -493,4 +489,6 @@ public interface ISuportePersistente {
     public IPersistentInstitution getIPersistentInstitution();
     
     public IPersistentNonAffiliatedTeacher getIPersistentNonAffiliatedTeacher();
+    
+    public IPersistentAuthorship getIPersistentAuthorship();
 }

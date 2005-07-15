@@ -1869,22 +1869,7 @@
 		<action type="net.sourceforge.fenixedu.presentationTier.Action.publication.SearchAuthorPublicationAction" 
             path="/prepareSearchPerson" name="publicationManagementForm" scope="request"
             parameter="method" input="prepareSearchPerson" validate="false">
-            <forward name="show-search-author-form" path="view-authors-form"/>
 			<forward name="show-attributes" path="/readPublicationAttributes.do"/>
-        </action>
-        
-        <!-- InsertAuthorsInPublication-->
-        <action type="net.sourceforge.fenixedu.presentationTier.Action.publication.SearchAuthorPublicationAction" 
-            path="/insertAuthorsInPublication" name="publicationManagementForm" scope="request"
-            parameter="method" input="insertsAuthorInPublication" validate="false">
-            <forward name="show-search-author-form" path="view-authors-form"/>
-        </action>
-        
-        <!-- InsertAuthorInPublication-->
-        <action type="net.sourceforge.fenixedu.presentationTier.Action.publication.SearchAuthorPublicationAction" 
-            path="/insertAuthorInPublication" name="publicationManagementForm" scope="request"
-            parameter="method" input="insertAuthorInPublication" validate="false">
-            <forward name="show-search-author-form" path="view-authors-form"/>
         </action>
         
         <!-- SearchAuthor-->
@@ -1894,14 +1879,6 @@
             <forward name="show-search-author-form" path="view-authors-form"/>
         </action>
         
-        <!-- DeleteAuthorInPublication-->
-        <action type="net.sourceforge.fenixedu.presentationTier.Action.publication.SearchAuthorPublicationAction" 
-            path="/deleteAuthorInPublication" name="publicationManagementForm" scope="request"
-            parameter="method" input="deleteAuthorInPublication" validate="false">
-            <forward name="show-search-author-form" path="view-authors-form"/>
-        </action>
-        
-		
         <!-- Read Publications -->
         <action type="net.sourceforge.fenixedu.presentationTier.Action.publication.ReadPublicationsAction" 
             path="/readPublications" name="readPublicationsForm" scope="request" validate="false">

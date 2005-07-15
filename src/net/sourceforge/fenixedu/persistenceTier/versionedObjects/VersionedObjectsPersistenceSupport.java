@@ -47,6 +47,7 @@ import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersist
 import net.sourceforge.fenixedu.persistenceTier.places.campus.IPersistentCampus;
 import net.sourceforge.fenixedu.persistenceTier.projectsManagement.IPersistentProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthor;
+import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthorship;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
@@ -78,6 +79,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AttendInAtt
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AttendsSetVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AulaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AuthorVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AuthorshipVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.BibliographicReferenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.BranchVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.BuildingVO;
@@ -271,7 +273,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
         return new WrittenEvaluationCurricularCourseScopeVO();
     }
 */
-    public IPersistentPublicationAuthor getIPersistentPublicationAuthor() {
+	public IPersistentPublicationAuthor getIPersistentPublicationAuthor() {
         return new PublicationAuthorVO();
     }
 
@@ -914,7 +916,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     public IPersistentAuthor getIPersistentAuthor() {
         return new AuthorVO();
     }
-
+    
     public IPersistentShiftProfessorship getIPersistentTeacherShiftPercentage() {
         return null;
     }
@@ -985,6 +987,10 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentNonAffiliatedTeacher getIPersistentNonAffiliatedTeacher() {
         return null;
+    }
+
+    public IPersistentAuthorship getIPersistentAuthorship() {
+        return new AuthorshipVO();
     }
 	
 }

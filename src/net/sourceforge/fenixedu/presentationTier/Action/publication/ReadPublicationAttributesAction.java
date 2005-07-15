@@ -16,10 +16,10 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.constants.publication.PublicationConstants;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoSiteAttributes;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
-import net.sourceforge.fenixedu.domain.publication.IAuthor;
+import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -131,8 +131,10 @@ public class ReadPublicationAttributesAction extends FenixAction {
 
         List infoAuthors = (List) CollectionUtils.collect(authors, new Transformer() {
             public Object transform(Object o) {
-                IAuthor author = (IAuthor) o;
-                return Cloner.copyIAuthor2InfoAuthor(author);
+                IPerson author = (IPerson) o;
+                InfoPerson infoPerson = new InfoPerson();
+                infoPerson.copyFromDomain(author);
+                return infoPerson;
             }
         });
         return infoAuthors;

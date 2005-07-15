@@ -1,7 +1,3 @@
-/*
- * Created on Jun 10, 2004
- * 
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 
 import java.util.ArrayList;
@@ -16,16 +12,13 @@ import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoSitePublications;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.publication.Author;
-import net.sourceforge.fenixedu.domain.publication.IAuthor;
+import net.sourceforge.fenixedu.domain.publication.IAuthorship;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
-import net.sourceforge.fenixedu.domain.publication.IPublicationAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthor;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -37,13 +30,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  *  
  */
 public class ReadAuthorPublicationsToInsert implements IService {
-
-    /**
-     *  
-     */
-    public ReadAuthorPublicationsToInsert() {
-
-    }
 
     /**
      * Executes the service.
@@ -71,33 +57,17 @@ public class ReadAuthorPublicationsToInsert implements IService {
         }
     }
 
-    private List getInfoPublications(ISuportePersistente sp, ITeacher teacher)
-            throws ExcepcaoPersistencia {
+    private List getInfoPublications(ISuportePersistente sp, ITeacher teacher) {
 
         IPerson pessoa = teacher.getPerson();
-        Integer keyPerson = pessoa.getIdInternal();
-
-        IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
-        IAuthor author = persistentAuthor.readAuthorByKeyPerson(keyPerson);
-
-        List authorPublications = new ArrayList();
-        List infoAuthorPublications = new ArrayList();
-        List newAuthorPublications = new ArrayList();
-        if (author == null) {
-            Author newAuthor = new Author();
-            //newAuthor.setKeyPerson(keyPerson);
-            newAuthor.setPerson(pessoa);
-            persistentAuthor.lockWrite(newAuthor);
-
-        } else {
-            List<IPublicationAuthor> publicationAuthors = author.getAuthorPublications();
-            authorPublications = (List<IPublication>)CollectionUtils.collect(publicationAuthors,new Transformer() {
-                public Object transform(Object object) {
-                    IPublicationAuthor publicationAuthor = (IPublicationAuthor) object;
-                    return publicationAuthor.getPublication();
-                }
-            });
-        }
+        
+        List<IPublication> authorPublications = new ArrayList<IPublication>();
+        List<IPublication> newAuthorPublications = new ArrayList<IPublication>();
+        List<InfoPublication> infoAuthorPublications = new ArrayList<InfoPublication>();
+        
+        for (IAuthorship authorship : pessoa.getPersonAuthorships()) {
+            authorPublications.add(authorship.getPublication());
+        } 
 
         List publicationTeachersInTeachersList = teacher.getTeacherPublications();
         

@@ -62,9 +62,8 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness.Mone
 import net.sourceforge.fenixedu.persistenceTier.OJB.person.qualification.QualificationOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.places.campus.CampusOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.projectsManagement.ProjectAccessOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.publication.AuthorOJB;
+import net.sourceforge.fenixedu.persistenceTier.OJB.publication.AuthorshipOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationAttributeOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationAuthorOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationFormatOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationTeacherOJB;
@@ -135,7 +134,7 @@ import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersist
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentMoneyCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.places.campus.IPersistentCampus;
 import net.sourceforge.fenixedu.persistenceTier.projectsManagement.IPersistentProjectAccess;
-import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthor;
+import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthorship;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
@@ -1180,15 +1179,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new PublicationFormatOJB();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentAuthor()
-     */
-    public IPersistentAuthor getIPersistentAuthor() {
-        return new AuthorOJB();
-    }
-
     public IPersistentSibsPaymentFile getIPersistentSibsPaymentFile() {
         return new SibsPaymentFileOJB();
     }
@@ -1259,10 +1249,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     
     public IPersistentEnrolmentLog getIPersistentEnrolmentLog() {
         return new EnrolmentLogOJB();
-    }
-    
-    public IPersistentPublicationAuthor getIPersistentPublicationAuthor() {
-    	return new PublicationAuthorOJB();
     }
 
     // Rita Ferreira e Jo�o Fialho
@@ -1336,6 +1322,10 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     public IPersistentNonAffiliatedTeacher getIPersistentNonAffiliatedTeacher() {
         return new NonAffiliatedTeacherOJB();
+    }
+
+    public IPersistentAuthorship getIPersistentAuthorship() {
+        return new AuthorshipOJB();
     }
 
 }

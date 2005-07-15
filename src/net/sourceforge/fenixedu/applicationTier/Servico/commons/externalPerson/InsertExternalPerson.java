@@ -23,7 +23,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class InsertExternalPerson implements IService {
 
-    public void run(String name, String sex, String address, Integer workLocationID, String phone,
+    public IExternalPerson run(String name, String sex, String address, Integer workLocationID, String phone,
             String mobile, String homepage, String email) throws FenixServiceException,
             ExcepcaoPersistencia {
 
@@ -59,9 +59,13 @@ public class InsertExternalPerson implements IService {
 
         IExternalPerson externalPerson = new ExternalPerson();        
         externalPerson.setPerson(person);
-        externalPerson.setWorkLocation(storedWorkLocation);
+        if (storedWorkLocation != null) {
+            externalPerson.setWorkLocation(storedWorkLocation);
+        }
 
         sp.getIPersistentExternalPerson().simpleLockWrite(externalPerson);
+        
+        return externalPerson;
 
     }
 }

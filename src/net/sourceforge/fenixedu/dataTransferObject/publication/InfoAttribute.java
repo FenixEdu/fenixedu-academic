@@ -1,25 +1,12 @@
-/*
- * Created on Mar 29, 2004
- *
- * To change the template for this generated file go to
- * Window - Preferences - Java - Code Generation - Code and Comments
- */
 package net.sourceforge.fenixedu.dataTransferObject.publication;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.publication.IAttribute;
 import net.sourceforge.fenixedu.domain.publication.IPublicationType;
 
-/**
- * @author TJBF & PFON
- * 
- * To change the template for this generated type comment go to Window -
- * Preferences - Java - Code Generation - Code and Comments
- */
 public class InfoAttribute extends InfoObject {
 
     private String attributeType;
@@ -34,13 +21,11 @@ public class InfoAttribute extends InfoObject {
         super.copyFromDomain(att);
         if (att != null) {
 	        attributeType = att.getAttributeType();
-	        publications = new ArrayList();
-	        IPublicationType pubtype = null;
-	        for (Iterator iter = att.getPublications().iterator(); iter.hasNext(); pubtype = (IPublicationType)iter.next()) 
-	        {
-	            InfoPublicationType ipubtype = InfoPublicationType.newInfoFromDomain(pubtype);
-	            publications.add(ipubtype);
-	        }
+	        publications = new ArrayList<IPublicationType>();
+            
+            for (IPublicationType publicationType : (List<IPublicationType>)att.getPublicationTypes()) {
+                publications.add(InfoPublicationType.newInfoFromDomain(publicationType));
+            }
         }
     }
     

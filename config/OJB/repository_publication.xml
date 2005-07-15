@@ -1,38 +1,11 @@
-<!-- TJBF & PFON  -->
-<!-- Carlos Pereira & Francisco Passos  -->
-<!-- Ricardo Rodrigues -->
-
 <!-- Definitions for net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute -->
 <class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.publication.PublicationTypeAttribute" table="PUBLICATION_ATTRIBUTE">
-    <field-descriptor
-    	name="idInternal"
-     	column="ID_INTERNAL"
-     	jdbc-type="INTEGER"
-     	primarykey="true"
-     	autoincrement="true"
-    />
-	<field-descriptor
-		name="ackOptLock"
-		column="ACK_OPT_LOCK"
-		jdbc-type="INTEGER"
-		locking="true"
-	/>
-	<field-descriptor
-		name="keyPublicationType"
-		column="KEY_PUBLICATION_TYPE"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyAttribute"
-		column="KEY_ATTRIBUTE"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="required"
-		column="REQUIRED"
-		jbdc-type="BIT"
-	/>
-	<reference-descriptor
+    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+	<field-descriptor name="keyPublicationType" column="KEY_PUBLICATION_TYPE" jdbc-type="INTEGER"/>
+	<field-descriptor name="keyAttribute" column="KEY_ATTRIBUTE" jdbc-type="INTEGER"/>
+	<field-descriptor name="required" column="REQUIRED" jbdc-type="BIT"/>
+	<reference-descriptor 
 		name="publicationType"
 		class-ref="net.sourceforge.fenixedu.domain.publication.PublicationType"
 		>
@@ -60,6 +33,11 @@
 	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          	name="subtypes"
          	element-class-ref="net.sourceforge.fenixedu.domain.publication.PublicationSubtype">
+         <inverse-foreignkey field-ref="keyPublicationType"/>
+    </collection-descriptor>
+    <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+         	name="publications"
+         	element-class-ref="net.sourceforge.fenixedu.domain.publication.Publication">
          <inverse-foreignkey field-ref="keyPublicationType"/>
     </collection-descriptor>
 </class-descriptor>
@@ -184,7 +162,7 @@
 	    <foreignkey field-ref="keyPerson"/>
     </reference-descriptor>
     
-</class-descriptor>			
+</class-descriptor>
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.PublicationAuthor -->
@@ -224,35 +202,11 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.publication.PublicationTeacher -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.publication.PublicationTeacher" table="PUBLICATION_TEACHER">
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="keyPublication"
-		column="KEY_PUBLICATION"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="keyTeacher"
-		column="KEY_TEACHER"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="publicationArea"
-		column="PUBLICATION_AREA"
-		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.PublicationArea2SqlPublicationAreaFieldConversion"
-	/>
-	<field-descriptor
-		name="ackOptLock"
-		column="ACK_OPT_LOCK"
-		jdbc-type="INTEGER"
-		locking="true"
-	/>
+	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
+	<field-descriptor name="keyPublication" column="KEY_PUBLICATION" jdbc-type="INTEGER"/>
+	<field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
+	<field-descriptor name="publicationArea" column="PUBLICATION_AREA" jdbc-type="VARCHAR" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.PublicationArea2SqlPublicationAreaFieldConversion"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
 	<reference-descriptor
 			name="teacher"
 			class-ref="net.sourceforge.fenixedu.domain.Teacher"

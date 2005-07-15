@@ -84,7 +84,6 @@ import net.sourceforge.fenixedu.dataTransferObject.gaugingTests.physics.InfoGaug
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseHistoric;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAttribute;
-import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthorPerson;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationFormat;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoStudentCourseReport;
@@ -123,7 +122,6 @@ import net.sourceforge.fenixedu.domain.gesdis.ICourseHistoric;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.IStudentCourseReport;
 import net.sourceforge.fenixedu.domain.publication.IAttribute;
-import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublicationFormat;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
@@ -600,45 +598,6 @@ public abstract class Cloner {
     }
 
     /**
-     * Method copyIShift2InfoShift.
-     * 
-     * @param elem
-     * @return Object
-     */
-    // public static InfoShift copyIShift2InfoShift(IShift shift)
-    // DO NOT DELETE - this is used locally through introspection!!!
-    private static InfoShift copy(IShift shift) {
-
-        if (shift == null)
-            return null;
-        InfoShift infoShift = new InfoShift();
-        InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner.get(shift
-                .getDisciplinaExecucao());
-        List infoLessonList = (List) CollectionUtils.collect(shift.getAssociatedLessons(),
-                new Transformer() {
-                    public Object transform(Object arg0) {
-                        return copyILesson2InfoLesson((ILesson) arg0);
-                    }
-                });
-
-        List infoClassesList = (List) CollectionUtils.collect(shift.getAssociatedClasses(),
-                new Transformer() {
-                    public Object transform(Object arg0) {
-                        return InfoClassWithAll.newInfoFromDomain((ISchoolClass) arg0);
-                    }
-                });
-
-        copyObjectProperties(infoShift, shift);
-        infoShift.setAvailabilityFinal(shift.getAvailabilityFinal());
-        infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
-        infoShift.setIdInternal(shift.getIdInternal());
-        infoShift.setInfoLessons(infoLessonList);
-        infoShift.setInfoClasses(infoClassesList);
-
-        return infoShift;
-    }
-
-    /**
      * Method copyInfoStudent2IStudent.
      * 
      * @param infoStudent
@@ -722,6 +681,7 @@ public abstract class Cloner {
             }
 
             copyObjectProperties(infoPerson, person);
+//            infoPerson.copyToDomain(infoPerson,person);
             infoPerson.setInfoPais(infoCountry);
 
             if (person.getAdvisories() != null) {
@@ -2569,36 +2529,6 @@ public abstract class Cloner {
         InfoPublicationFormat infoPublicationFormat = new InfoPublicationFormat();
         copyObjectProperties(infoPublicationFormat, PublicationFormat);
         return infoPublicationFormat;
-    }
-
-    public static InfoAuthor copyIAuthor2InfoAuthor(IAuthor author) {
-        InfoAuthor infoAuthor = new InfoAuthor();
-        InfoPerson infoPerson = new InfoPerson();
-        if (author.getKeyPerson() != null) {
-            infoPerson = copyIPerson2InfoPerson(author.getPerson());
-        }
-        copyObjectProperties(infoAuthor, author);
-        if (author.getKeyPerson() != null) {
-            infoAuthor.setInfoPessoa(infoPerson);
-        }
-        if (author.getOrganization() == null
-                || author.getOrganization().length() == PublicationConstants.ZERO_VALUE) {
-            infoAuthor.setOrganization(PublicationConstants.DEFAULT_ORGANIZATION);
-        }
-        return infoAuthor;
-    }
-
-    public static InfoAuthorPerson copyIAuthor2InfoAuthorperson(IAuthor author) {
-
-        InfoAuthorPerson infoAuthorPerson = new InfoAuthorPerson();
-        String keyIdString = author.getIdInternal().toString() + PublicationConstants.INIT_AUTHOR;
-
-        infoAuthorPerson.setIdInternal(author.getIdInternal());
-        infoAuthorPerson.setKeyFinal(keyIdString);
-        infoAuthorPerson.setName(author.getAuthor());
-        infoAuthorPerson.setOrganisation(author.getOrganization());
-
-        return infoAuthorPerson;
     }
 
     public static InfoAuthorPerson copyIPerson2InfoAuthorPerson(IPerson person) {

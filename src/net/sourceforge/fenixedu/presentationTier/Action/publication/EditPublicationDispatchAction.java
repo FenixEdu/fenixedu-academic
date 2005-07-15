@@ -1,7 +1,3 @@
-/*
- * Created on 9/Dez/2004
- *
- */
 package net.sourceforge.fenixedu.presentationTier.Action.publication;
 
 import java.util.ArrayList;
@@ -21,13 +17,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAttribute;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
+import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationAuthor;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationType;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.publication.IAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublicationType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
@@ -43,7 +38,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 /**
- * @author Ricardo G?es
+ * @author Ricardo Goes
  *  
  */
 public class EditPublicationDispatchAction extends FenixDispatchAction {
@@ -94,7 +89,7 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
             return mapping.getInputForward();
         }
         
-        List infoAuthors = new ArrayList();
+        List<InfoAuthor> infoAuthors = new ArrayList<InfoAuthor>();
         InfoPublication publication = new InfoPublication();
         
         Object[] arrayId = (Object[]) dynaForm.get("authorsId");
@@ -113,14 +108,27 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
         	}
         	else {
 	        	Object[] argReadAuthor = { arrayId[i] };
-	        	InfoAuthor author = (InfoAuthor)ServiceUtils.executeService(userView, "ReadAuthorById", argReadAuthor);
-	        	InfoPerson person = (InfoPerson)ServiceUtils.executeService(userView, "ReadPerson", new Object[] { author.getKeyPerson() });
-	        	author.setInfoPessoa(person);
-	        	infoAuthors.add(author);
+	        	InfoPerson author = (InfoPerson)ServiceUtils.executeService(userView, "ReadPerson", argReadAuthor);
+                InfoAuthor infoAuthor = new InfoAuthor();
+                infoAuthor.setIdInternal(author.getIdInternal());
+                infoAuthor.setInfoPessoa(author);
+                infoAuthor.setKeyPerson(author.getIdInternal());
+
+	        	infoAuthors.add(infoAuthor);
         	}
         }
         
-        publication.setInfoPublicationAuthors(infoAuthors);
+        List<InfoPublicationAuthor> infoPublicationAuthors = new ArrayList<InfoPublicationAuthor>();
+        for (InfoAuthor author : infoAuthors) {
+            InfoPublicationAuthor infoPublicationAuthor = new InfoPublicationAuthor();
+            infoPublicationAuthor.setInfoAuthor(author);
+            infoPublicationAuthor.setInfoPublication(publication);
+            infoPublicationAuthor.setKeyAuthor(author.getIdInternal());
+            infoPublicationAuthor.setKeyPublication(publication.getIdInternal());
+            infoPublicationAuthors.add(infoPublicationAuthor);
+        }
+        
+        publication.setInfoPublicationAuthors(infoPublicationAuthors);
         
         publication.setTitle((String)dynaForm.get("title"));
         //ERROR this is wrong... a domain object is up here :(
@@ -381,12 +389,11 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
 		Integer[] authorsId = (Integer[]) insertPublicationForm.get("authorsId");
 		if (authorsId.length == 0) {
 			InfoPerson infoPerson = (InfoPerson) ServiceUtils.executeService(userView, "ReadPersonByUserview", new Object[] { userView });
-			InfoAuthor infoAuthor = (InfoAuthor) ServiceUtils.executeService(userView, "ReadAuthorByPersonId", new Object[] { userView.getUtilizador() });
 
 			Integer[] newAuthorsId = new Integer[1];
 	        String[] newAuthorsName = new String[1];
 	        
-	        newAuthorsId[newAuthorsId.length - 1] = infoAuthor.getIdInternal();
+	        newAuthorsId[newAuthorsId.length - 1] = infoPerson.getIdInternal();
 	        newAuthorsName[newAuthorsName.length - 1] = infoPerson.getNome();
 	
 	        insertPublicationForm.set("authorsId", newAuthorsId);
@@ -526,7 +533,7 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward selectAuthor(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
         DynaActionForm insertPublicationForm = (DynaActionForm) form;
         IUserView userView = SessionUtils.getUserView(request);
@@ -548,21 +555,16 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
     		errors.add("error1", new ActionError("message.publication.repeatedAuthor"));
         }
         else {
-        
-	        InfoAuthor infoAuthor = null;
-	
-	        try {
-	            infoAuthor = (InfoAuthor) ServiceUtils.executeService(userView, "ReadAuthorById",
-	                    new Object[] { selectedAuthorId });
-	            if (infoAuthor.getAuthor() == null || infoAuthor.getAuthor().equals("")){
-	            	InfoPerson infoPerson = (InfoPerson) ServiceUtils.executeService(userView, "ReadPerson",
-		                    new Object[] { infoAuthor.getKeyPerson() });
-	            	infoAuthor.setAuthor(infoPerson.getNome());
-	            }
-	        } catch (FenixServiceException e) {
-	            e.printStackTrace();
-	            throw new FenixActionException(e);
-	        }
+
+            InfoPerson infoPerson = (InfoPerson) ServiceUtils.executeService(userView, "ReadPerson",
+                    new Object[] { selectedAuthorId });
+            
+            InfoAuthor infoAuthor = new InfoAuthor();
+            infoAuthor.setAuthor(infoPerson.getNome());
+            infoAuthor.setIdInternal(infoPerson.getIdInternal());
+            infoAuthor.setInfoPessoa(infoPerson);
+            infoAuthor.setKeyPerson(infoPerson.getIdInternal());
+            infoAuthor.setOrganization("");
 	        
 	        Integer[] newAuthorsId = new Integer[authorsId.length + 1];
 	        String[] newAuthorsName = new String[authorsName.length + 1];
@@ -589,42 +591,26 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward searchAuthor(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm insertPublicationForm = (DynaActionForm) form;
 
         String searchedAuthorName = (String) insertPublicationForm.get("searchedAuthorName");
         if (searchedAuthorName == null || searchedAuthorName.equals("")) {
-        	ActionErrors errors = new ActionErrors();
-        	errors.add("error1", new ActionError("message.publication.emptySearch"));
-        	return mapping.findForward("searchAuthors");
+            ActionErrors errors = new ActionErrors();
+            errors.add("error1", new ActionError("message.publication.emptySearch"));
+            return mapping.findForward("searchAuthors");
         }
 
-        Object[] arg = { searchedAuthorName };
-        List authorsList = null, personList = null;
+        Object[] arg = { userView, searchedAuthorName };
+        List infoAuthorList = new ArrayList<InfoAuthor>();
 
-        //ATEN??O, MAIS OBJECTOS DE DOM?NIO NA APRESENTA??O!!
-        try {
-            authorsList = (List) ServiceUtils.executeService(userView, "ReadAuthorsByName", arg);
-            personList = (List) ServiceUtils.executeService(userView, "ReadPersonsNotAuthors", new Object[] { "%"+searchedAuthorName.replace(' ','%')+"%", userView });
-            Iterator iter = personList.iterator();
-            while (iter.hasNext()) {
-            	IPerson pessoa = (IPerson)iter.next();
-            	InfoAuthor infoAuthor = (InfoAuthor) ServiceUtils.executeService(userView, "ReadAuthorByPersonId", new Object[] { pessoa.getIdInternal() });
-            	if (pessoa.getIdInternal() != null)
-            		infoAuthor.setKeyPerson(pessoa.getIdInternal());
-            	infoAuthor.setAuthor(pessoa.getNome());
-            	if (infoAuthor.getIdInternal()!=null) 
-            		authorsList.add(infoAuthor);
-            }
-        } catch (FenixServiceException e) {
-            e.printStackTrace();
-        }
+        infoAuthorList = (List<InfoAuthor>) ServiceUtils.executeService(userView, "ReadAuthorsByName", arg);
 
-        request.setAttribute("searchedAuthorsList", authorsList);
-
-         return mapping.findForward("searchAuthors");
+        request.setAttribute("searchedAuthorsList", infoAuthorList);
+        
+        return mapping.findForward("searchAuthors");
     }
     
     public List readInfoAuthors(List authorsIds, IUserView userView) throws FenixFilterException, FenixServiceException {
@@ -641,8 +627,10 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
 
         List infoAuthors = (List) CollectionUtils.collect(authors, new Transformer() {
             public Object transform(Object o) {
-                IAuthor author = (IAuthor) o;
-                return Cloner.copyIAuthor2InfoAuthor(author);
+                IPerson author = (IPerson) o;
+                InfoPerson infoPerson = new InfoPerson();
+                infoPerson.copyFromDomain(author);
+                return infoPerson;
             }
         });
         return infoAuthors;
@@ -651,12 +639,14 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
     public List infoAuthorsPersons(List listObjects, Object object) {
         List infoAuthorPersons = new ArrayList();
 
-        if (object instanceof IAuthor) {
+        if (object instanceof IPerson) {
 
             infoAuthorPersons = (List) CollectionUtils.collect(listObjects, new Transformer() {
                 public Object transform(Object o) {
-                    IAuthor author = (IAuthor) o;
-                    return Cloner.copyIAuthor2InfoAuthorperson(author);
+                    IPerson author = (IPerson) o;
+                    InfoPerson infoPerson = new InfoPerson();
+                    infoPerson.copyFromDomain(author);
+                    return infoPerson;
                 }
             });
 

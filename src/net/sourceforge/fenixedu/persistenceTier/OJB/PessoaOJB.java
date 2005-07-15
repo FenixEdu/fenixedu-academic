@@ -111,4 +111,10 @@ public class PessoaOJB extends PersistentObjectOJB implements IPessoaPersistente
         return result;
     }
 
+    public List<IPerson> readPersonsBySubName(String subName) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addLike("name", subName);
+        return queryList(Person.class, criteria);
+    }
+
 }

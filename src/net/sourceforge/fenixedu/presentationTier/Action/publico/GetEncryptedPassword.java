@@ -48,7 +48,7 @@ public class GetEncryptedPassword extends Action {
         } else {
 
             try {
-                infoTeacher = (InfoTeacher) ServiceUtils.executeService(null, "ReadTeacherByUserName",
+                infoTeacher = (InfoTeacher) ServiceUtils.executeService(null, "ReadTeacherByUsername",
                         args);
             } catch (FenixServiceException e) {
                 error = new Integer(1);

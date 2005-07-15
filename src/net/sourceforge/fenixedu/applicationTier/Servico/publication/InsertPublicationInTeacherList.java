@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoSitePublications;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
@@ -52,7 +51,7 @@ public class InsertPublicationInTeacherList implements IService {
 
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
         ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class, teacherId);
-        InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+        InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
         infoSitePublications.setInfoTeacher(infoTeacher);
 
         IPersistentPublication persistentPublication = sp.getIPersistentPublication();

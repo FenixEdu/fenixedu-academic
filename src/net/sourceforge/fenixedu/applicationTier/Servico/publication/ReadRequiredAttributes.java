@@ -4,11 +4,11 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAttribute;
 import net.sourceforge.fenixedu.domain.publication.IAttribute;
 import net.sourceforge.fenixedu.domain.publication.IPublicationType;
 import net.sourceforge.fenixedu.domain.publication.PublicationType;
@@ -16,58 +16,27 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationType;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
-
-/**
- * @author TJBF
- * @author PFON
- *  
- */
-public class ReadRequiredAttributes implements IServico {
-    private static ReadRequiredAttributes service = new ReadRequiredAttributes();
-
-    /**
-     *  
-     */
-    private ReadRequiredAttributes() {
-
-    }
-
-    public static ReadRequiredAttributes getService() {
-
-        return service;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome() {
-        return "ReadRequiredAttributes";
-    }
+public class ReadRequiredAttributes implements IService {
 
     public List run(String user, int publicationTypeId) throws FenixServiceException {
         try {
+            
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-            IPersistentPublicationType persistentPublicationType = persistentSuport
-                    .getIPersistentPublicationType();
+            IPersistentPublicationType persistentPublicationType = persistentSuport.getIPersistentPublicationType();
+           
+            
             IPublicationType publicationType = (IPublicationType) persistentPublicationType.readByOID(
                     PublicationType.class, new Integer(publicationTypeId));
 
-            List requiredAttributeList = publicationType.getRequiredAttributes();
+            List<InfoAttribute> infoAttributes = new ArrayList(); 
+            for (IAttribute attribute : (List<IAttribute>)publicationType.getRequiredAttributes()) {
+                infoAttributes.add(InfoAttribute.newInfoFromDomain(attribute));
+            }
 
-            List result = (List) CollectionUtils.collect(requiredAttributeList, new Transformer() {
-                public Object transform(Object o) {
-                    IAttribute publicationAttribute = (IAttribute) o;
-                    return Cloner.copyIAttribute2InfoAttribute(publicationAttribute);
-                }
-            });
-
-            return result;
+            return infoAttributes;
+            
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }

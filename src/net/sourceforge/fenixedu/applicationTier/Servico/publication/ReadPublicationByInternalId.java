@@ -1,11 +1,3 @@
-/*
- * Created on 25-Oct-2004
- *
- * @author Carlos Pereira & Francisco Passos
- * 
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 
 import java.util.HashMap;
@@ -20,9 +12,8 @@ import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationType;
 import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.publication.IAuthor;
+import net.sourceforge.fenixedu.domain.publication.IAuthorship;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
-import net.sourceforge.fenixedu.domain.publication.IPublicationAuthor;
 import net.sourceforge.fenixedu.domain.publication.IPublicationType;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -31,12 +22,6 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author Carlos Pereira & Francisco Passos
- * 
- * TODO To change the template for this generated type comment go to Window -
- * Preferences - Java - Code Style - Code Templates
- */
 public class ReadPublicationByInternalId implements IService {
 
     public InfoPublication run(Integer internalId, IUserView userView)
@@ -55,8 +40,9 @@ public class ReadPublicationByInternalId implements IService {
         ReadPublicationType readPublicationType = new ReadPublicationType();
         IPublicationType publicationType = readPublicationType.run(publication.getKeyPublicationType());
 
-        final List publicationAuthors = publication.getPublicationAuthors();
-        final Map personsMap = generatePersonsMap(publicationAuthors);
+        final List<IAuthorship> authorships = publication.getPublicationAuthorships();
+        
+        final Map personsMap = generatePersonsMap(authorships);
 
         if (publicationType != null) {
             infoPublication.setPublicationType(publicationType.getPublicationType());
@@ -94,9 +80,8 @@ public class ReadPublicationByInternalId implements IService {
     protected Map generatePersonsMap(final List publicationAuthors) {
         final Map personsMap = new HashMap(publicationAuthors.size());
         for (final Iterator iterator = publicationAuthors.iterator(); iterator.hasNext();) {
-            final IPublicationAuthor publicationAuthor = (IPublicationAuthor) iterator.next();
-            final IAuthor author = publicationAuthor.getAuthor();
-            final IPerson person = author.getPerson();
+            final IAuthorship authorship = (IAuthorship) iterator.next();
+            final IPerson person = authorship.getAuthor();
             if (person != null) {
                 personsMap.put(person.getIdInternal(), person);
             }

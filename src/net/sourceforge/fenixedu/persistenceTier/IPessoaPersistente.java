@@ -1,17 +1,9 @@
-/*
- * IPessoaPersistente.java
- * 
- * Created on 15 de Outubro de 2002, 15:03
- */
-
 package net.sourceforge.fenixedu.persistenceTier;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 
 public interface IPessoaPersistente extends IPersistentObject {
     /**
@@ -42,5 +34,7 @@ public interface IPessoaPersistente extends IPersistentObject {
     // ExcepcaoPersistencia;
     public IPerson lerPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao,
             IDDocumentType tipoDocumentoIdentificacao) throws ExcepcaoPersistencia;
+    
+    public List<IPerson> readPersonsBySubName(String subName) throws ExcepcaoPersistencia;
 
 }

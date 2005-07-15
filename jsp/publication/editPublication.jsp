@@ -42,7 +42,7 @@
 				</td>
 
 				<td>
-					<%= authorN.toString() %>
+					<%= authorN.toString().replaceAll("'.'","      -      ")+(authorN.toString().contains("'.'")?"        (External person)":"") %>
 				</td>
 				<logic:equal name="singleAuthor" value="false">
 					<td>

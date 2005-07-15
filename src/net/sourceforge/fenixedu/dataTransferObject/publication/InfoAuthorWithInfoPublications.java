@@ -1,9 +1,3 @@
-/*
- * Created on May 24, 2004
- *
- * To change the template for this generated file go to
- * Window - Preferences - Java - Code Generation - Code and Comments
- */
 package net.sourceforge.fenixedu.dataTransferObject.publication;
 
 
@@ -14,42 +8,26 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.publication.IAuthor;
+import net.sourceforge.fenixedu.domain.publication.IAuthorship;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
-import net.sourceforge.fenixedu.domain.publication.IPublicationAuthor;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-/**
- * @author <a href="mailto:cgmp@mega.ist.utl.pt">Carlos Pereira </a> & <a href="mailto:fmmp@mega.ist.utl.pt">Francisco Passos </a>
- */
 public class InfoAuthorWithInfoPublications extends InfoAuthor {
 
-	
-    /* (non-Javadoc)
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
-     */
-    public void copyFromDomain(IAuthor author) {
+    public void copyFromDomain(IPerson author) {
         if (author != null){
             super.copyFromDomain(author);
-	        setAuthor(author.getAuthor());
-	        setIdInternal(author.getIdInternal());
-	        setKeyPerson(author.getKeyPerson());
-	        setOrganization(author.getOrganization());
 	        
-            List publicationAuthors = new ArrayList(author.getAuthorPublications());
+            List publicationAuthors = new ArrayList(author.getPersonAuthorships());
             Collections.sort(publicationAuthors, new BeanComparator("order"));
             List publicationList = (List)CollectionUtils.collect(publicationAuthors,
                     new Transformer() {
                         public Object transform(Object object) {
-                            IPublicationAuthor publicationAuthor = (IPublicationAuthor) object;
-                            return publicationAuthor.getPublication();
+                            IAuthorship authorship = (IAuthorship) object;
+                            return authorship.getPublication();
             }});
             
 	        List infoPublicationsList = new ArrayList();
@@ -67,19 +45,9 @@ public class InfoAuthorWithInfoPublications extends InfoAuthor {
      * Copies the infoAuthor to an Author object except the publications List for wich
      * @param 
      */
-    public void copyToDomain(InfoAuthorWithInfoPublications infoAuthor, IAuthor author) throws ExcepcaoPersistencia{
+    public void copyToDomain(InfoAuthorWithInfoPublications infoAuthor, IPerson author){
         if (infoAuthor != null && author != null){
             super.copyToDomain(infoAuthor, author);
-	        author.setAuthor(infoAuthor.getAuthor());
-	        author.setKeyPerson(infoAuthor.getKeyPerson());
-	        author.setOrganization(infoAuthor.getOrganization());
-	        InfoPerson infoPerson = infoAuthor.getInfoPessoa();
-	        if (infoAuthor.getKeyPerson() != null){
-                ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-                IPerson pessoa = (IPerson)sp.getIPessoaPersistente().readByOID(Person.class, infoAuthor.getKeyPerson());
-		        
-		        author.setPerson(pessoa);
-	        }
         }
     }
     

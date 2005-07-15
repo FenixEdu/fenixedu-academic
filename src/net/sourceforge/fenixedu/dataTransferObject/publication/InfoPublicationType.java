@@ -1,9 +1,3 @@
-/*
- * Created on Mar 29, 2004
- *
- * To change the template for this generated file go to
- * Window - Preferences - Java - Code Generation - Code and Comments
- */
 package net.sourceforge.fenixedu.dataTransferObject.publication;
 
 import java.util.List;
@@ -11,14 +5,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.publication.IPublicationType;
 
-/**
- * @author TJBF & PFON
- * @author Carlos Pereira
- * @author Francisco Passos
- * 
- * To change the template for this generated type comment go to Window -
- * Preferences - Java - Code Generation - Code and Comments
- */
 public class InfoPublicationType extends InfoObject {
 
     protected String publicationType;

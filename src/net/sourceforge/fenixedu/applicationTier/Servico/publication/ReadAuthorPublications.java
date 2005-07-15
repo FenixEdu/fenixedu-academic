@@ -16,15 +16,14 @@ import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoSitePublications;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.publication.Author;
-import net.sourceforge.fenixedu.domain.publication.IAuthor;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.publication.IAuthorship;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
-import net.sourceforge.fenixedu.domain.publication.IPublicationAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
+import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthor;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -77,27 +76,24 @@ public class ReadAuthorPublications implements IServico {
         IPerson pessoa = teacher.getPerson();
         Integer keyPerson = pessoa.getIdInternal();
 
-        IPersistentAuthor persistentAuthor = sp.getIPersistentAuthor();
-        IAuthor author = persistentAuthor.readAuthorByKeyPerson(keyPerson);
+        IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
+        IPerson author = (IPerson)persistentPerson.readByOID(Person.class,keyPerson);
 
         List publications = new ArrayList();
         List infoPublications = new ArrayList();
 
         if (author == null) {
-            Author newAuthor = new Author();
-            newAuthor.setKeyPerson(keyPerson);
-            newAuthor.setPerson(pessoa);
-            persistentAuthor.lockWrite(newAuthor);
-
-        } else {
-            List<IPublicationAuthor> publicationAuthors = author.getAuthorPublications();
-            publications = (List<IPublication>)CollectionUtils.collect(publicationAuthors,new Transformer() {
-                public Object transform(Object object) {
-                    IPublicationAuthor publicationAuthor = (IPublicationAuthor) object;
-                    return publicationAuthor.getPublication();
-                }
-            });
+            throw new RuntimeException("Author should always exist in this scenario");
+            
         }
+        
+        List<IAuthorship> authorships = author.getPersonAuthorships();
+        publications = (List<IPublication>)CollectionUtils.collect(authorships,new Transformer() {
+            public Object transform(Object object) {
+                IAuthorship authorship = (IAuthorship) object;
+                return authorship.getPublication();
+            }
+        });
 
         if (publications != null || publications.size() != PublicationConstants.ZERO_VALUE) {
             infoPublications = (List) CollectionUtils.collect(publications, new Transformer() {

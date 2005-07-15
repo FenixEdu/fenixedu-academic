@@ -2543,14 +2543,6 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>ReadTeacherByUserName</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadTeacherByUserName</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
 		<name>ReadPublicExecutionDegreeByDCPID</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadPublicExecutionDegreeByDCPID</implementationClass>
@@ -3392,15 +3384,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadAuthorById</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAuthorById</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadPersonsNotAuthors</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadPersonsNotAuthors</implementationClass>
 		<description />
@@ -3410,62 +3393,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadAuthors</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAuthors</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>InsertNewAuthorsAsPersons</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.InsertNewAuthorsAsPersons</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadAuthorsToInsert</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAuthorsToInsert</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>InsertAuthor</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.InsertAuthor</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadAuthorByKeyPerson</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAuthorByKeyPerson</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadAuthorByPersonId</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAuthorByPersonId</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadAuthorsByPublicationId</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAuthorsByPublicationId</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -5570,6 +5499,14 @@
 		<name>InsertExternalPerson</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains />
+	</service>
+	<service>
+		<name>InsertExternalPersons</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPersons</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
@@ -8722,4 +8659,28 @@
         <filterChains>
         </filterChains>
     </service>  
+    <service>
+    	<name>ReadWorkLocationByName</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.workLocation.ReadWorkLocationByName</implementationClass>
+        <description>Reads a work location given a name</description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
+    <service>
+    	<name>DeleteAuthorships</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.DeleteAuthorships</implementationClass>
+        <description>Deletes authorships for a given publication</description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
+    <service>
+    	<name>InsertInexistentAuthors</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.InsertInexistentAuthors</implementationClass>
+        <description>Given a set of Persons, it inserts as external persons the ones that do not already exist in the system</description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
 </serviceDefinitions>
