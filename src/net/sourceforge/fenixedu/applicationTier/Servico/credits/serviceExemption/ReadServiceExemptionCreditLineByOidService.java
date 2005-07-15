@@ -17,30 +17,15 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
  */
 public class ReadServiceExemptionCreditLineByOidService extends ReadDomainObjectService {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
-     */
     protected Class getDomainObjectClass() {
         return ServiceExemptionCreditLine.class;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-     */
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentServiceExemptionCreditLine();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
-     */
-    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
+    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
         return Cloner
                 .copyIServiceExemptionCreditLine2InfoServiceExemptionCreditLine((IServiceExemptionCreditLine) domainObject);
     }
