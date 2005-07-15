@@ -48,20 +48,20 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
-<!--
-    <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-         name="rolePersons"
-         element-class-ref="net.sourceforge.fenixedu.domain.Person"
-         
-         indirection-table = "PERSON_ROLE"
-         auto-retrieve="true"
-         auto-update="false"
-         auto-delete="false"
-      >
-    	<fk-pointing-to-this-class  column="KEY_ROLE" />
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		name="associatedPersons"
+		element-class-ref="net.sourceforge.fenixedu.domain.Person"
+		indirection-table = "PERSON_ROLE"
+		>
+    	<fk-pointing-to-this-class column="KEY_ROLE" />
     	<fk-pointing-to-element-class column="KEY_PERSON" />
-    </collection-descriptor> 
--->
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		name="associatedPersonRoles"
+		element-class-ref="net.sourceforge.fenixedu.domain.PersonRole"
+		>
+		<inverse-foreignkey field-ref="keyRole"/>
+	</collection-descriptor> 
 </class-descriptor>
 
 
