@@ -5,9 +5,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwnerWithPerson;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantContract;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Pica
@@ -18,12 +16,13 @@ public class InfoGrantContractWithGrantOwnerAndGrantType extends InfoGrantContra
     public void copyFromDomain(IGrantContract grantContract) {
         super.copyFromDomain(grantContract);
 
-        if (grantContract != null) {     
+        if (grantContract != null) {
             setGrantOwnerInfo(InfoGrantOwnerWithPerson.newInfoFromDomain(grantContract.getGrantOwner()));
             setGrantTypeInfo(InfoGrantType.newInfoFromDomain(grantContract.getGrantType()));
-            if (grantContract.getGrantCostCenter()!= null)
-                setGrantCostCenterInfo(InfoGrantCostCenter.newInfoFromDomain(grantContract.getGrantCostCenter()));
-            
+            if (grantContract.getGrantCostCenter() != null)
+                setGrantCostCenterInfo(InfoGrantCostCenter.newInfoFromDomain(grantContract
+                        .getGrantCostCenter()));
+
         }
     }
 
@@ -34,26 +33,6 @@ public class InfoGrantContractWithGrantOwnerAndGrantType extends InfoGrantContra
             infoGrantContract.copyFromDomain(grantContract);
         }
         return infoGrantContract;
-    }
-
-    public void copyToDomain(InfoGrantContract infoGrantContract, IGrantContract grantContract) throws ExcepcaoPersistencia {
-        super.copyToDomain(infoGrantContract, grantContract);
-        grantContract.setGrantOwner(InfoGrantOwnerWithPerson.newDomainFromInfo(infoGrantContract
-                .getGrantOwnerInfo()));
-        grantContract
-                .setGrantType(InfoGrantType.newDomainFromInfo(infoGrantContract.getGrantTypeInfo()));
-         grantContract.setGrantCostCenter(InfoGrantCostCenter.newDomainFromInfo(infoGrantContract.getGrantCostCenterInfo()));
-    }
-
-    public static IGrantContract newDomainFromInfo(InfoGrantContract infoGrantContract) throws ExcepcaoPersistencia {
-        IGrantContract grantContract = null;
-        InfoGrantContractWithGrantOwnerAndGrantType infoGrantContractWithGrantOwnerAndGrantType = null;
-        if (infoGrantContract != null) {
-            grantContract = new GrantContract();
-            infoGrantContractWithGrantOwnerAndGrantType = new InfoGrantContractWithGrantOwnerAndGrantType();
-            infoGrantContractWithGrantOwnerAndGrantType.copyToDomain(infoGrantContract, grantContract);
-        }
-        return grantContract;
     }
 
 }
