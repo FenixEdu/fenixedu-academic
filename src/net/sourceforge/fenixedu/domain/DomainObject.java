@@ -6,6 +6,9 @@ package net.sourceforge.fenixedu.domain;
 
 import java.lang.reflect.Proxy;
 
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+
 import org.apache.ojb.broker.core.proxy.ProxyHelper;
 
 /**
@@ -21,6 +24,7 @@ public abstract class DomainObject extends DomainObject_Base {
     public static void turnOffLockMode() {
         lockMode = false;
     }
+
     public static void turnOnLockMode() {
         lockMode = true;
     }
@@ -28,14 +32,12 @@ public abstract class DomainObject extends DomainObject_Base {
     protected static void doLockWriteOn(Object obj) {
         if (lockMode) {
             try {
-                net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB.getInstance()
-                        .lockWrite(obj);
+                PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentObject().lockWrite(obj);
             } catch (Exception e) {
                 throw new Error("Couldn't obtain lockwrite on object", e);
             }
         }
     }
-
 
     public DomainObject() {
         super();
@@ -61,13 +63,21 @@ public abstract class DomainObject extends DomainObject_Base {
                 domainObject = (IDomainObject) ProxyHelper.getRealObject(domainObject);
             }
 
-            if (this.getClass() == domainObject.getClass()
-                    && getIdInternal() != null
+            if (this.getClass() == domainObject.getClass() && getIdInternal() != null
                     && getIdInternal().equals(domainObject.getIdInternal())) {
                 return true;
             }
         }
         return false;
+    }
+
+    protected void delete() {
+        try {
+            PersistenceSupportFactory.getDefaultPersistenceSupport()
+                    .getIPersistentObject().deleteByOID(this.getClass(), getIdInternal());
+        } catch (ExcepcaoPersistencia e) {
+            throw new Error("Couldn't delete object", e);
+        }
     }
 
 }
