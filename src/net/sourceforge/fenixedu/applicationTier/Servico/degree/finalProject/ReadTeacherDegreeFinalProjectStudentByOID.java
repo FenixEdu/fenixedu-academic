@@ -26,41 +26,17 @@ public class ReadTeacherDegreeFinalProjectStudentByOID extends ReadDomainObjectS
         return service;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
-     */
     protected Class getDomainObjectClass() {
         return TeacherDegreeFinalProjectStudent.class;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-     */
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentTeacherDegreeFinalProjectStudent();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
-     */
-    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
+    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
         return Cloner
                 .copyITeacherDegreeFinalProjectStudent2InfoTeacherDegreeFinalProjectStudent((ITeacherDegreeFinalProjectStudent) domainObject);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome() {
-        return "ReadTeacherDegreeFinalProjectStudentByOID";
     }
 
 }

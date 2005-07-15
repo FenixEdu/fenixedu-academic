@@ -17,8 +17,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
  * João Simas Nuno Barbosa
  */
 public class ReadGrantPart extends ReadDomainObjectService {
-    public ReadGrantPart() {
-    }
 
     protected Class getDomainObjectClass() {
         return GrantPart.class;
@@ -28,8 +26,9 @@ public class ReadGrantPart extends ReadDomainObjectService {
         return sp.getIPersistentGrantPart();
     }
 
-    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
+    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
         return InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity
                 .newInfoFromDomain((IGrantPart) domainObject);
     }
+
 }

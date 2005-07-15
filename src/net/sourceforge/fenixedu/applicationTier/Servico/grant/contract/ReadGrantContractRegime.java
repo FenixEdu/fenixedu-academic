@@ -17,8 +17,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
  * João Simas Nuno Barbosa
  */
 public class ReadGrantContractRegime extends ReadDomainObjectService {
-    public ReadGrantContractRegime() {
-    }
 
     protected Class getDomainObjectClass() {
         return GrantContractRegime.class;
@@ -28,8 +26,9 @@ public class ReadGrantContractRegime extends ReadDomainObjectService {
         return sp.getIPersistentGrantContractRegime();
     }
 
-    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
+    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
         return InfoGrantContractRegimeWithTeacherAndContract
                 .newInfoFromDomain((IGrantContractRegime) domainObject);
     }
+
 }

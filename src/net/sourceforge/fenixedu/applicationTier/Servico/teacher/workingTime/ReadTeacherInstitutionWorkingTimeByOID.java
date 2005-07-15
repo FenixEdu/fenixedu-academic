@@ -17,50 +17,18 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
  * @author jpvl
  */
 public class ReadTeacherInstitutionWorkingTimeByOID extends ReadDomainObjectService {
-    private static ReadTeacherInstitutionWorkingTimeByOID service = new ReadTeacherInstitutionWorkingTimeByOID();
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadTeacherInstitutionWorkingTimeByOID getService() {
-        return service;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
-     */
     protected Class getDomainObjectClass() {
         return TeacherInstitutionWorkTime.class;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-     */
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentTeacherInstitutionWorkingTime();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
-     */
-    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
+    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
         return Cloner
                 .copyITeacherInstitutionWorkingTime2InfoTeacherInstitutionWorkTime((ITeacherInstitutionWorkTime) domainObject);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome() {
-        return "ReadTeacherInstitutionWorkingTimeByOID";
     }
 
 }

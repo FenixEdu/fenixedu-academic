@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.ReadDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -17,46 +17,17 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
  * @author jpvl
  */
 public class ReadTeacherByOID extends ReadDomainObjectService {
-    private static ReadTeacherByOID service = new ReadTeacherByOID();
 
-    public static ReadTeacherByOID getService() {
-        return service;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
-     */
     protected Class getDomainObjectClass() {
         return Teacher.class;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-     */
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentTeacher();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
-     */
-    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
-        return Cloner.copyITeacher2InfoTeacher((ITeacher) domainObject);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome() {
-        return "ReadTeacherByOID";
+    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
+        return InfoTeacher.newInfoFromDomain((ITeacher) domainObject);
     }
 
 }

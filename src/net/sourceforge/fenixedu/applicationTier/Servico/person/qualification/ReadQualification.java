@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author Barbosa
@@ -24,58 +23,20 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 public class ReadQualification extends ReadDomainObjectService {
 
-    private static ReadQualification service = new ReadQualification();
-
-    public static ReadQualification getService() {
-        return service;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
-     */
     protected Class getDomainObjectClass() {
         return Qualification.class;
     }
 
-    private ReadQualification() {
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-     */
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        return persistentSuport.getIPersistentQualification();
+        return sp.getIPersistentQualification();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
-     */
-    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
+    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
         return InfoQualificationWithPersonAndCountry.newInfoFromDomain((IQualification) domainObject);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getISiteComponent(net.sourceforge.fenixedu.dataTransferObject.InfoObject)
-     */
     protected ISiteComponent getISiteComponent(InfoObject infoObject) {
         return (InfoQualification) infoObject;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome() {
-        return "ReadQualification";
-    }
 }

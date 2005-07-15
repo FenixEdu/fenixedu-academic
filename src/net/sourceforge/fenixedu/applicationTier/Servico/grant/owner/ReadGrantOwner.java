@@ -17,37 +17,20 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author Barbosa
  * @author Pica
- *  
+ * 
  */
 public class ReadGrantOwner extends ReadDomainObjectService implements IService {
 
-    public ReadGrantOwner() {
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-     */
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentGrantOwner();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
-     */
-    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
+    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
         return InfoGrantOwnerWithPerson.newInfoFromDomain((IGrantOwner) domainObject);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
-     */
     protected Class getDomainObjectClass() {
         return GrantOwner.class;
     }
+
 }

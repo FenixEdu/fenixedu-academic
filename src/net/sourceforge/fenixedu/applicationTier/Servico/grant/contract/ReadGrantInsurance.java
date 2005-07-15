@@ -18,34 +18,15 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
  */
 public class ReadGrantInsurance extends ReadDomainObjectService {
 
-    public ReadGrantInsurance() {
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
-     */
     protected Class getDomainObjectClass() {
         return GrantInsurance.class;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-     */
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentGrantInsurance();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
-     */
-    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
-
+    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
         return InfoGrantInsuranceWithContractAndPaymentEntity
                 .newInfoFromDomain((IGrantInsurance) domainObject);
     }

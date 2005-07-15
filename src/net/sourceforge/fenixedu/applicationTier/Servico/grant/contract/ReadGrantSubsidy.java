@@ -28,8 +28,6 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
  * @author Barbosa
  */
 public class ReadGrantSubsidy extends ReadDomainObjectService {
-    public ReadGrantSubsidy() {
-    }
 
     protected Class getDomainObjectClass() {
         return GrantSubsidy.class;
@@ -39,23 +37,18 @@ public class ReadGrantSubsidy extends ReadDomainObjectService {
         return sp.getIPersistentGrantSubsidy();
     }
 
-    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
+    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
         return InfoGrantSubsidyWithContract.newInfoFromDomain((IGrantSubsidy) domainObject);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#run(java.lang.Integer)
-     */
     public InfoObject run(Integer objectId) throws FenixServiceException {
         InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) super.run(objectId);
 
-        //TODO The ReadDomainObjectService only reads 2level depth of
+        // TODO The ReadDomainObjectService only reads 2level depth of
         // references to other objects.
-        //In this case we have InfoGrantSubsidy and its reference to
+        // In this case we have InfoGrantSubsidy and its reference to
         // InfoGrantContract.
-        //Now we need to get the references of InfoGrantContract, e.g.,
+        // Now we need to get the references of InfoGrantContract, e.g.,
         // InfoGrantOwner
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -65,7 +58,7 @@ public class ReadGrantSubsidy extends ReadDomainObjectService {
                     .newInfoFromDomain((IGrantContract) pgc.readByOID(GrantContract.class,
                             infoGrantSubsidy.getInfoGrantContract().getIdInternal()));
 
-            //this section of code is temporary!!!! (see above the reason)
+            // this section of code is temporary!!!! (see above the reason)
             if (infoGrantSubsidy.getInfoGrantContract().getGrantOwnerInfo() == null)
                 infoGrantSubsidy.getInfoGrantContract().setGrantOwnerInfo(new InfoGrantOwner());
 
@@ -76,4 +69,5 @@ public class ReadGrantSubsidy extends ReadDomainObjectService {
         }
         return infoGrantSubsidy;
     }
+
 }

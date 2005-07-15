@@ -17,49 +17,17 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
  * @author jpvl
  */
 public class ReadSupportLessonByOID extends ReadDomainObjectService {
-    private static ReadSupportLessonByOID service = new ReadSupportLessonByOID();
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadSupportLessonByOID getService() {
-        return service;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
-     */
     protected Class getDomainObjectClass() {
         return SupportLesson.class;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-     */
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentSupportLesson();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
-     */
-    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
+    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
         return Cloner.copyISupportLesson2InfoSupportLesson((ISupportLesson) domainObject);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome() {
-        return "ReadSupportLessonByOID";
     }
 
 }

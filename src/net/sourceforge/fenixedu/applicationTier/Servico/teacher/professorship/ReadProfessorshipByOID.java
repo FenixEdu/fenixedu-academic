@@ -17,49 +17,17 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
  * @author jpvl
  */
 public class ReadProfessorshipByOID extends ReadDomainObjectService {
-    private static ReadProfessorshipByOID service = new ReadProfessorshipByOID();
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadProfessorshipByOID getService() {
-        return service;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
-     */
     protected Class getDomainObjectClass() {
         return Professorship.class;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-     */
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentProfessorship();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
-     */
-    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
+    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
         return InfoProfessorshipWithAll.newInfoFromDomain((IProfessorship) domainObject);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome() {
-        return "ReadProfessorshipByOID";
     }
 
 }

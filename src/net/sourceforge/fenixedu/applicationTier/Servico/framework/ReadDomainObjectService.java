@@ -27,7 +27,7 @@ public abstract class ReadDomainObjectService implements IService {
             InfoObject infoObject = null;
 
             if (domainObject != null) {
-                infoObject = clone2InfoObject(domainObject);
+                infoObject = newInfoFromDomain(domainObject);
             }
 
             return infoObject;
@@ -60,5 +60,5 @@ public abstract class ReadDomainObjectService implements IService {
      * @param infoObject
      * @return
      */
-    protected abstract InfoObject clone2InfoObject(IDomainObject domainObject);
+    protected abstract InfoObject newInfoFromDomain(IDomainObject domainObject);
 }

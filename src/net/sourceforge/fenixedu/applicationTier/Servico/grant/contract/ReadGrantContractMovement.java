@@ -17,8 +17,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
  * Barbosa Pica
  */
 public class ReadGrantContractMovement extends ReadDomainObjectService {
-    public ReadGrantContractMovement() {
-    }
 
     protected Class getDomainObjectClass() {
         return GrantContractMovement.class;
@@ -28,8 +26,9 @@ public class ReadGrantContractMovement extends ReadDomainObjectService {
         return sp.getIPersistentGrantContractMovement();
     }
 
-    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
+    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
         return InfoGrantContractMovementWithContract
                 .newInfoFromDomain((IGrantContractMovement) domainObject);
     }
+
 }

@@ -17,8 +17,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
  * Pica Barbosa
  */
 public class ReadGrantPaymentEntity extends ReadDomainObjectService {
-    public ReadGrantPaymentEntity() {
-    }
 
     protected Class getDomainObjectClass() {
         return GrantPaymentEntity.class;
@@ -28,7 +26,8 @@ public class ReadGrantPaymentEntity extends ReadDomainObjectService {
         return sp.getIPersistentGrantPaymentEntity();
     }
 
-    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
+    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
         return InfoGrantPaymentEntity.newInfoFromDomain((IGrantPaymentEntity) domainObject);
     }
+
 }
