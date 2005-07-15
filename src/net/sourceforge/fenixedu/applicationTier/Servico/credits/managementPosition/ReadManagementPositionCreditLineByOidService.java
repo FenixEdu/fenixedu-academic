@@ -17,30 +17,15 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
  */
 public class ReadManagementPositionCreditLineByOidService extends ReadDomainObjectService {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
-     */
     protected Class getDomainObjectClass() {
         return ManagementPositionCreditLine.class;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-     */
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentManagementPositionCreditLine();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
-     */
-    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
+    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
         return Cloner
                 .copyIManagementPositionCreditLine2InfoManagementPositionCreditLine((IManagementPositionCreditLine) domainObject);
     }
