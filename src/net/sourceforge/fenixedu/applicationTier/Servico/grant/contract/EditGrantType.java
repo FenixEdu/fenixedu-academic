@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObje
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantType;
 import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
@@ -23,22 +24,42 @@ public class EditGrantType extends EditDomainObjectService {
     public EditGrantType() {
     }
 
-    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
-        return InfoGrantType.newDomainFromInfo((InfoGrantType) infoObject);
-    }
-
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentGrantType();
     }
 
-    protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
+    protected IDomainObject readObjectByUnique(InfoObject infoObject, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         IPersistentGrantType pgs = sp.getIPersistentGrantType();
-        IGrantType grantType = (IGrantType) domainObject;
-        return pgs.readGrantTypeBySigla(grantType.getSigla());
+        InfoGrantType infoGrantType = (InfoGrantType) infoObject;
+        return pgs.readGrantTypeBySigla(infoGrantType.getSigla());
     }
 
     public void run(InfoGrantType infoGrantType) throws FenixServiceException {
         super.run(new Integer(0), infoGrantType);
     }
+
+	@Override
+	protected IDomainObject createNewDomainObject(InfoObject infoObject) {
+		return new GrantType();
+	}
+
+	@Override
+	protected Class getDomainObjectClass() {
+		return GrantType.class;
+	}
+
+	@Override
+	protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) {
+		InfoGrantType infoGrantType = (InfoGrantType) infoObject;
+		IGrantType grantType = (IGrantType) domainObject;
+
+		grantType.setIndicativeValue(infoGrantType.getIndicativeValue());
+		grantType.setMaxPeriodDays(infoGrantType.getMaxPeriodDays());
+		grantType.setMinPeriodDays(infoGrantType.getMinPeriodDays());
+		grantType.setName(infoGrantType.getName());
+		grantType.setSigla(infoGrantType.getSigla());
+		grantType.setSource(infoGrantType.getSource());
+		grantType.setState(infoGrantType.getState());
+	}
 }
