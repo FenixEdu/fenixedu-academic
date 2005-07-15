@@ -6,13 +6,24 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoProfessionalCareer;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoTeachingCareer;
 import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.teacher.Career;
+import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.ICareer;
+import net.sourceforge.fenixedu.domain.teacher.ICategory;
+import net.sourceforge.fenixedu.domain.teacher.IProfessionalCareer;
+import net.sourceforge.fenixedu.domain.teacher.ITeachingCareer;
+import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
+import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCareer;
+import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
 
 /**
  * @author Leonor Almeida
@@ -47,8 +58,68 @@ public class EditCareer extends EditDomainObjectService {
         return persistentCareer;
     }
 
-    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
-        ICareer career = Cloner.copyInfoCareer2ICareer((InfoCareer) infoObject);
-        return career;
-    }
+//    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
+//        ICareer career = Cloner.copyInfoCareer2ICareer((InfoCareer) infoObject);
+//        return career;
+//    }
+
+	@Override
+	protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
+		
+		
+        if (infoObject instanceof InfoProfessionalCareer) {
+        	IProfessionalCareer professionalCareer = (ProfessionalCareer) domainObject;
+        	InfoProfessionalCareer infoProfessionalCareer = (InfoProfessionalCareer)infoObject;
+        	
+        	professionalCareer.setBeginYear(infoProfessionalCareer.getBeginYear());
+        	professionalCareer.setEndYear(infoProfessionalCareer.getEndYear());
+        	professionalCareer.setEntity(infoProfessionalCareer.getEntity());
+        	professionalCareer.setFunction(infoProfessionalCareer.getFunction());
+        	professionalCareer.setLastModificationDate(infoProfessionalCareer.getLastModificationDate());
+        	professionalCareer.setOjbConcreteClass(ProfessionalCareer.class.getName());
+        	
+        	IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            ITeacher teacher = persistentTeacher.readByNumber(infoProfessionalCareer.getInfoTeacher().getTeacherNumber());
+            
+            professionalCareer.setTeacher(teacher);
+           
+            
+
+          
+        } 
+        else {
+            InfoTeachingCareer infoTeachingCareer = (InfoTeachingCareer) infoObject;
+            ITeachingCareer teachingCareer = (TeachingCareer)domainObject;
+            teachingCareer.setBeginYear(infoTeachingCareer.getBeginYear());
+            IPersistentCategory persistentCategory = sp.getIPersistentCategory();
+            ICategory category = new Category();
+            category = (ICategory)persistentCategory.readByOID(Category.class,infoTeachingCareer.getInfoCategory().getIdInternal());
+            
+            teachingCareer.setCategory(category);
+            teachingCareer.setKeyCategory(category.getIdInternal());
+            teachingCareer.setCourseOrPosition(infoTeachingCareer.getCourseOrPosition());
+            teachingCareer.setEndYear(infoTeachingCareer.getEndYear());
+            teachingCareer.setLastModificationDate(infoTeachingCareer.getLastModificationDate());
+            teachingCareer.setOjbConcreteClass(TeachingCareer.class.getName());
+            
+            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            ITeacher teacher = persistentTeacher.readByNumber(infoTeachingCareer.getInfoTeacher().getTeacherNumber());
+            teachingCareer.setTeacher(teacher);
+            teachingCareer.setKeyTeacher(teacher.getIdInternal());
+           
+            }
+       	
+	}
+
+	@Override
+	protected IDomainObject createNewDomainObject(InfoObject infoObject) {
+		// TODO Auto-generated method stub
+		return  new Career();
+	}
+
+	@Override
+	protected Class getDomainObjectClass() {
+		// TODO Auto-generated method stub
+		return Career.class ;
+	}
 }

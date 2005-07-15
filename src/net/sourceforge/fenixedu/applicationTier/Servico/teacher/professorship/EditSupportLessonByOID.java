@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ISupportLesson;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -58,14 +59,14 @@ public class EditSupportLessonByOID extends EditDomainObjectService {
         return sp.getIPersistentSupportLesson();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(net.sourceforge.fenixedu.dataTransferObject.InfoObject)
-     */
-    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
-        return Cloner.copyInfoSupportLesson2ISupportLesson((InfoSupportLesson) infoObject);
-    }
+//    /*
+//     * (non-Javadoc)
+//     * 
+//     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(net.sourceforge.fenixedu.dataTransferObject.InfoObject)
+//     */
+//    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
+//        return Cloner.copyInfoSupportLesson2ISupportLesson((InfoSupportLesson) infoObject);
+//    }
 
     /*
      * (non-Javadoc)
@@ -143,4 +144,36 @@ public class EditSupportLessonByOID extends EditDomainObjectService {
 
         super.doBeforeLock(domainObjectToLock, infoObject, sp);
     }
+
+	@Override
+	protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
+		InfoSupportLesson infoSupportLesson = (InfoSupportLesson)infoObject;
+		ISupportLesson supportLesson = (SupportLesson)domainObject;
+		supportLesson.setEndTime(infoSupportLesson.getEndTime());
+		
+		IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+		IProfessorship professorship = (IProfessorship)persistentProfessorship.readByOID(Professorship.class, infoSupportLesson.getInfoProfessorship().getIdInternal());
+		supportLesson.setKeyProfessorship(professorship.getIdInternal());
+		
+		supportLesson.setPlace(infoSupportLesson.getPlace());
+		
+		supportLesson.setProfessorship(professorship);
+		
+		supportLesson.setStartTime(infoSupportLesson.getStartTime());
+		supportLesson.setWeekDay(infoSupportLesson.getWeekDay());
+		
+		
+	}
+
+	@Override
+	protected IDomainObject createNewDomainObject(InfoObject infoObject) {
+		// TODO Auto-generated method stub
+		return new SupportLesson();
+	}
+
+	@Override
+	protected Class getDomainObjectClass() {
+		// TODO Auto-generated method stub
+		return SupportLesson.class ;
+	}
 }

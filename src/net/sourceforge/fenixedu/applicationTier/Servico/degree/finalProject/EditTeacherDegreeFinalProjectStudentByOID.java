@@ -17,12 +17,17 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.finalProject.ITeacherDegreeFinalProjectStudent;
+import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 
@@ -89,12 +94,12 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
      * (non-Javadoc)
      * 
      * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(net.sourceforge.fenixedu.dataTransferObject.InfoObject)
-     */
-    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
-        InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = (InfoTeacherDegreeFinalProjectStudent) infoObject;
-        return Cloner
-                .copyInfoTeacherDegreeFinalProjectStudent2ITeacherDegreeFinalProjectStudent(infoTeacherDegreeFinalProjectStudent);
-    }
+//     */
+//    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
+//        InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = (InfoTeacherDegreeFinalProjectStudent) infoObject;
+//        return Cloner
+//                .copyInfoTeacherDegreeFinalProjectStudent2ITeacherDegreeFinalProjectStudent(infoTeacherDegreeFinalProjectStudent);
+//    }
 
     /*
      * (non-Javadoc)
@@ -209,4 +214,43 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
 
         return teacherDegreeFinalProjectStudent;
     }
+
+	@Override
+	protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
+		InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = (InfoTeacherDegreeFinalProjectStudent)infoObject;
+		ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent =(TeacherDegreeFinalProjectStudent)domainObject;
+		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+		IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+		
+		
+		IExecutionPeriod executionPeriod = (ExecutionPeriod)persistentExecutionPeriod.readByOID(ExecutionPeriod .class,infoTeacherDegreeFinalProjectStudent.getInfoExecutionPeriod().getIdInternal());
+		IStudent student = (Student) persistentStudent.readByOID(Student.class,infoTeacherDegreeFinalProjectStudent.getInfoStudent().getIdInternal());
+		ITeacher teacher = (Teacher)persistentTeacher.readByOID(Teacher.class,infoTeacherDegreeFinalProjectStudent.getInfoTeacher().getIdInternal());
+		
+		
+		teacherDegreeFinalProjectStudent.setExecutionPeriod(executionPeriod);
+		teacherDegreeFinalProjectStudent.setKeyExecutionPeriod(executionPeriod.getIdInternal());
+		teacherDegreeFinalProjectStudent.setKeyStudent(student.getIdInternal());
+		teacherDegreeFinalProjectStudent.setKeyTeacher(teacher.getIdInternal());
+		
+		teacherDegreeFinalProjectStudent.setPercentage(infoTeacherDegreeFinalProjectStudent.getPercentage());
+		
+		teacherDegreeFinalProjectStudent.setStudent(student);
+		teacherDegreeFinalProjectStudent.setTeacher(teacher);
+	
+		
+	}
+
+	@Override
+	protected IDomainObject createNewDomainObject(InfoObject infoObject) {
+		// TODO Auto-generated method stub
+		return new TeacherDegreeFinalProjectStudent();
+	}
+
+	@Override
+	protected Class getDomainObjectClass() {
+		// TODO Auto-generated method stub
+		return TeacherDegreeFinalProjectStudent.class;
+	}
 }
