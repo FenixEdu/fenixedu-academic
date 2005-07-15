@@ -25,59 +25,34 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author Barbosa
  * @author Pica
- *  
+ * 
  */
 public class ReadGrantContract extends ReadDomainObjectService implements IService {
-    public ReadGrantContract() {
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-     */
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentGrantContract();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
-     */
-    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
+    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
         return InfoGrantContractWithGrantOwnerAndGrantType
                 .newInfoFromDomain((IGrantContract) domainObject);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getDomainObjectClass()
-     */
     protected Class getDomainObjectClass() {
         return GrantContract.class;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#run(java.lang.Integer)
-     */
     public InfoObject run(Integer objectId) throws FenixServiceException {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentGrantOrientationTeacher pgot = sp.getIPersistentGrantOrientationTeacher();
 
             InfoGrantContract infoGrantContract = (InfoGrantContract) super.run(objectId);
-            IGrantContract contract = InfoGrantContractWithGrantOwnerAndGrantType
-                    .newDomainFromInfo(infoGrantContract);
-           
 
-            //get the GrantOrientationTeacher for the contract
+            // get the GrantOrientationTeacher for the contract
             IGrantOrientationTeacher orientationTeacher = pgot
-                    .readActualGrantOrientationTeacherByContract(contract.getIdInternal(), new Integer(0));
-//System.out.println("WWWWWWWWWWWWWWWWWW"+orientationTeacher.getIdInternal());         
+                    .readActualGrantOrientationTeacherByContract(infoGrantContract.getIdInternal(),
+                            new Integer(0));
             InfoGrantOrientationTeacher infoOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract
                     .newInfoFromDomain(orientationTeacher);
             infoGrantContract.setGrantOrientationTeacherInfo(infoOrientationTeacher);
@@ -87,4 +62,5 @@ public class ReadGrantContract extends ReadDomainObjectService implements IServi
             throw new FenixServiceException(e.getMessage());
         }
     }
+
 }
