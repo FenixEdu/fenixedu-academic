@@ -51,6 +51,7 @@ import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersist
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentMoneyCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.places.campus.IPersistentCampus;
 import net.sourceforge.fenixedu.persistenceTier.projectsManagement.IPersistentProjectAccess;
+import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthor;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthorship;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
@@ -491,4 +492,8 @@ public interface ISuportePersistente {
     public IPersistentNonAffiliatedTeacher getIPersistentNonAffiliatedTeacher();
     
     public IPersistentAuthorship getIPersistentAuthorship();
+    
+    public IPersistentAuthor getIPersistentAuthor();
+    
+    public IPersistentPublicationAuthor getIPersistentPublicationAuthor();
 }
