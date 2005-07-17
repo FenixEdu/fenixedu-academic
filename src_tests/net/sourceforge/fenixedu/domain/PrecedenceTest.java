@@ -38,15 +38,15 @@ public class PrecedenceTest extends DomainTestBase {
         super.tearDown();
     }
 	
-	public void testDeleteRestriction() {
+	public void testDelete() {
 		
-		precedence.deletePrecedence();
+		precedence.delete();
 		
-		assertNull(precedence.getCurricularCourse());
-		assertTrue(precedence.getRestrictions().isEmpty());
+		assertFalse(precedence.hasCurricularCourse());
+		assertFalse(precedence.hasAnyRestrictions());
 				
-		assertNull(restriction.getPrecedence());
-		assertNull(restrictionByCurricularCourse.getPrecedence());
-		assertNull(restrictionByCurricularCourse.getPrecedentCurricularCourse());
+		assertFalse(restriction.hasPrecedence());
+		assertFalse(restrictionByCurricularCourse.hasPrecedence());
+		assertFalse(restrictionByCurricularCourse.hasPrecedentCurricularCourse());
 	}
 }

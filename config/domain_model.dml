@@ -132,6 +132,8 @@ class net.sourceforge.fenixedu.domain.Attends extends net.sourceforge.fenixedu.d
 	public java.util.List getAttendsSets();
 
 	public boolean existsAttendInAttendsSet(IAttendInAttendsSet attendInAttendsSet);
+	
+	public void delete() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
 	"	
 }
 
@@ -361,6 +363,10 @@ class net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea extends net.sour
     Integer givenCredits;
     Integer studentCurricularPlanKey;
     Integer enrolmentKey;
+	
+	interface "
+	public void delete();
+	"
 }
     
     
@@ -369,6 +375,10 @@ class net.sourceforge.fenixedu.domain.CreditsInScientificArea extends net.source
 	Integer studentCurricularPlanKey;
 	Integer enrolmentKey;
 	Integer scientificAreaKey;
+	
+	interface "
+	public void delete();
+	"
 }
 
 
@@ -473,7 +483,7 @@ class net.sourceforge.fenixedu.domain.CurricularCourseScope extends net.sourcefo
     
     public Boolean isActive();
 	
-	public void deleteCurricularCourseScope() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+	public void delete() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
     "
 }
 
@@ -672,6 +682,12 @@ class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu
     EnrollmentState enrollmentState;
     EnrollmentCondition condition;
     EnrolmentEvaluationType enrolmentEvaluationType;
+	
+	interface "
+	public void delete();
+	public void unEnroll() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+	public IEnrolmentEvaluation getImprovementEvaluation();
+	"
 }
 
     class net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
@@ -701,8 +717,9 @@ class net.sourceforge.fenixedu.domain.EnrolmentEvaluation extends net.sourceforg
     
     interface "
     public boolean isNormal();
-
     public boolean isImprovment();
+	public void delete();
+	public void unEnrollImprovment(IExecutionPeriod currentExecutionPeriod) throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
     "
 }
 
@@ -1693,7 +1710,7 @@ class net.sourceforge.fenixedu.domain.precedences.Precedence extends net.sourcef
 	
 	interface " 
 	public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType evaluate(net.sourceforge.fenixedu.domain.precedences.PrecedenceContext precedenceContext);
-	public void deletePrecedence();
+	public void delete();
 	"
 }
 
@@ -1857,7 +1874,7 @@ class net.sourceforge.fenixedu.domain.precedences.Restriction extends net.source
 	
 	interface " 	
 	public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType evaluate(net.sourceforge.fenixedu.domain.precedences.PrecedenceContext precedenceContext);
-	public void deleteRestriction();
+	public void delete();
 	"
 }
 

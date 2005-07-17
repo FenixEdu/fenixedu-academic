@@ -22,10 +22,8 @@ public class DeletePrecedenceFromDegreeCurricularPlan implements IService {
 
             IPrecedence precedence = (IPrecedence) precedenceDAO.readByOID(Precedence.class, precedenceID);
        
-			if (precedence != null) {
-				precedence.deletePrecedence();
-	            precedenceDAO.deleteByOID(Precedence.class, precedenceID);	
-			}
+			if (precedence != null)
+				precedence.delete();
 			
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.precedences;
 
+import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
@@ -40,15 +41,18 @@ public class Precedence extends Precedence_Base {
     }
 	
 	
-	public void deletePrecedence() {
+	public void delete() {
 		
-		List<IRestriction> restrictions = getRestrictions();
-		for (IRestriction restriction : restrictions) {
-			if (restriction instanceof IRestrictionByCurricularCourse)
-				((IRestrictionByCurricularCourse)restriction).setPrecedentCurricularCourse(null);
+		Iterator<IRestriction> restrictionIterator = getRestrictionsIterator();
+		
+		while (restrictionIterator.hasNext()) {
+			IRestriction restriction = restrictionIterator.next();
+			
+			restrictionIterator.remove();
+			restriction.delete();
 		}
 		
-		setCurricularCourse(null);
-		getRestrictions().clear();
+		removeCurricularCourse();
+		super.deleteDomainObject();
 	}
 }

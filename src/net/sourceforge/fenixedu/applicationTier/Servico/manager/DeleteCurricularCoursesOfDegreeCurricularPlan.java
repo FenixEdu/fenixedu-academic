@@ -72,8 +72,7 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan implements IService {
                             while (iterator.hasNext()) {
 								try {
 									ICurricularCourseScope scope = (ICurricularCourseScope)iterator.next();
-									scope.deleteCurricularCourseScope();
-									persistentCurricularCourseScope.deleteByOID(CurricularCourseScope.class, scope.getIdInternal());	
+									scope.delete();
 								}
 								catch (DomainException e) {}
                             }

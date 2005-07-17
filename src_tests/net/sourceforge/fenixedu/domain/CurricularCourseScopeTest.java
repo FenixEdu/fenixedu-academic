@@ -41,28 +41,28 @@ public class CurricularCourseScopeTest extends DomainTestBase {
         super.tearDown();
     }
 	
-	public void testDeleteCurricularCourseGroup() {
+	public void testDelete() {
 		try {
-			curricularCourseScopeNotToDelete.deleteCurricularCourseScope();
+			curricularCourseScopeNotToDelete.delete();
 			fail("Should not have been deleted.");
 		} catch (DomainException e) {
 
 		}
 		
 		try {
-			curricularCourseScopeToDelete.deleteCurricularCourseScope();
+			curricularCourseScopeToDelete.delete();
 		} catch (DomainException e) {
 			fail("Should have been deleted.");
 		}
 		
 		
-		assertNull(curricularCourseScopeToDelete.getCurricularCourse());
-		assertNull(curricularCourseScopeToDelete.getCurricularSemester());
-		assertTrue(curricularCourseScopeToDelete.getAssociatedWrittenEvaluations().isEmpty());
+		assertFalse(curricularCourseScopeToDelete.hasCurricularCourse());
+		assertFalse(curricularCourseScopeToDelete.hasCurricularSemester());
+		assertFalse(curricularCourseScopeToDelete.hasAnyAssociatedWrittenEvaluations());
 		
-		assertNotNull(curricularCourseScopeNotToDelete.getCurricularCourse());
-		assertNotNull(curricularCourseScopeNotToDelete.getCurricularSemester());
-		assertFalse(curricularCourseScopeNotToDelete.getAssociatedWrittenEvaluations().isEmpty());
+		assertTrue(curricularCourseScopeNotToDelete.hasCurricularCourse());
+		assertTrue(curricularCourseScopeNotToDelete.hasCurricularSemester());
+		assertTrue(curricularCourseScopeNotToDelete.hasAnyAssociatedWrittenEvaluations());
 	}
 
 }

@@ -81,13 +81,15 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
     }
 	
 	
-	public void deleteCurricularCourseScope() throws DomainException {
+	public void delete() throws DomainException {
 		List writtenEvaluations = getAssociatedWrittenEvaluations();
 
-	    if (writtenEvaluations == null || writtenEvaluations.isEmpty()) {		
-			setCurricularSemester(null);
-			setCurricularCourse(null);
-			setBranch(null);
+	    if (!hasAnyAssociatedWrittenEvaluations()) {		
+			removeCurricularSemester();
+			removeCurricularCourse();
+			removeBranch();
+			
+			super.deleteDomainObject();
         } else {
             throw new DomainException(this.getClass().getName(), "ola mundo");
         }

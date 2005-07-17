@@ -21,8 +21,7 @@ public class DeleteRestrictionFromDegreeCurricularPlan implements IService {
             IPersistentRestriction restrictionDAO = persistentSuport.getIPersistentRestriction();
 			IRestriction restriction = (IRestriction)restrictionDAO.readByOID(Restriction.class, restrictionID);
 			
-			restriction.deleteRestriction();	
-            restrictionDAO.deleteByOID(Restriction.class, restrictionID);
+			restriction.delete();	
 
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);

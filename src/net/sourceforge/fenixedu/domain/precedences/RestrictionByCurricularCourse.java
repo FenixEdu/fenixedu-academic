@@ -14,8 +14,8 @@ public abstract class RestrictionByCurricularCourse extends RestrictionByCurricu
         return stringBuffer.toString();
     }
 	
-	public void deleteRestriction(){
-		super.deleteRestriction();
-		setPrecedentCurricularCourse(null);
+	public void delete(){
+		removePrecedentCurricularCourse();
+		super.delete();
 	}
 }

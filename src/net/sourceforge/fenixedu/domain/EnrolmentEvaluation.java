@@ -1,10 +1,16 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 /**
  * @author dcs-rjao 24/Mar/2003
@@ -166,5 +172,66 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
             return true;
         return false;
     }
+	
+	
+	
+	
+	
+	public void delete() {
+		removePersonResponsibleForGrade();
+		removeEmployee();
+		removeEnrolment();
+		
+		super.deleteDomainObject();
+	}
+	
+	
+	
+	
+	
+	public void unEnrollImprovment(final IExecutionPeriod currentExecutionPeriod) throws DomainException {
+		if (!getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT) ||
+			!getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ))
+			
+			throw new DomainException(this.getClass().getName(), "ola mundo");
+		
+		
+		IEnrolment enrolment = getEnrolment();
+		delete();
+		
+		final IStudent student = enrolment.getStudentCurricularPlan().getStudent();
+		List<IExecutionCourse> executionCourses = enrolment.getCurricularCourse().getAssociatedExecutionCourses();
+		
+        IExecutionCourse currentExecutionCourse = (IExecutionCourse) CollectionUtils.find(executionCourses, new Predicate() {
+
+            public boolean evaluate(Object arg0) {
+                IExecutionCourse executionCourse = (IExecutionCourse) arg0;
+                if (executionCourse.getExecutionPeriod().equals(currentExecutionPeriod))
+                    return true;
+                return false;
+            }
+        });
+		
+        if (currentExecutionCourse != null) {
+            List attends = currentExecutionCourse.getAttends();
+            IAttends attend = (IAttends) CollectionUtils.find(attends, new Predicate() {
+
+                public boolean evaluate(Object arg0) {
+                    IAttends frequenta = (IAttends) arg0;
+                    if (frequenta.getAluno().equals(student))
+                        return true;
+                    return false;
+                }
+            });
+			
+            if (attend != null) {
+                attend.delete();
+            }
+        }
+		
+		
+		
+		
+	}
 
 }

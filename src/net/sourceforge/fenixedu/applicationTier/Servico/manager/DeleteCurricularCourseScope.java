@@ -24,16 +24,14 @@ public class DeleteCurricularCourseScope implements IService {
     public void run(Integer scopeId) throws FenixServiceException {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
-                    .getIPersistentCurricularCourseScope();
+            IPersistentCurricularCourseScope persistentCurricularCourseScope = sp.getIPersistentCurricularCourseScope();
 
             ICurricularCourseScope scope = (ICurricularCourseScope) persistentCurricularCourseScope
                     .readByOID(CurricularCourseScope.class, scopeId);
             if (scope != null) {
 				
 				try {
-					scope.deleteCurricularCourseScope();
-					persistentCurricularCourseScope.deleteByOID(CurricularCourseScope.class, scope.getIdInternal());
+					scope.delete();
 				}
 				catch (DomainException e) {
 					throw new CantDeleteServiceException();

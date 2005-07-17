@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
@@ -38,97 +39,33 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ImprovmentUnEnrollService implements IService {
 
-    public Object run(Integer studentNumber, List enrolmentsIds) throws FenixServiceException,
-            ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+    public Object run(Integer studentNumber, List<Integer> enrolmentsIds)
+			throws FenixServiceException, ExcepcaoPersistencia, DomainException {
+        
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentEnrollment persistentEnrollment = sp.getIPersistentEnrolment();
-
         IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-        IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
-                DegreeType.DEGREE);
-        if (student == null) {
-            throw new InvalidArgumentsServiceException();
-        }
-
+		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+		
         Iterator iterator = enrolmentsIds.iterator();
-        while (iterator.hasNext()) {
-            Integer enrolmentId = (Integer) iterator.next();
-            IEnrolment enrollment = (IEnrolment) persistentEnrollment.readByOID(Enrolment.class,
-                    enrolmentId);
-            if (enrollment == null) {
+		for (Integer enrolmentId : enrolmentsIds) {
+            
+            IEnrolment enrolment = (IEnrolment) persistentEnrollment.readByOID(Enrolment.class,enrolmentId);
+            if (enrolment == null) {
                 throw new InvalidArgumentsServiceException();
             }
-            IEnrolmentEvaluation improvmentEnrolmentEvaluation = (IEnrolmentEvaluation) CollectionUtils
-                    .find(enrollment.getEvaluations(), new Predicate() {
 
-                        public boolean evaluate(Object arg0) {
-                            IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) arg0;
-                            if (enrolmentEvaluation.getEnrolmentEvaluationType().equals(
-                                    EnrolmentEvaluationType.IMPROVEMENT)
-                                    && enrolmentEvaluation.getEnrolmentEvaluationState().equals(
-                                            EnrolmentEvaluationState.TEMPORARY_OBJ))
-                                return true;
-                            return false;
-                        }
-
-                    });
-
+			IEnrolmentEvaluation improvmentEnrolmentEvaluation = enrolment.getImprovementEvaluation();
             if (improvmentEnrolmentEvaluation != null) {
-				IPersistentEnrolmentEvaluation persistentEvaluation = sp.getIPersistentEnrolmentEvaluation();
-				DeleteEnrolmentUtils.deleteEnrolmentEvaluation(improvmentEnrolmentEvaluation, persistentEvaluation);
+				try {
+					improvmentEnrolmentEvaluation.unEnrollImprovment(persistentExecutionPeriod.readActualExecutionPeriod());
+				}
+				catch (DomainException e) {}
+				
             }
-
-            setAttend(sp, enrollment, student);
         }
 
         return new Boolean(true);
-
-    }
-
-    /**
-     * @param sp
-     * @param enrollment
-     * @param student
-     */
-    private void setAttend(ISuportePersistente sp, IEnrolment enrollment, final IStudent student)
-            throws ExcepcaoPersistencia {
-
-        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-        final IExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod
-                .readActualExecutionPeriod();
-
-        IFrequentaPersistente frequentaPersistente = sp.getIFrequentaPersistente();
-
-        List executionCourses = enrollment.getCurricularCourse().getAssociatedExecutionCourses();
-        IExecutionCourse currentExecutionCourse = (IExecutionCourse) CollectionUtils.find(
-                executionCourses, new Predicate() {
-
-                    public boolean evaluate(Object arg0) {
-                        IExecutionCourse executionCourse = (IExecutionCourse) arg0;
-                        if (executionCourse.getExecutionPeriod().equals(currentExecutionPeriod))
-                            return true;
-                        return false;
-                    }
-
-                });
-
-        if (currentExecutionCourse != null) {
-            List attends = currentExecutionCourse.getAttends();
-            IAttends attend = (IAttends) CollectionUtils.find(attends, new Predicate() {
-
-                public boolean evaluate(Object arg0) {
-                    IAttends frequenta = (IAttends) arg0;
-                    if (frequenta.getAluno().equals(student))
-                        return true;
-                    return false;
-                }
-
-            });
-            if (attend != null) {
-                frequentaPersistente.simpleLockWrite(attend);
-                attend.setEnrolment(null);
-            }
-        }
 
     }
 

@@ -143,9 +143,9 @@ public class ReadStudentCurricularInformation implements IService {
                 infoCurricularCourse.setName(curricularCourse.getName());
                 infoCurricularCourse.setCode(curricularCourse.getCode());
 
-                Collections.sort(enrollmentEvaluations);
-                final IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) enrollmentEvaluations
-                        .get(enrollmentEvaluations.size() - 1);
+				
+				final IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) Collections.max(enrollmentEvaluations);
+
                 infoEnrollmentGrade.setGrade(enrolmentEvaluation.getGrade());
 
                 return infoEnrollmentGrade;

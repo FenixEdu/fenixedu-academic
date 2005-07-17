@@ -5,11 +5,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.utils.enrolment.DeleteEnrolmentUtils;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.IEnrolment;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.precedences.IRestriction;
 import net.sourceforge.fenixedu.domain.precedences.IRestrictionByCurricularCourse;
-import net.sourceforge.fenixedu.domain.precedences.IRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
@@ -27,18 +27,19 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author João Mota Jul 23, 2004
  */
 public class DeleteEnrolment implements IService {
+    public DeleteEnrolment() {
+    }
 
     // some of these arguments may be null. they are only needed for filter
     public void run(Integer executionDegreeId, Integer studentCurricularPlanId, Integer enrolmentID)
-            throws FenixServiceException {
+            throws FenixServiceException, DomainException {
         try {
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentEnrollment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
             IPersistentRestriction persistentRestriction = persistentSuport.getIPersistentRestriction();
-            final IEnrolment enrollment1 = (IEnrolment) enrolmentDAO.readByOID(Enrolment.class,
-                    enrolmentID);
+            final IEnrolment enrollment1 = (IEnrolment) enrolmentDAO.readByOID(Enrolment.class, enrolmentID);
 
-            List enrollments2Delete = new ArrayList();
+            List<IEnrolment> enrollments2Delete = new ArrayList<IEnrolment>();
             List studentEnrolledEnrollmentsInExecutionPeriod = enrollment1.getStudentCurricularPlan()
                     .getAllStudentEnrolledEnrollmentsInExecutionPeriod(enrollment1.getExecutionPeriod());
             List finalEnrollments2Delete = new ArrayList();
@@ -65,9 +66,9 @@ public class DeleteEnrolment implements IService {
 
                         RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class);
                 if (restrictions != null) {
-                    Iterator iter = restrictions.iterator();
+                    Iterator<IRestriction> iter = restrictions.iterator();
                     while (iter.hasNext()) {
-                        final IRestrictionByCurricularCourse restriction = (IRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse) iter
+                        final IRestrictionByCurricularCourse restriction = (RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse) iter
                                 .next();
                         if (enrollment1.getStudentCurricularPlan().isCurricularCourseEnrolled(
                                 restriction.getPrecedence().getCurricularCourse())) {
@@ -90,9 +91,9 @@ public class DeleteEnrolment implements IService {
             }
             finalEnrollments2Delete.add(enrollment1);
             finalEnrollments2Delete.addAll(enrollments2Delete);
-            Iterator iter = finalEnrollments2Delete.iterator();
+            Iterator<IEnrolment> iter = finalEnrollments2Delete.iterator();
             while (iter.hasNext()) {
-                DeleteEnrolmentUtils.deleteEnrollment(persistentSuport, (IEnrolment) iter.next());
+            	iter.next().unEnroll();
             }
 
         } catch (ExcepcaoPersistencia e) {

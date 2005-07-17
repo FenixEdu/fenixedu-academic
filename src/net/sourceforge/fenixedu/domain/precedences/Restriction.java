@@ -13,8 +13,9 @@ public abstract class Restriction extends Restriction_Base {
         setOjbConcreteClass(this.getClass().getName());
     }
 	
-	public void deleteRestriction() {
-		setPrecedence(null);
+	public void delete() {
+		removePrecedence();
+		super.deleteDomainObject();
 	}
 
 }

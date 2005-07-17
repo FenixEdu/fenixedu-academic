@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 /**
  * 
  * @author tfc130
@@ -40,5 +42,17 @@ public class Attends extends Attends_Base {
     public boolean existsAttendInAttendsSet(IAttendInAttendsSet attendInAttendsSet) {
         return getAttendInAttendsSet().contains(attendInAttendsSet);
     }
+	
+	public void delete() throws DomainException {
+		
+		if (!hasAnyAttendInAttendsSet() && !hasAnyStudentGroupAttends() && !hasMark()) {
+			removeAluno();
+			removeDisciplinaExecucao();
+			removeEnrolment();
+			super.deleteDomainObject();
+		}
+		else
+			throw new DomainException(this.getClass().getName(), "ola mundo");
+	}
 
 }

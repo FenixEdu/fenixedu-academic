@@ -38,14 +38,14 @@ public class RestrictionTest extends DomainTestBase {
         super.tearDown();
     }
 	
-	public void testDeleteRestriction() {
+	public void testDelete() {
 		
-		restriction.deleteRestriction();
-		restrictionByCurricularCourse.deleteRestriction();
+		restriction.delete();
+		restrictionByCurricularCourse.delete();
 
-		assertNull(restriction.getPrecedence());
-		assertNull(restrictionByCurricularCourse.getPrecedence());
-		assertNull(restrictionByCurricularCourse.getPrecedentCurricularCourse());
+		assertFalse(restriction.hasPrecedence());
+		assertFalse(restrictionByCurricularCourse.hasPrecedence());
+		assertFalse(restrictionByCurricularCourse.hasPrecedentCurricularCourse());
 	}
 
 
