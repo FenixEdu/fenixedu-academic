@@ -11,6 +11,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
 /**
@@ -176,4 +177,9 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
             }
         }
     }
+	
+	public void delete() throws DomainException {
+		removeSecundaryBranch();
+		super.delete();
+	}
 }

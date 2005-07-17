@@ -71,7 +71,7 @@ public abstract class DomainObject extends DomainObject_Base {
         return false;
     }
 
-    public void deleteDomainObject() {
+    protected final void deleteDomainObject() {
         try {
             PersistenceSupportFactory.getDefaultPersistenceSupport()
                     .getIPersistentObject().deleteByOID(this.getClass(), getIdInternal());

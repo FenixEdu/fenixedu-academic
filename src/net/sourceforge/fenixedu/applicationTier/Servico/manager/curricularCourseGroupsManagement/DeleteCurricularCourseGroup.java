@@ -36,8 +36,8 @@ public class DeleteCurricularCourseGroup implements IService {
                     .readByOID(CurricularCourseGroup.class, groupId);
 			if (curricularCourseGroup != null) {
 				try {
-					curricularCourseGroup.deleteCurricularCourseGroup();
-					persistentCurricularCourseGroup.deleteByOID(CurricularCourseGroup.class,groupId);
+					curricularCourseGroup.delete();
+//					persistentCurricularCourseGroup.deleteByOID(CurricularCourseGroup.class,groupId);
 				} catch (DomainException e) {
 					throw new InvalidArgumentsServiceException();
 				}

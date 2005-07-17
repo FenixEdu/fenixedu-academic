@@ -194,6 +194,9 @@ class net.sourceforge.fenixedu.domain.Branch extends net.sourceforge.fenixedu.do
     
     interface "
     public java.util.List getAreaCurricularCourseGroups(net.sourceforge.fenixedu.tools.enrollment.AreaType areaType);
+	public void delete() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+	public Boolean canBeDeleted();
+	public Boolean representsCommonBranch();
     "
 }
 
@@ -363,7 +366,7 @@ class net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea extends net.sour
     Integer givenCredits;
     Integer studentCurricularPlanKey;
     Integer enrolmentKey;
-	
+
 	interface "
 	public void delete();
 	"
@@ -453,7 +456,7 @@ class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourcefo
     public net.sourceforge.fenixedu.tools.enrollment.AreaType getAreaType();
     public void setAreaType(net.sourceforge.fenixedu.tools.enrollment.AreaType areaType);
 	
-	public void deleteCurricularCourseGroup() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+	public void delete() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
     "
 }
 
@@ -484,6 +487,8 @@ class net.sourceforge.fenixedu.domain.CurricularCourseScope extends net.sourcefo
     public Boolean isActive();
 	
 	public void delete() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+	
+	public Boolean canBeDeleted();
     "
 }
 
@@ -518,8 +523,7 @@ class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.do
 	
 	interface "
 
-	public void deleteDegree () throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
-	
+	public void delete() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
 	"
 }
 
@@ -617,6 +621,12 @@ class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.f
 	Boolean type;
 	Integer keyStudent;
     DelegateYearType yearType;
+	
+	interface "
+
+	public void delete();
+	
+	"
 }
 	
 	
@@ -1417,6 +1427,12 @@ class net.sourceforge.fenixedu.domain.NonTeacherEmployee extends net.sourceforge
 class net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer studentCurricularPlanKey;
     Integer curricularCourseKey;
+	
+	interface "
+
+	public void delete();
+	
+	"
 }
 
 
@@ -1463,6 +1479,12 @@ class net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes extends n
 	Integer numAnswers2_5_text;
 	Integer numberAnswers;
 	Integer inquiryId;
+	
+	interface "
+
+	public void delete();
+	
+	"
 }
 
 
@@ -1508,6 +1530,12 @@ class net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary extends net.
 	Double average3_8;
 	Integer numberAnswers;
 	Integer inquiryId;
+	
+	interface "
+
+	public void delete();
+	
+	"
 }
 
 
@@ -1567,6 +1595,12 @@ class net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes extends 
 	Double tolerance3_9;
 	Integer departmentCode;
 	Double deviation3_9;
+	
+	interface "
+
+	public void delete();
+	
+	"
 }
 
 
@@ -2280,6 +2314,8 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
     public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea);
     
     public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea);
+	
+	public void delete() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
     "
 }
 

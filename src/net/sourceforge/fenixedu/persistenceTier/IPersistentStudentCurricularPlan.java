@@ -35,12 +35,6 @@ public interface IPersistentStudentCurricularPlan extends IPersistentObject {
             DegreeType degreeType) throws ExcepcaoPersistencia;
 
     /**
-     * @param studentCurricularPlan
-     * @throws ExcepcaoPersistencia
-     */
-    public void delete(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia;
-
-    /**
      * @param studentNumber
      * @return @throws
      *         ExcepcaoPersistencia

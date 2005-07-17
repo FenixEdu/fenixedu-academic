@@ -48,10 +48,6 @@ public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
 
     }
 
-    public void delete(IStudentCurricularPlan curricularPlan) throws ExcepcaoPersistencia {
-        super.delete(curricularPlan);
-    }
-
     public List readAllFromStudent(int studentNumber) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();

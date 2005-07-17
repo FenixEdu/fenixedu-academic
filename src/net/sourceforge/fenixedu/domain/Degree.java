@@ -6,6 +6,8 @@
 
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Iterator;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesSummary;
@@ -43,32 +45,47 @@ public class Degree extends Degree_Base {
         return degreeCurricularPlan;
     }
 	
-	public void deleteDegree () throws DomainException {
+	public void delete() throws DomainException {
 		
-		if (getDegreeCurricularPlans() == null || getDegreeCurricularPlans().isEmpty()) {
+		if (!hasAnyDegreeCurricularPlans()) {
 			
-			for (IOldInquiriesCoursesRes oldICR : getOldInquiriesCoursesRes()) {
-				oldICR.setExecutionPeriod(null);
+			Iterator oicrIterator = getOldInquiriesCoursesResIterator();
+			while (oicrIterator.hasNext()) {
+				IOldInquiriesCoursesRes oicr = (IOldInquiriesCoursesRes) oicrIterator.next();
+				oicrIterator.remove();
+				oicr.removeDegree();
+				oicr.delete();
 			}
-			getOldInquiriesCoursesRes().clear();
-			
-			for (IOldInquiriesTeachersRes oldITR : getOldInquiriesTeachersRes()) {
-				oldITR.setExecutionPeriod(null);
-				oldITR.setTeacher(null);
+		
+			Iterator oitrIterator = getOldInquiriesTeachersResIterator();
+			while (oitrIterator.hasNext()) {
+				IOldInquiriesTeachersRes oitr = (IOldInquiriesTeachersRes) oitrIterator.next();
+				oitrIterator.remove();
+				oitr.removeDegree();
+				oitr.delete();
 			}
-			getOldInquiriesTeachersRes().clear();
-			
-			for (IOldInquiriesSummary oldIS : getOldInquiriesSummary()) {
-				oldIS.setExecutionPeriod(null);
+				
+			Iterator oisIterator = getOldInquiriesSummaryIterator();
+			while (oisIterator.hasNext()) {
+				IOldInquiriesSummary ois = (IOldInquiriesSummary) oisIterator.next();
+				oisIterator.remove();
+				ois.removeDegree();
+				ois.delete();
 			}
-			getOldInquiriesSummary().clear();
 			
-			for (IDelegate delegate : getDelegate()) {
-				delegate.setExecutionYear(null);
-				delegate.setStudent(null);
+			Iterator delegatesIterator = getDelegateIterator();
+			while(delegatesIterator.hasNext()) {
+				IDelegate delegate = (IDelegate)delegatesIterator.next();
+				delegatesIterator.remove();
+				delegate.removeDegree();
+				delegate.delete();
 			}
-			getDelegate().clear();
 			
+			for (IDegreeInfo degreeInfo : getDegreeInfos()) {
+				((DegreeInfo)degreeInfo).deleteDomainObject();
+			}
+			
+			deleteDomainObject();
 		} else {
 			throw new DomainException(this.getClass().getName(),"");
 		}

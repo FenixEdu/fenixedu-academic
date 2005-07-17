@@ -4,12 +4,9 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import java.util.Iterator;
-import java.util.List;
-
-import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -22,22 +19,15 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class DeleteStudentCurricularPlan implements IService {
 
-    public void run(final Integer studentCurricularPlanId) throws ExcepcaoPersistencia {
+    public void run(final Integer studentCurricularPlanId) throws DomainException, ExcepcaoPersistencia {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
                 .getIStudentCurricularPlanPersistente();
         final IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan
                 .readByOID(StudentCurricularPlan.class, studentCurricularPlanId);
-        final List enrollments = studentCurricularPlan.getEnrolments();
-        for (final Iterator iterator = enrollments.iterator(); iterator.hasNext();) {
-            final IEnrolment enrollment = (IEnrolment) iterator.next();
-			
-			DeleteEnrollment deleteEnrollmentService = new DeleteEnrollment();
-            deleteEnrollmentService.run(enrollment.getIdInternal());
-        }
 
-        persistentStudentCurricularPlan.delete(studentCurricularPlan);
+		if (studentCurricularPlan != null)
+			studentCurricularPlan.delete();
     }
-
 }

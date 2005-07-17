@@ -561,6 +561,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
                     .getDegreeCurricularPlan()));
             setAcronym(curricularCourse.getAcronym());
             setNameEn(curricularCourse.getNameEn());
+			setEnrollmentAllowed(curricularCourse.getEnrollmentAllowed());
         }
     }
 

@@ -24,9 +24,9 @@ public class InfoDegree extends InfoObject implements Comparable {
 
     protected DegreeType tipoCurso;
 
-    private List infoDegreeCurricularPlans;
+    private List infoDegreeCurricularPlans = null;
 
-    private List infoDegreeInfos; //added by Tânia Pousão
+    private List infoDegreeInfos = null; //added by Tânia Pousão
 
     public InfoDegree() {
     }

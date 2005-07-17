@@ -16,10 +16,11 @@ public abstract class CurricularCourseGroup extends CurricularCourseGroup_Base {
         this.setOjbConcreteClass(this.getClass().getName());
     }
 	
-	public void deleteCurricularCourseGroup() throws DomainException {
-		if (getCurricularCourses() == null || getCurricularCourses().isEmpty()) {
-			setBranch(null);
+	public void delete() throws DomainException {
+		if (!hasAnyCurricularCourses()) {
+			removeBranch();
 			getScientificAreas().clear();
+			deleteDomainObject();
 		} else {
 			throw new DomainException(this.getClass().getName(), "ola mundo");			
 		}

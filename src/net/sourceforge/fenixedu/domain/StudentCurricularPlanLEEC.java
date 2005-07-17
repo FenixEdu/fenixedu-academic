@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -221,4 +222,8 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
         });
     }
 
+	public void delete() throws DomainException {
+		removeSecundaryBranch();
+		super.delete();
+	}
 }

@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 /**
  * @author David Santos on Jul 26, 2004
  */
@@ -41,4 +43,12 @@ public class AreaCurricularCourseGroup extends AreaCurricularCourseGroup_Base {
                 + super.getMaximumValue() + "] branch[" + getBranch().getName() + "]";
     }
 
+	public void delete() throws DomainException {
+		if (!hasAnyCurricularCourses()) {
+			getScientificAreasForThis().clear();
+			super.delete();
+		} else {
+			throw new DomainException(this.getClass().getName(), "ola mundo");			
+		}
+	}
 }

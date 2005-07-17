@@ -1,16 +1,10 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
-import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.GratuitySituation;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IGratuitySituation;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.degree.enrollment.INotNeedToEnrollInCurricularCourse;
-import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -66,29 +60,6 @@ public class StudentCurricularPlanVO extends VersionedObjectsBase implements
                 return scp;
         }
         return null;
-    }
-
-    public void delete(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
-        studentCurricularPlan.setBranch(null);
-        studentCurricularPlan.setDegreeCurricularPlan(null);
-        studentCurricularPlan.setEmployee(null);
-        for (Iterator iter = studentCurricularPlan.getEnrolments().iterator(); iter.hasNext();) {
-            IEnrolment enrolment = (IEnrolment) iter.next();
-            enrolment.setStudentCurricularPlan(null);
-        }
-        for (Iterator iter = studentCurricularPlan.getGratuitySituations().iterator(); iter.hasNext();) {
-            IGratuitySituation gratuitySituation = (IGratuitySituation) iter.next();
-            deleteByOID(GratuitySituation.class,gratuitySituation.getIdInternal());
-        }
-        studentCurricularPlan.setMasterDegreeThesis(null);
-
-        for (Iterator iter = studentCurricularPlan.getNotNeedToEnrollCurricularCourses().iterator(); iter.hasNext();) {
-            INotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = (INotNeedToEnrollInCurricularCourse) iter.next();
-            deleteByOID(NotNeedToEnrollInCurricularCourse.class,notNeedToEnrollInCurricularCourse.getIdInternal());
-        }
-        
-        studentCurricularPlan.setSecundaryBranch(null);
-        studentCurricularPlan.setStudent(null);
     }
 
     public List readAllFromStudent(final int studentNumber) throws ExcepcaoPersistencia {

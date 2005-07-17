@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Calendar;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -81,10 +80,13 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
     }
 	
 	
+	public Boolean canBeDeleted() {
+		return !hasAnyAssociatedWrittenEvaluations();
+	}
+	
 	public void delete() throws DomainException {
-		List writtenEvaluations = getAssociatedWrittenEvaluations();
 
-	    if (!hasAnyAssociatedWrittenEvaluations()) {		
+	    if (canBeDeleted()) {
 			removeCurricularSemester();
 			removeCurricularCourse();
 			removeBranch();

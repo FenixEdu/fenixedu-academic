@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.degree.enrollment.INotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.IEnrollmentRule;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
@@ -838,4 +839,45 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     // -------------------------------------------------------------
     // END: Only for enrollment purposes (PROTECTED)
     // -------------------------------------------------------------
+	
+	
+    public void delete() throws DomainException {
+
+		removeDegreeCurricularPlan();
+		removeStudent();
+		removeBranch();
+		removeEmployee();
+		removeMasterDegreeThesis();
+		getGratuitySituations().clear();
+        
+		for (Iterator iter = getEnrolmentsIterator(); iter.hasNext();) {
+            IEnrolment enrolment = (IEnrolment) iter.next();
+			iter.remove();
+			enrolment.removeStudentCurricularPlan();
+            enrolment.delete();
+        }
+		
+        for (Iterator iter = getNotNeedToEnrollCurricularCoursesIterator(); iter.hasNext();) {
+            INotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = (INotNeedToEnrollInCurricularCourse) iter.next();
+			iter.remove();
+			notNeedToEnrollInCurricularCourse.removeStudentCurricularPlan();
+			notNeedToEnrollInCurricularCourse.delete();
+        }
+		
+		for (Iterator iter = getCreditsInAnySecundaryAreasIterator(); iter.hasNext();) {
+			ICreditsInAnySecundaryArea creditsInAnySecundaryArea = (ICreditsInAnySecundaryArea) iter.next();
+			iter.remove();
+			creditsInAnySecundaryArea.removeStudentCurricularPlan();
+			creditsInAnySecundaryArea.delete();
+		}
+		
+		for (Iterator iter = getCreditsInScientificAreasIterator(); iter.hasNext();) {
+			ICreditsInScientificArea creditsInScientificArea = (ICreditsInScientificArea) iter.next();
+			iter.remove();
+			creditsInScientificArea.removeStudentCurricularPlan();
+			creditsInScientificArea.delete();
+		}
+		
+		deleteDomainObject();
+    }
 }

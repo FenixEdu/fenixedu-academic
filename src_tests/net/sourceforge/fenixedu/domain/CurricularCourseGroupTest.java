@@ -5,12 +5,15 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class CurricularCourseGroupTest extends DomainTestBase {
 
+	private IAreaCurricularCourseGroup areaCurricularCourseGroupToDelete;
 	private ICurricularCourseGroup curricularCourseGroupToDelete;
 	private ICurricularCourseGroup curricularCourseGroupNotToDelete;
 	
 	protected void setUp() throws Exception {
         super.setUp();
 		
+		areaCurricularCourseGroupToDelete = new AreaCurricularCourseGroup();
+		areaCurricularCourseGroupToDelete.setIdInternal(0);
 		curricularCourseGroupToDelete = new AreaCurricularCourseGroup();
 		curricularCourseGroupToDelete.setIdInternal(1);
 		curricularCourseGroupNotToDelete = new OptionalCurricularCourseGroup();
@@ -26,9 +29,17 @@ public class CurricularCourseGroupTest extends DomainTestBase {
 		sa1.setIdInternal(1);
 		IScientificArea sa2 = new ScientificArea();
 		sa2.setIdInternal(2);
+		
+		IScientificArea sa3 = new ScientificArea();
+		sa3.setIdInternal(3);
 
+		areaCurricularCourseGroupToDelete.setBranch(br1);
+		
 		curricularCourseGroupToDelete.setBranch(br1);
 		curricularCourseGroupNotToDelete.setBranch(br1);
+		
+		areaCurricularCourseGroupToDelete.addScientificAreas(sa1);
+		areaCurricularCourseGroupToDelete.addScientificAreasForThis(sa3);
 		
 		curricularCourseGroupToDelete.addScientificAreas(sa1);
 		curricularCourseGroupToDelete.addScientificAreas(sa2);
@@ -44,26 +55,37 @@ public class CurricularCourseGroupTest extends DomainTestBase {
         super.tearDown();
     }
 	
-	public void testDeleteCurricularCourseGroup() {
+	public void testDelete() {
 		try {
-			curricularCourseGroupNotToDelete.deleteCurricularCourseGroup();
-			fail("Expected DomainException.");
+			curricularCourseGroupNotToDelete.delete();
+			fail("Expected DomainException: should not have been deleted.");
 		} catch (DomainException e) {
 
 		}
 		
+		assertTrue(curricularCourseGroupNotToDelete.hasBranch());
+		assertTrue(curricularCourseGroupNotToDelete.hasAnyScientificAreas());
+		assertTrue(curricularCourseGroupNotToDelete.hasAnyCurricularCourses());
+		
 		try {
-			curricularCourseGroupToDelete.deleteCurricularCourseGroup();
+			curricularCourseGroupToDelete.delete();
 		} catch (DomainException e) {
-			fail("Unexpected DomainException.");
+			fail("Unexpected DomainException: should have been deleted.");
 		}
 		
-		assertNull(curricularCourseGroupToDelete.getBranch());
-		assertTrue(curricularCourseGroupToDelete.getScientificAreas().isEmpty());
-		assertTrue(curricularCourseGroupToDelete.getCurricularCourses().isEmpty());
+		assertFalse(curricularCourseGroupToDelete.hasBranch());
+		assertFalse(curricularCourseGroupToDelete.hasAnyScientificAreas());
+		assertFalse(curricularCourseGroupToDelete.hasAnyCurricularCourses());
 		
-		assertNotNull(curricularCourseGroupNotToDelete.getBranch());
-		assertFalse(curricularCourseGroupNotToDelete.getScientificAreas().isEmpty());
-		assertFalse(curricularCourseGroupNotToDelete.getCurricularCourses().isEmpty());
+		try {
+			areaCurricularCourseGroupToDelete.delete();
+		} catch (DomainException e) {
+			fail("Unexpected DomainException: should have been deleted.");
+		}
+		
+		assertFalse(areaCurricularCourseGroupToDelete.hasBranch());
+		assertFalse(areaCurricularCourseGroupToDelete.hasAnyScientificAreas());
+		assertFalse(areaCurricularCourseGroupToDelete.hasAnyScientificAreasForThis());
+		assertFalse(areaCurricularCourseGroupToDelete.hasAnyCurricularCourses());
 	}
 }

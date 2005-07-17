@@ -108,66 +108,66 @@ public class DegreeTest extends DomainTestBase {
 		super.tearDown();
 	}
 	
-	public void testDeleteDegree() {
+	public void testDelete() {
 		try {
-			degreeToDelete.deleteDegree();
+			degreeToDelete.delete();
 		} catch (DomainException e) {
 			fail("Unexpected DomainException: should have been deleted.");
 		}
 		
 		try {
-			degreeNotToDelete.deleteDegree();
+			degreeNotToDelete.delete();
 			fail ("Expected DomainException: should not have been deleted.");
 		} catch (DomainException e) {
 		}
 		
-		assertTrue(degreeToDelete.getDelegate().isEmpty());
-		assertTrue(degreeToDelete.getOldInquiriesCoursesRes().isEmpty());
-		assertTrue(degreeToDelete.getOldInquiriesTeachersRes().isEmpty());
-		assertTrue(degreeToDelete.getOldInquiriesSummary().isEmpty());
-		assertTrue(degreeToDelete.getDegreeCurricularPlans().isEmpty());
+		assertFalse(degreeToDelete.hasAnyDelegate());
+		assertFalse(degreeToDelete.hasAnyOldInquiriesCoursesRes());
+		assertFalse(degreeToDelete.hasAnyOldInquiriesTeachersRes());
+		assertFalse(degreeToDelete.hasAnyOldInquiriesSummary());
+		assertFalse(degreeToDelete.hasAnyDegreeCurricularPlans());
 		
 		for (IDelegate delegate : delegatesToDelete) {
-			assertNull(delegate.getExecutionYear());
-			assertNull(delegate.getStudent());
+			assertFalse(delegate.hasExecutionYear());
+			assertFalse(delegate.hasStudent());
 		}
 		
 		for (IOldInquiriesCoursesRes oicr : oldInquiriesCoursesResToDelete) {
-			assertNull (oicr.getExecutionPeriod());
+			assertFalse(oicr.hasExecutionPeriod());
 		}
 		
 		for (IOldInquiriesTeachersRes oitr : oldInquiriesTeachersResToDelete) {
-			assertNull (oitr.getExecutionPeriod());
-			assertNull (oitr.getTeacher());
+			assertFalse(oitr.hasExecutionPeriod());
+			assertFalse(oitr.hasTeacher());
 		}
 		
 		for (IOldInquiriesSummary ois : oldInquiriesSummaryToDelete) {
-			assertNull (ois.getExecutionPeriod());
+			assertFalse(ois.hasExecutionPeriod());
 		}
 		
-		assertFalse(degreeNotToDelete.getDelegate().isEmpty());
-		assertFalse(degreeNotToDelete.getOldInquiriesCoursesRes().isEmpty());
-		assertFalse(degreeNotToDelete.getOldInquiriesTeachersRes().isEmpty());
-		assertFalse(degreeNotToDelete.getOldInquiriesSummary().isEmpty());
-		assertFalse(degreeNotToDelete.getDegreeCurricularPlans().isEmpty());
-		assertFalse(degreeNotToDelete.getDegreeInfos().isEmpty());
+		assertTrue(degreeNotToDelete.hasAnyDelegate());
+		assertTrue(degreeNotToDelete.hasAnyOldInquiriesCoursesRes());
+		assertTrue(degreeNotToDelete.hasAnyOldInquiriesTeachersRes());
+		assertTrue(degreeNotToDelete.hasAnyOldInquiriesSummary());
+		assertTrue(degreeNotToDelete.hasAnyDegreeCurricularPlans());
+		assertTrue(degreeNotToDelete.hasAnyDegreeInfos());
 		
 		for (IDelegate delegate : degreeNotToDelete.getDelegate()) {
-			assertNotNull(delegate.getExecutionYear());
-			assertNotNull(delegate.getStudent());
+			assertTrue(delegate.hasExecutionYear());
+			assertTrue(delegate.hasStudent());
 		}
 		
 		for (IOldInquiriesCoursesRes oicr : degreeNotToDelete.getOldInquiriesCoursesRes()) {
-			assertNotNull (oicr.getExecutionPeriod());
+			assertTrue (oicr.hasExecutionPeriod());
 		}
 		
 		for (IOldInquiriesTeachersRes oitr : degreeNotToDelete.getOldInquiriesTeachersRes()) {
-			assertNotNull (oitr.getExecutionPeriod());
-			assertNotNull (oitr.getTeacher());
+			assertTrue (oitr.hasExecutionPeriod());
+			assertTrue (oitr.hasTeacher());
 		}
 		
 		for (IOldInquiriesSummary ois : degreeNotToDelete.getOldInquiriesSummary()) {
-			assertNotNull (ois.getExecutionPeriod());
+			assertTrue (ois.hasExecutionPeriod());
 		}
 	}
 }
