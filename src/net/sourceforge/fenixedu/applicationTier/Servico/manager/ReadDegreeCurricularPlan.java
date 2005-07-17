@@ -34,19 +34,14 @@ public class ReadDegreeCurricularPlan implements IService {
     public InfoDegreeCurricularPlan run(final Integer idInternal) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        final IDegreeCurricularPlan degreeCurricularPlan;
-
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        degreeCurricularPlan = (IDegreeCurricularPlan) sp.getIPersistentDegreeCurricularPlan()
+		final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp.getIPersistentDegreeCurricularPlan()
                 .readByOID(DegreeCurricularPlan.class, idInternal);
 
         if (degreeCurricularPlan == null) {
             throw new NonExistingServiceException();
         }
 
-        final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlanWithDegree
-                .newInfoFromDomain(degreeCurricularPlan);
-
-        return infoDegreeCurricularPlan;
+        return InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(degreeCurricularPlan);
     }
 }

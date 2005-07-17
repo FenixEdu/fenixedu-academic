@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -22,24 +21,16 @@ public class ReadBranch implements IService {
 
     /**
      * Executes the service. Returns the current infoBranch.
+     * @throws ExcepcaoPersistencia 
      */
-    public InfoBranch run(Integer idInternal) throws FenixServiceException {
-        ISuportePersistente sp;
-        IBranch branch = null;
+    public InfoBranch run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            branch = (IBranch) sp.getIPersistentBranch().readByOID(Branch.class, idInternal);
-
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
-        }
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IBranch branch = (IBranch) sp.getIPersistentBranch().readByOID(Branch.class, idInternal);
 
         if (branch == null) {
             throw new NonExistingServiceException();
         }
-
-        InfoBranch infoBranch = Cloner.copyIBranch2InfoBranch(branch);
-        return infoBranch;
+        return InfoBranch.newInfoFromDomain(branch);
     }
 }

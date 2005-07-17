@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeWithInfoDegreeCurricularPlansAndInfoDegreeInfos;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -19,25 +19,17 @@ public class ReadDegree implements IService {
 
     /**
      * Executes the service. Returns the current infodegree.
+     * @throws ExcepcaoPersistencia 
      */
-    public InfoDegree run(Integer idInternal) throws FenixServiceException {
-        ISuportePersistente sp;
-        InfoDegree infoDegree = null;
-        IDegree degree = null;
+    public InfoDegree run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            degree = (IDegree)sp.getICursoPersistente().readByOID(Degree.class,idInternal);
+		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IDegree degree = (IDegree)sp.getICursoPersistente().readByOID(Degree.class,idInternal);
 
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia);
-        }
-
-        if (degree == null) {
+		if (degree == null) {
             throw new NonExistingServiceException();
         }
 
-        infoDegree = Cloner.copyIDegree2InfoDegree(degree);
-        return infoDegree;
+        return InfoDegreeWithInfoDegreeCurricularPlansAndInfoDegreeInfos.newInfoFromDomain(degree);
     }
 }

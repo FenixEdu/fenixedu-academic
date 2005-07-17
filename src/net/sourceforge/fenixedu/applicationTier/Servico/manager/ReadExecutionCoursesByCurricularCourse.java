@@ -10,7 +10,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
@@ -61,8 +61,8 @@ public class ReadExecutionCoursesByCurricularCourse implements IService {
 
             Boolean hasSite;
             while (iterator.hasNext()) {
-                InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner
-                        .get((IExecutionCourse) iterator.next());
+
+				InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain((IExecutionCourse) iterator.next());
                 try {
                   
                    IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, infoExecutionCourse.getIdInternal());

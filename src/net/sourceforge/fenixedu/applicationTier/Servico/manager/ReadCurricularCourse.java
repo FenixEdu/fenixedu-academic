@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegreeAndScopes;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -35,9 +35,7 @@ public class ReadCurricularCourse implements IService {
         if (curricularCourse == null) {
             throw new NonExistingServiceException();
         }
-
-        InfoCurricularCourse infoCurricularCourse = Cloner
-                .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-        return infoCurricularCourse;
+		
+        return InfoCurricularCourseWithInfoDegreeAndScopes.newInfoFromDomain(curricularCourse);
     }
 }

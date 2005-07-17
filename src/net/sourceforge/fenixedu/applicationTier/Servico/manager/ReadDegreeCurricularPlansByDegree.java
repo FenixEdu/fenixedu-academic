@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
@@ -47,7 +47,7 @@ public class ReadDegreeCurricularPlansByDegree implements IService {
 
         while (iterator.hasNext()) {
             IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) iterator.next();
-            result.add(Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(degreeCurricularPlan));
+			result.add(InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(degreeCurricularPlan));
         }
         return result;
     }

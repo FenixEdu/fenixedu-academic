@@ -8,7 +8,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithBranchAndSemesterAndYear;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndSemesterAndYear;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
@@ -49,10 +51,7 @@ public class ReadActiveCurricularCourseScopes implements IService {
         List result = new ArrayList(allCurricularCourseScopes.size());
 
         while (iterator.hasNext())
-            result
-                    .add(Cloner
-                            .copyICurricularCourseScope2InfoCurricularCourseScope((ICurricularCourseScope) iterator
-                                    .next()));
+            result.add(InfoCurricularCourseScopeWithBranchAndSemesterAndYear.newInfoFromDomain((ICurricularCourseScope)iterator.next()));
 
         return result;
     }

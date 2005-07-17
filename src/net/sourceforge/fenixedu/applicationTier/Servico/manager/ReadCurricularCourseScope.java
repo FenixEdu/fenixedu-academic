@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -37,12 +37,6 @@ public class ReadCurricularCourseScope implements IService {
             throw new NonExistingServiceException();
         }
 
-        Integer curricularSemesterId = curricularCourseScope.getCurricularSemester().getIdInternal();
-        InfoCurricularCourseScope infoCurricularCourseScope = Cloner
-                .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
-
-        infoCurricularCourseScope.getInfoCurricularSemester().setIdInternal(curricularSemesterId);
-
-        return infoCurricularCourseScope;
+        return InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear.newInfoFromDomain(curricularCourseScope);
     }
 }

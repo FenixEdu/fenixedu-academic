@@ -56,9 +56,7 @@ public class ReadCurricularCourseGroupsByDegreeCurricularPlan implements IServic
             return (List) CollectionUtils.collect(groups, new Transformer() {
 
                 public Object transform(Object arg0) {
-
-                    return InfoCurricularCourseGroupWithInfoBranch
-                            .newInfoFromDomain((ICurricularCourseGroup) arg0);
+                    return InfoCurricularCourseGroupWithInfoBranch.newInfoFromDomain((ICurricularCourseGroup) arg0);
                 }
             });
 
