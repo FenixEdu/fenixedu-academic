@@ -12,5 +12,11 @@ public class CreditsInAnySecundaryArea extends CreditsInAnySecundaryArea_Base {
         result += "] course: [" + this.getEnrolment().getCurricularCourse().getName() + "]";
         return result;
     }
-
+	
+	
+	public void delete() {
+		removeEnrolment();
+		removeStudentCurricularPlan();
+		super.deleteDomainObject();
+	}
 }

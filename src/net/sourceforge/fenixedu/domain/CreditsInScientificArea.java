@@ -12,5 +12,13 @@ public class CreditsInScientificArea extends CreditsInScientificArea_Base {
         result += "] course: [" + this.getEnrolment().getCurricularCourse().getName() + "]";
         return result;
     }
+	
+	
+	public void delete() {
+		removeScientificArea();
+		removeEnrolment();
+		removeStudentCurricularPlan();
+		super.deleteDomainObject();
+	}
     
 }
