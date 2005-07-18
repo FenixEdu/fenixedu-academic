@@ -20,6 +20,8 @@ public abstract class DomainObject extends DomainObject_Base {
     // disabled for writting test cases. Testing domain code can be done
     // without persisting anything.
     private static boolean lockMode = true;
+    
+    private static int nextIdInternal =  1; 
 
     public static void turnOffLockMode() {
         lockMode = false;
@@ -46,6 +48,9 @@ public abstract class DomainObject extends DomainObject_Base {
         // Locking the object will also set the idInternal which will be
         // used by both the hashcode and the equals methods
         doLockWriteOn(this);
+        if (!lockMode) {
+            setIdInternal(new Integer(nextIdInternal++));
+        }
     }
 
     public final int hashCode() {
