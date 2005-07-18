@@ -44,6 +44,16 @@ import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersist
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkHistoric;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkRequests;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentMoneyCostCenter;
+import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
+import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTestAdvisory;
+import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
+import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentOnlineTest;
+import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
+import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestLog;
+import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
+import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTest;
+import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;
+import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestScope;
 import net.sourceforge.fenixedu.persistenceTier.places.campus.IPersistentCampus;
 import net.sourceforge.fenixedu.persistenceTier.projectsManagement.IPersistentProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthor;
@@ -115,6 +125,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionCourseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionPeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionYearVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.FrequentaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuitySituationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuityTransactionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuityValuesVO;
@@ -190,6 +201,16 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.I
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.OldInquiriesCoursesResVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.OldInquiriesSummaryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries.OldInquiriesTeachersResVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.DistributedTestAdvisoryVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.DistributedTestVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.MetadataVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.OnlineTestVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.QuestionVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.StudentTestLogVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.StudentTestQuestionVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.TestQuestionVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.TestScopeVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTests.TestVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.places.campus.CampusVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.projectsManagement.ProjectAccessVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries.CandidacyVO;
@@ -226,7 +247,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentTestScope getIPersistentTestScope() {
-        return null;
+        return new TestScopeVO();
     }
 
     public IPersistentCareer getIPersistentCareer() {
@@ -254,7 +275,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentStudentTestLog getIPersistentStudentTestLog() {
-        return null;
+        return new StudentTestLogVO();
     }
 
     public IPersistentPublicationsNumber getIPersistentPublicationsNumber() {
@@ -306,7 +327,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion() {
-        return null;
+        return new StudentTestQuestionVO();
     }
 
     public IPersistentPublication getIPersistentPublication() {
@@ -458,7 +479,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IFrequentaPersistente getIFrequentaPersistente() {
-        return null;
+        return new FrequentaVO();
     }
 
     public ISalaPersistente getISalaPersistente() {
@@ -534,7 +555,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentMetadata getIPersistentMetadata() {
-        return null;
+        return new MetadataVO();
     }
 
     public IPersistentBuilding getIPersistentBuilding() {
@@ -578,11 +599,11 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory() {
-        return null;
+        return new DistributedTestAdvisoryVO();
     }
 
     public IPersistentTest getIPersistentTest() {
-        return null;
+        return new TestVO();
     }
 
     public IPersistentGrantPaymentEntity getIPersistentGrantPaymentEntity() {
@@ -654,7 +675,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentOnlineTest getIPersistentOnlineTest() {
-        return null;
+        return new OnlineTestVO();
     }
 
     public IPersistentWeeklyOcupation getIPersistentWeeklyOcupation() {
@@ -686,7 +707,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentQuestion getIPersistentQuestion() {
-        return null;
+        return new QuestionVO();
     }
 
     public IPersistentCourseReport getIPersistentCourseReport() {
@@ -922,7 +943,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentDistributedTest getIPersistentDistributedTest() {
-        return null;
+        return new DistributedTestVO();
     }
 
     public IPersistentOldPublication getIPersistentOldPublication() {
@@ -942,7 +963,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentTestQuestion getIPersistentTestQuestion() {
-        return null;
+        return new TestQuestionVO();
     }
 
     public IPersistentCurricularCourseEquivalence getIPersistentCurricularCourseEquivalence() {
