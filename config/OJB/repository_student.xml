@@ -139,6 +139,14 @@
 			>
 		<inverse-foreignkey field-ref="keyStudent"/>
 	</collection-descriptor>
+	 <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="shifts"
+			element-class-ref="net.sourceforge.fenixedu.domain.Shift"
+			indirection-table="SHIFT_STUDENT"
+			>
+		<fk-pointing-to-this-class column="KEY_STUDENT"/>
+		<fk-pointing-to-element-class column="KEY_SHIFT"/>
+	</collection-descriptor>
 	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="enrolmentLogs"
 			element-class-ref="net.sourceforge.fenixedu.domain.log.EnrolmentLog"
