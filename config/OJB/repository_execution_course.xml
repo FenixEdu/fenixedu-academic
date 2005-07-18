@@ -259,6 +259,10 @@
 			
 			>
 		<inverse-foreignkey field-ref="keyExecutionPeriod"/>
-	</collection-descriptor>						
-
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="metadatas"
+			element-class-ref="net.sourceforge.fenixedu.domain.onlineTests.Metadata">
+		<inverse-foreignkey field-ref="keyExecutionCourse"/>
+	</collection-descriptor>
 </class-descriptor>

@@ -154,4 +154,14 @@
 			>
 		<inverse-foreignkey field-ref="keyStudent"/>
 	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="studentTestsLogs"
+			element-class-ref="net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog">
+		<inverse-foreignkey field-ref="keyStudent"/>
+	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="studentTestsQuestions"
+			element-class-ref="net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion">
+		<inverse-foreignkey field-ref="keyStudent"/>
+	</collection-descriptor>
 </class-descriptor>
