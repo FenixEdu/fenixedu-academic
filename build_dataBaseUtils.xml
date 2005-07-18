@@ -1,292 +1,66 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project basedir="." default="get-dump" name="DataBase Utils">
-
-    <!-- ########## PROPERTIES ########## -->
+<project basedir="." default="generate-fenix-sql" name="DataBase Utils">
 
     <property environment="env"/>
 	<property name="encoding" value="ISO-8859-15"/>
 
-	<property file="build.properties"/>
+    <property name="lib" location="lib" />
 
-	<property name="sql" location="etc"/>
+	<property name="build.home" location="build"/>
+	<property name="build.home.temp" value="${build.home}/temp"/>
+	<property name="build.home.temp.classes" value="${build.home.temp}/classes"/>
+	<property name="build.home.webinf" value="${build.home}/WEB-INF"/>
+	<property name="build.home.webinf.classes" value="${build.home.webinf}/classes"/>
 
-    <!-- ########## TARGETS ########## -->
+    <target name="compile"
+    		description="Compile tools">
+    	<ant antfile="build_codeGenerator.xml" target="compile"/>
+	</target>
 
-    <target name="create-tables"
-            description="Cria as tabelas da base de dados.">
-        <sql
-            driver="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost/"
-            userid="${db.user}"
-            password="${db.pass}"
-            encoding="${encoding}"
-            classpath="${lib}/mysql-connector-java-3.0.10-stable-bin.jar"
-        >
-        DROP DATABASE IF EXISTS ${db.name};
-        CREATE DATABASE ${db.name};
-        </sql>
-        <sql
-            driver="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost/${db.name}"
-            userid="${db.user}"
-            password="${db.pass}"
-            encoding="${encoding}">
-	        <fileset dir="${sql}">
-	        	<include name="fenix.data.structure.sql" />
-  			</fileset>
-            <classpath>
+    <target name="generate-fenix-sql"
+    		description="Generate sql schema for fenix database."
+    		depends="compile">
+		<java classname="pt.utl.ist.codeGenerator.SQLGenerator" fork="true">
+			<classpath>
+				<pathelement path="${build.home.temp.classes}"/>
+				<pathelement path="${build.home.webinf.classes}"/>
                 <fileset dir="${lib}">
                     <include name="**/*.jar"/>
                 </fileset>
-            </classpath>
-        </sql>
+			</classpath>
+		</java>
     </target>
 
-    <target name="create-tables_assiduidade"
-            description="Cria as tabelas da base de dados.">
-        <sql
-            driver="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost/"
-            userid="${db.assiduousness.user}"
-            password="${db.assiduousness.pass}"
-            encoding="${encoding}"
-	    classpath="${lib}/mysql-connector-java-3.0.7.jar"
-        >
-        DROP DATABASE IF EXISTS ${db.assiduousness.name};
-        CREATE DATABASE ${db.assiduousness.name};
-        </sql>
-        <sql
-            driver="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost/${db.assiduousness.name}"
-            userid="${db.assiduousness.user}"
-            password="${db.assiduousness.pass}"
-            encoding="${encoding}">
-	        <fileset dir="${sql}">
-			 <include name="tables_AssiduousnessASSMARCAS.sql" />
-			 <include name="test-data_AssiduousnessASSMARCAS.sql" />
-  			</fileset>
-            <classpath>
+    <target name="generate-fenix-xls"
+    		description="Generate xls schema for fenix database."
+    		depends="compile">
+		<java classname="pt.utl.ist.codeGenerator.database.XLSGenerator" fork="true">
+			<arg value="etc/fenix.xls"/>
+			<arg value="PERSON"/>
+			<classpath>
+				<pathelement path="${build.home.temp.classes}"/>
+				<pathelement path="${build.home.webinf.classes}"/>
                 <fileset dir="${lib}">
                     <include name="**/*.jar"/>
                 </fileset>
-            </classpath>
-        </sql>
+			</classpath>
+		</java>
     </target>
 
-    <target name="create-tables_filterperson"
-            description="Cria as tabelas da base de dados.">
-        <sql
-            driver="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost/"
-            userid="${db.personFilter.user}"
-            password="${db.personFilter.pass}"
-            encoding="${encoding}"
-	    classpath="${lib}/mysql-connector-java-3.0.7.jar"
-        >
-        DROP DATABASE IF EXISTS ${db.personFilter.name};
-        CREATE DATABASE ${db.personFilter.name};
-        </sql>
-        <sql
-            driver="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost/${db.personFilter.name}"
-            userid="${db.personFilter.user}"
-            password="${db.personFilter.pass}"
-            encoding="${encoding}">
-	        <fileset dir="${sql}">
-			 <include name="tables_personFilter.sql" />
-			 <include name="test-data_personFilter.sql" />
-  			</fileset>
-            <classpath>
+    <target name="load-fenix-xls"
+    		description="Generate xls schema for fenix database."
+    		depends="compile">
+		<java classname="pt.utl.ist.codeGenerator.database.XLSLoader" fork="true">
+			<arg value="etc/fenix.xls"/>
+			<arg value="PERSON"/>
+			<classpath>
+				<pathelement path="${build.home.temp.classes}"/>
+				<pathelement path="${build.home.webinf.classes}"/>
                 <fileset dir="${lib}">
                     <include name="**/*.jar"/>
                 </fileset>
-            </classpath>
-        </sql>
-    </target>
-
-    <target name="load-database"
-            depends="create-tables"
-            description="Cria as tabelas da base de dados.">
-        <sql
-            driver="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost/${db.name}"
-            userid="${db.user}"
-            password="${db.pass}"
-            encoding="${encoding}"
-            src="${sql}/test-data_*.sql"
-        >
-            <classpath>
-                <fileset dir="${lib}">
-                    <include name="**/*.jar"/>
-                </fileset>
-            </classpath>
-        </sql>
-    </target>
-
-    <target name="dump-db"
-            description="Uses dbunit to load database to xml file">
-	  <dbunit driver="com.mysql.jdbc.Driver"
-    	      url="jdbc:mysql://localhost/${db.name}"
-        	  userid="${db.user}"
-	          password="${db.pass}">
-    	  <export dest="${sql}/dbContents.xml"/> 
-	  </dbunit>
-    </target>
-
-    <target name="load-dump-db" depends="load-database, dump-db"
-            description="Load and dump database to testDataSet.xml">
-	  <copy file="${sql}/dbContents.xml" toFile="${sql}/testDataSet.xml"/>
-    </target>
-
-
-    <target name="get-fenix-dump"
-            description="Deploys application to test server"
-            >
-		<property name="server.hostname"
-				  value="fenix.ist.utl.pt"
-				  />
-		<property name="server.dumpScript"
-				  value="/root/configs/getDBDump"
-				  />
-		<property name="server.dumpFilename"
-				  value="fenix.dump.sql"
-				  />
-
-		<property name="destination.hostname"
-				  value="fenix-tests.ist.utl.pt"
-				  />
-
-		<!-- Prompt for username & password -->
-		<input message="Enter username for ${server.hostname}:"
-			   addproperty="server.username"
-			   />
-		<input message="Enter password for ${server.hostname}:"
-			   addproperty="server.password"
-			   />
-		<input message="Enter username for ${destination.hostname}:"
-			   addproperty="destination.username"
-			   />
-		<input message="Enter password for ${destination.hostname}:"
-			   addproperty="destination.password"
-			   />
-
-		<!-- Obtail DB Dump -->
-		<antcall target="publish-dump"/>
-
-    </target>
-
-    <target name="publish-dump"
-            description="Obtails a dump of the database"
-            >
-
-		<!-- Run Dump Script on Server -->
-        <sshexec host="${server.hostname}"
-        		 username="${server.username}"
-        		 password="${server.password}"
-        		 command="${server.dumpScript}; zip ${server.dumpFilename}.zip ${server.dumpFilename}; rm ${server.dumpFilename}"
-        		 timeout="0"
-        		 trust="yes"
-        		 />
-
-		<!-- Transfer DB Dump File to Destination -->
-        <scp file="${server.username}:${server.password}@${server.hostname}:/root/${server.dumpFilename}.zip"
-        	 todir="${basedir}"
-        	 trust="true"
-        	 />
-        <scp file="${server.dumpFilename}.zip"
-        	 todir="${destination.username}:${destination.password}@${destination.hostname}:~"
-        	 trust="true"
-        	 />
-
-		<!-- Remove DB Dump File from Server -->
-        <sshexec host="${server.hostname}"
-        		 username="${server.username}"
-        		 password="${server.password}"
-        		 command="rm ${server.dumpFilename}.zip"
-        		 timeout="0"
-        		 trust="yes"
-        		 />
-
-		<!-- Remove temporary local copy of DB Dump File -->
-		<delete file="${server.dumpFilename}.zip"/>
-
-		<!-- Load the Destination Servers DB -->
-        <sshexec host="${destination.hostname}"
-        		 username="${destination.username}"
-        		 password="${destination.password}"
-        		 command="loadFenixImage"
-        		 timeout="0"
-        		 trust="yes"
-        		 />
-
-    </target>
-
-    <target name="get-dump"
-            description="Deploys application to test server"
-            >
-		<property name="server.hostname"
-				  value="fenix-tests.ist.utl.pt"
-				  />
-		<property name="server.dumpFilename.fenix"
-				  value="fenix.dump.sql"
-				  />
-		<property name="server.dumpFilename.slide"
-				  value="slide.dump.sql"
-				  />
-
-		<!-- Prompt for username & password -->
-
-		<input message="Enter username for ${server.hostname}:"
-			   addproperty="server.username"
-			   />
-		<input message="Enter password for ${server.hostname}:"
-			   addproperty="server.password"
-			   />
-
-		<!-- Transfer DB Dump File -->
-
-        <scp file="${server.username}:${server.password}@${server.hostname}:${server.dumpFilename.fenix}.zip"
-        	 todir="${sql}"
-        	 trust="true"
-        	 />
-        <scp file="${server.username}:${server.password}@${server.hostname}:${server.dumpFilename.slide}.zip"
-        	 todir="${sql}"
-        	 trust="true"
-        	 />
-
-		<unzip src="${sql}/${server.dumpFilename.fenix}.zip" dest="${sql}/${server.dumpFilename.fenix}"/>
-		<unzip src="${sql}/${server.dumpFilename.slide}.zip" dest="${sql}/${server.dumpFilename.slide}"/>
-		<delete file="${sql}/${server.dumpFilename.fenix}.zip"/>
-		<delete file="${sql}/${server.dumpFilename.slide}.zip"/>
-        <sql
-            driver="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost/${db.name}"
-            userid="${db.user}"
-            password="${db.pass}"
-            encoding="${encoding}"
-            src="${sql}/${fenix.dump.sql}"
-        >
-            <classpath>
-                <fileset dir="${lib}">
-                    <include name="**/*.jar"/>
-                </fileset>
-            </classpath>
-        </sql>
-
-        <sql
-            driver="${db.slide.driver}"
-            url="${db.slide.alias}"
-            userid="${db.slide.user}"
-            password="${db.slide.pass}"
-            encoding="${encoding}"
-            src="${sql}/${slide.dump.sql}"
-        >
-            <classpath>
-                <fileset dir="${lib}">
-                    <include name="**/*.jar"/>
-                </fileset>
-            </classpath>
-        </sql>
+			</classpath>
+		</java>
     </target>
 
 </project>
