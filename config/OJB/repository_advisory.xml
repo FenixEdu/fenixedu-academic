@@ -61,5 +61,10 @@
 		<fk-pointing-to-element-class column="KEY_PERSON" />
 		<fk-pointing-to-this-class column="KEY_ADVISORY" />
 	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="distributedTestsAdvisories"
+			element-class-ref="net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory">
+		<inverse-foreignkey field-ref="keyAdvisory"/>
+	</collection-descriptor>
 </class-descriptor>
 <!-- Mapping of User defined classses ends here -->
