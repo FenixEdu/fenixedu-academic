@@ -4,10 +4,8 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests;
 
-import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.ITestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;

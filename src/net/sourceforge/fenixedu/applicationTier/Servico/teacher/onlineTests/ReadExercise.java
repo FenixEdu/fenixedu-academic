@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoMetadata;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoMetadataWithVisibleQuestions;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteExercise;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
