@@ -8,12 +8,12 @@ import java.util.Calendar;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.domain.DistributedTest;
-import net.sourceforge.fenixedu.domain.IDistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;

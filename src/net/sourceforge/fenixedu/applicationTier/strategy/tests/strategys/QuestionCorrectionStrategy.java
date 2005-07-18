@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentTestQuestion;
+import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.CardinalityType;
 import net.sourceforge.fenixedu.util.tests.QuestionOption;
 import net.sourceforge.fenixedu.util.tests.RenderChoise;
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
 
 /**
  * @author Susana Fernandes
- *  
+ * 
  */
 public abstract class QuestionCorrectionStrategy implements IQuestionCorrectionStrategy {
 
@@ -85,8 +85,7 @@ public abstract class QuestionCorrectionStrategy implements IQuestionCorrectionS
     public String validResponse(InfoStudentTestQuestion infoStudentTestQuestion) {
 
         if (infoStudentTestQuestion.getQuestion().getQuestionType().getRender() instanceof RenderFIB) {
-            RenderFIB renderFIB = (RenderFIB) infoStudentTestQuestion.getQuestion().getQuestionType()
-                    .getRender();
+            RenderFIB renderFIB = (RenderFIB) infoStudentTestQuestion.getQuestion().getQuestionType().getRender();
             try {
                 if (renderFIB.getFibtype().intValue() == RenderFIB.INTEGER_CODE)
                     new Integer(((ResponseNUM) infoStudentTestQuestion.getResponse()).getResponse());
@@ -94,20 +93,14 @@ public abstract class QuestionCorrectionStrategy implements IQuestionCorrectionS
                     new Double(((ResponseNUM) infoStudentTestQuestion.getResponse()).getResponse());
                 }
             } catch (NumberFormatException ex) {
-                return new String("Pergunta "
-                        + infoStudentTestQuestion.getTestQuestionOrder().toString()
-                        + ": Formato de resposta inválido");
+                return new String("Pergunta " + infoStudentTestQuestion.getTestQuestionOrder().toString() + ": Formato de resposta inválido");
             }
         } else if (infoStudentTestQuestion.getQuestion().getQuestionType().getRender() instanceof RenderChoise) {
-            if (infoStudentTestQuestion.getQuestion().getQuestionType().getCardinalityType().getType()
-                    .equals(new Integer(CardinalityType.MULTIPLE))) {
-                int emptyOptionIndex = getEmptyOptionIndex(infoStudentTestQuestion.getQuestion()
-                        .getOptions());
+            if (infoStudentTestQuestion.getQuestion().getQuestionType().getCardinalityType().getType().equals(new Integer(CardinalityType.MULTIPLE))) {
+                int emptyOptionIndex = getEmptyOptionIndex(infoStudentTestQuestion.getQuestion().getOptions());
                 if (emptyOptionIndex != -1) {
-                    if (responseIsEmptyAndOther(((ResponseLID) infoStudentTestQuestion.getResponse())
-                            .getResponse(), emptyOptionIndex))
-                        return new String("Pergunta "
-                                + infoStudentTestQuestion.getTestQuestionOrder().toString()
+                    if (responseIsEmptyAndOther(((ResponseLID) infoStudentTestQuestion.getResponse()).getResponse(), emptyOptionIndex))
+                        return new String("Pergunta " + infoStudentTestQuestion.getTestQuestionOrder().toString()
                                 + ": Não pode responder \"Nenhuma\" e uma opção em simultâneo");
                 }
 

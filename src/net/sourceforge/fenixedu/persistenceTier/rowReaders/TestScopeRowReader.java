@@ -8,20 +8,20 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.ITestScope;
+import net.sourceforge.fenixedu.domain.onlineTests.ITestScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import net.sourceforge.fenixedu.persistenceTier.OJB.FenixRowReader;
 
-import org.apache.ojb.broker.accesslayer.RowReaderDefaultImpl;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
 
 /**
  * 
  * @author Susana Fernandes
- *  
+ * 
  */
-public class TestScopeRowReader extends RowReaderDefaultImpl {
+public class TestScopeRowReader extends FenixRowReader {
 
     public TestScopeRowReader(ClassDescriptor arg0) {
         super(arg0);
@@ -34,9 +34,8 @@ public class TestScopeRowReader extends RowReaderDefaultImpl {
             try {
                 persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-                IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
-                        .getIPersistentExecutionCourse().readByOID(ExecutionCourse.class,
-                                testScope.getKeyClass());
+                IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOID(
+                        ExecutionCourse.class, testScope.getKeyClass());
                 testScope.setDomainObject(executionCourse);
             } catch (ExcepcaoPersistencia e) {
                 return testScope;

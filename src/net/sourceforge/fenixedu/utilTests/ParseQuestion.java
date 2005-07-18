@@ -16,8 +16,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoQuestion;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentTestQuestion;
+import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
+import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.CardinalityType;
 import net.sourceforge.fenixedu.util.tests.QuestionOption;
 import net.sourceforge.fenixedu.util.tests.QuestionType;

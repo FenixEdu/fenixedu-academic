@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.dataTransferObject.comparators;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoMetadata;
+import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoMetadata;
 import net.sourceforge.fenixedu.util.tests.QuestionDifficultyType;
 
 /**

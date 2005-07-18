@@ -43,11 +43,9 @@ import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentAnnouncement;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupPropertiesExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentMetadata;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
@@ -59,6 +57,8 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseReport;
+import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
+import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -140,7 +140,7 @@ public class MergeExecutionCourses implements IService {
         IPersistentDistributedTest persistentDistributedTest = ps.getIPersistentDistributedTest();
         try {
             List metadatas = persistentMetadata.readByExecutionCourse(source);
-            List distributedTests = persistentDistributedTest.readByTestScopeObject(source);
+            List distributedTests = persistentDistributedTest.readByTestScope(source.getClass().getName(), source.getIdInternal());
             distributedTestAuthorization = (metadatas == null || metadatas.isEmpty())
                     && (distributedTests == null || distributedTests.isEmpty());
 

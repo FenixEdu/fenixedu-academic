@@ -49,6 +49,16 @@ import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersist
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkHistoric;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkRequests;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentMoneyCostCenter;
+import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
+import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTestAdvisory;
+import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
+import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentOnlineTest;
+import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
+import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestLog;
+import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
+import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTest;
+import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;
+import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestScope;
 import net.sourceforge.fenixedu.persistenceTier.places.campus.IPersistentCampus;
 import net.sourceforge.fenixedu.persistenceTier.projectsManagement.IPersistentProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthor;

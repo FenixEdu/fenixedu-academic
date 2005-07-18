@@ -19,7 +19,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import net.sourceforge.fenixedu.domain.IMetadata;
+import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -63,8 +63,7 @@ public class ParseMetadata extends DefaultHandler {
         return getMembers();
     }
 
-    public IMetadata parseMetadata(String file, IMetadata metadata, String path) throws IOException,
-            ParserConfigurationException, SAXException {
+    public IMetadata parseMetadata(String file, IMetadata metadata, String path) throws IOException, ParserConfigurationException, SAXException {
         SAXParserFactory spf = SAXParserFactory.newInstance();
         spf.setValidating(true);
         SAXParser saxParser = spf.newSAXParser();
@@ -129,7 +128,7 @@ public class ParseMetadata extends DefaultHandler {
         while (it.hasNext()) {
             Element element = (Element) it.next();
             String tag = element.getQName();
-            //Attributes atts = element.getAttributes();
+            // Attributes atts = element.getAttributes();
             if ((tag.equals("difficulty"))) {
                 difficulty = true;
                 mainsubject = false;
@@ -176,8 +175,7 @@ public class ParseMetadata extends DefaultHandler {
                 author = false;
                 secondarysubject = false;
                 typicallearningtime = true;
-            } else if ((tag.equals("value"))
-                    && (difficulty == true || mainsubject == true || secondarysubject == true)) {
+            } else if ((tag.equals("value")) && (difficulty == true || mainsubject == true || secondarysubject == true)) {
                 value = true;
             } else if ((tag.equals("langstring")) && difficulty == true && value == true) {
                 metadata.setDifficulty(element.getValue());
@@ -228,7 +226,7 @@ public class ParseMetadata extends DefaultHandler {
         while (it.hasNext()) {
             Element element = (Element) it.next();
             String tag = element.getQName();
-            //Attributes atts = element.getAttributes();
+            // Attributes atts = element.getAttributes();
             if ((tag.equals("location")))
                 result.add(element.getValue());
         }

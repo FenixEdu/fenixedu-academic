@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.IMS_LID
 import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.IMS_NUMQuestionCorrectionStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.IMS_STRQuestionCorrectionStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys.IQuestionCorrectionStrategy;
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentTestQuestion;
+import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 

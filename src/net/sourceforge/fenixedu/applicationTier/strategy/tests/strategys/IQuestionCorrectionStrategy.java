@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.strategy.tests.strategys;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoStudentTestQuestion;
+import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 
 /**
  * @author Susana Fernandes
