@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCampus;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.dataTransferObject.InfoClassWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinator;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;

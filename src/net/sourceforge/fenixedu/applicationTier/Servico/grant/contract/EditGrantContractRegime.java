@@ -9,16 +9,12 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.GrantOrientationTeacherNotFoundException;
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
-import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
-import net.sourceforge.fenixedu.dataTransferObject.InfoEmployee;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractRegime;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantInsurance;
 import net.sourceforge.fenixedu.domain.IDomainObject;
-import net.sourceforge.fenixedu.domain.IEmployee;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Person;
@@ -169,7 +165,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
                     	IPerson person = (IPerson)persistentPerson.readByOID(Person.class,teacher.getPerson().getIdInternal() );
                     	infoTeacher.setTeacherNumber(teacher.getTeacherNumber());
                     	InfoPerson infoPerson = new InfoPerson();
-                    	infoPerson = (InfoPerson) getInfoPerson(person);
+                    	infoPerson = getInfoPerson(person);
                     	infoTeacher.setInfoPerson(infoPerson);
                     //InfoTeacherWithPerson.newInfoFromDomain(grantOrientationTeacher.getOrientationTeacher()); //
                     }else{
@@ -178,7 +174,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
                     	IPerson person = (IPerson)persistentPerson.readByOID(Person.class,teacher.getPerson().getIdInternal() );
                     	infoTeacher.setTeacherNumber(teacher.getTeacherNumber());
                     	InfoPerson infoPerson = new InfoPerson();
-                    	infoPerson = (InfoPerson) getInfoPerson(person);
+                    	infoPerson = getInfoPerson(person);
                     	infoTeacher.setInfoPerson(infoPerson);
                         //infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);                    
                     }

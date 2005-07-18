@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidy;
-import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidyWithContract;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
@@ -19,7 +18,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.IGrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantSubsidy;

@@ -4,15 +4,11 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.person.qualification;
 
-import org.dbunit.database.statement.IBatchStatement;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualificationWithPersonAndCountry;
-import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.ICountry;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.IPerson;

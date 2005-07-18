@@ -8,10 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObje
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoStudentCourseReport;
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.ICountry;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IDomainObject;
-import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.gesdis.IStudentCourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;

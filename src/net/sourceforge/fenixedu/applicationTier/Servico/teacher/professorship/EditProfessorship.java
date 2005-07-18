@@ -4,12 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 
-import sun.security.krb5.internal.p;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;

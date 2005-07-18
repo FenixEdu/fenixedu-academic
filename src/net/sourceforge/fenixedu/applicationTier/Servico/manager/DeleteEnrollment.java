@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.utils.enrolment.DeleteEnrolmentUtils;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;

@@ -59,7 +59,7 @@ public class EditGrantPaymentEntity extends EditDomainObjectService implements
 			if (infoGrantProject.getInfoResponsibleTeacher() != null) {
 				IPersistentTeacher persistentTeacher = sp
 						.getIPersistentTeacher();
-				ITeacher teacher = (ITeacher) persistentTeacher
+				ITeacher teacher = persistentTeacher
 						.readByNumber(infoGrantProject
 								.getInfoResponsibleTeacher().getTeacherNumber());
 				if (teacher == null)
@@ -70,7 +70,7 @@ public class EditGrantPaymentEntity extends EditDomainObjectService implements
 			if (infoGrantProject.getInfoGrantCostCenter() != null) {
 				IPersistentGrantCostCenter persistentGrantCostCenter = sp
 						.getIPersistentGrantCostCenter();
-				IGrantCostCenter grantCostCenter = (IGrantCostCenter) persistentGrantCostCenter
+				IGrantCostCenter grantCostCenter = persistentGrantCostCenter
 						.readGrantCostCenterByNumber(infoGrantProject
 								.getInfoGrantCostCenter().getNumber());
 				if (grantCostCenter == null)
@@ -89,7 +89,7 @@ public class EditGrantPaymentEntity extends EditDomainObjectService implements
 			if (infoGrantCostCenter.getInfoResponsibleTeacher() != null) {
 				IPersistentTeacher persistentTeacher = sp
 						.getIPersistentTeacher();
-				ITeacher teacher = (ITeacher) persistentTeacher
+				ITeacher teacher = persistentTeacher
 						.readByNumber(infoGrantCostCenter
 								.getInfoResponsibleTeacher().getTeacherNumber());
 				if (teacher == null)
