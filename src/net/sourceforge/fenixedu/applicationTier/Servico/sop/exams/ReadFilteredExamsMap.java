@@ -57,8 +57,6 @@ public class ReadFilteredExamsMap implements IService {
         infoExamsMap.setCurricularYears(curricularYears);
 
         // Translate to execute following queries
-        //IExecutionPeriod executionPeriod = InfoExecutionPeriod.newDomainFromInfo(infoExecutionPeriod);
-
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
 
@@ -100,8 +98,7 @@ public class ReadFilteredExamsMap implements IService {
             // Obtain list os execution courses
             List executionCourses = sp.getIPersistentExecutionCourse()
                     .readByCurricularYearAndExecutionPeriodAndExecutionDegree(
-                            (Integer) curricularYears.get(i), 
-                            infoExecutionPeriod.getSemester(), 
+                            (Integer) curricularYears.get(i), infoExecutionPeriod.getSemester(),
                             executionDegree.getDegreeCurricularPlan().getName(),
                             executionDegree.getDegreeCurricularPlan().getDegree().getSigla(),
                             infoExecutionPeriod.getIdInternal());
@@ -147,8 +144,8 @@ public class ReadFilteredExamsMap implements IService {
                                 curricularCourseIDs.add(infoCurricularCourse.getIdInternal());
                                 int numberEnroledStudentsInCurricularCourse = persistentEnrolment
                                         .countEnrolmentsByCurricularCourseAndExecutionPeriod(
-                                                infoCurricularCourse.getIdInternal(), infoExecutionPeriod
-                                                        .getIdInternal());
+                                                infoCurricularCourse.getIdInternal(),
+                                                infoExecutionPeriod.getIdInternal());
 
                                 numberOfStudentsForExam += numberEnroledStudentsInCurricularCourse;
                             }
@@ -163,34 +160,33 @@ public class ReadFilteredExamsMap implements IService {
                     for (int h = 0; h < associatedCurricularCourseScope.size(); h++) {
                         InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) associatedCurricularCourseScope
                                 .get(h);
-                      boolean isCurricularYearEqual = false;
-                    
-                      if(infoCurricularCourseScope!=null){                    
-                        InfoCurricularYear infoCurricularYear = infoCurricularCourseScope
-                                .getInfoCurricularSemester().getInfoCurricularYear();
+                        boolean isCurricularYearEqual = false;
 
-                        isCurricularYearEqual = infoCurricularYear.getYear().equals(
-                                curricularYears.get(i));
-                     
+                        if (infoCurricularCourseScope != null) {
+                            InfoCurricularYear infoCurricularYear = infoCurricularCourseScope
+                                    .getInfoCurricularSemester().getInfoCurricularYear();
 
-                        // obter o curricular plan a partir do curricular
-                        // course scope
-                        InfoDegreeCurricularPlan degreeCurricularPlanFromScope = infoCurricularCourseScope
-                                .getInfoCurricularCourse().getInfoDegreeCurricularPlan();
+                            isCurricularYearEqual = infoCurricularYear.getYear().equals(
+                                    curricularYears.get(i));
 
-                        // obter o curricular plan a partir do info degree
-                        InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree
-                                .getInfoDegreeCurricularPlan();
+                            // obter o curricular plan a partir do curricular
+                            // course scope
+                            InfoDegreeCurricularPlan degreeCurricularPlanFromScope = infoCurricularCourseScope
+                                    .getInfoCurricularCourse().getInfoDegreeCurricularPlan();
 
-                        boolean isCurricularPlanEqual = degreeCurricularPlanFromScope
-                                .equals(infoDegreeCurricularPlan);
+                            // obter o curricular plan a partir do info degree
+                            InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree
+                                    .getInfoDegreeCurricularPlan();
 
-                        if (isCurricularYearEqual && isCurricularPlanEqual
-                                && !associatedInfoExams.contains(infoExam)) {
-                            associatedInfoExams.add(infoExam);
-                            break;
+                            boolean isCurricularPlanEqual = degreeCurricularPlanFromScope
+                                    .equals(infoDegreeCurricularPlan);
+
+                            if (isCurricularYearEqual && isCurricularPlanEqual
+                                    && !associatedInfoExams.contains(infoExam)) {
+                                associatedInfoExams.add(infoExam);
+                                break;
+                            }
                         }
-                      } 
                     }
                 }
                 infoExecutionCourse.setAssociatedInfoExams(associatedInfoExams);

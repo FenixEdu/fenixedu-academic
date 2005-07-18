@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop.exams;
 
 /**
  * @author Ana & Ricardo
- *  
+ * 
  */
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,162 +36,146 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadFilteredExamsMapList implements IService {
 
-	public InfoExamsMap run(List infoExecutionDegreeList, List curricularYears,
-			   InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia {
-        final ISuportePersistente persistentSuppot = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentExecutionDegree persistentExecutionDegree = persistentSuppot.getIPersistentExecutionDegree();
+    public InfoExamsMap run(List infoExecutionDegreeList, List curricularYears,
+            InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia {
+        final ISuportePersistente persistentSuppot = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+        final IPersistentExecutionDegree persistentExecutionDegree = persistentSuppot
+                .getIPersistentExecutionDegree();
 
-		   // Object to be returned
-		   InfoExamsMap infoExamsMap = new InfoExamsMap();
+        // Object to be returned
+        InfoExamsMap infoExamsMap = new InfoExamsMap();
 
-		   // Set Execution Degree
-		   InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList.get(0);
-		   infoExamsMap.setInfoExecutionDegree(infoExecutionDegree);
+        // Set Execution Degree
+        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList.get(0);
+        infoExamsMap.setInfoExecutionDegree(infoExecutionDegree);
 
-		   // Set List of Curricular Years
-		   infoExamsMap.setCurricularYears(curricularYears);
- 
-           final IExecutionDegree executionDegreeFromDB = (IExecutionDegree) persistentExecutionDegree.readByOID(ExecutionDegree.class, infoExecutionDegree.getIdInternal());
+        // Set List of Curricular Years
+        infoExamsMap.setCurricularYears(curricularYears);
 
-           final Calendar startSeason1;
-           final Calendar endSeason2;
-           if (infoExecutionPeriod.getSemester().intValue() == 1) {
-               startSeason1 = executionDegreeFromDB.getPeriodExamsFirstSemester().getStartDate();
-               endSeason2 = executionDegreeFromDB.getPeriodExamsFirstSemester().getEndDate();
-           } else {
-               startSeason1 = executionDegreeFromDB.getPeriodExamsSecondSemester().getStartDate();
-               endSeason2 = executionDegreeFromDB.getPeriodExamsSecondSemester().getEndDate();
-           }
+        final IExecutionDegree executionDegreeFromDB = (IExecutionDegree) persistentExecutionDegree
+                .readByOID(ExecutionDegree.class, infoExecutionDegree.getIdInternal());
 
-		   // Set Exam Season info
-		   infoExamsMap.setStartSeason1(startSeason1);
-		   infoExamsMap.setEndSeason1(null);
-		   infoExamsMap.setStartSeason2(null);
-		   infoExamsMap.setEndSeason2(endSeason2);
-           //List executionDegreeList=new ArrayList(); 
-		   // Translate to execute following queries
-           
-//		   for (int i = 0; i < infoExecutionDegreeList.size(); i++) {
-//		       IExecutionDegree executionDegree = InfoExecutionDegreeWithInfoDegreeCurricularPlan
-//				  .newDomainFromInfo((InfoExecutionDegree)infoExecutionDegreeList.get(i));
-//		       executionDegreeList.add(infoExecutionDegree);
-//		   }	
-		   
-           //IExecutionPeriod executionPeriod = InfoExecutionPeriod.newDomainFromInfo(infoExecutionPeriod);
-		
-		   try {
-			   ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-			   IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
+        final Calendar startSeason1;
+        final Calendar endSeason2;
+        if (infoExecutionPeriod.getSemester().intValue() == 1) {
+            startSeason1 = executionDegreeFromDB.getPeriodExamsFirstSemester().getStartDate();
+            endSeason2 = executionDegreeFromDB.getPeriodExamsFirstSemester().getEndDate();
+        } else {
+            startSeason1 = executionDegreeFromDB.getPeriodExamsSecondSemester().getStartDate();
+            endSeason2 = executionDegreeFromDB.getPeriodExamsSecondSemester().getEndDate();
+        }
 
-			   // List of execution courses
-			   List infoExecutionCourses = new ArrayList();
+        // Set Exam Season info
+        infoExamsMap.setStartSeason1(startSeason1);
+        infoExamsMap.setEndSeason1(null);
+        infoExamsMap.setStartSeason2(null);
+        infoExamsMap.setEndSeason2(endSeason2);
 
-			   // Obtain execution courses and associated information
-			   // of the given execution degree for each curricular year specified
-			   for (int i = 0; i < curricularYears.size(); i++) {
-				   // Obtain list os execution courses
-//				   List executionCourses = sp.getIPersistentExecutionCourse()
-//						   .readByCurricularYearAndExecutionPeriodAndExecutionDegree(
-//								   (Integer) curricularYears.get(i), executionPeriod, executionDegree);
-				for (int n = 0; n < infoExecutionDegreeList.size(); n++) {
-					InfoExecutionDegree infoExecucaoDegree = (InfoExecutionDegree)infoExecutionDegreeList.get(n);
-					List executionCourses = sp.getIPersistentExecutionCourse()
-										   .readByCurricularYearAndExecutionPeriodAndExecutionDegree(
-                                                   (Integer) curricularYears.get(i),
-                                                   infoExecutionPeriod.getSemester(),
-                                                   infoExecucaoDegree.getInfoDegreeCurricularPlan().getName(),
-                                                   infoExecucaoDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla(),
-                                                   infoExecutionPeriod.getIdInternal());
-				
-				   // For each execution course obtain curricular courses and
-				   // exams
-				   for (int j = 0; j < executionCourses.size(); j++) {
-					   InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriodAndExams
-							   .newInfoFromDomain((IExecutionCourse) executionCourses.get(j));
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
 
-					   infoExecutionCourse.setCurricularYear((Integer) curricularYears.get(i));
+        // List of execution courses
+        List infoExecutionCourses = new ArrayList();
 
-					   List associatedInfoCurricularCourses = new ArrayList();
-					   List associatedCurricularCourses = ((IExecutionCourse) executionCourses.get(j))
-							   .getAssociatedCurricularCourses();
+        // Obtain execution courses and associated information
+        // of the given execution degree for each curricular year specified
+        for (int i = 0; i < curricularYears.size(); i++) {
+            // Obtain list os execution courses
+            for (int n = 0; n < infoExecutionDegreeList.size(); n++) {
+                InfoExecutionDegree infoExecucaoDegree = (InfoExecutionDegree) infoExecutionDegreeList
+                        .get(n);
+                List executionCourses = sp.getIPersistentExecutionCourse()
+                        .readByCurricularYearAndExecutionPeriodAndExecutionDegree(
+                                (Integer) curricularYears.get(i),
+                                infoExecutionPeriod.getSemester(),
+                                infoExecucaoDegree.getInfoDegreeCurricularPlan().getName(),
+                                infoExecucaoDegree.getInfoDegreeCurricularPlan().getInfoDegree()
+                                        .getSigla(), infoExecutionPeriod.getIdInternal());
 
-                       // Curricular courses
-					   for (int k = 0; k < associatedCurricularCourses.size(); k++) {
-						   InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
-								   .newInfoFromDomain((ICurricularCourse) associatedCurricularCourses
-										   .get(k));
-                                
-						   associatedInfoCurricularCourses.add(infoCurricularCourse);
-					   }
-					   infoExecutionCourse
-							   .setAssociatedInfoCurricularCourses(associatedInfoCurricularCourses);
+                // For each execution course obtain curricular courses and
+                // exams
+                for (int j = 0; j < executionCourses.size(); j++) {
+                    InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriodAndExams
+                            .newInfoFromDomain((IExecutionCourse) executionCourses.get(j));
 
-					   List associatedInfoExams = new ArrayList();
-					   List associatedExams = ((IExecutionCourse) executionCourses.get(j))
-							   .getAssociatedExams();
-					   // Exams
-					   for (int k = 0; k < associatedExams.size(); k++) {
-						   if (!(associatedExams.get(k) instanceof IExam)) {
-							   continue;
-						   }
+                    infoExecutionCourse.setCurricularYear((Integer) curricularYears.get(i));
 
-						   InfoExam infoExam = InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear
-								   .newInfoFromDomain((IExam) associatedExams.get(k));
-						   int numberOfStudentsForExam = 0;
-						   List curricularCourseIDs = new ArrayList();
-						   for (int l = 0; l < infoExam.getAssociatedCurricularCourseScope().size(); l++) {
-							   InfoCurricularCourseScope scope = (InfoCurricularCourseScope) infoExam
-									   .getAssociatedCurricularCourseScope().get(l);
-							   InfoCurricularCourse infoCurricularCourse = scope.getInfoCurricularCourse();
-							   if (!curricularCourseIDs.contains(infoCurricularCourse.getIdInternal())) {
-								   curricularCourseIDs.add(infoCurricularCourse.getIdInternal());
-								   int numberEnroledStudentsInCurricularCourse = persistentEnrolment
-										   .countEnrolmentsByCurricularCourseAndExecutionPeriod(
-												   infoCurricularCourse.getIdInternal(), infoExecutionPeriod
-														   .getIdInternal());
+                    List associatedInfoCurricularCourses = new ArrayList();
+                    List associatedCurricularCourses = ((IExecutionCourse) executionCourses.get(j))
+                            .getAssociatedCurricularCourses();
 
-								   numberOfStudentsForExam += numberEnroledStudentsInCurricularCourse;
-							   }
-						   }
+                    // Curricular courses
+                    for (int k = 0; k < associatedCurricularCourses.size(); k++) {
+                        InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
+                                .newInfoFromDomain((ICurricularCourse) associatedCurricularCourses
+                                        .get(k));
 
-						   infoExam.setEnrolledStudents(new Integer(numberOfStudentsForExam));
+                        associatedInfoCurricularCourses.add(infoCurricularCourse);
+                    }
+                    infoExecutionCourse
+                            .setAssociatedInfoCurricularCourses(associatedInfoCurricularCourses);
 
-						   List associatedCurricularCourseScope = new ArrayList();
-						   associatedCurricularCourseScope = infoExam.getAssociatedCurricularCourseScope();
+                    List associatedInfoExams = new ArrayList();
+                    List associatedExams = ((IExecutionCourse) executionCourses.get(j))
+                            .getAssociatedExams();
+                    // Exams
+                    for (int k = 0; k < associatedExams.size(); k++) {
+                        if (!(associatedExams.get(k) instanceof IExam)) {
+                            continue;
+                        }
 
-						   for (int h = 0; h < associatedCurricularCourseScope.size(); h++) {
-							   InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) associatedCurricularCourseScope
-									   .get(h);
+                        InfoExam infoExam = InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear
+                                .newInfoFromDomain((IExam) associatedExams.get(k));
+                        int numberOfStudentsForExam = 0;
+                        List curricularCourseIDs = new ArrayList();
+                        for (int l = 0; l < infoExam.getAssociatedCurricularCourseScope().size(); l++) {
+                            InfoCurricularCourseScope scope = (InfoCurricularCourseScope) infoExam
+                                    .getAssociatedCurricularCourseScope().get(l);
+                            InfoCurricularCourse infoCurricularCourse = scope.getInfoCurricularCourse();
+                            if (!curricularCourseIDs.contains(infoCurricularCourse.getIdInternal())) {
+                                curricularCourseIDs.add(infoCurricularCourse.getIdInternal());
+                                int numberEnroledStudentsInCurricularCourse = persistentEnrolment
+                                        .countEnrolmentsByCurricularCourseAndExecutionPeriod(
+                                                infoCurricularCourse.getIdInternal(),
+                                                infoExecutionPeriod.getIdInternal());
 
-							   InfoCurricularYear infoCurricularYear = infoCurricularCourseScope
-									   .getInfoCurricularSemester().getInfoCurricularYear();
+                                numberOfStudentsForExam += numberEnroledStudentsInCurricularCourse;
+                            }
+                        }
 
-							   boolean isCurricularYearEqual = infoCurricularYear.getYear().equals(
-									   curricularYears.get(i));
+                        infoExam.setEnrolledStudents(new Integer(numberOfStudentsForExam));
 
-//							   boolean isCurricularPlanEqual = degreeCurricularPlanFromScope
-//									   .equals(infoDegreeCurricularPlan);
-							   boolean isCurricularPlanEqual = true;
-							   if (isCurricularYearEqual && isCurricularPlanEqual
-									   && !associatedInfoExams.contains(infoExam)) {
-								   associatedInfoExams.add(infoExam);
-								   break;
-							   }
-						   }
-					   }
-					   infoExecutionCourse.setAssociatedInfoExams(associatedInfoExams);
+                        List associatedCurricularCourseScope = new ArrayList();
+                        associatedCurricularCourseScope = infoExam.getAssociatedCurricularCourseScope();
 
+                        for (int h = 0; h < associatedCurricularCourseScope.size(); h++) {
+                            InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) associatedCurricularCourseScope
+                                    .get(h);
 
-					   infoExecutionCourses.add(infoExecutionCourse);
-				   }
-				   }
-			   }
-			   infoExamsMap.setExecutionCourses(infoExecutionCourses);
-		   } catch (ExcepcaoPersistencia ex) {
-			   ex.printStackTrace();
-		   }
+                            InfoCurricularYear infoCurricularYear = infoCurricularCourseScope
+                                    .getInfoCurricularSemester().getInfoCurricularYear();
 
-		   return infoExamsMap;
-	   }
+                            boolean isCurricularYearEqual = infoCurricularYear.getYear().equals(
+                                    curricularYears.get(i));
+
+                            boolean isCurricularPlanEqual = true;
+                            if (isCurricularYearEqual && isCurricularPlanEqual
+                                    && !associatedInfoExams.contains(infoExam)) {
+                                associatedInfoExams.add(infoExam);
+                                break;
+                            }
+                        }
+                    }
+                    infoExecutionCourse.setAssociatedInfoExams(associatedInfoExams);
+
+                    infoExecutionCourses.add(infoExecutionCourse);
+                }
+            }
+        }
+        infoExamsMap.setExecutionCourses(infoExecutionCourses);
+
+        return infoExamsMap;
+    }
 
 }
