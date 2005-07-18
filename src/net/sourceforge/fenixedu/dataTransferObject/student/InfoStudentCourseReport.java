@@ -135,22 +135,6 @@ public class InfoStudentCourseReport extends InfoObject {
         return infoStudentCourseReport;
     }
     
-    public void copyToDomain(InfoStudentCourseReport infoStudentCourseReport,
-            IStudentCourseReport studentCourseReport) {
-        super.copyToDomain(infoStudentCourseReport, studentCourseReport);
-
-        studentCourseReport.setStrongPoints(infoStudentCourseReport.getStrongPoints());
-        studentCourseReport.setWeakPoints(infoStudentCourseReport.getWeakPoints());
-        studentCourseReport.setStudentReport(infoStudentCourseReport.getStudentReport());
-        studentCourseReport.setLastModificationDate(infoStudentCourseReport.getLastModificationDate());
-
-        if (infoStudentCourseReport.getInfoCurricularCourse() != null) {
-            studentCourseReport.setCurricularCourse(InfoCurricularCourse
-                    .newDomainFromInfo(infoStudentCourseReport.getInfoCurricularCourse()));
-            studentCourseReport.setKeyCurricularCourse(studentCourseReport.getCurricularCourse().getIdInternal());
-        }
-    }
-    
     public static IStudentCourseReport newDomainFromInfo(
             InfoStudentCourseReport infoStudentCourseReport) {
         IStudentCourseReport studentCourseReport = null;
