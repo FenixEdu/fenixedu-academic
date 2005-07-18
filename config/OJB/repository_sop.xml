@@ -871,7 +871,7 @@
     <extent-class class-ref="net.sourceforge.fenixedu.domain.WrittenTest" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.WrittenEvaluation" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.FinalEvaluation" />
-    <extent-class class-ref="net.sourceforge.fenixedu.domain.OnlineTest" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.onlineTests.OnlineTest" />
       <field-descriptor
          name="idInternal"
          column="ID_INTERNAL"
