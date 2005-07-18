@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -19,6 +18,7 @@ import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.Guide;
+import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.IContributor;
@@ -110,10 +110,9 @@ public class CreateGuide implements IService {
         }
 
         // Write the new Entries of the Guide
-        Iterator iterator = infoGuide.getInfoGuideEntries().iterator();
-        while (iterator.hasNext()) {
-            IGuideEntry guideEntry = InfoGuideEntry.newDomainFromInfo((InfoGuideEntry) iterator.next());
-            sp.getIPersistentGuideEntry().simpleLockWrite(guideEntry);
+        for (InfoGuideEntry infoGuideEntryIter : (List<InfoGuideEntry>) infoGuide.getInfoGuideEntries()) {
+            IGuideEntry guideEntry = new GuideEntry();
+            infoGuideEntryIter.copyToDomain(infoGuideEntryIter, guideEntry);
             guideEntry.setGuide(guide);
         }
 
