@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GraduationType;
-import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.IGuideEntry;
 
 /**
@@ -149,11 +148,6 @@ public class InfoGuideEntry extends InfoObject {
         quantity = integer;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
-     */
     public void copyFromDomain(IGuideEntry guideEntry) {
         super.copyFromDomain(guideEntry);
         if (guideEntry != null) {
@@ -171,30 +165,16 @@ public class InfoGuideEntry extends InfoObject {
             infoGuideEntry = new InfoGuideEntry();
             infoGuideEntry.copyFromDomain(guideEntry);
         }
-
         return infoGuideEntry;
     }
-    
+
     public void copyToDomain(InfoGuideEntry infoGuideEntry, IGuideEntry guideEntry) {
         super.copyToDomain(infoGuideEntry, guideEntry);
-        
         guideEntry.setDescription(infoGuideEntry.getDescription());
         guideEntry.setDocumentType(infoGuideEntry.getDocumentType());
         guideEntry.setGraduationType(infoGuideEntry.getGraduationType());
-//        guideEntry.setGuide(null);
         guideEntry.setPrice(infoGuideEntry.getPrice());
         guideEntry.setQuantity(infoGuideEntry.getQuantity());
-//        guideEntry.setReimbursementGuideEntries(null);
-        
     }
 
-    public static IGuideEntry newDomainFromInfo(InfoGuideEntry infoGuideEntry) {
-        IGuideEntry guideEntry = null;
-
-        if (infoGuideEntry != null) {
-            guideEntry = new GuideEntry();
-            infoGuideEntry.copyToDomain(infoGuideEntry, guideEntry);
-        }
-        return guideEntry;
-    }
 }
