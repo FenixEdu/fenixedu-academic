@@ -31,6 +31,20 @@
 		</java>
     </target>
 
+    <target name="initialize-database"
+    		description="Generate sql schema for fenix database."
+    		depends="compile">
+		<java classname="pt.utl.ist.codeGenerator.database.DataInitializer" fork="true">
+			<classpath>
+				<pathelement path="${build.home.temp.classes}"/>
+				<pathelement path="${build.home.webinf.classes}"/>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+			</classpath>
+		</java>
+    </target>
+
     <target name="generate-fenix-xls"
     		description="Generate xls schema for fenix database."
     		depends="compile">

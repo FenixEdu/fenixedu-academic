@@ -9,11 +9,11 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 public class DataInitializer {
 
-    private static final ISuportePersistente persistentSupport = null;
+    private static ISuportePersistente persistentSupport = null;
 
     public static void main(String[] args) {
         try {
-            PersistenceSupportFactory.getDefaultPersistenceSupport();
+            persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentSupport.iniciarTransaccao();
             initialize();
             persistentSupport.confirmarTransaccao();
