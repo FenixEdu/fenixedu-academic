@@ -4,8 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis.student;
 
-import org.w3c.tidy.IStack;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoStudentCourseReport;
