@@ -28,7 +28,7 @@ public class DeleteTest implements IService {
         IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
         IPersistentTestQuestion persistentTestQuestion = persistentSuport.getIPersistentTestQuestion();
         ITest test = (ITest) persistentTest.readByOID(Test.class, testId);
-        List<ITestQuestion> testQuestionList = persistentTestQuestion.readByTest(testId);
+        List<ITestQuestion> testQuestionList = test.getTestQuestions();
         for (ITestQuestion testQuestion : testQuestionList) {
             testQuestion.removeQuestion();
             testQuestion.removeTest();
