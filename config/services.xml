@@ -754,7 +754,7 @@
 	<service>
 		<name>ReadExecutionCoursesByStudentTests</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.student.ReadExecutionCoursesByStudentTests</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.ReadExecutionCoursesByStudentTests</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -763,7 +763,7 @@
 	</service>
 	<service>
 		<name>ReadStudentTests</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentTests</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.ReadStudentTests</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -772,7 +772,7 @@
 	</service>
 	<service>
 		<name>ReadStudentTest</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentTest</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.ReadStudentTest</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -781,7 +781,7 @@
 	</service>
 	<service>
 		<name>ReadStudentTestToDo</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentTest</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.ReadStudentTest</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -790,7 +790,7 @@
 	</service>
 	<service>
 		<name>ReadStudentTestForCorrection</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentTest</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.ReadStudentTest</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -800,7 +800,7 @@
 	<service>
 		<name>ReadStudentTestQuestionImage</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentTestQuestionImage</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.ReadStudentTestQuestionImage</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
@@ -808,7 +808,7 @@
 	<service>
 		<name>InsertStudentTestResponses</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.student.InsertStudentTestResponses</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests.InsertStudentTestResponses</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4337,16 +4337,7 @@
 	</service>
 	<service>
 		<name>ReadMetadatas</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadMetadatas</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadMetadatasByTest</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadMetadatasByTest</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadMetadatas</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4355,7 +4346,7 @@
 	</service>
 	<service>
 		<name>CountMetadatasByExecutionCourse</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CountMetadatasByExecutionCourse</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.CountMetadatasByExecutionCourse</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4364,7 +4355,7 @@
 	</service>
 	<service>
 		<name>ReadQuestion</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadQuestion</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadQuestion</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4373,7 +4364,7 @@
 	</service>
 	<service>
 		<name>ReadTests</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadTests</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadTests</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4382,7 +4373,7 @@
 	</service>
 	<service>
 		<name>InsertTest</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.InsertTest</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.InsertTest</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4391,7 +4382,7 @@
 	</service>
 	<service>
 		<name>InsertTestAsNewTest</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.InsertTestAsNewTest</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.InsertTestAsNewTest</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4400,7 +4391,7 @@
 	</service>
 	<service>
 		<name>DeleteTest</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteTest</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.DeleteTest</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4409,7 +4400,7 @@
 	</service>
 	<service>
 		<name>InsertTestQuestion</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.InsertTestQuestion</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.InsertTestQuestion</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4418,7 +4409,7 @@
 	</service>
 	<service>
 		<name>ReadTest</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadTest</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadTest</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4427,7 +4418,7 @@
 	</service>
 	<service>
 		<name>EditTest</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditTest</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.EditTest</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4436,14 +4427,14 @@
 	</service>
 	<service>
 		<name>ReadQuestionImage</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadQuestionImage</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadQuestionImage</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
 	</service>
 	<service>
 		<name>DeleteTestQuestion</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteTestQuestion</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.DeleteTestQuestion</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4452,7 +4443,7 @@
 	</service>
 	<service>
 		<name>EditTestQuestion</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditTestQuestion</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.EditTestQuestion</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4461,7 +4452,7 @@
 	</service>
 	<service>
 		<name>ReadTestQuestion</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadTestQuestion</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadTestQuestion</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4471,7 +4462,7 @@
 	<service>
 		<name>InsertDistributedTest</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.InsertDistributedTest</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.InsertDistributedTest</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4480,7 +4471,7 @@
 	</service>
 	<service>
 		<name>InsertStudentDistributedTestAdvisory</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.InsertStudentDistributedTestAdvisory</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.InsertStudentDistributedTestAdvisory</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4489,7 +4480,7 @@
 	</service>
 	<service>
 		<name>ReadStudentsByIdArray</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadStudentsByIdArray</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadStudentsByIdArray</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4498,7 +4489,7 @@
 	</service>
 	<service>
 		<name>ReadDistributedTests</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadDistributedTests</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadDistributedTests</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4507,7 +4498,7 @@
 	</service>
 	<service>
 		<name>ReadDistributedTest</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadDistributedTest</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadDistributedTest</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4516,7 +4507,7 @@
 	</service>
 	<service>
 		<name>EditDistributedTest</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditDistributedTest</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.EditDistributedTest</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4525,7 +4516,7 @@
 	</service>
 	<service>
 		<name>AddStudentsToDistributedTest</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.AddStudentsToDistributedTest</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.AddStudentsToDistributedTest</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4534,7 +4525,7 @@
 	</service>
 	<service>
 		<name>ReadStudentsWithDistributedTest</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadStudentsWithDistributedTest</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadStudentsWithDistributedTest</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4543,7 +4534,7 @@
 	</service>
 	<service>
 		<name>VerifyIfCanDeleteDistributedTest</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.VerifyIfCanDeleteDistributedTest</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.VerifyIfCanDeleteDistributedTest</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4552,7 +4543,7 @@
 	</service>
 	<service>
 		<name>DeleteDistributedTest</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteDistributedTest</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.DeleteDistributedTest</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4562,7 +4553,7 @@
 	<service>
 		<name>ReadStudentDistributedTest</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadStudentDistributedTest</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadStudentDistributedTest</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4572,7 +4563,7 @@
 	<service>
 		<name>GenetareStudentTestForSimulation</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.GenetareStudentTestForSimulation</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.GenetareStudentTestForSimulation</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4582,7 +4573,7 @@
 	<service>
 		<name>SimulateTest</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.SimulateTest</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.SimulateTest</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4591,7 +4582,7 @@
 	</service>
 	<service>
 		<name>ReadStudentTestLog</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadStudentTestLog</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadStudentTestLog</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4601,7 +4592,7 @@
 	<service>
 		<name>ReadShiftsByDistributedTest</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadShiftsByDistributedTest</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadShiftsByDistributedTest</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4611,7 +4602,7 @@
 	<service>
 		<name>ReadStudentsWithoutDistributedTest</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadStudentsWithoutDistributedTest</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadStudentsWithoutDistributedTest</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4621,7 +4612,7 @@
 	<service>
 		<name>ReadDistributedTestMarks</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadDistributedTestMarks</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadDistributedTestMarks</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4630,7 +4621,7 @@
 	</service>
 	<service>
 		<name>InsertExercise</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.InsertExercise</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.InsertExercise</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4639,7 +4630,7 @@
 	</service>
 	<service>
 		<name>ReadExercise</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadExercise</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadExercise</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4649,7 +4640,7 @@
 	<service>
 		<name>EditExercise</name>
 		<implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditExercise</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.EditExercise</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4658,7 +4649,7 @@
 	</service>
 	<service>
 		<name>DeleteExercise</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteExercise</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.DeleteExercise</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4668,7 +4659,7 @@
 	<service>
 		<name>ChangeStudentTestQuestion</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.ChangeStudentTestQuestion</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ChangeStudentTestQuestion</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4678,17 +4669,7 @@
 	<service>
 		<name>CreateStudentTestAdvisory</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateStudentTestAdvisory</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="ExecutionCourseLecturingTeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadMetadatasByDistributedTest</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadMetadatasByDistributedTest</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.CreateStudentTestAdvisory</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4698,7 +4679,7 @@
 	<service>
 		<name>ReadDistributedTestMarksToString</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadDistributedTestMarksToString</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadDistributedTestMarksToString</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4708,7 +4689,7 @@
 	<service>
 		<name>ReadDistributedTestMarksStatistics</name>
 		<implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadDistributedTestMarksStatistics</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadDistributedTestMarksStatistics</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4718,7 +4699,7 @@
 	<service>
 		<name>ReadInquiryStatistics</name>
 		<implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadInquiryStatistics</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadInquiryStatistics</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4728,7 +4709,7 @@
 	<service>
 		<name>CreateExercise</name>
 		<implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateExercise</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.CreateExercise</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4738,7 +4719,7 @@
 	<service>
 		<name>InsertExerciseVariation</name>
 		<implementationClass>
-            net.sourceforge.fenixedu.applicationTier.Servico.teacher.InsertExerciseVariation</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.InsertExerciseVariation</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
