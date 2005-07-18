@@ -41,12 +41,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class CreateGuide implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public CreateGuide() {
-    }
-
     public InfoGuide run(InfoGuide infoGuide, String othersRemarks, Double othersPrice, String remarks,
             GuideState situationOfGuide, String paymentType) throws FenixServiceException,
             ExcepcaoPersistencia {
@@ -72,7 +66,6 @@ public class CreateGuide implements IService {
         }
 
         // Calculate the Guide Total Price
-
         infoGuide.setTotal(CalculateGuideTotal.calculate(infoGuide));
 
         // Get the Guide Number
@@ -88,8 +81,6 @@ public class CreateGuide implements IService {
         Calendar calendar = Calendar.getInstance();
         infoGuideSituation.setDate(calendar.getTime());
         infoGuideSituation.setSituation(situationOfGuide);
-
-        // guide = InfoGuide.newDomainFromInfo(infoGuide);
 
         IPerson person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,
                 infoGuide.getInfoPerson().getIdInternal());

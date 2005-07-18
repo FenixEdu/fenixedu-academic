@@ -43,12 +43,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class CreateGuideFromTransactions implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public CreateGuideFromTransactions() {
-    }
-
     public InfoGuide run(InfoGuide infoGuide, String remarks, GuideState situationOfGuide,
             List transactionsIDs) throws FenixServiceException {
 
@@ -82,11 +76,8 @@ public class CreateGuideFromTransactions implements IService {
         infoGuideSituation.setInfoGuide(infoGuide);
 
         Calendar calendar = Calendar.getInstance();
-        // infoGuideSituation.setDate(calendar.getTime());
         infoGuideSituation.setSituation(situationOfGuide);
 
-//        guide = InfoGuide.newDomainFromInfo(infoGuide);
-        
         guide.setCreationDate(infoGuide.getCreationDate());
         guide.setGuideRequester(infoGuide.getGuideRequester());
         guide.setNumber(infoGuide.getNumber());
@@ -96,7 +87,6 @@ public class CreateGuideFromTransactions implements IService {
         guide.setTotal(infoGuide.getTotal());
         guide.setVersion(infoGuide.getVersion());
         guide.setYear(infoGuide.getYear());
-        
 
         try {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
