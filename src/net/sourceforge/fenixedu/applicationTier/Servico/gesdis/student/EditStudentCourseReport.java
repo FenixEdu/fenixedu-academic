@@ -20,55 +20,41 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
  * @author <a href="mailto:shmc@mega.ist.utl.pt">Sergio Montelobo </a>
- *  
+ * 
  */
 public class EditStudentCourseReport extends EditDomainObjectService {
 
     @Override
 	protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
-		InfoStudentCourseReport infoStudentCourseReport = (InfoStudentCourseReport)infoObject;
-		IStudentCourseReport studentCourseReport = (StudentCourseReport) domainObject;
-		
-		IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-		ICurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(CurricularCourse.class ,infoStudentCourseReport.getInfoCurricularCourse().getIdInternal());
-		studentCourseReport.setCurricularCourse(curricularCourse);	
-		studentCourseReport.setKeyCurricularCourse(curricularCourse.getIdInternal());
-		
-		studentCourseReport.setLastModificationDate(infoStudentCourseReport.getLastModificationDate());
-		studentCourseReport.setStrongPoints(infoStudentCourseReport.getStrongPoints());
-		studentCourseReport.setStudentReport(infoStudentCourseReport.getStudentReport());
-		studentCourseReport.setWeakPoints(infoStudentCourseReport.getWeakPoints());
-	
-		
-	}
+        InfoStudentCourseReport infoStudentCourseReport = (InfoStudentCourseReport) infoObject;
+        IStudentCourseReport studentCourseReport = (StudentCourseReport) domainObject;
 
-	@Override
-	protected IDomainObject createNewDomainObject(InfoObject infoObject) {
-		// TODO Auto-generated method stub
-		return new StudentCourseReport();
-	}
+        IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+        ICurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+                CurricularCourse.class, infoStudentCourseReport.getInfoCurricularCourse()
+                        .getIdInternal());
+        studentCourseReport.setCurricularCourse(curricularCourse);
+        studentCourseReport.setKeyCurricularCourse(curricularCourse.getIdInternal());
 
-	@Override
-	protected Class getDomainObjectClass() {
-		// TODO Auto-generated method stub
-		return StudentCourseReport.class;
-	}
+        studentCourseReport.setLastModificationDate(infoStudentCourseReport.getLastModificationDate());
+        studentCourseReport.setStrongPoints(infoStudentCourseReport.getStrongPoints());
+        studentCourseReport.setStudentReport(infoStudentCourseReport.getStudentReport());
+        studentCourseReport.setWeakPoints(infoStudentCourseReport.getWeakPoints());
 
-	/*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(net.sourceforge.fenixedu.dataTransferObject.InfoObject)
-     */
-    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
-        return InfoStudentCourseReport.newDomainFromInfo((InfoStudentCourseReport) infoObject);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-     */
+	@Override
+    protected IDomainObject createNewDomainObject(InfoObject infoObject) {
+        return new StudentCourseReport();
+    }
+
+	@Override
+    protected Class getDomainObjectClass() {
+        return StudentCourseReport.class;
+    }
+
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentStudentCourseReport();
     }
+
 }
