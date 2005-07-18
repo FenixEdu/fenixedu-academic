@@ -43,7 +43,6 @@ public class PublishMarks implements IService {
             evaluation.setPublishmentMessage(" ");
         } else {
             evaluation.setPublishmentMessage(publishmentMessage);
-            siteDAO.simpleLockWrite(site);
             site.createAnnouncement(announcementTitle, publishmentMessage);                       
         }
 

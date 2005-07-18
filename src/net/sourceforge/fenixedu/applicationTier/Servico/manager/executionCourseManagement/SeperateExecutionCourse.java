@@ -60,9 +60,8 @@ public class SeperateExecutionCourse implements IService {
             destinationExecutionCourse = createNewExecutionCourse(persistentObject,
                     originExecutionCourse);
             createNewSite(persistentObject, destinationExecutionCourse);
-            copyEvaluationMethod(sp, persistentObject, destinationExecutionCourse, originExecutionCourse);
-            copyBibliographicReferences(sp, persistentObject, destinationExecutionCourse,
-                    originExecutionCourse);
+            copyEvaluationMethod(destinationExecutionCourse, originExecutionCourse);
+            copyBibliographicReferences(destinationExecutionCourse, originExecutionCourse);
         }
 
         final Collection curricularCoursesToTransfer = getCurricularCoursesToTransfer(
@@ -82,33 +81,27 @@ public class SeperateExecutionCourse implements IService {
         destinationExecutionCourse.getAssociatedCurricularCourses().addAll(curricularCoursesToTransfer);
     }
 
-    private void copyBibliographicReferences(ISuportePersistente sp, IPersistentObject persistentObject,
-            IExecutionCourse destinationExecutionCourse, IExecutionCourse originExecutionCourse)
-            throws ExcepcaoPersistencia {
+    private void copyBibliographicReferences(IExecutionCourse destinationExecutionCourse,
+            IExecutionCourse originExecutionCourse) throws ExcepcaoPersistencia {
 
         final Iterator bibliographicReferences = originExecutionCourse
                 .getAssociatedBibliographicReferencesIterator();
         while (bibliographicReferences.hasNext()) {
             final IBibliographicReference bibliographicReference = (IBibliographicReference) bibliographicReferences
                     .next();
-            persistentObject.simpleLockWrite(destinationExecutionCourse);
             destinationExecutionCourse.createBibliographicReference(bibliographicReference.getTitle(),
                     bibliographicReference.getAuthors(), bibliographicReference.getReference(),
                     bibliographicReference.getYear(), bibliographicReference.getOptional());
-
         }
     }
 
-    private void copyEvaluationMethod(ISuportePersistente sp, IPersistentObject persistentObject,
-            IExecutionCourse destinationExecutionCourse, IExecutionCourse originExecutionCourse)
-            throws ExcepcaoPersistencia {
+    private void copyEvaluationMethod(IExecutionCourse destinationExecutionCourse,
+            IExecutionCourse originExecutionCourse) throws ExcepcaoPersistencia {
 
         IEvaluationMethod evaluationMethod = originExecutionCourse.getEvaluationMethod();
         if (evaluationMethod != null) {
-            persistentObject.simpleLockWrite(destinationExecutionCourse);
             destinationExecutionCourse.createEvaluationMethod(evaluationMethod.getEvaluationElements(),
                     evaluationMethod.getEvaluationElementsEn());
-            evaluationMethod.delete();
         }
     }
 
@@ -204,8 +197,7 @@ public class SeperateExecutionCourse implements IService {
         destinationExecutionCourse.setPraticalHours(originExecutionCourse.getPraticalHours());
 
         for (int i = 0; i < originExecutionCourse.getProfessorships().size(); i++) {
-            IProfessorship professorship = originExecutionCourse.getProfessorships()
-                    .get(i);
+            IProfessorship professorship = originExecutionCourse.getProfessorships().get(i);
             IProfessorship newProfessorship = new Professorship();
             persistentObject.simpleLockWrite(newProfessorship);
             newProfessorship.setExecutionCourse(destinationExecutionCourse);
@@ -214,8 +206,7 @@ public class SeperateExecutionCourse implements IService {
         }
 
         for (int i = 0; i < originExecutionCourse.getResponsibleTeachers().size(); i++) {
-            IResponsibleFor responsibleFor = originExecutionCourse
-                    .getResponsibleTeachers().get(i);
+            IResponsibleFor responsibleFor = originExecutionCourse.getResponsibleTeachers().get(i);
             IResponsibleFor newResponsibleFor = new ResponsibleFor();
             persistentObject.simpleLockWrite(newResponsibleFor);
             newResponsibleFor.setExecutionCourse(destinationExecutionCourse);
