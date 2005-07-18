@@ -64,7 +64,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                 return gp;
         }
         return null;
-
     }
 
     public boolean existsGroupPropertiesExecutionCourse(
@@ -103,6 +102,22 @@ public class ExecutionCourse extends ExecutionCourse_Base {
                         DegreeType.DEGREE);
             }
         });
+    }
+
+    public void edit(String name, String acronym, double theoreticalHours,
+            double theoreticalPraticalHours, double praticalHours, double laboratoryHours, String comment) {
+        
+        if (name == null || acronym == null || theoreticalHours < 0 || theoreticalPraticalHours < 0
+                || praticalHours < 0 || laboratoryHours < 0 || comment == null)
+            throw new NullPointerException();
+        
+        setNome(name);
+        setSigla(acronym);
+        setTheoreticalHours(theoreticalHours);
+        setTheoPratHours(theoreticalPraticalHours);
+        setPraticalHours(praticalHours);
+        setLabHours(laboratoryHours);
+        setComment(comment);
     }
 
     public void createSite() {

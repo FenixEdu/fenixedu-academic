@@ -885,6 +885,9 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 	
     public boolean isMasterDegreeOnly();
     
+    public void edit(String name, String acronym, double theoreticalHours,
+            double theoreticalPraticalHours, double praticalHours, double laboratoryHours, String comment);
+    
     public void createSite();
         
     public void createEvaluationMethod(String evaluationElements, String evaluationElementsEng);
