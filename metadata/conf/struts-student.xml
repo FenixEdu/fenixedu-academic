@@ -680,7 +680,7 @@
 			input="/studentTests.do?method=prepareToDoTest"
 			scope="request"
 			parameter="method"
-			type="net.sourceforge.fenixedu.presentationTier.Action.student.StudentTestsAction"
+			type="net.sourceforge.fenixedu.presentationTier.Action.student.onlineTests.StudentTestsAction"
 			validate="false">
 			<forward name="testsFirstPage" path="tests-First-Page"/>
 			<forward name="doTest" path="do-Test"/>

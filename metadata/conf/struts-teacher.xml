@@ -64,7 +64,7 @@
         </form-bean>
         <form-bean name="questionForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="questionValue" type="java.lang.String"/>
-            <form-property name="formula" type="java.lang.String" initial="2"/>
+            <form-property name="formula" type="java.lang.String" initial="1"/>
             <form-property name="testCode" type="java.lang.String"/>
             <form-property name="metadataCode" type="java.lang.String"/>
             <form-property name="questionOrder" type="java.lang.String"/>
@@ -113,7 +113,8 @@
             <form-property name="selected" type="java.lang.String"/>
             <form-property name="insertByShifts" type="java.lang.String"/>
             <form-property name="objectCode" type="java.lang.String"/>
-            <form-property name="testCode" type="java.lang.String"/>
+            <form-property name="distributedTestCode" type="java.lang.Integer"/>
+            <form-property name="title" type="java.lang.String"/>
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>
         <form-bean name="testMarksForm" type="org.apache.struts.validator.DynaValidatorForm" 
@@ -1163,7 +1164,7 @@
         <!-- Action for Tests Administration Site -->
         <action path="/testsManagement" name="testForm" 
             input="/testsManagement.do?method=prepareCreateTest&amp;page=0" scope="request" 
-            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TestsManagementAction" 
+            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.TestsManagementAction" 
             validate="true">
             <forward name="testsFirstPage" path="tests-First-Page"/>
             <forward name="createTest" path="create-Test"/>
@@ -1178,7 +1179,7 @@
         </action>
 		<action path="/studentTestManagement" name="studentTestForm"
         	scope="request"
-            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TestsManagementAction" 
+            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.TestsManagementAction" 
             validate="true">
             <forward name="showStudentTest" path="show-Student-Test"/>
             <forward name="doTestSimulation" path="do-Test-Simulation"/>
@@ -1190,7 +1191,7 @@
         </action>
         <action path="/exercisesManagement" name="exerciseForm"
             input="/exercisesManagement.do?method=insertNewExercise&amp;page=0" scope="request" 
-            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ExercisesManagementAction" 
+            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.ExercisesManagementAction" 
             validate="true">
             <forward name="chooseExerciseType" path="choose-Exercise-Type"/>
             <forward name="testsFirstPage" path="tests-First-Page"/>
@@ -1203,27 +1204,27 @@
         </action>
        <action path="/exercisesEdition" name="exerciseEditionForm"
             input="/exercisesManagement.do?method=prepareEditExercise&amp;page=0" scope="request" 
-            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ExercisesManagementAction" 
+            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.ExercisesManagementAction" 
             validate="true">
             <forward name="editExercise" path="edit-Exercise"/>
             <forward name="exercisesFirstPage" path="exercises-First-Page"/>
         </action>
         <action path="/questionsManagementWithValue" name="questionForm" 
             input="/questionsManagement.do?method=prepareInsertTestQuestion&amp;page=0" scope="request"
-            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TestsManagementAction" 
+            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.TestsManagementAction" 
             validate="true">
             <forward name="showAvailableQuestions" path="show-Available-Questions"/>
         </action>
 	    <action path="/questionsManagement" name="questionForm" 
             input="/questionsManagement.do?method=showAvailableQuestions&amp;page=0" scope="request"
-            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TestsManagementAction" 
+            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.TestsManagementAction" 
             validate="true">
             <forward name="showAvailableQuestions" path="show-Available-Questions"/>
             <forward name="insertTestQuestion" path="insert-Test-Question"/>
         </action>
         <action path="/testEdition" name="testForm" 
             input="/testEdition.do?method=prepareEditTestHeader&amp;page=0" scope="request" 
-            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TestsManagementAction" 
+            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.TestsManagementAction" 
             validate="true">
             <forward name="editTest" path="edit-Test"/>
             <forward name="editTestHeader" path="edit-Test-Header"/>
@@ -1231,14 +1232,14 @@
         </action>
         <action path="/testQuestionEdition" name="testQuestionForm" 
             input="/testQuestionEdition.do?method=prepareEditTestQuestion&amp;page=0" scope="request" 
-            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TestsManagementAction" 
+            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.TestsManagementAction" 
             validate="true">
             <forward name="editTestQuestion" path="edit-Test-Question"/>
             <forward name="editTest" path="edit-Test"/>
         </action>
         <action path="/testDistribution" name="distributedTestForm" 
             input="/testDistribution.do?method=prepareDistributeTest&amp;page=0" scope="request" 
-            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TestsManagementAction" 
+            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.TestsManagementAction" 
             validate="true">
             <forward name="distributeTest" path="distribute-Test"/>
             <forward name="showDistributedTests" path="show-Distributed-Tests"/>
@@ -1252,18 +1253,18 @@
 		</action>
         <action path="/testDistributionByShifts" name="distributedTestForm" 
             input="/testDistribution.do?method=chooseShifts&amp;page=1" scope="request" parameter="method" 
-            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TestsManagementAction" validate="true">
+            type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.TestsManagementAction" validate="true">
             <forward name="showDistributedTests" path="show-Distributed-Tests"/>
         </action>
         <action path="/testDistributionByStudents" name="distributedTestForm" 
             input="/testDistribution.do?method=chooseStudents&amp;page=1" scope="request" 
-            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TestsManagementAction" 
+            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.TestsManagementAction" 
             validate="true">
             <forward name="showDistributedTests" path="show-Distributed-Tests"/>
         </action>
         <action path="/distributedTestEdition" name="distributedTestForm" 
             input="/distributedTestEdition.do?method=prepareEditDistributedTest&amp;page=0" scope="request" 
-            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TestsManagementAction" 
+            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.TestsManagementAction" 
             validate="true">
             <forward name="editDistributedTest" path="edit-Distributed-Test"/>
             <forward name="showDistributedTests" path="show-Distributed-Tests"/>
@@ -1272,20 +1273,20 @@
         </action>
         <action path="/distributedTestMarks" name="testMarksForm" 
             input="/testDistribution.do?method=showDistributedTests&amp;page=0" scope="request" 
-            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TestsManagementAction" 
+            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.TestsManagementAction" 
             validate="true">
             <forward name="showDistributedTests" path="show-Distributed-Tests"/>
         </action>
         <action path="/exerciseType" name="exerciseCreationForm"
             input="/exercisesManagement.do?method=prepareChooseExerciseType&amp;page=0" scope="request" 
-            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ExercisesManagementAction" 
+            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.ExercisesManagementAction" 
             validate="true">
             <forward name="prepareCreateExercise" path="prepare-Create-Exercise"/>
             <forward name="chooseExerciseType" path="choose-Exercise-Type"/>
         </action>
         <action path="/exerciseCreation" name="exerciseCreationForm"
             input="/exerciseType.do?method=chooseQuestionType&amp;page=1" scope="request" 
-            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ExercisesManagementAction" 
+            parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.onlineTests.ExercisesManagementAction" 
             validate="true">
             <forward name="prepareCreateExercise" path="prepare-Create-Exercise"/>
             <forward name="exercisesFirstPage" path="exercises-First-Page"/>

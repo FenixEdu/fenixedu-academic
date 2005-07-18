@@ -19,7 +19,7 @@
 	  <put name="serviceName" value="Portal Docente" />	
 	  <put name="institutionName" value="Instituto Superior Técnico" />
 	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
-	  <put name="navLocal" value="/teacher/testsNavbar.jsp" />
+	  <put name="navLocal" value="/teacher/onlineTests/testsNavbar.jsp" />
 	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
 	  <put name="body" value=" " />
 	  <put name="footer" value="/copyright.jsp" />	  

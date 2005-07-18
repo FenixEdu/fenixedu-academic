@@ -207,118 +207,115 @@
 	</definition>	
 <!-- TESTS DEFINITIONS -->
 	<definition name="tests-First-Page" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/testsFirstPage_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/testsFirstPage.jsp"></put>		
 	</definition>
 	<definition name="create-Test" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/createTest_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/createTest.jsp"></put>		
 	</definition>
 	<definition name="show-Available-Questions" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/showAvailableQuestions_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/showAvailableQuestions.jsp"></put>		
 	</definition>
 	<definition name="show-Tests" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/showTests_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/showTests.jsp"></put>		
 	</definition>
 	<definition name="prepare-Delete-Test" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/prepareDeleteTest_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/prepareDeleteTest.jsp"></put>		
 	</definition>
 	<definition name="show-Student-Test" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/showStudentTestCorrection.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/showStudentTestCorrection.jsp"></put>		
 	</definition>
 	<definition name="choose-Test-Simulation-Options" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/chooseTestSimulationOptions.jsp"></put>
+		<put name="body" value="/teacher/onlineTests/chooseTestSimulationOptions.jsp"></put>
 	</definition>
 	<definition name="do-Test-Simulation" extends="definition.teacher.one-column">
-		<put name="body" value="/teacher/simulateTest.jsp"></put>
-		<put name="footer" value="/teacher/commons/commonFooterTests.jsp"></put>
+		<put name="body" value="/teacher/onlineTests/simulateTest.jsp"></put>
 	</definition>
 	<definition name="show-Simulation-Feedback" extends="definition.teacher.one-column">
-		<put name="body" value="/teacher/showSimulationFeedback.jsp"></put>
-		<put name="footer" value="/teacher/commons/commonFooterTests.jsp"></put>
+		<put name="body" value="/teacher/onlineTests/showSimulationFeedback.jsp"></put>
 	</definition>
 	<definition name="show-Simulation-Correction" extends="definition.teacher.one-column">
-		<put name="body" value="/teacher/showSimulationCorrection.jsp"></put>
-		<put name="footer" value="/teacher/commons/commonFooterTests.jsp"></put>
+		<put name="body" value="/teacher/onlineTests/showSimulationCorrection.jsp"></put>
 	</definition>
 	<definition name="show-Student-Test-Log" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/showStudentTestLog_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/showStudentTestLog.jsp"></put>		
 	</definition>
 	<definition name="change-Student-Test-Question" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/changeStudentTestQuestion_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/changeStudentTestQuestion.jsp"></put>
 	</definition>
 	<definition name="choose-Another-Exercise" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/chooseAnotherExercise_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/chooseAnotherExercise.jsp"></put>		
 	</definition>
 	<definition name="show-Test-Marks" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/showTestMarks_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/showTestMarks.jsp"></put>		
 	</definition>
 	<definition name="exercises-First-Page" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/exercisesFirstPage_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/exercisesFirstPage.jsp"></put>		
 	</definition>
 	<definition name="insert-New-Exercise" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/insertNewExercise_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/insertNewExercise.jsp"></put>		
 	</definition>
 	<definition name="prepare-Remove-Exercise" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/prepareRemoveExercise_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/prepareRemoveExercise.jsp"></put>		
 	</definition>
 	<definition name="edit-Exercise" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/editExercise_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/editExercise.jsp"></put>		
 	</definition>
 	<definition name="insert-Test-Question" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/insertTestQuestion_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/insertTestQuestion.jsp"></put>		
 	</definition>
 	<definition name="edit-Test" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/editTest_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/editTest.jsp"></put>		
 	</definition>
 	<definition name="edit-Test-Header" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/editTestHeader_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/editTestHeader.jsp"></put>		
 	</definition>
 	<definition name="edit-Test-Question" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/editTestQuestion_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/editTestQuestion.jsp"></put>		
 	</definition>
 	<definition name="distribute-Test" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/distributeTest_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/distributeTest.jsp"></put>		
 	</definition>
 	<definition name="show-Distributed-Tests" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/showDistributedTests_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/showDistributedTests.jsp"></put>		
 	</definition>
 	<definition name="distribute-Test-By-Shifts" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/distributeTestByShifts_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/distributeTestByShifts.jsp"></put>		
 	</definition>
 	<definition name="distribute-Test-By-Students" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/distributeTestByStudents_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/distributeTestByStudents.jsp"></put>		
 	</definition>
 	<definition name="show-Test-Marks-Statistics" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/showTestMarksStatistics_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/showTestMarksStatistics.jsp"></put>
 	</definition>
 	<definition name="show-Test-Statistics" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/showTestStatistics_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/showTestStatistics.jsp"></put>		
 	</definition>
 	<definition name="edit-Distributed-Test" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/editDistributedTest_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/editDistributedTest.jsp"></put>
 	</definition>
 	<definition name="add-Shifts-To-Distributed-Test" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/addShiftsToDistributedTest_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/addShiftsToDistributedTest.jsp"></put>		
 	</definition>
 	<definition name="add-Students-To-Distributed-Test" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/addStudentsToDistributedTest_bd.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/addStudentsToDistributedTest.jsp"></put>		
 	</definition>
 	<definition name="prepare-Delete-Distributed-Test" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/prepareDeleteDistributedTest.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/prepareDeleteDistributedTest.jsp"></put>		
 	</definition>
 	<definition name="choose-Exercise-Type" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/chooseExerciseType.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/chooseExerciseType.jsp"></put>		
 	</definition>
 	<definition name="prepare-Create-Exercise" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/prepareCreateExercise.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/prepareCreateExercise.jsp"></put>		
 	</definition>
 	<definition name="preview-Exercise" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/previewExercise.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/previewExercise.jsp"></put>		
 	</definition>
 	<definition name="add-Exercise-Variation" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/addExerciseVariation.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/addExerciseVariation.jsp"></put>		
 	</definition>
 	<definition name="choose-New-Exercise" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/chooseNewExercise.jsp"></put>		
+		<put name="body" value="/teacher/onlineTests/chooseNewExercise.jsp"></put>		
 	</definition>
 	
 	

@@ -10,25 +10,25 @@
 	<!-- STUDENT TESTS DEFINITIONS -->
 	
 	<definition name="view-Student-ExecutionCourses-With-Tests" extends="definition.student.masterPage">
-		<put name="body" value="/student/viewStudentExecutionCoursesWithTests_bd.jsp" />		
+		<put name="body" value="/student/onlineTests/viewStudentExecutionCoursesWithTests_bd.jsp" />		
 	</definition>
 	
 	<definition name="tests-First-Page" extends="definition.student.masterPage">
-		<put name="body" value="/student/testsFirstPage_bd.jsp" />		
+		<put name="body" value="/student/onlineTests/testsFirstPage_bd.jsp" />		
 	</definition>
 	
 	<definition name="do-Test" extends="definition.student.one-column">
-		<put name="body" value="/student/doTest_bd.jsp" />		
+		<put name="body" value="/student/onlineTests/doTest_bd.jsp" />		
 	</definition>
 	<definition name="test-Error" extends="definition.student.masterPage">
-		<put name="body" value="/student/testError_bd.jsp" />		
+		<put name="body" value="/student/onlineTests/testError_bd.jsp" />		
 	</definition>
 	<definition name="show-Student-Test-Feedback" extends="definition.student.one-column">
-		<put name="body" value="/student/showStudentTestFeedback_bd.jsp" />		
+		<put name="body" value="/student/onlineTests/showStudentTestFeedback_bd.jsp" />		
 	</definition>
 	
 	<definition name="show-Test-Correction" extends="definition.student.one-column">
-		<put name="body" value="/student/showTestCorrection_bd.jsp" />		
+		<put name="body" value="/student/onlineTests/showTestCorrection_bd.jsp" />		
 	</definition>
 	
 	<!-- END STUDENT TESTS DEFINITIONS -->
