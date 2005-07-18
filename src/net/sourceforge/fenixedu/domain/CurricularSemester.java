@@ -8,6 +8,16 @@ package net.sourceforge.fenixedu.domain;
 
 public class CurricularSemester extends CurricularSemester_Base {
 
+    public CurricularSemester() {
+        super();
+    }
+
+    public CurricularSemester(final CurricularYear curricularYear, final Integer semester) {
+        super();
+        setCurricularYear(curricularYear);
+        setSemester(semester);
+    }    
+
     public String toString() {
         String result = "[" + this.getClass().getName() + ": ";
         result += "idInternal = " + this.getIdInternal() + "; ";
