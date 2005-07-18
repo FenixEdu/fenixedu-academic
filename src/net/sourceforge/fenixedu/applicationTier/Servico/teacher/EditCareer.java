@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.domain.teacher.Category;
-import net.sourceforge.fenixedu.domain.teacher.ICareer;
 import net.sourceforge.fenixedu.domain.teacher.ICategory;
 import net.sourceforge.fenixedu.domain.teacher.IProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.ITeachingCareer;
@@ -32,41 +31,12 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
  */
 public class EditCareer extends EditDomainObjectService {
 
-    private static EditCareer service = new EditCareer();
-
-    public static EditCareer getService() {
-        return service;
-    }
-
-    /**
-     *  
-     */
-    private EditCareer() {
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome() {
-        return "EditCareer";
-    }
-
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         IPersistentCareer persistentCareer = sp.getIPersistentCareer();
         return persistentCareer;
     }
 
-//    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
-//        ICareer career = Cloner.copyInfoCareer2ICareer((InfoCareer) infoObject);
-//        return career;
-//    }
-
-	@Override
 	protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
-		
-		
         if (infoObject instanceof InfoProfessionalCareer) {
         	IProfessionalCareer professionalCareer = (ProfessionalCareer) domainObject;
         	InfoProfessionalCareer infoProfessionalCareer = (InfoProfessionalCareer)infoObject;
@@ -82,11 +52,7 @@ public class EditCareer extends EditDomainObjectService {
             ITeacher teacher = persistentTeacher.readByNumber(infoProfessionalCareer.getInfoTeacher().getTeacherNumber());
             
             professionalCareer.setTeacher(teacher);
-           
-            
-
-          
-        } 
+        }
         else {
             InfoTeachingCareer infoTeachingCareer = (InfoTeachingCareer) infoObject;
             ITeachingCareer teachingCareer = (TeachingCareer)domainObject;
@@ -106,20 +72,21 @@ public class EditCareer extends EditDomainObjectService {
             ITeacher teacher = persistentTeacher.readByNumber(infoTeachingCareer.getInfoTeacher().getTeacherNumber());
             teachingCareer.setTeacher(teacher);
             teachingCareer.setKeyTeacher(teacher.getIdInternal());
-           
-            }
-       	
+        }
 	}
 
-	@Override
 	protected IDomainObject createNewDomainObject(InfoObject infoObject) {
-		// TODO Auto-generated method stub
-		return  new Career();
+        if (infoObject instanceof InfoProfessionalCareer) {
+            return new ProfessionalCareer();
+        } else if (infoObject instanceof InfoTeachingCareer) {
+            return new TeachingCareer();
+        } else {
+            throw new Error("Unknown type of InfoCareer: " + infoObject.getClass().getName());
+        }
 	}
 
-	@Override
 	protected Class getDomainObjectClass() {
-		// TODO Auto-generated method stub
 		return Career.class ;
 	}
+
 }
