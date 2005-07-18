@@ -77,11 +77,13 @@ public abstract class DomainObject extends DomainObject_Base {
     }
 
     protected final void deleteDomainObject() {
-        try {
-            PersistenceSupportFactory.getDefaultPersistenceSupport()
-                    .getIPersistentObject().deleteByOID(this.getClass(), getIdInternal());
-        } catch (ExcepcaoPersistencia e) {
-            throw new Error("Couldn't delete object", e);
+        if (lockMode) {
+            try {
+                PersistenceSupportFactory.getDefaultPersistenceSupport()
+                        .getIPersistentObject().deleteByOID(this.getClass(), getIdInternal());
+            } catch (ExcepcaoPersistencia e) {
+                throw new Error("Couldn't delete object", e);
+            }
         }
     }
 
