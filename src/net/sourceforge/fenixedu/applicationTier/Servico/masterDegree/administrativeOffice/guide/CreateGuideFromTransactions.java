@@ -7,7 +7,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
@@ -97,14 +96,12 @@ public class CreateGuideFromTransactions implements IService {
             }
 
             // Get the Execution Degree
-            IExecutionDegree executionDegree = sp
-                    .getIPersistentExecutionDegree()
+            IExecutionDegree executionDegree = sp.getIPersistentExecutionDegree()
                     .readByDegreeCurricularPlanAndExecutionYear(
                             infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName(),
                             infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan()
                                     .getInfoDegree().getSigla(),
-                            InfoExecutionYear.newDomainFromInfo(
-                                    infoGuide.getInfoExecutionDegree().getInfoExecutionYear()).getYear());
+                            infoGuide.getInfoExecutionDegree().getInfoExecutionYear().getYear());
 
             contributor = sp.getIPersistentContributor().readByContributorNumber(
                     infoGuide.getInfoContributor().getContributorNumber());
