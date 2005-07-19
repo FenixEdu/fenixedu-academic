@@ -176,7 +176,6 @@ import net.sourceforge.fenixedu.domain.IWebSite;
 import net.sourceforge.fenixedu.domain.IWebSiteItem;
 import net.sourceforge.fenixedu.domain.IWebSiteSection;
 import net.sourceforge.fenixedu.domain.IWorkLocation;
-import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Period;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -184,7 +183,6 @@ import net.sourceforge.fenixedu.domain.Room;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentKind;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -333,34 +331,6 @@ public abstract class Cloner {
     }
 
     /**
-     * Method copyInfoLesson2Lesson.
-     * 
-     * @param lessonExample
-     * @return ILesson
-     */
-    public static ILesson copyInfoLesson2Lesson(InfoLesson infoLesson) {
-        ILesson lesson = new Lesson();
-        IRoom sala = null;
-
-        IRoomOccupation roomOccupation = null;
-        // IShift shift = null;
-        try {
-            BeanUtils.copyProperties(lesson, infoLesson);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
-
-        sala = Cloner.copyInfoRoom2Room(infoLesson.getInfoSala());
-        roomOccupation = Cloner
-                .copyInfoRoomOccupation2RoomOccupation(infoLesson.getInfoRoomOccupation());
-
-        lesson.setSala(sala);
-        lesson.setRoomOccupation(roomOccupation);
-
-        return lesson;
-    }
-
-    /**
      * Method copyInfoRoom2Room.
      * 
      * @param infoRoom
@@ -437,31 +407,6 @@ public abstract class Cloner {
         infoLesson.setInfoRoomOccupation(infoRoomOccupation);
 
         return infoLesson;
-    }
-
-    /**
-     * Method copyInfoShift2Shift.
-     * 
-     * @param infoShift
-     * @return IShift
-     */
-    public static IShift copyInfoShift2IShift(InfoShift infoShift) {
-        if (infoShift == null)
-            return null;
-        IShift shift = new Shift();
-        IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoShift
-                .getInfoDisciplinaExecucao());
-
-        copyObjectProperties(shift, infoShift);
-        if (shift.getAssociatedLessons() != null) {
-            for (int i = 0; i < shift.getAssociatedLessons().size(); i++) {
-                InfoLesson infoLesson = (InfoLesson) shift.getAssociatedLessons().get(i);
-                ILesson lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
-                shift.addAssociatedLessons(lesson);
-            }
-        }
-        shift.setDisciplinaExecucao(executionCourse);
-        return shift;
     }
 
     /**
@@ -1542,24 +1487,6 @@ public abstract class Cloner {
         infoProfessorShip.setInfoExecutionCourse(infoExecutionCourse);
 
         return infoProfessorShip;
-    }
-
-    public static IShiftProfessorship copyInfoShiftProfessorship2IShiftProfessorship(
-            InfoShiftProfessorship infoTeacherShiftPercentage) {
-        InfoShift infoShift = infoTeacherShiftPercentage.getInfoShift();
-        InfoProfessorship infoProfessorShip = infoTeacherShiftPercentage.getInfoProfessorship();
-
-        IShiftProfessorship teacherShiftPercentage = new ShiftProfessorship();
-        IProfessorship professorship = Cloner.copyInfoProfessorship2IProfessorship(infoProfessorShip);
-        IShift shift = Cloner.copyInfoShift2IShift(infoShift);
-
-        copyObjectProperties(teacherShiftPercentage, infoTeacherShiftPercentage);
-
-        teacherShiftPercentage.setPercentage(infoTeacherShiftPercentage.getPercentage());
-        teacherShiftPercentage.setShift(shift);
-        teacherShiftPercentage.setProfessorship(professorship);
-
-        return teacherShiftPercentage;
     }
 
     public static IProfessorship copyInfoProfessorship2IProfessorship(InfoProfessorship infoProfessorShip) {
