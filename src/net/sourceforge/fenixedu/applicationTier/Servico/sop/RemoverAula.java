@@ -1,16 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
-/**
- * Servi�o RemoverAula
- * 
- * @author tfc130
- * @version
- */
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
-import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -22,9 +13,7 @@ public class RemoverAula implements IService {
             throws ExcepcaoPersistencia {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final ILesson lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
-
-        DeleteLessons.deleteLesson(sp, lesson.getIdInternal());
+        DeleteLessons.deleteLesson(sp, infoLesson.getIdInternal());
 
         return new Boolean(true);
     }
