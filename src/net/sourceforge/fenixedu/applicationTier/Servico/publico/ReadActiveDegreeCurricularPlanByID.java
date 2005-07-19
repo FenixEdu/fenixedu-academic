@@ -11,17 +11,18 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -35,91 +36,61 @@ import org.apache.commons.collections.comparators.ComparatorChain;
  */
 public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlanBaseService {
 
-    public List run(Integer degreeCurricularPlanCode, Integer executionPeriodCode, String language,
+    public List run(Integer degreeCurricularPlanId, Integer executionPeriodId, String language,
             String arg) throws FenixServiceException, ExcepcaoPersistencia {
 
-        if (degreeCurricularPlanCode == null) {
-            throw new FenixServiceException("nullDegree");
+        if (degreeCurricularPlanId == null) {
+            throw new FenixServiceException("null degreeCurricularPlanId");
+        }
+
+        if (executionPeriodId == null) {
+            return groupScopesByCurricularYearAndCurricularCourseAndBranch(super
+                    .readActiveCurricularCourseScopes(degreeCurricularPlanId), language);
         }
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
-                .getIPersistentDegreeCurricularPlan();
-
-        IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
-                .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanCode);
-
-        if (degreeCurricularPlan == null) {
-            throw new FenixServiceException("nullDegree");
-        }
-
-        if (executionPeriodCode == null) {
-            return groupScopesByCurricularYearAndCurricularCourseAndBranch(super
-                    .readActiveCurricularCourseScopes(degreeCurricularPlan, sp), language);
-        }
-
         IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
         IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
-                ExecutionPeriod.class, executionPeriodCode);
+                ExecutionPeriod.class, executionPeriodId);
         if (executionPeriod == null || executionPeriod.getExecutionYear() == null) {
-            throw new FenixServiceException("nullDegree");
+            throw new FenixServiceException("null executionPeriod");
         }
 
         return groupScopesByCurricularYearAndCurricularCourseAndBranch(super
-                .readActiveCurricularCourseScopesInExecutionYear(degreeCurricularPlan, executionPeriod
-                        .getExecutionYear(), sp), language);
+                .readActiveCurricularCourseScopesInExecutionYear(degreeCurricularPlanId, executionPeriod
+                        .getExecutionYear()), language);
     }
+
 
     public List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
             Integer curricularYear, String language) throws FenixServiceException, ExcepcaoPersistencia {
 
-        IExecutionDegree executionDegree = InfoExecutionDegree.newDomainFromInfo(infoExecutionDegree);
-        if (executionDegree != null) {
-            executionDegree.setDegreeCurricularPlan(InfoDegreeCurricularPlan
-                    .newDomainFromInfo(infoExecutionDegree.getInfoDegreeCurricularPlan()));
-            executionDegree.getDegreeCurricularPlan().setDegree(
-                    InfoDegree.newDomainFromInfo(infoExecutionDegree.getInfoDegreeCurricularPlan()
-                            .getInfoDegree()));
-        }
-        IExecutionPeriod executionPeriod = InfoExecutionPeriod.newDomainFromInfo(infoExecutionPeriod);
-        IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
+        final IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+                ExecutionDegree.class, infoExecutionDegree.getIdInternal());
+        final IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
         if (degreeCurricularPlan == null) {
-            throw new FenixServiceException("nullDegree");
+            throw new FenixServiceException("null degreeCurricularPlan");
         }
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
-                .getIPersistentDegreeCurricularPlan();
-
-        degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOID(
-                DegreeCurricularPlan.class, degreeCurricularPlan.getIdInternal());
-        if (degreeCurricularPlan == null) {
-            throw new FenixServiceException("nullDegree");
-        }
-
-        if (executionPeriod == null) {
+        if (infoExecutionPeriod == null) {
             return groupScopesByCurricularYearAndCurricularCourseAndBranch(super
-                    .readActiveCurricularCourseScopes(degreeCurricularPlan, sp), language);
+                    .readActiveCurricularCourseScopes(degreeCurricularPlan.getIdInternal()), language);
         }
         IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-        executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(ExecutionPeriod.class,
-                executionPeriod.getIdInternal());
+        IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+                ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
         if (executionPeriod == null || executionPeriod.getExecutionYear() == null) {
             throw new FenixServiceException("nullDegree");
         }
-        // return
-        // super.readActiveCurricularCourseScopesInCurricularYearAndExecutionPeriodAndExecutionDegree(executionPeriod,executionDegree,curricularYear,
-        // sp);
 
         return groupScopesByCurricularYearAndCurricularCourseAndBranch(super
                 .readActiveCurricularCourseScopesInCurricularYearAndExecutionPeriodAndExecutionDegree(
-                        executionPeriod, executionDegree, curricularYear, sp), language);
-
+                        executionPeriod, executionDegree, curricularYear), language);
     }
 
-    // meu**************************
+    
     private List groupScopesByCurricularYearAndCurricularCourseAndBranch(List scopes, String language) {
         List result = new ArrayList();
         List temp = new ArrayList();
@@ -173,19 +144,17 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
         return result;
     }
 
-    // *****************************
-
-    public InfoDegreeCurricularPlan run(Integer degreeCurricularPlanCode, Integer executionYear,
-            String arg) throws FenixServiceException, ExcepcaoPersistencia {
-        InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
+    
+    public InfoDegreeCurricularPlan run(Integer degreeCurricularPlanId, Integer executionYear, String arg)
+            throws FenixServiceException, ExcepcaoPersistencia {
+        
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
                 .getIPersistentDegreeCurricularPlan();
+        final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
+                .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
 
-        IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
-                .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanCode);
-
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
         if (degreeCurricularPlan != null) {
             infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
         }
@@ -195,4 +164,5 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
 
         return infoDegreeCurricularPlan;
     }
+
 }
