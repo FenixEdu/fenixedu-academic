@@ -1,9 +1,3 @@
-/*
- * Created on Mar 30, 2004
- *
- * To change the template for this generated file go to
- * Window - Preferences - Java - Code Generation - Code and Comments
- */
 package net.sourceforge.fenixedu.domain.publication;
 
 import java.util.ArrayList;
@@ -13,14 +7,11 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-/**
- * @author TJBF & PFON
- * 
- * To change the template for this generated type comment go to Window -
- * Preferences - Java - Code Generation - Code and Comments
- */
 public class PublicationType extends PublicationType_Base implements IPublicationType {
 
+    public PublicationType() {
+        super();
+    }
     
     /**
      * @return Returns the nonRequiredAttributes.

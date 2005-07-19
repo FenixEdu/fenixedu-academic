@@ -49,7 +49,7 @@ public class ReadPublicationTypesAction extends FenixAction {
             Integer keyTeacher = new Integer(request.getParameter("infoTeacher#idInternal"));
             String typePublication = request.getParameter("typePublication");
             List infoPublicationTypes = (List) ServiceUtils.executeService(userView,
-                    "ReadPublicationTypes", args);
+                    "ReadAllPublicationTypes", args);
 
             //TODO remove when database is updated
             Iterator iterator = infoPublicationTypes.iterator();

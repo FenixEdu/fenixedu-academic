@@ -1,33 +1,28 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 
-import java.util.Iterator;
-import java.util.List;
-
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.publication.IPublication;
+import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class DeletePublicationInTeacherList implements IService {
-
-    public void run(Integer teacherId, final Integer publicationId) throws ExcepcaoPersistencia {
+public class RemovePublicationFromTeacherSheet implements IService {
+    
+    public void run(Integer teacherId, final Integer publicationId) throws ExcepcaoPersistencia, DomainException {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        IPersistentPublication persistentPublication = sp.getIPersistentPublication();
 
         ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class, teacherId);
+        IPublication publication = (IPublication) persistentPublication.readByOID(Publication.class, publicationId);
         
-        List<IPublicationTeacher> publicationTeachers = teacher.getTeacherPublications();
-        
-        for(Iterator<IPublicationTeacher> iter = publicationTeachers.iterator(); iter.hasNext(); ){
-            IPublicationTeacher publicationTeacher = iter.next();
-            if (publicationTeacher.getPublication().getIdInternal().equals(publicationId)) {
-                iter.remove();
-                publicationTeacher.delete();
-            }
-        }
+        teacher.removeFromTeacherSheet(publication);
     }
+    
 }

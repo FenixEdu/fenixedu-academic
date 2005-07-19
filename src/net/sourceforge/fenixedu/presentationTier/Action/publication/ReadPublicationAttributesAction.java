@@ -65,18 +65,15 @@ public class ReadPublicationAttributesAction extends FenixAction {
 
         if (session != null) {
 
-            Object[] args = { userView.getUtilizador(), publicationTypeId };
-            List requiredAttributes = (List) ServiceUtils.executeService(userView,
-                    "ReadRequiredAttributes", args);
+            Object[] args = { publicationTypeId };
+            
+            List requiredAttributes = (List) ServiceUtils.executeService(userView, "ReadRequiredAttributes", args);
 
-            List nonRequiredAttributes = (List) ServiceUtils.executeService(userView,
-                    "ReadNonRequiredAttributes", args);
+            List nonRequiredAttributes = (List) ServiceUtils.executeService(userView, "ReadNonRequiredAttributes", args);
+            
+            List subTypeList = (List) ServiceUtils.executeService(userView, "ReadPublicationSubtypesByPublicationType", args);
 
-            List subTypeList = (List) ServiceUtils.executeService(userView, "ReadPublicationSubtypes",
-                    args);
-
-            List formatList = (List) ServiceUtils.executeService(userView, "ReadPublicationFormats",
-                    args);
+            List formatList = (List) ServiceUtils.executeService(userView, "ReadAllPublicationFormats", args);
 
             List monthList = (List) ServiceUtils.executeService(userView, "ReadPublicationMonths", args);
 
@@ -92,7 +89,7 @@ public class ReadPublicationAttributesAction extends FenixAction {
 
             Object argPubType[] = { userView.getUtilizador() };
             List infoPublicationTypes = (List) ServiceUtils.executeService(userView,
-                    "ReadPublicationTypes", argPubType);
+                    "ReadAllPublicationTypes", argPubType);
             request.setAttribute("publicationTypesList", infoPublicationTypes);
 
             request.setAttribute("infoAuthorsList", infoAuthors);
@@ -127,7 +124,7 @@ public class ReadPublicationAttributesAction extends FenixAction {
         }
 
         Object[] args = { newAuthorsIds };
-        List authors = (List) ServiceUtils.executeService(userView, "ReadAuthorsToInsert", args);
+        List authors = (List) ServiceUtils.executeService(userView, "ReadPersons", args);
 
         List infoAuthors = (List) CollectionUtils.collect(authors, new Transformer() {
             public Object transform(Object o) {

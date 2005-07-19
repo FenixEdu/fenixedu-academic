@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.workLocation;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.IWorkLocation;
 import net.sourceforge.fenixedu.domain.WorkLocation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -15,7 +14,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class InsertWorkLocation implements IService {
 
-    public IWorkLocation run(String workLocationName) throws FenixServiceException, ExcepcaoPersistencia {
+    public IWorkLocation run(String workLocationName) throws ExcepcaoPersistencia, ExistingServiceException {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IWorkLocation storedWorkLocation = sp.getIPersistentWorkLocation().readByName(workLocationName);
 

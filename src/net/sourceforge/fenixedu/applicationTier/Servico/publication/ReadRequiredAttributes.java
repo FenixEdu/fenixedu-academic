@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAttribute;
 import net.sourceforge.fenixedu.domain.publication.IAttribute;
 import net.sourceforge.fenixedu.domain.publication.IPublicationType;
@@ -20,25 +19,20 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadRequiredAttributes implements IService {
 
-    public List run(String user, int publicationTypeId) throws FenixServiceException {
-        try {
-            
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentPublicationType persistentPublicationType = persistentSuport.getIPersistentPublicationType();
+    public List run(int publicationTypeId) throws ExcepcaoPersistencia {
            
-            
-            IPublicationType publicationType = (IPublicationType) persistentPublicationType.readByOID(
-                    PublicationType.class, new Integer(publicationTypeId));
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentPublicationType persistentPublicationType = persistentSuport.getIPersistentPublicationType();
+       
+        
+        IPublicationType publicationType = (IPublicationType) persistentPublicationType.readByOID(
+                PublicationType.class, new Integer(publicationTypeId));
 
-            List<InfoAttribute> infoAttributes = new ArrayList(); 
-            for (IAttribute attribute : (List<IAttribute>)publicationType.getRequiredAttributes()) {
-                infoAttributes.add(InfoAttribute.newInfoFromDomain(attribute));
-            }
-
-            return infoAttributes;
-            
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+        List<InfoAttribute> infoAttributes = new ArrayList(); 
+        for (IAttribute attribute : (List<IAttribute>)publicationType.getRequiredAttributes()) {
+            infoAttributes.add(InfoAttribute.newInfoFromDomain(attribute));
         }
+
+        return infoAttributes;
     }
 }

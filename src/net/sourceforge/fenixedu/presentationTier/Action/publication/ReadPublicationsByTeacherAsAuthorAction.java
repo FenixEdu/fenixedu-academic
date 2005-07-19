@@ -48,7 +48,7 @@ public class ReadPublicationsByTeacherAsAuthorAction extends FenixDispatchAction
 
             Object[] argsToReadPublicationsOfTeacher = { userView.getUtilizador() };
             SiteView siteView = (SiteView) ServiceUtils.executeService(userView,
-                    "ReadAuthorPublicationsToInsert", argsToReadPublicationsOfTeacher);
+                    "ReadPublicationsNotInTeacherSheet", argsToReadPublicationsOfTeacher);
 
             InfoSitePublications infoSitePublications = (InfoSitePublications) siteView.getComponent();
             request.setAttribute("infoSitePublications", infoSitePublications);
@@ -82,7 +82,7 @@ public class ReadPublicationsByTeacherAsAuthorAction extends FenixDispatchAction
                 Object[] argsToInsertPublicationInTeacherSList = { teacherId, publicationId,
                         typePublication };
                 SiteView siteView = (SiteView) ServiceUtils.executeService(userView,
-                        "InsertPublicationInTeacherList", argsToInsertPublicationInTeacherSList);
+                        "AddPublicationToTeacherSheet", argsToInsertPublicationInTeacherSList);
 
                 request.setAttribute("siteView", siteView);
             }
@@ -117,7 +117,7 @@ public class ReadPublicationsByTeacherAsAuthorAction extends FenixDispatchAction
 
                 Object[] argsToInsertPublicationInTeacherSList = { teacherId, publicationId };
                 SiteView siteView = (SiteView) ServiceUtils.executeService(userView,
-                        "DeletePublicationInTeacherList", argsToInsertPublicationInTeacherSList);
+                        "RemovePublicationFromTeacherSheet", argsToInsertPublicationInTeacherSList);
 
                 request.setAttribute("siteView", siteView);
             }

@@ -9,7 +9,6 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.constants.publication.PublicationConstants;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAdvisory;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsSet;
@@ -82,9 +81,6 @@ import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeach
 import net.sourceforge.fenixedu.dataTransferObject.gaugingTests.physics.InfoGaugingTestResult;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseHistoric;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
-import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAttribute;
-import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthorPerson;
-import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationFormat;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoStudentCourseReport;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
@@ -120,8 +116,6 @@ import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseHistoric;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.IStudentCourseReport;
-import net.sourceforge.fenixedu.domain.publication.IAttribute;
-import net.sourceforge.fenixedu.domain.publication.IPublicationFormat;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 import net.sourceforge.fenixedu.domain.teacher.ICareer;
@@ -2516,32 +2510,5 @@ public abstract class Cloner {
         infoCreditLine.setInfoTeacher(infoTeacher);
         return infoCreditLine;
     }
-
-    public static InfoAttribute copyIAttribute2InfoAttribute(IAttribute attribute) {
-        InfoAttribute infoAttribute = new InfoAttribute();
-        copyObjectProperties(infoAttribute, attribute);
-        return infoAttribute;
-    }
-
-    public static InfoPublicationFormat copyIPublicationFormat2InfoPublicationFormat(
-            IPublicationFormat PublicationFormat) {
-        InfoPublicationFormat infoPublicationFormat = new InfoPublicationFormat();
-        copyObjectProperties(infoPublicationFormat, PublicationFormat);
-        return infoPublicationFormat;
-    }
-
-    public static InfoAuthorPerson copyIPerson2InfoAuthorPerson(IPerson person) {
-
-        InfoAuthorPerson infoAuthorPerson = new InfoAuthorPerson();
-
-        String keyIdString = person.getIdInternal().toString() + PublicationConstants.INIT_PERSON;
-
-        infoAuthorPerson.setIdInternal(person.getIdInternal());
-        infoAuthorPerson.setKeyFinal(keyIdString);
-        infoAuthorPerson.setName(person.getNome());
-        infoAuthorPerson.setOrganisation(PublicationConstants.DEFAULT_ORGANIZATION);
-        return infoAuthorPerson;
-    }
-    // TJBF& PFON
 
 }

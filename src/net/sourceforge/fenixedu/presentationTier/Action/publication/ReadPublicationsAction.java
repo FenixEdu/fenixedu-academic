@@ -44,7 +44,7 @@ public class ReadPublicationsAction extends FenixAction {
 
             Object[] args = { userView.getUtilizador(), string };
 
-            SiteView siteView = (SiteView) ServiceUtils.executeService(userView, "ReadPublications",
+            SiteView siteView = (SiteView) ServiceUtils.executeService(userView, "ReadTeacherPublicationsByArea",
                     args);
 
             request.setAttribute("siteView", siteView);

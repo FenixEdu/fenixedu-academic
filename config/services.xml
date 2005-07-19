@@ -3276,8 +3276,8 @@
 	<!--TJBF & PFON-->
 
 	<service>
-		<name>ReadPublications</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadPublications</implementationClass>
+		<name>ReadTeacherPublicationsByArea</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadTeacherPublicationsByArea</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -3294,13 +3294,11 @@
         </filterChains>
     </service>-->
 	<service>
-		<name>ReadPublicationTypes</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadPublicationTypes</implementationClass>
+		<name>ReadAllPublicationTypes</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAllPublicationTypes</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
+		<filterChains />
 	</service>
 	<service>
 		<name>ReadPublicationType</name>
@@ -3330,22 +3328,18 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadPublicationSubtypes</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadPublicationSubtypes</implementationClass>
+		<name>ReadPublicationSubtypesByPublicationType</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadPublicationSubtypesByPublicationType</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
+		<filterChains />
 	</service>
 	<service>
-		<name>ReadPublicationFormats</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadPublicationFormats</implementationClass>
+		<name>ReadAllPublicationFormats</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAllPublicationFormats</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
+		<filterChains />
 	</service>
 	<service>
 		<name>ReadPublicationMonths</name>
@@ -3366,8 +3360,15 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadAuthorPublications</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAuthorPublications</implementationClass>
+		<name>ReadAuthorships</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAuthorships</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains />
+	</service>
+	<service>
+		<name>ReadAuthorsByNameWithoutUser</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAuthorsByNameWithoutUser</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -3375,8 +3376,22 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadAuthorsByName</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAuthorsByName</implementationClass>
+		<name>ReadPersonsByNameWithoutUser</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonsByNameWithoutUser</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains />
+	</service>
+	<service>
+		<name>ReadPersons</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersons</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains />
+	</service>
+	<service>
+		<name>AddPublicationToTeacherSheet</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.AddPublicationToTeacherSheet</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -3384,8 +3399,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadPersonsNotAuthors</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadPersonsNotAuthors</implementationClass>
+		<name>ReadPublicationsNotInTeacherSheet</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadPublicationsNotInTeacherSheet</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -3393,35 +3408,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadAuthorsToInsert</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAuthorsToInsert</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>InsertPublicationInTeacherList</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.InsertPublicationInTeacherList</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadAuthorPublicationsToInsert</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAuthorPublicationsToInsert</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>DeletePublicationInTeacherList</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.DeletePublicationInTeacherList</implementationClass>
+		<name>RemovePublicationFromTeacherSheet</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.RemovePublicationFromTeacherSheet</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -8644,14 +8632,6 @@
     	<name>ReadWorkLocationByName</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.workLocation.ReadWorkLocationByName</implementationClass>
         <description>Reads a work location given a name</description>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-        </filterChains>
-    </service>
-    <service>
-    	<name>DeleteAuthorships</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.DeleteAuthorships</implementationClass>
-        <description>Deletes authorships for a given publication</description>
         <isTransactional>true</isTransactional>
         <filterChains>
         </filterChains>

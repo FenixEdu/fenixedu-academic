@@ -39,7 +39,7 @@ public class PublicationManagementAction extends FenixAction {
 		Object[] args = { userView.getUtilizador() };
 
 		SiteView siteView = (SiteView) ServiceUtils.executeService(userView,
-				"ReadAuthorPublications", args);
+				"ReadAuthorships", args);
 		InfoSitePublications infoSitePublications = (InfoSitePublications) siteView
 				.getComponent();
 

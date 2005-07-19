@@ -2516,6 +2516,10 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	public net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits getExecutionPeriodCredits(IExecutionPeriod executionPeriod);
 	
 	public void notifyCreditsChange(net.sourceforge.fenixedu.domain.credits.event.CreditsEvent creditsEvent, net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator originator);
+	
+	public void addToTeacherSheet(net.sourceforge.fenixedu.domain.publication.IPublication publication, net.sourceforge.fenixedu.util.PublicationArea publicationArea) throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+	
+	public void removeFromTeacherSheet(net.sourceforge.fenixedu.domain.publication.IPublication publication) throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
 	"
 }
 
@@ -2677,6 +2681,7 @@ class net.sourceforge.fenixedu.domain.publication.Publication extends net.source
 	String publicationString;
 	
 	interface "
+	public void edit(net.sourceforge.fenixedu.dataTransferObject.publication.PublicationDTO publicationDTO, net.sourceforge.fenixedu.domain.publication.IPublicationType publicationType, java.util.List<net.sourceforge.fenixedu.domain.IPerson> authors);
 	public void delete();
 	"
 }

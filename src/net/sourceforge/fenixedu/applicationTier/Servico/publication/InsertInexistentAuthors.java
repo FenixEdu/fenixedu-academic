@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPersons;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWorkLocation;
@@ -22,7 +22,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class InsertInexistentAuthors implements IService {
 
-    public List<IPerson> run(final List<InfoAuthor> infoAuthorsList) throws FenixServiceException, ExcepcaoPersistencia {
+    public List<IPerson> run(final List<InfoAuthor> infoAuthorsList) throws ExcepcaoPersistencia, ExistingServiceException {
         
         final List<IPerson> authorsList = new ArrayList(infoAuthorsList.size());
         

@@ -1,7 +1,3 @@
-/*
- * Created on Feb 18, 2004
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Filtro.publication;
 
 import java.util.ArrayList;
@@ -21,10 +17,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
 
-/**
- * @author <a href="mailto:cgmp@mega.ist.utl.pt">Carlos Pereira </a>
- * @author <a href="mailto:fmmp@mega.ist.utl.pt">Francisco Passos </a>
- */
 public class PublicationAuthorAuthorizationFilter extends DomainObjectAuthorizationFilter {
 
     /*

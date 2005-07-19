@@ -1,25 +1,29 @@
-/*
- * Created on Mar 29, 2004
- *
- * To change the template for this generated file go to
- * Window - Preferences - Java - Code Generation - Code and Comments
- */
 package net.sourceforge.fenixedu.dataTransferObject.publication;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
+import net.sourceforge.fenixedu.domain.publication.IPublicationFormat;
 
-/**
- * @author TJBF & PFON
- * 
- * To change the template for this generated type comment go to Window -
- * Preferences - Java - Code Generation - Code and Comments
- */
 public class InfoPublicationFormat extends InfoObject {
 
     private String format;
 
     public InfoPublicationFormat() {
         super();
+    }
+    
+    public static InfoPublicationFormat newInfoFromDomain(IPublicationFormat publicationFormat) {
+        InfoPublicationFormat infoPublicationFormat = new InfoPublicationFormat();
+        if(publicationFormat != null) {
+            infoPublicationFormat.copyFromDomain(publicationFormat);
+        }
+        return infoPublicationFormat;
+    }
+    
+    public void copyFromDomain(IPublicationFormat publicationFormat) {
+        super.copyFromDomain(publicationFormat);
+        if (publicationFormat != null) {
+            format = publicationFormat.getFormat();
+        }
     }
 
     /**
@@ -36,5 +40,7 @@ public class InfoPublicationFormat extends InfoObject {
     public void setFormat(String format) {
         this.format = format;
     }
+
+
 
 }

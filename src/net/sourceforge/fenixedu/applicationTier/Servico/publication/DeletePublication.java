@@ -18,7 +18,6 @@ public class DeletePublication implements IService {
         final IPublication publication = (IPublication) persistentPublication.readByOID(Publication.class, publicationId);
         publication.delete();
         
-        persistentPublication.simpleLockWrite(publication);
 	}
 
 }

@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publication;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -22,17 +21,11 @@ import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAttribute;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationType;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
-import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.publication.IPublicationType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
-import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -56,7 +49,7 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
         // InfoPublication pub = (InfoPublication) infoObject;
         Integer keyPublicationType = (Integer) dynaForm.get("infoPublicationTypeId");
 
-        Object[] argReqAtt = { userView.getUtilizador(), keyPublicationType };
+        Object[] argReqAtt = { keyPublicationType };
         List requiredAttributes = (List) ServiceUtils.executeService(userView, "ReadRequiredAttributes",
                 argReqAtt);
 
@@ -264,17 +257,16 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
 
         IUserView userView = SessionUtils.getUserView(request);
         Object argPubType[] = { userView.getUtilizador() };
-        List infoPublicationTypes = (List) ServiceUtils.executeService(userView, "ReadPublicationTypes",
-                argPubType);
+        List infoPublicationTypes = (List) ServiceUtils.executeService(userView, "ReadAllPublicationTypes", argPubType);
         request.setAttribute("publicationTypesList", infoPublicationTypes);
 
-        Object args[] = { userView.getUtilizador(), type };
-        List infoPublicationSubtypes = (List) ServiceUtils.executeService(userView,
-                "ReadPublicationSubtypes", args);
+        Object args[] = { type };
+
+        
+        List infoPublicationSubtypes = (List) ServiceUtils.executeService(userView, "ReadPublicationSubtypesByPublicationType", args);
         request.setAttribute("subTypeList", infoPublicationSubtypes);
 
-        List infoPublicationFormats = (List) ServiceUtils.executeService(userView,
-                "ReadPublicationFormats", args);
+        List infoPublicationFormats = (List) ServiceUtils.executeService(userView, "ReadAllPublicationFormats", args);
         request.setAttribute("formatList", infoPublicationFormats);
 
         List monthList = (List) ServiceUtils.executeService(userView, "ReadPublicationMonths", args);
@@ -502,93 +494,11 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
         Object[] arg = { userView, searchedAuthorName };
         List infoAuthorList = new ArrayList<InfoAuthor>();
 
-        infoAuthorList = (List<InfoAuthor>) ServiceUtils.executeService(userView, "ReadAuthorsByName", arg);
+        infoAuthorList = (List<InfoAuthor>) ServiceUtils.executeService(userView, "ReadAuthorsByNameWithoutUser", arg);
 
         request.setAttribute("searchedAuthorsList", infoAuthorList);
         
         return mapping.findForward("searchAuthors");
-    }
-
-    public List readInfoAuthors(List authorsIds, IUserView userView) throws FenixFilterException,
-            FenixServiceException {
-
-        List newAuthorsIds = new ArrayList();
-        Iterator iteratorIds = authorsIds.iterator();
-
-        while (iteratorIds.hasNext()) {
-            newAuthorsIds.add(iteratorIds.next());
-        }
-
-        Object[] args = { newAuthorsIds };
-        List authors = (List) ServiceUtils.executeService(userView, "ReadAuthorsToInsert", args);
-
-        List infoAuthors = (List) CollectionUtils.collect(authors, new Transformer() {
-            public Object transform(Object o) {
-                IPerson author = (IPerson) o;
-                InfoPerson infoPerson = new InfoPerson();
-                infoPerson.copyFromDomain(author);
-                return infoPerson;
-            }
-        });
-        return infoAuthors;
-    }
-
-    public List infoAuthorsPersons(List listObjects, Object object) {
-        List infoAuthorPersons = new ArrayList();
-
-        if (object instanceof IPerson) {
-
-            infoAuthorPersons = (List) CollectionUtils.collect(listObjects, new Transformer() {
-                public Object transform(Object o) {
-                    IPerson author = (IPerson) o;
-                    InfoPerson infoPerson = new InfoPerson();
-                    infoPerson.copyFromDomain(author);
-                    return infoPerson;
-                }
-            });
-
-        } else {
-
-            infoAuthorPersons = (List) CollectionUtils.collect(listObjects, new Transformer() {
-                public Object transform(Object o) {
-                    IPerson person = (IPerson) o;
-                    return Cloner.copyIPerson2InfoAuthorPerson(person);
-                }
-            });
-        }
-
-        return infoAuthorPersons;
-
-    }
-
-    public List joinAuthorsAndPersons(List authors, List persons) {
-        List authorsPersons = new ArrayList();
-
-        if ((authors == null || authors.size() == PublicationConstants.ZERO_VALUE)
-                && (persons == null || persons.size() == PublicationConstants.ZERO_VALUE)) {
-            return authorsPersons;
-        }
-
-        if (authors == null || authors.size() == PublicationConstants.ZERO_VALUE) {
-            authorsPersons = persons;
-        }
-        if (persons == null || persons.size() == PublicationConstants.ZERO_VALUE) {
-            authorsPersons = authors;
-        } else {
-            authorsPersons = persons;
-            authorsPersons.addAll(authors);
-        }
-
-        return authorsPersons;
-    }
-
-    public List sortListByName(List infoAuthorpersons) {
-
-        ComparatorChain comparatorChain = new ComparatorChain();
-        comparatorChain.addComparator(new BeanComparator(PublicationConstants.BEAN_COMPARATOR_NAME));
-        Collections.sort(infoAuthorpersons, comparatorChain);
-
-        return infoAuthorpersons;
     }
 
     public ActionForward cancel(ActionMapping mapping, ActionForm form,
