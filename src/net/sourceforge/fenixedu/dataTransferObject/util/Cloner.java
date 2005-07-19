@@ -107,7 +107,6 @@ import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.domain.credits.IManagementPositionCreditLine;
 import net.sourceforge.fenixedu.domain.credits.IOtherTypeCreditLine;
 import net.sourceforge.fenixedu.domain.credits.IServiceExemptionCreditLine;
-import net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine;
 import net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine;
 import net.sourceforge.fenixedu.domain.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
@@ -2449,42 +2448,6 @@ public abstract class Cloner {
         infoOtherTypeCreditLine.setInfoTeacher(infoTeacher);
         infoOtherTypeCreditLine.setInfoExecutionPeriod(infoExecutionPeriod);
         return infoOtherTypeCreditLine;
-    }
-
-    public static IOtherTypeCreditLine copyInfoOtherTypeCreditLine2IOtherCreditLine(
-            InfoOtherTypeCreditLine creditLine) {
-        ITeacher teacher = null;
-        if (creditLine.getInfoTeacher() != null) {
-            teacher = copyInfoTeacher2Teacher(creditLine.getInfoTeacher());
-        }
-        IExecutionPeriod executionPeriod = null;
-        if (creditLine.getInfoExecutionPeriod() != null) {
-            executionPeriod = copyInfoExecutionPeriod2IExecutionPeriod(creditLine
-                    .getInfoExecutionPeriod());
-        }
-
-        IOtherTypeCreditLine otherTypeCreditLine = new OtherTypeCreditLine();
-
-        copyObjectProperties(otherTypeCreditLine, creditLine);
-
-        otherTypeCreditLine.setTeacher(teacher);
-        otherTypeCreditLine.setExecutionPeriod(executionPeriod);
-        return otherTypeCreditLine;
-    }
-
-    public static IManagementPositionCreditLine copyInfoManagementPositionCreditLine2IManagementPositionCreditLine(
-            InfoManagementPositionCreditLine creditLine) {
-        ITeacher teacher = null;
-        if (creditLine.getInfoTeacher() != null) {
-            teacher = copyInfoTeacher2Teacher(creditLine.getInfoTeacher());
-        }
-
-        IManagementPositionCreditLine managementPositionCreditLine = new ManagementPositionCreditLine();
-
-        copyObjectProperties(managementPositionCreditLine, creditLine);
-
-        managementPositionCreditLine.setTeacher(teacher);
-        return managementPositionCreditLine;
     }
 
     public static InfoManagementPositionCreditLine copyIManagementPositionCreditLine2InfoManagementPositionCreditLine(
