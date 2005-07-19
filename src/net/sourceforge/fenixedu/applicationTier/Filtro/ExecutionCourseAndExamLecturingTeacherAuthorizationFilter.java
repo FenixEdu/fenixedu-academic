@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
-import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
@@ -101,18 +100,14 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
     }
 
     private boolean examBelongsExecutionCourse(IUserView id, Object[] argumentos) {
-
-        ISuportePersistente sp = null;
         InfoExecutionCourse infoExecutionCourse = null;
         IExecutionCourse executionCourse = null;
-        InfoExam infoExam = null;
-        IExam exam = null;
 
         if (argumentos == null) {
             return false;
         }
         try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             IPersistentExam persistentExam = sp.getIPersistentExam();
 
@@ -124,15 +119,21 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
                         ExecutionCourse.class, (Integer) argumentos[0]);
             }
 
+            Integer examId;
             if (argumentos[1] instanceof InfoExam) {
-                infoExam = (InfoExam) argumentos[1];
-                exam = Cloner.copyInfoExam2IExam(infoExam);
+                InfoExam infoExam = (InfoExam) argumentos[1];
+                examId = infoExam.getIdInternal();
             } else {
-                exam = (IExam) persistentExam.readByOID(Exam.class, (Integer) argumentos[1]);
+                examId = (Integer) argumentos[1];
             }
 
-            if (executionCourse != null && exam != null) {
-                return executionCourse.getAssociatedExams().contains(exam);
+            if (executionCourse != null && examId != null) {
+                for (IExam associatedExam : executionCourse.getAssociatedExams()) {
+                    if(associatedExam.getIdInternal().equals(examId)) {
+                        return true;
+                    }
+                }
+                return false;
             }
             return false;
 
