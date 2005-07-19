@@ -95,7 +95,102 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime;
-import net.sourceforge.fenixedu.domain.*;
+import net.sourceforge.fenixedu.domain.Advisory;
+import net.sourceforge.fenixedu.domain.Branch;
+import net.sourceforge.fenixedu.domain.Campus;
+import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularSemester;
+import net.sourceforge.fenixedu.domain.CurricularYear;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.ExternalPerson;
+import net.sourceforge.fenixedu.domain.GroupProperties;
+import net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse;
+import net.sourceforge.fenixedu.domain.GuideEntry;
+import net.sourceforge.fenixedu.domain.IAdvisory;
+import net.sourceforge.fenixedu.domain.IAnnouncement;
+import net.sourceforge.fenixedu.domain.IAttends;
+import net.sourceforge.fenixedu.domain.IAttendsSet;
+import net.sourceforge.fenixedu.domain.IBibliographicReference;
+import net.sourceforge.fenixedu.domain.IBranch;
+import net.sourceforge.fenixedu.domain.ICampus;
+import net.sourceforge.fenixedu.domain.ICandidateSituation;
+import net.sourceforge.fenixedu.domain.ICoordinator;
+import net.sourceforge.fenixedu.domain.ICountry;
+import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
+import net.sourceforge.fenixedu.domain.ICurricularSemester;
+import net.sourceforge.fenixedu.domain.ICurricularYear;
+import net.sourceforge.fenixedu.domain.ICurriculum;
+import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.IDepartment;
+import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.IEmployee;
+import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.IExam;
+import net.sourceforge.fenixedu.domain.IExamStudentRoom;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.IExternalPerson;
+import net.sourceforge.fenixedu.domain.IGratuityValues;
+import net.sourceforge.fenixedu.domain.IGroupProperties;
+import net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse;
+import net.sourceforge.fenixedu.domain.IGuideEntry;
+import net.sourceforge.fenixedu.domain.IItem;
+import net.sourceforge.fenixedu.domain.ILesson;
+import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.IMasterDegreeProofVersion;
+import net.sourceforge.fenixedu.domain.IMasterDegreeThesis;
+import net.sourceforge.fenixedu.domain.IPaymentPhase;
+import net.sourceforge.fenixedu.domain.IPeriod;
+import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.IPrice;
+import net.sourceforge.fenixedu.domain.IProfessorship;
+import net.sourceforge.fenixedu.domain.IResponsibleFor;
+import net.sourceforge.fenixedu.domain.IRole;
+import net.sourceforge.fenixedu.domain.IRoom;
+import net.sourceforge.fenixedu.domain.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.ISchoolClass;
+import net.sourceforge.fenixedu.domain.IScientificArea;
+import net.sourceforge.fenixedu.domain.ISection;
+import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.IShiftProfessorship;
+import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.ISiteIST;
+import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.IStudentKind;
+import net.sourceforge.fenixedu.domain.ISupportLesson;
+import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.IUniversity;
+import net.sourceforge.fenixedu.domain.IWebSite;
+import net.sourceforge.fenixedu.domain.IWebSiteItem;
+import net.sourceforge.fenixedu.domain.IWebSiteSection;
+import net.sourceforge.fenixedu.domain.IWorkLocation;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.Period;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Room;
+import net.sourceforge.fenixedu.domain.RoomOccupation;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftProfessorship;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentKind;
+import net.sourceforge.fenixedu.domain.SupportLesson;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.University;
+import net.sourceforge.fenixedu.domain.WorkLocation;
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
@@ -107,7 +202,6 @@ import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.domain.credits.IManagementPositionCreditLine;
 import net.sourceforge.fenixedu.domain.credits.IOtherTypeCreditLine;
 import net.sourceforge.fenixedu.domain.credits.IServiceExemptionCreditLine;
-import net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine;
 import net.sourceforge.fenixedu.domain.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.gaugingTests.physics.IGaugingTestResult;
@@ -673,7 +767,7 @@ public abstract class Cloner {
             }
 
             copyObjectProperties(infoPerson, person);
-//            infoPerson.copyToDomain(infoPerson,person);
+            // infoPerson.copyToDomain(infoPerson,person);
             infoPerson.setInfoPais(infoCountry);
 
             if (person.getAdvisories() != null) {
@@ -964,39 +1058,6 @@ public abstract class Cloner {
     }
 
     /**
-     * @param infoExam
-     * @return IExam
-     */
-    public static IExam copyInfoExam2IExam(InfoExam infoExam) {
-        IExam exam = new Exam();
-
-        copyObjectProperties(exam, infoExam);
-
-        if (infoExam != null && infoExam.getAssociatedCurricularCourseScope() != null
-                && infoExam.getAssociatedCurricularCourseScope().size() > 0) {
-            for (int i = 0; i < infoExam.getAssociatedCurricularCourseScope().size(); i++) {
-                exam
-                        .addAssociatedCurricularCourseScope(copyInfoCurricularCourseScope2ICurricularCourseScope((InfoCurricularCourseScope) infoExam
-                                .getAssociatedCurricularCourseScope().get(i)));
-            }
-        }
-
-        if (infoExam != null && infoExam.getAssociatedRoomOccupation() != null
-                && infoExam.getAssociatedRoomOccupation().size() > 0) {
-            for (int i = 0; i < infoExam.getAssociatedRoomOccupation().size(); i++) {
-                exam
-                        .addAssociatedRoomOccupation(copyInfoRoomOccupation2IRoomOccupation((InfoRoomOccupation) infoExam
-                                .getAssociatedRoomOccupation().get(i)));
-            }
-        }
-
-        return exam;
-    }
-
-    // Ana e Ricardo
-    // -----------------------------------------
-
-    /**
      * @param InfoRoomOccupation
      * @return IRoomOcupation
      */
@@ -1247,33 +1308,6 @@ public abstract class Cloner {
 
     /**
      * @author dcs-rjao
-     * @param InfoCurricularCourse
-     * @return ICurricularCourse
-     */
-    public static ICurricularCourse copyInfoCurricularCourse2CurricularCourse(
-            InfoCurricularCourse infoCurricularCourse) {
-
-        ICurricularCourse curricularCourse = new CurricularCourse();
-        IUniversity university = Cloner.copyInfoUniversity2IUniversity(infoCurricularCourse
-                .getInfoUniversity());
-        IDegreeCurricularPlan planoCurricularCurso = copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoCurricularCourse
-                .getInfoDegreeCurricularPlan());
-
-        copyObjectProperties(curricularCourse, infoCurricularCourse);
-
-        if (infoCurricularCourse.getInfoScientificArea() != null) {
-            IScientificArea scientificArea = copyInfoScientificArea2IScientificArea(infoCurricularCourse
-                    .getInfoScientificArea());
-            curricularCourse.setScientificArea(scientificArea);
-        }
-
-        curricularCourse.setDegreeCurricularPlan(planoCurricularCurso);
-        curricularCourse.setUniversity(university);
-        return curricularCourse;
-    }
-
-    /**
-     * @author dcs-rjao
      * @param ICurricularCourse
      * @return InfoCurricularCourse
      */
@@ -1324,31 +1358,6 @@ public abstract class Cloner {
         infoCurricularCourseScope.setInfoBranch(infoBranch);
 
         return infoCurricularCourseScope;
-    }
-
-    /**
-     * @author dcs-rjao
-     * @param InfoCurricularCourseScope
-     * @return ICurricularCourseScope
-     */
-    public static ICurricularCourseScope copyInfoCurricularCourseScope2ICurricularCourseScope(
-            InfoCurricularCourseScope infoCurricularCourseScope) {
-
-        ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
-
-        ICurricularCourse curricularCourse = copyInfoCurricularCourse2CurricularCourse(infoCurricularCourseScope
-                .getInfoCurricularCourse());
-        ICurricularSemester curricularSemester = copyInfoCurricularSemester2CurricularSemester(infoCurricularCourseScope
-                .getInfoCurricularSemester());
-        IBranch branch = copyInfoBranch2IBranch(infoCurricularCourseScope.getInfoBranch());
-
-        copyObjectProperties(curricularCourseScope, infoCurricularCourseScope);
-
-        curricularCourseScope.setCurricularCourse(curricularCourse);
-        curricularCourseScope.setCurricularSemester(curricularSemester);
-        curricularCourseScope.setBranch(branch);
-
-        return curricularCourseScope;
     }
 
     /**
@@ -2370,14 +2379,6 @@ public abstract class Cloner {
         infoResponsibleFor.setInfoTeacher(infoTeacher);
 
         return infoResponsibleFor;
-    }
-
-    public static IScientificArea copyInfoScientificArea2IScientificArea(
-            InfoScientificArea infoScientificArea) {
-        IScientificArea scientificArea = new ScientificArea();
-        copyObjectProperties(scientificArea, infoScientificArea);
-
-        return scientificArea;
     }
 
     public static InfoScientificArea copyIScientificArea2InfoScientificArea(
