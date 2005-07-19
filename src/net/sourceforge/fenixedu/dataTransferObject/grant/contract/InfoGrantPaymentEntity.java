@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantProject;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.ojb.broker.core.proxy.ProxyHelper;
 
@@ -119,21 +118,6 @@ public abstract class InfoGrantPaymentEntity extends InfoObject {
             }
         }
         return null;
-    }
-
-    public static IGrantPaymentEntity newDomainFromInfo(InfoGrantPaymentEntity infoGrantPaymentEntity)
-            throws ExcepcaoPersistencia {
-        IGrantPaymentEntity grantPaymentEntity = null;
-        if (infoGrantPaymentEntity != null) {
-            if (infoGrantPaymentEntity.getOjbConcreteClass().equals(GrantCostCenter.class.getName())) {
-                return InfoGrantCostCenterWithTeacher
-                        .newDomainFromInfo((InfoGrantCostCenter) infoGrantPaymentEntity);
-            } else if (infoGrantPaymentEntity.getOjbConcreteClass().equals(GrantProject.class.getName())) {
-                return InfoGrantProjectWithTeacherAndCostCenter
-                        .newDomainFromInfo((InfoGrantProject) infoGrantPaymentEntity);
-            }
-        }
-        return grantPaymentEntity;
     }
 
 }

@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantOrientationTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Pica
@@ -34,16 +33,6 @@ public class InfoGrantOrientationTeacherWithTeacherAndGrantContract extends Info
                     .copyFromDomain(grantOrientationTeacher);
         }
         return infoGrantOrientationTeacherWithTeacherAndGrantContract;
-    }
-
-    public void copyToDomain(InfoGrantOrientationTeacher infoGrantOrientationTeacher,
-            IGrantOrientationTeacher grantOrientationTeacher) throws ExcepcaoPersistencia {
-        super.copyToDomain(infoGrantOrientationTeacher, grantOrientationTeacher);
-
-        grantOrientationTeacher.setOrientationTeacher(InfoTeacherWithPerson
-                .newDomainFromInfo(infoGrantOrientationTeacher.getOrientationTeacherInfo()));
-        grantOrientationTeacher.setGrantContract(InfoGrantContractWithGrantOwnerAndGrantType
-                .newDomainFromInfo(infoGrantOrientationTeacher.getGrantContractInfo()));
     }
 
 }

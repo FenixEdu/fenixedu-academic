@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.IInstitution;
 import net.sourceforge.fenixedu.domain.INonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.Institution;
-import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 
 /**
  * @author Ricardo Rodrigues
@@ -39,7 +38,7 @@ public class InfoNonAffiliatedTeacher extends InfoObject {
         }
     }
 
-	public static InfoNonAffiliatedTeacher newInfoFromDomain(INonAffiliatedTeacher naTeacher) {
+    public static InfoNonAffiliatedTeacher newInfoFromDomain(INonAffiliatedTeacher naTeacher) {
         InfoNonAffiliatedTeacher infoNaTeacher = null;
         if (naTeacher != null) {
             infoNaTeacher = new InfoNonAffiliatedTeacher();
@@ -48,21 +47,13 @@ public class InfoNonAffiliatedTeacher extends InfoObject {
         return infoNaTeacher;
     }
 
-    public static INonAffiliatedTeacher newDomainFromInfo(InfoNonAffiliatedTeacher infoNonAffiliatedTeacher) {
-        INonAffiliatedTeacher nonAffiliatedTeacher = null;
-        if (infoNonAffiliatedTeacher != null) {
-            nonAffiliatedTeacher = new NonAffiliatedTeacher();
-            infoNonAffiliatedTeacher.copyToDomain(infoNonAffiliatedTeacher, nonAffiliatedTeacher);
-        }
-        return nonAffiliatedTeacher;
-    }
-
-    public void copyToDomain(InfoNonAffiliatedTeacher infoNonAffiliatedTeacher, INonAffiliatedTeacher nonAffiliatedTeacher) {
+    public void copyToDomain(InfoNonAffiliatedTeacher infoNonAffiliatedTeacher,
+            INonAffiliatedTeacher nonAffiliatedTeacher) {
         if (infoNonAffiliatedTeacher != null && nonAffiliatedTeacher != null) {
             super.copyToDomain(infoNonAffiliatedTeacher, nonAffiliatedTeacher);
             nonAffiliatedTeacher.setName(infoNonAffiliatedTeacher.getName());
             InfoInstitution infoInstitution = infoNonAffiliatedTeacher.getInfoInstitution();
-            if (infoInstitution != null){
+            if (infoInstitution != null) {
                 IInstitution institution = new Institution();
                 infoInstitution.copyToDomain(infoInstitution, institution);
                 nonAffiliatedTeacher.setInstitution(institution);
@@ -93,13 +84,12 @@ public class InfoNonAffiliatedTeacher extends InfoObject {
     public void setName(String name) {
         this.name = name;
     }
-	
+
     public String toString() {
         String result = "[INFONONAFFILIATEDTEACHER";
         result += ", nome=" + this.getName();
         result += "]";
         return result;
     }
-
 
 }

@@ -9,7 +9,6 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantCostCenter;
@@ -38,39 +37,45 @@ public class InfoGrantContractRegime extends InfoObject {
     private Date dateSendDispatchCD;
 
     private Date dateDispatchCD;
-    
+
     private Integer costCenterKey;
 
     private InfoTeacher infoTeacher;
 
     private InfoGrantContract infoGrantContract;
-    
+
     private InfoGrantCostCenter grantCostCenterInfo;
 
-	/**
-	 * @return Returns the costCenterKey.
-	 */
-	public Integer getCostCenterKey() {
-		return costCenterKey;
-	}
-	/**
-	 * @param costCenterKey The costCenterKey to set.
-	 */
-	public void setCostCenterKey(Integer costCenterKey) {
-		this.costCenterKey = costCenterKey;
-	}
-	/**
-	 * @return Returns the grantCostCenterInfo.
-	 */
-	public InfoGrantCostCenter getGrantCostCenterInfo() {
-		return grantCostCenterInfo;
-	}
-	/**
-	 * @param grantCostCenterInfo The grantCostCenterInfo to set.
-	 */
-	public void setGrantCostCenterInfo(InfoGrantCostCenter grantCostCenterInfo) {
-		this.grantCostCenterInfo = grantCostCenterInfo;
-	}
+    /**
+     * @return Returns the costCenterKey.
+     */
+    public Integer getCostCenterKey() {
+        return costCenterKey;
+    }
+
+    /**
+     * @param costCenterKey
+     *            The costCenterKey to set.
+     */
+    public void setCostCenterKey(Integer costCenterKey) {
+        this.costCenterKey = costCenterKey;
+    }
+
+    /**
+     * @return Returns the grantCostCenterInfo.
+     */
+    public InfoGrantCostCenter getGrantCostCenterInfo() {
+        return grantCostCenterInfo;
+    }
+
+    /**
+     * @param grantCostCenterInfo
+     *            The grantCostCenterInfo to set.
+     */
+    public void setGrantCostCenterInfo(InfoGrantCostCenter grantCostCenterInfo) {
+        this.grantCostCenterInfo = grantCostCenterInfo;
+    }
+
     /**
      * @return Returns the dateBeginContract.
      */
@@ -236,7 +241,7 @@ public class InfoGrantContractRegime extends InfoObject {
         return new Integer(inactiveState);
     }
 
-     /**
+    /**
      * @param GrantContractRegime
      */
     public void copyFromDomain(IGrantContractRegime grantContractRegime) {
@@ -249,13 +254,15 @@ public class InfoGrantContractRegime extends InfoObject {
             setDateDispatchCD(grantContractRegime.getDateDispatchCD());
             setDateSendDispatchCC(grantContractRegime.getDateSendDispatchCC());
             setDateSendDispatchCD(grantContractRegime.getDateSendDispatchCD());
-            if (grantContractRegime.getGrantContract().getGrantCostCenter()!=null){
-            	  
-            	 setCostCenterKey(grantContractRegime.getGrantContract().getGrantCostCenter().getIdInternal());
-            	 setGrantCostCenterInfo(InfoGrantCostCenter.newInfoFromDomain(grantContractRegime.getGrantContract().getGrantCostCenter()));
-            	        	 
+            if (grantContractRegime.getGrantContract().getGrantCostCenter() != null) {
+
+                setCostCenterKey(grantContractRegime.getGrantContract().getGrantCostCenter()
+                        .getIdInternal());
+                setGrantCostCenterInfo(InfoGrantCostCenter.newInfoFromDomain(grantContractRegime
+                        .getGrantContract().getGrantCostCenter()));
+
             }
-          
+
         }
     }
 
@@ -284,21 +291,12 @@ public class InfoGrantContractRegime extends InfoObject {
         grantContractRegime.setDateSendDispatchCC(infoGrantContractRegime.getDateSendDispatchCC());
         grantContractRegime.setDateSendDispatchCD(infoGrantContractRegime.getDateSendDispatchCD());
         grantContractRegime.setState(infoGrantContractRegime.getState());
-        if (infoGrantContractRegime.getGrantCostCenterInfo()!=null){
-	        IGrantCostCenter grantCostCenter = new GrantCostCenter();
-	        grantCostCenter = InfoGrantCostCenter.newDomainFromInfo(infoGrantContractRegime.getGrantCostCenterInfo());
-	        grantContractRegime.setGrantCostCenter(grantCostCenter);
+        if (infoGrantContractRegime.getGrantCostCenterInfo() != null) {
+            IGrantCostCenter grantCostCenter = new GrantCostCenter();
+            grantCostCenter = InfoGrantCostCenter.newDomainFromInfo(infoGrantContractRegime
+                    .getGrantCostCenterInfo());
+            grantContractRegime.setGrantCostCenter(grantCostCenter);
         }
-        
-    }
-
-    public static IGrantContractRegime newDomainFromInfo(InfoGrantContractRegime infoGrantContractRegime) throws ExcepcaoPersistencia {
-        IGrantContractRegime grantContractRegime = null;
-        if (infoGrantContractRegime != null) {
-            grantContractRegime = new GrantContractRegime();            
-            infoGrantContractRegime.copyToDomain(infoGrantContractRegime, grantContractRegime);
-        }
-        return grantContractRegime;
     }
 
 }

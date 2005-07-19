@@ -32,12 +32,4 @@ public class InfoDegreeCurricularPlanWithDegree extends InfoDegreeCurricularPlan
         return infoDegreeCurricularPlan;
     }
 
-    public void copyToDomain(InfoDegreeCurricularPlan infoDegreeCurricularPlan,
-            IDegreeCurricularPlan degreeCurricularPlan) {
-        super.copyToDomain(infoDegreeCurricularPlan, degreeCurricularPlan);
-        degreeCurricularPlan.setDegree(InfoDegree.newDomainFromInfo(infoDegreeCurricularPlan
-                .getInfoDegree()));
-
-    }
-
 }

@@ -7,14 +7,13 @@ package net.sourceforge.fenixedu.dataTransferObject.support;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.support.FAQEntry;
 import net.sourceforge.fenixedu.domain.support.FAQSection;
 import net.sourceforge.fenixedu.domain.support.IFAQEntry;
 import net.sourceforge.fenixedu.domain.support.IFAQSection;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class InfoFAQEntry extends InfoObject implements Serializable {
 
@@ -87,12 +86,4 @@ public class InfoFAQEntry extends InfoObject implements Serializable {
         }
     }
 
-    public static IFAQEntry newDomainFromInfo(InfoFAQEntry infoFAQEntry) {
-        IFAQEntry faqEntry = null;
-        if (infoFAQEntry != null) {
-            faqEntry = new FAQEntry();
-            infoFAQEntry.copyToDomain(infoFAQEntry, faqEntry);
-        }
-        return faqEntry;
-    }
 }

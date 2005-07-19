@@ -3,12 +3,10 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
-
 import java.util.Calendar;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantInsurance;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.projectsManagement.FormatDouble;
@@ -19,7 +17,7 @@ import net.sourceforge.fenixedu.util.projectsManagement.FormatDouble;
  */
 public class InfoGrantInsurance extends InfoObject {
 
-    //This is the value of a day of an insurance. It's static for all
+    // This is the value of a day of an insurance. It's static for all
     // contracts.
     private static final double dayValueOfInsurance = 63.35;
 
@@ -121,23 +119,23 @@ public class InfoGrantInsurance extends InfoObject {
      * multiply by the constant value 'dayValueOfInsurance'
      */
     public static Double calculateTotalValue(Date dateBegin, Date dateEnd) {
-      
+
         if (dateBegin != null && dateEnd != null && dateBegin.before(dateEnd)) {
             Calendar c1 = Calendar.getInstance();
             Calendar c2 = Calendar.getInstance();
 
-            Integer numberOfMonth=0;
-            Integer numberOfYear=0;
-            Integer value=1;
+            Integer numberOfMonth = 0;
+            Integer numberOfYear = 0;
+            Integer value = 1;
             c1.setTime(dateBegin);
             c2.setTime(dateEnd);
-           
-            numberOfYear = 12*(c2.get(Calendar.YEAR)-c1.get(Calendar.YEAR));  
-            numberOfMonth = (c2.get(Calendar.MONTH)-c1.get(Calendar.MONTH))+1;
-            value=numberOfYear+numberOfMonth;
-            return new Double(FormatDouble.round(((getDayValueOfInsurance().doubleValue())/12)*value));
-           
-          
+
+            numberOfYear = 12 * (c2.get(Calendar.YEAR) - c1.get(Calendar.YEAR));
+            numberOfMonth = (c2.get(Calendar.MONTH) - c1.get(Calendar.MONTH)) + 1;
+            value = numberOfYear + numberOfMonth;
+            return new Double(FormatDouble
+                    .round(((getDayValueOfInsurance().doubleValue()) / 12) * value));
+
         }
         return new Double(0);
     }
@@ -165,22 +163,13 @@ public class InfoGrantInsurance extends InfoObject {
         return infoGrantInsurance;
     }
 
-    public void copyToDomain(InfoGrantInsurance infoGrantInsurance, IGrantInsurance grantInsurance) throws ExcepcaoPersistencia {
+    public void copyToDomain(InfoGrantInsurance infoGrantInsurance, IGrantInsurance grantInsurance)
+            throws ExcepcaoPersistencia {
         super.copyToDomain(infoGrantInsurance, grantInsurance);
 
         grantInsurance.setDateBeginInsurance(infoGrantInsurance.getDateBeginInsurance());
         grantInsurance.setDateEndInsurance(infoGrantInsurance.getDateEndInsurance());
         grantInsurance.setTotalValue(infoGrantInsurance.getTotalValue());
     }
-
-    public static IGrantInsurance newDomainFromInfo(InfoGrantInsurance infoGrantInsurance) throws ExcepcaoPersistencia {
-        IGrantInsurance grantInsurance = null;
-        if (infoGrantInsurance != null) {
-            grantInsurance = new GrantInsurance();
-            infoGrantInsurance.copyToDomain(infoGrantInsurance, grantInsurance);
-        }
-        return grantInsurance;
-    }
-    
 
 }

@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.IQualification;
-import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -275,7 +274,8 @@ public class InfoQualification extends InfoObject implements ISiteComponent {
         return infoQualification;
     }
 
-    public void copyToDomain(InfoQualification infoQualification, IQualification qualification) throws ExcepcaoPersistencia {
+    public void copyToDomain(InfoQualification infoQualification, IQualification qualification)
+            throws ExcepcaoPersistencia {
         super.copyToDomain(infoQualification, qualification);
 
         qualification.setTitle(infoQualification.getTitle());
@@ -291,12 +291,4 @@ public class InfoQualification extends InfoObject implements ISiteComponent {
         qualification.setEquivalenceSchool(infoQualification.getEquivalenceSchool());
     }
 
-    public static IQualification newDomainFromInfo(InfoQualification infoQualification) throws ExcepcaoPersistencia {
-        IQualification qualification = null;
-        if (infoQualification != null) {
-            qualification = new Qualification();
-            infoQualification.copyToDomain(infoQualification, qualification);
-        }
-        return qualification;
-    }
 }

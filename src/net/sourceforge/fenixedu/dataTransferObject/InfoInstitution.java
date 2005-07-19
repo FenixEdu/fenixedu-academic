@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.IInstitution;
-import net.sourceforge.fenixedu.domain.Institution;
 
 /**
  * @author Ricardo Rodrigues
@@ -30,22 +29,13 @@ public class InfoInstitution extends InfoObject {
         }
     }
 
-    public static IInstitution newDomainFromInfo(InfoInstitution infoInstitution){
-        IInstitution institution = null;
-        if(infoInstitution != null){
-            institution = new Institution();
-            infoInstitution.copyToDomain(infoInstitution, institution);
-        }
-        return institution;
-    }
-    
-    public void copyToDomain(InfoInstitution infoInstitution, IInstitution institution){
-        if (infoInstitution != null && institution != null){
+    public void copyToDomain(InfoInstitution infoInstitution, IInstitution institution) {
+        if (infoInstitution != null && institution != null) {
             super.copyToDomain(infoInstitution, institution);
             institution.setName(infoInstitution.getName());
         }
     }
-    
+
     public String getName() {
         return name;
     }

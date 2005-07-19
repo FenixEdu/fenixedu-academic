@@ -9,7 +9,6 @@ import java.util.Date;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.gesdis.IStudentCourseReport;
-import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
 
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
@@ -115,7 +114,7 @@ public class InfoStudentCourseReport extends InfoObject {
     public void setWeakPoints(String weakPoints) {
         this.weakPoints = weakPoints;
     }
-    
+
     public void copyFromDomain(IStudentCourseReport scr) {
         super.copyFromDomain(scr);
         if (scr != null) {
@@ -125,7 +124,7 @@ public class InfoStudentCourseReport extends InfoObject {
             setLastModificationDate(scr.getLastModificationDate());
         }
     }
-    
+
     public static InfoStudentCourseReport newInfoFromDomain(IStudentCourseReport scr) {
         InfoStudentCourseReport infoStudentCourseReport = null;
         if (scr != null) {
@@ -133,16 +132,6 @@ public class InfoStudentCourseReport extends InfoObject {
             infoStudentCourseReport.copyFromDomain(scr);
         }
         return infoStudentCourseReport;
-    }
-    
-    public static IStudentCourseReport newDomainFromInfo(
-            InfoStudentCourseReport infoStudentCourseReport) {
-        IStudentCourseReport studentCourseReport = null;
-        if (infoStudentCourseReport != null) {
-            studentCourseReport = new StudentCourseReport();
-            infoStudentCourseReport.copyToDomain(infoStudentCourseReport, studentCourseReport);
-        }
-        return studentCourseReport;
     }
 
 }

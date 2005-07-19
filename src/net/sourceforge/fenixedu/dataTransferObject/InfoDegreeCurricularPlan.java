@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.util.MarkType;
@@ -16,7 +15,7 @@ import net.sourceforge.fenixedu.util.MarkType;
  */
 public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
 
-	private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     private InfoDegree infoDegree;
 
@@ -41,10 +40,10 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
     private String description;
 
     private String descriptionEn;
-    
+
     private String anotation;
 
-    //by gedl AT rnl dot IST dot UTL dot PT (August the 3rd, 2003)
+    // by gedl AT rnl dot IST dot UTL dot PT (August the 3rd, 2003)
     private List curricularCourses;
 
     public InfoDegreeCurricularPlan() {
@@ -92,17 +91,17 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
     }
 
     public String getLabel() {
-		final String degreeName = infoDegree.getNome();
-		final String initialDateString = simpleDateFormat.format(initialDate);
+        final String degreeName = infoDegree.getNome();
+        final String initialDateString = simpleDateFormat.format(initialDate);
 
-		final int labelSize = degreeName.length() + initialDateString.length() + name.length() + 4;
+        final int labelSize = degreeName.length() + initialDateString.length() + name.length() + 4;
 
-		final StringBuilder stringBuilder = new StringBuilder(labelSize);
-		stringBuilder.append(degreeName);
-		stringBuilder.append(" ");
-		stringBuilder.append(initialDateString);
-		stringBuilder.append(" - ");
-		stringBuilder.append(name);
+        final StringBuilder stringBuilder = new StringBuilder(labelSize);
+        stringBuilder.append(degreeName);
+        stringBuilder.append(" ");
+        stringBuilder.append(initialDateString);
+        stringBuilder.append(" - ");
+        stringBuilder.append(name);
         return stringBuilder.toString();
     }
 
@@ -243,7 +242,7 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
         numerusClausus = integer;
     }
 
-    //	alphabetical order
+    // alphabetical order
     public int compareTo(Object arg0) {
         InfoDegreeCurricularPlan degreeCurricularPlan = (InfoDegreeCurricularPlan) arg0;
         return this.getName().compareTo(degreeCurricularPlan.getName());
@@ -276,15 +275,13 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
         this.descriptionEn = descriptionEn;
     }
 
-    
     public void prepareEnglishPresentation(String language) {
-        if (language.equals("en")){        
+        if (language.equals("en")) {
             this.description = this.descriptionEn;
             this.infoDegree.prepareEnglishPresentation(language);
         }
     }
-    
-    
+
     public void copyFromDomain(IDegreeCurricularPlan plan) {
         super.copyFromDomain(plan);
         if (plan != null) {
@@ -299,7 +296,7 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
             setDegreeDuration(plan.getDegreeDuration());
             setMinimalYearForOptionalCourses(plan.getMinimalYearForOptionalCourses());
             setAnotation(plan.getAnotation());
-			setInfoDegree(InfoDegree.newInfoFromDomain(plan.getDegree()));
+            setInfoDegree(InfoDegree.newInfoFromDomain(plan.getDegree()));
         }
     }
 
@@ -329,23 +326,12 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
         degreeCurricularPlan.setAnotation(infoDegreeCurricularPlan.getAnotation());
     }
 
-    public static IDegreeCurricularPlan newDomainFromInfo(
-            InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
-        IDegreeCurricularPlan degreeCurricularPlan = null;
-        if (infoDegreeCurricularPlan != null) {
-            degreeCurricularPlan = new DegreeCurricularPlan();
-            infoDegreeCurricularPlan.copyToDomain(infoDegreeCurricularPlan, degreeCurricularPlan);
-        }
-        return degreeCurricularPlan;
-    }
-
     public String getAnotation() {
         return anotation;
     }
-    
 
     public void setAnotation(String anotation) {
         this.anotation = anotation;
     }
-    
+
 }

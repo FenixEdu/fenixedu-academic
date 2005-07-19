@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.support.IFAQSection;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class InfoFAQSection extends InfoObject implements Serializable {
 
@@ -109,15 +109,6 @@ public class InfoFAQSection extends InfoObject implements Serializable {
                 faqSection.getParentSection().setIdInternal(infoParentFAQSection.getIdInternal());
             }
         }
-    }
-
-    public static IFAQSection newDomainFromInfo(InfoFAQSection infoFAQSection) {
-        IFAQSection faqSection = null;
-        if (infoFAQSection != null) {
-            faqSection = new FAQSection();
-            infoFAQSection.copyToDomain(infoFAQSection, faqSection);
-        }
-        return faqSection;
     }
 
 }

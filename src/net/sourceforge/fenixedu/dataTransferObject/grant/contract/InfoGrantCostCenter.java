@@ -22,7 +22,7 @@ public class InfoGrantCostCenter extends InfoGrantPaymentEntity {
     public void copyFromDomain(IGrantCostCenter grantCostCenter) {
         super.copyFromDomain(grantCostCenter);
         if (grantCostCenter != null) {
-            
+
             setNumber(grantCostCenter.getNumber());
             setDesignation(grantCostCenter.getDesignation());
             setOjbConcreteClass(grantCostCenter.getOjbConcreteClass());
@@ -42,7 +42,8 @@ public class InfoGrantCostCenter extends InfoGrantPaymentEntity {
         return infoGrantCostCenter;
     }
 
-    public void copyToDomain(InfoGrantCostCenter infoGrantCostCenter, IGrantCostCenter grantCostCenter) throws ExcepcaoPersistencia {
+    public void copyToDomain(InfoGrantCostCenter infoGrantCostCenter, IGrantCostCenter grantCostCenter)
+            throws ExcepcaoPersistencia {
         super.copyToDomain(infoGrantCostCenter, grantCostCenter);
 
         grantCostCenter.setDesignation(infoGrantCostCenter.getDesignation());
@@ -50,7 +51,8 @@ public class InfoGrantCostCenter extends InfoGrantPaymentEntity {
         grantCostCenter.setOjbConcreteClass(infoGrantCostCenter.getOjbConcreteClass());
     }
 
-    public static IGrantCostCenter newDomainFromInfo(InfoGrantCostCenter infoGrantCostCenter) throws ExcepcaoPersistencia {
+    public static IGrantCostCenter newDomainFromInfo(InfoGrantCostCenter infoGrantCostCenter)
+            throws ExcepcaoPersistencia {
         IGrantCostCenter grantCostCenter = null;
         if (infoGrantCostCenter != null) {
             grantCostCenter = new GrantCostCenter();
@@ -58,4 +60,5 @@ public class InfoGrantCostCenter extends InfoGrantPaymentEntity {
         }
         return grantCostCenter;
     }
+
 }

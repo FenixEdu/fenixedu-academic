@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
@@ -19,7 +18,7 @@ public class InfoDegree extends InfoObject implements Comparable {
     protected String sigla;
 
     protected String nome;
-    
+
     protected String nameEn;
 
     protected DegreeType tipoCurso;
@@ -36,7 +35,7 @@ public class InfoDegree extends InfoObject implements Comparable {
         setNome(nome);
     }
 
-    public InfoDegree(String sigla, String nome,String nameEn, DegreeType degreeType) {
+    public InfoDegree(String sigla, String nome, String nameEn, DegreeType degreeType) {
         setSigla(sigla);
         setNome(nome);
         setNameEn(nameEn);
@@ -156,27 +155,17 @@ public class InfoDegree extends InfoObject implements Comparable {
         degree.setNameEn(infoDegree.getNameEn());
     }
 
-    public static IDegree newDomainFromInfo(InfoDegree infoDegree) {
-        IDegree degree = null;
-        if (infoDegree != null) {
-            degree = new Degree();
-            infoDegree.copyToDomain(infoDegree, degree);
-        }
-        return degree;
-    }
-
     public String getNameEn() {
         return nameEn;
     }
-    
 
     public void setNameEn(String nameEn) {
         this.nameEn = nameEn;
     }
-    
+
     public void prepareEnglishPresentation(String language) {
-        if (language.equals("en")){ 
-            if (!(this.nameEn==null)&&!(this.nameEn.length()==0)&&!(this.nameEn=="")){
+        if (language.equals("en")) {
+            if (!(this.nameEn == null) && !(this.nameEn.length() == 0) && !(this.nameEn == "")) {
                 this.nome = this.nameEn;
             }
         }

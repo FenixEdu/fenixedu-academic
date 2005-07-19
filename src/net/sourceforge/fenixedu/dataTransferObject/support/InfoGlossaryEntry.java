@@ -7,12 +7,11 @@ package net.sourceforge.fenixedu.dataTransferObject.support;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.support.GlossaryEntry;
 import net.sourceforge.fenixedu.domain.support.IGlossaryEntry;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class InfoGlossaryEntry extends InfoObject implements Serializable {
 
@@ -63,15 +62,6 @@ public class InfoGlossaryEntry extends InfoObject implements Serializable {
             glossaryEntry.setTerm(infoGlossaryEntry.getTerm());
             glossaryEntry.setDefinition(infoGlossaryEntry.getDefinition());
         }
-    }
-
-    public static IGlossaryEntry newDomainFromInfo(InfoGlossaryEntry infoGlossaryEntry) {
-        IGlossaryEntry glossaryEntry = null;
-        if (infoGlossaryEntry != null) {
-            glossaryEntry = new GlossaryEntry();
-            infoGlossaryEntry.copyToDomain(infoGlossaryEntry, glossaryEntry);
-        }
-        return glossaryEntry;
     }
 
 }

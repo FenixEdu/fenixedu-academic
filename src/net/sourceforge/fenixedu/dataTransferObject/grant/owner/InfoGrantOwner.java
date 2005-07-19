@@ -9,14 +9,13 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Barbosa
  * @author Pica
- *  
+ * 
  */
 public class InfoGrantOwner extends InfoObject {
 
@@ -127,7 +126,8 @@ public class InfoGrantOwner extends InfoObject {
         return infoGrantOwner;
     }
 
-    public void copyToDomain(InfoGrantOwner infoGrantOwner, IGrantOwner grantOwner) throws ExcepcaoPersistencia {
+    public void copyToDomain(InfoGrantOwner infoGrantOwner, IGrantOwner grantOwner)
+            throws ExcepcaoPersistencia {
         super.copyToDomain(infoGrantOwner, grantOwner);
 
         grantOwner.setCardCopyNumber(infoGrantOwner.getCardCopyNumber());
@@ -135,12 +135,4 @@ public class InfoGrantOwner extends InfoObject {
         grantOwner.setNumber(infoGrantOwner.getGrantOwnerNumber());
     }
 
-    public static IGrantOwner newDomainFromInfo(InfoGrantOwner infoGrantOwner) throws ExcepcaoPersistencia {
-        IGrantOwner grantOwner = null;
-        if (infoGrantOwner != null) {
-            grantOwner = new GrantOwner();
-            infoGrantOwner.copyToDomain(infoGrantOwner, grantOwner);
-        }
-        return grantOwner;
-    }
 }

@@ -33,10 +33,4 @@ public class InfoExecutionDegreeWithInfoDegreeCurricularPlan extends InfoExecuti
         return infoExecutionDegree;
     }
 
-    public void copyToDomain(InfoExecutionDegree infoExecutionDegree, IExecutionDegree executionDegree) {
-        super.copyToDomain(infoExecutionDegree, executionDegree);
-        executionDegree.setDegreeCurricularPlan(InfoDegreeCurricularPlanWithDegree
-                .newDomainFromInfo(infoExecutionDegree.getInfoDegreeCurricularPlan()));
-    }
-
 }

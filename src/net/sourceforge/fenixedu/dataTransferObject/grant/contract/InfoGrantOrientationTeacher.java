@@ -8,14 +8,13 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Barbosa
  * @author Pica
- *  
+ * 
  */
 
 public class InfoGrantOrientationTeacher extends InfoObject {
@@ -117,14 +116,4 @@ public class InfoGrantOrientationTeacher extends InfoObject {
         grantOrientationTeacher.setEndDate(infoGrantOrientationTeacher.getEndDate());
     }
 
-    public static IGrantOrientationTeacher newDomainFromInfo(
-            InfoGrantOrientationTeacher infoGrantOrientationTeacher) throws ExcepcaoPersistencia {
-        IGrantOrientationTeacher grantOrientationTeacher = null;
-        if (infoGrantOrientationTeacher != null) {
-            grantOrientationTeacher = new GrantOrientationTeacher();
-            infoGrantOrientationTeacher.copyToDomain(infoGrantOrientationTeacher,
-                    grantOrientationTeacher);
-        }
-        return grantOrientationTeacher;
-    }
 }

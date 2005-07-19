@@ -5,13 +5,13 @@
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractMovement;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Pica
  * @author Barbosa
  */
 public class InfoGrantContractMovementWithContract extends InfoGrantContractMovement {
+
     public void copyFromDomain(IGrantContractMovement grantMovement) {
         super.copyFromDomain(grantMovement);
         if (grantMovement != null) {
@@ -27,18 +27,6 @@ public class InfoGrantContractMovementWithContract extends InfoGrantContractMove
             infoGrantContractMovementWithContract.copyFromDomain(grantMovement);
         }
         return infoGrantContractMovementWithContract;
-    }
-
-    /**
-     * @param grantMovement
-     * @throws ExcepcaoPersistencia 
-     */
-    public void copyToDomain(InfoGrantContractMovement infoGrantContractMovement,
-            IGrantContractMovement grantContractMovement) throws ExcepcaoPersistencia {
-        super.copyToDomain(infoGrantContractMovement, grantContractMovement);
-
-        grantContractMovement.setGrantContract(InfoGrantContractWithGrantOwnerAndGrantType
-                .newDomainFromInfo(infoGrantContractMovement.getInfoGrantContract()));
     }
 
 }

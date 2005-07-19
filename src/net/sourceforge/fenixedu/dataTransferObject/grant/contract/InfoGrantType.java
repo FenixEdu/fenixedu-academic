@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantType;
 
 /**
@@ -167,15 +166,6 @@ public class InfoGrantType extends InfoObject {
         grantType.setIndicativeValue(infoGrantType.getIndicativeValue());
         grantType.setSource(infoGrantType.getSource());
         grantType.setState(infoGrantType.getState());
-    }
-
-    public static IGrantType newDomainFromInfo(InfoGrantType infoGrantType) {
-        IGrantType grantType = null;
-        if (infoGrantType != null) {
-            grantType = new GrantType();
-            infoGrantType.copyToDomain(infoGrantType, grantType);
-        }
-        return grantType;
     }
 
 }

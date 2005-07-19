@@ -8,7 +8,6 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -22,11 +21,11 @@ public class InfoGrantContract extends InfoObject {
     private Integer contractNumber;
 
     private String endContractMotive;
-    
+
     private Integer costCenterKey;
 
     private InfoGrantOwner grantOwnerInfo;
-    
+
     private InfoGrantCostCenter grantCostCenterInfo;
 
     private InfoGrantOrientationTeacher grantOrientationTeacherInfo;
@@ -165,12 +164,7 @@ public class InfoGrantContract extends InfoObject {
         if (grantContract != null) {
             setContractNumber(grantContract.getContractNumber());
             setEndContractMotive(grantContract.getEndContractMotive());
-//            if (grantContract.getGrantCostCenter()!= null || grantContract.getGrantCostCenter().getIdInternal()!= new Integer(0)) {    
-//            	setCostCenterKey(grantContract.getGrantCostCenter().getIdInternal());
-//            	setGrantCostCenterInfo(InfoGrantCostCenter.newInfoFromDomain(grantContract.getGrantCostCenter()));
-//            }
-            setDateAcceptTerm(grantContract.getDateAcceptTerm());      
-    
+            setDateAcceptTerm(grantContract.getDateAcceptTerm());
         }
     }
 
@@ -187,51 +181,46 @@ public class InfoGrantContract extends InfoObject {
         return infoGrantContract;
     }
 
-    public void copyToDomain(InfoGrantContract infoGrantContract, IGrantContract grantContract) throws ExcepcaoPersistencia {
+    public void copyToDomain(InfoGrantContract infoGrantContract, IGrantContract grantContract)
+            throws ExcepcaoPersistencia {
         super.copyToDomain(infoGrantContract, grantContract);
-       
+
         grantContract.setContractNumber(infoGrantContract.getContractNumber());
         grantContract.setDateAcceptTerm(infoGrantContract.getDateAcceptTerm());
         grantContract.setEndContractMotive(infoGrantContract.getEndContractMotive());
-        if (infoGrantContract.getGrantCostCenterInfo()!=null){
-         grantContract.setCostCenterKey(infoGrantContract.getGrantCostCenterInfo().getIdInternal() );
-       
+        if (infoGrantContract.getGrantCostCenterInfo() != null) {
+            grantContract.setCostCenterKey(infoGrantContract.getGrantCostCenterInfo().getIdInternal());
         }
-
     }
 
-    public static IGrantContract newDomainFromInfo(InfoGrantContract infoGrantContract) throws ExcepcaoPersistencia {
-        IGrantContract grantContract = null;
-        if (infoGrantContract != null) {
-            grantContract = new GrantContract();
-            infoGrantContract.copyToDomain(infoGrantContract, grantContract);
-        }
-        return grantContract;
+    /**
+     * @return Returns the costCenterKey.
+     */
+    public Integer getCostCenterKey() {
+        return costCenterKey;
     }
 
+    /**
+     * @param costCenterKey
+     *            The costCenterKey to set.
+     */
+    public void setCostCenterKey(Integer costCenterKey) {
+        this.costCenterKey = costCenterKey;
+    }
 
-	/**
-	 * @return Returns the costCenterKey.
-	 */
-	public Integer getCostCenterKey() {
-		return costCenterKey;
-	}
-	/**
-	 * @param costCenterKey The costCenterKey to set.
-	 */
-	public void setCostCenterKey(Integer costCenterKey) {
-		this.costCenterKey = costCenterKey;
-	}
-	/**
-	 * @return Returns the grantCostCenterInfo.
-	 */
-	public InfoGrantCostCenter getGrantCostCenterInfo() {
-		return grantCostCenterInfo;
-	}
-	/**
-	 * @param grantCostCenterInfo The grantCostCenterInfo to set.
-	 */
-	public void setGrantCostCenterInfo(InfoGrantCostCenter grantCostCenterInfo) {
-		this.grantCostCenterInfo = grantCostCenterInfo;
-	}
+    /**
+     * @return Returns the grantCostCenterInfo.
+     */
+    public InfoGrantCostCenter getGrantCostCenterInfo() {
+        return grantCostCenterInfo;
+    }
+
+    /**
+     * @param grantCostCenterInfo
+     *            The grantCostCenterInfo to set.
+     */
+    public void setGrantCostCenterInfo(InfoGrantCostCenter grantCostCenterInfo) {
+        this.grantCostCenterInfo = grantCostCenterInfo;
+    }
+
 }

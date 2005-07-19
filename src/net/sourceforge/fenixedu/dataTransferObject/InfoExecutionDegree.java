@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -193,7 +192,8 @@ public class InfoExecutionDegree extends InfoObject {
         this.infoPeriodLessonsSecondSemester = infoPeriodLessonsSecondSemester;
     }
 
-    public static List buildLabelValueBeansForList(List executionDegrees, MessageResources messageResources) {
+    public static List buildLabelValueBeansForList(List executionDegrees,
+            MessageResources messageResources) {
         List copyExecutionDegrees = new ArrayList();
         copyExecutionDegrees.addAll(executionDegrees);
         List result = new ArrayList();
@@ -214,30 +214,30 @@ public class InfoExecutionDegree extends InfoObject {
             });
             if (equalDegrees.size() == 1) {
                 copyExecutionDegrees.remove(infoExecutionDegree);
-                
+
                 String degreeType = null;
-                if(messageResources != null) {
-                    degreeType = messageResources.getMessage(infoExecutionDegree.getInfoDegreeCurricularPlan()
-                            .getInfoDegree().getTipoCurso().toString());
+                if (messageResources != null) {
+                    degreeType = messageResources.getMessage(infoExecutionDegree
+                            .getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString());
                 }
-                if(degreeType == null)
-                    degreeType = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString();
-                
-                result.add(new LabelValueBean(degreeType
-                        + "  "
+                if (degreeType == null)
+                    degreeType = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
+                            .getTipoCurso().toString();
+
+                result.add(new LabelValueBean(degreeType + "  "
                         + infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome(),
                         infoExecutionDegree.getIdInternal().toString()));
             } else {
                 String degreeType = null;
-                if(messageResources != null) {
-                    degreeType = messageResources.getMessage(infoExecutionDegree.getInfoDegreeCurricularPlan()
-                            .getInfoDegree().getTipoCurso().toString());
+                if (messageResources != null) {
+                    degreeType = messageResources.getMessage(infoExecutionDegree
+                            .getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString());
                 }
-                if(degreeType == null)
-                    degreeType = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString();
-                
-                result.add(new LabelValueBean(degreeType
-                        + "  "
+                if (degreeType == null)
+                    degreeType = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
+                            .getTipoCurso().toString();
+
+                result.add(new LabelValueBean(degreeType + "  "
                         + infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome()
                         + " - " + infoExecutionDegree.getInfoDegreeCurricularPlan().getName(),
                         infoExecutionDegree.getIdInternal().toString()));
@@ -272,12 +272,4 @@ public class InfoExecutionDegree extends InfoObject {
         executionDegree.setTemporaryExamMap(infoExecutionDegree.getTemporaryExamMap());
     }
 
-    public static IExecutionDegree newDomainFromInfo(InfoExecutionDegree infoExecutionDegree) {
-        IExecutionDegree executionDegree = null;
-        if (infoExecutionDegree != null) {
-            executionDegree = new ExecutionDegree();
-            infoExecutionDegree.copyToDomain(infoExecutionDegree, executionDegree);
-        }
-        return executionDegree;
-    }
 }
