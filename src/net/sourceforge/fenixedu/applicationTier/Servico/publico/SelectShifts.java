@@ -3,62 +3,32 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author João Mota
- *  
+ * 
  */
-public class SelectShifts implements IServico {
+public class SelectShifts implements IService {
 
-    private static SelectShifts _servico = new SelectShifts();
+    public Object run(InfoShift infoShift) throws ExcepcaoPersistencia {
 
-    /**
-     * The actor of this class.
-     */
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IShift shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class,
+                infoShift.getIdInternal());
 
-    private SelectShifts() {
+        final List<IShift> shifts = sp.getITurnoPersistente().readByExecutionCourse(
+                shift.getDisciplinaExecucao().getIdInternal());
 
-    }
-
-    /**
-     * Returns Service Name
-     */
-    public String getNome() {
-        return "SelectShifts";
-    }
-
-    /**
-     * Returns the _servico.
-     * 
-     * @return SelectShifts
-     */
-    public static SelectShifts getService() {
-        return _servico;
-    }
-
-    public Object run(InfoShift infoShift) {
-
-        List shifts = new ArrayList();
-        List infoShifts = new ArrayList();
-
-        IShift shift = Cloner.copyInfoShift2IShift(infoShift);
-
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            shifts = sp.getITurnoPersistente().readByExecutionCourse(shift.getDisciplinaExecucao().getIdInternal());
-
-            for (int i = 0; i < shifts.size(); i++) {
-                IShift taux = (IShift) shifts.get(i);
-                infoShifts.add(InfoShift.newInfoFromDomain(taux));
-            }
-        } catch (ExcepcaoPersistencia e) {
+        List<InfoShift> infoShifts = new ArrayList<InfoShift>();
+        for (IShift taux : shifts) {
+            infoShifts.add(InfoShift.newInfoFromDomain(taux));
         }
 
         return infoShifts;
