@@ -208,7 +208,6 @@ import net.sourceforge.fenixedu.domain.gesdis.ICourseHistoric;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.IStudentCourseReport;
 import net.sourceforge.fenixedu.domain.teacher.Category;
-import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 import net.sourceforge.fenixedu.domain.teacher.ICareer;
 import net.sourceforge.fenixedu.domain.teacher.ICategory;
 import net.sourceforge.fenixedu.domain.teacher.IExternalActivity;
@@ -220,10 +219,8 @@ import net.sourceforge.fenixedu.domain.teacher.IServiceProviderRegime;
 import net.sourceforge.fenixedu.domain.teacher.ITeachingCareer;
 import net.sourceforge.fenixedu.domain.teacher.IWeeklyOcupation;
 import net.sourceforge.fenixedu.domain.teacher.Orientation;
-import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;
 import net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime;
-import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.domain.teacher.workTime.ITeacherInstitutionWorkTime;
 
@@ -2051,20 +2048,6 @@ public abstract class Cloner {
         return infoCareer;
     }
 
-    public static ICareer copyInfoCareer2ICareer(InfoCareer infoCareer) {
-        ICareer career = null;
-
-        if (infoCareer instanceof InfoProfessionalCareer) {
-            InfoProfessionalCareer infoProfessionalCareer = (InfoProfessionalCareer) infoCareer;
-            career = copyInfoProfessionalCareer2IProfessionalCareer(infoProfessionalCareer);
-        } else {
-            InfoTeachingCareer infoTeachingCareer = (InfoTeachingCareer) infoCareer;
-            career = copyInfoTeachingCareer2ITeachingCareer(infoTeachingCareer);
-        }
-
-        return career;
-    }
-
     private static InfoProfessionalCareer copyIProfessionalCareer2InfoProfessionalCareer(
             IProfessionalCareer professionalCareer) {
         InfoProfessionalCareer infoProfessionalCareer = new InfoProfessionalCareer();
@@ -2074,16 +2057,6 @@ public abstract class Cloner {
         infoProfessionalCareer.setInfoTeacher(infoTeacher);
 
         return infoProfessionalCareer;
-    }
-
-    private static IProfessionalCareer copyInfoProfessionalCareer2IProfessionalCareer(
-            InfoProfessionalCareer infoProfessionalCareer) {
-        IProfessionalCareer professionalCareer = new ProfessionalCareer();
-        ITeacher teacher = copyInfoTeacher2Teacher(infoProfessionalCareer.getInfoTeacher());
-        copyObjectProperties(professionalCareer, infoProfessionalCareer);
-
-        professionalCareer.setTeacher(teacher);
-        return professionalCareer;
     }
 
     private static InfoTeachingCareer copyITeachingCareer2InfoTeachingCareer(
@@ -2097,19 +2070,6 @@ public abstract class Cloner {
         infoTeachingCareer.setInfoCategory(infoCategory);
 
         return infoTeachingCareer;
-    }
-
-    private static ITeachingCareer copyInfoTeachingCareer2ITeachingCareer(
-            InfoTeachingCareer infoTeachingCareer) {
-        ITeachingCareer teachingCareer = new TeachingCareer();
-        ITeacher teacher = copyInfoTeacher2Teacher(infoTeachingCareer.getInfoTeacher());
-        ICategory category = copyInfoCategory2ICategory(infoTeachingCareer.getInfoCategory());
-        copyObjectProperties(teachingCareer, infoTeachingCareer);
-
-        teachingCareer.setTeacher(teacher);
-        teachingCareer.setCategory(category);
-
-        return teachingCareer;
     }
 
     /**
@@ -2140,21 +2100,6 @@ public abstract class Cloner {
         infoExternalActivity.setInfoTeacher(infoTeacher);
 
         return infoExternalActivity;
-    }
-
-    /**
-     * @param infoExternalActivity
-     * @return
-     */
-    public static IExternalActivity copyInfoExternalActivity2IExternalActivity(
-            InfoExternalActivity infoExternalActivity) {
-        IExternalActivity externalActivity = new ExternalActivity();
-        ITeacher teacher = copyInfoTeacher2Teacher(infoExternalActivity.getInfoTeacher());
-        copyObjectProperties(externalActivity, infoExternalActivity);
-
-        externalActivity.setTeacher(teacher);
-
-        return externalActivity;
     }
 
     /**
