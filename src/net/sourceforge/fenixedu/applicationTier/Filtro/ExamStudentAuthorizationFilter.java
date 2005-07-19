@@ -7,9 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
-import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.IExam;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -19,7 +16,7 @@ import pt.utl.ist.berserk.ServiceResponse;
 
 /**
  * @author Luis Egidio, lmre@mega.ist.utl.pt Nuno Ochoa, nmgo@mega.ist.utl.pt
- *  
+ * 
  */
 public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
 
@@ -52,31 +49,26 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
     }
 
     private boolean attendsExamExecutionCourse(IUserView id, Object[] argumentos) {
-        ISuportePersistente sp;
-        IExam exam = null;
-        InfoExam infoExam = null;
-
         if (argumentos == null) {
             return false;
         }
         try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExam persistentExam = sp.getIPersistentExam();
-
+            Integer examId;
             if (argumentos[1] instanceof InfoExam) {
-                infoExam = (InfoExam) argumentos[1];
-                exam = Cloner.copyInfoExam2IExam(infoExam);
+                InfoExam infoExam = (InfoExam) argumentos[1];
+                examId = infoExam.getIdInternal();
             } else {
-                exam = (IExam) persistentExam.readByOID(Exam.class, (Integer) argumentos[1]);
+                examId = (Integer) argumentos[1];
             }
 
             String username = (String) argumentos[0];
-            return persistentExam.isExamOfExecutionCourseTheStudentAttends(exam.getIdInternal(),
-                    username);
+
+            final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            final IPersistentExam persistentExam = sp.getIPersistentExam();
+            return persistentExam.isExamOfExecutionCourseTheStudentAttends(examId, username);
         } catch (Exception ex) {
             return false;
         }
-
     }
 
 }
