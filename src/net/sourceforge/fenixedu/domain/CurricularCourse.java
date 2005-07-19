@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -135,8 +136,9 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getCurricularCourseUniqueKeyForEnrollment() {
-        DegreeType degreeType = (this.getDegreeCurricularPlan() != null && this.getDegreeCurricularPlan()
-                .getDegree() != null) ? this.getDegreeCurricularPlan().getDegree().getTipoCurso() : null;
+        DegreeType degreeType = (this.getDegreeCurricularPlan() != null && this
+                .getDegreeCurricularPlan().getDegree() != null) ? this.getDegreeCurricularPlan()
+                .getDegree().getTipoCurso() : null;
         return constructUniqueEnrollmentKey(this.getCode(), this.getName(), degreeType);
     }
 
@@ -225,4 +227,22 @@ public class CurricularCourse extends CurricularCourse_Base {
         return StringUtils.lowerCase(stringBuffer.toString());
     }
 
+    public ICurriculum insertCurriculum(String program, String programEn, String operacionalObjectives,
+            String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn) {
+
+        ICurriculum curriculum = new Curriculum();
+        
+        curriculum.setCurricularCourse(this);
+        curriculum.setProgram(program);
+        curriculum.setProgramEn(programEn);
+        curriculum.setOperacionalObjectives(operacionalObjectives);
+        curriculum.setOperacionalObjectivesEn(operacionalObjectivesEn);
+        curriculum.setGeneralObjectives(generalObjectives);
+        curriculum.setGeneralObjectivesEn(generalObjectivesEn);
+        
+        Calendar today = Calendar.getInstance();
+        curriculum.setLastModificationDate(today.getTime());
+
+        return curriculum;
+    }
 }
