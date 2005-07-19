@@ -167,7 +167,7 @@ public class SimulateTest implements IService {
 
         List<ITestQuestion> testQuestionList = sp.getIPersistentTestQuestion().readByTest(testId);
         for (int i = 0; i < testQuestionList.size(); i++) {
-            ITestQuestion testQuestionExample = (ITestQuestion) testQuestionList.get(i);
+            ITestQuestion testQuestionExample = testQuestionList.get(i);
 
             IStudentTestQuestion studentTestQuestion = new StudentTestQuestion();
             studentTestQuestion.setDistributedTest(distributedTest);

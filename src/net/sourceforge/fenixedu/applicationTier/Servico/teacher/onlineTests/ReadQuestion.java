@@ -39,7 +39,7 @@ public class ReadQuestion implements IService {
                     throw new InvalidArgumentsServiceException();
                 }
                 if (metadata.getVisibleQuestions() != null && metadata.getVisibleQuestions().size() != 0) {
-                    question = (IQuestion) metadata.getVisibleQuestions().get(0);
+                    question = metadata.getVisibleQuestions().get(0);
                 } else {
                     throw new InvalidArgumentsServiceException();
                 }

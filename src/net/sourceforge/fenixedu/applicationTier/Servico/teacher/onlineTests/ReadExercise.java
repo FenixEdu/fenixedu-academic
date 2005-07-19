@@ -57,7 +57,7 @@ public class ReadExercise implements IService {
             List<InfoQuestion> visibleInfoQuestions = new ArrayList<InfoQuestion>();
             List<LabelValueBean> questionNames = new ArrayList<LabelValueBean>();
             if (metadata.getVisibleQuestions() != null) {
-                for (IQuestion question : (List<IQuestion>) metadata.getVisibleQuestions()) {
+                for (IQuestion question : metadata.getVisibleQuestions()) {
                     if (question.getIdInternal().equals(variationId) || variationId.intValue() == -2) {
                         InfoQuestion infoQuestion = InfoQuestion.newInfoFromDomain(question);
                         ParseQuestion parse = new ParseQuestion();

@@ -169,7 +169,7 @@ public class InsertDistributedTest implements IService {
         if (questions.size() != 0) {
             Random r = new Random();
             int questionIndex = r.nextInt(questions.size());
-            question = (IQuestion) questions.get(questionIndex);
+            question = questions.get(questionIndex);
         }
         return question;
     }

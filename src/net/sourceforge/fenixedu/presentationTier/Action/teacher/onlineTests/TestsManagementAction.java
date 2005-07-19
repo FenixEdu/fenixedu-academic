@@ -1284,7 +1284,7 @@ public class TestsManagementAction extends FenixDispatchAction {
             throw new FenixActionException(e);
         }
         for (int i = 0; i < infoStudentTestQuestionList.size(); i++) {
-            InfoStudentTestQuestion infoStudentTestQuestion = (InfoStudentTestQuestion) infoStudentTestQuestionList.get(i);
+            InfoStudentTestQuestion infoStudentTestQuestion = infoStudentTestQuestionList.get(i);
 
             if (infoStudentTestQuestion.getQuestion().getQuestionType().getType().intValue() == QuestionType.STR
                     && ((ResponseSTR) infoStudentTestQuestion.getResponse()).getResponse() != null)

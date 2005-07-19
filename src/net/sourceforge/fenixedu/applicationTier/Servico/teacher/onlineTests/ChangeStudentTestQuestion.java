@@ -92,7 +92,7 @@ public class ChangeStudentTestQuestion implements IService {
             boolean canDelete = true;
             for (int i = 0; i < distributedTestList.size(); i++) {
                 List<IStudentTestQuestion> studentsTestQuestionList = new ArrayList<IStudentTestQuestion>();
-                IDistributedTest distributedTest = (IDistributedTest) distributedTestList.get(i);
+                IDistributedTest distributedTest = distributedTestList.get(i);
 
                 if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.THIS_STUDENT) {
                     IStudent student = (IStudent) persistentSuport.getIPersistentStudent().readByOID(Student.class, studentId);
@@ -195,7 +195,7 @@ public class ChangeStudentTestQuestion implements IService {
         if (questions.size() != 0) {
             Random r = new Random();
             int questionIndex = r.nextInt(questions.size());
-            question = (IQuestion) questions.get(questionIndex);
+            question = questions.get(questionIndex);
         }
         return question;
     }
