@@ -425,6 +425,9 @@ class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.f
     public boolean hasActiveScopeInGivenSemesterForCommonAndGivenBranch(final Integer semester, final IBranch branch);
 
     public java.util.List<ICurricularCourseScope> getActiveScopesInExecutionPeriod(final IExecutionPeriod executionPeriod);
+    
+     public ICurriculum insertCurriculum(String program, String programEn, String operacionalObjectives,
+            String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn);
 	"
 }
 
@@ -511,6 +514,12 @@ class net.sourceforge.fenixedu.domain.Curriculum extends net.sourceforge.fenixed
 	String programEn;
 	String generalObjectivesEn;
 	String program;
+	
+	interface "
+	public void edit(String generalObjectives, String operacionalObjectives, String program,
+            String generalObjectivesEn, String operacionalObjectivesEn, String programEn,
+            String language, IPerson person);	
+	"
 }
 
 
