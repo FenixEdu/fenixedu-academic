@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
@@ -39,31 +38,11 @@ public class EditTeacherInstitutionWorkingTimeByOID extends EditDomainObjectServ
      * @author jpvl
      */
     public class InvalidPeriodException extends FenixServiceException {
-
-        /**
-         *  
-         */
         public InvalidPeriodException() {
             super();
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(net.sourceforge.fenixedu.dataTransferObject.InfoObject)
-     */
-    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
-        return Cloner
-                .copyInfoTeacherInstitutionWorkingTime2ITeacherInstitutionWorkTime((InfoTeacherInstitutionWorkTime) infoObject);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#doBeforeLock(Dominio.IDomainObject,
-     *      net.sourceforge.fenixedu.dataTransferObject.InfoObject, ServidorPersistente.ISuportePersistente)
-     */
     protected void doBeforeLock(IDomainObject domainObjectToLock, InfoObject infoObject,
             ISuportePersistente sp) throws Exception {
         super.doBeforeLock(domainObjectToLock, infoObject, sp);
@@ -82,16 +61,17 @@ public class EditTeacherInstitutionWorkingTimeByOID extends EditDomainObjectServ
         Date startTime = infoTeacherInstitutionWorkTime.getStartTime();
         Date endTime = infoTeacherInstitutionWorkTime.getEndTime();
 
-        CreditsValidator.validatePeriod(infoTeacherInstitutionWorkTime.getInfoTeacher().getIdInternal(), infoTeacherInstitutionWorkTime
-                .getInfoExecutionPeriod().getIdInternal(), weekDay, startTime, endTime,
-                PeriodType.INSTITUTION_WORKING_TIME_PERIOD);
+        CreditsValidator.validatePeriod(infoTeacherInstitutionWorkTime.getInfoTeacher().getIdInternal(),
+                infoTeacherInstitutionWorkTime.getInfoExecutionPeriod().getIdInternal(), weekDay,
+                startTime, endTime, PeriodType.INSTITUTION_WORKING_TIME_PERIOD);
         IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO = sp
                 .getIPersistentTeacherInstitutionWorkingTime();
 
         try {
             List teacherInstitutionWorkingTime = teacherInstitutionWorkingTimeDAO.readOverlappingPeriod(
-                    infoTeacherInstitutionWorkTime.getInfoTeacher().getIdInternal(), infoTeacherInstitutionWorkTime
-                    .getInfoExecutionPeriod().getIdInternal(), weekDay, startTime, endTime);
+                    infoTeacherInstitutionWorkTime.getInfoTeacher().getIdInternal(),
+                    infoTeacherInstitutionWorkTime.getInfoExecutionPeriod().getIdInternal(), weekDay,
+                    startTime, endTime);
             boolean ok = true;
             if (!teacherInstitutionWorkingTime.isEmpty()) {
                 if (teacherInstitutionWorkingTime.size() == 1) {
@@ -115,21 +95,10 @@ public class EditTeacherInstitutionWorkingTimeByOID extends EditDomainObjectServ
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-     */
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentTeacherInstitutionWorkingTime();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#readObjectByUnique(Dominio.IDomainObject,
-     *      ServidorPersistente.ISuportePersistente)
-     */
     protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO = sp
@@ -140,36 +109,38 @@ public class EditTeacherInstitutionWorkingTimeByOID extends EditDomainObjectServ
         return teacherInstitutionWorkTime;
     }
 
-	@Override
-	protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
-		InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = (InfoTeacherInstitutionWorkTime)infoObject;
-		ITeacherInstitutionWorkTime teacherInstitutionWorkTime = (TeacherInstitutionWorkTime)domainObject;
-		teacherInstitutionWorkTime.setEndTime(infoTeacherInstitutionWorkTime.getEndTime());
-		
-		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-	    IExecutionPeriod executionPeriod = 	(ExecutionPeriod) persistentExecutionPeriod.readByOID(ExecutionPeriod.class,infoTeacherInstitutionWorkTime.getInfoExecutionPeriod().getIdInternal());
-		teacherInstitutionWorkTime.setExecutionPeriod(executionPeriod);
-		teacherInstitutionWorkTime.setKeyExecutionPeriod(executionPeriod.getIdInternal());
-		
-		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-		ITeacher teacher = (Teacher)persistentTeacher.readByOID(Teacher.class ,infoTeacherInstitutionWorkTime.getInfoTeacher().getIdInternal());
-		teacherInstitutionWorkTime.setKeyTeacher(teacher.getIdInternal());
-		teacherInstitutionWorkTime.setStartTime(infoTeacherInstitutionWorkTime.getStartTime());
-		teacherInstitutionWorkTime.setTeacher(teacher);
-		
-		teacherInstitutionWorkTime.setWeekDay(infoTeacherInstitutionWorkTime.getWeekDay());
-		
-	}
+    @Override
+    protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject,
+            IDomainObject domainObject) throws ExcepcaoPersistencia {
+        InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = (InfoTeacherInstitutionWorkTime) infoObject;
+        ITeacherInstitutionWorkTime teacherInstitutionWorkTime = (TeacherInstitutionWorkTime) domainObject;
+        teacherInstitutionWorkTime.setEndTime(infoTeacherInstitutionWorkTime.getEndTime());
 
-	@Override
-	protected IDomainObject createNewDomainObject(InfoObject infoObject) {
-		// TODO Auto-generated method stub
-		return new TeacherInstitutionWorkTime();
-	}
+        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        IExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
+                ExecutionPeriod.class, infoTeacherInstitutionWorkTime.getInfoExecutionPeriod()
+                        .getIdInternal());
+        teacherInstitutionWorkTime.setExecutionPeriod(executionPeriod);
+        teacherInstitutionWorkTime.setKeyExecutionPeriod(executionPeriod.getIdInternal());
 
-	@Override
-	protected Class getDomainObjectClass() {
-		// TODO Auto-generated method stub
-		return TeacherInstitutionWorkTime.class;
-	}
+        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        ITeacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class,
+                infoTeacherInstitutionWorkTime.getInfoTeacher().getIdInternal());
+        teacherInstitutionWorkTime.setKeyTeacher(teacher.getIdInternal());
+        teacherInstitutionWorkTime.setStartTime(infoTeacherInstitutionWorkTime.getStartTime());
+        teacherInstitutionWorkTime.setTeacher(teacher);
+
+        teacherInstitutionWorkTime.setWeekDay(infoTeacherInstitutionWorkTime.getWeekDay());
+    }
+
+    @Override
+    protected IDomainObject createNewDomainObject(InfoObject infoObject) {
+        return new TeacherInstitutionWorkTime();
+    }
+
+    @Override
+    protected Class getDomainObjectClass() {
+        return TeacherInstitutionWorkTime.class;
+    }
+
 }
