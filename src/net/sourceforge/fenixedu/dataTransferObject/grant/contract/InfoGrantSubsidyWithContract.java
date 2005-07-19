@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
-import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -29,21 +28,11 @@ public class InfoGrantSubsidyWithContract extends InfoGrantSubsidy {
         return infoGrantSubsidy;
     }
 
-    public void copyToDomain(InfoGrantSubsidy infoGrantSubsidy, IGrantSubsidy grantSubsidy) throws ExcepcaoPersistencia {
+    public void copyToDomain(InfoGrantSubsidy infoGrantSubsidy, IGrantSubsidy grantSubsidy)
+            throws ExcepcaoPersistencia {
         super.copyToDomain(infoGrantSubsidy, grantSubsidy);
         grantSubsidy.setGrantContract(InfoGrantContractWithGrantOwnerAndGrantType
                 .newDomainFromInfo(infoGrantSubsidy.getInfoGrantContract()));
-    }
-
-    public static IGrantSubsidy newDomainFromInfo(InfoGrantSubsidy infoGrantSubsidy) throws ExcepcaoPersistencia {
-        IGrantSubsidy grantSubsidy = null;
-        InfoGrantSubsidyWithContract infoGrantSubsidyWithContract = null;
-        if (infoGrantSubsidy != null) {
-            grantSubsidy = new GrantSubsidy();
-            infoGrantSubsidyWithContract = new InfoGrantSubsidyWithContract();
-            infoGrantSubsidyWithContract.copyToDomain(infoGrantSubsidy, grantSubsidy);
-        }
-        return grantSubsidy;
     }
 
 }

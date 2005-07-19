@@ -21,7 +21,7 @@ public class InfoGrantProjectWithTeacherAndCostCenter extends InfoGrantProject {
                 setInfoResponsibleTeacher(InfoTeacherWithPerson.newInfoFromDomain(grantProject
                         .getResponsibleTeacher()));
             }
-            if (grantProject.getOjbConcreteClass().equals(GrantProject.class.getName())){
+            if (grantProject.getOjbConcreteClass().equals(GrantProject.class.getName())) {
                 if (grantProject.getGrantCostCenter() != null) {
                     setInfoGrantCostCenter(InfoGrantCostCenterWithTeacher.newInfoFromDomain(grantProject
                             .getGrantCostCenter()));
@@ -39,7 +39,8 @@ public class InfoGrantProjectWithTeacherAndCostCenter extends InfoGrantProject {
         return infoGrantProject;
     }
 
-    public void copyToDomain(InfoGrantProject infoGrantProject, IGrantProject grantProject) throws ExcepcaoPersistencia {
+    public void copyToDomain(InfoGrantProject infoGrantProject, IGrantProject grantProject)
+            throws ExcepcaoPersistencia {
         super.copyToDomain(infoGrantProject, grantProject);
 
         grantProject.setResponsibleTeacher(InfoTeacherWithPerson.newDomainFromInfo(infoGrantProject
@@ -48,14 +49,4 @@ public class InfoGrantProjectWithTeacherAndCostCenter extends InfoGrantProject {
                 .newDomainFromInfo(infoGrantProject.getInfoGrantCostCenter()));
     }
 
-    public static IGrantProject newDomainFromInfo(InfoGrantProject infoGrantProject) throws ExcepcaoPersistencia {
-        IGrantProject grantProject = null;
-        InfoGrantProjectWithTeacherAndCostCenter infoGrantProjectWithTeacherAndCostCenter = null;
-        if (infoGrantProject != null) {
-            grantProject = new GrantProject();
-            infoGrantProjectWithTeacherAndCostCenter = new InfoGrantProjectWithTeacherAndCostCenter();
-            infoGrantProjectWithTeacherAndCostCenter.copyToDomain(infoGrantProject, grantProject);
-        }
-        return grantProject;
-    }
 }

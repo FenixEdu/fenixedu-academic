@@ -4,7 +4,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -38,17 +37,6 @@ public class InfoGrantCostCenterWithTeacher extends InfoGrantCostCenter {
 
         grantCostCenter.setResponsibleTeacher(InfoTeacherWithPerson
                 .newDomainFromInfo(infoGrantCostCenter.getInfoResponsibleTeacher()));
-    }
-
-    public static IGrantCostCenter newDomainFromInfo(InfoGrantCostCenter infoGrantCostCenter) throws ExcepcaoPersistencia {
-        IGrantCostCenter grantCostCenter = null;
-        InfoGrantCostCenterWithTeacher infoGrantCostCenterWithTeacher = null;
-        if (infoGrantCostCenter != null) {
-            grantCostCenter = new GrantCostCenter();
-            infoGrantCostCenterWithTeacher = new InfoGrantCostCenterWithTeacher();
-            infoGrantCostCenterWithTeacher.copyToDomain(infoGrantCostCenter, grantCostCenter);
-        }
-        return grantCostCenter;
     }
 
 }

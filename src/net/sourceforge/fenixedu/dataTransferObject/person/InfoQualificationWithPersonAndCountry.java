@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.ICountry;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IQualification;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -51,18 +50,6 @@ public class InfoQualificationWithPersonAndCountry extends InfoQualification {
         IPerson person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,
                 infoQualification.getInfoPerson().getIdInternal());
         qualification.setPerson(person);
-    }
-
-    public static IQualification newDomainFromInfo(InfoQualification infoQualification)
-            throws ExcepcaoPersistencia {
-        IQualification qualification = null;
-        InfoQualificationWithPersonAndCountry infoQualificationWithPersonAndCountry = null;
-        if (infoQualification != null) {
-            qualification = new Qualification();
-            infoQualificationWithPersonAndCountry = new InfoQualificationWithPersonAndCountry();
-            infoQualificationWithPersonAndCountry.copyToDomain(infoQualification, qualification);
-        }
-        return qualification;
     }
 
 }

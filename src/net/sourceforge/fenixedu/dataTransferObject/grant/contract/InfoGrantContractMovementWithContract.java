@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
-import net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement;
 import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractMovement;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -42,21 +41,4 @@ public class InfoGrantContractMovementWithContract extends InfoGrantContractMove
                 .newDomainFromInfo(infoGrantContractMovement.getInfoGrantContract()));
     }
 
-    /**
-     * @param GrantMovement
-     * @return
-     * @throws ExcepcaoPersistencia 
-     */
-    public static IGrantContractMovement newDomainFromInfo(
-            InfoGrantContractMovement infoGrantContractMovement) throws ExcepcaoPersistencia {
-        IGrantContractMovement grantContractMovement = null;
-        InfoGrantContractMovementWithContract infoGrantContractMovementWithContract = null;
-        if (infoGrantContractMovement != null) {
-            grantContractMovement = new GrantContractMovement();
-            infoGrantContractMovementWithContract = new InfoGrantContractMovementWithContract();
-            infoGrantContractMovementWithContract.copyToDomain(infoGrantContractMovement,
-                    grantContractMovement);
-        }
-        return grantContractMovement;
-    }
 }

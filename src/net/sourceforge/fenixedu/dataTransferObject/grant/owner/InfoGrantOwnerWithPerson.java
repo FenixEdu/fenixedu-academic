@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.dataTransferObject.grant.owner;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonWithInfoCountry;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -42,18 +41,6 @@ public class InfoGrantOwnerWithPerson extends InfoGrantOwner {
         IPerson person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,
                 infoGrantOwner.getPersonInfo().getIdInternal());
         grantOwner.setPerson(person);
-    }
-
-    public static IGrantOwner newDomainFromInfo(InfoGrantOwner infoGrantOwner)
-            throws ExcepcaoPersistencia {
-        IGrantOwner grantOwner = null;
-        InfoGrantOwnerWithPerson infoGrantOwnerWithPerson = null;
-        if (infoGrantOwner != null) {
-            grantOwner = new GrantOwner();
-            infoGrantOwnerWithPerson = new InfoGrantOwnerWithPerson();
-            infoGrantOwnerWithPerson.copyToDomain(infoGrantOwner, grantOwner);
-        }
-        return grantOwner;
     }
 
 }
