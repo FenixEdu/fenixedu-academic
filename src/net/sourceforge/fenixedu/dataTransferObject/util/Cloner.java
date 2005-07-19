@@ -178,7 +178,6 @@ import net.sourceforge.fenixedu.domain.IWebSiteSection;
 import net.sourceforge.fenixedu.domain.IWorkLocation;
 import net.sourceforge.fenixedu.domain.Period;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Room;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.domain.SchoolClass;
@@ -1487,33 +1486,6 @@ public abstract class Cloner {
         infoProfessorShip.setInfoExecutionCourse(infoExecutionCourse);
 
         return infoProfessorShip;
-    }
-
-    public static IProfessorship copyInfoProfessorship2IProfessorship(InfoProfessorship infoProfessorShip) {
-        InfoExecutionCourse infoExecutionCourse = infoProfessorShip.getInfoExecutionCourse();
-        InfoTeacher infoTeacher = infoProfessorShip.getInfoTeacher();
-
-        IProfessorship professorship = new Professorship();
-
-        copyObjectProperties(professorship, infoProfessorShip);
-        IExecutionCourse executionCourse = null;
-        if (infoExecutionCourse != null) {
-            executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
-        } else {
-            copyObjectProperties(executionCourse, infoExecutionCourse);
-        }
-        professorship.setExecutionCourse(executionCourse);
-
-        ITeacher teacher = null;
-
-        if (infoTeacher != null) {
-            teacher = Cloner.copyInfoTeacher2Teacher(infoTeacher);
-        } else {
-            copyObjectProperties(teacher, infoTeacher);
-        }
-        professorship.setTeacher(teacher);
-
-        return professorship;
     }
 
     /**
