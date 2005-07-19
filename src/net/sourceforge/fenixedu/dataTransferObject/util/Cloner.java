@@ -187,7 +187,6 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentKind;
-import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.University;
 import net.sourceforge.fenixedu.domain.WorkLocation;
@@ -203,7 +202,6 @@ import net.sourceforge.fenixedu.domain.credits.IManagementPositionCreditLine;
 import net.sourceforge.fenixedu.domain.credits.IOtherTypeCreditLine;
 import net.sourceforge.fenixedu.domain.credits.IServiceExemptionCreditLine;
 import net.sourceforge.fenixedu.domain.degree.finalProject.ITeacherDegreeFinalProjectStudent;
-import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.gaugingTests.physics.IGaugingTestResult;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseHistoric;
@@ -221,7 +219,6 @@ import net.sourceforge.fenixedu.domain.teacher.IPublicationsNumber;
 import net.sourceforge.fenixedu.domain.teacher.IServiceProviderRegime;
 import net.sourceforge.fenixedu.domain.teacher.ITeachingCareer;
 import net.sourceforge.fenixedu.domain.teacher.IWeeklyOcupation;
-import net.sourceforge.fenixedu.domain.teacher.OldPublication;
 import net.sourceforge.fenixedu.domain.teacher.Orientation;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;
@@ -2204,16 +2201,6 @@ public abstract class Cloner {
         return infoOldPublication;
     }
 
-    public static IOldPublication copyInfoOldPublication2IOldPublication(
-            InfoOldPublication infoOldPublication) {
-        IOldPublication oldPublication = new OldPublication();
-        ITeacher teacher = Cloner.copyInfoTeacher2Teacher(infoOldPublication.getInfoTeacher());
-        copyObjectProperties(oldPublication, infoOldPublication);
-
-        oldPublication.setTeacher(teacher);
-        return oldPublication;
-    }
-
     public static InfoGaugingTestResult copyIGaugingTestResult2IngoGaugingTestResult(
             IGaugingTestResult gaugingTestResult) {
         InfoStudent infoStudent = copyIStudent2InfoStudent(gaugingTestResult.getStudent());
@@ -2240,22 +2227,6 @@ public abstract class Cloner {
     }
 
     /**
-     * @param supportLesson
-     * @return
-     */
-    public static ISupportLesson copyInfoSupportLesson2ISupportLesson(InfoSupportLesson infoSupportLesson) {
-        ISupportLesson supportLesson = new SupportLesson();
-        IProfessorship professorship = Cloner.copyInfoProfessorship2IProfessorship(infoSupportLesson
-                .getInfoProfessorship());
-
-        copyObjectProperties(supportLesson, infoSupportLesson);
-
-        supportLesson.setProfessorship(professorship);
-
-        return supportLesson;
-    }
-
-    /**
      * @param teacherDegreeFinalProjectStudent
      * @return
      */
@@ -2277,31 +2248,6 @@ public abstract class Cloner {
         infoTeacherDegreeFinalProjectStudent.setInfoTeacher(infoTeacher);
 
         return infoTeacherDegreeFinalProjectStudent;
-    }
-
-    /**
-     * @param teacherDegreeFinalProjectStudent
-     * @return
-     */
-    public static ITeacherDegreeFinalProjectStudent copyInfoTeacherDegreeFinalProjectStudent2ITeacherDegreeFinalProjectStudent(
-            InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent) {
-        ITeacher teacher = Cloner.copyInfoTeacher2Teacher(infoTeacherDegreeFinalProjectStudent
-                .getInfoTeacher());
-        IExecutionPeriod executionPeriod = Cloner
-                .copyInfoExecutionPeriod2IExecutionPeriod(infoTeacherDegreeFinalProjectStudent
-                        .getInfoExecutionPeriod());
-        IStudent student = Cloner.copyInfoStudent2IStudent(infoTeacherDegreeFinalProjectStudent
-                .getInfoStudent());
-
-        TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = new TeacherDegreeFinalProjectStudent();
-
-        copyObjectProperties(teacherDegreeFinalProjectStudent, infoTeacherDegreeFinalProjectStudent);
-
-        teacherDegreeFinalProjectStudent.setExecutionPeriod(executionPeriod);
-        teacherDegreeFinalProjectStudent.setStudent(student);
-        teacherDegreeFinalProjectStudent.setTeacher(teacher);
-
-        return teacherDegreeFinalProjectStudent;
     }
 
     public static InfoTeacherInstitutionWorkTime copyITeacherInstitutionWorkingTime2InfoTeacherInstitutionWorkTime(
