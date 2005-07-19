@@ -229,7 +229,6 @@ import net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime;
 import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.domain.teacher.workTime.ITeacherInstitutionWorkTime;
-import net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
@@ -2303,24 +2302,6 @@ public abstract class Cloner {
         teacherDegreeFinalProjectStudent.setTeacher(teacher);
 
         return teacherDegreeFinalProjectStudent;
-    }
-
-    public static ITeacherInstitutionWorkTime copyInfoTeacherInstitutionWorkingTime2ITeacherInstitutionWorkTime(
-            InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime) {
-        ITeacher teacher = Cloner.copyInfoTeacher2Teacher(infoTeacherInstitutionWorkTime
-                .getInfoTeacher());
-        IExecutionPeriod executionPeriod = Cloner
-                .copyInfoExecutionPeriod2IExecutionPeriod(infoTeacherInstitutionWorkTime
-                        .getInfoExecutionPeriod());
-
-        ITeacherInstitutionWorkTime teacherInstitutionWorkTime = new TeacherInstitutionWorkTime();
-
-        copyObjectProperties(teacherInstitutionWorkTime, infoTeacherInstitutionWorkTime);
-
-        teacherInstitutionWorkTime.setTeacher(teacher);
-        teacherInstitutionWorkTime.setExecutionPeriod(executionPeriod);
-
-        return teacherInstitutionWorkTime;
     }
 
     public static InfoTeacherInstitutionWorkTime copyITeacherInstitutionWorkingTime2InfoTeacherInstitutionWorkTime(
