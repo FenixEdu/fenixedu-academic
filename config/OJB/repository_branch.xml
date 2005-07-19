@@ -89,35 +89,34 @@
 	
 	
 	
-	<collection-descriptor
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="curricularCourseGroups"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseGroup">
 		<inverse-foreignkey field-ref="keyBranch"/>
 	</collection-descriptor>
 
-    <collection-descriptor
+    <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="studentCurricularPlans"
 			element-class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlan">
 		<inverse-foreignkey field-ref="branchKey"/>
 	</collection-descriptor>
 	
-	<collection-descriptor
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="secundaryStudentCurricularPlansLEIC"
 			element-class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEIC">
 		<inverse-foreignkey field-ref="secundaryBranchKey"/>
 	</collection-descriptor>
 	
-	    <collection-descriptor
+	    <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="secundaryStudentCurricularPlansLEEC"
 			element-class-ref="net.sourceforge.fenixedu.domain.StudentCurricularPlanLEEC">
 		<inverse-foreignkey field-ref="secundaryBranchKey"/>
 	</collection-descriptor>
 	
-	<collection-descriptor
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedFinalDegreeWorkProposals"
 			element-class-ref="net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal"
-			indirection-table="FINAL_DEGREE_WORK_PROPOSAL_BRANCH"
-			auto-retrieve="true">
+			indirection-table="FINAL_DEGREE_WORK_PROPOSAL_BRANCH">
 		<fk-pointing-to-this-class column="KEY_BRANCH"/>
 		<fk-pointing-to-element-class column="KEY_FINAL_DEGREE_WORK_PROPOSAL"/>
 	</collection-descriptor>
