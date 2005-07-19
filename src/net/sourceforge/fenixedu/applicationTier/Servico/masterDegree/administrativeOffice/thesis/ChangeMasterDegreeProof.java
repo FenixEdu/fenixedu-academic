@@ -32,78 +32,52 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ChangeMasterDegreeProof implements IService {
 
-	/**
-	 * The actor of this class.
-	 */
-	public ChangeMasterDegreeProof() {
-	}
+    public void run(IUserView userView, InfoStudentCurricularPlan infoStudentCurricularPlan,
+            Date proofDate, Date thesisDeliveryDate, MasterDegreeClassification finalResult,
+            Integer attachedCopiesNumber, List infoTeacherJuries, List infoExternalPersonExternalJuries)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-	public void run(IUserView userView,
-			InfoStudentCurricularPlan infoStudentCurricularPlan,
-			Date proofDate, Date thesisDeliveryDate,
-			MasterDegreeClassification finalResult,
-			Integer attachedCopiesNumber, List infoTeacherJuries,
-			List infoExternalPersonExternalJuries) throws FenixServiceException {
-		try {
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-			ISuportePersistente sp = PersistenceSupportFactory
-					.getDefaultPersistenceSupport();
-//			IStudentCurricularPlan studentCurricularPlan = Cloner
-//					.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
+        IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) sp
+                .getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,
+                        infoStudentCurricularPlan.getIdInternal());
 
-			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) sp.getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,infoStudentCurricularPlan.getIdInternal());
-			
-			IMasterDegreeThesis storedMasterDegreeThesis = sp
-					.getIPersistentMasterDegreeThesis()
-					.readByStudentCurricularPlan(
-							infoStudentCurricularPlan.getIdInternal());
-			if (storedMasterDegreeThesis == null) {
-				throw new NonExistingServiceException(
-						"error.exception.masterDegree.nonExistentMasterDegreeThesis");
-			}
-			IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory
-					.getInstance();
-			IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy = (IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory
-					.getDegreeCurricularPlanStrategy(studentCurricularPlan
-							.getDegreeCurricularPlan());
+        IMasterDegreeThesis storedMasterDegreeThesis = sp.getIPersistentMasterDegreeThesis()
+                .readByStudentCurricularPlan(infoStudentCurricularPlan.getIdInternal());
+        if (storedMasterDegreeThesis == null) {
+            throw new NonExistingServiceException(
+                    "error.exception.masterDegree.nonExistentMasterDegreeThesis");
+        }
+        IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory
+                .getInstance();
+        IMasterDegreeCurricularPlanStrategy masterDegreeCurricularPlanStrategy = (IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory
+                .getDegreeCurricularPlanStrategy(studentCurricularPlan.getDegreeCurricularPlan());
 
-			if (!masterDegreeCurricularPlanStrategy
-					.checkEndOfScholarship(studentCurricularPlan)) {
-				throw new ScholarshipNotFinishedServiceException(
-						"error.exception.masterDegree.scholarshipNotFinished");
-			}
+        if (!masterDegreeCurricularPlanStrategy.checkEndOfScholarship(studentCurricularPlan)) {
+            throw new ScholarshipNotFinishedServiceException(
+                    "error.exception.masterDegree.scholarshipNotFinished");
+        }
 
-			IMasterDegreeProofVersion storedMasterDegreeProofVersion = sp
-					.getIPersistentMasterDegreeProofVersion()
-					.readActiveByStudentCurricularPlan(studentCurricularPlan);
-			if (storedMasterDegreeProofVersion != null) {
-				sp.getIPersistentMasterDegreeProofVersion().simpleLockWrite(
-						storedMasterDegreeProofVersion);
-				storedMasterDegreeProofVersion.setCurrentState(new State(
-						State.INACTIVE));
-			}
+        IMasterDegreeProofVersion storedMasterDegreeProofVersion = sp
+                .getIPersistentMasterDegreeProofVersion().readActiveByStudentCurricularPlan(
+                        studentCurricularPlan);
+        if (storedMasterDegreeProofVersion != null) {
+            sp.getIPersistentMasterDegreeProofVersion().simpleLockWrite(storedMasterDegreeProofVersion);
+            storedMasterDegreeProofVersion.setCurrentState(new State(State.INACTIVE));
+        }
 
-			IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(
-					userView.getUtilizador());
-			IEmployee employee = sp.getIPersistentEmployee().readByPerson(
-					person.getIdInternal().intValue());
-			List teacherJuries = Cloner
-					.copyListInfoTeacher2ListITeacher(infoTeacherJuries);
-			List externalJuries = Cloner
-					.copyListInfoExternalPerson2ListIExternalPerson(infoExternalPersonExternalJuries);
+        IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+        IEmployee employee = sp.getIPersistentEmployee().readByPerson(person.getIdInternal().intValue());
+        List teacherJuries = Cloner.copyListInfoTeacher2ListITeacher(infoTeacherJuries);
+        List externalJuries = Cloner
+                .copyListInfoExternalPerson2ListIExternalPerson(infoExternalPersonExternalJuries);
 
-			IMasterDegreeProofVersion masterDegreeProofVersion = new MasterDegreeProofVersion(
-					storedMasterDegreeThesis, employee, new Date(), proofDate,
-					thesisDeliveryDate, finalResult, attachedCopiesNumber,
-					new State(State.ACTIVE), teacherJuries, externalJuries);
-			sp.getIPersistentMasterDegreeProofVersion().simpleLockWrite(
-					masterDegreeProofVersion);
+        IMasterDegreeProofVersion masterDegreeProofVersion = new MasterDegreeProofVersion(
+                storedMasterDegreeThesis, employee, new Date(), proofDate, thesisDeliveryDate,
+                finalResult, attachedCopiesNumber, new State(State.ACTIVE), teacherJuries,
+                externalJuries);
+        sp.getIPersistentMasterDegreeProofVersion().simpleLockWrite(masterDegreeProofVersion);
+    }
 
-		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException(
-					"Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		}
-	}
 }
