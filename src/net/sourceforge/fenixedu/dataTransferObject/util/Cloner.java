@@ -183,7 +183,6 @@ import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.StudentKind;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.University;
 import net.sourceforge.fenixedu.domain.WorkLocation;
@@ -618,26 +617,6 @@ public abstract class Cloner {
         domainClass.setExecutionDegree(executionDegree);
         domainClass.setExecutionPeriod(executionPeriod);
         return domainClass;
-    }
-
-    /**
-     * Method copyInfoStudent2IStudent.
-     * 
-     * @param infoStudent
-     * @return IStudent
-     */
-    public static IStudent copyInfoStudent2IStudent(InfoStudent infoStudent) {
-        IStudent student = new Student();
-        IPerson person = Cloner.copyInfoPerson2IPerson(infoStudent.getInfoPerson());
-        IStudentKind studentGroupInfo = Cloner.copyInfoStudentKind2IStudentKind(infoStudent
-                .getInfoStudentKind());
-        copyObjectProperties(student, infoStudent);
-        student.setPerson(person);
-        student.setStudentKind(studentGroupInfo);
-
-        // by gedl at august the 5th, 2003
-        student.setIdInternal(infoStudent.getIdInternal());
-        return student;
     }
 
     /**
@@ -1413,16 +1392,6 @@ public abstract class Cloner {
         return infoStudentKind;
     }
 
-    /**
-     * @author dcs-rjao
-     * @param IStudentKind
-     * @return InfoStudentKind
-     */
-    public static IStudentKind copyInfoStudentKind2IStudentKind(InfoStudentKind infoStudentGroupInfo) {
-        IStudentKind studentKind = new StudentKind();
-        copyObjectProperties(studentKind, infoStudentGroupInfo);
-        return studentKind;
-    }
 
     /**
      * @author dcs-rjao
