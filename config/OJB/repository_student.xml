@@ -140,7 +140,7 @@
 		<inverse-foreignkey field-ref="keyStudent"/>
 	</collection-descriptor>
 	 <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="shifts"
+			name="shiftStudents"
 			element-class-ref="net.sourceforge.fenixedu.domain.Shift"
 			indirection-table="SHIFT_STUDENT"
 			>
