@@ -256,7 +256,6 @@ public class InfoQualification extends InfoObject implements ISiteComponent {
             setMark(qualification.getMark());
             setSchool(qualification.getSchool());
             setSpecializationArea(qualification.getSpecializationArea());
-            setMark(qualification.getMark());
             setBranch(qualification.getBranch());
             setDegree(qualification.getDegree());
             setDegreeRecognition(qualification.getDegreeRecognition());
@@ -283,7 +282,6 @@ public class InfoQualification extends InfoObject implements ISiteComponent {
         qualification.setMark(infoQualification.getMark());
         qualification.setSchool(infoQualification.getSchool());
         qualification.setSpecializationArea(infoQualification.getSpecializationArea());
-        qualification.setMark(infoQualification.getMark());
         qualification.setBranch(infoQualification.getBranch());
         qualification.setDegree(infoQualification.getDegree());
         qualification.setDegreeRecognition(infoQualification.getDegreeRecognition());
