@@ -14,7 +14,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
@@ -36,11 +37,15 @@ public class LerTurmas implements IService {
 
         ITurmaPersistente classDAO = sp.getITurmaPersistente();
 
-        IExecutionPeriod executionPeriod = Cloner
-                .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+        // IExecutionPeriod executionPeriod = Cloner
+        // .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+        IExecutionPeriod executionPeriod = (IExecutionPeriod) sp.getIPersistentExecutionPeriod()
+                .readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
 
-        IExecutionDegree executionDegree = Cloner
-                .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
+        // IExecutionDegree executionDegree = Cloner
+        // .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
+        IExecutionDegree executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree()
+                .readByOID(ExecutionDegree.class, infoExecutionDegree.getIdInternal());
 
         if (curricularYear != null) {
             classesList = classDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(
