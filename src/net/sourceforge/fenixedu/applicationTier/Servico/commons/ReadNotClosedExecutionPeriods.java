@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -20,24 +20,21 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadNotClosedExecutionPeriods implements IService {
 
-    public List run() throws FenixServiceException {
+    public List run() throws FenixServiceException, ExcepcaoPersistencia {
 
         List result = new ArrayList();
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
 
-            List executionPeriods = executionPeriodDAO.readNotClosedExecutionPeriods();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
 
-            if (executionPeriods != null) {
-                for (int i = 0; i < executionPeriods.size(); i++) {
-                    result.add(Cloner.get((IExecutionPeriod) executionPeriods.get(i)));
-                }
+        List executionPeriods = executionPeriodDAO.readNotClosedExecutionPeriods();
+
+        if (executionPeriods != null) {
+            for (int i = 0; i < executionPeriods.size(); i++) {
+                result.add(InfoExecutionPeriod.newInfoFromDomain((IExecutionPeriod) executionPeriods
+                        .get(i)));
             }
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
         }
-
         return result;
     }
 }
