@@ -15,7 +15,7 @@ public class ReadPersonByUserview implements IService {
 
     public InfoPerson run(IUserView userView) throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();;
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         String username = new String(userView.getUtilizador());
         IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
 
