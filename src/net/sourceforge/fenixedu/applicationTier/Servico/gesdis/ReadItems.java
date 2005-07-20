@@ -8,12 +8,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSection;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IItem;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
@@ -27,47 +25,23 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadItems implements IService {
 
-    /**
-     * The ctor of this class.
-     */
-    public ReadItems() {
-    }
+    public List run(InfoSection infoSection) throws ExcepcaoPersistencia {
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentItem persistentItem = sp.getIPersistentItem();
 
-    /**
-     * Executes the service.
-     *  
-     */
-    public List run(InfoSection infoSection) throws FenixServiceException {
-        List itemsList = null;
+        List<IItem> itemsList = persistentItem.readAllItemsBySection(infoSection.getIdInternal(),
+                infoSection.getInfoSite().getInfoExecutionCourse().getSigla(), infoSection.getInfoSite()
+                        .getInfoExecutionCourse().getInfoExecutionPeriod().getInfoExecutionYear()
+                        .getYear(), infoSection.getInfoSite().getInfoExecutionCourse()
+                        .getInfoExecutionPeriod().getName());
 
-        try {
-
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentItem persistentItem = sp.getIPersistentItem();
-
-            //ISection section = Cloner.copyInfoSection2ISection(infoSection);
-
-            itemsList = persistentItem.readAllItemsBySection(infoSection.getIdInternal(),
-                    infoSection.getInfoSite().getInfoExecutionCourse().getSigla(),
-                    infoSection.getInfoSite().getInfoExecutionCourse().getInfoExecutionPeriod().getInfoExecutionYear().getYear(),
-                    infoSection.getInfoSite().getInfoExecutionCourse().getInfoExecutionPeriod().getName());
-            
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+        List<InfoItem> infoItemsList = new ArrayList<InfoItem>(itemsList.size());
+        for (IItem elem : itemsList) {
+            infoItemsList.add(InfoItem.newInfoFromDomain(elem));
         }
 
-        List infoItemsList = new ArrayList(itemsList.size());
-        Iterator iter = itemsList.iterator();
-
-        while (iter.hasNext())
-            infoItemsList.add(Cloner.copyIItem2InfoItem((IItem) iter.next()));
-
-        //			if (itemsList == null || itemsList.isEmpty())
-        //				throw new InvalidArgumentsServiceException();
         Collections.sort(infoItemsList);
         return infoItemsList;
-
     }
 
 }
-
