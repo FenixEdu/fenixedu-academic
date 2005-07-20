@@ -181,5 +181,10 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		name="associatedTeachingCareers"
+		element-class-ref="net.sourceforge.fenixedu.domain.teacher.TeachingCareer">
+		<inverse-foreignkey field-ref="keyCategory"/>
+  	</collection-descriptor>
 </class-descriptor>
 
