@@ -95,7 +95,6 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime;
-import net.sourceforge.fenixedu.domain.Advisory;
 import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -177,7 +176,6 @@ import net.sourceforge.fenixedu.domain.Room;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.University;
 import net.sourceforge.fenixedu.domain.WorkLocation;
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
@@ -631,16 +629,6 @@ public abstract class Cloner {
         return infoAdvisory;
     }
 
-    /**
-     * @param advisory
-     * @return
-     */
-    public static IAdvisory copyInfoAdvisory2IAdvisory(InfoAdvisory infoAdvisory) {
-        IAdvisory advisory = new Advisory();
-        copyObjectProperties(advisory, infoAdvisory);
-        return advisory;
-    }
-
     public static InfoCandidateSituation copyICandidateSituation2InfoCandidateSituation(
             ICandidateSituation candidateSituation) {
         InfoCandidateSituation infoCandidateSituation = new InfoCandidateSituation();
@@ -831,12 +819,6 @@ public abstract class Cloner {
         InfoUniversity infoUniversity = new InfoUniversity();
         copyObjectProperties(infoUniversity, university);
         return infoUniversity;
-    }
-
-    public static IUniversity copyInfoUniversity2IUniversity(InfoUniversity infoUniversity) {
-        IUniversity university = new University();
-        copyObjectProperties(university, infoUniversity);
-        return university;
     }
 
     /**
@@ -1615,7 +1597,7 @@ public abstract class Cloner {
         InfoEmployee infoEmployee = Cloner.copyIEmployee2InfoEmployee(masterDegreeProofVersion
                 .getResponsibleEmployee());
         List infoJuries = Cloner.copyListITeacher2ListInfoTeacher(masterDegreeProofVersion.getJuries());
-        
+
         List infoExternalPersonJuries = new ArrayList<InfoExternalPerson>();
         for (IExternalPerson externalPerson : masterDegreeProofVersion.getExternalJuries()) {
             infoExternalPersonJuries.add(InfoExternalPerson.newInfoFromDomain(externalPerson));
