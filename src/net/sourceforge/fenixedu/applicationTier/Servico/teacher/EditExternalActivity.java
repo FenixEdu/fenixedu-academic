@@ -57,7 +57,7 @@ public class EditExternalActivity extends EditDomainObjectService {
 //    }
 
 	@Override
-	protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
+	protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
 		InfoExternalActivity infoExternalActivity = (InfoExternalActivity)infoObject;
 		IExternalActivity externalActivity = (ExternalActivity) domainObject;
 		externalActivity.setActivity(infoExternalActivity.getActivity());

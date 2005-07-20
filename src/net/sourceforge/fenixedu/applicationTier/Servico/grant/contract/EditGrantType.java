@@ -50,7 +50,7 @@ public class EditGrantType extends EditDomainObjectService {
 	}
 
 	@Override
-	protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) {
+	protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) {
 		InfoGrantType infoGrantType = (InfoGrantType) infoObject;
 		IGrantType grantType = (IGrantType) domainObject;
 

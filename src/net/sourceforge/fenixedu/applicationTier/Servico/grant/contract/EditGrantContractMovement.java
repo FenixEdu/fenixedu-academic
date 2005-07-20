@@ -82,7 +82,7 @@ public class EditGrantContractMovement extends EditDomainObjectService {
     }
 
 	@Override
-	protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject)throws ExcepcaoPersistencia {
+	protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject)throws ExcepcaoPersistencia {
 		InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
 		IGrantContractMovement grantContractMovement = (IGrantContractMovement) domainObject;
 

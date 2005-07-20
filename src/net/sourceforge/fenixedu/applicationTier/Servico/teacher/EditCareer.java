@@ -36,7 +36,7 @@ public class EditCareer extends EditDomainObjectService {
         return persistentCareer;
     }
 
-	protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
+	protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
         if (infoObject instanceof InfoProfessionalCareer) {
         	IProfessionalCareer professionalCareer = (ProfessionalCareer) domainObject;
         	InfoProfessionalCareer infoProfessionalCareer = (InfoProfessionalCareer)infoObject;
@@ -76,6 +76,7 @@ public class EditCareer extends EditDomainObjectService {
 	}
 
 	protected IDomainObject createNewDomainObject(InfoObject infoObject) {
+
         if (infoObject instanceof InfoProfessionalCareer) {
             return new ProfessionalCareer();
         } else if (infoObject instanceof InfoTeachingCareer) {

@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 public class EditQualification extends EditDomainObjectService {
 
     @Override
-    protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject,
+    protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
             IDomainObject domainObject) throws ExcepcaoPersistencia {
         InfoQualification infoQualification = (InfoQualification) infoObject;
         IQualification qualification = (Qualification) domainObject;
@@ -40,7 +40,6 @@ public class EditQualification extends EditDomainObjectService {
 
         qualification.setBranch(infoQualification.getBranch());
         qualification.setCountry(country);
-        qualification.setCountryKey(country.getIdInternal());
         qualification.setDate(infoQualification.getDate());
         qualification.setDegree(infoQualification.getDegree());
         qualification.setDegreeRecognition(infoQualification.getDegreeRecognition());
@@ -50,7 +49,6 @@ public class EditQualification extends EditDomainObjectService {
         // qualification.setLastModificationDate();
         qualification.setMark(infoQualification.getMark());
         qualification.setPerson(person);
-        qualification.setPersonKey(person.getIdInternal());
         qualification.setSchool(infoQualification.getSchool());
         qualification.setSpecializationArea(infoQualification.getSpecializationArea());
         qualification.setTitle(infoQualification.getTitle());

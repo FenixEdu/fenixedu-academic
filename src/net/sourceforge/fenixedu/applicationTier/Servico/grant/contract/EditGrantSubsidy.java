@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantSubsidy;
 public class EditGrantSubsidy extends EditDomainObjectService {
 
     @Override
-	protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
+	protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
 		InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy)infoObject;
 		IGrantSubsidy grantSubsidy = (IGrantSubsidy) domainObject;
 		grantSubsidy.setDateBeginSubsidy(infoGrantSubsidy.getDateBeginSubsidy());

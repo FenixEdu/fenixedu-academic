@@ -145,7 +145,7 @@ public class EditSupportLessonByOID extends EditDomainObjectService {
     }
 
 	@Override
-	protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
+	protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
 		InfoSupportLesson infoSupportLesson = (InfoSupportLesson)infoObject;
 		ISupportLesson supportLesson = (SupportLesson)domainObject;
 		supportLesson.setEndTime(infoSupportLesson.getEndTime());

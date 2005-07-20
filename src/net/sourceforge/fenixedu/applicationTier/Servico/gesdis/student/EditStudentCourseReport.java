@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 public class EditStudentCourseReport extends EditDomainObjectService {
 
     @Override
-	protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
+	protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
         InfoStudentCourseReport infoStudentCourseReport = (InfoStudentCourseReport) infoObject;
         IStudentCourseReport studentCourseReport = (StudentCourseReport) domainObject;
 

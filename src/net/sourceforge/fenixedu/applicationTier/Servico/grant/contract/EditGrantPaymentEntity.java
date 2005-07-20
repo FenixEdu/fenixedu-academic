@@ -42,7 +42,7 @@ public class EditGrantPaymentEntity extends EditDomainObjectService implements
 		IService {
 
 	@Override
-	protected void copyInformationFromIntoToDomain(ISuportePersistente sp,
+	protected void copyInformationFromInfoToDomain(ISuportePersistente sp,
 			InfoObject infoObject, IDomainObject domainObject)
 			throws ExcepcaoPersistencia, FenixServiceException {
 		IGrantPaymentEntity grantPaymentEntity = (IGrantPaymentEntity) domainObject;

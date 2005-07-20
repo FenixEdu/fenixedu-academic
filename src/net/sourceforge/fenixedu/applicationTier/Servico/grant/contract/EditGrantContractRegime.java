@@ -44,7 +44,7 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientatio
 public class EditGrantContractRegime extends EditDomainObjectService {
 
     @Override
-    protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject,
+    protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
             IDomainObject domainObject) throws ExcepcaoPersistencia {
         InfoGrantContractRegime infoGrantContractRegime = (InfoGrantContractRegime) infoObject;
         IGrantContractRegime grantContractRegime = (IGrantContractRegime) domainObject;

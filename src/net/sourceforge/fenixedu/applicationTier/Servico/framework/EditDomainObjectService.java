@@ -123,7 +123,7 @@ public abstract class EditDomainObjectService implements IService {
 
             persistentObject.simpleLockWrite(domainObject);
 
-            copyInformationFromIntoToDomain(sp, infoObject, domainObject);
+            copyInformationFromInfoToDomain(sp, infoObject, domainObject);
 
             doAfterLock(domainObject, infoObject, sp);
      
@@ -151,7 +151,7 @@ public abstract class EditDomainObjectService implements IService {
 
     protected abstract IDomainObject createNewDomainObject(InfoObject infoObject);
     protected abstract Class getDomainObjectClass();
-    protected abstract void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject)throws ExcepcaoPersistencia,FenixServiceException;
+    protected abstract void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject)throws ExcepcaoPersistencia,FenixServiceException;
 
 	private IDomainObject getObjectFromDatabase(InfoObject infoObject, ISuportePersistente sp)
             throws Exception {
