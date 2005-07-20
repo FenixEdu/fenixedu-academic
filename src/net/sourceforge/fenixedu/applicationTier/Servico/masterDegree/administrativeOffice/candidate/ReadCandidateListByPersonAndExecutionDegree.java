@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWith
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ICandidateSituation;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
@@ -42,13 +41,11 @@ public class ReadCandidateListByPersonAndExecutionDegree implements IService {
 
             // Read the candidates
 
-            IExecutionDegree executionDegree = Cloner
-                    .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
             IPerson person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,infoPerson.getIdInternal());
             infoPerson.copyToDomain(infoPerson,person);
 
             result = sp.getIPersistentMasterDegreeCandidate().readByExecutionDegreeAndPersonAndNumber(
-                    executionDegree.getIdInternal(), person.getIdInternal(), number);
+                    infoExecutionDegree.getIdInternal(), person.getIdInternal(), number);
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             newEx.fillInStackTrace();
