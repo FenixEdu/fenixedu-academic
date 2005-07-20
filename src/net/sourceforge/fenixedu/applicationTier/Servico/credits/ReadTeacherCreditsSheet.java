@@ -30,11 +30,9 @@ import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.IShiftProfessorship;
 import net.sourceforge.fenixedu.domain.ISupportLesson;
 import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.ResponsibleFor;
 import net.sourceforge.fenixedu.domain.credits.IManagementPositionCreditLine;
 import net.sourceforge.fenixedu.domain.credits.IOtherTypeCreditLine;
 import net.sourceforge.fenixedu.domain.credits.IServiceExemptionCreditLine;
@@ -44,7 +42,6 @@ import net.sourceforge.fenixedu.domain.teacher.workTime.ITeacherInstitutionWorkT
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -340,11 +337,11 @@ public class ReadTeacherCreditsSheet implements IService {
     private List readDetailedProfessorships(ITeacher teacher, IExecutionPeriod executionPeriod,
             ISuportePersistente sp) throws ExcepcaoPersistencia {
         IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
-        IPersistentResponsibleFor responsibleForDAO = sp.getIPersistentResponsibleFor();
-
+        
         List professorshipList = professorshipDAO.readByTeacherAndExecutionPeriod(teacher
                 .getIdInternal(), executionPeriod.getIdInternal());
-        final List responsibleFors = responsibleForDAO.readByTeacher(teacher.getIdInternal());
+        
+        final List responsibleFors = teacher.responsibleFors();
 
         List detailedProfessorshipList = (List) CollectionUtils.collect(professorshipList,
                 new Transformer() {
@@ -357,13 +354,10 @@ public class ReadTeacherCreditsSheet implements IService {
                         DetailedProfessorship detailedProfessorship = new DetailedProfessorship();
 
                         List executionCourseCurricularCoursesList = getInfoCurricularCourses(
-                                detailedProfessorship, professorship.getExecutionCourse());
-
-                        IResponsibleFor responsibleFor = new ResponsibleFor();
-                        responsibleFor.setExecutionCourse(professorship.getExecutionCourse());
-                        responsibleFor.setTeacher(professorship.getTeacher());
+                                detailedProfessorship, professorship.getExecutionCourse());                                                               
+                        
                         detailedProfessorship.setResponsibleFor(Boolean.valueOf(responsibleFors
-                                .contains(responsibleFor)));
+                                .contains(professorship)));
 
                         detailedProfessorship.setInfoProfessorship(infoProfessorShip);
                         detailedProfessorship

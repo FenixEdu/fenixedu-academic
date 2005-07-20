@@ -527,15 +527,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new ProfessorshipOJB();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorPersistente.ISuportePersistente#getIPersistentResponsibleFor()
-     */
-    public IPersistentResponsibleFor getIPersistentResponsibleFor() {
-        return new ResponsibleForOJB();
-    }
-
     public IPersistentPrice getIPersistentPrice() {
         return new PriceOJB();
     }

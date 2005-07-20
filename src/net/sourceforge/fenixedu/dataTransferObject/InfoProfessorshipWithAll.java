@@ -17,7 +17,8 @@ public class InfoProfessorshipWithAll extends InfoProfessorship {
         if (professorship != null) {
             setInfoExecutionCourse(InfoExecutionCourseWithExecutionPeriod
                     .newInfoFromDomain(professorship.getExecutionCourse()));
-            setInfoTeacher(InfoTeacherWithPerson.newInfoFromDomain(professorship.getTeacher()));
+            setInfoTeacher(InfoTeacherWithPerson.newInfoFromDomain(professorship.getTeacher()));           
+            setResponsibleFor(professorship.getResponsibleFor());
         }
     }
 

@@ -12,17 +12,14 @@ import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.INonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.ResponsibleFor;
 import net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty;
 import net.sourceforge.fenixedu.domain.classProperties.IExecutionCourseProperty;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -59,8 +56,7 @@ public class DeleteExecutionCourses implements IService {
 
         if (canBeDeleted(executionCourse)) {
             deleteProfessorships(persistentSupport, executionCourse);
-            deleteResponsibleFors(persistentSupport, executionCourse);
-
+            
             executionCourse.getExecutionPeriod().getAssociatedExecutionCourses().remove(executionCourse);
             executionCourse.setExecutionPeriod(null);
 
@@ -107,19 +103,6 @@ public class DeleteExecutionCourses implements IService {
             curricularCourse.getAssociatedExecutionCourses().remove(executionCourse);
         }
         curricularCourses.clear();
-    }
-
-    private void deleteResponsibleFors(ISuportePersistente persistentSupport,
-            IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
-        final IPersistentResponsibleFor persistentResponsibleFor = persistentSupport
-                .getIPersistentResponsibleFor();
-        final List<IResponsibleFor> responsibleFors = executionCourse.getResponsibleTeachers();
-        for (IResponsibleFor responsibleFor : responsibleFors) {
-            responsibleFor.setExecutionCourse(null);
-            responsibleFor.setTeacher(null);
-            persistentResponsibleFor.deleteByOID(ResponsibleFor.class, responsibleFor.getIdInternal());
-        }
-        responsibleFors.clear();
     }
 
     private void deleteProfessorships(final ISuportePersistente persistentSupport,

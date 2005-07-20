@@ -10,14 +10,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
 import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.ISummary;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.ResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -41,8 +38,7 @@ public class DissociateProfessorShipsAndResponsibleFor implements IService {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-            IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
+            IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();            
             IPersistentSupportLesson persistentSupportLesson = sp.getIPersistentSupportLesson();
             IPersistentShiftProfessorship persistentShiftProfessorship = sp
                     .getIPersistentShiftProfessorship();
@@ -78,8 +74,9 @@ public class DissociateProfessorShipsAndResponsibleFor implements IService {
                 while (iterResponsibleFor.hasNext()) {
                     Integer responsibleForId = (Integer) iterResponsibleFor.next();
 
-                    IResponsibleFor responsibleFor = (IResponsibleFor) persistentResponsibleFor
-                            .readByOID(ResponsibleFor.class, responsibleForId);
+                    IProfessorship responsibleFor = (IProfessorship) persistentProfessorship
+                            .readByOID(Professorship.class, responsibleForId);
+                   
                     if (responsibleFor == null) {
                         throw new FenixServiceException("nullPSNorRF");
                     }
@@ -127,12 +124,8 @@ public class DissociateProfessorShipsAndResponsibleFor implements IService {
 
                 iterResponsibleFor = newResponsibleFor.iterator();
                 while (iterResponsibleFor.hasNext()) {
-                    IResponsibleFor responsibleFor = (IResponsibleFor) iterResponsibleFor.next();
-                    responsibleFor.getExecutionCourse().getResponsibleTeachers().remove(responsibleFor);
-                    responsibleFor.setExecutionCourse(null);
-                    responsibleFor.getTeacher().getAssociatedResponsibles().remove(responsibleFor);
-                    responsibleFor.setTeacher(null);
-                    persistentResponsibleFor.deleteByOID(ResponsibleFor.class, responsibleFor.getIdInternal());
+                    IProfessorship responsibleFor = (IProfessorship) iterResponsibleFor.next();                   
+                    responsibleFor.setResponsibleFor(false);
                 }
             }
         } catch (ExcepcaoPersistencia ex) {

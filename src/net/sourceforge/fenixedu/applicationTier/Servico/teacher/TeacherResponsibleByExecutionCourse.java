@@ -3,11 +3,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
+import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -34,13 +33,10 @@ public class TeacherResponsibleByExecutionCourse implements IService {
 
         ISuportePersistente suportePersistente = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        IPersistentResponsibleFor persistentResponsibleFor = suportePersistente
-                .getIPersistentResponsibleFor();
         IPersistentTeacher persistentTeacher = suportePersistente.getIPersistentTeacher();
 
         ITeacher teacher = persistentTeacher.readTeacherByUsername(teacherUserName);
-        IResponsibleFor responsibleFor = persistentResponsibleFor.readByTeacherAndExecutionCourse(
-                teacher.getIdInternal(), executionCourseCode);
+        IProfessorship responsibleFor = teacher.responsibleFor(executionCourseCode);
         if (responsibleFor == null) {
             result = false;
         } else {

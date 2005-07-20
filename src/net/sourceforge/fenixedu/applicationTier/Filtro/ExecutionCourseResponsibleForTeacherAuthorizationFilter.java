@@ -11,11 +11,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
+import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -72,7 +71,7 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends Aut
         InfoExecutionCourse infoExecutionCourse = null;
         IExecutionCourse executionCourse = null;
         ISuportePersistente sp;
-        IResponsibleFor responsibleFor = null;
+        IProfessorship responsibleFor = null;
         if (argumentos == null) {
             return false;
         }
@@ -90,10 +89,8 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends Aut
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-
-            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-            responsibleFor = persistentResponsibleFor.readByTeacherAndExecutionCourse(teacher
-                    .getIdInternal(), executionCourse.getIdInternal());
+                        
+            responsibleFor = teacher.responsibleFor(executionCourse.getIdInternal());
 
         } catch (Exception e) {
             return false;

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
-import net.sourceforge.fenixedu.dataTransferObject.InfoResponsibleFor;
+import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionForm;
@@ -45,7 +45,7 @@ public class MaxResponsibleForExceedHandler extends ExceptionHandler {
         Iterator iterator = maxResponsibleForExceedException.getInfoResponsiblefors().iterator();
         StringBuffer arg1 = new StringBuffer();
         while (iterator.hasNext()) {
-            InfoResponsibleFor infoResponsibleFor = (InfoResponsibleFor) iterator.next();
+            InfoProfessorship infoResponsibleFor = (InfoProfessorship) iterator.next();
             Integer teacherNumber = infoResponsibleFor.getInfoTeacher().getTeacherNumber();
             String teacherName = infoResponsibleFor.getInfoTeacher().getInfoPerson().getNome();
             arg1

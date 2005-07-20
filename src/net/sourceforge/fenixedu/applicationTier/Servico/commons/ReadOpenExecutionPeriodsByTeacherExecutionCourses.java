@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -44,17 +43,7 @@ public class ReadOpenExecutionPeriodsByTeacherExecutionCourses implements IServi
                 executionPeriods.add(executionPeriod);
             }
         }
-        
-        final Iterator associatedResponsibleFor = teacher.getAssociatedResponsiblesIterator();
-        while (associatedResponsibleFor.hasNext()) {
-            IResponsibleFor responsibleFor = (IResponsibleFor) associatedResponsibleFor.next();
-            IExecutionPeriod executionPeriod = responsibleFor.getExecutionCourse().getExecutionPeriod();
-            PeriodState periodState = executionPeriod.getState();
-            if (!executionPeriods.contains(executionPeriod) && (periodState.getStateCode().equals("C") || periodState.getStateCode().equals("O"))) {
-                executionPeriods.add(executionPeriod);
-            }
-        }
-        
+               
         for (final IExecutionPeriod executionPeriod : executionPeriods) {
             result.add(InfoExecutionPeriod.newInfoFromDomain(executionPeriod));
         }

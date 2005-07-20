@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.ISummary;
@@ -38,7 +37,6 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -162,16 +160,6 @@ public class ReadSummaries implements IService {
         return siteView;
     }
 
-    /**
-     * @param executionCourseId
-     * @param summaryType
-     * @param shiftId
-     * @param professorShiftId
-     * @param persistentSummary
-     * @param summaries
-     * @return
-     * @throws ExcepcaoPersistencia
-     */
     protected List readAllSummaries(Integer executionCourseId, String summaryType, Integer shiftId, Integer professorShiftId, IPersistentSummary persistentSummary, List summaries) throws ExcepcaoPersistencia {
         if ((summaryType == null || summaryType.equals("0")) && (shiftId == null || shiftId.intValue() == 0)
                 && (professorShiftId == null || professorShiftId.intValue() == 0)) {
@@ -259,12 +247,10 @@ public class ReadSummaries implements IService {
         IProfessorship professorship = getProfessorship(professorShiftId, professorships);
 
         if ((professorship != null) && (professorShiftId != null) && (professorShiftId.intValue() > 0)) {
-            IPersistentResponsibleFor persistentResponsibleFor = persistentSuport
-                    .getIPersistentResponsibleFor();
-            IResponsibleFor responsibleFor = persistentResponsibleFor.readByTeacherAndExecutionCourse(
-                    professorship.getTeacher().getIdInternal(), executionCourseId);
-
-            if (responsibleFor != null) {
+            
+            IProfessorship responsibleFor = professorship.getTeacher().responsibleFor(executionCourseId);                           
+            
+            if (responsibleFor != null && responsibleFor.getResponsibleFor()) {
                 List<ISummary> summariesByTeacher = persistentSummary.readByOtherTeachers(executionCourseId);               
 
                 if (summaryType != null && !summaryType.equals("0")) {

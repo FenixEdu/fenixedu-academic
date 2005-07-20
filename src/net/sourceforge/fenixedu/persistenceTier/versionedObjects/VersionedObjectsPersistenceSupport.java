@@ -152,7 +152,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.Publication
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationsNumberVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ReimbursementGuideEntryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ReimbursementGuideVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ResponsibleForVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.RestrictionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SalaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ScientificAreaVO;
@@ -285,16 +284,13 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     public IPersistentEvaluationMethod getIPersistentEvaluationMethod() {
         return new EvaluationMethodVO();
     }
-
-    public IPersistentResponsibleFor getIPersistentResponsibleFor() {
-        return new ResponsibleForVO();
-    }
-/*
+   
+    /*
     public IPersistentWrittenEvaluationCurricularCourseScope getIPersistentWrittenEvaluationCurricularCourseScope() {
         return new WrittenEvaluationCurricularCourseScopeVO();
     }
 */
-	public IPersistentPublicationAuthor getIPersistentPublicationAuthor() {
+    public IPersistentPublicationAuthor getIPersistentPublicationAuthor() {
         return new PublicationAuthorVO();
     }
 
@@ -1009,9 +1005,8 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     public IPersistentNonAffiliatedTeacher getIPersistentNonAffiliatedTeacher() {
         return null;
     }
-
-    public IPersistentAuthorship getIPersistentAuthorship() {
+    
+	public IPersistentAuthorship getIPersistentAuthorship() {
         return new AuthorshipVO();
     }
-	
 }

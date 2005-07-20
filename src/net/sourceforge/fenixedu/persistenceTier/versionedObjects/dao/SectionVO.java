@@ -30,11 +30,11 @@ public class SectionVO extends VersionedObjectsBase implements IPersistentSectio
                     executionCourse.getExecutionPeriod().getExecutionYear().getYear().equals(year))
                 
                 if(superiorSectionID == null){
-                    if(section.getKeySuperiorSection() == null)
+                    if(section.getSuperiorSection() == null)
                        sections_aux.add(section); 
                 }
-                else if((section.getKeySuperiorSection() != null) && 
-                        (section.getKeySuperiorSection().equals(superiorSectionID)))
+                else if((section.getSuperiorSection() != null) && 
+                        (section.getSuperiorSection().equals(superiorSectionID)))
                     sections_aux.add(section);                                      
         }       
         return sections_aux;

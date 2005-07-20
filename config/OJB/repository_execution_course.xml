@@ -161,17 +161,7 @@
 		auto-delete="false"
 		>
 		<inverse-foreignkey field-ref="keyExecutionCourse"/>
-	</collection-descriptor>     
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="responsibleTeachers"
-		element-class-ref="net.sourceforge.fenixedu.domain.ResponsibleFor"
-		
-		auto-retrieve="true"
-		auto-update="false"
-		auto-delete="false"
-		>
-		<inverse-foreignkey field-ref="keyExecutionCourse"/>
-	</collection-descriptor>        
+	</collection-descriptor>            
 	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="professorships"
 		element-class-ref="net.sourceforge.fenixedu.domain.Professorship"

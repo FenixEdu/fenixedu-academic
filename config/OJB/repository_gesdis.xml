@@ -451,7 +451,12 @@
         name="hours"
         column="HOURS"
         jdbc-type="FLOAT"
-    />      
+    /> 
+	<field-descriptor
+        name="responsibleFor"
+        column="RESPONSIBLE_FOR"
+        jdbc-type="BIT"
+	/>   
 	
 	<reference-descriptor
          name="teacher"
@@ -486,48 +491,6 @@
 		<inverse-foreignkey field-ref="keyProfessorship"/>
 	</collection-descriptor>
 </class-descriptor>
-
-<!-- ******************************************************************************************************************************* -->
-<!-- Definitions for net.sourceforge.fenixedu.domain.ResponsibleFor -->
-<!-- ******************************************************************************************************************************* -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.ResponsibleFor" table="RESPONSIBLEFOR">
-	<field-descriptor
-		id="1"
-		name="idInternal"
-		column="INTERNAL_CODE"
-		jdbc-type="INTEGER"
-		primarykey="true"
-        autoincrement="true"
-		/>
-	<field-descriptor id="2"
-        name="keyTeacher"
-        column="KEY_TEACHER"
-        jdbc-type="INTEGER"
-	/>
-	<field-descriptor id="3"
-        name="keyExecutionCourse"
-        column="KEY_EXECUTION_COURSE"
-        jdbc-type="INTEGER"
-	/>
-      <field-descriptor
-      	name="ackOptLock"
-      	column="ACK_OPT_LOCK"
-      	jdbc-type="INTEGER"
-      	locking="true"
-      />
-	<reference-descriptor
-         name="teacher"
-         class-ref="net.sourceforge.fenixedu.domain.Teacher"
-         >
-	<foreignkey field-ref="keyTeacher"/>
-    </reference-descriptor>
-	<reference-descriptor
-         name="executionCourse"
-         class-ref="net.sourceforge.fenixedu.domain.ExecutionCourse"
-         >
-	<foreignkey field-ref="keyExecutionCourse"/>
-    </reference-descriptor>
-</class-descriptor>	
 
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.Summary -->

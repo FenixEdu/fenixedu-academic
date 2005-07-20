@@ -48,7 +48,6 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.ITeacher;
@@ -65,7 +64,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
@@ -117,9 +115,7 @@ public class ReadCourseInformation implements IService {
                     .newInfoFromDomain(evaluationMethod));
         }
 
-        IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-        List responsiblesFor = persistentResponsibleFor.readByExecutionCourse(executionCourse
-                .getIdInternal());
+        List responsiblesFor = executionCourse.responsibleFors();
 
         List infoResponsibleTeachers = getInfoResponsibleTeachers(responsiblesFor, sp);
         infoSiteCourseInformation.setInfoResponsibleTeachers(infoResponsibleTeachers);
@@ -181,10 +177,10 @@ public class ReadCourseInformation implements IService {
     }
 
     private List removeDuplicates(List responsiblesFor) {
-        List<IResponsibleFor> result = new ArrayList<IResponsibleFor>();
+        List<IProfessorship> result = new ArrayList<IProfessorship>();
         Iterator iter = responsiblesFor.iterator();
         while (iter.hasNext()) {
-            IResponsibleFor responsibleFor = (IResponsibleFor) iter.next();
+            IProfessorship responsibleFor = (IProfessorship) iter.next();
             if (!result.contains(responsibleFor))
                 result.add(responsibleFor);
         }
@@ -339,7 +335,7 @@ public class ReadCourseInformation implements IService {
         responsiblesFor = removeDuplicates(responsiblesFor);
         Iterator iter = responsiblesFor.iterator();
         while (iter.hasNext()) {
-            IResponsibleFor responsibleFor = (IResponsibleFor) iter.next();
+            IProfessorship responsibleFor = (IProfessorship) iter.next();
             ITeacher teacher = responsibleFor.getTeacher();
             IDepartment department = persistentDepartment.readByTeacher(teacher.getIdInternal());
 
@@ -528,7 +524,7 @@ public class ReadCourseInformation implements IService {
         List infoResponsibleTeachers = new ArrayList();
         Iterator iter = responsiblesFor.iterator();
         while (iter.hasNext()) {
-            IResponsibleFor responsibleFor = (IResponsibleFor) iter.next();
+            IProfessorship responsibleFor = (IProfessorship) iter.next();
             ITeacher teacher = responsibleFor.getTeacher();
 
             infoResponsibleTeachers.add(InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher));

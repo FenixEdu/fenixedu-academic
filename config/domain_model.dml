@@ -427,8 +427,8 @@ class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.f
 
     public java.util.List<ICurricularCourseScope> getActiveScopesInExecutionPeriod(final IExecutionPeriod executionPeriod);
     
-     public ICurriculum insertCurriculum(String program, String programEn, String operacionalObjectives,
-            String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn);
+    public ICurriculum insertCurriculum(String program, String programEn, String operacionalObjectives, 
+    	String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn);
 	"
 }
 
@@ -519,10 +519,10 @@ class net.sourceforge.fenixedu.domain.Curriculum extends net.sourceforge.fenixed
 	String generalObjectivesEn;
 	String program;
 	
-	interface "
-	public void edit(String generalObjectives, String operacionalObjectives, String program,
-            String generalObjectivesEn, String operacionalObjectivesEn, String programEn,
-            String language, IPerson person);	
+	interface"	
+	
+	public void edit(String generalObjectives, String operacionalObjectives, String program, String generalObjectivesEn, String operacionalObjectivesEn, String programEn, String language, IPerson person);	
+	
 	"
 }
 
@@ -970,6 +970,8 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
     public void createBibliographicReference(String title, String authors, String reference, String year, Boolean optional);
     
     public void createCourseReport(String report);
+    
+    public java.util.List responsibleFors();
     "
 }
 
@@ -1857,6 +1859,7 @@ class net.sourceforge.fenixedu.domain.Professorship extends net.sourceforge.feni
 	Integer keyTeacher;
 	Integer keyExecutionCourse;
 	Double hours;
+	Boolean responsibleFor;
 
     interface "
 	public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod);
@@ -2003,11 +2006,6 @@ class net.sourceforge.fenixedu.domain.student.ResidenceCandidacies extends net.s
     Integer keyStudent;
 }
 
-
-class net.sourceforge.fenixedu.domain.ResponsibleFor extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyExecutionCourse;
-	Integer keyTeacher;
-}
 
 class net.sourceforge.fenixedu.domain.precedences.Restriction extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
@@ -2546,6 +2544,15 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	public void addToTeacherSheet(net.sourceforge.fenixedu.domain.publication.IPublication publication, net.sourceforge.fenixedu.util.PublicationArea publicationArea) throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
 	
 	public void removeFromTeacherSheet(net.sourceforge.fenixedu.domain.publication.IPublication publication) throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+	
+	public java.util.List responsibleFors();
+	
+	public IProfessorship responsibleFor(Integer executionCourseId);
+	
+	public void updateResponsabilitiesFor(Integer executionYearId, java.util.List<Integer> executionCourses) 
+		throws net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed, 
+		net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory, 
+		net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;		
 	"
 }
 
@@ -3540,15 +3547,6 @@ relation ExecutionCourseReport {
 	}
 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 }
-
-
-relation ExecutionCourseResponsibleFor {
-	net.sourceforge.fenixedu.domain.ResponsibleFor playsRole responsibleTeachers {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
-}
-
 
 relation ExecutionCourseSite {
 	net.sourceforge.fenixedu.domain.Site playsRole site {
@@ -5114,14 +5112,6 @@ relation TeacherOtherTypeCreditLine {
 
 relation TeacherProfessorship {
 	net.sourceforge.fenixedu.domain.Professorship playsRole professorships {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
-}
-
-
-relation TeacherResponsibleFor {
-	net.sourceforge.fenixedu.domain.ResponsibleFor playsRole associatedResponsibles {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;

@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.ISummary;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Summary;
@@ -23,7 +22,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -166,14 +164,17 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
         try {
             List result = null;
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-            result = persistentResponsibleFor.readByExecutionCourse(executionCourseId);
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseId);
+            
+            result = executionCourse.responsibleFors();
 
             List infoResult = new ArrayList();
             if (result != null) {
                 Iterator iter = result.iterator();
                 while (iter.hasNext()) {
-                    IResponsibleFor responsibleFor = (IResponsibleFor) iter.next();
+                    IProfessorship responsibleFor = (IProfessorship) iter.next();
                     ITeacher teacher = responsibleFor.getTeacher();
                     infoResult.add(teacher);
                 }
@@ -292,24 +293,32 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
      * @param teacher
      * @param summary
      * @return
+     * @throws ExcepcaoPersistencia 
      */
-    private boolean isResponsible(final ITeacher teacher, ISummary summary) {
+    private boolean isResponsible(final ITeacher teacher, ISummary summary) throws ExcepcaoPersistencia {
+        ISuportePersistente persistenteSupport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
+                
         if (summary.getShift() == null) {
-            return CollectionUtils.find(summary.getExecutionCourse().getResponsibleTeachers(),
-                    new Predicate() {
+            
+            List responsibleTeachers = summary.getExecutionCourse().responsibleFors(); 
+                                        
+            return CollectionUtils.find(responsibleTeachers, new Predicate() {
 
-                        public boolean evaluate(Object arg0) {
-                            IResponsibleFor responsibleFor = (IResponsibleFor) arg0;
-                            return responsibleFor.getTeacher().getIdInternal().equals(
-                                    teacher.getIdInternal());
-                        }
-                    }) != null;
+                public boolean evaluate(Object arg0) {
+                    IProfessorship responsibleFor = (IProfessorship) arg0;
+                    return responsibleFor.getTeacher().getIdInternal().equals(teacher.getIdInternal());
+                }
+            }) != null;
         }
-        return CollectionUtils.find(summary.getShift().getDisciplinaExecucao().getResponsibleTeachers(),
+        
+        List responsibleTeachers = summary.getShift().getDisciplinaExecucao().responsibleFors();
+       
+        return CollectionUtils.find(responsibleTeachers,
                 new Predicate() {
 
                     public boolean evaluate(Object arg0) {
-                        IResponsibleFor responsibleFor = (IResponsibleFor) arg0;
+                        IProfessorship responsibleFor = (IProfessorship) arg0;
                         return responsibleFor.getTeacher().getIdInternal().equals(
                                 teacher.getIdInternal());
                     }

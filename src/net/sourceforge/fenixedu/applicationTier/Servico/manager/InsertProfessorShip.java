@@ -10,14 +10,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.ResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -63,19 +60,9 @@ public class InsertProfessorShip implements IService {
             professorShip.setHours(new Double(0.0));
         }
 
-        if (responsibleFor.booleanValue()) {
-            IPersistentResponsibleFor responsibleForDAO = sp.getIPersistentResponsibleFor();
-
-            IResponsibleFor responsibleForTeacher = responsibleForDAO.readByTeacherAndExecutionCourse(
-                    teacher.getIdInternal(), executionCourse.getIdInternal());
-            if (responsibleForTeacher == null) {
-                responsibleForTeacher = new ResponsibleFor();
-                responsibleForDAO.simpleLockWrite(responsibleForTeacher);
-                responsibleForTeacher.setExecutionCourse(executionCourse);
-                responsibleForTeacher.setTeacher(teacher);
-                ResponsibleForValidator.getInstance().validateResponsibleForList(teacher,
-                        executionCourse, responsibleForTeacher, responsibleForDAO);
-            }
+        if (responsibleFor.booleanValue()) {            
+            ResponsibleForValidator.getInstance().validateResponsibleForList(teacher, executionCourse, professorShip);
+            professorShip.setResponsibleFor(true);
         }
     }
 }

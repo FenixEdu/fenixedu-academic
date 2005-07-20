@@ -258,13 +258,6 @@
 		<inverse-foreignkey field-ref="keyTeacher"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-		name="associatedResponsibles" 
-		element-class-ref="net.sourceforge.fenixedu.domain.ResponsibleFor"
-		
-		>
-		<inverse-foreignkey field-ref="keyTeacher"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
 		name="associatedGrantContractRegimes" 
 		element-class-ref="net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime"
 		
@@ -361,6 +354,11 @@
 		
 		>
 		<inverse-foreignkey field-ref="guiderKey"/>
+	</collection-descriptor>	
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+		name="inquiriesTeacher" 
+		element-class-ref="net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher">
+		<inverse-foreignkey field-ref="keyTeacher"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
         	name="masterDegreeThesisGuider"

@@ -14,12 +14,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
+import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -29,7 +29,7 @@ import pt.utl.ist.berserk.ServiceResponse;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class EditCourseInformationAuthorizationFilter extends AuthorizationByRoleFilter {
 
@@ -74,19 +74,18 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-
+            IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
             InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
                     ExecutionCourse.class, infoExecutionCourse.getIdInternal());
 
-            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-            List<IResponsibleFor> responsiblesFor = persistentResponsibleFor.readByExecutionCourse(executionCourse.getIdInternal());
+            List<IProfessorship> responsiblesFor = executionCourse.responsibleFors();
             
-            for (IResponsibleFor responsibleFor : responsiblesFor) {
-                if(responsibleFor.getTeacher().equals(teacher) && responsibleFor.getExecutionCourse().equals(executionCourse))
+			for(IProfessorship professorship : responsiblesFor){
+			    if(professorship.getTeacher().equals(teacher))
                     return true;
-            }
+            }            
             return false;
 
         } catch (ExcepcaoPersistencia e) {

@@ -8,11 +8,13 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAuthorizationFilter;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -20,7 +22,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- *  
+ * 
  */
 public class ReadCourseInformationAuthorizationFilter extends DomainObjectAuthorizationFilter {
 
@@ -31,14 +33,16 @@ public class ReadCourseInformationAuthorizationFilter extends DomainObjectAuthor
     protected boolean verifyCondition(IUserView id, Integer executionCourseID) {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-            List<IResponsibleFor> responsiblesFor = persistentResponsibleFor
-                    .readByExecutionCourse(executionCourseID);
 
-            for (IResponsibleFor responsibleFor : responsiblesFor) {
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                    ExecutionCourse.class, executionCourseID);
+
+            List<IProfessorship> responsiblesFor = executionCourse.responsibleFors();
+
+            for (IProfessorship responsibleFor : responsiblesFor) {
                 if (responsibleFor.getTeacher().equals(teacher))
                     return true;
             }

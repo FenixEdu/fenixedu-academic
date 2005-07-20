@@ -18,6 +18,8 @@ public class InfoProfessorship extends InfoObject {
     private Double hours;
 
     private String toDelete;
+    
+    private Boolean responsibleFor;
 
     public InfoProfessorship() {
     }
@@ -78,6 +80,14 @@ public class InfoProfessorship extends InfoObject {
     public String getToDelete() {
         return toDelete;
     }
+    
+    public void setResponsibleFor(Boolean value){
+        this.responsibleFor = value;
+    }
+    
+    public Boolean getResponsibleFor(){
+        return responsibleFor;
+    }
 
     /**
      * @param toDelete
@@ -91,6 +101,7 @@ public class InfoProfessorship extends InfoObject {
         super.copyFromDomain(professorship);
         if (professorship != null) {
             setHours(professorship.getHours());
+            setResponsibleFor(professorship.getResponsibleFor());
         }
     }
 
@@ -102,6 +113,4 @@ public class InfoProfessorship extends InfoObject {
         }
         return infoProfessorship;
     }
-    
-
 }

@@ -23,13 +23,10 @@ import net.sourceforge.fenixedu.domain.IDepartment;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.ResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -65,7 +62,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartment implements IServi
 
         Iterator iter = teachers.iterator();
         IPersistentProfessorship persistentProfessorship = ps.getIPersistentProfessorship();
-        IPersistentResponsibleFor persistentResponsibleFor = ps.getIPersistentResponsibleFor();
+        
         List professorships = new ArrayList();
         List responsibleFors = new ArrayList();
         while (iter.hasNext()) {
@@ -82,11 +79,15 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartment implements IServi
             }
 
             List teacherResponsibleFors = null;
+            List<IProfessorship> teacherResponsibleForsAux = null;
             if (executionYear == null) {
-                teacherResponsibleFors = persistentResponsibleFor.readByTeacher(teacher.getIdInternal());
+                teacherResponsibleFors = teacher.responsibleFors();
             } else {
-                teacherResponsibleFors = persistentResponsibleFor.readByTeacherAndExecutionYear(teacher
-                        .getIdInternal(), executionYear.getIdInternal());
+                teacherResponsibleForsAux = teacher.responsibleFors(); 
+                for(IProfessorship professorship : teacherResponsibleForsAux){
+                    if(professorship.getExecutionCourse().getExecutionPeriod().getExecutionYear().equals(executionYear));
+                        teacherResponsibleFors.add(professorship);
+                }                   
             }
             if (teacherResponsibleFors != null) {
                 responsibleFors.addAll(teacherResponsibleFors);
@@ -162,11 +163,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartment implements IServi
 
                         DetailedProfessorship detailedProfessorship = new DetailedProfessorship();
 
-                        IResponsibleFor responsibleFor = new ResponsibleFor();
-                        responsibleFor.setExecutionCourse(professorship.getExecutionCourse());
-                        responsibleFor.setTeacher(professorship.getTeacher());
-                        detailedProfessorship.setResponsibleFor(Boolean.valueOf(responsibleFors
-                                .contains(responsibleFor)));
+                        detailedProfessorship.setResponsibleFor(professorship.getResponsibleFor());
 
                         detailedProfessorship.setInfoProfessorship(infoProfessorShip);
                         detailedProfessorship

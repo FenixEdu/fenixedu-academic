@@ -13,10 +13,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -24,7 +26,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author João Mota
  * 
- *  
+ * 
  */
 public class ReadTeachersByExecutionCourseResponsibility implements IService {
 
@@ -33,16 +35,18 @@ public class ReadTeachersByExecutionCourseResponsibility implements IService {
 
         ISuportePersistente suportePersistente = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        IPersistentResponsibleFor persistentResponsibleFor = suportePersistente
-                .getIPersistentResponsibleFor();
-        List result = persistentResponsibleFor
-                .readByExecutionCourse(infoExecutionCourse.getIdInternal());
+        IPersistentExecutionCourse persistentExecutionCourse = suportePersistente
+                .getIPersistentExecutionCourse();
+        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                ExecutionCourse.class, infoExecutionCourse.getIdInternal());
+
+        List result = executionCourse.responsibleFors();
 
         List infoResult = new ArrayList();
         if (result != null) {
             Iterator iter = result.iterator();
             while (iter.hasNext()) {
-                IResponsibleFor responsibleFor = (IResponsibleFor) iter.next();
+                IProfessorship responsibleFor = (IProfessorship) iter.next();
                 ITeacher teacher = responsibleFor.getTeacher();
                 InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
                 infoResult.add(infoTeacher);
@@ -57,15 +61,18 @@ public class ReadTeachersByExecutionCourseResponsibility implements IService {
 
         ISuportePersistente suportePersistente = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        IPersistentResponsibleFor persistentResponsibleFor = suportePersistente
-                .getIPersistentResponsibleFor();
-        List result = persistentResponsibleFor.readByExecutionCourse(executionCourseID);
+        IPersistentExecutionCourse persistentExecutionCourse = suportePersistente
+                .getIPersistentExecutionCourse();
+        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                ExecutionCourse.class, executionCourseID);
+
+        List result = executionCourse.responsibleFors();
 
         List infoResult = new ArrayList();
         if (result != null) {
             Iterator iter = result.iterator();
             while (iter.hasNext()) {
-                IResponsibleFor responsibleFor = (IResponsibleFor) iter.next();
+                IProfessorship responsibleFor = (IProfessorship) iter.next();
                 ITeacher teacher = responsibleFor.getTeacher();
                 InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
                 infoResult.add(infoTeacher);

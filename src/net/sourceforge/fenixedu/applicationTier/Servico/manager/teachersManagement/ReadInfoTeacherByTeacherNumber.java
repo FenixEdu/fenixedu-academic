@@ -5,15 +5,14 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -35,8 +34,7 @@ public class ReadInfoTeacherByTeacherNumber implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
         IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-        IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-
+       
         if (teacherNumber == null) {
             throw new FenixServiceException("nullTeacherNumber");
         }
@@ -48,27 +46,25 @@ public class ReadInfoTeacherByTeacherNumber implements IService {
 
         List professorShips = persistentProfessorship.readByTeacher(teacher.getIdInternal());
 
-        List responsibleFors = persistentResponsibleFor.readByTeacher(teacher.getIdInternal());
+        List responsibleFors = teacher.responsibleFors();
         if ((professorShips == null || professorShips.size() == 0)
                 && (responsibleFors == null || responsibleFors.size() == 0)) {
             throw new NonExistingServiceException("noPSnorRF");
         }
 
-        List infoProfessorShips = new ArrayList();
+        List<InfoProfessorship> infoProfessorShips = new ArrayList();
         CollectionUtils.collect(professorShips, new Transformer() {
             public Object transform(Object input) {
                 IProfessorship professorship = (IProfessorship) input;
                 return InfoProfessorshipWithAll.newInfoFromDomain(professorship);
             }
         }, infoProfessorShips);
-
+        
         List infoResponsibleFors = new ArrayList();
-        CollectionUtils.collect(responsibleFors, new Transformer() {
-            public Object transform(Object input) {
-                IResponsibleFor responsibleFor = (IResponsibleFor) input;
-                return Cloner.copyIResponsibleFor2InfoResponsibleFor(responsibleFor);
-            }
-        }, infoResponsibleFors);
+        for(InfoProfessorship infoProfessorship : infoProfessorShips){
+            if(infoProfessorship.getResponsibleFor())
+                infoResponsibleFors.add(infoProfessorship);
+        }
 
         infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
         infoTeacher.setResponsibleForExecutionCourses(infoResponsibleFors);

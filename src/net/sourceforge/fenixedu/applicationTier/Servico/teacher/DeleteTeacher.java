@@ -4,16 +4,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
 import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.IShiftProfessorship;
 import net.sourceforge.fenixedu.domain.ISummary;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.ResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -37,24 +33,13 @@ public class DeleteTeacher implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-        IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
         IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();
         IPersistentShiftProfessorship shiftProfessorshipDAO = sp.getIPersistentShiftProfessorship();
 
         // note: removed the possibility for a responsible teacher to remove
         // from himself the professorship
         // (it was a feature that didnt make sense)
-        IResponsibleFor responsibleFor = persistentResponsibleFor.readByTeacherAndExecutionCourse(
-                teacherCode, infoExecutionCourseCode);
-        IPersistentResponsibleFor responsibleForDAO = sp.getIPersistentResponsibleFor();
-
-        if (responsibleFor != null) {
-            if (!canDeleteResponsibleFor()) {
-                throw new notAuthorizedServiceDeleteException();
-            }
-            deleteResponsibleFor(responsibleFor, responsibleForDAO);
-        }
-
+        
         IProfessorship professorshipToDelete = persistentProfessorship.readByTeacherAndExecutionCourse(
                 teacherCode, infoExecutionCourseCode);
 
@@ -100,16 +85,7 @@ public class DeleteTeacher implements IService {
             }
         }
         return Boolean.TRUE;
-    }
-
-    private void deleteResponsibleFor(final IResponsibleFor responsibleFor,
-            final IPersistentResponsibleFor responsibleForDAO) throws ExcepcaoPersistencia {
-        responsibleFor.getExecutionCourse().getResponsibleTeachers().remove(responsibleFor);
-        responsibleFor.getTeacher().getAssociatedResponsibles().remove(responsibleFor);
-        responsibleFor.setExecutionCourse(null);
-        responsibleFor.setTeacher(null);
-        responsibleForDAO.deleteByOID(ResponsibleFor.class, responsibleFor.getIdInternal());
-    }
+    }    
 
     private void deleteProfessorship(final IPersistentProfessorship persistentProfessorship,
             final IProfessorship professorshipToDelete) throws ExcepcaoPersistencia {

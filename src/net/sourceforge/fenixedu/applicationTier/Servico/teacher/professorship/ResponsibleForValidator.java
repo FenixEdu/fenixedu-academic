@@ -8,13 +8,11 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoResponsibleFor;
+import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
+import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -70,12 +68,14 @@ public class ResponsibleForValidator {
     }
 
     public void validateResponsibleForList(ITeacher teacher, IExecutionCourse executionCourse,
-            IResponsibleFor responsibleForAdded, IPersistentResponsibleFor responsibleForDAO)
-            throws ExcepcaoPersistencia, MaxResponsibleForExceed, InvalidCategory {
+            IProfessorship responsibleForAdded)
+            throws MaxResponsibleForExceed, InvalidCategory  {
+       
         if (!teacher.getCategory().getCanBeExecutionCourseResponsible().booleanValue()) {
             throw new InvalidCategory();
         }
-        List responsibleFors = responsibleForDAO.readByExecutionCourse(executionCourse.getIdInternal());
+       
+        List responsibleFors = executionCourse.responsibleFors();
 
         if ((!responsibleFors.contains(responsibleForAdded))
                 && (responsibleFors.size() >= MAX_RESPONSIBLEFOR_BY_EXECUTION_COURSE)) {
@@ -83,12 +83,12 @@ public class ResponsibleForValidator {
                     new Transformer() {
 
                         public Object transform(Object input) {
-                            IResponsibleFor responsibleFor = (IResponsibleFor) input;
-                            InfoResponsibleFor infoResponsibleFor = Cloner
-                                    .copyIResponsibleFor2InfoResponsibleFor(responsibleFor);
+                            IProfessorship responsibleFor = (IProfessorship) input;
+                            InfoProfessorship infoResponsibleFor = InfoProfessorship.newInfoFromDomain(responsibleFor);
                             return infoResponsibleFor;
                         }
                     });
+           
             InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
             throw new MaxResponsibleForExceed(infoExecutionCourse, infoResponsibleFors);
         }

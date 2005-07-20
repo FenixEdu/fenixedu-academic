@@ -9,9 +9,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
+import net.sourceforge.fenixedu.domain.IProfessorship;
+import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -28,13 +29,16 @@ public class ReadExecutionCoursesByTeacherResponsibility implements IService {
         
         final ISuportePersistente persistentSuport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        final IPersistentResponsibleFor persistentResponsibleFor = persistentSuport
-                .getIPersistentResponsibleFor();
-        final List<IResponsibleFor> responsibilities = persistentResponsibleFor
-                .readByTeacherNumber(teacherNumber);
+   
+        final IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
+       
+        ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);        
+        
+        final List<IProfessorship> responsibilities = teacher.responsibleFors();
+        
         if (responsibilities != null) {
-            for (final IResponsibleFor responsibleFor : responsibilities) {
-                infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(responsibleFor
+            for (final IProfessorship professorship : responsibilities) {
+                infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(professorship
                         .getExecutionCourse()));
             }
         }

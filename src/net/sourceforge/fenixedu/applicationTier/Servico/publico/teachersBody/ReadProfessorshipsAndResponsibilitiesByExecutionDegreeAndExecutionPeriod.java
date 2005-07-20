@@ -24,13 +24,10 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
-import net.sourceforge.fenixedu.domain.ResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
@@ -41,13 +38,13 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author João e Rita
- *  
+ * 
  */
 public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionPeriod implements
         IService {
 
     /**
-     *  
+     * 
      */
     public ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionPeriod() {
     }
@@ -57,11 +54,9 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionP
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-
         IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-
         IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-        IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
+
         IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
                 ExecutionDegree.class, executionDegreeId);
 
@@ -69,21 +64,21 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionP
         if (semester.intValue() == 0)
             professorships = persistentProfessorship.readByDegreeCurricularPlanAndExecutionYear(
                     executionDegree.getDegreeCurricularPlan().getIdInternal(), executionDegree
-                    .getExecutionYear().getIdInternal());
+                            .getExecutionYear().getIdInternal());
         else {
             IExecutionPeriod executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(
                     semester, executionDegree.getExecutionYear().getYear());
             professorships = persistentProfessorship.readByDegreeCurricularPlanAndExecutionPeriod(
-                    executionDegree.getDegreeCurricularPlan().getIdInternal(), executionPeriod.getIdInternal());
+                    executionDegree.getDegreeCurricularPlan().getIdInternal(), executionPeriod
+                            .getIdInternal());
         }
 
-        List responsibleFors = persistentResponsibleFor.readByExecutionDegree(executionDegree
-                .getDegreeCurricularPlan().getIdInternal(), executionDegree.getExecutionYear()
-                .getIdInternal());
+        List responsibleFors = getResponsibleForsByDegree(executionDegree);
+
         List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors, sp,
                 teacherType);
 
-        //Cleaning out possible null elements inside the list
+        // Cleaning out possible null elements inside the list
         Iterator itera = detailedProfessorships.iterator();
         while (itera.hasNext()) {
             Object dp = itera.next();
@@ -140,6 +135,22 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionP
         return result;
     }
 
+    private List getResponsibleForsByDegree(IExecutionDegree executionDegree) {
+        List responsibleFors = new ArrayList();
+
+        List<IExecutionCourse> executionCourses = new ArrayList();
+        List<IExecutionPeriod> executionPeriods = executionDegree.getExecutionYear()
+                .getExecutionPeriods();
+
+        for (IExecutionPeriod executionPeriod : executionPeriods) {
+            executionCourses = executionPeriod.getAssociatedExecutionCourses();
+            for (IExecutionCourse executionCourse : executionCourses) {
+                responsibleFors.add(executionCourse.responsibleFors());
+            }
+        }
+        return responsibleFors;
+    }
+
     protected List getDetailedProfessorships(List professorships, final List responsibleFors,
             ISuportePersistente sp, final Integer teacherType) {
         List detailedProfessorshipList = (List) CollectionUtils.collect(professorships,
@@ -156,12 +167,7 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionP
 
                         DetailedProfessorship detailedProfessorship = new DetailedProfessorship();
 
-                        IResponsibleFor responsibleFor = new ResponsibleFor();
-                        responsibleFor.setExecutionCourse(professorship.getExecutionCourse());
-                        responsibleFor.setTeacher(professorship.getTeacher());
-
-                        Boolean isResponsible = Boolean
-                                .valueOf(responsibleFors.contains(responsibleFor));
+                        Boolean isResponsible = Boolean.valueOf(professorship.getResponsibleFor());
 
                         if ((teacherType.intValue() == 1) && (!isResponsible.booleanValue())) {
                             return null;

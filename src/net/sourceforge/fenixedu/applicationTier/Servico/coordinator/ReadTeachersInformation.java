@@ -35,7 +35,6 @@ import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.IQualification;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.teacher.ICareer;
 import net.sourceforge.fenixedu.domain.teacher.IExternalActivity;
@@ -50,7 +49,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentQualification;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -254,15 +252,15 @@ public class ReadTeachersInformation implements IService {
 
     private List getInfoResponsibleExecutionCourses(ITeacher teacher, ISuportePersistente sp,
             final IExecutionYear executionYear) throws ExcepcaoPersistencia {
-        IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-        List responsiblesFor = persistentResponsibleFor.readByTeacher(teacher.getIdInternal());
+        
+        List responsiblesFor = teacher.responsibleFors();
 
         // filter only the execution courses of the chosen execution year or the
         // current in case none was chosen
         responsiblesFor = (List) CollectionUtils.select(responsiblesFor, new Predicate() {
 
             public boolean evaluate(Object o) {
-                IResponsibleFor responsibleFor = (IResponsibleFor) o;
+                IProfessorship responsibleFor = (IProfessorship) o;
                 IExecutionCourse executionCourse = responsibleFor.getExecutionCourse();
                 IExecutionYear executionYearElem = executionCourse.getExecutionPeriod()
                         .getExecutionYear();
@@ -271,7 +269,7 @@ public class ReadTeachersInformation implements IService {
         });
         List infoExecutionCourses = (List) CollectionUtils.collect(responsiblesFor, new Transformer() {
             public Object transform(Object o) {
-                IResponsibleFor responsibleFor = (IResponsibleFor) o;
+                IProfessorship responsibleFor = (IProfessorship) o;
                 IExecutionCourse executionCourse = responsibleFor.getExecutionCourse();
                 List curricularCourses = executionCourse.getAssociatedCurricularCourses();
                 List infoCurricularCourses = (List) CollectionUtils.collect(curricularCourses,

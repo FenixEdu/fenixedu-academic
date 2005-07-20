@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IFinalEvaluation;
 import net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse;
 import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.ISection;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IShiftProfessorship;
@@ -35,7 +34,6 @@ import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.ISummary;
 import net.sourceforge.fenixedu.domain.ISupportLesson;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.ResponsibleFor;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
@@ -48,7 +46,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGroupPropertiesExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
@@ -423,21 +420,20 @@ public class MergeExecutionCourses implements IService {
                 }
             }
         }
-        IPersistentResponsibleFor persistentResponsibleFor = ps.getIPersistentResponsibleFor();
-        List destinationResponsibleFor = persistentResponsibleFor.readByExecutionCourse(destination.getIdInternal());
+        List destinationResponsibleFor = destination.responsibleFors();
         if (destinationResponsibleFor == null) {
             destinationResponsibleFor = new ArrayList();
         }
-        List sourceResponsibleFor = persistentResponsibleFor.readByExecutionCourse(source.getIdInternal());
+        List sourceResponsibleFor = source.responsibleFors();
         if (sourceResponsibleFor != null) {
             Iterator iter = sourceResponsibleFor.iterator();
             while (iter.hasNext()) {
-                IResponsibleFor responsibleFor = (IResponsibleFor) iter.next();
-                final IResponsibleFor responsibleFor2Compare = responsibleFor;
+                IProfessorship responsibleFor = (IProfessorship) iter.next();
+                final IProfessorship responsibleFor2Compare = responsibleFor;
                 if (CollectionUtils.find(destinationResponsibleFor, new Predicate() {
 
                     public boolean evaluate(Object arg0) {
-                        IResponsibleFor respons = (IResponsibleFor) arg0;
+                        IProfessorship respons = (IProfessorship) arg0;
                         if (respons.getTeacher() == responsibleFor2Compare.getTeacher()) {
                             return true;
                         }
@@ -445,15 +441,11 @@ public class MergeExecutionCourses implements IService {
 
                     }
                 }) == null) {
-                    persistentResponsibleFor.simpleLockWrite(responsibleFor);
+                    persistentProfessorship.simpleLockWrite(responsibleFor);
                     responsibleFor.setExecutionCourse(destination);
 
                 } else {
-                    responsibleFor.getExecutionCourse().getResponsibleTeachers().remove(responsibleFor);
-                    responsibleFor.setExecutionCourse(null);
-                    responsibleFor.getTeacher().getAssociatedResponsibles().remove(responsibleFor);
-                    responsibleFor.setTeacher(null);
-                    persistentResponsibleFor.deleteByOID(ResponsibleFor.class, responsibleFor.getIdInternal());
+                    responsibleFor.setResponsibleFor(false);
                 }
             }
         }

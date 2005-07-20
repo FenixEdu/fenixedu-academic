@@ -18,11 +18,9 @@ import net.sourceforge.fenixedu.domain.IEvaluationMethod;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IShiftStudent;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.ResponsibleFor;
 import net.sourceforge.fenixedu.domain.ShiftStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
@@ -202,17 +200,9 @@ public class SeperateExecutionCourse implements IService {
             persistentObject.simpleLockWrite(newProfessorship);
             newProfessorship.setExecutionCourse(destinationExecutionCourse);
             newProfessorship.setTeacher(professorship.getTeacher());
+            newProfessorship.setResponsibleFor(professorship.getResponsibleFor());
             destinationExecutionCourse.getProfessorships().add(newProfessorship);
-        }
-
-        for (int i = 0; i < originExecutionCourse.getResponsibleTeachers().size(); i++) {
-            IResponsibleFor responsibleFor = originExecutionCourse.getResponsibleTeachers().get(i);
-            IResponsibleFor newResponsibleFor = new ResponsibleFor();
-            persistentObject.simpleLockWrite(newResponsibleFor);
-            newResponsibleFor.setExecutionCourse(destinationExecutionCourse);
-            newResponsibleFor.setTeacher(responsibleFor.getTeacher());
-            destinationExecutionCourse.getResponsibleTeachers().add(newResponsibleFor);
-        }
+        }      
 
         destinationExecutionCourse.setSigla(getUniqueExecutionCourseCode(
                 originExecutionCourse.getNome(), originExecutionCourse.getExecutionPeriod(),

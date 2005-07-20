@@ -12,16 +12,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.ISummary;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.ResponsibleFor;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -40,6 +37,7 @@ public class SaveTeachersBody implements IService {
         Integer id;
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
         IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
         IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseId);
@@ -51,16 +49,16 @@ public class SaveTeachersBody implements IService {
         // RESPONSIBLES MODIFICATIONS
 
         // get the ids of the teachers that used to be responsible
-        IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-        List oldResponsibles = persistentResponsibleFor.readByExecutionCourse(executionCourse
-                .getIdInternal());
+
+        List oldResponsibles = executionCourse.responsibleFors();
+
         List oldResponsibleTeachersIds = new ArrayList();
         if (oldResponsibles != null) {
 
             Iterator iterator = oldResponsibles.iterator();
-            IResponsibleFor responsibleFor;
+            IProfessorship responsibleFor;
             while (iterator.hasNext()) {
-                responsibleFor = (IResponsibleFor) iterator.next();
+                responsibleFor = (IProfessorship) iterator.next();
                 id = responsibleFor.getTeacher().getIdInternal();
                 oldResponsibleTeachersIds.add(id);
             }
@@ -70,28 +68,26 @@ public class SaveTeachersBody implements IService {
             while (oldRespIterator.hasNext()) {
                 id = (Integer) oldRespIterator.next();
                 if (!responsibleTeachersIds.contains(id))
-                    persistentResponsibleFor.deleteByOID(ResponsibleFor.class,
-                            ((IResponsibleFor) oldResponsibles
-                                    .get(oldResponsibleTeachersIds.indexOf(id))).getIdInternal());
+                    ((IProfessorship) oldResponsibles.get(oldResponsibleTeachersIds.indexOf(id)))
+                            .setResponsibleFor(false);
             }
         }
 
         // add new responsibles
         Iterator newRespIterator = responsibleTeachersIds.iterator();
-        IResponsibleFor responsibleForToWrite;
+        IProfessorship responsibleForToWrite;
         ITeacher teacher;
         while (newRespIterator.hasNext()) {
             id = (Integer) newRespIterator.next();
             if (!oldResponsibleTeachersIds.contains(id)) {
-                responsibleForToWrite = new ResponsibleFor();
-                responsibleForToWrite.setExecutionCourse(executionCourse);
                 teacher = (ITeacher) sp.getIPersistentTeacher().readByOID(Teacher.class, id);
                 if (teacher == null)
                     result = false;
                 else {
-                    persistentResponsibleFor.simpleLockWrite(responsibleForToWrite);
-                    responsibleForToWrite.setTeacher(teacher);
-
+                    responsibleForToWrite = persistentProfessorship.readByTeacherAndExecutionCourse(
+                            teacher.getIdInternal(), executionCourseId);
+                    persistentProfessorship.simpleLockWrite(responsibleForToWrite);
+                    responsibleForToWrite.setResponsibleFor(true);
                 }
             }
         }
@@ -100,7 +96,8 @@ public class SaveTeachersBody implements IService {
 
         // get the ids of the teachers that used to teach the course
         IPersistentProfessorship persistentProfessorShip = sp.getIPersistentProfessorship();
-        List oldProfessorShips = persistentProfessorShip.readByExecutionCourse(executionCourse.getIdInternal());
+        List oldProfessorShips = persistentProfessorShip.readByExecutionCourse(executionCourse
+                .getIdInternal());
         List oldProfessorShipTeachersIds = new ArrayList();
         if (oldProfessorShips != null && !oldProfessorShips.isEmpty()) {
 

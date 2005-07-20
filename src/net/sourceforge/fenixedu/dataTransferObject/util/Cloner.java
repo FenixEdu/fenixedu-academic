@@ -54,7 +54,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPrice;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
-import net.sourceforge.fenixedu.dataTransferObject.InfoResponsibleFor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
@@ -86,18 +85,27 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoExternalActivity;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOldPublication;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOrientation;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoProfessionalCareer;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoPublicationsNumber;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRegime;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoTeachingCareer;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime;
+import net.sourceforge.fenixedu.domain.Advisory;
+import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.domain.CurricularYear;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
@@ -146,13 +154,13 @@ import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IPrice;
 import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IScientificArea;
 import net.sourceforge.fenixedu.domain.ISection;
+import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IShiftProfessorship;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.ISiteIST;
@@ -166,12 +174,19 @@ import net.sourceforge.fenixedu.domain.IWebSite;
 import net.sourceforge.fenixedu.domain.IWebSiteItem;
 import net.sourceforge.fenixedu.domain.IWebSiteSection;
 import net.sourceforge.fenixedu.domain.IWorkLocation;
+import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Period;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Room;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentKind;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.University;
 import net.sourceforge.fenixedu.domain.WorkLocation;
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
@@ -195,8 +210,16 @@ import net.sourceforge.fenixedu.domain.teacher.ICareer;
 import net.sourceforge.fenixedu.domain.teacher.ICategory;
 import net.sourceforge.fenixedu.domain.teacher.IExternalActivity;
 import net.sourceforge.fenixedu.domain.teacher.IOldPublication;
+import net.sourceforge.fenixedu.domain.teacher.IOrientation;
 import net.sourceforge.fenixedu.domain.teacher.IProfessionalCareer;
+import net.sourceforge.fenixedu.domain.teacher.IPublicationsNumber;
+import net.sourceforge.fenixedu.domain.teacher.IServiceProviderRegime;
 import net.sourceforge.fenixedu.domain.teacher.ITeachingCareer;
+import net.sourceforge.fenixedu.domain.teacher.IWeeklyOcupation;
+import net.sourceforge.fenixedu.domain.teacher.Orientation;
+import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;
+import net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime;
+import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.domain.teacher.workTime.ITeacherInstitutionWorkTime;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -261,6 +284,17 @@ public abstract class Cloner {
         }
     }
 
+    public static IShift copyInfoShift2Shift(InfoShift infoShift) {
+        IShift shift = new Shift();
+        IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoShift
+                .getInfoDisciplinaExecucao());
+        copyObjectProperties(shift, infoShift);
+
+        shift.setDisciplinaExecucao(executionCourse);
+        shift.setIdInternal(infoShift.getIdInternal());
+        return shift;
+    }
+
     /**
      * Method copyInfoExecutionCourse2ExecutionCourse.
      * 
@@ -294,6 +328,34 @@ public abstract class Cloner {
         infoExecutionCourse.setNumberOfAttendingStudents(new Integer(executionCourse
                 .getAttendingStudents() == null ? 0 : executionCourse.getAttendingStudents().size()));
         return infoExecutionCourse;
+    }
+
+    /**
+     * Method copyInfoLesson2Lesson.
+     * 
+     * @param lessonExample
+     * @return ILesson
+     */
+    public static ILesson copyInfoLesson2Lesson(InfoLesson infoLesson) {
+        ILesson lesson = new Lesson();
+        IRoom sala = null;
+
+        IRoomOccupation roomOccupation = null;
+        // IShift shift = null;
+        try {
+            BeanUtils.copyProperties(lesson, infoLesson);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+        sala = Cloner.copyInfoRoom2Room(infoLesson.getInfoSala());
+        roomOccupation = Cloner
+                .copyInfoRoomOccupation2RoomOccupation(infoLesson.getInfoRoomOccupation());
+
+        lesson.setSala(sala);
+        lesson.setRoomOccupation(roomOccupation);
+
+        return lesson;
     }
 
     /**
@@ -381,6 +443,31 @@ public abstract class Cloner {
      * @param infoShift
      * @return IShift
      */
+    public static IShift copyInfoShift2IShift(InfoShift infoShift) {
+        if (infoShift == null)
+            return null;
+        IShift shift = new Shift();
+        IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoShift
+                .getInfoDisciplinaExecucao());
+
+        copyObjectProperties(shift, infoShift);
+        if (shift.getAssociatedLessons() != null) {
+            for (int i = 0; i < shift.getAssociatedLessons().size(); i++) {
+                InfoLesson infoLesson = (InfoLesson) shift.getAssociatedLessons().get(i);
+                ILesson lesson = Cloner.copyInfoLesson2Lesson(infoLesson);
+                shift.addAssociatedLessons(lesson);
+            }
+        }
+        shift.setDisciplinaExecucao(executionCourse);
+        return shift;
+    }
+
+    /**
+     * Method copyInfoShift2Shift.
+     * 
+     * @param infoShift
+     * @return IShift
+     */
     public static InfoClass copyClass2InfoClass(ISchoolClass classD) {
         InfoClass infoClass = new InfoClass();
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner.get(classD
@@ -423,6 +510,33 @@ public abstract class Cloner {
                 e.printStackTrace();
                 throw new RuntimeException(e);
             }
+    }
+
+    /**
+     * @param infoExecutionDegree
+     * @return IExecutionDegree
+     */
+    public static IExecutionDegree copyInfoExecutionDegree2ExecutionDegree(
+            InfoExecutionDegree infoExecutionDegree) {
+
+        IExecutionDegree executionDegree = new ExecutionDegree();
+        IDegreeCurricularPlan degreeCurricularPlan = Cloner
+                .copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoExecutionDegree
+                        .getInfoDegreeCurricularPlan());
+
+        IExecutionYear executionYear = Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionDegree
+                .getInfoExecutionYear());
+
+        copyObjectProperties(executionDegree, infoExecutionDegree);
+
+        executionDegree.setExecutionYear(executionYear);
+        executionDegree.setDegreeCurricularPlan(degreeCurricularPlan);
+
+        ICampus campus = Cloner.copyInfoCampus2ICampus(infoExecutionDegree.getInfoCampus());
+        executionDegree.setCampus(campus);
+
+        return executionDegree;
+
     }
 
     /**
@@ -502,6 +616,19 @@ public abstract class Cloner {
     }
 
     /**
+     * Method copyInfoDegree2IDegree.
+     * 
+     * @param infoDegree
+     * @return IDegree
+     */
+    public static IDegree copyInfoDegree2IDegree(InfoDegree infoDegree) {
+        IDegree degree = new Degree();
+        copyObjectProperties(degree, infoDegree);
+        return degree;
+
+    }
+
+    /**
      * Method copyInfoExecutionPeriod2IExecutionPeriod.
      * 
      * @param infoExecutionPeriod
@@ -524,6 +651,47 @@ public abstract class Cloner {
         executionPeriod.setExecutionYear(executionYear);
 
         return executionPeriod;
+    }
+
+    /**
+     * Method copyInfoClass2Class.
+     * 
+     * @param infoTurma
+     * @return ISchoolClass
+     */
+    public static ISchoolClass copyInfoClass2Class(InfoClass infoClass) {
+        ISchoolClass domainClass = new SchoolClass();
+
+        IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoClass
+                .getInfoExecutionPeriod());
+        IExecutionDegree executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoClass
+                .getInfoExecutionDegree());
+
+        copyObjectProperties(domainClass, infoClass);
+
+        domainClass.setExecutionDegree(executionDegree);
+        domainClass.setExecutionPeriod(executionPeriod);
+        return domainClass;
+    }
+
+    /**
+     * Method copyInfoStudent2IStudent.
+     * 
+     * @param infoStudent
+     * @return IStudent
+     */
+    public static IStudent copyInfoStudent2IStudent(InfoStudent infoStudent) {
+        IStudent student = new Student();
+        IPerson person = Cloner.copyInfoPerson2IPerson(infoStudent.getInfoPerson());
+        IStudentKind studentGroupInfo = Cloner.copyInfoStudentKind2IStudentKind(infoStudent
+                .getInfoStudentKind());
+        copyObjectProperties(student, infoStudent);
+        student.setPerson(person);
+        student.setStudentKind(studentGroupInfo);
+
+        // by gedl at august the 5th, 2003
+        student.setIdInternal(infoStudent.getIdInternal());
+        return student;
     }
 
     /**
@@ -615,6 +783,16 @@ public abstract class Cloner {
         InfoAdvisory infoAdvisory = new InfoAdvisory();
         copyObjectProperties(infoAdvisory, advisory);
         return infoAdvisory;
+    }
+
+    /**
+     * @param advisory
+     * @return
+     */
+    public static IAdvisory copyInfoAdvisory2IAdvisory(InfoAdvisory infoAdvisory) {
+        IAdvisory advisory = new Advisory();
+        copyObjectProperties(advisory, infoAdvisory);
+        return advisory;
     }
 
     public static InfoCandidateSituation copyICandidateSituation2InfoCandidateSituation(
@@ -807,6 +985,12 @@ public abstract class Cloner {
         InfoUniversity infoUniversity = new InfoUniversity();
         copyObjectProperties(infoUniversity, university);
         return infoUniversity;
+    }
+
+    public static IUniversity copyInfoUniversity2IUniversity(InfoUniversity infoUniversity) {
+        IUniversity university = new University();
+        copyObjectProperties(university, infoUniversity);
+        return university;
     }
 
     /**
@@ -1015,6 +1199,24 @@ public abstract class Cloner {
 
     /**
      * @author dcs-rjao
+     * @param InfoDegreeCurricularPlan
+     * @return IDegreeCurricularPlan
+     */
+    public static IDegreeCurricularPlan copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(
+            InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
+        IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
+
+        IDegree degree = Cloner.copyInfoDegree2IDegree(infoDegreeCurricularPlan.getInfoDegree());
+
+        copyObjectProperties(degreeCurricularPlan, infoDegreeCurricularPlan);
+
+        degreeCurricularPlan.setDegree(degree);
+
+        return degreeCurricularPlan;
+    }
+
+    /**
+     * @author dcs-rjao
      * @param IDegreeCurricularPlan
      * @return InfoDegreeCurricularPlan
      */
@@ -1030,6 +1232,24 @@ public abstract class Cloner {
         infoDegreeCurricularPlan.setInfoDegree(infoDegree);
 
         return infoDegreeCurricularPlan;
+    }
+
+    /**
+     * @author dcs-rjao
+     * @param InfoBranch
+     * @return IBranch
+     */
+    public static IBranch copyInfoBranch2IBranch(InfoBranch infoBranch) {
+
+        IBranch branch = new Branch();
+        if (infoBranch != null) {
+            IDegreeCurricularPlan degreeCurricularPlan = Cloner
+                    .copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoBranch
+                            .getInfoDegreeCurricularPlan());
+            copyObjectProperties(branch, infoBranch);
+            branch.setDegreeCurricularPlan(degreeCurricularPlan);
+        }
+        return branch;
     }
 
     public static InfoCurricularCourse copyCurricularCourse2InfoCurricularCourseWithCurricularCourseScopes(
@@ -1249,6 +1469,17 @@ public abstract class Cloner {
 
     /**
      * @author dcs-rjao
+     * @param IStudentKind
+     * @return InfoStudentKind
+     */
+    public static IStudentKind copyInfoStudentKind2IStudentKind(InfoStudentKind infoStudentGroupInfo) {
+        IStudentKind studentKind = new StudentKind();
+        copyObjectProperties(studentKind, infoStudentGroupInfo);
+        return studentKind;
+    }
+
+    /**
+     * @author dcs-rjao
      * @param IEnrolmentEvaluation
      * @return InfoEnrolmentEvaluation
      */
@@ -1309,6 +1540,51 @@ public abstract class Cloner {
         infoProfessorShip.setInfoExecutionCourse(infoExecutionCourse);
 
         return infoProfessorShip;
+    }
+
+    public static IShiftProfessorship copyInfoShiftProfessorship2IShiftProfessorship(
+            InfoShiftProfessorship infoTeacherShiftPercentage) {
+        InfoShift infoShift = infoTeacherShiftPercentage.getInfoShift();
+        InfoProfessorship infoProfessorShip = infoTeacherShiftPercentage.getInfoProfessorship();
+
+        IShiftProfessorship teacherShiftPercentage = new ShiftProfessorship();
+        IProfessorship professorship = Cloner.copyInfoProfessorship2IProfessorship(infoProfessorShip);
+        IShift shift = Cloner.copyInfoShift2IShift(infoShift);
+
+        copyObjectProperties(teacherShiftPercentage, infoTeacherShiftPercentage);
+
+        teacherShiftPercentage.setPercentage(infoTeacherShiftPercentage.getPercentage());
+        teacherShiftPercentage.setShift(shift);
+        teacherShiftPercentage.setProfessorship(professorship);
+
+        return teacherShiftPercentage;
+    }
+
+    public static IProfessorship copyInfoProfessorship2IProfessorship(InfoProfessorship infoProfessorShip) {
+        InfoExecutionCourse infoExecutionCourse = infoProfessorShip.getInfoExecutionCourse();
+        InfoTeacher infoTeacher = infoProfessorShip.getInfoTeacher();
+
+        IProfessorship professorship = new Professorship();
+
+        copyObjectProperties(professorship, infoProfessorShip);
+        IExecutionCourse executionCourse = null;
+        if (infoExecutionCourse != null) {
+            executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+        } else {
+            copyObjectProperties(executionCourse, infoExecutionCourse);
+        }
+        professorship.setExecutionCourse(executionCourse);
+
+        ITeacher teacher = null;
+
+        if (infoTeacher != null) {
+            teacher = Cloner.copyInfoTeacher2Teacher(infoTeacher);
+        } else {
+            copyObjectProperties(teacher, infoTeacher);
+        }
+        professorship.setTeacher(teacher);
+
+        return professorship;
     }
 
     /**
@@ -1585,12 +1861,10 @@ public abstract class Cloner {
         InfoEmployee infoEmployee = Cloner.copyIEmployee2InfoEmployee(masterDegreeProofVersion
                 .getResponsibleEmployee());
         List infoJuries = Cloner.copyListITeacher2ListInfoTeacher(masterDegreeProofVersion.getJuries());
+        List infoExternalPersonJuries = Cloner
+                .copyListIExternalPerson2ListInfoExternalPerson(masterDegreeProofVersion
+                        .getExternalJuries());
 
-        List infoExternalPersonJuries = new ArrayList<InfoExternalPerson>();
-        for (IExternalPerson externalPerson : masterDegreeProofVersion.getExternalJuries()) {
-            infoExternalPersonJuries.add(InfoExternalPerson.newInfoFromDomain(externalPerson));
-        }
-        
         infoMasterDegreeProofVersion.setInfoMasterDegreeThesis(infoMasterDegreeThesis);
         infoMasterDegreeProofVersion.setInfoResponsibleEmployee(infoEmployee);
         infoMasterDegreeProofVersion.setInfoJuries(infoJuries);
@@ -1649,6 +1923,34 @@ public abstract class Cloner {
         externalPerson.setWorkLocation(workLocation);
 
         return externalPerson;
+    }
+
+    public static InfoExternalPerson copyIExternalPerson2InfoExternalPerson(
+            IExternalPerson externalPerson) {
+        InfoExternalPerson infoExternalPerson = new InfoExternalPerson();
+        copyObjectProperties(infoExternalPerson, externalPerson);
+        InfoPerson infoPerson = Cloner.copyIPerson2InfoPerson(externalPerson.getPerson());
+        infoExternalPerson.setInfoPerson(infoPerson);
+        InfoWorkLocation infoWorkLocation = Cloner.copyIWorkLocation2InfoWorkLocation(externalPerson
+                .getWorkLocation());
+        infoExternalPerson.setInfoWorkLocation(infoWorkLocation);
+
+        return infoExternalPerson;
+    }
+
+    public static List copyListIExternalPerson2ListInfoExternalPerson(List listIExternalPerson) {
+        List listInfoExternalPersons = new ArrayList();
+
+        Iterator iterListIExternalPerson = listIExternalPerson.iterator();
+
+        while (iterListIExternalPerson.hasNext()) {
+            IExternalPerson externalPerson = (IExternalPerson) iterListIExternalPerson.next();
+            InfoExternalPerson infoExternalPerson = Cloner
+                    .copyIExternalPerson2InfoExternalPerson(externalPerson);
+            listInfoExternalPersons.add(infoExternalPerson);
+        }
+
+        return listInfoExternalPersons;
     }
 
     public static List copyListInfoExternalPerson2ListIExternalPerson(List listInfoExternalPerson) {
@@ -1769,6 +2071,21 @@ public abstract class Cloner {
     }
 
     /**
+     * @param infoWeeklyOcupation
+     * @return
+     */
+    public static IWeeklyOcupation copyInfoWeeklyOcupation2IWeeklyOcupation(
+            InfoWeeklyOcupation infoWeeklyOcupation) {
+        IWeeklyOcupation weeklyOcupation = new WeeklyOcupation();
+        ITeacher teacher = copyInfoTeacher2Teacher(infoWeeklyOcupation.getInfoTeacher());
+        copyObjectProperties(weeklyOcupation, infoWeeklyOcupation);
+
+        weeklyOcupation.setTeacher(teacher);
+
+        return weeklyOcupation;
+    }
+
+    /**
      * @param externalActivity
      * @return
      */
@@ -1781,6 +2098,40 @@ public abstract class Cloner {
         infoExternalActivity.setInfoTeacher(infoTeacher);
 
         return infoExternalActivity;
+    }
+
+    /**
+     * @param infoServiceProviderRegime
+     * @return
+     */
+    public static IServiceProviderRegime copyInfoServiceProviderRegime2IServiceProviderRegime(
+            InfoServiceProviderRegime infoServiceProviderRegime) {
+        IServiceProviderRegime serviceProviderRegime = new ServiceProviderRegime();
+        ITeacher teacher = copyInfoTeacher2Teacher(infoServiceProviderRegime.getInfoTeacher());
+        copyObjectProperties(serviceProviderRegime, infoServiceProviderRegime);
+
+        serviceProviderRegime.setTeacher(teacher);
+
+        return serviceProviderRegime;
+    }
+
+    public static IOrientation copyInfoOrientation2IOrientation(InfoOrientation infoOrientation) {
+        IOrientation orientation = new Orientation();
+        ITeacher teacher = Cloner.copyInfoTeacher2Teacher(infoOrientation.getInfoTeacher());
+        copyObjectProperties(orientation, infoOrientation);
+
+        orientation.setTeacher(teacher);
+        return orientation;
+    }
+
+    public static IPublicationsNumber copyInfoPublicationsNumber2IPublicationsNumber(
+            InfoPublicationsNumber infoPublicationsNumber) {
+        IPublicationsNumber publicationsNumber = new PublicationsNumber();
+        ITeacher teacher = Cloner.copyInfoTeacher2Teacher(infoPublicationsNumber.getInfoTeacher());
+        copyObjectProperties(publicationsNumber, infoPublicationsNumber);
+
+        publicationsNumber.setTeacher(teacher);
+        return publicationsNumber;
     }
 
     public static InfoOldPublication copyIOldPublication2InfoOldPublication(
@@ -1871,33 +2222,6 @@ public abstract class Cloner {
         copyObjectProperties(infoWorkLocation, workLocation);
 
         return infoWorkLocation;
-    }
-
-    public static InfoResponsibleFor copyIResponsibleFor2InfoResponsibleFor(
-            IResponsibleFor responsibleFor) {
-        IExecutionCourse executionCourse = responsibleFor.getExecutionCourse();
-        ITeacher teacher = responsibleFor.getTeacher();
-
-        InfoResponsibleFor infoResponsibleFor = new InfoResponsibleFor();
-        copyObjectProperties(infoResponsibleFor, responsibleFor);
-
-        InfoExecutionCourse infoExecutionCourse = null;
-        if (executionCourse != null) {
-            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
-        } else {
-            copyObjectProperties(infoExecutionCourse, executionCourse);
-        }
-        infoResponsibleFor.setInfoExecutionCourse(infoExecutionCourse);
-
-        InfoTeacher infoTeacher = null;
-        if (teacher != null) {
-            infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
-        } else {
-            copyObjectProperties(infoTeacher, teacher);
-        }
-        infoResponsibleFor.setInfoTeacher(infoTeacher);
-
-        return infoResponsibleFor;
     }
 
     public static InfoScientificArea copyIScientificArea2InfoScientificArea(

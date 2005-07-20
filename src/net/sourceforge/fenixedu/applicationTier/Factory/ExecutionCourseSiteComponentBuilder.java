@@ -65,7 +65,6 @@ import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IItem;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.ISchoolClassShift;
 import net.sourceforge.fenixedu.domain.ISection;
 import net.sourceforge.fenixedu.domain.IShift;
@@ -82,7 +81,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReferenc
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
@@ -827,16 +825,16 @@ public class ExecutionCourseSiteComponentBuilder {
             IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
         List responsibleDomainTeachersList = null;
 
-        IPersistentResponsibleFor persistentResponsibleFor = persistentSupport
-                .getIPersistentResponsibleFor();
-        responsibleDomainTeachersList = persistentResponsibleFor.readByExecutionCourse(executionCourse.getIdInternal());
-
+        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
+        
+        responsibleDomainTeachersList = executionCourse.responsibleFors();
+        
         List responsibleInfoTeachersList = new ArrayList();
         if (responsibleDomainTeachersList != null) {
             Iterator iter = responsibleDomainTeachersList.iterator();
             while (iter.hasNext()) {
-                IResponsibleFor responsibleFor = (IResponsibleFor) iter.next();
-                ITeacher teacher = responsibleFor.getTeacher();
+                IProfessorship professorship = (IProfessorship) iter.next();
+                ITeacher teacher = professorship.getTeacher();
                 InfoTeacher infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
                 responsibleInfoTeachersList.add(infoTeacher);
             }

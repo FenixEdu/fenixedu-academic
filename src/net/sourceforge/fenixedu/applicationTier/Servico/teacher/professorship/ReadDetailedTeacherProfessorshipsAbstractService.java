@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.Detaile
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -33,10 +32,11 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author jpvl
  */
 public class ReadDetailedTeacherProfessorshipsAbstractService implements IService {
+    
     private final class Professorships2DetailProfessorship implements Transformer {
-        private final List<IResponsibleFor> responsiblesFor;
+        private final List<IProfessorship> responsiblesFor;
 
-        private Professorships2DetailProfessorship(List<IResponsibleFor> responsiblesFor) {
+        private Professorships2DetailProfessorship(List<IProfessorship> responsiblesFor) {
             super();
             this.responsiblesFor = responsiblesFor;
         }
@@ -51,17 +51,8 @@ public class ReadDetailedTeacherProfessorshipsAbstractService implements IServic
             IExecutionCourse executionCourse = professorship.getExecutionCourse();
             List executionCourseCurricularCoursesList = getInfoCurricularCourses(detailedProfessorship,
                     executionCourse);
-
-            boolean responsible = false;
-            for (IResponsibleFor responsibleFor : responsiblesFor) {
-                if (responsibleFor.getTeacher().equals(professorship.getTeacher())
-                        && responsibleFor.getExecutionCourse()
-                                .equals(professorship.getExecutionCourse())) {
-                    responsible = true;
-                    break;
-                }
-            }
-            detailedProfessorship.setResponsibleFor(Boolean.valueOf(responsible));
+           
+            detailedProfessorship.setResponsibleFor(professorship.getResponsibleFor());
 
             detailedProfessorship.setInfoProfessorship(infoProfessorShip);
             detailedProfessorship

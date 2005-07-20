@@ -13,12 +13,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -32,7 +30,6 @@ public class ReadProfessorships extends ReadDetailedTeacherProfessorshipsAbstrac
         ISuportePersistente persistentSuport;
         persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IPersistentResponsibleFor responsibleForDAO = persistentSuport.getIPersistentResponsibleFor();
         IPersistentProfessorship persistentProfessorship = persistentSuport
                 .getIPersistentProfessorship();
         IPersistentTeacher teacherDAO = persistentSuport.getIPersistentTeacher();
@@ -61,14 +58,14 @@ public class ReadProfessorships extends ReadDetailedTeacherProfessorshipsAbstrac
             }
         }
 
-        final List responsibleFors = responsibleForDAO.readByTeacher(teacher.getIdInternal());
+        final List responsibleFors = teacher.responsibleFors();
         List responsibleForsList = new ArrayList();
         responsibleForsList.addAll(responsibleFors);
 
         if (executionPeriod != null) {
             Iterator iterResponsibleFors = responsibleFors.iterator();
             while (iterResponsibleFors.hasNext()) {
-                IResponsibleFor responsibleFor = (IResponsibleFor) iterResponsibleFors.next();
+                IProfessorship responsibleFor = (IProfessorship) iterResponsibleFors.next();
                 if (!responsibleFor.getExecutionCourse().getExecutionPeriod().equals(executionPeriod)) {
                     responsibleForsList.remove(responsibleFor);
                 }

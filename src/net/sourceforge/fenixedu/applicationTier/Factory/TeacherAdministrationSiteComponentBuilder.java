@@ -100,7 +100,6 @@ import net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse;
 import net.sourceforge.fenixedu.domain.IItem;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IResponsibleFor;
 import net.sourceforge.fenixedu.domain.ISchoolClassShift;
 import net.sourceforge.fenixedu.domain.ISection;
 import net.sourceforge.fenixedu.domain.IShift;
@@ -124,7 +123,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExamStudentRoom;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentResponsibleFor;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -633,16 +631,14 @@ public class TeacherAdministrationSiteComponentBuilder {
 
                 // see if teacher is responsible for that execution course
                 IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-                IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-                List responsibleTeachers = persistentResponsibleFor
-                        .readByExecutionCourse(executionCourse.getIdInternal());
+                List responsibleTeachers = executionCourse.responsibleFors();
 
                 List infoResponsibleTeachers = new ArrayList();
                 boolean isResponsible = false;
                 if (responsibleTeachers != null) {
                     Iterator iter2 = responsibleTeachers.iterator();
                     while (iter2.hasNext()) {
-                        IResponsibleFor responsibleFor = (IResponsibleFor) iter2.next();
+                        IProfessorship responsibleFor = (IProfessorship) iter2.next();
                         ITeacher teacher = responsibleFor.getTeacher();
 
                         InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
@@ -650,7 +646,7 @@ public class TeacherAdministrationSiteComponentBuilder {
                     }
 
                     ITeacher teacher = persistentTeacher.readTeacherByUsername(username);
-                    IResponsibleFor responsibleFor = persistentResponsibleFor
+                    IProfessorship responsibleFor = persistentProfessorship
                             .readByTeacherAndExecutionCourse(teacher.getIdInternal(), executionCourse
                                     .getIdInternal());
                     if (teacher != null) {
