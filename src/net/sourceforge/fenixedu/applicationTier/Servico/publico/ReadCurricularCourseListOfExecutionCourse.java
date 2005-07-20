@@ -3,9 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IServico;
-import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -17,78 +14,39 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author tfc130
  */
-public class ReadCurricularCourseListOfExecutionCourse implements IServico {
+public class ReadCurricularCourseListOfExecutionCourse implements IService {
 
-    private static ReadCurricularCourseListOfExecutionCourse _servico = new ReadCurricularCourseListOfExecutionCourse();
+    public Object run(InfoExecutionCourse infoExecCourse) throws ExcepcaoPersistencia {
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-    /**
-     * The actor of this class.
-     */
+        IExecutionCourse executionCourse = executionCourseDAO
+                .readByExecutionCourseInitialsAndExecutionPeriodId(infoExecCourse.getSigla(),
+                        infoExecCourse.getInfoExecutionPeriod().getIdInternal());
 
-    private ReadCurricularCourseListOfExecutionCourse() {
+        List<InfoCurricularCourse> infoCurricularCourseList = new ArrayList<InfoCurricularCourse>();
+        if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null) {
 
-    }
+            for (ICurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+                InfoCurricularCourse infoCurricularCourse = Cloner
+                        .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
 
-    /**
-     * Returns Service Name
-     */
-    public String getNome() {
-        return "ReadCurricularCourseListOfExecutionCourse";
-    }
-
-    /**
-     * Returns the _servico.
-     * 
-     * @return ReadExecutionCourse
-     */
-    public static ReadCurricularCourseListOfExecutionCourse getService() {
-        return _servico;
-    }
-
-    public Object run(InfoExecutionCourse infoExecCourse) throws ExcepcaoInexistente,
-            FenixServiceException {
-
-        List infoCurricularCourseList = new ArrayList();
-        List infoCurricularCourseScopeList = null;
-
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
-           
-//            IExecutionCourse executionCourse = Cloner
-//                    .copyInfoExecutionCourse2ExecutionCourse(infoExecCourse);
-//            
-            IExecutionCourse executionCourse = executionCourseDAO.readByExecutionCourseInitialsAndExecutionPeriodId(
-                    infoExecCourse.getSigla(), infoExecCourse.getInfoExecutionPeriod().getIdInternal());
-            
-            if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null)
-                for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {
-                    ICurricularCourse curricularCourse = executionCourse
-                            .getAssociatedCurricularCourses().get(i);
-                    InfoCurricularCourse infoCurricularCourse = Cloner
-                            .copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-                    infoCurricularCourseScopeList = new ArrayList();
-                    for (int j = 0; j < curricularCourse.getScopes().size(); j++) {
-                        ICurricularCourseScope curricularCourseScope = curricularCourse
-                                .getScopes().get(j);
-                        InfoCurricularCourseScope infoCurricularCourseScope = Cloner
-                                .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
-                        infoCurricularCourseScopeList.add(infoCurricularCourseScope);
-                    }
-
-                    infoCurricularCourse.setInfoScopes(infoCurricularCourseScopeList);
-                    infoCurricularCourseList.add(infoCurricularCourse);
-
+                // curricular course scope list
+                List<InfoCurricularCourseScope> infoCurricularCourseScopeList = new ArrayList<InfoCurricularCourseScope>();
+                for (ICurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
+                    InfoCurricularCourseScope infoCurricularCourseScope = Cloner
+                            .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+                    infoCurricularCourseScopeList.add(infoCurricularCourseScope);
                 }
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
-            FenixServiceException newEx = new FenixServiceException("");
-            newEx.fillInStackTrace();
-            throw newEx;
+                infoCurricularCourse.setInfoScopes(infoCurricularCourseScopeList);
+
+                infoCurricularCourseList.add(infoCurricularCourse);
+            }
         }
 
         return infoCurricularCourseList;
