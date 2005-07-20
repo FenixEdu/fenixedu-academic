@@ -49,15 +49,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>AdicionarTurno</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.AdicionarTurno</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TimeTableManagerAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ApagarSala</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.ApagarSala</implementationClass>
 		<description />
