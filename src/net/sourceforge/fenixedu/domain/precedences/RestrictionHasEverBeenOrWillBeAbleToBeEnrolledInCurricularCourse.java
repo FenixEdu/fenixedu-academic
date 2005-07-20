@@ -14,9 +14,18 @@ import org.apache.commons.collections.Transformer;
  */
 
 public class RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse extends RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse_Base {
-    public RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse() {
+
+	public RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse() {
         super();
     }
+	
+	public RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse(Integer number, IPrecedence precedence, ICurricularCourse precedentCurricularCourse) {
+		super();
+		
+		setPrecedence(precedence);
+        setPrecedentCurricularCourse(precedentCurricularCourse);
+	}
+	
 
     public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
         ICurricularCourse curricularCourse = this.getPrecedentCurricularCourse();

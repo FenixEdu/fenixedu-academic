@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesSummary;
@@ -15,6 +16,16 @@ import net.sourceforge.fenixedu.domain.student.IDelegate;
 
 public class DegreeTest extends DomainTestBase {
 
+	private IDegree degreeToCreate;
+	private String newName;
+	private String newNameEn;
+	private String newSigla;
+	private DegreeType newDegreeType;
+	private String newConcreteClassForDegreeCurricularPlans;
+	
+	private IDegree degreeToEditWithDegreeInfo;
+	private IDegree degreeToEditWithoutDegreeInfo;
+	
 	private IDegree degreeToDelete;
 	private IDegree degreeNotToDelete;
 	private List<IDelegate> delegatesToDelete;
@@ -24,6 +35,25 @@ public class DegreeTest extends DomainTestBase {
 	
 	protected void setUp() throws Exception {
 		super.setUp();
+		
+		newName = "name";
+		newNameEn = "nameEn";
+		newSigla = "sigla";
+		newDegreeType = DegreeType.DEGREE;
+		newConcreteClassForDegreeCurricularPlans = DegreeCurricularPlan.class.getName();
+		
+		degreeToCreate = new Degree(newName, newNameEn, newSigla, newDegreeType, newConcreteClassForDegreeCurricularPlans);
+		degreeToCreate.setIdInternal(3);
+		
+		
+		
+		degreeToEditWithDegreeInfo = new Degree("x", "x", "x", null, null);
+		degreeToEditWithDegreeInfo.setIdInternal(4);
+		
+		degreeToEditWithoutDegreeInfo = new Degree();
+		degreeToEditWithoutDegreeInfo.setIdInternal(5);
+		
+		
 		
 		delegatesToDelete = new ArrayList();
 		oldInquiriesCoursesResToDelete = new ArrayList();
@@ -107,6 +137,36 @@ public class DegreeTest extends DomainTestBase {
 	protected void tearDown() throws Exception {
 		super.tearDown();
 	}
+	
+	
+	public void testCreate() {
+		assertTrue(degreeToCreate.getNome().equals(newName));
+		assertTrue(degreeToCreate.getNameEn().equals(newNameEn));
+		assertTrue(degreeToCreate.getSigla().equals(newSigla));
+		assertTrue(degreeToCreate.getTipoCurso().equals(newDegreeType));
+		assertTrue(degreeToCreate.getConcreteClassForDegreeCurricularPlans().equals(newConcreteClassForDegreeCurricularPlans));
+		assertTrue(degreeToCreate.hasAnyDegreeInfos());
+	}
+	
+	public void testEdit() {
+		degreeToEditWithDegreeInfo.edit(newName, newNameEn, newSigla, newDegreeType);
+		
+		assertTrue(degreeToEditWithDegreeInfo.getNome().equals(newName));
+		assertTrue(degreeToEditWithDegreeInfo.getNameEn().equals(newNameEn));
+		assertTrue(degreeToEditWithDegreeInfo.getSigla().equals(newSigla));
+		assertTrue(degreeToEditWithDegreeInfo.getTipoCurso().equals(newDegreeType));
+		assertTrue(degreeToEditWithDegreeInfo.hasAnyDegreeInfos());
+		
+		
+		degreeToEditWithoutDegreeInfo.edit(newName, newNameEn, newSigla, newDegreeType);
+		
+		assertTrue(degreeToEditWithoutDegreeInfo.getNome().equals(newName));
+		assertTrue(degreeToEditWithoutDegreeInfo.getNameEn().equals(newNameEn));
+		assertTrue(degreeToEditWithoutDegreeInfo.getSigla().equals(newSigla));
+		assertTrue(degreeToEditWithoutDegreeInfo.getTipoCurso().equals(newDegreeType));
+		assertTrue(degreeToEditWithoutDegreeInfo.hasAnyDegreeInfos());
+	}
+	
 	
 	public void testDelete() {
 		try {

@@ -23,39 +23,23 @@ public class EditDegreeCurricularPlan implements IService {
     public void run(InfoDegreeCurricularPlan newInfoDegreeCP)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        final ISuportePersistente persistentSuport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-
-        final IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport
-                .getIPersistentDegreeCurricularPlan();
+        final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport.getIPersistentDegreeCurricularPlan();
 
         final IDegreeCurricularPlan degreeCP = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
-                .readByOID(DegreeCurricularPlan.class, newInfoDegreeCP
-                        .getIdInternal());
+                .readByOID(DegreeCurricularPlan.class, newInfoDegreeCP.getIdInternal());
         if (degreeCP == null) {
-            throw new NonExistingServiceException(
-                    "message.nonExistingDegreeCurricularPlan", null);
+            throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
         }
+		
         final IDegree degree = degreeCP.getDegree();
         if (degree == null) {
-            throw new NonExistingServiceException("message.nonExistingDegree",
-                    null);
+            throw new NonExistingServiceException("message.nonExistingDegree", null);
         }
 
-        final String newName = newInfoDegreeCP.getName();
-
-        persistentDegreeCurricularPlan.simpleLockWrite(degreeCP);
-        degreeCP.setName(newName);
-        degreeCP.setState(newInfoDegreeCP.getState());
-        degreeCP.setInitialDate(newInfoDegreeCP.getInitialDate());
-        degreeCP.setEndDate(newInfoDegreeCP.getEndDate());
-        degreeCP.setDegreeDuration(newInfoDegreeCP.getDegreeDuration());
-        degreeCP.setMinimalYearForOptionalCourses(newInfoDegreeCP
-                .getMinimalYearForOptionalCourses());
-        degreeCP.setNeededCredits(newInfoDegreeCP.getNeededCredits());
-        degreeCP.setMarkType(newInfoDegreeCP.getMarkType());
-        degreeCP.setNumerusClausus(newInfoDegreeCP.getNumerusClausus());
-        degreeCP.setAnotation(newInfoDegreeCP.getAnotation());
-
+		degreeCP.edit(newInfoDegreeCP.getName(), newInfoDegreeCP.getState(), newInfoDegreeCP.getInitialDate(),
+				newInfoDegreeCP.getEndDate(), newInfoDegreeCP.getDegreeDuration(), 
+				newInfoDegreeCP.getMinimalYearForOptionalCourses(), newInfoDegreeCP.getNeededCredits(), 
+				newInfoDegreeCP.getMarkType(), newInfoDegreeCP.getNumerusClausus(), newInfoDegreeCP.getAnotation());
     }
 }

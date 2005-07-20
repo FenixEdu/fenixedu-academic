@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 
 /**
  * @author dcs-rjao
@@ -12,6 +13,27 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class CurricularCourseScope extends CurricularCourseScope_Base {
 
+	public CurricularCourseScope() {}
+	
+	public CurricularCourseScope(IBranch branch, ICurricularCourse curricularCourse, ICurricularSemester curricularSemester,
+								 Calendar beginDate, Calendar endDate, String Annotation) {
+		
+        // check that there isn't another scope active with the same curricular course, branch and semester
+		
+        if (curricularCourse.hasActiveScopeInGivenSemesterForGivenBranch(curricularSemester.getSemester(), branch)) {
+            throw new RuntimeException();
+        }
+		
+		setBranch(branch);
+		setCurricularCourse(curricularCourse);
+		setCurricularSemester(curricularSemester);
+		
+		setBeginDate(beginDate);
+		setEndDate(endDate);
+		setAnotation(Annotation);
+	}
+	
+	
     /**
      * @return Returns the beginDate.
      */

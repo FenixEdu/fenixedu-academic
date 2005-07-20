@@ -1,16 +1,65 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 
 
 public class CurricularCourseScopeTest extends DomainTestBase {
 
+	private ICurricularCourseScope newCurricularCourseScope;
+	private ICurricularSemester newCurricularSemester;
+	private ICurricularCourse newCurricularCourse;
+	private IBranch newBranch;
+	
+	private ICurricularCourseScope unableToCreateCurricularCourseScope;
+	private ICurricularSemester commonCurricularSemester;
+	private ICurricularCourse commonCurricularCourse;
+	private IBranch commonBranch;
+	
+	private Calendar newBeginDate;
+	private Calendar newEndDate;
+	private String newAnnotation;
+	
 	private ICurricularCourseScope curricularCourseScopeToDelete;
 	private ICurricularCourseScope curricularCourseScopeNotToDelete;
 	
 	protected void setUp() throws Exception {
         super.setUp();
+		
+		setUpCreate();
+		
+		setUpDelete();
+    }
+	
+	
+	private void setUpCreate() {
+		
+		newCurricularSemester = new CurricularSemester();
+		newCurricularCourse = new CurricularCourse();
+		newBranch = new Branch();
+		
+		newBeginDate = new GregorianCalendar();
+		newEndDate = new GregorianCalendar();
+		newAnnotation = "annotation";
+		
+
+		commonCurricularSemester = new CurricularSemester();
+		commonCurricularCourse = new CurricularCourse();
+		commonBranch = new Branch();
+		
+		ICurricularCourseScope otherCurricularCourseScope = new CurricularCourseScope();
+		otherCurricularCourseScope.setCurricularCourse(commonCurricularCourse);
+		otherCurricularCourseScope.setCurricularSemester(commonCurricularSemester);
+		otherCurricularCourseScope.setBranch(commonBranch);
+		
+
+	}
+	
+	
+	private void setUpDelete() {
 		
 		curricularCourseScopeToDelete = new CurricularCourseScope();
 		curricularCourseScopeToDelete.setIdInternal(1);
@@ -18,15 +67,11 @@ public class CurricularCourseScopeTest extends DomainTestBase {
 		curricularCourseScopeNotToDelete.setIdInternal(2);
 		
 		ICurricularCourse cc1 = new CurricularCourse();
-		cc1.setIdInternal(1);
 		
 		ICurricularSemester cs1 = new CurricularSemester();
-		cs1.setIdInternal(1);
 		
 		IWrittenEvaluation we1 = new WrittenEvaluation();
-		we1.setIdInternal(1);
 		IWrittenEvaluation we2 = new WrittenEvaluation();
-		we2.setIdInternal(2);
 		
 		curricularCourseScopeToDelete.setCurricularCourse(cc1);
 		curricularCourseScopeToDelete.setCurricularSemester(cs1);
@@ -35,11 +80,47 @@ public class CurricularCourseScopeTest extends DomainTestBase {
 		curricularCourseScopeNotToDelete.setCurricularSemester(cs1);
 		curricularCourseScopeNotToDelete.addAssociatedWrittenEvaluations(we1);
 		curricularCourseScopeNotToDelete.addAssociatedWrittenEvaluations(we2);
-    }
+	}
 
+	
+	
+	
+	
     protected void tearDown() throws Exception {
         super.tearDown();
     }
+	
+	
+	
+	
+	
+	public void testCreate() {
+		
+		try {
+			newCurricularCourseScope = new CurricularCourseScope(newBranch, newCurricularCourse, newCurricularSemester,
+																newBeginDate, newEndDate, newAnnotation);
+		} catch (RuntimeException e) {
+			fail("Should have been deleted.");
+		}
+		
+		
+		assertTrue(newCurricularCourseScope.hasCurricularSemester());
+		assertTrue(newCurricularCourseScope.hasCurricularCourse());
+		assertTrue(newCurricularCourseScope.hasBranch());
+		assertTrue(newCurricularCourseScope.getBeginDate().equals(newBeginDate));
+		assertTrue(newCurricularCourseScope.getEndDate().equals(newEndDate));
+		assertTrue(newCurricularCourseScope.getAnotation().equals(newAnnotation));
+		
+		
+		try {
+			unableToCreateCurricularCourseScope = new CurricularCourseScope(commonBranch, commonCurricularCourse, 
+																			commonCurricularSemester, null, null, null);
+			fail("Should not have been created.");
+		} catch (RuntimeException e) {
+			
+		}
+		
+	}
 	
 	public void testDelete() {
 		try {

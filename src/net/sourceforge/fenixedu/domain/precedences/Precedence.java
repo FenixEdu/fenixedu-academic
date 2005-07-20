@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.domain.precedences;
 
+import java.lang.reflect.Constructor;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 
 /**
@@ -11,6 +13,25 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
 
 public class Precedence extends Precedence_Base {
 
+	public Precedence () {}
+	
+	public Precedence(ICurricularCourse curricularCourseToAddPrecedence, String className, ICurricularCourse precedentCurricularCourse, Integer number) {
+		
+		setCurricularCourse(curricularCourseToAddPrecedence);
+		
+		Class[] parameters = {Integer.class, IPrecedence.class, ICurricularCourse.class};
+		Object[] arguments = {number, this, precedentCurricularCourse};
+				
+		Constructor constructor;
+		try {
+			constructor = Class.forName(className).getConstructor(parameters);
+			constructor.newInstance(arguments);
+		} catch (Exception e) {
+			throw new RuntimeException("error.manager.impossible.insertPrecedence");
+		} 
+
+	}
+	
     public String toString() {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("Precedence:\n");

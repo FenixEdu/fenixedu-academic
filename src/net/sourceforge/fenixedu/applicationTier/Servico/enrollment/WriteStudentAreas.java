@@ -28,14 +28,12 @@ public class WriteStudentAreas implements IService {
         try {
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentBranch branchDAO = persistentSuport.getIPersistentBranch();
-            IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSuport
-                    .getIStudentCurricularPlanPersistente();
+            IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSuport.getIStudentCurricularPlanPersistente();
 
             IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) studentCurricularPlanDAO
                     .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
 
-            IBranch specializationArea = (IBranch) branchDAO.readByOID(Branch.class,
-                    specializationAreaID);
+            IBranch specializationArea = (IBranch) branchDAO.readByOID(Branch.class, specializationAreaID);
 
             IBranch secundaryArea = null;
             if (secundaryAreaID != null) {

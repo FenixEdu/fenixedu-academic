@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -839,6 +840,84 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     // -------------------------------------------------------------
     // END: Only for enrollment purposes (PROTECTED)
     // -------------------------------------------------------------
+	
+	
+	
+
+	
+	public StudentCurricularPlan(IStudent student, IDegreeCurricularPlan degreeCurricularPlan,
+						StudentCurricularPlanState studentCurricularPlanState, Date startDate) {
+
+		this.setOjbConcreteClass(getClass().getName());
+		
+		setCurrentState(studentCurricularPlanState);
+	    setDegreeCurricularPlan(degreeCurricularPlan);
+	    setStartDate(startDate);
+	    setStudent(student);
+	    setWhen(new Date());
+		
+		if (!canSetStateToActive() && studentCurricularPlanState.equals(StudentCurricularPlanState.ACTIVE)) {
+			inactivateTheActiveStudentCurricularPlan();
+			setCurrentState(studentCurricularPlanState);
+		}
+	}
+	
+	
+
+	
+	
+	
+	public void changeState(StudentCurricularPlanState studentCurricularPlanState) throws DomainException {
+		
+		if (!canSetStateToActive() && studentCurricularPlanState.equals(StudentCurricularPlanState.ACTIVE))
+			throw new DomainException(this.getClass().getName(), "ola mundo");
+		else
+			setCurrentState(studentCurricularPlanState);
+	}
+	
+	
+	private boolean canSetStateToActive() {
+		
+		final IStudent student = getStudent();
+        final IDegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
+
+        for (IStudentCurricularPlan otherStudentCurricularPlan : student.getStudentCurricularPlans()) {
+            final IDegreeCurricularPlan associatedDegreeCurricularPlan = otherStudentCurricularPlan.getDegreeCurricularPlan();
+			
+            if (associatedDegreeCurricularPlan.getIdInternal().equals(degreeCurricularPlan.getIdInternal())
+                    && otherStudentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.ACTIVE)) {
+				
+				//there can be only one active student curricular plan for the same student and degree curricular plan
+                return false;
+            }
+        }
+		
+        return true;
+	}
+	
+	
+	private void inactivateTheActiveStudentCurricularPlan(){
+		
+		final IStudent student = getStudent();
+        final IDegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
+
+        for (IStudentCurricularPlan otherStudentCurricularPlan : student.getStudentCurricularPlans()) {
+            final IDegreeCurricularPlan associatedDegreeCurricularPlan = otherStudentCurricularPlan.getDegreeCurricularPlan();
+			
+			boolean x1 = associatedDegreeCurricularPlan.getIdInternal().equals(degreeCurricularPlan.getIdInternal());
+			boolean x2 = otherStudentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.ACTIVE);
+			
+			
+            if (associatedDegreeCurricularPlan.getIdInternal().equals(degreeCurricularPlan.getIdInternal())
+                    && otherStudentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.ACTIVE)) {
+				
+				otherStudentCurricularPlan.setCurrentState(StudentCurricularPlanState.INACTIVE);
+            }
+        }
+	}
+	
+	
+	
 	
 	
     public void delete() throws DomainException {

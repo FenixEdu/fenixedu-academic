@@ -11,6 +11,14 @@ public class RestrictionNotEnrolledInCurricularCourse extends RestrictionNotEnro
     public RestrictionNotEnrolledInCurricularCourse() {
         super();
     }
+	
+	public RestrictionNotEnrolledInCurricularCourse(Integer number, IPrecedence precedence, ICurricularCourse precedentCurricularCourse) {
+		super();
+		
+		setPrecedence(precedence);
+        setPrecedentCurricularCourse(precedentCurricularCourse);
+	}
+	
 
     public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
         ICurricularCourse curricularCourse = this.getPrecedentCurricularCourse();

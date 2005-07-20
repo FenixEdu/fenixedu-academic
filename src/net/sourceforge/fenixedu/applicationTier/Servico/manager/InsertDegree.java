@@ -3,16 +3,11 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import java.sql.Timestamp;
-import java.util.Calendar;
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeInfo;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -30,23 +25,7 @@ public class InsertDegree implements IService {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         ICursoPersistente persistentDegree = persistentSuport.getICursoPersistente();
 
-        String code = infoDegree.getSigla();
-        String name = infoDegree.getNome();
-        String nameEn = infoDegree.getNameEn();
-        DegreeType type = infoDegree.getTipoCurso();
-
-        IDegree degree = new Degree();
-        persistentDegree.simpleLockWrite(degree);
-        degree.setSigla(code);
-        degree.setNome(name);
-        degree.setNameEn(nameEn);
-        degree.setTipoCurso(type);
-        degree.setConcreteClassForDegreeCurricularPlans(DegreeCurricularPlan.class.getName());
-
-        IDegreeInfo degreeInfo = new DegreeInfo();
-        degreeInfo.setDegree(degree);
-        degreeInfo.setLastModificationDate(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-        persistentSuport.getIPersistentDegreeInfo().simpleLockWrite(degreeInfo);
-
+        IDegree degree = new Degree(infoDegree.getNome(), infoDegree.getNameEn(),
+				infoDegree.getSigla(), infoDegree.getTipoCurso(), DegreeCurricularPlan.class.getName());
     }
 }

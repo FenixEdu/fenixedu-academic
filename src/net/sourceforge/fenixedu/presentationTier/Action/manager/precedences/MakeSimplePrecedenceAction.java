@@ -90,33 +90,17 @@ public class MakeSimplePrecedenceAction extends FenixDispatchAction {
         }
         request.setAttribute("className", className);
 
-        if (className.equals(RestrictionByNumberOfDoneCurricularCourses.class.getName().substring(
-                RestrictionByNumberOfDoneCurricularCourses.class.getName().lastIndexOf(".") + 1))) {
+        if (className.equals(RestrictionByNumberOfDoneCurricularCourses.class.getName())) {
             return mapping.findForward("insertRestrictionByNumber");
-        } else if (className.equals(RestrictionPeriodToApply.class.getName().substring(
-                RestrictionPeriodToApply.class.getName().lastIndexOf(".") + 1))) {
+        } else if (className.equals(RestrictionPeriodToApply.class.getName())) {
             request.setAttribute("periodToApplyList", PeriodToApplyRestriction.getEnumList());
             return mapping.findForward("insertRestrictionByPeriodToApply");
-        } else if ((className.equals(RestrictionDoneCurricularCourse.class.getName().substring(
-                RestrictionDoneCurricularCourse.class.getName().lastIndexOf(".") + 1)))
-                || (className.equals(RestrictionNotDoneCurricularCourse.class.getName().substring(
-                        RestrictionNotDoneCurricularCourse.class.getName().lastIndexOf(".") + 1)))
-                || (className.equals(RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class
-                        .getName().substring(
-                                RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class
-                                        .getName().lastIndexOf(".") + 1)))
-                || (className
-                        .equals(RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse.class
-                                .getName()
-                                .substring(
-                                        RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse.class
-                                                .getName().lastIndexOf(".") + 1)))
-                || (className.equals(RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse.class
-                        .getName().substring(
-                                RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse.class.getName()
-                                        .lastIndexOf(".") + 1)))
-                || (className.equals(RestrictionNotEnrolledInCurricularCourse.class.getName().substring(
-                        RestrictionNotEnrolledInCurricularCourse.class.getName().lastIndexOf(".") + 1)))) {
+        } else if (className.equals(RestrictionDoneCurricularCourse.class.getName()) ||
+                   className.equals(RestrictionNotDoneCurricularCourse.class.getName()) ||
+                   className.equals(RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class.getName()) || 
+				   className.equals(RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse.class.getName()) || 
+				   className.equals(RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse.class.getName()) || 
+				   className.equals(RestrictionNotEnrolledInCurricularCourse.class.getName())) {
             return mapping.findForward("insertRestrictionByCurricularCourse");
         }
 

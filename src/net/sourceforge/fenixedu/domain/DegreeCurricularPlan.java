@@ -3,11 +3,13 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
+import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfAcumulatedEnrollmentsRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfCurricularCoursesEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PrecedencesEnrollmentRule;
@@ -17,6 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
+import net.sourceforge.fenixedu.util.MarkType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -30,6 +33,26 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public DegreeCurricularPlan() {
         setOjbConcreteClass(getClass().getName());
     }
+	
+	public DegreeCurricularPlan(IDegree degree, String name, DegreeCurricularPlanState state, Date inicialDate,
+								Date endDate, Integer degreeDuration, Integer minimalYearForOptionalCourses,
+								Double neededCredits, MarkType markType, Integer numerusClausus, String annotation) {
+		
+		setOjbConcreteClass(getClass().getName());
+		
+		setDegree(degree);
+		setName(name);
+        setState(state);
+        setInitialDate(inicialDate);
+        setEndDate(endDate);
+        setDegreeDuration(degreeDuration);
+        setMinimalYearForOptionalCourses(minimalYearForOptionalCourses);
+        setNeededCredits(neededCredits);
+        setMarkType(markType);
+        setNumerusClausus(numerusClausus);
+        setAnotation(annotation);
+        setConcreteClassForStudentCurricularPlans(degree.getConcreteClassForDegreeCurricularPlans());
+	}
 
     public String toString() {
         String result = "[" + this.getClass().getName() + ": ";
@@ -241,8 +264,27 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return groups;
     }
 
-    // -------------------------------------------------------------
-    // END: Only for enrollment purposes
-    // -------------------------------------------------------------
 
+	
+	
+	
+	
+	public void edit(String name, DegreeCurricularPlanState state, Date inicialDate, Date endDate,
+					Integer degreeDuration, Integer minimalYearForOptionalCourses, Double neededCredits,
+					MarkType markType, Integer numerusClausus, String annotation) {
+		
+        setName(name);
+        setState(state);
+        setInitialDate(inicialDate);
+        setEndDate(endDate);
+        setDegreeDuration(degreeDuration);
+        setMinimalYearForOptionalCourses(minimalYearForOptionalCourses);
+        setNeededCredits(neededCredits);
+        setMarkType(markType);
+        setNumerusClausus(numerusClausus);
+        setAnotation(annotation);
+	}
+	
+	
+	
 }

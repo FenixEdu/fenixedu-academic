@@ -5229,16 +5229,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>EditDegreeInfoByExecutionDegree</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.coordinator.EditDegreeInfoByExecutionDegree</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="CurrentDegreeCoordinatorAuthorization" />
-		</filterChains>
-	</service>
-	<service>
 		<name>ReadActiveDegreeCurricularPlanScopes</name>
 		<implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurricularPlanManagement.ReadActiveDegreeCurricularPlanScopes</implementationClass>

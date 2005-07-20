@@ -29,39 +29,21 @@ public void run(final Integer studentNumber, final DegreeType degreeType,
             final Integer degreeCurricularPlanId, final Date startDate) throws ExcepcaoPersistencia,
             FenixServiceException {
 
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-        final IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport
-                .getIPersistentDegreeCurricularPlan();
-        final IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
-                .getIStudentCurricularPlanPersistente();
-
-        final IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
-                degreeType);
+        final IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
+    
+        final IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber, degreeType);
         if (student == null) {
             throw new NonExistingServiceException("exception.student.does.not.exist");
         }
 
         final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
                 .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
+		if (degreeCurricularPlan == null) {
+			throw new NonExistingServiceException("exception.degree.curricular.plan.does.not.exist");
+		}
 
-        // TODO : student can only have one active student curricular plan at a time.
-        final List studentCurricularPlans = student.getStudentCurricularPlans();
-            for (final Iterator iterator = studentCurricularPlans.iterator(); iterator.hasNext(); ) {
-                final IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();
-                final IDegreeCurricularPlan associatedDegreeCurricularCourse = studentCurricularPlan.getDegreeCurricularPlan();
-                if (associatedDegreeCurricularCourse.getIdInternal().equals(degreeCurricularPlan.getIdInternal())
-                        && studentCurricularPlan.getCurrentState().equals(studentCurricularPlanState)) {
-                    throw new ExistingServiceException("student.curricular.plan.already.exists");
-                }
-        }
-
-        final IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
-        persistentStudentCurricularPlan.simpleLockWrite(studentCurricularPlan);
-        studentCurricularPlan.setCurrentState(studentCurricularPlanState);
-        studentCurricularPlan.setDegreeCurricularPlan(degreeCurricularPlan);
-        studentCurricularPlan.setStartDate(startDate);
-        studentCurricularPlan.setStudent(student);
-        studentCurricularPlan.setWhen(new Date());
-    }}
+		new StudentCurricularPlan(student, degreeCurricularPlan, studentCurricularPlanState, startDate);
+    }
+}

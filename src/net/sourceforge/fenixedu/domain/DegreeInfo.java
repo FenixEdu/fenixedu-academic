@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
+
 /**
  * @author Tania Pousao Created on 30/Out/2003
  */
@@ -35,6 +38,16 @@ public class DegreeInfo extends DegreeInfo_Base {
         result += "]";
         return result;
     }
+	
+	
+	public DegreeInfo() {
+		setLastModificationDate(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+	}
+	
+	public DegreeInfo(IDegree degree) {
+		setDegree(degree);
+		setLastModificationDate(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+	}
 
 	public void delete() {
 		removeDegree();

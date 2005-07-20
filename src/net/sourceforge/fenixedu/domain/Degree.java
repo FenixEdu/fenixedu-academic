@@ -8,6 +8,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Iterator;
 
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesSummary;
@@ -44,6 +45,31 @@ public class Degree extends Degree_Base {
 
         return degreeCurricularPlan;
     }
+	
+	
+	public Degree() {};
+	
+	public Degree(String name, String nameEn, String sigla, DegreeType degreeType, String concreteClassForDegreeCurricularPlans) {
+		setNome(name);
+		setNameEn(nameEn);
+		setSigla(sigla);
+		setTipoCurso(degreeType);
+		setConcreteClassForDegreeCurricularPlans(concreteClassForDegreeCurricularPlans);
+		
+		new DegreeInfo(this);
+	}
+	
+	
+	public void edit(String name, String nameEn, String sigla, DegreeType degreeType) {
+		setNome(name);
+		setNameEn(nameEn);
+		setSigla(sigla);
+		setTipoCurso(degreeType);
+		
+        if(!hasAnyDegreeInfos())  
+			new DegreeInfo(this);
+	}
+		
 	
 	public void delete() throws DomainException {
 		

@@ -108,12 +108,13 @@ public class Enrolment extends Enrolment_Base {
 		while (attendsIter.hasNext()) {
 			IAttends attends = attendsIter.next();
 			
-			try {
-				attendsIter.remove();
-				attends.removeEnrolment();
-				attends.delete();
-			}
-			catch (DomainException e) {}
+			attends.removeEnrolment();
+//			try {
+//				attendsIter.remove();
+//				attends.removeEnrolment();
+//				attends.delete();
+//			}
+//			catch (DomainException e) {}
 		}
 		
 		

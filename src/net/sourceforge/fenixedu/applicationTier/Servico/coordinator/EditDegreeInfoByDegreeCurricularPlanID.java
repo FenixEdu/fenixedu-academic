@@ -50,10 +50,16 @@ public class EditDegreeInfoByDegreeCurricularPlanID implements IService {
                 throw new FenixServiceException("error.impossibleEditDegreeInfo");
             }
 
+			
             // and correspondent execution degrees
-            executionDegrees = suportePersistente.getIPersistentExecutionDegree()
-                    .readByDegreeCurricularPlan(degreeCurricularPlan.getIdInternal());
+			
+			executionDegrees = degreeCurricularPlan.getExecutionDegrees();
 
+			if (executionDegrees == null) {
+				throw new FenixServiceException("error.impossibleEditDegreeInfo");
+	        }
+			 
+			 
             // sort them by begin date
 
             Collections.sort(executionDegrees, new Comparator() {
@@ -63,9 +69,7 @@ public class EditDegreeInfoByDegreeCurricularPlanID implements IService {
                 }
             });
 
-            if (executionDegrees == null) {
-                throw new FenixServiceException("error.impossibleEditDegreeInfo");
-            }
+           
 
             //Degree
             IDegree degree = degreeCurricularPlan.getDegree();
@@ -75,11 +79,10 @@ public class EditDegreeInfoByDegreeCurricularPlanID implements IService {
 
             //DegreeInfo
             IPersistentDegreeInfo persistentDegreeInfo = suportePersistente.getIPersistentDegreeInfo();
-            degreeInfo = (IDegreeInfo) persistentDegreeInfo.readByOID(DegreeInfo.class,
-                    infoDegreeInfoId, true);
+            degreeInfo = (IDegreeInfo) persistentDegreeInfo.readByOID(DegreeInfo.class, infoDegreeInfoId, true);
 
             //decide which is the execution year which we want to edit
-            IExecutionDegree executionDegree = getActiveExecutionYear(executionDegrees);
+            IExecutionDegree executionDegree = getActiveExecutionDegree(executionDegrees);
             if (executionDegree == null) {
                 throw new FenixServiceException("error.impossibleEditDegreeInfo");
             }
@@ -155,23 +158,20 @@ public class EditDegreeInfoByDegreeCurricularPlanID implements IService {
      * @param infoExecutionDegreeList a list of infoexecution degrees sorted by beginDate
      */
 
-    private IExecutionDegree getActiveExecutionYear(List executionDegreeList) {
+    private IExecutionDegree getActiveExecutionDegree(List executionDegreeList) {
         Date todayDate = new Date();
         int i;
         for (i = 0; i < executionDegreeList.size(); i++) {
             //if the first is in the future, the rest is also
-            if ((ExecutionDegreeDuringDate(todayDate, (IExecutionDegree) executionDegreeList
-                    .get(i)) == 1)
+            if ((ExecutionDegreeDuringDate(todayDate, (IExecutionDegree) executionDegreeList.get(i)) == 1)
                     && (i == 0))
                 return (IExecutionDegree) executionDegreeList.get(i);            
             // if the last is in the past, there is no editable executionDegree
-            if ((ExecutionDegreeDuringDate(todayDate, (IExecutionDegree) executionDegreeList
-                    .get(i)) == 1)
+            if ((ExecutionDegreeDuringDate(todayDate, (IExecutionDegree) executionDegreeList.get(i)) == 1)
                     && (i == executionDegreeList.size()-1))
                 return null;
             
-            if (ExecutionDegreeDuringDate(todayDate, (IExecutionDegree) executionDegreeList
-                    .get(i)) == 0)
+            if (ExecutionDegreeDuringDate(todayDate, (IExecutionDegree) executionDegreeList.get(i)) == 0)
                 return (IExecutionDegree) executionDegreeList.get(i);
         }
         return null;

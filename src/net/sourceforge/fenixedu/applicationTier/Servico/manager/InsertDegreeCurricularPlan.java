@@ -10,10 +10,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
@@ -31,30 +29,17 @@ public class InsertDegreeCurricularPlan implements IService {
 
         try {
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport
-                    .getIPersistentDegreeCurricularPlan();
-
             ICursoPersistente persistentDegree = persistentSuport.getICursoPersistente();
+			
             IDegree degree = (IDegree)persistentDegree.readByOID(Degree.class,infoDegreeCurricularPlan.getInfoDegree().getIdInternal());
             if (degree == null)
                 throw new NonExistingServiceException();
 
-            IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
-            persistentDegreeCurricularPlan.simpleLockWrite(degreeCurricularPlan);
-            degreeCurricularPlan.setName(infoDegreeCurricularPlan.getName());
-            degreeCurricularPlan.setDegree(degree);
-            degreeCurricularPlan.setState(infoDegreeCurricularPlan.getState());
-            degreeCurricularPlan.setInitialDate(infoDegreeCurricularPlan.getInitialDate());
-            degreeCurricularPlan.setEndDate(infoDegreeCurricularPlan.getEndDate());
-            degreeCurricularPlan.setDegreeDuration(infoDegreeCurricularPlan.getDegreeDuration());
-            degreeCurricularPlan.setMinimalYearForOptionalCourses(infoDegreeCurricularPlan
-                    .getMinimalYearForOptionalCourses());
-            degreeCurricularPlan.setNeededCredits(infoDegreeCurricularPlan.getNeededCredits());
-            degreeCurricularPlan.setMarkType(infoDegreeCurricularPlan.getMarkType());
-            degreeCurricularPlan.setNumerusClausus(infoDegreeCurricularPlan.getNumerusClausus());
-            degreeCurricularPlan.setAnotation(infoDegreeCurricularPlan.getAnotation());
-            degreeCurricularPlan.setConcreteClassForStudentCurricularPlans(degree
-                    .getConcreteClassForDegreeCurricularPlans());
+            new DegreeCurricularPlan(degree, infoDegreeCurricularPlan.getName(), infoDegreeCurricularPlan.getState(),
+					infoDegreeCurricularPlan.getInitialDate(), infoDegreeCurricularPlan.getEndDate(), 
+					infoDegreeCurricularPlan.getDegreeDuration(), infoDegreeCurricularPlan.getMinimalYearForOptionalCourses(),
+					infoDegreeCurricularPlan.getNeededCredits(), infoDegreeCurricularPlan.getMarkType(),
+					infoDegreeCurricularPlan.getNumerusClausus(), infoDegreeCurricularPlan.getAnotation());
 
         } catch (ExistingPersistentException existingException) {
             throw new ExistingServiceException("O plano curricular com nome "

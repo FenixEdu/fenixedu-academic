@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.precedences;
 
+import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.util.PeriodToApplyRestriction;
@@ -11,6 +12,16 @@ import net.sourceforge.fenixedu.util.PeriodToApplyRestriction;
 public class RestrictionPeriodToApply extends RestrictionPeriodToApply_Base implements
         IRestrictionPeriodToApply {
 
+	public RestrictionPeriodToApply() {}
+	
+	
+	public RestrictionPeriodToApply(Integer number, IPrecedence precedence, ICurricularCourse precedentCurricularCourse) {
+		
+        setPrecedence(precedence);
+        setPeriodToApplyRestriction(PeriodToApplyRestriction.getEnum(number.intValue()));
+	}
+	
+	
     public String toString() {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("Restriction(").append(this.getClass()).append("):").append("\n\t");

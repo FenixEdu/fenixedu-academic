@@ -536,6 +536,7 @@ class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.do
 	
 	interface "
 
+	public void edit(String name, String nameEn, String sigla, net.sourceforge.fenixedu.domain.degree.DegreeType degreeType);
 	public void delete() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
 	"
 }
@@ -580,6 +581,10 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     public java.util.List getCurricularCoursesByYearAndSemesterAndBranch(int year, Integer semester, IBranch area);
     
     public java.util.List getSpecialListOfCurricularCourses();
+	
+	public void edit(String name, net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState state, 
+			java.util.Date inicialDate, java.util.Date endDate, Integer degreeDuration, Integer minimalYearForOptionalCourses, 
+			Double neededCredits, net.sourceforge.fenixedu.util.MarkType markType, Integer numerusClausus, String annotation);
     "
 }
 
@@ -2416,6 +2421,8 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
     public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea);
     
     public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea);
+	
+	public void changeState(net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState studentCurricularPlanState) throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
 	
 	public void delete() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
     "

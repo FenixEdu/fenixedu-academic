@@ -8,9 +8,17 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
  */
 
 public class RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse extends RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse_Base {
-    public RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse() {
+
+	public RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse() {
         super();
     }
+	
+	public RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse(Integer number, IPrecedence precedence, ICurricularCourse precedentCurricularCourse) {
+		super();
+		
+		setPrecedence(precedence);
+        setPrecedentCurricularCourse(precedentCurricularCourse);
+	}
 
     public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
         ICurricularCourse curricularCourse = this.getPrecedentCurricularCourse();

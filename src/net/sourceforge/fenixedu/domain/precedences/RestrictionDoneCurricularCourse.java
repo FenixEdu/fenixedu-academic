@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.precedences;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 
@@ -13,10 +14,20 @@ import org.apache.commons.collections.Transformer;
  */
 
 public class RestrictionDoneCurricularCourse extends RestrictionDoneCurricularCourse_Base {
-    public RestrictionDoneCurricularCourse() {
+
+	public RestrictionDoneCurricularCourse() {
         super();
     }
+	
+	public RestrictionDoneCurricularCourse(Integer number, IPrecedence precedence, ICurricularCourse precedentCurricularCourse) {
+		super();
+		
+        setPrecedence(precedence);
+        setPrecedentCurricularCourse(precedentCurricularCourse);
+	}
 
+	
+	
     public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
 
         if (precedenceContext.getStudentCurricularPlan().isCurricularCourseApproved(
