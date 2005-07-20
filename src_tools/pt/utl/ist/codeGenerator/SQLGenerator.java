@@ -12,7 +12,7 @@ public class SQLGenerator {
 
 	public static void main(String[] args) {
 		try {
-			generate("/tmp/fenix.sql");
+			generate(args[0]);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
