@@ -21,31 +21,20 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class DeleteCurricularCourseGroup implements IService {
 
-    /**
-     *  
-     */
-    public DeleteCurricularCourseGroup() {
-    }
-
-    public void run(Integer groupId) throws FenixServiceException {
-        try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSuport
-                    .getIPersistentCurricularCourseGroup();
-            ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) persistentCurricularCourseGroup
-                    .readByOID(CurricularCourseGroup.class, groupId);
-			if (curricularCourseGroup != null) {
-				try {
-					curricularCourseGroup.delete();
-//					persistentCurricularCourseGroup.deleteByOID(CurricularCourseGroup.class,groupId);
-				} catch (DomainException e) {
-					throw new InvalidArgumentsServiceException();
-				}
+    public void run(Integer groupId) throws FenixServiceException, ExcepcaoPersistencia {
+        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSuport
+                .getIPersistentCurricularCourseGroup();
+        ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) persistentCurricularCourseGroup
+                .readByOID(CurricularCourseGroup.class, groupId);
+		if (curricularCourseGroup != null) {
+			try {
+				curricularCourseGroup.delete();
+			} catch (DomainException e) {
+				throw new InvalidArgumentsServiceException();
 			}
-			// inexistent CurricularCourseGroup
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
+		}
+		// inexistent CurricularCourseGroup
     }
 
 }

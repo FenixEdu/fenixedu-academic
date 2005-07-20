@@ -36,4 +36,8 @@ public class DegreeInfo extends DegreeInfo_Base {
         return result;
     }
 
+	public void delete() {
+		removeDegree();
+		deleteDomainObject();
+	}
 }

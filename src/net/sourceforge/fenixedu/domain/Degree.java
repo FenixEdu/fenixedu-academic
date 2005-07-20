@@ -81,8 +81,12 @@ public class Degree extends Degree_Base {
 				delegate.delete();
 			}
 			
-			for (IDegreeInfo degreeInfo : getDegreeInfos()) {
-				((DegreeInfo)degreeInfo).deleteDomainObject();
+			Iterator degreeInfosIterator = getDegreeInfosIterator();
+			while (degreeInfosIterator.hasNext()) {
+				IDegreeInfo degreeInfo = (IDegreeInfo) degreeInfosIterator.next();
+				degreeInfosIterator.remove();
+				degreeInfo.removeDegree();
+				degreeInfo.delete();
 			}
 			
 			deleteDomainObject();

@@ -7,6 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -20,10 +21,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class DeleteDegrees implements IService {
 
     // delete a set of degrees
-    public List run(List degreesInternalIds) throws FenixServiceException {
-
-        try {
-
+    public List run(List degreesInternalIds) throws FenixServiceException, ExcepcaoPersistencia {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             ICursoPersistente persistentDegree = sp.getICursoPersistente();
 
@@ -40,8 +38,7 @@ public class DeleteDegrees implements IService {
                 
                     try {
 						degree.delete();
-						//persistentDegree.deleteByOID(Degree.class,degree.getIdInternal());
-					} catch (net.sourceforge.fenixedu.domain.exceptions.DomainException e) {
+					} catch (DomainException e) {
 						undeletedDegreesNames.add(degree.getNome());
 					}
                 }
@@ -49,8 +46,5 @@ public class DeleteDegrees implements IService {
 
             return undeletedDegreesNames;
 
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
     }
 }

@@ -70,25 +70,6 @@
 			>
 		<inverse-foreignkey field-ref="branchKey"/>
 	</collection-descriptor>    
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"  
-			name="areaCurricularCourseGroups"
-			element-class-ref="net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup"
-            
-			
-            >
-		<inverse-foreignkey field-ref="keyBranch"/>
-	</collection-descriptor>   
-    <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="optionalCurricularCourseGroups"
-			element-class-ref="net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup"
-            
-			>
-		<inverse-foreignkey field-ref="keyBranch"/>
-	</collection-descriptor>
-	
-	
-	
-	
 	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="curricularCourseGroups"
 			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseGroup">

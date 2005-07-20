@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
 /**
  * @author David Santos on Jul 26, 2004
  */
 
 public class AreaCurricularCourseGroup extends AreaCurricularCourseGroup_Base {
-
+	
     public Integer getMaximumCredits() {
         return super.getMaximumValue();
     }
@@ -43,12 +43,11 @@ public class AreaCurricularCourseGroup extends AreaCurricularCourseGroup_Base {
                 + super.getMaximumValue() + "] branch[" + getBranch().getName() + "]";
     }
 
-	public void delete() throws DomainException {
-		if (!hasAnyCurricularCourses()) {
-			getScientificAreasForThis().clear();
-			super.delete();
-		} else {
-			throw new DomainException(this.getClass().getName(), "ola mundo");			
-		}
+	public void edit(String name, IBranch branch, Integer minimumValue, Integer maximumValue, AreaType areaType){
+        setName(name);
+		setBranch(branch);
+		setMinimumCredits(minimumValue);
+		setMaximumCredits(maximumValue);
+		setAreaType(areaType);
 	}
 }

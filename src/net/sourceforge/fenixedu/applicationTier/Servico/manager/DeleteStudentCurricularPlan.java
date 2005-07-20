@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -19,7 +20,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class DeleteStudentCurricularPlan implements IService {
 
-    public void run(final Integer studentCurricularPlanId) throws DomainException, ExcepcaoPersistencia {
+    public void run(final Integer studentCurricularPlanId) throws DomainException, ExcepcaoPersistencia, NonExistingServiceException {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
@@ -29,5 +30,7 @@ public class DeleteStudentCurricularPlan implements IService {
 
 		if (studentCurricularPlan != null)
 			studentCurricularPlan.delete();
+		else
+			throw new NonExistingServiceException();
     }
 }

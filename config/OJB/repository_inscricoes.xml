@@ -870,8 +870,8 @@
 		locking="true"
 	/>
 	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="areaCurricularCourseGroups"
-			element-class-ref="net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup"
+			name="curricularCourseGroups"
+			element-class-ref="net.sourceforge.fenixedu.domain.CurricularCourseGroup"
 			indirection-table="SCIENTIFIC_AREA_CURRICULAR_COURSE_GROUP"
 			>
 		<fk-pointing-to-this-class column="KEY_SCIENTIFIC_AREA"/>

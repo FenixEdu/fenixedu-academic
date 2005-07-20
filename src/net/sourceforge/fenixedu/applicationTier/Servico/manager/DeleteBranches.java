@@ -43,11 +43,9 @@ public class DeleteBranches implements IService {
 					try {
 	                    if (branch.getStudentCurricularPlans().isEmpty()) {
 							branch.delete();
-//	                        persistentBranch.deleteByOID(Branch.class,branch.getIdInternal());
 	                    } else {
 	                        if (forceDelete.booleanValue() == true) {
 								branch.delete();
-//	                            persistentBranch.deleteByOID(Branch.class,branch.getIdInternal());
 	                        } else {
 	                            undeletedCodes.add(branch.getCode());
 	                        }

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,33 +23,22 @@ public class CurricularCourseGroupVO extends VersionedObjectsBase implements IPe
 	
 	
 	   public List readByBranchAndAreaType(Integer branchId, AreaType areaType) throws ExcepcaoPersistencia {
-		   
 		   IBranch branch = (IBranch)readByOID(Branch.class, branchId);
-		   List<IAreaCurricularCourseGroup> curricularCourseGroups = branch.getAreaCurricularCourseGroups();
-		   List<ICurricularCourseGroup> result = new ArrayList();
-		   
-		   for (ICurricularCourseGroup curricularCourseGroup : curricularCourseGroups){
-			   if (curricularCourseGroup.getAreaType().equals(areaType))
-				   result.add(curricularCourseGroup);
-		   }
-		   
-		   return result;
+		   return branch.getAreaCurricularCourseGroups(areaType);
 	    }
 
 	    public ICurricularCourseGroup readByBranchAndCurricularCourseAndAreaType(Integer branchId,
 	            Integer curricularCourseId, AreaType areaType) throws ExcepcaoPersistencia {
 			
 		   IBranch branch = (IBranch)readByOID(Branch.class, branchId);
-		   List<IAreaCurricularCourseGroup> curricularCourseGroups = branch.getAreaCurricularCourseGroups();
+		   List<ICurricularCourseGroup> curricularCourseGroups = branch.getAreaCurricularCourseGroups(areaType);
 		   
 		   for (ICurricularCourseGroup curricularCourseGroup : curricularCourseGroups){
-			   if (curricularCourseGroup.getAreaType().equals(areaType)){
-				   List<ICurricularCourse> curricularCourses = curricularCourseGroup.getCurricularCourses();
+			   List<ICurricularCourse> curricularCourses = curricularCourseGroup.getCurricularCourses();
 				   
-				   for (ICurricularCourse curricularCourse : curricularCourses){
-					   if (curricularCourse.getIdInternal().equals(curricularCourseId))
-						   return curricularCourseGroup;
-				   }
+			   for (ICurricularCourse curricularCourse : curricularCourses){
+				   if (curricularCourse.getIdInternal().equals(curricularCourseId))
+					   return curricularCourseGroup;
 			   }
 		   }
 		   
@@ -61,17 +49,15 @@ public class CurricularCourseGroupVO extends VersionedObjectsBase implements IPe
 	            Integer scientificAreaId, AreaType areaType) throws ExcepcaoPersistencia {
 			
 			IBranch branch = (IBranch)readByOID(Branch.class, branchId);
-			List<IAreaCurricularCourseGroup> curricularCourseGroups = branch.getAreaCurricularCourseGroups();
+			List<IAreaCurricularCourseGroup> curricularCourseGroups = branch.getAreaCurricularCourseGroups(areaType);
 			
 			for (ICurricularCourseGroup curricularCourseGroup : curricularCourseGroups){
-				if (curricularCourseGroup.getAreaType().equals(areaType)){
-					List<IScientificArea> scientificAreas = curricularCourseGroup.getScientificAreas();
-					
-					for (IScientificArea scientificArea : scientificAreas){
-						if (scientificArea.getIdInternal().equals(scientificAreaId))
-							return curricularCourseGroup;
-					}		
-				}
+				List<IScientificArea> scientificAreas = curricularCourseGroup.getScientificAreas();
+				
+				for (IScientificArea scientificArea : scientificAreas){
+					if (scientificArea.getIdInternal().equals(scientificAreaId))
+						return curricularCourseGroup;
+				}		
 			}
 			return null;
 	    }

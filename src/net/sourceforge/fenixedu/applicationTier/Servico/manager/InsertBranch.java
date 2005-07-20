@@ -9,10 +9,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -30,31 +28,17 @@ public class InsertBranch implements IService {
 
     public void run(InfoBranch infoBranch) throws FenixServiceException {
 
-        String code = null;
         try {
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             Integer degreeCurricularPlanId = infoBranch.getInfoDegreeCurricularPlan().getIdInternal();
-            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport
-                    .getIPersistentDegreeCurricularPlan();
-            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
-                    .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
+            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport.getIPersistentDegreeCurricularPlan();
+            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
 
             if (degreeCurricularPlan == null)
                 throw new NonExistingServiceException();
 
-            String name = infoBranch.getName();
-            String nameEn = infoBranch.getNameEn();
-            code = infoBranch.getCode();
-
-            IPersistentBranch persistentBranch = persistentSuport.getIPersistentBranch();
-
-            IBranch branch = new Branch();
-            persistentBranch.simpleLockWrite(branch);
-            branch.setCode(code);
-            branch.setName(name);
-            branch.setNameEn(nameEn);
-            branch.setDegreeCurricularPlan(degreeCurricularPlan);
+            new Branch(infoBranch.getName(), infoBranch.getNameEn(), infoBranch.getCode(), degreeCurricularPlan);
 
         } catch (ExistingPersistentException existingException) {
             throw new ExistingServiceException();

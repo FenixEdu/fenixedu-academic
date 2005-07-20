@@ -34,25 +34,18 @@ public class EditBranch implements IService {
 
     public void run(InfoBranch infoBranch) throws FenixServiceException {
 
-        ISuportePersistente persistentSuport = null;
-        IPersistentBranch persistentbranch = null;
-        IBranch branch = null;
-        String code = infoBranch.getCode();
-
         try {
+			
+			ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+			IPersistentBranch persistentbranch = persistentSuport.getIPersistentBranch();
 
-            persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            persistentbranch = persistentSuport.getIPersistentBranch();
-
-            branch = (IBranch) persistentbranch.readByOID(Branch.class, infoBranch.getIdInternal());
+			IBranch branch = (IBranch) persistentbranch.readByOID(Branch.class, infoBranch.getIdInternal());
 
             if (branch == null) {
                 throw new NonExistingServiceException();
             }
-            persistentbranch.simpleLockWrite(branch);
-            branch.setName(infoBranch.getName());
-            branch.setNameEn(infoBranch.getNameEn());
-            branch.setCode(code);
+			
+			branch.edit(infoBranch.getName(),infoBranch.getNameEn(),infoBranch.getCode());
 
         } catch (ExistingPersistentException ex) {
             throw new ExistingServiceException();

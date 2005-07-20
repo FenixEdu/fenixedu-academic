@@ -68,7 +68,6 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan implements IService {
 								curricularCourse.removeScopes(scope);
 								
 								scope.delete();
-								persistentCurricularCourseScope.deleteByOID(CurricularCourseScope.class, scope.getIdInternal());	
 							}
 							catch (DomainException e) {
 								

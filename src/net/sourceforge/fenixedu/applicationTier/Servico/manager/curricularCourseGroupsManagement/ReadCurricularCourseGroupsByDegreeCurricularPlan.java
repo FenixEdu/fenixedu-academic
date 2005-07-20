@@ -49,8 +49,7 @@ public class ReadCurricularCourseGroupsByDegreeCurricularPlan implements IServic
             Iterator iter = areas.iterator();
             while (iter.hasNext()) {
                 IBranch branch = (IBranch) iter.next();
-                groups.addAll(branch.getAreaCurricularCourseGroups());
-                groups.addAll(branch.getOptionalCurricularCourseGroups());
+				groups.addAll(branch.getCurricularCourseGroups());
             }
 
             return (List) CollectionUtils.collect(groups, new Transformer() {

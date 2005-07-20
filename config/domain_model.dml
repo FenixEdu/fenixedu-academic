@@ -197,6 +197,7 @@ class net.sourceforge.fenixedu.domain.Branch extends net.sourceforge.fenixedu.do
 	public void delete() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
 	public Boolean canBeDeleted();
 	public Boolean representsCommonBranch();
+	public void edit(String name, String nameEn, String code);
     "
 }
 
@@ -460,6 +461,9 @@ class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourcefo
     public void setAreaType(net.sourceforge.fenixedu.tools.enrollment.AreaType areaType);
 	
 	public void delete() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+	
+	public void edit(String name, IBranch branch, Integer minimumValue, Integer maximumValue);
+	public void edit(String name, IBranch branch, Integer minimumValue, Integer maximumValue, net.sourceforge.fenixedu.tools.enrollment.AreaType areaType);
     "
 }
 
@@ -620,6 +624,12 @@ class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixed
     String history;
     Integer degreeKey;
     Date lastModificationDate;
+	
+	interface "
+
+	public void delete();
+	
+	"
 }
 
 
@@ -2874,22 +2884,6 @@ relation BranchCurricularCourseGroup {
     net.sourceforge.fenixedu.domain.Branch playsRole branch;
 
     net.sourceforge.fenixedu.domain.CurricularCourseGroup playsRole curricularCourseGroups {
-        multiplicity *;
-    }
-}
-
-relation BranchAreaCurricularCourseGroup {
-    net.sourceforge.fenixedu.domain.Branch playsRole branchForWhichThisIsAreaCurricularCourseGroup;
-
-    net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup playsRole areaCurricularCourseGroups {
-        multiplicity *;
-    }
-}
-
-relation BranchOptionalCurricularCourseGroup {
-    net.sourceforge.fenixedu.domain.Branch playsRole branchForWhichThisIsOptionalCurricularCourseGroup;
-
-    net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup playsRole optionalCurricularCourseGroups {
         multiplicity *;
     }
 }
@@ -5298,18 +5292,6 @@ relation PublicationTypePublicationSubtype {
 relation PublicationsNumberTeacher {
 	net.sourceforge.fenixedu.domain.teacher.PublicationsNumber playsRole publicationsNumber;
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
-}
-
-relation ScientificAreaAreaCurricularCourseGroup {
-
-    net.sourceforge.fenixedu.domain.ScientificArea playsRole scientificAreasForThis {
-        multiplicity *;
-    }
-
-    net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup playsRole areaCurricularCourseGroups {
-        multiplicity *;
-    }
-    
 }
 
 relation SeminaryCourseEquivalency {

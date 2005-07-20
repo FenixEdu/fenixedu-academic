@@ -182,7 +182,10 @@ public class CurricularCourseGroupManagementDispatchAction extends FenixDispatch
         Integer maximumValue = (Integer) groupForm.get("maximumValue");
         String areaType = (String) groupForm.get("areaType");
         String type = (String) groupForm.get("type");
-        Object args[] = { groupId, name, branchId, minimumValue, maximumValue, areaType,
+		
+		AreaType realAreaType = ((areaType == null || areaType.equals(""))?null:AreaType.valueOf(areaType));
+		
+        Object args[] = { groupId, name, branchId, minimumValue, maximumValue, realAreaType,
                 getClassName(type) };
 
         try {

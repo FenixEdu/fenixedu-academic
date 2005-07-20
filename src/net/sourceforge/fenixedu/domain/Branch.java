@@ -18,6 +18,18 @@ import org.apache.commons.collections.Predicate;
 
 public class Branch extends Branch_Base {
 
+	public Branch() {
+		super();
+	}
+	
+	public Branch (String name, String nameEn, String code, IDegreeCurricularPlan degreeCurricularPlan) {
+		super();
+		setName(name);
+		setNameEn(nameEn);
+		setCode(code);
+		setDegreeCurricularPlan(degreeCurricularPlan);
+	}
+	
     public String toString() {
         String result = "[" + this.getClass().getName() + ": ";
         result += "idInternal = " + getIdInternal() + "; ";
@@ -33,10 +45,16 @@ public class Branch extends Branch_Base {
         }
         return Boolean.FALSE;
     }
+	
+	public void edit(String name, String nameEn, String code) {
+		setName(name);
+		setNameEn(nameEn);
+		setCode(code);
+	}
 
     public List getAreaCurricularCourseGroups(final AreaType areaType) {
 
-        return (List) CollectionUtils.select(getAreaCurricularCourseGroups(), new Predicate() {
+        return (List) CollectionUtils.select(getCurricularCourseGroups(), new Predicate() {
 
             public boolean evaluate(Object arg0) {
                 ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) arg0;
@@ -67,7 +85,7 @@ public class Branch extends Branch_Base {
 			return false;
 		
 		if (this.representsCommonBranch() && 
-				(this.hasAnyCurricularCourseGroups() || this.hasAnyScopes() || this.hasAnyOptionalCurricularCourseGroups() || this.hasAnyAreaCurricularCourseGroups()))
+				(this.hasAnyCurricularCourseGroups() || this.hasAnyScopes()))
 			return false;
 		
 		IBranch commonBranch = findCommonBranchForSameDegreeCurricularPlan();
@@ -98,20 +116,6 @@ public class Branch extends Branch_Base {
 			curricularCourseGroup.setBranch(commonBranch);
 		}
 
-		Iterator optionalCurricularCourseGroupsIterator = getOptionalCurricularCourseGroupsIterator();
-		while (optionalCurricularCourseGroupsIterator.hasNext()) {
-			IOptionalCurricularCourseGroup curricularCourseGroup = (IOptionalCurricularCourseGroup) optionalCurricularCourseGroupsIterator.next();
-			optionalCurricularCourseGroupsIterator.remove();
-			curricularCourseGroup.setBranchForWhichThisIsOptionalCurricularCourseGroup(commonBranch);
-		}
-		
-		Iterator areaCurricularCourseGroupsIterator = getAreaCurricularCourseGroupsIterator();
-		while (areaCurricularCourseGroupsIterator.hasNext()) {
-			IAreaCurricularCourseGroup curricularCourseGroup = (IAreaCurricularCourseGroup) areaCurricularCourseGroupsIterator.next();
-			areaCurricularCourseGroupsIterator.remove();
-			curricularCourseGroup.setBranchForWhichThisIsAreaCurricularCourseGroup(commonBranch);
-		}
-		
 		removeCurricularCourseScopes(commonBranch);
 		
 		removeDegreeCurricularPlan();

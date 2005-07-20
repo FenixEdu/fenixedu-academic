@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.tools.enrollment.AreaType;
  */
 
 public class OptionalCurricularCourseGroup extends OptionalCurricularCourseGroup_Base {
-
+	
     public Integer getMinimumNumberOfOptionalCourses() {
         return super.getMinimumValue();
     }
@@ -50,5 +50,15 @@ public class OptionalCurricularCourseGroup extends OptionalCurricularCourseGroup
                 + "] maximumNumberOfOptionalCourses[" + super.getMaximumValue() + "] branch["
                 + getBranch().getName() + "]";
     }
-
+	
+	public void edit(String name, IBranch branch, Integer minimumValue, Integer maximumValue, AreaType areaType) {
+		edit(name, branch, minimumValue, maximumValue);
+	}
+	
+	public void edit(String name, IBranch branch, Integer minimumValue, Integer maximumValue){
+		setName(name);
+		setBranch(branch);
+		setMinimumNumberOfOptionalCourses(minimumValue);
+		setMaximumNumberOfOptionalCourses(maximumValue);
+	}
 }

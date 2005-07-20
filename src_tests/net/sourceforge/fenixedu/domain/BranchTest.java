@@ -34,50 +34,135 @@ public class BranchTest extends DomainTestBase {
 	private List<IStudentCurricularPlanLEIC> studentCurricularPlansLEICInCommonBranchToDelete = new ArrayList();
 	private IDegreeCurricularPlan degreeCurricularPlanInCommonBranchToDelete = null;
 	
-	
 	private IBranch commonBranchNotToDelete = null;
+	
+	private IBranch branchToEdit = null;
+	private String editedName = "";
+	private String editedNameEn = "";
+	private String editedCode = "";
+	
+	private IBranch branchToCreate = null;
+	private String createdBranchName = "";
+	private String createdBranchNameEn = "";
+	private String createdBranchCode = "";
+	private IDegreeCurricularPlan createdBranchDCP = null;
 	
 	protected void setUp() throws Exception {
 		super.setUp();
-		nonCommonBranchToDelete = new Branch();
-		nonCommonBranchToDelete.setIdInternal(1);
-		nonCommonBranchToDelete.setBranchType(BranchType.SECNBR);
-		nonCommonBranchToDelete.setName("Generic Branch To Delete");
+		setUpDeleteCaseForNonCommonBranch();
+	
+		setUpDeleteCaseForNonDeletableBranchWithProposals();
 		
-		commonBranchInOtherDegreeCurricularPlan = new Branch();
-		commonBranchInOtherDegreeCurricularPlan.setIdInternal(2);
-		commonBranchInOtherDegreeCurricularPlan.setBranchType(BranchType.COMNBR);
-		commonBranchInOtherDegreeCurricularPlan.setName("");
+		setUpDeleteCaseForCommonBranch();
 		
-		commonBranchInSameDegreeCurricularPlan = new Branch();
-		commonBranchInSameDegreeCurricularPlan.setIdInternal(3);
-		commonBranchInSameDegreeCurricularPlan.setBranchType(BranchType.COMNBR);
-		commonBranchInSameDegreeCurricularPlan.setName("");
+		setUpDeleteCaseForNonDeletableCommonBranch();
 		
-		nonCommonBranchNotToDeleteWithProposals = new Branch();
-		nonCommonBranchNotToDeleteWithProposals.setIdInternal(4);
-		nonCommonBranchNotToDeleteWithProposals.setBranchType(BranchType.SECNBR);
-		nonCommonBranchNotToDeleteWithProposals.setName("Branch not to delete because of associated final degree work proposals");
+		setUpEditCase();
+		
+		setUpCreateCase();
+	}
+
+	private IBranch createBranchWithNameAndType(BranchType branchType, String name) {
+		IBranch br = new Branch();
+		br.setBranchType(branchType);
+		br.setName(name);
+		
+		return br;
+	}
+	
+	private void setUpDeleteCaseForNonDeletableCommonBranch() {
+		commonBranchNotToDelete = createBranchWithNameAndType(BranchType.COMNBR,"");		
+		
+		IOptionalCurricularCourseGroup opCCG = new OptionalCurricularCourseGroup();
+		opCCG.setBranch(commonBranchNotToDelete);
+		
+		IAreaCurricularCourseGroup areaCCG = new AreaCurricularCourseGroup();
+		areaCCG.setBranch(commonBranchNotToDelete);
+		
+		IStudentCurricularPlan scpW = new StudentCurricularPlan();
+		scpW.setBranch(commonBranchNotToDelete);
+		
+		IStudentCurricularPlanLEIC scpWLEIC = new StudentCurricularPlanLEIC();
+		scpWLEIC.setSecundaryBranch(commonBranchNotToDelete);
+		
+		IStudentCurricularPlanLEEC scpWLEEC = new StudentCurricularPlanLEEC();
+		scpWLEEC.setSecundaryBranch(commonBranchNotToDelete);
+		
+		IDegreeCurricularPlan dcpW = new DegreeCurricularPlan();
+		dcpW.addAreas(commonBranchNotToDelete);
+		
+		ICurricularCourseScope ccsW = new CurricularCourseScope();
+		ccsW.setBranch(commonBranchNotToDelete);
+	}
+
+	private void setUpDeleteCaseForCommonBranch() {
+		commonBranchToDelete = createBranchWithNameAndType(BranchType.COMNBR,"");
+		
+		IStudentCurricularPlan scpD = new StudentCurricularPlan();
+		scpD.setBranch(commonBranchToDelete);
+		studentCurricularPlansInCommonBranchToDelete.add(scpD);
+		
+		IStudentCurricularPlanLEIC scpDLEIC = new StudentCurricularPlanLEIC();
+		scpDLEIC.setSecundaryBranch(commonBranchToDelete);
+		studentCurricularPlansLEICInCommonBranchToDelete.add(scpDLEIC);
+		
+		IStudentCurricularPlanLEEC scpDLEEC = new StudentCurricularPlanLEEC();
+		scpDLEEC.setSecundaryBranch(commonBranchToDelete);
+		studentCurricularPlansLEECInCommonBranchToDelete.add(scpDLEEC);
+		
+		IDegreeCurricularPlan dcpD = new DegreeCurricularPlan();
+		dcpD.addAreas(commonBranchToDelete);
+		degreeCurricularPlanInCommonBranchToDelete = dcpD;
+	}
+
+	private void setUpDeleteCaseForNonDeletableBranchWithProposals() {
+		nonCommonBranchNotToDeleteWithProposals = createBranchWithNameAndType(BranchType.SECNBR,"Branch not to delete because of associated final degree work proposals");
+		
+		IProposal proposal1 = new Proposal();
+		nonCommonBranchNotToDeleteWithProposals.addAssociatedFinalDegreeWorkProposals(proposal1);
+		
+		IOptionalCurricularCourseGroup opCCG = new OptionalCurricularCourseGroup();
+		opCCG.setBranch(nonCommonBranchNotToDeleteWithProposals);
+		
+		IAreaCurricularCourseGroup areaCCG = new AreaCurricularCourseGroup();
+		areaCCG.setBranch(nonCommonBranchNotToDeleteWithProposals);
+		
+		IStudentCurricularPlan scpW = new StudentCurricularPlan();
+		scpW.setBranch(nonCommonBranchNotToDeleteWithProposals);
+		
+		IStudentCurricularPlanLEIC scpWLEIC = new StudentCurricularPlanLEIC();
+		scpWLEIC.setSecundaryBranch(nonCommonBranchNotToDeleteWithProposals);
+		
+		IStudentCurricularPlanLEEC scpWLEEC = new StudentCurricularPlanLEEC();
+		scpWLEEC.setSecundaryBranch(nonCommonBranchNotToDeleteWithProposals);
+		
+		IDegreeCurricularPlan dcpW = new DegreeCurricularPlan();
+		dcpW.addAreas(nonCommonBranchNotToDeleteWithProposals);
+		
+		ICurricularCourseScope ccsW = new CurricularCourseScope();
+		ccsW.setBranch(nonCommonBranchNotToDeleteWithProposals);
+	}
+
+	private void setUpDeleteCaseForNonCommonBranch() {
+		nonCommonBranchToDelete = createBranchWithNameAndType(BranchType.SECNBR,"Generic Branch To Delete");
+		
+		commonBranchInOtherDegreeCurricularPlan = createBranchWithNameAndType(BranchType.COMNBR,"");
+		
+		commonBranchInSameDegreeCurricularPlan = createBranchWithNameAndType(BranchType.COMNBR,"");
 		
 		IDegreeCurricularPlan dcp = new DegreeCurricularPlan();
-		dcp.setIdInternal(1);
 		nonCommonBranchToDelete.setDegreeCurricularPlan(dcp);
 		commonBranchInSameDegreeCurricularPlan.setDegreeCurricularPlan(dcp);
 		degreeCurricularPlan = dcp;
 		
 		IDegreeCurricularPlan otherDCP = new DegreeCurricularPlan();
-		otherDCP.setIdInternal(2);
 		commonBranchInOtherDegreeCurricularPlan.setDegreeCurricularPlan(otherDCP);
 		
 		ICurricularCourse cc1 = new CurricularCourse();
-		cc1.setIdInternal(1);
 		ICurricularCourse cc2 = new CurricularCourse();
-		cc2.setIdInternal(2);
 		ICurricularCourse cc3 = new CurricularCourse();
-		cc3.setIdInternal(3);
 		
 		ICurricularCourseScope ccs1 = new CurricularCourseScope();
-		ccs1.setIdInternal(1);
 		ccs1.setBranch(nonCommonBranchToDelete);
 		ccs1.setCurricularCourse(cc1);
 		curricularCoursesWithNoneHavingCCScopeInCommonBranch.add(cc1);
@@ -85,7 +170,6 @@ public class BranchTest extends DomainTestBase {
 		curricularCourseScopesToCommonBranch.add(ccs1);
 
 		ICurricularCourseScope ccs2 = new CurricularCourseScope();
-		ccs2.setIdInternal(2);
 		ccs2.setBranch(nonCommonBranchToDelete);
 		ccs2.setCurricularCourse(cc2);
 		curricularCoursesWithNoneHavingCCScopeInCommonBranch.add(cc2);
@@ -93,157 +177,61 @@ public class BranchTest extends DomainTestBase {
 		curricularCourseScopesToCommonBranch.add(ccs2);
 
 		ICurricularCourseScope ccs3 = new CurricularCourseScope();
-		ccs3.setIdInternal(3);
 		ccs3.setBranch(nonCommonBranchToDelete);
 		ccs3.setCurricularCourse(cc3);
 		curricularCourseScopesToDelete.add(ccs3);
 
 		ICurricularCourseScope ccs4 = new CurricularCourseScope();
-		ccs4.setIdInternal(4);
 		ccs4.setBranch(commonBranchInSameDegreeCurricularPlan);
 		ccs4.setCurricularCourse(cc3);
 		curricularCoursesWithOneHavingCCScopeInCommonBranch.add(cc3);
 		
 		ICurricularCourseScope ccs5 = new CurricularCourseScope();
-		ccs5.setIdInternal(5);
 		ccs5.setBranch(commonBranchInOtherDegreeCurricularPlan);
 		ccs5.setCurricularCourse(cc2);
 
 		ICurricularCourseGroup ccg1 = new OptionalCurricularCourseGroup();
-		ccg1.setIdInternal(1);
-		nonCommonBranchToDelete.addOptionalCurricularCourseGroups((IOptionalCurricularCourseGroup)ccg1);
 		nonCommonBranchToDelete.addCurricularCourseGroups(ccg1);
 		curricularCourseGroupsToCommonBranch.add(ccg1);
 		optionalCurricularCourseGroupsToCommonBranch.add((IOptionalCurricularCourseGroup)ccg1);
 		
 		ICurricularCourseGroup ccg2 = new AreaCurricularCourseGroup();
-		ccg2.setIdInternal(2);
-		nonCommonBranchToDelete.addAreaCurricularCourseGroups((IAreaCurricularCourseGroup) ccg2);
 		nonCommonBranchToDelete.addCurricularCourseGroups(ccg2);
 		curricularCourseGroupsToCommonBranch.add(ccg2);
 		areaCurricularCourseGroupsToCommonBranch.add((IAreaCurricularCourseGroup)ccg2);
 		
 		
 		IStudentCurricularPlan scp1 = new StudentCurricularPlan();
-		scp1.setIdInternal(1);
 		scp1.setBranch(nonCommonBranchToDelete);
 		studentCurricularPlans.add(scp1);
 		
 		IStudentCurricularPlanLEIC scp2 = new StudentCurricularPlanLEIC();
-		scp2.setIdInternal(2);
 		scp2.setBranch(nonCommonBranchToDelete);
 		scp2.setSecundaryBranch(nonCommonBranchToDelete);
 		studentCurricularPlansLEIC.add(scp2);
 		
 		IStudentCurricularPlanLEEC scp3 = new StudentCurricularPlanLEEC();
-		scp3.setIdInternal(3);
 		scp3.setBranch(nonCommonBranchToDelete);
 		scp3.setSecundaryBranch(nonCommonBranchToDelete);
 		studentCurricularPlansLEEC.add(scp3);
+	}
+	
+	private void setUpEditCase() {
+		branchToEdit = new Branch();
+		branchToEdit.setName("");
+		branchToEdit.setNameEn("");
+		branchToEdit.setCode("");
 		
-		
-		/* initialization of nonCommonBranchNotToDeleteWithProposals */
-		{
-		IProposal proposal1 = new Proposal();
-		proposal1.setIdInternal(1);
-		nonCommonBranchNotToDeleteWithProposals.addAssociatedFinalDegreeWorkProposals(proposal1);
-		
-		IOptionalCurricularCourseGroup opCCG = new OptionalCurricularCourseGroup();
-		opCCG.setIdInternal(20);
-		opCCG.setBranchForWhichThisIsOptionalCurricularCourseGroup(nonCommonBranchNotToDeleteWithProposals);
-		opCCG.setBranch(nonCommonBranchNotToDeleteWithProposals);
-		
-		IAreaCurricularCourseGroup areaCCG = new AreaCurricularCourseGroup();
-		areaCCG.setIdInternal(20);
-		areaCCG.setBranchForWhichThisIsAreaCurricularCourseGroup(nonCommonBranchNotToDeleteWithProposals);
-		areaCCG.setBranch(nonCommonBranchNotToDeleteWithProposals);
-		
-		IStudentCurricularPlan scpW = new StudentCurricularPlan();
-		scpW.setIdInternal(20);
-		scpW.setBranch(nonCommonBranchNotToDeleteWithProposals);
-		
-		IStudentCurricularPlanLEIC scpWLEIC = new StudentCurricularPlanLEIC();
-		scpWLEIC.setIdInternal(21);
-		scpWLEIC.setSecundaryBranch(nonCommonBranchNotToDeleteWithProposals);
-		
-		IStudentCurricularPlanLEEC scpWLEEC = new StudentCurricularPlanLEEC();
-		scpWLEEC.setIdInternal(22);
-		scpWLEEC.setSecundaryBranch(nonCommonBranchNotToDeleteWithProposals);
-		
-		IDegreeCurricularPlan dcpW = new DegreeCurricularPlan();
-		dcpW.setIdInternal(20);
-		dcpW.addAreas(nonCommonBranchNotToDeleteWithProposals);
-		
-		ICurricularCourseScope ccsW = new CurricularCourseScope();
-		ccsW.setIdInternal(20);
-		ccsW.setBranch(nonCommonBranchNotToDeleteWithProposals);
-		}
-		
-		/* initialization of commonBranchToDelete */
-		{
-		commonBranchToDelete = new Branch();
-		commonBranchToDelete.setIdInternal(30);
-		commonBranchToDelete.setBranchType(BranchType.COMNBR);
-		commonBranchToDelete.setName("");
-		
-		IStudentCurricularPlan scpD = new StudentCurricularPlan();
-		scpD.setIdInternal(30);
-		scpD.setBranch(commonBranchToDelete);
-		studentCurricularPlansInCommonBranchToDelete.add(scpD);
-		
-		IStudentCurricularPlanLEIC scpDLEIC = new StudentCurricularPlanLEIC();
-		scpDLEIC.setIdInternal(31);
-		scpDLEIC.setSecundaryBranch(commonBranchToDelete);
-		studentCurricularPlansLEICInCommonBranchToDelete.add(scpDLEIC);
-		
-		IStudentCurricularPlanLEEC scpDLEEC = new StudentCurricularPlanLEEC();
-		scpDLEEC.setIdInternal(32);
-		scpDLEEC.setSecundaryBranch(commonBranchToDelete);
-		studentCurricularPlansLEECInCommonBranchToDelete.add(scpDLEEC);
-		
-		IDegreeCurricularPlan dcpD = new DegreeCurricularPlan();
-		dcpD.setIdInternal(30);
-		dcpD.addAreas(commonBranchToDelete);
-		degreeCurricularPlanInCommonBranchToDelete = dcpD;
-		}
-		
-		/* initialization of commonBranchNotToDelete */
-		{
-			commonBranchNotToDelete = new Branch();
-			commonBranchNotToDelete.setIdInternal(40);
-			commonBranchNotToDelete.setBranchType(BranchType.COMNBR);
-			commonBranchNotToDelete.setName("");
-			
-			IOptionalCurricularCourseGroup opCCG = new OptionalCurricularCourseGroup();
-			opCCG.setIdInternal(40);
-			opCCG.setBranchForWhichThisIsOptionalCurricularCourseGroup(commonBranchNotToDelete);
-			opCCG.setBranch(commonBranchNotToDelete);
-			
-			IAreaCurricularCourseGroup areaCCG = new AreaCurricularCourseGroup();
-			areaCCG.setIdInternal(40);
-			areaCCG.setBranchForWhichThisIsAreaCurricularCourseGroup(commonBranchNotToDelete);
-			areaCCG.setBranch(commonBranchNotToDelete);
-			
-			IStudentCurricularPlan scpW = new StudentCurricularPlan();
-			scpW.setIdInternal(40);
-			scpW.setBranch(commonBranchNotToDelete);
-			
-			IStudentCurricularPlanLEIC scpWLEIC = new StudentCurricularPlanLEIC();
-			scpWLEIC.setIdInternal(41);
-			scpWLEIC.setSecundaryBranch(commonBranchNotToDelete);
-			
-			IStudentCurricularPlanLEEC scpWLEEC = new StudentCurricularPlanLEEC();
-			scpWLEEC.setIdInternal(42);
-			scpWLEEC.setSecundaryBranch(commonBranchNotToDelete);
-			
-			IDegreeCurricularPlan dcpW = new DegreeCurricularPlan();
-			dcpW.setIdInternal(40);
-			dcpW.addAreas(commonBranchNotToDelete);
-			
-			ICurricularCourseScope ccsW = new CurricularCourseScope();
-			ccsW.setIdInternal(40);
-			ccsW.setBranch(commonBranchNotToDelete);
-		}
+		editedName = "Ramo A";
+		editedNameEn = "Branch A";
+		editedCode = "1010";
+	}
+
+	private void setUpCreateCase() {
+		createdBranchName = "novo Ramo";
+		createdBranchNameEn = "new Branch";
+		createdBranchCode = "007";
+		createdBranchDCP = new DegreeCurricularPlan();
 	}
 	
 	protected void tearDown() throws Exception {
@@ -262,8 +250,6 @@ public class BranchTest extends DomainTestBase {
 		assertFalse(nonCommonBranchToDelete.hasDegreeCurricularPlan());
 		assertFalse(nonCommonBranchToDelete.hasAnyScopes());
 		assertFalse(nonCommonBranchToDelete.hasAnyCurricularCourseGroups());
-		assertFalse(nonCommonBranchToDelete.hasAnyOptionalCurricularCourseGroups());
-		assertFalse(nonCommonBranchToDelete.hasAnyAreaCurricularCourseGroups());
 		assertFalse(nonCommonBranchToDelete.hasAnyStudentCurricularPlans());
 		assertFalse(nonCommonBranchToDelete.hasAnySecundaryStudentCurricularPlansLEEC());
 		assertFalse(nonCommonBranchToDelete.hasAnySecundaryStudentCurricularPlansLEIC());
@@ -285,14 +271,6 @@ public class BranchTest extends DomainTestBase {
 			assertTrue(ccg.getBranch().representsCommonBranch());
 		}
 		
-		for (IOptionalCurricularCourseGroup ccg : optionalCurricularCourseGroupsToCommonBranch) {
-			assertTrue(ccg.getBranchForWhichThisIsOptionalCurricularCourseGroup().representsCommonBranch());
-		}
-		
-		for (IAreaCurricularCourseGroup ccg : areaCurricularCourseGroupsToCommonBranch) {
-			assertTrue(ccg.getBranchForWhichThisIsAreaCurricularCourseGroup().representsCommonBranch());
-		}
-
 		for (IStudentCurricularPlan scp : studentCurricularPlans) {
 			assertFalse(scp.hasBranch());
 		}
@@ -319,8 +297,6 @@ public class BranchTest extends DomainTestBase {
 		assertTrue(nonCommonBranchNotToDeleteWithProposals.hasDegreeCurricularPlan());
 		assertTrue(nonCommonBranchNotToDeleteWithProposals.hasAnyScopes());
 		assertTrue(nonCommonBranchNotToDeleteWithProposals.hasAnyCurricularCourseGroups());
-		assertTrue(nonCommonBranchNotToDeleteWithProposals.hasAnyOptionalCurricularCourseGroups());
-		assertTrue(nonCommonBranchNotToDeleteWithProposals.hasAnyAreaCurricularCourseGroups());
 		assertTrue(nonCommonBranchNotToDeleteWithProposals.hasAnyStudentCurricularPlans());
 		assertTrue(nonCommonBranchNotToDeleteWithProposals.hasAnySecundaryStudentCurricularPlansLEEC());
 		assertTrue(nonCommonBranchNotToDeleteWithProposals.hasAnySecundaryStudentCurricularPlansLEIC());
@@ -353,11 +329,27 @@ public class BranchTest extends DomainTestBase {
 		assertTrue(commonBranchNotToDelete.hasDegreeCurricularPlan());
 		assertTrue(commonBranchNotToDelete.hasAnyScopes());
 		assertTrue(commonBranchNotToDelete.hasAnyCurricularCourseGroups());
-		assertTrue(commonBranchNotToDelete.hasAnyOptionalCurricularCourseGroups());
-		assertTrue(commonBranchNotToDelete.hasAnyAreaCurricularCourseGroups());
 		assertTrue(commonBranchNotToDelete.hasAnyStudentCurricularPlans());
 		assertTrue(commonBranchNotToDelete.hasAnySecundaryStudentCurricularPlansLEEC());
 		assertTrue(commonBranchNotToDelete.hasAnySecundaryStudentCurricularPlansLEIC());
 	}
+	
+	public void testEdit() {
+		branchToEdit.edit(editedName,editedNameEn,editedCode);
+		
+		assertEquals(branchToEdit.getName(),editedName);
+		assertEquals(branchToEdit.getNameEn(),editedNameEn);
+		assertEquals(branchToEdit.getCode(),editedCode);
+	}
+	
+	public void testCreate() {
+		branchToCreate = new Branch(createdBranchName,createdBranchNameEn,createdBranchCode,createdBranchDCP);
+		
+		assertEquals (branchToCreate.getName(),createdBranchName);
+		assertEquals (branchToCreate.getNameEn(),createdBranchNameEn);
+		assertEquals (branchToCreate.getCode(),createdBranchCode);
+		assertEquals (branchToCreate.getDegreeCurricularPlan(),createdBranchDCP);
+	}
 }
+
 

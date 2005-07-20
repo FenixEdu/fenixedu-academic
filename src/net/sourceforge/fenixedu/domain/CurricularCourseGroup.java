@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
 
 /**
@@ -25,4 +26,8 @@ public abstract class CurricularCourseGroup extends CurricularCourseGroup_Base {
 			throw new DomainException(this.getClass().getName(), "ola mundo");			
 		}
 	}
+	
+	public void edit(String name, IBranch branch, Integer minimumValue, Integer maximumValue){}
+	
+	public void edit(String name, IBranch branch, Integer minimumValue, Integer maximumValue, AreaType areaType){}
 }
