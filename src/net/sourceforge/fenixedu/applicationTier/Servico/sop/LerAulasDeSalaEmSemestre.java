@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
@@ -32,44 +31,37 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class LerAulasDeSalaEmSemestre implements IService {
 
-    public LerAulasDeSalaEmSemestre() {
-    }
-
-    public List run(InfoExecutionPeriod infoExecutionPeriod, InfoRoom infoRoom, Integer executionPeriodId) {
+    public List run(InfoExecutionPeriod infoExecutionPeriod, InfoRoom infoRoom, Integer executionPeriodId)
+            throws ExcepcaoPersistencia {
         List infoAulas = null;
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-            IAulaPersistente lessonDAO = sp.getIAulaPersistente();
-            IExecutionPeriod executionPeriod = null;
-            if (executionPeriodId != null) {
-                executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
-                        ExecutionPeriod.class, executionPeriodId, false);
-            } else {
-                executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        IAulaPersistente lessonDAO = sp.getIAulaPersistente();
+        IExecutionPeriod executionPeriod = null;
+        if (executionPeriodId != null) {
+            executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+                    ExecutionPeriod.class, executionPeriodId, false);
+        } else {
+            executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+        }
+
+        List lessonList = lessonDAO.readByRoomAndExecutionPeriod(infoRoom.getIdInternal(),
+                executionPeriod.getIdInternal());
+
+        Iterator iterator = lessonList.iterator();
+        infoAulas = new ArrayList();
+        while (iterator.hasNext()) {
+            ILesson elem = (ILesson) iterator.next();
+            InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
+            IShift shift = elem.getShift();
+            if (shift == null) {
+                continue;
             }
+            InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
+            infoLesson.setInfoShift(infoShift);
 
-            IRoom room = Cloner.copyInfoRoom2Room(infoRoom);
-
-            List lessonList = lessonDAO.readByRoomAndExecutionPeriod(room.getIdInternal(), executionPeriod.getIdInternal());
-
-            Iterator iterator = lessonList.iterator();
-            infoAulas = new ArrayList();
-            while (iterator.hasNext()) {
-                ILesson elem = (ILesson) iterator.next();
-                InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
-                IShift shift = elem.getShift();
-                if (shift == null) {
-                    continue;
-                }
-                InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
-                infoLesson.setInfoShift(infoShift);
-
-                infoAulas.add(infoLesson);
-            }
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
+            infoAulas.add(infoLesson);
         }
         return infoAulas;
     }

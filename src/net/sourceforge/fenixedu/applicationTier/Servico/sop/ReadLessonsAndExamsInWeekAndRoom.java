@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IPeriod;
-import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.Period;
@@ -64,12 +63,11 @@ public class ReadLessonsAndExamsInWeekAndRoom implements IService {
             endDay.setTimeInMillis(startDay.getTimeInMillis());
             endDay.add(Calendar.DATE, 6);
             Period weekPeriod = new Period(day, endDay);
-            IRoom room = Cloner.copyInfoRoom2Room(infoRoom);
 
             Period lessonsPeriod = calculateLessonsSeason(executionPeriod);
             if (lessonsPeriod.intersectPeriods(weekPeriod)) {
                 //adicionar as aulas
-                List lessonList = lessonDAO.readByRoomAndExecutionPeriod(room.getIdInternal(), executionPeriod.getIdInternal());
+                List lessonList = lessonDAO.readByRoomAndExecutionPeriod(infoRoom.getIdInternal(), executionPeriod.getIdInternal());
                 Iterator iterator = lessonList.iterator();
 
                 while (iterator.hasNext()) {
@@ -126,7 +124,7 @@ public class ReadLessonsAndExamsInWeekAndRoom implements IService {
             }
 
             //adicionar os exames
-            List examList = examDAO.readByRoomAndWeek(room.getNome(), day);
+            List examList = examDAO.readByRoomAndWeek(infoRoom.getNome(), day);
             Iterator iteratorExams = examList.iterator();
 
             while (iteratorExams.hasNext()) {
