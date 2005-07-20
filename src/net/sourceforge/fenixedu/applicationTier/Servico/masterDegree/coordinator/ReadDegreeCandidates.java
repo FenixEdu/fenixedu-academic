@@ -20,15 +20,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ICandidateSituation;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -38,28 +34,13 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadDegreeCandidates implements IService {
 
-    public List run(InfoExecutionDegree infoExecutionDegree) throws ExcepcaoInexistente,
-            FenixServiceException {
+    public List run(InfoExecutionDegree infoExecutionDegree) throws ExcepcaoPersistencia {
 
-        ISuportePersistente sp = null;
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        List candidates = null;
-
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-            // Read the Candidates
-
-            IExecutionDegree executionDegree = Cloner
-                    .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
-
-            candidates = sp.getIPersistentMasterDegreeCandidate().readByExecutionDegree(executionDegree.getIdInternal());
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+        // Read the Candidates
+        List candidates = sp.getIPersistentMasterDegreeCandidate().readByExecutionDegree(
+                infoExecutionDegree.getIdInternal());
 
         if (candidates == null)
             return new ArrayList();
@@ -92,15 +73,10 @@ public class ReadDegreeCandidates implements IService {
     }
 
     public List run(Integer degreeCurricularPlanId) throws ExcepcaoPersistencia {
-
-        ISuportePersistente sp = null;
-
-        List candidates = null;
-
-        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         // Read the Candidates
-        candidates = sp.getIPersistentMasterDegreeCandidate().readByDegreeCurricularPlanId(
+        List candidates = sp.getIPersistentMasterDegreeCandidate().readByDegreeCurricularPlanId(
                 degreeCurricularPlanId);
 
         if (candidates == null)
@@ -132,4 +108,5 @@ public class ReadDegreeCandidates implements IService {
 
         return result;
     }
+
 }
