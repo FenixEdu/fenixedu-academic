@@ -1,14 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ISchoolClassShift;
-import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurmaTurnoPersistente;
@@ -21,22 +18,17 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadClassesWithShiftService implements IService {
 
     public Object run(InfoShift infoShift) throws ExcepcaoPersistencia {
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ITurmaTurnoPersistente classShiftDAO = sp.getITurmaTurnoPersistente();
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final List<ISchoolClassShift> shiftClasses = classShiftDAO.readClassesWithShift(infoShift
+                .getIdInternal());
 
-        ITurmaTurnoPersistente classShiftDAO = sp.getITurmaTurnoPersistente();
-
-        IShift shift = Cloner.copyInfoShift2Shift(infoShift);
-
-        List shiftClasses = classShiftDAO.readClassesWithShift(shift.getIdInternal());
-
-        Iterator iterator = shiftClasses.iterator();
-
-        List infoClasses = new ArrayList();
-        while (iterator.hasNext()) {
-            ISchoolClassShift element = (ISchoolClassShift) iterator.next();
+        List<InfoClass> infoClasses = new ArrayList<InfoClass>();
+        for (ISchoolClassShift element : shiftClasses) {
             infoClasses.add(InfoClass.newInfoFromDomain(element.getTurma()));
         }
         return infoClasses;
     }
+
 }

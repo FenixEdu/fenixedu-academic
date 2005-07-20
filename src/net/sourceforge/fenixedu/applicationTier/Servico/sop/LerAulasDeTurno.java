@@ -12,49 +12,38 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  * @author tfc130
  */
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
+import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class LerAulasDeTurno implements IService {
 
-    public List run(ShiftKey shiftKey) {
-        ArrayList infoAulas = null;
+    public List run(ShiftKey shiftKey) throws ExcepcaoPersistencia {
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ITurnoPersistente persistentShift = sp.getITurnoPersistente();
 
-        //   try {
-        //   ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IShift shift = persistentShift.readByNameAndExecutionCourse(shiftKey.getShiftName(), shiftKey
+                .getInfoExecutionCourse().getIdInternal());
+        final List<ILesson> aulas = shift.getAssociatedLessons();
 
-        IShift shift = Cloner.copyInfoShift2Shift(new InfoShift(shiftKey.getShiftName(), null, null,
-                shiftKey.getInfoExecutionCourse()));
-
-        //List aulas = sp.getITurnoAulaPersistente().readByShift(shift);
-        List aulas = shift.getAssociatedLessons();
-
-        Iterator iterator = aulas.iterator();
-        infoAulas = new ArrayList();
-
-        while (iterator.hasNext()) {
-            ILesson elem = (ILesson) iterator.next();
-
-            InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
+        List<InfoLesson> infoAulas = new ArrayList<InfoLesson>();
+        for (ILesson elem : aulas) {
+            InfoLesson infoLesson = InfoLesson.newInfoFromDomain(elem);
 
             InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
             infoLesson.setInfoShift(infoShift);
 
             infoAulas.add(infoLesson);
         }
-
-        //    } catch (ExcepcaoPersistencia ex) {
-        //      ex.printStackTrace();
-        //    }
-
         return infoAulas;
     }
 
