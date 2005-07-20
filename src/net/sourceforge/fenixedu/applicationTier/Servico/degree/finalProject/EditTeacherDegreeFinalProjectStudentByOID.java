@@ -38,31 +38,19 @@ import org.apache.commons.collections.Transformer;
  * @author jpvl
  */
 public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectService {
-    /**
-     * @author jpvl
-     */
-    public class ExecutionPeriodNotFoundException extends FenixServiceException {
 
-        /**
-         *  
-         */
+    public class ExecutionPeriodNotFoundException extends FenixServiceException {
         public ExecutionPeriodNotFoundException() {
             super();
         }
     }
 
-    /**
-     * @author jpvl
-     */
     public class StudentNotFoundServiceException extends FenixServiceException {
         public StudentNotFoundServiceException() {
             super();
         }
     }
 
-    /**
-     * @author jpvl
-     */
     public class StudentPercentageExceed extends FenixServiceException {
         private List infoTeacherDegreeFinalProjectStudentList;
 
@@ -81,32 +69,6 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
         }
     }
 
-    private static EditTeacherDegreeFinalProjectStudentByOID service = new EditTeacherDegreeFinalProjectStudentByOID();
-
-    /**
-     * The singleton access method of this class.
-     */
-    public static EditTeacherDegreeFinalProjectStudentByOID getService() {
-        return service;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(net.sourceforge.fenixedu.dataTransferObject.InfoObject)
-//     */
-//    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
-//        InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = (InfoTeacherDegreeFinalProjectStudent) infoObject;
-//        return Cloner
-//                .copyInfoTeacherDegreeFinalProjectStudent2ITeacherDegreeFinalProjectStudent(infoTeacherDegreeFinalProjectStudent);
-//    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#doBeforeLock(Dominio.IDomainObject,
-     *      net.sourceforge.fenixedu.dataTransferObject.InfoObject, ServidorPersistente.ISuportePersistente)
-     */
     protected void doBeforeLock(IDomainObject domainObjectToLock, InfoObject infoObject,
             ISuportePersistente sp) throws FenixServiceException {
         try {
@@ -120,8 +82,9 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
             IStudent student = studentDAO.readStudentByNumberAndDegreeType(infoStudent.getNumber(),
                     DegreeType.DEGREE);
 
-            IExecutionPeriod executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
-                    infoTeacherDegreeFinalProjectStudent.getInfoExecutionPeriod().getIdInternal());
+            IExecutionPeriod executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(
+                    ExecutionPeriod.class, infoTeacherDegreeFinalProjectStudent.getInfoExecutionPeriod()
+                            .getIdInternal());
 
             if (student == null) {
                 throw new StudentNotFoundServiceException();
@@ -133,7 +96,8 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
             IPersistentTeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudentDAO = sp
                     .getIPersistentTeacherDegreeFinalProjectStudent();
             List teacherDegreeFinalProjectStudentList = teacherDegreeFinalProjectStudentDAO
-                    .readByStudentAndExecutionPeriod(student.getIdInternal(), executionPeriod.getIdInternal());
+                    .readByStudentAndExecutionPeriod(student.getIdInternal(), executionPeriod
+                            .getIdInternal());
 
             double requestedPercentage = ((InfoTeacherDegreeFinalProjectStudent) infoObject)
                     .getPercentage().doubleValue();
@@ -165,39 +129,19 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException("Problems on database!", e);
         }
-    } /*
-       * (non-Javadoc)
-       * 
-       * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-       */
+    }
 
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentTeacherDegreeFinalProjectStudent();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome() {
-        return "EditTeacherDegreeFinalProjectStudentByOID";
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#readObjectByUnique(Dominio.IDomainObject,
-     *      ServidorPersistente.ISuportePersistente)
-     */
     protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
             throws ExcepcaoPersistencia, FenixServiceException {
         ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (ITeacherDegreeFinalProjectStudent) domainObject;
         IStudent student = teacherDegreeFinalProjectStudent.getStudent();
         IPersistentStudent studentDAO = sp.getIPersistentStudent();
 
-        student = studentDAO.readStudentByNumberAndDegreeType(student.getNumber(),
-                DegreeType.DEGREE);
+        student = studentDAO.readStudentByNumberAndDegreeType(student.getNumber(), DegreeType.DEGREE);
         if (student == null) {
             throw new StudentNotFoundServiceException();
         }
@@ -206,51 +150,46 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
         IPersistentTeacherDegreeFinalProjectStudent teacherDFPStudentDAO = sp
                 .getIPersistentTeacherDegreeFinalProjectStudent();
 
-        teacherDegreeFinalProjectStudent = teacherDFPStudentDAO
-                .readByUnique(
-                        teacherDegreeFinalProjectStudent.getTeacher().getIdInternal(),
-                        teacherDegreeFinalProjectStudent.getExecutionPeriod().getIdInternal(),
-                        teacherDegreeFinalProjectStudent.getStudent().getIdInternal());
+        teacherDegreeFinalProjectStudent = teacherDFPStudentDAO.readByUnique(
+                teacherDegreeFinalProjectStudent.getTeacher().getIdInternal(),
+                teacherDegreeFinalProjectStudent.getExecutionPeriod().getIdInternal(),
+                teacherDegreeFinalProjectStudent.getStudent().getIdInternal());
 
         return teacherDegreeFinalProjectStudent;
     }
 
-	@Override
-	protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
-		InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = (InfoTeacherDegreeFinalProjectStudent)infoObject;
-		ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent =(TeacherDegreeFinalProjectStudent)domainObject;
-		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-		IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-		
-		
-		IExecutionPeriod executionPeriod = (ExecutionPeriod)persistentExecutionPeriod.readByOID(ExecutionPeriod .class,infoTeacherDegreeFinalProjectStudent.getInfoExecutionPeriod().getIdInternal());
-		IStudent student = (Student) persistentStudent.readByOID(Student.class,infoTeacherDegreeFinalProjectStudent.getInfoStudent().getIdInternal());
-		ITeacher teacher = (Teacher)persistentTeacher.readByOID(Teacher.class,infoTeacherDegreeFinalProjectStudent.getInfoTeacher().getIdInternal());
-		
-		
-		teacherDegreeFinalProjectStudent.setExecutionPeriod(executionPeriod);
-		teacherDegreeFinalProjectStudent.setKeyExecutionPeriod(executionPeriod.getIdInternal());
-		teacherDegreeFinalProjectStudent.setKeyStudent(student.getIdInternal());
-		teacherDegreeFinalProjectStudent.setKeyTeacher(teacher.getIdInternal());
-		
-		teacherDegreeFinalProjectStudent.setPercentage(infoTeacherDegreeFinalProjectStudent.getPercentage());
-		
-		teacherDegreeFinalProjectStudent.setStudent(student);
-		teacherDegreeFinalProjectStudent.setTeacher(teacher);
-	
-		
-	}
+    @Override
+    protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject,
+            IDomainObject domainObject) throws ExcepcaoPersistencia {
+        InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = (InfoTeacherDegreeFinalProjectStudent) infoObject;
+        ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (TeacherDegreeFinalProjectStudent) domainObject;
+        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
-	@Override
-	protected IDomainObject createNewDomainObject(InfoObject infoObject) {
-		// TODO Auto-generated method stub
-		return new TeacherDegreeFinalProjectStudent();
-	}
+        IExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
+                ExecutionPeriod.class, infoTeacherDegreeFinalProjectStudent.getInfoExecutionPeriod()
+                        .getIdInternal());
+        IStudent student = (Student) persistentStudent.readByOID(Student.class,
+                infoTeacherDegreeFinalProjectStudent.getInfoStudent().getIdInternal());
+        ITeacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class,
+                infoTeacherDegreeFinalProjectStudent.getInfoTeacher().getIdInternal());
 
-	@Override
-	protected Class getDomainObjectClass() {
-		// TODO Auto-generated method stub
-		return TeacherDegreeFinalProjectStudent.class;
-	}
+        teacherDegreeFinalProjectStudent.setExecutionPeriod(executionPeriod);
+        teacherDegreeFinalProjectStudent.setPercentage(infoTeacherDegreeFinalProjectStudent
+                .getPercentage());
+        teacherDegreeFinalProjectStudent.setStudent(student);
+        teacherDegreeFinalProjectStudent.setTeacher(teacher);
+    }
+
+    @Override
+    protected IDomainObject createNewDomainObject(InfoObject infoObject) {
+        return new TeacherDegreeFinalProjectStudent();
+    }
+
+    @Override
+    protected Class getDomainObjectClass() {
+        return TeacherDegreeFinalProjectStudent.class;
+    }
+
 }
