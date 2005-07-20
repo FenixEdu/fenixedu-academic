@@ -96,14 +96,11 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProf
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.domain.Advisory;
-import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.domain.CurricularYear;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -516,19 +513,6 @@ public abstract class Cloner {
         InfoDegree infoDegree = new InfoDegree();
         copyObjectProperties(infoDegree, degree);
         return infoDegree;
-    }
-
-    /**
-     * Method copyInfoDegree2IDegree.
-     * 
-     * @param infoDegree
-     * @return IDegree
-     */
-    public static IDegree copyInfoDegree2IDegree(InfoDegree infoDegree) {
-        IDegree degree = new Degree();
-        copyObjectProperties(degree, infoDegree);
-        return degree;
-
     }
 
     /**
@@ -1061,24 +1045,6 @@ public abstract class Cloner {
 
     /**
      * @author dcs-rjao
-     * @param InfoDegreeCurricularPlan
-     * @return IDegreeCurricularPlan
-     */
-    public static IDegreeCurricularPlan copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(
-            InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
-        IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
-
-        IDegree degree = Cloner.copyInfoDegree2IDegree(infoDegreeCurricularPlan.getInfoDegree());
-
-        copyObjectProperties(degreeCurricularPlan, infoDegreeCurricularPlan);
-
-        degreeCurricularPlan.setDegree(degree);
-
-        return degreeCurricularPlan;
-    }
-
-    /**
-     * @author dcs-rjao
      * @param IDegreeCurricularPlan
      * @return InfoDegreeCurricularPlan
      */
@@ -1094,24 +1060,6 @@ public abstract class Cloner {
         infoDegreeCurricularPlan.setInfoDegree(infoDegree);
 
         return infoDegreeCurricularPlan;
-    }
-
-    /**
-     * @author dcs-rjao
-     * @param InfoBranch
-     * @return IBranch
-     */
-    public static IBranch copyInfoBranch2IBranch(InfoBranch infoBranch) {
-
-        IBranch branch = new Branch();
-        if (infoBranch != null) {
-            IDegreeCurricularPlan degreeCurricularPlan = Cloner
-                    .copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoBranch
-                            .getInfoDegreeCurricularPlan());
-            copyObjectProperties(branch, infoBranch);
-            branch.setDegreeCurricularPlan(degreeCurricularPlan);
-        }
-        return branch;
     }
 
     public static InfoCurricularCourse copyCurricularCourse2InfoCurricularCourseWithCurricularCourseScopes(
