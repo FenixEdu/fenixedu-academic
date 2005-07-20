@@ -31,6 +31,4 @@ public class IndirectionHandlerFenixImpl extends IndirectionHandlerDefaultImpl {
         }
     }
 
-    
-
 }
