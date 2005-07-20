@@ -186,5 +186,10 @@
 		element-class-ref="net.sourceforge.fenixedu.domain.teacher.TeachingCareer">
 		<inverse-foreignkey field-ref="keyCategory"/>
   	</collection-descriptor>
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		name="teacher"
+		element-class-ref="net.sourceforge.fenixedu.domain.Teacher">
+		<inverse-foreignkey field-ref="keyCategory"/>
+  	</collection-descriptor>
 </class-descriptor>
 
