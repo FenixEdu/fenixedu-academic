@@ -28,11 +28,7 @@ public class AnnouncementTest extends DomainTestBase {
         announcement.setTitle("Title");
         announcement.setInformation("Information");
         announcement.setSite(site);
-        announcement.setCreationDate(Calendar.getInstance().getTime());        
-    }
-
-    protected void tearDown() throws Exception {
-        super.tearDown();
+        announcement.setCreationDate(Calendar.getInstance().getTime());
     }
 
     public void testEditAnnouncement() {
@@ -40,33 +36,21 @@ public class AnnouncementTest extends DomainTestBase {
             announcement.edit(null, null);
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
-            assertEquals("Size unexpected!", 1, site.getAssociatedAnnouncementsCount());
-            assertEquals("Different Announcement Title!", "Title", announcement.getTitle());
-            assertEquals("Different Announcement Information!", "Information", announcement
-                    .getInformation());
-            assertEquals("Different Announcement Site!", site, announcement.getSite());
+            checkIfAnnouncementAttributesAreCorrect(1, "Title", "Information", this.site);
         }
 
         try {
             announcement.edit("TitleEdited", null);
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
-            assertEquals("Size unexpected!", 1, site.getAssociatedAnnouncementsCount());
-            assertEquals("Different Announcement Title!", "Title", announcement.getTitle());
-            assertEquals("Different Announcement Information!", "Information", announcement
-                    .getInformation());
-            assertEquals("Different Announcement Site!", site, announcement.getSite());
+            checkIfAnnouncementAttributesAreCorrect(1, "Title", "Information", this.site);
         }
 
         try {
             announcement.edit(null, "InformationEdited");
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
-            assertEquals("Size unexpected!", 1, site.getAssociatedAnnouncementsCount());
-            assertEquals("Different Announcement Title!", "Title", announcement.getTitle());
-            assertEquals("Different Announcement Information!", "Information", announcement
-                    .getInformation());
-            assertEquals("Different Announcement Site!", site, announcement.getSite());
+            checkIfAnnouncementAttributesAreCorrect(1, "Title", "Information", this.site);
         }
 
         final Date dateBeforeEdition = Calendar.getInstance().getTime();
@@ -75,11 +59,7 @@ public class AnnouncementTest extends DomainTestBase {
         sleep(1000);
         final Date dateAfterEdition = Calendar.getInstance().getTime();
 
-        assertEquals("Size unexpected!", 1, site.getAssociatedAnnouncementsCount());
-        assertEquals("Different Announcement Title!", "TitleEdited", announcement.getTitle());
-        assertEquals("Different Announcement Information!", "InformationEdited", announcement
-                .getInformation());
-        assertEquals("Different Announcement Site!", site, announcement.getSite());
+        checkIfAnnouncementAttributesAreCorrect(1, "TitleEdited", "InformationEdited", this.site);
         assertTrue("Expected CreationDate Before ModificationDate", announcement.getCreationDate()
                 .before(announcement.getLastModifiedDate()));
         assertTrue("Expected ModificationDate After an initial timestamp", announcement
@@ -91,7 +71,17 @@ public class AnnouncementTest extends DomainTestBase {
     public void testDeleteAnnouncement() {
         assertEquals("Size unexpected!", 1, site.getAssociatedAnnouncementsCount());
         announcement.delete();
-        assertEquals("Size unexpected in AssociatedAnnouncements!", 0, site.getAssociatedAnnouncementsCount());
+        assertEquals("Size unexpected in AssociatedAnnouncements!", 0, site
+                .getAssociatedAnnouncementsCount());
         assertNull("Expected Null Site in Announcement!", announcement.getSite());
     }
+
+    private void checkIfAnnouncementAttributesAreCorrect(final int size, final String title,
+            final String information, final ISite site) {
+        assertEquals("Size unexpected!", size, site.getAssociatedAnnouncementsCount());
+        assertEquals("Different Announcement Title!", title, announcement.getTitle());
+        assertEquals("Different Announcement Information!", information, announcement.getInformation());
+        assertEquals("Different Announcement Site!", site, announcement.getSite());
+    }
+
 }

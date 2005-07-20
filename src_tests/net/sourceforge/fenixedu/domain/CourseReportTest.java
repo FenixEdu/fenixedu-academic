@@ -28,18 +28,12 @@ public class CourseReportTest extends DomainTestBase {
         courseReport.setExecutionCourse(executionCourse);
     }
 
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
     public void testEdit() {
         try {
             courseReport.edit(null);
             fail("Expected Null Pointer Exception!");
         } catch (NullPointerException e) {
-            assertEquals("Different Report in CourseReport!", "report", courseReport.getReport());
-            assertEquals("Different ExecutionCourse in CourseReport!",
-                    courseReport.getExecutionCourse(), executionCourse);
+            checkIfCourseReportAttributesAreCorrect("report", this.executionCourse);            
         }
 
         final Date dateBeforeEdition = Calendar.getInstance().getTime();
@@ -48,9 +42,7 @@ public class CourseReportTest extends DomainTestBase {
         sleep(1000);
         final Date dateAfterEdition = Calendar.getInstance().getTime();
 
-        assertEquals("Different Report in CourseReport!", "newReport", courseReport.getReport());
-        assertEquals("Different ExecutionCourse in CourseReport!", courseReport.getExecutionCourse(),
-                executionCourse);
+        checkIfCourseReportAttributesAreCorrect("newReport", this.executionCourse);
         assertTrue("Expected LastModificationDate After an initial timestamp!", courseReport
                 .getLastModificationDate().after(dateBeforeEdition));
         assertTrue("Expected LastModificationDate Before an initial timestamp!", courseReport
@@ -62,6 +54,12 @@ public class CourseReportTest extends DomainTestBase {
                 executionCourse);
         courseReport.delete();
         assertNull("Expected Null ExecutionCourse in CourseReport!", courseReport.getExecutionCourse());
+    }
+    
+    private void checkIfCourseReportAttributesAreCorrect(final String report, final IExecutionCourse executionCourse) {
+        assertEquals("Different Report in CourseReport!", report, courseReport.getReport());
+        assertEquals("Different ExecutionCourse in CourseReport!", courseReport.getExecutionCourse(), executionCourse);
+        
     }
 
 }

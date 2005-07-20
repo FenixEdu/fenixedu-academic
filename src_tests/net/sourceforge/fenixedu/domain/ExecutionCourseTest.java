@@ -16,7 +16,7 @@ public class ExecutionCourseTest extends DomainTestBase {
 
         executionCourse = new ExecutionCourse();
         executionCourse.setIdInternal(0);
-        
+
         executionCourse.setNome("name");
         executionCourse.setSigla("acronym");
         executionCourse.setTheoreticalHours(4.0);
@@ -26,61 +26,33 @@ public class ExecutionCourseTest extends DomainTestBase {
         executionCourse.setComment("comment");
     }
 
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-    
     public void testEdit() {
         try {
             executionCourse.edit(null, null, 0.0, 0.0, 0.0, 0.0, null);
-            fail ("Expected NullPointerException!");
+            fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
-            assertEquals("Different ExecutionCourse Name!", "name", executionCourse.getNome());
-            assertEquals("Different ExecutionCourse Acronym!", "acronym", executionCourse.getSigla());
-            assertEquals("Different ExecutionCourse Theoretical Hours!", 4.0, executionCourse.getTheoreticalHours());
-            assertEquals("Different ExecutionCourse TheoreticalPratical Hours!", 0.0, executionCourse.getTheoPratHours());
-            assertEquals("Different ExecutionCourse Pratical Hours!", 2.0, executionCourse.getPraticalHours());
-            assertEquals("Different ExecutionCourse Laboratory Hours!", 0.0, executionCourse.getLabHours());
-            assertEquals("Different ExecutionCourse Comment!", "comment", executionCourse.getComment());
+            checkIfExecutionCourseAttributesAreCorrect("name", "acronym", 4.0, 0.0, 2.0, 0.0, "comment");
         }
-        
+
         try {
             executionCourse.edit(null, null, 0.0, 2.0, 0.0, 0.0, "newComment");
-            fail ("Expected NullPointerException!");
+            fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
-            assertEquals("Different ExecutionCourse Name!", "name", executionCourse.getNome());
-            assertEquals("Different ExecutionCourse Acronym!", "acronym", executionCourse.getSigla());
-            assertEquals("Different ExecutionCourse Theoretical Hours!", 4.0, executionCourse.getTheoreticalHours());
-            assertEquals("Different ExecutionCourse TheoreticalPratical Hours!", 0.0, executionCourse.getTheoPratHours());
-            assertEquals("Different ExecutionCourse Pratical Hours!", 2.0, executionCourse.getPraticalHours());
-            assertEquals("Different ExecutionCourse Laboratory Hours!", 0.0, executionCourse.getLabHours());
-            assertEquals("Different ExecutionCourse Comment!", "comment", executionCourse.getComment());
+            checkIfExecutionCourseAttributesAreCorrect("name", "acronym", 4.0, 0.0, 2.0, 0.0, "comment");
         }
-        
+
         try {
             executionCourse.edit("newName", null, 0.0, 0.0, 4.0, 0.0, null);
-            fail ("Expected NullPointerException!");
+            fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
-            assertEquals("Different ExecutionCourse Name!", "name", executionCourse.getNome());
-            assertEquals("Different ExecutionCourse Acronym!", "acronym", executionCourse.getSigla());
-            assertEquals("Different ExecutionCourse Theoretical Hours!", 4.0, executionCourse.getTheoreticalHours());
-            assertEquals("Different ExecutionCourse TheoreticalPratical Hours!", 0.0, executionCourse.getTheoPratHours());
-            assertEquals("Different ExecutionCourse Pratical Hours!", 2.0, executionCourse.getPraticalHours());
-            assertEquals("Different ExecutionCourse Laboratory Hours!", 0.0, executionCourse.getLabHours());
-            assertEquals("Different ExecutionCourse Comment!", "comment", executionCourse.getComment());
+            checkIfExecutionCourseAttributesAreCorrect("name", "acronym", 4.0, 0.0, 2.0, 0.0, "comment");
         }
-        
-        executionCourse.edit("newName", "newAcronym", 2.0, 1.0, 2.0, 1.0, "newComment");
-        assertEquals("Different ExecutionCourse Name!", "newName", executionCourse.getNome());
-        assertEquals("Different ExecutionCourse Acronym!", "newAcronym", executionCourse.getSigla());
-        assertEquals("Different ExecutionCourse Theoretical Hours!", 2.0, executionCourse.getTheoreticalHours());
-        assertEquals("Different ExecutionCourse TheoreticalPratical Hours!", 1.0, executionCourse.getTheoPratHours());
-        assertEquals("Different ExecutionCourse Pratical Hours!", 2.0, executionCourse.getPraticalHours());
-        assertEquals("Different ExecutionCourse Laboratory Hours!", 1.0, executionCourse.getLabHours());
-        assertEquals("Different ExecutionCourse Comment!", "newComment", executionCourse.getComment());
-        
-    }
 
+        executionCourse.edit("newName", "newAcronym", 2.0, 1.0, 2.0, 1.0, "newComment");
+        checkIfExecutionCourseAttributesAreCorrect("newName", "newAcronym", 2.0, 1.0, 2.0, 1.0,
+                "newComment");
+    }
+    
     public void testCreateSite() {
         executionCourse.setSite(null);
 
@@ -208,5 +180,21 @@ public class ExecutionCourseTest extends DomainTestBase {
         assertEquals("Different ExecutionCourse in CourseReport!", executionCourse.getCourseReport()
                 .getExecutionCourse(), executionCourse);
     }
+    
+    private void checkIfExecutionCourseAttributesAreCorrect(final String name, final String acronym,
+            final double theoreticalHours, final double theoreticalPraticalHours,
+            final double praticalHours, final double laboratoryHours, final String comment) {
 
+        assertEquals("Different ExecutionCourse Name!", name, executionCourse.getNome());
+        assertEquals("Different ExecutionCourse Acronym!", acronym, executionCourse.getSigla());
+        assertEquals("Different ExecutionCourse Theoretical Hours!", theoreticalHours, executionCourse
+                .getTheoreticalHours());
+        assertEquals("Different ExecutionCourse TheoreticalPratical Hours!", theoreticalPraticalHours,
+                executionCourse.getTheoPratHours());
+        assertEquals("Different ExecutionCourse Pratical Hours!", praticalHours, executionCourse
+                .getPraticalHours());
+        assertEquals("Different ExecutionCourse Laboratory Hours!", laboratoryHours, executionCourse
+                .getLabHours());
+        assertEquals("Different ExecutionCourse Comment!", comment, executionCourse.getComment());
+    }
 }

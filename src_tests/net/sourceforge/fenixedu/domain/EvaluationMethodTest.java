@@ -4,15 +4,15 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-
 public class EvaluationMethodTest extends DomainTestBase {
 
     private IExecutionCourse executionCourse;
+
     private IEvaluationMethod evaluationMethod;
-    
+
     protected void setUp() throws Exception {
         super.setUp();
-           
+
         executionCourse = new ExecutionCourse();
         executionCourse.setIdInternal(0);
 
@@ -20,11 +20,7 @@ public class EvaluationMethodTest extends DomainTestBase {
         evaluationMethod.setIdInternal(0);
         evaluationMethod.setEvaluationElements("evaluationElements");
         evaluationMethod.setEvaluationElementsEn("evaluationElementsEng");
-        evaluationMethod.setExecutionCourse(executionCourse);        
-    }
-
-    protected void tearDown() throws Exception {
-        super.tearDown();
+        evaluationMethod.setExecutionCourse(executionCourse);
     }
 
     public void testEdit() {
@@ -32,32 +28,43 @@ public class EvaluationMethodTest extends DomainTestBase {
             evaluationMethod.edit("newEvaluationElements", null);
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
-            assertEquals("Different EvaluationElements in EvaluationMethod!", "evaluationElements", evaluationMethod.getEvaluationElements());
-            assertEquals("Different EvaluationElementsEng in EvaluationMethod!", "evaluationElementsEng", evaluationMethod.getEvaluationElementsEn());
-            assertTrue("Different ExecutionCourse in EvaluationMethod!", evaluationMethod.getExecutionCourse().equals(executionCourse));
+            checkIfEvaluationMethodAttributesAreCorrect("evaluationElements", "evaluationElementsEng",
+                    this.executionCourse);
         }
 
         try {
             evaluationMethod.edit(null, "newEvaluationElementsEng");
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
-            assertEquals("Different EvaluationElements in EvaluationMethod!", "evaluationElements", evaluationMethod.getEvaluationElements());
-            assertEquals("Different EvaluationElementsEng in EvaluationMethod!", "evaluationElementsEng", evaluationMethod.getEvaluationElementsEn());
-            assertTrue("Different ExecutionCourse in EvaluationMethod!", evaluationMethod.getExecutionCourse().equals(executionCourse));
+            checkIfEvaluationMethodAttributesAreCorrect("evaluationElements", "evaluationElementsEng",
+                    this.executionCourse);
         }
-        
+
         evaluationMethod.edit("newEvaluationElements", "newEvaluationElementsEng");
-        assertEquals("Different EvaluationElements in EvaluationMethod!", "newEvaluationElements", evaluationMethod.getEvaluationElements());
-        assertEquals("Different EvaluationElementsEng in EvaluationMethod!", "newEvaluationElementsEng", evaluationMethod.getEvaluationElementsEn());
-        assertTrue("Different ExecutionCourse in EvaluationMethod!", evaluationMethod.getExecutionCourse().equals(executionCourse));
+        checkIfEvaluationMethodAttributesAreCorrect("newEvaluationElements", "newEvaluationElementsEng",
+                this.executionCourse);
     }
 
     public void testDelete() {
-        assertNotNull("Expected Not Null ExecutionCourse in EvaluationMethod!", evaluationMethod.getExecutionCourse());
-        assertNotNull("Expected Not Null EvaluationMethod in ExecutionCourse!", executionCourse.getEvaluationMethod());
+        assertNotNull("Expected Not Null ExecutionCourse in EvaluationMethod!", evaluationMethod
+                .getExecutionCourse());
+        assertNotNull("Expected Not Null EvaluationMethod in ExecutionCourse!", executionCourse
+                .getEvaluationMethod());
         evaluationMethod.delete();
-        assertNull("Expected Null ExecutionCourse in EvaluationMethod!", evaluationMethod.getExecutionCourse());
-        assertNull("Expected Null EvaluationMethod in ExecutionCourse!", executionCourse.getEvaluationMethod());
+        assertNull("Expected Null ExecutionCourse in EvaluationMethod!", evaluationMethod
+                .getExecutionCourse());
+        assertNull("Expected Null EvaluationMethod in ExecutionCourse!", executionCourse
+                .getEvaluationMethod());
+    }
+
+    private void checkIfEvaluationMethodAttributesAreCorrect(final String evaluationElements,
+            final String evaluationElementsEng, final IExecutionCourse executionCourse) {
+        assertEquals("Different EvaluationElements in EvaluationMethod!", evaluationElements,
+                evaluationMethod.getEvaluationElements());
+        assertEquals("Different EvaluationElementsEng in EvaluationMethod!", evaluationElementsEng,
+                evaluationMethod.getEvaluationElementsEn());
+        assertTrue("Different ExecutionCourse in EvaluationMethod!", evaluationMethod
+                .getExecutionCourse().equals(executionCourse));
     }
 
 }
