@@ -12,8 +12,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  * @author tfc130
  */
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
@@ -24,47 +22,27 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IPeriod;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.domain.IRoomOccupation;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class LerAulasDeTurma implements IService {
 
     public List run(InfoClass infoClass) throws ExcepcaoPersistencia {
-        ArrayList infoLessonList = null;
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        
+        final List<IShift> shiftList = sp.getITurmaTurnoPersistente().readByClass(infoClass.getIdInternal());
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        ITurmaPersistente persistentDomainClass = sp.getITurmaPersistente();
-        ISchoolClass group = null;
-        if (infoClass.getIdInternal() != null) {
-
-            group = (ISchoolClass) persistentDomainClass.readByOID(SchoolClass.class, infoClass
-                    .getIdInternal());
-        } else {
-            group = Cloner.copyInfoClass2Class(infoClass);
-        }
-
-        List shiftList = sp.getITurmaTurnoPersistente().readByClass(group.getIdInternal());
-
-        Iterator iterator = shiftList.iterator();
-
-        infoLessonList = new ArrayList();
-
-        while (iterator.hasNext()) {
-            IShift shift = (IShift) iterator.next();
+        List<InfoLesson> infoLessonList = new ArrayList<InfoLesson>();
+        for (IShift shift : shiftList) {
             final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
 
             final IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
@@ -77,11 +55,11 @@ public class LerAulasDeTurma implements IService {
                     .newInfoFromDomain(executionPeriod);
             infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod2);
 
-            final Collection lessons = shift.getAssociatedLessons();
-            final List infoLessons = new ArrayList(lessons.size());
+            final List<ILesson> lessons = shift.getAssociatedLessons();
+
+            final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>(lessons.size());
             infoShift.setInfoLessons(infoLessons);
-            for (final Iterator iterator2 = lessons.iterator(); iterator2.hasNext();) {
-                final ILesson lesson = (ILesson) iterator2.next();
+            for (ILesson lesson : lessons) {
                 final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
                 infoLesson.setInfoShift(infoShift);
                 infoLesson.setInfoShiftList(new ArrayList(1));
