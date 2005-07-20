@@ -110,7 +110,7 @@ public class EditTeacherInstitutionWorkingTimeByOID extends EditDomainObjectServ
     }
 
     @Override
-    protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject,
+    protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
             IDomainObject domainObject) throws ExcepcaoPersistencia {
         InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = (InfoTeacherInstitutionWorkTime) infoObject;
         ITeacherInstitutionWorkTime teacherInstitutionWorkTime = (TeacherInstitutionWorkTime) domainObject;

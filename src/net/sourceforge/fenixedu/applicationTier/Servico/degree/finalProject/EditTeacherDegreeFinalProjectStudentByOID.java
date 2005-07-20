@@ -159,7 +159,7 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
     }
 
     @Override
-    protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject,
+    protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
             IDomainObject domainObject) throws ExcepcaoPersistencia {
         InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = (InfoTeacherDegreeFinalProjectStudent) infoObject;
         ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (TeacherDegreeFinalProjectStudent) domainObject;

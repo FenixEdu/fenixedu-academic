@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 public class EditShiftProfessorshipByOID extends EditDomainObjectService {
 
     @Override
-    protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject,
+    protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
             IDomainObject domainObject) throws ExcepcaoPersistencia {
         InfoShiftProfessorship infoShiftProfessorship = (InfoShiftProfessorship) infoObject;
         IShiftProfessorship shiftProfessorship = (ShiftProfessorship) domainObject;

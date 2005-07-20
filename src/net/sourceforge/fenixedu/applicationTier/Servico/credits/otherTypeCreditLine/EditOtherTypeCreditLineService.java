@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 public class EditOtherTypeCreditLineService extends EditDomainObjectService {
 
     @Override
-    protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject,
+    protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
             IDomainObject domainObject) throws ExcepcaoPersistencia {
         InfoOtherTypeCreditLine infoOtherTypeCreditLine = (InfoOtherTypeCreditLine) infoObject;
         IOtherTypeCreditLine otherTypeCreditLine = (OtherTypeCreditLine) domainObject;
