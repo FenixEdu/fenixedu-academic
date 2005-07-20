@@ -15,8 +15,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -32,17 +32,15 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class CriarTurma implements IService {
 
     public Object run(final InfoClass infoTurma) throws ExcepcaoPersistencia, ExistingServiceException {
-
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final ISchoolClass turma = Cloner.copyInfoClass2Class(infoTurma);
+        final ITurmaPersistente schoolClassDAO = sp.getITurmaPersistente();
+        final List<ISchoolClass> listSchoolClasses = schoolClassDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(
+                infoTurma.getInfoExecutionPeriod().getIdInternal(), 
+                infoTurma.getAnoCurricular(), 
+                infoTurma.getInfoExecutionDegree().getIdInternal());
 
-        final ITurmaPersistente classDAO = sp.getITurmaPersistente();
-        final List listClasses = classDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(turma
-                .getExecutionPeriod().getIdInternal(), turma.getAnoCurricular(), turma
-                .getExecutionDegree().getIdInternal());
-
-        final ISchoolClass existingClass = (ISchoolClass) CollectionUtils.find(listClasses,
+        final ISchoolClass existingClass = (ISchoolClass) CollectionUtils.find(listSchoolClasses,
                 new Predicate() {
 
                     public boolean evaluate(Object arg0) {
@@ -56,20 +54,25 @@ public class CriarTurma implements IService {
             throw new ExistingServiceException("Duplicate Entry: " + infoTurma.getNome());
         }
 
+        ISchoolClass schoolClass = new SchoolClass();
+        sp.getITurmaPersistente().simpleLockWrite(schoolClass);
+        schoolClass.setNome(infoTurma.getNome());
+        schoolClass.setAnoCurricular(infoTurma.getAnoCurricular());
+        
+        final IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();        
+        schoolClass.setExecutionDegree(
+                executionDegreeDAO.readByDegreeCurricularPlanAndExecutionYear(
+                        infoTurma.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName(), 
+                        infoTurma.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree().getSigla(), 
+                        infoTurma.getInfoExecutionDegree().getInfoExecutionYear().getYear()));
+
         final IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
-        final IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
+        schoolClass.setExecutionPeriod(
+                executionPeriodDAO.readByNameAndExecutionYear(
+                        infoTurma.getInfoExecutionPeriod().getName(), 
+                        infoTurma.getInfoExecutionPeriod().getInfoExecutionYear().getYear()));
 
-        sp.getITurmaPersistente().simpleLockWrite(turma);
-        turma.setExecutionDegree(executionDegreeDAO.readByDegreeCurricularPlanAndExecutionYear(turma
-                .getExecutionDegree().getDegreeCurricularPlan().getName(), turma.getExecutionDegree()
-                .getDegreeCurricularPlan().getDegree().getSigla(), turma.getExecutionDegree()
-                .getExecutionYear().getYear()));
-
-        turma.setExecutionPeriod(executionPeriodDAO
-                .readByNameAndExecutionYear(turma.getExecutionPeriod().getName(), turma
-                        .getExecutionPeriod().getExecutionYear().getYear()));
-
-        return InfoClass.newInfoFromDomain(turma);
+        return InfoClass.newInfoFromDomain(schoolClass);
     }
 
 }
