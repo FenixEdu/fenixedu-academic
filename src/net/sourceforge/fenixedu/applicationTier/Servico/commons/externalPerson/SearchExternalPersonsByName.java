@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
+import net.sourceforge.fenixedu.domain.IExternalPerson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -29,8 +30,11 @@ public class SearchExternalPersonsByName implements IService {
 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            List externalPersons = sp.getIPersistentExternalPerson().readByName(name);
-            infoExternalPersons = Cloner.copyListIExternalPerson2ListInfoExternalPerson(externalPersons);
+            List<IExternalPerson> externalPersons = sp.getIPersistentExternalPerson().readByName(name);
+            
+            for (IExternalPerson externalPerson : externalPersons) {
+                infoExternalPersons.add(InfoExternalPerson.newInfoFromDomain(externalPerson));
+            }
 
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");

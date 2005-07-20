@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.IExternalPerson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -37,7 +36,7 @@ public class ReadExternalPersonByID implements IService {
             if (externalPerson == null)
                 throw new NonExistingServiceException("error.exception.commons.ExternalPersonNotFound");
 
-            infoExternalPerson = Cloner.copyIExternalPerson2InfoExternalPerson(externalPerson);
+            infoExternalPerson = InfoExternalPerson.newInfoFromDomain(externalPerson);
 
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");

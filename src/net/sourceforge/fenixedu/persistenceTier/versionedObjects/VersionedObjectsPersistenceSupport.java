@@ -125,6 +125,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionCourseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionPeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionYearVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExternalPersonVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuitySituationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuityTransactionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuityValuesVO;
@@ -514,7 +515,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentExternalPerson getIPersistentExternalPerson() {
-        return null;
+        return new ExternalPersonVO();
     }
 
     public IPersistentPaymentPhase getIPersistentPaymentPhase() {

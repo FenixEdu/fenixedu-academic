@@ -1,19 +1,6 @@
-/*
- * 
- * Created on 02 de Dezembro de 2002, 16:25
- */
-
-/**
- * 
- * Autores : - Nuno Nunes (nmsn@rnl.ist.utl.pt) - Joana Mota
- * (jccm@rnl.ist.utl.pt)
- *  
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonWithInfoCountryAndAdvisories;
 import net.sourceforge.fenixedu.domain.IPerson;
@@ -24,27 +11,14 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadPersonByUsername implements IService {
 
-    public Object run(String username) throws ExcepcaoInexistente, FenixServiceException {
+    public InfoPerson run(String username) throws ExcepcaoInexistente, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = null;
-
-        IPerson person = null;
-
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
-
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
 
         if (person == null)
             throw new ExcepcaoInexistente("Unknown Person !!");
 
-        InfoPerson infoPerson = InfoPersonWithInfoCountryAndAdvisories.newInfoFromDomain(person);
-
-        return infoPerson;
+        return InfoPersonWithInfoCountryAndAdvisories.newInfoFromDomain(person);
     }
 }

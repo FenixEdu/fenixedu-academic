@@ -1615,10 +1615,12 @@ public abstract class Cloner {
         InfoEmployee infoEmployee = Cloner.copyIEmployee2InfoEmployee(masterDegreeProofVersion
                 .getResponsibleEmployee());
         List infoJuries = Cloner.copyListITeacher2ListInfoTeacher(masterDegreeProofVersion.getJuries());
-        List infoExternalPersonJuries = Cloner
-                .copyListIExternalPerson2ListInfoExternalPerson(masterDegreeProofVersion
-                        .getExternalJuries());
-
+        
+        List infoExternalPersonJuries = new ArrayList<InfoExternalPerson>();
+        for (IExternalPerson externalPerson : masterDegreeProofVersion.getExternalJuries()) {
+            infoExternalPersonJuries.add(InfoExternalPerson.newInfoFromDomain(externalPerson));
+        }
+        
         infoMasterDegreeProofVersion.setInfoMasterDegreeThesis(infoMasterDegreeThesis);
         infoMasterDegreeProofVersion.setInfoResponsibleEmployee(infoEmployee);
         infoMasterDegreeProofVersion.setInfoJuries(infoJuries);
@@ -1677,34 +1679,6 @@ public abstract class Cloner {
         externalPerson.setWorkLocation(workLocation);
 
         return externalPerson;
-    }
-
-    public static InfoExternalPerson copyIExternalPerson2InfoExternalPerson(
-            IExternalPerson externalPerson) {
-        InfoExternalPerson infoExternalPerson = new InfoExternalPerson();
-        copyObjectProperties(infoExternalPerson, externalPerson);
-        InfoPerson infoPerson = Cloner.copyIPerson2InfoPerson(externalPerson.getPerson());
-        infoExternalPerson.setInfoPerson(infoPerson);
-        InfoWorkLocation infoWorkLocation = Cloner.copyIWorkLocation2InfoWorkLocation(externalPerson
-                .getWorkLocation());
-        infoExternalPerson.setInfoWorkLocation(infoWorkLocation);
-
-        return infoExternalPerson;
-    }
-
-    public static List copyListIExternalPerson2ListInfoExternalPerson(List listIExternalPerson) {
-        List listInfoExternalPersons = new ArrayList();
-
-        Iterator iterListIExternalPerson = listIExternalPerson.iterator();
-
-        while (iterListIExternalPerson.hasNext()) {
-            IExternalPerson externalPerson = (IExternalPerson) iterListIExternalPerson.next();
-            InfoExternalPerson infoExternalPerson = Cloner
-                    .copyIExternalPerson2InfoExternalPerson(externalPerson);
-            listInfoExternalPersons.add(infoExternalPerson);
-        }
-
-        return listInfoExternalPersons;
     }
 
     public static List copyListInfoExternalPerson2ListIExternalPerson(List listInfoExternalPerson) {

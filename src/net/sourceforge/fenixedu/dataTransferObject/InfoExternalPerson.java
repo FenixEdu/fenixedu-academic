@@ -64,4 +64,12 @@ public class InfoExternalPerson extends InfoObject {
         }
         return infoExternalPerson;
     }
+    
+    public void copyFromDomain(IExternalPerson externalPerson) {
+        super.copyFromDomain(externalPerson);
+        
+        setInfoPerson(InfoPerson.newInfoFromDomain(externalPerson.getPerson()));
+        setInfoWorkLocation(InfoWorkLocation.newInfoFromDomain(externalPerson.getWorkLocation()));
+        
+    }
 }

@@ -22,18 +22,13 @@ public class InsertPublication implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentPublicationType persistentPublicationType = sp.getIPersistentPublicationType();
 
-        // Write the authors to the AUTHOR table
         List infoAuthorsList = infoPublication.getInfoPublicationAuthors();
 
-        // Call the InsertAuthors Service to insert in the DB the
-        // PublicationAuthors
-        final InsertInexistentAuthors iia = new InsertInexistentAuthors();
-        final List<IPerson> authors = iia.run(infoAuthorsList);
+        final List<IPerson> authors = new InsertInexistentAuthors().run(infoAuthorsList);
 
         IPublicationType publicationType = (IPublicationType) persistentPublicationType.readByOID(
                 PublicationType.class, infoPublication.getInfoPublicationType().getIdInternal());
         
-        // Create the Publication
         new Publication(infoPublication,publicationType,authors);
 
     }
