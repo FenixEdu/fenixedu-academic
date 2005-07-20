@@ -86,12 +86,8 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoExternalActivity;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOldPublication;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOrientation;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoProfessionalCareer;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoPublicationsNumber;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRegime;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoTeachingCareer;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime;
@@ -199,16 +195,8 @@ import net.sourceforge.fenixedu.domain.teacher.ICareer;
 import net.sourceforge.fenixedu.domain.teacher.ICategory;
 import net.sourceforge.fenixedu.domain.teacher.IExternalActivity;
 import net.sourceforge.fenixedu.domain.teacher.IOldPublication;
-import net.sourceforge.fenixedu.domain.teacher.IOrientation;
 import net.sourceforge.fenixedu.domain.teacher.IProfessionalCareer;
-import net.sourceforge.fenixedu.domain.teacher.IPublicationsNumber;
-import net.sourceforge.fenixedu.domain.teacher.IServiceProviderRegime;
 import net.sourceforge.fenixedu.domain.teacher.ITeachingCareer;
-import net.sourceforge.fenixedu.domain.teacher.IWeeklyOcupation;
-import net.sourceforge.fenixedu.domain.teacher.Orientation;
-import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;
-import net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime;
-import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.domain.teacher.workTime.ITeacherInstitutionWorkTime;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -1781,21 +1769,6 @@ public abstract class Cloner {
     }
 
     /**
-     * @param infoWeeklyOcupation
-     * @return
-     */
-    public static IWeeklyOcupation copyInfoWeeklyOcupation2IWeeklyOcupation(
-            InfoWeeklyOcupation infoWeeklyOcupation) {
-        IWeeklyOcupation weeklyOcupation = new WeeklyOcupation();
-        ITeacher teacher = copyInfoTeacher2Teacher(infoWeeklyOcupation.getInfoTeacher());
-        copyObjectProperties(weeklyOcupation, infoWeeklyOcupation);
-
-        weeklyOcupation.setTeacher(teacher);
-
-        return weeklyOcupation;
-    }
-
-    /**
      * @param externalActivity
      * @return
      */
@@ -1808,40 +1781,6 @@ public abstract class Cloner {
         infoExternalActivity.setInfoTeacher(infoTeacher);
 
         return infoExternalActivity;
-    }
-
-    /**
-     * @param infoServiceProviderRegime
-     * @return
-     */
-    public static IServiceProviderRegime copyInfoServiceProviderRegime2IServiceProviderRegime(
-            InfoServiceProviderRegime infoServiceProviderRegime) {
-        IServiceProviderRegime serviceProviderRegime = new ServiceProviderRegime();
-        ITeacher teacher = copyInfoTeacher2Teacher(infoServiceProviderRegime.getInfoTeacher());
-        copyObjectProperties(serviceProviderRegime, infoServiceProviderRegime);
-
-        serviceProviderRegime.setTeacher(teacher);
-
-        return serviceProviderRegime;
-    }
-
-    public static IOrientation copyInfoOrientation2IOrientation(InfoOrientation infoOrientation) {
-        IOrientation orientation = new Orientation();
-        ITeacher teacher = Cloner.copyInfoTeacher2Teacher(infoOrientation.getInfoTeacher());
-        copyObjectProperties(orientation, infoOrientation);
-
-        orientation.setTeacher(teacher);
-        return orientation;
-    }
-
-    public static IPublicationsNumber copyInfoPublicationsNumber2IPublicationsNumber(
-            InfoPublicationsNumber infoPublicationsNumber) {
-        IPublicationsNumber publicationsNumber = new PublicationsNumber();
-        ITeacher teacher = Cloner.copyInfoTeacher2Teacher(infoPublicationsNumber.getInfoTeacher());
-        copyObjectProperties(publicationsNumber, infoPublicationsNumber);
-
-        publicationsNumber.setTeacher(teacher);
-        return publicationsNumber;
     }
 
     public static InfoOldPublication copyIOldPublication2InfoOldPublication(
