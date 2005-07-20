@@ -106,7 +106,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
@@ -162,7 +161,6 @@ import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.domain.IScientificArea;
 import net.sourceforge.fenixedu.domain.ISection;
-import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IShiftProfessorship;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.ISiteIST;
@@ -180,8 +178,6 @@ import net.sourceforge.fenixedu.domain.Period;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Room;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
-import net.sourceforge.fenixedu.domain.SchoolClass;
-import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.University;
@@ -280,17 +276,6 @@ public abstract class Cloner {
             }
             return parameters;
         }
-    }
-
-    public static IShift copyInfoShift2Shift(InfoShift infoShift) {
-        IShift shift = new Shift();
-        IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoShift
-                .getInfoDisciplinaExecucao());
-        copyObjectProperties(shift, infoShift);
-
-        shift.setDisciplinaExecucao(executionCourse);
-        shift.setIdInternal(infoShift.getIdInternal());
-        return shift;
     }
 
     /**
@@ -458,33 +443,6 @@ public abstract class Cloner {
     }
 
     /**
-     * @param infoExecutionDegree
-     * @return IExecutionDegree
-     */
-    public static IExecutionDegree copyInfoExecutionDegree2ExecutionDegree(
-            InfoExecutionDegree infoExecutionDegree) {
-
-        IExecutionDegree executionDegree = new ExecutionDegree();
-        IDegreeCurricularPlan degreeCurricularPlan = Cloner
-                .copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoExecutionDegree
-                        .getInfoDegreeCurricularPlan());
-
-        IExecutionYear executionYear = Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionDegree
-                .getInfoExecutionYear());
-
-        copyObjectProperties(executionDegree, infoExecutionDegree);
-
-        executionDegree.setExecutionYear(executionYear);
-        executionDegree.setDegreeCurricularPlan(degreeCurricularPlan);
-
-        ICampus campus = Cloner.copyInfoCampus2ICampus(infoExecutionDegree.getInfoCampus());
-        executionDegree.setCampus(campus);
-
-        return executionDegree;
-
-    }
-
-    /**
      * @param executionDegree
      * @return InfoExecutionDegree
      */
@@ -596,27 +554,6 @@ public abstract class Cloner {
         executionPeriod.setExecutionYear(executionYear);
 
         return executionPeriod;
-    }
-
-    /**
-     * Method copyInfoClass2Class.
-     * 
-     * @param infoTurma
-     * @return ISchoolClass
-     */
-    public static ISchoolClass copyInfoClass2Class(InfoClass infoClass) {
-        ISchoolClass domainClass = new SchoolClass();
-
-        IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoClass
-                .getInfoExecutionPeriod());
-        IExecutionDegree executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoClass
-                .getInfoExecutionDegree());
-
-        copyObjectProperties(domainClass, infoClass);
-
-        domainClass.setExecutionDegree(executionDegree);
-        domainClass.setExecutionPeriod(executionPeriod);
-        return domainClass;
     }
 
     /**
@@ -1391,7 +1328,6 @@ public abstract class Cloner {
         copyObjectProperties(infoStudentKind, studentGroupInfo);
         return infoStudentKind;
     }
-
 
     /**
      * @author dcs-rjao
