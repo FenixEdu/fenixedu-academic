@@ -10,9 +10,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -24,23 +21,16 @@ public class LerTurma implements IService {
     public InfoClass run(String className, InfoExecutionDegree infoExecutionDegree,
             InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia {
 
-        InfoClass infoTurma = null;
-
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        IExecutionPeriod executionPeriod = Cloner
-                .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
-        IExecutionDegree executionDegree = Cloner
-                .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
-
-        ISchoolClass turma = sp.getITurmaPersistente().readByNameAndExecutionDegreeAndExecutionPeriod(
-                className, executionDegree.getIdInternal(), executionPeriod.getIdInternal());
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISchoolClass turma = sp.getITurmaPersistente()
+                .readByNameAndExecutionDegreeAndExecutionPeriod(className,
+                        infoExecutionDegree.getIdInternal(), infoExecutionPeriod.getIdInternal());
 
         if (turma != null) {
-            infoTurma = InfoClass.newInfoFromDomain(turma);
+            return InfoClass.newInfoFromDomain(turma);
         }
 
-        return infoTurma;
+        return null;
     }
 
 }
