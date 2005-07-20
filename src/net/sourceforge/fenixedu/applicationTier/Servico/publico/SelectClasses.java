@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ISchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -20,29 +17,19 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class SelectClasses implements IService {
 
     public Object run(InfoClass infoClass) throws ExcepcaoPersistencia {
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ITurmaPersistente classDAO = sp.getITurmaPersistente();
 
-        List classes = new ArrayList();
-        List infoClasses = new ArrayList();
+        List<ISchoolClass> classes = classDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(
+                infoClass.getInfoExecutionPeriod().getIdInternal(), infoClass.getAnoCurricular(),
+                infoClass.getInfoExecutionDegree().getIdInternal());
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        ITurmaPersistente classDAO = sp.getITurmaPersistente();
-
-        IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoClass
-                .getInfoExecutionPeriod());
-        IExecutionDegree executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoClass
-                .getInfoExecutionDegree());
-
-        classes = classDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(executionPeriod
-                .getIdInternal(), infoClass.getAnoCurricular(), executionDegree.getIdInternal());
-
-        for (int i = 0; i < classes.size(); i++) {
-            ISchoolClass taux = (ISchoolClass) classes.get(i);
+        List<InfoClass> infoClasses = new ArrayList<InfoClass>();
+        for (ISchoolClass taux : classes) {
             infoClasses.add(InfoClass.newInfoFromDomain(taux));
         }
 
         return infoClasses;
-
     }
 
 }
