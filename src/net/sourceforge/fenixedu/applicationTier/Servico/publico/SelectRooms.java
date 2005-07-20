@@ -17,7 +17,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IServico;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -73,7 +72,7 @@ public class SelectRooms implements IServico {
 
         while (iter.hasNext()) {
             sala = (IRoom) iter.next();
-            salasView.add(Cloner.copyRoom2InfoRoom(sala));
+            salasView.add(InfoRoom.newInfoFromDomain(sala));
         }
 
         return salasView;
