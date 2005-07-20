@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
@@ -16,7 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWith
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.ICandidateSituation;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
@@ -33,26 +31,14 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadMasterDegreeCandidate implements IService {
 
     public InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree,
-            Integer candidateNumber, Specialization degreeType) throws FenixServiceException {
+            Integer candidateNumber, Specialization degreeType) throws ExcepcaoPersistencia {
 
-        ISuportePersistente sp = null;
-        IMasterDegreeCandidate masterDegreeCandidate = null;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IExecutionDegree executionDegree = Cloner
-                    .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
-
-            // Read the candidates
-
-            masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
-                    .readByNumberAndExecutionDegreeAndSpecialization(candidateNumber, executionDegree.getIdInternal(),
-                            degreeType);
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+        // Read the candidates
+        IMasterDegreeCandidate masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
+                .readByNumberAndExecutionDegreeAndSpecialization(candidateNumber,
+                        infoExecutionDegree.getIdInternal(), degreeType);
 
         if (masterDegreeCandidate == null)
             return null;
@@ -76,27 +62,19 @@ public class ReadMasterDegreeCandidate implements IService {
     }
 
     public InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, InfoPerson infoPerson)
-            throws FenixServiceException {
+            throws ExcepcaoPersistencia {
 
-        ISuportePersistente sp = null;
-        IMasterDegreeCandidate masterDegreeCandidate = null;
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IExecutionDegree executionDegree = Cloner
-                    .copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
-            IPerson person = (IPerson)sp.getIPessoaPersistente().readByOID(Person.class,infoPerson.getIdInternal());
-            infoPerson.copyToDomain(infoPerson,person);
+        IPerson person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,
+                infoPerson.getIdInternal());
+        infoPerson.copyToDomain(infoPerson, person);
 
-            // Read the candidates
+        // Read the candidates
 
-            masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
-                    .readByExecutionDegreeAndPerson(executionDegree.getIdInternal(), person.getIdInternal());
-        } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
+        IMasterDegreeCandidate masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
+                .readByExecutionDegreeAndPerson(infoExecutionDegree.getIdInternal(),
+                        person.getIdInternal());
 
         if (masterDegreeCandidate == null)
             return null;
