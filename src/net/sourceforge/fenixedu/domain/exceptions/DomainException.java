@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.exceptions;
 
-public class DomainException extends Exception {
+public class DomainException extends RuntimeException {
 
     private final String key;
     private final String[] args;
