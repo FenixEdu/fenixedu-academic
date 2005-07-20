@@ -22,53 +22,33 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 public class EditManagementPositionCreditLineService extends EditDomainObjectService {
 
     @Override
-	protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) throws ExcepcaoPersistencia {
-		InfoManagementPositionCreditLine infoManagementPositionCreditLine = (InfoManagementPositionCreditLine)infoObject;
-		IManagementPositionCreditLine managementPositionCreditLine = (ManagementPositionCreditLine)domainObject;
-		managementPositionCreditLine.setCredits(infoManagementPositionCreditLine.getCredits());
-		managementPositionCreditLine.setEnd(infoManagementPositionCreditLine.getEnd());
-		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-		ITeacher teacher = (Teacher)persistentTeacher.readByOID(Teacher.class,infoManagementPositionCreditLine.getInfoTeacher().getIdInternal());
-		
-		managementPositionCreditLine.setKeyTeacher(teacher.getIdInternal());
-		
-		managementPositionCreditLine.setPosition(infoManagementPositionCreditLine.getPosition());
-		managementPositionCreditLine.setStart(infoManagementPositionCreditLine.getStart());
-		
-		managementPositionCreditLine.setTeacher(teacher);
-		
-		
-		
-	}
+    protected void copyInformationFromIntoToDomain(ISuportePersistente sp, InfoObject infoObject,
+            IDomainObject domainObject) throws ExcepcaoPersistencia {
+        InfoManagementPositionCreditLine infoManagementPositionCreditLine = (InfoManagementPositionCreditLine) infoObject;
+        IManagementPositionCreditLine managementPositionCreditLine = (ManagementPositionCreditLine) domainObject;
+        managementPositionCreditLine.setCredits(infoManagementPositionCreditLine.getCredits());
+        managementPositionCreditLine.setEnd(infoManagementPositionCreditLine.getEnd());
+        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        ITeacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class,
+                infoManagementPositionCreditLine.getInfoTeacher().getIdInternal());
 
-	@Override
-	protected IDomainObject createNewDomainObject(InfoObject infoObject) {
-		// TODO Auto-generated method stub
-		return new ManagementPositionCreditLine();
-	}
+        managementPositionCreditLine.setPosition(infoManagementPositionCreditLine.getPosition());
+        managementPositionCreditLine.setStart(infoManagementPositionCreditLine.getStart());
+        managementPositionCreditLine.setTeacher(teacher);
+    }
 
-	@Override
-	protected Class getDomainObjectClass() {
-		// TODO Auto-generated method stub
-		return ManagementPositionCreditLine.class;
-	}
+    @Override
+    protected IDomainObject createNewDomainObject(InfoObject infoObject) {
+        return new ManagementPositionCreditLine();
+    }
 
-	/*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(net.sourceforge.fenixedu.dataTransferObject.InfoObject)
-     */
-//    protected IDomainObject clone2DomainObject(InfoObject infoObject) {
-//        return Cloner
-//                .copyInfoManagementPositionCreditLine2IManagementPositionCreditLine((InfoManagementPositionCreditLine) infoObject);
-//    }
+    @Override
+    protected Class getDomainObjectClass() {
+        return ManagementPositionCreditLine.class;
+    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-     */
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentManagementPositionCreditLine();
     }
+
 }
