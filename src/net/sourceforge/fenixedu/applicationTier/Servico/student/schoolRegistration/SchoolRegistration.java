@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.IPersonalDataUseInquiryAnswers;
 import net.sourceforge.fenixedu.domain.student.IResidenceCandidacies;
@@ -78,11 +77,7 @@ public class SchoolRegistration implements IService {
 
             public boolean evaluate(Object arg0) {
                 IRole role = (IRole) arg0;
-
-                IRole newRole = new Role();
-                newRole.setRoleType(RoleType.FIRST_TIME_STUDENT);
-
-                return role.equals(newRole);
+                return role.getRoleType().equals(RoleType.FIRST_TIME_STUDENT);
             }
         });
 
@@ -158,11 +153,7 @@ public class SchoolRegistration implements IService {
 
             public boolean evaluate(Object arg0) {
                 IRole role = (IRole) arg0;
-
-                IRole newRole = new Role();
-                newRole.setRoleType(RoleType.FIRST_TIME_STUDENT);
-
-                return !role.equals(newRole);
+                return !role.getRoleType().equals(RoleType.FIRST_TIME_STUDENT);
             }
         });
 
