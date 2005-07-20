@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoAdvisory;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.Advisory;
 import net.sourceforge.fenixedu.domain.IAdvisory;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IRole;
@@ -40,12 +40,19 @@ public class CreateAdvisory implements IService {
 
     public Boolean run(InfoAdvisory infoAdvisory, AdvisoryRecipients advisoryRecipients)
             throws ExcepcaoPersistencia {
-        final ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente persistenceSupport = PersistenceSupportFactory
+                .getDefaultPersistenceSupport();
         final IPersistentAdvisory persistentAdvisory = persistenceSupport.getIPersistentAdvisory();
         final IPessoaPersistente persistentPerson = persistenceSupport.getIPessoaPersistente();
 
-        final IAdvisory advisory = Cloner.copyInfoAdvisory2IAdvisory(infoAdvisory);
+        final IAdvisory advisory = new Advisory();
         persistentAdvisory.simpleLockWrite(advisory);
+        advisory.setCreated(infoAdvisory.getCreated());
+        advisory.setSubject(infoAdvisory.getSubject());
+        advisory.setOnlyShowOnce(infoAdvisory.getOnlyShowOnce());
+        advisory.setExpires(infoAdvisory.getExpires());
+        advisory.setMessage(infoAdvisory.getMessage());
+        advisory.setSender(infoAdvisory.getSender());
 
         final Collection people = persistentPerson.readAll(Person.class);
         for (final Iterator iterator = people.iterator(); iterator.hasNext();) {
