@@ -1715,42 +1715,8 @@ public abstract class Cloner {
         return roomOccupation;
     }
 
-    /**
-     * Method copyInfoExecutionYear2IExecutionYear.
-     * 
-     * @param infoExecutionYear
-     * @return IExecutionYear
-     */
-    public static IExecutionYear copyInfoExecutionYear2IExecutionYear(InfoExecutionYear infoExecutionYear) {
-        IExecutionYear executionYear = new ExecutionYear();
-        try {
-            BeanUtils.copyProperties(executionYear, infoExecutionYear);
-        } catch (Exception e) {
 
-            throw new RuntimeException(e);
-        }
-        return executionYear;
-    }
 
-    /**
-     * Method copyInfoDegree2IDegree.
-     * 
-     * @param infoDegree
-     * @return IDegree
-     */
-    public static IDegree copyInfoDegree2IDegree(InfoDegree infoDegree) {
-        IDegree degree = new Degree();
-        copyObjectProperties(degree, infoDegree);
-        return degree;
-
-    }
-
-    /**
-     * Method copyInfoExecutionPeriod2IExecutionPeriod.
-     * 
-     * @param infoExecutionPeriod
-     * @return IExecutionPeriod
-     */
     public static IExecutionPeriod copyInfoExecutionPeriod2IExecutionPeriod(
             InfoExecutionPeriod infoExecutionPeriod) {
 
@@ -1758,7 +1724,12 @@ public abstract class Cloner {
         InfoExecutionYear infoExecutionYear = infoExecutionPeriod.getInfoExecutionYear();
         IExecutionYear executionYear = null;
         if (infoExecutionYear != null) {
-            executionYear = Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionYear);
+            executionYear = new ExecutionYear();
+            try {
+                BeanUtils.copyProperties(executionYear, infoExecutionYear);
+            } catch (Exception e) {
+                    throw new RuntimeException(e);
+            }
         } else {
             copyObjectProperties(executionYear, infoExecutionYear);
         }
