@@ -89,11 +89,8 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProf
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.CurricularSemester;
-import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -249,24 +246,6 @@ public abstract class Cloner {
     }
 
 
-    /**
-     * Method copyInfoExecutionCourse2ExecutionCourse.
-     * 
-     * @param infoExecutionCourse
-     * @return IDisciplinaExecucao
-     */
-    public static IExecutionCourse copyInfoExecutionCourse2ExecutionCourse(
-            InfoExecutionCourse infoExecutionCourse) {
-        IExecutionCourse executionCourse = new ExecutionCourse();
-        IExecutionPeriod executionPeriod = Cloner
-                .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionCourse.getInfoExecutionPeriod());
-
-        copyObjectProperties(executionCourse, infoExecutionCourse);
-
-        executionCourse.setExecutionPeriod(executionPeriod);
-        return executionCourse;
-    }
-
     // DO NOT DELETE - this is used locally through introspection!!!
     private static InfoExecutionCourse copy(IExecutionCourse executionCourse) {
         InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
@@ -285,45 +264,6 @@ public abstract class Cloner {
     }
 
     /**
-     * Method copyInfoLesson2Lesson.
-     * 
-     * @param lessonExample
-     * @return ILesson
-     */
-    public static ILesson copyInfoLesson2Lesson(InfoLesson infoLesson) {
-        ILesson lesson = new Lesson();
-        IRoom sala = null;
-
-        IRoomOccupation roomOccupation = null;
-        // IShift shift = null;
-        try {
-            BeanUtils.copyProperties(lesson, infoLesson);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
-
-        sala = Cloner.copyInfoRoom2Room(infoLesson.getInfoSala());
-        roomOccupation = Cloner
-                .copyInfoRoomOccupation2RoomOccupation(infoLesson.getInfoRoomOccupation());
-
-        lesson.setSala(sala);
-        lesson.setRoomOccupation(roomOccupation);
-
-        return lesson;
-    }
-
-    /**
-     * Method copyInfoRoom2Room.
-     * 
-     * @param infoRoom
-     */
-    public static IRoom copyInfoRoom2Room(InfoRoom infoRoom) {
-        IRoom room = new Room();
-        copyObjectProperties(room, infoRoom);
-        return room;
-    }
-
-    /**
      * @param room
      * @return ILesson
      */
@@ -336,18 +276,6 @@ public abstract class Cloner {
             return infoRoom;
         }
         return null;
-    }
-
-    /**
-     * Method copyInfoRoomOccupation2RoomOccupation.
-     * 
-     * @param infoRoomOccupation
-     */
-    public static IRoomOccupation copyInfoRoomOccupation2RoomOccupation(
-            InfoRoomOccupation infoRoomOccupation) {
-        IRoomOccupation roomOccupation = new RoomOccupation();
-        copyObjectProperties(roomOccupation, infoRoomOccupation);
-        return roomOccupation;
     }
 
     /**
@@ -474,22 +402,6 @@ public abstract class Cloner {
 
     }
 
-    /**
-     * Method copyInfoExecutionYear2IExecutionYear.
-     * 
-     * @param infoExecutionYear
-     * @return IExecutionYear
-     */
-    public static IExecutionYear copyInfoExecutionYear2IExecutionYear(InfoExecutionYear infoExecutionYear) {
-        IExecutionYear executionYear = new ExecutionYear();
-        try {
-            BeanUtils.copyProperties(executionYear, infoExecutionYear);
-        } catch (Exception e) {
-
-            throw new RuntimeException(e);
-        }
-        return executionYear;
-    }
 
     /**
      * Method copyInfoExecutionYear2IExecutionYear.
@@ -518,44 +430,6 @@ public abstract class Cloner {
     }
 
     /**
-     * Method copyInfoDegree2IDegree.
-     * 
-     * @param infoDegree
-     * @return IDegree
-     */
-    public static IDegree copyInfoDegree2IDegree(InfoDegree infoDegree) {
-        IDegree degree = new Degree();
-        copyObjectProperties(degree, infoDegree);
-        return degree;
-
-    }
-
-    /**
-     * Method copyInfoExecutionPeriod2IExecutionPeriod.
-     * 
-     * @param infoExecutionPeriod
-     * @return IExecutionPeriod
-     */
-    public static IExecutionPeriod copyInfoExecutionPeriod2IExecutionPeriod(
-            InfoExecutionPeriod infoExecutionPeriod) {
-
-        IExecutionPeriod executionPeriod = new ExecutionPeriod();
-        InfoExecutionYear infoExecutionYear = infoExecutionPeriod.getInfoExecutionYear();
-        IExecutionYear executionYear = null;
-        if (infoExecutionYear != null) {
-            executionYear = Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionYear);
-        } else {
-            copyObjectProperties(executionYear, infoExecutionYear);
-        }
-
-        copyObjectProperties(executionPeriod, infoExecutionPeriod);
-
-        executionPeriod.setExecutionYear(executionYear);
-
-        return executionPeriod;
-    }
-
-    /**
      * Method copyIStudent2InfoStudent.
      * 
      * @param elem
@@ -572,23 +446,6 @@ public abstract class Cloner {
         // by gedl at august the 5th, 2003
         infoStudent.setIdInternal(student.getIdInternal());
         return infoStudent;
-    }
-
-    /**
-     * Method copyInfoPerson2IPerson.
-     * 
-     * @param infoPerson
-     * @return IPerson
-     */
-    public static IPerson copyInfoPerson2IPerson(InfoPerson infoPerson) {
-        IPerson person = null;
-        if (infoPerson != null) {
-            person = new Person();
-            ICountry country = Cloner.copyInfoCountry2ICountry(infoPerson.getInfoPais());
-            copyObjectProperties(person, infoPerson);
-            person.setPais(country);
-        }
-        return person;
     }
 
     /**
@@ -681,18 +538,6 @@ public abstract class Cloner {
 
         copyObjectProperties(infoMasterDegreeCandidate, masterDegreeCandidate);
         return infoMasterDegreeCandidate;
-    }
-
-    /**
-     * Method copyInfoCountry2ICountry
-     * 
-     * @param infoCountry
-     * @return
-     */
-    public static ICountry copyInfoCountry2ICountry(InfoCountry infoCountry) {
-        ICountry country = new Country();
-        copyObjectProperties(country, infoCountry);
-        return country;
     }
 
     /**
@@ -838,12 +683,6 @@ public abstract class Cloner {
         return infoUniversity;
     }
 
-    public static IUniversity copyInfoUniversity2IUniversity(InfoUniversity infoUniversity) {
-        IUniversity university = new University();
-        copyObjectProperties(university, infoUniversity);
-        return university;
-    }
-
     /**
      * @param exam
      * @return InfoExam
@@ -900,25 +739,6 @@ public abstract class Cloner {
     }
 
     /**
-     * @param InfoRoomOccupation
-     * @return IRoomOcupation
-     */
-    public static IRoomOccupation copyInfoRoomOccupation2IRoomOccupation(
-            InfoRoomOccupation infoRoomOccupation) {
-        IRoomOccupation roomOccupation = new RoomOccupation();
-
-        IPeriod period = Cloner.copyInfoPeriod2IPeriod(infoRoomOccupation.getInfoPeriod());
-        IRoom room = Cloner.copyInfoRoom2Room(infoRoomOccupation.getInfoRoom());
-
-        copyObjectProperties(roomOccupation, infoRoomOccupation);
-
-        roomOccupation.setPeriod(period);
-        roomOccupation.setRoom(room);
-
-        return roomOccupation;
-    }
-
-    /**
      * @param IRoomOccupation
      * @return InfoRoomOccupation
      */
@@ -936,18 +756,6 @@ public abstract class Cloner {
         infoRoomOccupation.setInfoRoom(infoRoom);
 
         return infoRoomOccupation;
-    }
-
-    /**
-     * @param InfoPeriod
-     * @return IPeriod
-     */
-    public static IPeriod copyInfoPeriod2IPeriod(InfoPeriod infoPeriod) {
-        IPeriod period = new Period();
-
-        copyObjectProperties(period, infoPeriod);
-
-        return period;
     }
 
     /**
@@ -985,23 +793,6 @@ public abstract class Cloner {
     }
 
     /**
-     * @param infoTeacher
-     * @return
-     */
-    public static ITeacher copyInfoTeacher2Teacher(InfoTeacher infoTeacher) {
-        ITeacher teacher = new Teacher();
-        IPerson person = new Person();
-        ICategory category = new Category();
-        person = copyInfoPerson2IPerson(infoTeacher.getInfoPerson());
-        category = copyInfoCategory2ICategory(infoTeacher.getInfoCategory());
-        copyObjectProperties(teacher, infoTeacher);
-        teacher.setPerson(person);
-        teacher.setCategory(category);
-
-        return teacher;
-    }
-
-    /**
      * @param category
      * @return
      */
@@ -1010,60 +801,6 @@ public abstract class Cloner {
         copyObjectProperties(infoCategory, category);
 
         return infoCategory;
-    }
-
-    /**
-     * @param infoCategory
-     * @return
-     */
-    public static ICategory copyInfoCategory2ICategory(InfoCategory infoCategory) {
-        ICategory category = new Category();
-        copyObjectProperties(category, infoCategory);
-
-        return category;
-    }
-
-    /**
-     * @param infoCourseReport
-     * @return
-     */
-    public static ICourseReport copyInfoCourseReport2ICourseReport(InfoCourseReport infoCourseReport) {
-        ICourseReport courseReport = new CourseReport();
-        IExecutionCourse executionCourse = copyInfoExecutionCourse2ExecutionCourse(infoCourseReport
-                .getInfoExecutionCourse());
-        copyObjectProperties(courseReport, infoCourseReport);
-
-        courseReport.setExecutionCourse(executionCourse);
-
-        return courseReport;
-    }
-
-    /**
-     * @param infoGuideEntry
-     * @return IGuideEntry
-     */
-    public static IGuideEntry copyInfoGuideEntry2IGuideEntry(InfoGuideEntry infoGuideEntry) {
-        IGuideEntry guideEntry = new GuideEntry();
-        copyObjectProperties(guideEntry, infoGuideEntry);
-        return guideEntry;
-    }
-
-    /**
-     * @author dcs-rjao
-     * @param InfoDegreeCurricularPlan
-     * @return IDegreeCurricularPlan
-     */
-    public static IDegreeCurricularPlan copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(
-            InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
-        IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
-
-        IDegree degree = Cloner.copyInfoDegree2IDegree(infoDegreeCurricularPlan.getInfoDegree());
-
-        copyObjectProperties(degreeCurricularPlan, infoDegreeCurricularPlan);
-
-        degreeCurricularPlan.setDegree(degree);
-
-        return degreeCurricularPlan;
     }
 
     /**
@@ -1184,24 +921,6 @@ public abstract class Cloner {
         return infoCurricularCourseScope;
     }
 
-    /**
-     * @author dcs-rjao
-     * @param InfoCurricularSemester
-     * @return ICurricularSemester
-     */
-    public static ICurricularSemester copyInfoCurricularSemester2CurricularSemester(
-            InfoCurricularSemester infoCurricularSemester) {
-
-        ICurricularSemester curricularSemester = new CurricularSemester();
-
-        ICurricularYear curricularYear = copyInfoCurricularYear2CurricularYear(infoCurricularSemester
-                .getInfoCurricularYear());
-
-        copyObjectProperties(curricularSemester, infoCurricularSemester);
-        curricularSemester.setCurricularYear(curricularYear);
-
-        return curricularSemester;
-    }
 
     /**
      * @author dcs-rjao
@@ -1221,18 +940,6 @@ public abstract class Cloner {
         infoCurricularSemester.setInfoCurricularYear(infoCurricularYear);
 
         return infoCurricularSemester;
-    }
-
-    /**
-     * @author dcs-rjao
-     * @param InfoCurricularYear
-     * @return ICurricularYear
-     */
-    public static ICurricularYear copyInfoCurricularYear2CurricularYear(
-            InfoCurricularYear infoCurricularYear) {
-        ICurricularYear curricularYear = new CurricularYear();
-        copyObjectProperties(curricularYear, infoCurricularYear);
-        return curricularYear;
     }
 
     /**
@@ -1599,19 +1306,6 @@ public abstract class Cloner {
         return infoEmployee;
     }
 
-    public static IExternalPerson copyInfoExternalPerson2IExternalPerson(
-            InfoExternalPerson infoExternalPerson) {
-        IExternalPerson externalPerson = new ExternalPerson();
-        copyObjectProperties(externalPerson, infoExternalPerson);
-        IPerson person = Cloner.copyInfoPerson2IPerson(infoExternalPerson.getInfoPerson());
-        externalPerson.setPerson(person);
-        IWorkLocation workLocation = Cloner.copyInfoWorkLocation2IWorkLocation(infoExternalPerson
-                .getInfoWorkLocation());
-        externalPerson.setWorkLocation(workLocation);
-
-        return externalPerson;
-    }
-
     public static InfoExternalPerson copyIExternalPerson2InfoExternalPerson(
             IExternalPerson externalPerson) {
         InfoExternalPerson infoExternalPerson = new InfoExternalPerson();
@@ -1838,13 +1532,6 @@ public abstract class Cloner {
         return infoTeacherInstitutionWorkTime;
     }
 
-    public static IWorkLocation copyInfoWorkLocation2IWorkLocation(InfoWorkLocation infoWorkLocation) {
-        IWorkLocation workLocation = new WorkLocation();
-        copyObjectProperties(workLocation, infoWorkLocation);
-
-        return workLocation;
-    }
-
     public static InfoWorkLocation copyIWorkLocation2InfoWorkLocation(IWorkLocation workLocation) {
         InfoWorkLocation infoWorkLocation = new InfoWorkLocation();
         copyObjectProperties(infoWorkLocation, workLocation);
@@ -1944,6 +1631,290 @@ public abstract class Cloner {
 
         infoCreditLine.setInfoTeacher(infoTeacher);
         return infoCreditLine;
+    }
+
+    /**
+     * Method copyInfoExecutionCourse2ExecutionCourse.
+     * 
+     * @param infoExecutionCourse
+     * @return IDisciplinaExecucao
+     */
+    public static IExecutionCourse copyInfoExecutionCourse2ExecutionCourse(
+            InfoExecutionCourse infoExecutionCourse) {
+        IExecutionCourse executionCourse = new ExecutionCourse();
+        IExecutionPeriod executionPeriod = Cloner
+                .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionCourse.getInfoExecutionPeriod());
+
+        copyObjectProperties(executionCourse, infoExecutionCourse);
+
+        executionCourse.setExecutionPeriod(executionPeriod);
+        return executionCourse;
+    }
+
+    /**
+     * Method copyInfoLesson2Lesson.
+     * 
+     * @param lessonExample
+     * @return ILesson
+     */
+    public static ILesson copyInfoLesson2Lesson(InfoLesson infoLesson) {
+        ILesson lesson = new Lesson();
+        IRoom sala = null;
+
+        IRoomOccupation roomOccupation = null;
+        // IShift shift = null;
+        try {
+            BeanUtils.copyProperties(lesson, infoLesson);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+        sala = Cloner.copyInfoRoom2Room(infoLesson.getInfoSala());
+        roomOccupation = Cloner
+                .copyInfoRoomOccupation2RoomOccupation(infoLesson.getInfoRoomOccupation());
+
+        lesson.setSala(sala);
+        lesson.setRoomOccupation(roomOccupation);
+
+        return lesson;
+    }
+
+    /**
+     * Method copyInfoRoom2Room.
+     * 
+     * @param infoRoom
+     */
+    public static IRoom copyInfoRoom2Room(InfoRoom infoRoom) {
+        IRoom room = new Room();
+        copyObjectProperties(room, infoRoom);
+        return room;
+    }
+
+
+    /**
+     * Method copyInfoRoomOccupation2RoomOccupation.
+     * 
+     * @param infoRoomOccupation
+     */
+    public static IRoomOccupation copyInfoRoomOccupation2RoomOccupation(
+            InfoRoomOccupation infoRoomOccupation) {
+        IRoomOccupation roomOccupation = new RoomOccupation();
+        copyObjectProperties(roomOccupation, infoRoomOccupation);
+        return roomOccupation;
+    }
+
+    /**
+     * Method copyInfoExecutionYear2IExecutionYear.
+     * 
+     * @param infoExecutionYear
+     * @return IExecutionYear
+     */
+    public static IExecutionYear copyInfoExecutionYear2IExecutionYear(InfoExecutionYear infoExecutionYear) {
+        IExecutionYear executionYear = new ExecutionYear();
+        try {
+            BeanUtils.copyProperties(executionYear, infoExecutionYear);
+        } catch (Exception e) {
+
+            throw new RuntimeException(e);
+        }
+        return executionYear;
+    }
+
+    /**
+     * Method copyInfoDegree2IDegree.
+     * 
+     * @param infoDegree
+     * @return IDegree
+     */
+    public static IDegree copyInfoDegree2IDegree(InfoDegree infoDegree) {
+        IDegree degree = new Degree();
+        copyObjectProperties(degree, infoDegree);
+        return degree;
+
+    }
+
+    /**
+     * Method copyInfoExecutionPeriod2IExecutionPeriod.
+     * 
+     * @param infoExecutionPeriod
+     * @return IExecutionPeriod
+     */
+    public static IExecutionPeriod copyInfoExecutionPeriod2IExecutionPeriod(
+            InfoExecutionPeriod infoExecutionPeriod) {
+
+        IExecutionPeriod executionPeriod = new ExecutionPeriod();
+        InfoExecutionYear infoExecutionYear = infoExecutionPeriod.getInfoExecutionYear();
+        IExecutionYear executionYear = null;
+        if (infoExecutionYear != null) {
+            executionYear = Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionYear);
+        } else {
+            copyObjectProperties(executionYear, infoExecutionYear);
+        }
+
+        copyObjectProperties(executionPeriod, infoExecutionPeriod);
+
+        executionPeriod.setExecutionYear(executionYear);
+
+        return executionPeriod;
+    }
+
+    /**
+     * Method copyInfoPerson2IPerson.
+     * 
+     * @param infoPerson
+     * @return IPerson
+     */
+    public static IPerson copyInfoPerson2IPerson(InfoPerson infoPerson) {
+        IPerson person = null;
+        if (infoPerson != null) {
+            person = new Person();
+            ICountry country = Cloner.copyInfoCountry2ICountry(infoPerson.getInfoPais());
+            copyObjectProperties(person, infoPerson);
+            person.setPais(country);
+        }
+        return person;
+    }
+
+    /**
+     * Method copyInfoCountry2ICountry
+     * 
+     * @param infoCountry
+     * @return
+     */
+    public static ICountry copyInfoCountry2ICountry(InfoCountry infoCountry) {
+        ICountry country = new Country();
+        copyObjectProperties(country, infoCountry);
+        return country;
+    }
+
+
+    public static IUniversity copyInfoUniversity2IUniversity(InfoUniversity infoUniversity) {
+        IUniversity university = new University();
+        copyObjectProperties(university, infoUniversity);
+        return university;
+    }
+
+    /**
+     * @param InfoRoomOccupation
+     * @return IRoomOcupation
+     */
+    public static IRoomOccupation copyInfoRoomOccupation2IRoomOccupation(
+            InfoRoomOccupation infoRoomOccupation) {
+        IRoomOccupation roomOccupation = new RoomOccupation();
+
+        IPeriod period = Cloner.copyInfoPeriod2IPeriod(infoRoomOccupation.getInfoPeriod());
+        IRoom room = Cloner.copyInfoRoom2Room(infoRoomOccupation.getInfoRoom());
+
+        copyObjectProperties(roomOccupation, infoRoomOccupation);
+
+        roomOccupation.setPeriod(period);
+        roomOccupation.setRoom(room);
+
+        return roomOccupation;
+    }
+
+    /**
+     * @param InfoPeriod
+     * @return IPeriod
+     */
+    public static IPeriod copyInfoPeriod2IPeriod(InfoPeriod infoPeriod) {
+        IPeriod period = new Period();
+
+        copyObjectProperties(period, infoPeriod);
+
+        return period;
+    }
+
+    /**
+     * @param infoTeacher
+     * @return
+     */
+    public static ITeacher copyInfoTeacher2Teacher(InfoTeacher infoTeacher) {
+        ITeacher teacher = new Teacher();
+        IPerson person = new Person();
+        ICategory category = new Category();
+        person = copyInfoPerson2IPerson(infoTeacher.getInfoPerson());
+        category = copyInfoCategory2ICategory(infoTeacher.getInfoCategory());
+        copyObjectProperties(teacher, infoTeacher);
+        teacher.setPerson(person);
+        teacher.setCategory(category);
+
+        return teacher;
+    }
+
+
+    /**
+     * @param infoCategory
+     * @return
+     */
+    public static ICategory copyInfoCategory2ICategory(InfoCategory infoCategory) {
+        ICategory category = new Category();
+        copyObjectProperties(category, infoCategory);
+
+        return category;
+    }
+
+    /**
+     * @param infoCourseReport
+     * @return
+     */
+    public static ICourseReport copyInfoCourseReport2ICourseReport(InfoCourseReport infoCourseReport) {
+        ICourseReport courseReport = new CourseReport();
+        IExecutionCourse executionCourse = copyInfoExecutionCourse2ExecutionCourse(infoCourseReport
+                .getInfoExecutionCourse());
+        copyObjectProperties(courseReport, infoCourseReport);
+
+        courseReport.setExecutionCourse(executionCourse);
+
+        return courseReport;
+    }
+
+    /**
+     * @param infoGuideEntry
+     * @return IGuideEntry
+     */
+    public static IGuideEntry copyInfoGuideEntry2IGuideEntry(InfoGuideEntry infoGuideEntry) {
+        IGuideEntry guideEntry = new GuideEntry();
+        copyObjectProperties(guideEntry, infoGuideEntry);
+        return guideEntry;
+    }
+
+    /**
+     * @author dcs-rjao
+     * @param InfoDegreeCurricularPlan
+     * @return IDegreeCurricularPlan
+     */
+    public static IDegreeCurricularPlan copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(
+            InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
+        IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
+
+        IDegree degree = Cloner.copyInfoDegree2IDegree(infoDegreeCurricularPlan.getInfoDegree());
+
+        copyObjectProperties(degreeCurricularPlan, infoDegreeCurricularPlan);
+
+        degreeCurricularPlan.setDegree(degree);
+
+        return degreeCurricularPlan;
+    }
+
+    public static IExternalPerson copyInfoExternalPerson2IExternalPerson(
+            InfoExternalPerson infoExternalPerson) {
+        IExternalPerson externalPerson = new ExternalPerson();
+        copyObjectProperties(externalPerson, infoExternalPerson);
+        IPerson person = Cloner.copyInfoPerson2IPerson(infoExternalPerson.getInfoPerson());
+        externalPerson.setPerson(person);
+        IWorkLocation workLocation = Cloner.copyInfoWorkLocation2IWorkLocation(infoExternalPerson
+                .getInfoWorkLocation());
+        externalPerson.setWorkLocation(workLocation);
+
+        return externalPerson;
+    }
+
+    public static IWorkLocation copyInfoWorkLocation2IWorkLocation(InfoWorkLocation infoWorkLocation) {
+        IWorkLocation workLocation = new WorkLocation();
+        copyObjectProperties(workLocation, infoWorkLocation);
+
+        return workLocation;
     }
 
 }
