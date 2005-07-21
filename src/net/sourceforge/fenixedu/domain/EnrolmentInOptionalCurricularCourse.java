@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+
 /**
  * @author dcs-rjao
  * 
@@ -11,5 +12,4 @@ public class EnrolmentInOptionalCurricularCourse extends EnrolmentInOptionalCurr
     public EnrolmentInOptionalCurricularCourse() {
         super();
     }
-
 }

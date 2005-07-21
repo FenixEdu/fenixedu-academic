@@ -159,8 +159,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         courseReport.setLastModificationDate(Calendar.getInstance().getTime());
         courseReport.setExecutionCourse(this);
     }
-    
-    public List responsibleFors() {
+	
+	public List responsibleFors() {
         List<IProfessorship> professorships = this.getProfessorships();
         List res = new ArrayList();
 
@@ -170,4 +170,16 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
         return res;
     }
+	
+	public IAttends getAttendsByStudent (final IStudent student) {
+		
+		return (IAttends)CollectionUtils.find(getAttends(),new Predicate() {
+
+			public boolean evaluate(Object o) {
+				IAttends attends = (IAttends) o;
+				return attends.getAluno().equals(student);
+			}
+			
+		});
+	}
 }

@@ -427,8 +427,10 @@ class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.f
 
     public java.util.List<ICurricularCourseScope> getActiveScopesInExecutionPeriod(final IExecutionPeriod executionPeriod);
     
-    public ICurriculum insertCurriculum(String program, String programEn, String operacionalObjectives, 
+     public ICurriculum insertCurriculum(String program, String programEn, String operacionalObjectives, 
     	String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn);
+	 
+	 public java.util.List getExecutionCoursesByExecutionPeriod (final IExecutionPeriod executionPeriod);
 	"
 }
 
@@ -770,6 +772,11 @@ class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu
 	public void delete();
 	public void unEnroll() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
 	public IEnrolmentEvaluation getImprovementEvaluation();
+	public IEnrolmentEvaluation getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade (final net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType evaluationType, final String grade);
+	
+	public void createEnrollmentEvaluationWithoutGrade();
+	public void createAttend(IStudent student, ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod);
+	public void initializeAsNew (IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod, net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition enrolmentCondition, String createdBy);
 	"
 }
 
@@ -972,8 +979,10 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
     public void createBibliographicReference(String title, String authors, String reference, String year, Boolean optional);
     
     public void createCourseReport(String report);
-    
-    public java.util.List responsibleFors();
+
+	public java.util.List responsibleFors();	
+
+	public IAttends getAttendsByStudent (final IStudent student);
     "
 }
 
@@ -2426,6 +2435,8 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
 	public void changeState(net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState studentCurricularPlanState) throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
 	
 	public void delete() throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+	
+	public IEnrolment getEnrolmentByCurricularCourseAndExecutionPeriod(final ICurricularCourse curricularCourse, final IExecutionPeriod executionPeriod);
     "
 }
 

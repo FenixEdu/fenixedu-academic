@@ -950,4 +950,15 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		
 		deleteDomainObject();
     }
+	
+	public IEnrolment getEnrolmentByCurricularCourseAndExecutionPeriod(final ICurricularCourse curricularCourse, final IExecutionPeriod executionPeriod) {
+		
+		return (IEnrolment) CollectionUtils.find(getEnrolments(), new Predicate() {
+			public boolean evaluate(Object o) {
+				IEnrolment enrolment = (IEnrolment) o;
+				return (enrolment.getCurricularCourse().equals(curricularCourse))
+						&& (enrolment.getExecutionPeriod().equals(executionPeriod));
+			}
+		});
+	}
 }

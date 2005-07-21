@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.commons.CollectionUtils;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
@@ -11,6 +14,7 @@ import net.sourceforge.fenixedu.domain.log.IEnrolmentLog;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
+import org.apache.commons.collections.Predicate;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerException;
 
@@ -25,6 +29,19 @@ public class Enrolment extends Enrolment_Base {
     public Enrolment() {
         this.setOjbConcreteClass(this.getClass().getName());
     }
+	
+	public void initializeAsNew (IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod, EnrollmentCondition enrolmentCondition, String createdBy) {
+		setCurricularCourse(curricularCourse);
+		setEnrollmentState(EnrollmentState.ENROLLED);
+		setExecutionPeriod(executionPeriod);
+		setStudentCurricularPlan(studentCurricularPlan);
+		setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
+		setCreationDate(new Date());
+		setCondition(enrolmentCondition);
+		setCreatedBy(createdBy);
+		createEnrollmentEvaluationWithoutGrade();
+		createAttend(studentCurricularPlan.getStudent(), curricularCourse, executionPeriod);
+	}
 
     public String toString() {
         String result = "[" + this.getClass().getName() + "; ";
@@ -108,13 +125,12 @@ public class Enrolment extends Enrolment_Base {
 		while (attendsIter.hasNext()) {
 			IAttends attends = attendsIter.next();
 			
-			attends.removeEnrolment();
-//			try {
-//				attendsIter.remove();
-//				attends.removeEnrolment();
-//				attends.delete();
-//			}
-//			catch (DomainException e) {}
+			try {
+				attendsIter.remove();
+				attends.removeEnrolment();
+				//attends.delete();
+			}
+			catch (DomainException e) {}
 		}
 		
 		
@@ -176,8 +192,6 @@ public class Enrolment extends Enrolment_Base {
 			equivalenceIterator.remove();
 			equivalence.removeEnrolment();
 			
-			List<IEquivalentEnrolmentForEnrolmentEquivalence> equivalentRestrictions = equivalence.getEquivalenceRestrictions();
-			
 			Iterator<IEquivalentEnrolmentForEnrolmentEquivalence> equivalentRestrictionIterator = equivalence.getEquivalenceRestrictionsIterator();
 			
 			while (equivalentRestrictionIterator.hasNext()) {
@@ -220,4 +234,60 @@ public class Enrolment extends Enrolment_Base {
 		return null;
 	}
 
+	
+	public IEnrolmentEvaluation getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade (final EnrolmentEvaluationType evaluationType, final String grade) {
+		
+		return (IEnrolmentEvaluation)CollectionUtils.find(getEvaluations(),new Predicate() {
+
+			public boolean evaluate(Object o) {
+				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) o;
+				return enrolmentEvaluation.getEnrolmentEvaluationType().equals(evaluationType) &&
+					(grade == null || enrolmentEvaluation.getGrade().equals(grade));
+			}
+			
+		});
+	}
+	
+    public void createEnrollmentEvaluationWithoutGrade() {
+		
+		IEnrolmentEvaluation enrolmentEvaluation = getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(EnrolmentEvaluationType.NORMAL, null);
+
+        if (enrolmentEvaluation == null) {
+            enrolmentEvaluation = new EnrolmentEvaluation();
+            enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
+            enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
+			
+			addEvaluations(enrolmentEvaluation);
+        }
+    }
+	
+	public void createAttend(IStudent student, ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) {
+
+		List executionCourses = curricularCourse.getExecutionCoursesByExecutionPeriod(executionPeriod);
+		
+		IExecutionCourse executionCourse = null;
+        if (executionCourses.size() > 1) {
+            Iterator iterator = executionCourses.iterator();
+            while (iterator.hasNext()) {
+                IExecutionCourse executionCourse2 = (IExecutionCourse) iterator.next();
+                if (executionCourse2.getExecutionCourseProperties() == null
+                        || executionCourse2.getExecutionCourseProperties().isEmpty()) {
+                    executionCourse = executionCourse2;
+                }
+            }
+        } else if (executionCourses.size() == 1) {
+            executionCourse = (IExecutionCourse) executionCourses.get(0);
+        }
+
+        if (executionCourse != null) {
+			IAttends attend = executionCourse.getAttendsByStudent(student);
+
+            if (attend != null) {
+				addAttends(attend);
+            } else {
+                IAttends attendToWrite = new Attends(student,executionCourse);
+				addAttends(attendToWrite);
+            }
+        }
+    }
 }

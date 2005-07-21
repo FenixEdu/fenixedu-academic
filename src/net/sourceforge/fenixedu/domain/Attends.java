@@ -18,6 +18,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
  */
 public class Attends extends Attends_Base {
 
+	public Attends() {}
+	
+	public Attends (IStudent student, IExecutionCourse executionCourse) {
+		setAluno(student);
+		setDisciplinaExecucao(executionCourse);
+	}
+	
     public String toString() {
         String result = "[ATTEND";
         result += ", codigoInterno=" + getIdInternal();

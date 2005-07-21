@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
     private String RECTIFICATION = "RECTIFICAÇÃO";
-
+	
     public String toString() {
         String result = "[" + this.getClass().getName() + "; ";
         result += "grade = " + this.getGrade() + "; ";

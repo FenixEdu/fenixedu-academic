@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+
 /**
  * @author dcs-rjao
  * 

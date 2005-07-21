@@ -245,4 +245,15 @@ public class CurricularCourse extends CurricularCourse_Base {
 
         return curriculum;
     }
+	
+	public List getExecutionCoursesByExecutionPeriod (final IExecutionPeriod executionPeriod) {
+
+		return (List)CollectionUtils.select(getAssociatedExecutionCourses(), new Predicate() {
+
+			public boolean evaluate(Object o) {
+				IExecutionCourse executionCourse = (IExecutionCourse)o;
+				return executionCourse.getExecutionPeriod().equals(executionPeriod);
+			}
+		});
+	}
 }
