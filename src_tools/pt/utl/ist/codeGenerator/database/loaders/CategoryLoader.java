@@ -1,23 +1,23 @@
 package pt.utl.ist.codeGenerator.database.loaders;
 
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 public class CategoryLoader extends XlsLoader {
 
-    public CategoryLoader(final HSSFWorkbook workbook, final HSSFCellStyle cellStyle) {
-        super(workbook, cellStyle, Category.class.getSimpleName());
+	public static void addSheet(final HSSFWorkbook workbook, final HSSFCellStyle cellStyle) {
+		final HSSFRow header = createSheet(workbook, Category.class);
 
-        addColumn("longName");
-        addColumn("code");
-        addColumn("canBeExecutionCourseResponsible");
-        addColumn("shortName");
-    }
+		final String classname = Category.class.getName();
 
-    private void addColumn(final String property) {
-        addColumn(Category.class.getName(), property);
-    }
+        addColumn(cellStyle, header, classname, "longName");
+        addColumn(cellStyle, header, classname, "code");
+        addColumn(cellStyle, header, classname, "canBeExecutionCourseResponsible");
+        addColumn(cellStyle, header, classname, "shortName");
+	}
 
 }

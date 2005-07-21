@@ -33,10 +33,10 @@ public class XLSGenerator {
         final HSSFWorkbook workbook = new HSSFWorkbook();
         final HSSFCellStyle cellStyle = createHeaderCellStyle(workbook);
 
-        CountryLoader countryLoader = new CountryLoader(workbook, cellStyle);
-        StudentLoader studentLoader = new StudentLoader(workbook, cellStyle);
-        CategoryLoader categoryLoader = new CategoryLoader(workbook, cellStyle);
-        TeacherLoader teacherLoader = new TeacherLoader(workbook, cellStyle);
+        CountryLoader.addSheet(workbook, cellStyle);
+        StudentLoader.addSheet(workbook, cellStyle);
+        CategoryLoader.addSheet(workbook, cellStyle);
+        TeacherLoader.addSheet(workbook, cellStyle);
 
         final OutputStream outputStream = new FileOutputStream(destinationFilename);
         workbook.write(outputStream);

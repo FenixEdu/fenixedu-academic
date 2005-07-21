@@ -1,22 +1,23 @@
 package pt.utl.ist.codeGenerator.database.loaders;
 
 import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.teacher.Category;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 public class CountryLoader extends XlsLoader {
 
-    public CountryLoader(final HSSFWorkbook workbook, final HSSFCellStyle cellStyle) {
-        super(workbook, cellStyle, Country.class.getSimpleName());
+	public static void addSheet(final HSSFWorkbook workbook, final HSSFCellStyle cellStyle) {
+		final HSSFRow header = createSheet(workbook, Country.class);
 
-        addColumn("name");
-        addColumn("code");
-        addColumn("nationality");
-    }
+		final String classname = Country.class.getName();
 
-    private void addColumn(final String property) {
-        addColumn(Country.class.getName(), property);
-    }
+        addColumn(cellStyle, header, classname, "name");
+        addColumn(cellStyle, header, classname, "code");
+        addColumn(cellStyle, header, classname, "nationality");
+	}
 
 }
