@@ -38,7 +38,7 @@ public class DatabaseDescriptorFactory {
         });
     }
 
-    private static Map<String, ClassDescriptor> getDescriptorTable() {
+    public static Map<String, ClassDescriptor> getDescriptorTable() {
         final MetadataManager metadataManager = MetadataManager.getInstance();
         final DescriptorRepository descriptorRepository = metadataManager.getGlobalRepository();
         return descriptorRepository.getDescriptorTable();
