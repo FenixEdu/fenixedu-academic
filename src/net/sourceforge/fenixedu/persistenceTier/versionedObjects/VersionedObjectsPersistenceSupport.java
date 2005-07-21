@@ -152,6 +152,7 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.Publication
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationsNumberVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ReimbursementGuideEntryVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ReimbursementGuideVO;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ReimbursementTransactionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.RestrictionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.SalaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ScientificAreaVO;
@@ -307,7 +308,7 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     }
 
     public IPersistentReimbursementTransaction getIPersistentReimbursementTransaction() {
-        return null;
+        return new ReimbursementTransactionVO();
     }
 
     public IPersistentGrantOrientationTeacher getIPersistentGrantOrientationTeacher() {
