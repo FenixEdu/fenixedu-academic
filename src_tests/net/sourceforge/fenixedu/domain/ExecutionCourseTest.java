@@ -10,6 +10,10 @@ import java.util.Date;
 public class ExecutionCourseTest extends DomainTestBase {
 
     private IExecutionCourse executionCourse;
+	
+	private IExecutionCourse executionCourseToReadFrom = null;
+	private IStudent thisStudent = null;
+	private IAttends attendsForThisStudent = null;
 
     protected void setUp() throws Exception {
         super.setUp();
@@ -24,9 +28,28 @@ public class ExecutionCourseTest extends DomainTestBase {
         executionCourse.setPraticalHours(2.0);
         executionCourse.setLabHours(0.0);
         executionCourse.setComment("comment");
+		
+		setUpForGetAttendsByStudentCase();
     }
 
-    public void testEdit() {
+    private void setUpForGetAttendsByStudentCase() {
+		executionCourseToReadFrom = new ExecutionCourse();
+		thisStudent = new Student();
+		attendsForThisStudent = new Attends();
+		
+		attendsForThisStudent.setAluno(thisStudent);
+		executionCourseToReadFrom.addAttends(attendsForThisStudent);
+		
+		IAttends otherAttends1 = new Attends();
+		otherAttends1.setAluno(new Student());
+		executionCourseToReadFrom.addAttends(otherAttends1);
+		
+		IAttends otherAttends2 = new Attends();
+		otherAttends2.setAluno(new Student());
+		executionCourseToReadFrom.addAttends(otherAttends2);
+	}
+
+	public void testEdit() {
         try {
             executionCourse.edit(null, null, 0.0, 0.0, 0.0, 0.0, null);
             fail("Expected NullPointerException!");
@@ -197,4 +220,11 @@ public class ExecutionCourseTest extends DomainTestBase {
                 .getLabHours());
         assertEquals("Different ExecutionCourse Comment!", comment, executionCourse.getComment());
     }
+	
+	
+	public void testGetAttendsByStudent() {
+		IAttends attends = executionCourseToReadFrom.getAttendsByStudent(thisStudent);
+		
+		assertEquals(attends,attendsForThisStudent);
+	}
 }

@@ -39,6 +39,7 @@ public class Enrolment extends Enrolment_Base {
 		setCreationDate(new Date());
 		setCondition(enrolmentCondition);
 		setCreatedBy(createdBy);
+		
 		createEnrollmentEvaluationWithoutGrade();
 		createAttend(studentCurricularPlan.getStudent(), curricularCourse, executionPeriod);
 	}
@@ -241,8 +242,11 @@ public class Enrolment extends Enrolment_Base {
 
 			public boolean evaluate(Object o) {
 				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) o;
+				String evaluationGrade = enrolmentEvaluation.getGrade();
+				
 				return enrolmentEvaluation.getEnrolmentEvaluationType().equals(evaluationType) &&
-					(grade == null || enrolmentEvaluation.getGrade().equals(grade));
+					((grade == null && evaluationGrade == null) || 
+							(evaluationGrade != null && evaluationGrade.equals(grade)));
 			}
 			
 		});

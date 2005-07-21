@@ -17,8 +17,15 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 	private IStudentCurricularPlanLEIC studentCurricularPlanLEICToDelete = null;
 	private IStudentCurricularPlanLEEC studentCurricularPlanLEECToDelete = null;
 	
+	private IStudentCurricularPlan studentCurricularPlanToReadFrom = null;
+	private IEnrolment enrolmentToBeRead = null;
+	private ICurricularCourse curricularCourse = null;
+	private IExecutionPeriod executionPeriod = null;
+	
 	protected void setUp() throws Exception {
 		super.setUp();
+		
+		setUpEnrolmentByCurricularCourseAndExecutionPeriodCase();
 		
 		IStudent student = new Student();
 		IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
@@ -68,6 +75,36 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 	
 	
 	
+	private void setUpEnrolmentByCurricularCourseAndExecutionPeriodCase() {
+		// TODO Auto-generated method stub
+		
+		studentCurricularPlanToReadFrom = new StudentCurricularPlan();
+		enrolmentToBeRead = new Enrolment();
+		curricularCourse = new CurricularCourse();
+		executionPeriod = new ExecutionPeriod();
+		
+		ICurricularCourse cc1 = new CurricularCourse();
+		IExecutionPeriod ep1 = new ExecutionPeriod();
+		
+		IEnrolment e1 = new Enrolment();
+		e1.setExecutionPeriod(executionPeriod);
+		e1.setCurricularCourse(cc1);
+		studentCurricularPlanToReadFrom.addEnrolments(e1);
+		
+		IEnrolment e2 = new Enrolment();
+		e2.setExecutionPeriod(ep1);
+		e2.setCurricularCourse(curricularCourse);
+		studentCurricularPlanToReadFrom.addEnrolments(e2);
+		
+		studentCurricularPlanToReadFrom.addEnrolments(enrolmentToBeRead);
+		enrolmentToBeRead.setExecutionPeriod(executionPeriod);
+		enrolmentToBeRead.setCurricularCourse(curricularCourse);
+		
+	}
+
+
+
+
 	private void setUpCreate(IStudent student, IDegreeCurricularPlan degreeCurricularPlan) {
 		newStudentCurricularPlan = new StudentCurricularPlan(student, degreeCurricularPlan,
 												StudentCurricularPlanState.ACTIVE, new Date());
@@ -166,5 +203,11 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		}
 		
 		assertFalse(studentCurricularPlanLEECToDelete.hasSecundaryBranch());
+	}
+	
+	public void testEnrolmentByCurricularCourseAndExecutionPeriod () {
+		IEnrolment enrolment = studentCurricularPlanToReadFrom.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse,executionPeriod);
+		
+		assertEquals(enrolment,enrolmentToBeRead);
 	}
 }

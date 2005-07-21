@@ -1,8 +1,11 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
@@ -30,11 +33,33 @@ public class EnrolmentTest extends DomainTestBase {
 	private IEnrolmentEvaluation improvementEvaluation;
 	
 	
+	private IEnrolment enrolmentToInitialize = null;
+	private IStudentCurricularPlan studentCurricularPlan = null;
+	private ICurricularCourse curricularCourseToEnroll = null;
+	private IExecutionCourse executionCourseToEnroll = null;
+	private IAttends attendsToEnroll = null;
+	private IExecutionPeriod currentExecutionPeriod = null;
+	private EnrollmentCondition enrolmentCondition = null;
+	private String createdBy = null;
+	private IStudent thisStudent = null;
 	
+	private IEnrolment enrolmentToInitializeForAnotherExecutionPeriod = null;
+	private IExecutionCourse executionCourseToEnrollWithAttendsForThisStudent = null;
+	private IExecutionPeriod anotherExecutionPeriod = null;
+
+	private IEnrolment enrolmentToReadFrom = null;
+	private IEnrolmentEvaluation evaluationWithGradeToBeRead = null;
+	private IEnrolmentEvaluation evaluationWithoutGradeToBeRead = null;
+	private String gradeToSearchFor = null;
+	private String impossibleGrade = null;
+	private EnrolmentEvaluationType enrolmentEvaluationTypeToSearchFor = null;
 	
 	
 	protected void setUp() throws Exception {
         super.setUp();
+		
+		setUpForGetEnrolmentEvaluationByEnrolmentEvaluationTypeAndGradeCase();
+		setUpForInitializeAsNewCase();
 		
 		enrolmentA = new Enrolment();
 		enrolmentB = new Enrolment();
@@ -216,7 +241,70 @@ public class EnrolmentTest extends DomainTestBase {
 		improvementEvaluation.setEnrolment(enrolmentWithImprovement);
     }
 
-    protected void tearDown() throws Exception {
+    private void setUpForInitializeAsNewCase() {
+		enrolmentToInitialize = new Enrolment();
+		
+		thisStudent = new Student();
+		IStudent otherStudent = new Student();
+		
+		IAttends attends2 = new Attends();
+		attends2.setAluno(otherStudent);
+
+		
+		studentCurricularPlan = new StudentCurricularPlan();
+		studentCurricularPlan.setStudent(thisStudent);
+		curricularCourseToEnroll = new CurricularCourse();
+		currentExecutionPeriod = new ExecutionPeriod();
+		IExecutionPeriod otherExecutionPeriod = new ExecutionPeriod();
+		
+		enrolmentCondition = EnrollmentCondition.FINAL;
+		createdBy = "XxX";
+		
+		IExecutionCourse ec1 = new ExecutionCourse();
+		ec1.setExecutionPeriod(otherExecutionPeriod);
+		curricularCourseToEnroll.addAssociatedExecutionCourses(ec1);
+		
+		executionCourseToEnroll = new ExecutionCourse();
+		executionCourseToEnroll.setExecutionPeriod(currentExecutionPeriod);		
+		executionCourseToEnroll.addAttends(attends2);
+		curricularCourseToEnroll.addAssociatedExecutionCourses(executionCourseToEnroll);
+
+		attendsToEnroll = new Attends();
+		attendsToEnroll.setAluno(thisStudent);
+		enrolmentToInitializeForAnotherExecutionPeriod = new Enrolment();
+		anotherExecutionPeriod = new ExecutionPeriod();
+		
+		executionCourseToEnrollWithAttendsForThisStudent = new ExecutionCourse();
+		executionCourseToEnrollWithAttendsForThisStudent.setExecutionPeriod(anotherExecutionPeriod);
+		executionCourseToEnrollWithAttendsForThisStudent.addAttends(attendsToEnroll);
+		curricularCourseToEnroll.addAssociatedExecutionCourses(executionCourseToEnrollWithAttendsForThisStudent);
+	}
+
+	private void setUpForGetEnrolmentEvaluationByEnrolmentEvaluationTypeAndGradeCase() {
+		enrolmentToReadFrom = new Enrolment();
+		gradeToSearchFor = "20";
+		impossibleGrade = "300";
+		enrolmentEvaluationTypeToSearchFor = EnrolmentEvaluationType.EQUIVALENCE;
+		String otherGrade = "10";
+		EnrolmentEvaluationType otherType = EnrolmentEvaluationType.CLOSED;
+		
+		// with required type and grade
+		IEnrolmentEvaluation ee1 = createEnrolmentEvaluation(enrolmentToReadFrom,enrolmentEvaluationTypeToSearchFor,gradeToSearchFor);
+		evaluationWithGradeToBeRead = ee1;
+		
+		// with required type and NOT grade
+		createEnrolmentEvaluation(enrolmentToReadFrom,enrolmentEvaluationTypeToSearchFor,otherGrade);
+		// without required type and with grade
+		createEnrolmentEvaluation(enrolmentToReadFrom,otherType,gradeToSearchFor);
+		// without required type or grade
+		createEnrolmentEvaluation(enrolmentToReadFrom,otherType,otherGrade);
+		
+		// with required type and null grade
+		IEnrolmentEvaluation ee2 = createEnrolmentEvaluation(enrolmentToReadFrom,enrolmentEvaluationTypeToSearchFor,null);
+		evaluationWithoutGradeToBeRead = ee2;
+	}
+
+	protected void tearDown() throws Exception {
         super.tearDown();
     }
 	
@@ -306,5 +394,63 @@ public class EnrolmentTest extends DomainTestBase {
 		assertNull(enrolmentWithoutImprovement.getImprovementEvaluation());
 		assertTrue(enrolmentWithImprovement.getImprovementEvaluation().equals(improvementEvaluation));	
 	}
+	
+	
+	public void testGetEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade() {
+		IEnrolmentEvaluation enrolmentEvaluationWithGrade = enrolmentToReadFrom.getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(enrolmentEvaluationTypeToSearchFor,gradeToSearchFor);
+		assertEquals(enrolmentEvaluationWithGrade,evaluationWithGradeToBeRead);
+		
+		IEnrolmentEvaluation enrolmentEvaluationWithoutGrade = enrolmentToReadFrom.getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(enrolmentEvaluationTypeToSearchFor,null);
+		assertEquals(enrolmentEvaluationWithoutGrade,evaluationWithoutGradeToBeRead);
+		
+		IEnrolmentEvaluation nullEnrolmentEvaluation = enrolmentToReadFrom.getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(enrolmentEvaluationTypeToSearchFor,impossibleGrade);
+		assertNull(nullEnrolmentEvaluation);
+	}
+	
+	public void testInitializeAsNew() {
+		Date before = new Date();
+		enrolmentToInitialize.initializeAsNew(studentCurricularPlan,curricularCourseToEnroll,currentExecutionPeriod,enrolmentCondition,createdBy);
+		Date after = new Date();
+		
+		assertEquals(enrolmentToInitialize.getStudentCurricularPlan(),studentCurricularPlan);
+		assertEquals(enrolmentToInitialize.getCurricularCourse(),curricularCourseToEnroll);
+		assertEquals(enrolmentToInitialize.getExecutionPeriod(),currentExecutionPeriod);
+		assertEquals(enrolmentToInitialize.getCondition(),enrolmentCondition);
+		assertEquals(enrolmentToInitialize.getCreatedBy(),createdBy);
+		assertEquals(enrolmentToInitialize.getEnrollmentState(),EnrollmentState.ENROLLED);
+		assertEquals(enrolmentToInitialize.getEnrolmentEvaluationType(),EnrolmentEvaluationType.NORMAL);
+		assertTrue(before.before(enrolmentToInitialize.getCreationDate()) && after.after(enrolmentToInitialize.getCreationDate()));
+		
+		assertTrue(enrolmentToInitialize.getEvaluationsCount() == 1);
+		IEnrolmentEvaluation evaluation = enrolmentToInitialize.getEvaluations().get(0);
+		assertEquals(evaluation.getEnrolmentEvaluationState(),EnrolmentEvaluationState.TEMPORARY_OBJ);
+        assertEquals(evaluation.getEnrolmentEvaluationType(),EnrolmentEvaluationType.NORMAL);
+		assertNull(evaluation.getGrade());
+		
+		assertTrue(enrolmentToInitialize.getAttendsCount() == 1);
+		IAttends attends = enrolmentToInitialize.getAttends().get(0);
+		assertEquals(attends.getAluno(),studentCurricularPlan.getStudent());
+		assertEquals(attends.getDisciplinaExecucao(),executionCourseToEnroll);
+		assertEquals(attends.getEnrolment(),enrolmentToInitialize);
+		
+		// only difference lies in the Attends assignment part
+		enrolmentToInitializeForAnotherExecutionPeriod.initializeAsNew(studentCurricularPlan,curricularCourseToEnroll,anotherExecutionPeriod,enrolmentCondition,createdBy);
+		assertTrue(enrolmentToInitializeForAnotherExecutionPeriod.getAttendsCount() == 1);
+		IAttends att = enrolmentToInitializeForAnotherExecutionPeriod.getAttends().get(0);
+		assertEquals(att,attendsToEnroll);
+		assertEquals(att.getAluno(),thisStudent);
+		assertEquals(att.getDisciplinaExecucao(),executionCourseToEnrollWithAttendsForThisStudent);
+		assertEquals(att.getEnrolment(),enrolmentToInitializeForAnotherExecutionPeriod);
+		
+	}
 
+	
+	
+	private IEnrolmentEvaluation createEnrolmentEvaluation(IEnrolment enrolment, EnrolmentEvaluationType type, String grade) {
+		IEnrolmentEvaluation ee = new EnrolmentEvaluation();
+		ee.setEnrolmentEvaluationType(type);
+		ee.setGrade(grade);
+		ee.setEnrolment(enrolment);
+		return ee;
+	}
 }

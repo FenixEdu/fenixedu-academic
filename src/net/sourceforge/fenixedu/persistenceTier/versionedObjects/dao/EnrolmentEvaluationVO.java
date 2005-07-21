@@ -32,7 +32,8 @@ public class EnrolmentEvaluationVO extends VersionedObjectsBase implements IPers
 				
 				for (IEnrolmentEvaluation enrolmentEvaluation : enrolmentEvaluations) {
 					if (enrolmentEvaluation.getEnrolmentEvaluationType().equals(evaluationType) &&
-						(grade == null || enrolmentEvaluation.getGrade().equals(grade)))
+							((grade == null && enrolmentEvaluation.getGrade() == null) || 
+									(enrolmentEvaluation.getGrade() != null && enrolmentEvaluation.getGrade().equals(grade))))
 						return enrolmentEvaluation;
 				}
 	    	}
