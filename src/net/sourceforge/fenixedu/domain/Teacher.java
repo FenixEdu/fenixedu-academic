@@ -26,32 +26,31 @@ import net.sourceforge.fenixedu.util.PublicationArea;
 public class Teacher extends Teacher_Base {
     private Map creditsMap = new HashMap();
 
-    /********************************************************************
-     *                        BUSINESS SERVICES                         *
-     ********************************************************************/
-    
-    public void addToTeacherSheet(IPublication publication, PublicationArea publicationArea) throws DomainException {
+    /***************************************************************************
+     * BUSINESS SERVICES *
+     **************************************************************************/
+
+    public void addToTeacherSheet(IPublication publication, PublicationArea publicationArea)
+            throws DomainException {
 
         checkForMaximumPublicationsInTeacherSheet(publicationArea);
 
         new PublicationTeacher(publication, this, publicationArea);
-        
+
     }
-    
+
     public void removeFromTeacherSheet(IPublication publication) throws DomainException {
         Iterator<IPublicationTeacher> iterator = getTeacherPublications().iterator();
 
-        while(iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             IPublicationTeacher publicationTeacher = iterator.next();
-            if(publicationTeacher.getPublication().equals(publication))
-            {
+            if (publicationTeacher.getPublication().equals(publication)) {
                 iterator.remove();
                 publicationTeacher.delete();
                 return;
             }
         }
-        //In case the publication isn't associated with the teacher
+        // In case the publication isn't associated with the teacher
         throw new DomainException(publication.getTitle());
     }
 
@@ -77,7 +76,7 @@ public class Teacher extends Teacher_Base {
         return null;
     }
 
-    public void updateResponsabilitiesFor(Integer executionYearId, List<Integer> executionCourses) throws MaxResponsibleForExceed, InvalidCategory {
+public void updateResponsabilitiesFor(Integer executionYearId, List<Integer> executionCourses) throws MaxResponsibleForExceed, InvalidCategory {
 
         if (executionYearId == null || executionCourses == null)
             throw new NullPointerException();
@@ -86,23 +85,16 @@ public class Teacher extends Teacher_Base {
 
         for (IProfessorship professorship : professorships) {
             IExecutionCourse executionCourse = professorship.getExecutionCourse();
+            ResponsibleForValidator.getInstance().validateResponsibleForList(this, executionCourse, professorship);
             if (executionCourse.getExecutionPeriod().getExecutionYear().getIdInternal().equals(
-                    executionYearId)) {                
-                if (executionCourses.contains(executionCourse.getIdInternal())){
-                    ResponsibleForValidator.getInstance().validateResponsibleForList(this, executionCourse, professorship);
-                    professorship.setResponsibleFor(true);
-                }
-                else{
-                    professorship.setResponsibleFor(false);
-                }
+                    executionYearId)) {                                               
+                    professorship.setResponsibleFor(executionCourses.contains(executionCourse.getIdInternal()));                
             }
         }
-    }
-    
-    /********************************************************************
-     *                          OTHER METHODS                           *
-     ********************************************************************/    
-    
+    }    /*******************************************************************
+             * OTHER METHODS *
+             ******************************************************************/
+
     public String toString() {
         String result = "[Dominio.Teacher ";
         result += ", teacherNumber=" + getTeacherNumber();
@@ -130,12 +122,13 @@ public class Teacher extends Teacher_Base {
             }
         }
     }
-    
-    /********************************************************************
-     *                         PRIVATE METHODS                          *
-     ********************************************************************/
 
-    private void checkForMaximumPublicationsInTeacherSheet(PublicationArea publicationArea) throws DomainException {
+    /***************************************************************************
+     * PRIVATE METHODS *
+     **************************************************************************/
+
+    private void checkForMaximumPublicationsInTeacherSheet(PublicationArea publicationArea)
+            throws DomainException {
         int publicationCount = 0;
         for (IPublicationTeacher publicationTeacher : getTeacherPublications()) {
             if (publicationTeacher.getPublicationArea().equals(publicationArea)) {

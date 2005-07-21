@@ -1,18 +1,32 @@
+/*
+ * Created on Jul 7, 2005
+ *	by mrsp and jdnf
+ */
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
 import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
+import net.sourceforge.fenixedu.domain.teacher.Category;
+import net.sourceforge.fenixedu.domain.teacher.ICategory;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.PublicationArea;
 
 public class TeacherTest extends DomainTestBase {
 
-    private ITeacher teacher;
+    private ITeacher teacher, teacher2, teacher3;
+    private IExecutionCourse executionCourse, executionCourse2, executionCourse3;
+    private IProfessorship professorship, professorship2, professorship3, professorship4, professorship5, professorship6;
+    private IExecutionYear  executionYear;
+    private IExecutionPeriod executionPeriod;
+    private ICategory category;   
     private IPublication publication;
     private IPublication publication2;
     private IPublication publication3;
@@ -20,15 +34,18 @@ public class TeacherTest extends DomainTestBase {
     private IPublication publication5;
     private IPublication publication6;
     private IPublication publication7;
-    
     private IPublication publication8;
     private IPublication publication9;
-    private ITeacher teacher2;
+        
     
     protected void setUp() throws Exception {
         super.setUp();
+    
+        setupTestUpdateResponsabilitiesFor();
+                
         teacher = new Teacher();
         teacher.setIdInternal(1);
+        
         publication = new Publication();
         publication.setIdInternal(1); 
         publication2 = new Publication();
@@ -46,10 +63,12 @@ public class TeacherTest extends DomainTestBase {
         
         teacher2 = new Teacher();
         teacher2.setIdInternal(2);
+        
         publication8 = new Publication();
         publication8.setIdInternal(8);
         publication9 = new Publication();
         publication9.setIdInternal(9);
+        
         new PublicationTeacher(publication8, teacher2, PublicationArea.CIENTIFIC).setIdInternal(1);
         new PublicationTeacher(publication9, teacher2, PublicationArea.DIDATIC).setIdInternal(2);
     }
@@ -58,6 +77,88 @@ public class TeacherTest extends DomainTestBase {
         super.tearDown();
     }
 
+    public void testUpdateResponsabilitiesFor() {
+               
+        try{
+            teacher3.updateResponsabilitiesFor(null, null);
+            fail("Expected NullPointerException");
+        }
+        catch(NullPointerException e){
+            testResponsibleForValue(true, false, true);
+        }
+        catch (MaxResponsibleForExceed e) {
+            fail("Expected NullPointerException");
+        } 
+        catch (InvalidCategory e) {
+            fail("Expected NullPointerException");
+        } 
+        catch (ExcepcaoPersistencia e) {
+            fail("Expected NullPointerException");
+        }
+        
+        List newResponsabilities = new ArrayList();
+        newResponsabilities.add(1);
+        
+        ///////////////////////////
+        
+        teacher3.getCategory().setCanBeExecutionCourseResponsible(true);        
+        
+        try {
+            teacher3.updateResponsabilitiesFor(executionYear.getIdInternal(), newResponsabilities);
+            fail("Expected MaxResponsibleForExceed");
+            
+        } catch (MaxResponsibleForExceed e) {
+            testResponsibleForValue(false, false, true); 
+            
+            // O primeiro argumento é false porque nos testes n existe mecanismo transacional logo se ocorrer um excepção 
+            // todas as alterações efectuadas ateriormente não serão repostas.
+        
+        } catch (InvalidCategory e) {
+            fail("Expected MaxResponsibleForExceed");
+       
+        } catch (ExcepcaoPersistencia e) {
+            fail("Expected MaxResponsibleForExceed");
+        }
+        
+        //////////////////////////
+        
+        teacher3.getCategory().setCanBeExecutionCourseResponsible(false);
+        
+        try {
+            teacher3.updateResponsabilitiesFor(executionYear.getIdInternal(), newResponsabilities);
+            fail("Expected InvalidCategory");
+            
+        } catch (MaxResponsibleForExceed e) {
+            fail("Expected InvalidCategory");            
+        
+        } catch (InvalidCategory e) {
+            testResponsibleForValue(false, false, true);
+       
+        } catch (ExcepcaoPersistencia e) {
+            fail("Expected InvalidCategory");
+        }
+        
+        /////////////////////////
+        
+        professorship5.setResponsibleFor(false);
+        teacher3.getCategory().setCanBeExecutionCourseResponsible(true);
+        
+        try {
+            teacher3.updateResponsabilitiesFor(executionYear.getIdInternal(), newResponsabilities);
+            
+        } catch (MaxResponsibleForExceed e) {
+            testResponsibleForValue(false, false, true);            
+        
+        } catch (InvalidCategory e) {
+            testResponsibleForValue(false, false, true);
+       
+        } catch (ExcepcaoPersistencia e) {
+            testResponsibleForValue(false, false, true);
+        }
+        
+        testResponsibleForValue(false, true, false);    
+    }       
+    
     public void testAddPublicationToTeacherSheet() {
         List<IPublication> publications;
         
@@ -239,5 +340,81 @@ public class TeacherTest extends DomainTestBase {
             // clean expected exception
         }
     }
-
+    
+    private void testResponsibleForValue(boolean value1, boolean value2, boolean value3){
+        assertEquals("Responsible For Unexpected", value1, teacher3.getProfessorships(0).getResponsibleFor().booleanValue());
+        assertEquals("Responsible For Unexpected", value2, teacher3.getProfessorships(1).getResponsibleFor().booleanValue());
+        assertEquals("Responsible For Unexpected", value3, teacher3.getProfessorships(2).getResponsibleFor().booleanValue());
+    }
+    
+    private void setupTestUpdateResponsabilitiesFor(){
+        category = new Category();
+        category.setIdInternal(0);
+        category.setCanBeExecutionCourseResponsible(true);
+        
+        executionPeriod = new ExecutionPeriod();
+        executionPeriod.setIdInternal(0);
+        
+        executionYear = new ExecutionYear();
+        executionYear.setIdInternal(0);
+        
+        executionYear.addExecutionPeriods(executionPeriod);
+        
+        teacher3 = new Teacher();
+        teacher3.setIdInternal(0);
+        teacher3.setCategory(category);      
+        
+        executionCourse = new ExecutionCourse();
+        executionCourse.setIdInternal(0);
+        executionCourse.setExecutionPeriod(executionPeriod);
+        
+        executionCourse2 = new ExecutionCourse();
+        executionCourse2.setIdInternal(1);
+        executionCourse2.setExecutionPeriod(executionPeriod);
+        
+        executionCourse3 = new ExecutionCourse();
+        executionCourse3.setIdInternal(2);
+        executionCourse3.setExecutionPeriod(executionPeriod);
+        
+        professorship = new Professorship();
+        professorship.setIdInternal(0);
+        
+        professorship2 = new Professorship();
+        professorship2.setIdInternal(1);
+        
+        professorship3 = new Professorship();
+        professorship3.setIdInternal(2);
+        
+        professorship4 = new Professorship();
+        professorship4.setIdInternal(3);
+        
+        professorship5 = new Professorship();
+        professorship5.setIdInternal(4);
+        
+        professorship6 = new Professorship();
+        professorship6.setIdInternal(4);
+        
+        /////////////////////////////
+                
+        teacher3.addProfessorships(professorship);
+        teacher3.addProfessorships(professorship2);
+        teacher3.addProfessorships(professorship3);
+        
+        executionCourse.addProfessorships(professorship);
+               
+        executionCourse2.addProfessorships(professorship2);
+        executionCourse2.addProfessorships(professorship4);
+        executionCourse2.addProfessorships(professorship5);
+        executionCourse2.addProfessorships(professorship6);
+        
+        executionCourse3.addProfessorships(professorship3);
+        
+        professorship.setResponsibleFor(true);
+        professorship2.setResponsibleFor(false);
+        professorship3.setResponsibleFor(true);
+        
+        professorship4.setResponsibleFor(true);
+        professorship5.setResponsibleFor(true);
+        professorship6.setResponsibleFor(true);        
+    }
 }
