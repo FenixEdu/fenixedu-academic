@@ -158,7 +158,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Room;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.University;
 import net.sourceforge.fenixedu.domain.WorkLocation;
 import net.sourceforge.fenixedu.domain.credits.IManagementPositionCreditLine;
 import net.sourceforge.fenixedu.domain.credits.IOtherTypeCreditLine;
@@ -237,7 +236,6 @@ public abstract class Cloner {
             return parameters;
         }
     }
-
 
     // DO NOT DELETE - this is used locally through introspection!!!
     private static InfoExecutionCourse copy(IExecutionCourse executionCourse) {
@@ -394,7 +392,6 @@ public abstract class Cloner {
         return infoExecutionDegree;
 
     }
-
 
     /**
      * Method copyInfoExecutionYear2IExecutionYear.
@@ -914,7 +911,6 @@ public abstract class Cloner {
         return infoCurricularCourseScope;
     }
 
-
     /**
      * @author dcs-rjao
      * @param ICurricularSemester
@@ -1000,7 +996,6 @@ public abstract class Cloner {
         return infoStudentKind;
     }
 
-    
     /**
      * @author dcs-rjao
      * @param IEnrolmentEvaluation
@@ -1016,7 +1011,6 @@ public abstract class Cloner {
         infoEnrolmentEvaluation.setInfoPersonResponsibleForGrade(infoPerson);
         return infoEnrolmentEvaluation;
     }
-
 
     public static InfoShiftProfessorship copyIShiftProfessorship2InfoShiftProfessorship(
             IShiftProfessorship teacherShiftPercentage) {
@@ -1142,7 +1136,6 @@ public abstract class Cloner {
 
         return infoGroupProperties;
     }
-
 
     /**
      * @param IGroupPropertiesExecutionCourse
@@ -1335,8 +1328,16 @@ public abstract class Cloner {
         while (iterListInfoExternalPerson.hasNext()) {
             InfoExternalPerson infoExternalPerson = (InfoExternalPerson) iterListInfoExternalPerson
                     .next();
-            IExternalPerson externalPerson = Cloner
-                    .copyInfoExternalPerson2IExternalPerson(infoExternalPerson);
+            
+            IExternalPerson externalPerson = new ExternalPerson();
+            copyObjectProperties(externalPerson, infoExternalPerson);
+            IPerson person = Cloner.copyInfoPerson2IPerson(infoExternalPerson.getInfoPerson());
+            externalPerson.setPerson(person);
+
+            IWorkLocation workLocation = new WorkLocation();
+            copyObjectProperties(workLocation, infoExternalPerson.getInfoWorkLocation());
+            externalPerson.setWorkLocation(workLocation);
+
             listExternalPersons.add(externalPerson);
         }
 
@@ -1364,7 +1365,18 @@ public abstract class Cloner {
 
         while (iterListInfoTeacher.hasNext()) {
             InfoTeacher infoTeacher = (InfoTeacher) iterListInfoTeacher.next();
-            ITeacher teacher = Cloner.copyInfoTeacher2Teacher(infoTeacher);
+
+            ITeacher teacher = new Teacher();
+            copyObjectProperties(teacher, infoTeacher);
+
+            IPerson person = new Person();
+            person = copyInfoPerson2IPerson(infoTeacher.getInfoPerson());
+            teacher.setPerson(person);
+
+            ICategory category = new Category();
+            copyObjectProperties(category, infoTeacher.getInfoCategory());
+            teacher.setCategory(category);
+
             listITeacher.add(teacher);
         }
 
@@ -1683,7 +1695,6 @@ public abstract class Cloner {
         return room;
     }
 
-
     /**
      * Method copyInfoRoomOccupation2RoomOccupation.
      * 
@@ -1780,17 +1791,6 @@ public abstract class Cloner {
         return country;
     }
 
-
-    public static IUniversity copyInfoUniversity2IUniversity(InfoUniversity infoUniversity) {
-        IUniversity university = new University();
-        copyObjectProperties(university, infoUniversity);
-        return university;
-    }
-
-    /**
-     * @param InfoRoomOccupation
-     * @return IRoomOcupation
-     */
     public static IRoomOccupation copyInfoRoomOccupation2IRoomOccupation(
             InfoRoomOccupation infoRoomOccupation) {
         IRoomOccupation roomOccupation = new RoomOccupation();
@@ -1806,54 +1806,12 @@ public abstract class Cloner {
         return roomOccupation;
     }
 
-    /**
-     * @param InfoPeriod
-     * @return IPeriod
-     */
     public static IPeriod copyInfoPeriod2IPeriod(InfoPeriod infoPeriod) {
         IPeriod period = new Period();
 
         copyObjectProperties(period, infoPeriod);
 
         return period;
-    }
-
-    /**
-     * @param infoTeacher
-     * @return
-     */
-    public static ITeacher copyInfoTeacher2Teacher(InfoTeacher infoTeacher) {
-        ITeacher teacher = new Teacher();
-        IPerson person = new Person();
-        ICategory category = new Category();
-        person = copyInfoPerson2IPerson(infoTeacher.getInfoPerson());
-        category = copyInfoCategory2ICategory(infoTeacher.getInfoCategory());
-        copyObjectProperties(teacher, infoTeacher);
-        teacher.setPerson(person);
-        teacher.setCategory(category);
-
-        return teacher;
-    }
-
-    public static ICategory copyInfoCategory2ICategory(InfoCategory infoCategory) {
-        ICategory category = new Category();
-        copyObjectProperties(category, infoCategory);
-
-        return category;
-    }
-
-    public static IExternalPerson copyInfoExternalPerson2IExternalPerson(
-            InfoExternalPerson infoExternalPerson) {
-        IExternalPerson externalPerson = new ExternalPerson();
-        copyObjectProperties(externalPerson, infoExternalPerson);
-        IPerson person = Cloner.copyInfoPerson2IPerson(infoExternalPerson.getInfoPerson());
-        externalPerson.setPerson(person);
-
-        IWorkLocation workLocation = new WorkLocation();
-        copyObjectProperties(workLocation, infoExternalPerson.getInfoWorkLocation());
-        externalPerson.setWorkLocation(workLocation);
-
-        return externalPerson;
     }
 
 }
