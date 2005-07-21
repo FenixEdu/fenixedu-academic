@@ -7,7 +7,7 @@ import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-public class CategoryLoader extends XlsLoader {
+public class CategoryLoader extends BaseLoader {
 
 	public static void addSheet(final HSSFWorkbook workbook, final HSSFCellStyle cellStyle) {
 		final HSSFRow header = createSheet(workbook, Category.class);

@@ -8,7 +8,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-public class CountryLoader extends XlsLoader {
+public class CountryLoader extends BaseLoader {
 
 	public static void addSheet(final HSSFWorkbook workbook, final HSSFCellStyle cellStyle) {
 		final HSSFRow header = createSheet(workbook, Country.class);

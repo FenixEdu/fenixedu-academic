@@ -12,15 +12,19 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import pt.utl.ist.codeGenerator.database.DatabaseDescriptorFactory;
 
-public class XlsLoader {
+public class BaseLoader {
 
     protected static final Map<String, ClassDescriptor> descriptorTable = DatabaseDescriptorFactory.getDescriptorTable();
 
     protected static HSSFRow createSheet(final HSSFWorkbook workbook, final Class domainClass) {
-    	final HSSFSheet sheet = workbook.createSheet(calculateSheetName(domainClass.getSimpleName()));
+    	final HSSFSheet sheet = workbook.createSheet(calculateSheetName(domainClass));
         sheet.setDefaultColumnWidth((short) 20);
         return sheet.createRow(0);
 	}
+
+    public static String calculateSheetName(final Class domainClass) {
+        return calculateSheetName(domainClass.getSimpleName());
+    }
 
     private static String calculateSheetName(final String name) {
         return (name.length() <= 31) ? name : name.substring(0, 31);

@@ -7,7 +7,7 @@ import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-public class PersonLoader extends XlsLoader {
+public class PersonLoader extends BaseLoader {
 
 	public static void addSheet(final HSSFWorkbook workbook, final HSSFCellStyle cellStyle, final HSSFRow header) {
 		final String classname = Person.class.getName();
