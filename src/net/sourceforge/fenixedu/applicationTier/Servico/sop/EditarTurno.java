@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IShift;
@@ -29,27 +29,13 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class EditarTurno implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public EditarTurno() {
-    }
-
     public Object run(InfoShift infoShiftOld, InfoShift infoShiftNew) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        try {
-            newShiftIsValid(infoShiftOld, infoShiftNew.getTipo(), infoShiftNew
-                    .getInfoDisciplinaExecucao(), infoShiftNew.getLotacao());
-        } catch (InvalidNewShiftExecutionCourse ex) {
-            throw new InvalidNewShiftExecutionCourse();
-        } catch (InvalidNewShiftType ex) {
-            throw new InvalidNewShiftType();
-        } catch (InvalidNewShiftCapacity ex) {
-            throw new InvalidNewShiftCapacity();
-        }
+        newShiftIsValid(infoShiftOld, infoShiftNew.getTipo(), infoShiftNew.getInfoDisciplinaExecucao(),
+                infoShiftNew.getLotacao());
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IShift shiftToEdit = (IShift) sp.getITurnoPersistente().readByOID(Shift.class,
                 infoShiftOld.getIdInternal());
@@ -61,11 +47,8 @@ public class EditarTurno implements IService {
             throw new InvalidFinalAvailabilityException();
         }
 
-        final IExecutionCourse executionCourse = Cloner
-                .copyInfoExecutionCourse2ExecutionCourse(infoShiftNew.getInfoDisciplinaExecucao());
-
         IShift otherShiftWithSameNewName = sp.getITurnoPersistente().readByNameAndExecutionCourse(
-                infoShiftNew.getNome(), executionCourse.getIdInternal());
+                infoShiftNew.getNome(), infoShiftNew.getInfoDisciplinaExecucao().getIdInternal());
 
         if ((otherShiftWithSameNewName != null)
                 && !(otherShiftWithSameNewName.getIdInternal().equals(shiftToEdit.getIdInternal()))) {
@@ -81,30 +64,23 @@ public class EditarTurno implements IService {
         shiftToEdit.setAvailabilityFinal(new Integer(shiftToEdit.getAvailabilityFinal().intValue()
                 + capacityDiference));
 
-
+        final IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
+                .readByOID(ExecutionCourse.class,
+                        infoShiftNew.getInfoDisciplinaExecucao().getIdInternal());
         shiftToEdit.setDisciplinaExecucao(executionCourse);
 
         // Also change the type of associated lessons and lessons execution
         // course
         if (shiftToEdit.getAssociatedLessons() != null) {
             for (int i = 0; i < shiftToEdit.getAssociatedLessons().size(); i++) {
-                sp.getIAulaPersistente().simpleLockWrite(
-                        shiftToEdit.getAssociatedLessons().get(i));
+                sp.getIAulaPersistente().simpleLockWrite(shiftToEdit.getAssociatedLessons().get(i));
                 shiftToEdit.getAssociatedLessons().get(i).setTipo(infoShiftNew.getTipo());
                 shiftToEdit.getAssociatedLessons().get(i).setShift(shiftToEdit);
-                //((ILesson)
-                // shift.getAssociatedLessons().get(i)).setDisciplinaExecucao(executionCourse);
+
             }
         }
 
         return InfoShift.newInfoFromDomain(shiftToEdit);
-
-        // NOTE: changed the lock twice strategy to see if the new turn exists
-        //        catch (ExcepcaoPersistencia ex)
-        //        {
-        //            throw new FenixServiceException(ex);
-        //        }
-
     }
 
     private void newShiftIsValid(InfoShift infoShiftOld, ShiftType newShiftType,
@@ -136,8 +112,8 @@ public class EditarTurno implements IService {
             }
         }
 
-        // 3a. If NEW shift type is diferent from CURRENT shift type
-        //     check if shift total duration exceeds new shift type duration
+        // 3a. If NEW shift type is diferent from CURRENT shift type check if
+        // shift total duration exceeds new shift type duration
         if (!newShiftType.equals(infoShiftOld.getTipo())) {
             if (!newShiftTypeIsValid(shift, newShiftType, shiftDuration)) {
                 throw new InvalidNewShiftType();
@@ -145,8 +121,8 @@ public class EditarTurno implements IService {
         }
 
         // 3b. If NEW shift executionCourse is diferent from CURRENT shift
-        // executionCourse
-        //     check if shift total duration exceeds new executionCourse duration
+        // executionCourse check if shift total duration exceeds new
+        // executionCourse duration
         if (!newShiftExecutionCourse.equals(infoShiftOld.getInfoDisciplinaExecucao())) {
             if (!newShiftExecutionCourseIsValid(shift, newShiftExecutionCourse, shiftDuration)) {
                 throw new InvalidNewShiftExecutionCourse();
@@ -155,10 +131,9 @@ public class EditarTurno implements IService {
 
         // 4. Check if NEW shift capacity is bigger then maximum lesson room
         // capacity
-        //if (newShiftCapacity.intValue() > maxCapacity.intValue()) {
-        //	throw new InvalidNewShiftCapacity();
-        //}
-
+        // if (newShiftCapacity.intValue() > maxCapacity.intValue()) {
+        // throw new InvalidNewShiftCapacity();
+        // }
     }
 
     private boolean newShiftTypeIsValid(IShift shift, ShiftType newShiftType, double shiftDuration) {
@@ -224,86 +199,38 @@ public class EditarTurno implements IService {
         return new Integer(duration);
     }
 
-    /**
-     * To change the template for this generated type comment go to
-     * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
-     */
     public class InvalidNewShiftType extends FenixServiceException {
-
-        /**
-         *  
-         */
         InvalidNewShiftType() {
             super();
         }
-
     }
 
-    /**
-     * To change the template for this generated type comment go to
-     * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
-     */
     public class InvalidNewShiftExecutionCourse extends FenixServiceException {
-
-        /**
-         *  
-         */
         InvalidNewShiftExecutionCourse() {
             super();
         }
-
     }
 
-    /**
-     * To change the template for this generated type comment go to
-     * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
-     */
     public class InvalidNewShiftCapacity extends FenixServiceException {
-
-        /**
-         *  
-         */
         InvalidNewShiftCapacity() {
             super();
         }
-
     }
 
-    /**
-     * To change the template for this generated type comment go to
-     * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
-     */
     public class ExistingShiftException extends FenixServiceException {
-
-        /**
-         *  
-         */
         private ExistingShiftException() {
             super();
         }
 
-        /**
-         * @param cause
-         */
         ExistingShiftException(Throwable cause) {
             super(cause);
         }
-
     }
 
-    /**
-     * To change the template for this generated type comment go to
-     * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
-     */
     public class InvalidFinalAvailabilityException extends FenixServiceException {
-
-        /**
-         *  
-         */
         InvalidFinalAvailabilityException() {
             super();
         }
-
     }
 
 }
