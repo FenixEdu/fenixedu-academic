@@ -12,14 +12,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  * @author tfc130
  */
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -31,24 +28,16 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class LerAlunosDeTurno implements IService {
 
     public Object run(ShiftKey keyTurno) throws ExcepcaoPersistencia {
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        List alunos = null;
-        List infoAlunos = null;
+        final ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+        IShift shift = persistentShift.readByNameAndExecutionCourse(keyTurno.getShiftName(), keyTurno
+                .getInfoExecutionCourse().getIdInternal());
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final List<IStudent> alunos = sp.getITurnoAlunoPersistente().readByShift(shift.getIdInternal());
 
-        IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(keyTurno
-                .getInfoExecutionCourse());
-
-        ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-        IShift shift = persistentShift.readByNameAndExecutionCourse(keyTurno.getShiftName(), executionCourse.getIdInternal());
-
-        alunos = sp.getITurnoAlunoPersistente().readByShift(shift.getIdInternal());
-
-        
-        infoAlunos = new ArrayList(alunos.size());
-        for (final Iterator iterator = alunos.iterator(); iterator.hasNext(); ) {
-            IStudent elem = (IStudent) iterator.next();
+        List<InfoStudent> infoAlunos = new ArrayList<InfoStudent>(alunos.size());
+        for (IStudent elem : alunos) {
             InfoPerson infoPessoa = new InfoPerson();
             infoPessoa.setNome(elem.getPerson().getNome());
             infoPessoa.setUsername(elem.getPerson().getUsername());
