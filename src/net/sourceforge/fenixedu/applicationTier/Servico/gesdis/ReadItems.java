@@ -40,7 +40,7 @@ public class ReadItems implements IService {
             infoItemsList.add(InfoItem.newInfoFromDomain(elem));
         }
 
-//        Collections.sort(infoItemsList);
+        Collections.sort(infoItemsList);
         return infoItemsList;
     }
 
