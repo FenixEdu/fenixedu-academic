@@ -11,6 +11,7 @@ import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 
+import pt.utl.ist.codeGenerator.database.loaders.BaseLoader;
 import pt.utl.ist.codeGenerator.database.loaders.CategoryLoader;
 import pt.utl.ist.codeGenerator.database.loaders.CountryLoader;
 import pt.utl.ist.codeGenerator.database.loaders.StudentLoader;
@@ -36,7 +37,8 @@ public class XlsLoader {
 		final HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
         inputStream.close();
 
-        
+        CountryLoader.load(workbook);
+        CategoryLoader.load(workbook);
 	}
 
 }

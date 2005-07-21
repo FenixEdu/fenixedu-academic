@@ -22,7 +22,7 @@ public class BaseLoader {
         return sheet.createRow(0);
 	}
 
-    public static String calculateSheetName(final Class domainClass) {
+    protected static String calculateSheetName(final Class domainClass) {
         return calculateSheetName(domainClass.getSimpleName());
     }
 
