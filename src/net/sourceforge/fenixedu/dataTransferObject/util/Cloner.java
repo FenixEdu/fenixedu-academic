@@ -163,7 +163,6 @@ import net.sourceforge.fenixedu.domain.IWorkLocation;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Period;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Room;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -1318,21 +1317,6 @@ public abstract class Cloner {
         return infoEnrolmentEvaluation;
     }
 
-    /**
-     * @author dcs-rjao
-     * @param IEnrolmentEvaluation
-     * @return InfoEnrolmentEvaluation
-     */
-    public static IEnrolmentEvaluation copyInfoEnrolmentEvaluation2IEnrolmentEvaluation(
-            InfoEnrolmentEvaluation infoEnrolmentEvaluation) {
-        // properties of infoEnrolment are not copied for not to get into loop
-        IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
-        IPerson pessoa = copyInfoPerson2IPerson(infoEnrolmentEvaluation
-                .getInfoPersonResponsibleForGrade());
-        copyObjectProperties(enrolmentEvaluation, infoEnrolmentEvaluation);
-        enrolmentEvaluation.setPersonResponsibleForGrade(pessoa);
-        return enrolmentEvaluation;
-    }
 
     public static InfoShiftProfessorship copyIShiftProfessorship2InfoShiftProfessorship(
             IShiftProfessorship teacherShiftPercentage) {
@@ -1364,33 +1348,6 @@ public abstract class Cloner {
         infoProfessorShip.setInfoExecutionCourse(infoExecutionCourse);
 
         return infoProfessorShip;
-    }
-
-    public static IProfessorship copyInfoProfessorship2IProfessorship(InfoProfessorship infoProfessorShip) {
-        InfoExecutionCourse infoExecutionCourse = infoProfessorShip.getInfoExecutionCourse();
-        InfoTeacher infoTeacher = infoProfessorShip.getInfoTeacher();
-
-        IProfessorship professorship = new Professorship();
-
-        copyObjectProperties(professorship, infoProfessorShip);
-        IExecutionCourse executionCourse = null;
-        if (infoExecutionCourse != null) {
-            executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
-        } else {
-            copyObjectProperties(executionCourse, infoExecutionCourse);
-        }
-        professorship.setExecutionCourse(executionCourse);
-
-        ITeacher teacher = null;
-
-        if (infoTeacher != null) {
-            teacher = Cloner.copyInfoTeacher2Teacher(infoTeacher);
-        } else {
-            copyObjectProperties(teacher, infoTeacher);
-        }
-        professorship.setTeacher(teacher);
-
-        return professorship;
     }
 
     /**
