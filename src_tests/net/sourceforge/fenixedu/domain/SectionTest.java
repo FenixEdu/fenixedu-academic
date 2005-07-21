@@ -93,57 +93,45 @@ public class SectionTest extends DomainTestBase {
         } catch (NullPointerException e) {
             assertEquals("Size Unexpected", 0, section.getAssociatedItemsCount());
         } catch (DomainException e) {
-            assertEquals("Size Unexpected", 0, section.getAssociatedItemsCount());
+            fail("Expected NullPointerException");
         }
         
         try {
-            section.insertItem("ItemName1", "ItemInformation1", true, 0);
-          
-            assertEquals("Size Unexpected", 1, section.getAssociatedItemsCount());
-            assertEquals("Name Unexpected", "ItemName1", section.getAssociatedItems(0).getName());
-            assertEquals("Information Unexpected", "ItemInformation1", section.getAssociatedItems(0).getInformation());
-            assertEquals("Urgent Unexpected", true, section.getAssociatedItems(0).getUrgent().booleanValue());
-            assertEquals("Order Unexpected", 0, section.getAssociatedItems(0).getItemOrder().intValue());       
+            section.insertItem("ItemName1", "ItemInformation1", true, 0);          
+            testInsertItemInformation(1, "ItemName1", "ItemInformation1", true, 0, 0);             
        
         } catch (DomainException e) {
             assertEquals("Size Unexpected", 0, section.getAssociatedItemsCount());
-        }      
+        }  
         
+        //Test: insert an item with the same name of an existing one 
         try {
-            section.insertItem("ItemName2", "ItemInformation2", false, 1);
-            
-            assertEquals("Size Unexpected", 2, section.getAssociatedItemsCount());
-            assertEquals("Name Unexpected", "ItemName2", section.getAssociatedItems(1).getName());
-            assertEquals("Information Unexpected", "ItemInformation2", section.getAssociatedItems(1).getInformation());
-            assertEquals("Urgent Unexpected", false, section.getAssociatedItems(1).getUrgent().booleanValue());
-            assertEquals("Order Unexpected", 1, section.getAssociatedItems(1).getItemOrder().intValue());
-        
-        } catch (DomainException e) {
-            assertEquals("Size Unexpected", 1, section.getAssociatedItemsCount());
+            section.insertItem("ItemName1", "ItemInformation111111", false, 0);
+            fail("Expected DomainException");
+          
+        } catch (DomainException e) {            
+            testInsertItemInformation(1, "ItemName1", "ItemInformation1", true, 0, 0);            
         }
         
+        try {
+            section.insertItem("ItemName2", "ItemInformation2", false, 1);           
+            testInsertItemInformation(2, "ItemName2", "ItemInformation2", false, 1, 1);
+                   
+        } catch (DomainException e) {
+            assertEquals("Size Unexpected", 1, section.getAssociatedItemsCount());
+        }        
               
         try {
             section.insertItem("ItemName3", "ItemInformation3", true, 1);
-            
-            assertEquals("Size Expected", 3, section.getAssociatedItemsCount());
-            assertEquals("Name Expected", "ItemName3", section.getAssociatedItems(2).getName());
-            assertEquals("Information Expected", "ItemInformation3", section.getAssociatedItems(2).getInformation());
-            assertEquals("Urgent Expected", true, section.getAssociatedItems(2).getUrgent().booleanValue());
-            assertEquals("Order Expected", 1, section.getAssociatedItems(2).getItemOrder().intValue());           
-        
+            testInsertItemInformation(3, "ItemName3", "ItemInformation3", true, 1, 2);
+                           
         } catch (DomainException e) {
             assertEquals("Size Unexpected", 2, section.getAssociatedItemsCount());
         }
         
         try {
-            section.insertItem("ItemName4", "ItemInformation4", false, 2);
-            
-            assertEquals("Size Unexpected", 4, section.getAssociatedItemsCount());
-            assertEquals("Name Unexpected", "ItemName4", section.getAssociatedItems(3).getName());
-            assertEquals("Information Unexpected", "ItemInformation4", section.getAssociatedItems(3).getInformation());
-            assertEquals("Urgent Unexpected", false, section.getAssociatedItems(3).getUrgent().booleanValue());
-            assertEquals("Order Unexpected", 2, section.getAssociatedItems(3).getItemOrder().intValue());
+            section.insertItem("ItemName4", "ItemInformation4", false, 2);            
+            testInsertItemInformation(4, "ItemName4", "ItemInformation4", false, 2, 3);            
         
         } catch (DomainException e) {
             assertEquals("Size Unexpected", 3, section.getAssociatedItemsCount());
@@ -227,5 +215,13 @@ public class SectionTest extends DomainTestBase {
         assertNull("Site Unexpected", section.getSite());
         assertNull("Site Unexpected", section2.getSite());
         assertNull("Site Unexpected", section4.getSite());        
+    }
+    
+    private void testInsertItemInformation(int size, String name, String information, boolean urgent, int order, int index){
+        assertEquals("Size Unexpected", size, section.getAssociatedItemsCount());
+        assertEquals("Name Unexpected", name, section.getAssociatedItems(index).getName());
+        assertEquals("Information Unexpected", information, section.getAssociatedItems(index).getInformation());
+        assertEquals("Urgent Unexpected", urgent, section.getAssociatedItems(index).getUrgent().booleanValue());
+        assertEquals("Order Unexpected", order, section.getAssociatedItems(index).getItemOrder().intValue());
     }
 }
