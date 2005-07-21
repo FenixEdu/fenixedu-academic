@@ -42,7 +42,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGroupProperties;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGroupPropertiesExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
@@ -77,7 +76,6 @@ import net.sourceforge.fenixedu.dataTransferObject.credits.InfoServiceExemptionC
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.dataTransferObject.gaugingTests.physics.InfoGaugingTestResult;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseHistoric;
-import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoStudentCourseReport;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
@@ -90,12 +88,10 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSup
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
-import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.IAdvisory;
 import net.sourceforge.fenixedu.domain.IAnnouncement;
 import net.sourceforge.fenixedu.domain.IAttends;
@@ -127,7 +123,6 @@ import net.sourceforge.fenixedu.domain.IExternalPerson;
 import net.sourceforge.fenixedu.domain.IGratuityValues;
 import net.sourceforge.fenixedu.domain.IGroupProperties;
 import net.sourceforge.fenixedu.domain.IGroupPropertiesExecutionCourse;
-import net.sourceforge.fenixedu.domain.IGuideEntry;
 import net.sourceforge.fenixedu.domain.IItem;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
@@ -170,9 +165,7 @@ import net.sourceforge.fenixedu.domain.credits.IOtherTypeCreditLine;
 import net.sourceforge.fenixedu.domain.credits.IServiceExemptionCreditLine;
 import net.sourceforge.fenixedu.domain.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.gaugingTests.physics.IGaugingTestResult;
-import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.ICourseHistoric;
-import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.IStudentCourseReport;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.ICareer;
@@ -1842,59 +1835,11 @@ public abstract class Cloner {
         return teacher;
     }
 
-
-    /**
-     * @param infoCategory
-     * @return
-     */
     public static ICategory copyInfoCategory2ICategory(InfoCategory infoCategory) {
         ICategory category = new Category();
         copyObjectProperties(category, infoCategory);
 
         return category;
-    }
-
-    /**
-     * @param infoCourseReport
-     * @return
-     */
-    public static ICourseReport copyInfoCourseReport2ICourseReport(InfoCourseReport infoCourseReport) {
-        ICourseReport courseReport = new CourseReport();
-        IExecutionCourse executionCourse = copyInfoExecutionCourse2ExecutionCourse(infoCourseReport
-                .getInfoExecutionCourse());
-        copyObjectProperties(courseReport, infoCourseReport);
-
-        courseReport.setExecutionCourse(executionCourse);
-
-        return courseReport;
-    }
-
-    /**
-     * @param infoGuideEntry
-     * @return IGuideEntry
-     */
-    public static IGuideEntry copyInfoGuideEntry2IGuideEntry(InfoGuideEntry infoGuideEntry) {
-        IGuideEntry guideEntry = new GuideEntry();
-        copyObjectProperties(guideEntry, infoGuideEntry);
-        return guideEntry;
-    }
-
-    /**
-     * @author dcs-rjao
-     * @param InfoDegreeCurricularPlan
-     * @return IDegreeCurricularPlan
-     */
-    public static IDegreeCurricularPlan copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(
-            InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
-        IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
-
-        IDegree degree = Cloner.copyInfoDegree2IDegree(infoDegreeCurricularPlan.getInfoDegree());
-
-        copyObjectProperties(degreeCurricularPlan, infoDegreeCurricularPlan);
-
-        degreeCurricularPlan.setDegree(degree);
-
-        return degreeCurricularPlan;
     }
 
     public static IExternalPerson copyInfoExternalPerson2IExternalPerson(
@@ -1903,18 +1848,12 @@ public abstract class Cloner {
         copyObjectProperties(externalPerson, infoExternalPerson);
         IPerson person = Cloner.copyInfoPerson2IPerson(infoExternalPerson.getInfoPerson());
         externalPerson.setPerson(person);
-        IWorkLocation workLocation = Cloner.copyInfoWorkLocation2IWorkLocation(infoExternalPerson
-                .getInfoWorkLocation());
+
+        IWorkLocation workLocation = new WorkLocation();
+        copyObjectProperties(workLocation, infoExternalPerson.getInfoWorkLocation());
         externalPerson.setWorkLocation(workLocation);
 
         return externalPerson;
-    }
-
-    public static IWorkLocation copyInfoWorkLocation2IWorkLocation(InfoWorkLocation infoWorkLocation) {
-        IWorkLocation workLocation = new WorkLocation();
-        copyObjectProperties(workLocation, infoWorkLocation);
-
-        return workLocation;
     }
 
 }
