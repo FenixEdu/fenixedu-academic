@@ -39,6 +39,8 @@ public class XlsLoader {
 
         CountryLoader.load(workbook);
         CategoryLoader.load(workbook);
+        StudentLoader.load(workbook);
+        TeacherLoader.load(workbook);
 	}
 
 }
