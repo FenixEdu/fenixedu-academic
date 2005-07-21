@@ -149,10 +149,8 @@ public class EnrollmentVO extends VersionedObjectsBase implements
 		return (IEnrolment) CollectionUtils.find(enrolments, new Predicate() {
 			public boolean evaluate(Object o) {
 				IEnrolment enrolment = (IEnrolment) o;
-				return (enrolment.getCurricularCourse().getIdInternal()
-						.equals(curricularCourseId))
-						&& (enrolment.getExecutionPeriod()
-								.equals(executionPeriodId));
+				return (enrolment.getCurricularCourse().getIdInternal().equals(curricularCourseId))
+						&& (enrolment.getExecutionPeriod().getIdInternal().equals(executionPeriodId));
 			}
 		});
 	}
