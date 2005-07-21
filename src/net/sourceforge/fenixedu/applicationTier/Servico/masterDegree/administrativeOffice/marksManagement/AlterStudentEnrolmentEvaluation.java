@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.De
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
@@ -21,6 +22,7 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudent;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -130,8 +132,11 @@ public class AlterStudentEnrolmentEvaluation implements IService {
                     enrolmentEvaluation.setGrade(infoEnrolmentEvaluation.getGrade());
                     enrolmentEvaluation.setGradeAvailableDate(infoEnrolmentEvaluation.getGradeAvailableDate());
                     
-                    IPerson pessoa = Cloner.copyInfoPerson2IPerson(infoEnrolmentEvaluation.getInfoPersonResponsibleForGrade());
-                    enrolmentEvaluation.setPersonResponsibleForGrade(pessoa);
+                    InfoPerson infoPersonResponsibleForGrade = infoEnrolmentEvaluation.getInfoPersonResponsibleForGrade();
+                    if (infoPersonResponsibleForGrade.getIdInternal() != null) {
+                        IPerson personResponsibleForGrade = (IPerson) persistentPerson.readByOID(Person.class, infoPersonResponsibleForGrade.getIdInternal());                        
+                        enrolmentEvaluation.setPersonResponsibleForGrade(personResponsibleForGrade);
+                    } 
 
                     //check for an alteration
                     if (!enrolmentEvaluation.getGrade().equals(iEnrolmentEvaluation.getGrade())) {
