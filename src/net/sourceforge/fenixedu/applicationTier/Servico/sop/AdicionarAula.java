@@ -15,11 +15,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftServiceResult;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.Lesson;
@@ -31,53 +28,28 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class AdicionarAula implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public AdicionarAula() {
-    }
+    public List run(InfoShift infoShift, String[] classesList) throws ExcepcaoPersistencia {
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-    public List run(InfoShift infoShift, String[] classesList) throws FenixServiceException {
+        final IShift turno1 = sp.getITurnoPersistente().readByNameAndExecutionCourse(
+                infoShift.getNome(), infoShift.getInfoDisciplinaExecucao().getIdInternal());
 
-        //ITurnoAula turnoAula = null;
-        InfoShiftServiceResult result = null;
-        List serviceResult = new ArrayList();
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        List<InfoShiftServiceResult> serviceResult = new ArrayList<InfoShiftServiceResult>();
+        for (String lessonIdString : classesList) {
+            final ILesson lesson = (ILesson) sp.getIAulaPersistente().readByOID(Lesson.class,
+                    new Integer(lessonIdString));
 
-            IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoShift
-                    .getInfoDisciplinaExecucao());
+            if (lesson != null) {
+                InfoShiftServiceResult result = valid(turno1, lesson);
+                serviceResult.add(result);
 
-            IShift turno1 = sp.getITurnoPersistente().readByNameAndExecutionCourse(infoShift.getNome(),
-                    executionCourse.getIdInternal());
-
-            int i = 0;
-            while (i < classesList.length) {
-                Integer lessonId = new Integer(classesList[i]);
-                ILesson lesson = (ILesson) sp.getIAulaPersistente().readByOID(Lesson.class, lessonId);
-                if (lesson != null) {
-                    //turnoAula = new TurnoAula(turno1, lesson);
-                    result = valid(turno1, lesson);
-                    serviceResult.add(result);
-                    if (result.isSUCESS()) {
-                        /*
-                         * try { sp.getITurnoAulaPersistente().simpleLockWrite(
-                         * turnoAula); } catch (ExistingPersistentException ex) {
-                         * throw new ExistingServiceException(ex); }
-                         */
-                        try {
-                            sp.getIAulaPersistente().simpleLockWrite(lesson);
-                            lesson.setShift(turno1);
-                        } catch (ExcepcaoPersistencia ex) {
-
-                        }
-                    }
+                if (result.isSUCESS()) {
+                    sp.getIAulaPersistente().simpleLockWrite(lesson);
+                    lesson.setShift(turno1);
                 }
-                i++;
+
             }
 
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex.getMessage());
         }
 
         return serviceResult;
@@ -125,7 +97,8 @@ public class AdicionarAula implements IService {
          * shiftCriteria.setNome(shift.getNome());
          * shiftCriteria.setDisciplinaExecucao(shift.getDisciplinaExecucao());
          * 
-         * List lessonsOfShiftType = PersistenceSupportFactory.getDefaultPersistenceSupport()
+         * List lessonsOfShiftType =
+         * PersistenceSupportFactory.getDefaultPersistenceSupport()
          * .getITurnoAulaPersistente().readLessonsByShift(shiftCriteria);
          * 
          * ILesson lesson = null; double duration = 0; for (int i = 0; i <
