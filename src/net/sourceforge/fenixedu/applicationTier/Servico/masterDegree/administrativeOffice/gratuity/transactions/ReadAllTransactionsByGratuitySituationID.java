@@ -117,7 +117,7 @@ public class ReadAllTransactionsByGratuitySituationID implements IService {
 
                     }
                     IReimbursementTransaction reimbursementTransaction = reimbursementTransactionDAO
-                            .readByReimbursementGuideEntry(newReimbursementGuideEntry);
+                            .readByReimbursementGuideEntry(newReimbursementGuideEntry.getIdInternal());
 
                     if (reimbursementTransaction == null) {
                         throw new NonExistingServiceException(
