@@ -1331,7 +1331,12 @@ public abstract class Cloner {
             
             IExternalPerson externalPerson = new ExternalPerson();
             copyObjectProperties(externalPerson, infoExternalPerson);
-            IPerson person = Cloner.copyInfoPerson2IPerson(infoExternalPerson.getInfoPerson());
+
+            IPerson person = new Person();
+            copyObjectProperties(person, infoExternalPerson.getInfoPerson());
+            ICountry country = new Country();
+            copyObjectProperties(country, infoExternalPerson.getInfoPerson().getInfoPais());
+            person.setPais(country);
             externalPerson.setPerson(person);
 
             IWorkLocation workLocation = new WorkLocation();
@@ -1370,7 +1375,10 @@ public abstract class Cloner {
             copyObjectProperties(teacher, infoTeacher);
 
             IPerson person = new Person();
-            person = copyInfoPerson2IPerson(infoTeacher.getInfoPerson());
+            copyObjectProperties(person, infoTeacher.getInfoPerson());
+            ICountry country = new Country();
+            copyObjectProperties(country, infoTeacher.getInfoPerson().getInfoPais());
+            person.setPais(country);
             teacher.setPerson(person);
 
             ICategory category = new Category();
@@ -1760,35 +1768,6 @@ public abstract class Cloner {
         executionPeriod.setExecutionYear(executionYear);
 
         return executionPeriod;
-    }
-
-    /**
-     * Method copyInfoPerson2IPerson.
-     * 
-     * @param infoPerson
-     * @return IPerson
-     */
-    public static IPerson copyInfoPerson2IPerson(InfoPerson infoPerson) {
-        IPerson person = null;
-        if (infoPerson != null) {
-            person = new Person();
-            ICountry country = Cloner.copyInfoCountry2ICountry(infoPerson.getInfoPais());
-            copyObjectProperties(person, infoPerson);
-            person.setPais(country);
-        }
-        return person;
-    }
-
-    /**
-     * Method copyInfoCountry2ICountry
-     * 
-     * @param infoCountry
-     * @return
-     */
-    public static ICountry copyInfoCountry2ICountry(InfoCountry infoCountry) {
-        ICountry country = new Country();
-        copyObjectProperties(country, infoCountry);
-        return country;
     }
 
     public static IRoomOccupation copyInfoRoomOccupation2IRoomOccupation(
