@@ -47,7 +47,8 @@ public class AlterStudentEnrolmentEvaluation implements IService {
             InfoEnrolmentEvaluation infoEnrolmentEvaluation, Integer teacherNumber, IUserView userView)
             throws FenixServiceException {
 
-        List infoEvaluationsWithError = null;
+        List<InfoEnrolmentEvaluation> infoEvaluationsWithError = null;
+        
         try {
             Calendar calendario = Calendar.getInstance();
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -112,7 +113,7 @@ public class AlterStudentEnrolmentEvaluation implements IService {
 
                 infoEnrolmentEvaluation = completeEnrolmentEvaluation(infoEnrolmentEvaluation);
 
-                infoEvaluationsWithError = new ArrayList();
+                infoEvaluationsWithError = new ArrayList<InfoEnrolmentEvaluation>();
 
                 if (!isValidEvaluation(infoEnrolmentEvaluation)) {
                     infoEvaluationsWithError.add(infoEnrolmentEvaluation);
@@ -124,8 +125,13 @@ public class AlterStudentEnrolmentEvaluation implements IService {
 
                     // new enrolment evaluation
                     IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
-                    enrolmentEvaluation = Cloner
-                            .copyInfoEnrolmentEvaluation2IEnrolmentEvaluation(infoEnrolmentEvaluation);
+                    enrolmentEvaluation.setEnrolmentEvaluationType(infoEnrolmentEvaluation.getEnrolmentEvaluationType());
+                    enrolmentEvaluation.setExamDate(infoEnrolmentEvaluation.getExamDate());
+                    enrolmentEvaluation.setGrade(infoEnrolmentEvaluation.getGrade());
+                    enrolmentEvaluation.setGradeAvailableDate(infoEnrolmentEvaluation.getGradeAvailableDate());
+                    
+                    IPerson pessoa = Cloner.copyInfoPerson2IPerson(infoEnrolmentEvaluation.getInfoPersonResponsibleForGrade());
+                    enrolmentEvaluation.setPersonResponsibleForGrade(pessoa);
 
                     //check for an alteration
                     if (!enrolmentEvaluation.getGrade().equals(iEnrolmentEvaluation.getGrade())) {
