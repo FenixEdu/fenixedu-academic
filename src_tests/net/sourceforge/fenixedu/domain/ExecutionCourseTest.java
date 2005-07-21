@@ -7,13 +7,19 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 import java.util.Date;
 
+import net.sourceforge.fenixedu.applicationTier.utils.summary.SummaryUtils;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 public class ExecutionCourseTest extends DomainTestBase {
 
     private IExecutionCourse executionCourse;
-	
 	private IExecutionCourse executionCourseToReadFrom = null;
 	private IStudent thisStudent = null;
 	private IAttends attendsForThisStudent = null;
+    private IShift shift;
+    private IRoom room;
+    private ITeacher teacher;
+    private IProfessorship professorship;
 
     protected void setUp() throws Exception {
         super.setUp();
@@ -28,8 +34,22 @@ public class ExecutionCourseTest extends DomainTestBase {
         executionCourse.setPraticalHours(2.0);
         executionCourse.setLabHours(0.0);
         executionCourse.setComment("comment");
-		
-		setUpForGetAttendsByStudentCase();
+        
+        setUpForGetAttendsByStudentCase();
+
+        shift = new Shift();
+        shift.setIdInternal(1);
+
+        room = new Room();
+        room.setIdInternal(1);
+
+        teacher = new Teacher();
+        teacher.setIdInternal(1);
+
+        professorship = new Professorship();
+        professorship.setIdInternal(1);
+        professorship.setExecutionCourse(this.executionCourse);
+        professorship.setTeacher(this.teacher);
     }
 
     private void setUpForGetAttendsByStudentCase() {
@@ -75,7 +95,7 @@ public class ExecutionCourseTest extends DomainTestBase {
         checkIfExecutionCourseAttributesAreCorrect("newName", "newAcronym", 2.0, 1.0, 2.0, 1.0,
                 "newComment");
     }
-    
+
     public void testCreateSite() {
         executionCourse.setSite(null);
 
@@ -203,7 +223,122 @@ public class ExecutionCourseTest extends DomainTestBase {
         assertEquals("Different ExecutionCourse in CourseReport!", executionCourse.getCourseReport()
                 .getExecutionCourse(), executionCourse);
     }
+
+    public void testCreateSummary() {
+        ISummary summary;
+        Date summaryDate;
+        Date summaryHour;
+        Date dateBeforeCreation;
+        Date dateAfterCreation;
+        try {
+            IProfessorship professorshipTest = null;
+            executionCourse.createSummary("title", "summaryText", 20, true, professorshipTest);
+            fail("Expected NullPointerException!");
+        } catch (NullPointerException e) {
+            assertEquals("Unexpected size in associated summaries!", 0, executionCourse
+                    .getAssociatedSummariesCount());
+        }
+
+        try {
+            ITeacher teacherTest = null;
+            executionCourse.createSummary("title", "summaryText", 20, true, teacherTest);
+            fail("Expected NullPointerException!");
+        } catch (NullPointerException e) {
+            assertEquals("Unexpected size in associated summaries!", 0, executionCourse
+                    .getAssociatedSummariesCount());
+        }
+
+        try {
+            String teacherNameTest = null;
+            executionCourse.createSummary("title", "summaryText", 20, true, teacherNameTest);
+            fail("Expected NullPointerException!");
+        } catch (NullPointerException e) {
+            assertEquals("Unexpected size in associated summaries!", 0, executionCourse
+                    .getAssociatedSummariesCount());
+        }
+
+        try {
+            executionCourse.createSummary(null, "summaryText", null, true, this.professorship);
+            fail("Expected NullPointerException!");
+        } catch (NullPointerException e) {
+            assertEquals("Unexpected size in associated summaries!", 0, executionCourse
+                    .getAssociatedSummariesCount());
+        }
+
+        try {
+            executionCourse.createSummary("title", null, 20, null, this.professorship);
+            fail("Expected NullPointerException!");
+        } catch (NullPointerException e) {
+            assertEquals("Unexpected size in associated summaries!", 0, executionCourse
+                    .getAssociatedSummariesCount());
+        }
+
+        // Create Summary using Professorship
+        summaryDate = SummaryUtils.createSummaryDate(2005, 5, 5);
+        summaryHour = SummaryUtils.createSummaryHour(11, 0);
+        dateBeforeCreation = Calendar.getInstance().getTime();
+        sleep(1000);
+        summary = executionCourse.createSummary("title", "summaryText", 20, true, this.professorship);
+        shift.transferSummary(summary, summaryDate, summaryHour, this.room);
+        sleep(1000);
+        dateAfterCreation = Calendar.getInstance().getTime();
+        checkIfSummaryAttributesAreCorrect(summary, "title", "summaryText", 20, true, summaryDate,
+                summaryHour, this.executionCourse, this.professorship, null, null, this.shift, this.room);
+        checkSummaryModificationDate(summary, dateBeforeCreation, dateAfterCreation);
+        assertEquals("Unexpected size in associated summaries!", 1, executionCourse
+                .getAssociatedSummariesCount());
+        assertEquals("Unexpected size in associated summaries!", 1, shift.getAssociatedSummariesCount());
+
+        // Try to insert a summary to a shift that already exit
+        try {
+            shift.transferSummary(summary, summaryDate, summaryHour, this.room);
+            fail("Expected DomainException: summary already exist!");
+        } catch (DomainException e) {
+            assertEquals("Unexpected size in associated summaries!", 1, executionCourse
+                    .getAssociatedSummariesCount());
+            assertEquals("Unexpected size in associated summaries!", 1, shift
+                    .getAssociatedSummariesCount());
+        }
+
+        // Create Summary using Teacher
+        summaryDate = SummaryUtils.createSummaryDate(2005, 6, 5);
+        summaryHour = SummaryUtils.createSummaryHour(11, 0);
+        dateBeforeCreation = Calendar.getInstance().getTime();
+        sleep(1000);
+        summary = executionCourse.createSummary("title", "summaryText", 20, true, this.teacher);
+        shift.transferSummary(summary, summaryDate, summaryHour, this.room);
+        sleep(1000);
+        dateAfterCreation = Calendar.getInstance().getTime();
+        checkIfSummaryAttributesAreCorrect(summary, "title", "summaryText", 20, true, summaryDate,
+                summaryHour, this.executionCourse, null, this.teacher, null, this.shift, this.room);
+        checkSummaryModificationDate(summary, dateBeforeCreation, dateAfterCreation);
+        assertEquals("Unexpected size in associated summaries!", 2, executionCourse
+                .getAssociatedSummariesCount());
+        assertEquals("Unexpected size in associated summaries!", 2, shift.getAssociatedSummariesCount());
+
+        // Create Summary using TeacherName
+        summaryDate = SummaryUtils.createSummaryDate(2005, 8, 5);
+        summaryHour = SummaryUtils.createSummaryHour(11, 0);
+        dateBeforeCreation = Calendar.getInstance().getTime();
+        sleep(1000);
+        summary = executionCourse.createSummary("title", "summaryText", 20, true, "JPNF");
+        shift.transferSummary(summary, summaryDate, summaryHour, this.room);
+        sleep(1000);
+        dateAfterCreation = Calendar.getInstance().getTime();
+        checkIfSummaryAttributesAreCorrect(summary, "title", "summaryText", 20, true, summaryDate,
+                summaryHour, this.executionCourse, null, null, "JPNF", this.shift, this.room);
+        checkSummaryModificationDate(summary, dateBeforeCreation, dateAfterCreation);
+        assertEquals("Unexpected size in associated summaries!", 3, executionCourse
+                .getAssociatedSummariesCount());
+        assertEquals("Unexpected size in associated summaries!", 3, shift.getAssociatedSummariesCount());
+    }
     
+    public void testGetAttendsByStudent() {
+		IAttends attends = executionCourseToReadFrom.getAttendsByStudent(thisStudent);
+		
+		assertEquals(attends,attendsForThisStudent);
+	}
+
     private void checkIfExecutionCourseAttributesAreCorrect(final String name, final String acronym,
             final double theoreticalHours, final double theoreticalPraticalHours,
             final double praticalHours, final double laboratoryHours, final String comment) {
@@ -220,11 +355,32 @@ public class ExecutionCourseTest extends DomainTestBase {
                 .getLabHours());
         assertEquals("Different ExecutionCourse Comment!", comment, executionCourse.getComment());
     }
-	
-	
-	public void testGetAttendsByStudent() {
-		IAttends attends = executionCourseToReadFrom.getAttendsByStudent(thisStudent);
-		
-		assertEquals(attends,attendsForThisStudent);
-	}
+
+    private void checkIfSummaryAttributesAreCorrect(final ISummary summary, final String title,
+            final String summaryText, final Integer studentsNumber, final Boolean isExtraLesson,
+            final Date summaryDate, final Date summaryHour, final IExecutionCourse executionCourse,
+            final IProfessorship professorship, final ITeacher teacher, final String teacherName,
+            final IShift shift, final IRoom room) {
+
+        assertEquals("Different Summary Title!", title, summary.getTitle());
+        assertEquals("Different Summary Text!", summaryText, summary.getSummaryText());
+        assertEquals("Different Summary StudentsNumber!", studentsNumber, summary.getStudentsNumber());
+        assertEquals("Different Summary Extra Lesson!", isExtraLesson, summary.getIsExtraLesson());
+        assertEquals("Different Summary ExecutionCourse!", executionCourse, summary.getExecutionCourse());
+        assertEquals("Different Summary Professorship!", professorship, summary.getProfessorship());
+        assertEquals("Different Summary Teacher!", teacher, summary.getTeacher());
+        assertEquals("Different Summary TeacherName!", teacherName, summary.getTeacherName());
+        assertEquals("Different Summary Shift!", shift, summary.getShift());
+        assertEquals("Different Summary Room!", room, summary.getRoom());
+        assertTrue("Different Summary Date!", summary.getSummaryDate().equals(summaryDate));
+        assertTrue("Different Summary Hour!", summary.getSummaryHour().equals(summaryHour));
+    }
+
+    private void checkSummaryModificationDate(final ISummary summary, final Date dateBeforeEdition,
+            final Date dateAfterEdition) {
+        assertTrue("Expected ModificationDate After an initial timestamp", summary.getLastModifiedDate()
+                .after(dateBeforeEdition));
+        assertTrue("Expected ModificationDate Before an initial timestamp", summary
+                .getLastModifiedDate().before(dateAfterEdition));
+    }
 }

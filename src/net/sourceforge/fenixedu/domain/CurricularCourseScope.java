@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 
 /**
  * @author dcs-rjao

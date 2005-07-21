@@ -587,7 +587,7 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
 	public void edit(String name, net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState state, 
 			java.util.Date inicialDate, java.util.Date endDate, Integer degreeDuration, Integer minimalYearForOptionalCourses, 
 			Double neededCredits, net.sourceforge.fenixedu.util.MarkType markType, Integer numerusClausus, String annotation);
-	
+
 	public void delete();
     "
 }
@@ -979,6 +979,15 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
     public void createBibliographicReference(String title, String authors, String reference, String year, Boolean optional);
     
     public void createCourseReport(String report);
+    
+    public ISummary createSummary(String title, String summaryText, Integer studentsNumber,
+            Boolean isExtraLesson, IProfessorship professorship);
+            
+    public ISummary createSummary(String title, String summaryText, Integer studentsNumber,
+            Boolean isExtraLesson, ITeacher teacher);
+            
+    public ISummary createSummary(String title, String summaryText, Integer studentsNumber,
+            Boolean isExtraLesson, String teacherName);
 
 	public java.util.List responsibleFors();	
 
@@ -2275,6 +2284,8 @@ class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.dom
     public double hours();
     
     public void associateSchoolClass(net.sourceforge.fenixedu.domain.ISchoolClass schoolClass);
+    
+    public void transferSummary(ISummary summary, java.util.Date summaryDate, java.util.Date summaryHour, IRoom room);
 	"
 }
 
@@ -2512,6 +2523,21 @@ class net.sourceforge.fenixedu.domain.Summary extends net.sourceforge.fenixedu.d
     Date summaryDate;
     Date summaryHour;
     ShiftType summaryType;
+    
+    interface "
+    public void edit(String title, String summaryText, Integer studentsNumber, Boolean isExtraLesson,
+            IProfessorship professorship);
+            
+    public void edit(String title, String summaryText, Integer studentsNumber, Boolean isExtraLesson,
+            ITeacher teacher);
+            
+    public void edit(String title, String summaryText, Integer studentsNumber, Boolean isExtraLesson,
+            String teacherName);
+            
+	public void modifyShift(IShift shift, java.util.Date summaryDate, java.util.Date summaryHour, IRoom room);            
+	
+	public void delete();
+    "
 }
 
 class net.sourceforge.fenixedu.domain.SupportLesson extends net.sourceforge.fenixedu.domain.DomainObject {

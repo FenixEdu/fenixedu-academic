@@ -106,11 +106,11 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public void edit(String name, String acronym, double theoreticalHours,
             double theoreticalPraticalHours, double praticalHours, double laboratoryHours, String comment) {
-        
+
         if (name == null || acronym == null || theoreticalHours < 0 || theoreticalPraticalHours < 0
                 || praticalHours < 0 || laboratoryHours < 0 || comment == null)
             throw new NullPointerException();
-        
+
         setNome(name);
         setSigla(acronym);
         setTheoreticalHours(theoreticalHours);
@@ -159,8 +159,67 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         courseReport.setLastModificationDate(Calendar.getInstance().getTime());
         courseReport.setExecutionCourse(this);
     }
-	
-	public List responsibleFors() {
+
+    private ISummary createSummary(String title, String summaryText, Integer studentsNumber,
+            Boolean isExtraLesson) {
+        
+        if (title == null || summaryText == null || studentsNumber == null || isExtraLesson == null)
+            throw new NullPointerException();
+
+        final ISummary summary = new Summary();
+        summary.setTitle(title);
+        summary.setSummaryText(summaryText);
+        summary.setStudentsNumber(studentsNumber);
+        summary.setIsExtraLesson(isExtraLesson);
+        summary.setLastModifiedDate(Calendar.getInstance().getTime());
+        summary.setExecutionCourse(this);
+
+        return summary;
+    }
+
+    public ISummary createSummary(String title, String summaryText, Integer studentsNumber,
+            Boolean isExtraLesson, IProfessorship professorship) {
+
+        if (professorship == null)
+            throw new NullPointerException();
+
+        final ISummary summary = createSummary(title, summaryText, studentsNumber, isExtraLesson);
+        summary.setProfessorship(professorship);
+        summary.setTeacher(null);
+        summary.setTeacherName(null);
+        
+        return summary;
+    }
+
+    public ISummary createSummary(String title, String summaryText, Integer studentsNumber,
+            Boolean isExtraLesson, ITeacher teacher) {
+
+        if (teacher == null)
+            throw new NullPointerException();
+        
+        final ISummary summary = createSummary(title, summaryText, studentsNumber, isExtraLesson);
+        summary.setTeacher(teacher);
+        summary.setProfessorship(null);
+        summary.setTeacherName(null);
+        
+        return summary;
+    }
+
+    public ISummary createSummary(String title, String summaryText, Integer studentsNumber,
+            Boolean isExtraLesson, String teacherName) {
+
+        if (teacherName == null)
+            throw new NullPointerException();
+        
+        final ISummary summary = createSummary(title, summaryText, studentsNumber, isExtraLesson);
+        summary.setTeacherName(teacherName);
+        summary.setTeacher(null);
+        summary.setProfessorship(null);    
+        
+        return summary;
+    }
+    
+    public List responsibleFors() {
         List<IProfessorship> professorships = this.getProfessorships();
         List res = new ArrayList();
 

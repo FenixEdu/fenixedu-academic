@@ -10,7 +10,11 @@ package net.sourceforge.fenixedu.domain;
  * 
  * @author tfc130
  */
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class Shift extends Shift_Base {
     protected Integer ocupation;
@@ -64,6 +68,23 @@ public class Shift extends Shift_Base {
         if (!schoolClass.getAssociatedShifts().contains(this)) {
             schoolClass.getAssociatedShifts().add(this);
         }
+    }
+
+    public void transferSummary(ISummary summary, Date summaryDate, Date summaryHour, IRoom room) {
+        checkIfSummaryExistFor(summaryDate, summaryHour);
+        summary.modifyShift(this, summaryDate, summaryHour, room);
+    }
+
+    private void checkIfSummaryExistFor(final Date summaryDate, final Date summaryHour) {
+        final Iterator associatedSummaries = getAssociatedSummariesIterator();
+        while (associatedSummaries.hasNext()) {
+            ISummary summary = (ISummary) associatedSummaries.next();
+            if (summary.getSummaryDate().equals(summaryDate)
+                    && summary.getSummaryHour().equals(summaryHour)) {
+                throw new DomainException(this.getClass().getName(), "error.summary.already.exists");
+            }
+        }
+        return;
     }
 
 }
