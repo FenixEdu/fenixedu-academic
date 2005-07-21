@@ -9,7 +9,9 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.cache.EnrollmentInfoCacheOSCacheImpl;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ChosenAreasAreIncompatibleServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedBranchChangeException;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
@@ -426,16 +428,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
      */
     public boolean areNewAreasCompatible(IBranch specializationArea, IBranch secundaryArea)
             throws BothAreasAreTheSameServiceException, InvalidArgumentsServiceException {
-        // This look stupid but it avoids a irritating warnin that the exception
-        // is not thrown
-        // Performance-wise the compiler removes the whole block because it is
-        // un-reachable.
-        if (false) {
-            throw new BothAreasAreTheSameServiceException();
-        }
-        if (false) {
-            throw new InvalidArgumentsServiceException();
-        }
+
         return true;
     }
 
@@ -915,8 +908,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
             }
         }
 	}
-	
-	
 	
 	
 	

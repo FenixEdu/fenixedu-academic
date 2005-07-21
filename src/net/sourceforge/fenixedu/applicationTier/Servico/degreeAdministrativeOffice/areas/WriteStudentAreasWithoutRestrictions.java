@@ -48,7 +48,6 @@ public class WriteStudentAreasWithoutRestrictions implements IService {
                 throw new BothAreasAreTheSameServiceException();
             }
 
-            studentCurricularPlanDAO.simpleLockWrite(studentCurricularPlan);
             studentCurricularPlan.setBranch(specializationArea);
             studentCurricularPlan.setSecundaryBranch(secundaryArea);
         } catch (ExcepcaoPersistencia e) {

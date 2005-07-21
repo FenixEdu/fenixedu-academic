@@ -16,8 +16,7 @@ public class TransferEnrollments implements IService {
     public void run(final Integer destinationStudentCurricularPlanId,
             final Integer[] enrollmentIDsToTransfer) throws ExcepcaoPersistencia {
 
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
                 .getIStudentCurricularPlanPersistente();
         final IPersistentEnrollment persistentEnrollment = persistentSupport.getIPersistentEnrolment();
@@ -29,7 +28,6 @@ public class TransferEnrollments implements IService {
             final Integer enrollmentIDToTransfer = enrollmentIDsToTransfer[i];
             final IEnrolment enrollment = (IEnrolment) persistentEnrollment.readByOID(Enrolment.class, enrollmentIDToTransfer);
 
-            persistentEnrollment.simpleLockWrite(enrollment);
             enrollment.setStudentCurricularPlan(studentCurricularPlan);
         }
     }

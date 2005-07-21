@@ -43,25 +43,20 @@ public class EditDegreeInfoByDegreeCurricularPlanID implements IService {
 
             // degree curricular plan
             IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) suportePersistente
-                    .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
-                            degreeCurricularPlanID);
+                    .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,degreeCurricularPlanID);
 
             if (degreeCurricularPlan == null) {
                 throw new FenixServiceException("error.impossibleEditDegreeInfo");
             }
 
-			
             // and correspondent execution degrees
-			
 			executionDegrees = degreeCurricularPlan.getExecutionDegrees();
 
 			if (executionDegrees == null) {
 				throw new FenixServiceException("error.impossibleEditDegreeInfo");
 	        }
-			 
-			 
-            // sort them by begin date
 
+            // sort them by begin date
             Collections.sort(executionDegrees, new Comparator() {
                 public int compare(Object o1, Object o2) {
                     return ((IExecutionDegree) o1).getExecutionYear().getBeginDate().compareTo(
@@ -87,12 +82,9 @@ public class EditDegreeInfoByDegreeCurricularPlanID implements IService {
                 throw new FenixServiceException("error.impossibleEditDegreeInfo");
             }
             
-            //verify if the record found is in this execution period
-            //or if is new in database
-            //if it isn't, is necessary to create a new record
-            if (degreeInfo == null
-                    || (!verifyExecutionYear(degreeInfo.getLastModificationDate(), executionDegree
-                            .getExecutionYear()))) {
+            //verify if the record found is in this execution period or if is new in database 
+			//if it isn't, is necessary to create a new record
+            if (degreeInfo == null || (!verifyExecutionYear(degreeInfo.getLastModificationDate(), executionDegree.getExecutionYear()))) {
                 degreeInfo = new DegreeInfo();
 
                 //associate the degree
@@ -117,8 +109,7 @@ public class EditDegreeInfoByDegreeCurricularPlanID implements IService {
             degreeInfo.setMarkMax(infoDegreeInfo.getMarkMax());
             degreeInfo.setMarkAverage(infoDegreeInfo.getMarkAverage());
 
-            //update information in english that it will be displayed in degree
-            // site.
+            //update information in english that it will be displayed in degree site.
             degreeInfo.setDescriptionEn(infoDegreeInfo.getDescriptionEn());
             degreeInfo.setObjectivesEn(infoDegreeInfo.getObjectivesEn());
             degreeInfo.setHistoryEn(infoDegreeInfo.getHistoryEn());

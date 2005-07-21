@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfAc
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfCurricularCoursesEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PrecedencesEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PreviousYearsCurricularCourseEnrollmentRule;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -286,5 +287,26 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
 	
 	
+	private Boolean canBeDeleted() {
+		
+		return !(hasAnyStudentCurricularPlans() ||
+				 hasAnyCurricularCourseEquivalences() ||
+				 hasAnyEnrolmentPeriods() ||
+				 hasAnyCurricularCourses() ||
+				 hasAnyExecutionDegrees() ||
+				 hasAnyAreas());
+	}
+	
+	
+	public void delete() {
+		
+		if (canBeDeleted()) {
+			removeDegree();
+			deleteDomainObject();
+		}
+		else
+			throw new DomainException(this.getClass().getName(), "ola mundo");
+		
+	}
 	
 }

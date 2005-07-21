@@ -48,7 +48,6 @@ public class WriteStudentAreas implements IService {
             }
 
             if (studentCurricularPlan.areNewAreasCompatible(specializationArea, secundaryArea)) {
-                studentCurricularPlanDAO.simpleLockWrite(studentCurricularPlan);
                 studentCurricularPlan.setBranch(specializationArea);
                 studentCurricularPlan.setSecundaryBranch(secundaryArea);
             } else {

@@ -96,16 +96,13 @@ public class MakePrecedenceConjunctionForDegreeCurricularPlanDA extends FenixDis
         Integer secondPrecedenceID = (Integer) mergePrecedencesForm.get("secondPrecedence");
 
         Object args1[] = { firstPrecedenceID, secondPrecedenceID };
-        Object args2[] = { secondPrecedenceID };
-        Object args3[] = { degreeCurricularPlanID };
+        Object args2[] = { degreeCurricularPlanID };
 
         try {
             ServiceManagerServiceFactory.executeService(userView,
                     "MergePrecedencesForDegreeCurricularPlan", args1);
-            ServiceManagerServiceFactory.executeService(userView,
-                    "DeletePrecedenceFromDegreeCurricularPlan", args2);
             Map result = (Map) ServiceManagerServiceFactory.executeService(userView,
-                    "ReadPrecedencesFromDegreeCurricularPlan", args3);
+                    "ReadPrecedencesFromDegreeCurricularPlan", args2);
             request.setAttribute("precedences", result);
         } catch (InvalidArgumentsServiceException e) {
             errors.add(e.getMessage(), new ActionError(e.getMessage()));

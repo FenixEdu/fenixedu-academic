@@ -76,4 +76,19 @@ public class Precedence extends Precedence_Base {
 		removeCurricularCourse();
 		super.deleteDomainObject();
 	}
+	
+	
+	public void mergePrecedences(IPrecedence sourcePrecedence) {
+		
+        Iterator<IRestriction> restrictionsIterator = sourcePrecedence.getRestrictionsIterator();
+		
+        while (restrictionsIterator.hasNext()) {
+			IRestriction restriction = restrictionsIterator.next();
+			
+			restrictionsIterator.remove();
+			restriction.setPrecedence(this);
+        }
+
+		sourcePrecedence.delete();
+	}
 }

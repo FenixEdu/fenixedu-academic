@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IDegree;
 import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
@@ -25,68 +26,28 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class DeleteDegreeCurricularPlans implements IService {
 
-    // delete a set of degreeCurricularPlans
     public List run(List degreeCurricularPlansIds) throws FenixServiceException {
 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
-                    .getIPersistentDegreeCurricularPlan();
-            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp.getIPersistentDegreeCurricularPlan();
+            
+            Iterator<Integer> iter = degreeCurricularPlansIds.iterator();
 
-            Iterator iter = degreeCurricularPlansIds.iterator();
-
-            List undeletedDegreeCurricularPlansNames = new ArrayList();
-            List executionDegrees, curricularCourses, branches, studentCurricularPlans;
-            Integer degreeCurricularPlanId;
-            IDegreeCurricularPlan degreeCurricularPlan;
+            List<String> undeletedDegreeCurricularPlansNames = new ArrayList<String>();
 
             while (iter.hasNext()) {
 
-                degreeCurricularPlanId = (Integer) iter.next();
-                degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOID(
+				Integer degreeCurricularPlanId = (Integer) iter.next();
+				IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOID(
                         DegreeCurricularPlan.class, degreeCurricularPlanId);
-                if (degreeCurricularPlan != null) {
-                    executionDegrees = persistentExecutionDegree
-                            .readByDegreeCurricularPlan(degreeCurricularPlan.getIdInternal());
-                    if (!executionDegrees.isEmpty())
-                        undeletedDegreeCurricularPlansNames.add(degreeCurricularPlan.getName());
-                    else {
-						
-						String name = degreeCurricularPlan.getName();
-						String degreeName = degreeCurricularPlan.getDegree().getNome();
-						String degreeSigla = degreeCurricularPlan.getDegree().getSigla();
-						
-                        curricularCourses = persistentCurricularCourse
-                                .readCurricularCoursesByDegreeCurricularPlan(name, degreeName, degreeSigla);
-                        if (!curricularCourses.isEmpty())
-                            undeletedDegreeCurricularPlansNames.add(degreeCurricularPlan.getName());
-                        else {
-                            branches = degreeCurricularPlan.getAreas();
-                            if (!branches.isEmpty())
-                                undeletedDegreeCurricularPlansNames.add(degreeCurricularPlan.getName());
-                            else {
-                                studentCurricularPlans = degreeCurricularPlan.getStudentCurricularPlans();
-                                if (!studentCurricularPlans.isEmpty())
-                                    undeletedDegreeCurricularPlansNames.add(degreeCurricularPlan
-                                            .getName());
-                                else {
-                                    
-                                    if (degreeCurricularPlan.getCurricularCourseEquivalences().isEmpty() &&
-                                            degreeCurricularPlan.getEnrolmentPeriods().isEmpty())
-                                    {
-                                        dereferenceDegreeCurricularPlan(degreeCurricularPlan,sp);
-                                        persistentDegreeCurricularPlan.deleteByOID(DegreeCurricularPlan.class,degreeCurricularPlan.getIdInternal());
-                                    }
-                                    else
-                                        undeletedDegreeCurricularPlansNames.add(degreeCurricularPlan.getName());                                        
-                                }
-                                    
-                            }
-                        }
-                    }
-                }
+ 
+				try {
+					degreeCurricularPlan.delete();
+				}
+				catch (DomainException e) {
+					undeletedDegreeCurricularPlansNames.add(degreeCurricularPlan.getName());
+				}	
             }
 
             return undeletedDegreeCurricularPlansNames;
@@ -94,12 +55,5 @@ public class DeleteDegreeCurricularPlans implements IService {
         } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
-
-    }
-
-    private void dereferenceDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente sp) throws ExcepcaoPersistencia
-    {
-        IDegree degree = degreeCurricularPlan.getDegree();
-        degree.getDegreeCurricularPlans().remove(degreeCurricularPlan);        
     }
 }
