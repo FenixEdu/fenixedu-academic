@@ -63,3 +63,4 @@ ${log.image.directory}
 *.war
 build.properties.test
 build.properties.prod
+development.properties
