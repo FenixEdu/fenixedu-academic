@@ -11,10 +11,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGroupProperties;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.AttendInAttendsSet;
 import net.sourceforge.fenixedu.domain.AttendsSet;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.GroupProperties;
 import net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttendInAttendsSet;
 import net.sourceforge.fenixedu.domain.IAttends;
@@ -67,9 +67,20 @@ public class CreateGroupProperties implements IService {
         List attends = new ArrayList();
         attends = persistentFrequenta.readByExecutionCourse(executionCourseCode);
 
-        IGroupProperties newGroupProperties = Cloner
-                .copyInfoGroupProperties2IGroupProperties(infoGroupProperties);
+        IGroupProperties newGroupProperties = new GroupProperties();
         persistentGroupProperties.simpleLockWrite(newGroupProperties);
+        
+        newGroupProperties.setEnrolmentBeginDay(infoGroupProperties.getEnrolmentBeginDay());
+        newGroupProperties.setEnrolmentEndDay(infoGroupProperties.getEnrolmentEndDay());
+        newGroupProperties.setMaximumCapacity(infoGroupProperties.getMaximumCapacity());
+        newGroupProperties.setMinimumCapacity(infoGroupProperties.getMinimumCapacity());
+        newGroupProperties.setIdealCapacity(infoGroupProperties.getIdealCapacity());
+        newGroupProperties.setGroupMaximumNumber(infoGroupProperties.getGroupMaximumNumber());
+        newGroupProperties.setEnrolmentPolicy(infoGroupProperties.getEnrolmentPolicy());
+        newGroupProperties.setIdInternal(infoGroupProperties.getIdInternal());
+        newGroupProperties.setName(infoGroupProperties.getName());
+        newGroupProperties.setShiftType(infoGroupProperties.getShiftType());
+        newGroupProperties.setProjectDescription(infoGroupProperties.getProjectDescription());
 
         IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse;
         groupPropertiesExecutionCourse = new GroupPropertiesExecutionCourse(newGroupProperties,
