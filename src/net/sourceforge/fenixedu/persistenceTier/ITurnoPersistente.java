@@ -20,7 +20,7 @@ public interface ITurnoPersistente extends IPersistentObject {
     public List readByExecutionCourseAndType(Integer executionCourseOID, ShiftType type)
             throws ExcepcaoPersistencia;
 
-    public List readByExecutionCourse(Integer executionCourseOID) throws ExcepcaoPersistencia;
+    public List<IShift> readByExecutionCourse(Integer executionCourseOID) throws ExcepcaoPersistencia;
 
     public List readByExecutionPeriodAndExecutionDegreeAndCurricularYear(Integer executionPeriodOID,
             Integer executionDegreeOID, Integer curricularYearOID) throws ExcepcaoPersistencia;

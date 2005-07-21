@@ -20,5 +20,5 @@ public interface ITurmaTurnoPersistente extends IPersistentObject {
 
     public List readByClass(Integer schoolClassOID) throws ExcepcaoPersistencia;
 
-    public List readClassesWithShift(Integer turnoOID) throws ExcepcaoPersistencia;
+    public List<ISchoolClassShift> readClassesWithShift(Integer turnoOID) throws ExcepcaoPersistencia;
 }
