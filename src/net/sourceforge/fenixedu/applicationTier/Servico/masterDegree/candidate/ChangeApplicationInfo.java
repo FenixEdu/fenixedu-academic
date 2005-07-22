@@ -17,7 +17,7 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePersonalInfo;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePersonalContactInformation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
@@ -61,8 +61,8 @@ public class ChangeApplicationInfo implements IService {
         if (isNewPerson) {
             changeAllPersonInfo(sp, infoPerson, existingMasterDegreeCandidate.getPerson());
         } else {
-            IService service = new ChangePersonalInfo();
-            ((ChangePersonalInfo) service).run(userView, infoPerson);
+            IService service = new ChangePersonalContactInformation();
+            ((ChangePersonalContactInformation) service).run(userView, infoPerson);
         }
 
         // Change Candidate Information

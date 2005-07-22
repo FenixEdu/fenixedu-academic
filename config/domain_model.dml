@@ -1821,6 +1821,14 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     public String getSlideNameForCandidateDocuments();
     
     public void delete();
+    
+    public net.sourceforge.fenixedu.domain.IPerson edit(net.sourceforge.fenixedu.dataTransferObject.InfoPerson personToEdit, net.sourceforge.fenixedu.domain.ICountry country);
+    
+    public void changePassword(String oldPassword, String newPassword);
+    
+    public IPerson editPersonalContactInformation(net.sourceforge.fenixedu.dataTransferObject.InfoPerson personToEdit);
+    
+    public void changeUsername(String newUsername, java.util.List<IPerson> persons);
     "
 }
 

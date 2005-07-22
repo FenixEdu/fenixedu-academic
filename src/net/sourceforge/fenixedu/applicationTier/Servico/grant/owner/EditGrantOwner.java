@@ -1,35 +1,23 @@
-/*
- * Created on 29/10/2003
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.owner;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.base.CreatePersonBaseClass;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
+import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.ICountry;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonRole;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRole;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author Barbosa
- * @author Pica
- *  
- */
-public class EditGrantOwner extends CreatePersonBaseClass implements IService {
-
-    public EditGrantOwner() {
-    }
+public class EditGrantOwner implements IService {
 
     private String generateGrantOwnerPersonUsername(Integer grantOwnerNumber) {
         String result = null;
@@ -73,15 +61,10 @@ public class EditGrantOwner extends CreatePersonBaseClass implements IService {
         return ((objectId == null) || objectId.equals(new Integer(0)));
     }
 
-    /**
-     * Executes the service.
-     */
-    public Integer run(InfoGrantOwner infoGrantOwner) throws FenixServiceException {
+    public Integer run(InfoGrantOwner infoGrantOwner) throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp = null;
-        IPessoaPersistente pPerson = null;
         IPersistentGrantOwner pGrantOwner = null;
-        IPersistentPersonRole pPersonRole = null;
-
+        
         try {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         } catch (ExcepcaoPersistencia e) {
@@ -89,38 +72,41 @@ public class EditGrantOwner extends CreatePersonBaseClass implements IService {
             throw new FenixServiceException("Unable to dao factory!", e);
         }
         pGrantOwner = sp.getIPersistentGrantOwner();
-        pPersonRole = sp.getIPersistentPersonRole();
-        pPerson = sp.getIPessoaPersistente();
-
-        try {
-            IPerson person = null;
-            IGrantOwner grantOwner = null;
-
-            //create or edit person information
-            person = CreatePersonBaseClass.createPersonBase(person, infoGrantOwner.getPersonInfo(), sp,
-                    pPerson, pPersonRole);
-
-            //verify if person is new
-            if (person.getUsername() != null)
-                grantOwner = checkIfGrantOwnerExists(infoGrantOwner.getGrantOwnerNumber(), pGrantOwner);
-
-            //create or edit grantOwner information
-            if (grantOwner == null) {
-                grantOwner = new GrantOwner();
-
-                pPerson.lockWrite(person);
-                IPersistentRole persistentRole = sp.getIPersistentRole();
-                person.getPersonRoles().add(persistentRole.readByRoleType(RoleType.GRANT_OWNER));
-            }
-            grantOwner = prepareGrantOwner(grantOwner, person, infoGrantOwner, pGrantOwner);
-
-            //Generate the GrantOwner's Person Username
-            if (person.getUsername() == null)
-                person.setUsername(generateGrantOwnerPersonUsername(grantOwner.getNumber()));
-
-            return grantOwner.getIdInternal();
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-            throw new FenixServiceException(excepcaoPersistencia.getMessage());
+        
+        IPerson person = null;
+        IGrantOwner grantOwner = null;
+        ICountry country = null;
+        
+        if (infoGrantOwner.getPersonInfo().getInfoPais() != null) {
+            country = (ICountry) sp.getIPersistentCountry().readByOID(Country.class, infoGrantOwner.getPersonInfo().getInfoPais().getIdInternal());
         }
+        
+        //create or edit person information
+        if (infoGrantOwner.getPersonInfo().getIdInternal() == null) {
+            person = new Person(infoGrantOwner.getPersonInfo(), country);
+        }
+        else {
+            person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class, infoGrantOwner.getPersonInfo().getIdInternal());
+            person.edit(infoGrantOwner.getPersonInfo(), country);
+        }
+
+        //verify if person is new
+        if (person.getUsername() != null)
+            grantOwner = checkIfGrantOwnerExists(infoGrantOwner.getGrantOwnerNumber(), pGrantOwner);
+
+        //create or edit grantOwner information
+        if (grantOwner == null) {
+            grantOwner = new GrantOwner();
+
+            IPersistentRole persistentRole = sp.getIPersistentRole();
+            person.getPersonRoles().add(persistentRole.readByRoleType(RoleType.GRANT_OWNER));
+        }
+        grantOwner = prepareGrantOwner(grantOwner, person, infoGrantOwner, pGrantOwner);
+
+        //Generate the GrantOwner's Person Username
+        if (person.getUsername() == null)
+            person.setUsername(generateGrantOwnerPersonUsername(grantOwner.getNumber()));
+
+        return grantOwner.getIdInternal();
     }
 }

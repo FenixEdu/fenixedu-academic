@@ -103,7 +103,7 @@ public class CorrectGrantOwnerAction extends FenixDispatchAction {
                 newUsernameOldPerson += oldInfoPerson.getNumeroDocumentoIdentificacao();
 
                 Object[] argsChangeUsername = { newUsernameOldPerson, oldInfoPerson.getIdInternal() };
-                ServiceUtils.executeService(userView, "ChangePersonUsernameService", argsChangeUsername);
+                ServiceUtils.executeService(userView, "ChangePersonUsername", argsChangeUsername);
             }
 
             //Change username of the new person if is a "INA***" to
@@ -115,7 +115,7 @@ public class CorrectGrantOwnerAction extends FenixDispatchAction {
                 infoPerson.setUsername(newUsernameNewPerson);
 
                 Object[] argsChangeUsername = { newUsernameNewPerson, infoPerson.getIdInternal() };
-                ServiceUtils.executeService(userView, "ChangePersonUsernameService", argsChangeUsername);
+                ServiceUtils.executeService(userView, "ChangePersonUsername", argsChangeUsername);
             }
 
             //Associate the new person with the grant owner, and save the

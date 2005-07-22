@@ -5,9 +5,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate;
 
 import java.util.Calendar;
+import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.GenerateUsername;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
@@ -89,6 +89,8 @@ public class CreateMasterDegreeCandidate implements IService {
 		IPerson person = sp.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(
 				identificationDocumentNumber, identificationDocumentType);
 
+        List<IPerson> persons = (List<IPerson>) sp.getIPessoaPersistente().readAll(Person.class);
+        
 		if (person == null) {
 			// Create the new Person
 			person = new Person();
@@ -100,7 +102,7 @@ public class CreateMasterDegreeCandidate implements IService {
 			person.setGender(Gender.MALE);
 
 			// Generate Person Username
-			String username = GenerateUsername.getCandidateUsername(masterDegreeCandidate);
+			String username = MasterDegreeCandidate.generateUsernameForNewCandidate(masterDegreeCandidate, persons);
 			person.setUsername(username);
 
 			// Give the Person Role
@@ -109,7 +111,7 @@ public class CreateMasterDegreeCandidate implements IService {
             if(person.getUsername().startsWith("INA")){
                 // Generate Person Username
                 sp.getIPessoaPersistente().simpleLockWrite(person);
-                String username = GenerateUsername.getCandidateUsername(masterDegreeCandidate);
+                String username = MasterDegreeCandidate.generateUsernameForNewCandidate(masterDegreeCandidate, persons);
                 person.setUsername(username);
             }
         }

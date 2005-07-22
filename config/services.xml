@@ -2333,8 +2333,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ChangePasswordService</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePasswordService</implementationClass>
+		<name>ChangePassword</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePassword</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -2342,8 +2342,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ChangePersonUsernameService</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePersonUsernameService</implementationClass>
+		<name>ChangePersonUsername</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePersonUsername</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -2365,8 +2365,8 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>ChangePersonalInfo</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePersonalInfo</implementationClass>
+		<name>ChangePersonalContactInformation</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePersonalContactInformation</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>

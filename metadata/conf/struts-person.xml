@@ -195,6 +195,7 @@
 				 key="ServidorApresentacao.Action.exceptions.InvalidPasswordActionException"
                  handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                  />
+
         <forward name="Success" path="/changePasswordSuccess.jsp"/>
       </action>
 

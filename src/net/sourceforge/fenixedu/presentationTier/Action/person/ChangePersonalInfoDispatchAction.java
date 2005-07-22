@@ -76,7 +76,7 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
         Object changeArgs[] = { userView, infoPerson };
 
         userView = (IUserView) ServiceManagerServiceFactory.executeService(userView,
-                "ChangePersonalInfo", changeArgs);
+                "ChangePersonalContactInformation", changeArgs);
 
         session.setAttribute(SessionConstants.U_VIEW, userView);
         return mapping.findForward("Success");

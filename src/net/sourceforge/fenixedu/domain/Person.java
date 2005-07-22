@@ -1,33 +1,161 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
+import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
+import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 
 public class Person extends Person_Base {
 
+    /***************************************************************************
+     * BUSINESS SERVICES *
+     **************************************************************************/
+
+    public Person(InfoPerson personToCreate, ICountry country) {
+
+        if (personToCreate.getIdInternal() != null)
+            throw new DomainException("error.publication.existentPublication");
+
+        setProperties(personToCreate);
+        setPais(country);
+
+    }
+
+    public IPerson edit(InfoPerson personToEdit, ICountry country) {
+        setProperties(personToEdit);
+        setPais(country);
+        return this;
+    }
+
+    public IPerson editPersonalContactInformation(InfoPerson personToEdit) {
+        setTelemovel(personToEdit.getTelemovel());
+        setWorkPhone(personToEdit.getWorkPhone());
+        setEmail(personToEdit.getEmail());
+        setAvailableEmail(personToEdit.getAvailableEmail());
+        setEnderecoWeb(personToEdit.getEnderecoWeb());
+        setAvailableWebSite(personToEdit.getAvailableWebSite());
+        setAvailablePhoto(personToEdit.getAvailablePhoto());
+        return this;
+    }
+
+    public static boolean checkIfUsernameExists(String username, List<IPerson> persons) {
+        for (IPerson person : persons) {
+            if (username.equals(person.getUsername())) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public void changeUsername(String newUsername, List<IPerson> persons) {
+        if (newUsername == null || newUsername.equals("")) {
+            throw new DomainException("error.person.nullOrEmptyUsername");
+        }
+        
+        if (checkIfUsernameExists(newUsername, persons)) {
+            throw new DomainException("error.person.existingUsername");
+        }
+        
+        setUsername(newUsername);
+    }
+
+    public void changePassword(String oldPassword, String newPassword) {
+
+        if (newPassword == null) {
+            throw new DomainException("error.person.invalidNullPassword");
+        }
+
+        if (!PasswordEncryptor.areEquals(getPassword(), oldPassword)) {
+            throw new DomainException("error.person.invalidExistingPassword");
+        }
+
+        if (PasswordEncryptor.areEquals(getPassword(), newPassword)) {
+            throw new DomainException("error.person.invalidSamePassword");
+        }
+
+        if (newPassword.equals("")) {
+            throw new DomainException("error.person.invalidEmptyPassword");
+        }
+
+        if (getNumeroDocumentoIdentificacao().equalsIgnoreCase(newPassword)) {
+            throw new DomainException("error.person.invalidIDPassword");
+        }
+
+        if (getCodigoFiscal() != null && getCodigoFiscal().equalsIgnoreCase(newPassword)) {
+            throw new DomainException("error.person.invalidFiscalCodePassword");
+        }
+
+        if (getNumContribuinte() != null && getNumContribuinte().equalsIgnoreCase(newPassword)) {
+            throw new DomainException("error.person.invalidTaxPayerPassword");
+        }
+
+        setPassword(PasswordEncryptor.encryptPassword(newPassword));
+    }
+
+
+    /***************************************************************************
+     * PRIVATE METHODS *
+     **************************************************************************/
+
+    private void setProperties(InfoPerson infoPerson) {
+
+        setNome(infoPerson.getNome());
+
+        if (infoPerson.getNumeroDocumentoIdentificacao() != null)
+            setNumeroDocumentoIdentificacao(infoPerson.getNumeroDocumentoIdentificacao());
+        if (infoPerson.getTipoDocumentoIdentificacao() != null)
+            setIdDocumentType(infoPerson.getTipoDocumentoIdentificacao());
+
+        setCodigoFiscal(infoPerson.getCodigoFiscal());
+        setCodigoPostal(infoPerson.getCodigoPostal());
+        setConcelhoMorada(infoPerson.getConcelhoMorada());
+        setConcelhoNaturalidade(infoPerson.getConcelhoNaturalidade());
+        setDataEmissaoDocumentoIdentificacao(infoPerson.getDataEmissaoDocumentoIdentificacao());
+        setDataValidadeDocumentoIdentificacao(infoPerson.getDataValidadeDocumentoIdentificacao());
+        setDistritoMorada(infoPerson.getDistritoMorada());
+        setDistritoNaturalidade(infoPerson.getDistritoNaturalidade());
+        setEmail(infoPerson.getEmail());
+        setEnderecoWeb(infoPerson.getEnderecoWeb());
+        setMaritalStatus(infoPerson.getMaritalStatus());
+        setFreguesiaMorada(infoPerson.getFreguesiaMorada());
+        setFreguesiaNaturalidade(infoPerson.getFreguesiaNaturalidade());
+        setLocalEmissaoDocumentoIdentificacao(infoPerson.getLocalEmissaoDocumentoIdentificacao());
+        setLocalidade(infoPerson.getLocalidade());
+        setLocalidadeCodigoPostal(infoPerson.getLocalidadeCodigoPostal());
+        setMorada(infoPerson.getMorada());
+        setNacionalidade(infoPerson.getNacionalidade());
+        setNascimento(infoPerson.getNascimento());
+        setNomeMae(infoPerson.getNomeMae());
+        setNomePai(infoPerson.getNomePai());
+        setNumContribuinte(infoPerson.getNumContribuinte());
+
+        setProfissao(infoPerson.getProfissao());
+        setGender(infoPerson.getSexo());
+        setTelefone(infoPerson.getTelefone());
+        setTelemovel(infoPerson.getTelemovel());
+
+        // Generate person's Password
+        if (getPassword() == null)
+            setPassword(PasswordEncryptor.encryptPassword(GeneratePassword.generatePassword()));
+
+        setAvailableEmail(infoPerson.getAvailableEmail());
+        setAvailablePhoto(infoPerson.getAvailablePhoto());
+        setAvailableWebSite(infoPerson.getAvailableWebSite());
+        setWorkPhone(infoPerson.getWorkPhone());
+    }
+
+    /***************************************************************************
+     * OTHER METHODS *
+     **************************************************************************/
+
     public Person() {
-		super();
-        this.setMaritalStatus(MaritalStatus.UNKNOWN);
-        this.setAvailableEmail(Boolean.FALSE);
-        this.setAvailableWebSite(Boolean.FALSE);
-        this.setAvailablePhoto(Boolean.FALSE);
-    }
-
-    public Person(String username) {
-        this.setUsername(username);
-        this.setMaritalStatus(MaritalStatus.UNKNOWN);
-        this.setAvailableEmail(Boolean.FALSE);
-        this.setAvailableWebSite(Boolean.FALSE);
-        this.setAvailablePhoto(Boolean.FALSE);
-    }
-
-    public Person(IDDocumentType idDocumentType, String userName) {
-		this.setIdDocumentType(idDocumentType);
-		this.setUsername(userName);
+        super();
         this.setMaritalStatus(MaritalStatus.UNKNOWN);
         this.setAvailableEmail(Boolean.FALSE);
         this.setAvailableWebSite(Boolean.FALSE);
@@ -39,15 +167,15 @@ public class Person extends Person_Base {
      * Devido ao JDBC
      */
     public Person(Integer codigoInterno, String numeroDocumentoIdentificacao,
-            IDDocumentType iDDocumentType,
-            String localEmissaoDocumentoIdentificacao, Date dataEmissaoDocumentoIdentificacao,
-            Date dataValidadeDocumentoIdentificacao, String nome, Gender sex, MaritalStatus estadoCivil,
-            Date nascimento, String nomePai, String nomeMae, String nacionalidade,
-            String freguesiaNaturalidade, String concelhoNaturalidade, String distritoNaturalidade,
-            String morada, String localidade, String codigoPostal, String localidadeCodigoPostal,
-            String freguesiaMorada, String concelhoMorada, String distritoMorada, String telefone,
-            String telemovel, String email, String enderecoWeb, String numContribuinte,
-            String profissao, String username, String password, String codigoFiscal) {
+            IDDocumentType iDDocumentType, String localEmissaoDocumentoIdentificacao,
+            Date dataEmissaoDocumentoIdentificacao, Date dataValidadeDocumentoIdentificacao,
+            String nome, Gender sex, MaritalStatus estadoCivil, Date nascimento, String nomePai,
+            String nomeMae, String nacionalidade, String freguesiaNaturalidade,
+            String concelhoNaturalidade, String distritoNaturalidade, String morada, String localidade,
+            String codigoPostal, String localidadeCodigoPostal, String freguesiaMorada,
+            String concelhoMorada, String distritoMorada, String telefone, String telemovel,
+            String email, String enderecoWeb, String numContribuinte, String profissao, String username,
+            String password, String codigoFiscal) {
         this.setIdInternal(codigoInterno);
         this.setNumeroDocumentoIdentificacao(numeroDocumentoIdentificacao);
         this.setIdDocumentType(iDDocumentType);
@@ -86,48 +214,7 @@ public class Person extends Person_Base {
 
     }
 
-    /*
-     * Acrescentado por Fernanda Quitério & Tânia Pousão Devido à aplicacao
-     * Assiduidade no usecase Inserir Funcionario
-     */
-    public Person(String numeroDocumentoIdentificacao, String tipoDocumentoIdentificacao, String nome,
-            String username, String password) {
-        Calendar calendario = Calendar.getInstance();
-        calendario.set(1970, Calendar.JANUARY, 31, 00, 00, 00);
-
-        this.setNumeroDocumentoIdentificacao(numeroDocumentoIdentificacao);
-        this.setIdDocumentType(IDDocumentType.valueOf(tipoDocumentoIdentificacao));
-        this.setLocalEmissaoDocumentoIdentificacao("");
-        this.setNome(nome);
-        this.setNomePai("");
-        this.setNomeMae("");
-        this.setNacionalidade("");
-        this.setFreguesiaNaturalidade("");
-        this.setConcelhoNaturalidade("");
-        this.setDistritoNaturalidade("");
-        this.setMorada("");
-        this.setLocalidade("");
-        this.setCodigoPostal("");
-        this.setLocalidadeCodigoPostal("");
-        this.setFreguesiaMorada("");
-        this.setConcelhoMorada("");
-        this.setDistritoMorada("");
-        this.setTelefone("");
-        this.setTelemovel("");
-        this.setEmail("");
-        this.setEnderecoWeb("");
-        this.setNumContribuinte("");
-        this.setProfissao("");
-        this.setUsername(username);
-        this.setPassword(password);
-        this.setCodigoFiscal("");
-        this.setAvailableEmail(Boolean.FALSE);
-        this.setAvailableWebSite(Boolean.FALSE);
-        this.setAvailablePhoto(Boolean.FALSE);
-    }
-
-    public Person(String numeroDocumentoIdentificacao,
-            IDDocumentType tipoDocumentoIdentificacao,
+    public Person(String numeroDocumentoIdentificacao, IDDocumentType tipoDocumentoIdentificacao,
             String localEmissaoDocumentoIdentificacao, Date dataEmissaoDocumentoIdentificacao,
             Date dataValidadeDocumentoIdentificacao, String nome, Gender sex, MaritalStatus estadoCivil,
             Date nascimento, String nomePai, String nomeMae, String nacionalidade,
@@ -190,7 +277,7 @@ public class Person extends Person_Base {
     public String getSlideNameForCandidateDocuments() {
         return "/candidateDocuments/person/P" + getIdInternal();
     }
-    
+
     public void delete() {
         this.getAdvisories().clear();
         this.getAssociatedAlteredCurriculums().clear();
