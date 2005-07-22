@@ -115,12 +115,14 @@ public void updateResponsabilitiesFor(Integer executionYearId, List<Integer> exe
     }
 
     public void notifyCreditsChange(CreditsEvent creditsEvent, ICreditsEventOriginator originator) {
-        Iterator iterator = this.creditsMap.keySet().iterator();
-        while (iterator.hasNext()) {
-            IExecutionPeriod executionPeriod = (IExecutionPeriod) iterator.next();
-            if (originator.belongsToExecutionPeriod(executionPeriod)) {
-                iterator.remove();
-            }
+        if(this.creditsMap != null && !this.creditsMap.isEmpty()){
+            Iterator iterator = this.creditsMap.keySet().iterator();
+            while (iterator.hasNext()) {
+                IExecutionPeriod executionPeriod = (IExecutionPeriod) iterator.next();
+                if (originator.belongsToExecutionPeriod(executionPeriod)) {
+                    iterator.remove();
+                }
+            }    
         }
     }
     
