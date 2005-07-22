@@ -1,6 +1,5 @@
 package pt.utl.ist.codeGenerator.database.loaders;
 
-import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 
 import org.apache.ojb.broker.PersistenceBrokerFactory;

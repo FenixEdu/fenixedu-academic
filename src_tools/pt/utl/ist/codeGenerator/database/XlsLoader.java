@@ -1,17 +1,11 @@
 package pt.utl.ist.codeGenerator.database;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.HSSFColor;
 
-import pt.utl.ist.codeGenerator.database.loaders.BaseLoader;
 import pt.utl.ist.codeGenerator.database.loaders.CategoryLoader;
 import pt.utl.ist.codeGenerator.database.loaders.CountryLoader;
 import pt.utl.ist.codeGenerator.database.loaders.StudentLoader;
