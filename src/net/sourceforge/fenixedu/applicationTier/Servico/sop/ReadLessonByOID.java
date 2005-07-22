@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoLessonWithInfoRoomAndInfoRoomOccupationAndInfoPeriod;
 import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -30,7 +31,7 @@ public class ReadLessonByOID implements IService {
             IAulaPersistente lessonDAO = sp.getIAulaPersistente();
             ILesson lesson = (ILesson) lessonDAO.readByOID(Lesson.class, oid);
             if (lesson != null) {
-                InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
+                InfoLesson infoLesson = InfoLessonWithInfoRoomAndInfoRoomOccupationAndInfoPeriod.newInfoFromDomain(lesson);
 
                 result = infoLesson;
             }
