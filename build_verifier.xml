@@ -96,6 +96,8 @@
       <arg value="${build.home.webinf.classes}/${analysis.subdir}"/>
       <arg value="-i"/>
       <arg value="net.sourceforge.fenixedu.persistenceTier.OJB.DomainAllocator"/>
+      <arg value="-i"/>
+      <arg value="net.sourceforge.fenixedu.domain.DomainFactory"/>
     </java>
   </target>
 
