@@ -90,10 +90,10 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
 
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-        Object changeArgs[] = { userView };
+        Object changeArgs[] = { userView.getUtilizador() };
         Object result = null;
         try {
-            result = ServiceManagerServiceFactory.executeService(userView, "ReadPersonByUserview",
+            result = ServiceManagerServiceFactory.executeService(userView, "ReadPersonByUsername",
                     changeArgs);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

@@ -18,5 +18,5 @@ public interface IPersistentItem extends IPersistentObject {
 
     public IItem readBySectionAndName(Integer sectionID, String executionCourseSigla, String executionCourseYear, String executionPeriodName, String itemName) throws ExcepcaoPersistencia;
 
-    public List readAllItemsBySection(Integer sectionID, String executionCourseSigla, String executionPeriodYear, String executionPeriodName) throws ExcepcaoPersistencia;
+    public List<IItem> readAllItemsBySection(Integer sectionID, String executionCourseSigla, String executionPeriodYear, String executionPeriodName) throws ExcepcaoPersistencia;
 }

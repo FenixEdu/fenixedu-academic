@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationSubtype;
@@ -11,10 +12,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationType;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
-
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 
@@ -30,11 +27,11 @@ public class ReadPublicationSubtypesByPublicationType implements IService {
 
         List<IPublicationSubtype> publicationSubtypeList = publicationType.getSubtypes();
 
-        List<InfoPublicationSubtype> result = (List<InfoPublicationSubtype>) CollectionUtils.collect(publicationSubtypeList, new Transformer() {
-            public Object transform(Object o) {
-                return InfoPublicationSubtypeWithPublicationType.newInfoFromDomain((IPublicationSubtype) o);                    
-            }
-        });
+        List<InfoPublicationSubtype> result = new ArrayList<InfoPublicationSubtype>();
+        for (IPublicationSubtype publicationSubtype : publicationSubtypeList) {
+			result.add(InfoPublicationSubtypeWithPublicationType.newInfoFromDomain(publicationSubtype));
+		}
+
 
         return result;
     }

@@ -43,12 +43,12 @@ public class SendSmsDispatchAction extends FenixDispatchAction {
         IUserView userView = SessionUtils.getUserView(request);
 
         //check if person has mobile
-        Object args[] = { userView };
+        Object args[] = { userView.getUtilizador() };
         InfoPerson infoPerson = null;
 
         try {
             infoPerson = (InfoPerson) ServiceUtils
-                    .executeService(userView, "ReadPersonByUserview", args);
+                    .executeService(userView, "ReadPersonByUsername", args);
         } catch (FenixServiceException e1) {
             throw new FenixActionException();
         }

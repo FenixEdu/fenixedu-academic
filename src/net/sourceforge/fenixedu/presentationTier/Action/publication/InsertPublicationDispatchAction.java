@@ -278,7 +278,7 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
         Integer[] authorsId = (Integer[]) insertPublicationForm.get("authorsId");
         if (authorsId.length == 0) {
             InfoPerson infoPerson = (InfoPerson) ServiceUtils.executeService(userView,
-                    "ReadPersonByUserview", new Object[] { userView });
+                    "ReadPersonByUsername", new Object[] { userView.getUtilizador() });
 
             Integer[] newAuthorsId = new Integer[1];
             String[] newAuthorsName = new String[1];
@@ -491,11 +491,13 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
             return mapping.findForward("searchAuthors");
         }
 
-        Object[] arg = { userView, searchedAuthorName };
+        Object[] arg = { searchedAuthorName };
         List infoAuthorList = new ArrayList<InfoAuthor>();
 
-        infoAuthorList = (List<InfoAuthor>) ServiceUtils.executeService(userView, "ReadAuthorsByNameWithoutUser", arg);
+        infoAuthorList = (List<InfoAuthor>) ServiceUtils.executeService(userView, "ReadAuthorsByName", arg);
 
+        //TODO RETIRAR OS AUTORES
+        
         request.setAttribute("searchedAuthorsList", infoAuthorList);
         
         return mapping.findForward("searchAuthors");

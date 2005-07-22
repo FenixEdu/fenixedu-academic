@@ -19,7 +19,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadRequiredAttributes implements IService {
 
-    public List run(int publicationTypeId) throws ExcepcaoPersistencia {
+    public List<InfoAttribute> run(int publicationTypeId) throws ExcepcaoPersistencia {
            
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentPublicationType persistentPublicationType = persistentSuport.getIPersistentPublicationType();
@@ -28,7 +28,7 @@ public class ReadRequiredAttributes implements IService {
         IPublicationType publicationType = (IPublicationType) persistentPublicationType.readByOID(
                 PublicationType.class, new Integer(publicationTypeId));
 
-        List<InfoAttribute> infoAttributes = new ArrayList(); 
+        List<InfoAttribute> infoAttributes = new ArrayList<InfoAttribute>(); 
         for (IAttribute attribute : (List<IAttribute>)publicationType.getRequiredAttributes()) {
             infoAttributes.add(InfoAttribute.newInfoFromDomain(attribute));
         }

@@ -16,9 +16,9 @@ public class PublicationTeacher extends PublicationTeacher_Base implements IPubl
      ********************************************************************/
     
     public PublicationTeacher(IPublication publication, ITeacher teacher, PublicationArea area) {
+    	setPublicationArea(area);
         setPublication(publication);
         setTeacher(teacher);
-        setPublicationArea(area);
     }
 
     public void delete()

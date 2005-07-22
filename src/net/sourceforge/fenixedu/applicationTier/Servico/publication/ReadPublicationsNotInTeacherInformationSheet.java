@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 
-public class ReadPublicationsNotInTeacherSheet implements IService {
+public class ReadPublicationsNotInTeacherInformationSheet implements IService {
 
     public SiteView run(String user) throws ExcepcaoPersistencia {
         InfoSitePublications infoSitePublications = new InfoSitePublications();
@@ -27,12 +27,12 @@ public class ReadPublicationsNotInTeacherSheet implements IService {
         
         ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
 
-        List<IPublication> publicationsInTeacherSheet = new ArrayList(teacher.getTeacherPublicationsCount());
+        List<IPublication> publicationsInTeacherSheet = new ArrayList<IPublication>(teacher.getTeacherPublicationsCount());
         for(IPublicationTeacher publicationTeacher : teacher.getTeacherPublications()) {
             publicationsInTeacherSheet.add(publicationTeacher.getPublication());
         }
         
-        List<InfoPublication> infoPublications = new ArrayList();
+        List<InfoPublication> infoPublications = new ArrayList<InfoPublication>();
         for(IAuthorship authorship : teacher.getPerson().getPersonAuthorships()) {
             IPublication publication = authorship.getPublication();
             if (!publicationsInTeacherSheet.contains(publication)) {

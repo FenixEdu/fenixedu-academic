@@ -11,8 +11,8 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadPublicationMonths implements IService {
 
-    public List run(int publicationTypeId) {
-        List MonthList = new ArrayList();
+    public List<String> run(int publicationTypeId) {
+        List<String> MonthList = new ArrayList<String>();
         int i = PublicationConstants.MONTHS_INIT;
         while (i < PublicationConstants.MONTHS_LIMIT) {
             Mes mes = new Mes(i);

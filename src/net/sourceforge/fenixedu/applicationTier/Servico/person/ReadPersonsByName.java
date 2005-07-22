@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class ReadPersonsByNameWithoutUser implements IService {
+public class ReadPersonsByName implements IService {
 
-    public List<InfoPerson> run(IUserView userView, String stringtoSearch) throws ExcepcaoPersistencia {
+    public List<InfoPerson> run(String stringtoSearch) throws ExcepcaoPersistencia {
 
         IPessoaPersistente persistentPerson = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPessoaPersistente();
 
@@ -26,10 +26,7 @@ public class ReadPersonsByNameWithoutUser implements IService {
         }
         List<IPerson> persons = persistentPerson.readPersonsBySubName(authorName.toString());
 
-        IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
-        persons.remove(person);
-        
-        List<InfoPerson> infoPersons = new ArrayList(persons.size());
+       List<InfoPerson> infoPersons = new ArrayList<InfoPerson>(persons.size());
 
         for (IPerson individualPerson : persons) {
             infoPersons.add(InfoPerson.newInfoFromDomain(individualPerson));

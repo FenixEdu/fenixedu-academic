@@ -32,7 +32,7 @@ public class ReadAuthorships implements IService {
             ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
             
             InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
-            List<InfoPublication> infoPublications = new ArrayList(person.getPersonAuthorshipsCount());
+            List<InfoPublication> infoPublications = new ArrayList<InfoPublication>(person.getPersonAuthorshipsCount());
             
             for (IAuthorship authorship : person.getPersonAuthorships()) {
                 infoPublications.add(InfoPublication.newInfoFromDomain(authorship.getPublication()));

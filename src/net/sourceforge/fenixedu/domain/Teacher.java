@@ -19,27 +19,18 @@ import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.util.PublicationArea;
 
-/**
- * @author EP15
- * @author Ivo Brandão
- */
 public class Teacher extends Teacher_Base {
     private Map creditsMap = new HashMap();
 
-    /***************************************************************************
-     * BUSINESS SERVICES *
-     **************************************************************************/
-
-    public void addToTeacherSheet(IPublication publication, PublicationArea publicationArea)
-            throws DomainException {
-
-        checkForMaximumPublicationsInTeacherSheet(publicationArea);
-
+    /********************************************************************
+     *                        BUSINESS SERVICES                         *
+     ********************************************************************/
+    
+    public void addToTeacherInformationSheet(IPublication publication, PublicationArea publicationArea) throws DomainException {
         new PublicationTeacher(publication, this, publicationArea);
-
     }
-
-    public void removeFromTeacherSheet(IPublication publication) throws DomainException {
+    
+    public void removeFromTeacherInformationSheet(IPublication publication) throws DomainException {
         Iterator<IPublicationTeacher> iterator = getTeacherPublications().iterator();
 
         while (iterator.hasNext()) {
@@ -53,10 +44,18 @@ public class Teacher extends Teacher_Base {
         // In case the publication isn't associated with the teacher
         throw new DomainException(publication.getTitle());
     }
+    
+    public Boolean canAddPublicationToTeacherInformationSheet(PublicationArea area) {
+    	//NOTA : a linha seguinte contém um número explícito quando não deve
+    	// isto deve ser mudado! Mas esta mudança implica tornar explícito o 
+    	// conceito de Ficha de docente.
+    	return new Boolean(countPublicationsInArea(area) < 5);
+        
+    }
 
     public List responsibleFors() {
         List<IProfessorship> professorships = this.getProfessorships();
-        List res = new ArrayList();
+        List<IProfessorship> res = new ArrayList<IProfessorship>();
 
         for (IProfessorship professorship : professorships) {
             if (professorship.getResponsibleFor())
@@ -91,10 +90,12 @@ public void updateResponsabilitiesFor(Integer executionYearId, List<Integer> exe
                     professorship.setResponsibleFor(executionCourses.contains(executionCourse.getIdInternal()));                
             }
         }
-    }    /*******************************************************************
-             * OTHER METHODS *
-             ******************************************************************/
-
+    }
+    
+    /********************************************************************
+     *                          OTHER METHODS                           *
+     ********************************************************************/    
+    
     public String toString() {
         String result = "[Dominio.Teacher ";
         result += ", teacherNumber=" + getTeacherNumber();
@@ -122,21 +123,18 @@ public void updateResponsabilitiesFor(Integer executionYearId, List<Integer> exe
             }
         }
     }
-
-    /***************************************************************************
-     * PRIVATE METHODS *
-     **************************************************************************/
-
-    private void checkForMaximumPublicationsInTeacherSheet(PublicationArea publicationArea)
-            throws DomainException {
-        int publicationCount = 0;
+    
+    /********************************************************************
+     *                         PRIVATE METHODS                          *
+     ********************************************************************/
+    
+    private int countPublicationsInArea(PublicationArea area) {
+        int count = 0;
         for (IPublicationTeacher publicationTeacher : getTeacherPublications()) {
-            if (publicationTeacher.getPublicationArea().equals(publicationArea)) {
-                publicationCount++;
+            if (publicationTeacher.getPublicationArea().equals(area)) {
+                count++;
             }
         }
-        if (publicationCount >= 5) {
-            throw new DomainException("error.teacherSheetFull", publicationArea.getName());
-        }
+        return count;
     }
 }

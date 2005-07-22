@@ -55,10 +55,10 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
 
         InfoPerson infoPerson = null;
 
-        Object args[] = { userView };
+        Object args[] = { userView.getUtilizador() };
 
         infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView,
-                "ReadPersonByUserview", args);
+                "ReadPersonByUsername", args);
 
         session.removeAttribute("personalInfo");
 

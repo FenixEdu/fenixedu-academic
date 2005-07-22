@@ -29,10 +29,10 @@ public final class MainPage extends Action {
 
         IUserView userView = (IUserView) request.getSession(false).getAttribute(SessionConstants.U_VIEW);
 
-        Object[] args = { userView };
+        Object[] args = { userView.getUtilizador() };
         try {
             InfoPerson infoPerson = (InfoPerson) ServiceUtils.executeService(userView,
-                    "ReadPersonByUserview", args);
+                    "ReadPersonByUsername", args);
             if (infoPerson.getInfoAdvisories() == null || infoPerson.getInfoAdvisories().isEmpty()) {
                 infoPerson.setInfoAdvisories(new ArrayList());
             } else {

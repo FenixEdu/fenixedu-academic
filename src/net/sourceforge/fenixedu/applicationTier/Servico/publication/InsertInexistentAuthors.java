@@ -24,14 +24,14 @@ public class InsertInexistentAuthors implements IService {
 
     public List<IPerson> run(final List<InfoAuthor> infoAuthorsList) throws ExcepcaoPersistencia, ExistingServiceException {
         
-        final List<IPerson> authorsList = new ArrayList(infoAuthorsList.size());
+        final List<IPerson> authorsList = new ArrayList<IPerson>(infoAuthorsList.size());
         
         List<Integer> externalPersonsIndexes = new ArrayList<Integer>();
         
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPessoaPersistente personDAO = sp.getIPessoaPersistente();
         
-        List<InfoExternalPerson> infoExternalPersons = new ArrayList();
+        List<InfoExternalPerson> infoExternalPersons = new ArrayList<InfoExternalPerson>();
         int index = 0;
         for (InfoAuthor infoAuthor : infoAuthorsList) {
             if (infoAuthor.getIdInternal() == null) {

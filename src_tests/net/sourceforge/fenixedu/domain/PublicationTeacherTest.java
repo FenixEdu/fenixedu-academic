@@ -27,7 +27,7 @@ public class PublicationTeacherTest extends DomainTestBase {
         
         teacher1 = new Teacher();
         
-        teachers = new ArrayList();
+        teachers = new ArrayList<ITeacher>();
         teachers.add(teacher1);
         
         publication = new Publication();
@@ -38,14 +38,8 @@ public class PublicationTeacherTest extends DomainTestBase {
         publicationTeacher1.setPublicationArea(PublicationArea.CIENTIFIC);
     }
 
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-    
     public void testCreatePublicationTeacher() {
         IPublicationTeacher publicationTeacher = new PublicationTeacher(publication, teacher1, PublicationArea.DIDATIC);
-        
-        assertNotNull("PublicationTeacher Expected", publicationTeacher);
         
         assertEquals("Publication Expected", publicationTeacher.getPublication(), publication);
         assertEquals("Teacher Expected", publicationTeacher.getTeacher(), teacher1);
@@ -59,7 +53,7 @@ public class PublicationTeacherTest extends DomainTestBase {
     public void testDeletePublicationTeacher() {
         
         assertEquals("Unexpected PublicationTeachers Size", publication.getPublicationTeachersCount(), 1);
-        if (!publication.getPublicationTeachers().contains(publicationTeacher1)) { fail(); }
+        assertTrue("Publication should be connected to teacher", publication.getPublicationTeachers().contains(publicationTeacher1));
         
         publicationTeacher1.delete();
         
@@ -68,7 +62,7 @@ public class PublicationTeacherTest extends DomainTestBase {
         
         assertEquals("Unexpected PublicationTeachers Size", publication.getPublicationTeachersCount(), 0);
         
-        if (publication.getPublicationTeachers().contains(publicationTeacher1)) { fail(); }
+        assertFalse("Publication shouldn't be connected to teacher", publication.getPublicationTeachers().contains(publicationTeacher1));
         
     }
 

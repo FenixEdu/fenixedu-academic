@@ -23,7 +23,7 @@ public class ReadTeacherPublicationsByArea implements IService {
         final IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
         final ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
         
-        List<InfoPublication> infoPublications = new ArrayList(); 
+        List<InfoPublication> infoPublications = new ArrayList<InfoPublication>(); 
         for(IPublicationTeacher publicationTeacher : teacher.getTeacherPublications()) {
             if (publicationTeacher.getPublicationArea().getName().equals(publicationAreaString)) {
                 infoPublications.add(InfoPublication.newInfoFromDomain(publicationTeacher.getPublication()));

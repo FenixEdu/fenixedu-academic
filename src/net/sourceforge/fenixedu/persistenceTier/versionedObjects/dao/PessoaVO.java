@@ -69,69 +69,76 @@ public class PessoaVO extends PersistentObjectOJB implements IPessoaPersistente 
     }
 
     /*
-     * This method return a list with 2 elements. The first is a Integer with
-     * the number of elements returned by the main search, The second is a list
-     * with the elemts returned by the limited search.
+     * This method return a list with elements returned by the limited search.
      */
-    public List findActivePersonByNameAndEmailAndUsernameAndDocumentId(final String name, final String email,
+    public List<IPerson> readActivePersonByNameAndEmailAndUsernameAndDocumentId(final String name, final String email,
             final String username, final String documentIdNumber, final Integer startIndex, final Integer numberOfElementsInSpan)
             throws ExcepcaoPersistencia {
         
-        final List result = new ArrayList(2);
+        final List<IPerson> persons = new ArrayList<IPerson>();
         
         final String nameToMatch = name.replaceAll("%",".*");
         final String emailToMatch = email.replaceAll("%",".*");
         final String usernameToMatch = email.replaceAll("%",".*");
         final String documentIdNumberToMatch = documentIdNumber.replaceAll("%",".*");
         
-        final List allPersons = (List) readAll(Person.class);
+        final List<IPerson> allPersons = (List<IPerson>) readAll(Person.class);
         
-        List filteredPersons = new ArrayList();
+        List<IPerson> filteredPersons = new ArrayList<IPerson>();
         
         for (final IPerson person : (List<IPerson>) readAll(Person.class)) {
-            if (name != null && name.length() > 0 && !person.getNome().matches(nameToMatch)) {
-                continue;
-            }
-            
-            if (email != null && email.length() > 0 && !person.getEmail().matches(emailToMatch)) {
-                continue;
-            }
-            
+            if (name != null && name.length() > 0 && !person.getNome().matches(nameToMatch)) { continue; }
+            if (email != null && email.length() > 0 && !person.getEmail().matches(emailToMatch)) { continue; }
             if (username != null && username.length() > 0) {
-                
-                if (!person.getUsername().matches(usernameToMatch)) {
-                    continue;
-                }
-                
-                if (person.getUsername().matches("INA.*")) {
-                    continue;
-                }
-                
+                if (!person.getUsername().matches(usernameToMatch)) { continue; }
+                if (person.getUsername().matches("INA.*")) { continue; }
             }
 
             if (documentIdNumber != null && documentIdNumber.length() > 0 && 
                     !person.getNumeroDocumentoIdentificacao().matches(documentIdNumberToMatch)) {
                 continue;
             }
-            
             filteredPersons.add(person);
         }
 
-        result.add(0, new Integer(allPersons.size()));
-
+        List<IPerson> result = new ArrayList<IPerson>();
         if (startIndex == null && numberOfElementsInSpan == null) {
-            
             Collections.sort(filteredPersons,new BeanComparator("nome"));
-            result.add(1,filteredPersons);
-            
+            result = filteredPersons;
         } else if (startIndex != null && numberOfElementsInSpan != null) {
-            
-            result.add(1,filteredPersons.subList(startIndex,startIndex+numberOfElementsInSpan));
-            
+            result = (filteredPersons.subList(startIndex,startIndex+numberOfElementsInSpan));
         }
 
         return result;
+    }
+    
+    public Integer countActivePersonByNameAndEmailAndUsernameAndDocumentId(final String name, final String email,
+            final String username, final String documentIdNumber, final Integer startIndex)
+            throws ExcepcaoPersistencia {
+        
+        final String nameToMatch = name.replaceAll("%",".*");
+        final String emailToMatch = email.replaceAll("%",".*");
+        final String usernameToMatch = email.replaceAll("%",".*");
+        final String documentIdNumberToMatch = documentIdNumber.replaceAll("%",".*");
+        
+        final List<IPerson> allPersons = (List<IPerson>) readAll(Person.class);
+        
+        int count = 0;        
+        for (final IPerson person : (List<IPerson>) readAll(Person.class)) {
+            if (name != null && name.length() > 0 && !person.getNome().matches(nameToMatch)) { continue; }
+            if (email != null && email.length() > 0 && !person.getEmail().matches(emailToMatch)) { continue; }
+            if (username != null && username.length() > 0) {
+                if (!person.getUsername().matches(usernameToMatch)) { continue; }
+                if (person.getUsername().matches("INA.*")) { continue; }
+            }
 
+            if (documentIdNumber != null && documentIdNumber.length() > 0 && 
+                    !person.getNumeroDocumentoIdentificacao().matches(documentIdNumberToMatch)) {
+                continue;
+            }
+            count++;
+        }
+        return new Integer(count);
     }
 
     public List<IPerson> readPersonsBySubName(String subName) throws ExcepcaoPersistencia {

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.publication.Authorship;
 import net.sourceforge.fenixedu.domain.publication.IAuthorship;
 import net.sourceforge.fenixedu.domain.publication.IPublication;
@@ -31,7 +32,7 @@ public class AuthorshipTest extends DomainTestBase {
         person2 = new Person();
         person2.setNome("Autor2");
         
-        authors = new ArrayList();
+        authors = new ArrayList<IPerson>();
         authors.add(person1);
         
         publication = new Publication();
@@ -43,28 +44,35 @@ public class AuthorshipTest extends DomainTestBase {
         
     }
 
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    public void testCreateAuthorship() {
+    	try {
+	        IAuthorship authorship = new Authorship(publication, person2, 2);
+	        
+	        assertEquals("Publication Expected", authorship.getPublication(), publication);
+	        assertEquals("Person Expected", authorship.getAuthor(), person2);
+	        assertEquals("Authorship's Order Unexpected", new Integer(2), authorship.getOrder());
+	        
+	        assertEquals("Authorships size unexpected", 2, publication.getPublicationAuthorshipsCount());
+	        assertEquals("Teachers size unexpected", 0, publication.getPublicationTeachersCount());
+    	} catch (DomainException domainException) {
+    		fail("The authorship should have been sucessfully created");
+    	}
     }
     
-    public void testCreateAuthorship() {
-        IAuthorship authorship = new Authorship(publication, person2, 2);
-        
-        assertNotNull("Authorship Expected", authorship);
-        
-        assertEquals("Publication Expected", authorship.getPublication(), publication);
-        assertEquals("Person Expected", authorship.getAuthor(), person2);
-        assertEquals("Authorship's Order Unexpected", new Integer(2), authorship.getOrder());
-        
-        assertEquals("Authorships size unexpected", 2, publication.getPublicationAuthorshipsCount());
-        assertEquals("Teachers size unexpected", 0, publication.getPublicationTeachersCount());
-        
+    public void testCreateAuthorshipWithExistingOrder() {
+    	try {
+    		IAuthorship authorship = new Authorship(publication, person2, 1);
+    		fail("The authorship shouldn't have been sucessfully deleted");
+    	} catch (DomainException domainException) {
+    		//Caso em que se tenta criar uma autoria para uma determinada publicação/pessoa com uma ordem já existente
+    	}
+    	
     }
 
     public void testDeleteAuthorship() {
         
         assertEquals("Unexpected Authorships Size", publication.getPublicationAuthorshipsCount(), 1);
-        if (!publication.getPublicationAuthorships().contains(authorship1)) { fail(); }
+        assertTrue("Publication doen't contain the authorship being deleted", publication.getPublicationAuthorships().contains(authorship1));
         
         authorship1.delete();
         
@@ -75,7 +83,7 @@ public class AuthorshipTest extends DomainTestBase {
         
         assertEquals("Unexpected Authorships Size", publication.getPublicationAuthorshipsCount(), 0);
         
-        if (publication.getPublicationAuthorships().contains(authorship1)) { fail(); }
+        assertFalse("Publication still contains the authorship", publication.getPublicationAuthorships().contains(authorship1));
         
     }
 

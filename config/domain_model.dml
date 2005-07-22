@@ -2589,10 +2589,12 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	
 	public void notifyCreditsChange(net.sourceforge.fenixedu.domain.credits.event.CreditsEvent creditsEvent, net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator originator);
 	
-	public void addToTeacherSheet(net.sourceforge.fenixedu.domain.publication.IPublication publication, net.sourceforge.fenixedu.util.PublicationArea publicationArea) throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+	public void addToTeacherInformationSheet(net.sourceforge.fenixedu.domain.publication.IPublication publication, net.sourceforge.fenixedu.util.PublicationArea publicationArea) throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
 	
-	public void removeFromTeacherSheet(net.sourceforge.fenixedu.domain.publication.IPublication publication) throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
+	public void removeFromTeacherInformationSheet(net.sourceforge.fenixedu.domain.publication.IPublication publication) throws net.sourceforge.fenixedu.domain.exceptions.DomainException;
 	
+	public Boolean canAddPublicationToTeacherInformationSheet(net.sourceforge.fenixedu.util.PublicationArea area);
+
 	public java.util.List responsibleFors();
 	
 	public IProfessorship responsibleFor(Integer executionCourseId);
@@ -2697,9 +2699,9 @@ class net.sourceforge.fenixedu.domain.publication.PublicationType extends net.so
 	String publicationType;
 		
 	interface "
-	public java.util.List getRequiredAttributes();
+	public java.util.List<IAttribute> getRequiredAttributes();
 
-    public java.util.List getNonRequiredAttributes();
+    public java.util.List<IAttribute> getNonRequiredAttributes();
 	"
 }
 
@@ -2783,7 +2785,7 @@ class net.sourceforge.fenixedu.domain.publication.Attribute extends net.sourcefo
 	String attributeType;
 		
 	interface "
-	public java.util.List getPublicationTypes();
+	public java.util.List<IPublicationType> getPublicationTypes();
 	"
 }
 

@@ -42,7 +42,7 @@ public class ItemVO extends VersionedObjectsBase implements IPersistentItem {
         return null;
     }
 
-    public List readAllItemsBySection(Integer sectionID, String executionCourseSigla,
+    public List<IItem> readAllItemsBySection(Integer sectionID, String executionCourseSigla,
             String executionPeriodYear, String executionPeriodName) throws ExcepcaoPersistencia {
         Collection<ISection> sections = readAll(Section.class);
         for (ISection section : sections) {

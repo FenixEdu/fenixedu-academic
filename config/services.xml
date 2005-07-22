@@ -2358,15 +2358,8 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>ReadPersonByUserview</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByUserview</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
-		<name>ChangePersonalContactInformation</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePersonalContactInformation</implementationClass>
+		<name>ChangePersonalInfo</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePersonalInfo</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -3358,21 +3351,19 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>ReadAuthorsByNameWithoutUser</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAuthorsByNameWithoutUser</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="TeacherAuthorization" />
-		</filterChains>
-	</service>
-	<service>
-		<name>ReadPersonsByNameWithoutUser</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonsByNameWithoutUser</implementationClass>
+		<name>ReadAuthorsByName</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAuthorsByName</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
-	</service>
+	</service>	
+	<service>
+		<name>ReadPersonsByName</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonsByName</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains />
+	</service>	
 	<service>
 		<name>ReadPersons</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersons</implementationClass>
@@ -3381,8 +3372,8 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>AddPublicationToTeacherSheet</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.AddPublicationToTeacherSheet</implementationClass>
+		<name>AddPublicationToTeacherInformationSheet</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.AddPublicationToTeacherInformationSheet</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -3390,8 +3381,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadPublicationsNotInTeacherSheet</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadPublicationsNotInTeacherSheet</implementationClass>
+		<name>ReadPublicationsNotInTeacherInformationSheet</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadPublicationsNotInTeacherInformationSheet</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -3399,8 +3390,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>RemovePublicationFromTeacherSheet</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.RemovePublicationFromTeacherSheet</implementationClass>
+		<name>RemovePublicationFromTeacherInformationSheet</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.RemovePublicationFromTeacherInformationSheet</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -4154,14 +4145,6 @@
 	<service>
 		<name>student.ReadStudentById</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentById</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
-		<name>ReadUserManageableDepartments</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.person.ReadUserManageableDepartments</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />

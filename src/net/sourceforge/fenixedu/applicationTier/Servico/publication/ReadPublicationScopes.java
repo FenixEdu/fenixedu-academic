@@ -10,8 +10,8 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadPublicationScopes implements IService {
 
-    public List run(int publicationTypeId) {
-        List scopeList = new ArrayList();
+    public List<String> run(int publicationTypeId) {
+        List<String> scopeList = new ArrayList<String>();
 
         scopeList.add(PublicationConstants.SCOPE_LOCAL);
         scopeList.add(PublicationConstants.SCOPE_NACIONAL);

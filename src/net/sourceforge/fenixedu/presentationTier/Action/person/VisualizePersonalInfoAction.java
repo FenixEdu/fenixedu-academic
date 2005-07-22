@@ -36,11 +36,10 @@ public class VisualizePersonalInfoAction extends FenixAction {
 
         InfoPerson infoPerson = null;
 
-        Object args[] = new Object[1];
-        args[0] = userView;
+        Object args[] = { userView.getUtilizador() };
 
         infoPerson = (InfoPerson) ServiceManagerServiceFactory.executeService(userView,
-                "ReadPersonByUserview", args);
+                "ReadPersonByUsername", args);
 
         request.removeAttribute("personalInfo");
 

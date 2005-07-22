@@ -33,7 +33,7 @@ public class ItemOJB extends PersistentObjectOJB implements IPersistentItem {
 
     }
 
-    public List readAllItemsBySection(Integer sectionID, String executionCourseSigla, String executionPeriodYear, String executionPeriodName) throws ExcepcaoPersistencia {
+    public List<IItem> readAllItemsBySection(Integer sectionID, String executionCourseSigla, String executionPeriodYear, String executionPeriodName) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("section.idInternal", sectionID);
         crit.addEqualTo("section.site.executionCourse.code", executionCourseSigla);

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.publication.IPublicationType;
@@ -22,6 +23,7 @@ public class InsertPublication implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentPublicationType persistentPublicationType = sp.getIPersistentPublicationType();
 
+        // COMO É QUE ISTO ESTÁ A FUNCIONAR???? estamos a passar uma lista de InfoPublicationAuthors qd devia ser info Authors!!
         List infoAuthorsList = infoPublication.getInfoPublicationAuthors();
 
         final List<IPerson> authors = new InsertInexistentAuthors().run(infoAuthorsList);
