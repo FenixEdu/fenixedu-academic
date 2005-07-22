@@ -121,17 +121,14 @@ public class InfoRoomOccupation extends InfoObject {
         this.infoRoom = infoRoom;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
-     */
+
     public void copyFromDomain(IRoomOccupation roomOccupation) {
         super.copyFromDomain(roomOccupation);
         if (roomOccupation != null) {
             setDayOfWeek(roomOccupation.getDayOfWeek());
             setStartTime(roomOccupation.getStartTime());
             setEndTime(roomOccupation.getEndTime());
+            setFrequency(roomOccupation.getFrequency());
         }
     }
 
