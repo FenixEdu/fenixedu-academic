@@ -73,9 +73,8 @@ public class ReadStudentMarksListByCurricularCourse implements IService {
         List result = new ArrayList();
         Integer numberAux = null;
 
-        BeanComparator numberComparator = new BeanComparator("studentCurricularPlan.student.number");
-        Collections.sort(enrollments, numberComparator);
-
+        BeanComparator numberComparator = new BeanComparator("infoStudentCurricularPlan.infoStudent.number");
+ 
         Iterator iterator = enrollments.iterator();
         while (iterator.hasNext()) {
             IEnrolment enrolment = (IEnrolment) iterator.next();
@@ -93,9 +92,11 @@ public class ReadStudentMarksListByCurricularCourse implements IService {
                             .newInfoFromDomain(enrolment);
                     infoEnrolment.setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);
                     result.add(infoEnrolment);
+					
                 }
             }
         }
+		Collections.sort(result,numberComparator);
         return result;
     }
 }
