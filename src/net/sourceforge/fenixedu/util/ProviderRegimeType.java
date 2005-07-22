@@ -60,9 +60,12 @@ public class ProviderRegimeType extends FenixValuedEnum {
     }
 
     public String toString() {
-        String result = "Provider Regime Type:\n";
-        result += "\n  - Provider Regime Type : " + this.getName();
-
-        return result;
+        switch (getValue()) {
+        case EXCLUSIVE_TYPE : return "EXCLUSIVE_TYPE";
+        case CUMULATIVE_TYPE : return "CUMULATIVE_TYPE";
+        case COMPLEMENT_TYPE : return "COMPLEMENT_TYPE";
+        case EXCLUSIVE_CUMULATIVE_TYPE : return "EXCLUSIVE_CUMULATIVE_TYPE";
+        default : throw new Error("Unknown provider regime type value.");
+        }
     }
 }

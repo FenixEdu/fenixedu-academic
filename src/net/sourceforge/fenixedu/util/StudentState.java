@@ -88,6 +88,6 @@ public class StudentState extends FenixUtil {
             break;
         }
 
-        return "[" + this.getClass().getName() + ": " + valueS + "]";
+        return valueS;
     }
 }

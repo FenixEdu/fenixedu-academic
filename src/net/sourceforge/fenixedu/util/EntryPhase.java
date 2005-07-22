@@ -56,4 +56,13 @@ public class EntryPhase {
     public void setEntryPhase(Integer entryPhase) {
         this.entryPhase = entryPhase;
     }
+
+    public String toString() {
+        switch (entryPhase.intValue()) {
+        case FIRST_PHASE : return "FIRST_PHASE";
+        case SECOND_PHASE : return "SECOND_PHASE";
+        default : throw new Error("Unknown entry phase value.");
+        }
+    }
+
 }
