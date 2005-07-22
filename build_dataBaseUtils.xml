@@ -50,9 +50,8 @@
     <target name="generate-fenix-xls"
     		description="Generate xls schema for fenix database."
     		depends="compile">
-		<java classname="pt.utl.ist.codeGenerator.database.XLSGenerator" fork="true">
+		<java classname="pt.utl.ist.codeGenerator.database.XlsGenerator" fork="true">
 			<arg value="etc/fenix.xls"/>
-			<arg value="PERSON"/>
 			<classpath>
 				<pathelement path="${build.home.temp.classes}"/>
 				<pathelement path="${build.home.webinf.classes}"/>
@@ -66,9 +65,23 @@
     <target name="load-fenix-xls"
     		description="Generate xls schema for fenix database."
     		depends="compile">
-		<java classname="pt.utl.ist.codeGenerator.database.XLSLoader" fork="true">
+		<java classname="pt.utl.ist.codeGenerator.database.XlsLoader" fork="true">
 			<arg value="etc/fenix.xls"/>
-			<arg value="PERSON"/>
+			<classpath>
+				<pathelement path="${build.home.temp.classes}"/>
+				<pathelement path="${build.home.webinf.classes}"/>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+			</classpath>
+		</java>
+    </target>
+
+    <target name="dump-fenix-xls"
+    		description="Generate xls schema for fenix database."
+    		depends="compile">
+		<java classname="pt.utl.ist.codeGenerator.database.XlsDump" fork="true">
+			<arg value="etc/fenix.xls"/>
 			<classpath>
 				<pathelement path="${build.home.temp.classes}"/>
 				<pathelement path="${build.home.webinf.classes}"/>
