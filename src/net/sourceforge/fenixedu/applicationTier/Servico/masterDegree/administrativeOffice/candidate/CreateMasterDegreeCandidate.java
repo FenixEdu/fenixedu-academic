@@ -93,32 +93,24 @@ public class CreateMasterDegreeCandidate implements IService {
         
 		if (person == null) {
 			// Create the new Person
-			person = new Person();
-			sp.getIPessoaPersistente().simpleLockWrite(person);
-
-			person.setNome(name);
-			person.setNumeroDocumentoIdentificacao(identificationDocumentNumber);
-			person.setIdDocumentType(identificationDocumentType);
-			person.setGender(Gender.MALE);
+			person = new Person(name, identificationDocumentNumber, identificationDocumentType, Gender.MALE);
 
 			// Generate Person Username
 			String username = MasterDegreeCandidate.generateUsernameForNewCandidate(masterDegreeCandidate, persons);
-			person.setUsername(username);
+			person.changeUsername(username, (List<IPerson>) sp.getIPessoaPersistente().readAll(Person.class));
 
 			// Give the Person Role
 			person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(RoleType.PERSON));
 		}else{
             if(person.getUsername().startsWith("INA")){
                 // Generate Person Username
-                sp.getIPessoaPersistente().simpleLockWrite(person);
                 String username = MasterDegreeCandidate.generateUsernameForNewCandidate(masterDegreeCandidate, persons);
-                person.setUsername(username);
+                person.changeUsername(username, (List<IPerson>) sp.getIPessoaPersistente().readAll(Person.class));
             }
         }
 
 		if (!person.getPersonRoles().contains(
 				sp.getIPersistentRole().readByRoleType(RoleType.MASTER_DEGREE_CANDIDATE))) {
-			sp.getIPessoaPersistente().simpleLockWrite(person);
 			person.getPersonRoles().add(
 					sp.getIPersistentRole().readByRoleType(RoleType.MASTER_DEGREE_CANDIDATE));
 		}

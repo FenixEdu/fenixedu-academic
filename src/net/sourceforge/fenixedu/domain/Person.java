@@ -26,7 +26,14 @@ public class Person extends Person_Base {
         setPais(country);
 
     }
-
+    
+    public Person(String name, String identificationDocumentNumber, IDDocumentType identificationDocumentType, Gender gender) {
+        setNome(name);
+        setNumeroDocumentoIdentificacao(identificationDocumentNumber);
+        setIdDocumentType(identificationDocumentType);
+        setGender(gender);
+    }
+    
     public IPerson edit(InfoPerson personToEdit, ICountry country) {
         setProperties(personToEdit);
         setPais(country);
