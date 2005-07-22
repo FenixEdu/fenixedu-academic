@@ -451,9 +451,42 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		</copy>
 	</target>
 
+  <target name="compile-domain" 
+          description="Compile application's domain"
+          depends="generate">
+    <javac destdir="${build.home.webinf.classes}"
+           extdirs="${lib};${env.JBOSS_HOME}/client"
+           debug="${compile.debug}"
+           optimize="${compile.optimize}"
+           deprecation="${compile.deprecation}"
+           encoding="${encoding}"
+           nowarn="true">
+      <src path="${src_gen}"/>
+      <src path="${src}"/>
+      <include name="net/sourceforge/fenixedu/tools/**"/>
+      <include name="net/sourceforge/fenixedu/domain/**"/>
+      <include name="relation/**"/>
+    </javac>
+    <java classname="net.sourceforge.fenixedu.tools.CreateDomainFactoryClass" 
+          dir="${build.home.webinf.classes}"
+          fork="true">
+      <classpath>
+	<pathelement path="${build.home.webinf.classes}"/>
+	<fileset dir="${lib}">
+	  <include name="**/*.jar"/>
+	</fileset>
+      </classpath>
+      <arg value="-cfn"/>
+      <arg value="net.sourceforge.fenixedu.domain.DomainFactory"/>
+      <arg value="-d"/>
+      <arg value="${dml.definition.file}"/>
+    </java>	
+  </target>
+
+
     <target name="compile"
     		description="Compile application"
-    		depends="i18nDefault, write-filter-hostnames-configuration-file, generate">
+    		depends="compile-domain,i18nDefault, write-filter-hostnames-configuration-file, generate">
 		<javac destdir="${build.home.webinf.classes}"
                extdirs="${lib};${env.JBOSS_HOME}/client"
                debug="${compile.debug}"
@@ -473,7 +506,9 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 					<include name="**/*.jar"/>
 				</fileset>
 			</classpath>
+			<arg value="-cfn"/>
 			<arg value="net.sourceforge.fenixedu.persistenceTier.OJB.DomainAllocator"/>
+			<arg value="-d"/>
 			<arg value="${dml.definition.file}"/>
 		</java>	
     </target>
