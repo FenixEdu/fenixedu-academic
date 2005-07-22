@@ -93,7 +93,7 @@ public class RoomSearchDA extends FenixContextDispatchAction {
         int dayOfWeekInt = searchDate.get(Calendar.DAY_OF_WEEK);
         DiaSemana dayOfWeek = new DiaSemana(dayOfWeekInt);
 
-        Object args[] = { new Period(searchDate, searchDate), searchStartTime, searchEndTime, dayOfWeek,
+        Object args[] = { searchDate, searchDate, searchStartTime, searchEndTime, dayOfWeek,
                 null, null, new Integer(RoomOccupation.DIARIA), null, new Boolean(false) };
         List availableInfoRoom = null;
         try {

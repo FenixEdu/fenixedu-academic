@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.RoomAlphabeticComparator;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IPeriod;
-import net.sourceforge.fenixedu.domain.IRoomOccupation;
 import net.sourceforge.fenixedu.domain.RoomOccupation;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -170,22 +169,20 @@ public class ManageLessonDA extends
             }
 
             String action = request.getParameter("action");
-            IRoomOccupation oldRoomOccupation = null;
+            Integer oldRoomOccupationId = null;
             if (action != null && action.equals("edit")) {
-                oldRoomOccupation = Cloner.copyInfoRoomOccupation2IRoomOccupation(lessonBeingEdited
-                        .getInfoRoomOccupation());
+                oldRoomOccupationId = lessonBeingEdited.getInfoRoomOccupation().getIdInternal();
             }
             Integer frequency = new Integer(RoomOccupation.DIARIA);
             if (quinzenal.booleanValue()) {
                 frequency = new Integer(RoomOccupation.QUINZENAL);
             }
 
-            IPeriod period = Cloner.copyInfoPeriod2IPeriod(infoPeriod);
-            Object args[] = { period, inicio, fim, weekDay, oldRoomOccupation, null, frequency,
+            Object args[] = { infoPeriod.getStartDate(), infoPeriod.getEndDate(), inicio, fim, weekDay, oldRoomOccupationId, null, frequency,
                     weekOfQuinzenalStart, new Boolean(true) };
 
-            List emptyRoomsList = (List) ServiceUtils.executeService(SessionUtils.getUserView(request),
-                    "ReadAvailableRoomsForExam", args);
+            List<InfoRoom> emptyRoomsList = (List<InfoRoom>) ServiceUtils.executeService(SessionUtils
+                    .getUserView(request), "ReadAvailableRoomsForExam", args);
 
             if (emptyRoomsList == null || emptyRoomsList.isEmpty()) {
                 actionErrors.add("search.empty.rooms.no.rooms", new ActionError(
@@ -197,29 +194,20 @@ public class ManageLessonDA extends
             if (action != null && action.equals("edit")) {
                 // Permit selection of current room only if the day didn't
                 // change and the hour is contained within the original hour
-                //				InfoLesson infoLessonOld =
-                //					(InfoLesson) request.getAttribute(SessionConstants.LESSON);
                 manageLessonForm.set("nomeSala", ""
                         + ((InfoLesson) request.getAttribute(SessionConstants.LESSON))
                                 .getInfoRoomOccupation().getInfoRoom().getNome());
             }
 
             Collections.sort(emptyRoomsList, new RoomAlphabeticComparator());
-            List listaSalas = new ArrayList();
+            List<LabelValueBean> listaSalas = new ArrayList();
             for (int i = 0; i < emptyRoomsList.size(); i++) {
-                InfoRoom elem = (InfoRoom) emptyRoomsList.get(i);
+                InfoRoom elem = emptyRoomsList.get(i);
                 listaSalas.add(new LabelValueBean(elem.getNome(), elem.getNome()));
             }
 
             request.setAttribute("action", action);
-            //emptyRoomsList.add(0, infoSala);
-
-            //sessao.removeAttribute("listaSalas");
-            //sessao.removeAttribute("listaInfoSalas");
             request.setAttribute("listaSalas", listaSalas);
-            //request.setAttribute("listaInfoSalas", emptyRoomsList);
-            //			request.setAttribute(SessionConstants.LESSON, infoLesson);
-
             request.setAttribute("manageLessonForm", manageLessonForm);
 
             return mapping.findForward("ShowChooseRoomForm");
@@ -271,8 +259,6 @@ public class ManageLessonDA extends
 
             InfoShift infoShift = (InfoShift) (request.getAttribute(SessionConstants.SHIFT));
 
-            //infoLesson.setInfoDisciplinaExecucao(
-            //	infoShift.getInfoDisciplinaExecucao());
             infoLesson.setInfoShift(infoShift);
 
             infoLesson.setTipo(infoShift.getTipo());
@@ -299,9 +285,6 @@ public class ManageLessonDA extends
                 infoRoomOccupation.setFrequency(RoomOccupation.SEMANAL);
             }
 
-            //			Calendar start = Calendar.getInstance();
-            //			Calendar end = Calendar.getInstance();
-
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                     .getAttribute(SessionConstants.EXECUTION_PERIOD);
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
@@ -311,22 +294,11 @@ public class ManageLessonDA extends
 
             if (infoExecutionPeriod.getSemester().equals(new Integer(1))) {
                 infoPeriod = infoExecutionDegree.getInfoPeriodLessonsFirstSemester();
-                //				start =
-                // infoExecutionDegree.getInfoPeriodLessonsFirstSemester().getStartDate();
-                //				end =
-                // infoExecutionDegree.getInfoPeriodLessonsFirstSemester().getEndDate();
             } else {
                 infoPeriod = infoExecutionDegree.getInfoPeriodLessonsSecondSemester();
-                //				start =
-                // infoExecutionDegree.getInfoPeriodLessonsSecondSemester().getStartDate();
-                //				end =
-                // infoExecutionDegree.getInfoPeriodLessonsSecondSemester().getEndDate();
             }
 
-            /*
-             * InfoPeriod infoPeriod = new InfoPeriod();
-             * infoPeriod.setStartDate(start); infoPeriod.setEndDate(end);
-             */infoRoomOccupation.setInfoPeriod(infoPeriod);
+            infoRoomOccupation.setInfoPeriod(infoPeriod);
 
             infoLesson.setInfoRoomOccupation(infoRoomOccupation);
 
@@ -336,7 +308,6 @@ public class ManageLessonDA extends
                 ServiceUtils.executeService(SessionUtils.getUserView(request), "CreateLesson", args);
             } catch (CreateLesson.InvalidLoadException ex) {
 
-                //ActionErrors actionErrors = new ActionErrors();
                 if (ex.getMessage().endsWith("REACHED")) {
                     actionErrors.add("errors.shift.hours.limit.reached", new ActionError(
                             "errors.shift.hours.limit.reached"));
@@ -375,9 +346,6 @@ public class ManageLessonDA extends
         if (string.equalsIgnoreCase("S")) {
             result = "7";
         }
-        /*
-         * if (string.equalsIgnoreCase("D")) { result = "1"; }
-         */
         return result;
     }
 
@@ -412,7 +380,7 @@ public class ManageLessonDA extends
 
         IUserView userView = (IUserView) sessao.getAttribute("UserView");
 
-        List lessons = new ArrayList();
+        List<Integer> lessons = new ArrayList<Integer>();
         lessons.add(new Integer(request.getParameter(SessionConstants.LESSON_OID)));
 
         Object argsApagarAula[] = { lessons };
@@ -468,8 +436,6 @@ public class ManageLessonDA extends
 
             InfoShift infoShift = (InfoShift) (request.getAttribute(SessionConstants.SHIFT));
 
-            //infoLessonToCreateOrEdited.setInfoDisciplinaExecucao(
-            //	infoShift.getInfoDisciplinaExecucao());
             infoLessonToCreateOrEdited.setInfoShift(infoShift);
             infoLessonToCreateOrEdited.setTipo(infoShift.getTipo());
             infoLessonToCreateOrEdited.setInfoSala(infoSala);
@@ -495,9 +461,6 @@ public class ManageLessonDA extends
                 infoRoomOccupation.setFrequency(RoomOccupation.SEMANAL);
             }
 
-            //			Calendar start = Calendar.getInstance();
-            //			Calendar end = Calendar.getInstance();
-
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                     .getAttribute(SessionConstants.EXECUTION_PERIOD);
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
@@ -507,22 +470,11 @@ public class ManageLessonDA extends
 
             if (infoExecutionPeriod.getSemester().equals(new Integer(1))) {
                 infoPeriod = infoExecutionDegree.getInfoPeriodLessonsFirstSemester();
-                //				start =
-                // infoExecutionDegree.getInfoPeriodLessonsFirstSemester().getStartDate();
-                //				end =
-                // infoExecutionDegree.getInfoPeriodLessonsFirstSemester().getEndDate();
             } else {
                 infoPeriod = infoExecutionDegree.getInfoPeriodLessonsSecondSemester();
-                //				start =
-                // infoExecutionDegree.getInfoPeriodLessonsSecondSemester().getStartDate();
-                //				end =
-                // infoExecutionDegree.getInfoPeriodLessonsSecondSemester().getEndDate();
             }
 
-            /*
-             * InfoPeriod infoPeriod = new InfoPeriod();
-             * infoPeriod.setStartDate(start); infoPeriod.setEndDate(end);
-             */infoRoomOccupation.setInfoPeriod(infoPeriod);
+            infoRoomOccupation.setInfoPeriod(infoPeriod);
 
             infoLessonToCreateOrEdited.setInfoRoomOccupation(infoRoomOccupation);
 
@@ -531,17 +483,12 @@ public class ManageLessonDA extends
 
                 InfoLesson infoLessonOld = (InfoLesson) request.getAttribute(SessionConstants.LESSON);
 
-                Object argsEditLesson[] = { infoLessonOld, infoLessonToCreateOrEdited, /*
-                                                                                        * ,
-                                                                                        * iExecutionPeriod
-                                                                                        */
-                infoShift };
+                Object argsEditLesson[] = { infoLessonOld, infoLessonToCreateOrEdited, infoShift };
 
                 try {
                     ServiceUtils.executeService(SessionUtils.getUserView(request), "EditLesson",
                             argsEditLesson);
                 } catch (EditLesson.InvalidLoadException ex) {
-                    //ActionErrors actionErrors = new ActionErrors();
                     if (ex.getMessage().endsWith("REACHED")) {
                         actionErrors.add("errors.shift.hours.limit.reached", new ActionError(
                                 "errors.shift.hours.limit.reached"));
@@ -565,7 +512,6 @@ public class ManageLessonDA extends
                     ServiceUtils.executeService(SessionUtils.getUserView(request), "CreateLesson",
                             argsCreateLesson);
                 } catch (CreateLesson.InvalidLoadException ex) {
-                    //ActionErrors actionErrors = new ActionErrors();
                     if (ex.getMessage().endsWith("REACHED")) {
                         actionErrors.add("errors.shift.hours.limit.reached", new ActionError(
                                 "errors.shift.hours.limit.reached"));

@@ -94,7 +94,7 @@ public class SearchEmptyRoomsDispatchAction extends FenixContextDispatchAction {
                 return prepare(mapping, form, request, response);
             }
 
-            Object args[] = { new Period(startDate, endDate), start, end, weekDay, null, normalCapacity,
+            Object args[] = { startDate, endDate, start, end, weekDay, null, normalCapacity,
                     new Integer(RoomOccupation.SEMANAL), null, new Boolean(true) };
 
             List emptyRoomsList = (List) ServiceUtils.executeService(SessionUtils.getUserView(request),

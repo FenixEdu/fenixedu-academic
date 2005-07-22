@@ -97,7 +97,7 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
         int dayOfWeekInt = examDate.get(Calendar.DAY_OF_WEEK);
         DiaSemana dayOfWeek = new DiaSemana(dayOfWeekInt);
 
-        Object args[] = { new Period(examDate, examDate), examStartTime, examEndTime, dayOfWeek, null,
+        Object args[] = { examDate, examDate, examStartTime, examEndTime, dayOfWeek, null,
                 null, new Integer(RoomOccupation.DIARIA), null, new Boolean(false) };
 
         List availableInfoRoom = (List) ServiceUtils.executeService(userView,

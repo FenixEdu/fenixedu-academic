@@ -734,7 +734,7 @@ public class CreateExamDA extends FenixDateAndTimeContextDispatchAction
             return prepare(mapping, form, request, response);
         }
 
-        Object args[] = { new Period(examDate, examDate), examStartTime, examEndTime, dayOfWeek, null,
+        Object args[] = { examDate, examDate, examStartTime, examEndTime, dayOfWeek, null,
                 null, new Integer(RoomOccupation.DIARIA), null, new Boolean(false) };
 
         List availableInfoRoom = (List) ServiceUtils.executeService(userView,
