@@ -151,7 +151,6 @@ import net.sourceforge.fenixedu.domain.IWebSite;
 import net.sourceforge.fenixedu.domain.IWebSiteItem;
 import net.sourceforge.fenixedu.domain.IWebSiteSection;
 import net.sourceforge.fenixedu.domain.IWorkLocation;
-import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Period;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Room;
@@ -1664,45 +1663,6 @@ public abstract class Cloner {
     }
 
     /**
-     * Method copyInfoLesson2Lesson.
-     * 
-     * @param lessonExample
-     * @return ILesson
-     */
-    public static ILesson copyInfoLesson2Lesson(InfoLesson infoLesson) {
-        ILesson lesson = new Lesson();
-        IRoom sala = null;
-
-        IRoomOccupation roomOccupation = null;
-        // IShift shift = null;
-        try {
-            BeanUtils.copyProperties(lesson, infoLesson);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
-
-        sala = Cloner.copyInfoRoom2Room(infoLesson.getInfoSala());
-        roomOccupation = Cloner
-                .copyInfoRoomOccupation2RoomOccupation(infoLesson.getInfoRoomOccupation());
-
-        lesson.setSala(sala);
-        lesson.setRoomOccupation(roomOccupation);
-
-        return lesson;
-    }
-
-    /**
-     * Method copyInfoRoom2Room.
-     * 
-     * @param infoRoom
-     */
-    public static IRoom copyInfoRoom2Room(InfoRoom infoRoom) {
-        IRoom room = new Room();
-        copyObjectProperties(room, infoRoom);
-        return room;
-    }
-
-    /**
      * Method copyInfoRoomOccupation2RoomOccupation.
      * 
      * @param infoRoomOccupation
@@ -1742,14 +1702,15 @@ public abstract class Cloner {
 
     public static IRoomOccupation copyInfoRoomOccupation2IRoomOccupation(
             InfoRoomOccupation infoRoomOccupation) {
+
         IRoomOccupation roomOccupation = new RoomOccupation();
-
-        IPeriod period = Cloner.copyInfoPeriod2IPeriod(infoRoomOccupation.getInfoPeriod());
-        IRoom room = Cloner.copyInfoRoom2Room(infoRoomOccupation.getInfoRoom());
-
         copyObjectProperties(roomOccupation, infoRoomOccupation);
-
+        
+        IPeriod period = Cloner.copyInfoPeriod2IPeriod(infoRoomOccupation.getInfoPeriod());
         roomOccupation.setPeriod(period);
+        
+        IRoom room = new Room();
+        copyObjectProperties(room, infoRoomOccupation.getInfoRoom());
         roomOccupation.setRoom(room);
 
         return roomOccupation;
