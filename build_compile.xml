@@ -467,8 +467,8 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
       <include name="net/sourceforge/fenixedu/domain/**"/>
       <include name="relation/**"/>
     </javac>
-    <java classname="net.sourceforge.fenixedu.tools.CreateDomainFactoryClass" 
-          dir="${build.home.webinf.classes}"
+    <java classname="net.sourceforge.fenixedu.tools.CreateDomainFactoryClassSource" 
+          dir="${src_gen}"
           fork="true">
       <classpath>
 	<pathelement path="${build.home.webinf.classes}"/>
