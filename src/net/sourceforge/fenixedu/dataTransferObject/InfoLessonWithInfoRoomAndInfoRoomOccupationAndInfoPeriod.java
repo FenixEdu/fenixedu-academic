@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.ILesson;
  */
 public class InfoLessonWithInfoRoomAndInfoRoomOccupationAndInfoPeriod extends InfoLessonWithInfoRoom {
 
+    @Override
     public void copyFromDomain(ILesson lesson) {
         super.copyFromDomain(lesson);
         if (lesson != null) {

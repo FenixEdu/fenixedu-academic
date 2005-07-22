@@ -12,11 +12,7 @@ import net.sourceforge.fenixedu.domain.IRoomOccupation;
  */
 public class InfoRoomOccupationWithInfoRoom extends InfoRoomOccupation {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation#copyFromDomain(Dominio.IRoomOccupation)
-     */
+    @Override
     public void copyFromDomain(IRoomOccupation roomOccupation) {
         super.copyFromDomain(roomOccupation);
         if (roomOccupation != null) {
