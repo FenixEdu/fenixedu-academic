@@ -19,8 +19,9 @@ public class Person extends Person_Base {
 
     public Person(InfoPerson personToCreate, ICountry country) {
 
-        if (personToCreate.getIdInternal() != null)
+        if (personToCreate.getIdInternal() != null) {
             throw new DomainException("error.publication.existentPublication");
+        }
 
         setProperties(personToCreate);
         setPais(country);

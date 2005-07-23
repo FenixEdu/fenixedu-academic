@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationAuthor;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationType;
-import net.sourceforge.fenixedu.domain.publication.IPublicationType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -125,9 +124,9 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
         
         publication.setTitle((String)dynaForm.get("title"));
         //ERROR this is wrong... a domain object is up here :(
-        InfoPublicationType type = InfoPublicationType.newInfoFromDomain(
-        		(IPublicationType)ServiceUtils.executeService(userView,"ReadPublicationType",
-        				new Object[]{ keyPublicationType }));
+        InfoPublicationType type = 
+        		(InfoPublicationType)ServiceUtils.executeService(userView,"ReadPublicationType",
+        				new Object[]{ keyPublicationType });
         HashMap attributes = (HashMap) ServiceUtils.executeService(userView,
                 "ReadAttributesByPublicationType", new Object[] { keyPublicationType });
 
@@ -275,9 +274,7 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
 		DynaActionForm actionForm = (DynaActionForm)form;
 		
 		//ERROR this should not happen - domain object in presentation
-		IPublicationType iPublicationType = (IPublicationType) ServiceUtils.executeService(userView,
-				"ReadPublicationType", new Object[] {publication.getInfoPublicationType().getIdInternal()});
-		InfoPublicationType infoPublicationType = InfoPublicationType.newInfoFromDomain(iPublicationType);
+		InfoPublicationType infoPublicationType = publication.getInfoPublicationType();
 		if (infoPublicationType != null) actionForm.set("infoPublicationTypeId",infoPublicationType.getIdInternal());
 		
 		if (publication.getTitle() != null) actionForm.set("title",publication.getTitle());
@@ -339,10 +336,6 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
 		actionForm.set("authorsName",names);
 		actionForm.set("authorsId",ids);
 		
-		/*
-			autores podem vir a null...
-			os campos de selec??o n?o est?o a aparecer bem preenchidos, os malandros
-		*/
 	}
 	
     public ActionForward lightPrepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -397,9 +390,9 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixFilterException, FenixServiceException {
     	
-        loadData(form,request);        
+        loadData(form,request);
         lightPrepare(mapping,form,request,response);
-		
+        
         return mapping.findForward("edit");
     }
     

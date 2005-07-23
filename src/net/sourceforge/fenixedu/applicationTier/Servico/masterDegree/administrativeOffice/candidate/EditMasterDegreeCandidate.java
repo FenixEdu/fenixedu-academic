@@ -34,7 +34,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class ChangeCandidate implements IService {
+public class EditMasterDegreeCandidate implements IService {
 
     public InfoMasterDegreeCandidate run(Integer oldCandidateID, InfoMasterDegreeCandidate newCandidate)
             throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
@@ -51,45 +51,13 @@ public class ChangeCandidate implements IService {
 
         // Change personal Information
         IPerson person = masterDegreeCandidate.getPerson();
-        person.setIdDocumentType(newCandidate.getInfoPerson().getTipoDocumentoIdentificacao());
-        person.setNumeroDocumentoIdentificacao(newCandidate.getInfoPerson()
-                .getNumeroDocumentoIdentificacao());
+        ICountry country = null;
         if ((newCandidate.getInfoPerson().getInfoPais() != null)) {
-            ICountry nationality = sp.getIPersistentCountry().readCountryByNationality(
+            country = sp.getIPersistentCountry().readCountryByNationality(
                     newCandidate.getInfoPerson().getInfoPais().getNationality());
-            person.setPais(nationality);
         }
-        person.setNascimento(newCandidate.getInfoPerson().getNascimento());
-        person.setDataEmissaoDocumentoIdentificacao(newCandidate.getInfoPerson()
-                .getDataEmissaoDocumentoIdentificacao());
-        person.setDataValidadeDocumentoIdentificacao(newCandidate.getInfoPerson()
-                .getDataValidadeDocumentoIdentificacao());
-        person.setLocalEmissaoDocumentoIdentificacao(newCandidate.getInfoPerson()
-                .getLocalEmissaoDocumentoIdentificacao());
-        person.setNome(newCandidate.getInfoPerson().getNome());
-        person.setGender(newCandidate.getInfoPerson().getSexo());
-        person.setMaritalStatus(newCandidate.getInfoPerson().getMaritalStatus());
-        person.setNomePai(newCandidate.getInfoPerson().getNomePai());
-        person.setNomeMae(newCandidate.getInfoPerson().getNomeMae());
-        person.setFreguesiaNaturalidade(newCandidate.getInfoPerson().getFreguesiaNaturalidade());
-        person.setConcelhoNaturalidade(newCandidate.getInfoPerson().getConcelhoNaturalidade());
-        person.setDistritoNaturalidade(newCandidate.getInfoPerson().getDistritoNaturalidade());
-        person.setLocalidadeCodigoPostal(newCandidate.getInfoPerson().getLocalidadeCodigoPostal());
-        person.setMorada(newCandidate.getInfoPerson().getMorada());
-        person.setLocalidade(newCandidate.getInfoPerson().getLocalidade());
-        person.setCodigoPostal(newCandidate.getInfoPerson().getCodigoPostal());
-        person.setFreguesiaMorada(newCandidate.getInfoPerson().getFreguesiaMorada());
-        person.setConcelhoMorada(newCandidate.getInfoPerson().getConcelhoMorada());
-        person.setDistritoMorada(newCandidate.getInfoPerson().getDistritoMorada());
-        person.setTelefone(newCandidate.getInfoPerson().getTelefone());
-        person.setTelemovel(newCandidate.getInfoPerson().getTelemovel());
-        person.setEmail(newCandidate.getInfoPerson().getEmail());
-        person.setEnderecoWeb(newCandidate.getInfoPerson().getEnderecoWeb());
-        person.setNumContribuinte(newCandidate.getInfoPerson().getNumContribuinte());
-        person.setProfissao(newCandidate.getInfoPerson().getProfissao());
-        person.setNacionalidade(newCandidate.getInfoPerson().getNacionalidade());
-        sp.getIPessoaPersistente().simpleLockWrite(person);
-
+        person.edit(newCandidate.getInfoPerson(),country);
+        
         // Change Candidate Information
         masterDegreeCandidate.setAverage(newCandidate.getAverage());
         masterDegreeCandidate.setMajorDegree(newCandidate.getMajorDegree());

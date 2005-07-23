@@ -1582,9 +1582,9 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ChangeCandidate</name>
+		<name>EditMasterDegreeCandidate</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.ChangeCandidate</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.EditMasterDegreeCandidate</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>

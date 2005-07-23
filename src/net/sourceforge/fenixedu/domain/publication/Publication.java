@@ -148,13 +148,6 @@ public class Publication extends Publication_Base implements IPublication {
         String publication;
         publication = "";
 
-        /*
-         * if (getType() != null) { if (getType() .getPublicationType()
-         * .equalsIgnoreCase("Outra Publicacao")) { publication =
-         * getPublicationType().toUpperCase() + " : '\n'"; } else { publication =
-         * getType().getPublicationType().toUpperCase() + " : '\n'"; } }
-         */
-
         publication += getTitle();
 
         String str = "";
@@ -250,11 +243,6 @@ public class Publication extends Publication_Base implements IPublication {
             publication = publication + " - " + getLastPage() + ")";
         }
 
-        /*
-         * if (getNumberPages() != null && getNumberPages().intValue() != 0) {
-         * publication = publication + ", Number Pages = " + getNumberPages(); }
-         */
-
         if (getSerie() != null && getSerie().intValue() != 0) {
             publication = publication + ", Serie " + getSerie();
         }
@@ -262,19 +250,6 @@ public class Publication extends Publication_Base implements IPublication {
         if (getEditor() != null && getEditor().length() != 0) {
             publication = publication + ", " + getEditor();
         }
-
-        /*
-         * if (getIssn() != null && getIssn().intValue() != 0) { publication =
-         * publication + ", ISSN = " + getIssn(); }
-         * 
-         * if (getIsbn() != null && getIsbn().intValue() != 0) { publication =
-         * publication + ", ISBN = " + getIsbn(); }
-         */
-
-        /*
-         * if (getScope() != null && getScope().length() != 0) { publication =
-         * publication + ", Scope : " + getScope(); }
-         */
 
         if (getLocal() != null && getLocal().length() != 0) {
             publication = publication + ", " + getLocal();
@@ -312,11 +287,6 @@ public class Publication extends Publication_Base implements IPublication {
             publication = publication + ", " + getCountry();
         }
 
-        /*
-         * if (getObservation() != null && getObservation().length() != 0) {
-         * publication = publication + ", Observation : " + getObservation(); }
-         */
-        //publication = publication + ".";
         if (getFormat() != null && getFormat().length() != 0) {
             publication = publication + ", (" + getFormat() + " format)";
         }

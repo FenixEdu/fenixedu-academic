@@ -59,7 +59,15 @@ public class ChangeApplicationInfo implements IService {
 
         // Change Personal Information
         if (isNewPerson) {
-            changeAllPersonInfo(sp, infoPerson, existingMasterDegreeCandidate.getPerson());
+            ICountry country = null;
+            if ((infoPerson.getInfoPais() != null)) {
+                country = sp.getIPersistentCountry().readCountryByNationality(
+                        infoPerson.getInfoPais().getNationality());
+            }
+            
+            IPerson person = existingMasterDegreeCandidate.getPerson();
+            person.edit(infoPerson, country);
+            
         } else {
             IService service = new ChangePersonalContactInformation();
             ((ChangePersonalContactInformation) service).run(userView, infoPerson);
@@ -90,45 +98,6 @@ public class ChangeApplicationInfo implements IService {
 
         return InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(existingMasterDegreeCandidate);
 
-    }
-
-    private void changeAllPersonInfo(ISuportePersistente sp, InfoPerson infoPerson, IPerson person)
-            throws ExcepcaoPersistencia {
-
-        person.setIdDocumentType(infoPerson.getTipoDocumentoIdentificacao());
-        person.setNumeroDocumentoIdentificacao(infoPerson.getNumeroDocumentoIdentificacao());
-        if ((infoPerson.getInfoPais() != null)) {
-            ICountry nationality = sp.getIPersistentCountry().readCountryByNationality(
-                    infoPerson.getInfoPais().getNationality());
-            person.setPais(nationality);
-        }
-        person.setNascimento(infoPerson.getNascimento());
-        person.setDataEmissaoDocumentoIdentificacao(infoPerson.getDataEmissaoDocumentoIdentificacao());
-        person.setDataValidadeDocumentoIdentificacao(infoPerson.getDataValidadeDocumentoIdentificacao());
-        person.setLocalEmissaoDocumentoIdentificacao(infoPerson.getLocalEmissaoDocumentoIdentificacao());
-        person.setNome(infoPerson.getNome());
-        person.setGender(infoPerson.getSexo());
-        person.setMaritalStatus(infoPerson.getMaritalStatus());
-        person.setNomePai(infoPerson.getNomePai());
-        person.setNomeMae(infoPerson.getNomeMae());
-        person.setFreguesiaNaturalidade(infoPerson.getFreguesiaNaturalidade());
-        person.setConcelhoNaturalidade(infoPerson.getConcelhoNaturalidade());
-        person.setDistritoNaturalidade(infoPerson.getDistritoNaturalidade());
-        person.setLocalidadeCodigoPostal(infoPerson.getLocalidadeCodigoPostal());
-        person.setMorada(infoPerson.getMorada());
-        person.setLocalidade(infoPerson.getLocalidade());
-        person.setCodigoPostal(infoPerson.getCodigoPostal());
-        person.setFreguesiaMorada(infoPerson.getFreguesiaMorada());
-        person.setConcelhoMorada(infoPerson.getConcelhoMorada());
-        person.setDistritoMorada(infoPerson.getDistritoMorada());
-        person.setTelefone(infoPerson.getTelefone());
-        person.setTelemovel(infoPerson.getTelemovel());
-        person.setEmail(infoPerson.getEmail());
-        person.setEnderecoWeb(infoPerson.getEnderecoWeb());
-        person.setNumContribuinte(infoPerson.getNumContribuinte());
-        person.setProfissao(infoPerson.getProfissao());
-        person.setNacionalidade(infoPerson.getNacionalidade());
-        sp.getIPessoaPersistente().simpleLockWrite(person);
     }
 
 }

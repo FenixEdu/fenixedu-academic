@@ -78,10 +78,11 @@ public class InfoPublication extends PublicationDTO {
             setYear(String.valueOf(publication.getYear()));
             setYear_end(String.valueOf(publication.getYear_end()));
             
-        	if (getInfoPublicationType() == null) {
-        		setInfoPublicationType(new InfoPublicationType());
+            
+            
+        	if (publication.getType() != null) {
+        		setInfoPublicationType(InfoPublicationType.newInfoFromDomain(publication.getType()));
         	}
-        	getInfoPublicationType().setIdInternal(publication.getKeyPublicationType());
             
             List unsortedAuthorsList = new ArrayList(publication.getPublicationAuthorships());
             Collections.sort(unsortedAuthorsList, new BeanComparator("order"));
@@ -121,12 +122,6 @@ public class InfoPublication extends PublicationDTO {
                 infoTeachersList.add(infoTeacher);
             }
             setInfoPublicationTeachers(infoTeachersList);
-            
-            
-            //tranform the publicationType into an infoPublicationType
-            InfoPublicationType infoPublicationType = new InfoPublicationType();
-            infoPublicationType.setPublicationType(publication.getPublicationType());
-            setInfoPublicationType(infoPublicationType);
 
         }
     }	

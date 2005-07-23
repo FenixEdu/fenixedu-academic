@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAttribute;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationType;
-import net.sourceforge.fenixedu.domain.publication.IPublicationType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -121,10 +120,9 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
         publication.setInfoPublicationAuthors(infoAuthors);
 
         publication.setTitle((String) dynaForm.get("title"));
-        // ERROR this is wrong... a domain object is up here :(
 
-        InfoPublicationType type = InfoPublicationType.newInfoFromDomain((IPublicationType) ServiceUtils
-                .executeService(userView, "ReadPublicationType", new Object[] { keyPublicationType }));
+        InfoPublicationType type = (InfoPublicationType) ServiceUtils
+                .executeService(userView, "ReadPublicationType", new Object[] { keyPublicationType });
         HashMap attributes = (HashMap) ServiceUtils.executeService(userView,
                 "ReadAttributesByPublicationType", new Object[] { keyPublicationType });
 

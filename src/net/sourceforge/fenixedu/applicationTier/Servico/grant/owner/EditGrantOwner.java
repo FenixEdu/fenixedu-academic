@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.owner;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.domain.Country;
@@ -105,7 +107,7 @@ public class EditGrantOwner implements IService {
 
         //Generate the GrantOwner's Person Username
         if (person.getUsername() == null)
-            person.setUsername(generateGrantOwnerPersonUsername(grantOwner.getNumber()));
+            person.changeUsername(generateGrantOwnerPersonUsername(grantOwner.getNumber()), (List<IPerson>) sp.getIPessoaPersistente().readAll(Person.class));
 
         return grantOwner.getIdInternal();
     }

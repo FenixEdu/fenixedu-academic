@@ -25,8 +25,8 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationType;
 import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.publication.IPublicationType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -70,7 +70,7 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
         ActionForward actionForward = null;
 
         Object args[] = { publicationTypeId };
-        IPublicationType publicationType = (IPublicationType) ServiceUtils.executeService(userView,
+        InfoPublicationType publicationType = (InfoPublicationType) ServiceUtils.executeService(userView,
                 "ReadPublicationType", args);
 
         if (session != null) {

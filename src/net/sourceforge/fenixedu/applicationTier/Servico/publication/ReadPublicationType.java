@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 
+import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationType;
 import net.sourceforge.fenixedu.domain.publication.IPublicationType;
 import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -10,14 +11,15 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadPublicationType implements IService {
 
-    public IPublicationType run(Integer publicationTypeId) throws ExcepcaoPersistencia  {
+    public InfoPublicationType run(Integer publicationTypeId) throws ExcepcaoPersistencia  {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentPublicationType persistentPublicationType = sp.getIPersistentPublicationType();
 
             IPublicationType publicationType = (IPublicationType) persistentPublicationType.readByOID(
                     PublicationType.class, publicationTypeId);
-            return publicationType;
+            
+            return InfoPublicationType.newInfoFromDomain(publicationType);
 
     }
     

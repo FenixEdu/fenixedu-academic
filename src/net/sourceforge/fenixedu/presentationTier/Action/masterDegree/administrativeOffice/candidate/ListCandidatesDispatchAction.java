@@ -491,7 +491,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 
             try {
                 infoMasterDegreeCandidateChanged = (InfoMasterDegreeCandidate) ServiceManagerServiceFactory
-                        .executeService(userView, "ChangeCandidate", args);
+                        .executeService(userView, "EditMasterDegreeCandidate", args);
             } catch (ExistingServiceException e) {
                 throw new ExistingActionException("Esta Person", e);
             } catch (FenixServiceException e) {
