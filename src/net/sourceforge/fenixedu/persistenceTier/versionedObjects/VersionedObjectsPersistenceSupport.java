@@ -56,7 +56,6 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuest
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestScope;
 import net.sourceforge.fenixedu.persistenceTier.places.campus.IPersistentCampus;
 import net.sourceforge.fenixedu.persistenceTier.projectsManagement.IPersistentProjectAccess;
-import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthor;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthorship;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
@@ -88,7 +87,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.Announcemen
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AttendInAttendsSetVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AttendsSetVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AulaVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AuthorVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AuthorshipVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.BibliographicReferenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.BranchVO;
@@ -145,7 +143,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PessoaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PrecedenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PriceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ProfessorshipVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationAuthorVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationTeacherVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationTypeVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationVO;
@@ -291,9 +288,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
         return new WrittenEvaluationCurricularCourseScopeVO();
     }
 */
-    public IPersistentPublicationAuthor getIPersistentPublicationAuthor() {
-        return new PublicationAuthorVO();
-    }
 
     public IPersistentExam getIPersistentExam() {
         return new ExamVO();
@@ -931,10 +925,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
         return new PrecedenceVO();
     }
 
-    public IPersistentAuthor getIPersistentAuthor() {
-        return new AuthorVO();
-    }
-    
     public IPersistentShiftProfessorship getIPersistentTeacherShiftPercentage() {
         return null;
     }

@@ -90,6 +90,8 @@ public class InfoPerson extends InfoObject {
     private MaritalStatus maritalStatus;
 
     private InfoCountry infoPais;
+    
+    private InfoExternalPerson infoExternalPerson;
 
     private List infoAdvisories;
 
@@ -810,6 +812,14 @@ public class InfoPerson extends InfoObject {
     public void setAvailablePhoto(Boolean availablePhoto) {
         this.availablePhoto = availablePhoto;
     }
+    
+    public InfoExternalPerson getInfoExternalPerson() {
+        return infoExternalPerson;
+    }
+
+    public void setInfoExternalPerson(InfoExternalPerson infoExternalPerson) {
+        this.infoExternalPerson = infoExternalPerson;
+    }
 
     public void copyFromDomain(IPerson person) {
         super.copyFromDomain(person);
@@ -857,6 +867,14 @@ public class InfoPerson extends InfoObject {
 
             setPassword(person.getPassword());
             setUsername(person.getUsername());
+            
+            if (person.getExternalPerson() != null) {
+                InfoExternalPerson infoExternalPerson = new InfoExternalPerson();
+                infoExternalPerson.setIdInternal(person.getExternalPerson().getIdInternal());
+                infoExternalPerson.setInfoPerson(this);
+                infoExternalPerson.setInfoWorkLocation(InfoWorkLocation.newInfoFromDomain(person.getExternalPerson().getWorkLocation()));
+                setInfoExternalPerson(infoExternalPerson);
+            }
 
             setAvailablePhoto(person.getAvailablePhoto());
             
@@ -927,4 +945,5 @@ public class InfoPerson extends InfoObject {
 
         person.setAvailablePhoto(infoPerson.getAvailablePhoto());
     }
+
 }

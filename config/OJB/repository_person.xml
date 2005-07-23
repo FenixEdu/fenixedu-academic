@@ -173,11 +173,6 @@
         jdbc-type="INTEGER"
     />
     <field-descriptor
-        name="keyAuthor"
-        column="KEY_AUTHOR"
-        jdbc-type="INTEGER"
-    />
-    <field-descriptor
         name="codigoFiscal"
         column="FISCAL_CODE"
         jdbc-type="VARCHAR"
@@ -221,12 +216,6 @@
          
     >
          <foreignkey field-ref="chavePais"/>
-    </reference-descriptor>
-        <reference-descriptor
-         name="author"
-         class-ref="net.sourceforge.fenixedu.domain.publication.Author"
-         >
-         <foreignkey field-ref="keyAuthor"/>
     </reference-descriptor>
     <collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="personRoles"

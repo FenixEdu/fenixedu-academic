@@ -2691,12 +2691,6 @@ class net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation extends net.source
     Integer support;
 }
 
-class net.sourceforge.fenixedu.domain.publication.Author extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyPerson;
-	String organization;
-	String author;
-}
-
 class net.sourceforge.fenixedu.domain.publication.PublicationType extends net.sourceforge.fenixedu.domain.DomainObject {
 	String publicationType;
 		
@@ -2789,12 +2783,6 @@ class net.sourceforge.fenixedu.domain.publication.Attribute extends net.sourcefo
 	interface "
 	public java.util.List<IPublicationType> getPublicationTypes();
 	"
-}
-
-class net.sourceforge.fenixedu.domain.publication.PublicationAuthor extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer keyAuthor;
-	Integer keyPublication;
-	Integer order;
 }
 
 class net.sourceforge.fenixedu.domain.publication.PublicationSubtype extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -5276,20 +5264,6 @@ relation PublicationTeacherTeacher {
 	net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
 }
 
-relation PublicationAuthorPublication {
-	net.sourceforge.fenixedu.domain.publication.PublicationAuthor playsRole publicationAuthors {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.publication.Publication playsRole publication;
-}
-
-relation PublicationAuthorAuthor {
-	net.sourceforge.fenixedu.domain.publication.PublicationAuthor playsRole authorPublications {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.publication.Author playsRole author;
-}
-
 relation AuthorshipPerson {
 	net.sourceforge.fenixedu.domain.publication.Authorship playsRole personAuthorships {
 		multiplicity *;
@@ -5302,11 +5276,6 @@ relation PublicationAuthorship {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.publication.Publication playsRole publication;
-}
-
-relation AuthorPerson {
-	net.sourceforge.fenixedu.domain.publication.Author playsRole author;
-	net.sourceforge.fenixedu.domain.Person playsRole person;
 }
 
 relation AttributePublicationTypeAttribute {

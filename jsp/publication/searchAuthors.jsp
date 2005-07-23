@@ -77,7 +77,14 @@
 						<bean:write name="author" property="author" />
 					</td>
 					<td>
+						<bean:define id="authorOrganization" name="author" property="organization" type="String"/>
+						<%= (authorOrganization != null && !authorOrganization.equals("")) ? "     -     " : "" %>
+					</td>
+					<td>
 						<bean:write name="author" property="organization" />
+					</td>
+					<td>
+						<%= (authorOrganization != null && !authorOrganization.equals("")) ? "(Pessoa externa)" : "" %>
 					</td>
 				</tr>
 			</logic:iterate>	
@@ -94,7 +101,7 @@
 			</tr>
 			<tr>
 				<td>
-					OrganizaÃ§Ã£o
+					Organização
 				</td>
 				<td>
 					<html:text property="authorOrganization" />

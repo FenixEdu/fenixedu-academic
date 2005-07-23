@@ -72,10 +72,8 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests.TestScopeOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.person.qualification.QualificationOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.places.campus.CampusOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.projectsManagement.ProjectAccessOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.publication.AuthorOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.AuthorshipOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationAttributeOJB;
-import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationAuthorOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationFormatOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationOJB;
 import net.sourceforge.fenixedu.persistenceTier.OJB.publication.PublicationTeacherOJB;
@@ -156,7 +154,6 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuest
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestScope;
 import net.sourceforge.fenixedu.persistenceTier.places.campus.IPersistentCampus;
 import net.sourceforge.fenixedu.persistenceTier.projectsManagement.IPersistentProjectAccess;
-import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthor;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthorship;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
@@ -1340,14 +1337,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     public IPersistentAuthorship getIPersistentAuthorship() {
         return new AuthorshipOJB();
-    }
-    
-    public IPersistentAuthor getIPersistentAuthor() {
-        return new AuthorOJB();
-    }
-    
-    public IPersistentPublicationAuthor getIPersistentPublicationAuthor() {
-        return new PublicationAuthorOJB();
     }
 
 }

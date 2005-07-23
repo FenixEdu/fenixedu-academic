@@ -105,13 +105,6 @@
 		<inverse-foreignkey field-ref="keyPublication"/>
 	</collection-descriptor>
 	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="publicationAuthors"
-			element-class-ref="net.sourceforge.fenixedu.domain.publication.PublicationAuthor"
-			
-			>
-		<inverse-foreignkey field-ref="keyPublication"/>
-	</collection-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="publicationAuthorships"
 			element-class-ref="net.sourceforge.fenixedu.domain.publication.Authorship"
 			
@@ -142,44 +135,6 @@
 	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
     <field-descriptor name="format" column="FORMAT" jdbc-type="VARCHAR"/>
 </class-descriptor>
-
-<!-- Definitions for net.sourceforge.fenixedu.domain.publication.Author -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.publication.Author" table="AUTHOR">
-    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
-    <field-descriptor name="keyPerson" column="KEY_PERSON" jdbc-type="INTEGER"/>
-    <field-descriptor name="author" column="AUTHOR" jdbc-type="VARCHAR"/>
-	<field-descriptor name="organization" column="ORGANISATION" jdbc-type="VARCHAR"/>
-
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="authorPublications"
-			element-class-ref="net.sourceforge.fenixedu.domain.publication.PublicationAuthor"
-			refresh="true" >
-		<inverse-foreignkey field-ref="keyAuthor"/>
-	</collection-descriptor>	
-
-	<reference-descriptor name="person" class-ref="net.sourceforge.fenixedu.domain.Person" >
-	    <foreignkey field-ref="keyPerson"/>
-    </reference-descriptor>
-    
-</class-descriptor>
-
-<!-- ************************************************************************************************************ -->
-<!-- Definitions for net.sourceforge.fenixedu.domain.PublicationAuthor -->
-<!-- ************************************************************************************************************ -->
-<class-descriptor proxy="dynamic" class="net.sourceforge.fenixedu.domain.publication.PublicationAuthor" table="PUBLICATION_AUTHOR">
-	<field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true" />
-	<field-descriptor name="keyPublication" column="KEY_PUBLICATION" jdbc-type="INTEGER" />
-	<field-descriptor name="keyAuthor" column="KEY_AUTHOR" jdbc-type="INTEGER" />
-	<field-descriptor name="order" column="AUTHOR_ORDER" jdbc-type="INTEGER" />
-	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
-	<reference-descriptor name="author" class-ref="net.sourceforge.fenixedu.domain.publication.Author" 	>
-		<foreignkey field-ref="keyAuthor"/>
-	</reference-descriptor>
-	<reference-descriptor name="publication" class-ref="net.sourceforge.fenixedu.domain.publication.Publication"  >
-		<foreignkey field-ref="keyPublication"/>
-	</reference-descriptor>
-</class-descriptor>	
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for net.sourceforge.fenixedu.domain.Authorship -->

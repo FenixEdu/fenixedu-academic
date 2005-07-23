@@ -581,7 +581,8 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
         DynaActionForm insertPublicationForm = (DynaActionForm) form;
 
         String searchedAuthorName = (String) insertPublicationForm.get("searchedAuthorName");
-        String[] selectedAuthorsIds = (String[]) insertPublicationForm.get("authorsIds");
+        Integer[] selectedAuthorsIds = (Integer[]) insertPublicationForm.get("authorsId");
+        
         if (searchedAuthorName == null || searchedAuthorName.equals("")) {
             ActionErrors errors = new ActionErrors();
             errors.add("error1", new ActionError("message.publication.emptySearch"));
@@ -607,22 +608,17 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
     }
     
     
-    private void removeAuthors(String[] alreadySelectedAuthors, List<InfoAuthor> infoAuthors) {
-    	//Converter String[] num arraylist
-    	List<Integer> authorsIds = new ArrayList<Integer>();
-    	for(int i = 0; i < alreadySelectedAuthors.length ; i++) {
-    		authorsIds.add(Integer.getInteger(alreadySelectedAuthors[i]));
-    	}
-    		
-    	Iterator<InfoAuthor> iterator = infoAuthors.iterator();
-    	while (iterator.hasNext()) {
-    		InfoAuthor currentInfoAuthor = (InfoAuthor) iterator.next();
-    		for (Integer id : authorsIds) {
-    			if (id == currentInfoAuthor.getIdInternal()) {
-    				iterator.remove();
-    			}
-    		}
-    	}
+    private void removeAuthors(Integer[] alreadySelectedAuthors, List<InfoAuthor> infoAuthors) {
+        
+        Iterator<InfoAuthor> iterator = infoAuthors.iterator();
+        while (iterator.hasNext()) {
+            InfoAuthor currentInfoAuthor = (InfoAuthor) iterator.next();
+            for(int i = 0; i < alreadySelectedAuthors.length ; i++) {
+                if (currentInfoAuthor.getIdInternal().equals(alreadySelectedAuthors[i])) {
+                    iterator.remove();
+                }
+            }
+        }
     }
     
     

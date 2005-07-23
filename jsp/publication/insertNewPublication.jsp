@@ -45,7 +45,7 @@
 					</logic:notEqual>
 				</td>
 				<td>
-					<%= authorN.toString().replaceAll("'.'","      -      ")+(authorN.toString().contains("'.'")?"        (External person)":"") %>
+					<%= authorN.toString().replaceAll("'.'","      -      ")+(authorN.toString().contains("'.'")?"        (Pessoa externa)":"") %>
 				</td>
 				
 				<logic:equal name="singleAuthor" value="false">

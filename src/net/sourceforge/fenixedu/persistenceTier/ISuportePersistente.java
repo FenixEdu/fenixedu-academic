@@ -61,7 +61,6 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuest
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestScope;
 import net.sourceforge.fenixedu.persistenceTier.places.campus.IPersistentCampus;
 import net.sourceforge.fenixedu.persistenceTier.projectsManagement.IPersistentProjectAccess;
-import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthor;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthorship;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationAttribute;
@@ -102,8 +101,6 @@ public interface ISuportePersistente {
     public void clearCache();
 
     public Integer getNumberCachedItems();
-
-    //public IPessoaPersistente getIPessoaPersistente();
 
     public IAulaPersistente getIAulaPersistente();
 
@@ -501,7 +498,4 @@ public interface ISuportePersistente {
     
     public IPersistentAuthorship getIPersistentAuthorship();
     
-    public IPersistentAuthor getIPersistentAuthor();
-    
-    public IPersistentPublicationAuthor getIPersistentPublicationAuthor();
 }
