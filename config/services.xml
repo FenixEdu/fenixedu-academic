@@ -3219,7 +3219,6 @@
 		</filterChains>
 	</service>
 
-	<!-- Carlos Pereira & Francisco Passos -->
 	<service>
 		<name>InsertPublication</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.InsertPublication</implementationClass>
@@ -3268,15 +3267,6 @@
 			<chain name="TeacherAuthorization" />
 		</filterChains>
 	</service>
-	<!--<service>
-		<name>DeletePublication</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeletePublication</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="TeacherAuthorization"/>
-        </filterChains>
-    </service>-->
 	<service>
 		<name>ReadAllPublicationTypes</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAllPublicationTypes</implementationClass>
