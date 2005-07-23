@@ -777,6 +777,8 @@ class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu
 	public void createEnrollmentEvaluationWithoutGrade();
 	public void createAttend(IStudent student, ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod);
 	public void initializeAsNew (IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod, net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition enrolmentCondition, String createdBy);
+	public IEnrolmentEvaluation submitEnrolmentEvaluation (net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType enrolmentEvaluationType, IMark publishedMark, IEmployee employee, IPerson personResponsibleForGrade, java.util.Date evaluationDate, String observation);
+	public boolean isImprovementForExecutionCourse (IExecutionCourse executionCourse);
 	"
 }
 

@@ -106,11 +106,11 @@ public class EnrolmentEvaluationVO extends VersionedObjectsBase implements IPers
 			Collection<IEnrolmentEvaluation> filteredEvaluations = new ArrayList();
 			
 			for(IEnrolmentEvaluation evaluation : evaluations){
-				if (enrolmentIds.contains(evaluation.getIdInternal()))
+				if (enrolmentIds.contains(evaluation.getEnrolment().getIdInternal()))
 					filteredEvaluations.add(evaluation);
 			}
 			
-			return (List)CollectionUtils.select(evaluations, new Predicate(){
+			return (List)CollectionUtils.select(filteredEvaluations, new Predicate(){
 					public boolean evaluate(Object obj){
 						IEnrolmentEvaluation eval = (IEnrolmentEvaluation)obj;
 						return (eval.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.FINAL_OBJ) ||

@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -252,6 +254,58 @@ public class Enrolment extends Enrolment_Base {
 		});
 	}
 	
+	private IEnrolmentEvaluation getEnrolmentEvaluationByEnrolmentEvaluationStateAndType (final EnrolmentEvaluationState state, final EnrolmentEvaluationType type) {
+		return (IEnrolmentEvaluation)CollectionUtils.find(getEvaluations(),new Predicate() {
+
+			public boolean evaluate(Object o) {
+				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) o;
+				return (enrolmentEvaluation.getEnrolmentEvaluationState().equals(state) &&
+						enrolmentEvaluation.getEnrolmentEvaluationType().equals(type));
+			}
+			
+		});
+	}
+	
+	public IEnrolmentEvaluation submitEnrolmentEvaluation (EnrolmentEvaluationType enrolmentEvaluationType, IMark publishedMark, IEmployee employee, IPerson personResponsibleForGrade, Date evaluationDate, String observation) {
+		
+		IEnrolmentEvaluation enrolmentEvaluation = getEnrolmentEvaluationByEnrolmentEvaluationStateAndType(EnrolmentEvaluationState.TEMPORARY_OBJ, enrolmentEvaluationType);
+
+		//There can be only one enrolmentEvaluation with Temporary State
+		if (enrolmentEvaluation == null ) {
+		    enrolmentEvaluation = new EnrolmentEvaluation();
+			enrolmentEvaluation.setEnrolment(this);
+		}
+		
+		//teacher responsible for execution course
+		String grade = null;
+		if ((publishedMark == null) || (publishedMark.getMark().length() == 0))
+			grade = "NA";
+		else
+			grade = publishedMark.getMark().toUpperCase();
+		
+		enrolmentEvaluation.setGrade(grade);
+		
+		enrolmentEvaluation.setEnrolmentEvaluationType(enrolmentEvaluationType);
+		enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
+		enrolmentEvaluation.setObservation(observation);
+		enrolmentEvaluation.setPersonResponsibleForGrade(personResponsibleForGrade);
+		
+		enrolmentEvaluation.setEmployee(employee);
+		
+		Calendar calendar = Calendar.getInstance();
+		enrolmentEvaluation.setWhen(new Timestamp(calendar.getTimeInMillis()));
+		enrolmentEvaluation.setGradeAvailableDate(calendar.getTime());
+		if (evaluationDate != null) {
+		    enrolmentEvaluation.setExamDate(evaluationDate);
+		} else {
+		    enrolmentEvaluation.setExamDate(calendar.getTime());
+		}
+		
+		enrolmentEvaluation.setCheckSum("");
+		
+		return enrolmentEvaluation;
+	}
+	
     public void createEnrollmentEvaluationWithoutGrade() {
 		
 		IEnrolmentEvaluation enrolmentEvaluation = getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(EnrolmentEvaluationType.NORMAL, null);
@@ -294,4 +348,9 @@ public class Enrolment extends Enrolment_Base {
             }
         }
     }
+	
+	
+	public boolean isImprovementForExecutionCourse (IExecutionCourse executionCourse) {
+		return !getExecutionPeriod().equals(executionCourse.getExecutionPeriod());
+	}
 }

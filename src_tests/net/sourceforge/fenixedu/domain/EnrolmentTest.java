@@ -32,7 +32,6 @@ public class EnrolmentTest extends DomainTestBase {
 	private List<IEnrolmentEquivalence> enrolmentEquivalencesD;
 	private IEnrolmentEvaluation improvementEvaluation;
 	
-	
 	private IEnrolment enrolmentToInitialize = null;
 	private IStudentCurricularPlan studentCurricularPlan = null;
 	private ICurricularCourse curricularCourseToEnroll = null;
@@ -54,12 +53,29 @@ public class EnrolmentTest extends DomainTestBase {
 	private String impossibleGrade = null;
 	private EnrolmentEvaluationType enrolmentEvaluationTypeToSearchFor = null;
 	
+	private IEnrolment enrolmentToSubmitWithoutTemporaryEvaluation = null;
+	private IEnrolment enrolmentToSubmitWithTemporaryEvaluation = null;
+	private IEnrolmentEvaluation existingTemporaryEnrolmentEvaluation = null;
+	private EnrolmentEvaluationType notExistingEnrolmentEvaluationType = null;
+	private EnrolmentEvaluationType existingEnrolmentEvaluationType = null;
+	private IMark realMark = null;
+	private IMark emptyMark = null;
+	private Date examDate = null;
+	private IEmployee employeeSubmittingGrade = null;
+	private IPerson personResponsibleForGrade = null;
+	private String observation = null;
+	
+	private IEnrolment improvementEnrolment = null;
+	private IEnrolment nonImprovementEnrolment = null;
+	private IExecutionCourse executionCourseForImprovement = null;
 	
 	protected void setUp() throws Exception {
         super.setUp();
 		
 		setUpForGetEnrolmentEvaluationByEnrolmentEvaluationTypeAndGradeCase();
 		setUpForInitializeAsNewCase();
+		setUpForSubmitEnrolmentEvaluationCase();
+		setUpForIsImprovementForExecutionCourseCase();
 		
 		enrolmentA = new Enrolment();
 		enrolmentB = new Enrolment();
@@ -241,7 +257,45 @@ public class EnrolmentTest extends DomainTestBase {
 		improvementEvaluation.setEnrolment(enrolmentWithImprovement);
     }
 
-    private void setUpForInitializeAsNewCase() {
+    private void setUpForIsImprovementForExecutionCourseCase() {
+		improvementEnrolment = new Enrolment();
+		nonImprovementEnrolment = new Enrolment();
+		
+		IExecutionPeriod sameExecutionPeriod = new ExecutionPeriod();
+		executionCourseForImprovement = new ExecutionCourse();
+		executionCourseForImprovement.setExecutionPeriod(sameExecutionPeriod);
+		nonImprovementEnrolment.setExecutionPeriod(sameExecutionPeriod);
+		
+		IExecutionPeriod otherExecutionPeriod = new ExecutionPeriod();
+		improvementEnrolment.setExecutionPeriod(otherExecutionPeriod);
+	}
+
+	private void setUpForSubmitEnrolmentEvaluationCase() {
+
+		enrolmentToSubmitWithoutTemporaryEvaluation = new Enrolment();
+		enrolmentToSubmitWithTemporaryEvaluation = new Enrolment();
+		
+		existingTemporaryEnrolmentEvaluation = new EnrolmentEvaluation();
+
+		notExistingEnrolmentEvaluationType = EnrolmentEvaluationType.CLOSED;
+		existingEnrolmentEvaluationType = EnrolmentEvaluationType.NORMAL;
+		existingTemporaryEnrolmentEvaluation.setEnrolmentEvaluationType(existingEnrolmentEvaluationType);
+		existingTemporaryEnrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
+		enrolmentToSubmitWithTemporaryEvaluation.addEvaluations(existingTemporaryEnrolmentEvaluation);
+		
+		realMark = new Mark();
+		realMark.setMark("20");
+		
+		emptyMark = new Mark();
+		emptyMark.setMark("");
+		
+		examDate = new Date(2001,4,15);
+		employeeSubmittingGrade = new Employee();
+		personResponsibleForGrade = new Person();
+		observation = "submission";
+	}
+
+	private void setUpForInitializeAsNewCase() {
 		enrolmentToInitialize = new Enrolment();
 		
 		thisStudent = new Student();
@@ -444,7 +498,72 @@ public class EnrolmentTest extends DomainTestBase {
 		
 	}
 
+	public void testSubmitEnrolmentEvaluation() {
+
+		long sleepTime = 1000;
+		
+		// there isn't an evaluation with TEMPORARY state
+		Date before = new Date();
+		sleep(sleepTime);
+		IEnrolmentEvaluation newEvaluation = enrolmentToSubmitWithoutTemporaryEvaluation.submitEnrolmentEvaluation(
+				notExistingEnrolmentEvaluationType,realMark,employeeSubmittingGrade,
+				personResponsibleForGrade,examDate,observation);
+		
+		sleep(sleepTime);
+		Date after = new Date();
+
+		assertTrue(enrolmentToSubmitWithoutTemporaryEvaluation.getEvaluations().contains(newEvaluation));
+		assertEquals(newEvaluation.getGrade().toUpperCase(),realMark.getMark().toUpperCase());
+		assertEquals(newEvaluation.getEnrolmentEvaluationType(),notExistingEnrolmentEvaluationType);
+		assertEquals(newEvaluation.getEnrolmentEvaluationState(),EnrolmentEvaluationState.TEMPORARY_OBJ);
+		assertEquals(newEvaluation.getObservation(),observation);
+		assertEquals(newEvaluation.getPersonResponsibleForGrade(),personResponsibleForGrade);
+		assertEquals(newEvaluation.getEmployee(),employeeSubmittingGrade);
+		assertEquals(newEvaluation.getExamDate(),examDate);
+		assertTrue(before.before(newEvaluation.getWhen()));
+		assertTrue(after.after(newEvaluation.getWhen()));
+		assertTrue(before.before(newEvaluation.getGradeAvailableDate()));
+		assertTrue(after.after(newEvaluation.getGradeAvailableDate()));
+
+		// there *is* an evaluation with TEMPORARY state
+		IEnrolmentEvaluation existingEvaluation = enrolmentToSubmitWithTemporaryEvaluation.submitEnrolmentEvaluation(
+				existingEnrolmentEvaluationType,realMark,employeeSubmittingGrade,
+				personResponsibleForGrade,examDate,observation);
+		
+		assertTrue(enrolmentToSubmitWithTemporaryEvaluation.getEvaluations().contains(existingEvaluation));
+		assertEquals(existingEvaluation,existingTemporaryEnrolmentEvaluation);
+		
+		// null mark
+		IEnrolmentEvaluation anotherEnrolmentEvaluation = enrolmentToSubmitWithoutTemporaryEvaluation.submitEnrolmentEvaluation(
+				notExistingEnrolmentEvaluationType,null,employeeSubmittingGrade,
+				personResponsibleForGrade,examDate,observation);
+		
+		assertTrue(anotherEnrolmentEvaluation.getGrade().equals("NA"));
+
+		// "" mark
+		anotherEnrolmentEvaluation = enrolmentToSubmitWithoutTemporaryEvaluation.submitEnrolmentEvaluation(
+				notExistingEnrolmentEvaluationType,emptyMark,employeeSubmittingGrade,
+				personResponsibleForGrade,examDate,observation);
+		
+		assertTrue(anotherEnrolmentEvaluation.getGrade().equals("NA"));
+		
+		// null examDate
+		before = new Date();
+		sleep(sleepTime);
+		anotherEnrolmentEvaluation = enrolmentToSubmitWithoutTemporaryEvaluation.submitEnrolmentEvaluation(
+				notExistingEnrolmentEvaluationType,realMark,employeeSubmittingGrade,
+				personResponsibleForGrade,null,observation);
+		sleep(sleepTime);
+		after = new Date();
+		
+		assertTrue(before.before(anotherEnrolmentEvaluation.getExamDate()));
+		assertTrue(after.after(anotherEnrolmentEvaluation.getExamDate()));
+	}
 	
+	public void testIsImprovementForExecutionCourse() {
+		assertTrue(improvementEnrolment.isImprovementForExecutionCourse(executionCourseForImprovement));
+		assertFalse(nonImprovementEnrolment.isImprovementForExecutionCourse(executionCourseForImprovement));
+	}
 	
 	private IEnrolmentEvaluation createEnrolmentEvaluation(IEnrolment enrolment, EnrolmentEvaluationType type, String grade) {
 		IEnrolmentEvaluation ee = new EnrolmentEvaluation();
