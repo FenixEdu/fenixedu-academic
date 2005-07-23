@@ -705,6 +705,14 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
+	  
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="students"
+			element-class-ref="net.sourceforge.fenixedu.domain.Student">
+		<inverse-foreignkey field-ref="studentKindKey"/>
+	</collection-descriptor>
+	  
+	  
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
