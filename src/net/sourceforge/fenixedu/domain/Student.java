@@ -2,7 +2,10 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
+import net.sourceforge.fenixedu.util.EntryPhase;
+import net.sourceforge.fenixedu.util.StudentState;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -18,6 +21,21 @@ public class Student extends Student_Base {
     public Student() {
         this.setSpecialSeason(Boolean.FALSE);
     }
+	
+	public Student(IPerson person, Integer studentNumber, IStudentKind studentKind, StudentState state, 
+			Boolean payedTuition, Boolean enrolmentForbidden, EntryPhase entryPhase, DegreeType degreeType) {
+
+		this();
+		
+		setPayedTuition(payedTuition);
+        setEnrollmentForbidden(enrolmentForbidden);
+        setEntryPhase(entryPhase);
+        setDegreeType(degreeType);
+        setPerson(person);
+        setState(state);
+		setNumber(studentNumber);
+		setStudentKind(studentKind);
+	}
 
     public String toString() {
         String result = "[" + this.getClass().getName() + "; ";

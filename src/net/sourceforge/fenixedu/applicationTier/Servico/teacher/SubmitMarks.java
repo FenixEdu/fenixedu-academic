@@ -1,9 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.io.File;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
@@ -19,7 +17,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoFrequentaWithInfoStudentA
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSubmitMarks;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
-import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.IAttends;
@@ -34,21 +31,17 @@ import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IProfessorship;
 import net.sourceforge.fenixedu.domain.ISite;
 import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.Ftp;
 import net.sourceforge.fenixedu.util.middleware.CreateFile;
 
@@ -65,76 +58,73 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  *  
  */
 public class SubmitMarks implements IService {
-    
-    private MultiHashMap enrolmentEvaluationTableByDegree;
-    private MultiHashMap improvmentEnrolmentEvaluationTableByDegree;
-    private List notEnrolled;
-    private List postGraduate;
-    private Integer nSubmited;
 
     public Object run(Integer executionCourseCode, Integer evaluationCode, Date evaluationDate,
             IUserView userView) throws FenixServiceException {
-        enrolmentEvaluationTableByDegree = new MultiHashMap();
-        improvmentEnrolmentEvaluationTableByDegree = new MultiHashMap();
-        notEnrolled = new ArrayList();
-        postGraduate = new ArrayList();
+		MultiHashMap enrolmentEvaluationTableByDegree = new MultiHashMap();
+		MultiHashMap improvmentEnrolmentEvaluationTableByDegree = new MultiHashMap();
+		List notEnrolled = new ArrayList();
+		List postGraduate = new ArrayList();
 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+			IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
+            IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
+			IPersistentEmployee persistentEmployee = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentEmployee();
             
             //execution course and execution course's site
-           IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-
             IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
                     ExecutionCourse.class, executionCourseCode);
 
-            IPersistentSite persistentSite = sp.getIPersistentSite();
-            ISite site = persistentSite.readByExecutionCourse(executionCourseCode);
+			ISite site = executionCourse.getSite();
 
             //evaluation
-            IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
-            IEvaluation evaluation = (IEvaluation) persistentEvaluation.readByOID(Evaluation.class,
-                    evaluationCode);
+			IEvaluation evaluation = (IEvaluation) persistentEvaluation.readByOID(Evaluation.class,evaluationCode);
 
             //attend list
-            IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
-            List attendList = persistentAttend.readByExecutionCourse(executionCourseCode);
+            List attendList = executionCourse.getAttends();
 
             List professors = executionCourse.responsibleFors();
 
             //employee logged
-            IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
             IPerson pessoa = pessoaPersistente.lerPessoaPorUsername(userView.getUtilizador());
-            IEmployee employee = readEmployee(pessoa);
+
+			IEmployee employee = persistentEmployee.readByPerson(pessoa.getIdInternal().intValue());
+			
             ITeacher teacher = ((IProfessorship) professors.get(0)).getTeacher();
 
-            
             //Separate improvments/normal/not enrolled/postGraduate attends
-            separateAttends(userView, executionCourse, attendList, evaluation, evaluationDate, employee, teacher);
-            
+            Integer nSubmitted = separateAttends(executionCourse, attendList, evaluation, evaluationDate, employee, teacher,
+					enrolmentEvaluationTableByDegree, improvmentEnrolmentEvaluationTableByDegree,
+					notEnrolled, postGraduate);
             
             List fileList = submitMarksAndCreateFiles(enrolmentEvaluationTableByDegree);
             Ftp.enviarFicheiros("/DegreeGradesFtpServerConfig.properties", fileList, "notas/");
             
             List improvmentFileList = submitMarksAndCreateFiles(improvmentEnrolmentEvaluationTableByDegree);
 
-            //Send the files via FPT
-            
+            //Send the files via FTP
             Ftp.enviarFicheiros("/DegreeGradesFtpServerConfig.properties", improvmentFileList, "melhorias/");
 
-            return createSiteView(site, evaluation, nSubmited, notEnrolled, postGraduate);
+            return createSiteView(site, evaluation, nSubmitted, notEnrolled, postGraduate);
         } catch (Exception e) {
             e.printStackTrace();
             throw new FenixServiceException(e.getMessage());
         }
     }
 
-    private void separateAttends(IUserView userView,
-            IExecutionCourse executionCourse, List attendList, IEvaluation evaluation,
-            Date evaluationDate, IEmployee employee, ITeacher teacher) throws FenixServiceException {
+    private Integer separateAttends(
+            IExecutionCourse executionCourse, 
+            List attendList, IEvaluation evaluation,
+            Date evaluationDate, IEmployee employee, ITeacher teacher,
+            MultiHashMap enrolmentEvaluationTableByDegree,
+            MultiHashMap improvmentEnrolmentEvaluationTableByDegree,
+            List notEnrolled,
+            List postGraduate) throws FenixServiceException {
 
         try {
-            int submited = 0;
+            int submitted = 0;
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentMark persistentMark = sp.getIPersistentMark();
             IPersistentEnrolmentEvaluation enrolmentEvaluationDAO = sp
@@ -168,50 +158,23 @@ public class SubmitMarks implements IService {
                     continue;
                 }
                 
+				String observation = "Submissão da Pauta";
                 IMark mark = getMark(evaluation, markList, attend);
-                if(isImprovment(enrolment, executionCourse)) {
-                    enrolmentEvaluation = getEnrolmentEvaluation(userView, executionCourse, enrolment, evaluationDate, employee, teacher, mark, EnrolmentEvaluationType.IMPROVEMENT);
+                if(enrolment.isImprovementForExecutionCourse(executionCourse)) {
+					enrolmentEvaluation = enrolment.submitEnrolmentEvaluation(EnrolmentEvaluationType.IMPROVEMENT, mark, employee, teacher.getPerson(), evaluationDate,observation);
                     improvmentEnrolmentEvaluationTableByDegree.put(enrolment.getStudentCurricularPlan().getDegreeCurricularPlan().getDegree().getIdInternal(), enrolmentEvaluation);
                 } else {
-                    enrolmentEvaluation = getEnrolmentEvaluation(userView, executionCourse, enrolment, evaluationDate, employee, teacher, mark, EnrolmentEvaluationType.NORMAL);
+					enrolmentEvaluation = enrolment.submitEnrolmentEvaluation(EnrolmentEvaluationType.NORMAL, mark, employee, teacher.getPerson(), evaluationDate,observation);
                     enrolmentEvaluationTableByDegree.put(enrolment.getStudentCurricularPlan().getDegreeCurricularPlan().getDegree().getIdInternal(), enrolmentEvaluation);
                 }
-                submited++;
+                submitted++;
             }
             
-            nSubmited = new Integer(submited);
+            return new Integer(submitted);
         } catch (Exception e) {
             e.printStackTrace();
             throw new FenixServiceException(e.getMessage());
         }
-    }
-
-    private IEnrolmentEvaluation getEnrolmentEvaluation(IUserView userView,
-            IExecutionCourse executionCourse, IEnrolment enrolment, Date evaluationDate, IEmployee employee, ITeacher teacher, IMark mark, EnrolmentEvaluationType enrolmentEvaluationType) throws FenixServiceException {
-        
-        IEnrolmentEvaluation newEnrolmentEvaluation = null;
-        
-        
- 
-        if ((mark == null) || (mark.getMark().length() == 0)) {
-
-            newEnrolmentEvaluation = getEnrolmentEvaluationByEnrolment(userView, executionCourse,
-                    enrolment, evaluationDate, "NA", employee, teacher, enrolmentEvaluationType);
- 
-
-        } else {
-
-            newEnrolmentEvaluation = getEnrolmentEvaluationByEnrolment(userView, executionCourse,
-                    enrolment, evaluationDate, mark.getMark().toUpperCase(), employee, teacher, enrolmentEvaluationType);
-        }
-        
-        return newEnrolmentEvaluation;
-    }
-
-    private boolean isImprovment(IEnrolment enrolment, IExecutionCourse executionCourse) {
-        if(enrolment.getExecutionPeriod().equals(executionCourse.getExecutionPeriod()))
-            return false;
-        return true;
     }
 
     private void verifyAlreadySubmittedMarks(List attendList, final IExecutionPeriod executionPeriod,
@@ -245,75 +208,16 @@ public class SubmitMarks implements IService {
         }
     }
 
-    private IMark getMark(IEvaluation evaluation, List markList, IAttends attend) {
-        //                IMark mark = persistentMark.readBy(evaluation, attend);
-        IMark mark = new Mark();
-        mark.setAttend(attend);
-        mark.setEvaluation(evaluation);
-        int indexOf = markList.indexOf(mark);
-        if (indexOf != -1) {
-            mark = (IMark) markList.get(indexOf);
-        } else {
-            mark = null;
-        }
-        return mark;
-    }
+    private IMark getMark(final IEvaluation evaluation, List markList, final IAttends attend) {
 
-    private IEnrolmentEvaluation getEnrolmentEvaluationByEnrolment(IUserView userView,
-            IExecutionCourse executionCourse, IEnrolment enrolment, Date evaluationDate,
-            String publishedMark, IEmployee employee, ITeacher teacher, EnrolmentEvaluationType enrolmentEvaluationType) throws FenixServiceException {
-        ISuportePersistente sp;
-        IEnrolmentEvaluation enrolmentEvaluation = null;
+		return (IMark)CollectionUtils.find(markList,new Predicate() {
 
-        try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-            IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp
-                    .getIPersistentEnrolmentEvaluation();
-
-            //Verify if this mark has been already submited
-            //verifyYetSubmitMarks(enrolment);
-
-            enrolmentEvaluation = persistentEnrolmentEvaluation
-                    .readEnrolmentEvaluationByEnrolmentEvaluationStateAndType(enrolment.getIdInternal(),
-                            EnrolmentEvaluationState.TEMPORARY_OBJ, enrolmentEvaluationType);
-
-            //There can exist only one enrolmentEvaluation with Temporary State
-            if (enrolmentEvaluation == null ) {
-                enrolmentEvaluation = new EnrolmentEvaluation();
-            }
-
-            //teacher responsible for execution course
-
-            enrolmentEvaluation.setEnrolment(enrolment);
-            persistentEnrolmentEvaluation.simpleLockWrite(enrolmentEvaluation);
-
-            enrolmentEvaluation.setGrade(publishedMark);
-
-            enrolmentEvaluation.setEnrolmentEvaluationType(enrolmentEvaluationType);
-            enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
-            enrolmentEvaluation.setObservation(new String("Submissão da Pauta"));
-
-            enrolmentEvaluation.setPersonResponsibleForGrade(teacher.getPerson());
-
-            enrolmentEvaluation.setEmployee(employee);
-
-            Calendar calendar = Calendar.getInstance();
-            enrolmentEvaluation.setWhen(new Timestamp(calendar.getTimeInMillis()));
-            enrolmentEvaluation.setGradeAvailableDate(calendar.getTime());
-            if (evaluationDate != null) {
-                enrolmentEvaluation.setExamDate(evaluationDate);
-            } else {
-                enrolmentEvaluation.setExamDate(calendar.getTime());
-            }
-
-            enrolmentEvaluation.setCheckSum("");
-
-            return enrolmentEvaluation;
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-            throw new FenixServiceException(e.getMessage());
-        }
+			public boolean evaluate(Object o) {
+				IMark mark = (IMark)o;
+				return mark.getAttend().equals(attend) &&
+						mark.getEvaluation().equals(evaluation);
+			}
+		});
     }
 
     private List submitMarksAndCreateFiles(MultiHashMap enrolmentEvaluationTableByDegree)
@@ -336,18 +240,6 @@ public class SubmitMarks implements IService {
             e.printStackTrace();
             throw new FenixServiceException(e.getMessage());
         }
-    }
-
-    private IEmployee readEmployee(IPerson person) {
-        IEmployee employee = null;
-        IPersistentEmployee persistentEmployee;
-        try {
-            persistentEmployee = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentEmployee();
-            employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-        }
-        return employee;
     }
 
     private Object createSiteView(ISite site, IEvaluation evaluation, Integer submited,

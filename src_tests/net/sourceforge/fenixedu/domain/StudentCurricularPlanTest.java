@@ -5,6 +5,7 @@ import java.util.Date;
 import net.sourceforge.fenixedu.domain.degree.enrollment.INotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 
 public class StudentCurricularPlanTest extends DomainTestBase {
@@ -22,10 +23,19 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 	private ICurricularCourse curricularCourse = null;
 	private IExecutionPeriod executionPeriod = null;
 	
+	private IStudent studentForNewStudentCurricularPlan = null;
+	private IDegreeCurricularPlan degreeCurricularPlanForNewStudentCurricularPlan = null;
+	private IBranch branchForNewStudentCurricularPlan = null;
+	private Date startDateForNewStudentCurricularPlan = null;
+	private StudentCurricularPlanState stateForNewStudentCurricularPlan = null;
+	private Double givenCreditsForNewStudentCurricularPlan = null;
+	private Specialization specializationForNewStudentCurricularPlan = null;
+	
 	protected void setUp() throws Exception {
 		super.setUp();
 		
 		setUpEnrolmentByCurricularCourseAndExecutionPeriodCase();
+		setUpNewStudentCurricularPlanCase();
 		
 		IStudent student = new Student();
 		IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
@@ -75,8 +85,17 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 	
 	
 	
+	private void setUpNewStudentCurricularPlanCase() {
+		studentForNewStudentCurricularPlan = new Student();
+		degreeCurricularPlanForNewStudentCurricularPlan = new DegreeCurricularPlan();
+		branchForNewStudentCurricularPlan = new Branch();
+		startDateForNewStudentCurricularPlan = new Date(2002,4,13);
+		stateForNewStudentCurricularPlan = StudentCurricularPlanState.CONCLUDED;
+		givenCreditsForNewStudentCurricularPlan = 10.0;
+		specializationForNewStudentCurricularPlan = Specialization.MASTER_DEGREE; 
+	}
+
 	private void setUpEnrolmentByCurricularCourseAndExecutionPeriodCase() {
-		// TODO Auto-generated method stub
 		
 		studentCurricularPlanToReadFrom = new StudentCurricularPlan();
 		enrolmentToBeRead = new Enrolment();
@@ -209,5 +228,21 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		IEnrolment enrolment = studentCurricularPlanToReadFrom.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse,executionPeriod);
 		
 		assertEquals(enrolment,enrolmentToBeRead);
+	}
+	
+	public void testNewStudentcurricularPlan() {
+		
+		IStudentCurricularPlan scp = new StudentCurricularPlan(studentForNewStudentCurricularPlan,
+				degreeCurricularPlanForNewStudentCurricularPlan, branchForNewStudentCurricularPlan,
+				startDateForNewStudentCurricularPlan, stateForNewStudentCurricularPlan, 
+				givenCreditsForNewStudentCurricularPlan, specializationForNewStudentCurricularPlan) ;
+		
+		assertEquals(scp.getStudent(),studentForNewStudentCurricularPlan);
+		assertEquals(scp.getDegreeCurricularPlan(),degreeCurricularPlanForNewStudentCurricularPlan);
+		assertEquals(scp.getBranch(),branchForNewStudentCurricularPlan);
+		assertEquals(scp.getStartDate(),startDateForNewStudentCurricularPlan);
+		assertEquals(scp.getCurrentState(),stateForNewStudentCurricularPlan);
+		assertEquals(scp.getGivenCredits(),givenCreditsForNewStudentCurricularPlan);
+		assertEquals(scp.getSpecialization(),specializationForNewStudentCurricularPlan);
 	}
 }

@@ -17,17 +17,18 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateRegistration;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.ICandidateEnrolment;
 import net.sourceforge.fenixedu.domain.ICandidateSituation;
+import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IGratuitySituation;
 import net.sourceforge.fenixedu.domain.IGratuityValues;
 import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
@@ -41,17 +42,13 @@ import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
-import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
@@ -69,7 +66,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class RegisterCandidate implements IService {
 
-    boolean personIsLocked = false;
+//    boolean personIsLocked = false;
 
     public InfoCandidateRegistration run(Integer candidateID, Integer branchID, Integer studentNumber,
             IUserView userView) throws FenixServiceException {
@@ -83,16 +80,10 @@ public class RegisterCandidate implements IService {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             if (studentNumber != null) {
-                student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(studentNumber,
-                        DegreeType.MASTER_DEGREE);
-
-                // if (student != null) {
-                // throw new ExistingServiceException();
-                // }
+                student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(studentNumber,DegreeType.MASTER_DEGREE);
             }
 
-            masterDegreeCandidate = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate()
-                    .readByOID(MasterDegreeCandidate.class, candidateID);
+            masterDegreeCandidate = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class, candidateID);
 
             if (student != null) {
 
@@ -100,24 +91,6 @@ public class RegisterCandidate implements IService {
                         student.getPerson().getIdInternal()))) {
                     throw new ExistingServiceException();
                 }
-
-                // List studentCurricularPlans =
-                // student.getStudentCurricularPlans();
-                // for (Iterator iter = studentCurricularPlans.iterator();
-                // iter.hasNext();) {
-                // IStudentCurricularPlan studentCurricularPlan =
-                // (IStudentCurricularPlan) iter.next();
-                // if (studentCurricularPlan.getCurrentState().equals(
-                // StudentCurricularPlanState.ACTIVE_OBJ)) {
-                // if
-                // (masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan()
-                // .getIdInternal().equals(
-                // studentCurricularPlan.getDegreeCurricularPlan().getIdInternal()))
-                // {
-                // throw new ExistingServiceException();
-                // }
-                // }
-                // }
             }
 
             if (!validSituation(masterDegreeCandidate.getActiveCandidateSituation())) {
@@ -138,69 +111,39 @@ public class RegisterCandidate implements IService {
                         }
                     });
             if (role != null) {
-                sp.getIPessoaPersistente().simpleLockWrite(masterDegreeCandidate.getPerson());
-                personIsLocked = true;
                 masterDegreeCandidate.getPerson().getPersonRoles().remove(role);
             }
-            Integer newStudentNumber = null;
-            newStudentNumber = sp.getIPersistentStudent().generateStudentNumber(DegreeType.MASTER_DEGREE);
+            Integer newStudentNumber = sp.getIPersistentStudent().generateStudentNumber(DegreeType.MASTER_DEGREE);
 
             if (studentNumber != null && studentNumber.intValue() > newStudentNumber.intValue())
                 throw new InvalidStudentNumberServiceException();
 
             if (student == null) {
-                student = new Student();
-                sp.getIPersistentStudent().simpleLockWrite(student);
-                student.setPayedTuition(new Boolean(false));
-                student.setEnrollmentForbidden(new Boolean(false));
-                student.setEntryPhase(EntryPhase.FIRST_PHASE_OBJ);
-                student.setDegreeType(DegreeType.MASTER_DEGREE);
-                student.setPerson(masterDegreeCandidate.getPerson());
-                student.setState(new StudentState(StudentState.INSCRITO));
-
-                if (studentNumber == null) {
-                    student.setNumber(newStudentNumber);
-                } else {
-                    student.setNumber(studentNumber);
-                }
-
-                IStudentKind studentKind = sp.getIPersistentStudentKind().readByStudentType(
-                        new StudentType(StudentType.NORMAL));
-                student.setStudentKind(studentKind);
-
+				
+				Integer number = ((studentNumber == null)?newStudentNumber:studentNumber);
+				IStudentKind studentKind = sp.getIPersistentStudentKind().readByStudentType(new StudentType(StudentType.NORMAL));
+				StudentState state = new StudentState(StudentState.INSCRITO);
+                student = new Student(masterDegreeCandidate.getPerson(),number,studentKind,state,false,false,EntryPhase.FIRST_PHASE_OBJ,DegreeType.MASTER_DEGREE);
+				
                 List roles = new ArrayList();
-                Iterator iterator = masterDegreeCandidate.getPerson().getPersonRoles().iterator();
+                Iterator iterator = masterDegreeCandidate.getPerson().getPersonRolesIterator();
                 while (iterator.hasNext()) {
-                    roles.add(Cloner.copyIRole2InfoRole((IRole) iterator.next()));
+                    //roles.add(Cloner.copyIRole2InfoRole((IRole) iterator.next()));
+					roles.add(InfoRole.newInfoFromDomain((IRole) iterator.next()));
                 }
 
                 // Give The Student Role if Necessary
                 if (!AuthorizationUtils.containsRole(roles, RoleType.STUDENT)) {
                     role = sp.getIPersistentRole().readByRoleType(RoleType.STUDENT);
-                    if (!personIsLocked) {
-                        sp.getIPessoaPersistente().simpleLockWrite(masterDegreeCandidate.getPerson());
-                        masterDegreeCandidate.getPerson().getPersonRoles().add(role);
-                    }
+					masterDegreeCandidate.getPerson().addPersonRoles(role);
                 }
             }
 
-            // IStudentCurricularPlan studentCurricularPlanOld =
-            // sp.getIStudentCurricularPlanPersistente()
-            // .readActiveStudentCurricularPlan(student.getNumber(),
-            // DegreeType.MESTRADO_OBJ);
-            //
-            // if ((studentCurricularPlanOld != null)
-            // && (studentCurricularPlanOld.getCurrentState()
-            // .equals(StudentCurricularPlanState.ACTIVE_OBJ))) {
-            // throw new
-            // ActiveStudentCurricularPlanAlreadyExistsServiceException();
-            // }
-
-            List<IStudentCurricularPlan> studentCurricularPalns = masterDegreeCandidate
+            List<IStudentCurricularPlan> studentCurricularPlans = masterDegreeCandidate
                     .getExecutionDegree().getDegreeCurricularPlan().getStudentCurricularPlans();
             
             IStudentCurricularPlan existingStudentCurricularPlan = null;                
-            for (IStudentCurricularPlan scp : studentCurricularPalns) {
+            for (IStudentCurricularPlan scp : studentCurricularPlans) {
                 if (scp.getStudent().getIdInternal().equals(student.getIdInternal())
                         && scp.getCurrentState().equals(StudentCurricularPlanState.ACTIVE)) {
                     existingStudentCurricularPlan = scp;
@@ -212,20 +155,13 @@ public class RegisterCandidate implements IService {
                 throw new ExistingServiceException();
             }
 
-            IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
-            sp.getIStudentCurricularPlanPersistente().simpleLockWrite(studentCurricularPlan);
-
             IBranch branch = (IBranch) sp.getIPersistentBranch().readByOID(Branch.class, branchID);
+			IDegreeCurricularPlan degreecurricularPlan = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan();
+			Date startDate = Calendar.getInstance().getTime();
 
-            studentCurricularPlan.setBranch(branch);
-            studentCurricularPlan.setCurrentState(StudentCurricularPlanState.ACTIVE);
-            studentCurricularPlan.setDegreeCurricularPlan(masterDegreeCandidate.getExecutionDegree()
-                    .getDegreeCurricularPlan());
-            studentCurricularPlan.setGivenCredits(masterDegreeCandidate.getGivenCredits());
-            studentCurricularPlan.setSpecialization(masterDegreeCandidate.getSpecialization());
-            studentCurricularPlan.setStartDate(Calendar.getInstance().getTime());
-            studentCurricularPlan.setStudent(student);
-
+			IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan(student,degreecurricularPlan,branch,startDate,
+					StudentCurricularPlanState.ACTIVE,masterDegreeCandidate.getGivenCredits(),masterDegreeCandidate.getSpecialization());           
+			
             // Get the Candidate Enrolments
 
             List candidateEnrolments = sp.getIPersistentCandidateEnrolment().readByMDCandidate(
@@ -235,25 +171,13 @@ public class RegisterCandidate implements IService {
             while (iterator.hasNext()) {
                 ICandidateEnrolment candidateEnrolment = (ICandidateEnrolment) iterator.next();
 
+				//TODO refactor
+				IExecutionPeriod executionPeriod = sp.getIPersistentExecutionPeriod().readActualExecutionPeriod();
                 IEnrolment enrolment = new Enrolment();
-                sp.getIPersistentEnrolment().simpleLockWrite(enrolment);
-                enrolment.setCurricularCourse(candidateEnrolment.getCurricularCourse());
-                enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
-                enrolment.setEnrollmentState(EnrollmentState.ENROLLED);
-                enrolment.setExecutionPeriod(sp.getIPersistentExecutionPeriod()
-                        .readActualExecutionPeriod());
-                enrolment.setStudentCurricularPlan(studentCurricularPlan);
-                enrolment.setCondition(EnrollmentCondition.FINAL);
 
-                IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
-                sp.getIPersistentEnrolmentEvaluation().simpleLockWrite(enrolmentEvaluation);
-                enrolmentEvaluation.setEnrolment(enrolment);
-                enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
-                enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
-
-                enrolment.getEvaluations().add(enrolmentEvaluation);
-                enrolment.setCreationDate(new Date());
-                enrolment.setCreatedBy(userView.getUtilizador());
+				enrolment.initializeAsNew(studentCurricularPlan,candidateEnrolment.getCurricularCourse(),
+						executionPeriod,EnrollmentCondition.FINAL,userView.getUtilizador());
+				//TODO end refactor
             }
 
             // Change the Candidate Situation
@@ -264,7 +188,6 @@ public class RegisterCandidate implements IService {
             oldCandidateSituation.setValidation(new State(State.INACTIVE));
 
             ICandidateSituation candidateSituation = new CandidateSituation();
-            sp.getIPersistentCandidateSituation().simpleLockWrite(candidateSituation);
             candidateSituation.setDate(Calendar.getInstance().getTime());
             candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
             candidateSituation.setValidation(new State(State.ACTIVE));
@@ -273,7 +196,6 @@ public class RegisterCandidate implements IService {
             // Copy Qualifications
 
             IQualification qualification = new Qualification();
-            sp.getIPersistentQualification().simpleLockWrite(qualification);
             if (masterDegreeCandidate.getAverage() != null) {
                 qualification.setMark(masterDegreeCandidate.getAverage().toString());
             }
@@ -300,7 +222,6 @@ public class RegisterCandidate implements IService {
             studentCurricularPlanResult = studentCurricularPlan;
 
             // Create Gratuity Situations
-            IPersistentGratuitySituation gratuitySituationDAO = sp.getIPersistentGratuitySituation();
             IGratuityValues gratuityValues = masterDegreeCandidate.getExecutionDegree().getGratuityValues();
 
             if (gratuityValues == null) {
@@ -322,15 +243,6 @@ public class RegisterCandidate implements IService {
                 totalValue = new Double(0);
             }
 
-            // else if
-            // (studentCurricularPlan.getSpecialization().equals(Specialization.ESPECIALIZACAO_TYPE))
-            // {
-            // totalValue =
-            // calculateTotalValueForSpecialization(masterDegreeCandidate.getExecutionDegree().getExecutionYear(),
-            // gratuityValues,
-            // studentCurricularPlan);
-            // }
-
             if (totalValue == null) {
                 throw new GratuityValuesNotDefinedServiceException(
                         "error.exception.masterDegree.gratuity.gratuityValuesNotDefined");
@@ -338,9 +250,6 @@ public class RegisterCandidate implements IService {
 
             gratuitySituation.setRemainingValue(totalValue);
             gratuitySituation.setTotalValue(totalValue);
-
-            gratuitySituationDAO.simpleLockWrite(gratuitySituation);
-
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
             throw newEx;
@@ -364,18 +273,12 @@ public class RegisterCandidate implements IService {
     }
 
     private void changeUsernameIfNeccessary(IStudent student) throws ExcepcaoPersistencia {
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            if ((student.getPerson().getUsername().indexOf("Mes") != -1)
-                    || (student.getPerson().getUsername().indexOf("Esp") != -1)
-                    || (student.getPerson().getUsername().indexOf("Int") != -1)) {
+        if ((student.getPerson().getUsername().indexOf("Mes") != -1)
+                || (student.getPerson().getUsername().indexOf("Esp") != -1)
+                || (student.getPerson().getUsername().indexOf("Int") != -1)) {
 
-                sp.getIPessoaPersistente().simpleLockWrite(student.getPerson());
-                student.getPerson().setUsername("M" + student.getNumber());
-            }
-        } catch (ExcepcaoPersistencia e) {
-            throw new ExcepcaoPersistencia();
+            student.getPerson().setUsername("M" + student.getNumber());
         }
     }
 

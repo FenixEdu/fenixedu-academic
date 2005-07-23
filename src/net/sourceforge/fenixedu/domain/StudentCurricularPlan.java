@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.INotNeedToEnrollInCurri
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.IEnrollmentRule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
+import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
@@ -37,7 +38,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         this.setOjbConcreteClass(getClass().getName());
     }
 
-    public String toString() {
+	public String toString() {
         String result = "[" + this.getClass().getName() + "; ";
         result += "internalCode = " + getIdInternal() + "; ";
         result += "student = " + this.getStudent() + "; ";
@@ -834,7 +835,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	
 	
 	
-
+	public StudentCurricularPlan (IStudent student, IDegreeCurricularPlan degreeCurricularPlan, IBranch branch,
+			Date startDate, StudentCurricularPlanState currentState, Double givenCredits, Specialization specialization) 
+				throws DomainException {
+		
+		this(student,degreeCurricularPlan,currentState,startDate);
+		
+		setBranch(branch);
+		setGivenCredits(givenCredits);
+		setSpecialization(specialization);
+	}
 	
 	public StudentCurricularPlan(IStudent student, IDegreeCurricularPlan degreeCurricularPlan,
 						StudentCurricularPlanState studentCurricularPlanState, Date startDate) {

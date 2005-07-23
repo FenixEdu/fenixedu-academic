@@ -1468,7 +1468,15 @@
 		auto-delete="false"
 		>
 		<inverse-foreignkey field-ref="keyGratuityValues"/>
-	 </collection-descriptor>   
+	 </collection-descriptor>
+
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+		name="gratuitySituations"
+		element-class-ref="net.sourceforge.fenixedu.domain.GratuitySituation">
+		<inverse-foreignkey field-ref="keyGratuityValues"/>
+	 </collection-descriptor>
+
+
 </class-descriptor>  
 <!-- End of definitions for class GratuityValues -->
 
@@ -1544,10 +1552,7 @@
     />    
     <reference-descriptor
       	name="gratuityValues"
-       	class-ref="net.sourceforge.fenixedu.domain.GratuityValues"
-       	
-		
-    >
+       	class-ref="net.sourceforge.fenixedu.domain.GratuityValues">
         <foreignkey field-ref="keyGratuityValues"/>
     </reference-descriptor>
     <reference-descriptor
