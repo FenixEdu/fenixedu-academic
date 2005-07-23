@@ -3239,8 +3239,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadPublicationByInternalId</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadPublicationByInternalId</implementationClass>
+		<name>ReadPublicationByID</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadPublicationByID</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -3344,8 +3344,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadAuthorships</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAuthorships</implementationClass>
+		<name>ReadAuthorshipsByUsername</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.publication.ReadAuthorshipsByUsername</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
@@ -3367,8 +3367,8 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>ReadPersons</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersons</implementationClass>
+		<name>ReadPersonsByIDs</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonsByIDs</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
@@ -5955,9 +5955,9 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>ReadPerson</name>
+		<name>ReadPersonByID</name>
 		<description>Reads a Person by OID</description>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPerson</implementationClass>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByID</implementationClass>
 		<isTransactional>True</isTransactional>
 		<filterChains />
 	</service>

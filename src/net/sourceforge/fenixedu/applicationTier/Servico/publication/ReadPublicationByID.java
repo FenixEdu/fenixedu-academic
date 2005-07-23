@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class ReadPublicationByInternalId implements IService {
+public class ReadPublicationByID implements IService {
 
     public InfoPublication run(Integer internalId, IUserView userView)
     		throws ExcepcaoPersistencia {

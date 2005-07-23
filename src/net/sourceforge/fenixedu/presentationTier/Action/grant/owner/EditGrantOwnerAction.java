@@ -82,7 +82,7 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
                     Object[] args = { personId };
                     InfoPerson infoPerson = null;
                     infoPerson = (InfoPerson) ServiceUtils.executeService(SessionUtils
-                            .getUserView(request), "ReadPerson", args);
+                            .getUserView(request), "ReadPersonByID", args);
                     infoGrantOwner.setPersonInfo(infoPerson);
                 } catch (Exception e) {
                     return setError(request, mapping, "errors.grant.unrecoverable",

@@ -124,7 +124,7 @@ public class ReadPublicationAttributesAction extends FenixAction {
         }
 
         Object[] args = { newAuthorsIds };
-        List authors = (List) ServiceUtils.executeService(userView, "ReadPersons", args);
+        List authors = (List) ServiceUtils.executeService(userView, "ReadPersonsByIDs", args);
 
         List infoAuthors = (List) CollectionUtils.collect(authors, new Transformer() {
             public Object transform(Object o) {

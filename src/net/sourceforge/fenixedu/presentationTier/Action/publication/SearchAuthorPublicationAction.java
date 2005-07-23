@@ -103,7 +103,7 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
         }
 
         Object[] args = { newAuthorsIds };
-        List authors = (List) ServiceUtils.executeService(userView, "ReadPersons", args);
+        List authors = (List) ServiceUtils.executeService(userView, "ReadPersonsByIDs", args);
 
         List infoAuthors = (List) CollectionUtils.collect(authors, new Transformer() {
             public Object transform(Object o) {

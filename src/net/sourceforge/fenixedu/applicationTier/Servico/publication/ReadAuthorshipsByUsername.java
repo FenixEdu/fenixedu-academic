@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class ReadAuthorships implements IService {
+public class ReadAuthorshipsByUsername implements IService {
     
     public SiteView run(String user) throws FenixServiceException {
         try {

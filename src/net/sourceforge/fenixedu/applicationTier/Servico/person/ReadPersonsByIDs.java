@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-public class ReadPersons implements IService {
+public class ReadPersonsByIDs implements IService {
 
     public List<InfoPerson> run(List<Integer> personsInternalIds) throws ExcepcaoPersistencia {
         List<InfoPerson> persons = new ArrayList<InfoPerson>();

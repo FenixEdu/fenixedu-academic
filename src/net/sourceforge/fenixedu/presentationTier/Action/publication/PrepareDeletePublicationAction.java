@@ -37,7 +37,7 @@ public class PrepareDeletePublicationAction extends FenixAction {
 		Object[] args = { internalId, userView };
 		
 		InfoPublication infoPublication =
-			(InfoPublication) ServiceUtils.executeService(userView, "ReadPublicationByInternalId", args);
+			(InfoPublication) ServiceUtils.executeService(userView, "ReadPublicationByID", args);
 		
 		/*
 		DynaActionForm form = (DynaActionForm) actionForm;

@@ -18,12 +18,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadExternalPersonByID implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public ReadExternalPersonByID() {
-    }
-
     public Object run(Integer externalPersonID) throws FenixServiceException {
         InfoExternalPerson infoExternalPerson = null;
         IExternalPerson externalPerson = null;

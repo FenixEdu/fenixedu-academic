@@ -101,7 +101,7 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
         	}
         	else {
 	        	Object[] argReadAuthor = { arrayId[i] };
-	        	InfoPerson author = (InfoPerson)ServiceUtils.executeService(userView, "ReadPerson", argReadAuthor);
+	        	InfoPerson author = (InfoPerson)ServiceUtils.executeService(userView, "ReadPersonByID", argReadAuthor);
                 InfoAuthor infoAuthor = new InfoAuthor();
                 infoAuthor.setIdInternal(author.getIdInternal());
                 infoAuthor.setInfoPessoa(author);
@@ -271,7 +271,7 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
 		IUserView userView = SessionUtils.getUserView(request);
 		
 		InfoPublication publication = (InfoPublication) ServiceUtils.executeService(userView,
-		        "ReadPublicationByInternalId", new Object[] {idInternal,userView});
+		        "ReadPublicationByID", new Object[] {idInternal,userView});
 		DynaActionForm actionForm = (DynaActionForm)form;
 		
 		//ERROR this should not happen - domain object in presentation
@@ -328,7 +328,7 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
 				names[i] = author.getAuthor();
 			}
 			else {
-				InfoPerson infoPerson = (InfoPerson) ServiceUtils.executeService(userView, "ReadPerson",
+				InfoPerson infoPerson = (InfoPerson) ServiceUtils.executeService(userView, "ReadPersonByID",
 												new Object[] { author.getKeyPerson() });
 				names[i] = infoPerson.getNome();
 			}
@@ -547,7 +547,7 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
         }
         else {
 
-            InfoPerson infoPerson = (InfoPerson) ServiceUtils.executeService(userView, "ReadPerson",
+            InfoPerson infoPerson = (InfoPerson) ServiceUtils.executeService(userView, "ReadPersonByID",
                     new Object[] { selectedAuthorId });
             
             InfoAuthor infoAuthor = new InfoAuthor();
@@ -588,6 +588,7 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
         DynaActionForm insertPublicationForm = (DynaActionForm) form;
 
         String searchedAuthorName = (String) insertPublicationForm.get("searchedAuthorName");
+        String[] selectedAuthorsIds = (String[]) insertPublicationForm.get("authorsIds");
         if (searchedAuthorName == null || searchedAuthorName.equals("")) {
             ActionErrors errors = new ActionErrors();
             errors.add("error1", new ActionError("message.publication.emptySearch"));
@@ -595,11 +596,11 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
         }
 
         Object[] arg = { searchedAuthorName };
-        List infoAuthorList = new ArrayList<InfoAuthor>();
+        List<InfoAuthor> infoAuthorList = new ArrayList<InfoAuthor>();
 
         infoAuthorList = (List<InfoAuthor>) ServiceUtils.executeService(userView, "ReadAuthorsByName", arg);
 
-        //TODO RETIRAR o próprio autor
+        removeAuthors(selectedAuthorsIds, infoAuthorList);
         
         request.setAttribute("searchedAuthorsList", infoAuthorList);
         
@@ -611,4 +612,28 @@ public class EditPublicationDispatchAction extends FenixDispatchAction {
 
         return mapping.findForward("done");
     }
+    
+    
+    private void removeAuthors(String[] alreadySelectedAuthors, List<InfoAuthor> infoAuthors) {
+    	//Converter String[] num arraylist
+    	List<Integer> authorsIds = new ArrayList<Integer>();
+    	for(int i = 0; i < alreadySelectedAuthors.length ; i++) {
+    		authorsIds.add(Integer.getInteger(alreadySelectedAuthors[i]));
+    	}
+    		
+    	Iterator<InfoAuthor> iterator = infoAuthors.iterator();
+    	while (iterator.hasNext()) {
+    		InfoAuthor currentInfoAuthor = (InfoAuthor) iterator.next();
+    		for (Integer id : authorsIds) {
+    			if (id == currentInfoAuthor.getIdInternal()) {
+    				iterator.remove();
+    			}
+    		}
+    	}
+    }
+    
+    
+    
+    
+    
 }

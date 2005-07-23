@@ -104,7 +104,7 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
                 infoAuthors.add(author);
             } else {
                 Object[] argReadAuthor = { arrayId[i] };
-                InfoPerson infoPerson = (InfoPerson) ServiceUtils.executeService(userView, "ReadPerson",
+                InfoPerson infoPerson = (InfoPerson) ServiceUtils.executeService(userView, "ReadPersonByID",
                         argReadAuthor);
                 
                 InfoAuthor infoAuthor = new InfoAuthor();
@@ -444,7 +444,7 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
         } else {
 
             
-            InfoPerson infoPerson = (InfoPerson) ServiceUtils.executeService(userView, "ReadPerson",
+            InfoPerson infoPerson = (InfoPerson) ServiceUtils.executeService(userView, "ReadPersonByID",
                     new Object[] { selectedAuthorId });
             
             InfoAuthor infoAuthor = new InfoAuthor();
@@ -485,6 +485,8 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
         DynaActionForm insertPublicationForm = (DynaActionForm) form;
 
         String searchedAuthorName = (String) insertPublicationForm.get("searchedAuthorName");
+        Integer[] selectedAuthorsIds = (Integer[]) insertPublicationForm.get("authorsId");
+        
         if (searchedAuthorName == null || searchedAuthorName.equals("")) {
             ActionErrors errors = new ActionErrors();
             errors.add("error1", new ActionError("message.publication.emptySearch"));
@@ -492,11 +494,11 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
         }
 
         Object[] arg = { searchedAuthorName };
-        List infoAuthorList = new ArrayList<InfoAuthor>();
+        List<InfoAuthor> infoAuthorList = new ArrayList<InfoAuthor>();
 
         infoAuthorList = (List<InfoAuthor>) ServiceUtils.executeService(userView, "ReadAuthorsByName", arg);
 
-        //TODO RETIRAR OS AUTORES
+        removeAuthors(selectedAuthorsIds, infoAuthorList);
         
         request.setAttribute("searchedAuthorsList", infoAuthorList);
         
@@ -507,6 +509,20 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) {
 
         return mapping.findForward("done");
+    }
+    
+    
+    private void removeAuthors(Integer[] alreadySelectedAuthors, List<InfoAuthor> infoAuthors) {
+    		
+    	Iterator<InfoAuthor> iterator = infoAuthors.iterator();
+    	while (iterator.hasNext()) {
+    		InfoAuthor currentInfoAuthor = (InfoAuthor) iterator.next();
+        	for(int i = 0; i < alreadySelectedAuthors.length ; i++) {
+        		if (currentInfoAuthor.getIdInternal().equals(alreadySelectedAuthors[i])) {
+        			iterator.remove();
+        		}
+        	}
+    	}
     }
     
 }
