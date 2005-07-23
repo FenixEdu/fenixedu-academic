@@ -7,6 +7,9 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
+import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
+import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
@@ -307,6 +310,20 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 		else
 			throw new DomainException(this.getClass().getName(), "ola mundo");
 		
+	}
+	
+	
+	
+	public boolean isGradeValid(String grade) {
+		
+		IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory.getInstance();
+		IDegreeCurricularPlanStrategy degreeCurricularPlanStrategy = degreeCurricularPlanStrategyFactory
+        																.getDegreeCurricularPlanStrategy(this);
+		
+		if (grade == null || grade.length() == 0)
+			return false;
+
+		return degreeCurricularPlanStrategy.checkMark(grade.toUpperCase());
 	}
 	
 }

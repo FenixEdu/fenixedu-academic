@@ -2,12 +2,14 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
@@ -191,26 +193,10 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     private ICurricularYear getCurricularYearWithLowerYear(List listOfScopes) {
 
-        ICurricularYear maxCurricularYear = new CurricularYear();
-        maxCurricularYear.setYear(new Integer(10));
-
-        ICurricularYear actualCurricularYear = null;
-
-        int size = listOfScopes.size();
-
-        for (int i = 0; i < size; i++) {
-
-            ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) listOfScopes.get(i);
-            actualCurricularYear = curricularCourseScope.getCurricularSemester().getCurricularYear();
-
-            if (maxCurricularYear.getYear().intValue() > actualCurricularYear.getYear().intValue()
-                    && curricularCourseScope.isActive().booleanValue()) {
-
-                maxCurricularYear = actualCurricularYear;
-            }
-        }
-
-        return maxCurricularYear;
+		ICurricularCourseScope minYearScope = (ICurricularCourseScope)Collections.min(listOfScopes, 
+								new BeanComparator("curricularSemester.curricularYear.year"));
+		
+		return minYearScope.getCurricularSemester().getCurricularYear();        
     }
 
     // -------------------------------------------------------------

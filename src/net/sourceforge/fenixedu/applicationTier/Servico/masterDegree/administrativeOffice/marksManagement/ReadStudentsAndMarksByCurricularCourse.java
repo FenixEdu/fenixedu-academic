@@ -133,6 +133,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IService {
                     IEnrolmentEvaluation elem = (IEnrolmentEvaluation) iter.next();
                     InfoEnrolmentEvaluation infoEnrolmentEvaluation = Cloner
                             .copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(elem);
+					infoEnrolmentEvaluation.setIdInternal(elem.getIdInternal());
 
                     InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
                             .newInfoFromDomain(elem.getEnrolment());

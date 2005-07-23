@@ -10,6 +10,7 @@ import java.util.Map;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.cache.EnrollmentInfoCacheOSCacheImpl;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedBranchChangeException;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
@@ -968,5 +969,35 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 						&& (enrolment.getExecutionPeriod().equals(executionPeriod));
 			}
 		});
+	}
+	
+	
+	
+	
+	
+	public void setStudentAreasWithoutRestrictions(IBranch specializationArea, IBranch secundaryArea) 
+		throws DomainException {
+		
+        if (specializationArea != null && secundaryArea != null && specializationArea.equals(secundaryArea))
+            throw new DomainException(this.getClass().getName(), "ola mundo");
+		
+        setBranch(specializationArea);
+        setSecundaryBranch(secundaryArea);
+	}
+	
+	
+	
+	
+	public void setStudentAreas(IBranch specializationArea, IBranch secundaryArea) throws NotAuthorizedBranchChangeException, 
+		BothAreasAreTheSameServiceException, InvalidArgumentsServiceException, DomainException {
+		
+        if (!getCanChangeSpecializationArea())
+            throw new NotAuthorizedBranchChangeException();
+
+        if (areNewAreasCompatible(specializationArea, secundaryArea))
+			setStudentAreasWithoutRestrictions(specializationArea, secundaryArea);
+			
+        else
+            throw new DomainException(this.getClass().getName(), "ola mundo");
 	}
 }

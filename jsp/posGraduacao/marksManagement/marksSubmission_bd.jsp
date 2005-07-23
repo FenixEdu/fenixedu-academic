@@ -76,6 +76,7 @@
 	    <% if (((InfoEnrolmentEvaluation) enrolmentEvaluation).getInfoEnrolment().getInfoStudentCurricularPlan().getCurrentState().equals(StudentCurricularPlanState.ACTIVE)) { %> 		
 	    		<bean:define id="studentCode" name="enrolmentEvaluation" property="infoEnrolment.infoStudentCurricularPlan.infoStudent.idInternal" />
 	    		<bean:define id="enrolmentCode" name="enrolmentEvaluation" property="infoEnrolment.idInternal" />
+	    		<bean:define id="idInternal" name="enrolmentEvaluation" property="idInternal" />
 	    		
 	    		<tr>
 					<td class="listClasses">
@@ -88,6 +89,7 @@
 						<html:text name="enrolmentEvaluation" property="grade" size="4" indexed="true" />
 	 					<html:hidden name="enrolmentEvaluation" property="studentCode" value="<%= studentCode.toString() %>" indexed="true" />
 	 					<html:hidden name="enrolmentEvaluation" property="enrolmentCode" value="<%= enrolmentCode.toString() %>" indexed="true" />
+	 					<html:hidden name="enrolmentEvaluation" property="idInternal" value="<%= idInternal.toString() %>" indexed="true" />
 					</td>
 				</tr>
 				<% } %>

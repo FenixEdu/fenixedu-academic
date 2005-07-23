@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.IBranch;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
@@ -19,37 +20,41 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 /**
  * @author David Santos in Apr 14, 2004
  */
-
 public class WriteStudentAreasWithoutRestrictions implements IService {
     public WriteStudentAreasWithoutRestrictions() {
     }
 
-    // The first 2 arguments are only used by the filter applyed to this
-    // service.
+    // The first 2 arguments are only used by the filter applyed to this service.
     public void run(InfoStudent infoStudent, DegreeType degreeType, Integer studentCurricularPlanID,
             Integer specializationAreaID, Integer secundaryAreaID) throws FenixServiceException {
-        try {
+       
+		try {
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentBranch branchDAO = persistentSuport.getIPersistentBranch();
-            IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSuport.getIStudentCurricularPlanPersistente();
+            IPersistentBranch persistentBranch = persistentSuport.getIPersistentBranch();
+            IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSuport.getIStudentCurricularPlanPersistente();
 
-            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) studentCurricularPlanDAO
+            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan
                     .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
-
-            IBranch specializationArea = (IBranch) branchDAO.readByOID(Branch.class, specializationAreaID);
-            IBranch secundaryArea = (IBranch) branchDAO.readByOID(Branch.class, secundaryAreaID);
-
+			
             if (studentCurricularPlan == null) {
                 throw new NonExistingServiceException();
             }
 
-            if (specializationArea != null && secundaryArea != null
-                    && specializationArea.equals(secundaryArea)) {
-                throw new BothAreasAreTheSameServiceException();
+            IBranch specializationArea = (IBranch) persistentBranch.readByOID(Branch.class, specializationAreaID);
+            
+            IBranch secundaryArea = null;
+            if (secundaryAreaID != null) {
+                secundaryArea = (IBranch) persistentBranch.readByOID(Branch.class, secundaryAreaID);
             }
 
-            studentCurricularPlan.setBranch(specializationArea);
-            studentCurricularPlan.setSecundaryBranch(secundaryArea);
+			try {
+				studentCurricularPlan.setStudentAreasWithoutRestrictions(specializationArea, secundaryArea);
+			}
+			catch (DomainException e) {
+				throw new BothAreasAreTheSameServiceException();
+			}
+            
+			
         } catch (ExcepcaoPersistencia e) {
 
             throw new FenixServiceException(e);

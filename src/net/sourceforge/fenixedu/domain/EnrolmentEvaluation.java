@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
+import net.sourceforge.fenixedu.util.MarkType;
 
 /**
  * @author dcs-rjao 24/Mar/2003
@@ -18,6 +20,15 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
     private String RECTIFICATION = "RECTIFICAÇÃO";
+	
+	
+	public EnrolmentEvaluation() {}
+	
+	public EnrolmentEvaluation(IEnrolment enrolment, EnrolmentEvaluationType type) {
+		setEnrolment(enrolment);
+		setEnrolmentEvaluationType(type);
+	}
+	
 	
     public String toString() {
         String result = "[" + this.getClass().getName() + "; ";
@@ -176,6 +187,46 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
 	
 	
 	
+	public void edit(IPerson responsibleFor, String grade, Date availableDate, Date examDate, String checksum) {
+		
+        setCheckSum(checksum);
+        setGrade(grade);
+        setGradeAvailableDate(availableDate);
+        setPersonResponsibleForGrade(responsibleFor);
+		
+		if (examDate == null && grade == null)
+			setExamDate(null);
+		
+		else if (examDate == null && grade != null)
+			setExamDate(availableDate);
+		
+		else
+			setExamDate(examDate);
+	}
+	
+	
+	public void confirmSubmission(IEmployee employee, String observation) {
+		
+        setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
+        Calendar calendar = Calendar.getInstance();
+        setWhen(calendar.getTime());
+        setEmployee(employee);
+        setObservation(observation);
+        setCheckSum("");
+		
+		IEnrolment enrolment = getEnrolment();
+        EnrollmentState newEnrolmentState = EnrollmentState.APROVED;
+
+        if (MarkType.getRepMarks().contains(getGrade())) {
+            newEnrolmentState = EnrollmentState.NOT_APROVED;
+        } else if (MarkType.getNaMarks().contains(getGrade())) {
+            newEnrolmentState = EnrollmentState.NOT_EVALUATED;
+        }
+        enrolment.setEnrollmentState(newEnrolmentState);
+	}
+	
+	
+	
 	
 	public void delete() {
 		removePersonResponsibleForGrade();
@@ -228,10 +279,60 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
                 attend.delete();
             }
         }
+	}
+	
+	
+	
+	public void insertStudentFinalEvaluationForMasterDegree(String grade, IPerson responsibleFor, Date examDate) 
+		throws DomainException {
 		
+		IDegreeCurricularPlan degreeCurricularPlan = getEnrolment().getStudentCurricularPlan().getDegreeCurricularPlan();
+
+		if (grade == null || grade.length() == 0) {	
 		
+			if (getGrade() != null && getGrade().length() > 0)
+				edit(null, null, null, null, null);
+		} 
 		
+		else if (grade != null && grade.length() > 0) {
 		
+			if (degreeCurricularPlan.isGradeValid(grade)) {
+				Calendar calendar = Calendar.getInstance();
+				edit(responsibleFor, grade, calendar.getTime(), examDate, "");
+			}
+		
+			else
+				throw new DomainException(this.getClass().getName(), "ola mundo");
+		}
+	}
+	
+	
+	
+	public void alterStudentEnrolmentEvaluationForMasterDegree(String grade, IEmployee employee, IPerson responsibleFor,
+			EnrolmentEvaluationType evaluationType, Date evaluationAvailableDate, Date examDate, String observation) 
+				throws DomainException {
+
+		IEnrolment enrolment = getEnrolment();
+		IDegreeCurricularPlan degreeCurricularPlan = getEnrolment().getStudentCurricularPlan().getDegreeCurricularPlan();
+        		
+		if (grade.equals("0") || grade.equals("")) {
+
+            IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(enrolment, getEnrolmentEvaluationType());
+			enrolmentEvaluation.confirmSubmission(employee, observation);
+			enrolment.setEnrollmentState(EnrollmentState.ENROLLED);
+
+        } else {
+
+			if (degreeCurricularPlan.isGradeValid(grade)) {
+				
+				IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(enrolment, evaluationType);
+				enrolmentEvaluation.edit(responsibleFor, grade, evaluationAvailableDate, examDate, "");
+				enrolmentEvaluation.confirmSubmission(employee, observation);
+			}
+			
+			else
+				throw new DomainException(this.getClass().getName(), "ola mundo");
+        }
 	}
 
 }

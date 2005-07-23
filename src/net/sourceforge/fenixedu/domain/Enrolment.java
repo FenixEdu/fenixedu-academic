@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.log.IEnrolmentLog;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
@@ -131,7 +132,7 @@ public class Enrolment extends Enrolment_Base {
 			try {
 				attendsIter.remove();
 				attends.removeEnrolment();
-				//attends.delete();
+				attends.delete();
 			}
 			catch (DomainException e) {}
 		}
@@ -319,6 +320,7 @@ public class Enrolment extends Enrolment_Base {
         }
     }
 	
+	
 	public void createAttend(IStudent student, ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) {
 
 		List executionCourses = curricularCourse.getExecutionCoursesByExecutionPeriod(executionPeriod);
@@ -347,6 +349,63 @@ public class Enrolment extends Enrolment_Base {
 				addAttends(attendToWrite);
             }
         }
+    }
+	
+	
+	
+	public void createEnrolmentEvaluationForImprovment(IEmployee employee, IExecutionPeriod currentExecutionPeriod,
+														IStudent student) {
+		
+		IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
+
+        enrolmentEvaluation.setEmployee(employee);
+        enrolmentEvaluation.setWhen(new Date());
+        enrolmentEvaluation.setEnrolment(this);
+        enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
+        enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.IMPROVEMENT);
+		
+		createAttendForImprovment(currentExecutionPeriod, student);
+	}
+	
+	
+	
+    private void createAttendForImprovment(final IExecutionPeriod currentExecutionPeriod, final IStudent student) {
+        
+        List executionCourses = getCurricularCourse().getAssociatedExecutionCourses();
+        IExecutionCourse currentExecutionCourse = (IExecutionCourse) CollectionUtils.find(executionCourses, new Predicate() {
+
+            public boolean evaluate(Object arg0) {
+                IExecutionCourse executionCourse = (IExecutionCourse) arg0;
+                if(executionCourse.getExecutionPeriod().equals(currentExecutionPeriod))
+                	return true;
+                return false;
+            }
+            
+        });
+        
+        if(currentExecutionCourse != null) {
+            List attends = currentExecutionCourse.getAttends();
+            IAttends attend = (IAttends) CollectionUtils.find(attends, new Predicate() {
+
+                public boolean evaluate(Object arg0) {
+                    IAttends frequenta = (IAttends) arg0;
+                    if(frequenta.getAluno().equals(student))
+                    	return true;
+                    return false;
+                }
+                
+            });
+            
+            if(attend != null) {
+                attend.setEnrolment(this);
+            }
+            else {
+                attend = new Attends(student, currentExecutionCourse);
+                attend.setEnrolment(this);                
+            }
+            
+        }
+        
     }
 	
 	

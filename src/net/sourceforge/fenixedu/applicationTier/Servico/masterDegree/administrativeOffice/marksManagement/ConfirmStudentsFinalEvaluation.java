@@ -39,14 +39,12 @@ public class ConfirmStudentsFinalEvaluation implements IService {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-            IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp
-                    .getIPersistentEnrolmentEvaluation();
             IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
+			IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
 
-            //			employee
             IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
-            IEmployee employee = readEmployee(person);
+			IEmployee employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
 
             ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
                     .readByOID(CurricularCourse.class, curricularCourseCode, false);
@@ -58,32 +56,38 @@ public class ConfirmStudentsFinalEvaluation implements IService {
             } else {
                 enrolments = curricularCourse.getEnrolments();
             }
+			
+			
             List enrolmentEvaluations = new ArrayList();
             Iterator iterEnrolment = enrolments.listIterator();
             while (iterEnrolment.hasNext()) {
                 IEnrolment enrolment = (IEnrolment) iterEnrolment.next();
-                List allEnrolmentEvaluations = enrolment.getEvaluations();
+             
+				List allEnrolmentEvaluations = enrolment.getEvaluations();
                 IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) allEnrolmentEvaluations
                         .get(allEnrolmentEvaluations.size() - 1);
                 enrolmentEvaluations.add(enrolmentEvaluation);
             }
 
+			
             if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
+				
                 ListIterator iterEnrolmentEvaluations = enrolmentEvaluations.listIterator();
                 while (iterEnrolmentEvaluations.hasNext()) {
-                    IEnrolmentEvaluation enrolmentEvaluationElem = (IEnrolmentEvaluation) iterEnrolmentEvaluations
-                            .next();
-                    if (enrolmentEvaluationElem.getGrade() != null
-                            && enrolmentEvaluationElem.getGrade().length() > 0
-                            && enrolmentEvaluationElem.getEnrolmentEvaluationState().equals(
-                                    EnrolmentEvaluationState.TEMPORARY_OBJ)) {
+					
+                    IEnrolmentEvaluation enrolmentEvaluationElem = (IEnrolmentEvaluation) iterEnrolmentEvaluations.next();
+					
+                    if (enrolmentEvaluationElem.getGrade() != null && 
+						enrolmentEvaluationElem.getGrade().length() > 0 && 
+						enrolmentEvaluationElem.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ)) {
 
-                        updateEnrolmentEvaluation(persistentEnrolmentEvaluation, persistentEnrolment,
-                                employee, enrolmentEvaluationElem);
+						enrolmentEvaluationElem.confirmSubmission(employee, "Lançamento de Notas na Secretaria");
                     }
                 }
             }
-        } catch (ExcepcaoPersistencia ex) {
+        } 
+		
+		catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();
             FenixServiceException newEx = new FenixServiceException("");
             newEx.fillInStackTrace();
@@ -93,47 +97,4 @@ public class ConfirmStudentsFinalEvaluation implements IService {
         return Boolean.TRUE;
     }
 
-    private void updateEnrolmentEvaluation(IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation,
-            IPersistentEnrollment persistentEnrolment, IEmployee employee,
-            IEnrolmentEvaluation enrolmentEvaluationElem) throws ExcepcaoPersistencia {
-        persistentEnrolmentEvaluation.simpleLockWrite(enrolmentEvaluationElem);
-
-        enrolmentEvaluationElem.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
-        Calendar calendar = Calendar.getInstance();
-        enrolmentEvaluationElem.setWhen(calendar.getTime());
-        enrolmentEvaluationElem.setEmployee(employee);
-        enrolmentEvaluationElem.setObservation("Lançamento de Notas na Secretaria");
-        //TODO: checksum
-        enrolmentEvaluationElem.setCheckSum("");
-
-        // update state of enrolment: aproved, notAproved or notEvaluated
-        updateEnrolmentState(persistentEnrolment, enrolmentEvaluationElem);
-    }
-
-    private void updateEnrolmentState(IPersistentEnrollment persistentEnrolment,
-            IEnrolmentEvaluation enrolmentEvaluationElem) throws ExcepcaoPersistencia {
-        IEnrolment enrolmentToEdit = enrolmentEvaluationElem.getEnrolment();
-        persistentEnrolment.simpleLockWrite(enrolmentToEdit);
-
-        EnrollmentState newEnrolmentState = EnrollmentState.APROVED;
-
-        if (MarkType.getRepMarks().contains(enrolmentEvaluationElem.getGrade())) {
-            newEnrolmentState = EnrollmentState.NOT_APROVED;
-        } else if (MarkType.getNaMarks().contains(enrolmentEvaluationElem.getGrade())) {
-            newEnrolmentState = EnrollmentState.NOT_EVALUATED;
-        }
-        enrolmentToEdit.setEnrollmentState(newEnrolmentState);
-    }
-
-    private IEmployee readEmployee(IPerson person) {
-        IEmployee employee = null;
-        IPersistentEmployee persistentEmployee;
-        try {
-            persistentEmployee = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentEmployee();
-            employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-        }
-        return employee;
-    }
 }

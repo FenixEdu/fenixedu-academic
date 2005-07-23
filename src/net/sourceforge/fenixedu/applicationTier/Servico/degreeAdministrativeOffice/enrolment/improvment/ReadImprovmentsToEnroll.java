@@ -46,30 +46,26 @@ public class ReadImprovmentsToEnroll implements IService  {
             List previousExecPeriodAprovedEnrol = new ArrayList();
             List beforePreviousExecPeriodAprovedEnrol = new ArrayList();
             List beforeBeforePreviousExecPeriodAprovedEnrol = new ArrayList();
-            //Read Execution Periods
-            IExecutionPeriod actualExecPeriod = sp
-                    .getIPersistentExecutionPeriod()
-                    .readActualExecutionPeriod();
-            IExecutionPeriod previousExecPeriod = actualExecPeriod
-                    .getPreviousExecutionPeriod();
-            IExecutionPeriod beforePreviousExecPeriod = previousExecPeriod
-                    .getPreviousExecutionPeriod();
+
+			//Read Execution Periods
+            IExecutionPeriod actualExecPeriod = sp.getIPersistentExecutionPeriod().readActualExecutionPeriod();
+            IExecutionPeriod previousExecPeriod = actualExecPeriod.getPreviousExecutionPeriod();
+            IExecutionPeriod beforePreviousExecPeriod = previousExecPeriod.getPreviousExecutionPeriod();
             IExecutionPeriod beforeBeforePreviousExecPeriod = beforePreviousExecPeriod.getPreviousExecutionPeriod();
 
             //Read Student
-            IStudent student = sp.getIPersistentStudent()
-                    .readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
+            IStudent student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
             
             if(student == null) {
                 throw new InvalidArgumentsServiceException("error.student.notExist");
             }
+			
             //Read Aproved Enrolments by Execution Period
             List studentCurricularPlans = student.getStudentCurricularPlans();
 
-            Iterator iterator = studentCurricularPlans.iterator();
+            Iterator<IStudentCurricularPlan> iterator = studentCurricularPlans.iterator();
             while (iterator.hasNext()) {
-                IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator
-                        .next();
+                IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();
 
                 if (previousExecPeriod != null) {
                     previousExecPeriodAprovedEnrol.addAll(studentCurricularPlan.getAprovedEnrolmentsInExecutionPeriod(previousExecPeriod));

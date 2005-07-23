@@ -160,6 +160,7 @@ public class SubmitMarksAction extends DispatchAction {
     private InfoEnrolmentEvaluation getFinalEvaluation(HttpServletRequest request, int index) {
         Integer studentCode = null;
         Integer enrolmentCode = null;
+		Integer evaluationId = null;
         String evaluation = request.getParameter("enrolmentEvaluation[" + index + "].grade");
         if (request.getParameter("enrolmentEvaluation[" + index + "].studentCode") != null) {
             studentCode = Integer.valueOf(request.getParameter("enrolmentEvaluation[" + index
@@ -167,6 +168,9 @@ public class SubmitMarksAction extends DispatchAction {
 
             enrolmentCode = Integer.valueOf(request.getParameter("enrolmentEvaluation[" + index
                     + "].enrolmentCode"));
+			
+			evaluationId = Integer.valueOf(request.getParameter("enrolmentEvaluation[" + index
+					+ "].idInternal"));
 
         }
         if (studentCode != null) {
@@ -187,6 +191,7 @@ public class SubmitMarksAction extends DispatchAction {
             infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
 
             infoEnrolmentEvaluation.setGrade(evaluation);
+			infoEnrolmentEvaluation.setIdInternal(evaluationId);
             return infoEnrolmentEvaluation;
         }
         return null;
