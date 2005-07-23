@@ -837,8 +837,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	
 	
 	public StudentCurricularPlan (IStudent student, IDegreeCurricularPlan degreeCurricularPlan, IBranch branch,
-			Date startDate, StudentCurricularPlanState currentState, Double givenCredits, Specialization specialization) 
-				throws DomainException {
+			Date startDate, StudentCurricularPlanState currentState, Double givenCredits, Specialization specialization) {
 		
 		this(student,degreeCurricularPlan,currentState,startDate);
 		
