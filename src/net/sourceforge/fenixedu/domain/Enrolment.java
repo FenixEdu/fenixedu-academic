@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.log.IEnrolmentLog;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
@@ -43,7 +42,7 @@ public class Enrolment extends Enrolment_Base {
 		setCondition(enrolmentCondition);
 		setCreatedBy(createdBy);
 		
-		createEnrollmentEvaluationWithoutGrade();
+		createEnrolmentEvaluationWithoutGrade();
 		createAttend(studentCurricularPlan.getStudent(), curricularCourse, executionPeriod);
 	}
 
@@ -307,7 +306,7 @@ public class Enrolment extends Enrolment_Base {
 		return enrolmentEvaluation;
 	}
 	
-    public void createEnrollmentEvaluationWithoutGrade() {
+    private void createEnrolmentEvaluationWithoutGrade() {
 		
 		IEnrolmentEvaluation enrolmentEvaluation = getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(EnrolmentEvaluationType.NORMAL, null);
 
@@ -321,7 +320,7 @@ public class Enrolment extends Enrolment_Base {
     }
 	
 	
-	public void createAttend(IStudent student, ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) {
+	private void createAttend(IStudent student, ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) {
 
 		List executionCourses = curricularCourse.getExecutionCoursesByExecutionPeriod(executionPeriod);
 		

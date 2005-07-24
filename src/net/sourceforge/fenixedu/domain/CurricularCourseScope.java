@@ -15,12 +15,12 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 	public CurricularCourseScope() {}
 	
 	public CurricularCourseScope(IBranch branch, ICurricularCourse curricularCourse, ICurricularSemester curricularSemester,
-								 Calendar beginDate, Calendar endDate, String Annotation) {
+								 Calendar beginDate, Calendar endDate, String Annotation){
 		
         // check that there isn't another scope active with the same curricular course, branch and semester
 		
         if (curricularCourse.hasActiveScopeInGivenSemesterForGivenBranch(curricularSemester.getSemester(), branch)) {
-            throw new RuntimeException();
+            throw new DomainException("","");
         }
 		
 		setBranch(branch);

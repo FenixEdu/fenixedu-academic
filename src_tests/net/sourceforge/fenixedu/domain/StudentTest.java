@@ -38,7 +38,7 @@ public class StudentTest extends DomainTestBase {
 		super.tearDown();
 	}
 	
-	public void testNewStudent() {
+	public void testCreate() {
 		IStudent student = new Student(person, studentNumber, studentKind, studentState, 
 				payedTuition, enrolmentForbidden, entryPhase, degreeType);
 		

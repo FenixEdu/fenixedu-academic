@@ -6,6 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**
  * @author David Santos in Jun 9, 2004
@@ -27,7 +28,7 @@ public class Precedence extends Precedence_Base {
 			constructor = Class.forName(className).getConstructor(parameters);
 			constructor.newInstance(arguments);
 		} catch (Exception e) {
-			throw new RuntimeException("error.manager.impossible.insertPrecedence");
+			throw new DomainException("error.manager.impossible.insertPrecedence");
 		} 
 
 	}

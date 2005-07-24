@@ -22,7 +22,7 @@ public class CreditsInAnySecundaryAreaTest extends DomainTestBase {
         super.tearDown();
     }
 	
-	public void testDeleteRestriction() {
+	public void testDelete() {
 		
 		credits.delete();
 		

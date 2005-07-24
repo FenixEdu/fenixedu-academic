@@ -47,6 +47,7 @@ public class CurricularCourseScopeTest extends DomainTestBase {
 		
 
 		commonCurricularSemester = new CurricularSemester();
+		commonCurricularSemester.setSemester(2);
 		commonCurricularCourse = new CurricularCourse();
 		commonBranch = new Branch();
 		
@@ -54,8 +55,6 @@ public class CurricularCourseScopeTest extends DomainTestBase {
 		otherCurricularCourseScope.setCurricularCourse(commonCurricularCourse);
 		otherCurricularCourseScope.setCurricularSemester(commonCurricularSemester);
 		otherCurricularCourseScope.setBranch(commonBranch);
-		
-
 	}
 	
 	
@@ -97,8 +96,8 @@ public class CurricularCourseScopeTest extends DomainTestBase {
 		try {
 			newCurricularCourseScope = new CurricularCourseScope(newBranch, newCurricularCourse, newCurricularSemester,
 																newBeginDate, newEndDate, newAnnotation);
-		} catch (RuntimeException e) {
-			fail("Should have been deleted.");
+		} catch (DomainException e) {
+			fail("Should have been created.");
 		}
 		
 		
@@ -114,7 +113,7 @@ public class CurricularCourseScopeTest extends DomainTestBase {
 			unableToCreateCurricularCourseScope = new CurricularCourseScope(commonBranch, commonCurricularCourse, 
 																			commonCurricularSemester, null, null, null);
 			fail("Should not have been created.");
-		} catch (RuntimeException e) {
+		} catch (DomainException e) {
 			
 		}
 		

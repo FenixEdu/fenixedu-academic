@@ -90,9 +90,9 @@ public class CurricularCourseGroupTest extends DomainTestBase {
 		assertFalse(curricularCourseGroupToDelete.hasBranch());
 		assertFalse(curricularCourseGroupToDelete.hasAnyScientificAreas());
 		assertFalse(curricularCourseGroupToDelete.hasAnyCurricularCourses());
-		
-		
-		
+	}
+	
+	public void testEdit() {
 		areaCurricularcourseGroupToEdit.edit(editedAreaCCGName,editedBranch,editedMinimumValue,editedMaximumValue,editedAreaType);
 		
 		assertEquals(areaCurricularcourseGroupToEdit.getName(),editedAreaCCGName);

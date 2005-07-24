@@ -35,7 +35,6 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		super.setUp();
 		
 		setUpEnrolmentByCurricularCourseAndExecutionPeriodCase();
-		setUpNewStudentCurricularPlanCase();
 		
 		IStudent student = new Student();
 		IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
@@ -87,19 +86,6 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		ICreditsInScientificArea cred2 = new CreditsInScientificArea();
 		cred2.setStudentCurricularPlan(studentCurricularPlanToDelete);
 	}
-	
-	
-	
-	
-	private void setUpNewStudentCurricularPlanCase() {
-		studentForNewStudentCurricularPlan = new Student();
-		degreeCurricularPlanForNewStudentCurricularPlan = new DegreeCurricularPlan();
-		branchForNewStudentCurricularPlan = new Branch();
-		startDateForNewStudentCurricularPlan = new Date(2002,4,13);
-		stateForNewStudentCurricularPlan = StudentCurricularPlanState.CONCLUDED;
-		givenCreditsForNewStudentCurricularPlan = 10.0;
-		specializationForNewStudentCurricularPlan = Specialization.MASTER_DEGREE; 
-	}
 
 	private void setUpEnrolmentByCurricularCourseAndExecutionPeriodCase() {
 		
@@ -133,6 +119,15 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 	private void setUpCreate(IStudent student, IDegreeCurricularPlan degreeCurricularPlan) {
 		newStudentCurricularPlan = new StudentCurricularPlan(student, degreeCurricularPlan,
 												StudentCurricularPlanState.ACTIVE, new Date());
+		
+		
+		studentForNewStudentCurricularPlan = new Student();
+		degreeCurricularPlanForNewStudentCurricularPlan = new DegreeCurricularPlan();
+		branchForNewStudentCurricularPlan = new Branch();
+		startDateForNewStudentCurricularPlan = new Date(2002,4,13);
+		stateForNewStudentCurricularPlan = StudentCurricularPlanState.CONCLUDED;
+		givenCreditsForNewStudentCurricularPlan = 10.0;
+		specializationForNewStudentCurricularPlan = Specialization.MASTER_DEGREE; 
 	}
 	
 	
@@ -174,6 +169,21 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		
 		assertTrue(newStudentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.ACTIVE));
 		assertTrue(activeStudentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.INACTIVE));
+		
+		
+		
+		IStudentCurricularPlan scp = new StudentCurricularPlan(studentForNewStudentCurricularPlan,
+				degreeCurricularPlanForNewStudentCurricularPlan, branchForNewStudentCurricularPlan,
+				startDateForNewStudentCurricularPlan, stateForNewStudentCurricularPlan, 
+				givenCreditsForNewStudentCurricularPlan, specializationForNewStudentCurricularPlan) ;
+		
+		assertEquals(scp.getStudent(),studentForNewStudentCurricularPlan);
+		assertEquals(scp.getDegreeCurricularPlan(),degreeCurricularPlanForNewStudentCurricularPlan);
+		assertEquals(scp.getBranch(),branchForNewStudentCurricularPlan);
+		assertEquals(scp.getStartDate(),startDateForNewStudentCurricularPlan);
+		assertEquals(scp.getCurrentState(),stateForNewStudentCurricularPlan);
+		assertEquals(scp.getGivenCredits(),givenCreditsForNewStudentCurricularPlan);
+		assertEquals(scp.getSpecialization(),specializationForNewStudentCurricularPlan);
 	}
 	
 	public void testChangeState() {
@@ -230,25 +240,9 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		assertFalse(studentCurricularPlanLEECToDelete.hasSecundaryBranch());
 	}
 	
-	public void testEnrolmentByCurricularCourseAndExecutionPeriod () {
+	public void testGetEnrolmentByCurricularCourseAndExecutionPeriod () {
 		IEnrolment enrolment = studentCurricularPlanToReadFrom.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse,executionPeriod);
 		
 		assertEquals(enrolment,enrolmentToBeRead);
-	}
-	
-	public void testNewStudentcurricularPlan() {
-		
-		IStudentCurricularPlan scp = new StudentCurricularPlan(studentForNewStudentCurricularPlan,
-				degreeCurricularPlanForNewStudentCurricularPlan, branchForNewStudentCurricularPlan,
-				startDateForNewStudentCurricularPlan, stateForNewStudentCurricularPlan, 
-				givenCreditsForNewStudentCurricularPlan, specializationForNewStudentCurricularPlan) ;
-		
-		assertEquals(scp.getStudent(),studentForNewStudentCurricularPlan);
-		assertEquals(scp.getDegreeCurricularPlan(),degreeCurricularPlanForNewStudentCurricularPlan);
-		assertEquals(scp.getBranch(),branchForNewStudentCurricularPlan);
-		assertEquals(scp.getStartDate(),startDateForNewStudentCurricularPlan);
-		assertEquals(scp.getCurrentState(),stateForNewStudentCurricularPlan);
-		assertEquals(scp.getGivenCredits(),givenCreditsForNewStudentCurricularPlan);
-		assertEquals(scp.getSpecialization(),specializationForNewStudentCurricularPlan);
 	}
 }
